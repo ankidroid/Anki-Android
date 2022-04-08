@@ -26,7 +26,7 @@ import androidx.annotation.VisibleForTesting;
  * The TaskManager has two related purposes.
  *
  * A concrete TaskManager's mission is to take a TaskDelegate, potentially a CollectionListener, and execute them.
- * Currently, the default TaskManager is SingleTaskManager, which executes the tasks in order in which they are generated. It essentially consists in using basic AsyntTask properties with CollectionTask.
+ * Currently, the default TaskManager is SingleTaskManager, which executes the tasks in order in which they are generated. It essentially consists in using basic AsyncTask properties with CollectionTask.
  * It should eventually be replaced by non deprecated system.
  *
  * The only other TaskManager currently is ForegroundTaskManager, which runs everything foreground and is used for unit testings.

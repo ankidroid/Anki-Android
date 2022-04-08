@@ -104,7 +104,7 @@ abstract class Test21And26 {
         /**
          * Allow to ensure that [test] throw an IOException.
          * We plan to use it to ensure that if we don't have permission to read the directory
-         * the exception is not catched.
+         * the exception is not caught.
          */
         fun assertThrowsWhenPermissionDenied(test: () -> Unit): IOException =
             runWithPermissionDenied { assertThrowsSubclass(test) }

@@ -1461,15 +1461,15 @@ public class NoteEditor extends AnkiActivity implements
         for (int i = 0; i < editLines.size(); i++) {
             FieldEditLine edit_line_view = editLines.get(i);
             mCustomViewIds.add(edit_line_view.getId());
-            FieldEditText newTextbox = edit_line_view.getEditText();
-            newTextbox.setImagePasteListener(this::onImagePaste);
+            FieldEditText newEditText = edit_line_view.getEditText();
+            newEditText.setImagePasteListener(this::onImagePaste);
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {
-                    findViewById(R.id.note_deck_spinner).setNextFocusForwardId(newTextbox.getId());
+                    findViewById(R.id.note_deck_spinner).setNextFocusForwardId(newEditText.getId());
                 }
                 if (previous != null) {
-                    previous.getLastViewInTabOrder().setNextFocusForwardId(newTextbox.getId());
+                    previous.getLastViewInTabOrder().setNextFocusForwardId(newEditText.getId());
                 }
             }
             previous = edit_line_view;
@@ -1480,19 +1480,19 @@ public class NoteEditor extends AnkiActivity implements
             if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.M) {
                 // Use custom implementation of ActionMode.Callback customize selection and insert menus
                 Field f = new Field(getFieldByIndex(i), getCol());
-                ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox, f);
+                ActionModeCallback actionModeCallback = new ActionModeCallback(newEditText, f);
                 edit_line_view.setActionModeCallbacks(actionModeCallback);
             }
 
             edit_line_view.setTypeface(customTypeface);
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
-            initFieldEditText(newTextbox, i, !editModelMode);
-            mEditFields.add(newTextbox);
+            initFieldEditText(newEditText, i, !editModelMode);
+            mEditFields.add(newEditText);
             SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
             if (prefs.getInt("note_editor_font_size", -1) > 0) {
-                newTextbox.setTextSize(prefs.getInt("note_editor_font_size", -1));
+                newEditText.setTextSize(prefs.getInt("note_editor_font_size", -1));
             }
-            newTextbox.setCapitalize(prefs.getBoolean("note_editor_capitalize", true));
+            newEditText.setCapitalize(prefs.getBoolean("note_editor_capitalize", true));
 
             ImageButton mediaButton = edit_line_view.getMediaButton();
             ImageButton toggleStickyButton = edit_line_view.getToggleSticky();

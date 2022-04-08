@@ -524,7 +524,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                         return
                     }
 
-                    // Reinitialize controls incase changed to filtered deck
+                    // Reinitialize controls in case changed to filtered deck
                     initAllContentViews(mStudyOptionsView!!)
                     // Set the deck name
                     val deck = col!!.decks.current()

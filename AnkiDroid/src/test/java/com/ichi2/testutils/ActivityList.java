@@ -43,7 +43,7 @@ import com.ichi2.anki.SharedDecksActivity;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptionsActivity;
 import com.ichi2.anki.VideoPlayer;
-import com.ichi2.anki.multimediacard.activity.LoadPronounciationActivity;
+import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
 import com.ichi2.anki.services.ReminderService;
@@ -92,7 +92,7 @@ public class ActivityList {
                 get(CardTemplatePreviewer.class),
                 get(MultimediaEditFieldActivity.class),
                 get(TranslationActivity.class),
-                get(LoadPronounciationActivity.class),
+                get(LoadPronunciationActivity.class),
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
                 get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),

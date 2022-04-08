@@ -381,7 +381,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
 
     public static class CardTemplateFragment extends Fragment {
-        private FixedTextView mCurrentEdtiorTitle;
+        private FixedTextView mCurrentEditorTitle;
         private FixedEditText mEditorEditText;
 
         private int mCurrentEditorViewId;
@@ -428,7 +428,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return mainView;
             }
 
-            mCurrentEdtiorTitle = mainView.findViewById(R.id.title_edit);
+            mCurrentEditorTitle = mainView.findViewById(R.id.title_edit);
             mEditorEditText = mainView.findViewById(R.id.editor_editText);
             mEditorPosition = getArguments().getInt(EDITOR_POSITION_KEY);
 
@@ -563,7 +563,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         public void setCurrentEditorView(@NonNull int id, @NonNull String editorContent, @NonNull int editorTitleId) {
             setCurrentEditorViewId(id);
             mEditorEditText.setText(editorContent);
-            mCurrentEdtiorTitle.setText(getResources().getString(editorTitleId));
+            mCurrentEditorTitle.setText(getResources().getString(editorTitleId));
             mEditorEditText.setSelection(mEditorPosition);
             mEditorEditText.requestFocus();
         }
@@ -714,7 +714,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             i.putExtra("ordinal", ordinal);
             i.putExtra("cardListIndex", 0);
 
-            // If we have a card for this position, send it, otherwise an empty cardlist signals to show a blank
+            // If we have a card for this position, send it, otherwise an empty card list signals to show a blank
             if (noteId != -1L) {
                 List<Long> cids = col.getNote(noteId).cids();
                 if (ordinal < cids.size()) {
@@ -982,7 +982,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         private void addNewTemplateWithCheck(final JSONObject model) {
             try {
                 mTemplateEditor.getCol().modSchema();
-                Timber.d("addNewTemplateWithCheck() called and no CMSE?");
+                Timber.d("addNewTemplateWithCheck() called and no ConfirmModSchemaException?");
                 addNewTemplate(model);
             } catch (ConfirmModSchemaException e) {
                 e.log();

@@ -31,7 +31,7 @@ import java.lang.IllegalStateException
  *
  * Ensures that the folder underneath [proposedDestinationFile] exists, and renames the destination file.
  * if the file at [proposedDestinationFile] exists and has a distinct content, it will increment the filename, attempting to find a filename which is not in use.
- * if the file at [proposedDestinationFile] exists and has the same content, [sourceFile] is deleted and move is assumed to be succesful.
+ * if the file at [proposedDestinationFile] exists and has the same content, [sourceFile] is deleted and move is assumed to be successful.
  *
  * This does not handle other exceptions, such as a file existing as a directory in the relative path.
  *

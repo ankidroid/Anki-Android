@@ -69,7 +69,7 @@ public class CardInfoModelTest extends RobolectricTest {
     }
 
     @Test
-    public void ensureFilteredCardIsMakredAsSuch() {
+    public void ensureFilteredCardIsMarkedAsSuch() {
         // differs from Anki Desktop - provides date in 1700
         assertThat(mModel.getDue(), is("(filtered)"));
     }

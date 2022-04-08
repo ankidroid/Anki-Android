@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="davidallison">
     <words>
+      <w>Aedict</w>
       <w>Affero</w>
       <w>Beolingus</w>
       <w>CROWDIN</w>
@@ -32,6 +33,7 @@
       <w>dedupe</w>
       <w>delim</w>
       <w>dups</w>
+      <w>enricher</w>
       <w>envvar</w>
       <w>eszett</w>
       <w>filepaths</w>
@@ -43,17 +45,21 @@
       <w>glosbe</w>
       <w>janky</w>
       <w>keybind</w>
+      <w>ktlint</w>
       <w>lateinit</w>
+      <w>linebreaks</w>
       <w>mbit</w>
       <w>mins</w>
       <w>misclick</w>
       <w>misclicks</w>
       <w>munge</w>
       <w>mutliselect</w>
+      <w>numpad</w>
       <w>onboarding</w>
       <w>optin</w>
       <w>overdueness</w>
       <w>pcent</w>
+      <w>polytonic</w>
       <w>poweredbeolingus</w>
       <w>poweredglosbe</w>
       <w>quuux</w>
@@ -61,9 +67,13 @@
       <w>relativize</w>
       <w>replayq</w>
       <w>rerender</w>
+      <w>resync</w>
       <w>servicelayer</w>
       <w>spacebar</w>
       <w>studyoptions</w>
+      <w>subdir</w>
+      <w>subdirs</w>
+      <w>subscreen</w>
       <w>subsubdeck</w>
       <w>summ</w>
       <w>tempfile</w>
@@ -72,18 +82,23 @@
       <w>testfile</w>
       <w>testfiles</w>
       <w>testpath</w>
+      <w>thirdpartyapps</w>
       <w>tmpzip</w>
       <w>topbar</w>
+      <w>typealiases</w>
       <w>typeblurtext</w>
       <w>typeentertext</w>
       <w>typefocus</w>
       <w>uint</w>
       <w>unbury</w>
+      <w>unburying</w>
+      <w>undeletable</w>
       <w>unflag</w>
       <w>unmark</w>
       <w>unsuspend</w>
       <w>untriggered</w>
       <w>userbase</w>
+      <w>walkthrough</w>
     </words>
   </dictionary>
 </component>

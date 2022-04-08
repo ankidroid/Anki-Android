@@ -19,25 +19,25 @@ package com.ichi2.anki
 
 import android.os.SystemClock
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.HandlerUtils
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.closeTo
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.*
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTasks
 
 @RunWith(AndroidJUnit4::class)
+@Config(application = EmptyApplication::class)
 class HandlerUtilsTest {
 
     @Test
     fun checkHandlerFunctionExecution() {
         var value = false
-        HandlerUtils.executeFunctionUsingHandler {
-            value = true
-        }
+        HandlerUtils.executeFunctionUsingHandler { value = true }
         runUiThreadTasksIncludingDelayedTasks()
-        assertThat("Function was executed", value, `is`(true))
+        assertThat("Function was executed", value, equalTo(true))
     }
 
     @Test
@@ -45,15 +45,10 @@ class HandlerUtilsTest {
         var value = false
         val initialTime = SystemClock.uptimeMillis()
 
-        HandlerUtils.executeFunctionWithDelay(
-            {
-                value = true
-            },
-            1000
-        )
+        HandlerUtils.executeFunctionWithDelay(1000) { value = true }
 
         runUiThreadTasksIncludingDelayedTasks()
-        assertThat("Function was executed", value, `is`(true))
+        assertThat("Function was executed", value, equalTo(true))
 
         val duration = SystemClock.uptimeMillis() - initialTime
 

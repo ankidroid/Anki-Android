@@ -33,6 +33,8 @@
  *
  */
 
+@file:Suppress("SpellCheckingInspection") // converted from AOSP - some typos
+
 package com.ichi2.anki.lint.utils
 
 /**

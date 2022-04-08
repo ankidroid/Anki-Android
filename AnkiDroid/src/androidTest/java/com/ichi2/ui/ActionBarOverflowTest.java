@@ -49,7 +49,7 @@ public class ActionBarOverflowTest {
         } catch (Error e) {
             fail("See discussion on #5806\n" +
                     "https://developer.android.com/distribute/best-practices/develop/restrictions-non-sdk-interfaces\n" +
-                    "Once this throws, errors are being thrown on a currently graylisted method");
+                    "Once this throws, errors are being thrown on a currently greylisted method");
         }
     }
 
