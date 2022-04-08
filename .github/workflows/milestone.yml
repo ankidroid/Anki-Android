@@ -1,13 +1,17 @@
 name: PR Milestone
 
 on:
-  pull_request:
+  pull_request_target:
     types: [ closed ]
 
 jobs:
   milestone:
     if: ${{ github.event.pull_request.merged == true && github.event.pull_request.milestone == null }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
     steps:
     - uses: actions/checkout@v2
     - name: Add to milestone
