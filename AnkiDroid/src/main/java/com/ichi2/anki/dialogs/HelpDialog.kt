@@ -35,7 +35,6 @@ import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
-import com.ichi2.utils.KotlinCleanup
 import org.acra.ACRA
 import org.acra.config.DialogConfigurationBuilder
 import org.acra.config.LimiterData
@@ -204,14 +203,14 @@ object HelpDialog {
 
     class FunctionItem : RecursivePictureMenu.Item, Parcelable {
 
-        private lateinit var mFunc: ActivityConsumer
+        private val mFunc: ActivityConsumer
 
         constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?, func: ActivityConsumer) : super(titleRes, iconRes, analyticsRes) {
-                mFunc = func
+            mFunc = func
         }
 
         override fun onClicked(activity: AnkiActivity) {
-            mFunc!!.consume(activity)
+            mFunc.consume(activity)
         }
 
         private constructor(`in`: Parcel) : super(`in`) {
