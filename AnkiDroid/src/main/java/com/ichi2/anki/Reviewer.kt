@@ -80,7 +80,6 @@ import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
-import com.ichi2.utils.HandlerUtils.postOnNewHandler
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
@@ -666,34 +665,11 @@ open class Reviewer : AbstractFlashcardViewer() {
             flag_icon.icon.mutate().alpha = alpha
         }
 
-        // Undo button
-        @DrawableRes val undoIconId: Int
-        val undoEnabled: Boolean
-        if (mShowWhiteboard && whiteboard != null && whiteboard!!.isUndoModeActive) {
-            // Whiteboard is here and strokes have been added at some point
-            undoIconId = R.drawable.eraser
-            undoEnabled = !whiteboard!!.undoEmpty()
-        } else {
-            // We can arrive here even if `mShowWhiteboard &&
-            // mWhiteboard != null` if no stroke had ever been made
-            undoIconId = R.drawable.ic_undo_white
-            undoEnabled = colIsOpen() && col.undoAvailable()
-        }
-        val alpha_undo = if (undoEnabled && super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
-        val undoIcon = menu.findItem(R.id.action_undo)
-        undoIcon.setIcon(undoIconId)
-        undoIcon.setEnabled(undoEnabled).icon.mutate().alpha = alpha_undo
-        undoIcon.actionView.isEnabled = undoEnabled
-        if (colIsOpen()) { // Required mostly because there are tests where `col` is null
-            undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
-        }
-        if (undoEnabled) {
-            mOnboarding.onUndoButtonEnabled()
-        }
         val toggle_whiteboard_icon = menu.findItem(R.id.action_toggle_whiteboard)
         val hide_whiteboard_icon = menu.findItem(R.id.action_hide_whiteboard)
         val change_pen_color_icon = menu.findItem(R.id.action_change_whiteboard_pen_color)
         // White board button
+        val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
         if (mPrefWhiteboard) {
             // Configure the whiteboard related items in the action bar
             toggle_whiteboard_icon.setTitle(R.string.disable_whiteboard)
@@ -711,17 +687,15 @@ open class Reviewer : AbstractFlashcardViewer() {
             if (!mActionButtons.status.whiteboardPenColorIsDisabled()) {
                 change_pen_color_icon.isVisible = true
             }
-            val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
+
             val whiteboardColorPaletteIcon = VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, null)!!.mutate()
             if (mShowWhiteboard) {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
-                hide_whiteboard_icon.icon = whiteboardIcon
                 hide_whiteboard_icon.setTitle(R.string.hide_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 change_pen_color_icon.icon = whiteboardColorPaletteIcon
             } else {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
-                hide_whiteboard_icon.icon = whiteboardIcon
                 hide_whiteboard_icon.setTitle(R.string.show_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 change_pen_color_icon.isEnabled = false
@@ -760,17 +734,42 @@ open class Reviewer : AbstractFlashcardViewer() {
         bury_icon.icon.mutate().alpha = alpha
         suspend_icon.icon.mutate().alpha = alpha
         setupSubMenu(menu, R.id.action_schedule, ScheduleProvider(this))
-        mOnboarding.onCreate()
         setMenuIconsColor(menu)
+        hide_whiteboard_icon.icon = whiteboardIcon
+
+        // Undo button
+        @DrawableRes val undoIconId: Int
+        val undoEnabled: Boolean
+        if (mShowWhiteboard && whiteboard != null && whiteboard!!.isUndoModeActive) {
+            // Whiteboard is here and strokes have been added at some point
+            undoIconId = R.drawable.eraser
+            undoEnabled = !whiteboard!!.undoEmpty()
+        } else {
+            // We can arrive here even if `mShowWhiteboard &&
+            // mWhiteboard != null` if no stroke had ever been made
+            undoIconId = R.drawable.ic_undo_white
+            undoEnabled = colIsOpen() && col.undoAvailable()
+        }
+        val alpha_undo = if (undoEnabled && super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
+        val undoIcon = menu.findItem(R.id.action_undo)
+        undoIcon.setIcon(undoIconId)
+        undoIcon.setEnabled(undoEnabled).icon.mutate().alpha = alpha_undo
+        undoIcon.actionView.isEnabled = undoEnabled
+        if (colIsOpen()) { // Required mostly because there are tests where `col` is null
+            undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+        }
+        if (undoEnabled) {
+            mOnboarding.onUndoButtonEnabled()
+        }
+
+        mOnboarding.onCreate()
         return super.onCreateOptionsMenu(menu)
     }
 
     private fun setMenuIconsColor(menu: Menu) {
-        postOnNewHandler {
-            for (i in 0 until menu.size()) {
-                val menuItem = menu.getItem(i)
-                shouldUseDefaultColor(menuItem)
-            }
+        for (i in 0 until menu.size()) {
+            val menuItem = menu.getItem(i)
+            shouldUseDefaultColor(menuItem)
         }
     }
 
