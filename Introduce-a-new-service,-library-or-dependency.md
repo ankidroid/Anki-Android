@@ -8,7 +8,7 @@ First, let me list the services that we use today. That may illustrate the choic
 
 * Android studio, java and kotlin compiler, for compilation
 * We use [gradle](https://github.com/ankidroid/Anki-Android/blob/main/gradlew) as a build system.
-* We use [https://opencollective.com/ankidroid] for donations I suspect that I may even forgot some tools here and there.
+* We use [open collective](https://opencollective.com/ankidroid) for donations I suspect that I may even forgot some tools here and there.
 * We use [crowdin](https://crowdin.com/project/ankidroid) for translation
 * We use github to host code, host our wiki, and a lot of automated [actions](https://github.com/ankidroid/Anki-Android/tree/main/.github/workflows) such as automated testing, linting, adding milestone to PR, publishing an update, updating translation from, hosting various alpha binaries.
 * We use [codecove](https://codecov.io/gh/ankidroid/Anki-Android/) for code coverage by test.
