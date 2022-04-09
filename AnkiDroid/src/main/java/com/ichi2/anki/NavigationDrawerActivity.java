@@ -359,6 +359,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public boolean onNavigationItemSelected(final MenuItem item) {
         // Don't do anything if user selects already selected position
         if (item.isChecked()) {
+            closeDrawer();
             return true;
         }
 
