@@ -169,7 +169,7 @@ public class AnkiDroidApp extends Application {
     }
 
 
-    public static boolean isAcraEnabled(@SuppressLint("UnknownNullness") Context context, boolean defaultValue) {
+    public static boolean isAcraEnabled(Context context, boolean defaultValue) {
         if (!getSharedPrefs(context).contains(ACRA.PREF_DISABLE_ACRA)) {
             // we shouldn't use defaultValue below, as it would be inverted which complicated understanding.
             Timber.w("No default value for '%s'", ACRA.PREF_DISABLE_ACRA);
