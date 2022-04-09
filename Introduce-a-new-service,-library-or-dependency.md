@@ -55,28 +55,28 @@ However, some smaller services, such as hosting crash report, can be self-hosted
 
 This section concentrates specifically on the case of adding a new library/dependency in AnkiDroid.
 
-## Licence
+### Licence
 
 AnkiDroid is under GPL. This licence can incorporate codes using a lot of other licences, however, we still must be sure that we only incorporate code we are legally allowed to incorporate.
 
-## Fixed version
+### Fixed version
 
 There as been a few examples of maintainers volunterally breaking their code with an updaet. It is safer if we can access the code from a source that allows us to select the version number we require. While it's not perfect safety, at least, we get an idea of which version of the code we run - as long as the package manager is honest.
 
-## Easy to add/update with our tooling systems
+### Easy to add/update with our tooling systems
 
 If a dependency can directly be incorporated with gradle, that's perfect. If it requires new tooling (e.g. a svelte compiler), we will not want it into ankidroid repository. However, it can be added to another repository that we then incorporate as a dependency. If the library is simple but not available (e.g. we had the case with a CSV parser), it is also an option to port it manually in Kotlin.
 
-## Application size
+### Application size
 
 A lot of our userbase has small smartphone. We will almost certainly reject a library that considerably increase the application size. Note however that the actual size is hard to know until it is actually measured, because AnkiDroid has tooling that scraps unused part of the codebase when packaging it. In particular, any big file that can not be compressed are not acceptable. This may include bitmap pictures, videos, audio files, or trained ML models.
 
-## How buggy is it
+### How buggy is it
 
 Sometime we must accept buggy code when there is no alternative. As an example, MathJax 3 seems to render improperly some mathematics equation that were rendered properly with MathJax2. However, Anki uses MJ3 and MJ 2 is not developed anymore. While rendering bugs are frustrating for users using it, there is still no alternative in this space, especially since many anki cards are written for mathjax and some uses MJ 3 features. Furthermore, rendering bugs don't leak or destry user data
 
 However, in general, we prefer dependencies that are not buggy. That means in particular, dependencies that are used by a lot of product, which would have detected and reported those bugs. That also means that there is a ticket/issue system so that we can check how the dependency deals with bugs.
 
-## Is it maintained
+### Is it maintained
 
 Some code may never change. E.g. it's probable that a CSV parser do not have to be updated regularly. However, a library that adds a user interface elements (onboarding slides, new button) may need to be updated when the API it uses gets deprecated. A library may have a bug that needs to be corrected. So we strongly prefer a library that has shown to be maintained by its creator or community.
