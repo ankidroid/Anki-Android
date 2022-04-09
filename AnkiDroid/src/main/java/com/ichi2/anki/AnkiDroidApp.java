@@ -168,7 +168,6 @@ public class AnkiDroidApp extends Application {
         sInstance = null;
     }
 
-
     public static boolean isAcraEnabled(Context context, boolean defaultValue) {
         if (!getSharedPrefs(context).contains(ACRA.PREF_DISABLE_ACRA)) {
             // we shouldn't use defaultValue below, as it would be inverted which complicated understanding.
