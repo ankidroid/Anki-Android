@@ -134,9 +134,6 @@ class MyAccount : AnkiActivity() {
         inputMethodManager.hideSoftInputFromWindow(mUsername.windowToken, 0)
         val username = mUsername.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
         val password = mPassword.text.toString()
-        if (username.isEmpty() || password.isEmpty()) {
-            showSimpleSnackbar(this, R.string.invalid_username_password, true)
-        }
         if (username.isEmpty()) {
             mUsername.error = getString(R.string.email_id_empty)
             mUsername.requestFocus()
