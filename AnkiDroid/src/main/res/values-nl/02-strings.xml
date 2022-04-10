@@ -343,7 +343,7 @@
     <string name="before_text">HTML voor de selectie</string>
     <string name="after_text">HTML na de selectie</string>
     <string name="add_toolbar_item">Werkbalkitem aanmaken</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="edit_toolbar_item">Werkbalkitem bewerken</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Werkbalkitem verwijderen?</string>
     <string name="note_editor_paste_too_large">De afbeelding is te groot om te plakken, gelieve de afbeelding manueel in te voegen</string>
@@ -402,8 +402,8 @@
     <string name="scoped_storage_migrate">Migreren</string>
     <string name="search_card_js_api_no_results">Zoekopdracht heeft geen resultaten opgeleverd</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="not_valid_js_addon">%s is geen geldig javascript addon pakket</string>
+    <string name="could_not_create_dir">Kon de map %s niet creëeren </string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
