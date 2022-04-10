@@ -53,6 +53,11 @@ class Directory private constructor(val directory: File) {
     override fun toString(): String = directory.canonicalPath
     companion object {
         /**
+         * Returns a [Directory] from [path] if `Directory` precondition holds; i.e. [path] is an existing directory.
+         * Otherwise returns `null`.
+         */
+        fun createInstance(path: String): Directory? = createInstance(File(path))
+        /**
          * Returns a [Directory] from [file] if `Directory` precondition holds; i.e. [file] is an existing directory.
          * Otherwise returns `null`.
          */
