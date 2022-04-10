@@ -20,6 +20,7 @@ import android.os.Bundle
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
+import com.ichi2.utils.ImportUtils
 import timber.log.Timber
 import java.net.URLDecoder
 
@@ -41,7 +42,7 @@ class ImportDialog : AsyncDialogFragment() {
             DIALOG_IMPORT_ADD_CONFIRM -> {
                 val displayFileName = convertToDisplayName(dialogMessage)
                 builder.title(res.getString(R.string.import_title))
-                    .content(res.getString(R.string.import_message_add_confirm, filenameFromPath(displayFileName)))
+                    .content(res.getString(R.string.import_message_add_confirm, ImportUtils.fileNameFromPath(displayFileName)))
                     .positiveText(R.string.import_message_add)
                     .negativeText(R.string.dialog_cancel)
                     .onPositive { _: MaterialDialog?, _: DialogAction? ->
@@ -108,10 +109,6 @@ class ImportDialog : AsyncDialogFragment() {
             args.putString("dialogMessage", dialogMessage)
             f.arguments = args
             return f
-        }
-
-        private fun filenameFromPath(path: String): String {
-            return path.split("/").toTypedArray()[path.split("/").toTypedArray().size - 1]
         }
     }
 }

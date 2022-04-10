@@ -75,6 +75,11 @@ object ImportUtils {
     }
 
     @JvmStatic
+    fun fileNameFromPath(path: String): String {
+        return path.split("/").last()
+    }
+
+    @JvmStatic
     fun showImportUnsuccessfulDialog(
         activity: Activity,
         errorMessage: String?,
