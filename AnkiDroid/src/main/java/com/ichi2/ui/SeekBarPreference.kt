@@ -19,17 +19,12 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.annotation.StringRes
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.utils.KotlinCleanup
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 see: SeekBarPreferenceCompat
-@KotlinCleanup("autolint")
 class SeekBarPreference(context: Context, attrs: AttributeSet) : android.preference.DialogPreference(context, attrs), OnSeekBarChangeListener {
-    @KotlinCleanup("lateinit, not null")
-    private var mSeekLine: LinearLayout? = null
-    @KotlinCleanup("lateinit, not null")
-    private var mSeekBar: SeekBar? = null
-    @KotlinCleanup("lateinit, not null")
-    private var mValueText: TextView? = null
+    private lateinit var mSeekLine: LinearLayout
+    private lateinit var mSeekBar: SeekBar
+    private lateinit var mValueText: TextView
     private val mSuffix: String?
     private val mDefault: Int
     private val mMax: Int
@@ -49,8 +44,8 @@ class SeekBarPreference(context: Context, attrs: AttributeSet) : android.prefere
         mMax = attrs.getAttributeIntValue(androidns, "max", 100)
         mMin = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0)
         mInterval = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1)
-        mXLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0)
-        mYLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "ylabel", 0)
+        mXLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xLabel", 0)
+        mYLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "yLabel", 0)
     }
 
     override fun onCreateDialogView(): View {
@@ -58,15 +53,15 @@ class SeekBarPreference(context: Context, attrs: AttributeSet) : android.prefere
         layout.orientation = LinearLayout.VERTICAL
         layout.setPadding(6, 6, 6, 6)
         mValueText = FixedTextView(context)
-        mValueText!!.setGravity(Gravity.CENTER_HORIZONTAL)
-        mValueText!!.setTextSize(32f)
+        mValueText.gravity = Gravity.CENTER_HORIZONTAL
+        mValueText.textSize = 32f
         val params = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         layout.addView(mValueText, params)
         mSeekBar = SeekBar(context)
-        mSeekBar!!.setOnSeekBarChangeListener(this)
+        mSeekBar.setOnSeekBarChangeListener(this)
         layout.addView(
             mSeekBar,
             LinearLayout.LayoutParams(
@@ -75,31 +70,31 @@ class SeekBarPreference(context: Context, attrs: AttributeSet) : android.prefere
             )
         )
         if (mXLabel != 0 && mYLabel != 0) {
-            val params_seekbar = LinearLayout.LayoutParams(
+            val paramsSeekbar = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-            params_seekbar.setMargins(0, 12, 0, 0)
+            paramsSeekbar.setMargins(0, 12, 0, 0)
             mSeekLine = LinearLayout(context)
-            mSeekLine!!.orientation = LinearLayout.HORIZONTAL
-            mSeekLine!!.setPadding(6, 6, 6, 6)
+            mSeekLine.orientation = LinearLayout.HORIZONTAL
+            mSeekLine.setPadding(6, 6, 6, 6)
             addLabelsBelowSeekBar()
-            layout.addView(mSeekLine, params_seekbar)
+            layout.addView(mSeekLine, paramsSeekbar)
         }
         if (shouldPersist()) {
             mValue = getPersistedInt(mDefault)
         }
-        mSeekBar!!.max = (mMax - mMin) / mInterval
-        mSeekBar!!.progress = (mValue - mMin) / mInterval
+        mSeekBar.max = (mMax - mMin) / mInterval
+        mSeekBar.progress = (mValue - mMin) / mInterval
         val t = mValue.toString()
-        mValueText!!.setText(if (mSuffix == null) t else t + mSuffix)
+        mValueText.text = if (mSuffix == null) t else t + mSuffix
         return layout
     }
 
     override fun onBindDialogView(v: View) {
         super.onBindDialogView(v)
-        mSeekBar!!.max = (mMax - mMin) / mInterval
-        mSeekBar!!.progress = (mValue - mMin) / mInterval
+        mSeekBar.max = (mMax - mMin) / mInterval
+        mSeekBar.progress = (mValue - mMin) / mInterval
     }
 
     override fun onSetInitialValue(restore: Boolean, defaultValue: Any?) {
@@ -116,7 +111,7 @@ class SeekBarPreference(context: Context, attrs: AttributeSet) : android.prefere
         if (fromTouch) {
             mValue = value * mInterval + mMin
             val t = mValue.toString()
-            mValueText!!.text = if (mSuffix == null) t else t + mSuffix
+            mValueText.text = if (mSuffix == null) t else t + mSuffix
             onValueUpdated()
         }
     }
@@ -157,7 +152,7 @@ class SeekBarPreference(context: Context, attrs: AttributeSet) : android.prefere
             val textView: TextView = FixedTextView(context)
             textView.text = context.getString(labels[count])
             textView.gravity = Gravity.START
-            mSeekLine!!.addView(textView)
+            mSeekLine.addView(textView)
             if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_LTR) textView.layoutParams = if (count == 1) getLayoutParams(0.0f) else getLayoutParams(1.0f) else textView.layoutParams = if (count == 0) getLayoutParams(0.0f) else getLayoutParams(1.0f)
         }
     }
