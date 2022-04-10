@@ -25,28 +25,18 @@ class SeekBarPreference(context: Context, attrs: AttributeSet) : android.prefere
     private lateinit var mSeekLine: LinearLayout
     private lateinit var mSeekBar: SeekBar
     private lateinit var mValueText: TextView
-    private val mSuffix: String?
-    private val mDefault: Int
-    private val mMax: Int
-    private val mMin: Int
-    private val mInterval: Int
+    private val mSuffix: String? = attrs.getAttributeValue(androidns, "text")
+    private val mDefault: Int = attrs.getAttributeIntValue(androidns, "defaultValue", 0)
+    private val mMax: Int = attrs.getAttributeIntValue(androidns, "max", 100)
+    private val mMin: Int = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0)
+    private val mInterval: Int = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1)
     private var mValue = 0
 
     @StringRes
-    private val mXLabel: Int
+    private val mXLabel: Int = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xLabel", 0)
 
     @StringRes
-    private val mYLabel: Int
-
-    init {
-        mSuffix = attrs.getAttributeValue(androidns, "text")
-        mDefault = attrs.getAttributeIntValue(androidns, "defaultValue", 0)
-        mMax = attrs.getAttributeIntValue(androidns, "max", 100)
-        mMin = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0)
-        mInterval = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1)
-        mXLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xLabel", 0)
-        mYLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "yLabel", 0)
-    }
+    private val mYLabel: Int = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "yLabel", 0)
 
     override fun onCreateDialogView(): View {
         val layout = LinearLayout(context)
