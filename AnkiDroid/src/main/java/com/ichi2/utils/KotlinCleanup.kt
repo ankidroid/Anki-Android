@@ -23,5 +23,6 @@ package com.ichi2.utils
     AnnotationTarget.FIELD, AnnotationTarget.PROPERTY
 )
 @Retention(AnnotationRetention.SOURCE)
+@Repeatable
 @MustBeDocumented
 annotation class KotlinCleanup(val value: String)
