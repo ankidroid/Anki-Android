@@ -25,7 +25,6 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData
-import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 import java.io.File
 
@@ -94,9 +93,14 @@ object ScopedStorageService {
      * This directory is stored under [CollectionHelper.PREF_DECK_PATH] in SharedPreferences
      * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
      */
-    @NeedsTest("may want unit testing")
     fun isLegacyStorage(context: Context): Boolean {
-        val currentDirPath = CollectionHelper.getCurrentAnkiDroidDirectory(context)
+        return isLegacyStorage(CollectionHelper.getCurrentAnkiDroidDirectory(context), context)
+    }
+
+    /**
+     * @return `true` if [currentDirPath] is a Legacy Storage Directory.
+     */
+    fun isLegacyStorage(currentDirPath: String, context: Context): Boolean {
         val internalScopedDirPath = CollectionHelper.getAppSpecificInternalAnkiDroidDirectory(context)
         val currentDir = File(currentDirPath).canonicalFile
         val externalScopedDirs = CollectionHelper.getAppSpecificExternalDirectories(context).map { it.canonicalFile }
