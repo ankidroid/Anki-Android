@@ -324,10 +324,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return new BackupManager();
     }
 
-    private final ImportAddListener mImportAddListener = new ImportAddListener(this);
+    private ImportAddListener importAddListener(String importPath) {
+        return new ImportAddListener(this, importPath);
+    }
     private static class ImportAddListener extends TaskListenerWithContext<DeckPicker, String, Triple<AnkiPackageImporter, Boolean, String>> {
-        public ImportAddListener(DeckPicker deckPicker) {
+        private final String mImportPath;
+
+
+        public ImportAddListener(DeckPicker deckPicker, String importPath) {
             super(deckPicker);
+            mImportPath = importPath;
         }
 
         @Override
@@ -345,9 +351,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 AnkiPackageImporter imp = result.first;
                 deckPicker.showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
                 deckPicker.updateDeckList();
+                Uri cleanupUri = deckPicker.getDeckDownloadedUri(mImportPath);
+                Timber.i("Cleaning up %s", cleanupUri);
+                deckPicker.getBaseContext().getContentResolver().delete(cleanupUri, null, null);
             }
         }
-
 
         @Override
         public void actualOnPreExecute(@NonNull DeckPicker deckPicker) {
@@ -364,12 +372,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private ImportReplaceListener importReplaceListener() {
-        return new ImportReplaceListener(this);
+    private Uri getDeckDownloadedUri(String importPath) {
+        String filename = ImportUtils.fileNameFromPath(importPath);
+        return ImportUtils.getApkgDownloadUriFor(getBaseContext(), filename);
+    }
+
+    private ImportReplaceListener importReplaceListener(String importPath) {
+        return new ImportReplaceListener(this, importPath);
     }
     private static class ImportReplaceListener extends TaskListenerWithContext<DeckPicker, String, Computation<?>>{
-        public ImportReplaceListener(DeckPicker deckPicker) {
+        private final String mImportPath;
+
+
+        public ImportReplaceListener(DeckPicker deckPicker, String importPath) {
             super(deckPicker);
+            mImportPath = importPath;
         }
 
         @SuppressWarnings("unchecked")
@@ -382,6 +399,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Resources res = deckPicker.getResources();
             if (result.succeeded()) {
                 deckPicker.updateDeckList();
+                Uri cleanupUri = deckPicker.getDeckDownloadedUri(mImportPath);
+                Timber.i("Cleaning up %s", cleanupUri);
+                deckPicker.getBaseContext().getContentResolver().delete(cleanupUri, null, null);
             } else {
                 deckPicker.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
             }
@@ -1966,14 +1986,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public void importAdd(String importPath) {
         Timber.d("importAdd() for file %s", importPath);
-        TaskManager.launchCollectionTask(new CollectionTask.ImportAdd(importPath), mImportAddListener);
+        TaskManager.launchCollectionTask(new CollectionTask.ImportAdd(importPath), importAddListener(importPath));
     }
 
 
     // Callback to import a file -- replacing the existing collection
     @Override
     public void importReplace(String importPath) {
-        TaskManager.launchCollectionTask(new CollectionTask.ImportReplace(importPath), importReplaceListener());
+        TaskManager.launchCollectionTask(new CollectionTask.ImportReplace(importPath), importReplaceListener(importPath));
     }
 
 
