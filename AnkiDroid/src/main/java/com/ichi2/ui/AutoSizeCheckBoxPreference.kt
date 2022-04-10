@@ -20,34 +20,34 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ViewGroupUtils.getAllChildren
 
 // extending androidx.preference didn't work:
 // java.lang.ClassCastException: com.ichi2.ui.AutoSizeCheckBoxPreference cannot be cast to android.preference.Preference
-@Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-@KotlinCleanup("auto-lint (except unused class)")
+// TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
+
+@Suppress("deprecation")
 class AutoSizeCheckBoxPreference : android.preference.CheckBoxPreference {
     @Suppress("unused") constructor(context: Context?) : super(context) {}
     @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
     @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
     @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {}
 
+    @Deprecated("Deprecated in Java")
     override fun onBindView(view: View) {
         makeMultiline(view)
         super.onBindView(view)
     }
 
-    protected fun makeMultiline(view: View) {
+    private fun makeMultiline(view: View) {
         // https://stackoverflow.com/q/4267939/13121290
         if (view is ViewGroup) {
             for (child in getAllChildren(view)) {
                 makeMultiline(child)
             }
         } else if (view is TextView) {
-            val t = view
-            t.isSingleLine = false
-            t.ellipsize = null
+            view.isSingleLine = false
+            view.ellipsize = null
         }
     }
 }
