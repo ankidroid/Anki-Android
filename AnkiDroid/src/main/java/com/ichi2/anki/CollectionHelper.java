@@ -349,6 +349,15 @@ public class CollectionHelper {
 
 
     /**
+     * @return Returns an array of {@link File}s reflecting the directories that AnkiDroid can access without storage permissions
+     * @see android.content.Context#getExternalFilesDirs(String)
+     */
+    @NonNull
+    public static File[] getAppSpecificExternalDirectories(@NonNull Context context) {
+        return context.getExternalFilesDirs(null);
+    }
+
+    /**
      * Returns the absolute path to the private AnkiDroid directory under the app-specific, internal storage directory.
      * <p>
      * AnkiDroid can access this directory without permissions, even under Scoped Storage
