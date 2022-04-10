@@ -22,11 +22,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Message
 import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
+import androidx.core.content.FileProvider
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
@@ -64,12 +66,28 @@ object ImportUtils {
     }
 
     @JvmStatic
-    fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
+    fun getApkgDownloadUriFor(context: Context, filename: String): Uri {
+        return FileProvider.getUriForFile(
+            context,
+            context.applicationContext?.packageName + ".apkgfileprovider",
+            File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename)
+        )
+    }
+
+    @JvmStatic
+    fun showImportUnsuccessfulDialog(
+        activity: Activity,
+        errorMessage: String?,
+        exitActivity: Boolean
+    ) {
         FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
     }
 
     fun isCollectionPackage(filename: String?): Boolean {
-        return filename != null && (filename.lowercase(Locale.ROOT).endsWith(".colpkg") || "collection.apkg" == filename)
+        return filename != null && (
+            filename.lowercase(Locale.ROOT)
+                .endsWith(".colpkg") || "collection.apkg" == filename
+            )
     }
 
     /** @return Whether the file is either a deck, or a collection package */

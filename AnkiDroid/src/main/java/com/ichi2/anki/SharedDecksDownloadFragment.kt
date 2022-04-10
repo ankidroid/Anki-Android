@@ -32,13 +32,11 @@ import android.webkit.URLUtil
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
-import java.io.File
 import java.net.URLConnection
 import kotlin.math.abs
 
@@ -376,13 +374,7 @@ class SharedDecksDownloadFragment : Fragment() {
         val fileIntent = Intent(context, IntentHandler::class.java)
         fileIntent.action = Intent.ACTION_VIEW
 
-        val fileUri = context?.let {
-            FileProvider.getUriForFile(
-                it,
-                it.applicationContext?.packageName + ".apkgfileprovider",
-                File(it.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), mFileName.toString())
-            )
-        }
+        val fileUri = context?.let { ImportUtils.getApkgDownloadUriFor(it, mFileName.toString()) }
         Timber.d("File URI -> $fileUri")
         fileIntent.setDataAndType(fileUri, mimeType)
         fileIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
