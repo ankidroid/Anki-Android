@@ -25,6 +25,7 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData
+import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 import java.io.File
 
@@ -90,35 +91,33 @@ object ScopedStorageService {
 
     /**
      * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
-     * This directory is stored under [.PREF_DECK_PATH]
+     * This directory is stored under [CollectionHelper.PREF_DECK_PATH] in SharedPreferences
      * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
      */
+    @NeedsTest("may want unit testing")
     fun isLegacyStorage(context: Context): Boolean {
         val currentDirPath = CollectionHelper.getCurrentAnkiDroidDirectory(context)
-        val externalScopedDirPath = CollectionHelper.getAppSpecificExternalAnkiDroidDirectory(context)
         val internalScopedDirPath = CollectionHelper.getAppSpecificInternalAnkiDroidDirectory(context)
-        val currentDir = File(currentDirPath)
-        val externalScopedDirs = context.getExternalFilesDirs(null)
-        val internalScopedDir = File(internalScopedDirPath)
+        val currentDir = File(currentDirPath).canonicalFile
+        val externalScopedDirs = CollectionHelper.getAppSpecificExternalDirectories(context).map { it.canonicalFile }
+        val internalScopedDir = File(internalScopedDirPath).canonicalFile
         Timber.i(
-            "isLegacyStorage(): current dir: %s\nscoped external dir: %s\nscoped internal dir: %s",
-            currentDirPath, externalScopedDirPath, internalScopedDirPath
+            "isLegacyStorage(): current dir: %s\nscoped external dirs: %s\nscoped internal dir: %s",
+            currentDirPath, externalScopedDirs.joinToString(", "), internalScopedDirPath
         )
 
         // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
         // for app-specific external or internal storage - the only directories which will be accessible without
         // permissions under scoped storage
+        val scopedDirectories = externalScopedDirs + internalScopedDir
         var currentDirParent: File? = currentDir
         while (currentDirParent != null) {
-            if (currentDirParent.compareTo(internalScopedDir) == 0) {
-                return false
-            }
-            for (externalScopedDir in externalScopedDirs) {
-                if (currentDirParent.compareTo(externalScopedDir) == 0) {
+            for (scopedDir in scopedDirectories) {
+                if (currentDirParent.compareTo(scopedDir) == 0) {
                     return false
                 }
             }
-            currentDirParent = currentDirParent.parentFile
+            currentDirParent = currentDirParent.parentFile?.canonicalFile
         }
 
         // If the current AnkiDroid directory isn't a sub directory of the app-specific external or internal storage
