@@ -39,7 +39,7 @@ public class LanguageUtil {
 
     /** A list of all languages supported by AnkiDroid
      * Please modify LanguageUtilsTest if changing
-     * Please note 'yue' is special, it is 'yu' on crowdin, and mapped in import specially to 'yue' */
+     * Please note 'yue' is special, it is 'yu' on CrowdIn, and mapped in import specially to 'yue' */
     public static final String[] APP_LANGUAGES = {"af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
             "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",
             "gu-IN", "heb", "hi", "hr", "hu", "hy-AM", "ind", "is", "it", "ja", "jv", "ka", "kk", "km", "kn", "ko", "ku",

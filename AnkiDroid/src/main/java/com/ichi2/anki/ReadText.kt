@@ -47,13 +47,11 @@ object ReadText {
     private var mReviewer: WeakReference<Context>? = null
     private var mDid: Long = 0
     private var mOrd = 0
-    private var mQuestionAnswer: SoundSide? = null
+    var questionAnswer: SoundSide? = null
+        private set
     const val NO_TTS = "0"
     private val mTtsParams = Bundle()
     private var mCompletionListener: ReadTextListener? = null
-    fun getmQuestionAnswer(): SoundSide? {
-        return mQuestionAnswer
-    }
 
     private fun speak(text: String?, loc: String, queueMode: Int) {
         val result = textToSpeech!!.setLanguage(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(loc))
@@ -91,7 +89,7 @@ object ReadText {
     fun selectTts(text: String?, did: Long, ord: Int, qa: SoundSide?) {
         // TODO: Consolidate with ReadText.readCardSide
         textToSpeak = text
-        mQuestionAnswer = qa
+        questionAnswer = qa
         mDid = did
         mOrd = ord
         val res = mReviewer!!.get()!!.resources
@@ -122,7 +120,7 @@ object ReadText {
                 .itemsCallback { _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
                     val locale = dialogIds[which]
                     Timber.d("ReadText.selectTts() user chose locale '%s'", locale)
-                    MetaDB.storeLanguage(mReviewer!!.get(), mDid, mOrd, mQuestionAnswer, locale)
+                    MetaDB.storeLanguage(mReviewer!!.get(), mDid, mOrd, questionAnswer, locale)
                     if (locale != NO_TTS) {
                         speak(textToSpeak, locale, TextToSpeech.QUEUE_FLUSH)
                     } else {
@@ -193,7 +191,7 @@ object ReadText {
      */
     private fun textToSpeech(tag: TTSTag, did: Long, ord: Int, qa: SoundSide, queueMode: Int): Boolean {
         textToSpeak = tag.fieldText
-        mQuestionAnswer = qa
+        questionAnswer = qa
         mDid = did
         mOrd = ord
         Timber.d("ReadText.textToSpeech() method started for string '%s', locale '%s'", tag.fieldText, tag.lang)
@@ -206,7 +204,7 @@ object ReadText {
         }
         if (localeCode.isEmpty()) {
             // get the user's existing language preference
-            localeCode = getLanguage(mDid, mOrd, mQuestionAnswer)
+            localeCode = getLanguage(mDid, mOrd, questionAnswer)
             Timber.d("ReadText.textToSpeech() method found language choice '%s'", localeCode)
         }
         if (localeCode == NO_TTS) {
@@ -229,7 +227,7 @@ object ReadText {
                 false
             )
         }
-        selectTts(textToSpeak, mDid, mOrd, mQuestionAnswer)
+        selectTts(textToSpeak, mDid, mOrd, questionAnswer)
         return true
     }
 
@@ -262,7 +260,7 @@ object ReadText {
                 }
                 textToSpeech!!.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                     override fun onDone(arg0: String) {
-                        listener.onDone(getmQuestionAnswer())
+                        listener.onDone(questionAnswer)
                     }
 
                     @Deprecated("")

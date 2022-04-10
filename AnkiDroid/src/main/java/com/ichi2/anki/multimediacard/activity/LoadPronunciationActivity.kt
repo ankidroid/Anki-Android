@@ -37,6 +37,7 @@ import com.ichi2.async.Connection
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
+import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -51,12 +52,12 @@ import java.util.*
  * FIXME why isn't this extending AnkiActivity?
  */
 @KotlinCleanup("lateinit")
-open class LoadPronounciationActivity : Activity(), DialogInterface.OnCancelListener {
+open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListener {
     var source: String? = null
     private var mTranslationAddress: String? = null
     private var mPronunciationAddress: String? = null
     private var mMp3Address: String? = null
-    private var mActivity: LoadPronounciationActivity? = null
+    private var mActivity: LoadPronunciationActivity? = null
     private var mLanguageLister: LanguageListerBeolingus? = null
     private var mSpinnerFrom: Spinner? = null
     private var mMainLayout: LinearLayout? = null
@@ -99,7 +100,7 @@ open class LoadPronounciationActivity : Activity(), DialogInterface.OnCancelList
         val buttonLoadPronunciation = Button(this)
         buttonLoadPronunciation.text = gtxt(R.string.multimedia_editor_pron_load)
         mMainLayout!!.addView(buttonLoadPronunciation)
-        buttonLoadPronunciation.setOnClickListener(this@LoadPronounciationActivity::onLoadPronunciation)
+        buttonLoadPronunciation.setOnClickListener(this@LoadPronunciationActivity::onLoadPronunciation)
         val saveButton = Button(this)
         saveButton.text = "Save"
         saveButton.setOnClickListener { }
@@ -182,7 +183,7 @@ open class LoadPronounciationActivity : Activity(), DialogInterface.OnCancelList
             return fetchThroughHttp(address, "ISO-8859-1")
         }
 
-        override fun onPostExecute(result: String?) {
+        override fun onPostExecute(@Language("HTML") result: String?) {
             // Result here is the whole HTML of the page
             // this is passed to ask for address and differentiate, which of the
             // post has finished.
@@ -211,7 +212,7 @@ open class LoadPronounciationActivity : Activity(), DialogInterface.OnCancelList
     }
 
     @Suppress("deprecation") // #7108: AsyncTask
-    protected fun processPostFinished(post: BackgroundPost, result: String) {
+    protected fun processPostFinished(post: BackgroundPost, @Language("HTML") result: String) {
         if (mStopped) {
             return
         }
@@ -251,7 +252,7 @@ open class LoadPronounciationActivity : Activity(), DialogInterface.OnCancelList
         // We chekc if mp3 file could be downloaded and download it.
         if (post.address.contentEquals(mPronunciationAddress)) {
             // else here = pronunciation post returned;
-            mMp3Address = BeolingusParser.getMp3AddressFromPronounciation(result)
+            mMp3Address = BeolingusParser.getMp3AddressFromPronunciation(result)
             if (mMp3Address.contentEquals("no")) {
                 failNoPronunciation()
                 return

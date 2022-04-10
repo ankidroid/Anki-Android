@@ -40,7 +40,7 @@ class HelpDialogTest : RobolectricTest() {
 
     @Test
     @RunInBackground
-    fun testmenuSupportAnkiDroidDoesNotCrash() {
+    fun testMenuSupportAnkiDroidDoesNotCrash() {
         val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
         super.openDialogFragmentUsingActivity(dialog)
         val v = getRecyclerViewFor(dialog)

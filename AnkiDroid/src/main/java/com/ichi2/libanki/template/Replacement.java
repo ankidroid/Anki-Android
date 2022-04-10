@@ -69,11 +69,11 @@ public class Replacement extends ParsedNode {
         }
         Resources res = AnkiDroidApp.getAppResources();
         // random id
-        String domid = "hint" + txt.hashCode();
+        String domId = "hint" + txt.hashCode();
         return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
-                domid + "').style.display='block';_relinquishFocus();return false;\">" +
+                domId + "').style.display='block';_relinquishFocus();return false;\">" +
                 res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
-                domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
+                domId + "\" class=hint style=\"display: none\">" + txt + "</div>";
     }
 
 

@@ -46,6 +46,7 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.FunctionalInterfaces
+import com.ichi2.utils.KotlinCleanup
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -190,11 +191,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      * @param deck deck sent to the listener.
      */
     protected fun onDeckSelected(deck: SelectableDeck?) {
-        deckSelectionListener.onDeckSelected(deck)
+        deckSelectionListener!!.onDeckSelected(deck)
     }
 
-    private val deckSelectionListener: DeckSelectionListener
+    @KotlinCleanup("Use a factory here")
+    var deckSelectionListener: DeckSelectionListener? = null
         get() {
+            if (field != null) {
+                return field
+            }
             val activity: Activity = requireActivity()
             if (activity is DeckSelectionListener) {
                 return activity
@@ -322,7 +327,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
         }
 
-        protected constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
+        constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
 
         /** "All decks" comes first. Then usual deck name order.  */
         override fun compareTo(other: SelectableDeck): Int {

@@ -13,13 +13,13 @@ import static org.junit.Assert.*;
 public class ClipboardUtilTest {
 
     @Test
-    public void hasImageClipboardmanagernulltest() {
+    public void hasImageClipboardManagerNullTest() {
         ClipboardManager clipboardManager = null;
         assertFalse(hasImage(clipboardManager));
     }
 
     @Test
-    public void hasImageDescriptionnulltest() {
+    public void hasImageDescriptionNullTest() {
         ClipDescription clipDescription = null;
         assertFalse(hasImage(clipDescription));
     }

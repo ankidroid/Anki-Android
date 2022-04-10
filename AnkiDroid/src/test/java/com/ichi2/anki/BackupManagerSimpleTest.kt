@@ -102,7 +102,7 @@ class BackupManagerSimpleTest {
         assertNotNull(bm.getLastBackupDate(backups))
         assertEquals(expected, bm.getLastBackupDate(backups))
         assertEquals("getLastBackupDate() should return the last valid date", expected2, bm.getLastBackupDate(backups2))
-        assertNull("getLastBackupDate() should return null when all files aren't parseable", bm.getLastBackupDate(backups3))
+        assertNull("getLastBackupDate() should return null when all files aren't parsable", bm.getLastBackupDate(backups3))
     }
 
     @Test

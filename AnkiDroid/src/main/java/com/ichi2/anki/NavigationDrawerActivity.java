@@ -188,8 +188,8 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         intentReviewCards.setAction(Intent.ACTION_VIEW);
         intentReviewCards.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         ShortcutInfo reviewCardsShortcut = new ShortcutInfo.Builder(context, "reviewCardsShortcutId")
-                .setShortLabel(context.getString(R.string.card_info_reviews))
-                .setLongLabel(context.getString(R.string.card_info_reviews))
+                .setShortLabel(context.getString(R.string.studyoptions_start))
+                .setLongLabel(context.getString(R.string.studyoptions_start))
                 .setIcon(Icon.createWithResource(context, R.drawable.ankidroid_logo))
                 .setIntent(intentReviewCards)
                 .build();
@@ -359,6 +359,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public boolean onNavigationItemSelected(final MenuItem item) {
         // Don't do anything if user selects already selected position
         if (item.isChecked()) {
+            closeDrawer();
             return true;
         }
 

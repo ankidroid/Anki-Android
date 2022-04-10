@@ -24,11 +24,11 @@ object AnkiActivityUtils {
     @Suppress("unused")
     @KotlinCleanup("replace getDialogFragment with this")
     inline fun <reified T : DialogFragment> AnkiActivity.getDialogFragmentKt(): T? {
-        return supportFragmentManager.findFragmentByTag("dialog") as T?
+        return supportFragmentManager.findFragmentByTag(AnkiActivity.DIALOG_FRAGMENT_TAG) as T?
     }
 
     @JvmStatic
     fun getDialogFragment(activity: AnkiActivity): DialogFragment? {
-        return activity.supportFragmentManager.findFragmentByTag("dialog") as DialogFragment?
+        return activity.supportFragmentManager.findFragmentByTag(AnkiActivity.DIALOG_FRAGMENT_TAG) as DialogFragment?
     }
 }

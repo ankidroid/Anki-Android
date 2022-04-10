@@ -144,7 +144,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
         underTest.currentCard = addNoteUsingBasicModel("a", "").firstCard()
         underTest.handleUnicodeKeyPress('=')
-        assertThat("Bury Note should be calledd", underTest.buryNoteCalled)
+        assertThat("Bury Note should be called", underTest.buryNoteCalled)
     }
 
     @Test
@@ -306,7 +306,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
                 return key
             }
 
-        // useful to obtain unicode for kecode if run under AndroidJUnit4.
+        // useful to obtain unicode for keycode if run under AndroidJUnit4.
         fun handleAndroidKeyPress(keycode: Int) {
             try {
                 onKeyDown(keycode, createKeyEvent(ACTION_DOWN, keycode))

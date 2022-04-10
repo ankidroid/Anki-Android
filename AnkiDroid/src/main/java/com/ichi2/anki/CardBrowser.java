@@ -18,7 +18,6 @@
 
 package com.ichi2.anki;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -62,6 +61,7 @@ import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog;
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog;
 import com.ichi2.anki.dialogs.ConfirmationDialog;
 import com.ichi2.anki.dialogs.DeckSelectionDialog;
+import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck;
 import com.ichi2.anki.dialogs.IntegerDialog;
 import com.ichi2.anki.dialogs.RescheduleDialog;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
@@ -120,6 +120,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import androidx.fragment.app.Fragment;
 import kotlin.Unit;
 import timber.log.Timber;
 
@@ -212,6 +213,13 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open */
     private String mTempSearchQuery;
+
+    /**
+     * Argument key to add on change deck dialog,
+     * so it can be dismissed on activity recreation,
+     * since the cards are unselected when this happens
+     */
+    private static final String CHANGE_DECK_KEY = "CHANGE_DECK";
 
     ActivityResultLauncher<Intent> mOnEditCardActivityResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         Timber.d("onEditCardActivityResult: resultCode=%d", result.getResultCode());
@@ -538,15 +546,12 @@ public class CardBrowser extends NavigationDrawerActivity implements
 
     /**
      * Change Deck
-     * @param deckPosition NOT the did. The index in the DISPLAYED Deck list to change the decks to.
-     * grep: changeDeck
+     * @param did Id of the deck
      */
     @VisibleForTesting
-    void moveSelectedCardsToDeck(int deckPosition) {
+    void moveSelectedCardsToDeck(long did) {
         List<Long> ids = getSelectedCardIds();
-
-        Deck selectedDeck = getValidDecksForChangeDeck().get(deckPosition);
-
+        Deck selectedDeck = getCol().getDecks().get(did);
         try {
             //#5932 - can't be dynamic
             if (Decks.isDynamic(selectedDeck)) {
@@ -629,6 +634,17 @@ public class CardBrowser extends NavigationDrawerActivity implements
             searchCards();
         }
 
+        // Selected cards aren't restored on activity recreation,
+        // so it is necessary to dismiss the change deck dialog
+        Fragment dialogFragment = getSupportFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG);
+        if (dialogFragment instanceof DeckSelectionDialog) {
+            DeckSelectionDialog deckDialog = (DeckSelectionDialog) dialogFragment;
+
+            if (deckDialog.getArguments().getBoolean(CHANGE_DECK_KEY, false)) {
+                Timber.d("onCreate(): Change deck dialog dismissed");
+                deckDialog.dismiss();
+            }
+        }
         mOnboarding.onCreate();
     }
 
@@ -1441,29 +1457,31 @@ public class CardBrowser extends NavigationDrawerActivity implements
             rescheduleCardHandler());
     }
 
+    public DeckSelectionDialog getChangeDeckDialog(ArrayList<SelectableDeck> selectableDecks) {
+        DeckSelectionDialog dialog = DeckSelectionDialog.newInstance(
+                getString(R.string.move_all_to_deck),
+                null,
+                false,
+                selectableDecks
+        );
+        // Add change deck argument so the dialog can be dismissed
+        // after activity recreation, since the selected cards will be gone with it
+        dialog.getArguments().putBoolean(CHANGE_DECK_KEY, true);
+        dialog.setDeckSelectionListener(deck -> moveSelectedCardsToDeck(deck.getDeckId()));
+        return dialog;
+    }
 
     private void showChangeDeckDialog() {
         if (!hasSelectedCards()) {
             Timber.i("Not showing Change Deck - No Cards");
             return;
         }
-
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-        builderSingle.setTitle(getString(R.string.move_all_to_deck));
-
-        //WARNING: changeDeck depends on this index, so any changes should be reflected there.
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.dropdown_deck_item);
-        for (Deck deck : getValidDecksForChangeDeck()) {
-            try {
-                arrayAdapter.add(deck.getString("name"));
-            } catch (JSONException e) {
-                Timber.w(e);
-            }
+        ArrayList<SelectableDeck> selectableDecks = new ArrayList<>();
+        for (Deck deck: getValidDecksForChangeDeck()) {
+            selectableDecks.add(new SelectableDeck(deck));
         }
-
-        builderSingle.setNegativeButton(getString(R.string.dialog_cancel), (dialog, which) -> dialog.dismiss());
-        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> moveSelectedCardsToDeck(which));
-        builderSingle.show();
+        DeckSelectionDialog dialog = getChangeDeckDialog(selectableDecks);
+        showDialogFragment(dialog);
     }
 
 
@@ -2252,7 +2270,7 @@ public class CardBrowser extends NavigationDrawerActivity implements
                     }
                 browser.hideProgressBar();
                 browser.mCardsAdapter.notifyDataSetChanged();
-                Timber.d("Completed doInBackgroundRenderBrowserQA Successfuly");
+                Timber.d("Completed doInBackgroundRenderBrowserQA Successfully");
             } else {
                 // Might want to do something more proactive here like show a message box?
                 Timber.e("doInBackgroundRenderBrowserQA was not successful... continuing anyway");
@@ -2353,11 +2371,11 @@ public class CardBrowser extends NavigationDrawerActivity implements
                 // > com.ichi2.anki.exception.ManuallyReportedException: Useless onScroll call, with size 0 firstVisibleItem 0,
                 // > lastVisibleItem 0 and visibleItemCount 0.
 
-                // This change ensure that we log more specifically case where #8821 could have occured. That is, there are cards but we
+                // This change ensure that we log more specifically case where #8821 could have occurred. That is, there are cards but we
                 // are asked to display nothing.
 
                 // Note that this is not a bug. The fact that `visibleItemCount` is equal to 0 is actually authorized by the method we
-                // override and mentionned in the javadoc. It perfectly makes sens to get this order, since it can be used to know that we
+                // override and mentioned in the javadoc. It perfectly makes sens to get this order, since it can be used to know that we
                 // can delete some elements from the cache for example, since nothing is displayed.
 
                 // It would be interesting to know how often it occurs, but it is not a bug.
@@ -3019,18 +3037,6 @@ public class CardBrowser extends NavigationDrawerActivity implements
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     boolean hasCheckedCardAtPosition(int i) {
         return mCheckedCards.contains(getCards().get(i));
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public int getChangeDeckPositionFromId(long deckId) {
-        List<Deck> decks = getValidDecksForChangeDeck();
-        for (int i = 0; i < decks.size(); i++) {
-            Deck deck = decks.get(i);
-            if (deck.getLong("id") == deckId) {
-                return i;
-            }
-        }
-        throw new IllegalStateException(String.format(Locale.US, "Deck %d not found", deckId));
     }
 
 
