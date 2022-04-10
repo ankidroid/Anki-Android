@@ -26,6 +26,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.edit
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -37,7 +38,6 @@ import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.lang.Exception
 import java.net.UnknownHostException
@@ -45,21 +45,18 @@ import java.net.UnknownHostException
 class MyAccount : AnkiActivity() {
     private lateinit var mLoginToMyAccountView: View
     private lateinit var mLoggedIntoMyAccountView: View
-    @KotlinCleanup("lateinit")
-    private var mUsername: EditText? = null
+    private lateinit var mUsername: EditText
     private lateinit var mPassword: TextInputEditField
-    @KotlinCleanup("lateinit")
-    private var mUsernameLoggedIn: TextView? = null
+    private lateinit var mUsernameLoggedIn: TextView
     private var mProgressDialog: MaterialDialog? = null
     var toolbar: Toolbar? = null
     private lateinit var mPasswordLayout: TextInputLayout
-    @KotlinCleanup("lateinit")
-    private var mAnkidroidLogo: ImageView? = null
+    private lateinit var mAnkidroidLogo: ImageView
     private fun switchToState(newState: Int) {
         when (newState) {
             STATE_LOGGED_IN -> {
                 val username = AnkiDroidApp.getSharedPrefs(baseContext).getString("username", "")
-                mUsernameLoggedIn!!.text = username
+                mUsernameLoggedIn.text = username
                 toolbar = mLoggedIntoMyAccountView.findViewById(R.id.toolbar)
                 if (toolbar != null) {
                     toolbar!!.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
@@ -80,7 +77,6 @@ class MyAccount : AnkiActivity() {
         supportInvalidateOptionsMenu() // Needed?
     }
 
-    @KotlinCleanup("Use .isNotEmpty()")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -93,57 +89,54 @@ class MyAccount : AnkiActivity() {
         mayOpenUrl(Uri.parse(resources.getString(R.string.register_url)))
         initAllContentViews()
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-        if (preferences.getString("hkey", "")!!.length > 0) {
+        if (preferences.getString("hkey", "")!!.isNotEmpty()) {
             switchToState(STATE_LOGGED_IN)
         } else {
             switchToState(STATE_LOG_IN)
         }
         if (isScreenSmall && this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mAnkidroidLogo!!.visibility = View.GONE
+            mAnkidroidLogo.visibility = View.GONE
         } else {
-            mAnkidroidLogo!!.visibility = View.VISIBLE
+            mAnkidroidLogo.visibility = View.VISIBLE
         }
     }
 
-    @KotlinCleanup("Use .isEmpty() + invert if and return early")
     fun attemptLogin() {
-        val username = mUsername!!.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
+        val username = mUsername.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
         val password = mPassword.text.toString()
-        if (!"".equals(username, ignoreCase = true) && !"".equals(password, ignoreCase = true)) {
-            Timber.i("Attempting auto-login")
-            Connection.login(
-                mLoginListener,
-                Connection.Payload(
-                    arrayOf(
-                        username, password,
-                        getInstance(this)
-                    )
+        if (username.isEmpty() || password.isEmpty()) {
+            Timber.i("Auto-login cancelled - username/password missing")
+            return
+        }
+        Timber.i("Attempting auto-login")
+        Connection.login(
+            mLoginListener,
+            Connection.Payload(
+                arrayOf(
+                    username, password,
+                    getInstance(this)
                 )
             )
-        } else {
-            Timber.i("Auto-login cancelled - username/password missing")
+        )
+    }
+
+    private fun saveUserInformation(username: String, hkey: String) {
+        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        preferences.edit {
+            putString("username", username)
+            putString("hkey", hkey)
         }
     }
 
-    @KotlinCleanup("Use preferences.edit{ }")
-    private fun saveUserInformation(username: String, hkey: String) {
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-        val editor = preferences.edit()
-        editor.putString("username", username)
-        editor.putString("hkey", hkey)
-        editor.apply()
-    }
-
-    @KotlinCleanup("Remove useless `if (!''.equals...)` check")
     private fun login() {
         // Hide soft keyboard
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(mUsername!!.windowToken, 0)
-        val username = mUsername!!.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
+        inputMethodManager.hideSoftInputFromWindow(mUsername.windowToken, 0)
+        val username = mUsername.text.toString().trim { it <= ' ' } // trim spaces, issue 1586
         val password = mPassword.text.toString()
         if (username.isEmpty()) {
-            mUsername!!.error = getString(R.string.email_id_empty)
-            mUsername!!.requestFocus()
+            mUsername.error = getString(R.string.email_id_empty)
+            mUsername.requestFocus()
             return
         }
         if (password.isEmpty()) {
@@ -151,28 +144,23 @@ class MyAccount : AnkiActivity() {
             mPassword.requestFocus()
             return
         }
-        if (!"".equals(username, ignoreCase = true) && !"".equals(password, ignoreCase = true)) {
-            Connection.login(
-                mLoginListener,
-                Connection.Payload(
-                    arrayOf(
-                        username, password,
-                        getInstance(this)
-                    )
+        Connection.login(
+            mLoginListener,
+            Connection.Payload(
+                arrayOf(
+                    username, password,
+                    getInstance(this)
                 )
             )
-        } else {
-            showSimpleSnackbar(this, R.string.invalid_username_password, true)
-        }
+        )
     }
 
-    @KotlinCleanup("Use preferences.edit{ }")
     private fun logout() {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-        val editor = preferences.edit()
-        editor.putString("username", "")
-        editor.putString("hkey", "")
-        editor.apply()
+        preferences.edit {
+            putString("username", "")
+            putString("hkey", "")
+        }
         getInstance(this).reset()
         //  force media resync on deauth
         col.media.forceResync()
@@ -183,13 +171,14 @@ class MyAccount : AnkiActivity() {
         super.openUrl(Uri.parse(resources.getString(R.string.resetpw_url)))
     }
 
-    @KotlinCleanup("Use scope functions")
     private fun initAllContentViews() {
         mLoginToMyAccountView = layoutInflater.inflate(R.layout.my_account, null)
-        mUsername = mLoginToMyAccountView.findViewById(R.id.username)
-        mPassword = mLoginToMyAccountView.findViewById(R.id.password)
-        mPasswordLayout = mLoginToMyAccountView.findViewById(R.id.password_layout)
-        mAnkidroidLogo = mLoginToMyAccountView.findViewById(R.id.ankidroid_logo)
+        mLoginToMyAccountView.let {
+            mUsername = it.findViewById(R.id.username)
+            mPassword = it.findViewById(R.id.password)
+            mPasswordLayout = it.findViewById(R.id.password_layout)
+            mAnkidroidLogo = it.findViewById(R.id.ankidroid_logo)
+        }
 
         mPassword.setOnKeyListener(
             View.OnKeyListener { _: View?, keyCode: Int, event: KeyEvent ->
@@ -232,10 +221,9 @@ class MyAccount : AnkiActivity() {
         }
     }
 
-    @KotlinCleanup("Use .isNullOrEmpty()")
     private fun showLoginLogMessage(@StringRes messageResource: Int, loginMessage: String?) {
         run {
-            if (loginMessage == null || loginMessage.length == 0) {
+            if (loginMessage.isNullOrEmpty()) {
                 if (messageResource == R.string.youre_offline && !Connection.getAllowLoginSyncOnNoConnection()) {
                     // #6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
                     // val root = this.findViewById<View>(R.id.root_layout)
@@ -271,7 +259,6 @@ class MyAccount : AnkiActivity() {
             }
         }
 
-        @KotlinCleanup("Use .isNotEmpty()")
         override fun onPostExecute(data: Connection.Payload) {
             if (mProgressDialog != null) {
                 mProgressDialog!!.dismiss()
@@ -285,7 +272,7 @@ class MyAccount : AnkiActivity() {
                     finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
                 } else {
                     // Show logged view
-                    mUsernameLoggedIn!!.text = data.data[0] as String
+                    mUsernameLoggedIn.text = data.data[0] as String
                     switchToState(STATE_LOGGED_IN)
                 }
             } else {
@@ -295,7 +282,7 @@ class MyAccount : AnkiActivity() {
                 } else {
                     val message = resources.getString(R.string.connection_error_message)
                     val result = data.result
-                    if (result != null && result.size > 0 && result[0] is Exception) {
+                    if (!result.isNullOrEmpty() && result[0] is Exception) {
                         showSimpleMessageDialog(message, getHumanReadableLoginErrorMessage(result[0] as Exception), false)
                     } else {
                         showSimpleSnackbar(this@MyAccount, message, false)
@@ -338,9 +325,9 @@ class MyAccount : AnkiActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         if (isScreenSmall && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mAnkidroidLogo!!.visibility = View.GONE
+            mAnkidroidLogo.visibility = View.GONE
         } else {
-            mAnkidroidLogo!!.visibility = View.VISIBLE
+            mAnkidroidLogo.visibility = View.VISIBLE
         }
     }
 
