@@ -351,9 +351,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 AnkiPackageImporter imp = result.first;
                 deckPicker.showSimpleMessageDialog(TextUtils.join("\n", imp.getLog()));
                 deckPicker.updateDeckList();
-                Uri cleanupUri = deckPicker.getDeckDownloadedUri(mImportPath);
-                Timber.i("Cleaning up %s", cleanupUri);
-                deckPicker.getBaseContext().getContentResolver().delete(cleanupUri, null, null);
+                deckPicker.cleanupDownloadedDeck(mImportPath);
             }
         }
 
@@ -372,9 +370,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    private Uri getDeckDownloadedUri(String importPath) {
+    private void cleanupDownloadedDeck(String importPath) {
         String filename = ImportUtils.fileNameFromPath(importPath);
-        return ImportUtils.getApkgDownloadUriFor(getBaseContext(), filename);
+        Uri cleanupUri = ImportUtils.getApkgDownloadUriFor(getBaseContext(), filename);
+        getContentResolver().delete(cleanupUri, null, null);
     }
 
     private ImportReplaceListener importReplaceListener(String importPath) {
@@ -399,9 +398,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             Resources res = deckPicker.getResources();
             if (result.succeeded()) {
                 deckPicker.updateDeckList();
-                Uri cleanupUri = deckPicker.getDeckDownloadedUri(mImportPath);
-                Timber.i("Cleaning up %s", cleanupUri);
-                deckPicker.getBaseContext().getContentResolver().delete(cleanupUri, null, null);
+                deckPicker.cleanupDownloadedDeck(mImportPath);
             } else {
                 deckPicker.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true);
             }
