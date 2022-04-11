@@ -13,233 +13,181 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.CardMarker
+import com.ichi2.anki.reviewer.CardMarker.FlagDef
+import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
+import com.ichi2.libanki.Card
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers
+import org.mockito.Mockito
+import org.mockito.invocation.InvocationOnMock
 
-
-import com.ichi2.anki.cardviewer.ViewerCommand;
-import com.ichi2.anki.reviewer.CardMarker.FlagDef;
-import com.ichi2.libanki.Card;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_BLUE;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_GREEN;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_NONE;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_ORANGE;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_RED;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_PINK;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_TURQUOISE;
-import static com.ichi2.anki.reviewer.CardMarker.FLAG_PURPLE;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-@RunWith(AndroidJUnit4.class)
-public class AbstractFlashcardViewerCommandTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     @Test
-    public void doubleTapSetsNone() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED);
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_NONE));
+    fun doubleTapSetsNone() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED)
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_NONE))
     }
 
     @Test
-    public void noneDoesNothing() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_UNSET_FLAG);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_NONE));
+    fun noneDoesNothing() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_UNSET_FLAG)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_NONE))
     }
 
     @Test
-    public void doubleNoneDoesNothing() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_UNSET_FLAG);
-        viewer.executeCommand(ViewerCommand.COMMAND_UNSET_FLAG);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_NONE));
+    fun doubleNoneDoesNothing() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_UNSET_FLAG)
+        viewer.executeCommand(ViewerCommand.COMMAND_UNSET_FLAG)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_NONE))
     }
 
     @Test
-    public void flagCanBeChanged() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED);
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_BLUE));
+    fun flagCanBeChanged() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED)
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_BLUE))
     }
 
     @Test
-    public void unsetUnsets() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED);
-        viewer.executeCommand(ViewerCommand.COMMAND_UNSET_FLAG);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_NONE));
+    fun unsetUnsets() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED)
+        viewer.executeCommand(ViewerCommand.COMMAND_UNSET_FLAG)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_NONE))
     }
 
     @Test
-    public void tapRedFlagSetsRed() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_RED));
+    fun tapRedFlagSetsRed() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_RED))
     }
 
     @Test
-    public void tapOrangeFlagSetsOrange() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_ORANGE));
+    fun tapOrangeFlagSetsOrange() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_ORANGE))
     }
 
     @Test
-    public void tapGreenFlagSesGreen() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_GREEN));
+    fun tapGreenFlagSesGreen() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_GREEN))
     }
 
     @Test
-    public void tapBlueFlagSetsBlue() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_BLUE));
+    fun tapBlueFlagSetsBlue() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_BLUE))
     }
 
     @Test
-    public void tapPinkFlagSetsPink() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_PINK);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_PINK));
+    fun tapPinkFlagSetsPink() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_PINK)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_PINK))
     }
 
     @Test
-    public void tapTurquoiseFlagSetsTurquoise() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_TURQUOISE);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_TURQUOISE));
+    fun tapTurquoiseFlagSetsTurquoise() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_TURQUOISE)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_TURQUOISE))
     }
 
     @Test
-    public void tapPurpleFlagSetsPurple() {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_PURPLE);
-
-        assertThat(viewer.getLastFlag(), is(FLAG_PURPLE));
+    fun tapPurpleFlagSetsPurple() {
+        val viewer = viewer
+        viewer.executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_PURPLE)
+        MatcherAssert.assertThat(viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_PURPLE))
     }
 
     @Test
-    public void doubleTapUnsets() {
-        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_RED);
-        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE);
-        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN);
-        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE);
-        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_PINK);
-        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_TURQUOISE);
-        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_PURPLE);
+    fun doubleTapUnsets() {
+        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_RED)
+        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE)
+        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN)
+        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE)
+        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_PINK)
+        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_TURQUOISE)
+        testDoubleTapUnsets(ViewerCommand.COMMAND_TOGGLE_FLAG_PURPLE)
     }
 
-    private void testDoubleTapUnsets(ViewerCommand command) {
-        CommandTestCardViewer viewer = getViewer();
-
-        viewer.executeCommand(command);
-        viewer.executeCommand(command);
-
-        assertThat(command.toString(), viewer.getLastFlag(), is(FLAG_NONE));
+    private fun testDoubleTapUnsets(command: ViewerCommand) {
+        val viewer = viewer
+        viewer.executeCommand(command)
+        viewer.executeCommand(command)
+        MatcherAssert.assertThat(command.toString(), viewer.lastFlag, Matchers.`is`(CardMarker.FLAG_NONE))
     }
 
+    private val viewer: CommandTestCardViewer
+        get() = CommandTestCardViewer(cardWith(CardMarker.FLAG_NONE))
 
-    private CommandTestCardViewer getViewer() {
-        return new CommandTestCardViewer(cardWith(FLAG_NONE));
+    private fun cardWith(@FlagDef flag: Int): Card {
+        val c = Mockito.mock(Card::class.java)
+        val flags = intArrayOf(flag)
+        Mockito.`when`(c.userFlag()).then { flags[0] }
+        Mockito.doAnswer { invocation: InvocationOnMock ->
+            flags[0] = invocation.getArgument(0)
+            null
+        }.`when`(c).setUserFlag(ArgumentMatchers.anyInt())
+        return c
     }
 
+    private class CommandTestCardViewer(currentCard: Card?) : Reviewer() {
+        var lastFlag = 0
+            private set
 
-    private Card cardWith(@FlagDef int flag) {
-        Card c = mock(Card.class);
-        int[] flags = new int[] { flag };
-        when(c.userFlag()).then((invocation) -> flags[0]);
-        doAnswer(invocation -> {
-            flags[0] = invocation.getArgument(0);
-            return null;
-        }).when(c).setUserFlag(anyInt());
-        return c;
-    }
+        // we don't have getCol() here and we don't need the additional sound processing.
+        override var currentCard: Card?
+            get() = super.currentCard
+            set(card) {
+                mCurrentCard = card
+                // we don't have getCol() here and we don't need the additional sound processing.
+            }
 
-    private static class CommandTestCardViewer extends Reviewer {
-
-        private int mFlag;
-
-
-        public CommandTestCardViewer(Card currentCard) {
-            setCurrentCard(currentCard);
+        override fun setTitle() {
+            // Intentionally blank
         }
 
-
-        @Override
-        public void setCurrentCard(Card card) {
-            this.mCurrentCard = card;
-            // we don't have getCol() here and we don't need the additional sound processing.
-        }
-
-
-        @Override
-        protected void setTitle() {
-            //Intentionally blank
-        }
-
-
-        @Override
-        protected void performReload() {
+        override fun performReload() {
             // intentionally blank
         }
 
+        override var controlBlocked: ControlBlock
+            get() = ControlBlock.UNBLOCKED
+            set(controlBlocked) {
+                super.controlBlocked = controlBlocked
+            }
 
-        @Override
-        public ControlBlock getControlBlocked() {
-            return ControlBlock.UNBLOCKED;
+        override fun isControlBlocked(): Boolean {
+            return controlBlocked !== ControlBlock.UNBLOCKED
         }
 
-        @Override
-        public boolean isControlBlocked() {
-            return getControlBlocked() != ControlBlock.UNBLOCKED;
+        override fun onFlag(card: Card?, @FlagDef flag: Int) {
+            lastFlag = flag
+            mCurrentCard!!.setUserFlag(flag)
         }
 
-        @Override
-        protected void onFlag(Card card, @FlagDef int flag) {
-            this.mFlag = flag;
-            mCurrentCard.setUserFlag(flag);
-        }
-
-        public int getLastFlag() {
-            return mFlag;
+        init {
+            this.currentCard = currentCard
         }
     }
 }
