@@ -123,11 +123,11 @@ public class Anki2Importer extends Importer {
 
 
     private void _prepareFiles() {
-        boolean importingV2 = mFile.endsWith(".anki21");
+        boolean importingV2 = getFile().endsWith(".anki21");
         this.mMustResetLearning = false;
 
         mDst = mCol;
-        mSrc = Storage.Collection(mContext, mFile);
+        mSrc = Storage.Collection(mContext, getFile());
 
         if (!importingV2 && mCol.schedVer() != 1) {
             // any scheduling included?
@@ -179,7 +179,7 @@ public class Anki2Importer extends Importer {
             Timber.w(e);
             // This is actually not fatal but can fail since vacuum takes so much space
             // Allow the import to succeed but recommend the user run check database
-            mLog.add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
+            getLog().add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
         }
         publishProgress(100, 100, 65);
         try {
@@ -188,7 +188,7 @@ public class Anki2Importer extends Importer {
             Timber.w(e);
             // This is actually not fatal but can fail
             // Allow the import to succeed but recommend the user run check database
-            mLog.add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
+            getLog().add(getRes().getString(R.string.import_succeeded_but_check_database, e.getLocalizedMessage()));
         }
         publishProgress(100, 100, 75);
     }
@@ -332,9 +332,9 @@ public class Anki2Importer extends Importer {
             totalDirtyCount += dirty.size();
 
             if (dupes > 0) {
-                mLog.add(getRes().getString(R.string.import_update_details, totalUpdateCount, dupes));
+                getLog().add(getRes().getString(R.string.import_update_details, totalUpdateCount, dupes));
                 if (!dupesIgnored.isEmpty()) {
-                    mLog.add(getRes().getString(R.string.import_update_ignored));
+                    getLog().add(getRes().getString(R.string.import_update_ignored));
                 }
             }
             // export info for calling code
@@ -665,7 +665,7 @@ public class Anki2Importer extends Importer {
             cards.clear();
             insertRevlog(revlog);
             revlog.clear();
-            mLog.add(getRes().getString(R.string.import_complete_count, totalCardCount));
+            getLog().add(getRes().getString(R.string.import_complete_count, totalCardCount));
             mDst.getDb().getDatabase().setTransactionSuccessful();
         } finally {
             DB.safeEndInTransaction(mDst.getDb());

@@ -45,7 +45,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col, 
         publishProgress(0, 0, 0)
         val tempDir = File(File(mCol.path).parent, "tmpzip")
         val tmpCol: Collection? // self.col into Anki.
-        Timber.d("Attempting to import package %s", mFile)
+        Timber.d("Attempting to import package %s", file)
         try {
             // We extract the zip contents into a temporary directory and do a little more
             // validation than the desktop client to ensure the extracted collection is an apkg.
@@ -53,12 +53,12 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col, 
             try {
                 // extract the deck from the zip file
                 mZip = try {
-                    ZipFile(File(mFile))
+                    ZipFile(File(file))
                 } catch (fileNotFound: FileNotFoundException) {
                     Timber.w(fileNotFound)
                     // The cache can be cleared between copying the file in and importing. This is temporary
                     if (fileNotFound.message!!.contains("ENOENT")) {
-                        mLog.add(res.getString(R.string.import_log_file_cache_cleared))
+                        log.add(res.getString(R.string.import_log_file_cache_cleared))
                         return
                     }
                     throw fileNotFound // displays: failed to unzip
@@ -75,7 +75,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col, 
                 Timber.d("Total available size is:         %d", availableSpace)
                 if (uncompressedSize > availableSpace) {
                     Timber.e("Not enough space to unzip, need %d, available %d", uncompressedSize, availableSpace)
-                    mLog.add(res.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(mContext, uncompressedSize), Formatter.formatFileSize(mContext, availableSpace)))
+                    log.add(res.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(mContext, uncompressedSize), Formatter.formatFileSize(mContext, availableSpace)))
                     return
                 }
                 // The filename that we extract should be collection.anki2
@@ -88,24 +88,24 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col, 
             } catch (e: IOException) {
                 Timber.e(e, "Failed to unzip apkg.")
                 AnkiDroidApp.sendExceptionReport(e, "AnkiPackageImporter::run() - unzip")
-                mLog.add(res.getString(R.string.import_log_failed_unzip, e.localizedMessage))
+                log.add(res.getString(R.string.import_log_failed_unzip, e.localizedMessage))
                 return
             }
             val colpath = File(tempDir, colname).absolutePath
             if (!File(colpath).exists()) {
-                mLog.add(res.getString(R.string.import_log_failed_copy_to, colpath))
+                log.add(res.getString(R.string.import_log_failed_copy_to, colpath))
                 return
             }
             tmpCol = Storage.Collection(mContext, colpath)
             try {
                 if (!tmpCol.validCollection()) {
-                    mLog.add(res.getString(R.string.import_log_failed_validate))
+                    log.add(res.getString(R.string.import_log_failed_validate))
                     return
                 }
             } finally {
                 tmpCol?.close()
             }
-            mFile = colpath
+            file = colpath
             // we need the media dict in advance, and we'll need a map of fname ->
             // number to use during the import
             val mediaMapFile = File(tempDir, "media")

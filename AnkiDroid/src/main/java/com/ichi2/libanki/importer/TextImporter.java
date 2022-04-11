@@ -97,7 +97,7 @@ public class TextImporter extends NoteImporter {
         } catch (CsvException e) {
             log.add(getString(R.string.csv_importer_error_exception, e));
         }
-        mLog = log;
+        log = log;
         mFileobj.close();
         return notes;
     }
@@ -139,7 +139,7 @@ public class TextImporter extends NoteImporter {
 
     private void openFile() {
         mDialect = null;
-        mFileobj = FileObj.open(mFile);
+        mFileobj = FileObj.open(getFile());
 
         String firstLine = getFirstFileLine().orElse(null);
         if (firstLine != null) {
