@@ -18,6 +18,7 @@ package com.ichi2.libanki;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabaseLockedException;
 
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
@@ -49,6 +50,15 @@ public class Storage {
 
     private static boolean sUseBackend = true;
     private static boolean sUseInMemory = false;
+    /**
+     * The collection is locked from being opened via the {@link Storage} class. All collection accesses in the app
+     * should use this class.
+     *
+     * Opening a collection will then throw {@link SQLiteDatabaseLockedException}
+     *
+     * A collection which was opened before sIsLocked was set will be usable until it is closed.
+     */
+    private static boolean sIsLocked = false;
 
 
     /* Open a new or existing collection. Path must be unicode */
@@ -77,6 +87,10 @@ public class Storage {
     }
     public static Collection Collection(Context context, @NonNull String path, boolean server, boolean log, @NonNull Time time) {
         assert (path.endsWith(".anki2") || path.endsWith(".anki21"));
+        if (sIsLocked) {
+            throw new SQLiteDatabaseLockedException("AnkiDroid has locked the database");
+        }
+
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
         DroidBackend backend = DroidBackendFactory.getInstance(useBackend());
@@ -417,5 +431,36 @@ public class Storage {
 
     public static boolean isInMemory() {
         return sUseInMemory;
+    }
+
+    /** Allows the collection to be opened */
+    public static void unlockCollection() {
+        sIsLocked = false;
+        Timber.i("unlocked collection");
+    }
+
+    /**
+     * Stops the collection from being opened via throwing {@link SQLiteDatabaseLockedException}.
+     * does not affect a currently open collection
+     *
+     * To ensure that the collection is locked and unopenable:
+     *
+     * * Lock the collection
+     * * Get an instance of the collection, if it succeeds, close it
+     * * Ensure the collection is locked by trying to open it, it should fail.
+     * * Perform your operation
+     * * Unlock the collection
+     */
+    public static void lockCollection() {
+        sIsLocked = true;
+        Timber.i("locked collection. Opening will throw SQLiteDatabaseLockedException");
+    }
+
+    /**
+     * Whether the collection can be opened. If true, {@link #Collection(Context, String, boolean, boolean, Time)}
+     * throws a {@link SQLiteDatabaseLockedException}
+     */
+    public static Boolean isLocked() {
+        return sIsLocked;
     }
 }
