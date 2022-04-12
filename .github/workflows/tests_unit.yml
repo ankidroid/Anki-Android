@@ -31,8 +31,12 @@ on:
 jobs:
   unit:
     name: JUnit Tests
-    timeout-minutes: 20
-    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     #env:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
     steps:
@@ -80,4 +84,6 @@ jobs:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: curl https://codecov.io/bash -o codecov.sh && bash ./codecov.sh 
+          command: |
+            curl https://codecov.io/bash -o codecov.sh
+            bash ./codecov.sh
