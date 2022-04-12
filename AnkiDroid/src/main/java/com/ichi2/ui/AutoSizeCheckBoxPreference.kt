@@ -24,9 +24,8 @@ import com.ichi2.utils.ViewGroupUtils.getAllChildren
 
 // extending androidx.preference didn't work:
 // java.lang.ClassCastException: com.ichi2.ui.AutoSizeCheckBoxPreference cannot be cast to android.preference.Preference
-// TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 
-@Suppress("deprecation")
+@Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 class AutoSizeCheckBoxPreference : android.preference.CheckBoxPreference {
     @Suppress("unused") constructor(context: Context?) : super(context) {}
     @Suppress("unused") constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
