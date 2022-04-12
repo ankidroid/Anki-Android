@@ -19,8 +19,11 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import androidx.annotation.CheckResult
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.DiskFile
+import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.libanki.Media
 import org.acra.util.IOUtils
+import org.hamcrest.CoreMatchers.*
+import org.hamcrest.MatcherAssert.*
 import java.io.File
 
 /** Adds a media file to collection.media which [Media] is not aware of */
@@ -48,3 +51,11 @@ internal fun RobolectricTest.ankiDroidDirectory() = File(col.path).parentFile!!
 @CheckResult
 internal fun RobolectricTest.addUntrackedMediaFile(content: String, path: List<String>): DiskFile =
     addUntrackedMediaFile(col.media, content, path)
+
+fun RobolectricTest.assertMigrationInProgress() {
+    assertThat("the migration should be in progress", ScopedStorageService.userMigrationIsInProgress(this.targetContext), equalTo(true))
+}
+
+fun RobolectricTest.assertMigrationNotInProgress() {
+    assertThat("the migration should not be in progress", ScopedStorageService.userMigrationIsInProgress(this.targetContext), equalTo(false))
+}
