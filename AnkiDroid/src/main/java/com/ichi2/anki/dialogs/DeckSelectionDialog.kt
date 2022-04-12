@@ -353,7 +353,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
     }
 
-    interface DeckSelectionListener {
+    fun interface DeckSelectionListener {
         fun onDeckSelected(deck: SelectableDeck?)
     }
 
