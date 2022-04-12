@@ -514,7 +514,8 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 int initialSize = menu.size();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && mCurrentEditorViewId != R.id.styling_edit) {
-                    menu.add(Menu.FIRST, mInsertFieldId, 0, R.string.card_template_editor_insert_field);
+                    // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
+                    menu.add(Menu.FIRST, mInsertFieldId, 0, getString(R.string.card_template_editor_insert_field));
                 }
 
                 return initialSize != menu.size();
