@@ -13,45 +13,45 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.content.Intent
+import android.graphics.Color
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.ParameterizedRobolectricTestRunner
+import java.util.*
 
-import android.content.Intent;
-import android.graphics.Color;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.ParameterizedRobolectricTestRunner;
-
-import java.util.Arrays;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(ParameterizedRobolectricTestRunner.class)
-public class WhiteboardDefaultForegroundColorTest extends RobolectricTest {
-
-    @ParameterizedRobolectricTestRunner.Parameter()
-    public boolean mIsInverted;
+@RunWith(ParameterizedRobolectricTestRunner::class)
+@KotlinCleanup("IDE lint")
+@KotlinCleanup("`is` -> equalTo")
+class WhiteboardDefaultForegroundColorTest : RobolectricTest() {
+    @ParameterizedRobolectricTestRunner.Parameter
+    @JvmField
+    var mIsInverted = false
 
     @ParameterizedRobolectricTestRunner.Parameter(1)
-    public int mExpectedResult;
-
-    @ParameterizedRobolectricTestRunner.Parameters
-    public static java.util.Collection<Object[]> initParameters() {
-        return Arrays.asList(new Object[][] {
-                { true, Color.WHITE },
-                { false, Color.BLACK } });
-    }
-
+    @JvmField
+    var mExpectedResult = 0
     @Test
-    public void testDefaultForegroundColor() {
-        assertThat(getForegroundColor(), is(mExpectedResult));
+    fun testDefaultForegroundColor() {
+        assertThat(foregroundColor, `is`(mExpectedResult))
     }
 
+    protected val foregroundColor: Int
+        get() {
+            val mock: AbstractFlashcardViewer = super.startActivityNormallyOpenCollectionWithIntent(Reviewer::class.java, Intent())
+            return Whiteboard(mock, true, mIsInverted).foregroundColor
+        }
 
-    protected int getForegroundColor() {
-        AbstractFlashcardViewer mock = super.startActivityNormallyOpenCollectionWithIntent(Reviewer.class, new Intent());
-        return new Whiteboard(mock, true, mIsInverted).getForegroundColor();
+    companion object {
+        @ParameterizedRobolectricTestRunner.Parameters
+        @JvmStatic
+        fun initParameters(): Collection<Array<Any>> {
+            return Arrays.asList(*arrayOf(arrayOf(true, Color.WHITE), arrayOf(false, Color.BLACK)))
+        }
     }
 }
