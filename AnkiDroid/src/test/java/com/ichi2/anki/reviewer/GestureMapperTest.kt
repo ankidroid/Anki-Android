@@ -13,73 +13,69 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.reviewer
 
-package com.ichi2.anki.reviewer;
+import android.view.ViewConfiguration
+import com.ichi2.anki.cardviewer.Gesture
+import io.mockk.every
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
+import org.junit.AfterClass
+import org.junit.Assert.assertEquals
+import org.junit.BeforeClass
+import org.junit.Test
+import org.mockito.Mockito.mock
+import kotlin.test.assertNull
 
-import android.view.ViewConfiguration;
-
-import com.ichi2.anki.cardviewer.Gesture;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-
-public class GestureMapperTest {
-    private final GestureMapper mSut = new GestureMapper();
-
-    private static MockedStatic<ViewConfiguration> utilities;
-
-    @BeforeClass
-    public static void before() {
-        utilities = Mockito.mockStatic(ViewConfiguration.class);
-        utilities.when(() -> ViewConfiguration.get(any())).thenReturn(mock(ViewConfiguration.class));
-    }
-
-    @AfterClass
-    public static void after() {
-        utilities.close();
-    }
-
-
+class GestureMapperTest {
+    private val mSut = GestureMapper()
     @Test
-    public void zeroWidthReturnsNothing() {
-        assertNull(mSut.gesture(0, 10, 10, 10));
+    fun zeroWidthReturnsNothing() {
+        assertNull(mSut.gesture(0, 10, 10f, 10f))
     }
 
     @Test
-    public void zeroHeightReturnsNothing() {
-        assertNull(mSut.gesture(10, 0, 10, 10));
+    fun zeroHeightReturnsNothing() {
+        assertNull(mSut.gesture(10, 0, 10f, 10f))
     }
 
     @Test
-    public void testOobTop() {
-        assertEquals(Gesture.TAP_TOP, mSut.gesture(100, 100, 50, -5));
+    fun testOobTop() {
+        assertEquals(Gesture.TAP_TOP, mSut.gesture(100, 100, 50f, -5f))
     }
 
     @Test
-    public void testOobLeft() {
-        assertEquals(Gesture.TAP_LEFT, mSut.gesture(100, 100, -10, 50));
+    fun testOobLeft() {
+        assertEquals(Gesture.TAP_LEFT, mSut.gesture(100, 100, -10f, 50f))
     }
 
     @Test
-    public void testOobRight() {
-        assertEquals(Gesture.TAP_RIGHT, mSut.gesture(100, 100, 200, 50));
+    fun testOobRight() {
+        assertEquals(Gesture.TAP_RIGHT, mSut.gesture(100, 100, 200f, 50f))
     }
 
     @Test
-    public void testOobBottom() {
-        assertEquals(Gesture.TAP_BOTTOM, mSut.gesture(100, 100, 50, 200));
+    fun testOobBottom() {
+        assertEquals(Gesture.TAP_BOTTOM, mSut.gesture(100, 100, 50f, 200f))
     }
 
     @Test
-    public void testCenter() {
-        assertEquals(Gesture.TAP_CENTER, mSut.gesture(100, 100, 50, 50));
+    fun testCenter() {
+        assertEquals(Gesture.TAP_CENTER, mSut.gesture(100, 100, 50f, 50f))
+    }
+
+    companion object {
+        @BeforeClass
+        @JvmStatic
+        fun before() {
+            mockkStatic(ViewConfiguration::class)
+            every { ViewConfiguration.get(any()) } answers { mock(ViewConfiguration::class.java) }
+        }
+
+        @JvmStatic
+        @AfterClass
+        fun after() {
+            unmockkStatic(ViewConfiguration::class)
+        }
     }
 }
