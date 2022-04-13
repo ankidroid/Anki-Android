@@ -13,47 +13,43 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.view.View
+import com.ichi2.utils.KotlinCleanup
 
-import android.view.View;
+@KotlinCleanup("IDE lint")
+class TestCardTemplatePreviewer : CardTemplatePreviewer() {
+    var showingAnswer = false
+        protected set
 
-public class TestCardTemplatePreviewer extends CardTemplatePreviewer {
-    protected boolean mShowingAnswer = false;
-    public boolean getShowingAnswer() { return mShowingAnswer; }
-    public void disableDoubleClickPrevention() {
-        mLastClickTime = (AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL) * -2);
+    fun disableDoubleClickPrevention() {
+        mLastClickTime = (AnkiDroidApp.getSharedPrefs(baseContext).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL) * -2).toLong()
     }
 
-
-    @Override
-    public void displayCardAnswer() {
-        super.displayCardAnswer();
-        mShowingAnswer = true;
+    override fun displayCardAnswer() {
+        super.displayCardAnswer()
+        showingAnswer = true
     }
 
-
-    @Override
-    public void displayCardQuestion() {
-        super.displayCardQuestion();
-        mShowingAnswer = false;
+    override fun displayCardQuestion() {
+        super.displayCardQuestion()
+        showingAnswer = false
     }
 
-    public Boolean nextButtonVisible() {
-        return mPreviewLayout.getNextCard().getVisibility() != View.GONE;
+    fun nextButtonVisible(): Boolean {
+        return mPreviewLayout!!.nextCard.visibility != View.GONE
     }
 
-    public Boolean previousButtonVisible() {
-        return mPreviewLayout.getPrevCard().getVisibility() != View.GONE;
+    fun previousButtonVisible(): Boolean {
+        return mPreviewLayout!!.prevCard.visibility != View.GONE
     }
 
-
-    public Boolean previousButtonEnabled() {
-        return mPreviewLayout.getPrevCard().isEnabled();
+    fun previousButtonEnabled(): Boolean {
+        return mPreviewLayout!!.prevCard.isEnabled
     }
 
-
-    public Boolean nextButtonEnabled() {
-        return mPreviewLayout.getNextCard().isEnabled();
+    fun nextButtonEnabled(): Boolean {
+        return mPreviewLayout!!.nextCard.isEnabled
     }
 }
