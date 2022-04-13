@@ -13,213 +13,183 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.cardviewer
 
-package com.ichi2.anki.cardviewer;
+import android.content.res.Resources
+import android.os.Build
+import android.webkit.RenderProcessGoneDetail
+import android.webkit.WebView
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.Lifecycle
+import com.ichi2.anki.AbstractFlashcardViewer
+import com.ichi2.libanki.Card
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.StrictMock.Companion.strictMock
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
+import org.mockito.Mockito.*
+import java.util.concurrent.locks.Lock
 
-import android.content.res.Resources;
-import android.os.Build;
-import android.webkit.RenderProcessGoneDetail;
-import android.webkit.WebView;
-
-import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.libanki.Card;
-
-import org.junit.Test;
-
-import java.util.concurrent.locks.Lock;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.Lifecycle;
-
-import static com.ichi2.utils.StrictMock.strictMock;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-@RequiresApi(api = Build.VERSION_CODES.O) //onRenderProcessGone & RenderProcessGoneDetail
-public class OnRenderProcessGoneDelegateTest {
-
+@RequiresApi(api = Build.VERSION_CODES.O) // onRenderProcessGone & RenderProcessGoneDetail
+@KotlinCleanup("IDE-lint")
+@KotlinCleanup("`when` -> whenever")
+@KotlinCleanup("`is` -> equalTo")
+class OnRenderProcessGoneDelegateTest {
     @Test
-    public void singleCallCausesRefresh() {
-        AbstractFlashcardViewer mock = getViewer();
-        OnRenderProcessGoneDelegateImpl delegate = getInstance(mock);
+    fun singleCallCausesRefresh() {
+        val mock = viewer
+        val delegate = getInstance(mock)
 
-        callOnRenderProcessGone(delegate);
+        callOnRenderProcessGone(delegate)
 
-        verify(mock, times(1)).displayCardQuestion();
-        assertThat(delegate.mDisplayedToast, is(true));
-    }
-
-
-    @Test
-    public void secondCallCausesDialog() {
-        AbstractFlashcardViewer mock = getViewer();
-        OnRenderProcessGoneDelegateImpl delegate = getInstance(mock);
-
-        callOnRenderProcessGone(delegate);
-
-        verify(mock, times(1)).displayCardQuestion();
-
-        callOnRenderProcessGone(delegate);
-
-        verify(mock, times(1)
-                .description("displayCardQuestion should not be called again as the screen should close"))
-                .displayCardQuestion();
-        assertThat(delegate.mDisplayedDialog, is(true));
-        verify(mock, times(1).description("After the dialog, the screen should be closed")).finishWithoutAnimation();
+        verify(mock, times(1)).displayCardQuestion()
+        assertThat(delegate.displayedToast, `is`(true))
     }
 
     @Test
-    public void secondCallDoesNothingIfMinimised() {
-        AbstractFlashcardViewer mock = getMinimisedViewer();
-        OnRenderProcessGoneDelegateImpl delegate = getInstance(mock);
+    fun secondCallCausesDialog() {
+        val mock = viewer
+        val delegate = getInstance(mock)
 
-        callOnRenderProcessGone(delegate);
+        callOnRenderProcessGone(delegate)
 
-        verify(mock, times(1)).displayCardQuestion();
+        verify(mock, times(1)).displayCardQuestion()
 
-        callOnRenderProcessGone(delegate);
+        callOnRenderProcessGone(delegate)
 
-        verify(mock, times(2)
-                .description("displayCardQuestion should be called again as the app was minimised"))
-                .displayCardQuestion();
-        assertThat(delegate.mDisplayedDialog, is(false));
+        verify(
+            mock,
+            times(1)
+                .description("displayCardQuestion should not be called again as the screen should close")
+        )
+            .displayCardQuestion()
+        assertThat(delegate.displayedDialog, `is`(true))
+        verify(mock, times(1).description("After the dialog, the screen should be closed")).finishWithoutAnimation()
     }
-
 
     @Test
-    public void nothingHappensIfWebViewIsNotTheSame() {
-        AbstractFlashcardViewer mock = getViewer();
-        OnRenderProcessGoneDelegateImpl delegate = getInstance(mock);
+    fun secondCallDoesNothingIfMinimised() {
+        val mock = minimisedViewer
+        val delegate = getInstance(mock)
 
-        callOnRenderProcessGone(delegate, mock(WebView.class));
+        callOnRenderProcessGone(delegate)
 
-        verify(mock, never().description("No mutating methods should be called if the WebView is not relevant")).destroyWebViewFrame();
+        verify(mock, times(1)).displayCardQuestion()
+
+        callOnRenderProcessGone(delegate)
+
+        verify(
+            mock,
+            times(2)
+                .description("displayCardQuestion should be called again as the app was minimised")
+        )
+            .displayCardQuestion()
+        assertThat(delegate.displayedDialog, `is`(false))
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
-    public void unrecoverableCrashDoesNotRecreateWebView() {
-        AbstractFlashcardViewer mock = getViewer();
-        OnRenderProcessGoneDelegateImpl delegate = getInstance(mock);
+    fun nothingHappensIfWebViewIsNotTheSame() {
+        val mock = viewer
+        val delegate = getInstance(mock)
 
-        doReturn(null).when(mock).getCurrentCard();
-        callOnRenderProcessGone(delegate);
+        callOnRenderProcessGone(delegate, mock(WebView::class.java))
 
-        verify(mock, times(1)).destroyWebViewFrame();
-        verify(mock, never()).recreateWebViewFrame();
-
-        assertThat("A toast should be displayed", delegate.mDisplayedToast, is(true));
-        verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation();
+        verify(mock, never().description("No mutating methods should be called if the WebView is not relevant")).destroyWebViewFrame()
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Test
-    public void unrecoverableCrashCloses() {
-        AbstractFlashcardViewer mock = getMinimisedViewer();
-        OnRenderProcessGoneDelegateImpl delegate = getInstance(mock);
+    fun unrecoverableCrashDoesNotRecreateWebView() {
+        val mock = viewer
+        val delegate = getInstance(mock)
 
-        doReturn(null).when(mock).getCurrentCard();
-        callOnRenderProcessGone(delegate);
+        doReturn(null).`when`(mock).currentCard
+        callOnRenderProcessGone(delegate)
 
-        verify(mock, times(1)).destroyWebViewFrame();
-        verify(mock, never()).recreateWebViewFrame();
+        verify(mock, times(1)).destroyWebViewFrame()
+        verify(mock, never()).recreateWebViewFrame()
 
-        assertThat("A toast should not be displayed as the screen is minimised", delegate.mDisplayedToast, is(false));
-        verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation();
+        assertThat("A toast should be displayed", delegate.displayedToast, `is`(true))
+        verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation()
     }
 
+    @Test
+    fun unrecoverableCrashCloses() {
+        val mock = minimisedViewer
+        val delegate = getInstance(mock)
 
-    protected void callOnRenderProcessGone(OnRenderProcessGoneDelegateImpl delegate) {
-        callOnRenderProcessGone(delegate, delegate.getTarget().getWebView());
+        doReturn(null).`when`(mock).currentCard
+        callOnRenderProcessGone(delegate)
+
+        verify(mock, times(1)).destroyWebViewFrame()
+        verify(mock, never()).recreateWebViewFrame()
+
+        assertThat("A toast should not be displayed as the screen is minimised", delegate.displayedToast, `is`(false))
+        verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation()
     }
 
-
-    private void callOnRenderProcessGone(OnRenderProcessGoneDelegateImpl delegate, WebView webView) {
-        boolean result = delegate.onRenderProcessGone(webView, getCrashDetail());
-        assertThat("onRenderProcessGone should only return false if we want the app killed", result, is(true));
+    protected fun callOnRenderProcessGone(delegate: OnRenderProcessGoneDelegateImpl) {
+        callOnRenderProcessGone(delegate, delegate.target.webView)
     }
 
-
-    protected AbstractFlashcardViewer getMinimisedViewer() {
-        return getViewer(Lifecycle.State.CREATED);
+    @KotlinCleanup("webview nullability")
+    private fun callOnRenderProcessGone(delegate: OnRenderProcessGoneDelegateImpl, webView: WebView?) {
+        val result = delegate.onRenderProcessGone(webView!!, crashDetail)
+        assertThat("onRenderProcessGone should only return false if we want the app killed", result, `is`(true))
     }
 
-    @NonNull
-    protected AbstractFlashcardViewer getViewer() {
-        return getViewer(Lifecycle.State.STARTED);
+    protected val minimisedViewer: AbstractFlashcardViewer
+        get() = getViewer(Lifecycle.State.CREATED)
+    protected val viewer: AbstractFlashcardViewer
+        get() = getViewer(Lifecycle.State.STARTED)
+
+    private fun getViewer(state: Lifecycle.State): AbstractFlashcardViewer {
+        val mockWebView = mock(WebView::class.java)
+        val mock = strictMock(AbstractFlashcardViewer::class.java)
+        doReturn(mock(Lock::class.java)).`when`(mock).writeLock
+        doReturn(mock(Resources::class.java)).`when`(mock).resources
+        doReturn(mockWebView).`when`(mock).webView
+        doReturn(mock(Card::class.java)).`when`(mock).currentCard
+        doReturn(lifecycleOf(state)).`when`(mock).lifecycle
+        doNothing().`when`(mock).destroyWebViewFrame()
+        doNothing().`when`(mock).recreateWebViewFrame()
+        doNothing().`when`(mock).displayCardQuestion()
+        doNothing().`when`(mock).finishWithoutAnimation()
+        return mock
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private AbstractFlashcardViewer getViewer(Lifecycle.State state) {
-        WebView mockWebView = mock(WebView.class);
-        AbstractFlashcardViewer mock = strictMock(AbstractFlashcardViewer.class);
-        doReturn(mock(Lock.class)).when(mock).getWriteLock();
-        doReturn(mock(Resources.class)).when(mock).getResources();
-        doReturn(mockWebView).when(mock).getWebView();
-        doReturn(mock(Card.class)).when(mock).getCurrentCard();
-        doReturn(lifecycleOf(state)).when(mock).getLifecycle();
-        doNothing().when(mock).destroyWebViewFrame();
-        doNothing().when(mock).recreateWebViewFrame();
-        doNothing().when(mock).displayCardQuestion();
-        doNothing().when(mock).finishWithoutAnimation();
-        return mock;
+    private fun lifecycleOf(state: Lifecycle.State): Lifecycle {
+        val ret = mock(Lifecycle::class.java)
+        `when`(ret.currentState).thenReturn(state)
+        return ret
     }
 
-
-    private Lifecycle lifecycleOf(Lifecycle.State state) {
-        Lifecycle ret = mock(Lifecycle.class);
-        when(ret.getCurrentState()).thenReturn(state);
-        return ret;
+    protected fun getInstance(mock: AbstractFlashcardViewer?): OnRenderProcessGoneDelegateImpl {
+        return spy(OnRenderProcessGoneDelegateImpl(mock))
     }
 
-
-    @NonNull
-    protected OnRenderProcessGoneDelegateImpl getInstance(AbstractFlashcardViewer mock) {
-        return spy(new OnRenderProcessGoneDelegateImpl(mock));
-    }
-
-    protected RenderProcessGoneDetail getCrashDetail() {
-        RenderProcessGoneDetail mock = mock(RenderProcessGoneDetail.class);
-        when(mock.didCrash()).thenReturn(true); // this value doesn't matter for now as it only defines a string
-        return mock;
-    }
-
-    public static class OnRenderProcessGoneDelegateImpl extends OnRenderProcessGoneDelegate {
-
-        private boolean mDisplayedToast;
-        private boolean mDisplayedDialog;
-
-
-        public OnRenderProcessGoneDelegateImpl(AbstractFlashcardViewer target) {
-            super(target);
+    // this value doesn't matter for now as it only defines a string
+    protected val crashDetail: RenderProcessGoneDetail
+        get() {
+            val mock = mock(RenderProcessGoneDetail::class.java)
+            `when`(mock.didCrash()).thenReturn(true) // this value doesn't matter for now as it only defines a string
+            return mock
         }
 
-
-        @Override
-        protected void displayFatalError(RenderProcessGoneDetail detail) {
-            this.mDisplayedToast = true;
+    class OnRenderProcessGoneDelegateImpl(target: AbstractFlashcardViewer?) : OnRenderProcessGoneDelegate(target!!) {
+        var displayedToast = false
+        var displayedDialog = false
+        override fun displayFatalError(detail: RenderProcessGoneDetail) {
+            displayedToast = true
         }
 
-
-        @Override
-        protected void displayNonFatalError(RenderProcessGoneDetail detail) {
-            this.mDisplayedToast = true;
+        override fun displayNonFatalError(detail: RenderProcessGoneDetail) {
+            displayedToast = true
         }
 
-
-        @Override
-        protected void displayRenderLoopDialog(long currentCardId, RenderProcessGoneDetail detail) {
-            this.mDisplayedDialog = true;
-            this.onCloseRenderLoopDialog();
+        override fun displayRenderLoopDialog(currentCardId: Long, detail: RenderProcessGoneDetail) {
+            displayedDialog = true
+            onCloseRenderLoopDialog()
         }
     }
 }
