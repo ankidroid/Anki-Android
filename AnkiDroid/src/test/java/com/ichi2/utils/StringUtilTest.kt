@@ -13,97 +13,94 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import com.ichi2.utils.StringUtil.strip
+import com.ichi2.utils.StringUtil.toTitleCase
+import com.ichi2.utils.StringUtil.trimRight
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.nullValue
+import org.hamcrest.Matchers.sameInstance
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import kotlin.test.junit.JUnitAsserter.assertNull
 
-import org.junit.Test;
-
-import static com.ichi2.utils.StringUtil.trimRight;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-public class StringUtilTest {
-
+@KotlinCleanup("Change `is`() to equalTo()")
+class StringUtilTest {
     @Test
-    public void trimRightNullIsSetToNull() {
-        assertThat(trimRight(null), is(nullValue()));
+    fun trimRightNullIsSetToNull() {
+        assertThat(trimRight(null), `is`(nullValue()))
     }
 
     @Test
-    public void trimRightWhiteSpaceIsBlankString() {
-        assertThat(trimRight(" "), is(""));
+    fun trimRightWhiteSpaceIsBlankString() {
+        assertThat(trimRight(" "), `is`(""))
     }
 
     @Test
-    public void trimRightOnlyTrimsRight() {
-        assertThat(trimRight(" a "), is(" a"));
+    fun trimRightOnlyTrimsRight() {
+        assertThat(trimRight(" a "), `is`(" a"))
     }
 
     @Test
-    public void trimRightDoesNothingOnTrimmedString() {
-        String input = " foo";
-        assertThat(trimRight(input), sameInstance(input));
+    fun trimRightDoesNothingOnTrimmedString() {
+        val input = " foo"
+        assertThat(trimRight(input), sameInstance(input))
     }
 
     @Test
-    public void strip_on_null_return_null() {
-        assertNull(StringUtil.strip(null));
+    fun strip_on_null_return_null() {
+        assertNull("", strip(null))
     }
 
     @Test
-    public void strip_on_empty_return_empty() {
-        assertEquals("", StringUtil.strip(""));
-    }
-
-
-    @Test
-    public void string_on_nonempty_full_of_whitespace_return_empty() {
-        assertEquals("", StringUtil.strip(" \u0020\u2001  "));
-    }
-
-
-    @Test
-    public void strip_leading_spaces() {
-        assertEquals("Hello", StringUtil.strip("   \t\n Hello"));
+    fun strip_on_empty_return_empty() {
+        assertEquals("", strip(""))
     }
 
     @Test
-    public void strip_trailing_spaces() {
-        assertEquals("MyNameIs", StringUtil.strip("MyNameIs\n\u2009\u205F\t   \u3000 "));
-    }
-
-
-    @Test
-    public void strip_trailing_and_leading_spaces() {
-        assertEquals("Tarek", StringUtil.strip("\n\u2006 \r\n\t\u000CTarek   \u0009"));
+    fun string_on_nonempty_full_of_whitespace_return_empty() {
+        assertEquals("", strip(" \u0020\u2001  "))
     }
 
     @Test
-    public void strip_does_nothing_on_stripped_string() {
-        assertEquals("Java", StringUtil.strip("Java"));
+    fun strip_leading_spaces() {
+        assertEquals("Hello", strip("   \t\n Hello"))
     }
 
     @Test
-    public void toTitleCase_null_is_null() {
-        assertThat(StringUtil.toTitleCase(null), nullValue());
+    fun strip_trailing_spaces() {
+        assertEquals("MyNameIs", strip("MyNameIs\n\u2009\u205F\t   \u3000 "))
     }
 
     @Test
-    public void toTitleCase_single_letter() {
-        assertThat(StringUtil.toTitleCase("a"), is("A"));
+    fun strip_trailing_and_leading_spaces() {
+        assertEquals("Tarek", strip("\n\u2006 \r\n\t\u000CTarek   \u0009"))
     }
 
     @Test
-    public void toTitleCase_single_upper_letter() {
-        assertThat(StringUtil.toTitleCase("A"), is("A"));
+    fun strip_does_nothing_on_stripped_string() {
+        assertEquals("Java", strip("Java"))
     }
 
     @Test
-    public void toTitleCase_string() {
-        assertThat(StringUtil.toTitleCase("aB"), is("Ab"));
+    fun toTitleCase_null_is_null() {
+        assertThat(toTitleCase(null), nullValue())
+    }
+
+    @Test
+    fun toTitleCase_single_letter() {
+        assertThat(toTitleCase("a"), `is`("A"))
+    }
+
+    @Test
+    fun toTitleCase_single_upper_letter() {
+        assertThat(toTitleCase("A"), `is`("A"))
+    }
+
+    @Test
+    fun toTitleCase_string() {
+        assertThat(toTitleCase("aB"), `is`("Ab"))
     }
 }
