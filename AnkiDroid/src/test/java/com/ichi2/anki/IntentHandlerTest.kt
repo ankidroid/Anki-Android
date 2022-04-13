@@ -13,74 +13,71 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.IntentHandler.Companion.getLaunchType
+import com.ichi2.anki.IntentHandler.LaunchType
+import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mockito
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-
-import com.ichi2.anki.IntentHandler.LaunchType;
-import com.ichi2.anki.services.ReminderService;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
-
-@RunWith(AndroidJUnit4.class)
-public class IntentHandlerTest {
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("`is` -> equalTo")
+class IntentHandlerTest {
     // COULD_BE_BETTER: We're testing class internals here, would like to see these tests be replaced with
     // higher-level tests at a later date when we better extract dependencies
-
     @Test
-    public void viewIntentReturnsView() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("content://invalid"));
+    fun viewIntentReturnsView() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("content://invalid"))
 
-        LaunchType expected = IntentHandler.getLaunchType(intent);
+        val expected = getLaunchType(intent)
 
-        assertThat(expected, is(LaunchType.FILE_IMPORT));
+        assertThat(expected, `is`(LaunchType.FILE_IMPORT))
     }
 
     @Test
-    public void syncIntentReturnsSync() {
-        Intent intent = new Intent("com.ichi2.anki.DO_SYNC");
+    fun syncIntentReturnsSync() {
+        val intent = Intent("com.ichi2.anki.DO_SYNC")
 
-        LaunchType expected = IntentHandler.getLaunchType(intent);
+        val expected = getLaunchType(intent)
 
-        assertThat(expected, is(LaunchType.SYNC));
+        assertThat(expected, `is`(LaunchType.SYNC))
     }
 
     @Test
-    public void reviewIntentReturnsReview() {
-        Intent intent = ReminderService.getReviewDeckIntent(mock(Context.class), 1);
+    fun reviewIntentReturnsReview() {
+        val intent = getReviewDeckIntent(Mockito.mock(Context::class.java), 1)
 
-        LaunchType expected = IntentHandler.getLaunchType(intent);
+        val expected = getLaunchType(intent)
 
-        assertThat(expected, is(LaunchType.REVIEW));
+        assertThat(expected, `is`(LaunchType.REVIEW))
     }
 
     @Test
-    public void mainIntentStartsApp() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
+    fun mainIntentStartsApp() {
+        val intent = Intent(Intent.ACTION_MAIN)
 
-        LaunchType expected = IntentHandler.getLaunchType(intent);
+        val expected = getLaunchType(intent)
 
-        assertThat(expected, is(LaunchType.DEFAULT_START_APP_IF_NEW));
+        assertThat(expected, `is`(LaunchType.DEFAULT_START_APP_IF_NEW))
     }
 
     @Test
-    public void viewWithNoDataPerformsDefaultAction() {
+    fun viewWithNoDataPerformsDefaultAction() {
         // #6312 - Smart Launcher double-tap launches us with this. No data at all in the intent
         // so we can only perform the default action
-        Intent intent = new Intent(Intent.ACTION_VIEW);
+        val intent = Intent(Intent.ACTION_VIEW)
 
-        LaunchType expected = IntentHandler.getLaunchType(intent);
+        val expected = getLaunchType(intent)
 
-        assertThat(expected, is(LaunchType.DEFAULT_START_APP_IF_NEW));
+        assertThat(expected, `is`(LaunchType.DEFAULT_START_APP_IF_NEW))
     }
 }
