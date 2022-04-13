@@ -14,219 +14,189 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.cardviewer
 
-package com.ichi2.anki.cardviewer;
-
-import android.net.Uri;
-import android.webkit.WebResourceRequest;
-
-import com.ichi2.testutils.EmptyApplication;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.function.Consumer;
-import java.util.List;
-import java.util.Map;
-
-import androidx.annotation.NonNull;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import android.net.Uri
+import android.webkit.WebResourceRequest
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.contains
+import org.hamcrest.Matchers.`is`
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
+import java.io.File
+import java.util.function.Consumer
 
 // PERF:
 // Theoretically should be able to get away with not using this, but it requires WebResourceRequest (easy to mock)
 // and URLUtil.guessFileName (static - likely harder)
-@RunWith(AndroidJUnit4.class)
-@Config(application = EmptyApplication.class)
-public class MissingImageHandlerTest {
+@RunWith(AndroidJUnit4::class)
+@Config(application = EmptyApplication::class)
+@KotlinCleanup("`is`")
+@KotlinCleanup("IDE cleanup")
+class MissingImageHandlerTest {
+    private var mSut: MissingImageHandler? = null
+    private var mTimesCalled = 0
+    private var mFileNames: MutableList<String?>? = null
 
-    private MissingImageHandler mSut;
-    private int mTimesCalled = 0;
-    private List<String> mFileNames;
-
+    @KotlinCleanup("lateinit")
     @Before
-    public void before() {
-        mFileNames = new ArrayList<>();
-        mSut = new MissingImageHandler();
+    fun before() {
+        mFileNames = ArrayList()
+        mSut = MissingImageHandler()
     }
 
-
-    @NonNull
-    private Consumer<String> defaultHandler() {
-        return (f) -> {
-            mTimesCalled++;
-            mFileNames.add(f);
-        };
-    }
-
-
-    @Test
-    public void firstTimeOnNewCardSends() {
-        processFailure(getValidRequest("example.jpg"));
-        assertThat(mTimesCalled, is(1));
-        assertThat(mFileNames, contains("example.jpg"));
-    }
-
-    @Test
-    public void twoCallsOnSameSideCallsOnce() {
-        processFailure(getValidRequest("example.jpg"));
-        processFailure(getValidRequest("example2.jpg"));
-        assertThat(mTimesCalled, is(1));
-        assertThat(mFileNames, contains("example.jpg"));
-    }
-
-    @Test
-    public void callAfterFlipIsShown() {
-        processFailure(getValidRequest("example.jpg"));
-        mSut.onCardSideChange();
-        processFailure(getValidRequest("example2.jpg"));
-        assertThat(mTimesCalled, is(2));
-        assertThat(mFileNames, contains("example.jpg", "example2.jpg"));
-    }
-
-    @Test
-    public void thirdCallIsIgnored() {
-        processFailure(getValidRequest("example.jpg"));
-        mSut.onCardSideChange();
-        processFailure(getValidRequest("example2.jpg"));
-        mSut.onCardSideChange();
-        processFailure(getValidRequest("example3.jpg"));
-        assertThat(mTimesCalled, is(2));
-        assertThat(mFileNames, contains("example.jpg", "example2.jpg"));
-    }
-
-    @Test
-    public void invalidRequestIsIgnored() {
-        WebResourceRequest invalidRequest = getInvalidRequest("example.jpg");
-        processFailure(invalidRequest);
-        assertThat(mTimesCalled, is(0));
-    }
-
-
-    private void processFailure(WebResourceRequest invalidRequest) {
-        processFailure(invalidRequest, defaultHandler());
-    }
-
-    private void processFailure(WebResourceRequest invalidRequest, Consumer<String> consumer) {
-        mSut.processFailure(invalidRequest, consumer);
-    }
-
-    private void processMissingSound(File file, @NonNull Consumer<String> onFailure) {
-        mSut.processMissingSound(file, onFailure);
-    }
-
-    private void processInefficientImage(Runnable onFailure) {
-        mSut.processInefficientImage(onFailure);
-    }
-
-
-    @Test
-    public void uiFailureDoesNotCrash() {
-        processFailure(getValidRequest("example.jpg"), (f) -> { throw new RuntimeException("expected"); });
-        assertThat("Irrelevant assert to stop lint warnings", mTimesCalled, is(0));
-    }
-
-
-    @Test
-    public void testMissingSound_NullFile() {
-        processMissingSound(null, defaultHandler());
-        assertThat(mTimesCalled, is(0));
-    }
-
-    @Test
-    public void testThirdSoundIsIgnored() {
-        //Tests that the third call to processMissingSound is ignored
-        Consumer<String> handler = defaultHandler();
-        processMissingSound(new File("example.wav"), handler);
-        mSut.onCardSideChange();
-        processMissingSound(new File("example2.wav"), handler);
-        mSut.onCardSideChange();
-        processMissingSound(new File("example3.wav"), handler);
-
-        assertThat(mTimesCalled, is(2));
-        assertThat(mFileNames, contains("example.wav", "example2.wav"));
-    }
-
-    @Test
-    public void testMissingSound_ExceptionCaught() {
-        assertDoesNotThrow(() -> processMissingSound(new File("example.wav"), (f) -> { throw new RuntimeException("expected");}));
-    }
-
-    @Test
-    public void testInefficientImage() {
-        //Tests that the runnable passed to processInefficientImage only runs once
-        class runTest implements Runnable {
-            private int mNTimesRun = 0;
-            @Override
-            public void run() {
-                mNTimesRun++;
-            }
-            public int getNTimesRun() { return mNTimesRun; }
+    private fun defaultHandler(): Consumer<String?> {
+        return Consumer { f: String? ->
+            mTimesCalled++
+            mFileNames!!.add(f)
         }
-        runTest runnableTest = new runTest();
-        processInefficientImage(runnableTest);
-        processInefficientImage(runnableTest);
-        assertThat(runnableTest.getNTimesRun(), is(1));
     }
 
+    @Test
+    fun firstTimeOnNewCardSends() {
+        processFailure(getValidRequest("example.jpg"))
+        assertThat(mTimesCalled, `is`(1))
+        assertThat(mFileNames, contains("example.jpg"))
+    }
 
-    private WebResourceRequest getValidRequest(String fileName) {
+    @Test
+    fun twoCallsOnSameSideCallsOnce() {
+        processFailure(getValidRequest("example.jpg"))
+        processFailure(getValidRequest("example2.jpg"))
+        assertThat(mTimesCalled, `is`(1))
+        assertThat(mFileNames, contains("example.jpg"))
+    }
+
+    @Test
+    fun callAfterFlipIsShown() {
+        processFailure(getValidRequest("example.jpg"))
+        mSut!!.onCardSideChange()
+        processFailure(getValidRequest("example2.jpg"))
+        assertThat(mTimesCalled, `is`(2))
+        assertThat(mFileNames, contains("example.jpg", "example2.jpg"))
+    }
+
+    @Test
+    fun thirdCallIsIgnored() {
+        processFailure(getValidRequest("example.jpg"))
+        mSut!!.onCardSideChange()
+        processFailure(getValidRequest("example2.jpg"))
+        mSut!!.onCardSideChange()
+        processFailure(getValidRequest("example3.jpg"))
+        assertThat(mTimesCalled, `is`(2))
+        assertThat(mFileNames, contains("example.jpg", "example2.jpg"))
+    }
+
+    @Test
+    fun invalidRequestIsIgnored() {
+        val invalidRequest = getInvalidRequest("example.jpg")
+        processFailure(invalidRequest)
+        assertThat(mTimesCalled, `is`(0))
+    }
+
+    private fun processFailure(invalidRequest: WebResourceRequest, consumer: Consumer<String?> = defaultHandler()) {
+        mSut!!.processFailure(invalidRequest, consumer)
+    }
+
+    private fun processMissingSound(file: File?, onFailure: Consumer<String?>) {
+        mSut!!.processMissingSound(file, onFailure)
+    }
+
+    private fun processInefficientImage(onFailure: Runnable) {
+        mSut!!.processInefficientImage(onFailure)
+    }
+
+    @Test
+    fun uiFailureDoesNotCrash() {
+        processFailure(getValidRequest("example.jpg")) { throw RuntimeException("expected") }
+        assertThat("Irrelevant assert to stop lint warnings", mTimesCalled, `is`(0))
+    }
+
+    @Test
+    fun testMissingSound_NullFile() {
+        processMissingSound(null, defaultHandler())
+        assertThat(mTimesCalled, `is`(0))
+    }
+
+    @Test
+    fun testThirdSoundIsIgnored() {
+        // Tests that the third call to processMissingSound is ignored
+        val handler = defaultHandler()
+        processMissingSound(File("example.wav"), handler)
+        mSut!!.onCardSideChange()
+        processMissingSound(File("example2.wav"), handler)
+        mSut!!.onCardSideChange()
+        processMissingSound(File("example3.wav"), handler)
+        assertThat(mTimesCalled, `is`(2))
+        assertThat(mFileNames, contains("example.wav", "example2.wav"))
+    }
+
+    @Test
+    fun testMissingSound_ExceptionCaught() {
+        assertDoesNotThrow { processMissingSound(File("example.wav")) { throw RuntimeException("expected") } }
+    }
+
+    @Test
+    fun testInefficientImage() {
+        // Tests that the runnable passed to processInefficientImage only runs once
+        class runTest : Runnable {
+            var nTimesRun = 0
+                private set
+
+            override fun run() {
+                nTimesRun++
+            }
+        }
+
+        val runnableTest = runTest()
+        processInefficientImage(runnableTest)
+        processInefficientImage(runnableTest)
+        assertThat(runnableTest.nTimesRun, `is`(1))
+    }
+
+    private fun getValidRequest(fileName: String): WebResourceRequest {
         // actual URL on Android 9
-        String url =  String.format("file:///storage/emulated/0/AnkiDroid/collection.media/%s", fileName);
-        return getWebResourceRequest(url);
+        val url = String.format("file:///storage/emulated/0/AnkiDroid/collection.media/%s", fileName)
+        return getWebResourceRequest(url)
     }
 
-    private WebResourceRequest getInvalidRequest(@SuppressWarnings("SameParameterValue") String fileName) {
+    private fun getInvalidRequest(fileName: String): WebResourceRequest {
         // no collection.media in the URL
-        String url =  String.format("file:///storage/emulated/0/AnkiDroid/%s", fileName);
-        return getWebResourceRequest(url);
+        val url = String.format("file:///storage/emulated/0/AnkiDroid/%s", fileName)
+        return getWebResourceRequest(url)
     }
 
-    @NonNull
-    private WebResourceRequest getWebResourceRequest(String url) {
-        return new WebResourceRequest() {
-            @Override
-            public Uri getUrl() {
-                return Uri.parse(url);
+    private fun getWebResourceRequest(url: String): WebResourceRequest {
+        return object : WebResourceRequest {
+            override fun getUrl(): Uri {
+                return Uri.parse(url)
             }
 
-
-            @Override
-            public boolean isForMainFrame() {
-                return false;
+            override fun isForMainFrame(): Boolean {
+                return false
             }
 
-
-            @Override
-            public boolean isRedirect() {
-                return false;
+            override fun isRedirect(): Boolean {
+                return false
             }
 
-
-            @Override
-            public boolean hasGesture() {
-                return false;
+            override fun hasGesture(): Boolean {
+                return false
             }
 
-
-            @Override
-            public String getMethod() {
-                return null;
+            override fun getMethod(): String? {
+                return null
             }
 
-
-            @Override
-            public Map<String, String> getRequestHeaders() {
-                return null;
+            override fun getRequestHeaders(): Map<String, String>? {
+                return null
             }
-        };
+        }
     }
 }
