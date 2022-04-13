@@ -13,18 +13,19 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.themes
 
-package com.ichi2.themes;
+import com.ichi2.themes.HtmlColors.invertColors
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
 
-import org.junit.Test;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-public class HtmlColorsTest {
+@KotlinCleanup("`is` -> equalTo")
+class HtmlColorsTest {
     @Test
-    public void testDleColorInversion() {
+    fun testDleColorInversion() {
         // An invalid color code should not be changed.
-        assertThat(HtmlColors.invertColors(" color:DLE "), is(" color:DLE "));
+        assertThat(invertColors(" color:DLE "), `is`(" color:DLE "))
     }
 }
