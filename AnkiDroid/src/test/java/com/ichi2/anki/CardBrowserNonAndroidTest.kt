@@ -13,53 +13,47 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import androidx.annotation.CheckResult
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
 
-import org.junit.Test;
-
-import androidx.annotation.CheckResult;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-public class CardBrowserNonAndroidTest {
-
+@KotlinCleanup("`is` -> equalTo")
+class CardBrowserNonAndroidTest {
     @Test
-    public void soundIsStrippedCorrectly() {
-        String output = formatWithFilenamesStripped("aou[sound:foo.mp3]aou");
-
-        assertThat(output, is("aou aou"));
+    fun soundIsStrippedCorrectly() {
+        val output = formatWithFilenamesStripped("aou[sound:foo.mp3]aou")
+        assertThat(output, `is`("aou aou"))
     }
 
     @Test
-    public void soundIsRetainedWithoutTag() {
-        String output = formatWithFilenamesRetained("aou[sound:foo.mp3]aou");
-
-        assertThat(output, is("aou foo.mp3 aou"));
+    fun soundIsRetainedWithoutTag() {
+        val output = formatWithFilenamesRetained("aou[sound:foo.mp3]aou")
+        assertThat(output, `is`("aou foo.mp3 aou"))
     }
 
     @Test
-    public void imageIsStrippedCorrectly() {
-        String output = formatWithFilenamesStripped("aou<img src=\"test.jpg\">aou");
-
-        assertThat(output, is("aou aou"));
+    fun imageIsStrippedCorrectly() {
+        val output = formatWithFilenamesStripped("aou<img src=\"test.jpg\">aou")
+        assertThat(output, `is`("aou aou"))
     }
 
     @Test
-    public void imageIsRetainedWithNoHtml() {
-        String output = formatWithFilenamesRetained("aou<img src=\"test.jpg\">aou");
-
-        assertThat(output, is("aou test.jpg aou"));
+    fun imageIsRetainedWithNoHtml() {
+        val output = formatWithFilenamesRetained("aou<img src=\"test.jpg\">aou")
+        assertThat(output, `is`("aou test.jpg aou"))
     }
 
     @CheckResult
-    private String formatWithFilenamesRetained(String input) {
-        return CardBrowser.formatQAInternal(input, true);
+    private fun formatWithFilenamesRetained(input: String): String {
+        return CardBrowser.formatQAInternal(input, true)
     }
 
     @CheckResult
-    private String formatWithFilenamesStripped(String input) {
-        return CardBrowser.formatQAInternal(input, false);
+    private fun formatWithFilenamesStripped(input: String): String {
+        return CardBrowser.formatQAInternal(input, false)
     }
 }
