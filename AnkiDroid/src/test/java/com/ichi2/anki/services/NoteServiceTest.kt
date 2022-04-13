@@ -13,129 +13,121 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.services
 
-package com.ichi2.anki.services;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote
+import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.anki.multimediacard.fields.MediaClipField
+import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.Note
+import com.ichi2.testutils.createTransientFile
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.CoreMatchers.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.io.FileMatchers.*
+import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TemporaryFolder
+import org.junit.runner.RunWith
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
 
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.fields.MediaClipField;
-import com.ichi2.anki.multimediacard.fields.ImageField;
-import com.ichi2.anki.servicelayer.NoteService;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Note;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.io.FileMatchers.aFileWithAbsolutePath;
-import static org.hamcrest.io.FileMatchers.anExistingFile;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-import static com.ichi2.testutils.FileSystemUtilsKt.createTransientFile;
-
-@RunWith(AndroidJUnit4.class)
-public class NoteServiceTest extends RobolectricTest {
-
-    Collection mTestCol;
+@KotlinCleanup("See if we can remove JvmField from Rule")
+@KotlinCleanup("have Model constructor accent @Language('JSON')")
+@KotlinCleanup("fix typo: testimage -> test_image")
+@KotlinCleanup("Add scope functions")
+@RunWith(AndroidJUnit4::class)
+class NoteServiceTest : RobolectricTest() {
+    @KotlinCleanup("lateinit")
+    var testCol: Collection? = null
     @Before
-    public void before() {
-        mTestCol = getCol();
+    fun before() {
+        testCol = col
     }
 
-    //temporary directory to test importMediaToDirectory function
+    // temporary directory to test importMediaToDirectory function
     @Rule
-    public TemporaryFolder directory = new TemporaryFolder();
+    @JvmField
+    var directory = TemporaryFolder()
+
     @Rule
-    public TemporaryFolder directory2 = new TemporaryFolder();
+    @JvmField
+    var directory2 = TemporaryFolder()
 
-    //tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
+    // tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
     @Test
-    public void updateJsonNoteTest() {
-        Model testModel = mTestCol.getModels().byName("Basic");
-        IMultimediaEditableNote multiMediaNote = NoteService.createEmptyNote(testModel);
-        multiMediaNote.getField(0).setText("foo");
-        multiMediaNote.getField(1).setText("bar");
+    fun updateJsonNoteTest() {
+        val testModel = testCol!!.models.byName("Basic")
+        val multiMediaNote: IMultimediaEditableNote? = NoteService.createEmptyNote(testModel!!)
+        multiMediaNote!!.getField(0)!!.text = "foo"
+        multiMediaNote.getField(1)!!.text = "bar"
 
-        Note basicNote = new Note(mTestCol, testModel);
-        basicNote.setField(0, "this should be changed to foo");
-        basicNote.setField(1, "this should be changed to bar");
+        val basicNote = Note(testCol!!, testModel)
+        basicNote.setField(0, "this should be changed to foo")
+        basicNote.setField(1, "this should be changed to bar")
 
-
-        NoteService.updateJsonNoteFromMultimediaNote(multiMediaNote, basicNote);
-        assertEquals(basicNote.getFields()[0], multiMediaNote.getField(0).getText());
-        assertEquals(basicNote.getFields()[1], multiMediaNote.getField(1).getText());
-
+        NoteService.updateJsonNoteFromMultimediaNote(multiMediaNote, basicNote)
+        assertEquals(basicNote.fields[0], multiMediaNote.getField(0)!!.text)
+        assertEquals(basicNote.fields[1], multiMediaNote.getField(1)!!.text)
     }
 
-    //tests if updateJsonNoteFromMultimediaNote throws a RuntimeException if the ID's of the notes don't match
+    // tests if updateJsonNoteFromMultimediaNote throws a RuntimeException if the ID's of the notes don't match
     @Test
-    public void updateJsonNoteRuntimeErrorTest() {
-        //model with ID 42
-        Model testModel = new Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"42\"}");
-        IMultimediaEditableNote multiMediaNoteWithID42 = NoteService.createEmptyNote(testModel);
+    fun updateJsonNoteRuntimeErrorTest() {
+        // model with ID 42
+        var testModel = Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"42\"}")
+        val multiMediaNoteWithID42: IMultimediaEditableNote? = NoteService.createEmptyNote(testModel)
 
-        //model with ID 45
-        testModel = new Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"45\"}");
-        Note noteWithID45 = new Note(mTestCol, testModel);
-
-        Throwable expectedException = assertThrows(RuntimeException.class, () -> NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45));
-        assertEquals(expectedException.getMessage(), "Source and Destination Note ID do not match.");
+        // model with ID 45
+        testModel = Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"45\"}")
+        val noteWithID45 = Note(testCol!!, testModel)
+        val expectedException: Throwable = assertThrows(RuntimeException::class.java) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
+        assertEquals(expectedException.message, "Source and Destination Note ID do not match.")
     }
 
     @Test
-    public void importAudioClipToDirectoryTest() throws IOException {
-
-        File fileAudio = directory.newFile("testaudio.wav");
+    @Throws(IOException::class)
+    fun importAudioClipToDirectoryTest() {
+        val fileAudio = directory.newFile("testaudio.wav")
 
         // writes a line in the file so the file's length isn't 0
-        try (FileWriter fileWriter = new FileWriter(fileAudio)) {
-            fileWriter.write("line1");
-        }
+        FileWriter(fileAudio).use { fileWriter -> fileWriter.write("line1") }
 
-        MediaClipField audioField = new MediaClipField();
-        audioField.setAudioPath(fileAudio.getAbsolutePath());
+        val audioField = MediaClipField()
+        audioField.audioPath = fileAudio.absolutePath
 
-        NoteService.importMediaToDirectory(mTestCol, audioField);
+        NoteService.importMediaToDirectory(testCol!!, audioField)
 
-        File outFile = new File(mTestCol.getMedia().dir(), fileAudio.getName());
+        val outFile = File(testCol!!.media.dir(), fileAudio.name)
 
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(audioField.getAudioPath())));
-
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(audioField.audioPath)))
     }
 
     // Similar test like above, but with an ImageField instead of a MediaClipField
     @Test
-    public void importImageToDirectoryTest() throws IOException {
-
-        File fileImage = directory.newFile("testimage.png");
+    @Throws(IOException::class)
+    fun importImageToDirectoryTest() {
+        val fileImage = directory.newFile("testimage.png")
 
         // writes a line in the file so the file's length isn't 0
-        try (FileWriter fileWriter = new FileWriter(fileImage)) {
-            fileWriter.write("line1");
-        }
+        FileWriter(fileImage).use { fileWriter -> fileWriter.write("line1") }
 
-        ImageField imgField = new ImageField();
-        imgField.setImagePath(fileImage.getAbsolutePath());
+        val imgField = ImageField()
+        imgField.imagePath = fileImage.absolutePath
 
-        NoteService.importMediaToDirectory(mTestCol, imgField);
+        NoteService.importMediaToDirectory(testCol!!, imgField)
 
-        File outFile = new File(mTestCol.getMedia().dir(), fileImage.getName());
+        val outFile = File(testCol!!.media.dir(), fileImage.name)
 
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(imgField.getImagePath())));
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(imgField.imagePath)))
     }
-
 
     /**
      * Tests if after importing:
@@ -147,80 +139,74 @@ public class NoteServiceTest extends RobolectricTest {
      * @throws IOException if new created files already exist on temp directory
      */
     @Test
-    public void importAudioWithSameNameTest() throws IOException {
-        File f1 = directory.newFile("audio.mp3");
-        File f2 = directory2.newFile("audio.mp3");
+    @Throws(IOException::class)
+    fun importAudioWithSameNameTest() {
+        val f1 = directory.newFile("audio.mp3")
+        val f2 = directory2.newFile("audio.mp3")
 
-        // write a line in the file so the file's length isn't 0
-        try (FileWriter fileWriter = new FileWriter(f1)) {
-            fileWriter.write("1");
-        }
+        // writes a line in the file so the file's length isn't 0
+        FileWriter(f1).use { fileWriter -> fileWriter.write("1") }
         // do the same to the second file, but with different data
-        try (FileWriter fileWriter = new FileWriter(f2)) {
-            fileWriter.write("2");
-        }
+        FileWriter(f2).use { fileWriter -> fileWriter.write("2") }
 
-        MediaClipField fld1 = new MediaClipField();
-        fld1.setAudioPath(f1.getAbsolutePath());
+        val fld1 = MediaClipField()
+        fld1.audioPath = f1.absolutePath
 
-        MediaClipField fld2 = new MediaClipField();
-        fld2.setAudioPath(f2.getAbsolutePath());
+        val fld2 = MediaClipField()
+        fld2.audioPath = f2.absolutePath
 
         // third field to test if name is kept after reimporting the same file
-        MediaClipField fld3 = new MediaClipField();
-        fld3.setAudioPath(f1.getAbsolutePath());
+        val fld3 = MediaClipField()
+        fld3.audioPath = f1.absolutePath
 
-        NoteService.importMediaToDirectory(mTestCol, fld1);
-        File o1 = new File(mTestCol.getMedia().dir(), f1.getName());
+        NoteService.importMediaToDirectory(testCol!!, fld1)
+        val o1 = File(testCol!!.media.dir(), f1.name)
 
-        NoteService.importMediaToDirectory(mTestCol, fld2);
-        File o2 = new File(mTestCol.getMedia().dir(), f2.getName());
+        NoteService.importMediaToDirectory(testCol!!, fld2)
+        val o2 = File(testCol!!.media.dir(), f2.name)
 
-        NoteService.importMediaToDirectory(mTestCol, fld3);
+        NoteService.importMediaToDirectory(testCol!!, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one
 
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.getAudioPath())));
-        assertThat("path should be different to new file made in NoteService.importMediaToDirectory", o2, aFileWithAbsolutePath(not(fld2.getAudioPath())));
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld3.getAudioPath())));
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.audioPath)))
+        assertThat("path should be different to new file made in NoteService.importMediaToDirectory", o2, aFileWithAbsolutePath(not(fld2.audioPath)))
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld3.audioPath)))
     }
 
     // Similar test like above, but with an ImageField instead of a MediaClipField
     @Test
-    public void importImageWithSameNameTest() throws IOException {
-        File f1 = directory.newFile("img.png");
-        File f2 = directory2.newFile("img.png");
+    @Throws(IOException::class)
+    fun importImageWithSameNameTest() {
+        val f1 = directory.newFile("img.png")
+        val f2 = directory2.newFile("img.png")
 
         // write a line in the file so the file's length isn't 0
-        try (FileWriter fileWriter = new FileWriter(f1)) {
-            fileWriter.write("1");
-        }
+        FileWriter(f1).use { fileWriter -> fileWriter.write("1") }
         // do the same to the second file, but with different data
-        try (FileWriter fileWriter = new FileWriter(f2)) {
-            fileWriter.write("2");
-        }
+        FileWriter(f2).use { fileWriter -> fileWriter.write("2") }
 
-        ImageField fld1 = new ImageField();
-        fld1.setImagePath(f1.getAbsolutePath());
+        val fld1 = ImageField()
+        fld1.imagePath = f1.absolutePath
 
-        ImageField fld2 = new ImageField();
-        fld2.setImagePath(f2.getAbsolutePath());
+        val fld2 = ImageField()
+        fld2.imagePath = f2.absolutePath
 
         // third field to test if name is kept after reimporting the same file
-        ImageField fld3 = new ImageField();
-        fld3.setImagePath(f1.getAbsolutePath());
+        val fld3 = ImageField()
+        fld3.imagePath = f1.absolutePath
 
-        NoteService.importMediaToDirectory(mTestCol, fld1);
-        File o1 = new File(mTestCol.getMedia().dir(), f1.getName());
+        NoteService.importMediaToDirectory(testCol!!, fld1)
+        val o1 = File(testCol!!.media.dir(), f1.name)
 
-        NoteService.importMediaToDirectory(mTestCol, fld2);
-        File o2 = new File(mTestCol.getMedia().dir(), f2.getName());
+        NoteService.importMediaToDirectory(testCol!!, fld2)
+        val o2 = File(testCol!!.media.dir(), f2.name)
 
-        NoteService.importMediaToDirectory(mTestCol, fld3);
+        NoteService.importMediaToDirectory(testCol!!, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one
 
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.getImagePath())));
-        assertThat("path should be different to new file made in NoteService.importMediaToDirectory", o2, aFileWithAbsolutePath(not(fld2.getImagePath())));
-        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld3.getImagePath())));
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld1.imagePath)))
+        assertThat("path should be different to new file made in NoteService.importMediaToDirectory", o2, aFileWithAbsolutePath(not(fld2.imagePath)))
+        assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", o1, aFileWithAbsolutePath(equalTo(fld3.imagePath)))
     }
 
     /**
@@ -229,30 +215,29 @@ public class NoteServiceTest extends RobolectricTest {
      * This tests if cached media are properly deleted after import.
      */
     @Test
-    public void tempAudioIsDeletedAfterImport() {
-        File file = createTransientFile("foo");
+    fun tempAudioIsDeletedAfterImport() {
+        val file = createTransientFile("foo")
 
-        MediaClipField field = new MediaClipField();
-        field.setAudioPath(file.getAbsolutePath());
-        field.setHasTemporaryMedia(true);
+        val field = MediaClipField()
+        field.audioPath = file.absolutePath
+        field.setHasTemporaryMedia(true)
 
-        NoteService.importMediaToDirectory(mTestCol, field);
+        NoteService.importMediaToDirectory(testCol!!, field)
 
-        assertThat("Audio temporary file should have been deleted after importing", file, not(anExistingFile()));
+        assertThat("Audio temporary file should have been deleted after importing", file, not(anExistingFile()))
     }
 
     // Similar test like above, but with an ImageField instead of a MediaClipField
     @Test
-    public void tempImageIsDeletedAfterImport() {
-        File file = createTransientFile("foo");
+    fun tempImageIsDeletedAfterImport() {
+        val file = createTransientFile("foo")
 
-        ImageField field = new ImageField();
-        field.setImagePath(file.getAbsolutePath());
-        field.setHasTemporaryMedia(true);
+        val field = ImageField()
+        field.imagePath = file.absolutePath
+        field.setHasTemporaryMedia(true)
 
-        NoteService.importMediaToDirectory(mTestCol, field);
+        NoteService.importMediaToDirectory(testCol!!, field)
 
-        assertThat("Image temporary file should have been deleted after importing", file, not(anExistingFile()));
+        assertThat("Image temporary file should have been deleted after importing", file, not(anExistingFile()))
     }
-
 }
