@@ -13,184 +13,159 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.content.Intent
+import android.util.Pair
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.DeckPicker.CheckDatabaseListener
+import com.ichi2.libanki.Collection.CheckDatabaseResult
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.*
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 
-import android.content.Intent;
-import android.util.Pair;
-
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Collection.CheckDatabaseResult;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.android.controller.ActivityController;
-
-import androidx.annotation.NonNull;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-
-@RunWith(AndroidJUnit4.class)
-public class DeckPickerCheckDatabaseListenerTest extends RobolectricTest {
-
-    private DeckPickerTestImpl mImpl;
-
-    @Override
-    public void setUp() {
-        super.setUp();
-        //.visible() crashes: Layout state should be one of 100 but it is 10
-        ActivityController<DeckPickerTestImpl> controller =
-                Robolectric.buildActivity(DeckPickerTestImpl.class, new Intent())
-                .create().start().resume();
-        saveControllerForCleanup((controller));
-        mImpl = controller.get();
-        mImpl.resetVariables();
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("IDE lint")
+class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
+    @KotlinCleanup("lateinit")
+    private var mImpl: DeckPickerTestImpl? = null
+    override fun setUp() {
+        super.setUp()
+        // .visible() crashes: Layout state should be one of 100 but it is 10
+        val controller = Robolectric.buildActivity(DeckPickerTestImpl::class.java, Intent())
+            .create().start().resume()
+        saveControllerForCleanup(controller)
+        mImpl = controller.get().apply {
+            resetVariables()
+        }
     }
 
     @Test
-    public void failedResultWithNoDataWillDisplayFailedDialog() {
-        Pair<Boolean, Collection.CheckDatabaseResult> result = failedResultNoData();
+    fun failedResultWithNoDataWillDisplayFailedDialog() {
+        val result = failedResultNoData()
 
-        execute(result);
+        execute(result)
 
-        assertThat("Load Failed dialog should be shown if no data is supplied", mImpl.didDisplayDialogLoadFailed());
+        assertThat("Load Failed dialog should be shown if no data is supplied", mImpl!!.didDisplayDialogLoadFailed())
     }
 
     @Test
-    public void failedResultWithEmptyDataWillDisplayFailedDialog() {
-        CheckDatabaseResult validData = validData();
-        Pair<Boolean, Collection.CheckDatabaseResult> result = failedResultWithData(validData);
+    fun failedResultWithEmptyDataWillDisplayFailedDialog() {
+        val validData = validData()
+        val result = failedResultWithData(validData)
 
-        execute(result);
+        execute(result)
 
-        assertThat("Load Failed dialog should be shown if empty data is supplied", mImpl.didDisplayDialogLoadFailed());
+        assertThat("Load Failed dialog should be shown if empty data is supplied", mImpl!!.didDisplayDialogLoadFailed())
     }
 
     @Test
-    public void validResultWithValidDataWillDisplayMessageBox() {
-        CheckDatabaseResult validData = validData();
-        Pair<Boolean, Collection.CheckDatabaseResult> result = validResultWithData(validData);
+    fun validResultWithValidDataWillDisplayMessageBox() {
+        val validData = validData()
+        val result = validResultWithData(validData)
 
-        execute(result);
+        execute(result)
 
-        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl.didDisplayDialogLoadFailed());
-        assertThat("Dialog should be displayed", mImpl.didDisplayMessage());
+        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl!!.didDisplayDialogLoadFailed())
+        assertThat("Dialog should be displayed", mImpl!!.didDisplayMessage())
     }
 
     @Test
-    public void validResultWithFailedDatabaseWillShowFailedDialog() {
-        CheckDatabaseResult failedDb = failedDatabase();
-        Pair<Boolean, Collection.CheckDatabaseResult> result = validResultWithData(failedDb);
+    fun validResultWithFailedDatabaseWillShowFailedDialog() {
+        val failedDb = failedDatabase()
+        val result = validResultWithData(failedDb)
 
-        execute(result);
+        execute(result)
 
-        assertThat("Load Failed dialog should be shown if failed data is supplied", mImpl.didDisplayDialogLoadFailed());
-        assertThat("Locked Database dialog should be shown if Db was locked", !mImpl.didDisplayLockedDialog());
-        assertThat("Dialog should not be displayed", !mImpl.didDisplayMessage());
+        assertThat("Load Failed dialog should be shown if failed data is supplied", mImpl!!.didDisplayDialogLoadFailed())
+        assertThat("Locked Database dialog should be shown if Db was locked", !mImpl!!.didDisplayLockedDialog())
+        assertThat("Dialog should not be displayed", !mImpl!!.didDisplayMessage())
     }
 
     @Test
-    public void validResultWithLockedDatabaseWillShowLockedDialog() {
-        CheckDatabaseResult lockedDb = lockedDatabase();
-        Pair<Boolean, Collection.CheckDatabaseResult> result = validResultWithData(lockedDb);
+    fun validResultWithLockedDatabaseWillShowLockedDialog() {
+        val lockedDb = lockedDatabase()
+        val result = validResultWithData(lockedDb)
 
-        execute(result);
+        execute(result)
 
-        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl.didDisplayDialogLoadFailed());
-        assertThat("Locked Database dialog should be shown if Db was locked", mImpl.didDisplayLockedDialog());
-        assertThat("Dialog should not be displayed", !mImpl.didDisplayMessage());
+        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl!!.didDisplayDialogLoadFailed())
+        assertThat("Locked Database dialog should be shown if Db was locked", mImpl!!.didDisplayLockedDialog())
+        assertThat("Dialog should not be displayed", !mImpl!!.didDisplayMessage())
     }
 
-    @NonNull
-    private CheckDatabaseResult lockedDatabase() {
-        return new CheckDatabaseResult(1).markAsLocked();
+    private fun lockedDatabase(): CheckDatabaseResult {
+        return CheckDatabaseResult(1).markAsLocked()
     }
 
-    @NonNull
-    private CheckDatabaseResult failedDatabase() {
-        return new CheckDatabaseResult(1).markAsFailed();
+    private fun failedDatabase(): CheckDatabaseResult {
+        return CheckDatabaseResult(1).markAsFailed()
     }
 
-
-    @NonNull
-    private CheckDatabaseResult validData() {
-        return new CheckDatabaseResult(1);
+    private fun validData(): CheckDatabaseResult {
+        return CheckDatabaseResult(1)
     }
 
-
-    @NonNull
-    private Pair<Boolean, Collection.CheckDatabaseResult> failedResultWithData(Collection.CheckDatabaseResult obj) {
-        return new Pair<>(false, obj);
+    private fun failedResultWithData(obj: CheckDatabaseResult): Pair<Boolean, CheckDatabaseResult?> {
+        return Pair(false, obj)
     }
 
-    @NonNull
-    private Pair<Boolean, Collection.CheckDatabaseResult> validResultWithData(Collection.CheckDatabaseResult obj) {
-        return new Pair<>(true, obj);
+    private fun validResultWithData(obj: CheckDatabaseResult): Pair<Boolean, CheckDatabaseResult?> {
+        return Pair(true, obj)
     }
 
-
-    @NonNull
-    private Pair<Boolean, Collection.CheckDatabaseResult> failedResultNoData() {
-        return new Pair<>(false, null);
+    private fun failedResultNoData(): Pair<Boolean, CheckDatabaseResult?> {
+        return Pair(false, null)
     }
 
-    private void execute(Pair<Boolean, CheckDatabaseResult> result) {
-        DeckPicker.CheckDatabaseListener listener = getInstance(mImpl);
-
-        listener.onPostExecute(result);
+    private fun execute(result: Pair<Boolean, CheckDatabaseResult?>) {
+        val listener = getInstance(mImpl)
+        listener.onPostExecute(result)
     }
 
-    @NonNull
-    private DeckPicker.CheckDatabaseListener getInstance(DeckPickerTestImpl test) {
-        return test.new CheckDatabaseListener();
+    private fun getInstance(test: DeckPickerTestImpl?): CheckDatabaseListener {
+        return test!!.CheckDatabaseListener()
     }
 
-    /**COULD_BE_BETTER: Listener is too coupled to this */
-    protected static class DeckPickerTestImpl extends DeckPicker {
-
-        private boolean mDidDisplayDialogLoadFailed;
-        private boolean mDidDisplayMessage = false;
-        private boolean mDidDisplayDbLocked = false;
-
-
-        public boolean didDisplayDialogLoadFailed() {
-            return mDidDisplayDialogLoadFailed;
+    /**COULD_BE_BETTER: Listener is too coupled to this  */
+    @KotlinCleanup("replace getters with variables")
+    protected class DeckPickerTestImpl : DeckPicker() {
+        private var mDidDisplayDialogLoadFailed = false
+        private var mDidDisplayMessage = false
+        private var mDidDisplayDbLocked = false
+        fun didDisplayDialogLoadFailed(): Boolean {
+            return mDidDisplayDialogLoadFailed
         }
 
-        @Override
-        public void handleDbError() {
-            this.mDidDisplayDialogLoadFailed = true;
-            super.handleDbError();
+        override fun handleDbError() {
+            mDidDisplayDialogLoadFailed = true
+            super.handleDbError()
         }
 
-        @Override
-        public void handleDbLocked() {
-            this.mDidDisplayDbLocked = true;
-            super.handleDbLocked();
+        override fun handleDbLocked() {
+            mDidDisplayDbLocked = true
+            super.handleDbLocked()
         }
 
-        public void resetVariables() {
-            mDidDisplayMessage = false;
-            mDidDisplayDialogLoadFailed = false;
-            mDidDisplayDbLocked = false;
+        fun resetVariables() {
+            mDidDisplayMessage = false
+            mDidDisplayDialogLoadFailed = false
+            mDidDisplayDbLocked = false
         }
 
-        @Override
-        public void showSimpleMessageDialog(String message, boolean reload) {
-            mDidDisplayMessage = true;
-            super.showSimpleMessageDialog(message, reload);
+        override fun showSimpleMessageDialog(message: String, reload: Boolean) {
+            mDidDisplayMessage = true
+            super.showSimpleMessageDialog(message, reload)
         }
 
-
-        public boolean didDisplayMessage() {
-            return mDidDisplayMessage;
+        fun didDisplayMessage(): Boolean {
+            return mDidDisplayMessage
         }
 
-
-        public boolean didDisplayLockedDialog() {
-            return mDidDisplayDbLocked;
+        fun didDisplayLockedDialog(): Boolean {
+            return mDidDisplayDbLocked
         }
     }
 }
