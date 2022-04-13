@@ -13,55 +13,47 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.reviewer
 
-package com.ichi2.anki.reviewer;
+import android.content.SharedPreferences
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.PreferenceUtils
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsInAnyOrder
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mockito.*
+import org.mockito.invocation.InvocationOnMock
+import java.util.*
 
-import android.content.SharedPreferences;
-
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.testutils.PreferenceUtils;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-@RunWith(AndroidJUnit4.class)
-public class ActionButtonStatusTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("Objects.requireNonNull")
+@KotlinCleanup("`when` -> whenever`")
+class ActionButtonStatusTest : RobolectricTest() {
     @Test
-    public void allCustomButtonsCanBeDisabled() {
-        Set<String> reviewerExpectedKeys = getCustomButtonsExpectedKeys();
-        Set<String> actualPreferenceKeys = PreferenceUtils.getAllCustomButtonKeys(getTargetContext());
-
-        assertThat("Each button in the Action Bar must be modifiable in Preferences - Reviewer - App Bar Buttons",
-                reviewerExpectedKeys,
-                containsInAnyOrder(Objects.requireNonNull(actualPreferenceKeys.toArray())));
+    fun allCustomButtonsCanBeDisabled() {
+        val reviewerExpectedKeys = customButtonsExpectedKeys
+        val actualPreferenceKeys = PreferenceUtils.getAllCustomButtonKeys(targetContext)
+        assertThat(
+            "Each button in the Action Bar must be modifiable in Preferences - Reviewer - App Bar Buttons",
+            reviewerExpectedKeys,
+            containsInAnyOrder(*Objects.requireNonNull<Array<Any>>(actualPreferenceKeys.toTypedArray()))
+        )
     }
 
-
-    private Set<String> getCustomButtonsExpectedKeys() {
-        SharedPreferences preferences = mock(SharedPreferences.class);
-        Set<String> ret = new HashSet<>();
-        when(preferences.getString(any(), any())).then(a -> {
-            String key = a.getArgument(0);
-            ret.add(key);
-            return "0";
+    private val customButtonsExpectedKeys: Set<String>
+        get() {
+            val preferences = mock(SharedPreferences::class.java)
+            val ret: MutableSet<String> = HashSet()
+            `when`(preferences.getString(any(), any())).then { a: InvocationOnMock ->
+                val key = a.getArgument<String>(0)
+                ret.add(key)
+                "0"
+            }
+            val status = ActionButtonStatus(mock(ReviewerUi::class.java))
+            status.setup(preferences)
+            return ret
         }
-        );
-        ActionButtonStatus status = new ActionButtonStatus(mock(ReviewerUi.class));
-        status.setup(preferences);
-
-        return ret;
-    }
 }
