@@ -13,82 +13,85 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.Manifest
+import android.app.Application
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.InitialActivity.StartupFailure
+import com.ichi2.anki.InitialActivity.getStartupFailureType
+import com.ichi2.testutils.BackendEmulatingOpenConflict
+import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.Shadows
+import org.robolectric.shadows.ShadowEnvironment
 
-import android.app.Application;
-import android.content.Context;
-
-import com.ichi2.testutils.BackendEmulatingOpenConflict;
-import com.ichi2.testutils.BackupManagerTestUtilities;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Shadows;
-import org.robolectric.shadows.ShadowApplication;
-import org.robolectric.shadows.ShadowEnvironment;
-
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-@RunWith(AndroidJUnit4.class)
-public class InitialActivityWithConflictTest extends RobolectricTest {
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("`is` -> equalTo")
+class InitialActivityWithConflictTest : RobolectricTest() {
     @Before
-    @Override
-    public void setUp() {
-        super.setUp();
-        BackendEmulatingOpenConflict.enable();
+    override fun setUp() {
+        super.setUp()
+        BackendEmulatingOpenConflict.enable()
     }
 
     @After
-    @Override
-    public void tearDown() {
-        super.tearDown();
-        BackendEmulatingOpenConflict.disable();
+    override fun tearDown() {
+        super.tearDown()
+        BackendEmulatingOpenConflict.disable()
     }
 
     @Test
-    public void testInitialActivityResult() {
+    fun testInitialActivityResult() {
         try {
-            setupForDatabaseConflict();
+            setupForDatabaseConflict()
 
-            InitialActivity.StartupFailure f = InitialActivity.getStartupFailureType(getTargetContext());
+            val f = getStartupFailureType(targetContext)
 
-            assertThat("A conflict should be returned", f, is(InitialActivity.StartupFailure.DATABASE_LOCKED));
+            assertThat("A conflict should be returned", f, `is`(StartupFailure.DATABASE_LOCKED))
         } finally {
-            setupForDefault();
+            setupForDefault()
         }
     }
 
-    public static void setupForDatabaseConflict() {
-        grantWritePermissions();
-        ShadowEnvironment.setExternalStorageState("mounted");
-    }
+    companion object {
+        @JvmStatic
+        fun setupForDatabaseConflict() {
+            grantWritePermissions()
+            ShadowEnvironment.setExternalStorageState("mounted")
+        }
 
-    public static void setupForValid(Context context) {
-        grantWritePermissions();
-        ShadowEnvironment.setExternalStorageState("mounted");
-        BackupManagerTestUtilities.setupSpaceForBackup(context);
-    }
+        @JvmStatic
+        fun setupForValid(context: Context?) {
+            grantWritePermissions()
+            ShadowEnvironment.setExternalStorageState("mounted")
+            BackupManagerTestUtilities.setupSpaceForBackup(context)
+        }
 
-    public static void setupForDefault() {
-        revokeWritePermissions();
-        ShadowEnvironment.setExternalStorageState("removed");
-    }
+        @JvmStatic
+        fun setupForDefault() {
+            revokeWritePermissions()
+            ShadowEnvironment.setExternalStorageState("removed")
+        }
 
+        @JvmStatic
+        fun grantWritePermissions() {
+            val app = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application)
+            app.grantPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
 
-    protected static void grantWritePermissions() {
-        ShadowApplication app = Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext());
-        app.grantPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-    }
-
-    protected static void revokeWritePermissions() {
-        ShadowApplication app = Shadows.shadowOf((Application) ApplicationProvider.getApplicationContext());
-        app.denyPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        @JvmStatic
+        fun revokeWritePermissions() {
+            val app = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application)
+            app.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
     }
 }
