@@ -68,6 +68,20 @@ import java.util.zip.GZIPInputStream
  * https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream
  */
 
+/**
+ * addons path typealias, the path is some-addon path inside addons directory
+ * The path structure of some-addon
+ *
+ * AnkiDroid
+ *   - addons
+ *       - some-addon
+ *           - package
+ *               - index.js
+ *               - README.md
+ *       - some-another-addon
+ */
+typealias AddonsPackageDir = File
+
 class TgzPackageExtract(private val context: Context) {
     private val GZIP_SIGNATURE = byteArrayOf(0x1f, 0x8b.toByte())
     private var requiredMinSpace: Long = 0
@@ -103,13 +117,14 @@ class TgzPackageExtract(private val context: Context) {
      * Untar and ungzip a tar.gz file to a AnkiDroid/addons directory.
      *
      * @param tarballFile the .tgz file to extract
-     * @param addonsPackageDir the addons package directory
+     * @param addonsPackageDir the addons package directory, the path is addon path inside addons directory
+     *                         e.g. AnkiDroid/addons/some-addon/
      * @return the temp directory.
      * @throws FileNotFoundException if .tgz file or ungzipped file i.e. .tar file not found
      * @throws IOException
      */
     @Throws(Exception::class)
-    fun extractTarGzipToAddonFolder(tarballFile: File, addonsPackageDir: File) {
+    fun extractTarGzipToAddonFolder(tarballFile: File, addonsPackageDir: AddonsPackageDir) {
 
         require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon, tarballFile.absolutePath) }
 
@@ -301,7 +316,7 @@ class TgzPackageExtract(private val context: Context) {
             Timber.i("Attempting to create output directory %s.", outputFile.absolutePath)
             compat.createDirectories(outputFile)
         } catch (e: IOException) {
-            Timber.e(e)
+            Timber.w(e)
             throw IOException(context.getString(R.string.could_not_create_dir, outputFile.absolutePath))
         }
     }
@@ -379,7 +394,7 @@ class TgzPackageExtract(private val context: Context) {
         }
     }
 
-    private fun safeDeleteAddonsPackageDir(addonsPackageDir: File) {
+    private fun safeDeleteAddonsPackageDir(addonsPackageDir: AddonsPackageDir) {
         if (addonsPackageDir.parent != "addons") {
             return
         }
