@@ -518,7 +518,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         delegate.isHandleNativeActionModesEnabled = true
         val mainView = findViewById<View>(android.R.id.content)
         initNavigationDrawer(mainView)
-        mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.choosen_answer))
+        mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
     }
 
