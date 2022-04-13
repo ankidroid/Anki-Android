@@ -37,9 +37,9 @@ public class TextImporter extends NoteImporter {
     private boolean mNeedDelimiter = true;
     final String mPatterns = "\t|,;:";
 
-    private FileObj mFileobj;
+    private FileObj mFileObj;
     private char mDelimiter;
-    private String[] mTagstoadd;
+    private String[] mTagsToAdd;
 
     private CsvDialect mDialect;
     private int mNumFields;
@@ -50,9 +50,9 @@ public class TextImporter extends NoteImporter {
 
     public TextImporter(Collection col, @NonNull String file) {
         super(col, file);
-        mFileobj = null;
+        mFileObj = null;
         mDelimiter = '\0';
-        mTagstoadd = new String[0];
+        mTagsToAdd = new String[0];
     }
 
 
@@ -98,7 +98,7 @@ public class TextImporter extends NoteImporter {
             log.add(getString(R.string.csv_importer_error_exception, e));
         }
         mLog = log;
-        mFileobj.close();
+        mFileObj.close();
         return notes;
     }
 
@@ -117,7 +117,7 @@ public class TextImporter extends NoteImporter {
     private ForeignNote noteFromFields(List<String> fields) {
         ForeignNote note = new ForeignNote();
         note.mFields.addAll(fields);
-        note.mTags.addAll(Arrays.asList(mTagstoadd));
+        note.mTags.addAll(Arrays.asList(mTagsToAdd));
         return note;
     }
 
@@ -131,7 +131,7 @@ public class TextImporter extends NoteImporter {
 
     /** Read file into self.lines if not already there. */
     private void cacheFile() {
-        if (mFileobj == null) {
+        if (mFileObj == null) {
             openFile();
         }
     }
@@ -139,13 +139,13 @@ public class TextImporter extends NoteImporter {
 
     private void openFile() {
         mDialect = null;
-        mFileobj = FileObj.open(mFile);
+        mFileObj = FileObj.open(mFile);
 
         String firstLine = getFirstFileLine().orElse(null);
         if (firstLine != null) {
             if (firstLine.startsWith("tags:")) {
                 String tags = firstLine.substring("tags:".length()).trim();
-                mTagstoadd = tags.split(" ");
+                mTagsToAdd = tags.split(" ");
                 this.mFirstLineWasTags = true;
             }
             updateDelimiter();
@@ -239,7 +239,7 @@ public class TextImporter extends NoteImporter {
     private Stream<String> getDataStream() {
         Stream<String> data;
         try {
-            data = mFileobj.readAsUtf8WithoutBOM();
+            data = mFileObj.readAsUtf8WithoutBOM();
         } catch (IOException e) {
             throw new EncodingException(e);
         }

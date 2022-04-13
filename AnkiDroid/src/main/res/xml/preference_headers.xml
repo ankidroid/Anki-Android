@@ -31,7 +31,7 @@
         android:title="@string/pref_cat_reviewing">
     </Preference>
 
-    <!-- Appearance Prefrences  -->
+    <!-- Appearance Preferences  -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$AppearanceSettingsFragment"
         android:key="appearance_preference_group"
@@ -39,7 +39,7 @@
         android:title="@string/pref_cat_appearance">
     </Preference>
 
-    <!-- Navigation Prefrences -->
+    <!-- Navigation Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$GesturesSettingsFragment"
         android:summary="@string/pref_cat_gestures_summ"

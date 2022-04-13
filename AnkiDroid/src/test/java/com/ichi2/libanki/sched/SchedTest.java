@@ -765,7 +765,7 @@ public class SchedTest extends RobolectricTest {
         col.getSched().unsuspendCards(new long[] {c.getId()});
         col.reset();
         assertNotNull(getCard());
-        // should cope with rev cards being relearnt
+        // should cope with rev cards being relearned
         c.setDue(0);
         c.setIvl(100);
         c.setType(CARD_TYPE_REV);
