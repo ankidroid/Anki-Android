@@ -13,63 +13,53 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.reviewer
 
-package com.ichi2.anki.reviewer;
+import android.content.SharedPreferences
+import android.view.KeyEvent
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 
-import android.content.SharedPreferences;
-import android.view.KeyEvent;
-
-import com.ichi2.anki.cardviewer.ViewerCommand;
-
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-public class PeripheralKeymapTest {
+@KotlinCleanup("IDE lint")
+@KotlinCleanup("`is` -> equalTo`")
+@KotlinCleanup("`when` -> whenever`")
+class PeripheralKeymapTest {
     @Test
-    public void flagAndAnswerDoNotConflict() {
-        List<ViewerCommand> processed = new ArrayList<>();
+    fun flagAndAnswerDoNotConflict() {
+        val processed: MutableList<ViewerCommand> = ArrayList()
 
-        PeripheralKeymap peripheralKeymap = new PeripheralKeymap(new MockReviewerUi(), processed::add);
-        peripheralKeymap.setup(mock(SharedPreferences.class));
-        KeyEvent event = mock(KeyEvent.class);
-        when(event.getUnicodeChar()).thenReturn(0);
-        when(event.isCtrlPressed()).thenReturn(true);
-        when(event.getUnicodeChar(0)).thenReturn(49);
-        when(event.getKeyCode()).thenReturn(KeyEvent.KEYCODE_1);
+        val peripheralKeymap = PeripheralKeymap(MockReviewerUi(), { e: ViewerCommand -> processed.add(e) })
+        peripheralKeymap.setup(mock(SharedPreferences::class.java))
+        val event = mock(KeyEvent::class.java)
+        `when`(event.unicodeChar).thenReturn(0)
+        `when`(event.isCtrlPressed).thenReturn(true)
+        `when`(event.getUnicodeChar(0)).thenReturn(49)
+        `when`(event.keyCode).thenReturn(KeyEvent.KEYCODE_1)
 
-        assertThat((char) event.getUnicodeChar(), is('\0'));
-        assertThat((char) event.getUnicodeChar(0), is('1'));
-        peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_1, event);
+        assertThat(event.unicodeChar.toChar(), `is`('\u0000'))
+        assertThat(event.getUnicodeChar(0).toChar(), `is`('1'))
+        peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_1, event)
 
-        assertThat(processed, hasSize(1));
-        assertThat(processed.get(0), is(ViewerCommand.COMMAND_TOGGLE_FLAG_RED));
+        assertThat<List<ViewerCommand>>(processed, hasSize(1))
+        assertThat(processed[0], `is`(ViewerCommand.COMMAND_TOGGLE_FLAG_RED))
     }
 
-    private static class MockReviewerUi implements ReviewerUi {
+    private class MockReviewerUi : ReviewerUi {
+        override val controlBlocked: ControlBlock?
+            get() = null
 
-        @Override
-        public ControlBlock getControlBlocked() {
-            return null;
+        override fun isControlBlocked(): Boolean {
+            return false
         }
 
-
-        @Override
-        public boolean isControlBlocked() {
-            return false;
-        }
-
-
-        @Override
-        public boolean isDisplayingAnswer() {
-            return false;
-        }
+        override val isDisplayingAnswer: Boolean
+            get() = false
     }
 }
