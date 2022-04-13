@@ -13,66 +13,44 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import com.ichi2.anki.CardBrowser.CardCollection
+import com.ichi2.anki.CardBrowser.PositionAware
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.*
+import org.hamcrest.Matchers.*
+import org.junit.Test
+import java.util.*
 
-import org.junit.Test;
-
-import java.util.Arrays;
-
-
-import androidx.annotation.NonNull;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-public class CardBrowser_CardCollectionTest {
-
+@KotlinCleanup("IDE lint")
+@KotlinCleanup("`is` -> equalTo")
+class CardBrowser_CardCollectionTest {
     @Test
-    public void reverseFixesPosition() {
-        CardBrowser.CardCollection<Positioned> cardCollection = createCollection(new Positioned(0), new Positioned(1));
-
-        assertThat(cardCollection.get(0).getPosition(), is(0));
-        assertThat(cardCollection.get(0).getInitialValue(), is(0));
-
-        cardCollection.reverse();
-
-        assertThat(cardCollection.get(0).getPosition(), is(0));
-        assertThat(cardCollection.get(0).getInitialValue(), is(1));
+    fun reverseFixesPosition() {
+        val cardCollection = createCollection(Positioned(0), Positioned(1))
+        assertThat(cardCollection[0].position, `is`(0))
+        assertThat(cardCollection[0].initialValue, `is`(0))
+        cardCollection.reverse()
+        assertThat(cardCollection[0].position, `is`(0))
+        assertThat(cardCollection[0].initialValue, `is`(1))
     }
 
-
-    @NonNull
-    protected CardBrowser.CardCollection<Positioned> createCollection(Positioned... toInsert) {
-        CardBrowser.CardCollection<Positioned> cardCollection = new CardBrowser.CardCollection<>();
-        cardCollection.replaceWith(Arrays.asList(toInsert));
-        return cardCollection;
+    private fun createCollection(vararg toInsert: Positioned?): CardCollection<Positioned> {
+        val cardCollection = CardCollection<Positioned>()
+        cardCollection.replaceWith(Arrays.asList(*toInsert))
+        return cardCollection
     }
 
-
-    private static class Positioned implements CardBrowser.PositionAware {
-
-        private int mPosition;
-        private int mInitialValue;
-
-        public Positioned(int position) {
-            mPosition = position;
-            mInitialValue = position;
+    @KotlinCleanup("See if we can have the variable override")
+    private class Positioned(private var position: Int) : PositionAware {
+        val initialValue: Int = position
+        override fun getPosition(): Int {
+            return position
         }
 
-        private int getInitialValue() {
-            return mInitialValue;
-        }
-
-        @Override
-        public int getPosition() {
-            return mPosition;
-        }
-
-
-        @Override
-        public void setPosition(int value) {
-            mPosition = value;
+        override fun setPosition(value: Int) {
+            position = value
         }
     }
 }
