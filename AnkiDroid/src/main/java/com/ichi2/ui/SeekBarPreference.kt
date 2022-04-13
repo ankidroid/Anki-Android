@@ -25,7 +25,7 @@ class SeekBarPreference(context: Context, attrs: AttributeSet) : android.prefere
     private lateinit var mSeekLine: LinearLayout
     private lateinit var mSeekBar: SeekBar
     private lateinit var mValueText: TextView
-    private val mSuffix: String? = attrs.getAttributeValue(androidns, "text")
+    private val mSuffix: String = attrs.getAttributeValue(androidns, "text")
     private val mDefault: Int = attrs.getAttributeIntValue(androidns, "defaultValue", 0)
     private val mMax: Int = attrs.getAttributeIntValue(androidns, "max", 100)
     private val mMin: Int = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0)
