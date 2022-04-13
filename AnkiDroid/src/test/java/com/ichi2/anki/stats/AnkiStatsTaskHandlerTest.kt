@@ -13,53 +13,45 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.stats
 
-package com.ichi2.anki.stats;
+import android.widget.TextView
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.createReviewSummaryStatistics
+import com.ichi2.libanki.Collection
+import com.ichi2.utils.KotlinCleanup
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.*
+import org.mockito.MockitoAnnotations
+import java.util.concurrent.ExecutionException
 
-import android.util.Pair;
-import android.widget.TextView;
-
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.libanki.Collection;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
-import java.util.concurrent.ExecutionException;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.mockito.Mockito.*;
-
-@RunWith(AndroidJUnit4.class)
-public class AnkiStatsTaskHandlerTest extends RobolectricTest {
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("make mocks lateinit")
+@KotlinCleanup("`when` -> whenever")
+class AnkiStatsTaskHandlerTest : RobolectricTest() {
+    @Mock
+    private val mCol: Collection? = null
 
     @Mock
-    private Collection mCol;
-
-    @Mock
-    private TextView mView;
-
+    private val mView: TextView? = null
     @Before
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        when(mCol.getDb()).thenReturn(null);
+    override fun setUp() {
+        MockitoAnnotations.openMocks(this)
+        `when`(mCol!!.db).thenReturn(null)
     }
 
     @Test
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public void testCreateReviewSummaryStatistics() throws ExecutionException, InterruptedException {
-        Mockito.verify(mCol, atMost(0)).getDb();
-        android.os.AsyncTask<Pair<Collection, TextView>, Void, String> result = AnkiStatsTaskHandler
-                .createReviewSummaryStatistics(mCol, mView);
-
-        result.get();
-        advanceRobolectricLooper();
-
-        Mockito.verify(mCol, atLeast(1)).getDb();
+    @Throws(ExecutionException::class, InterruptedException::class)
+    @Suppress("deprecation") // #7108: AsyncTask
+    fun testCreateReviewSummaryStatistics() {
+        verify(mCol, atMost(0))!!.db
+        val result = createReviewSummaryStatistics(mCol!!, mView!!)
+        result.get()
+        advanceRobolectricLooper()
+        verify(mCol, atLeast(1))!!.db
     }
 }
