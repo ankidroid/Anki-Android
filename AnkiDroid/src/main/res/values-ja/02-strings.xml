@@ -383,7 +383,7 @@
     <string name="scoped_storage_term_1">I have backed up my data</string>
     <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
     <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
+    <string name="scoped_storage_select_all_terms">続行するにはすべての項目を承認してください</string>
     <string name="scoped_storage_learn_more">詳細</string>
     <string name="scoped_storage_postpone">後で</string>
     <string name="scoped_storage_migrate">Migrate</string>

@@ -47,7 +47,7 @@
     <string name="check_db_title">לבדוק את מסד הנתונים?</string>
     <string name="check_db_warning">פעולה זאת עלולה לארוך זמן רב</string>
     <string name="check_db_acknowledge">מסד הנתונים נבדק.‏</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">מסד הנתונים בדוק ושופר.\nהוקטן ב־ %dmb.‏</string>
     <string name="contextmenu_deckpicker_delete_deck">מחיקת חפיסה</string>
     <string name="delete_deck_default_deck">לא ניתן למחוק את חפיסת בררת המחדל</string>
     <string name="delete_deck_title">למחוק את החפיסה?‏</string>
@@ -61,22 +61,22 @@
     <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
     <string name="initializing_tts">מאתחל מנוע כתוב-אל-דיבור...‏</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nקבצים שאינם בשימוש:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>קלפי לימוד ל־Android</h2>AnkiDroid הוא יישום עם קלפי זיכרון עם תאימות לתכנית שולחן העבודה <a href=\"%2$s\">Anki</a>. ניתן ליצור, להוריד וללמוד חומר גם ב־AnkiDroid או ב־Anki Desktop, ולסנכרן ביניהם בקלות עם AnkiWeb.]]></item>
         <item><![CDATA[To help us make AnkiDroid better, please report bugs to <a href=\"%1$s\">the issue tracker</a>; new feature ideas are very welcome too. Find answers on <a href=\"%2$s\">the wiki</a> or start a discussion on <a href=\"%3$s\">the forum</a>.]]></item>
-        <item><![CDATA[AnkiDroid is <a href=\"%1$s\">open source software<a/>, so everyone is encouraged to <a href=\"%2$s\">become a contributor</a> :-)]]></item>
-        <item><![CDATA[Non-developers can also help. For instance, you can <a href=\"%1$s\">help translate</a> AnkiDroid, update the wiki, provide screenshots, or blog about AnkiDroid.]]></item>
+        <item><![CDATA[AnkiDroid הוא <a href=\"%1$s\">תכנה חופשית <a/>, כולם מוזמנים  <a href=\"%2$s\">להיות תורמים ומשפיעים  a </a> :-)]]></item>
+        <item><![CDATA[גם חסרי ידע טכנולוגי יכולים לסייע. למשל,  ניתן <a href=\"%1$s\">לעזור בתרגום</a> AnkiDroid, לעדכן את הויקי, לספק צילומי מסך, או לכתוב בלוג על AnkiDroid.]]></item>
         <item><![CDATA[AnkiDroid משוחררת ב<a href=\"%1$s\">רשיון הציבורי הכללי של גנו, גרסה 3</a> וקוד המקור שלה זמין <a href=\"%2$s\">באתר GitHub</a>.]]></item>
     </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">תצוגה מקדימה</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
+    <string name="reposition_card_dialog_title">שינוי מיקום כרטיס חדש</string>
     <string name="reposition_card_dialog_message">מיקום התחלתי:</string>
     <string name="reposition_card_not_new_error">ניתן לשנות מיקום לקלפים חדשים בלבד</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d card repositioned</item>
         <item quantity="two">%d cards repositioned</item>
-        <item quantity="many">%d cards repositioned</item>
+        <item quantity="many">שונה מיקום עבור %d כרטיסים </item>
         <item quantity="other">%d cards repositioned</item>
     </plurals>
     <string name="reset_card_dialog_title">איפוס התקדמות הקלף</string>
@@ -84,20 +84,20 @@
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="two">%d cards reset</item>
-        <item quantity="many">%d cards reset</item>
+        <item quantity="many">%d כרטיסיות אופסו</item>
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
         <item quantity="one">Reschedule %d card</item>
         <item quantity="two">Reschedule %d cards</item>
-        <item quantity="many">Reschedule %d cards</item>
+        <item quantity="many">תזמון מחדש %d כרטיסים </item>
         <item quantity="other">Reschedule %d cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Current interval: %d day</item>
         <item quantity="two">Current interval: %d days</item>
-        <item quantity="many">Current interval: %d days</item>
+        <item quantity="many">מרווח זמן נוכחי: %d ימים </item>
         <item quantity="other">Current interval: %d days</item>
     </plurals>
     <string name="reschedule_card_dialog_message">תזמן לשינון מחדש בעוד x ימים</string>
@@ -109,16 +109,17 @@
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">בחר חפיסה בסייר הקבצים או בקר ב about:download כדי לייבא אותו</string>
     <string name="answering_error_title">שגיאת מסד נתונים</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">כתיבה לאוסף נכשלה. מאגר המידע אולי שבור או שאין מספיק מקום בדיסק.\n\n אם זה קורה שוב ושוב, אפשר לבדוק את מאגר המידע, לתקן את האוסף או לשחזר אותו מגיבוי. לחץ \'אפשרויות\' עבור כך. \n כמו כן ייתכן שזוהי תקלה בAnkiDroid. נא לדווח את השגיאה כדי שנוכל לבדוק זאת.</string>
     <string name="answering_error_report">דיווח על שגיאה</string>
-    <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
+    <string name="repair_deck_dialog">לתקן את המאגר?\n\n
+לפני תחילת ניסיון התיקון, יתבצע שמירת העתק בתקייה %s</string>
     <string name="intent_aedict_empty">הקטגוריה \'ברירת מחדל\' ריקה</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_total_new">קלפים חדשים בחפיסה: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_new_extend">הוספה/הורדה(“-3”) הגבלת כרטיסים חדשים להיום ב</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead">עבור כמה ימים ברצונך לשנן מראש?</string>

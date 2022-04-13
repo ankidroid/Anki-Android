@@ -131,7 +131,7 @@
     <string name="tts" maxLength="41">Převod textu na řeč</string>
     <string name="tts_summ">Přečte otázku a odpověď, pokud není připojen žádný zvukový soubor</string>
     <string name="sync_fetch_missing_media" maxLength="41">Stáhnout multimédia při synchronizaci</string>
-    <string name="sync_fetch_missing_media_summ">Automaticky stáhnout chybějící multimédia při synchronizaci.</string>
+    <string name="sync_fetch_missing_media_summ">Automaticky stáhnout chybějící multimédia při synchronizaci</string>
     <string name="sync_account" maxLength="41">AnkiWeb účet</string>
     <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
     <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
