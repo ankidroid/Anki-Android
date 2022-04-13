@@ -38,6 +38,7 @@ import java.util.List;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
 /**
@@ -244,8 +245,9 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     // Called via mFlipCardListener in parent class when answer button pressed
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     @Override
-    protected void displayCardAnswer() {
+    public void displayCardAnswer() {
         super.displayCardAnswer();
         mShowingAnswer = true;
         updateButtonsState();

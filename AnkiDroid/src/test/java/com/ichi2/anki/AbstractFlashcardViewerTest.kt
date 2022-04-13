@@ -1,326 +1,300 @@
 //noinspection MissingCopyrightHeader #8659
 
-package com.ichi2.anki;
+package com.ichi2.anki
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Build;
-import android.os.LocaleList;
-import android.webkit.RenderProcessGoneDetail;
+import android.app.Activity
+import android.content.Intent
+import android.os.Build
+import android.webkit.RenderProcessGoneDetail
+import androidx.annotation.CheckResult
+import androidx.annotation.RequiresApi
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1
+import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_2
+import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_3
+import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_4
+import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.RELINQUISH_FOCUS
+import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SHOW_ANSWER
+import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NOOP
+import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS
+import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.AutomaticAnswer
+import com.ichi2.anki.reviewer.AutomaticAnswerAction
+import com.ichi2.anki.reviewer.AutomaticAnswerSettings
+import com.ichi2.anki.servicelayer.LanguageHintService
+import com.ichi2.libanki.StdModels
+import com.ichi2.testutils.AnkiAssert
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.*
+import org.junit.Assert.*
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mockito.*
+import org.robolectric.Robolectric
+import org.robolectric.android.controller.ActivityController
+import java.util.*
 
-import com.ichi2.anki.cardviewer.ViewerCommand;
-import com.ichi2.anki.reviewer.AutomaticAnswer;
-import com.ichi2.anki.reviewer.AutomaticAnswerAction;
-import com.ichi2.anki.reviewer.AutomaticAnswerSettings;
-import com.ichi2.anki.servicelayer.LanguageHintService;
-import com.ichi2.libanki.Model;
-import com.ichi2.libanki.Note;
-import com.ichi2.testutils.AnkiAssert;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.android.controller.ActivityController;
-
-import java.util.Locale;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1;
-import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_2;
-import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_3;
-import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_4;
-import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.RELINQUISH_FOCUS;
-import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SHOW_ANSWER;
-import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NOOP;
-import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS;
-import static com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl;
-import static com.ichi2.libanki.StdModels.BASIC_TYPING_MODEL;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-
-@RequiresApi(api = Build.VERSION_CODES.O) //getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
-@RunWith(AndroidJUnit4.class)
-public class AbstractFlashcardViewerTest extends RobolectricTest {
-
-    public static class NonAbstractFlashcardViewer extends AbstractFlashcardViewer {
-        public Integer mAnswered;
-        private int mLastTime = 0;
-
-        @Override
-        protected void setTitle() {
-        }
-
-
-        @Override
-        protected void performReload() {
+@RequiresApi(api = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("extract the deprecated method")
+@KotlinCleanup("`is` -> equalTo")
+@KotlinCleanup("import: assertDoesNotThrow")
+@KotlinCleanup("rename: `val viewer = viewer`")
+class AbstractFlashcardViewerTest : RobolectricTest() {
+    class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
+        var answered: Int? = null
+        private var mLastTime = 0
+        override fun setTitle() {}
+        override fun performReload() {
             // intentionally blank
         }
+        @KotlinCleanup("make base property public and remove")
+        val typedInput get() = super.typedInputText
 
-
-        @Override
-        public void answerCard(int ease) {
-            super.answerCard(ease);
-            this.mAnswered = ease;
+        override fun answerCard(ease: Int) {
+            super.answerCard(ease)
+            answered = ease
         }
 
-
-        @Override
-        protected long getElapsedRealTime() {
-            mLastTime += AnkiDroidApp.getSharedPrefs(getBaseContext()).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL);
-            return mLastTime;
-        }
-
-
-        public String getTypedInput() {
-            return super.getTypedInputText();
-        }
-
-        public String getHintLocale() {
-            LocaleList imeHintLocales = this.mAnswerField.getImeHintLocales();
-            if (imeHintLocales == null) {
-                return null;
+        override val elapsedRealTime: Long
+            get() {
+                mLastTime += AnkiDroidApp.getSharedPrefs(baseContext).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
+                return mLastTime.toLong()
             }
-            return imeHintLocales.toLanguageTags();
+        val hintLocale: String?
+            get() {
+                val imeHintLocales = mAnswerField!!.imeHintLocales ?: return null
+                return imeHintLocales.toLanguageTags()
+            }
+
+        fun hasAutomaticAnswerQueued(): Boolean {
+            return mAutomaticAnswer.timeoutHandler.hasMessages(0)
         }
-
-        public boolean hasAutomaticAnswerQueued() {
-            return mAutomaticAnswer.getTimeoutHandler().hasMessages(0);
-        }
     }
 
     @Test
-    public void relinquishFocusIsParsedFromSignal() {
-        String url = "signal:relinquishFocus"; //confirmed data from JS transition via debugger.
-        assertEquals(RELINQUISH_FOCUS, getSignalFromUrl(url));
+    fun relinquishFocusIsParsedFromSignal() {
+        val url = "signal:relinquishFocus" // confirmed data from JS transition via debugger.
+        assertEquals(RELINQUISH_FOCUS, getSignalFromUrl(url))
     }
 
     @Test
-    public void typeFocusIsParsedFromSignal() {
-        String url = "signal:typefocus";
-        assertEquals(TYPE_FOCUS, getSignalFromUrl(url));
+    fun typeFocusIsParsedFromSignal() {
+        val url = "signal:typefocus"
+        assertEquals(TYPE_FOCUS, getSignalFromUrl(url))
     }
 
     @Test
-    public void showAnswerIsParsedFromSignal() {
-        String url = "signal:show_answer";
-        assertEquals(SHOW_ANSWER, getSignalFromUrl(url));
+    fun showAnswerIsParsedFromSignal() {
+        val url = "signal:show_answer"
+        assertEquals(SHOW_ANSWER, getSignalFromUrl(url))
     }
 
-    //I'd love to turn these int parameterised tests, but it feels like more overhead for just 4 tests.
+    // I'd love to turn these int parameterised tests, but it feels like more overhead for just 4 tests.
     @Test
-    public void ease1IsParsedFromSignal() {
-        String url = "signal:answer_ease1";
-        assertEquals(ANSWER_ORDINAL_1, getSignalFromUrl(url));
-    }
-    @Test
-    public void ease2IsParsedFromSignal() {
-        String url = "signal:answer_ease2";
-        assertEquals(ANSWER_ORDINAL_2, getSignalFromUrl(url));
-    }
-    @Test
-    public void ease3IsParsedFromSignal() {
-        String url = "signal:answer_ease3";
-        assertEquals(ANSWER_ORDINAL_3, getSignalFromUrl(url));
-    }
-    @Test
-    public void ease4IsParsedFromSignal() {
-        String url = "signal:answer_ease4";
-        assertEquals(ANSWER_ORDINAL_4, getSignalFromUrl(url));
+    fun ease1IsParsedFromSignal() {
+        val url = "signal:answer_ease1"
+        assertEquals(ANSWER_ORDINAL_1, getSignalFromUrl(url))
     }
 
     @Test
-    public void invalidEaseIsParsedFromSignal() {
-        String url = "signal:answer_ease0";
-        assertEquals(SIGNAL_NOOP, getSignalFromUrl(url));
+    fun ease2IsParsedFromSignal() {
+        val url = "signal:answer_ease2"
+        assertEquals(ANSWER_ORDINAL_2, getSignalFromUrl(url))
     }
 
     @Test
-    public void invalidEncodingDoesNotCrash() {
-        //#5944 - input came in as: 'typeblurtext:%'. We've fixed the encoding, but want to make sure there's no crash
+    fun ease3IsParsedFromSignal() {
+        val url = "signal:answer_ease3"
+        assertEquals(ANSWER_ORDINAL_3, getSignalFromUrl(url))
+    }
+
+    @Test
+    fun ease4IsParsedFromSignal() {
+        val url = "signal:answer_ease4"
+        assertEquals(ANSWER_ORDINAL_4, getSignalFromUrl(url))
+    }
+
+    @Test
+    fun invalidEaseIsParsedFromSignal() {
+        val url = "signal:answer_ease0"
+        assertEquals(SIGNAL_NOOP, getSignalFromUrl(url))
+    }
+
+    @Test
+    fun invalidEncodingDoesNotCrash() {
+        // #5944 - input came in as: 'typeblurtext:%'. We've fixed the encoding, but want to make sure there's no crash
         // as JS can call this function with arbitrary data.
-        String url = "typeblurtext:%";
+        val url = "typeblurtext:%"
 
-        NonAbstractFlashcardViewer viewer = getViewer();
-        AnkiAssert.assertDoesNotThrow(() -> viewer.handleUrlFromJavascript(url));
+        val viewer = viewer
+        AnkiAssert.assertDoesNotThrow { viewer.handleUrlFromJavascript(url) }
     }
 
     @Test
-    public void validEncodingSetsAnswerCorrectly() {
-        //你好%
-        String url = "typeblurtext:%E4%BD%A0%E5%A5%BD%25";
-        NonAbstractFlashcardViewer viewer = getViewer();
+    fun validEncodingSetsAnswerCorrectly() {
+        // 你好%
+        val url = "typeblurtext:%E4%BD%A0%E5%A5%BD%25"
+        val viewer = viewer
 
-        viewer.handleUrlFromJavascript(url);
+        viewer.handleUrlFromJavascript(url)
 
-        assertThat(viewer.getTypedInput(), is("你好%"));
+        assertThat(viewer.typedInput, `is`("你好%"))
     }
 
     @Test
-    public void testEditingCardChangesTypedAnswer() {
+    @Suppress("deprecation") // onActivityResult
+    fun testEditingCardChangesTypedAnswer() {
         // 7363
-       addNoteUsingBasicTypedModel("Hello", "World");
+        addNoteUsingBasicTypedModel("Hello", "World")
 
-        NonAbstractFlashcardViewer viewer = getViewer();
+        val viewer = viewer
 
-        assertThat(viewer.getCorrectTypedAnswer(), is("World"));
+        assertThat(viewer.correctTypedAnswer, `is`("World"))
 
-        waitForAsyncTasksToComplete();
+        waitForAsyncTasksToComplete()
 
-        AbstractFlashcardViewer.setEditorCard(viewer.mCurrentCard);
+        AbstractFlashcardViewer.editorCard = viewer.mCurrentCard
 
-        Note note = viewer.mCurrentCard.note();
-        note.setField(1, "David");
+        val note = viewer.mCurrentCard!!.note()
+        note.setField(1, "David")
 
-        viewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
+        viewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, Intent())
 
-        waitForAsyncTasksToComplete();
+        waitForAsyncTasksToComplete()
 
-        assertThat(viewer.getCorrectTypedAnswer(), is("David"));
+        assertThat(viewer.correctTypedAnswer, `is`("David"))
     }
 
     @Test
-    public void testEditingCardChangesTypedAnswerOnDisplayAnswer() {
+    @Suppress("deprecation") // onActivityResult
+    fun testEditingCardChangesTypedAnswerOnDisplayAnswer() {
         // 7363
-        addNoteUsingBasicTypedModel("Hello", "World");
+        addNoteUsingBasicTypedModel("Hello", "World")
 
-        NonAbstractFlashcardViewer viewer = getViewer();
+        val viewer = viewer
 
-        assertThat(viewer.getCorrectTypedAnswer(), is("World"));
+        assertThat(viewer.correctTypedAnswer, `is`("World"))
 
-        viewer.displayCardAnswer();
+        viewer.displayCardAnswer()
 
-        assertThat(viewer.getCardContent(), containsString("World"));
+        assertThat(viewer.cardContent, containsString("World"))
 
-        waitForAsyncTasksToComplete();
+        waitForAsyncTasksToComplete()
 
-        AbstractFlashcardViewer.setEditorCard(viewer.mCurrentCard);
+        AbstractFlashcardViewer.editorCard = viewer.mCurrentCard
 
-        Note note = viewer.mCurrentCard.note();
-        note.setField(1, "David");
+        val note = viewer.mCurrentCard!!.note()
+        note.setField(1, "David")
 
-        viewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, new Intent());
+        viewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, Intent())
 
-        waitForAsyncTasksToComplete();
+        waitForAsyncTasksToComplete()
 
-        assertThat(viewer.getCorrectTypedAnswer(), is("David"));
-        assertThat(viewer.getCardContent(), not(containsString("World")));
-        assertThat(viewer.getCardContent(), containsString("David"));
+        assertThat(viewer.correctTypedAnswer, `is`("David"))
+        assertThat(viewer.cardContent, not(containsString("World")))
+        assertThat(viewer.cardContent, containsString("David"))
     }
 
     @Test
-    public void testCommandPerformsAnswerCard() {
+    fun testCommandPerformsAnswerCard() {
         // Regression for #8527/#8572
         // Note: Couldn't get a spy working, so overriding the method
-        NonAbstractFlashcardViewer viewer = getViewer();
+        val viewer = viewer
 
-        assertThat("Displaying question", viewer.isDisplayingAnswer(), is(false));
-        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED);
+        assertThat("Displaying question", viewer.isDisplayingAnswer, `is`(false))
+        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
 
-        assertThat("Displaying answer", viewer.isDisplayingAnswer(), is(true));
+        assertThat("Displaying answer", viewer.isDisplayingAnswer, `is`(true))
 
-        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED);
+        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
 
-        assertThat(viewer.mAnswered, notNullValue());
+        assertThat(viewer.answered, notNullValue())
     }
 
     @Test
-    public void defaultLanguageIsNull() {
-        NonAbstractFlashcardViewer viewer = getViewer();
-        assertThat(viewer.getHintLocale(), nullValue());
+    fun defaultLanguageIsNull() {
+        val viewer = viewer
+        assertThat(viewer.hintLocale, nullValue())
     }
 
     @Test
-    public void typedLanguageIsSet() {
-        Model withLanguage = BASIC_TYPING_MODEL.add(getCol(), "a");
-        Model normal = BASIC_TYPING_MODEL.add(getCol(), "b");
-        int typedField = 1; // BACK
+    fun typedLanguageIsSet() {
+        val withLanguage = StdModels.BASIC_TYPING_MODEL.add(col, "a")
+        val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
+        val typedField = 1 // BACK
 
-        LanguageHintService.setLanguageHintForField(getCol().getModels(), withLanguage, typedField, new Locale("ja"));
+        LanguageHintService.setLanguageHintForField(col.models, withLanguage, typedField, Locale("ja"))
 
-        addNoteUsingModelName(withLanguage.getString("name"), "ichi", "ni");
-        addNoteUsingModelName(normal.getString("name"), "one", "two");
+        addNoteUsingModelName(withLanguage.getString("name"), "ichi", "ni")
+        addNoteUsingModelName(normal.getString("name"), "one", "two")
+        val viewer = getViewer(false)
 
-        NonAbstractFlashcardViewer viewer = getViewer(false);
+        assertThat("A model with a language hint (japanese) should use it", viewer.hintLocale, equalTo("ja"))
 
-        assertThat("A model with a language hint (japanese) should use it", viewer.getHintLocale(), equalTo("ja"));
+        showNextCard(viewer)
 
-        showNextCard(viewer);
-
-        assertThat("A default model should have no preference", viewer.getHintLocale(), nullValue());
+        assertThat("A default model should have no preference", viewer.hintLocale, nullValue())
     }
 
     @Test
-    public void automaticAnswerDisabledProperty() {
-        ActivityController<NonAbstractFlashcardViewer> controller = getViewerController(true);
-        NonAbstractFlashcardViewer viewer = controller.get();
-        assertThat("not disabled initially", viewer.mAutomaticAnswer.isDisabled(), is(false));
-        controller.pause();
-        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled(), is(true));
-        controller.resume();
-        assertThat("enabled after resume", viewer.mAutomaticAnswer.isDisabled(), is(false));
+    fun automaticAnswerDisabledProperty() {
+        val controller = getViewerController(true)
+        val viewer = controller.get()
+        assertThat("not disabled initially", viewer.mAutomaticAnswer.isDisabled, `is`(false))
+        controller.pause()
+        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled, `is`(true))
+        controller.resume()
+        assertThat("enabled after resume", viewer.mAutomaticAnswer.isDisabled, `is`(false))
     }
 
     @Test
-    public void noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() {
-        ActivityController<NonAbstractFlashcardViewer> controller = getViewerController(true);
-        NonAbstractFlashcardViewer viewer = controller.get();
-        viewer.mAutomaticAnswer = new AutomaticAnswer(viewer, new AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5));
-        viewer.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER);
-        assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true));
-        controller.pause();
-        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled(), is(true));
-        assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false));
-        viewer.mOnRenderProcessGoneDelegate.onRenderProcessGone(viewer.getWebView(), mock(RenderProcessGoneDetail.class));
-        assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false));
+    fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() {
+        val controller = getViewerController(true)
+        val viewer = controller.get()
+        viewer.mAutomaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5))
+        viewer.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
+        assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true))
+        controller.pause()
+        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled, `is`(true))
+        assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false))
+        viewer.mOnRenderProcessGoneDelegate.onRenderProcessGone(viewer.webView!!, mock(RenderProcessGoneDetail::class.java))
+        assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false))
     }
 
-
-    private void showNextCard(NonAbstractFlashcardViewer viewer) {
-        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED);
-        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED);
+    private fun showNextCard(viewer: NonAbstractFlashcardViewer) {
+        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
+        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
     }
 
+    @get:CheckResult
+    private val viewer: NonAbstractFlashcardViewer
+        get() = getViewer(true)
 
     @CheckResult
-    private NonAbstractFlashcardViewer getViewer() {
-        return getViewer(true);
-    }
-
-    @CheckResult
-    private NonAbstractFlashcardViewer getViewer(boolean addCard) {
-        return getViewerController(addCard).get();
+    private fun getViewer(addCard: Boolean): NonAbstractFlashcardViewer {
+        return getViewerController(addCard).get()
     }
 
     @CheckResult
-    private ActivityController<NonAbstractFlashcardViewer> getViewerController(boolean addCard) {
+    private fun getViewerController(addCard: Boolean): ActivityController<NonAbstractFlashcardViewer> {
         if (addCard) {
-            @NonNull Note n = getCol().newNote();
-            n.setField(0, "a");
-            getCol().addNote(n);
+            val n = col.newNote()
+            n.setField(0, "a")
+            col.addNote(n)
         }
-
-        ActivityController<NonAbstractFlashcardViewer> multimediaController = Robolectric.buildActivity(NonAbstractFlashcardViewer.class, new Intent())
-                .create().start().resume().visible();
-        saveControllerForCleanup((multimediaController));
-
-        NonAbstractFlashcardViewer viewer = multimediaController.get();
-        viewer.onCollectionLoaded(getCol());
-        viewer.loadInitialCard();
+        val multimediaController = Robolectric.buildActivity(NonAbstractFlashcardViewer::class.java, Intent())
+            .create().start().resume().visible()
+        saveControllerForCleanup(multimediaController)
+        val viewer = multimediaController.get()
+        viewer.onCollectionLoaded(col)
+        viewer.loadInitialCard()
         // Without this, AbstractFlashcardViewer.mCard is still null, and RobolectricTest.tearDown executes before
         // AsyncTasks spawned by by loading the viewer finish. Is there a way to synchronize these things while under test?
-        advanceRobolectricLooperWithSleep();
-        advanceRobolectricLooperWithSleep();
-        return multimediaController;
+        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooperWithSleep()
+        return multimediaController
     }
 }

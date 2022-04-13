@@ -1312,7 +1312,8 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard!!.id)
     }
 
-    protected open fun displayCardAnswer() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    open fun displayCardAnswer() {
         // #7294 Required in case the animation end action does not fire:
         actualHideEaseButtons()
         Timber.d("displayCardAnswer()")

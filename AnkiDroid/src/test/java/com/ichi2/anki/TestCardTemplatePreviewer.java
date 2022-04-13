@@ -27,7 +27,7 @@ public class TestCardTemplatePreviewer extends CardTemplatePreviewer {
 
 
     @Override
-    protected void displayCardAnswer() {
+    public void displayCardAnswer() {
         super.displayCardAnswer();
         mShowingAnswer = true;
     }
