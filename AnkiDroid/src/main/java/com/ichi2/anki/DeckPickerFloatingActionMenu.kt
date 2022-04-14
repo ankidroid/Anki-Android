@@ -19,7 +19,6 @@ import android.animation.Animator
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.isVisible
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import timber.log.Timber
@@ -118,7 +117,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
     }
 
     fun isFloatingActionButtonVisible(): Boolean {
-        return mFabMain.isVisible
+        return mFabMain.isShown
     }
 
     init {
