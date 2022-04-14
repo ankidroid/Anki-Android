@@ -2700,14 +2700,14 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     public void hideFab() {
-        if (mFloatingActionMenu.isFabVisible()) {
+        if (mFloatingActionMenu.isFloatingActionButtonVisible()) {
             Timber.i("DeckPicker:: hideFab()");
             mFloatingActionMenu.hideFloatingActionButton();
         }
     }
 
     public void showFab() {
-        if (!mFloatingActionMenu.isFabVisible()) {
+        if (!mFloatingActionMenu.isFloatingActionButtonVisible()) {
             Timber.i("DeckPicker:: showFab()");
             mFloatingActionMenu.showFloatingActionButton();
         }
