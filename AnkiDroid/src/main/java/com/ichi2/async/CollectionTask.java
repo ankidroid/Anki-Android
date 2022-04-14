@@ -1107,7 +1107,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
             ArrayList<AnkiPackageImporter> impList;
             // Iterate over mPath
-            for(int i=0; i<= mPath.size(); i++){
+            for(int i = 0; i<= mPath.size(); i++) {
 
                 imp = new AnkiPackageImporter(col, mPath.get(i));
                 imp.setProgressCallback(new TaskManager.ProgressCallback(collectionTask, res));
