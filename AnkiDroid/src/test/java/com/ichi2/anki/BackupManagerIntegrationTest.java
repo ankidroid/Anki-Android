@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -45,7 +46,9 @@ public class BackupManagerIntegrationTest extends RobolectricTest {
         // Perform a write
         addNoteUsingBasicModel("Hello", "World");
 
-        waitForTask(new CollectionTask.ImportReplace(path), 1000);
+        ArrayList<String> pathList = new ArrayList<>();
+        pathList.add(path);
+        waitForTask(new CollectionTask.ImportReplace(pathList), 1000);
 
         assertThat("database should be read-write", getCol().getDb().getDatabase().isReadOnly(), is(false));
         AnkiAssert.assertDoesNotThrow(() -> addNoteUsingBasicModel("Hello", "World"));
