@@ -278,9 +278,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void onDeckClick(View v, DeckSelectionType selectionType) {
         long deckId = (long) v.getTag();
         Timber.i("DeckPicker:: Selected deck with id %d", deckId);
-        if (mFloatingActionMenu.isFABOpen()) {
-            mFloatingActionMenu.closeFloatingActionMenu();
-        }
+        closeFloatingActionMenu();
 
         boolean collectionIsOpen = false;
         try {
@@ -666,23 +664,21 @@ public class DeckPicker extends NavigationDrawerActivity implements
         MenuItem toolbarSearchItem = menu.findItem(R.id.deck_picker_action_filter);
         toolbarSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
+            // When SearchItem is expanded
             public boolean onMenuItemActionExpand(MenuItem item) {
-                Timber.i("DeckPicker:: hide FAB");
-                // When the keyboard is expanded, hide the floating action button if it is visible
-                if (mFloatingActionMenu.isFabVisible()) {
-                    mFloatingActionMenu.hideFloatingActionButton();
-                }
+                Timber.i("DeckPicker:: SearchItem opened");
+                closeFloatingActionMenu();
+                // Hide the floating action button if it is visible
+                hideFab();
                 return true;
             }
 
-
             @Override
+            // When SearchItem is collapsed
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                Timber.i("DeckPicker:: show FAB");
-                // When the keyboard is collapsed, show the floating action button if it is hidden
-                if (!mFloatingActionMenu.isFabVisible()) {
-                    mFloatingActionMenu.showFloatingActionButton();
-                }
+                Timber.i("DeckPicker:: SearchItem closed");
+                // Show the floating action button if it is hidden
+                showFab();
                 return true;
             }
         });
@@ -692,15 +688,15 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mToolbarSearchView.setQueryHint(getString(R.string.search_decks));
         mToolbarSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                mToolbarSearchView.clearFocus();
+            public boolean onQueryTextChange(String newText) {
+                Filterable adapter = (Filterable) mRecyclerView.getAdapter();
+                adapter.getFilter().filter(newText);
                 return true;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                Filterable adapter = (Filterable) mRecyclerView.getAdapter();
-                adapter.getFilter().filter(newText);
+            public boolean onQueryTextSubmit(String query) {
+                mToolbarSearchView.clearFocus();
                 return true;
             }
         });
@@ -2694,6 +2690,27 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         });
         createDeckDialog.showDialog();
+    }
+
+    public void closeFloatingActionMenu() {
+        if (mFloatingActionMenu.isFABOpen()) {
+            Timber.i("DeckPicker:: closeFloatingActionMenu()");
+            mFloatingActionMenu.closeFloatingActionMenu();
+        }
+    }
+
+    public void hideFab() {
+        if (mFloatingActionMenu.isFabVisible()) {
+            Timber.i("DeckPicker:: hideFab()");
+            mFloatingActionMenu.hideFloatingActionButton();
+        }
+    }
+
+    public void showFab() {
+        if (!mFloatingActionMenu.isFabVisible()) {
+            Timber.i("DeckPicker:: showFab()");
+            mFloatingActionMenu.showFloatingActionButton();
+        }
     }
 
     @VisibleForTesting
