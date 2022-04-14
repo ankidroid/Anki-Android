@@ -982,11 +982,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     @KotlinCleanup("once in Kotlin: use HandlerUtils.executeFunctionWithDelay")
     public void onBackPressed() {
-        // If floating action button is not visible, make it visible
-        if (!mFloatingActionMenu.isFabVisible()) {
-            mFloatingActionMenu.showFloatingActionButton();
-        }
-
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (isDrawerOpen()) {
             super.onBackPressed();
