@@ -188,8 +188,8 @@
     <!-- Deck Options -->
     <string name="deck_options_corrupt">デッキオプションの処理に失敗しました: %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">データベースがロックされました</string>
-    <string name="database_locked_summary">AnkiDroidデータベースは別のアプリケーションで使用されています。他のアプリケーションを閉じて、AnkiDroidを再起動してください。</string>
+    <string name="database_locked_title">データベースがロックされています</string>
+    <string name="database_locked_summary">AnkiDroidデータベースを別のアプリが使用中です。該当するアプリを終了してAnkiDroidを再起動してください。</string>
     <string name="incompatible_database_version_title">互換性のないデータベースのバージョン</string>
     <string name="incompatible_database_version_summary">このデータベースは、AnkiDroidの今のバージョンよりも新しいバージョン用のものです。 AnkiDroidをバージョンアップするか、データベースをダウングレードして開きます\n\nサポートされているバージョン: %1$d\nデータベースバージョン: %2$d\n\n以下の復元オプションは、現在のコレクションをおそらく互換性のあるデータベースのバージョンで上書きします。 </string>
     <!-- Deck Picker Background-->

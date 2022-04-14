@@ -518,7 +518,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         delegate.isHandleNativeActionModesEnabled = true
         val mainView = findViewById<View>(android.R.id.content)
         initNavigationDrawer(mainView)
-        mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.choosen_answer))
+        mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
     }
 
@@ -1312,7 +1312,8 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard!!.id)
     }
 
-    protected open fun displayCardAnswer() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    open fun displayCardAnswer() {
         // #7294 Required in case the animation end action does not fire:
         actualHideEaseButtons()
         Timber.d("displayCardAnswer()")

@@ -62,12 +62,12 @@ class AnkiFont private constructor(val name: String, private val family: String,
         @JvmStatic
         fun createAnkiFont(ctx: Context, filePath: String, fromAssets: Boolean): AnkiFont? {
             var path = filePath
-            val fontfile = File(path)
-            val name = Utils.splitFilename(fontfile.name)[0]
+            val fontFile = File(path)
+            val name = Utils.splitFilename(fontFile.name)[0]
             var family = name
             val attributes: MutableList<String> = ArrayList(2)
             if (fromAssets) {
-                path = fAssetPathPrefix + fontfile.name
+                path = fAssetPathPrefix + fontFile.name
             }
             val tf = getTypeface(ctx, path) // unable to create typeface
                 ?: return null

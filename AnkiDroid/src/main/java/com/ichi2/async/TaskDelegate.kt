@@ -36,7 +36,7 @@ import com.ichi2.libanki.Collection
  * The Task type is used to cancel planified tasks. In particular it means that no Task should
  * be an anonymous class if we want to be able to cancel the task running it.
  *
- * @param <Progress> The type of values that the task can send to indicates its progress. E.g. a card to dislay while remaining work is done; the progression of a counter.
+ * @param <Progress> The type of values that the task can send to indicates its progress. E.g. a card to display while remaining work is done; the progression of a counter.
  * @param <Result>   The type of result returned by the task at the end. E.g. the tree of decks, counts for a particular deck
  */
 abstract class TaskDelegate<Progress, Result> {

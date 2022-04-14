@@ -38,7 +38,7 @@
             android:textSize="14sp" />
 
         <com.ichi2.ui.FixedTextView
-            android:id="@+id/choosen_answer"
+            android:id="@+id/chosen_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -56,7 +56,7 @@
         android:layout_toStartOf="@+id/card_time"
         android:layout_alignTop="@+id/card_time"
         android:layout_alignBottom="@+id/card_time"
-        android:layout_toEndOf="@+id/choosen_answer"
+        android:layout_toEndOf="@+id/chosen_answer"
         android:gravity="center" >
 
         <ImageView

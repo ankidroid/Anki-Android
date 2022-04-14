@@ -56,7 +56,7 @@ public class XAxis implements Drawable {
     private final DecimalFormat dfScience = new DecimalFormat("0.0##E0");
     private final DecimalFormat dfInteger = new DecimalFormat("#.#");
     /**
-     * is set to true if scientifiv format (e.g. 1E-3) should be used
+     * is set to true if scientific format (e.g. 1E-3) should be used
      */
     private boolean isScientific = false;
 
@@ -180,21 +180,21 @@ public class XAxis implements Drawable {
 
 
         //arrow
-        float[] arowheadPos = {plotSheet.xToGraphic(Math.min(plotSheet.getxRange()[1], this.end), field), plotSheet.yToGraphic(yOffset, field)};
+        float[] arrowheadPos = {plotSheet.xToGraphic(Math.min(plotSheet.getxRange()[1], this.end), field), plotSheet.yToGraphic(yOffset, field)};
 
         FontMetricsWrap fm = g.getFontMetrics();
-        float fontHeigth = fm.getHeight();
+        float fontHeight = fm.getHeight();
         float width = fm.stringWidth(this.name);
         if (!this.isOnFrame) {
-            g.drawLine(arowheadPos[0] - 1, arowheadPos[1] - 1, arowheadPos[0] - 6, arowheadPos[1] - 3);
-            g.drawLine(arowheadPos[0] - 1, arowheadPos[1] + 1, arowheadPos[0] - 6, arowheadPos[1] + 3);
+            g.drawLine(arrowheadPos[0] - 1, arrowheadPos[1] - 1, arrowheadPos[0] - 6, arrowheadPos[1] - 3);
+            g.drawLine(arrowheadPos[0] - 1, arrowheadPos[1] + 1, arrowheadPos[0] - 6, arrowheadPos[1] + 3);
             if (mHasName) {
-                g.drawString(this.name, arowheadPos[0] - 14 - width, arowheadPos[1] + 12);
+                g.drawString(this.name, arrowheadPos[0] - 14 - width, arrowheadPos[1] + 12);
             }
         } else {
             float[] middlePosition = {plotSheet.xToGraphic(0, field), plotSheet.yToGraphic(yOffset, field)};
             if (mHasName) {
-                g.drawString(this.name, field.width / 2 - width / 2, Math.round(middlePosition[1] + fontHeigth * 2.5f));
+                g.drawString(this.name, field.width / 2 - width / 2, Math.round(middlePosition[1] + fontHeight * 2.5f));
             }
         }
     }

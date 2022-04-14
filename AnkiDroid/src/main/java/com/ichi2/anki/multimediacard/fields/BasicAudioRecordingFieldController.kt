@@ -30,7 +30,6 @@ import com.ichi2.anki.multimediacard.AudioView.Companion.createRecorderInstance
 import com.ichi2.anki.multimediacard.AudioView.Companion.generateTempAudioFile
 import com.ichi2.anki.multimediacard.AudioView.OnRecordingFinishEventListener
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.UiUtil.makeBold
 import java.io.File
 
@@ -39,9 +38,7 @@ import java.io.File
  */
 class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldController {
 
-    @KotlinCleanup("nun-null & lateinit")
     private var mTempAudioPath: String? = null
-    @KotlinCleanup("nun-null & lateinit")
     private var mAudioView: AudioView? = null
 
     override fun createUI(context: Context, layout: LinearLayout?) {

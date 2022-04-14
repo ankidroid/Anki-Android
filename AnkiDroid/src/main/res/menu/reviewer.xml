@@ -69,6 +69,7 @@
     <item
         android:id="@+id/action_save_whiteboard"
         android:title="@string/save_whiteboard"
+        android:icon="@drawable/ic_save_white"
         android:visible="false"
         ankidroid:showAsAction="never"/>
     <item

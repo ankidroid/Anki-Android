@@ -30,11 +30,17 @@
       <w>deepcopy</w>
       <w>did</w>
       <w>dids</w>
+      <w>dyns</w>
+      <w>edue</w>
       <w>escapechar</w>
       <w>exomple</w>
+      <w>filt</w>
       <w>flds</w>
+      <w>flist</w>
       <w>fmap</w>
       <w>fname</w>
+      <w>fnames</w>
+      <w>frac</w>
       <w>fullsync</w>
       <w>gendeck</w>
       <w>genrem</w>
@@ -43,14 +49,20 @@
       <w>hostnum</w>
       <w>ichi</w>
       <w>incr</w>
+      <w>incrReps</w>
       <w>ivl</w>
       <w>ivlfct</w>
       <w>ivls</w>
+      <w>jresp</w>
       <w>lchg</w>
+      <w>lcnt</w>
+      <w>ldirty</w>
       <w>lgraves</w>
       <w>libanki</w>
       <w>lims</w>
       <w>lineterminator</w>
+      <w>lscm</w>
+      <w>lsum</w>
       <w>mdir</w>
       <w>mid</w>
       <w>mids</w>
@@ -58,6 +70,7 @@
       <w>mtime</w>
       <w>mult</w>
       <w>musn</w>
+      <w>nconf</w>
       <w>ndid</w>
       <w>newc</w>
       <w>newflds</w>
@@ -74,21 +87,27 @@
       <w>qfmt</w>
       <w>quotechar</w>
       <w>rchg</w>
+      <w>rconf</w>
       <w>relrn</w>
       <w>replaybutton</w>
       <w>resched</w>
       <w>revlog</w>
       <w>revlogs</w>
+      <w>rlim</w>
       <w>rs's</w>
       <w>rsdroid</w>
       <w>rslib</w>
+      <w>rsum</w>
       <w>sched</w>
       <w>sched's</w>
+      <w>scmhash</w>
+      <w>sdids</w>
       <w>sfld</w>
       <w>sflds</w>
       <w>sidx</w>
       <w>snids</w>
       <w>sortf</w>
+      <w>strids</w>
       <w>subdeck</w>
       <w>subdecks</w>
       <w>timebox</w>
