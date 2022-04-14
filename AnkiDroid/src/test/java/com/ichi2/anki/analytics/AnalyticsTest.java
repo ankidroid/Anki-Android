@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki;
+package com.ichi2.anki.analytics;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,7 +23,7 @@ import android.content.res.Resources;
 import com.brsanthu.googleanalytics.GoogleAnalytics;
 import com.brsanthu.googleanalytics.GoogleAnalyticsBuilder;
 import com.brsanthu.googleanalytics.request.ExceptionHit;
-import com.ichi2.anki.analytics.UsageAnalytics;
+import com.ichi2.anki.R;
 
 import org.junit.After;
 import org.junit.Assert;

@@ -26,6 +26,7 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
+import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.ImportUtils.handleFileImport
@@ -77,7 +78,7 @@ class IntentHandler : Activity() {
      *
      */
     private fun performActionIfStorageAccessible(runnable: Runnable, reloadIntent: Intent, action: String?) {
-        if (!CollectionHelper.isLegacyStorage(this) ||
+        if (!ScopedStorageService.isLegacyStorage(this) ||
             applicationInfo.targetSdkVersion < Build.VERSION_CODES.R && hasStorageAccessPermission(this)
         ) {
             Timber.i("User has storage permissions. Running intent: %s", action)

@@ -435,8 +435,8 @@ public class UsageAnalytics {
         public static final String IMPORT_COLPKG_FILE = "Import COLPKG";
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE) // TOOD: Make this package-protected
-    public static void resetForTests() {
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    protected static void resetForTests() {
         sAnalytics = null;
     }
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2022 Kshitij Patil <kshitijpatil98@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -14,10 +14,11 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.testutils;
+package com.ichi2.anki
 
-import android.app.Application;
-
-/** Used when an application class is not required for a test to run */
-public class NullApplication extends Application {
+/**
+ * Intended to be used with [android.webkit.WebViewClient.onPageFinished]
+ */
+interface OnPageFinishedCallback {
+    fun onPageFinished()
 }

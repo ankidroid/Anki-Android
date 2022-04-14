@@ -54,5 +54,9 @@ class CardBrowser_CardCollectionTest {
         fun setPosition(value: Int) {
             position = value
         }
+
+    private class Positioned(override var position: Int) : PositionAware {
+        val initialValue: Int = position
+
     }
 }
