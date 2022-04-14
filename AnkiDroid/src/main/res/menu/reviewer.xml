@@ -137,5 +137,6 @@
     <item
         android:id="@+id/action_select_tts"
         android:title="@string/select_tts"
+        android:icon="@drawable/ic_language_white"
         android:visible="false" />
 </menu>
