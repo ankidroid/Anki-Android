@@ -51,7 +51,6 @@ class ImportDialog : AsyncDialogFragment() {
 
         return when (type) {
             DIALOG_IMPORT_ADD_CONFIRM -> {
-                // val displayFileName = convertToDisplayName(dialogMessage)
                 builder.title(res.getString(R.string.import_title))
                     .content(res.getString(R.string.import_message_add_confirm, displayFileName))
                     .positiveText(R.string.import_message_add)
