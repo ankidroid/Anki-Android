@@ -1139,7 +1139,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             Context context = col.getContext();
 
             // Iterate over mPath list.
-            for(int i=0; i < mPath.size(); i++){
+            for (int i = 0; i < mPath.size(); i++) {
 
                 // extract the deck from the zip file
                 String colPath = CollectionHelper.getCollectionPath(context);
