@@ -19,13 +19,13 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Pair
 import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemLongClickListener
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
+import androidx.lifecycle.lifecycleScope
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.MaterialDialog.ListCallback
@@ -36,7 +36,6 @@ import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.CollectionTask.CountModels
 import com.ichi2.async.CollectionTask.DeleteModel
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
@@ -44,12 +43,14 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.StdModels
 import com.ichi2.libanki.Utils
+import com.ichi2.suspend.CollectionTaskMig.countModels
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.widget.WidgetStatus.update
+import kotlinx.coroutines.*
 import timber.log.Timber
-import java.lang.RuntimeException
-import java.util.ArrayList
+import java.lang.Runnable
+import java.util.*
 
 @KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
 class ModelBrowser : AnkiActivity() {
@@ -76,35 +77,28 @@ class ModelBrowser : AnkiActivity() {
     private var mNewModelNames: ArrayList<String>? = null
 
     // ----------------------------------------------------------------------------
-    // AsyncTask methods
+    // Asynchronous methods
     // ----------------------------------------------------------------------------
     /*
      * Displays the loading bar when loading the mModels and displaying them
      * loading bar is necessary because card count per model is not cached *
      */
-    private fun loadingModelsHandler(): LoadingModelsHandler {
-        return LoadingModelsHandler(this)
-    }
-
-    private class LoadingModelsHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Pair<List<Model?>?, ArrayList<Int>?>?>(browser) {
-        override fun actualOnCancelled(context: ModelBrowser) {
-            context.hideProgressBar()
-        }
-
-        override fun actualOnPreExecute(context: ModelBrowser) {
-            context.showProgressBar()
-        }
-
-        @KotlinCleanup("Rename context in the base class to activity and see if we can make it non-null")
-        override fun actualOnPostExecute(context: ModelBrowser, result: Pair<List<Model?>?, ArrayList<Int>?>?) {
-            if (result == null) {
-                throw RuntimeException()
+    private var loadModelsJob: Job? = null
+    private fun loadModels() {
+        loadModelsJob?.cancel()
+        // using launchWhenCreated as this job requires the activity to be in at least created state
+        loadModelsJob = lifecycleScope.launchWhenCreated {
+            withContext(Dispatchers.Main) {
+                this@ModelBrowser.showProgressBar()
             }
-            context.let {
-                it.hideProgressBar()
-                it.mModels = ArrayList(result.first!!)
-                it.mCardCounts = result.second
-                it.fillModelList()
+            val result = countModels(col) ?: throw RuntimeException()
+            withContext(Dispatchers.Main) {
+                this@ModelBrowser.apply {
+                    hideProgressBar()
+                    mModels = ArrayList(result.first!!)
+                    mCardCounts = result.second
+                    fillModelList()
+                }
             }
         }
     }
@@ -192,7 +186,6 @@ class ModelBrowser : AnkiActivity() {
     }
 
     public override fun onDestroy() {
-        TaskManager.cancelAllTasks(CountModels::class.java)
         super.onDestroy()
     }
 
@@ -202,7 +195,7 @@ class ModelBrowser : AnkiActivity() {
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         mCol = col
-        TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
+        loadModels()
     }
 
     // ----------------------------------------------------------------------------
@@ -454,7 +447,7 @@ class ModelBrowser : AnkiActivity() {
      * Reloads everything
      */
     private fun fullRefresh() {
-        TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
+        loadModels()
     }
 
     /*
@@ -497,7 +490,7 @@ class ModelBrowser : AnkiActivity() {
     /*
      * For display in the main list via an ArrayAdapter
      */
-    inner class DisplayPairAdapter(context: Context?, items: ArrayList<DisplayPair>?) : ArrayAdapter<DisplayPair?>(context!!, R.layout.model_browser_list_item, R.id.model_list_item_1, items!!.toList()) {
+    inner class DisplayPairAdapter(context: Context?, items: ArrayList<DisplayPair>?) : ArrayAdapter<DisplayPair?>(context!!, R.layout.model_browser_list_item, R.id.model_list_item_1, items!! as List<DisplayPair?>) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val _convertView = convertView ?: LayoutInflater.from(context).inflate(R.layout.model_browser_list_item, parent, false)
             val item = getItem(position)
@@ -512,7 +505,7 @@ class ModelBrowser : AnkiActivity() {
 
     private val mEditTemplateResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            TaskManager.launchCollectionTask(CountModels(), loadingModelsHandler())
+            loadModels()
         }
     }
 }
