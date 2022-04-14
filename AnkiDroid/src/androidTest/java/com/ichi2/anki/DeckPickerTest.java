@@ -126,5 +126,8 @@ public class DeckPickerTest {
 
         // Go back to Deck Picker
         pressBack();
+        // It appears first attempt of `pressBack()` always fails,
+        // calling it for the second time makes it work
+        pressBack();
     }
 }
