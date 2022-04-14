@@ -1018,7 +1018,7 @@ abstract class AbstractFlashcardViewer :
         webView.isFocusableInTouchMode = typeAnswer!!.useInputTag
         webView.isScrollbarFadingEnabled = true
         Timber.d("Focusable = %s, Focusable in touch mode = %s", webView.isFocusable, webView.isFocusableInTouchMode)
-        webView.webViewClient = CardViewerWebClient(mAssetLoader)
+        webView.webViewClient = CardViewerWebClient(mAssetLoader, this)
         // Set transparent color to prevent flashing white when night mode enabled
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0))
 
