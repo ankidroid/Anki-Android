@@ -13,55 +13,57 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.ui
 
-package com.ichi2.ui;
+import android.content.Context
+import android.view.GestureDetector
+import android.view.GestureDetector.SimpleOnGestureListener
+import android.view.MotionEvent
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
+import com.ichi2.utils.KotlinCleanup
 
-import android.content.Context;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
+/** Adapts a RecyclerView.OnItemTouchListener to provide a click listener  */
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+class RecyclerSingleTouchAdapter(context: Context, listener: OnItemClickListener) : OnItemTouchListener {
+    @KotlinCleanup("could be made a non nullable constructor property")
+    private val mListener: OnItemClickListener?
+    @KotlinCleanup("combine declaration and initialization")
+    private val mGestureDetector: GestureDetector
 
-/** Adapts a RecyclerView.OnItemTouchListener to provide a click listener */
-public class RecyclerSingleTouchAdapter implements RecyclerView.OnItemTouchListener {
-    private final OnItemClickListener mListener;
-    private final GestureDetector mGestureDetector;
-
-    public interface OnItemClickListener {
-        void onItemClick(@NonNull View view, int position);
+    @KotlinCleanup("make this a fun interface to use a lambda at the call site in LocaleSelectionDialog")
+    interface OnItemClickListener {
+        fun onItemClick(view: View, position: Int)
     }
 
-
-    public RecyclerSingleTouchAdapter(@NonNull Context context, @NonNull OnItemClickListener listener) {
-        mListener = listener;
-        mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                //onDown was too fast
-                return true;
-            }
-        });
-    }
-
-
-    @Override
-    public boolean onInterceptTouchEvent(@NonNull RecyclerView view, @NonNull MotionEvent e) {
-        View childView = view.findChildViewUnder(e.getX(), e.getY());
+    override fun onInterceptTouchEvent(view: RecyclerView, e: MotionEvent): Boolean {
+        val childView = view.findChildViewUnder(e.x, e.y)
         if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
-            mListener.onItemClick(childView, view.getChildAdapterPosition(childView));
-            return true;
+            mListener.onItemClick(childView, view.getChildAdapterPosition(childView))
+            return true
         }
-        return false;
+        return false
     }
 
-    @Override public void onTouchEvent(@NonNull RecyclerView view, @NonNull MotionEvent motionEvent) {
-        //intentionally empty
+    override fun onTouchEvent(view: RecyclerView, motionEvent: MotionEvent) {
+        // intentionally empty
     }
 
-    @Override
-    public void onRequestDisallowInterceptTouchEvent (boolean disallowIntercept) {
-        //intentionally empty
+    override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+        // intentionally empty
+    }
+
+    init {
+        mListener = listener
+        mGestureDetector = GestureDetector(
+            context,
+            object : SimpleOnGestureListener() {
+                override fun onSingleTapUp(e: MotionEvent): Boolean {
+                    // onDown was too fast
+                    return true
+                }
+            }
+        )
     }
 }
