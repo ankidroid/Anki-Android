@@ -664,6 +664,29 @@ public class DeckPicker extends NavigationDrawerActivity implements
         menu.findItem(R.id.action_empty_cards).setEnabled(sdCardAvailable);
 
         MenuItem toolbarSearchItem = menu.findItem(R.id.deck_picker_action_filter);
+        toolbarSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                Timber.i("DeckPicker:: hide FAB");
+                // When the keyboard is expanded, hide the floating action button if it is visible
+                if (mFloatingActionMenu.isFabVisible()) {
+                    mFloatingActionMenu.hideFloatingActionButton();
+                }
+                return true;
+            }
+
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                Timber.i("DeckPicker:: show FAB");
+                // When the keyboard is collapsed, show the floating action button if it is hidden
+                if (!mFloatingActionMenu.isFabVisible()) {
+                    mFloatingActionMenu.showFloatingActionButton();
+                }
+                return true;
+            }
+        });
+
         mToolbarSearchView = (SearchView) toolbarSearchItem.getActionView();
 
         mToolbarSearchView.setQueryHint(getString(R.string.search_decks));
@@ -753,6 +776,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (itemId == R.id.action_undo) {
             Timber.i("DeckPicker:: Undo button pressed");
             undo();
+            return true;
+        } else if (itemId == R.id.deck_picker_action_filter) {
+            Timber.i("DeckPicker:: Search button pressed");
             return true;
         } else if (itemId == R.id.action_sync) {
             Timber.i("DeckPicker:: Sync button pressed");
@@ -960,6 +986,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     @KotlinCleanup("once in Kotlin: use HandlerUtils.executeFunctionWithDelay")
     public void onBackPressed() {
+        // If floating action button is not visible, make it visible
+        if (!mFloatingActionMenu.isFabVisible()) {
+            mFloatingActionMenu.showFloatingActionButton();
+        }
+
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (isDrawerOpen()) {
             super.onBackPressed();
