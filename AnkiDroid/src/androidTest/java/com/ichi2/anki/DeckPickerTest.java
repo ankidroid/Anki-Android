@@ -103,7 +103,7 @@ public class DeckPickerTest {
         // Create a new deck
         onView(withId(R.id.fab_main)).perform(click());
         onView(withId(R.id.add_deck_action)).perform(click());
-        onView(withId(R.id.action_edit)).perform(typeText("TestDeck" + testString));
+        onView(withId(android.R.id.input)).perform(typeText("TestDeck" + testString));
         onView(withId(R.id.md_buttonDefaultPositive)).perform(click());
 
         // The deck is currently empty, so if we tap on it, it becomes the selected deck but doesn't enter
