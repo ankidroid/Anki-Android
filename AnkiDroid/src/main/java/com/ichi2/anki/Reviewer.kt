@@ -1029,6 +1029,10 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (!isDisplayingAnswer && mShowWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
         }
+    }
+
+    override fun onPageFinished() {
+        super.onPageFinished()
         onFlagChanged()
         onMarkChanged()
     }
