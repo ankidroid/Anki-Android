@@ -66,6 +66,7 @@ class ImportFileSelectionFragment {
             intent.putExtra("android.content.extra.SHOW_ADVANCED", true)
             intent.putExtra("android.content.extra.FANCY", true)
             intent.putExtra("android.content.extra.SHOW_FILESIZE", true)
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             activity.startActivityForResultWithoutAnimation(intent, DeckPicker.PICK_APKG_FILE)
         }
     }

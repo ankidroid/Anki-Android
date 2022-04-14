@@ -46,6 +46,7 @@ import java.net.URLEncoder
 import java.util.*
 import java.util.zip.ZipException
 import java.util.zip.ZipInputStream
+import kotlin.collections.ArrayList
 
 object ImportUtils {
     /* A filename should be shortened if over this threshold */
@@ -125,65 +126,80 @@ object ImportUtils {
                 ) {
                     return ImportResult.fromErrorString(context.getString(R.string.import_error_unhandled_request))
                 }
-                val clipUri = intent.clipData!!.getItemAt(0).uri
-                return handleContentProviderFile(context, intent, clipUri)
+                val clipUriList: ArrayList<Uri> = ArrayList()
+                // Iterate over clipUri & create clipUriList
+                // Pass clipUri list.
+                for (i in 0 until intent.clipData!!.itemCount) {
+                    intent.clipData?.getItemAt(i)?.let { clipUriList.add(it.uri) }
+                }
+                return handleContentProviderFile(context, intent, clipUriList)
             }
 
             // If Uri is of scheme which is supported by ContentResolver, read the contents
             val intentUriScheme = intent.data!!.scheme
             return if (intentUriScheme == ContentResolver.SCHEME_CONTENT || intentUriScheme == ContentResolver.SCHEME_FILE || intentUriScheme == ContentResolver.SCHEME_ANDROID_RESOURCE) {
                 Timber.i("Attempting to read content from intent.")
-                handleContentProviderFile(context, intent, intent.data)
+                val intentDataList: ArrayList<Uri> = ArrayList()
+                intentDataList.add(intent.data!!)
+                handleContentProviderFile(context, intent, intentDataList)
             } else {
                 ImportResult.fromErrorString(context.resources.getString(R.string.import_error_unhandled_scheme, intent.data))
             }
         }
 
-        private fun handleContentProviderFile(context: Context, intent: Intent, data: Uri?): ImportResult {
+        private fun handleContentProviderFile(context: Context, intent: Intent, data: ArrayList<Uri>): ImportResult {
             // Note: intent.getData() can be null. Use data instead.
 
-            // Get the original filename from the content provider URI
-            var filename = getFileNameFromContentProvider(context, data)
+            val tempOutDirList: ArrayList<String> = ArrayList()
 
-            // Hack to fix bug where ContentResolver not returning filename correctly
-            if (filename == null) {
-                if (intent.type != null && ("application/apkg" == intent.type || hasValidZipFile(context, data))) {
-                    // Set a dummy filename if MIME type provided or is a valid zip file
-                    filename = "unknown_filename.apkg"
-                    Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue")
+            // Iterate over data & append tempOutDir to above arraylist.
+            data.forEach {
+                Timber.v(it.toString())
+
+                // Get the original filename from the content provider URI
+                var filename = getFileNameFromContentProvider(context, it)
+
+                // Hack to fix bug where ContentResolver not returning filename correctly
+                if (filename == null) {
+                    if (intent.type != null && ("application/apkg" == intent.type || hasValidZipFile(context, it))) {
+                        // Set a dummy filename if MIME type provided or is a valid zip file
+                        filename = "unknown_filename.apkg"
+                        Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue")
+                    } else {
+                        Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile")
+                        AnkiDroidApp.sendExceptionReport(RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed")
+                        return ImportResult.fromErrorString(AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing"))
+                    }
+                }
+                if (!isValidPackageName(filename)) {
+                    return if (isAnkiDatabase(filename)) {
+                        // .anki2 files aren't supported by Anki Desktop, we should eventually support them, because we can
+                        // but for now, show a "nice" error.
+                        ImportResult.fromErrorString(context.resources.getString(R.string.import_error_load_imported_database))
+                    } else {
+                        // Don't import if file doesn't have an Anki package extension
+                        ImportResult.fromErrorString(context.resources.getString(R.string.import_error_not_apkg_extension, filename))
+                    }
                 } else {
-                    Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile")
-                    AnkiDroidApp.sendExceptionReport(RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed")
-                    return ImportResult.fromErrorString(AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing"))
+                    // Copy to temporary file
+                    filename = ensureValidLength(filename)
+                    val tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
+                    val errorMessage = if (copyFileToCache(context, it, tempOutDir)) null else context.getString(R.string.import_error_copy_file_to_cache)
+                    // Show import dialog
+                    if (errorMessage != null) {
+                        AnkiDroidApp.sendExceptionReport(RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed")
+                        return ImportResult.fromErrorString(errorMessage)
+                    }
+                    val validateZipResult = validateZipFile(context, tempOutDir)
+                    if (validateZipResult != null) {
+                        File(tempOutDir).delete()
+                        return validateZipResult
+                    }
+                    tempOutDirList.add(tempOutDir)
                 }
             }
-            return if (!isValidPackageName(filename)) {
-                if (isAnkiDatabase(filename)) {
-                    // .anki2 files aren't supported by Anki Desktop, we should eventually support them, because we can
-                    // but for now, show a "nice" error.
-                    ImportResult.fromErrorString(context.resources.getString(R.string.import_error_load_imported_database))
-                } else {
-                    // Don't import if file doesn't have an Anki package extension
-                    ImportResult.fromErrorString(context.resources.getString(R.string.import_error_not_apkg_extension, filename))
-                }
-            } else {
-                // Copy to temporary file
-                filename = ensureValidLength(filename)
-                val tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
-                val errorMessage = if (copyFileToCache(context, data, tempOutDir)) null else context.getString(R.string.import_error_copy_file_to_cache)
-                // Show import dialog
-                if (errorMessage != null) {
-                    AnkiDroidApp.sendExceptionReport(RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed")
-                    return ImportResult.fromErrorString(errorMessage)
-                }
-                val validateZipResult = validateZipFile(context, tempOutDir)
-                if (validateZipResult != null) {
-                    File(tempOutDir).delete()
-                    return validateZipResult
-                }
-                sendShowImportFileDialogMsg(tempOutDir)
-                ImportResult.fromSuccess()
-            }
+            sendShowImportFileDialogMsg(tempOutDirList)
+            return ImportResult.fromSuccess()
         }
 
         private fun validateZipFile(ctx: Context, filePath: String): ImportResult? {
@@ -303,15 +319,16 @@ object ImportUtils {
              * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
              * @param path path to apkg file which will be imported
              */
-            private fun sendShowImportFileDialogMsg(path: String) {
+            private fun sendShowImportFileDialogMsg(pathList: ArrayList<String>) {
+
                 // Get the filename from the path
-                val f = File(path)
+                val f = File(pathList[0])
                 val filename = f.name
 
                 // Create a new message for DialogHandler so that we see the appropriate import dialog in DeckPicker
                 val handlerMessage = Message.obtain()
                 val msgData = Bundle()
-                msgData.putString("importPath", path)
+                msgData.putStringArrayList("importPath", pathList)
                 handlerMessage.data = msgData
                 if (isCollectionPackage(filename)) {
                     // Show confirmation dialog asking to confirm import with replace when file called "collection.apkg"

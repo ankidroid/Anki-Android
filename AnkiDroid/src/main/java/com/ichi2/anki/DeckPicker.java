@@ -146,6 +146,7 @@ import com.ichi2.widget.WidgetStatus;
 import com.ichi2.utils.JSONException;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import kotlin.Unit;
@@ -1397,12 +1398,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    public void showImportDialog(int id, String message) {
+    public void showImportDialog(int id, ArrayList<String> messageList) {
         Timber.d("showImportDialog() delegating to ImportDialog");
-        if (message == null) {
-            message = "";
+        if (messageList.isEmpty()) {
+            messageList.add("");
         }
-        AsyncDialogFragment newFragment = ImportDialog.newInstance(id, message);
+        AsyncDialogFragment newFragment = ImportDialog.newInstance(id, messageList);
         showAsyncDialogFragment(newFragment);
     }
 
@@ -1558,7 +1559,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     public void restoreFromBackup(String path) {
-        importReplace(path);
+        importReplace(new ArrayList());
     }
 
 
@@ -1964,7 +1965,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback to import a file -- adding it to existing collection
     @Override
-    public void importAdd(String importPath) {
+    public void importAdd(ArrayList<String> importPath) {
         Timber.d("importAdd() for file %s", importPath);
         TaskManager.launchCollectionTask(new CollectionTask.ImportAdd(importPath), mImportAddListener);
     }
@@ -1972,7 +1973,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback to import a file -- replacing the existing collection
     @Override
-    public void importReplace(String importPath) {
+    public void importReplace(ArrayList<String> importPath) {
         TaskManager.launchCollectionTask(new CollectionTask.ImportReplace(importPath), importReplaceListener());
     }
 

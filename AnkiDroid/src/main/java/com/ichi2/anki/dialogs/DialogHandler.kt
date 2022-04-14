@@ -49,10 +49,10 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
             (mActivity.get() as DeckPicker?)!!.showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
         } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG) {
             // Handle import of collection package APKG
-            (mActivity.get() as DeckPicker?)!!.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, msgData.getString("importPath"))
+            (mActivity.get() as DeckPicker?)!!.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, msgData.getStringArrayList("importPath"))
         } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG) {
             // Handle import of deck package APKG
-            (mActivity.get() as DeckPicker?)!!.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, msgData.getString("importPath"))
+            (mActivity.get() as DeckPicker?)!!.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, msgData.getStringArrayList("importPath"))
         } else if (msg.what == MSG_SHOW_SYNC_ERROR_DIALOG) {
             val id = msgData.getInt("dialogType")
             val message = msgData.getString("dialogMessage")
