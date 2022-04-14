@@ -42,15 +42,7 @@ class CardBrowser_CardCollectionTest {
         return cardCollection
     }
 
-    @KotlinCleanup("See if we can have the variable override")
-    private class Positioned(private var position: Int) : PositionAware {
+    private class Positioned(override var position: Int) : PositionAware {
         val initialValue: Int = position
-        override fun getPosition(): Int {
-            return position
-        }
-
-        override fun setPosition(value: Int) {
-            position = value
-        }
     }
 }
