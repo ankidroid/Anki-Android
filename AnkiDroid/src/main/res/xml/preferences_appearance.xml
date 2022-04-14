@@ -49,7 +49,7 @@
             android:title="@string/night_theme" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/background_image_title" >
-        <CheckBoxPreference
+        <SwitchPreference
             android:checked="false"
             android:defaultValue="0"
             android:key="deckPickerBackground"
@@ -83,7 +83,7 @@
                 app:min="10" />
         </PreferenceCategory>
     <PreferenceCategory android:title="@string/card_browser">
-        <CheckBoxPreference
+        <SwitchPreference
             android:checked="false"
             android:defaultValue="false"
             android:key="card_browser_show_media_filenames"
