@@ -1103,7 +1103,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             Timber.d("doInBackgroundImportAdd");
             Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
 
-           AnkiPackageImporter imp = null; 
+            AnkiPackageImporter imp = null; 
 
             ArrayList<AnkiPackageImporter> impList;
             // Iterate over mPath
