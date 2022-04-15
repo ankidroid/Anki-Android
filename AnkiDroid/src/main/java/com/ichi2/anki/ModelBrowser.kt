@@ -86,7 +86,7 @@ class ModelBrowser : AnkiActivity() {
         return LoadingModelsHandler(this)
     }
 
-    private class LoadingModelsHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Pair<List<Model?>?, ArrayList<Int>?>?>(browser) {
+    private class LoadingModelsHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Pair<List<Model>, ArrayList<Int>>?>(browser) {
         override fun actualOnCancelled(context: ModelBrowser) {
             context.hideProgressBar()
         }
@@ -96,7 +96,7 @@ class ModelBrowser : AnkiActivity() {
         }
 
         @KotlinCleanup("Rename context in the base class to activity and see if we can make it non-null")
-        override fun actualOnPostExecute(context: ModelBrowser, result: Pair<List<Model?>?, ArrayList<Int>?>?) {
+        override fun actualOnPostExecute(context: ModelBrowser, result: Pair<List<Model>, ArrayList<Int>>?) {
             if (result == null) {
                 throw RuntimeException()
             }

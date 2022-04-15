@@ -747,7 +747,7 @@ abstract class AbstractFlashcardViewer :
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...")
                 TaskManager.launchCollectionTask(
-                    UpdateNote(editorCard, true, canAccessScheduler()),
+                    UpdateNote(editorCard!!, true, canAccessScheduler()),
                     mUpdateCardHandler
                 )
                 onEditedNoteChanged()

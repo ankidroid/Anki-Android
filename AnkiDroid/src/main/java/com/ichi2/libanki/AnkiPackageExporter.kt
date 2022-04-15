@@ -366,6 +366,7 @@ open class AnkiExporter : Exporter {
     }
 }
 
+@KotlinCleanup("handle nullable did property in constructor - only one path")
 class AnkiPackageExporter : AnkiExporter {
     /**
      * An exporter for the whole collection of decks
