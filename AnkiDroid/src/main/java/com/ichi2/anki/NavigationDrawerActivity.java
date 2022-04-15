@@ -57,7 +57,6 @@ import androidx.drawerlayout.widget.ClosableDrawerLayout;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import timber.log.Timber;
-
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 
 
@@ -85,7 +84,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
      */
     private Runnable mPendingRunnable;
 
-
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
@@ -108,20 +106,14 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         setContentView(closableDrawerLayout);
     }
 
-
-    private @LayoutRes
-    int getNavigationDrawerLayout() {
+    private @LayoutRes int getNavigationDrawerLayout() {
         return fitsSystemWindows() ? R.layout.navigation_drawer_layout : R.layout.navigation_drawer_layout_fullscreen;
     }
 
-
-    /**
-     * Whether android:fitsSystemWindows="true" should be applied to the navigation drawer
-     */
+    /** Whether android:fitsSystemWindows="true" should be applied to the navigation drawer */
     protected boolean fitsSystemWindows() {
         return true;
     }
-
 
     // Navigation drawer initialisation
     protected void initNavigationDrawer(View mainView) {
@@ -278,11 +270,9 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         }
     }
 
-
     private SharedPreferences getPreferences() {
         return AnkiDroidApp.getSharedPrefs(NavigationDrawerActivity.this);
     }
-
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
@@ -298,7 +288,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         return mDrawerToggle;
     }
 
-
     /**
      * This function locks the navigation drawer closed in regards to swipes,
      * but continues to allowed it to be opened via it's indicator button. This
@@ -309,7 +298,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
     }
-
 
     /**
      * This function allows swipes to open the navigation drawer. This
@@ -356,7 +344,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         }
     }
 
-
     /**
      * Called, when navigation button of the action bar is pressed.
      * Design pattern: template method. Subclasses can override this to define their own behaviour.
@@ -368,7 +355,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
             openDrawer();
         }
     }
-
 
     @Override
     public boolean onNavigationItemSelected(final MenuItem item) {
@@ -420,7 +406,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         return true;
     }
 
-
     protected void openCardBrowser() {
         Intent intent = new Intent(NavigationDrawerActivity.this, CardBrowser.class);
         Long currentCardId = getCurrentCardId();
@@ -430,13 +415,11 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, START);
     }
 
-
     // Override this to specify a specific card id
     @Nullable
     protected Long getCurrentCardId() {
         return null;
     }
-
 
     protected void showBackIcon() {
         if (mDrawerToggle != null) {
@@ -448,7 +431,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         mNavButtonGoesBack = true;
     }
 
-
     protected void restoreDrawerIcon() {
         if (mDrawerToggle != null) {
             getDrawerToggle().setDrawerIndicatorEnabled(true);
@@ -456,11 +438,9 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         mNavButtonGoesBack = false;
     }
 
-
     public boolean isDrawerOpen() {
         return mDrawerLayout.isDrawerOpen(GravityCompat.START);
     }
-
 
     /**
      * Restart the activity and discard old backstack, creating it new from the hierarchy in the manifest
@@ -488,7 +468,6 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     private void openDrawer() {
         mDrawerLayout.openDrawer(GravityCompat.START, animationEnabled());
     }
-
 
     private void closeDrawer() {
         mDrawerLayout.closeDrawer(GravityCompat.START, animationEnabled());
