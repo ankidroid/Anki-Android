@@ -112,6 +112,7 @@ import com.ichi2.anki.servicelayer.UndoService;
 import com.ichi2.anki.stats.AnkiStatsTaskHandler;
 import com.ichi2.anki.web.HostNumFactory;
 import com.ichi2.anki.widgets.DeckAdapter;
+import com.ichi2.annotations.NeedsTest;
 import com.ichi2.async.Cancellable;
 import com.ichi2.async.Connection;
 import com.ichi2.async.Connection.Payload;
@@ -1964,6 +1965,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     // Callback to import a file -- adding it to existing collection
+    @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file.")
     @Override
     public void importAdd(List<String> importPaths) {
         Timber.d("importAdd() for file %s", importPaths);
@@ -1972,6 +1974,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
     // Callback to import a file -- replacing the existing collection
+    @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file.")
     @Override
     public void importReplace(List<String> importPaths) {
         TaskManager.launchCollectionTask(new CollectionTask.ImportReplace(importPaths), importReplaceListener());
