@@ -32,16 +32,16 @@ import com.ichi2.anki.servicelayer.DeckService.defaultDeckHasCards
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
 import java.util.*
 
 @KotlinCleanup("lots to do")
-class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
-    private val mDeckList: MutableList<T>
-
+class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
+    private val mDeckList: MutableList<TreeNode<AbstractDeckTreeNode>>
     /** A subset of mDeckList (currently displayed)  */
-    private val mCurrentDeckList: MutableList<AbstractDeckTreeNode<*>> = ArrayList()
+    private val mCurrentDeckList: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList()
     private val mZeroCountColor: Int
     private val mNewCountColor: Int
     private val mLearnCountColor: Int
@@ -120,7 +120,7 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
      * Consume a list of [AbstractDeckTreeNode]s to render a new deck list.
      * @param filter The string to filter the deck by
      */
-    fun buildDeckList(nodes: List<T>, col: Collection?, filter: CharSequence?) {
+    fun buildDeckList(nodes: List<TreeNode<AbstractDeckTreeNode>>, col: Collection?, filter: CharSequence?) {
         mCol = col
         mDeckList.clear()
         mCurrentDeckList.clear()
@@ -134,7 +134,7 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
         getFilter().filter(filter)
     }
 
-    fun getNodeByDid(did: Long): AbstractDeckTreeNode<*> {
+    fun getNodeByDid(did: Long): TreeNode<AbstractDeckTreeNode> {
         val pos = findDeckPosition(did)
         return deckList[pos]
     }
@@ -146,7 +146,8 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Update views for this node
-        val node = mCurrentDeckList[position]
+        val treeNode = mCurrentDeckList[position]
+        val node = treeNode.value
         // Set the expander icon and padding according to whether or not there are any subdecks
         val deckLayout = holder.deckLayout
         val rightPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_right_padding).toInt()
@@ -155,13 +156,13 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
             deckLayout.setPadding(smallPadding, 0, rightPadding, 0)
             holder.deckExpander.visibility = View.VISIBLE
             // Create the correct expander for this deck
-            setDeckExpander(holder.deckExpander, holder.indentView, node)
+            setDeckExpander(holder.deckExpander, holder.indentView, treeNode)
         } else {
             holder.deckExpander.visibility = View.GONE
             val normalPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_left_padding).toInt()
             deckLayout.setPadding(normalPadding, 0, rightPadding, 0)
         }
-        if (node.hasChildren()) {
+        if (treeNode.hasChildren()) {
             holder.deckExpander.tag = node.did
             holder.deckExpander.setOnClickListener(mDeckExpanderClickListener)
         } else {
@@ -216,7 +217,7 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
         view.background = background
     }
 
-    private fun isCurrentlySelectedDeck(node: AbstractDeckTreeNode<*>): Boolean {
+    private fun isCurrentlySelectedDeck(node: AbstractDeckTreeNode): Boolean {
         return node.did == mCol!!.decks.current().optLong("id")
     }
 
@@ -224,8 +225,9 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
         return mCurrentDeckList.size
     }
 
-    private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: AbstractDeckTreeNode<*>) {
-        val collapsed = mCol!!.decks.get(node.did).optBoolean("collapsed", false)
+    private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<AbstractDeckTreeNode>) {
+        val nodeValue = node.value
+        val collapsed = mCol!!.decks.get(nodeValue.did).optBoolean("collapsed", false)
         // Apply the correct expand/collapse drawable
         if (node.hasChildren()) {
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
@@ -241,21 +243,21 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
         }
         // Add some indenting for each nested level
-        val width = indent.resources.getDimension(R.dimen.keyline_1).toInt() * node.depth
+        val width = indent.resources.getDimension(R.dimen.keyline_1).toInt() * nodeValue.depth
         indent.minimumWidth = width
     }
 
-    private fun processNodes(nodes: List<T>) {
+    private fun processNodes(nodes: List<TreeNode<AbstractDeckTreeNode>>) {
         for (node in nodes) {
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
-            if (node.did == 1L && nodes.size > 1 && !node.hasChildren()) {
+            if (node.value.did == 1L && nodes.size > 1 && !node.hasChildren()) {
                 if (!defaultDeckHasCards(mCol!!)) {
                     continue
                 }
             }
             // If any of this node's parents are collapsed, don't add it to the deck list
-            for (parent in mCol!!.decks.parents(node.did)) {
+            for (parent in mCol!!.decks.parents(node.value.did)) {
                 mHasSubdecks = true // If a deck has a parent it means it's a subdeck so set a flag
                 if (parent.optBoolean("collapsed")) {
                     return
@@ -265,15 +267,15 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
             mCurrentDeckList.add(node)
 
             // Add this node's counts to the totals if it's a parent deck
-            if (node.depth == 0) {
-                if (node.shouldDisplayCounts()) {
-                    mNew += node.newCount
-                    mLrn += node.lrnCount
-                    mRev += node.revCount
+            if (node.value.depth == 0) {
+                if (node.value.shouldDisplayCounts()) {
+                    mNew += node.value.newCount
+                    mLrn += node.value.lrnCount
+                    mRev += node.value.revCount
                 }
             }
             // Process sub-decks
-            processNodes(node.children!!)
+            processNodes(node.children)
         }
     }
 
@@ -285,7 +287,7 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
      */
     fun findDeckPosition(did: Long): Int {
         for (i in mCurrentDeckList.indices) {
-            if (mCurrentDeckList[i].did == did) {
+            if (mCurrentDeckList[i].value.did == did) {
                 return i
             }
         }
@@ -310,33 +312,33 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
         } else {
             null
         }
-    private val deckList: List<AbstractDeckTreeNode<*>>
+    private val deckList: List<TreeNode<AbstractDeckTreeNode>>
         get() = mCurrentDeckList
 
     override fun getFilter(): Filter {
         return DeckFilter()
     }
 
-    private inner class DeckFilter : TypedFilter<T>(mDeckList) {
-        override fun filterResults(constraint: CharSequence, items: List<T>): List<T> {
+    private inner class DeckFilter : TypedFilter<TreeNode<AbstractDeckTreeNode>>(mDeckList) {
+        override fun filterResults(constraint: CharSequence, items: List<TreeNode<AbstractDeckTreeNode>>): List<TreeNode<AbstractDeckTreeNode>> {
             val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
-            return items.mapNotNull { t: T -> filterDeckInternal(filterPattern, t) }
+            return items.mapNotNull { t: TreeNode<AbstractDeckTreeNode> -> filterDeckInternal(filterPattern, t) }
         }
 
-        override fun publishResults(constraint: CharSequence?, results: List<T>) {
+        override fun publishResults(constraint: CharSequence?, results: List<TreeNode<AbstractDeckTreeNode>>) {
             mCurrentDeckList.clear()
             mCurrentDeckList.addAll(results)
             notifyDataSetChanged()
         }
 
-        private fun filterDeckInternal(filterPattern: String, root: T): T? {
+        private fun filterDeckInternal(filterPattern: String, root: TreeNode<AbstractDeckTreeNode>): TreeNode<AbstractDeckTreeNode>? {
 
             // If a deck contains the string, then all its children are valid
-            if (containsFilterString(filterPattern, root)) {
+            if (containsFilterString(filterPattern, root.value)) {
                 return root
             }
-            val children = root.children!!
-            val ret: MutableList<T> = ArrayList(children.size)
+            val children = root.children
+            val ret: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList(children.size)
             for (child in children) {
                 val returned = filterDeckInternal(filterPattern, child)
                 if (returned != null) {
@@ -345,10 +347,15 @@ class DeckAdapter<T : AbstractDeckTreeNode<T>>(private val layoutInflater: Layou
             }
 
             // If any of a deck's children contains the search string, then the deck is valid
-            return if (ret.isEmpty()) null else root.withChildren(ret)
+            if (ret.isEmpty()) return null
+
+            // we have a root, and a list of trees with the counts already calculated.
+            return TreeNode(root.value).apply {
+                children.addAll(ret)
+            }
         }
 
-        private fun containsFilterString(filterPattern: String, root: T): Boolean {
+        private fun containsFilterString(filterPattern: String, root: AbstractDeckTreeNode): Boolean {
             val deckName = root.fullDeckName
             return deckName.lowercase(Locale.getDefault()).contains(filterPattern) || deckName.lowercase(Locale.ROOT).contains(filterPattern)
         }

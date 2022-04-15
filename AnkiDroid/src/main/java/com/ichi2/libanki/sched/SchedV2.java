@@ -67,6 +67,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -571,7 +572,7 @@ public class SchedV2 extends AbstractSched {
      requires multiple database access by deck.  Ignoring this number
      lead to the creation of a tree more quickly.*/
     @Override
-    public @NonNull List<DeckTreeNode> quickDeckDueTree() {
+    public @NonNull List<TreeNode<DeckTreeNode>> quickDeckDueTree() {
         // Similar to deckDueTree, ignoring the numbers
 
         // Similar to deckDueList
@@ -586,12 +587,12 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public @NonNull List<DeckDueTreeNode> deckDueTree() {
+    public @NonNull List<TreeNode<DeckDueTreeNode>> deckDueTree() {
         return deckDueTree(null);
     }
 
     @Nullable
-    public List<DeckDueTreeNode> deckDueTree(@Nullable CancelListener cancelListener) {
+    public List<TreeNode<DeckDueTreeNode>> deckDueTree(@Nullable CancelListener cancelListener) {
         List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
         if (allDecksSorted == null) {
             return null;
@@ -604,7 +605,7 @@ public class SchedV2 extends AbstractSched {
      * @param allDecksSorted the set of all decks of the collection. Sorted.
      * @param checkDone Whether the set of deck was checked. If false, we can't assume all decks have parents
      * and that there is no duplicate. Instead, we'll ignore problems.*/
-    protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> allDecksSorted, boolean checkDone) {
+    protected @NonNull <T extends AbstractDeckTreeNode> List<TreeNode<T>> _groupChildren(@NonNull List<T> allDecksSorted, boolean checkDone) {
         return _groupChildren(allDecksSorted, 0, checkDone);
     }
 
@@ -619,8 +620,8 @@ public class SchedV2 extends AbstractSched {
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
-    protected @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> sortedDescendants, int depth, boolean checkDone) {
-        List<T> sortedChildren = new ArrayList<>();
+    protected @NonNull <T extends AbstractDeckTreeNode> List<TreeNode<T>> _groupChildren(@NonNull List<T> sortedDescendants, int depth, boolean checkDone) {
+        List<TreeNode<T>> sortedChildren = new ArrayList<>();
         // group and recurse
         ListIterator<T> it = sortedDescendants.listIterator();
         while (it.hasNext()) {
@@ -657,9 +658,15 @@ public class SchedV2 extends AbstractSched {
             }
             // the childrenNode set contains direct child of `child`, but not
             // any descendants of the children of `child`...
-            List<T> childrenNode = _groupChildren(sortedDescendantsOfChild, depth + 1, checkDone);
-            child.setChildren(childrenNode, "std".equals(getName()));
-            sortedChildren.add(child);
+            List<TreeNode<T>> childrenNode = _groupChildren(sortedDescendantsOfChild, depth + 1, checkDone);
+
+            // Add the child nodes, and process the addition
+            TreeNode<T> toAdd = new TreeNode<>(child);
+            toAdd.getChildren().addAll(childrenNode);
+            List<T> childValues = childrenNode.stream().map(TreeNode::getValue).collect(Collectors.toList());
+            child.processChildren(childValues, "std".equals(getName()));
+
+            sortedChildren.add(toAdd);
         }
         return sortedChildren;
     }

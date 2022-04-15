@@ -225,7 +225,7 @@ public class DeckPickerTest extends RobolectricTest {
         ensureCollectionLoadIsSynchronous();
         DeckPicker deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
 
-        assertEquals(10, deckPicker.mDueTree.get(0).getNewCount());
+        assertEquals(10, deckPicker.mDueTree.get(0).getValue().getNewCount());
     }
 
     @Test

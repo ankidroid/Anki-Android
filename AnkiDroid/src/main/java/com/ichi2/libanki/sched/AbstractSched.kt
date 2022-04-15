@@ -187,17 +187,17 @@ abstract class AbstractSched {
      * @param cancelListener A task that is potentially cancelled
      * @return the due tree. null if task is cancelled
      */
-    abstract fun deckDueTree(cancelListener: CancelListener?): List<DeckDueTreeNode?>?
+    abstract fun deckDueTree(cancelListener: CancelListener?): List<TreeNode<DeckDueTreeNode>>?
 
     /**
      * @return the due tree. null if task is cancelled.
      */
-    abstract fun deckDueTree(): List<DeckDueTreeNode>
+    abstract fun deckDueTree(): List<TreeNode<DeckDueTreeNode>>
 
     /**
      * @return The tree of decks, without numbers
      */
-    abstract fun quickDeckDueTree(): List<DeckTreeNode?>
+    abstract fun quickDeckDueTree(): List<TreeNode<DeckTreeNode>>
 
     /** New count for a single deck.
      * @param did The deck to consider (descendants and ancestors are ignored)
