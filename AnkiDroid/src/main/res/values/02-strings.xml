@@ -274,6 +274,10 @@
 
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
 
+    <!-- Toolbar -->
+    <string name="ankidroid_navigation_drawer_open">Open drawer</string>
+    <string name="ankidroid_navigation_drawer_close">Close drawer</string>
+
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
