@@ -30,7 +30,7 @@ As far as possible, we use services that have a free tier for free software. Hos
 
 ### What would be the impact if the service disappears
 
-Ideally, if a service comes to disappear, the project should survive. That would be the cade with codecov for example, which is a great tool but that is not mandatory in our production system. If crowdin were to disable free account, that would hurt us, but we already have all translations in our repo and we can still use them and send them to another service provider if necessary.
+Ideally, if a service comes to disappear, the project should survive. That would be the case with codecov for example, which is a great tool but that is not mandatory in our production system. If crowdin were to disable free account, that would hurt us, but we already have all translations in our repo and we can still use them and send them to another service provider if necessary.
 
 Sometime, we would be really hurt if a service were to disappear or drastically limit its free tier. The current process would immediately stop without github or the Play Store. Even with local copy of the git repo, not having the wiki, the issues, the automation would considerably slow down the development. And while it is not certain that those services will still be here in 10 or 20 years, historical experience shows that Google and Microsoft usually warn in advance before changing their term of service, which may allow some time to prepare ourselves. On the other hand, we probably would not want to have our entire process depending on a new-ish service that risk to get bankrupts without warning.
 
@@ -40,7 +40,7 @@ As a working example of service we had to stop using. We used to use Travis, unt
 
 If a service requires any permission, that would be extremely suspicious. For example, codecov can pull our code to analyse it and don't require any special permission. Crowd-in receives and sends translations through their API without requiring any access to github. It is hard to imagine a reason why we would agree to give permissions, in particular related to github or play store, to any service.
 
-### How much much maintainance does it require
+### How much maintenance does it require
 
 Ideally, most service don't require maintainance at all. Crowd-In require manual work to add a new language when a translator request it, it's rare enough to be okay. A service which changes its API every months and require us to rewrite part of our code would not be acceptable.
 
@@ -64,7 +64,7 @@ AnkiDroid is under GPL. This licence can incorporate codes using a lot of other 
 
 ### Fixed version
 
-There as been a few examples of maintainers volunterally breaking their code with an updaet. It is safer if we can access the code from a source that allows us to select the version number we require. While it's not perfect safety, at least, we get an idea of which version of the code we run - as long as the package manager is honest.
+There as been a few examples of maintainers volunterally breaking their code with an update. It is safer if we can access the code from a source that allows us to select the version number we require. While it's not perfect safety, at least, we get an idea of which version of the code we run - as long as the package manager is honest.
 
 ### Easy to add/update with our tooling systems
 
@@ -76,7 +76,7 @@ A lot of our userbase has small smartphone. We will almost certainly reject a li
 
 ### How buggy is it
 
-Sometime we must accept buggy code when there is no alternative. As an example, MathJax 3 seems to render improperly some mathematics equation that were rendered properly with MathJax2. However, Anki uses MJ3 and MJ 2 is not developed anymore. While rendering bugs are frustrating for users using it, there is still no alternative in this space, especially since many anki cards are written for mathjax and some uses MJ 3 features. Furthermore, rendering bugs don't leak or destry user data
+Sometime we must accept buggy code when there is no alternative. As an example, MathJax 3 seems to render improperly some mathematics equation that were rendered properly with MathJax2. However, Anki uses MJ3 and MJ 2 is not updated anymore. While rendering bugs are frustrating for users using it, there is still no alternative in this space, especially since many anki cards are written for mathjax and some uses MJ 3 features. Furthermore, rendering bugs don't leak or destry user data
 
 However, in general, we prefer dependencies that are not buggy. That means in particular, dependencies that are used by a lot of product, which would have detected and reported those bugs. That also means that there is a ticket/issue system so that we can check how the dependency deals with bugs.
 
