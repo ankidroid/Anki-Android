@@ -40,10 +40,7 @@ class ImportDialog : AsyncDialogFragment() {
 
         // Iterate over dialog message list & create display filename
         var displayFileName = ""
-        var fileNameCount = 0
         dialogMessageList.forEach {
-            fileNameCount += 1
-            displayFileName += "$fileNameCount. "
             displayFileName += filenameFromPath(convertToDisplayName(it)) + "\n"
         }
 
