@@ -24,8 +24,8 @@
 
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Open drawer</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Close drawer</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Close drawer</string>
 
     <string name="CardEditorCardDeck">Card deck:</string>
     <string name="CardEditorNoteDeck">Deck:</string>
@@ -273,10 +273,6 @@
     <string name="basic_answer_sample_text">an example</string>
 
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
-
-    <!-- Toolbar -->
-    <string name="ankidroid_navigation_drawer_open">Open drawer</string>
-    <string name="ankidroid_navigation_drawer_close">Close drawer</string>
 
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
