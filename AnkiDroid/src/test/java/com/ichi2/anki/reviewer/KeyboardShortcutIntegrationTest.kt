@@ -28,7 +28,6 @@ import com.ichi2.anki.multimediacard.AudioPlayer
 import com.ichi2.anki.multimediacard.AudioRecorder
 import com.ichi2.anki.multimediacard.AudioView
 import com.ichi2.testutils.KeyEventUtils.Companion.getVKey
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
@@ -150,19 +149,18 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
         assertThat(mReviewer.audioView!!.status, equalTo(recording))
     }
 
-    @KotlinCleanup("scope function")
-    private fun setupPlayerMock(): AudioPlayer {
+    private fun setupPlayerMock() = AudioPlayer().run {
         assertThat(mReviewer.openMicToolbar(), equalTo(true))
-        val player = mock(AudioPlayer::class.java)
+        val player = mock(this::class.java)
         mReviewer.audioView!!.setPlayer(player)
-        return player
+        player
     }
 
-    private fun setupRecorderMock(): AudioRecorder {
+    private fun setupRecorderMock() = AudioRecorder().run {
         assertThat(mReviewer.openMicToolbar(), equalTo(true))
-        val recorder = mock(AudioRecorder::class.java)
+        val recorder = mock(this::class.java)
         mReviewer.audioView!!.setRecorder(recorder)
-        return recorder
+        recorder
     }
 
     private fun pressVThenRelease() {
