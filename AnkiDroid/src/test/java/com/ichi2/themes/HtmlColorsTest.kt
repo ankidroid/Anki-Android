@@ -28,4 +28,9 @@ class HtmlColorsTest {
         // An invalid color code should not be changed.
         assertThat(invertColors(" color:DLE "), `is`(" color:DLE "))
     }
+    @Test
+    fun testCorrectColorInversion() {
+        // valid color should invert the code
+        assertThat(invertColors(" color:#FFFFFF "), `is`(" color:#000000 "))
+    }
 }
