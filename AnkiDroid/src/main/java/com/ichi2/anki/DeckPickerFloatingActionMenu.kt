@@ -109,15 +109,17 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
     }
 
     fun showFloatingActionButton() {
-        mFabMain.show()
+        if (!mFabMain.isShown) {
+            Timber.i("DeckPicker:: showFloatingActionButton()")
+            mFabMain.visibility = View.VISIBLE
+        }
     }
 
     fun hideFloatingActionButton() {
-        mFabMain.hide()
-    }
-
-    fun isFloatingActionButtonVisible(): Boolean {
-        return mFabMain.isShown
+        if (mFabMain.isShown) {
+            Timber.i("DeckPicker:: hideFloatingActionButton()")
+            mFabMain.visibility = View.GONE
+        }
     }
 
     init {

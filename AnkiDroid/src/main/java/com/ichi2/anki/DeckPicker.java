@@ -278,7 +278,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void onDeckClick(View v, DeckSelectionType selectionType) {
         long deckId = (long) v.getTag();
         Timber.i("DeckPicker:: Selected deck with id %d", deckId);
-        closeFloatingActionMenu();
 
         boolean collectionIsOpen = false;
         try {
@@ -667,9 +666,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // When SearchItem is expanded
             public boolean onMenuItemActionExpand(MenuItem item) {
                 Timber.i("DeckPicker:: SearchItem opened");
-                closeFloatingActionMenu();
+                mFloatingActionMenu.closeFloatingActionMenu();
                 // Hide the floating action button if it is visible
-                hideFab();
+                mFloatingActionMenu.hideFloatingActionButton();
                 return true;
             }
 
@@ -678,7 +677,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 Timber.i("DeckPicker:: SearchItem closed");
                 // Show the floating action button if it is hidden
-                showFab();
+                mFloatingActionMenu.showFloatingActionButton();
                 return true;
             }
         });
@@ -2685,27 +2684,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             }
         });
         createDeckDialog.showDialog();
-    }
-
-    public void closeFloatingActionMenu() {
-        if (mFloatingActionMenu.isFABOpen()) {
-            Timber.i("DeckPicker:: closeFloatingActionMenu()");
-            mFloatingActionMenu.closeFloatingActionMenu();
-        }
-    }
-
-    public void hideFab() {
-        if (mFloatingActionMenu.isFloatingActionButtonVisible()) {
-            Timber.i("DeckPicker:: hideFab()");
-            mFloatingActionMenu.hideFloatingActionButton();
-        }
-    }
-
-    public void showFab() {
-        if (!mFloatingActionMenu.isFloatingActionButtonVisible()) {
-            Timber.i("DeckPicker:: showFab()");
-            mFloatingActionMenu.showFloatingActionButton();
-        }
     }
 
     @VisibleForTesting
