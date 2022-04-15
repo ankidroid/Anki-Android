@@ -269,11 +269,11 @@ class Preferences : AnkiActivity() {
                         DAY_OFFSET -> (pref as SeekBarPreferenceCompat).value = getDayOffset(col)
                         PASTE_PNG -> (pref as SwitchPreference).isChecked = col.get_config("pastePNG", false)!!
                         NEW_TIMEZONE_HANDLING -> {
-                            val Switch = pref as SwitchPreference
-                            Switch.isChecked = col.sched._new_timezone_enabled()
+                            val switch = pref as SwitchPreference
+                            switch.isChecked = col.sched._new_timezone_enabled()
                             if (col.schedVer() <= 1 || !col.isUsingRustBackend) {
                                 Timber.d("Disabled 'newTimezoneHandling' box")
-                                Switch.isEnabled = false
+                                switch.isEnabled = false
                             }
                         }
                     }
