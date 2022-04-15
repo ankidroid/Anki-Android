@@ -89,6 +89,7 @@ import com.ichi2.libanki.SortOrder.UseCollectionOrdering
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.CardBrowserSearchView
+import com.ichi2.ui.FixedTextView
 import com.ichi2.upgrade.Upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
@@ -226,6 +227,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var isInMultiSelectMode = false
+        private set
+    var isTruncated = false
         private set
     private val mCheckedCards = Collections.synchronizedSet(LinkedHashSet<CardCache>())
     private var mLastSelectedPosition = 0
@@ -1183,8 +1186,24 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             return true
         } else if (itemId == R.id.action_edit_tags) {
             showEditTagsDialog()
+        } else if (itemId == R.id.action_truncate) {
+            onTruncate()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun onTruncate() {
+        val truncate = mActionBarMenu!!.findItem(R.id.action_truncate)
+
+        if (truncate.title == resources.getString(R.string.card_browser_truncate)) {
+            isTruncated = true
+            mCardsAdapter!!.notifyDataSetChanged()
+            truncate.title = resources.getString(R.string.card_browser_expand)
+        } else {
+            isTruncated = false
+            mCardsAdapter!!.notifyDataSetChanged()
+            truncate.title = resources.getString(R.string.card_browser_truncate)
+        }
     }
 
     protected fun deleteSelectedNote() {
@@ -1398,6 +1417,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         savedInstanceState.putBoolean("mPostAutoScroll", mPostAutoScroll)
         savedInstanceState.putInt("mLastSelectedPosition", mLastSelectedPosition)
         savedInstanceState.putBoolean("mInMultiSelectMode", isInMultiSelectMode)
+        savedInstanceState.putBoolean("mIsTruncated", isTruncated)
         super.onSaveInstanceState(savedInstanceState)
     }
 
@@ -1410,6 +1430,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         mPostAutoScroll = savedInstanceState.getBoolean("mPostAutoScroll")
         mLastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition")
         isInMultiSelectMode = savedInstanceState.getBoolean("mInMultiSelectMode")
+        isTruncated = savedInstanceState.getBoolean("mIsTruncated")
         searchCards()
     }
 
@@ -2140,6 +2161,16 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             }
             // change bg color on check changed
             checkBox.setOnClickListener { onCheck(position, v) }
+            val column1 = v.findViewById<FixedTextView>(R.id.card_sfld)
+            val column2 = v.findViewById<FixedTextView>(R.id.card_column2)
+
+            if (isTruncated) {
+                column1.maxLines = 4
+                column2.maxLines = 4
+            } else {
+                column1.maxLines = Integer.MAX_VALUE
+                column2.maxLines = Integer.MAX_VALUE
+            }
         }
 
         private fun setFont(v: TextView) {
