@@ -6,16 +6,19 @@ In this page, we'll consider how we decide if we allow or not a new library or d
 
 First, let me list the services that we use today. That may illustrate the choices we make. I probably forget some tools here.
 
-* Android studio, java and kotlin compiler, for compilation
+* Android studio,
+* java and kotlin compiler, for compilation
 * We use [gradle](https://github.com/ankidroid/Anki-Android/blob/main/gradlew) as a build system.
-* We use [open collective](https://opencollective.com/ankidroid) for donations I suspect that I may even forgot some tools here and there.
-* We use [crowdin](https://crowdin.com/project/ankidroid) for translation
-* We use github to host code, host our wiki, and a lot of automated [actions](https://github.com/ankidroid/Anki-Android/tree/main/.github/workflows) such as automated testing, linting, adding milestone to PR, publishing an update, updating translation from, hosting various alpha binaries.
-* We use [codecove](https://codecov.io/gh/ankidroid/Anki-Android/) for code coverage by test.
-* We use Play Store, F-store and Amazon store to distribute our app to users and update the apps.
+* We use [open collective](https://opencollective.com/ankidroid) for donations,
+* We use [crowdin](https://crowdin.com/project/ankidroid) for translation,
+* We use github to host code, host our wiki, and a lot of automated [actions](https://github.com/ankidroid/Anki-Android/tree/main/.github/workflows) such as automated testing, linting, adding milestone to PR, publishing an update, updating translation from, hosting various alpha binaries,
+* We use [codecove](https://codecov.io/gh/ankidroid/Anki-Android/) for code coverage by test,
+* We use Play Store, F-store and Amazon store to distribute our app to users and update the apps,
 * A host for [our website](https://docs.ankidroid.org/)
-* Sellers to provide testing device
-* Acralyzer to host crash report
+* Sellers to provide testing device,
+* Acralyzer to host crash report,
+
+I suspect that I may even forgot some tools here and there.
 
 ## How to decide whether we use a tool.
 
