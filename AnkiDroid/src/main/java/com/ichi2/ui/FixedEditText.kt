@@ -35,40 +35,26 @@
  *
  * Source: https://github.com/M66B/FairEmail/blob/75fe7d0ec92a9874a98c22b61eeb8e6a8906a9ea/app/src/main/java/eu/faircode/email/FixedEditText.java
 */
+package com.ichi2.ui
 
-package com.ichi2.ui;
+import android.content.Context
+import android.graphics.Canvas
+import android.util.AttributeSet
+import android.view.MotionEvent
+import androidx.appcompat.widget.AppCompatEditText
+import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
+import timber.log.Timber
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
+open class FixedEditText : AppCompatEditText {
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-import com.ichi2.utils.AndroidUiUtils;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatEditText;
-import timber.log.Timber;
-
-public class FixedEditText extends AppCompatEditText {
-    public FixedEditText(@NonNull Context context) {
-        super(context);
-    }
-
-    public FixedEditText(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public FixedEditText(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    @Override
-    public void setSelection(int index) {
+    override fun setSelection(index: Int) {
         try {
-            super.setSelection(index);
-        } catch (Throwable ex) {
-            Timber.w(ex);
+            super.setSelection(index)
+        } catch (ex: Throwable) {
+            Timber.w(ex)
             /*
                 java.lang.IndexOutOfBoundsException: setSpan (2 ... 2) ends beyond length 0
                         at android.text.SpannableStringBuilder.checkRange(SpannableStringBuilder.java:1265)
@@ -83,21 +69,19 @@ public class FixedEditText extends AppCompatEditText {
         }
     }
 
-    @Override
-    public void setSelection(int start, int stop) {
+    override fun setSelection(start: Int, stop: Int) {
         try {
-            super.setSelection(start, stop);
-        } catch (Throwable ex) {
-            Timber.w(ex);
+            super.setSelection(start, stop)
+        } catch (ex: Throwable) {
+            Timber.w(ex)
         }
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    override fun onDraw(canvas: Canvas) {
         try {
-            super.onDraw(canvas);
-        } catch (Throwable ex) {
-            Timber.w(ex);
+            super.onDraw(canvas)
+        } catch (ex: Throwable) {
+            Timber.w(ex)
             /*
                 java.lang.ArrayIndexOutOfBoundsException: length=39; index=-3
                   at android.text.DynamicLayout.getBlockIndex(DynamicLayout.java:648)
@@ -109,22 +93,20 @@ public class FixedEditText extends AppCompatEditText {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        try {
-            return super.onTouchEvent(event);
-        } catch (Throwable ex) {
-            Timber.w(ex);
-            return false;
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return try {
+            super.onTouchEvent(event)
+        } catch (ex: Throwable) {
+            Timber.w(ex)
+            false
         }
     }
 
-    @Override
-    public boolean performLongClick() {
-        try {
-            return super.performLongClick();
-        } catch (Throwable ex) {
-/*
+    override fun performLongClick(): Boolean {
+        return try {
+            super.performLongClick()
+        } catch (ex: Throwable) {
+        /*
             java.lang.IllegalStateException: Drag shadow dimensions must be positive
                     at android.view.View.startDragAndDrop(View.java:27316)
                     at android.widget.Editor.startDragAndDrop(Editor.java:1340)
@@ -132,16 +114,16 @@ public class FixedEditText extends AppCompatEditText {
                     at android.widget.TextView.performLongClick(TextView.java:13544)
                     at android.view.View.performLongClick(View.java:7928)
                     at android.view.View$CheckForLongPress.run(View.java:29321)
-*/
-            Timber.w(ex);
-            return false;
+        */
+            Timber.w(ex)
+            false
         }
     }
 
     /**
      * Focuses the edit text and opens the soft keyboard.
      */
-    public void focusWithKeyboard() {
-        AndroidUiUtils.setFocusAndOpenKeyboard(this);
+    fun focusWithKeyboard() {
+        setFocusAndOpenKeyboard(this)
     }
 }
