@@ -31,6 +31,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import java.io.IOException
+import kotlin.collections.HashSet
 
 @RunWith(AndroidJUnit4::class)
 class AddonModelTest : RobolectricTest() {
@@ -62,7 +63,18 @@ class AddonModelTest : RobolectricTest() {
         val result: Pair<AddonModel?, List<String>> = getAddonModelFromJson(validNpmPackageJson)
         assertTrue(result.second.isEmpty())
         assertTrue("package.json contains required fields", result.first != null)
-        assertEquals(result.first?.name, "valid-ankidroid-js-addon-test")
+
+        // needs to test these fields
+        val addon = result.first!!
+        assertEquals(addon.name, "valid-ankidroid-js-addon-test")
+        assertEquals(addon.addonTitle, "Valid AnkiDroid JS Addon")
+        assertEquals(addon.version, "1.0.0")
+        assertEquals(addon.ankidroidJsApi, "0.0.1")
+        assertEquals(addon.addonType, "reviewer")
+        assertEquals(addon.icon, "") // reviewer icon is empty
+
+        val expected: List<String> = listOf("ankidroid-js-addon")
+        assertEquals(addon.keywords, expected)
     }
 
     @Test
