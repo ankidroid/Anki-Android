@@ -13,23 +13,19 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
-
-import com.ichi2.testutils.AnkiAssert;
-
-import org.junit.Test;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.StringContains.containsString;
+import com.ichi2.testutils.assertThrows
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.StringContains.containsString
+import org.junit.Test
 
 // explicitly missing @RunWith(AndroidJUnit4.class)
-public class RobolectricTestAnnotationTest extends RobolectricTest {
-
+class RobolectricTestAnnotationTest : RobolectricTest() {
     @Test
-    public void readableErrorIfNotAnnotated() {
-        IllegalStateException exception = AnkiAssert.assertThrows(this::getTargetContext, IllegalStateException.class);
-        assertThat(exception.getMessage(), containsString("RobolectricTestAnnotationTest"));
-        assertThat(exception.getMessage(), containsString("@RunWith(AndroidJUnit4.class)"));
+    fun readableErrorIfNotAnnotated() {
+        val exception = assertThrows<IllegalStateException> { @Suppress("UNUSED_VARIABLE") val unused = this.targetContext }
+        assertThat(exception.message, containsString("RobolectricTestAnnotationTest"))
+        assertThat(exception.message, containsString("@RunWith(AndroidJUnit4.class)"))
     }
 }

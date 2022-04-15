@@ -92,10 +92,15 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
         recyclerView.addOnItemTouchListener(
-            RecyclerSingleTouchAdapter(activity) { _: View?, position: Int ->
-                val l = adapter.getLocaleAtPosition(position)
-                mDialogHandler!!.onSelectedLocale(l)
-            }
+            RecyclerSingleTouchAdapter(
+                activity,
+                object : RecyclerSingleTouchAdapter.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        val l = adapter.getLocaleAtPosition(position)
+                        mDialogHandler!!.onSelectedLocale(l)
+                    }
+                }
+            )
         )
     }
 
