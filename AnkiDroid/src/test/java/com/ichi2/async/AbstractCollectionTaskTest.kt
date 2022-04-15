@@ -13,31 +13,27 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.async
 
-package com.ichi2.async;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import org.junit.runner.RunWith
 
-import com.ichi2.anki.RobolectricTest;
-
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-@RunWith(AndroidJUnit4.class)
-public abstract class AbstractCollectionTaskTest extends RobolectricTest {
-
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    protected <Progress, Result> Result execute(TaskDelegate<Progress, Result> task) {
-        CollectionTask<Progress, Result> collectionTask = (CollectionTask<Progress, Result>)TaskManager.launchCollectionTask(task);
-        try {
-            return collectionTask.get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+@RunWith(AndroidJUnit4::class)
+abstract class AbstractCollectionTaskTest : RobolectricTest() {
+    @Suppress("deprecation") // #7108: AsyncTask
+    protected fun <Progress, Result> execute(task: TaskDelegate<Progress, Result>?): Result? {
+        @Suppress("UNCHECKED_CAST")
+        val collectionTask = TaskManager.launchCollectionTask(task) as CollectionTask<Progress, Result>
+        return try {
+            collectionTask.get()
+        } catch (e: Exception) {
+            throw RuntimeException(e)
         }
     }
 
-    protected <Progress, Result> void waitForTask(TaskDelegate<Progress, Result> task, TaskListener<Progress, Result> listener) {
-        TaskManager.launchCollectionTask(task, listener);
-
-        waitForAsyncTasksToComplete();
+    protected fun <Progress, Result> waitForTask(task: TaskDelegate<Progress, Result>, listener: TaskListener<Progress, Result>?) {
+        TaskManager.launchCollectionTask(task, listener)
+        waitForAsyncTasksToComplete()
     }
 }
