@@ -652,6 +652,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Timber.d("onCreateOptionsMenu()");
+        mFloatingActionMenu.closeFloatingActionMenu();
         getMenuInflater().inflate(R.menu.deck_picker, menu);
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
         menu.findItem(R.id.action_sync).setEnabled(sdCardAvailable);
@@ -666,7 +667,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             // When SearchItem is expanded
             public boolean onMenuItemActionExpand(MenuItem item) {
                 Timber.i("DeckPicker:: SearchItem opened");
-                mFloatingActionMenu.closeFloatingActionMenu();
                 // Hide the floating action button if it is visible
                 mFloatingActionMenu.hideFloatingActionButton();
                 return true;
@@ -763,6 +763,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mFloatingActionMenu.closeFloatingActionMenu();
+
         Resources res = getResources();
         if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
