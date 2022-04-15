@@ -157,4 +157,21 @@ public class FileUtilTest {
         assertThat(fileNameAndExtension.getKey(), is("a.b"));
         assertThat(fileNameAndExtension.getValue(), is(".c"));
     }
+
+    @Test
+    public void fileSizeTest() throws IOException {
+        assertThat("deleted file should have 0 size", FileUtil.getSize(new File("test.txt")), is(0L));
+
+        File temporaryRootDir = temporaryDirectory.newFolder("tempRootDir");
+
+        assertThat("empty directory should have 0 size", FileUtil.getSize(temporaryRootDir), is(0L));
+
+        File textFile = new File(temporaryRootDir, "tmp.txt");
+        writeStringToFile(textFile, "Hello World");
+
+        long expectedLength = (long) "Hello World".length();
+        assertThat("File size should return text length", FileUtil.getSize(textFile), is(expectedLength));
+
+        assertThat("Should return file lengths", FileUtil.getSize(temporaryRootDir), is(expectedLength));
+    }
 }
