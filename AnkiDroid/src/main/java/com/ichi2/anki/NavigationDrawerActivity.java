@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki;
+package com.ichi2.anki; 
 
 import android.annotation.TargetApi;
 import android.content.Context;
