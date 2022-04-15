@@ -96,7 +96,6 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
-import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
@@ -217,8 +216,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         get() = BackupManager()
     private val mImportAddListener = ImportAddListener(this)
 
-    private class ImportAddListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Triple<AnkiPackageImporter, Boolean, String?>>(deckPicker) {
-        override fun actualOnPostExecute(context: DeckPicker, result: Triple<AnkiPackageImporter, Boolean, String?>) {
+    private class ImportAddListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Triple<AnkiPackageImporter?, Boolean, String?>>(deckPicker) {
+        override fun actualOnPostExecute(context: DeckPicker, result: Triple<AnkiPackageImporter?, Boolean, String?>) {
             if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
                 context.mProgressDialog!!.dismiss()
             }
@@ -229,7 +228,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 context.showSimpleMessageDialog(result.third)
             } else {
                 Timber.i("Import: Add succeeded")
-                val imp = result.first
+                val imp = result.first!!
                 context.showSimpleMessageDialog(TextUtils.join("\n", imp.log))
                 context.updateDeckList()
             }
@@ -1968,7 +1967,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         if (quick) {
             TaskManager.launchCollectionTask(LoadDeck(), updateDeckListListener())
         } else {
-            TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener<DeckDueTreeNode>())
+            TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener())
         }
     }
 
@@ -2202,12 +2201,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         return SimpleProgressListener(this)
     }
 
-    private class SimpleProgressListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, DeckStudyData>(deckPicker) {
+    private class SimpleProgressListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, DeckStudyData?>(deckPicker) {
         override fun actualOnPreExecute(context: DeckPicker) {
             context.showProgressBar()
         }
 
-        override fun actualOnPostExecute(context: DeckPicker, result: DeckStudyData) {
+        override fun actualOnPostExecute(context: DeckPicker, result: DeckStudyData?) {
             context.updateDeckList()
             if (context.mFragmented) {
                 context.loadStudyOptionsFragment(false)
