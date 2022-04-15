@@ -144,13 +144,11 @@
                 android:summary="@string/convert_fen_text_summ"
                 android:title="@string/convert_fen_text" />
             <SwitchPreference
-                android:id="@+id/scrolling_buttons_Switch"
                 android:defaultValue="false"
                 android:key="scrolling_buttons"
                 android:summary="@string/more_scrolling_buttons_summ"
                 android:title="@string/more_scrolling_buttons" />
             <SwitchPreference
-                android:id="@+id/double_scrolling_Switch"
                 android:defaultValue="false"
                 android:key="double_scrolling"
                 android:summary="@string/double_scrolling_gap_summ"
