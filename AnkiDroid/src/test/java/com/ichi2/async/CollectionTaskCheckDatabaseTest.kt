@@ -13,38 +13,30 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.async
 
-package com.ichi2.async;
+import com.ichi2.anki.RunInBackground
+import com.ichi2.async.CollectionTask.CheckDatabase
+import com.ichi2.testutils.CollectionUtils
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
 
-import android.util.Pair;
-
-import com.ichi2.anki.RunInBackground;
-import com.ichi2.libanki.Collection;
-import com.ichi2.testutils.CollectionUtils;
-
-import org.junit.Ignore;
-import org.junit.Test;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-public class CollectionTaskCheckDatabaseTest extends AbstractCollectionTaskTest {
-
+@KotlinCleanup("`is` -> equalTo")
+class CollectionTaskCheckDatabaseTest : AbstractCollectionTaskTest() {
     @Test
     @RunInBackground
-    public void checkDatabaseWithLockedCollectionReturnsLocked() {
-        lockDatabase();
-
-        advanceRobolectricLooper();
-        Pair<Boolean, Collection.CheckDatabaseResult> result = super.execute(new CollectionTask.CheckDatabase());
-
-        assertThat("The result should specify a failure", result.first, is(false));
-        Collection.CheckDatabaseResult checkDbResult = result.second;
-
-        assertThat("The result should specify the database was locked", checkDbResult.getDatabaseLocked());
+    fun checkDatabaseWithLockedCollectionReturnsLocked() {
+        lockDatabase()
+        advanceRobolectricLooper()
+        val result = super.execute(CheckDatabase())!!
+        assertThat("The result should specify a failure", result.first, `is`(false))
+        val checkDbResult = result.second
+        assertThat("The result should specify the database was locked", checkDbResult.databaseLocked)
     }
 
-    private void lockDatabase() {
-        CollectionUtils.lockDatabase(getCol());
+    private fun lockDatabase() {
+        CollectionUtils.lockDatabase(col)
     }
-
 }
