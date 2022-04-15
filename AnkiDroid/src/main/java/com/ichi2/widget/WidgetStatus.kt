@@ -106,7 +106,7 @@ object WidgetStatus {
             col.sched._checkDay()
 
             // Only count the top-level decks in the total
-            val nodes = col.sched.deckDueTree()
+            val nodes = col.sched.deckDueTree().map { it.value }
             for (node in nodes) {
                 total.addNew(node.newCount)
                 total.addLrn(node.lrnCount)
