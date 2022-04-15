@@ -3,7 +3,7 @@
 
 <!-- Advanced Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
+    <SwitchPreference
         android:key="useCustomSyncServer"
         android:title="@string/custom_sync_server_enable_title"
         android:summary="@string/custom_sync_server_enable_summary"
