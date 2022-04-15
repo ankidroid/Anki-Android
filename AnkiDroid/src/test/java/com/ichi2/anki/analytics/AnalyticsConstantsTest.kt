@@ -13,17 +13,18 @@
 package com.ichi2.anki.analytics
 
 import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.*
 import org.junit.Assert
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.lang.RuntimeException
-import java.lang.reflect.Field
 import java.util.*
-import java.util.stream.Collectors
-import java.util.stream.Stream
 import kotlin.Throws
+import kotlin.reflect.full.memberProperties
+import kotlin.reflect.jvm.javaField
 
 /**
  * This class contains two nested classes and is using the concept of Enclosed runner that internally works as a Suite.
@@ -32,7 +33,7 @@ import kotlin.Throws
  */
 @RunWith(Enclosed::class)
 @KotlinCleanup("auto IDE lint")
-@KotlinCleanup("Move away from Java streams")
+@KotlinCleanup("remove JavaField accessors and check for annotations on the property")
 @KotlinCleanup("Remove @Throws")
 object AnalyticsConstantsTest {
     private val listOfConstantFields: MutableList<String> = ArrayList()
@@ -68,9 +69,11 @@ object AnalyticsConstantsTest {
         listOfConstantFields.add("Import COLPKG")
     }
 
-    internal val analyticsConstantFields: Stream<Field>
-        get() = Arrays.stream(UsageAnalytics.Actions::class.java.declaredFields)
-            .filter { x: Field -> x.isAnnotationPresent(AnalyticsConstant::class.java) }
+    internal val analyticsConstantFields
+        get() =
+            UsageAnalytics.Actions::class.memberProperties
+                .filter { x -> x.javaField!!.getAnnotation(AnalyticsConstant::class.java) != null }
+                .also { list -> assertThat(list.size, not(equalTo(0))) }
 
     @RunWith(Parameterized::class)
     class AnalyticsConstantsFieldValuesTest(private val analyticsString: String) {
@@ -90,8 +93,8 @@ object AnalyticsConstantsTest {
 
         @Throws(IllegalAccessException::class)
         fun getStringFromReflection(analyticsStringToBeChecked: String): String? {
-            for (value in analyticsConstantFields.collect(Collectors.toList())) {
-                val reflectedValue = value[null]
+            for (value in analyticsConstantFields) {
+                val reflectedValue = value.get(UsageAnalytics.Actions)
                 if (reflectedValue == analyticsStringToBeChecked) {
                     return reflectedValue as String
                 }
@@ -114,15 +117,15 @@ object AnalyticsConstantsTest {
             if (fieldSize > listOfConstantFields.size) {
                 Assert.assertEquals(
                     "Add the newly added analytics constant to AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
-                    listOfConstantFields.size.toLong(), fieldSize
+                    listOfConstantFields.size, fieldSize
                 )
             } else if (fieldSize < listOfConstantFields.size) {
                 Assert.assertEquals(
                     "If a constant is removed, it should be removed from AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
-                    listOfConstantFields.size.toLong(), fieldSize
+                    listOfConstantFields.size, fieldSize
                 )
             } else {
-                Assert.assertEquals(listOfConstantFields.size.toLong(), fieldSize)
+                Assert.assertEquals(listOfConstantFields.size, fieldSize)
             }
         }
 
@@ -132,15 +135,16 @@ object AnalyticsConstantsTest {
          */
         @Test
         fun fieldAnnotatedOrNot() {
-            val actions = UsageAnalytics.Actions()
-            val field: Array<Field>
-            field = actions.javaClass.declaredFields
-            for (value in field) {
-                if (!value.isAnnotationPresent(AnalyticsConstant::class.java) && !value.isSynthetic) {
+            for (value in getProperties()) {
+                if (value.getAnnotation(AnalyticsConstant::class.java) == null && !value.isSynthetic) {
                     throw RuntimeException("All the fields in Actions class must be annotated with @AnalyticsConstant. It seems " + value.name + " is not annotated.")
                 }
             }
         }
+
+        private fun getProperties() = UsageAnalytics.Actions::class.memberProperties
+            .mapNotNull { it.javaField }
+            .also { list -> assertThat("fields should not be empty", list.size, not(equalTo(0))) }
 
         companion object {
             /**
@@ -148,8 +152,7 @@ object AnalyticsConstantsTest {
              * Because whenever a new constant is added in Actions Class but not added to the list present in this
              * class (listOfConstantFields) the test must fail.
              */
-            val fieldSize: Long
-                get() = analyticsConstantFields.count()
+            val fieldSize get() = analyticsConstantFields.count()
         }
     }
 }

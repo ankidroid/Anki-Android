@@ -1077,7 +1077,7 @@ class Preferences : AnkiActivity() {
                 analyticsDebugMode.title = "Switch Analytics to dev mode"
                 analyticsDebugMode.summary = "Touch here to use Analytics dev tag and 100% sample rate"
                 analyticsDebugMode.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    if (UsageAnalytics.isEnabled()) {
+                    if (UsageAnalytics.isEnabled) {
                         showThemedToast(requireContext(), "Analytics set to dev mode", true)
                     } else {
                         showThemedToast(requireContext(), "Done! Enable Analytics in 'General' settings to use.", true)
