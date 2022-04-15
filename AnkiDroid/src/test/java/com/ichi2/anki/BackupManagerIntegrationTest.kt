@@ -38,8 +38,7 @@ class BackupManagerIntegrationTest : RobolectricTest() {
     fun restoreBackupLeavesCollectionWritable() {
         @Suppress("UNUSED_VARIABLE")
         val unusedCol = col
-        val path: ArrayList<String> = ArrayList<String>()
-        path.add(createBackup())
+        val path: ArrayList<String> = ArrayList<String>(listOf(createBackup()))
 
         // Perform a write
         addNoteUsingBasicModel("Hello", "World")
