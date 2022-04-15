@@ -1965,16 +1965,16 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback to import a file -- adding it to existing collection
     @Override
-    public void importAdd(ArrayList<String> importPath) {
-        Timber.d("importAdd() for file %s", importPath);
-        TaskManager.launchCollectionTask(new CollectionTask.ImportAdd(importPath), mImportAddListener);
+    public void importAdd(ArrayList<String> importPaths) {
+        Timber.d("importAdd() for file %s", importPaths);
+        TaskManager.launchCollectionTask(new CollectionTask.ImportAdd(importPaths), mImportAddListener);
     }
 
 
     // Callback to import a file -- replacing the existing collection
     @Override
-    public void importReplace(ArrayList<String> importPath) {
-        TaskManager.launchCollectionTask(new CollectionTask.ImportReplace(importPath), importReplaceListener());
+    public void importReplace(ArrayList<String> importPaths) {
+        TaskManager.launchCollectionTask(new CollectionTask.ImportReplace(importPaths), importReplaceListener());
     }
 
 
