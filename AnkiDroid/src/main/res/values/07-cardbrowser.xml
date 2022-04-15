@@ -70,6 +70,8 @@
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_truncate">Truncate</string>
+    <string name="card_browser_expand">Expand</string>
 
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d card deleted</item>
