@@ -17,28 +17,25 @@ package com.ichi2.anki
 
 import com.ichi2.anki.CardBrowser.CardCollection
 import com.ichi2.anki.CardBrowser.PositionAware
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.junit.Test
-import java.util.*
 
-@KotlinCleanup("IDE lint")
-@KotlinCleanup("`is` -> equalTo")
-class CardBrowser_CardCollectionTest {
+class CardBrowserCardCollectionTest {
+
     @Test
     fun reverseFixesPosition() {
         val cardCollection = createCollection(Positioned(0), Positioned(1))
-        assertThat(cardCollection[0].position, `is`(0))
-        assertThat(cardCollection[0].initialValue, `is`(0))
+        assertThat(cardCollection[0].position, equalTo(0))
+        assertThat(cardCollection[0].initialValue, equalTo(0))
         cardCollection.reverse()
-        assertThat(cardCollection[0].position, `is`(0))
-        assertThat(cardCollection[0].initialValue, `is`(1))
+        assertThat(cardCollection[0].position, equalTo(0))
+        assertThat(cardCollection[0].initialValue, equalTo(1))
     }
 
-    private fun createCollection(vararg toInsert: Positioned?): CardCollection<Positioned> {
+    private fun createCollection(vararg toInsert: Positioned): CardCollection<Positioned> {
         val cardCollection = CardCollection<Positioned>()
-        cardCollection.replaceWith(Arrays.asList(*toInsert))
+        cardCollection.replaceWith(toInsert.toMutableList())
         return cardCollection
     }
 

@@ -13,17 +13,11 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package com.ichi2.anki;
-
-import java.lang.annotation.Retention;
-
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+package com.ichi2.anki
 
 /**
  * Specifies that the test cannot yet be run in the background, so we need the legacy background executor
  * We should aim to remove this, as tests will be lass flaky and faster without it.
  */
-@Retention(RUNTIME)
-public @interface RunInBackground {
-}
+@Retention(AnnotationRetention.RUNTIME)
+annotation class RunInBackground

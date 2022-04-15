@@ -13,14 +13,13 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
-
-public class ParametersUtils {
+object ParametersUtils {
     /**
      * Used to satisfy a parameter with a null in a declarative way
      */
-    public static <T> T whatever() {
-        return null;
+    fun <T> whatever(): T? {
+        return null
     }
 }
