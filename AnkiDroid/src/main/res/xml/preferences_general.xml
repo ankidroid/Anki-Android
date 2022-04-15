@@ -22,7 +22,6 @@
 
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/app_name"
     android:summary="@string/pref_cat_general_summ">
     <PreferenceCategory android:title="@string/button_sync" >
