@@ -14,63 +14,47 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.R
+import com.ichi2.anki.exception.ImportExportException
+import com.ichi2.utils.CollectionUtils.addAll
+import com.ichi2.utils.JSONException
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.StringUtil.strip
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
+import timber.log.Timber
+import java.io.*
 
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.R;
-import com.ichi2.anki.exception.ImportExportException;
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
-import com.ichi2.utils.StringUtil;
+@KotlinCleanup("lots in this file")
+open class Exporter {
+    @JvmField
+    protected val mCol: Collection
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-import static com.ichi2.utils.CollectionUtils.addAll;
-
-class Exporter {
-    @NonNull
-    protected final Collection mCol;
     /**
      * If set exporter will export only this deck, otherwise will export all cards
      */
-    @Nullable
-    protected final Long mDid;
-    protected int mCount;
-    protected boolean mIncludeHTML;
+    protected val mDid: Long?
+    @JvmField
+    protected var mCount = 0
+    @JvmField
+    protected var mIncludeHTML = false
 
     /**
      * An exporter for the whole collection of decks
      *
      * @param col deck collection
      */
-    public Exporter(@NonNull Collection col) {
-        mCol = col;
-        mDid = null;
+    constructor(col: Collection) {
+        mCol = col
+        mDid = null
     }
-
 
     /**
      * An exporter for the content of a deck
@@ -78,93 +62,80 @@ class Exporter {
      * @param col deck collection
      * @param did deck id
      */
-    public Exporter(@NonNull Collection col, @NonNull Long did) {
-        mCol = col;
-        mDid = did;
+    constructor(col: Collection, did: Long) {
+        mCol = col
+        mDid = did
     }
-
 
     /**
      * Fetches the ids of cards to be exported
      *
      * @return list of card ids
      */
-    public Long[] cardIds() {
-        Long[] cids;
-        if (mDid == null) {
-            cids = Utils.list2ObjectArray(mCol.getDb().queryLongList("select id from cards"));
+    fun cardIds(): Array<Long> {
+        val cids: Array<Long>
+        cids = if (mDid == null) {
+            Utils.list2ObjectArray(mCol.db.queryLongList("select id from cards"))
         } else {
-            cids = Utils.list2ObjectArray(mCol.getDecks().cids(mDid, true));
+            Utils.list2ObjectArray(mCol.decks.cids(mDid, true))
         }
-        mCount = cids.length;
-        return cids;
+        mCount = cids.size
+        return cids
     }
 
-
-    @NonNull
-    protected String processText(@NonNull String text) {
+    fun processText(input: String): String {
+        var text = input
         if (!mIncludeHTML) {
-            text = stripHTML(text);
+            text = stripHTML(text)
         }
-
-        text = escapeText(text);
-
-        return text;
+        text = escapeText(text)
+        return text
     }
-
 
     /**
      * Escape newlines, tabs, CSS and quotechar.
      */
-    @NonNull
-    protected String escapeText(@NonNull String text) {
-        //pylib:fixme: we should probably quote fields with newlines instead of converting them to spaces
-        text = text.replace("\\n", " ");
-        text = text.replace("\\r", "");
+    protected fun escapeText(input: String): String {
+        // pylib:fixme: we should probably quote fields with newlines instead of converting them to spaces
+        var text = input
+        text = text.replace("\\n", " ")
+        text = text.replace("\\r", "")
 
-        //pylib: text = text.replace("\t", " " * 8)
-        text = text.replace("\\t", "        "/*8 spaced*/);
-
-        text = text.replaceAll("(?i)<style>.*?</style>", "");
-        text = text.replaceAll("\\[\\[type:[^]]+\\]\\]", "");
-
+        // pylib: text = text.replace("\t", " " * 8)
+        text = text.replace("\\t", "        " /*8 spaced*/)
+        text = text.replace("(?i)<style>.*?</style>".toRegex(), "")
+        text = text.replace("\\[\\[type:[^]]+\\]\\]".toRegex(), "")
         if (text.contains("\"")) {
-            text = '"' + text.replace("\"", "\"\"") + "\"";
+            text = '"'.toString() + text.replace("\"", "\"\"") + "\""
         }
-
-        return text;
+        return text
     }
-
 
     /**
      * very basic conversion to text
      */
-    @NonNull
-    protected String stripHTML(@NonNull String text) {
-        String s = text;
-        s = s.replaceAll("(?i)<(br ?/?|div|p)>", " ");
-        s = s.replaceAll("\\[sound:[^]]+\\]", "");
-        s = Utils.stripHTML(s);
-        s = s.replaceAll("[ \\n\\t]+", " ");
-        s = StringUtil.strip(s);
-        return s;
+    fun stripHTML(text: String): String {
+        var s = text
+        s = s.replace("(?i)<(br ?/?|div|p)>".toRegex(), " ")
+        s = s.replace("\\[sound:[^]]+\\]".toRegex(), "")
+        s = Utils.stripHTML(s)
+        s = s.replace("[ \\n\\t]+".toRegex(), " ")
+        s = strip(s)!!
+        return s
     }
 }
 
+open class AnkiExporter : Exporter {
+    protected val mIncludeSched: Boolean
+    protected val mIncludeMedia: Boolean
+    private var mSrc: Collection? = null
+    var mediaDir: String? = null
 
-@SuppressWarnings({"PMD.AvoidReassigningParameters","PMD.DefaultPackage",
-        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.ExcessiveMethodLength",
-        "PMD.EmptyIfStmt","PMD.CollapsibleIfStatements"})
-class AnkiExporter extends Exporter {
-    protected final boolean mIncludeSched;
-    protected final boolean mIncludeMedia;
-    private Collection mSrc;
-    String mMediaDir;
     // Actual capacity will be set when known, if media are imported.
-    final ArrayList<String> mMediaFiles = new ArrayList<>(0);
-    @SuppressLint("NonPublicNonStaticFieldName")
-    boolean _v2sched;
+    val mMediaFiles = ArrayList<String>(0)
 
+    @SuppressLint("NonPublicNonStaticFieldName")
+    var _v2sched = false
 
     /**
      * An exporter for the whole collection of decks
@@ -173,12 +144,10 @@ class AnkiExporter extends Exporter {
      * @param includeSched should include scheduling
      * @param includeMedia should include media
      */
-    public AnkiExporter(@NonNull Collection col, boolean includeSched, boolean includeMedia) {
-        super(col);
-        mIncludeSched = includeSched;
-        mIncludeMedia = includeMedia;
+    constructor(col: Collection, includeSched: Boolean, includeMedia: Boolean) : super(col) {
+        mIncludeSched = includeSched
+        mIncludeMedia = includeMedia
     }
-
 
     /**
      * An exporter for the selected deck
@@ -188,12 +157,10 @@ class AnkiExporter extends Exporter {
      * @param includeSched should include scheduling
      * @param includeMedia should include media
      */
-    public AnkiExporter(@NonNull Collection col, @NonNull Long did, boolean includeSched, boolean includeMedia) {
-        super(col, did);
-        mIncludeSched = includeSched;
-        mIncludeMedia = includeMedia;
+    constructor(col: Collection, did: Long, includeSched: Boolean, includeMedia: Boolean) : super(col, did) {
+        mIncludeSched = includeSched
+        mIncludeMedia = includeMedia
     }
-
 
     /**
      * Export source database into new destination database Note: The following python syntax isn't supported in
@@ -204,153 +171,157 @@ class AnkiExporter extends Exporter {
      * @throws JSONException
      * @throws IOException
      */
-
-    public void exportInto(@NonNull String path, Context context) throws JSONException, IOException, ImportExportException {
+    @Throws(JSONException::class, IOException::class, ImportExportException::class)
+    open fun exportInto(path: String, context: Context) {
         // create a new collection at the target
-        new File(path).delete();
-        Collection dst = Storage.Collection(context, path);
-        mSrc = mCol;
+        File(path).delete()
+        val dst = Storage.Collection(context, path)
+        mSrc = mCol
         // find cards
-        Long[] cids = cardIds();
+        val cids: Array<Long> = cardIds()
         // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
         // flexible
-        dst.close();
-        Timber.d("Attach DB");
-        mSrc.getDb().getDatabase().execSQL("ATTACH '" + path + "' AS DST_DB");
+        dst.close()
+        Timber.d("Attach DB")
+        mSrc!!.db.database.execSQL("ATTACH '$path' AS DST_DB")
         // copy cards, noting used nids (as unique set)
-        Timber.d("Copy cards");
-        mSrc.getDb().getDatabase()
-                .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids));
-        List<Long> uniqueNids = mSrc.getDb().queryLongList(
-                "select distinct nid from cards where id in " + Utils.ids2str(cids));
+        Timber.d("Copy cards")
+        mSrc!!.db.database
+            .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids))
+        val uniqueNids: List<Long> = mSrc!!.db.queryLongList(
+            "select distinct nid from cards where id in " + Utils.ids2str(cids)
+        )
         // notes
-        Timber.d("Copy notes");
-        String strnids = Utils.ids2str(uniqueNids);
-        mSrc.getDb().getDatabase().execSQL("INSERT INTO DST_DB.notes select * from notes where id in " + strnids);
+        Timber.d("Copy notes")
+        val strnids = Utils.ids2str(uniqueNids)
+        mSrc!!.db.database.execSQL("INSERT INTO DST_DB.notes select * from notes where id in $strnids")
         // remove system tags if not exporting scheduling info
         if (!mIncludeSched) {
-            Timber.d("Stripping system tags from list");
-            ArrayList<String> srcTags = mSrc.getDb().queryStringList(
-                    "select tags from notes where id in " + strnids);
-            ArrayList<Object[]> args = new ArrayList<>(srcTags.size());
-            Object [] arg = new Object[2];
-            for (int row = 0; row < srcTags.size(); row++) {
-                arg[0]=removeSystemTags(srcTags.get(row));
-                arg[1]=uniqueNids.get(row);
-                args.add(row, arg);
+            Timber.d("Stripping system tags from list")
+            val srcTags = mSrc!!.db.queryStringList(
+                "select tags from notes where id in $strnids"
+            )
+            val args = ArrayList<Array<Any?>>(srcTags.size)
+            val arg = arrayOfNulls<Any>(2)
+            for (row in srcTags.indices) {
+                arg[0] = removeSystemTags(srcTags[row])
+                arg[1] = uniqueNids[row]
+                args.add(row, arg)
             }
-            mSrc.getDb().executeMany("UPDATE DST_DB.notes set tags=? where id=?", args);
+            mSrc!!.db.executeMany("UPDATE DST_DB.notes set tags=? where id=?", args)
         }
         // models used by the notes
-        Timber.d("Finding models used by notes");
-        ArrayList<Long> mids = mSrc.getDb().queryLongList(
-                "select distinct mid from DST_DB.notes where id in " + strnids);
+        Timber.d("Finding models used by notes")
+        val mids = mSrc!!.db.queryLongList(
+            "select distinct mid from DST_DB.notes where id in $strnids"
+        )
         // card history and revlog
         if (mIncludeSched) {
-            Timber.d("Copy history and revlog");
-            mSrc.getDb().getDatabase()
-                    .execSQL("insert into DST_DB.revlog select * from revlog where cid in " + Utils.ids2str(cids));
+            Timber.d("Copy history and revlog")
+            mSrc!!.db.database
+                .execSQL("insert into DST_DB.revlog select * from revlog where cid in " + Utils.ids2str(cids))
             // reopen collection to destination database (different from original python code)
-            mSrc.getDb().getDatabase().execSQL("DETACH DST_DB");
-            dst.reopen();
+            mSrc!!.db.database.execSQL("DETACH DST_DB")
+            dst.reopen()
         } else {
-            Timber.d("Detaching destination db and reopening");
+            Timber.d("Detaching destination db and reopening")
             // first reopen collection to destination database (different from original python code)
-            mSrc.getDb().getDatabase().execSQL("DETACH DST_DB");
-            dst.reopen();
+            mSrc!!.db.database.execSQL("DETACH DST_DB")
+            dst.reopen()
             // then need to reset card state
-            Timber.d("Resetting cards");
-            dst.getSched().resetCards(cids);
+            Timber.d("Resetting cards")
+            dst.sched.resetCards(cids)
         }
         // models - start with zero
-        Timber.d("Copy models");
-        for (Model m : mSrc.getModels().all()) {
+        Timber.d("Copy models")
+        for (m in mSrc!!.models.all()) {
             if (mids.contains(m.getLong("id"))) {
-                dst.getModels().update(m);
+                dst.models.update(m)
             }
         }
         // decks
-        Timber.d("Copy decks");
-        java.util.Collection<Long> dids = null;
+        Timber.d("Copy decks")
+        var dids: MutableCollection<Long?>? = null
         if (mDid != null) {
-            dids = new HashSet<>(mSrc.getDecks().children(mDid).values());
-            dids.add(mDid);
+            dids = HashSet(mSrc!!.decks.children(mDid).values)
+            dids.add(mDid)
         }
-        JSONObject dconfs = new JSONObject();
-        for (Deck d : mSrc.getDecks().all()) {
-            if ("1".equals(d.getString("id"))) {
-                continue;
+        val dconfs = JSONObject()
+        for (d in mSrc!!.decks.all()) {
+            if ("1" == d.getString("id")) {
+                continue
             }
             if (dids != null && !dids.contains(d.getLong("id"))) {
-                continue;
+                continue
             }
-            if (d.isStd() && d.getLong("conf") != 1L) {
+            if (d.isStd && d.getLong("conf") != 1L) {
                 if (mIncludeSched) {
-                    dconfs.put(Long.toString(d.getLong("conf")), true);
+                    dconfs.put(java.lang.Long.toString(d.getLong("conf")), true)
                 }
             }
-
-            Deck destinationDeck = d.deepClone();
+            val destinationDeck = d.deepClone()
             if (!mIncludeSched) {
                 // scheduling not included, so reset deck settings to default
-                destinationDeck.put("conf", 1);
+                destinationDeck.put("conf", 1)
             }
-            dst.getDecks().update(destinationDeck);
+            dst.decks.update(destinationDeck)
         }
         // copy used deck confs
-        Timber.d("Copy deck options");
-        for (DeckConfig dc : mSrc.getDecks().allConf()) {
+        Timber.d("Copy deck options")
+        for (dc in mSrc!!.decks.allConf()) {
             if (dconfs.has(dc.getString("id"))) {
-                dst.getDecks().updateConf(dc);
+                dst.decks.updateConf(dc)
             }
         }
         // find used media
-        Timber.d("Find used media");
-        JSONObject media = new JSONObject();
-        mMediaDir = mSrc.getMedia().dir();
+        Timber.d("Find used media")
+        val media = JSONObject()
+        mediaDir = mSrc!!.media.dir()
         if (mIncludeMedia) {
-            ArrayList<Long> mid = mSrc.getDb().queryLongList("select mid from notes where id in " + strnids);
-            ArrayList<String> flds = mSrc.getDb().queryStringList(
-                    "select flds from notes where id in " + strnids);
-            for (int idx = 0; idx < mid.size(); idx++) {
-                for (String file : mSrc.getMedia().filesInStr(mid.get(idx), flds.get(idx))) {
+            val mid = mSrc!!.db.queryLongList("select mid from notes where id in $strnids")
+            val flds = mSrc!!.db.queryStringList(
+                "select flds from notes where id in $strnids"
+            )
+            for (idx in mid.indices) {
+                for (file in mSrc!!.media.filesInStr(mid[idx], flds[idx])) {
                     // skip files in subdirs
                     if (file.contains(File.separator)) {
-                        continue;
+                        continue
                     }
-                    media.put(file, true);
+                    media.put(file, true)
                 }
             }
-            if (mMediaDir != null) {
-                for (File f : new File(mMediaDir).listFiles()) {
-                    if (f.isDirectory()) {
-                        continue;
+            if (mediaDir != null) {
+                @KotlinCleanup("!! usage")
+                for (f in File(mediaDir!!).listFiles()!!) {
+                    if (f.isDirectory) {
+                        continue
                     }
-                    String fname = f.getName();
+                    val fname = f.name
                     if (fname.startsWith("_")) {
                         // Loop through every model that will be exported, and check if it contains a reference to f
-                        for (JSONObject model : mSrc.getModels().all()) {
+                        for (model in mSrc!!.models.all()) {
                             if (_modelHasMedia(model, fname)) {
-                                media.put(fname, true);
-                                break;
+                                media.put(fname, true)
+                                break
                             }
                         }
                     }
                 }
             }
         }
-        JSONArray keys = media.names();
+        val keys = media.names()
         if (keys != null) {
-            mMediaFiles.ensureCapacity(keys.length());
-            addAll(mMediaFiles, keys.stringIterable());
+            mMediaFiles.ensureCapacity(keys.length())
+            addAll(mMediaFiles, keys.stringIterable())
         }
-        Timber.d("Cleanup");
-        dst.setCrt(mSrc.getCrt());
+        Timber.d("Cleanup")
+        dst.crt = mSrc!!.crt
         // todo: tags?
-        mCount = dst.cardCount();
-        dst.setMod();
-        postExport();
-        dst.close();
+        mCount = dst.cardCount()
+        dst.setMod()
+        postExport()
+        dst.close()
     }
 
     /**
@@ -362,44 +333,40 @@ class AnkiExporter extends Exporter {
      * @return
      * @throws JSONException
      */
-    private boolean _modelHasMedia(JSONObject model, String fname) throws JSONException {
+    @Throws(JSONException::class)
+    private fun _modelHasMedia(model: JSONObject?, fname: String): Boolean {
         // Don't crash if the model is null
         if (model == null) {
-            Timber.w("_modelHasMedia given null model");
-            return true;
+            Timber.w("_modelHasMedia given null model")
+            return true
         }
         // First check the styling
         if (model.getString("css").contains(fname)) {
-            return true;
+            return true
         }
         // If not there then check the templates
-        JSONArray tmpls = model.getJSONArray("tmpls");
-        for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
+        val tmpls = model.getJSONArray("tmpls")
+        for (tmpl in tmpls.jsonObjectIterable()) {
             if (tmpl.getString("qfmt").contains(fname) || tmpl.getString("afmt").contains(fname)) {
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
-
 
     /**
      * override to apply customizations to the deck before it's closed, such as update the deck description
      */
-    protected void postExport() {
+    protected fun postExport() {
         // do nothing
     }
 
-
-    private String removeSystemTags(String tags) {
-        return mSrc.getTags().remFromStr("marked leech", tags);
+    private fun removeSystemTags(tags: String): String {
+        return mSrc!!.tags.remFromStr("marked leech", tags)
     }
 }
 
-
-
-public final class AnkiPackageExporter extends AnkiExporter {
-
+class AnkiPackageExporter : AnkiExporter {
     /**
      * An exporter for the whole collection of decks
      *
@@ -407,10 +374,7 @@ public final class AnkiPackageExporter extends AnkiExporter {
      * @param includeSched should include scheduling
      * @param includeMedia should include media
      */
-    public AnkiPackageExporter(@NonNull Collection col, boolean includeSched, boolean includeMedia) {
-        super(col, includeSched, includeMedia);
-    }
-
+    constructor(col: Collection, includeSched: Boolean, includeMedia: Boolean) : super(col, includeSched, includeMedia) {}
 
     /**
      * An exporter for a selected deck
@@ -420,197 +384,191 @@ public final class AnkiPackageExporter extends AnkiExporter {
      * @param includeSched should include scheduling
      * @param includeMedia should include media
      */
-    public AnkiPackageExporter(@NonNull Collection col, @NonNull Long did, boolean includeSched, boolean includeMedia) {
-        super(col, did, includeSched, includeMedia);
-    }
+    constructor(col: Collection, did: Long, includeSched: Boolean, includeMedia: Boolean) : super(col, did, includeSched, includeMedia) {}
 
-
-    @Override
-    public void exportInto(String path, Context context) throws IOException, JSONException, ImportExportException {
+    @Throws(IOException::class, JSONException::class, ImportExportException::class)
+    override fun exportInto(path: String, context: Context) {
         // sched info+v2 scheduler not compatible w/ older clients
-        Timber.i("Starting export into %s", path);
-        _v2sched = mCol.schedVer() != 1 && mIncludeSched;
+        Timber.i("Starting export into %s", path)
+        _v2sched = mCol.schedVer() != 1 && mIncludeSched
 
         // open a zip file
-        ZipFile z = new ZipFile(path);
+        val z = ZipFile(path)
         // if all decks and scheduling included, full export
-        JSONObject media;
-        if (mIncludeSched && mDid == null) {
-            media = exportVerbatim(z, context);
+        val media: JSONObject
+        media = if (mIncludeSched && mDid == null) {
+            exportVerbatim(z, context)
         } else {
             // otherwise, filter
-            media = exportFiltered(z, path, context);
+            exportFiltered(z, path, context)
         }
         // media map
-        z.writeStr("media", Utils.jsonToString(media));
-        z.close();
+        z.writeStr("media", Utils.jsonToString(media))
+        z.close()
     }
 
-
-    private JSONObject exportVerbatim(ZipFile z, Context context) throws IOException {
+    @KotlinCleanup("!! usage in listFiles")
+    @Throws(IOException::class)
+    private fun exportVerbatim(z: ZipFile, context: Context): JSONObject {
         // close our deck & write it into the zip file, and reopen
-        mCount = mCol.cardCount();
-        mCol.close();
+        mCount = mCol.cardCount()
+        mCol.close()
         if (!_v2sched) {
-            z.write(mCol.getPath(), CollectionHelper.COLLECTION_FILENAME);
+            z.write(mCol.path, CollectionHelper.COLLECTION_FILENAME)
         } else {
-            _addDummyCollection(z, context);
-            z.write(mCol.getPath(), "collection.anki21");
+            _addDummyCollection(z, context)
+            z.write(mCol.path, "collection.anki21")
         }
-
-        mCol.reopen();
+        mCol.reopen()
         // copy all media
         if (!mIncludeMedia) {
-            return new JSONObject();
+            return JSONObject()
         }
-        File mdir = new File(mCol.getMedia().dir());
-        if (mdir.exists() && mdir.isDirectory()) {
-            File[] mediaFiles = mdir.listFiles();
-            return _exportMedia(z, mediaFiles, ValidateFiles.SKIP_VALIDATION);
+        val mdir = File(mCol.media.dir())
+        return if (mdir.exists() && mdir.isDirectory) {
+            val mediaFiles = mdir.listFiles()!!
+            _exportMedia(z, mediaFiles, ValidateFiles.SKIP_VALIDATION)
         } else {
-            return new JSONObject();
+            JSONObject()
         }
     }
 
-    private JSONObject _exportMedia(ZipFile z, ArrayList<String> fileNames, String mdir) throws IOException {
-        int size = fileNames.size();
-        int i = 0;
-        File[] files = new File[size];
-        for (String fileName: fileNames){
-            files[i++] = new File(mdir, fileName);
+    @Throws(IOException::class)
+    private fun _exportMedia(z: ZipFile, fileNames: ArrayList<String>, mdir: String): JSONObject {
+        val size = fileNames.size
+        var i = 0
+        val files = arrayOfNulls<File>(size)
+        for (fileName in fileNames) {
+            files[i++] = File(mdir, fileName)
         }
-        return _exportMedia(z, files, ValidateFiles.VALIDATE);
+        return _exportMedia(z, files, ValidateFiles.VALIDATE)
     }
 
-    private JSONObject _exportMedia(ZipFile z, File[] files, ValidateFiles validateFiles) throws IOException {
-        int c = 0;
-        JSONObject media = new JSONObject();
-        for (File file : files) {
+    @Throws(IOException::class)
+    private fun _exportMedia(z: ZipFile, files: Array<File?>, validateFiles: ValidateFiles): JSONObject {
+        var c = 0
+        val media = JSONObject()
+        for (file in files) {
             // todo: deflate SVG files, as in dae/anki@a5b0852360b132c0d04094f5ca8f1933f64d7c7e
-            if (validateFiles == ValidateFiles.VALIDATE && !file.exists()) {
+            if (validateFiles == ValidateFiles.VALIDATE && !file!!.exists()) {
                 // Anki 2.1.30 does the same
-                Timber.d("Skipping missing file %s", file);
-                continue;
+                Timber.d("Skipping missing file %s", file)
+                continue
             }
-            z.write(file.getPath(), Integer.toString(c));
+            z.write(file!!.path, Integer.toString(c))
             try {
-                media.put(Integer.toString(c), file.getName());
-                c++;
-            } catch (JSONException e) {
-                Timber.w(e);
+                media.put(Integer.toString(c), file.name)
+                c++
+            } catch (e: JSONException) {
+                Timber.w(e)
             }
         }
-        return media;
+        return media
     }
 
-
-    private JSONObject exportFiltered(ZipFile z, String path, Context context) throws IOException, JSONException, ImportExportException {
+    @Throws(IOException::class, JSONException::class, ImportExportException::class)
+    private fun exportFiltered(z: ZipFile, path: String, context: Context): JSONObject {
         // export into the anki2 file
-        String colfile = path.replace(".apkg", ".anki2");
-
-        super.exportInto(colfile, context);
-        z.write(colfile, CollectionHelper.COLLECTION_FILENAME);
+        val colfile = path.replace(".apkg", ".anki2")
+        super.exportInto(colfile, context)
+        z.write(colfile, CollectionHelper.COLLECTION_FILENAME)
         // and media
-        prepareMedia();
-        JSONObject media = _exportMedia(z, mMediaFiles, mCol.getMedia().dir());
+        prepareMedia()
+        val media = _exportMedia(z, mMediaFiles, mCol.media.dir())
         // tidy up intermediate files
-        SQLiteDatabase.deleteDatabase(new File(colfile));
-        SQLiteDatabase.deleteDatabase(new File(path.replace(".apkg", ".media.ad.db2")));
-        String tempPath = path.replace(".apkg", ".media");
-        File file = new File(tempPath);
+        SQLiteDatabase.deleteDatabase(File(colfile))
+        SQLiteDatabase.deleteDatabase(File(path.replace(".apkg", ".media.ad.db2")))
+        val tempPath = path.replace(".apkg", ".media")
+        val file = File(tempPath)
         if (file.exists()) {
-            String deleteCmd = "rm -r " + tempPath;
-            Runtime runtime = Runtime.getRuntime();
+            val deleteCmd = "rm -r $tempPath"
+            val runtime = Runtime.getRuntime()
             try {
-                runtime.exec(deleteCmd);
-            } catch (IOException ignored) {
-                Timber.w(ignored);
+                runtime.exec(deleteCmd)
+            } catch (ignored: IOException) {
+                Timber.w(ignored)
             }
         }
-        return media;
+        return media
     }
 
-
-    protected void prepareMedia() {
+    protected fun prepareMedia() {
         // chance to move each file in self.mediaFiles into place before media
         // is zipped up
     }
 
     // create a dummy collection to ensure older clients don't try to read
     // data they don't understand
-    private void _addDummyCollection(ZipFile zip, Context context) throws IOException {
-        File f = File.createTempFile("dummy", ".anki2");
-        String path = f.getAbsolutePath();
-        f.delete();
-        Collection c = Storage.Collection(context, path);
-        @NonNull Note n = c.newNote();
-        //The created dummy collection only contains the StdModels.
-        //The field names for those are localised during creation, so we need to consider that when creating dummy note
-        n.setItem(context.getString(R.string.front_field_name), context.getString(R.string.export_v2_dummy_note));
-        c.addNote(n);
-        c.save();
-        c.close();
-        zip.write(f.getAbsolutePath(), CollectionHelper.COLLECTION_FILENAME);
+    @Throws(IOException::class)
+    private fun _addDummyCollection(zip: ZipFile, context: Context) {
+        val f = File.createTempFile("dummy", ".anki2")
+        val path = f.absolutePath
+        f.delete()
+        val c = Storage.Collection(context, path)
+        val n = c.newNote()
+        // The created dummy collection only contains the StdModels.
+        // The field names for those are localised during creation, so we need to consider that when creating dummy note
+        n.setItem(context.getString(R.string.front_field_name), context.getString(R.string.export_v2_dummy_note))
+        c.addNote(n)
+        c.save()
+        c.close()
+        zip.write(f.absolutePath, CollectionHelper.COLLECTION_FILENAME)
     }
 
-
-    /** Whether media files should be validated before being added to the zip */
-    private enum ValidateFiles {
-        VALIDATE,
-        SKIP_VALIDATION
+    /** Whether media files should be validated before being added to the zip  */
+    private enum class ValidateFiles {
+        VALIDATE, SKIP_VALIDATION
     }
 }
 
-
-
 /**
  * Wrapper around standard Python zip class used in this module for exporting to APKG
- * 
+ *
  * @author Tim
  */
-class ZipFile {
-    private static final int BUFFER_SIZE = 1024;
-    private ZipArchiveOutputStream mZos;
-
-
-    public ZipFile(String path) throws FileNotFoundException {
-        mZos = new ZipArchiveOutputStream(new BufferedOutputStream(new FileOutputStream(path)));
+internal class ZipFile(path: String?) {
+    private val mZos: ZipArchiveOutputStream
+    @Throws(IOException::class)
+    fun write(path: String?, entry: String?) {
+        val bis = BufferedInputStream(FileInputStream(path), BUFFER_SIZE)
+        val ze = ZipArchiveEntry(entry)
+        writeEntry(bis, ze)
     }
 
-
-    public void write(String path, String entry) throws IOException {
-        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(path), BUFFER_SIZE);
-        ZipArchiveEntry ze = new ZipArchiveEntry(entry);
-        writeEntry(bis, ze);
-    }
-
-
-    public void writeStr(String entry, String value) throws IOException {
+    @Throws(IOException::class)
+    fun writeStr(entry: String?, value: String) {
         // TODO: Does this work with abnormal characters?
-        InputStream is = new ByteArrayInputStream(value.getBytes());
-        BufferedInputStream bis = new BufferedInputStream(is, BUFFER_SIZE);
-        ZipArchiveEntry ze = new ZipArchiveEntry(entry);
-        writeEntry(bis, ze);
+        val `is`: InputStream = ByteArrayInputStream(value.toByteArray())
+        val bis = BufferedInputStream(`is`, BUFFER_SIZE)
+        val ze = ZipArchiveEntry(entry)
+        writeEntry(bis, ze)
     }
 
-
-    private void writeEntry(BufferedInputStream bis, ZipArchiveEntry ze) throws IOException {
-        byte[] buf = new byte[BUFFER_SIZE];
-        mZos.putArchiveEntry(ze);
-        int len;
-        while ((len = bis.read(buf, 0, BUFFER_SIZE)) != -1) {
-            mZos.write(buf, 0, len);
+    @Throws(IOException::class)
+    private fun writeEntry(bis: BufferedInputStream, ze: ZipArchiveEntry) {
+        val buf = ByteArray(BUFFER_SIZE)
+        mZos.putArchiveEntry(ze)
+        var len: Int
+        while (bis.read(buf, 0, BUFFER_SIZE).also { len = it } != -1) {
+            mZos.write(buf, 0, len)
         }
-        mZos.closeArchiveEntry();
-        bis.close();
+        mZos.closeArchiveEntry()
+        bis.close()
     }
 
-
-    public void close() {
+    fun close() {
         try {
-            mZos.close();
-        } catch (IOException e) {
-            Timber.w(e);
+            mZos.close()
+        } catch (e: IOException) {
+            Timber.w(e)
         }
+    }
+
+    companion object {
+        private const val BUFFER_SIZE = 1024
+    }
+
+    init {
+        mZos = ZipArchiveOutputStream(BufferedOutputStream(FileOutputStream(path)))
     }
 }
