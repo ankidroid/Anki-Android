@@ -322,7 +322,7 @@ object ImportUtils {
             private fun sendShowImportFileDialogMsg(pathList: ArrayList<String>) {
 
                 // Get the filename from the path
-                val f = File(pathList[0])
+                val f = File(pathList.first())
                 val filename = f.name
 
                 // Create a new message for DialogHandler so that we see the appropriate import dialog in DeckPicker
