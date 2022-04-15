@@ -33,7 +33,7 @@ import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 
 import static androidx.test.runner.lifecycle.Stage.RESUMED;
 
-public class TestUtils {
+public class AndroidTestUtils {
 
     /**
      * Get view at a particular index when there are multiple views with the same ID

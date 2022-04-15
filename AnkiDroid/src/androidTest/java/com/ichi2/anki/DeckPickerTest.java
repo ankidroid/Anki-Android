@@ -42,9 +42,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.ichi2.anki.TestUtils.clickChildViewWithId;
-import static com.ichi2.anki.TestUtils.getActivityInstance;
-import static com.ichi2.anki.TestUtils.isScreenSw600dp;
+import static com.ichi2.anki.AndroidTestUtils.clickChildViewWithId;
+import static com.ichi2.anki.AndroidTestUtils.getActivityInstance;
+import static com.ichi2.anki.AndroidTestUtils.isScreenSw600dp;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeFalse;
@@ -64,7 +64,7 @@ public class DeckPickerTest {
     public void checkIfClickOnCountsLayoutOpensStudyOptionsOnMobile() {
         // Run the test only on emulator.
         assumeTrue(InstrumentedTest.isEmulator());
-        assumeFalse("Test flaky in CI - #9282, skipping", TestUtils.wasBuiltOnCI());
+        assumeFalse("Test flaky in CI - #9282, skipping", AndroidTestUtils.wasBuiltOnCI());
 
         // For mobile. If it is not a mobile, then test will be ignored.
         assumeTrue(!isScreenSw600dp());
@@ -87,7 +87,7 @@ public class DeckPickerTest {
     public void checkIfStudyOptionsIsDisplayedOnTablet() {
         // Run the test only on emulator.
         assumeTrue(InstrumentedTest.isEmulator());
-        assumeFalse("Test flaky in CI - #9282, skipping", TestUtils.wasBuiltOnCI());
+        assumeFalse("Test flaky in CI - #9282, skipping", AndroidTestUtils.wasBuiltOnCI());
 
         // For tablet. If it is not a tablet, then test will be ignored.
         assumeTrue(isScreenSw600dp());
