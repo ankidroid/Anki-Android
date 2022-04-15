@@ -34,7 +34,7 @@ class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
             .checkBoxPrompt(res.getString(R.string.analytics_title), true, null)
             .positiveText(R.string.dialog_continue)
             .onPositive { dialog: MaterialDialog, _: DialogAction? ->
-                UsageAnalytics.setEnabled(dialog.isPromptCheckBoxChecked)
+                UsageAnalytics.isEnabled = dialog.isPromptCheckBoxChecked
                 (activity as DeckPicker?)!!.dismissAllDialogFragments()
             }
             .cancelable(true)
