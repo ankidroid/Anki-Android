@@ -17,11 +17,13 @@ package com.ichi2.async
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.utils.KotlinCleanup
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 abstract class AbstractCollectionTaskTest : RobolectricTest() {
     @Suppress("deprecation") // #7108: AsyncTask
+    @KotlinCleanup("see if we can make return value non-null")
     protected fun <Progress, Result> execute(task: TaskDelegate<Progress, Result>?): Result? {
         @Suppress("UNCHECKED_CAST")
         val collectionTask = TaskManager.launchCollectionTask(task) as CollectionTask<Progress, Result>
