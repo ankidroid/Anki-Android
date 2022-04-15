@@ -149,7 +149,7 @@
     <string name="import_title">Importing</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
-    <string name="import_message_add_confirm">Do you want to import the following files: \n%sThis may take a long time</string>
+    <string name="import_files_message_add_confirm">Do you want to import the following files: \n%sThis may take a long time</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
     <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
     <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>

@@ -43,16 +43,14 @@ class ImportDialog : AsyncDialogFragment() {
         var fileNameCount = 0
         dialogMessageList.forEach {
             fileNameCount += 1
-            displayFileName += fileNameCount
-            displayFileName += ". "
-            displayFileName += filenameFromPath(convertToDisplayName(it))
-            displayFileName += "\n"
+            displayFileName += "$fileNameCount. "
+            displayFileName += filenameFromPath(convertToDisplayName(it)) + "\n"
         }
 
         return when (type) {
             DIALOG_IMPORT_ADD_CONFIRM -> {
                 builder.title(res.getString(R.string.import_title))
-                    .content(res.getString(R.string.import_message_add_confirm, displayFileName))
+                    .content(res.getString(R.string.import_files_message_add_confirm, displayFileName))
                     .positiveText(R.string.import_message_add)
                     .negativeText(R.string.dialog_cancel)
                     .onPositive { _: MaterialDialog?, _: DialogAction? ->
