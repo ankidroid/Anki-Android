@@ -31,8 +31,12 @@ on:
 jobs:
   unit:
     name: JUnit Tests
-    timeout-minutes: 20
-    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     #env:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
     steps:
@@ -45,7 +49,7 @@ jobs:
           fetch-depth: 50
 
       - name: Configure JDK 1.11
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: "adopt"
           java-version: "11" # ubuntu-latest is about to default to 11, force it everywhere
@@ -80,4 +84,5 @@ jobs:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: curl https://codecov.io/bash -o codecov.sh && bash ./codecov.sh 
+          shell: bash
+          command: curl https://codecov.io/bash -o codecov.sh && bash ./codecov.sh

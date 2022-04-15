@@ -90,7 +90,7 @@ object NoteService {
     }
 
     /**
-     * Updates the JsonNote field values from MultimediaEditableNote When both notes are using the same Model, it updaes
+     * Updates the JsonNote field values from MultimediaEditableNote When both notes are using the same Model, it updates
      * the destination field values with source values. If models are different it throws an Exception
      *
      * @param noteSrc

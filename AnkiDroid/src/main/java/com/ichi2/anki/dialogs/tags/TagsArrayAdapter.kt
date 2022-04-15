@@ -18,13 +18,13 @@ package com.ichi2.anki.dialogs.tags
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.ui.CheckBoxTriStates
+import com.ichi2.utils.TypedFilter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -50,12 +50,10 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
     }
 
     /**
-     * A subset of all tags in [.mTags] satisfying the user's search.
-     *
-     * it will be null if the user search term is empty, in that case
-     * the adapter should use [.mTags] instead to access full list.
+     * A subset of all tags in [tags] satisfying the user's search.
+     * @see getFilter
      */
-    private var mFilteredList: ArrayList<String>? = null
+    private val mFilteredList: ArrayList<String>
     fun sortData() {
         tags.sort()
     }
@@ -88,39 +86,29 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
     }
 
     private fun getTagByIndex(index: Int): String {
-        return if (mFilteredList == null) {
-            tags[index]
-        } else mFilteredList!![index]
+        return mFilteredList[index]
     }
 
     override fun getItemCount(): Int {
-        return if (mFilteredList == null) {
-            tags.size()
-        } else mFilteredList!!.size
+        return mFilteredList.size
     }
 
-    override fun getFilter(): Filter {
+    override fun getFilter(): TagsFilter {
         return TagsFilter()
     }
 
     /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
-    private inner class TagsFilter : Filter() {
-        override fun performFiltering(constraint: CharSequence): FilterResults {
-            if (constraint.isEmpty()) {
-                mFilteredList = null
-            } else {
-                mFilteredList = ArrayList()
-                val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
-                for (tag in tags) {
-                    if (tag.lowercase(Locale.getDefault()).contains(filterPattern)) {
-                        mFilteredList!!.add(tag)
-                    }
-                }
+    inner class TagsFilter : TypedFilter<String>({ tags.toList() }) {
+        override fun filterResults(constraint: CharSequence, items: List<String>): List<String> {
+            val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+            return items.filter {
+                it.lowercase(Locale.getDefault()).contains(filterPattern)
             }
-            return FilterResults()
         }
 
-        override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+        override fun publishResults(constraint: CharSequence?, results: List<String>) {
+            mFilteredList.clear()
+            mFilteredList.addAll(results)
             sortData()
             notifyDataSetChanged()
         }
@@ -128,5 +116,6 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
 
     init {
         sortData()
+        mFilteredList = ArrayList(tags.toList())
     }
 }

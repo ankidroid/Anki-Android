@@ -121,7 +121,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         mDrawerLayout = mainView.findViewById(R.id.drawer_layout);
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // Force transparent status bar with primary dark color underlayed so that the drawer displays under status bar
+        // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
         mDrawerLayout.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimaryDark));
         // Setup toolbar and hamburger
@@ -188,8 +188,8 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         intentReviewCards.setAction(Intent.ACTION_VIEW);
         intentReviewCards.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         ShortcutInfo reviewCardsShortcut = new ShortcutInfo.Builder(context, "reviewCardsShortcutId")
-                .setShortLabel(context.getString(R.string.card_info_reviews))
-                .setLongLabel(context.getString(R.string.card_info_reviews))
+                .setShortLabel(context.getString(R.string.studyoptions_start))
+                .setLongLabel(context.getString(R.string.studyoptions_start))
                 .setIcon(Icon.createWithResource(context, R.drawable.ankidroid_logo))
                 .setIntent(intentReviewCards)
                 .build();
@@ -359,6 +359,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public boolean onNavigationItemSelected(final MenuItem item) {
         // Don't do anything if user selects already selected position
         if (item.isChecked()) {
+            closeDrawer();
             return true;
         }
 

@@ -216,8 +216,8 @@ abstract class AbstractSched {
     abstract fun totalRevForCurrentDeck(): Int
 
     /**
-     * @param ivl A number of days for the interval before fuzzying.
-     * @return An interval around `ivl`, with a few less or more days for fuzzying.
+     * @param ivl A number of days for the interval before fuzzing.
+     * @return An interval around `ivl`, with a few less or more days for fuzzing.
      */
     // In this abstract class for testing purpose only
     abstract fun _fuzzIvlRange(ivl: Int): Pair<Int?, Int?>

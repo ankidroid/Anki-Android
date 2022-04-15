@@ -38,6 +38,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
 
@@ -119,6 +121,7 @@ import com.ichi2.async.TaskListenerWithContext;
 import com.ichi2.async.TaskManager;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Consts;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
@@ -133,6 +136,7 @@ import com.ichi2.ui.BadgeDrawableBuilder;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ImportUtils;
 import com.ichi2.utils.Computation;
+import com.ichi2.utils.KotlinCleanup;
 import com.ichi2.utils.Permissions;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.Triple;
@@ -954,6 +958,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
     @Override
+    @KotlinCleanup("once in Kotlin: use HandlerUtils.executeFunctionWithDelay")
     public void onBackPressed() {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
         if (isDrawerOpen()) {
@@ -970,6 +975,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
                     UIUtils.showThemedToast(this, getString(R.string.back_pressed_once), true);
                 }
                 mBackButtonPressedToExit = true;
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mBackButtonPressedToExit = false;
+                    }
+                }, Consts.SHORT_TOAST_DURATION);
             }
         }
     }
@@ -1130,7 +1141,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 mRecommendFullSync = true;
             }
 
-            // Fix "font-family" definition in templates created by AnkiDroid before 2.6alhpa23
+            // Fix "font-family" definition in templates created by AnkiDroid before 2.6alpha23
             if (previous < 20600123) {
                 Timber.i("Fixing font-family definition in templates");
                 try {
@@ -1272,11 +1283,11 @@ public class DeckPicker extends NavigationDrawerActivity implements
         return new UndoTaskListener(isReview, this);
     }
     private static class UndoTaskListener extends TaskListenerWithContext<DeckPicker, Unit, Computation<? extends SchedulerService.NextCard<?>>> {
-        private final boolean mIsreview;
+        private final boolean mIsReview;
 
         public UndoTaskListener(boolean isReview, DeckPicker deckPicker) {
             super(deckPicker);
-            this.mIsreview = isReview;
+            this.mIsReview = isReview;
         }
 
 
@@ -1296,7 +1307,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         public void actualOnPostExecute(@NonNull DeckPicker deckPicker, Computation<? extends SchedulerService.NextCard<?>> voi) {
             deckPicker.hideProgressBar();
             Timber.i("Undo completed");
-            if (mIsreview) {
+            if (mIsReview) {
                 Timber.i("Review undone - opening reviewer.");
                 deckPicker.openReviewer();
             }
@@ -2262,7 +2273,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (getCol().cardCount() != -1) {
                 String time = "-";
                 if (eta != -1 && eta != null) {
-                    time = Utils.timeQuantityTopDeckPicker(AnkiDroidApp.getInstance(), eta*60);
+                    time = Utils.timeQuantityTopDeckPicker(this, eta*60);
                 }
                 if (due != null && getSupportActionBar() != null) {
                     String subTitle;
@@ -2645,6 +2656,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, did);
         createDeckDialog.setOnNewDeckCreated((i) -> {
             // a deck was created
+            dismissAllDialogFragments();
             mDeckListAdapter.notifyDataSetChanged();
             updateDeckList();
             if (mFragmented) {

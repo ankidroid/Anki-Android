@@ -44,7 +44,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-/** A non-parmaterized ReviewerTest - we should probably rename ReviewerTest in future */
+/** A non-parameterized ReviewerTest - we should probably rename ReviewerTest in future */
 @RunWith(AndroidJUnit4.class)
 public class ReviewerNoParamTest extends RobolectricTest {
     public static final int DEFAULT_LIGHT_PEN_COLOR = Color.BLACK;

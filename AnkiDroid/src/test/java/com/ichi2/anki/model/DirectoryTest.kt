@@ -38,7 +38,7 @@ class DirectoryTest : Test21And26() {
         val path = createTempDirectory().pathString
         MatcherAssert.assertThat(
             "Directory should work with valid directory",
-            Directory.createInstance(File(path)),
+            Directory.createInstance(path),
             not(nullValue())
         )
     }
@@ -58,7 +58,7 @@ class DirectoryTest : Test21And26() {
         val dir = kotlin.io.path.createTempFile().pathString
         MatcherAssert.assertThat(
             "file should not become a Directory",
-            Directory.createInstance(File(dir)),
+            Directory.createInstance(dir),
             nullValue()
         )
     }
@@ -107,6 +107,16 @@ class DirectoryTest : Test21And26() {
         )
     }
 
+    @Test
+    fun test_create_from_string() {
+        val path = File(createTempDirectory().pathString)
+
+        val fromPath = Directory.createInstance(path.path)!!
+        val fromFile = Directory.createInstance(path)!!
+
+        MatcherAssert.assertThat("Equal result constructing from file or path", fromFile.directory, equalTo(fromPath.directory))
+    }
+
     /**
      * Reproduces https://github.com/ankidroid/Anki-Android/issues/10358
      * Where for some reason, `listFiles` returned null on an existing directory and
@@ -119,6 +129,6 @@ class DirectoryTest : Test21And26() {
     }
 
     private fun createValidTempDir(): Directory {
-        return Directory.createInstance(File(createTempDirectory().pathString))!!
+        return Directory.createInstance(createTempDirectory().pathString)!!
     }
 }

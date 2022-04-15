@@ -71,7 +71,7 @@ public class BeolingusParserTest {
         @Language("HTML")
         String html = "<td><a href=\"/speak-de/0/7/52qA5FttGIU.mp3\">Mit Ihrem";
 
-        String mp3 = BeolingusParser.getMp3AddressFromPronounciation(html);
+        String mp3 = BeolingusParser.getMp3AddressFromPronunciation(html);
         assertEquals("https://dict.tu-chemnitz.de/speak-de/0/7/52qA5FttGIU.mp3", mp3);
     }
 }

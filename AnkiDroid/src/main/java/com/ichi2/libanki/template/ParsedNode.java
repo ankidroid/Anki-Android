@@ -103,7 +103,7 @@ public abstract class ParsedNode {
     /**
      * @param tokens An iterator returning a list of token obtained from a template
      * @param open_tag The last opened tag that is not yet closed, or null
-     * @return A tree representing the template, or nulll if no text can be generated.
+     * @return A tree representing the template, or null if no text can be generated.
      * @throws TemplateError Any reason meaning the data is not valid as a template.
      */
     private static @Nullable ParsedNode parse_inner(@NonNull Iterator<Tokenizer.Token> tokens, @Nullable String open_tag) throws TemplateError{

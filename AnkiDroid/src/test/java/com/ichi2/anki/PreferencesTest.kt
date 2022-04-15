@@ -18,7 +18,6 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Preferences.Companion.getDayOffset
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -57,11 +56,9 @@ class PreferencesTest : RobolectricTest() {
         assertThat("rollover config should be set to new value", col.get_config("rollover", 4.toInt()), equalTo(2))
     }
 
-    @KotlinCleanup("use scope function")
-    val instance: Preferences
-        get() {
-            val preferences = Preferences()
-            preferences.attachBaseContext(targetContext)
-            return preferences
+    val instance by lazy {
+        Preferences().apply {
+            attachBaseContext(targetContext)
         }
+    }
 }

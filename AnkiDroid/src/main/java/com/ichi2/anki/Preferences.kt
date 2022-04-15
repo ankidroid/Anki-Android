@@ -312,17 +312,17 @@ class Preferences : AnkiActivity() {
         scheduleNotification(col.time, this)
     }
 
-    fun updateNotificationPreference(listpref: ListPreference) {
-        val entries = listpref.entries
-        val values = listpref.entryValues
+    fun updateNotificationPreference(listPreference: ListPreference) {
+        val entries = listPreference.entries
+        val values = listPreference.entryValues
         for (i in entries.indices) {
             val value = values[i].toString().toInt()
             if (entries[i].toString().contains("%d")) {
                 entries[i] = String.format(entries[i].toString(), value)
             }
         }
-        listpref.entries = entries
-        listpref.summary = listpref.entry.toString()
+        listPreference.entries = entries
+        listPreference.summary = listPreference.entry.toString()
     }
 
     private fun updateSummary(pref: Preference?) {
@@ -547,10 +547,10 @@ class Preferences : AnkiActivity() {
                         preferencesActivity.col.setMod()
                     }
                     MINIMUM_CARDS_DUE_FOR_NOTIFICATION -> {
-                        val listpref = screen.findPreference<ListPreference>(MINIMUM_CARDS_DUE_FOR_NOTIFICATION)
-                        if (listpref != null) {
-                            preferencesActivity!!.updateNotificationPreference(listpref)
-                            if (listpref.value.toInt() < PENDING_NOTIFICATIONS_ONLY) {
+                        val listPreference = screen.findPreference<ListPreference>(MINIMUM_CARDS_DUE_FOR_NOTIFICATION)
+                        if (listPreference != null) {
+                            preferencesActivity!!.updateNotificationPreference(listPreference)
+                            if (listPreference.value.toInt() < PENDING_NOTIFICATIONS_ONLY) {
                                 scheduleNotification(preferencesActivity.col.time, preferencesActivity)
                             } else {
                                 val intent = CompatHelper.compat.getImmutableBroadcastIntent(
@@ -720,7 +720,6 @@ class Preferences : AnkiActivity() {
             initializeLanguageDialog(screen)
         }
 
-        @KotlinCleanup("iteration with i")
         private fun initializeLanguageDialog(screen: PreferenceScreen) {
             val languageSelection = screen.findPreference<ListPreference>(LANGUAGE)
             if (languageSelection != null) {
@@ -733,11 +732,10 @@ class Preferences : AnkiActivity() {
                 val languageDialogValues = arrayOfNulls<CharSequence>(items.size + 1)
                 languageDialogLabels[0] = resources.getString(R.string.language_system)
                 languageDialogValues[0] = ""
-                var i = 1
-                for ((key, value) in items) {
-                    languageDialogLabels[i] = key
-                    languageDialogValues[i] = value
-                    i++
+                val itemsList = items.toList()
+                for (i in 1..itemsList.size) {
+                    languageDialogLabels[i] = itemsList[i - 1].first
+                    languageDialogValues[i] = itemsList[i - 1].second
                 }
 
                 languageSelection.entries = languageDialogLabels

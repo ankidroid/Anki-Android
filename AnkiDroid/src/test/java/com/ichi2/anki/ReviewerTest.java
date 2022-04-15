@@ -338,12 +338,12 @@ public class ReviewerTest extends RobolectricTest {
         countList.add(jsApi.ankiGetLrnCardCount());
         countList.add(jsApi.ankiGetRevCardCount());
 
-        List<Integer> expexted = new ArrayList<>();
-        expexted.add(newCount);
-        expexted.add(stepCount);
-        expexted.add(revCount);
+        List<Integer> expected = new ArrayList<>();
+        expected.add(newCount);
+        expected.add(stepCount);
+        expected.add(revCount);
 
-        assertThat(countList.toString(), is(expexted.toString())); // We use toString as hamcrest does not print the whole array and stops at [0].
+        assertThat(countList.toString(), is(expected.toString())); // We use toString as hamcrest does not print the whole array and stops at [0].
     }
 
 

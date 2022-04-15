@@ -36,7 +36,7 @@ import java.util.concurrent.locks.ReentrantLock
 import kotlin.math.roundToInt
 
 class AnkiStatsTaskHandler private constructor(private val collectionData: Collection) {
-    private var mStandardTextSize = 10f
+    var standardTextSize = 10f
     var statType = AxisType.TYPE_MONTH
     private var mDeckId: Long = 0
     fun setDeckId(deckId: Long) {
@@ -223,14 +223,6 @@ class AnkiStatsTaskHandler private constructor(private val collectionData: Colle
                 textView.invalidate()
             }
         }
-    }
-
-    fun getmStandardTextSize(): Float {
-        return mStandardTextSize
-    }
-
-    fun setmStandardTextSize(standardTextSize: Float) {
-        mStandardTextSize = standardTextSize
     }
 
     companion object {

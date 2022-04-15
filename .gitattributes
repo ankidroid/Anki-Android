@@ -5,3 +5,4 @@
 *.java text
 *.txt text
 *.xml text
+.idea/dictionaries/*.xml linguist-generated=false

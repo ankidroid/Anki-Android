@@ -37,6 +37,8 @@ package com.ichi2.anki.jsaddons
 import android.content.Context
 import android.text.format.Formatter
 import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils
+import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Utils
 import org.apache.commons.compress.archivers.ArchiveException
 import org.apache.commons.compress.archivers.ArchiveStreamFactory
@@ -65,6 +67,20 @@ import java.util.zip.GZIPInputStream
  * Safely extract files
  * https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream
  */
+
+/**
+ * addons path typealias, the path is some-addon path inside addons directory
+ * The path structure of some-addon
+ *
+ * AnkiDroid
+ *   - addons
+ *       - some-addon
+ *           - package
+ *               - index.js
+ *               - README.md
+ *       - some-another-addon
+ */
+typealias AddonsPackageDir = File
 
 class TgzPackageExtract(private val context: Context) {
     private val GZIP_SIGNATURE = byteArrayOf(0x1f, 0x8b.toByte())
@@ -101,44 +117,44 @@ class TgzPackageExtract(private val context: Context) {
      * Untar and ungzip a tar.gz file to a AnkiDroid/addons directory.
      *
      * @param tarballFile the .tgz file to extract
-     * @param addonsDir   the AnkiDroid addons directory
+     * @param addonsPackageDir the addons package directory, the path is addon path inside addons directory
+     *                         e.g. AnkiDroid/addons/some-addon/
      * @return the temp directory.
      * @throws FileNotFoundException if .tgz file or ungzipped file i.e. .tar file not found
      * @throws IOException
      */
     @Throws(Exception::class)
-    fun extractTarGzipToAddonFolder(tarballFile: File, addonsDir: File) {
+    fun extractTarGzipToAddonFolder(tarballFile: File, addonsPackageDir: AddonsPackageDir) {
 
         require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon, tarballFile.absolutePath) }
 
-        if (!addonsDir.exists()) {
-            context.getString(R.string.could_not_create_dir, addonsDir.absolutePath)
+        try {
+            compat.createDirectories(addonsPackageDir)
+        } catch (e: IOException) {
+            UIUtils.showThemedToast(context, context.getString(R.string.could_not_create_dir, addonsPackageDir.absolutePath), false)
+            Timber.w(e)
+            return
         }
 
         // Make sure we have 2x the tar file size in free space (1x for tar file, 1x for unarchived tar file contents
         requiredMinSpace = tarballFile.length() * 2
-        availableSpace = Utils.determineBytesAvailable(addonsDir.canonicalPath)
-        if (requiredMinSpace > availableSpace) {
-            Timber.e("Not enough space to extract file, need %d, available %d", requiredMinSpace, availableSpace)
-            throw IOException(context.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(context, requiredMinSpace), Formatter.formatFileSize(context, availableSpace)))
-        }
+        availableSpace = Utils.determineBytesAvailable(addonsPackageDir.canonicalPath)
+        InsufficientSpaceException.throwIfInsufficientSpace(context, requiredMinSpace, availableSpace)
 
         // If space available then unGZip it
-        val tarTempFile = unGzip(tarballFile, addonsDir)
+        val tarTempFile = unGzip(tarballFile, addonsPackageDir)
         tarTempFile.deleteOnExit()
 
         // Make sure we have sufficient free space
         val unTarSize = calculateUnTarSize(tarTempFile)
-        if (unTarSize > availableSpace) {
-            Timber.e("Not enough space to untar, need %d, available %d", unTarSize, availableSpace)
-            throw IOException(context.getString(R.string.import_log_insufficient_space_error, Formatter.formatFileSize(context, unTarSize), Formatter.formatFileSize(context, availableSpace)))
-        }
+        InsufficientSpaceException.throwIfInsufficientSpace(context, unTarSize, availableSpace)
 
         try {
             // If space available then unTar it
-            unTar(tarTempFile, addonsDir)
+            unTar(tarTempFile, addonsPackageDir)
         } catch (e: IOException) {
             Timber.w("Failed to unTar file")
+            safeDeleteAddonsPackageDir(addonsPackageDir)
         } finally {
             tarTempFile.delete()
         }
@@ -157,8 +173,8 @@ class TgzPackageExtract(private val context: Context) {
     fun unGzip(inputFile: File, outputDir: File): File {
         Timber.i("Ungzipping %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
 
-        // rename '-4' to remove the '.tgz' extension and add .tar extension
-        val outputFile = File(outputDir, inputFile.name.substring(0, inputFile.name.length - 4) + ".tar")
+        // remove the '.tgz' extension and add .tar extension
+        val outputFile = File(outputDir, inputFile.nameWithoutExtension + ".tar")
 
         count = 0
         total = 0
@@ -250,14 +266,16 @@ class TgzPackageExtract(private val context: Context) {
     private fun unTarFile(tarInputStream: TarArchiveInputStream, entry: TarArchiveEntry, outputDir: File, outputFile: File) {
         Timber.i("Creating output file %s.", outputFile.absolutePath)
         val currentFile = File(outputDir, entry.name)
-        val parent = currentFile.parentFile // this line important otherwise FileNotFoundException
 
-        if (parent != null && !parent.exists()) {
-            if (!parent.mkdirs()) {
-                // clean up
-                outputDir.deleteRecursively()
-                throw IOException(context.getString(R.string.could_not_create_dir, parent.absolutePath))
-            }
+        // this line important otherwise FileNotFoundException
+        val parent = currentFile.parentFile ?: return
+
+        try {
+            compat.createDirectories(parent)
+        } catch (e: IOException) {
+            // clean up
+            Timber.w(e)
+            throw IOException(context.getString(R.string.could_not_create_dir, parent.absolutePath))
         }
 
         FileOutputStream(outputFile).use { outputFileStream ->
@@ -289,12 +307,17 @@ class TgzPackageExtract(private val context: Context) {
      * @param inputFile archive input file
      * @param outputDir Output directory
      * @param outputFile Output file
+     * @throws IOException
      */
+    @Throws(IOException::class)
     private fun unTarDir(inputFile: File, outputDir: File, outputFile: File) {
         Timber.i("Untaring %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
-        if (!outputFile.exists()) {
+        try {
             Timber.i("Attempting to create output directory %s.", outputFile.absolutePath)
-            check(outputFile.mkdirs()) { context.getString(R.string.could_not_create_dir, outputFile.absolutePath) }
+            compat.createDirectories(outputFile)
+        } catch (e: IOException) {
+            Timber.w(e)
+            throw IOException(context.getString(R.string.could_not_create_dir, outputFile.absolutePath))
         }
     }
 
@@ -355,9 +378,26 @@ class TgzPackageExtract(private val context: Context) {
     private fun enforceSpaceUsedLessThanHalfAvailable(outputDir: File) {
         val newAvailableSpace: Long = Utils.determineBytesAvailable(outputDir.canonicalPath)
         if (newAvailableSpace <= availableSpace / 2) {
-            // clean up
-            outputDir.deleteRecursively()
             throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
         }
+    }
+
+    class InsufficientSpaceException(val required: Long, val available: Long, val context: Context) : IOException() {
+
+        companion object {
+            fun throwIfInsufficientSpace(context: Context, requiredMinSpace: Long, availableSpace: Long) {
+                if (requiredMinSpace > availableSpace) {
+                    Timber.w("Not enough space, need %d, available %d", Formatter.formatFileSize(context, requiredMinSpace), Formatter.formatFileSize(context, availableSpace))
+                    throw InsufficientSpaceException(requiredMinSpace, availableSpace, context)
+                }
+            }
+        }
+    }
+
+    private fun safeDeleteAddonsPackageDir(addonsPackageDir: AddonsPackageDir) {
+        if (addonsPackageDir.parent != "addons") {
+            return
+        }
+        addonsPackageDir.deleteRecursively()
     }
 }

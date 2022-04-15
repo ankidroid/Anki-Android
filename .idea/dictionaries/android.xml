@@ -5,10 +5,13 @@
       <w>AGPL</w>
       <w>AOSP</w>
       <w>DOTALL</w>
+      <w>EMFILE</w>
+      <w>ENOENT</w>
       <w>FILESIZE</w>
       <w>ONEPLUS</w>
       <w>apkgfileprovider</w>
       <w>asynctasks</w>
+      <w>backreference</w>
       <w>bmgr</w>
       <w>cheets</w>
       <w>constraintlayout</w>
@@ -16,25 +19,36 @@
       <w>contextmenu</w>
       <w>customtabs</w>
       <w>fileprovider</w>
+      <w>greylist</w>
+      <w>greylisted</w>
       <w>gtxt</w>
       <w>instanceof</w>
       <w>keypress</w>
       <w>longclick</w>
+      <w>mediaplayer</w>
       <w>nomedia</w>
+      <w>openintents</w>
       <w>permcenter</w>
       <w>ranchu</w>
       <w>requery</w>
       <w>robo</w>
+      <w>runnables</w>
       <w>securitycenter</w>
       <w>setprop</w>
       <w>snackbar</w>
       <w>snackbars</w>
       <w>sqldb</w>
       <w>stacktraces</w>
+      <w>ungzip</w>
+      <w>ungzipped</w>
+      <w>ungzipping</w>
+      <w>untar</w>
       <w>vivo</w>
       <w>webview</w>
       <w>webviews</w>
       <w>widgetapp</w>
+      <w>xlabel</w>
+      <w>ylabel</w>
     </words>
   </dictionary>
 </component>

@@ -63,7 +63,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
 
     /**
      * Binds the Activity to the Custom Tabs Service.
-     * @param activity the activity to be binded to the service.
+     * @param activity the activity to be bound to the service.
      */
     @KotlinCleanup("make activity nonnull")
     fun bindCustomTabsService(activity: Activity?) {
@@ -142,7 +142,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
         private var sCustomTabsFailed = false
 
         /**
-         * Opens the URL on a Custom Tab if possible. Otherwise fallsback to opening it on a WebView.
+         * Opens the URL on a Custom Tab if possible. Otherwise falls back to opening it on a WebView.
          *
          * @param activity The host activity.
          * @param customTabsIntent a CustomTabsIntent to be used if Custom Tabs is available.

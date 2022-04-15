@@ -47,6 +47,7 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.FunctionalInterfaces
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.TypedFilter
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -274,30 +275,20 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             return DecksFilter()
         }
 
-        /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
-        private inner class DecksFilter : Filter() {
-            private val mFilteredDecks: ArrayList<SelectableDeck> = ArrayList()
-            override fun performFiltering(constraint: CharSequence): FilterResults {
-                mFilteredDecks.clear()
-                val allDecks = mAllDecksList
-                if (constraint.isEmpty()) {
-                    mFilteredDecks.addAll(allDecks)
-                } else {
-                    val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
-                    for (deck in allDecks) {
-                        if (deck.name.lowercase(Locale.getDefault()).contains(filterPattern)) {
-                            mFilteredDecks.add(deck)
-                        }
-                    }
+        private inner class DecksFilter : TypedFilter<SelectableDeck>(mAllDecksList) {
+            override fun filterResults(constraint: CharSequence, items: List<SelectableDeck>): List<SelectableDeck> {
+                val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+                return items.filter {
+                    it.name.lowercase(Locale.getDefault()).contains(filterPattern)
                 }
-                return FilterResults()
             }
 
-            override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-                val currentlyDisplayedDecks = mCurrentlyDisplayedDecks
-                currentlyDisplayedDecks.clear()
-                currentlyDisplayedDecks.addAll(mFilteredDecks)
-                currentlyDisplayedDecks.sort()
+            override fun publishResults(constraint: CharSequence?, results: List<SelectableDeck>) {
+                mCurrentlyDisplayedDecks.apply {
+                    clear()
+                    addAll(results)
+                    sort()
+                }
                 notifyDataSetChanged()
             }
         }
@@ -362,7 +353,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
     }
 
-    interface DeckSelectionListener {
+    fun interface DeckSelectionListener {
         fun onDeckSelected(deck: SelectableDeck?)
     }
 

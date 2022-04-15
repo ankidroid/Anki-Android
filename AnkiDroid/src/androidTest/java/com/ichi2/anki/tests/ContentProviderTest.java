@@ -100,8 +100,10 @@ public class ContentProviderTest extends InstrumentedTest {
     private static final String BASIC_MODEL_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F";
     private static final String TEST_FIELD_NAME = "TestFieldName";
     private static final String TEST_FIELD_VALUE = "test field value";
+    @SuppressWarnings("SpellCheckingInspection")
     private static final String TEST_TAG = "aldskfhewjklhfczmxkjshf";
     // In case of change in TEST_DECKS, change mTestDeckIds for efficiency
+    @SuppressWarnings("SpellCheckingInspection")
     private static final String[] TEST_DECKS = {
             "cmxieunwoogyxsctnjmv",
             "sstuljxgmfdyugiujyhq",

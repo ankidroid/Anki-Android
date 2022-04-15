@@ -129,11 +129,11 @@ public class TemplateFilters {
         }
         Resources res = AnkiDroidApp.getAppResources();
         // random id
-        String domid = "hint" + txt.hashCode();
+        String domId = "hint" + txt.hashCode();
         return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
-                domid + "').style.display='block';_relinquishFocus();return false;\">" +
+                domId + "').style.display='block';_relinquishFocus();return false;\">" +
                 res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
-                domid + "\" class=hint style=\"display: none\">" + txt + "</div>";
+                domId + "\" class=hint style=\"display: none\">" + txt + "</div>";
     }
 
 
@@ -203,7 +203,7 @@ public class TemplateFilters {
 
         Matcher m = Pattern.compile(regex).matcher(txt);
 
-        StringBuffer repl = new StringBuffer();
+        StringBuffer replacement = new StringBuffer();
         while (m.find()) {
             if (m.group(1) != null) {
                 if (in_mathjax) {
@@ -219,7 +219,7 @@ public class TemplateFilters {
                 if (in_mathjax) {
                     // appendReplacement has an issue with backslashes, so...
                     m.appendReplacement(
-                            repl,
+                            replacement,
                             Matcher.quoteReplacement(
                                     m.group(0).replace(
                                             "{{c" + ord + "::", "{{C" + ord + "::")));
@@ -229,9 +229,9 @@ public class TemplateFilters {
                 Timber.d("Unexpected: no expected capture group is present");
             }
             // appendReplacement has an issue with backslashes, so...
-            m.appendReplacement(repl, Matcher.quoteReplacement(m.group(0)));
+            m.appendReplacement(replacement, Matcher.quoteReplacement(m.group(0)));
         }
-        return m.appendTail(repl).toString();
+        return m.appendTail(replacement).toString();
     }
 
 }

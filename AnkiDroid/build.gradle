@@ -53,8 +53,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600155
-        versionName="2.16alpha55"
+        versionCode=21600157
+        versionName="2.16alpha57"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -300,13 +300,13 @@ dependencies {
     implementation 'androidx.webkit:webkit:1.4.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.3.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
     implementation 'com.github.CanHub:Android-Image-Cropper:3.1.3'
 
     // build with ./gradlew rsdroid:assembleRelease
     // In my experience, using `files()` currently requires a reindex operation.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
-    implementation 'com.google.protobuf:protobuf-java:3.19.4' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-java:3.20.0' // This is required when loading from a file
     implementation "io.github.david-allison-1:anki-android-backend:$ankidroid_backend_version"
     // build with ./gradlew rsdroid-testing:assembleRelease
     // RobolectricTest.java: replace RustBackendLoader.init(); with RustBackendLoader.loadRsdroid(path);

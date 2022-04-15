@@ -50,7 +50,6 @@ import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.ActionMode;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,7 +58,6 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -178,7 +176,7 @@ public class NoteEditor extends AnkiActivity implements
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
     // calling activity
-    public static final int CALLER_NOCALLER = 0;
+    public static final int CALLER_NO_CALLER = 0;
 
     public static final int CALLER_REVIEWER = 1;
     public static final int CALLER_STUDYOPTIONS = 2;
@@ -428,8 +426,8 @@ public class NoteEditor extends AnkiActivity implements
             mToggleStickyText = (HashMap<Integer, String>) savedInstanceState.getSerializable("toggleSticky");
             mChanged = savedInstanceState.getBoolean("changed");
         } else {
-            mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
-            if (mCaller == CALLER_NOCALLER) {
+            mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NO_CALLER);
+            if (mCaller == CALLER_NO_CALLER) {
                 String action = intent.getAction();
                 if ((ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND.equals(action) || ACTION_PROCESS_TEXT.equals(action))) {
                     mCaller = CALLER_CARDEDITOR_INTENT_ADD;
@@ -512,7 +510,7 @@ public class NoteEditor extends AnkiActivity implements
         mCurrentEditedCard = null;
 
         switch (mCaller) {
-            case CALLER_NOCALLER:
+            case CALLER_NO_CALLER:
                 Timber.e("no caller could be identified, closing");
                 finishWithoutAnimation();
                 return;
@@ -659,7 +657,7 @@ public class NoteEditor extends AnkiActivity implements
         String selectedText = text.substring(start, end);
         String afterText = text.substring(end);
 
-        Toolbar.TextWrapper.StringFormat formatResult = formatter.format(selectedText);
+        Toolbar.StringFormat formatResult = formatter.format(selectedText);
         String newText = formatResult.result;
 
         // Update text field with updated text and selection
@@ -667,8 +665,8 @@ public class NoteEditor extends AnkiActivity implements
         StringBuilder newFieldContent = new StringBuilder(length).append(beforeText).append(newText).append(afterText);
         textBox.setText(newFieldContent);
 
-        int newStart = formatResult.start;
-        int newEnd = formatResult.end;
+        int newStart = formatResult.selectionStart;
+        int newEnd = formatResult.selectionEnd;
         textBox.setSelection(start + newStart, start + newEnd);
     }
 
@@ -1463,15 +1461,15 @@ public class NoteEditor extends AnkiActivity implements
         for (int i = 0; i < editLines.size(); i++) {
             FieldEditLine edit_line_view = editLines.get(i);
             mCustomViewIds.add(edit_line_view.getId());
-            FieldEditText newTextbox = edit_line_view.getEditText();
-            newTextbox.setImagePasteListener(this::onImagePaste);
+            FieldEditText newEditText = edit_line_view.getEditText();
+            newEditText.setImagePasteListener(this::onImagePaste);
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {
-                    findViewById(R.id.note_deck_spinner).setNextFocusForwardId(newTextbox.getId());
+                    findViewById(R.id.note_deck_spinner).setNextFocusForwardId(newEditText.getId());
                 }
                 if (previous != null) {
-                    previous.getLastViewInTabOrder().setNextFocusForwardId(newTextbox.getId());
+                    previous.getLastViewInTabOrder().setNextFocusForwardId(newEditText.getId());
                 }
             }
             previous = edit_line_view;
@@ -1482,19 +1480,19 @@ public class NoteEditor extends AnkiActivity implements
             if (CompatHelper.getSdkVersion() >= Build.VERSION_CODES.M) {
                 // Use custom implementation of ActionMode.Callback customize selection and insert menus
                 Field f = new Field(getFieldByIndex(i), getCol());
-                ActionModeCallback actionModeCallback = new ActionModeCallback(newTextbox, f);
+                ActionModeCallback actionModeCallback = new ActionModeCallback(newEditText, f);
                 edit_line_view.setActionModeCallbacks(actionModeCallback);
             }
 
             edit_line_view.setTypeface(customTypeface);
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.getName()));
-            initFieldEditText(newTextbox, i, !editModelMode);
-            mEditFields.add(newTextbox);
+            initFieldEditText(newEditText, i, !editModelMode);
+            mEditFields.add(newEditText);
             SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
             if (prefs.getInt("note_editor_font_size", -1) > 0) {
-                newTextbox.setTextSize(prefs.getInt("note_editor_font_size", -1));
+                newEditText.setTextSize(prefs.getInt("note_editor_font_size", -1));
             }
-            newTextbox.setCapitalize(prefs.getBoolean("note_editor_capitalize", true));
+            newEditText.setCapitalize(prefs.getBoolean("note_editor_capitalize", true));
 
             ImageButton mediaButton = edit_line_view.getMediaButton();
             ImageButton toggleStickyButton = edit_line_view.getToggleSticky();
@@ -1893,15 +1891,15 @@ public class NoteEditor extends AnkiActivity implements
         View clozeIcon = mToolbar.getClozeIcon();
         if (mEditorNote.model().isCloze()) {
             Toolbar.TextFormatter clozeFormatter = s -> {
-                Toolbar.TextWrapper.StringFormat stringFormat = new Toolbar.TextWrapper.StringFormat();
+                Toolbar.StringFormat stringFormat = new Toolbar.StringFormat();
                 String prefix = "{{c" + getNextClozeIndex() + "::";
                 stringFormat.result = prefix + s + "}}";
                 if (s.length() == 0) {
-                    stringFormat.start = prefix.length();
-                    stringFormat.end = prefix.length();
+                    stringFormat.selectionStart = prefix.length();
+                    stringFormat.selectionEnd = prefix.length();
                 } else {
-                    stringFormat.start = 0;
-                    stringFormat.end = stringFormat.result.length();
+                    stringFormat.selectionStart = 0;
+                    stringFormat.selectionEnd = stringFormat.result.length();
                 }
                 return stringFormat;
             };

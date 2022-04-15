@@ -20,7 +20,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<!-- Fonts & Style Prefrences -->
+<!-- Fonts & Style Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
             android:title="@string/pref_cat_appearance"
