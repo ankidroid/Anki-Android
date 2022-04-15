@@ -13,28 +13,30 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.content.Context
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.ReadText.closeForTests
+import com.ichi2.anki.ReadText.initializeTts
+import com.ichi2.anki.ReadText.releaseTts
+import com.ichi2.anki.ReadText.textToSpeech
+import com.ichi2.libanki.Sound.SoundSide.*
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.*
+import org.hamcrest.Matchers.*
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mockito.*
+import org.robolectric.Shadows.*
 
-import android.content.Context;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.libanki.Sound.SoundSide.QUESTION;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.robolectric.Shadows.shadowOf;
-
-@RunWith(AndroidJUnit4.class)
-public class ReadTextTest extends RobolectricTest{
-
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("IDE Lint")
+@KotlinCleanup("`is` -> equalTo")
+class ReadTextTest : RobolectricTest() {
     @Before
-    public void init() {
+    fun init() {
         // Investigate: This is fine here, but previously caused test failures.
         // E/SQLiteConnectionPool: Failed to close connection, its fate is now in the hands of the merciful GC: SQLiteConnection
         // java.lang.IllegalStateException: Illegal connection pointer 1163. Current pointers for thread Thread[SDK 29 Main Thread,5,SDK 29] []
@@ -59,48 +61,46 @@ public class ReadTextTest extends RobolectricTest{
         //    at android.database.sqlite.SQLiteDatabase.onAllReferencesReleased(SQLiteDatabase.java:333)
         //    at android.database.sqlite.SQLiteClosable.releaseReference(SQLiteClosable.java:76)
         //    at android.database.sqlite.SQLiteClosable.close(SQLiteClosable.java:108)
-        ReadText.closeForTests();
-        ReadText.initializeTts(getTargetContext(), mock(AbstractFlashcardViewer.ReadTextListener.class));
-    }
-
-
-    @Test
-    public void SaveValue() {
-        assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is(""));
-        storeLanguage(1, "French");
-        assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("French"));
-        storeLanguage(1, "German");
-        assertThat(MetaDB.getLanguage(getTargetContext(), 1, 1, QUESTION), is("German"));
-        storeLanguage(2, "English");
-        assertThat(MetaDB.getLanguage(getTargetContext(), 2, 1, QUESTION), is("English"));
+        closeForTests()
+        initializeTts(targetContext, mock(AbstractFlashcardViewer.ReadTextListener::class.java))
     }
 
     @Test
-    public void testIsTextToSpeechReleased_sameContext() {
-        Context context = getTargetContext();
-        initializeTextToSpeech(context);
-        ReadText.releaseTts(context);
-        assertThat(isTextToSpeechShutdown(), is(true));
+    fun SaveValue() {
+        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), `is`(""))
+        storeLanguage(1, "French")
+        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), `is`("French"))
+        storeLanguage(1, "German")
+        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), `is`("German"))
+        storeLanguage(2, "English")
+        assertThat(MetaDB.getLanguage(targetContext, 2, 1, QUESTION), `is`("English"))
     }
 
     @Test
-    public void testIsTextToSpeechReleased_differentContext() {
-        initializeTextToSpeech(getTargetContext());
-        ReadText.releaseTts(mock(Context.class));
-        assertThat(isTextToSpeechShutdown(), is(false));
+    fun testIsTextToSpeechReleased_sameContext() {
+        val context = targetContext
+        initializeTextToSpeech(context)
+        releaseTts(context)
+        assertThat(isTextToSpeechShutdown, `is`(true))
     }
 
-    private boolean isTextToSpeechShutdown() {
-        return shadowOf(ReadText.getTextToSpeech()).isShutdown();
+    @Test
+    fun testIsTextToSpeechReleased_differentContext() {
+        initializeTextToSpeech(targetContext)
+        releaseTts(mock(Context::class.java))
+        assertThat(isTextToSpeechShutdown, `is`(false))
     }
 
-    private void initializeTextToSpeech(Context context) {
-        ReadText.initializeTts(context, mock(AbstractFlashcardViewer.ReadTextListener.class));
+    private val isTextToSpeechShutdown: Boolean
+        get() = shadowOf(textToSpeech).isShutdown
+
+    private fun initializeTextToSpeech(context: Context) {
+        initializeTts(context, mock(AbstractFlashcardViewer.ReadTextListener::class.java))
     }
 
-    protected void storeLanguage(int i, String french) {
-        MetaDB.storeLanguage(getTargetContext(), i, 1, QUESTION, french);
-        advanceRobolectricLooperWithSleep();
-        advanceRobolectricLooperWithSleep();
+    protected fun storeLanguage(i: Int, french: String?) {
+        MetaDB.storeLanguage(targetContext, i.toLong(), 1, QUESTION, french)
+        advanceRobolectricLooperWithSleep()
+        advanceRobolectricLooperWithSleep()
     }
 }
