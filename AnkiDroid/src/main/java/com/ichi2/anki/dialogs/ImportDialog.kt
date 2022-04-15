@@ -25,8 +25,8 @@ import java.net.URLDecoder
 
 class ImportDialog : AsyncDialogFragment() {
     interface ImportDialogListener {
-        fun importAdd(importPath: ArrayList<String>)
-        fun importReplace(importPath: ArrayList<String>)
+        fun importAdd(importPath: List<String>)
+        fun importReplace(importPath: List<String>)
         fun dismissAllDialogFragments()
     }
 
@@ -109,11 +109,11 @@ class ImportDialog : AsyncDialogFragment() {
          * or specify import path
          */
         @JvmStatic
-        fun newInstance(dialogType: Int, dialogMessage: ArrayList<String>): ImportDialog {
+        fun newInstance(dialogType: Int, dialogMessage: List<String>): ImportDialog {
             val f = ImportDialog()
             val args = Bundle()
             args.putInt("dialogType", dialogType)
-            args.putStringArrayList("dialogMessage", dialogMessage)
+            args.putStringArrayList("dialogMessage", dialogMessage as ArrayList<String>)
             f.arguments = args
             return f
         }

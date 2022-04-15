@@ -1398,7 +1398,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
     }
 
-    public void showImportDialog(int id, ArrayList<String> messageList) {
+    public void showImportDialog(int id, List<String> messageList) {
         Timber.d("showImportDialog() delegating to ImportDialog");
         if (messageList.isEmpty()) {
             messageList.add("");
@@ -1965,7 +1965,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback to import a file -- adding it to existing collection
     @Override
-    public void importAdd(ArrayList<String> importPaths) {
+    public void importAdd(List<String> importPaths) {
         Timber.d("importAdd() for file %s", importPaths);
         TaskManager.launchCollectionTask(new CollectionTask.ImportAdd(importPaths), mImportAddListener);
     }
@@ -1973,7 +1973,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     // Callback to import a file -- replacing the existing collection
     @Override
-    public void importReplace(ArrayList<String> importPaths) {
+    public void importReplace(List<String> importPaths) {
         TaskManager.launchCollectionTask(new CollectionTask.ImportReplace(importPaths), importReplaceListener());
     }
 

@@ -1091,10 +1091,10 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
     public static class ImportAdd extends TaskDelegate<String, Triple<AnkiPackageImporter, Boolean, String>> {
-        private final ArrayList<String> mPath;
+        private final List<String> mPath;
 
 
-        public ImportAdd(ArrayList<String> path) {
+        public ImportAdd(List<String> path) {
             this.mPath = path;
         }
 
@@ -1107,7 +1107,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
             ArrayList<AnkiPackageImporter> impList;
             // Iterate over mPath
-            for(int i = 0; i<= mPath.size(); i++) {
+            for(int i = 0; i < mPath.size(); i++) {
 
                 imp = new AnkiPackageImporter(col, mPath.get(i));
                 imp.setProgressCallback(new TaskManager.ProgressCallback(collectionTask, res));
@@ -1125,10 +1125,10 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
 
     public static class ImportReplace extends TaskDelegate<String, Computation<?>> {
-        private final ArrayList<String> mPath;
+        private final List<String> mPath;
 
 
-        public ImportReplace(ArrayList<String> path) {
+        public ImportReplace(List<String> path) {
             this.mPath = path;
         }
 
