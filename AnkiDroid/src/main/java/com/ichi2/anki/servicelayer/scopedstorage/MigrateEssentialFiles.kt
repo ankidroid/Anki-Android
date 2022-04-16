@@ -191,14 +191,14 @@ internal constructor(
         val prefs = AnkiDroidApp.getSharedPrefs(context)
 
         // keep the old values in case we need to restore them
-        val oldPrefValues = listOf(PREF_MIGRATION_SOURCE, PREF_MIGRATION_DESTINATION, CollectionHelper.PREF_DECK_PATH)
+        val oldPrefValues = listOf(PREF_MIGRATION_SOURCE, PREF_MIGRATION_DESTINATION, CollectionHelper.PREF_COLLECTION_PATH)
             .associateWith { prefs.getString(it, null) }
 
         prefs.edit {
             // specify that a migration is in progress
             putString(PREF_MIGRATION_SOURCE, sourceDirectory.directory.absolutePath)
             putString(PREF_MIGRATION_DESTINATION, destinationDirectory.directory.absolutePath)
-            putString(CollectionHelper.PREF_DECK_PATH, destinationDirectory.directory.absolutePath)
+            putString(CollectionHelper.PREF_COLLECTION_PATH, destinationDirectory.directory.absolutePath)
         }
 
         // open the collection in the new location - data is now migrated

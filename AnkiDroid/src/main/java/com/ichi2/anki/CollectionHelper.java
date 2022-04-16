@@ -66,7 +66,7 @@ public class CollectionHelper {
      * <br>
      * The path also defines the collection that the AnkiDroid API accesses
      */
-    public static final String PREF_DECK_PATH = "deckPath";
+    public static final String PREF_COLLECTION_PATH = "deckPath";
 
     /**
      * Prevents {@link com.ichi2.async.CollectionLoader} from spuriously re-opening the {@link Collection}.
@@ -235,7 +235,7 @@ public class CollectionHelper {
     /**
      * Create the AnkiDroid directory if it doesn't exist and add a .nomedia file to it if needed.
      *
-     * The AnkiDroid directory is a user preference stored under {@link #PREF_DECK_PATH}, and a sensible
+     * The AnkiDroid directory is a user preference stored under {@link #PREF_COLLECTION_PATH}, and a sensible
      * default is chosen if the preference hasn't been created yet (i.e., on the first run).
      *
      * The presence of a .nomedia file indicates to media scanners that the directory must be
@@ -426,7 +426,7 @@ public class CollectionHelper {
         }
         return PreferenceExtensions.getOrSetString(
                 preferences,
-                PREF_DECK_PATH,
+                PREF_COLLECTION_PATH,
                 () -> getDefaultAnkiDroidDirectory(context));
     }
 

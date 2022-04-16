@@ -129,7 +129,7 @@ object ScopedStorageService {
 
     /**
      * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
-     * This directory is stored under [CollectionHelper.PREF_DECK_PATH] in SharedPreferences
+     * This directory is stored under [CollectionHelper.PREF_COLLECTION_PATH] in SharedPreferences
      * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
      */
     fun isLegacyStorage(context: Context): Boolean {
