@@ -1,4 +1,4 @@
-//noinspection MissingCopyrightHeader #8659
+// noinspection MissingCopyrightHeader #8659
 /*
  * The MIT License (MIT)
 
@@ -22,109 +22,95 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+package com.ichi2.ui
 
-package com.ichi2.ui;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
-import com.ichi2.anki.R;
-
-import java.util.ArrayList;
-import java.util.Collections;
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.R
+import com.ichi2.ui.ButtonItemAdapter.ButtonVH
+import com.ichi2.utils.KotlinCleanup
+import java.util.*
 
 /**
  * RecyclerView.Adapter class copied almost completely from the Material Dialogs library example
- * {@see <a href="https://github.com/afollestad/material-dialogs/blob/0.9.6.0/sample/src/main/java/com/afollestad/materialdialogssample/ButtonItemAdapter.java>ButtonItemAdapter.java</a>
- */
-public class ButtonItemAdapter extends RecyclerView.Adapter<ButtonItemAdapter.ButtonVH> {
+ * {@see [](https://github.com/afollestad/material-dialogs/blob/0.9.6.0/sample/src/main/java/com/afollestad/materialdialogssample/ButtonItemAdapter.java>ButtonItemAdapter.java</a>
+ ) */
+@KotlinCleanup("Fix all IDE lint issues")
+class ButtonItemAdapter(private val items: kotlin.collections.ArrayList<String>) : RecyclerView.Adapter<ButtonVH>() {
+    @KotlinCleanup("make field non null")
+    private var mItemCallback: ItemCallback? = null
+    @KotlinCleanup("make field non null")
+    private var mButtonCallback: ButtonCallback? = null
 
-    private final ArrayList<String> mItems;
-    private ItemCallback mItemCallback;
-    private ButtonCallback mButtonCallback;
-
-    public ButtonItemAdapter(ArrayList<String> items) {
-        this.mItems = items;
+    fun remove(searchName: String) {
+        items.remove(searchName)
     }
 
-    public void remove(String searchName) {
-        mItems.remove(searchName);
+    fun setCallbacks(itemCallback: ItemCallback, buttonCallback: ButtonCallback) {
+        mItemCallback = itemCallback
+        mButtonCallback = buttonCallback
     }
 
-    public void setCallbacks(ItemCallback itemCallback, ButtonCallback buttonCallback) {
-        this.mItemCallback = itemCallback;
-        this.mButtonCallback = buttonCallback;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonVH {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.card_browser_item_my_searches_dialog, parent, false)
+        return ButtonVH(view, this)
     }
 
-    @Override
-    public @NonNull ButtonVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final View view =
-                LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.card_browser_item_my_searches_dialog, parent, false);
-        return new ButtonVH(view, this);
+    override fun onBindViewHolder(holder: ButtonVH, position: Int) {
+        holder.mTitle.text = items[position]
+        holder.mButton.tag = items[position]
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ButtonVH holder, int position) {
-        holder.mTitle.setText(mItems.get(position));
-        holder.mButton.setTag(mItems.get(position));
+    override fun getItemCount(): Int {
+        return items.size
     }
 
-    @Override
-    public int getItemCount() {
-        return mItems.size();
+    @KotlinCleanup("make this a fun interface to use a lambda at the call site")
+    interface ItemCallback {
+        fun onItemClicked(searchName: String)
     }
 
-    public interface ItemCallback {
-        void onItemClicked(String searchName);
+    @KotlinCleanup("make this a fun interface to use a lambda at the call site")
+    interface ButtonCallback {
+        fun onButtonClicked(searchName: String)
     }
 
-    public interface ButtonCallback {
-        void onButtonClicked(String searchName);
-    }
+    inner class ButtonVH constructor(itemView: View, adapter: ButtonItemAdapter) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        val mTitle: TextView
+        val mButton: ImageButton
+        private val mAdapter: ButtonItemAdapter
 
-    class ButtonVH extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        private final TextView mTitle;
-        private final ImageButton mButton;
-        private final ButtonItemAdapter mAdapter;
-
-        private ButtonVH(View itemView, ButtonItemAdapter adapter) {
-            super(itemView);
-            mTitle = itemView.findViewById(R.id.card_browser_my_search_name_textview);
-            mButton = itemView.findViewById(R.id.card_browser_my_search_remove_button);
-
-            this.mAdapter = adapter;
-            itemView.setOnClickListener(this);
-            mButton.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
+        override fun onClick(view: View) {
             if (mAdapter.mItemCallback == null) {
-                return;
+                return
             }
-            if (view instanceof ImageButton) {
-                mAdapter.mButtonCallback.onButtonClicked(mItems.get(getBindingAdapterPosition()));
-            }
-            else {
-                mAdapter.mItemCallback.onItemClicked(mItems.get(getBindingAdapterPosition()));
+            if (view is ImageButton) {
+                mAdapter.mButtonCallback!!.onButtonClicked(items[bindingAdapterPosition])
+            } else {
+                mAdapter.mItemCallback!!.onItemClicked(items[bindingAdapterPosition])
             }
         }
-    }
 
+        init {
+            mTitle = itemView.findViewById(R.id.card_browser_my_search_name_textview)
+            mButton = itemView.findViewById(R.id.card_browser_my_search_remove_button)
+            mAdapter = adapter
+            itemView.setOnClickListener(this)
+            mButton.setOnClickListener(this)
+        }
+    }
 
     /**
      * Ensure our strings are sorted alphabetically - call this explicitly after changing
      * the saved searches in any way, prior to displaying them again
      */
-    public void notifyAdapterDataSetChanged() {
-        Collections.sort(mItems, String::compareToIgnoreCase);
-        super.notifyDataSetChanged();
+    fun notifyAdapterDataSetChanged() {
+        Collections.sort(items) { obj: String, str: String? -> obj.compareTo(str!!, ignoreCase = true) }
+        super.notifyDataSetChanged()
     }
 }
