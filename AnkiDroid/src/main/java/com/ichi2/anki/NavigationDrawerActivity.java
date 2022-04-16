@@ -184,7 +184,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
         // Review Cards Shortcut
-        Intent intentReviewCards = new Intent(context, Reviewer.class);
+        Intent intentReviewCards = new Intent(context, DeckPicker.class);
         intentReviewCards.setAction(Intent.ACTION_VIEW);
         intentReviewCards.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         ShortcutInfo reviewCardsShortcut = new ShortcutInfo.Builder(context, "reviewCardsShortcutId")

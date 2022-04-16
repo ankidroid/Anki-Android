@@ -505,6 +505,12 @@ public class DeckPicker extends NavigationDrawerActivity implements
         mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
         new Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate();
+
+        //"Navigate" to review if coming from an intent.
+        if(Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+            Timber.d("Called from shortcut, launching review!");
+            openReviewer();
+        }
     }
 
     /**

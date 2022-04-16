@@ -161,10 +161,6 @@ open class Reviewer : AbstractFlashcardViewer() {
             finishWithAnimation(ActivityTransitionAnimation.Direction.END)
             return
         }
-        if (Intent.ACTION_VIEW == intent.action) {
-            Timber.d("onCreate() :: received Intent with action = %s", intent.action)
-            selectDeckFromExtra()
-        }
         mColorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
         mTextBarNew = findViewById(R.id.new_number)
