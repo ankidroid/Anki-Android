@@ -25,6 +25,7 @@ import com.ichi2.testutils.assertThrows
 import com.ichi2.testutils.createTransientFile
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,10 +34,13 @@ import org.junit.runner.RunWith
 class StorageLockingTest : RobolectricTest() {
 
     private var toCleanup: Collection? = null
+    private var lock: Any? = null
     @After
     fun after() {
         toCleanup?.close()
-        Storage.unlockCollection()
+        if (lock != null) {
+            unlockCollection()
+        }
     }
 
     @Test
@@ -46,22 +50,22 @@ class StorageLockingTest : RobolectricTest() {
 
     @Test
     fun open_fails_if_locked() {
-        Storage.lockCollection()
+        lockCollection()
         assertThrows<SQLiteDatabaseLockedException> { successfulOpen() }
     }
 
     @Test
     fun lock_sets_value() {
-        Storage.lockCollection()
+        lockCollection()
         assertThat("locking the collection sets isLocked", Storage.isLocked(), equalTo(true))
-        Storage.unlockCollection()
+        unlockCollection()
         assertThat("unlocking the collection sets isLocked", Storage.isLocked(), equalTo(false))
     }
 
     @Test
     fun unlock_works() {
         open_fails_if_locked()
-        Storage.unlockCollection()
+        unlockCollection()
         test_normal_open()
     }
 
@@ -69,8 +73,29 @@ class StorageLockingTest : RobolectricTest() {
     fun lock_does_nothing_if_open() {
         assertDoesNotThrow {
             successfulOpen()
-            Storage.lockCollection()
+            lockCollection()
         }
+    }
+
+    @Test
+    fun two_locks_fails() {
+        lockCollection()
+        assertThat("second lock should fail", Storage.lockCollection(), equalTo(null))
+    }
+
+    @Test
+    fun two_unlocks_fails() {
+        lockCollection()
+        // Make a copy because [unlockCollection] set [lock] to null.
+        val local_lock = lock
+        unlockCollection()
+        assertThat("second lock should fail", Storage.unlockCollection(local_lock!!), equalTo(false))
+    }
+
+    @Test
+    fun unlocks_wrong_object_fails() {
+        lockCollection()
+        assertThat("second lock should fail", Storage.unlockCollection(Object()), equalTo(false))
     }
 
     @Test
@@ -81,5 +106,19 @@ class StorageLockingTest : RobolectricTest() {
     /** Opens a valid collection */
     private fun successfulOpen() {
         toCleanup = Storage.Collection(getApplicationContext(), createTransientFile(extension = "anki2").path)
+    }
+
+    /** Lock the collection and store the lock. Collection should be unlocked.*/
+    private fun lockCollection() {
+        assertThat("no two locks should occur", lock, equalTo(null))
+        lock = Storage.lockCollection()
+        assertThat("A lock should succeed", lock, not(equalTo(null)))
+    }
+
+    /** Unlock the lock with currently held collection.*/
+    private fun unlockCollection() {
+        assertThat("A lock should occur when unlocking exists", lock, not(equalTo(null)))
+        assertThat("unlock should succeed", Storage.unlockCollection(lock!!), equalTo(true))
+        lock = null
     }
 }

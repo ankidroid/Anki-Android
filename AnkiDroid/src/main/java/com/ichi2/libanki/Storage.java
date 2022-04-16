@@ -39,6 +39,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import kotlin.jvm.Synchronized;
 import timber.log.Timber;
 
 import static com.ichi2.libanki.Consts.DECK_STD;
@@ -54,11 +56,13 @@ public class Storage {
      * The collection is locked from being opened via the {@link Storage} class. All collection accesses in the app
      * should use this class.
      *
-     * Opening a collection will then throw {@link SQLiteDatabaseLockedException}
+     * Opening a collection will then throw {@link SQLiteDatabaseLockedException}.
      *
      * A collection which was opened before sIsLocked was set will be usable until it is closed.
+     *
+     * Closing the lock can only be done by sending back the object that was used to create the lock.
      */
-    private static boolean sIsLocked = false;
+    private static Object sLock = null;
 
 
     /* Open a new or existing collection. Path must be unicode */
@@ -87,7 +91,7 @@ public class Storage {
     }
     public static Collection Collection(Context context, @NonNull String path, boolean server, boolean log, @NonNull Time time) {
         assert (path.endsWith(".anki2") || path.endsWith(".anki21"));
-        if (sIsLocked) {
+        if (isLocked()) {
             throw new SQLiteDatabaseLockedException("AnkiDroid has locked the database");
         }
 
@@ -433,10 +437,17 @@ public class Storage {
         return sUseInMemory;
     }
 
-    /** Allows the collection to be opened */
-    public static void unlockCollection() {
-        sIsLocked = false;
-        Timber.i("unlocked collection");
+    /** Allows the collection to be opened.
+     * @return whether the collection was opened */
+    @Synchronized
+    public static boolean unlockCollection(@NonNull Object lock) {
+        if (sLock == lock) {
+            sLock = null;
+            Timber.i("unlocked collection");
+            return true;
+        }
+        Timber.i("collection remained locked due to bad lock");
+        return false;
     }
 
     /**
@@ -451,16 +462,24 @@ public class Storage {
      * * Perform your operation
      * * Unlock the collection
      */
-    public static void lockCollection() {
-        sIsLocked = true;
-        Timber.i("locked collection. Opening will throw SQLiteDatabaseLockedException");
+    @Synchronized
+    public static @Nullable Object lockCollection() {
+        if (sLock == null) {
+            sLock = new Object();
+            Timber.i("locked collection. Opening will throw SQLiteDatabaseLockedException");
+            return sLock;
+        } else {
+            Timber.i("Can't lock the collection as it is already locked");
+            return null;
+        }
     }
 
     /**
      * Whether the collection can be opened. If true, {@link #Collection(Context, String, boolean, boolean, Time)}
      * throws a {@link SQLiteDatabaseLockedException}
      */
+    @Synchronized
     public static Boolean isLocked() {
-        return sIsLocked;
+        return sLock != null;
     }
 }
