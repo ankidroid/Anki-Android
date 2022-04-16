@@ -25,20 +25,20 @@
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     android:title="@string/pref_cat_gestures"
     android:summary="@string/pref_cat_gestures_summ" >
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="false"
         android:disableDependentsState="false"
         android:key="gestures"
         android:summary="@string/gestures_summ"
         android:title="@string/gestures" />
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="false"
         android:dependency="gestures"
         android:disableDependentsState="false"
         android:key="gestureCornerTouch"
         android:summary="@string/gestures_corner_touch_summary"
         android:title="@string/gestures_corner_touch" />
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="false"
         android:dependency="gestures"
         android:disableDependentsState="false"
