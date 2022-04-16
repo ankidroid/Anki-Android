@@ -149,18 +149,18 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
         assertThat(mReviewer.audioView!!.status, equalTo(recording))
     }
 
-    private fun setupPlayerMock() = AudioPlayer().run {
+    private fun setupPlayerMock(): AudioPlayer {
         assertThat(mReviewer.openMicToolbar(), equalTo(true))
-        val player = mock(this::class.java)
-        mReviewer.audioView!!.setPlayer(player)
-        player
+        return mock(AudioPlayer::class.java).also {
+            mReviewer.audioView!!.setPlayer(it)
+        }
     }
 
-    private fun setupRecorderMock() = AudioRecorder().run {
+    private fun setupRecorderMock(): AudioRecorder {
         assertThat(mReviewer.openMicToolbar(), equalTo(true))
-        val recorder = mock(this::class.java)
-        mReviewer.audioView!!.setRecorder(recorder)
-        recorder
+        return mock(AudioRecorder::class.java).also {
+            mReviewer.audioView!!.setRecorder(it)
+        }
     }
 
     private fun pressVThenRelease() {
