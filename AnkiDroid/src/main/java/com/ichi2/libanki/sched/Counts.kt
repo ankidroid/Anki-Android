@@ -16,7 +16,7 @@
 
 package com.ichi2.libanki.sched
 
-import com.ichi2.utils.KotlinCleanup
+// import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
 /**
@@ -72,8 +72,9 @@ class Counts @JvmOverloads constructor(var new: Int = 0, var lrn: Int = 0, var r
     }
 
     override fun hashCode(): Int {
-        @KotlinCleanup("Kotlin listOf instead of Java Arrays.asList")
-        return Arrays.asList(new, rev, lrn).hashCode()
+        // @KotlinCleanup("Kotlin listOf instead of Java Arrays.asList")
+        // replaced arrays list with the listof in kotlin
+        return listOf(new, rev, lrn).hashCode()
     }
 
     override fun toString(): String {
