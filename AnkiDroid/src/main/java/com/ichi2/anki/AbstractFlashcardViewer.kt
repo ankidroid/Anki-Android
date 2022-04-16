@@ -86,14 +86,16 @@ import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.*
 import com.ichi2.utils.AdaptionUtil.hasWebBrowser
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.AssetHelper.guessMimeType
 import com.ichi2.utils.ClipboardUtil.getText
+import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.MaxExecFunction
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -110,7 +112,14 @@ import java.util.function.Supplier
 import kotlin.math.abs
 
 @KotlinCleanup("lots to deal with")
-abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi, ViewerCommand.CommandProcessor, TagsDialogListener, WhiteboardMultiTouchMethods, AutomaticallyAnswered {
+abstract class AbstractFlashcardViewer :
+    NavigationDrawerActivity(),
+    ReviewerUi,
+    ViewerCommand.CommandProcessor,
+    TagsDialogListener,
+    WhiteboardMultiTouchMethods,
+    AutomaticallyAnswered,
+    OnPageFinishedCallback {
     private var mTtsInitialized = false
     private var mReplayOnTtsInit = false
     private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
@@ -430,7 +439,13 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         // intentionally blank
     }
 
-    internal inner class NextCardHandler<Result : Computation<NextCard<*>>> : TaskListener<Unit, Result>() {
+    /** Invoked by [CardViewerWebClient.onPageFinished] */
+    override fun onPageFinished() {
+        // intentionally blank
+    }
+
+    internal inner class NextCardHandler<Result : Computation<NextCard<*>>> :
+        TaskListener<Unit, Result>() {
         override fun onPreExecute() {
             dealWithTimeBox()
         }
@@ -518,7 +533,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         delegate.isHandleNativeActionModesEnabled = true
         val mainView = findViewById<View>(android.R.id.content)
         initNavigationDrawer(mainView)
-        mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.choosen_answer))
+        mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
     }
 
@@ -1003,7 +1018,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         webView.isFocusableInTouchMode = typeAnswer!!.useInputTag
         webView.isScrollbarFadingEnabled = true
         Timber.d("Focusable = %s, Focusable in touch mode = %s", webView.isFocusable, webView.isFocusableInTouchMode)
-        webView.webViewClient = CardViewerWebClient(mAssetLoader)
+        webView.webViewClient = CardViewerWebClient(mAssetLoader, this)
         // Set transparent color to prevent flashing white when night mode enabled
         webView.setBackgroundColor(Color.argb(1, 0, 0, 0))
 
@@ -1312,7 +1327,8 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         Timber.i("AbstractFlashcardViewer:: Question successfully shown for card id %d", mCurrentCard!!.id)
     }
 
-    protected open fun displayCardAnswer() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    open fun displayCardAnswer() {
         // #7294 Required in case the animation end action does not fire:
         actualHideEaseButtons()
         Timber.d("displayCardAnswer()")
@@ -2142,7 +2158,10 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
         }
     }
 
-    protected inner class CardViewerWebClient internal constructor(private val loader: WebViewAssetLoader?) : WebViewClient() {
+    protected inner class CardViewerWebClient internal constructor(
+        private val loader: WebViewAssetLoader?,
+        private val onPageFinishedCallback: OnPageFinishedCallback? = null
+    ) : WebViewClient() {
         @TargetApi(Build.VERSION_CODES.N)
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
             val url = request.url.toString()
@@ -2443,6 +2462,7 @@ abstract class AbstractFlashcardViewer : NavigationDrawerActivity(), ReviewerUi,
 
             // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
             if (url == mViewerUrl) {
+                onPageFinishedCallback?.onPageFinished()
                 Timber.d("New URL, triggering JS onPageFinished: %s", url)
                 view.loadUrl("javascript:onPageFinished();")
             }

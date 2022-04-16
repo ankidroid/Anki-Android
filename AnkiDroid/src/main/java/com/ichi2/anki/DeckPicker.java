@@ -2273,7 +2273,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
             if (getCol().cardCount() != -1) {
                 String time = "-";
                 if (eta != -1 && eta != null) {
-                    time = Utils.timeQuantityTopDeckPicker(AnkiDroidApp.getInstance(), eta*60);
+                    time = Utils.timeQuantityTopDeckPicker(this, eta*60);
                 }
                 if (due != null && getSupportActionBar() != null) {
                     String subTitle;
@@ -2656,6 +2656,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         CreateDeckDialog createDeckDialog = new CreateDeckDialog(DeckPicker.this, R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, did);
         createDeckDialog.setOnNewDeckCreated((i) -> {
             // a deck was created
+            dismissAllDialogFragments();
             mDeckListAdapter.notifyDataSetChanged();
             updateDeckList();
             if (mFragmented) {

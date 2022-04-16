@@ -5,7 +5,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki">
 
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="false"
         android:key="advanced_statistics_enabled"
         android:summary="@string/enable_advanced_statistics_summ"

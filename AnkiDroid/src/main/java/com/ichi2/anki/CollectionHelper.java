@@ -247,44 +247,6 @@ public class CollectionHelper {
         }
     }
 
-    /**
-     * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
-     * This directory is stored under {@link #PREF_DECK_PATH}
-     * @return <code>true</code> if AnkiDroid is storing user data in a Legacy Storage Directory.
-     */
-    public static boolean isLegacyStorage(Context context) {
-        String currentDirPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
-        String externalScopedDirPath = CollectionHelper.getAppSpecificExternalAnkiDroidDirectory(context);
-        String internalScopedDirPath = CollectionHelper.getAppSpecificInternalAnkiDroidDirectory(context);
-
-        File currentDir = new File(currentDirPath);
-        File[] externalScopedDirs = context.getExternalFilesDirs(null);
-        File internalScopedDir = new File(internalScopedDirPath);
-
-        Timber.i("isLegacyStorage(): current dir: %s\nscoped external dir: %s\nscoped internal dir: %s",
-                currentDirPath, externalScopedDirPath, internalScopedDirPath);
-
-        // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
-        // for app-specific external or internal storage - the only directories which will be accessible without
-        // permissions under scoped storage
-        File currentDirParent = currentDir;
-        while (currentDirParent != null) {
-            if (currentDirParent.compareTo(internalScopedDir) == 0) {
-                return false;
-            }
-            for (File externalScopedDir : externalScopedDirs) {
-                if (currentDirParent.compareTo(externalScopedDir) == 0) {
-                    return false;
-                }
-            }
-            currentDirParent = currentDirParent.getParentFile();
-        }
-
-        // If the current AnkiDroid directory isn't a sub directory of the app-specific external or internal storage
-        // directories, then it must be in a legacy storage directory
-        return true;
-    }
-
 
     /**
      * Get the absolute path to a directory that is suitable to be the default starting location
@@ -385,6 +347,15 @@ public class CollectionHelper {
         return context.getExternalFilesDir(null).getAbsolutePath();
     }
 
+
+    /**
+     * @return Returns an array of {@link File}s reflecting the directories that AnkiDroid can access without storage permissions
+     * @see android.content.Context#getExternalFilesDirs(String)
+     */
+    @NonNull
+    public static File[] getAppSpecificExternalDirectories(@NonNull Context context) {
+        return context.getExternalFilesDirs(null);
+    }
 
     /**
      * Returns the absolute path to the private AnkiDroid directory under the app-specific, internal storage directory.

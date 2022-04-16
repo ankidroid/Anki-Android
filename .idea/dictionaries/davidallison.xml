@@ -10,9 +10,13 @@
       <w>Glosbe</w>
       <w>NONINFRINGEMENT</w>
       <w>Pictogrammers</w>
+      <w>SuperMemo</w>
       <w>Unbury</w>
+      <w>acos</w>
       <w>actuals</w>
       <w>ankidroid</w>
+      <w>asin</w>
+      <w>atan</w>
       <w>audioclip</w>
       <w>audiorec</w>
       <w>autolint</w>
@@ -22,11 +26,14 @@
       <w>canonify</w>
       <w>cardbrowser</w>
       <w>cardviewer</w>
+      <w>chartbuilding</w>
       <w>checkin</w>
       <w>clusterable</w>
       <w>colordict</w>
       <w>consts</w>
       <w>coord</w>
+      <w>ctor</w>
+      <w>darkpencolor</w>
       <w>dateformat</w>
       <w>decklist</w>
       <w>deckpicker</w>
@@ -39,14 +46,20 @@
       <w>filepaths</w>
       <w>fixme</w>
       <w>fixmes</w>
+      <w>foobaz</w>
       <w>freqs</w>
       <w>furigana</w>
       <w>gamepad</w>
       <w>glosbe</w>
+      <w>helloworld</w>
+      <w>ifnull</w>
       <w>janky</w>
       <w>keybind</w>
       <w>ktlint</w>
       <w>lateinit</w>
+      <w>legendable</w>
+      <w>lexed</w>
+      <w>lightpencolor</w>
       <w>linebreaks</w>
       <w>mbit</w>
       <w>mins</w>
@@ -62,6 +75,7 @@
       <w>polytonic</w>
       <w>poweredbeolingus</w>
       <w>poweredglosbe</w>
+      <w>premade</w>
       <w>quuux</w>
       <w>quux</w>
       <w>relativize</w>
@@ -69,6 +83,7 @@
       <w>rerender</w>
       <w>resync</w>
       <w>servicelayer</w>
+      <w>sinh</w>
       <w>spacebar</w>
       <w>studyoptions</w>
       <w>subdir</w>
@@ -82,6 +97,7 @@
       <w>testfile</w>
       <w>testfiles</w>
       <w>testpath</w>
+      <w>thirdparty</w>
       <w>thirdpartyapps</w>
       <w>tmpzip</w>
       <w>topbar</w>
@@ -93,10 +109,15 @@
       <w>unbury</w>
       <w>unburying</w>
       <w>undeletable</w>
+      <w>underlaid</w>
       <w>unflag</w>
       <w>unmark</w>
+      <w>unopenable</w>
       <w>unsuspend</w>
+      <w>unsuspending</w>
       <w>untriggered</w>
+      <w>upstream</w>
+      <w>upstream's</w>
       <w>userbase</w>
       <w>walkthrough</w>
     </words>

@@ -77,7 +77,7 @@ public class PlotSheet implements Drawable {
      */
     private boolean isBordered = true;
 
-    //if class shold be made threadable for mulitplot mode, than
+    //if class should be made threadable for mulitplot mode, than
     //this must be done otherwise
     /**
      * screen that is currently rendered
@@ -406,7 +406,7 @@ public class PlotSheet implements Drawable {
     /**
      * the x-range for the plot
      *
-     * @return double array in the lenght of two with the first element beeingt left and the second element beeing the right border
+     * @return double array in the length of two with the first element beeingt left and the second element being the right border
      */
     public double[] getxRange() {
         return this.screenParts.get(0).getxRange();
@@ -416,7 +416,7 @@ public class PlotSheet implements Drawable {
     /**
      * the <-range for the plot
      *
-     * @return double array in the lenght of two with the first element being lower and the second element being the upper border
+     * @return double array in the length of two with the first element being lower and the second element being the upper border
      */
     public double[] getyRange() {
         return this.screenParts.get(0).getyRange();
