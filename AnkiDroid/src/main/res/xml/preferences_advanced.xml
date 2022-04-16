@@ -51,29 +51,29 @@
         <PreferenceCategory
             android:key="category_workarounds"
             android:title="@string/pref_cat_workarounds" >
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="softwareRender"
                 android:summary="@string/software_render_summ"
                 android:title="@string/software_render" />
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="safeDisplay"
                 android:summary="@string/safe_display_summ"
                 android:title="@string/safe_display" />
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="useInputTag"
                 android:disableDependentsState="true"
                 android:summary="@string/use_input_tag_summ"
                 android:title="@string/use_input_tag" />
             <!-- Workaround for #5533 -->
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="disableExtendedTextUi"
                 android:summary="@string/disable_extended_text_ui_summ"
                 android:title="@string/disable_extended_text_ui" />
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="true"
                 android:key="noteEditorNewlineReplace"
                 android:summary="@string/note_editor_replace_newlines_summ"
@@ -81,7 +81,7 @@
                 />
             <!-- #7896 - Workaround for old webviews which could not render some characters in a <code> block
             due to problems with the default monospace font handling -->
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="noCodeFormatting"
                 android:summary="@string/no_code_formatting_summ"
@@ -91,13 +91,13 @@
                 UseInputTag: has had `disableDependentsState` set, so this is disabled
                 if useInputTag is true
              -->
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="true"
                 android:key="autoFocusTypeInAnswer"
                 android:summary="@string/type_in_answer_focus_summ"
                 android:dependency="useInputTag"
                 android:title="@string/type_in_answer_focus" />
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="exitViaDoubleTapBack"
                 android:summary="@string/exit_via_double_tap_back_summ"
@@ -105,7 +105,7 @@
             <!-- #9639 - allow all files in media selection dialog - .opus is application/octet-stream
             in older versions of Android (fixed between API 26 and API 30)
              We don't want to allow this by default, but we want an override -->
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="mediaImportAllowAllFiles"
                 android:summary="@string/media_import_allow_all_files_summ"
@@ -114,7 +114,7 @@
         <PreferenceCategory
             android:key="category_plugins"
             android:title="@string/pref_cat_plugins" >
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="true"
                 android:key="providerEnabled"
                 android:summary="@string/enable_api_summary"
@@ -124,7 +124,7 @@
                 android:summary="@string/thirdparty_apps_summary"
                 android:title="@string/thirdparty_apps_title">
             </Preference>
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="tts"
                 android:summary="@string/tts_summ"
@@ -138,19 +138,17 @@
                 android:summary="@string/reset_languages_summ"
                 android:title="@string/reset_languages"
                 android:key="resetLanguages" />
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="convertFenText"
                 android:summary="@string/convert_fen_text_summ"
                 android:title="@string/convert_fen_text" />
-            <CheckBoxPreference
-                android:id="@+id/scrolling_buttons_checkbox"
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="scrolling_buttons"
                 android:summary="@string/more_scrolling_buttons_summ"
                 android:title="@string/more_scrolling_buttons" />
-            <CheckBoxPreference
-                android:id="@+id/double_scrolling_checkbox"
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="double_scrolling"
                 android:summary="@string/double_scrolling_gap_summ"
@@ -165,18 +163,18 @@
                 android:key="advanced_statistics_link"
                 android:title="@string/advanced_statistics_title"
                 android:fragment="com.ichi2.anki.Preferences$AdvancedStatisticsSettingsFragment" />
-            <CheckBoxPreference
+            <SwitchPreference
                 android:defaultValue="false"
                 android:key="html_javascript_debugging"
                 android:summary="@string/html_javascript_debugging_summ"
                 android:title="@string/html_javascript_debugging"/>
             <!-- Title and summary are variable, handled in string:
             card_browser_enable_external_context_menu -->
-            <CheckBoxPreference
+            <SwitchPreference
                 android:id="@+id/card_browser_external_context_menu"
                 android:defaultValue="false"
                 android:key="card_browser_enable_external_context_menu"/>
-            <CheckBoxPreference
+            <SwitchPreference
                 android:id="@+id/anki_card_external_context_menu"
                 android:defaultValue="true"
                 android:key="anki_card_enable_external_context_menu"/>

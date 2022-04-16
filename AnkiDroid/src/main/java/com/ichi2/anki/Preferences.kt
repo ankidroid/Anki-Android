@@ -259,21 +259,21 @@ class Preferences : AnkiActivity() {
             if (col != null) {
                 try {
                     when (pref.key) {
-                        SHOW_ESTIMATE -> (pref as CheckBoxPreference).isChecked = col.get_config_boolean("estTimes")
-                        SHOW_PROGRESS -> (pref as CheckBoxPreference).isChecked = col.get_config_boolean("dueCounts")
+                        SHOW_ESTIMATE -> (pref as SwitchPreference).isChecked = col.get_config_boolean("estTimes")
+                        SHOW_PROGRESS -> (pref as SwitchPreference).isChecked = col.get_config_boolean("dueCounts")
                         LEARN_CUTOFF -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("collapseTime") / 60)
                         TIME_LIMIT -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("timeLim") / 60)
                         USE_CURRENT -> (pref as ListPreference).setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
                         AUTOMATIC_ANSWER_ACTION -> (pref as ListPreference).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
                         NEW_SPREAD -> (pref as ListPreference).setValueIndex(col.get_config_int("newSpread"))
                         DAY_OFFSET -> (pref as SeekBarPreferenceCompat).value = getDayOffset(col)
-                        PASTE_PNG -> (pref as CheckBoxPreference).isChecked = col.get_config("pastePNG", false)!!
+                        PASTE_PNG -> (pref as SwitchPreference).isChecked = col.get_config("pastePNG", false)!!
                         NEW_TIMEZONE_HANDLING -> {
-                            val checkBox = pref as CheckBoxPreference
-                            checkBox.isChecked = col.sched._new_timezone_enabled()
+                            val switch = pref as SwitchPreference
+                            switch.isChecked = col.sched._new_timezone_enabled()
                             if (col.schedVer() <= 1 || !col.isUsingRustBackend) {
                                 Timber.d("Disabled 'newTimezoneHandling' box")
-                                checkBox.isEnabled = false
+                                switch.isEnabled = false
                             }
                         }
                     }
@@ -507,16 +507,16 @@ class Preferences : AnkiActivity() {
                     CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, CustomSyncServer.PREFERENCE_CUSTOM_SYNC_BASE, CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER -> // This may be a tad hasty - performed before "back" is pressed.
                         handleSyncServerPreferenceChange(preferencesActivity!!.baseContext)
                     "timeoutAnswer" -> {
-                        val keepScreenOn = screen.findPreference<CheckBoxPreference>("keepScreenOn")
-                        keepScreenOn!!.isChecked = (pref as CheckBoxPreference).isChecked
+                        val keepScreenOn = screen.findPreference<SwitchPreference>("keepScreenOn")
+                        keepScreenOn!!.isChecked = (pref as SwitchPreference).isChecked
                     }
                     LANGUAGE -> preferencesActivity!!.closePreferences()
                     SHOW_PROGRESS -> {
-                        preferencesActivity!!.col.set_config("dueCounts", (pref as CheckBoxPreference).isChecked)
+                        preferencesActivity!!.col.set_config("dueCounts", (pref as SwitchPreference).isChecked)
                         preferencesActivity.col.setMod()
                     }
                     SHOW_ESTIMATE -> {
-                        preferencesActivity!!.col.set_config("estTimes", (pref as CheckBoxPreference).isChecked)
+                        preferencesActivity!!.col.set_config("estTimes", (pref as SwitchPreference).isChecked)
                         preferencesActivity.col.setMod()
                     }
                     NEW_SPREAD -> {
@@ -543,7 +543,7 @@ class Preferences : AnkiActivity() {
                         preferencesActivity!!.setDayOffset((pref as SeekBarPreferenceCompat).value)
                     }
                     PASTE_PNG -> {
-                        preferencesActivity!!.col.set_config("pastePNG", (pref as CheckBoxPreference).isChecked)
+                        preferencesActivity!!.col.set_config("pastePNG", (pref as SwitchPreference).isChecked)
                         preferencesActivity.col.setMod()
                     }
                     MINIMUM_CARDS_DUE_FOR_NOTIFICATION -> {
@@ -582,7 +582,7 @@ class Preferences : AnkiActivity() {
                         val providerName = ComponentName(preferencesActivity!!, "com.ichi2.anki.provider.CardContentProvider")
                         val pm = preferencesActivity.packageManager
                         val state: Int
-                        if ((pref as CheckBoxPreference).isChecked) {
+                        if ((pref as SwitchPreference).isChecked) {
                             state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED
                             Timber.i("AnkiDroid ContentProvider enabled by user")
                         } else {
@@ -595,7 +595,7 @@ class Preferences : AnkiActivity() {
                         if (preferencesActivity!!.col.schedVer() != 1 && preferencesActivity.col.isUsingRustBackend) {
                             val sched = preferencesActivity.col.sched
                             val wasEnabled = sched._new_timezone_enabled()
-                            val isEnabled = (pref as CheckBoxPreference).isChecked
+                            val isEnabled = (pref as SwitchPreference).isChecked
                             if (wasEnabled != isEnabled) {
                                 if (isEnabled) {
                                     try {
@@ -710,11 +710,11 @@ class Preferences : AnkiActivity() {
             addPreferencesFromResource(R.xml.preferences_general)
             val screen = preferenceScreen
             if (isRestrictedLearningDevice) {
-                val checkBoxPrefVibrate = requirePreference<CheckBoxPreference>("widgetVibrate")
-                val checkBoxPrefBlink = requirePreference<CheckBoxPreference>("widgetBlink")
+                val switchPrefVibrate = requirePreference<SwitchPreference>("widgetVibrate")
+                val switchPrefBlink = requirePreference<SwitchPreference>("widgetBlink")
                 val category = requirePreference<PreferenceCategory>("category_general_notification_pref")
-                category.removePreference(checkBoxPrefVibrate)
-                category.removePreference(checkBoxPrefBlink)
+                category.removePreference(switchPrefVibrate)
+                category.removePreference(switchPrefBlink)
             }
             // Build languages
             initializeLanguageDialog(screen)
@@ -783,7 +783,7 @@ class Preferences : AnkiActivity() {
     }
 
     class AppearanceSettingsFragment : SpecificSettingsFragment() {
-        private var mBackgroundImage: CheckBoxPreference? = null
+        private var mBackgroundImage: SwitchPreference? = null
         override val preferenceResource: Int
             get() = R.xml.preferences_appearance
         override val analyticsScreenNameConstant: String
@@ -792,7 +792,7 @@ class Preferences : AnkiActivity() {
         @Suppress("deprecation") // startActivityForResult
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_appearance)
-            mBackgroundImage = requirePreference<CheckBoxPreference>("deckPickerBackground")
+            mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
             mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 if (mBackgroundImage!!.isChecked) {
                     try {
@@ -1020,7 +1020,7 @@ class Preferences : AnkiActivity() {
             setupContextMenuPreference(AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label)
             if (col!!.schedVer() == 1) {
                 Timber.i("Displaying V1-to-V2 scheduler preference")
-                val schedVerPreference = CheckBoxPreference(requireContext())
+                val schedVerPreference = SwitchPreference(requireContext())
                 schedVerPreference.setTitle(R.string.sched_v2)
                 schedVerPreference.setSummary(R.string.sched_v2_summ)
                 schedVerPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
@@ -1101,7 +1101,7 @@ class Preferences : AnkiActivity() {
             }
             if (BuildConfig.DEBUG) {
                 Timber.i("Debug mode, option for showing onboarding walkthrough")
-                val onboardingPreference = CheckBoxPreference(requireContext())
+                val onboardingPreference = SwitchPreference(requireContext())
                 onboardingPreference.key = "showOnboarding"
                 onboardingPreference.setTitle(R.string.show_onboarding)
                 onboardingPreference.setSummary(R.string.show_onboarding_desc)
@@ -1177,7 +1177,7 @@ class Preferences : AnkiActivity() {
         private fun setupContextMenuPreference(key: String, @StringRes contextMenuName: Int) {
             // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
             //  different than the app language
-            val cardBrowserContextMenuPreference = requirePreference<CheckBoxPreference>(key)
+            val cardBrowserContextMenuPreference = requirePreference<SwitchPreference>(key)
             val menuName = getString(contextMenuName)
             // Note: The below format strings are generic, not card browser specific despite the name
             cardBrowserContextMenuPreference.title = getString(R.string.card_browser_enable_external_context_menu, menuName)
@@ -1188,14 +1188,14 @@ class Preferences : AnkiActivity() {
             val plugins = findPreference<PreferenceCategory>("category_plugins")
             // Disable the emoji/kana buttons to scroll preference if those keys don't exist
             if (!CompatHelper.hasKanaAndEmojiKeys()) {
-                val emojiScrolling = findPreference<CheckBoxPreference>("scrolling_buttons")
+                val emojiScrolling = findPreference<SwitchPreference>("scrolling_buttons")
                 if (emojiScrolling != null && plugins != null) {
                     plugins.removePreference(emojiScrolling)
                 }
             }
             // Disable the double scroll preference if no scrolling keys
             if (!CompatHelper.hasScrollKeys() && !CompatHelper.hasKanaAndEmojiKeys()) {
-                val doubleScrolling = findPreference<CheckBoxPreference>("double_scrolling")
+                val doubleScrolling = findPreference<SwitchPreference>("double_scrolling")
                 if (doubleScrolling != null && plugins != null) {
                     plugins.removePreference(doubleScrolling)
                 }
