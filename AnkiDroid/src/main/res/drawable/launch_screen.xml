@@ -1,15 +1,24 @@
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
   <!-- The background color, preferably the same as your normal theme -->
   <item android:drawable="@color/material_theme_grey"/>
   <!-- Your product logo - 144dp color version of your app icon -->
-  <item>
+  <item
+      android:bottom="200dp"
+      android:top="200dp"
+      android:left="250dp"
+      android:right="250dp">
     <bitmap
       android:src="@drawable/logo_star_144dp"
       android:gravity="center"/>
   </item>
-    <item android:top="200dp">
+    <item android:top="250dp"
+        android:left="250dp"
+        android:right="250dp"
+        android:bottom="50dp">
         <bitmap
             android:src="@drawable/ankidroid_txt"
             android:gravity="center"/>
     </item>
+
 </layer-list>
