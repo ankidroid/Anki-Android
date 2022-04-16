@@ -28,24 +28,20 @@ import com.ichi2.anki.multimediacard.AudioPlayer
 import com.ichi2.anki.multimediacard.AudioRecorder
 import com.ichi2.anki.multimediacard.AudioView
 import com.ichi2.testutils.KeyEventUtils.Companion.getVKey
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 import org.mockito.kotlin.any
+import org.mockito.kotlin.whenever
 import org.robolectric.Shadows
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("auto IDE fixes")
-@KotlinCleanup("`is` -> equalTo")
-@KotlinCleanup("`when` -> whenever")
 class KeyboardShortcutIntegrationTest : RobolectricTest() {
-    @KotlinCleanup("lateinit")
-    private var mReviewer: Reviewer? = null
+    private lateinit var mReviewer: Reviewer
     @Before
     override fun setUp() {
         super.setUp()
@@ -149,23 +145,22 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
         assertStatus(AudioView.Status.RECORDING)
     }
 
-    protected fun assertStatus(recording: AudioView.Status) {
-        assertThat(mReviewer!!.audioView!!.status, `is`(recording))
+    private fun assertStatus(recording: AudioView.Status) {
+        assertThat(mReviewer.audioView!!.status, equalTo(recording))
     }
 
-    @KotlinCleanup("scope function")
-    protected fun setupPlayerMock(): AudioPlayer {
-        assertThat(mReviewer!!.openMicToolbar(), `is`(true))
-        val player = mock(AudioPlayer::class.java)
-        mReviewer!!.audioView!!.setPlayer(player)
-        return player
+    private fun setupPlayerMock(): AudioPlayer {
+        assertThat(mReviewer.openMicToolbar(), equalTo(true))
+        return mock(AudioPlayer::class.java).also {
+            mReviewer.audioView!!.setPlayer(it)
+        }
     }
 
-    protected fun setupRecorderMock(): AudioRecorder {
-        assertThat(mReviewer!!.openMicToolbar(), `is`(true))
-        val recorder = mock(AudioRecorder::class.java)
-        mReviewer!!.audioView!!.setRecorder(recorder)
-        return recorder
+    private fun setupRecorderMock(): AudioRecorder {
+        assertThat(mReviewer.openMicToolbar(), equalTo(true))
+        return mock(AudioRecorder::class.java).also {
+            mReviewer.audioView!!.setRecorder(it)
+        }
     }
 
     private fun pressVThenRelease() {
@@ -177,13 +172,13 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
         depressShiftKey()
 
         val vKey = getVKey()
-        `when`(vKey.isShiftPressed).thenReturn(true)
-        mReviewer!!.onKeyDown(KeyEvent.KEYCODE_V, vKey)
-        `when`(vKey.repeatCount).thenReturn(1)
-        mReviewer!!.onKeyDown(KeyEvent.KEYCODE_V, vKey)
+        whenever(vKey.isShiftPressed).thenReturn(true)
+        mReviewer.onKeyDown(KeyEvent.KEYCODE_V, vKey)
+        whenever(vKey.repeatCount).thenReturn(1)
+        mReviewer.onKeyDown(KeyEvent.KEYCODE_V, vKey)
     }
 
-    protected fun pressShiftAndVThenRelease() {
+    private fun pressShiftAndVThenRelease() {
         depressShiftKey()
         depressVKeyWithShiftHeld()
         releaseShiftKey()
@@ -192,45 +187,45 @@ class KeyboardShortcutIntegrationTest : RobolectricTest() {
 
     private fun releaseVKey() {
         val mock = mock(KeyEvent::class.java)
-        `when`(mock.keyCode).thenReturn(KeyEvent.KEYCODE_V)
-        `when`(mock.unicodeChar).thenReturn('v'.code)
-        `when`(mock.getUnicodeChar(anyInt())).thenReturn('v'.code)
-        mReviewer!!.onKeyUp(KeyEvent.KEYCODE_V, mock)
+        whenever(mock.keyCode).thenReturn(KeyEvent.KEYCODE_V)
+        whenever(mock.unicodeChar).thenReturn('v'.code)
+        whenever(mock.getUnicodeChar(anyInt())).thenReturn('v'.code)
+        mReviewer.onKeyUp(KeyEvent.KEYCODE_V, mock)
     }
 
     private fun releaseShiftKey() {
         val mock = mock(KeyEvent::class.java)
-        `when`(mock.keyCode).thenReturn(KeyEvent.KEYCODE_SHIFT_LEFT)
-        mReviewer!!.onKeyUp(KeyEvent.KEYCODE_SHIFT_LEFT, mock)
+        whenever(mock.keyCode).thenReturn(KeyEvent.KEYCODE_SHIFT_LEFT)
+        mReviewer.onKeyUp(KeyEvent.KEYCODE_SHIFT_LEFT, mock)
     }
 
     private fun depressVKey() {
         val mock = mock(KeyEvent::class.java)
-        `when`(mock.keyCode).thenReturn(KeyEvent.KEYCODE_V)
-        `when`(mock.unicodeChar).thenReturn('v'.code)
-        `when`(mock.getUnicodeChar(anyInt())).thenReturn('v'.code)
-        mReviewer!!.onKeyDown(KeyEvent.KEYCODE_V, mock)
+        whenever(mock.keyCode).thenReturn(KeyEvent.KEYCODE_V)
+        whenever(mock.unicodeChar).thenReturn('v'.code)
+        whenever(mock.getUnicodeChar(anyInt())).thenReturn('v'.code)
+        mReviewer.onKeyDown(KeyEvent.KEYCODE_V, mock)
     }
 
     private fun depressVKeyWithShiftHeld() {
         val mock = mock(KeyEvent::class.java)
-        `when`(mock.isShiftPressed).thenReturn(true)
-        `when`(mock.keyCode).thenReturn(KeyEvent.KEYCODE_V)
-        mReviewer!!.onKeyDown(KeyEvent.KEYCODE_V, mock)
+        whenever(mock.isShiftPressed).thenReturn(true)
+        whenever(mock.keyCode).thenReturn(KeyEvent.KEYCODE_V)
+        mReviewer.onKeyDown(KeyEvent.KEYCODE_V, mock)
     }
 
     private fun depressShiftKey() {
         val mock = mock(KeyEvent::class.java)
-        `when`(mock.action).thenReturn(0)
-        `when`(mock.deviceId).thenReturn(9)
-        `when`(mock.downTime).thenReturn(35660208L)
-        `when`(mock.eventTime).thenReturn(35660208L)
-        `when`(mock.flags).thenReturn(8)
-        `when`(mock.keyCode).thenReturn(KeyEvent.KEYCODE_SHIFT_LEFT)
-        `when`(mock.metaState).thenReturn(65)
-        `when`(mock.scanCode).thenReturn(42)
-        `when`(mock.source).thenReturn(257)
-        `when`(mock.repeatCount).thenReturn(0)
-        mReviewer!!.onKeyDown(KeyEvent.KEYCODE_SHIFT_LEFT, mock)
+        whenever(mock.action).thenReturn(0)
+        whenever(mock.deviceId).thenReturn(9)
+        whenever(mock.downTime).thenReturn(35660208L)
+        whenever(mock.eventTime).thenReturn(35660208L)
+        whenever(mock.flags).thenReturn(8)
+        whenever(mock.keyCode).thenReturn(KeyEvent.KEYCODE_SHIFT_LEFT)
+        whenever(mock.metaState).thenReturn(65)
+        whenever(mock.scanCode).thenReturn(42)
+        whenever(mock.source).thenReturn(257)
+        whenever(mock.repeatCount).thenReturn(0)
+        mReviewer.onKeyDown(KeyEvent.KEYCODE_SHIFT_LEFT, mock)
     }
 }
