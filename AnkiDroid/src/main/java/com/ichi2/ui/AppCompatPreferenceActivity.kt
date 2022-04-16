@@ -1,4 +1,4 @@
-//noinspection MissingCopyrightHeader #8659
+// noinspection MissingCopyrightHeader #8659
 /*
  * Copyright (C) 2014 The Android Open Source Project
  *
@@ -14,125 +14,112 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("DEPRECATION") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 
-package com.ichi2.ui;
+package com.ichi2.ui
 
-import android.content.Context;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.ichi2.anki.AnkiDroidApp;
+import android.content.Context
+import android.content.res.Configuration
+import android.os.Bundle
+import android.preference.PreferenceActivity
+import android.view.MenuInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
+import com.ichi2.anki.AnkiDroidApp
 
 /**
- * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls
+ * A [android.preference.PreferenceActivity] which implements and proxies the necessary calls
  * to be used with AppCompat.
  *
- * This technique can be used with an {@link android.app.Activity} class, not just
- * {@link android.preference.PreferenceActivity}.
+ * This technique can be used with an [android.app.Activity] class, not just
+ * [android.preference.PreferenceActivity].
  */
-@SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-public abstract class AppCompatPreferenceActivity extends android.preference.PreferenceActivity {
+abstract class AppCompatPreferenceActivity : PreferenceActivity() {
+    private var mDelegate: AppCompatDelegate? = null
 
-    private AppCompatDelegate mDelegate;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        getDelegate().installViewFactory();
-        getDelegate().onCreate(savedInstanceState);
-        super.onCreate(savedInstanceState);
+    @Deprecated("Deprecated in Java")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        delegate.installViewFactory()
+        delegate.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base));
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base))
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        getDelegate().onPostCreate(savedInstanceState);
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        delegate.onPostCreate(savedInstanceState)
     }
 
-    public ActionBar getSupportActionBar() {
-        return getDelegate().getSupportActionBar();
+    val supportActionBar: ActionBar?
+        get() = delegate.supportActionBar
+
+    fun setSupportActionBar(toolbar: Toolbar?) {
+        delegate.setSupportActionBar(toolbar)
     }
 
-    public void setSupportActionBar(@Nullable Toolbar toolbar) {
-        getDelegate().setSupportActionBar(toolbar);
+    override fun getMenuInflater(): MenuInflater {
+        return delegate.menuInflater
     }
 
-    @Override
-    public @NonNull MenuInflater getMenuInflater() {
-        return getDelegate().getMenuInflater();
+    override fun setContentView(@LayoutRes layoutResID: Int) {
+        delegate.setContentView(layoutResID)
     }
 
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        getDelegate().setContentView(layoutResID);
+    override fun setContentView(view: View) {
+        delegate.setContentView(view)
     }
 
-    @Override
-    public void setContentView(View view) {
-        getDelegate().setContentView(view);
+    override fun setContentView(view: View, params: ViewGroup.LayoutParams) {
+        delegate.setContentView(view, params)
     }
 
-    @Override
-    public void setContentView(View view, ViewGroup.LayoutParams params) {
-        getDelegate().setContentView(view, params);
+    override fun addContentView(view: View, params: ViewGroup.LayoutParams) {
+        delegate.addContentView(view, params)
     }
 
-    @Override
-    public void addContentView(View view, ViewGroup.LayoutParams params) {
-        getDelegate().addContentView(view, params);
+    override fun onPostResume() {
+        super.onPostResume()
+        delegate.onPostResume()
     }
 
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        getDelegate().onPostResume();
+    override fun onTitleChanged(title: CharSequence, color: Int) {
+        super.onTitleChanged(title, color)
+        delegate.setTitle(title)
     }
 
-    @Override
-    protected void onTitleChanged(CharSequence title, int color) {
-        super.onTitleChanged(title, color);
-        getDelegate().setTitle(title);
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        delegate.onConfigurationChanged(newConfig)
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        getDelegate().onConfigurationChanged(newConfig);
+    @Deprecated("Deprecated in Java")
+    override fun onStop() {
+        super.onStop()
+        delegate.onStop()
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        getDelegate().onStop();
+    @Deprecated("Deprecated in Java")
+    override fun onDestroy() {
+        super.onDestroy()
+        delegate.onDestroy()
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        getDelegate().onDestroy();
+    override fun invalidateOptionsMenu() {
+        delegate.invalidateOptionsMenu()
     }
 
-    public void invalidateOptionsMenu() {
-        getDelegate().invalidateOptionsMenu();
-    }
-
-    private AppCompatDelegate getDelegate() {
-        if (mDelegate == null) {
-            mDelegate = AppCompatDelegate.create(this, null);
+    private val delegate: AppCompatDelegate
+        get() {
+            if (mDelegate == null) {
+                mDelegate = AppCompatDelegate.create(this, null)
+            }
+            return mDelegate!! // safe as mDelegate is only initialized here, before being returned
         }
-        return mDelegate;
-    }
 }
