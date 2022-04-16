@@ -74,6 +74,7 @@
         android:requestLegacyExternalStorage="true"
         android:resizeableActivity="true"
         android:supportsRtl="true"
+        android:theme="@style/Theme_Splash"
         >
         <activity android:name=".DrawingActivity"
             android:label="@string/drawing"
@@ -170,7 +171,7 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.DeckPicker"
-            android:theme="@style/Theme_Dark_Compat.Launcher"
+            android:theme="@style/Theme_Splash"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             />
