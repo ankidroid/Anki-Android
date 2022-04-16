@@ -56,6 +56,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -416,7 +417,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
             return;
         }
         Timber.d("onCreate()");
-
         mExportingDelegate = new ActivityExportingDelegate(this, this::getCol);
 
         mCustomStudyDialogFactory = new CustomStudyDialogFactory(this::getCol, this).attachToActivity(this);
@@ -424,6 +424,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         //we need to restore here, as we need it before super.onCreate() is called.
         restoreWelcomeMessage(savedInstanceState);
+        SplashScreen.installSplashScreen(this);
 
         // Then set theme and content view
         super.onCreate(savedInstanceState);
