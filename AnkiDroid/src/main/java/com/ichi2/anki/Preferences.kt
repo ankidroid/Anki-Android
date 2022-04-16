@@ -998,7 +998,7 @@ class Preferences : AnkiActivity() {
             addPreferencesFromResource(R.xml.preferences_advanced)
             val screen = preferenceScreen
             // Check that input is valid before committing change in the collection path
-            val collectionPathPreference = requirePreference<EditTextPreference>(CollectionHelper.PREF_DECK_PATH)
+            val collectionPathPreference = requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH)
             collectionPathPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue: Any? ->
                 val newPath = newValue as String?
                 try {
