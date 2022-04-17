@@ -180,7 +180,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
             return;
         }
-
+        
         ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
         // Review Cards Shortcut
