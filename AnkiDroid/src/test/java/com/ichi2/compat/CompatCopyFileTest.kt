@@ -1,5 +1,6 @@
 /****************************************************************************************
- * Copyright (c) 2018 Mike Hardy <mike@mikehardy.net>                                   *
+ *                                                                                      *
+ * Copyright (c) 2021 Shridhar Goel <shridhar.goel@gmail.com>                           *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -13,87 +14,78 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.compat
 
-package com.ichi2.compat;
+import com.ichi2.anki.TestUtils
+import com.ichi2.utils.FileOperation.Companion.getFileResource
+import org.junit.Assert
+import org.junit.Test
+import java.io.*
+import java.net.URL
 
-import com.ichi2.anki.TestUtils;
-
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-
-import static com.ichi2.utils.FileOperation.getFileResource;
-
-public class CompatCopyFileTest extends Test21And26 {
-
+class CompatCopyFileTest : Test21And26() {
     @Test
-    public void testCopyFileToStream() throws Exception {
-        String resourcePath = getFileResource("path-traversal.zip");
-        File copy = File.createTempFile("testCopyFileToStream", ".zip");
-        copy.deleteOnExit();
-        FileOutputStream outputStream = new FileOutputStream(copy.getCanonicalPath());
-        CompatHelper.getCompat().copyFile(resourcePath, outputStream);
-        outputStream.close();
-        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
+    @Throws(Exception::class)
+    fun testCopyFileToStream() {
+        val resourcePath = getFileResource("path-traversal.zip")
+        val copy = File.createTempFile("testCopyFileToStream", ".zip")
+        copy.deleteOnExit()
+        val outputStream = FileOutputStream(copy.canonicalPath)
+        CompatHelper.compat.copyFile(resourcePath, outputStream)
+        outputStream.close()
+        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.canonicalPath))
     }
 
-
     @Test
-    public void testCopyStreamToFile() throws Exception {
-        String resourcePath = getFileResource("path-traversal.zip");
-        File copy = File.createTempFile("testCopyStreamToFile", ".zip");
-        copy.deleteOnExit();
-        CompatHelper.getCompat().copyFile(resourcePath, copy.getCanonicalPath());
-        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
+    @Throws(Exception::class)
+    fun testCopyStreamToFile() {
+        val resourcePath = getFileResource("path-traversal.zip")
+        val copy = File.createTempFile("testCopyStreamToFile", ".zip")
+        copy.deleteOnExit()
+        CompatHelper.compat.copyFile(resourcePath, copy.canonicalPath)
+        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.canonicalPath))
     }
 
-
     @Test
-    public void testCopyErrors() throws Exception {
-        String resourcePath = getFileResource("path-traversal.zip");
-        File copy = File.createTempFile("testCopyStreamToFile", ".zip");
-        copy.deleteOnExit();
+    @Throws(Exception::class)
+    fun testCopyErrors() {
+        val resourcePath = getFileResource("path-traversal.zip")
+        val copy = File.createTempFile("testCopyStreamToFile", ".zip")
+        copy.deleteOnExit()
 
         // Try copying from a bogus file
         try {
-            CompatHelper.getCompat().copyFile(new FileInputStream(""), copy.getCanonicalPath());
-            Assert.fail("Should have caught an exception");
-        } catch (FileNotFoundException e) {
+            CompatHelper.compat.copyFile(FileInputStream(""), copy.canonicalPath)
+            Assert.fail("Should have caught an exception")
+        } catch (e: FileNotFoundException) {
             // This is expected
         }
 
         // Try copying to a closed stream
         try {
-            FileOutputStream outputStream = new FileOutputStream(copy.getCanonicalPath());
-            outputStream.close();
-            CompatHelper.getCompat().copyFile(resourcePath, outputStream);
-            Assert.fail("Should have caught an exception");
-        } catch (IOException e) {
+            val outputStream = FileOutputStream(copy.canonicalPath)
+            outputStream.close()
+            CompatHelper.compat.copyFile(resourcePath, outputStream)
+            Assert.fail("Should have caught an exception")
+        } catch (e: IOException) {
             // this is expected
         }
 
         // Try copying from a closed stream
         try {
-            InputStream source = new URL(resourcePath).openStream();
-            source.close();
-            CompatHelper.getCompat().copyFile(source, copy.getCanonicalPath());
-            Assert.fail("Should have caught an exception");
-        } catch (IOException e) {
+            val source = URL(resourcePath).openStream()
+            source.close()
+            CompatHelper.compat.copyFile(source, copy.canonicalPath)
+            Assert.fail("Should have caught an exception")
+        } catch (e: IOException) {
             // this is expected
         }
 
         // Try copying to a bogus file
         try {
-            CompatHelper.getCompat().copyFile(resourcePath, "");
-            Assert.fail("Should have caught an exception");
-        } catch (Exception e) {
+            CompatHelper.compat.copyFile(resourcePath, "")
+            Assert.fail("Should have caught an exception")
+        } catch (e: Exception) {
             // this is expected
         }
     }
