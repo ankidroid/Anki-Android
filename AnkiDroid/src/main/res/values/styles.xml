@@ -195,7 +195,7 @@
 
     <!-- New overflow  for DeckOverview-->
     <style name="MyOverflow" parent="android:style/Widget.Holo.ActionButton.Overflow" >
-        <item name="android:src">@drawable/ic_baseline_tune_24</item>
+        <item name="android:src">@drawable/ic_tune_white</item>
     </style>
 
 </resources>
