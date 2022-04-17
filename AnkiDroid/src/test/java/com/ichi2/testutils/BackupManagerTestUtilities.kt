@@ -13,33 +13,31 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import android.content.Context
+import com.ichi2.anki.BackupManager.Companion.enoughDiscSpace
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.utils.KotlinCleanup
+import org.junit.Assert.assertTrue
+import java.io.File
+import java.lang.IllegalStateException
 
-import android.content.Context;
+object BackupManagerTestUtilities {
+    @JvmStatic
+    @KotlinCleanup("make context non-null")
+    fun setupSpaceForBackup(context: Context?) {
+        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
 
-import com.ichi2.anki.BackupManager;
-import com.ichi2.anki.CollectionHelper;
+        val path = File(currentAnkiDroidDirectory).parentFile
+            ?: throw IllegalStateException("currentAnkiDroidDirectory had no parent")
+        ShadowStatFs.markAsNonEmpty(path)
 
-import java.io.File;
-
-import static org.junit.Assert.assertTrue;
-
-public class BackupManagerTestUtilities {
-    public static void setupSpaceForBackup(Context context) {
-        String currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context);
-
-        File path = new File(currentAnkiDroidDirectory).getParentFile();
-        if (path == null) {
-            throw new IllegalStateException("currentAnkiDroidDirectory had no parent");
-        }
-        ShadowStatFs.markAsNonEmpty(path);
-
-        assertTrue(BackupManager.enoughDiscSpace(currentAnkiDroidDirectory));
+        assertTrue(enoughDiscSpace(currentAnkiDroidDirectory))
     }
 
-
-    public static void reset() {
-        ShadowStatFs.reset();
+    @JvmStatic
+    fun reset() {
+        ShadowStatFs.reset()
     }
 }
