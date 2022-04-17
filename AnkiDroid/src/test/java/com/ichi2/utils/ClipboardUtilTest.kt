@@ -1,27 +1,23 @@
 //noinspection MissingCopyrightHeader #8659
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import android.content.ClipDescription;
-import android.content.ClipboardManager;
+import android.content.ClipDescription
+import android.content.ClipboardManager
+import com.ichi2.utils.ClipboardUtil.hasImage
+import org.junit.Assert.assertFalse
+import org.junit.Test
 
-import org.junit.Test;
-import static com.ichi2.utils.ClipboardUtil.hasImage;
-import static org.junit.Assert.*;
-
-
-public class ClipboardUtilTest {
-
+class ClipboardUtilTest {
     @Test
-    public void hasImageClipboardManagerNullTest() {
-        ClipboardManager clipboardManager = null;
-        assertFalse(hasImage(clipboardManager));
+    fun hasImageClipboardManagerNullTest() {
+        val clipboardManager: ClipboardManager? = null
+        assertFalse(hasImage(clipboardManager))
     }
 
     @Test
-    public void hasImageDescriptionNullTest() {
-        ClipDescription clipDescription = null;
-        assertFalse(hasImage(clipDescription));
+    fun hasImageDescriptionNullTest() {
+        val clipDescription: ClipDescription? = null
+        assertFalse(hasImage(clipDescription))
     }
-
 }
