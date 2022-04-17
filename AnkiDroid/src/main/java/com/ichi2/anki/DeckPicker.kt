@@ -50,7 +50,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.GravityEnum
 import com.afollestad.materialdialogs.MaterialDialog
@@ -92,7 +91,6 @@ import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.DeckDueTreeNode
@@ -126,7 +124,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     private var mPullToSyncWrapper: SwipeRefreshLayout? = null
     private var mReviewSummaryTextView: TextView? = null
     private var mUnmountReceiver: BroadcastReceiver? = null
-    private val mDialogEditText: EditText? = null
     private var mFloatingActionMenu: DeckPickerFloatingActionMenu? = null
 
     // flag asking user to do a full sync which is used in upgrade path
@@ -137,7 +134,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     // Flag to keep track of startup error
     private var mStartupError = false
-    private val mExportFileName: String? = null
     private var mEmptyCardTask: Cancellable? = null
 
     @JvmField
@@ -365,13 +361,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
         mPullToSyncWrapper = findViewById(R.id.pull_to_sync_wrapper)
         mPullToSyncWrapper!!.setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
-        mPullToSyncWrapper!!.setOnRefreshListener(
-            OnRefreshListener {
-                Timber.i("Pull to Sync: Syncing")
-                mPullToSyncWrapper!!.setRefreshing(false)
-                sync()
-            }
-        )
+        mPullToSyncWrapper!!.setOnRefreshListener {
+            Timber.i("Pull to Sync: Syncing")
+            mPullToSyncWrapper!!.setRefreshing(false)
+            sync()
+        }
         mPullToSyncWrapper!!.getViewTreeObserver().addOnScrollChangedListener { mPullToSyncWrapper!!.setEnabled(mRecyclerViewLayoutManager!!.findFirstCompletelyVisibleItemPosition() == 0) }
 
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
@@ -499,23 +493,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .canceledOnTouchOutside(false)
                 .show()
         }
-    }
-
-    /**
-     * It can fail if an ancestor is a filtered deck.
-     * @param deckName Create a deck with this name.
-     * @return Whether creation succeeded.
-     */
-    protected fun createNewDeck(deckName: String?): Boolean {
-        Timber.i("DeckPicker:: Creating new deck...")
-        try {
-            getCol().decks.id(deckName!!)
-        } catch (ex: DeckRenameException) {
-            showThemedToast(this, ex.getLocalizedMessage(resources), false)
-            return false
-        }
-        updateDeckList()
-        return true
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
@@ -680,6 +657,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         return super.onOptionsItemSelected(item)
     }
 
+    @Deprecated("Deprecated in Java")
+    @Suppress("deprecation") // onActivityResult
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         if (resultCode == RESULT_MEDIA_EJECTED) {
@@ -1917,10 +1896,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
     }
 
-    private fun openHelpUrl(helpUrl: Uri) {
-        openUrl(helpUrl)
-    }
-
     /**
      * Scroll the deck list so that it is centered on the current deck.
      *
@@ -2461,13 +2436,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         @VisibleForTesting
         val REQUEST_STORAGE_PERMISSION = 0
         private const val REQUEST_PATH_UPDATE = 1
-        const val REPORT_FEEDBACK = 4
         private const val LOG_IN_FOR_SYNC = 6
         private const val SHOW_INFO_NEW_VERSION = 9
         const val SHOW_STUDYOPTIONS = 11
         private const val ADD_NOTE = 12
         const val PICK_APKG_FILE = 13
-        private const val PICK_EXPORT_FILE = 14
 
         // For automatic syncing
         // 10 minutes in milliseconds.
