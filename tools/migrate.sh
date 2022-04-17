@@ -13,16 +13,14 @@
 # * Do `git push`
 # * Open your pull request in AnkiDroid's github.
 
-# Failing on MAC
-#################
-
-if ["$OSTYPE" =~ ^darwin];
-then
-    echo "The script do not work on Mac OS."
-    echo "If you know how to correct it, it would be greatly appreciated."
-    echo "If you see this error and are not on mac, something went wrong."
-    exit 1
-fi;
+function sedcompat() {
+    if [[ $unamestr == 'Darwin' ]]; then
+        #specific case for Mac OSX
+        sed -E -i ''  $1 $2
+    else
+        sed -i  $1 $2
+    fi
+}
 
 # Getting file paths
 #########################
@@ -30,12 +28,12 @@ fi;
 # Deleted files
 # ------------
 # The deleted file(s). Normally a single one.
-DELETED=$(git status |grep "deleted:"| sed "s/[ \t]*deleted:[ \t]*//")
+DELETED=$(git status |grep "deleted:"| sed "s/[ \t]*deleted:[ \t]*//" | awk '$1=$1')
 echo "DELETED='$DELETED'"
 
 # Checking there is a single deleted file
 # Repeating the DELETED line because otherwise wc don't see new lines
-NB_DELETED=$(git status |grep "deleted:"| sed "s/[ \t]*deleted:[ \t]*//" | wc -l)
+NB_DELETED=$(git status |grep "deleted:"| sed "s/[ \t]*deleted:[ \t]*//" | wc -l | awk '$1=$1')
 echo "NB_DELETED=$NB_DELETED"
 if [[ $NB_DELETED -lt 0 ]];
 then
@@ -66,11 +64,11 @@ FILEPATH_JAVA=$DELETED
 # ------------
 
 # The added file(s). Normally a single one.
-ADDED=$(git status |grep "new file"| sed "s/[ \t]*new file:[ \t]*//")
+ADDED=$(git status |grep "new file"| sed "s/[ \t]*new file:[ \t]*//" | awk '$1=$1')
 echo "ADDED='$ADDED'"
 
 # Checking there is a single file added
-NB_ADDED=$(git status |grep "new file"| sed "s/[ \t]*new file:[ \t]*//" | wc -l)
+NB_ADDED=$(git status |grep "new file"| sed "s/[ \t]*new file:[ \t]*//" | wc -l | awk '$1=$1')
 echo "NB_ADDED=$NB_ADDED"
 if [[ $NB_ADDED -lt 1 ]];
 then
@@ -142,10 +140,10 @@ git mv $FILEPATH_JAVA $FILEPATH_KT
 echo "mv .java .kt"
 # In sed, instead of "/", we use ":" as separator. This is because "/" are in filepath while ":" are not
 # Modifying className value in kotlinMigration.gradle
-sed -i "s:def className = .*:def className = \"$PATH_IN_SOURCE.kt\":" AnkiDroid/kotlinMigration.gradle
+sed -i.bak "s:def className = .*:def className = \"$PATH_IN_SOURCE.kt\":" AnkiDroid/kotlinMigration.gradle
 echo "change className"
 # Modifying source value in kotlinMigration.gradle
-sed -i "s:def source = .*:def source = Source.$SOURCE:" AnkiDroid/kotlinMigration.gradle
+sed -i.bak "s:def source = .*:def source = Source.$SOURCE:" AnkiDroid/kotlinMigration.gradle
 echo "change source"
 # Creating the first commit
 git add AnkiDroid/kotlinMigration.gradle
@@ -167,10 +165,10 @@ echo "pop"
 git add $FILEPATH_KT
 echo "add kt"
 # Setting back className in kotlinMigration.gradle to its original value
-sed -i "s:def className = .*:def className = \"\":" AnkiDroid/kotlinMigration.gradle
+sed -i.bak "s:def className = .*:def className = \"\":" AnkiDroid/kotlinMigration.gradle
 echo "reset className"
 # Setting back source in kotlinMigration.gradle to its original value
-sed -i "s:def source = .*:def source = Source.MAIN:" AnkiDroid/kotlinMigration.gradle
+sed -i.bak "s:def source = .*:def source = Source.MAIN:" AnkiDroid/kotlinMigration.gradle
 echo "reset source"
 # No need to add explicitly kotlinMigration.gradle in git commit, since we use `git -a`
 
@@ -180,3 +178,5 @@ git commit -am "refactor: Convert $FILENAME.kt to Kotlin
 
 $PACKAGE_NAME"
 echo "second commit"
+rm AnkiDroid/kotlinMigration.gradle.bak || true
+echo "optional cleanup"
