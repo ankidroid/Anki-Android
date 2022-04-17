@@ -20,7 +20,6 @@ import com.ichi2.anki.Preferences.Companion.getDayOffset
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
