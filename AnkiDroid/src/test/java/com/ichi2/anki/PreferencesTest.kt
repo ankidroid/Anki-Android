@@ -28,8 +28,8 @@ import org.junit.runner.RunWith
 class PreferencesTest : RobolectricTest() {
     private lateinit var preferences: Preferences
 
-    @Before
-    fun setup() {
+    override fun setUp() {
+        super.setUp()
         preferences = Preferences()
         preferences.attachBaseContext(targetContext)
     }
