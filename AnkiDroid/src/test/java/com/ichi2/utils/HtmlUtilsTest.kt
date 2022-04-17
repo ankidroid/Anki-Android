@@ -13,46 +13,43 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.utils.HtmlUtils.escape
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
-import com.ichi2.testutils.EmptyApplication;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.utils.HtmlUtils.escape;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(AndroidJUnit4.class)
-@Config(application = EmptyApplication.class)
-public class HtmlUtilsTest {
+@RunWith(AndroidJUnit4::class)
+@Config(application = EmptyApplication::class)
+@KotlinCleanup("`is` -> equalTo")
+class HtmlUtilsTest {
     @Test
-    public void japaneseIsNotEscaped() {
-        assertThat(escape("飲む"), is("飲む"));
+    fun japaneseIsNotEscaped() {
+        assertThat(escape("飲む"), `is`("飲む"))
     }
 
     @Test
-    public void angleBraceIsEscaped() {
-        assertThat(escape("<"), is("&lt;"));
+    fun angleBraceIsEscaped() {
+        assertThat(escape("<"), `is`("&lt;"))
     }
 
     @Test
-    public void ampersandIsEscaped() {
-        assertThat(escape("&"), is("&amp;"));
+    fun ampersandIsEscaped() {
+        assertThat(escape("&"), `is`("&amp;"))
     }
 
     @Test
-    public void newLineIsNotEscaped() {
-        assertThat(escape("\n"), is("\n"));
+    fun newLineIsNotEscaped() {
+        assertThat(escape("\n"), `is`("\n"))
     }
 
     @Test
-    public void returnIsNotEscaped() {
-        assertThat(escape("\r"), is("\r"));
+    fun returnIsNotEscaped() {
+        assertThat(escape("\r"), `is`("\r"))
     }
 }
