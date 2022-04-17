@@ -184,14 +184,14 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
         // Review Cards Shortcut
-        Intent intentReviewCards = new Intent(context, DeckPicker.class);
+        Intent intentReviewCards = new Intent(context, Reviewer.class);
         intentReviewCards.setAction(Intent.ACTION_VIEW);
         intentReviewCards.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         ShortcutInfo reviewCardsShortcut = new ShortcutInfo.Builder(context, "reviewCardsShortcutId")
                 .setShortLabel(context.getString(R.string.studyoptions_start))
                 .setLongLabel(context.getString(R.string.studyoptions_start))
                 .setIcon(Icon.createWithResource(context, R.drawable.ankidroid_logo))
-                .setIntent(intentReviewCards)
+                .setIntents(addIntentToBase(context, intentReviewCards))
                 .build();
 
         // Add Note Shortcut
@@ -203,7 +203,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 .setShortLabel(context.getString(R.string.menu_add_note))
                 .setLongLabel(context.getString(R.string.menu_add_note))
                 .setIcon(Icon.createWithResource(context, R.drawable.ankidroid_logo))
-                .setIntent(intentAddNote)
+                .setIntents(addIntentToBase(context, intentAddNote))
                 .build();
 
         // CardBrowser Shortcut
@@ -214,11 +214,26 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 .setShortLabel(context.getString(R.string.card_browser))
                 .setLongLabel(context.getString(R.string.card_browser))
                 .setIcon(Icon.createWithResource(context, R.drawable.ankidroid_logo))
-                .setIntent(intentCardBrowser)
+                .setIntents(addIntentToBase(context, intentCardBrowser))
                 .build();
 
         shortcutManager.addDynamicShortcuts(Arrays.asList(reviewCardsShortcut, NoteEditorShortcut, cardBrowserShortcut));
 
+    }
+
+
+    /**
+     * Adds an additional intent on top of the "base" DeckPicker.
+     */
+    private static Intent[] addIntentToBase(Context context, Intent intent) {
+        Intent deckPickerIntent = new Intent(context, DeckPicker.class);
+        deckPickerIntent.setAction(Intent.ACTION_VIEW);
+        deckPickerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        TaskStackBuilder taskStackBuilder =
+                TaskStackBuilder.create(AnkiDroidApp.getInstance())
+                        .addNextIntent(deckPickerIntent)
+                        .addNextIntent(intent);
+        return taskStackBuilder.getIntents();
     }
 
 
