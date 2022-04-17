@@ -24,267 +24,249 @@
  *    * Converted to androidx.preference.DialogPreference
  *    * Split into SeekBarPreferenceCompat and SeekBarDialogFragmentCompat
  */
+package com.ichi2.preferences
 
-package com.ichi2.preferences;
+import android.content.Context
+import android.os.Bundle
+import android.util.AttributeSet
+import android.view.Gravity
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.TextView
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
+import androidx.preference.DialogPreference
+import androidx.preference.PreferenceDialogFragmentCompat
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.KotlinCleanup
 
-import android.content.Context;
-import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
+@KotlinCleanup("fix IDE lint issues")
+class SeekBarPreferenceCompat : DialogPreference {
+    @KotlinCleanup("make it a lateinit var")
+    private var mSuffix: String? = null
+    private var mDefault = 0
+    private var mMax = 0
+    private var mMin = 0
+    private var mInterval = 0
+    private var mValue = 0
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.ui.FixedTextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.preference.PreferenceDialogFragmentCompat;
-
-public class SeekBarPreferenceCompat extends androidx.preference.DialogPreference {
-    private static final String androidns = "http://schemas.android.com/apk/res/android";
-
-    private String mSuffix;
-    private int mDefault;
-    private int mMax;
-    private int mMin;
-    private int mInterval;
-    private int mValue = 0;
     @StringRes
-    private int mXLabel;
+    private var mXLabel = 0
+
     @StringRes
-    private int mYLabel;
+    private var mYLabel = 0
 
-    public SeekBarPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        setupVariables(attrs);
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        setupVariables(attrs)
     }
 
-
-    public SeekBarPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        setupVariables(attrs);
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        setupVariables(attrs)
     }
 
-
-    public SeekBarPreferenceCompat(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setupVariables(attrs);
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        setupVariables(attrs)
     }
 
+    constructor(context: Context) : super(context)
 
-    public SeekBarPreferenceCompat(Context context) {
-        super(context);
+    private fun setupVariables(attrs: AttributeSet?) {
+        mSuffix = attrs?.getAttributeValue(androidns, "text")
+        mDefault = attrs?.getAttributeIntValue(androidns, "defaultValue", 0) ?: 0
+        mMax = attrs?.getAttributeIntValue(androidns, "max", 100) ?: 100
+        mMin = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
+        mInterval = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1) ?: 1
+        mXLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0) ?: 0
+        mYLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "ylabel", 0) ?: 0
     }
 
-    private void setupVariables(AttributeSet attrs) {
-        mSuffix = attrs.getAttributeValue(androidns, "text");
-        mDefault = attrs.getAttributeIntValue(androidns, "defaultValue", 0);
-        mMax = attrs.getAttributeIntValue(androidns, "max", 100);
-        mMin = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0);
-        mInterval = attrs.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1);
-        mXLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0);
-        mYLabel = attrs.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "ylabel", 0);
-    }
-
-
-
-    @SuppressWarnings("deprecation") // 5019 - onSetInitialValue
-    @Override
-    protected void onSetInitialValue(boolean restore, Object defaultValue) {
-        super.onSetInitialValue(restore, defaultValue);
-        mValue = getPersistedInt(mDefault);
-        if (restore) {
-            mValue = shouldPersist() ? getPersistedInt(mDefault) : 0;
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
+    override fun onSetInitialValue(restore: Boolean, defaultValue: Any?) {
+        super.onSetInitialValue(restore, defaultValue)
+        mValue = getPersistedInt(mDefault)
+        mValue = if (restore) {
+            if (shouldPersist()) getPersistedInt(mDefault) else 0
         } else {
-            mValue = (Integer) defaultValue;
+            defaultValue as Int
         }
     }
 
-    public int getValue() {
-        if (mValue == 0) {
-            return getPersistedInt(mDefault);
+    var value: Int
+        get() = if (mValue == 0) {
+            getPersistedInt(mDefault)
         } else {
-            return mValue;
+            mValue
         }
-    }
+        set(value) {
+            mValue = value
+            persistInt(value)
+        }
 
-    public void setValue(int value) {
-        mValue = value;
-        persistInt(value);
-    }
-
-    private void onValueUpdated() {
+    private fun onValueUpdated() {
         if (shouldPersist()) {
-            persistInt(mValue);
+            persistInt(mValue)
         }
-        callChangeListener(mValue);
+        callChangeListener(mValue)
     }
 
-    private String getValueText() {
-        String t = String.valueOf(mValue);
-        return mSuffix == null ? t : t + mSuffix;
-    }
+    private val valueText: String
+        get() {
+            val t = mValue.toString()
+            return if (mSuffix == null) t else t + mSuffix
+        }
 
     // TODO: These could do with some thought as to either documentation, or defining the coupling between here and
     // SeekBarDialogFragmentCompat
-
-    private void setRelativeValue(int value) {
-        mValue = (value * mInterval) + mMin;
+    private fun setRelativeValue(value: Int) {
+        mValue = value * mInterval + mMin
     }
 
-    private int getRelativeMax() {
-        return (mMax - mMin) / mInterval;
-    }
+    private val relativeMax: Int
+        get() = (mMax - mMin) / mInterval
+    private val relativeProgress: Int
+        get() = (mValue - mMin) / mInterval
 
-    private int getRelativeProgress() {
-        return (mValue - mMin) / mInterval;
-    }
-
-    private void setupTempValue() {
+    private fun setupTempValue() {
         if (!shouldPersist()) {
-            return;
+            return
         }
-        mValue = getPersistedInt(mDefault);
+        mValue = getPersistedInt(mDefault)
     }
 
-    public static class SeekBarDialogFragmentCompat extends PreferenceDialogFragmentCompat
-            implements SeekBar.OnSeekBarChangeListener {
+    class SeekBarDialogFragmentCompat : PreferenceDialogFragmentCompat(), OnSeekBarChangeListener {
+        @KotlinCleanup("make it lateinit as it is initialized in onCreateDialogView")
+        private var mSeekLine: LinearLayout? = null
+        @KotlinCleanup("make it lateinit as it is initialized in onCreateDialogView")
+        private var mSeekBar: SeekBar? = null
+        @KotlinCleanup("see if it can be made non nullable")
+        private var mValueText: TextView? = null
 
-        public static SeekBarDialogFragmentCompat newInstance(@NonNull String key) {
-            SeekBarDialogFragmentCompat fragment = new SeekBarDialogFragmentCompat();
-            Bundle b = new Bundle(1);
-            b.putString(ARG_KEY, key);
-            fragment.setArguments(b);
-            return fragment;
+        override fun getPreference(): SeekBarPreferenceCompat {
+            return super.getPreference() as SeekBarPreferenceCompat
         }
 
-
-        private LinearLayout mSeekLine;
-        private SeekBar mSeekBar;
-        private TextView mValueText;
-
-        @Override
-        public SeekBarPreferenceCompat getPreference() {
-            return (SeekBarPreferenceCompat) super.getPreference();
-        }
-
-
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int value, boolean fromUser) {
+        override fun onProgressChanged(seekBar: SeekBar, value: Int, fromUser: Boolean) {
             if (fromUser) {
-                getPreference().setRelativeValue(value);
-                getPreference().onValueUpdated();
-                onValueUpdated();
+                preference.setRelativeValue(value)
+                preference.onValueUpdated()
+                onValueUpdated()
             }
         }
 
-
-        protected void onValueUpdated() {
-            mValueText.setText(getPreference().getValueText());
+        protected fun onValueUpdated() {
+            mValueText!!.text = preference.valueText
         }
 
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
+        override fun onStartTrackingTouch(seekBar: SeekBar) {
             // intentionally left blank
         }
 
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            this.getDialog().dismiss();
+        override fun onStopTrackingTouch(seekBar: SeekBar) {
+            this.dialog!!.dismiss()
         }
 
-
-        @Override
-        public void onDialogClosed(boolean positiveResult) {
+        override fun onDialogClosed(positiveResult: Boolean) {
             // nothing needed - see onStopTrackingTouch
         }
 
-
-        @Override
-        protected void onBindDialogView(View v) {
-            super.onBindDialogView(v);
-            mSeekBar.setMax(getPreference().getRelativeMax());
-            mSeekBar.setProgress(getPreference().getRelativeProgress());
+        override fun onBindDialogView(v: View) {
+            super.onBindDialogView(v)
+            mSeekBar!!.max = preference.relativeMax
+            mSeekBar!!.progress = preference.relativeProgress
         }
 
-
-        @Override
-        protected void onPrepareDialogBuilder(androidx.appcompat.app.AlertDialog.Builder builder) {
-            super.onPrepareDialogBuilder(builder);
-            builder.setNegativeButton(null, null);
-            builder.setPositiveButton(null, null);
-            builder.setTitle(null);
+        override fun onPrepareDialogBuilder(builder: AlertDialog.Builder) {
+            super.onPrepareDialogBuilder(builder)
+            builder.setNegativeButton(null, null)
+            builder.setPositiveButton(null, null)
+            builder.setTitle(null)
         }
 
-
-        @Override
-        protected View onCreateDialogView(Context context) {
-            LinearLayout layout = new LinearLayout(context);
-            layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setPadding(6, 6, 6, 6);
-
-            mValueText = new FixedTextView(context);
-            mValueText.setGravity(Gravity.CENTER_HORIZONTAL);
-            mValueText.setTextSize(32);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            layout.addView(mValueText, params);
-
-            mSeekBar = new SeekBar(context);
-            mSeekBar.setOnSeekBarChangeListener(this);
-
-            layout.addView(mSeekBar, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-
-            SeekBarPreferenceCompat preference = getPreference();
-
+        override fun onCreateDialogView(context: Context): View {
+            val layout = LinearLayout(context)
+            layout.orientation = LinearLayout.VERTICAL
+            layout.setPadding(6, 6, 6, 6)
+            @KotlinCleanup("use scope function")
+            mValueText = FixedTextView(context)
+            mValueText!!.setGravity(Gravity.CENTER_HORIZONTAL)
+            mValueText!!.setTextSize(32f)
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            layout.addView(mValueText, params)
+            @KotlinCleanup("maybe use scope function to make mSeekBar available to code below?")
+            mSeekBar = SeekBar(context)
+            mSeekBar!!.setOnSeekBarChangeListener(this)
+            layout.addView(
+                mSeekBar,
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            )
+            val preference = preference
             if (preference.mXLabel != 0 && preference.mYLabel != 0) {
-                LinearLayout.LayoutParams params_seekbar = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-                params_seekbar.setMargins(0, 12, 0, 0);
-                mSeekLine = new LinearLayout(context);
-                mSeekLine.setOrientation(LinearLayout.HORIZONTAL);
-                mSeekLine.setPadding(6, 6, 6, 6);
-                addLabelsBelowSeekBar(context);
-                layout.addView(mSeekLine, params_seekbar);
+                val params_seekbar = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                params_seekbar.setMargins(0, 12, 0, 0)
+                @KotlinCleanup("use scope function")
+                mSeekLine = LinearLayout(context)
+                mSeekLine!!.orientation = LinearLayout.HORIZONTAL
+                mSeekLine!!.setPadding(6, 6, 6, 6)
+                addLabelsBelowSeekBar(context)
+                layout.addView(mSeekLine, params_seekbar)
             }
-
-            preference.setupTempValue();
-
-            mSeekBar.setMax(preference.getRelativeMax());
-            mSeekBar.setProgress(preference.getRelativeProgress());
-
-            onValueUpdated();
-            return layout;
+            preference.setupTempValue()
+            mSeekBar!!.max = preference.relativeMax
+            mSeekBar!!.progress = preference.relativeProgress
+            onValueUpdated()
+            return layout
         }
 
-
-
-
-        private void addLabelsBelowSeekBar(Context context) {
-            int[] labels = { getPreference().mXLabel, getPreference().mYLabel };
-            for (int count = 0; count < 2; count++) {
-                TextView textView = new FixedTextView(context);
-                textView.setText(context.getString(labels[count]));
-                textView.setGravity(Gravity.START);
-                mSeekLine.addView(textView);
-                if(context.getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR)
-                    textView.setLayoutParams((count == 1) ? getLayoutParams(0.0f) : getLayoutParams(1.0f));
-                else
-                    textView.setLayoutParams((count == 0) ? getLayoutParams(0.0f) : getLayoutParams(1.0f));
+        private fun addLabelsBelowSeekBar(context: Context) {
+            val labels = intArrayOf(preference.mXLabel, preference.mYLabel)
+            @KotlinCleanup("maybe this could be improved as we only have two iterations?")
+            for (count in 0..1) {
+                val textView: TextView = FixedTextView(context)
+                @KotlinCleanup("could use a scope function")
+                textView.text = context.getString(labels[count])
+                textView.gravity = Gravity.START
+                mSeekLine!!.addView(textView)
+                @KotlinCleanup("properly indent this, try to use an if expression")
+                if (context.resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_LTR) textView.layoutParams = if (count == 1) getLayoutParams(0.0f) else getLayoutParams(1.0f) else textView.layoutParams = if (count == 0) getLayoutParams(0.0f) else getLayoutParams(1.0f)
             }
         }
 
-        LinearLayout.LayoutParams getLayoutParams(float weight) {
-            return new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, weight);
+        fun getLayoutParams(weight: Float): LinearLayout.LayoutParams {
+            return LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT, weight
+            )
         }
 
+        companion object {
+            @KotlinCleanup("simplify function by using a scope function and the bundleOf() method")
+            fun newInstance(key: String): SeekBarDialogFragmentCompat {
+                val fragment = SeekBarDialogFragmentCompat()
+                val b = Bundle(1)
+                b.putString(ARG_KEY, key)
+                fragment.arguments = b
+                return fragment
+            }
+        }
+    }
+
+    companion object {
+        @KotlinCleanup(
+            "this string should be extracted to a constant class and made public for the entire app"
+        )
+        private const val androidns = "http://schemas.android.com/apk/res/android"
     }
 }
