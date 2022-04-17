@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Ḍrŏvara ughaḍā</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Ḍrŏvara banda karā</string>
+    <string name="drawer_open">Ḍrŏvara ughaḍā</string>
+    <string name="drawer_close">Ḍrŏvara banda karā</string>
     <string name="CardEditorCardDeck">Kārḍa ḍēka:</string>
     <string name="CardEditorNoteDeck">Ḍēka:</string>
     <string name="CardEditorModel">Prakāra:</string>

@@ -79,7 +79,7 @@
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; správně)</string>
     <string name="stats_today_type_breakdown">Učit se: &lt;b&gt;%1$d&lt;/b&gt;, opakovat: &lt;b&gt;%2$d&lt;/b&gt;, znovu se učit: &lt;b&gt;%3$d&lt;/b&gt;, filtrováno: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Správné odpovědi u zralých karet: %1$d/%2$d (%3$.1f%%)</string>
-    <string name="stats_today_no_mature_cards">Žádné „zralé“ karty dnes nebyly studovány.</string>
+    <string name="stats_today_no_mature_cards">Žádné „zralé“ karty dnes nebyly studovány</string>
     <string name="stats_overview_forecast_total">Celkem: &lt;b&gt;%1$d&lt;/b&gt; opakování</string>
     <string name="stats_overview_forecast_average">Průměr: &lt;b&gt;%1$.1f&lt;/b&gt; opakování/den</string>
     <string name="stats_overview_forecast_due_tomorrow">Zítra ke zkoušení: &lt;b&gt;%1$d&lt;/b&gt;</string>

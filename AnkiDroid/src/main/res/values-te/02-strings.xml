@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">సొరుగు తెరవండి</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">సొరుగును మూసివేయండి</string>
+    <string name="drawer_open">సొరుగు తెరవండి</string>
+    <string name="drawer_close">సొరుగును మూసివేయండి</string>
     <string name="CardEditorCardDeck">కార్డ్ డెక్:</string>
     <string name="CardEditorNoteDeck">డెక్:</string>
     <string name="CardEditorModel">రకం:</string>

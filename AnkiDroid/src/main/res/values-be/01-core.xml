@@ -134,7 +134,7 @@
     <string name="menu_flag_card_five">Ружовы сцяжок</string>
     <string name="menu_flag_card_six">Туркусовы сцяжок</string>
     <string name="menu_flag_card_seven">Фіялетавы сцяжок</string>
-    <string name="menu_edit_tags">Змяніць меткі</string>
+    <string name="menu_edit_tags">Адрэдагаваць меткі</string>
     <string name="delete_note_message">Сапраўды выдаліць гэты запіс і ўсе яе карткі?\n%s</string>
     <string name="menu_search">Шукаць у %1$s</string>
     <string name="menu_mark_note">Пазначыць запіс</string>
@@ -185,7 +185,7 @@
     <string name="studyoptions_congrats_custom">Для змянення звыклага графіка вывучэння калоды, націсніце кнопку \"Дадатковае навучанне\"</string>
     <string name="studyoptions_no_cards_due">На сёння картак не засталося.</string>
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
-    <string name="empty_cloze_warning">Змяніце гэты запіс і дадайце пропускі. (%1$s)</string>
+    <string name="empty_cloze_warning">Адрэдагуйце гэты запіс і дадайце пропускі. (%1$s)</string>
     <string name="button_sync">Сінхранізаваць</string>
     <string name="cancel_sync_confirm">Скасаваць сінхранізацыю?</string>
     <string name="continue_sync">Працягнуць сiнхранiзацыю</string>
@@ -203,7 +203,7 @@
     <string name="card_template_editor_menu_card_browser_appearance">Выгляд аглядальніка картак</string>
     <string name="card_template_editor_deck_override">Перавызначэнне калоды</string>
     <string name="card_template_editor_insert_field">Уставіць поле</string>
-    <string name="card_template_editor_select_field">Абраць поле</string>
+    <string name="card_template_editor_select_field">Выбраць поле</string>
     <string name="card_template_editor_cant_delete">Патрабуецца прынамсі адзін тып картак</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Будзе створана %1$d картка. Працягнуць?</item>
