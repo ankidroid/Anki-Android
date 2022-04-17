@@ -104,6 +104,8 @@ import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 import java.io.File
+import kotlin.math.abs
+import kotlin.math.roundToLong
 
 @KotlinCleanup("automatic IDE lint")
 @KotlinCleanup("lots to do")
@@ -165,8 +167,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     // ----------------------------------------------------------------------------
     private val mDeckExpanderClickListener = View.OnClickListener { view: View ->
         val did = view.tag as Long
-        if (!getCol().decks.children(did).isEmpty()) {
-            getCol().decks.collapse(did)
+        if (!col.decks.children(did).isEmpty()) {
+            col.decks.collapse(did)
             __renderPage()
             dismissAllDialogFragments()
         }
@@ -197,7 +199,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     private fun displayFailedToOpenDeck(deckId: Long) {
         // #6208 - if the click is accepted before the sync completes, we get a failure.
         // We use the Deck ID as the deck likely doesn't exist any more.
-        val message = getString(R.string.deck_picker_failed_deck_load, java.lang.Long.toString(deckId))
+        val message = getString(R.string.deck_picker_failed_deck_load, deckId.toString())
         showThemedToast(this, message, false)
         Timber.w(message)
     }
@@ -291,9 +293,9 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             return
         }
         Timber.d("onCreate()")
-        mExportingDelegate = ActivityExportingDelegate(this) { getCol() }
-        mCustomStudyDialogFactory = CustomStudyDialogFactory({ getCol() }, this).attachToActivity<CustomStudyDialogFactory>(this)
-        mContextMenuFactory = DeckPickerContextMenu.Factory { getCol() }.attachToActivity<DeckPickerContextMenu.Factory>(this)
+        mExportingDelegate = ActivityExportingDelegate(this) { col }
+        mCustomStudyDialogFactory = CustomStudyDialogFactory({ col }, this).attachToActivity<CustomStudyDialogFactory>(this)
+        mContextMenuFactory = DeckPickerContextMenu.Factory { col }.attachToActivity<DeckPickerContextMenu.Factory>(this)
 
         // we need to restore here, as we need it before super.onCreate() is called.
         restoreWelcomeMessage(savedInstanceState)
@@ -323,12 +325,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         mRecyclerView = findViewById(R.id.files)
         mNoDecksPlaceholder = findViewById(R.id.no_decks_placeholder)
 
-        mDeckPickerContent!!.setVisibility(View.GONE)
-        mNoDecksPlaceholder!!.setVisibility(View.GONE)
+        mDeckPickerContent!!.visibility = View.GONE
+        mNoDecksPlaceholder!!.visibility = View.GONE
 
         // specify a LinearLayoutManager and set up item dividers for the RecyclerView
         mRecyclerViewLayoutManager = LinearLayoutManager(this)
-        mRecyclerView!!.setLayoutManager(mRecyclerViewLayoutManager)
+        mRecyclerView!!.layoutManager = mRecyclerViewLayoutManager
         val ta = this.obtainStyledAttributes(intArrayOf(R.attr.deckDivider))
         val divider = ta.getDrawable(0)
         ta.recycle()
@@ -357,16 +359,16 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         mDeckListAdapter!!.setDeckExpanderClickListener(mDeckExpanderClickListener)
         mDeckListAdapter!!.setDeckLongClickListener(mDeckLongClickListener)
         mDeckListAdapter!!.enablePartialTransparencyForBackground(hasDeckPickerBackground)
-        mRecyclerView!!.setAdapter(mDeckListAdapter)
+        mRecyclerView!!.adapter = mDeckListAdapter
 
         mPullToSyncWrapper = findViewById(R.id.pull_to_sync_wrapper)
         mPullToSyncWrapper!!.setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
         mPullToSyncWrapper!!.setOnRefreshListener {
             Timber.i("Pull to Sync: Syncing")
-            mPullToSyncWrapper!!.setRefreshing(false)
+            mPullToSyncWrapper!!.isRefreshing = false
             sync()
         }
-        mPullToSyncWrapper!!.getViewTreeObserver().addOnScrollChangedListener { mPullToSyncWrapper!!.setEnabled(mRecyclerViewLayoutManager!!.findFirstCompletelyVisibleItemPosition() == 0) }
+        mPullToSyncWrapper!!.viewTreeObserver.addOnScrollChangedListener { mPullToSyncWrapper!!.isEnabled = mRecyclerViewLayoutManager!!.findFirstCompletelyVisibleItemPosition() == 0 }
 
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
         mFloatingActionMenu = DeckPickerFloatingActionMenu(view, this)
@@ -551,17 +553,17 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             displaySyncBadge(menu)
 
             // Show / hide undo
-            if (mFragmented || !getCol().undoAvailable()) {
+            if (mFragmented || !col.undoAvailable()) {
                 menu.findItem(R.id.action_undo).isVisible = false
             } else {
                 val res = resources
                 menu.findItem(R.id.action_undo).isVisible = true
-                val undo = res.getString(R.string.studyoptions_congrats_undo, getCol().undoName(res))
+                val undo = res.getString(R.string.studyoptions_congrats_undo, col.undoName(res))
                 menu.findItem(R.id.action_undo).title = undo
             }
 
             // Remove the filter - not necessary and search has other implications for new users.
-            menu.findItem(R.id.deck_picker_action_filter).isVisible = getCol().decks.count() >= 10
+            menu.findItem(R.id.deck_picker_action_filter).isVisible = col.decks.count() >= 10
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -569,8 +571,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     @VisibleForTesting
     protected open fun displaySyncBadge(menu: Menu) {
         val syncMenu = menu.findItem(R.id.action_sync)
-        val syncStatus = SyncStatus.getSyncStatus { getCol() }
-        when (syncStatus) {
+        when (val syncStatus = SyncStatus.getSyncStatus { col }) {
             SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.INCONCLUSIVE -> {
                 BadgeDrawableBuilder.removeBadge(syncMenu)
                 syncMenu.setTitle(R.string.button_sync)
@@ -675,7 +676,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         } else if (requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS) {
             if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
                 // Show a message when reviewing has finished
-                if (getCol().sched.count() == 0) {
+                if (col.sched.count() == 0) {
                     showSimpleSnackbar(this, R.string.studyoptions_congrats_finished, false)
                 } else {
                     showSimpleSnackbar(this, R.string.studyoptions_no_cards_due, false)
@@ -793,8 +794,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         // (currently 10 minutes)
         val hkey = preferences.getString("hkey", "")
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
-        if (hkey!!.length != 0 && preferences.getBoolean("automaticSyncMode", false) &&
-            Connection.isOnline() && getCol().time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
+        if (hkey!!.isNotEmpty() && preferences.getBoolean("automaticSyncMode", false) &&
+            Connection.isOnline() && col.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
         ) {
             Timber.i("Triggering Automatic Sync")
             sync()
@@ -847,7 +848,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             }
             KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
-                handleDeckSelection(getCol().decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
+                handleDeckSelection(col.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
             }
             else -> {}
         }
@@ -872,13 +873,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      */
     private fun onFinishedStartup() {
         // create backup in background if needed
-        BackupManager.performBackupInBackground(getCol().path, getCol().time)
+        BackupManager.performBackupInBackground(col.path, col.time)
 
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
             mRecommendFullSync = false
             try {
-                getCol().modSchema()
+                col.modSchema()
             } catch (e: ConfirmModSchemaException) {
                 Timber.w("Forcing full sync")
                 e.log()
@@ -949,8 +950,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             // installation of AnkiDroid and we don't run the check.
             val current = VersionUtils.pkgVersionCode
             Timber.i("Current AnkiDroid version: %s", current)
-            val previous: Long
-            previous = if (preferences.contains(UPGRADE_VERSION_KEY)) {
+            val previous: Long = if (preferences.contains(UPGRADE_VERSION_KEY)) {
                 // Upgrading currently installed app
                 getPreviousVersion(preferences, current)
             } else {
@@ -978,7 +978,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             if (previous < 20600123) {
                 Timber.i("Fixing font-family definition in templates")
                 try {
-                    val models = getCol().models
+                    val models = col.models
                     for (m in models.all()) {
                         val css = m.getString("css")
                         if (css.contains("font-familiy")) {
@@ -1131,7 +1131,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     private fun undo() {
         Timber.i("undo()")
         val undoReviewString = resources.getString(R.string.undo_action_review)
-        val isReview = undoReviewString == getCol().undoName(resources)
+        val isReview = undoReviewString == col.undoName(resources)
         Undo().runWithHandler(undoTaskListener(isReview))
     }
 
@@ -1189,7 +1189,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 NotificationChannels.Channel.SYNC
             )
         } else {
-            if (syncMessage == null || syncMessage.length == 0) {
+            if (syncMessage == null || syncMessage.isEmpty()) {
                 if (messageResource == R.string.youre_offline && !Connection.getAllowLoginSyncOnNoConnection()) {
                     // #6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
                     showSnackbar(this, messageResource, false, R.string.sync_even_if_offline, {
@@ -1381,7 +1381,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     override fun sync(conflict: ConflictResolution?) {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         val hkey = preferences.getString("hkey", "")
-        if (hkey!!.length == 0) {
+        if (hkey!!.isEmpty()) {
             Timber.w("User not logged in")
             mPullToSyncWrapper!!.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
@@ -1424,7 +1424,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         override fun onPreExecute() {
             mCountUp = 0
             mCountDown = 0
-            val syncStartTime = getCol().time.intTimeMS()
+            val syncStartTime = col.time.intTimeMS()
             if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
                 try {
                     mProgressDialog = StyledProgressDialog.show(
@@ -1453,7 +1453,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                         !Connection.getIsCancelled()
                     ) {
                         // If less than 2s has elapsed since sync started then don't ask for confirmation
-                        if (getCol().time.intTimeMS() - syncStartTime < 2000) {
+                        if (col.time.intTimeMS() - syncStartTime < 2000) {
                             Connection.cancel()
                             mProgressDialog!!.setContent(R.string.sync_cancel_message)
                             return@setOnKeyListener true
@@ -1555,7 +1555,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                                     R.string.sync_log_clocks_unsynchronized, diff,
                                     res.getString(R.string.sync_log_clocks_unsynchronized_date)
                                 )
-                            } else if (Math.abs(diff % 3600.0 - 1800.0) >= 1500.0) {
+                            } else if (abs(diff % 3600.0 - 1800.0) >= 1500.0) {
                                 // The difference would be within limit if we adjusted the time by few hours
                                 // It doesn't work for all timezones, but it covers most and it's a guess anyway
                                 res.getString(
@@ -1567,7 +1567,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                             }
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
                         }
-                        ConnectionResultType.FULL_SYNC -> if (getCol().isEmpty) {
+                        ConnectionResultType.FULL_SYNC -> if (col.isEmpty) {
                             // don't prompt user to resolve sync conflict if local collection empty
                             sync(ConflictResolution.FULL_DOWNLOAD)
                             // TODO: Also do reverse check to see if AnkiWeb collection is empty if Anki Desktop
@@ -1634,22 +1634,22 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                             )
                         }
                         ConnectionResultType.CUSTOM_SYNC_SERVER_URL -> {
-                            val url = if (result.size > 0 && result[0] is CustomSyncServerUrlException) (result[0] as CustomSyncServerUrlException).url else "unknown"
+                            val url = if (result.isNotEmpty() && result[0] is CustomSyncServerUrlException) (result[0] as CustomSyncServerUrlException).url else "unknown"
                             dialogMessage = res.getString(R.string.sync_error_invalid_sync_server, url)
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
                         }
                         else -> {
-                            if (result.size > 0 && result[0] is Int) {
+                            if (result.isNotEmpty() && result[0] is Int) {
                                 val code = result[0] as Int
                                 dialogMessage = rewriteError(code)
                                 if (dialogMessage == null) {
                                     dialogMessage = res.getString(
                                         R.string.sync_log_error_specific,
-                                        Integer.toString(code), result[1]
+                                        code.toString(), result[1]
                                     )
                                 }
                             } else {
-                                dialogMessage = res.getString(R.string.sync_log_error_specific, Integer.toString(-1), resultType)
+                                dialogMessage = res.getString(R.string.sync_log_error_specific, (-1).toString(), resultType)
                             }
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
                         }
@@ -1670,10 +1670,9 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                         ${data.data[2]}
                     """.trimIndent()
                     showSimpleMessageDialog(message)
-                } else if (data.data.size > 0 && data.data[0] is ConflictResolution) {
+                } else if (data.data.isNotEmpty() && data.data[0] is ConflictResolution) {
                     // A full sync occurred
-                    val dataString = data.data[0] as ConflictResolution
-                    when (dataString) {
+                    when (data.data[0] as ConflictResolution) {
                         ConflictResolution.FULL_UPLOAD -> {
                             Timber.i("Full Upload Completed")
                             showSyncLogMessage(R.string.sync_log_uploading_message, syncMessage)
@@ -1823,11 +1822,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     private fun handleDeckSelection(did: Long, selectionType: DeckSelectionType) {
         // Clear the undo history when selecting a new deck
-        if (getCol().decks.selected() != did) {
-            getCol().clearUndo()
+        if (col.decks.selected() != did) {
+            col.clearUndo()
         }
         // Select the deck
-        getCol().decks.select(did)
+        col.decks.select(did)
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId()
         // Reset the schedule so that we get the counts for the currently selected deck
@@ -1842,15 +1841,15 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
         // There are numbers
         // Figure out what action to take
-        if (getCol().sched.hasCardsTodayAfterStudyAheadLimit()) {
+        if (col.sched.hasCardsTodayAfterStudyAheadLimit()) {
             // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
             openStudyOptions(false)
-        } else if (getCol().sched.newDue() || getCol().sched.revDue()) {
+        } else if (col.sched.newDue() || col.sched.revDue()) {
             // If there are no cards to review because of the daily study limit then give "Study more" option
             showSnackbar(this, R.string.studyoptions_limit_reached, false, R.string.study_more, {
                 val d = mCustomStudyDialogFactory!!.newCustomStudyDialog().withArguments(
                     CustomStudyDialog.ContextMenuConfiguration.LIMITS,
-                    getCol().decks.selected(), true
+                    col.decks.selected(), true
                 )
                 showDialogFragment(d)
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback)
@@ -1865,10 +1864,10 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 // highlighted correctly.
                 updateDeckList()
             }
-        } else if (getCol().decks.isDyn(did)) {
+        } else if (col.decks.isDyn(did)) {
             // Go to the study options screen if filtered deck with no cards to study
             openStudyOptions(false)
-        } else if (!deckDueTreeNode.hasChildren() && getCol().isEmptyDeck(did)) {
+        } else if (!deckDueTreeNode.hasChildren() && col.isEmptyDeck(did)) {
             // If the deck is empty and has no children then show a message saying it's empty
             showSnackbar(
                 this, R.string.empty_deck, false, R.string.empty_deck_add_note,
@@ -1884,7 +1883,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             showSnackbar(this, R.string.studyoptions_empty_schedule, false, R.string.custom_study, {
                 val d = mCustomStudyDialogFactory!!.newCustomStudyDialog().withArguments(
                     CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
-                    getCol().decks.selected(), true
+                    col.decks.selected(), true
                 )
                 showDialogFragment(d)
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback)
@@ -1933,7 +1932,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
             context.__renderPage()
             // Update the mini statistics bar as well
-            AnkiStatsTaskHandler.createReviewSummaryStatistics(context.getCol(), context.mReviewSummaryTextView!!)
+            AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView!!)
             Timber.d("Startup - Deck List UI Completed")
         }
     }
@@ -1966,7 +1965,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
 
         // Check if default deck is the only available and there are no cards
-        val isEmpty = mDueTree!!.size == 1 && mDueTree!![0].value.did == 1L && getCol().isEmpty
+        val isEmpty = mDueTree!!.size == 1 && mDueTree!![0].value.did == 1L && col.isEmpty
         if (animationDisabled()) {
             mDeckPickerContent!!.visibility = if (isEmpty) View.GONE else View.VISIBLE
             mNoDecksPlaceholder!!.visibility = if (isEmpty) View.VISIBLE else View.GONE
@@ -1982,13 +1981,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                     fadeOut(mDeckPickerContent, mShortAnimDuration, translation)
                 }
                 if (!placeholderShown) {
-                    fadeIn(mNoDecksPlaceholder, mShortAnimDuration, translation) // This is some bad choreographing here
-                        .setStartDelay(if (decksListShown) mShortAnimDuration * 2.toLong() else 0.toLong())
+                    fadeIn(mNoDecksPlaceholder, mShortAnimDuration, translation).startDelay = if (decksListShown) mShortAnimDuration * 2.toLong() else 0.toLong()
                 }
             } else {
                 if (!decksListShown) {
-                    fadeIn(mDeckPickerContent, mShortAnimDuration, translation)
-                        .setStartDelay(if (placeholderShown) mShortAnimDuration * 2.toLong() else 0.toLong())
+                    fadeIn(mDeckPickerContent, mShortAnimDuration, translation).startDelay = if (placeholderShown) mShortAnimDuration * 2.toLong() else 0.toLong()
                 }
                 if (placeholderShown) {
                     fadeOut(mNoDecksPlaceholder, mShortAnimDuration, translation)
@@ -1999,7 +1996,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
         if (isEmpty) {
             if (supportActionBar != null) {
-                supportActionBar!!.setSubtitle(null)
+                supportActionBar!!.subtitle = null
             }
             if (mToolbarSearchView != null) {
                 mDeckListAdapter!!.filter.filter(currentFilter)
@@ -2007,32 +2004,31 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             // We're done here
             return
         }
-        mDeckListAdapter!!.buildDeckList(mDueTree!!, getCol(), currentFilter)
+        mDeckListAdapter!!.buildDeckList(mDueTree!!, col, currentFilter)
 
         // Set the "x due in y minutes" subtitle
         try {
             val eta = mDeckListAdapter!!.eta
             val due = mDeckListAdapter!!.due
             val res = resources
-            if (getCol().cardCount() != -1) {
+            if (col.cardCount() != -1) {
                 var time: String? = "-"
                 if (eta != -1 && eta != null) {
                     time = Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
                 }
                 if (due != null && supportActionBar != null) {
-                    val subTitle: String
-                    subTitle = if (due == 0) {
-                        res.getQuantityString(R.plurals.deckpicker_title_zero_due, getCol().cardCount(), getCol().cardCount())
+                    val subTitle: String = if (due == 0) {
+                        res.getQuantityString(R.plurals.deckpicker_title_zero_due, col.cardCount(), col.cardCount())
                     } else {
                         res.getQuantityString(R.plurals.deckpicker_title, due, due, time)
                     }
-                    supportActionBar!!.setSubtitle(subTitle)
+                    supportActionBar!!.subtitle = subTitle
                 }
             }
         } catch (e: RuntimeException) {
             Timber.e(e, "RuntimeException setting time remaining")
         }
-        val current = getCol().decks.current().optLong("id")
+        val current = col.decks.current().optLong("id")
         if (mFocusedDeck != current) {
             scrollDecklistToDeck(current)
             mFocusedDeck = current
@@ -2042,7 +2038,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     // Callback to show study options for currently selected deck
     fun showContextMenuDeckOptions(did: Long) {
         // open deck options
-        if (getCol().decks.isDyn(did)) {
+        if (col.decks.isDyn(did)) {
             // open cram options if filtered deck
             val i = Intent(this@DeckPicker, FilteredDeckOptions::class.java)
             i.putExtra("did", did)
@@ -2056,21 +2052,21 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     fun exportDeck(did: Long) {
-        val msg = resources.getString(R.string.confirm_apkg_export_deck, getCol().decks.get(did).getString("name"))
+        val msg = resources.getString(R.string.confirm_apkg_export_deck, col.decks.get(did).getString("name"))
         mExportingDelegate!!.showExportDialog(msg, did)
     }
 
     fun createIcon(context: Context?, did: Long) {
         // This code should not be reachable with lower versions
-        val shortcut = ShortcutInfoCompat.Builder(this, java.lang.Long.toString(did))
+        val shortcut = ShortcutInfoCompat.Builder(this, did.toString())
             .setIntent(
                 Intent(context, Reviewer::class.java)
                     .setAction(Intent.ACTION_VIEW)
                     .putExtra("deckId", did)
             )
             .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
-            .setShortLabel(Decks.basename(getCol().decks.name(did)))
-            .setLongLabel(getCol().decks.name(did))
+            .setShortLabel(Decks.basename(col.decks.name(did)))
+            .setLongLabel(col.decks.name(did))
             .build()
         try {
             val success = ShortcutManagerCompat.requestPinShortcut(this, shortcut, null)
@@ -2089,7 +2085,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     fun renameDeckDialog(did: Long) {
-        val currentName = getCol().decks.name(did)
+        val currentName = col.decks.name(did)
         val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
         createDeckDialog.deckName = currentName
         createDeckDialog.setOnNewDeckCreated {
@@ -2114,8 +2110,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             return
         }
         // Get the number of cards contained in this deck and its subdecks
-        val cnt = DeckService.countCardsInDeckTree(getCol(), did)
-        val isDyn = getCol().decks.isDyn(did)
+        val cnt = DeckService.countCardsInDeckTree(col, did)
+        val isDyn = col.decks.isDyn(did)
         // Delete empty decks without warning. Filtered decks save filters in the deck data, so require confirmation.
         if (cnt == 0 && !isDyn) {
             deleteDeck(did)
@@ -2124,7 +2120,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
         // Otherwise we show a warning and require confirmation
         val msg: String
-        val deckName = "'" + getCol().decks.name(did) + "'"
+        val deckName = "'" + col.decks.name(did) + "'"
         msg = if (isDyn) {
             res.getString(R.string.delete_cram_deck_message, deckName)
         } else {
@@ -2154,7 +2150,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 context, null,
                 context.resources.getString(R.string.delete_deck), false
             )
-            if (did == context.getCol().decks.current().optLong("id")) {
+            if (did == context.col.decks.current().optLong("id")) {
                 mRemovingCurrent = true
             }
         }
@@ -2204,12 +2200,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     fun rebuildFiltered(did: Long) {
-        getCol().decks.select(did)
+        col.decks.select(did)
         TaskManager.launchCollectionTask(RebuildCram(), simpleProgressListener())
     }
 
     fun emptyFiltered(did: Long) {
-        getCol().decks.select(did)
+        col.decks.select(did)
         TaskManager.launchCollectionTask(EmptyCram(), simpleProgressListener())
     }
 
@@ -2250,8 +2246,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     private class HandleEmptyCardListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Int, List<Long?>?>(deckPicker) {
-        private val mNumberOfCards: Int
-        private val mOnePercent: Int
+        private val mNumberOfCards: Int = deckPicker.col.cardCount()
+        private val mOnePercent: Int = mNumberOfCards / 100
         private var mIncreaseSinceLastUpdate = 0
         @KotlinCleanup("remove _ parameters")
         private fun confirmCancel(deckPicker: DeckPicker, task: Cancellable) {
@@ -2308,7 +2304,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 val dialog = ConfirmationDialog()
                 dialog.setArgs(msg)
                 val confirm = Runnable {
-                    context.getCol().remCards(result)
+                    context.col.remCards(result)
                     showSimpleSnackbar(
                         context,
                         String.format(
@@ -2323,11 +2319,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
                 context.mProgressDialog!!.dismiss()
             }
-        }
-
-        init {
-            mNumberOfCards = deckPicker.getCol().cardCount()
-            mOnePercent = mNumberOfCards / 100
         }
     }
 
@@ -2385,7 +2376,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 showThemedToast(this@DeckPicker, message, false)
             }
             val msg: String
-            val shrunkInMb = Math.round(databaseResult.sizeChangeInKb / 1024.0)
+            val shrunkInMb = (databaseResult.sizeChangeInKb / 1024.0).roundToLong()
             msg = if (shrunkInMb > 0.0) {
                 resources.getString(R.string.check_db_acknowledge_shrunk, shrunkInMb.toInt())
             } else {
@@ -2432,9 +2423,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         /**
          * Available options performed by other activities (request codes for onActivityResult())
          */
-        @JvmField
         @VisibleForTesting
-        val REQUEST_STORAGE_PERMISSION = 0
+        const val REQUEST_STORAGE_PERMISSION = 0
         private const val REQUEST_PATH_UPDATE = 1
         private const val LOG_IN_FOR_SYNC = 6
         private const val SHOW_INFO_NEW_VERSION = 9
