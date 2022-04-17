@@ -13,62 +13,60 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import android.os.Bundle;
+import android.os.Bundle
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import org.mockito.Mockito.anyString
+import org.mockito.Mockito.eq
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
+import java.util.*
+import kotlin.test.assertNull
 
-import org.junit.Test;
-
-import java.util.Random;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-public class BundleUtilsTest {
-
-    public static final String KEY = "KEY";
-
-
+@KotlinCleanup("rename `val` variables")
+@KotlinCleanup("`when` -> whenever")
+class BundleUtilsTest {
     @Test
-    public void test_GetNullableLong_NullBundle_ReturnsNull() {
-        Long val = BundleUtils.getNullableLong(null, KEY);
-        assertNull(val);
+    fun test_GetNullableLong_NullBundle_ReturnsNull() {
+        val `val` = BundleUtils.getNullableLong(null, KEY)
+        assertNull(`val`)
     }
 
-
     @Test
-    public void test_GetNullableLong_NotFound_ReturnsNull() {
-        final Bundle b = mock(Bundle.class);
+    fun test_GetNullableLong_NotFound_ReturnsNull() {
+        val b = mock(Bundle::class.java)
 
-        when(b.containsKey(anyString())).thenReturn(false);
+        `when`(b.containsKey(anyString())).thenReturn(false)
 
-        Long val = BundleUtils.getNullableLong(b, KEY);
+        val `val` = BundleUtils.getNullableLong(b, KEY)
 
-        verify(b, times(0)).getLong(eq(KEY));
+        verify(b, times(0)).getLong(eq(KEY))
 
-        assertNull(val);
+        assertNull(`val`)
     }
 
-
     @Test
-    public void test_GetNullableLong_Found_ReturnIt() {
-        final Long expected = new Random().nextLong();
-        final Bundle b = mock(Bundle.class);
+    @KotlinCleanup("Use Kotlin's Random instead of Java's")
+    fun test_GetNullableLong_Found_ReturnIt() {
+        val expected = Random().nextLong()
+        val b = mock(Bundle::class.java)
 
-        when(b.containsKey(anyString())).thenReturn(true);
+        `when`(b.containsKey(anyString())).thenReturn(true)
 
-        when(b.getLong(anyString())).thenReturn(expected);
+        `when`(b.getLong(anyString())).thenReturn(expected)
 
-        Long val = BundleUtils.getNullableLong(b, KEY);
+        val `val` = BundleUtils.getNullableLong(b, KEY)
 
-        verify(b).getLong(eq(KEY));
+        verify(b).getLong(eq(KEY))
 
-        assertEquals(expected, val);
+        assertEquals(expected, `val`)
+    }
+
+    companion object {
+        const val KEY = "KEY"
     }
 }
