@@ -280,9 +280,6 @@ public class DeckPicker extends NavigationDrawerActivity implements
     private void onDeckClick(View v, DeckSelectionType selectionType) {
         long deckId = (long) v.getTag();
         Timber.i("DeckPicker:: Selected deck with id %d", deckId);
-        if (mFloatingActionMenu.isFABOpen()) {
-            mFloatingActionMenu.closeFloatingActionMenu();
-        }
 
         boolean collectionIsOpen = false;
         try {
@@ -657,6 +654,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Timber.d("onCreateOptionsMenu()");
+        mFloatingActionMenu.closeFloatingActionMenu();
         getMenuInflater().inflate(R.menu.deck_picker, menu);
         boolean sdCardAvailable = AnkiDroidApp.isSdCardMounted();
         menu.findItem(R.id.action_sync).setEnabled(sdCardAvailable);
@@ -666,20 +664,40 @@ public class DeckPicker extends NavigationDrawerActivity implements
         menu.findItem(R.id.action_empty_cards).setEnabled(sdCardAvailable);
 
         MenuItem toolbarSearchItem = menu.findItem(R.id.deck_picker_action_filter);
+        toolbarSearchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            // When SearchItem is expanded
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                Timber.i("DeckPicker:: SearchItem opened");
+                // Hide the floating action button if it is visible
+                mFloatingActionMenu.hideFloatingActionButton();
+                return true;
+            }
+
+            @Override
+            // When SearchItem is collapsed
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                Timber.i("DeckPicker:: SearchItem closed");
+                // Show the floating action button if it is hidden
+                mFloatingActionMenu.showFloatingActionButton();
+                return true;
+            }
+        });
+
         mToolbarSearchView = (SearchView) toolbarSearchItem.getActionView();
 
         mToolbarSearchView.setQueryHint(getString(R.string.search_decks));
         mToolbarSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                mToolbarSearchView.clearFocus();
+            public boolean onQueryTextChange(String newText) {
+                Filterable adapter = (Filterable) mRecyclerView.getAdapter();
+                adapter.getFilter().filter(newText);
                 return true;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                Filterable adapter = (Filterable) mRecyclerView.getAdapter();
-                adapter.getFilter().filter(newText);
+            public boolean onQueryTextSubmit(String query) {
+                mToolbarSearchView.clearFocus();
                 return true;
             }
         });
@@ -747,6 +765,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mFloatingActionMenu.closeFloatingActionMenu();
+
         Resources res = getResources();
         if (getDrawerToggle().onOptionsItemSelected(item)) {
             return true;
@@ -755,6 +775,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
         if (itemId == R.id.action_undo) {
             Timber.i("DeckPicker:: Undo button pressed");
             undo();
+            return true;
+        } else if (itemId == R.id.deck_picker_action_filter) {
+            Timber.i("DeckPicker:: Search button pressed");
             return true;
         } else if (itemId == R.id.action_sync) {
             Timber.i("DeckPicker:: Sync button pressed");
