@@ -214,14 +214,14 @@
     <string name="incompatible_database_version_title">Несумяшчальная версія базы даных</string>
     <string name="incompatible_database_version_summary">База даных была створана ў больш новай версіі праграмы і ў дадзены час з ёй немагчыма працаваць. Паспрабуйце абнавіць AnkiDroid або панізіць версію базы даных, каб адкрыць яе\n\nВерсія, якая падтрымліваецца: %1$d\nВерсія базы даных:%2$d\n\nНаступныя  параметры аднаўлення перазапішуць вашу бягучую калекцыю, магчыма з сумяшчальнай версіяй базы даных.</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Фонавая выява ўжыта</string>
-    <string name="background_image_removed">Фонавая выява выдалена</string>
-    <string name="no_image_selected">Ніводная выява не выбрана</string>
-    <string name="error_selecting_image">Памылка выбару выявы. Калі ласка, звярніцеся да даведніка. %s</string>
-    <string name="error_deleting_image">Памылка выдалення выявы</string>
-    <string name="failed_to_apply_background_image">Памылка дастасавання фонавай выявы %s</string>
-    <string name="background_image_too_large">Фонавая выява надта вялікая</string>
-    <string name="image_max_size_allowed">Максімальны памер выявы можа складаць %d МБ</string>
+    <string name="background_image_applied">Фонавы відарыс ужыты</string>
+    <string name="background_image_removed">Фонавы відарыс выдалены</string>
+    <string name="no_image_selected">Ніводны відарыс не выбраны</string>
+    <string name="error_selecting_image">Памылка выбару відарыса. Калі ласка, звярніцеся да даведніка. %s</string>
+    <string name="error_deleting_image">Памылка выдалення відарыса</string>
+    <string name="failed_to_apply_background_image">Памылка ўжывання фонавага відарыса %s</string>
+    <string name="background_image_too_large">Фонавы відарыс надта вялікі</string>
+    <string name="image_max_size_allowed">Максімальны памер відарыса можа складаць %d МБ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Няма дазволу на доступ да сховішча. Дайце неабходныя дазволы, а потым паўтарыце дзеянне.</string>

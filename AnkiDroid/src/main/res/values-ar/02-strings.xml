@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX %</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">فتح القائمة</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">إغلاق القائمة</string>
+    <string name="drawer_open">فتح القائمة</string>
+    <string name="drawer_close">إغلاق القائمة</string>
     <string name="CardEditorCardDeck">رزمة البطاقة:</string>
     <string name="CardEditorNoteDeck">الرزمة:</string>
     <string name="CardEditorModel">النوع:</string>

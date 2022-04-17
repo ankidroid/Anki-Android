@@ -47,7 +47,7 @@
     <string name="yes">כן</string>
     <!-- Navigation drawer items-->
     <string name="decks">חפיסות</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">דפדוף בכרטיסים</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">דפדפן קלפים</string>
     <string name="statistics">סטטיסטיקה</string>
     <string name="settings">הגדרות</string>
     <string name="help">עזרה</string>
@@ -55,7 +55,7 @@
     <string name="send_feedback">שליחת משוב</string>
     <string name="studyoptions_due_today">להיום:</string>
     <string name="studyoptions_new_total">סך כל הקלפים החדשים:</string>
-    <string name="studyoptions_total_cards">סך כל הכרטיסים:</string>
+    <string name="studyoptions_total_cards">סך כל הקלפים:</string>
     <string name="studyoptions_eta">זמן משוער (דקות):</string>
     <string name="studyoptions_start">לימוד</string>
     <!-- DeckPicker.java -->
@@ -63,10 +63,10 @@
     <string name="collapse">צמצם</string>
     <string name="study_more">תוספות</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">כרטיס %1$d נותר (%2$s)</item>
-        <item quantity="two">%1$d כרטיסים נותרים (%2$s)</item>
-        <item quantity="many">%1$d כרטיסים נותרים (%2$s)</item>
-        <item quantity="other">%1$d כרטיסים נותרים (%2$s)</item>
+        <item quantity="one">קלף אחד נותר (%2$s)</item>
+        <item quantity="two">%1$d קלפים נותרים (%2$s)</item>
+        <item quantity="many">%1$d קלפים נותרים (%2$s)</item>
+        <item quantity="other">%1$d קלפים נותרים (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">נותרה דקה %d</item>
@@ -91,10 +91,10 @@
 באמצעות הסמל +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">למדת היום כרטיס %1$d במשך %2$s</item>
-        <item quantity="two">היום נלמדו %1$d כרטיסיות מתוך %2$s</item>
-        <item quantity="many">היום נלמדו %1$d כרטיסיות מתוך %2$s</item>
-        <item quantity="other">למדת היום %1$d כרטיסים במשך %2$s</item>
+        <item quantity="one">למדת היום קלף אחד במשך %2$s</item>
+        <item quantity="two">היום נלמדו %1$d קלפים מתוך %2$s</item>
+        <item quantity="many">היום נלמדו %1$d קלפים מתוך %2$s</item>
+        <item quantity="other">למדת היום %1$d קלפים במשך %2$s</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">הקלדת תשובה</string>
@@ -113,7 +113,7 @@
     <string name="unbury">ביטול דילוג</string>
     <string name="rename_deck">שינוי שם חפיסה</string>
     <string name="create_shortcut">צור קיצור דרך</string>
-    <string name="browse_cards">לעיין בכרטיסים</string>
+    <string name="browse_cards">לעיין בקלפים</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">הוספה</string>
     <string name="menu_add_note">הוספת רשומה</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>
@@ -179,7 +179,7 @@
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
     <string name="studyoptions_empty">החפיסה ריקה. לחץ על כפתור ה+ להוספת תוכן חדש.</string>
     <string name="studyoptions_limit_reached">יעד הלמידה היומי הושלם</string>
-    <string name="studyoptions_empty_schedule">אין קלפים מתוכנני ללמידה</string>
+    <string name="studyoptions_empty_schedule">אין קלפים מתוכננים ללמידה</string>
     <string name="studyoptions_congrats_finished">מזל טוב! סיימת לרגע.‏</string>
     <string name="studyoptions_congrats_more_rev">יעד הלמידה היומי הושלם, אך עדיין יש קלפים לשינון. ניתן להגדיל את היעד באפשרויות.</string>
     <string name="studyoptions_congrats_more_new">יעד הלמידה היומי הושלם. ישנם קלפים חדשים זמינים; ניתן להגדיל את היעד באפשרויות, אך זה יגדיל את עומס הסקירה לטווח קצר.</string>
@@ -207,16 +207,16 @@
     <string name="card_template_editor_select_field">בחר שדה</string>
     <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">זה ייצור %d כרטיסייה. המשך?</item>
+        <item quantity="one">זה ייצור קלף אחד. להמשיך?</item>
         <item quantity="two">This will create %1$d cards. Proceed?</item>
-        <item quantity="many">This will create %1$d cards. Proceed?</item>
+        <item quantity="many">זה ייצור %d קלפים. להמשיך?</item>
         <item quantity="other">This will create %1$d cards. Proceed?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
-        <item quantity="two">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
-        <item quantity="many">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
-        <item quantity="other">מחק את סוג הכרטסיה \"%2$s\" ואת כל %1$d כרטסיותיו?</item>
+        <item quantity="one">מחק את סוג הקלף \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
+        <item quantity="two">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
+        <item quantity="many">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
+        <item quantity="other">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
     </plurals>
     <string name="invalid_template">לא ניתן לייצר קלף</string>
     <string name="card_template_editor_would_delete_note">הסרת סוג קלף זה תוביל למחיקת הערה אחת או יותר. נא ליצור ולשמור סוג קלף חדש תחילה.</string>
@@ -232,14 +232,14 @@
     <string name="read_write_permission_description">לגשת להערות, קלפים, סוגי הערות וחפיסות וגם ליצור חדשים</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">דפדפן הקלפים</string>
-    <string name="context_menu_anki_card_label">קלף של Anki</string>
+    <string name="context_menu_anki_card_label">קלף Anki</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s נתקל בבעיה:<br/>%2$s</string>
     <string name="more_information">מידע נוסף</string>
     <string name="no_field">מצא \'{{%1$s}}\', אבל אין שטח שנקרא \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="closed_tag_not_open">נמצא \'{{/%1$s}}\', אבל חסר  \'{{#%1$s}}\' או \'{{^%1$s}}\'.</string>
     <string name="missing_closing_bracket">חסרים  \'}}\' ב \'%s\'.</string>
     <string name="open_tag_not_closed">חסר \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="wrong_tag_closed">נמצא \'{{/%1$s}}\', אבל מחפש \'{{/%2$s}}\'</string>
     <string name="filter_error">שגיאה במסנן %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">לא ניתן לחבר את האוספים. איזה אחד לשמור?</string>
@@ -255,5 +255,5 @@
         <item quantity="many">%1$d cards (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">עותק של %s</string>
 </resources>

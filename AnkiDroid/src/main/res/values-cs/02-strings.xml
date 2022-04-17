@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Otevřít menu</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Zavřít menu</string>
+    <string name="drawer_open">Otevřít menu</string>
+    <string name="drawer_close">Zavřít menu</string>
     <string name="CardEditorCardDeck">Balíček karet:</string>
     <string name="CardEditorNoteDeck">Balíček:</string>
     <string name="CardEditorModel">Typ poznámky:</string>
@@ -428,7 +428,7 @@
     <string name="scoped_storage_migrate">Migrovat</string>
     <string name="search_card_js_api_no_results">Hledání nevrátilo žádné výsledky</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
+    <string name="not_valid_js_addon">%s není platný balíček javascript doplňku</string>
     <string name="could_not_create_dir">Nepodařilo se vytvořit adresář %s</string>
     <string name="malicious_archive_entry_outside">Škodlivý archiv. Obsahuje záznam mimo cílový adresář: %s</string>
     <string name="malicious_archive_exceeds_limit">Škodlivý archiv. Velikost přesahuje %1$s nebo obsahuje více než %2$d souborů</string>

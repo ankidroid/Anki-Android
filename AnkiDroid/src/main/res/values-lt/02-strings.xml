@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Atidaryti meniu</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Uždaryti meniu</string>
+    <string name="drawer_open">Atidaryti meniu</string>
+    <string name="drawer_close">Uždaryti meniu</string>
     <string name="CardEditorCardDeck">Kortelių rinkinys:</string>
     <string name="CardEditorNoteDeck">Rinkinys:</string>
     <string name="CardEditorModel">Tipas:</string>

@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Maak laai oop</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Maak laai toe</string>
+    <string name="drawer_open">Maak laai oop</string>
+    <string name="drawer_close">Maak laai toe</string>
     <string name="CardEditorCardDeck">Kaartpak:</string>
     <string name="CardEditorNoteDeck">Pak:</string>
     <string name="CardEditorModel">Tipe:</string>

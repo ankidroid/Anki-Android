@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Drawerê Veke</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Drawerê Bigire</string>
+    <string name="drawer_open">Drawerê Veke</string>
+    <string name="drawer_close">Drawerê Bigire</string>
     <string name="CardEditorCardDeck">Card deck:</string>
     <string name="CardEditorNoteDeck">دەستە:</string>
     <string name="CardEditorModel">جۆر:</string>
