@@ -115,20 +115,20 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
-    private var mDeckPickerContent: RelativeLayout? = null
+    private lateinit var mDeckPickerContent: RelativeLayout
     private var mProgressDialog: MaterialDialog? = null
-    private var mStudyoptionsFrame: View? = null
-    private var mRecyclerView: RecyclerView? = null
-    private var mRecyclerViewLayoutManager: LinearLayoutManager? = null
-    private var mDeckListAdapter: DeckAdapter? = null
+    private var mStudyoptionsFrame: View? = null // not lateInit - can be null
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mRecyclerViewLayoutManager: LinearLayoutManager
+    private lateinit var mDeckListAdapter: DeckAdapter
     private val mSnackbarShowHideCallback = Snackbar.Callback()
-    private var mExportingDelegate: ActivityExportingDelegate? = null
-    @KotlinCleanup("lateinit a lot of these")
-    private var mNoDecksPlaceholder: LinearLayout? = null
-    private var mPullToSyncWrapper: SwipeRefreshLayout? = null
-    private var mReviewSummaryTextView: TextView? = null
+    private lateinit var mExportingDelegate: ActivityExportingDelegate
+    private lateinit var mNoDecksPlaceholder: LinearLayout
+    private lateinit var mPullToSyncWrapper: SwipeRefreshLayout
+    private lateinit var mReviewSummaryTextView: TextView
+    @KotlinCleanup("make lateinit, but needs more changes")
     private var mUnmountReceiver: BroadcastReceiver? = null
-    private var mFloatingActionMenu: DeckPickerFloatingActionMenu? = null
+    private lateinit var mFloatingActionMenu: DeckPickerFloatingActionMenu
 
     // flag asking user to do a full sync which is used in upgrade path
     private var mRecommendFullSync = false
@@ -161,8 +161,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth  */
     private var mClosedWelcomeMessage = false
     private var mToolbarSearchView: SearchView? = null
-    private var mCustomStudyDialogFactory: CustomStudyDialogFactory? = null
-    private var mContextMenuFactory: DeckPickerContextMenu.Factory? = null
+    private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
+    private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -187,7 +187,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             if (mFragmented) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
                 // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
-                mDeckListAdapter!!.notifyDataSetChanged()
+                mDeckListAdapter.notifyDataSetChanged()
             }
         } catch (e: Exception) {
             // Maybe later don't report if collectionIsOpen is false?
@@ -209,7 +209,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     private val mDeckLongClickListener = OnLongClickListener { v ->
         val deckId = v.tag as Long
         Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId)
-        showDialogFragment(mContextMenuFactory!!.newDeckPickerContextMenu(deckId))
+        showDialogFragment(mContextMenuFactory.newDeckPickerContextMenu(deckId))
         true
     }
     @KotlinCleanup("remove ?")
@@ -296,8 +296,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
         Timber.d("onCreate()")
         mExportingDelegate = ActivityExportingDelegate(this) { col }
-        mCustomStudyDialogFactory = CustomStudyDialogFactory({ col }, this).attachToActivity<CustomStudyDialogFactory>(this)
-        mContextMenuFactory = DeckPickerContextMenu.Factory { col }.attachToActivity<DeckPickerContextMenu.Factory>(this)
+        mCustomStudyDialogFactory = CustomStudyDialogFactory({ col }, this).attachToActivity(this)
+        mContextMenuFactory = DeckPickerContextMenu.Factory { col }.attachToActivity(this)
 
         // we need to restore here, as we need it before super.onCreate() is called.
         restoreWelcomeMessage(savedInstanceState)
@@ -327,18 +327,18 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         mRecyclerView = findViewById(R.id.files)
         mNoDecksPlaceholder = findViewById(R.id.no_decks_placeholder)
 
-        mDeckPickerContent!!.visibility = View.GONE
-        mNoDecksPlaceholder!!.visibility = View.GONE
+        mDeckPickerContent.visibility = View.GONE
+        mNoDecksPlaceholder.visibility = View.GONE
 
         // specify a LinearLayoutManager and set up item dividers for the RecyclerView
         mRecyclerViewLayoutManager = LinearLayoutManager(this)
-        mRecyclerView!!.layoutManager = mRecyclerViewLayoutManager
+        mRecyclerView.layoutManager = mRecyclerViewLayoutManager
         val ta = this.obtainStyledAttributes(intArrayOf(R.attr.deckDivider))
         val divider = ta.getDrawable(0)
         ta.recycle()
-        val dividerDecorator = DividerItemDecoration(this, mRecyclerViewLayoutManager!!.orientation)
+        val dividerDecorator = DividerItemDecoration(this, mRecyclerViewLayoutManager.orientation)
         dividerDecorator.setDrawable(divider!!)
-        mRecyclerView!!.addItemDecoration(dividerDecorator)
+        mRecyclerView.addItemDecoration(dividerDecorator)
 
         // Add background to Deckpicker activity
         val view = if (mFragmented) findViewById(R.id.deckpicker_xl_view) else findViewById<View>(R.id.root_layout)
@@ -356,21 +356,21 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
         // create and set an adapter for the RecyclerView
         mDeckListAdapter = DeckAdapter(layoutInflater, this)
-        mDeckListAdapter!!.setDeckClickListener(mDeckClickListener)
-        mDeckListAdapter!!.setCountsClickListener(mCountsClickListener)
-        mDeckListAdapter!!.setDeckExpanderClickListener(mDeckExpanderClickListener)
-        mDeckListAdapter!!.setDeckLongClickListener(mDeckLongClickListener)
-        mDeckListAdapter!!.enablePartialTransparencyForBackground(hasDeckPickerBackground)
-        mRecyclerView!!.adapter = mDeckListAdapter
+        mDeckListAdapter.setDeckClickListener(mDeckClickListener)
+        mDeckListAdapter.setCountsClickListener(mCountsClickListener)
+        mDeckListAdapter.setDeckExpanderClickListener(mDeckExpanderClickListener)
+        mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener)
+        mDeckListAdapter.enablePartialTransparencyForBackground(hasDeckPickerBackground)
+        mRecyclerView.adapter = mDeckListAdapter
 
         mPullToSyncWrapper = findViewById(R.id.pull_to_sync_wrapper)
-        mPullToSyncWrapper!!.setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
-        mPullToSyncWrapper!!.setOnRefreshListener {
+        mPullToSyncWrapper.setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
+        mPullToSyncWrapper.setOnRefreshListener {
             Timber.i("Pull to Sync: Syncing")
-            mPullToSyncWrapper!!.isRefreshing = false
+            mPullToSyncWrapper.isRefreshing = false
             sync()
         }
-        mPullToSyncWrapper!!.viewTreeObserver.addOnScrollChangedListener { mPullToSyncWrapper!!.isEnabled = mRecyclerViewLayoutManager!!.findFirstCompletelyVisibleItemPosition() == 0 }
+        mPullToSyncWrapper.viewTreeObserver.addOnScrollChangedListener { mPullToSyncWrapper.isEnabled = mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0 }
 
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
         mFloatingActionMenu = DeckPickerFloatingActionMenu(view, this)
@@ -379,7 +379,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
         mShortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
-        Onboarding.DeckPicker(this, mRecyclerViewLayoutManager!!).onCreate()
+        Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate()
     }
 
     /**
@@ -509,7 +509,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
-        mFloatingActionMenu!!.closeFloatingActionMenu()
+        mFloatingActionMenu.closeFloatingActionMenu()
         menuInflater.inflate(R.menu.deck_picker, menu)
         val sdCardAvailable = AnkiDroidApp.isSdCardMounted()
         menu.findItem(R.id.action_sync).isEnabled = sdCardAvailable
@@ -524,7 +524,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 Timber.i("DeckPicker:: SearchItem opened")
                 // Hide the floating action button if it is visible
-                mFloatingActionMenu!!.hideFloatingActionButton()
+                mFloatingActionMenu.hideFloatingActionButton()
                 return true
             }
 
@@ -532,7 +532,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
                 Timber.i("DeckPicker:: SearchItem closed")
                 // Show the floating action button if it is hidden
-                mFloatingActionMenu!!.showFloatingActionButton()
+                mFloatingActionMenu.showFloatingActionButton()
                 return true
             }
         })
@@ -546,7 +546,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                val adapter = mRecyclerView!!.adapter as Filterable?
+                val adapter = mRecyclerView.adapter as Filterable?
                 adapter!!.filter.filter(newText)
                 return true
             }
@@ -601,7 +601,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        mFloatingActionMenu!!.closeFloatingActionMenu()
+        mFloatingActionMenu.closeFloatingActionMenu()
 
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true
@@ -664,7 +664,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             R.id.action_export -> {
                 Timber.i("DeckPicker:: Export collection button pressed")
                 val msg = resources.getString(R.string.confirm_apkg_export)
-                mExportingDelegate!!.showExportDialog(msg)
+                mExportingDelegate.showExportDialog(msg)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -763,12 +763,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage)
-        savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu!!.isFABOpen)
+        savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.isFABOpen)
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        mFloatingActionMenu!!.isFABOpen = savedInstanceState.getBoolean("mIsFABOpen")
+        mFloatingActionMenu.isFABOpen = savedInstanceState.getBoolean("mIsFABOpen")
     }
 
     override fun onPause() {
@@ -822,8 +822,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             super.onBackPressed()
         } else {
             Timber.i("Back key pressed")
-            if (mFloatingActionMenu!!.isFABOpen) {
-                mFloatingActionMenu!!.closeFloatingActionMenu()
+            if (mFloatingActionMenu.isFABOpen) {
+                mFloatingActionMenu.closeFloatingActionMenu()
             } else {
                 if (!preferences.getBoolean("exitViaDoubleTapBack", false) || mBackButtonPressedToExit) {
                     automaticSync()
@@ -1397,7 +1397,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         val hkey = preferences.getString("hkey", "")
         if (hkey!!.isEmpty()) {
             Timber.w("User not logged in")
-            mPullToSyncWrapper!!.isRefreshing = false
+            mPullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
         } else {
             Connection.sync(
@@ -1527,7 +1527,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
 
         override fun onPostExecute(data: Connection.Payload) {
-            mPullToSyncWrapper!!.isRefreshing = false
+            mPullToSyncWrapper.isRefreshing = false
             var dialogMessage: String? = ""
             Timber.d("Sync Listener onPostExecute()")
             val res = resources
@@ -1850,7 +1850,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         // Reset the schedule so that we get the counts for the currently selected deck
         mFocusedDeck = did
         // Get some info about the deck to handle special cases
-        val deckDueTreeNode = mDeckListAdapter!!.getNodeByDid(did)
+        val deckDueTreeNode = mDeckListAdapter.getNodeByDid(did)
         if (!deckDueTreeNode.value.shouldDisplayCounts() || deckDueTreeNode.value.knownToHaveRep()) {
             // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
             // If there is nothing to review, it'll come back to deck picker.
@@ -1865,7 +1865,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         } else if (col.sched.newDue() || col.sched.revDue()) {
             // If there are no cards to review because of the daily study limit then give "Study more" option
             showSnackbar(this, R.string.studyoptions_limit_reached, false, R.string.study_more, {
-                val d = mCustomStudyDialogFactory!!.newCustomStudyDialog().withArguments(
+                val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                     CustomStudyDialog.ContextMenuConfiguration.LIMITS,
                     col.decks.selected(), true
                 )
@@ -1899,7 +1899,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         } else {
             // Otherwise say there are no cards scheduled to study, and give option to do custom study
             showSnackbar(this, R.string.studyoptions_empty_schedule, false, R.string.custom_study, {
-                val d = mCustomStudyDialogFactory!!.newCustomStudyDialog().withArguments(
+                val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                     CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
                     col.decks.selected(), true
                 )
@@ -1919,8 +1919,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      * @param did The deck ID of the deck to select.
      */
     private fun scrollDecklistToDeck(did: Long) {
-        val position = mDeckListAdapter!!.findDeckPosition(did)
-        mRecyclerViewLayoutManager!!.scrollToPositionWithOffset(position, mRecyclerView!!.height / 2)
+        val position = mDeckListAdapter.findDeckPosition(did)
+        mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, mRecyclerView.height / 2)
     }
 
     private fun <T : AbstractDeckTreeNode> updateDeckListListener(): UpdateDeckListListener<T> {
@@ -1950,7 +1950,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
             context.renderPage()
             // Update the mini statistics bar as well
-            AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView!!)
+            AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
             Timber.d("Startup - Deck List UI Completed")
         }
     }
@@ -1985,15 +1985,15 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         // Check if default deck is the only available and there are no cards
         val isEmpty = mDueTree!!.size == 1 && mDueTree!![0].value.did == 1L && col.isEmpty
         if (animationDisabled()) {
-            mDeckPickerContent!!.visibility = if (isEmpty) View.GONE else View.VISIBLE
-            mNoDecksPlaceholder!!.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            mDeckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            mNoDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
         } else {
             val translation = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 8f,
                 resources.displayMetrics
             )
-            val decksListShown = mDeckPickerContent!!.visibility == View.VISIBLE
-            val placeholderShown = mNoDecksPlaceholder!!.visibility == View.VISIBLE
+            val decksListShown = mDeckPickerContent.visibility == View.VISIBLE
+            val placeholderShown = mNoDecksPlaceholder.visibility == View.VISIBLE
             if (isEmpty) {
                 if (decksListShown) {
                     fadeOut(mDeckPickerContent, mShortAnimDuration, translation)
@@ -2017,17 +2017,17 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 supportActionBar!!.subtitle = null
             }
             if (mToolbarSearchView != null) {
-                mDeckListAdapter!!.filter.filter(currentFilter)
+                mDeckListAdapter.filter.filter(currentFilter)
             }
             // We're done here
             return
         }
-        mDeckListAdapter!!.buildDeckList(mDueTree!!, col, currentFilter)
+        mDeckListAdapter.buildDeckList(mDueTree!!, col, currentFilter)
 
         // Set the "x due in y minutes" subtitle
         try {
-            val eta = mDeckListAdapter!!.eta
-            val due = mDeckListAdapter!!.due
+            val eta = mDeckListAdapter.eta
+            val due = mDeckListAdapter.due
             val res = resources
             if (col.cardCount() != -1) {
                 var time: String? = "-"
@@ -2071,7 +2071,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     fun exportDeck(did: Long) {
         val msg = resources.getString(R.string.confirm_apkg_export_deck, col.decks.get(did).getString("name"))
-        mExportingDelegate!!.showExportDialog(msg, did)
+        mExportingDelegate.showExportDialog(msg, did)
     }
 
     fun createIcon(context: Context?, did: Long) {
@@ -2108,7 +2108,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         createDeckDialog.deckName = currentName
         createDeckDialog.setOnNewDeckCreated {
             dismissAllDialogFragments()
-            mDeckListAdapter!!.notifyDataSetChanged()
+            mDeckListAdapter.notifyDataSetChanged()
             updateDeckList()
             if (mFragmented) {
                 loadStudyOptionsFragment(false)
@@ -2345,7 +2345,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         createDeckDialog.setOnNewDeckCreated {
             // a deck was created
             dismissAllDialogFragments()
-            mDeckListAdapter!!.notifyDataSetChanged()
+            mDeckListAdapter.notifyDataSetChanged()
             updateDeckList()
             if (mFragmented) {
                 loadStudyOptionsFragment(false)
@@ -2356,7 +2356,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     @get:VisibleForTesting
     val deckCount: Int
-        get() = mDeckListAdapter!!.itemCount
+        get() = mDeckListAdapter.itemCount
 
     @VisibleForTesting
     internal inner class CheckDatabaseListener : TaskListener<String, Pair<Boolean, CheckDatabaseResult?>>() {
@@ -2416,7 +2416,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      * Check if at least one deck is being displayed.
      */
     fun hasAtLeastOneDeckBeingDisplayed(): Boolean {
-        return mDeckListAdapter!!.itemCount > 0 && mRecyclerViewLayoutManager!!.getChildAt(0) != null
+        return mDeckListAdapter.itemCount > 0 && mRecyclerViewLayoutManager.getChildAt(0) != null
     }
 
     private enum class DeckSelectionType {
