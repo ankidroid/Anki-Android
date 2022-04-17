@@ -133,7 +133,7 @@
     <string name="menu_flag_card_three">דגל ירוק</string>
     <string name="menu_flag_card_four">דגל כחול</string>
     <string name="menu_flag_card_five">דגל ורוד</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
+    <string name="menu_flag_card_six">דגל טורקיז</string>
     <string name="menu_flag_card_seven">דגל סגול</string>
     <string name="menu_edit_tags">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
@@ -237,18 +237,18 @@
     <string name="more_information">מידע נוסף</string>
     <string name="no_field">מצא \'{{%1$s}}\', אבל אין שטח שנקרא \'%1$s\'.</string>
     <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
+    <string name="missing_closing_bracket">חסרים  \'}}\' ב \'%s\'.</string>
+    <string name="open_tag_not_closed">חסר \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
     <string name="filter_error">שגיאה במסנן %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">לא ניתן לחבר את האוספים. איזה אחד לשמור?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">אנקידרויד</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">להחליף את האוסף שביישום לאוסף שבאתר?</string>
+    <string name="sync_conflict_local_confirm_new">להחליף את האוסף שבאתר לאוסף שנמצא ביישום?</string>
+    <string name="sync_conflict_title_new">בחר את האוסף לשמירה</string>
+    <string name="sync_conflict_replace_title">החלפת אוסף</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="two">%1$d cards (0 due)</item>

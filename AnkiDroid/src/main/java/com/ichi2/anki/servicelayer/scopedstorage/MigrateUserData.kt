@@ -235,7 +235,7 @@ class MigrateUserData private constructor(val source: Directory, val destination
          * Starts to execute the current operation. Only do as little non-trivial work as possible to start the operation, such as listing a directory content or moving a single file.
          * Returns the list of operations remaining to end this operation.
          *
-         * E.g. for "move a directory", this method would simply compute the directory content and then retuns the following list of operations:
+         * E.g. for "move a directory", this method would simply compute the directory content and then returns the following list of operations:
          * * creating the destination directory
          * * moving each file and subdirectory individually
          * * deleting the original directory.

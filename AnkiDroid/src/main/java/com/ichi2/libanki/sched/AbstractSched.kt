@@ -342,7 +342,7 @@ abstract class AbstractSched {
     /**
      * @param ids Ids of cards to reset for export
      */
-    abstract fun resetCards(ids: Array<Long?>)
+    abstract fun resetCards(ids: Array<Long>)
 
     /**
      * @param cids Ids of card to set to new and sort

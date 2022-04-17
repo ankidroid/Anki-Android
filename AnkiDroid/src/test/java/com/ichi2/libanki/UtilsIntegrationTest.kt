@@ -18,7 +18,7 @@ package com.ichi2.libanki
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.testutils.NullApplication
+import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -26,7 +26,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-@Config(application = NullApplication::class, qualifiers = "en")
+@Config(application = EmptyApplication::class, qualifiers = "en")
 class UtilsIntegrationTest : RobolectricTest() {
     @Test
     fun deckPickerTimeOneAndHalfHours() {

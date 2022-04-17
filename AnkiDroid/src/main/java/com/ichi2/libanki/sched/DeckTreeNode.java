@@ -29,7 +29,7 @@ public class DeckTreeNode extends AbstractDeckTreeNode<DeckTreeNode> {
 
 
     @Override
-    public DeckTreeNode withChildren(@NonNull List<DeckTreeNode> children) {
+    public DeckTreeNode withChildren(@NonNull List<? extends DeckTreeNode> children) {
         Collection col = getCol();
         String name = getFullDeckName();
         long did = getDid();

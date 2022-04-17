@@ -72,6 +72,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:banner="@drawable/tv_banner"
         android:requestLegacyExternalStorage="true"
+        android:preserveLegacyExternalStorage="true"
         android:resizeableActivity="true"
         android:supportsRtl="true"
         >

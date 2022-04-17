@@ -40,7 +40,7 @@ import java.util.*
  *
  * A note about differences to the original python version of this class. We found that:
  * 1 - There is no reliable way to detect changes to the media directory on Android due to the
- * file systems used (mainly FAT32 for sdcards) and the utilities available to probe them.
+ * file systems used (mainly FAT32 for SD Cards) and the utilities available to probe them.
  * 2 - Scanning for media changes can take a very long time with thousands of files.
  *
  * Given these two points, we have decided to avoid the call to findChanges() on every sync and

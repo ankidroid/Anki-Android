@@ -54,9 +54,9 @@ class JUnitNullAssertionDetector : Detector(), SourceCodeScanner {
         val ID = "LegacyNullAssertionDetector"
 
         @VisibleForTesting
-        val DESCRIPTION = "Use kotlin.test.junit.JUnitAsserter instead of JUnit in Kotlin"
+        val DESCRIPTION = "Use kotlin.test.assert[Not]Null OR kotlin.test.junit.JUnitAsserter instead of JUnit in Kotlin"
         private const val EXPLANATION = "JUnitAsserter's methods use contracts, removing the need for `!!` " +
-            "afterwards"
+            "afterwards. Use JUnitAsserter if passing in a message, kotlin.test top level functions otherwise"
         private val implementation = Implementation(JUnitNullAssertionDetector::class.java, JAVA_FILE_SCOPE)
 
         @JvmField

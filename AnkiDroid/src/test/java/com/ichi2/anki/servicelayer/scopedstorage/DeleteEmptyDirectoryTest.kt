@@ -81,5 +81,5 @@ class DeleteEmptyDirectoryTest : Test21And26(), OperationTest {
     }
 
     private fun createEmptyDirectory() =
-        Directory.createInstance(File(createTempDirectory().pathString))!!
+        Directory.createInstance(createTempDirectory().pathString)!!
 }

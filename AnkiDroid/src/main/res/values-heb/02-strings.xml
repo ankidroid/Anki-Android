@@ -274,7 +274,7 @@
     <plurals name="reminder_text">
         <item quantity="one">קלף אחד לשינון בעוד</item>
         <item quantity="two">%2$d cards to review in %1$s</item>
-        <item quantity="many">%2$d cards to review in %1$s</item>
+        <item quantity="many">%2$d כרטיסים לשינון ב־%1$s</item>
         <item quantity="other">%2$d קלפים לשינון בעוד %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
@@ -296,8 +296,8 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">שחזור בררת המחדל</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">דודמא</string>
+    <string name="basic_answer_sample_text">דוגמה</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ריק</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">נא להפעיל את המסך המלא כדי להשתמש בהצגת מגירת ניווט עם JavaScript.</string>
@@ -365,20 +365,20 @@
     <string name="format_font_size">שינוי גודל הגופן</string>
     <string name="insert_mathjax">הוספת משוואת MathJax</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">טקסט הלחצן</string>
     <string name="before_text">HTML לפני הבחירה</string>
     <string name="after_text">HTML אחרי הבחירה</string>
     <string name="add_toolbar_item">יצירת פריט סרגל כלים</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="edit_toolbar_item">עריכת פריט סרגל כלים</string>
+    <string name="toolbar_item_explain_edit_or_remove">הזן HTML שיוכנס לפני ואחרי הטקסט שנבחר \n\n לחץ לחיצה ארוכה על פריט בסרגל הכלים כדי לערוך או להסיר אותו</string>
     <string name="remove_toolbar_item">להסיר פריט סרגל כלים?</string>
     <string name="note_editor_paste_too_large">התמונה גדולה מדי להדבקה, אנא הכנס את התמונה ידנית</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">בתהליך עדכון אנדרואיד, נסה שנית.</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">ייתכן שיהיה עליך להשתמש ב- iManager כדי לאפשר ל- AnkiDroid להוסיף קיצורי דרך</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">מסך הבית שלך אינו מאפשר ל- AnkiDroid להוסיף קיצורי דרך</string>
     <string name="create_shortcut_error">שגיאה בהוספת קיצור הדרך: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">סרגל כלים נגרר</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -386,21 +386,21 @@
     <string name="email_id_empty">נדרשת כתובת אימייל.</string>
     <string name="password_empty">דרושה סיסמא</string>
     <string name="back_pressed_once">לחץ \'חזור\' פעם נוספת כדי לצאת</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="back_pressed_once_reviewer">לחץ שוב כדי לחזור</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">הורדת חפיסה</string>
+    <string name="try_again">נסה שוב</string>
+    <string name="cancel_download">בטל הורדה</string>
+    <string name="cancel_download_question_title">בטל הורדה?</string>
+    <string name="downloading_file">מוריד %s</string>
+    <string name="import_deck">ייבוא חפיסה</string>
+    <string name="something_wrong">משהו השתבש, אנא נסה שוב</string>
+    <string name="download_failed">ההורדה נכשלה</string>
+    <string name="deck_download_progress_message">ניתן לעבור ליישומים אחרים בזמן ההורדה</string>
+    <string name="check_network">נא בדוק את החיבור לרשת</string>
+    <string name="search_using_deck_name">חיפוש באמצעות שם החפיסה</string>
+    <string name="home">בית</string>
     <!-- Importing -->
     <string name="import_mapped_to_field">Mapped to %s</string>
     <string name="import_mapped_to_tags">Mapped to Tags</string>
@@ -426,10 +426,10 @@
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">אין תוצאות לשאילתת החיפוש</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="not_valid_js_addon">%s אינו תוסף JS תקין</string>
+    <string name="could_not_create_dir">לא ניתן ליצור תיקיה %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>

@@ -24,12 +24,12 @@ public class FuriganaFilters {
 
     private static final String RUBY = "<ruby><rb>$1</rb><rt>$2</rt></ruby>";
 
-    private static String noSound(Matcher match, String repl) {
+    private static String noSound(Matcher match, String replacement) {
         if (match.group(2).startsWith("sound:")) {
             // return without modification
             return match.group(0);
         } else {
-            return r.matcher(match.group(0)).replaceAll(repl);
+            return r.matcher(match.group(0)).replaceAll(replacement);
         }
     }
 

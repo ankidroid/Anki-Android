@@ -262,6 +262,7 @@ class TagsDialog : AnalyticsDialogFragment {
             mTags!!.check(tag)
             mTagsArrayAdapter!!.sortData()
             mTagsArrayAdapter!!.notifyDataSetChanged()
+            mTagsArrayAdapter!!.filter.refresh()
             // Show a snackbar to let the user know the tag was added successfully
             showSnackbar(
                 requireActivity(), feedbackText, false, -1, null,

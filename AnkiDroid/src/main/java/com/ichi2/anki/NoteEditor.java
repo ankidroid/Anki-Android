@@ -176,7 +176,7 @@ public class NoteEditor extends AnkiActivity implements
     private static final String ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND";
 
     // calling activity
-    public static final int CALLER_NOCALLER = 0;
+    public static final int CALLER_NO_CALLER = 0;
 
     public static final int CALLER_REVIEWER = 1;
     public static final int CALLER_STUDYOPTIONS = 2;
@@ -426,8 +426,8 @@ public class NoteEditor extends AnkiActivity implements
             mToggleStickyText = (HashMap<Integer, String>) savedInstanceState.getSerializable("toggleSticky");
             mChanged = savedInstanceState.getBoolean("changed");
         } else {
-            mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NOCALLER);
-            if (mCaller == CALLER_NOCALLER) {
+            mCaller = intent.getIntExtra(EXTRA_CALLER, CALLER_NO_CALLER);
+            if (mCaller == CALLER_NO_CALLER) {
                 String action = intent.getAction();
                 if ((ACTION_CREATE_FLASHCARD.equals(action) || ACTION_CREATE_FLASHCARD_SEND.equals(action) || ACTION_PROCESS_TEXT.equals(action))) {
                     mCaller = CALLER_CARDEDITOR_INTENT_ADD;
@@ -510,7 +510,7 @@ public class NoteEditor extends AnkiActivity implements
         mCurrentEditedCard = null;
 
         switch (mCaller) {
-            case CALLER_NOCALLER:
+            case CALLER_NO_CALLER:
                 Timber.e("no caller could be identified, closing");
                 finishWithoutAnimation();
                 return;
