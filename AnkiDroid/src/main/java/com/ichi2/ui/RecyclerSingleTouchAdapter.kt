@@ -22,25 +22,29 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
-import com.ichi2.utils.KotlinCleanup
 
 /** Adapts a RecyclerView.OnItemTouchListener to provide a click listener  */
 
-class RecyclerSingleTouchAdapter(context: Context, listener: OnItemClickListener) : OnItemTouchListener {
-    @KotlinCleanup("could be made a non nullable constructor property")
-    private val mListener: OnItemClickListener?
-    @KotlinCleanup("combine declaration and initialization")
-    private val mGestureDetector: GestureDetector
+class RecyclerSingleTouchAdapter(val context: Context, val listener: OnItemClickListener) : OnItemTouchListener {
 
-    @KotlinCleanup("make this a fun interface to use a lambda at the call site in LocaleSelectionDialog")
-    interface OnItemClickListener {
+    private val mGestureDetector = GestureDetector(
+        context,
+        object : SimpleOnGestureListener() {
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
+                // onDown was too fast
+                return true
+            }
+        }
+    )
+
+    fun interface OnItemClickListener {
         fun onItemClick(view: View, position: Int)
     }
 
     override fun onInterceptTouchEvent(view: RecyclerView, e: MotionEvent): Boolean {
         val childView = view.findChildViewUnder(e.x, e.y)
-        if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
-            mListener.onItemClick(childView, view.getChildAdapterPosition(childView))
+        if (childView != null && mGestureDetector.onTouchEvent(e)) {
+            listener.onItemClick(childView, view.getChildAdapterPosition(childView))
             return true
         }
         return false
@@ -52,18 +56,5 @@ class RecyclerSingleTouchAdapter(context: Context, listener: OnItemClickListener
 
     override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
         // intentionally empty
-    }
-
-    init {
-        mListener = listener
-        mGestureDetector = GestureDetector(
-            context,
-            object : SimpleOnGestureListener() {
-                override fun onSingleTapUp(e: MotionEvent): Boolean {
-                    // onDown was too fast
-                    return true
-                }
-            }
-        )
     }
 }

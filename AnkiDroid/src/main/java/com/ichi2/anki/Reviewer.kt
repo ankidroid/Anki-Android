@@ -71,6 +71,7 @@ import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
@@ -183,6 +184,9 @@ open class Reviewer : AbstractFlashcardViewer() {
         super.onResume()
     }
 
+    @NeedsTest("is hidden if flag is on app bar")
+    @NeedsTest("is not hidden if flag is not on app bar")
+    @NeedsTest("is not hidden if flag is on app bar and fullscreen is enabled")
     protected val flagToDisplay: Int
         get() {
             val actualValue = mCurrentCard!!.userFlag()
@@ -190,7 +194,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 return CardMarker.FLAG_NONE
             }
             val isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_FLAG)
-            return if (isShownInActionBar != null && isShownInActionBar) {
+            return if (isShownInActionBar != null && isShownInActionBar && !mPrefFullscreenReview) {
                 CardMarker.FLAG_NONE
             } else actualValue
         }
@@ -208,6 +212,9 @@ open class Reviewer : AbstractFlashcardViewer() {
         setRenderWorkaround(this)
     }
 
+    @NeedsTest("is hidden if marked is on app bar")
+    @NeedsTest("is not hidden if marked is not on app bar")
+    @NeedsTest("is not hidden if marked is on app bar and fullscreen is enabled")
     override fun shouldDisplayMark(): Boolean {
         val markValue = super.shouldDisplayMark()
         if (!markValue) {
@@ -216,7 +223,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         val isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_MARK)
         // If we don't know, show it.
         // Otherwise, if it's in the action bar, don't show it again.
-        return isShownInActionBar == null || !isShownInActionBar
+        return isShownInActionBar == null || !isShownInActionBar || mPrefFullscreenReview
     }
 
     protected open fun onMark(card: Card?) {

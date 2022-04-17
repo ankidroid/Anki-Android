@@ -129,6 +129,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.AbstractDeckTreeNode;
+import com.ichi2.libanki.sched.TreeNode;
 import com.ichi2.libanki.sync.CustomSyncServerUrlException;
 import com.ichi2.libanki.sync.Syncer;
 import com.ichi2.themes.StyledProgressDialog;
@@ -147,6 +148,7 @@ import com.ichi2.utils.JSONException;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import kotlin.Unit;
 import timber.log.Timber;
@@ -233,7 +235,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
     @Nullable private Cancellable mEmptyCardTask = null;
 
     @VisibleForTesting
-    public List<? extends AbstractDeckTreeNode<?>> mDueTree;
+    public List<TreeNode<AbstractDeckTreeNode>> mDueTree;
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -2073,8 +2075,8 @@ public class DeckPicker extends NavigationDrawerActivity implements
         // Reset the schedule so that we get the counts for the currently selected deck
         mFocusedDeck = did;
         // Get some info about the deck to handle special cases
-        AbstractDeckTreeNode<?> deckDueTreeNode = mDeckListAdapter.getNodeByDid(did);
-        if (!deckDueTreeNode.shouldDisplayCounts() || deckDueTreeNode.knownToHaveRep()) {
+        TreeNode<AbstractDeckTreeNode> deckDueTreeNode = mDeckListAdapter.getNodeByDid(did);
+        if (!deckDueTreeNode.getValue().shouldDisplayCounts() || deckDueTreeNode.getValue().knownToHaveRep()) {
             // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
             // If there is nothing to review, it'll come back to deck picker.
             openReviewerOrStudyOptions(selectionType);
@@ -2149,10 +2151,10 @@ public class DeckPicker extends NavigationDrawerActivity implements
     }
 
 
-    private <T extends AbstractDeckTreeNode<T>> UpdateDeckListListener<T> updateDeckListListener() {
+    private <T extends AbstractDeckTreeNode> UpdateDeckListListener<T> updateDeckListListener() {
         return new UpdateDeckListListener<T>(this);
     }
-    private static class UpdateDeckListListener<T extends AbstractDeckTreeNode<T>> extends TaskListenerWithContext<DeckPicker, Void, List<T>>{
+    private static class UpdateDeckListListener<T extends AbstractDeckTreeNode> extends TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>>{
         public UpdateDeckListListener(DeckPicker deckPicker) {
             super(deckPicker);
         }
@@ -2167,7 +2169,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
 
         @Override
-        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, List<T> dueTree) {
+        public void actualOnPostExecute(@NonNull DeckPicker deckPicker, List<TreeNode<T>> dueTree) {
             Timber.i("Updating deck list UI");
             deckPicker.hideProgressBar();
             // Make sure the fragment is visible
@@ -2179,7 +2181,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
                 deckPicker.showCollectionErrorDialog();
                 return;
             }
-            deckPicker.mDueTree = dueTree;
+            deckPicker.mDueTree = dueTree.stream().map(x -> x.unsafeCastToType(AbstractDeckTreeNode.class) ).collect(Collectors.toList());
 
             deckPicker.__renderPage();
             // Update the mini statistics bar as well
@@ -2215,7 +2217,7 @@ public class DeckPicker extends NavigationDrawerActivity implements
         }
 
         // Check if default deck is the only available and there are no cards
-        boolean isEmpty = mDueTree.size() == 1 && mDueTree.get(0).getDid() == 1 && getCol().isEmpty();
+        boolean isEmpty = mDueTree.size() == 1 && mDueTree.get(0).getValue().getDid() == 1 && getCol().isEmpty();
 
         if (animationDisabled()) {
             mDeckPickerContent.setVisibility(isEmpty ? View.GONE : View.VISIBLE);

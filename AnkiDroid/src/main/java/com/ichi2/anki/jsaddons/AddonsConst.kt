@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2020 Arthur Milchior <arthur@milchior.fr>                              *
+ * Copyright (c) 2021 Mani <infinyte01@gmail.com>                                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -14,21 +14,10 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sched;
+package com.ichi2.anki.jsaddons
 
-import com.ichi2.libanki.Collection;
-
-import java.util.List;
-
-import androidx.annotation.NonNull;
-
-public class DeckTreeNode extends AbstractDeckTreeNode {
-    public DeckTreeNode(Collection col, String name, long did) {
-        super(col, name, did);
-    }
-
-    @Override
-    public void processChildren(@NonNull List<? extends AbstractDeckTreeNode> children, boolean addRev) {
-        // intentionally blank
-    }
+object AddonsConst {
+    const val ANKIDROID_JS_ADDON_KEYWORDS = "ankidroid-js-addon"
+    const val REVIEWER_ADDON = "reviewer"
+    const val NOTE_EDITOR_ADDON = "note-editor"
 }
