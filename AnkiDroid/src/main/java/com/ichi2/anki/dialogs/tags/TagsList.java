@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.dialogs.tags;
 
+import com.ichi2.utils.TagsUtil;
 import com.ichi2.utils.UniqueArrayList;
 
 import java.util.ArrayList;
@@ -80,18 +81,17 @@ public class TagsList implements Iterable<String> {
         mCheckedTags.addAll(checkedTags);
         mAllTags = UniqueArrayList.from(allTags, String.CASE_INSENSITIVE_ORDER);
         mAllTags.addAll(mCheckedTags);
+        mIndeterminateTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         if (uncheckedTags != null) {
             mAllTags.addAll(uncheckedTags);
-            mIndeterminateTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             // intersection between mCheckedTags and uncheckedTags
             mIndeterminateTags.addAll(mCheckedTags);
             Set<String> uncheckedSet = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             uncheckedSet.addAll(uncheckedTags);
             mIndeterminateTags.retainAll(uncheckedSet);
             mCheckedTags.removeAll(mIndeterminateTags);
-        } else {
-            mIndeterminateTags = Collections.emptySet();
         }
+        prepareTagHierarchy();
     }
 
 
@@ -253,18 +253,44 @@ public class TagsList implements Iterable<String> {
 
 
     /**
+     * Initialize the tag hierarchy.
+     */
+    private void prepareTagHierarchy() {
+        // add virtual tags to build the hierarchy tree
+        ArrayList<String> vTags = new ArrayList<>();
+        for (String tag : mAllTags) {
+            vTags.addAll(TagsUtil.getTagAncestors(tag));
+        }
+        mAllTags.addAll(vTags);
+
+        // mark ancestors of checked tags as indeterminate (if not a checked tag)
+        for (String tag : mCheckedTags) {
+            List<String> ancestors = TagsUtil.getTagAncestors(tag);
+            for (String anc : ancestors) {
+                if (!isChecked(anc)) {
+                    mIndeterminateTags.add(anc);
+                }
+            }
+        }
+    }
+
+
+    /**
      * Sort the tag list alphabetically ignoring the case, with priority for checked tags
+     * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     public void sort() {
         mAllTags.sort((lhs, rhs) -> {
-            boolean lhsChecked = isChecked(lhs) || isIndeterminate(lhs);
-            boolean rhsChecked = isChecked(rhs) || isIndeterminate(rhs);
+            String lhsRoot = TagsUtil.getTagRoot(lhs);
+            String rhsRoot = TagsUtil.getTagRoot(rhs);
+            boolean lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot);
+            boolean rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot);
 
             if (lhsChecked != rhsChecked) {
                 // checked tags must appear first
                 return lhsChecked ? -1 : 1;
             } else {
-                return lhs.compareToIgnoreCase(rhs);
+                return TagsUtil.compareTag(lhs, rhs);
             }
         });
     }
