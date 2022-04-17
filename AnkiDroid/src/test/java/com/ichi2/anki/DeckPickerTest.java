@@ -11,6 +11,7 @@ import android.view.Menu;
 
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
+import com.ichi2.annotations.NeedsTest;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.DeckConfig;
@@ -22,6 +23,7 @@ import com.ichi2.testutils.BackupManagerTestUtilities;
 import com.ichi2.testutils.DbUtils;
 import com.ichi2.utils.ResourceLoader;
 
+import org.apache.commons.exec.OS;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -399,7 +401,12 @@ public class DeckPickerTest extends RobolectricTest {
 
     @Test
     @RunInBackground
+    @NeedsTest("fix this on Windows")
     public void version16CollectionOpens() {
+        if (OS.isFamilyWindows()) {
+            assumeTrue("test is flaky on Windows", false);
+        }
+
         try {
             setupColV16();
 
