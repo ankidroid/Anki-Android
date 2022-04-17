@@ -19,6 +19,9 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+// usage of 'this' in constructors when class is non-final - weak warning
+// should be OK as this is only non-final for tests
+@file:Suppress("LeakingThis")
 package com.ichi2.anki
 
 import android.Manifest
@@ -107,7 +110,6 @@ import java.io.File
 import kotlin.math.abs
 import kotlin.math.roundToLong
 
-@KotlinCleanup("automatic IDE lint")
 @KotlinCleanup("lots to do")
 open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncErrorDialogListener, ImportDialogListener, MediaCheckDialogListener, OnRequestPermissionsResultCallback, CustomStudyListener {
     // Short animation duration from system
@@ -169,7 +171,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         val did = view.tag as Long
         if (!col.decks.children(did).isEmpty()) {
             col.decks.collapse(did)
-            __renderPage()
+            renderPage()
             dismissAllDialogFragments()
         }
     }
@@ -604,58 +606,69 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true
         }
-        val itemId = item.itemId
-        if (itemId == R.id.action_undo) {
-            Timber.i("DeckPicker:: Undo button pressed")
-            undo()
-            return true
-        } else if (itemId == R.id.deck_picker_action_filter) {
-            Timber.i("DeckPicker:: Search button pressed")
-            return true
-        } else if (itemId == R.id.action_sync) {
-            Timber.i("DeckPicker:: Sync button pressed")
-            sync()
-            return true
-        } else if (itemId == R.id.action_import) {
-            Timber.i("DeckPicker:: Import button pressed")
-            showDialogFragment(ImportFileSelectionFragment.createInstance(this))
-            return true
-        } else if (itemId == R.id.action_new_filtered_deck) {
-            val createFilteredDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
-            createFilteredDeckDialog.setOnNewDeckCreated {
-                // a filtered deck was created
-                openStudyOptions(true)
+        when (item.itemId) {
+            R.id.action_undo -> {
+                Timber.i("DeckPicker:: Undo button pressed")
+                undo()
+                return true
             }
-            createFilteredDeckDialog.showFilteredDeckDialog()
-            return true
-        } else if (itemId == R.id.action_check_database) {
-            Timber.i("DeckPicker:: Check database button pressed")
-            showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK)
-            return true
-        } else if (itemId == R.id.action_check_media) {
-            Timber.i("DeckPicker:: Check media button pressed")
-            showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK)
-            return true
-        } else if (itemId == R.id.action_empty_cards) {
-            Timber.i("DeckPicker:: Empty cards button pressed")
-            handleEmptyCards()
-            return true
-        } else if (itemId == R.id.action_model_browser_open) {
-            Timber.i("DeckPicker:: Model browser button pressed")
-            val noteTypeBrowser = Intent(this, ModelBrowser::class.java)
-            startActivityForResultWithAnimation(noteTypeBrowser, 0, START)
-            return true
-        } else if (itemId == R.id.action_restore_backup) {
-            Timber.i("DeckPicker:: Restore from backup button pressed")
-            showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP)
-            return true
-        } else if (itemId == R.id.action_export) {
-            Timber.i("DeckPicker:: Export collection button pressed")
-            val msg = resources.getString(R.string.confirm_apkg_export)
-            mExportingDelegate!!.showExportDialog(msg)
-            return true
+            R.id.deck_picker_action_filter -> {
+                Timber.i("DeckPicker:: Search button pressed")
+                return true
+            }
+            R.id.action_sync -> {
+                Timber.i("DeckPicker:: Sync button pressed")
+                sync()
+                return true
+            }
+            R.id.action_import -> {
+                Timber.i("DeckPicker:: Import button pressed")
+                showDialogFragment(ImportFileSelectionFragment.createInstance(this))
+                return true
+            }
+            R.id.action_new_filtered_deck -> {
+                val createFilteredDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
+                createFilteredDeckDialog.setOnNewDeckCreated {
+                    // a filtered deck was created
+                    openStudyOptions(true)
+                }
+                createFilteredDeckDialog.showFilteredDeckDialog()
+                return true
+            }
+            R.id.action_check_database -> {
+                Timber.i("DeckPicker:: Check database button pressed")
+                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK)
+                return true
+            }
+            R.id.action_check_media -> {
+                Timber.i("DeckPicker:: Check media button pressed")
+                showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK)
+                return true
+            }
+            R.id.action_empty_cards -> {
+                Timber.i("DeckPicker:: Empty cards button pressed")
+                handleEmptyCards()
+                return true
+            }
+            R.id.action_model_browser_open -> {
+                Timber.i("DeckPicker:: Model browser button pressed")
+                val noteTypeBrowser = Intent(this, ModelBrowser::class.java)
+                startActivityForResultWithAnimation(noteTypeBrowser, 0, START)
+                return true
+            }
+            R.id.action_restore_backup -> {
+                Timber.i("DeckPicker:: Restore from backup button pressed")
+                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP)
+                return true
+            }
+            R.id.action_export -> {
+                Timber.i("DeckPicker:: Export collection button pressed")
+                val msg = resources.getString(R.string.confirm_apkg_export)
+                mExportingDelegate!!.showExportDialog(msg)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     @Deprecated("Deprecated in Java")
@@ -981,6 +994,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                     val models = col.models
                     for (m in models.all()) {
                         val css = m.getString("css")
+                        @Suppress("SpellCheckingInspection")
                         if (css.contains("font-familiy")) {
                             m.put("css", css.replace("font-familiy", "font-family"))
                             models.save(m)
@@ -1549,21 +1563,25 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                         }
                         ConnectionResultType.CLOCK_OFF -> {
                             val diff = result[0] as Long
-                            dialogMessage = if (diff >= 86100) {
-                                // The difference if more than a day minus 5 minutes acceptable by ankiweb error
-                                res.getString(
-                                    R.string.sync_log_clocks_unsynchronized, diff,
-                                    res.getString(R.string.sync_log_clocks_unsynchronized_date)
-                                )
-                            } else if (abs(diff % 3600.0 - 1800.0) >= 1500.0) {
-                                // The difference would be within limit if we adjusted the time by few hours
-                                // It doesn't work for all timezones, but it covers most and it's a guess anyway
-                                res.getString(
-                                    R.string.sync_log_clocks_unsynchronized, diff,
-                                    res.getString(R.string.sync_log_clocks_unsynchronized_tz)
-                                )
-                            } else {
-                                res.getString(R.string.sync_log_clocks_unsynchronized, diff, "")
+                            dialogMessage = when {
+                                diff >= 86100 -> {
+                                    // The difference if more than a day minus 5 minutes acceptable by ankiweb error
+                                    res.getString(
+                                        R.string.sync_log_clocks_unsynchronized, diff,
+                                        res.getString(R.string.sync_log_clocks_unsynchronized_date)
+                                    )
+                                }
+                                abs(diff % 3600.0 - 1800.0) >= 1500.0 -> {
+                                    // The difference would be within limit if we adjusted the time by few hours
+                                    // It doesn't work for all timezones, but it covers most and it's a guess anyway
+                                    res.getString(
+                                        R.string.sync_log_clocks_unsynchronized, diff,
+                                        res.getString(R.string.sync_log_clocks_unsynchronized_tz)
+                                    )
+                                }
+                                else -> {
+                                    res.getString(R.string.sync_log_clocks_unsynchronized, diff, "")
+                                }
                             }
                             showSyncErrorMessage(joinSyncMessages(dialogMessage, syncMessage))
                         }
@@ -1930,7 +1948,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 return
             }
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
-            context.__renderPage()
+            context.renderPage()
             // Update the mini statistics bar as well
             AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView!!)
             Timber.d("Startup - Deck List UI Completed")
@@ -1956,7 +1974,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
     }
 
-    fun __renderPage() {
+    fun renderPage() {
         if (mDueTree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
@@ -2237,7 +2255,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         updateDeckList()
     }
 
-    fun handleEmptyCards() {
+    private fun handleEmptyCards() {
         mEmptyCardTask = TaskManager.launchCollectionTask(FindEmptyCards(), handlerEmptyCardListener())
     }
 
@@ -2451,7 +2469,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             }
         }
 
-        // Animation utility methods used by __renderPage() method
+        // Animation utility methods used by renderPage() method
         @JvmOverloads
         fun fadeIn(view: View?, duration: Int, translation: Float = 0f, startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE }): ViewPropertyAnimator {
             view!!.alpha = 0f
