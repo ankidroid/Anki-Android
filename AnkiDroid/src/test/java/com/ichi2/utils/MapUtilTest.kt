@@ -11,41 +11,36 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import org.junit.Before;
-import org.junit.Test;
+import com.ichi2.utils.MapUtil.getKeyByValue
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.not
+import org.junit.Before
+import org.junit.Test
+import java.util.HashMap
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.ichi2.utils.MapUtil.getKeyByValue;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-public class MapUtilTest {
-    private Map<Integer, String> mMap;
-
-
+@KotlinCleanup("`is` -> equalTo")
+@KotlinCleanup("Use Kotlin's HashMap instead of Java's")
+class MapUtilTest {
+    private lateinit var mMap: MutableMap<Int, String>
     @Before
-    public void initializeMap() {
-        mMap = new HashMap<>();
-        mMap.put(12, "Anki");
-        mMap.put(5, "AnkiMobile");
-        mMap.put(20, "AnkiDroid");
-        mMap.put(30, "AnkiDesktop");
+    fun initializeMap() {
+        mMap = HashMap()
+        mMap[12] = "Anki"
+        mMap[5] = "AnkiMobile"
+        mMap[20] = "AnkiDroid"
+        mMap[30] = "AnkiDesktop"
     }
 
-
     @Test
-    public void getKeyByValueIsEqualTest() {
-        assertThat(getKeyByValue(mMap, "AnkiDroid"), is(20));
+    fun getKeyByValueIsEqualTest() {
+        assertThat(getKeyByValue(mMap, "AnkiDroid"), `is`(20))
     }
 
-
     @Test
-    public void getKeyByValueIsNotEqualTest() {
-        assertThat(getKeyByValue(mMap, "AnkiDesktop"), not(5));
+    fun getKeyByValueIsNotEqualTest() {
+        assertThat(getKeyByValue(mMap, "AnkiDesktop"), not(5))
     }
 }
