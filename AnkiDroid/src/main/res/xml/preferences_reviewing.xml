@@ -52,7 +52,7 @@
             android:title="@string/time_limit"
             app:max="9999"
             app:min="0" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="@string/new_timezone_handling_preference"
             android:title="@string/new_timezone"
             android:defaultValue="false" />
@@ -71,7 +71,7 @@
             android:title="@string/custom_buttons"
             android:key="@string/custom_buttons_link_preference"
             android:fragment="com.ichi2.anki.Preferences$CustomButtonsSettingsFragment" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="@string/keep_screen_on_preference"
             android:summary="@string/pref_keep_screen_on_summ"
@@ -82,12 +82,12 @@
             android:entries="@array/full_screen_mode_labels"
             android:entryValues="@array/full_screen_mode_values"
             android:title="@string/fullscreen_review" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="@string/center_vertically_preference"
             android:summary="@string/vertical_centering_summ"
             android:title="@string/vertical_centering" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="@string/show_estimates_preference"
             android:summary="@string/show_estimates_summ"
             android:title="@string/show_estimates" />
@@ -124,21 +124,21 @@
             android:entryValues="@array/answer_buttons_position"
             android:key="@string/answer_buttons_position_preference"
             android:title="@string/answer_buttons_position" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="@string/show_topbar_preference"
             android:defaultValue="true"
             android:summary="@string/show_top_bar_summ"
             android:title="@string/show_top_bar" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="@string/show_progress_preference"
             android:summary="@string/show_progress_summ"
             android:title="@string/show_progress" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="@string/show_eta_preference"
             android:defaultValue="true"
             android:summary="@string/show_eta_summ"
             android:title="@string/show_eta" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="@string/show_large_answer_buttons_preference"
             android:defaultValue="false"
             android:summary="@string/show_large_answer_buttons_summ"
@@ -154,7 +154,7 @@
             android:title="@string/whiteboard_stroke_width" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/timeout_answer_text" >
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:disableDependentsState="false"
             android:key="@string/timeout_answer_preference"

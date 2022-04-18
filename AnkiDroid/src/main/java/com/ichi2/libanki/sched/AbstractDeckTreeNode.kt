@@ -22,39 +22,29 @@ import java.util.*
 
 /**
  * Holds the data for a single node (row) in the deck due tree (the user-visible list
- * of decks and their counts). A node also contains a list of nodes that refer to the
- * next level of sub-decks for that particular deck (which can be an empty list).
+ * of decks and their counts).
  *
  * The names field is an array of names that build a deck name from a hierarchy (i.e., a nested
  * deck will have an entry for every level of nesting). While the python version interchanges
  * between a string and a list of strings throughout processing, we always use an array for
  * this field and use getNamePart(0) for those cases.
  *
- * T represents the type of children. Required for typing purpose only.
+ * [processChildren] should be called if the children of this node are modified.
  */
-abstract class AbstractDeckTreeNode<T : AbstractDeckTreeNode<T>?>(
+abstract class AbstractDeckTreeNode(
     val col: Collection,
     /**
      * @return The full deck name, e.g. "A::B::C"
      */
     val fullDeckName: String,
     val did: Long
-) : Comparable<AbstractDeckTreeNode<T>> {
+) : Comparable<AbstractDeckTreeNode> {
     private val mNameComponents: Array<String>
-
-    /**
-     * @return The children of this deck. Note that they are set
-     * in the data structure returned by DeckDueTree but are
-     * always empty when the data structure is returned by
-     * deckDueList.
-     */
-    var children: List<T>? = null
-        private set
 
     /**
      * Sort on the head of the node.
      */
-    override fun compareTo(other: AbstractDeckTreeNode<T>): Int {
+    override fun compareTo(other: AbstractDeckTreeNode): Int {
         val minDepth = Math.min(depth, other.depth) + 1
         // Consider each subdeck name in the ordering
         for (i in 0 until minDepth) {
@@ -73,10 +63,12 @@ abstract class AbstractDeckTreeNode<T : AbstractDeckTreeNode<T>?>(
     /** Line representing this string without its children. Used in timbers only.  */
     protected open fun toStringLine(): String? {
         return String.format(
-            Locale.US, "%s, %d, %s",
-            fullDeckName, did, children
+            Locale.US, "%s, %d",
+            fullDeckName, did
         )
     }
+
+    abstract fun processChildren(children: List<AbstractDeckTreeNode>, addRev: Boolean)
 
     override fun toString(): String {
         val buf = StringBuffer()
@@ -89,12 +81,6 @@ abstract class AbstractDeckTreeNode<T : AbstractDeckTreeNode<T>?>(
             buf.append("  ")
         }
         buf.append(toStringLine())
-        if (children == null) {
-            return
-        }
-        for (children in children!!) {
-            children!!.toString(buf)
-        }
     }
 
     /**
@@ -121,21 +107,8 @@ abstract class AbstractDeckTreeNode<T : AbstractDeckTreeNode<T>?>(
     val depth: Int
         get() = mNameComponents.size - 1
 
-    /**
-     * @return whether this node as any children.
-     */
-    fun hasChildren(): Boolean {
-        return children != null && !children!!.isEmpty()
-    }
-
-    open fun setChildren(children: List<T>, addRev: Boolean) {
-        // addRev present here because it needs to be overridden
-        this.children = children
-    }
-
     override fun hashCode(): Int {
-        val childrenHash = if (children == null) 0 else children.hashCode()
-        return fullDeckName.hashCode() + childrenHash
+        return fullDeckName.hashCode()
     }
 
     /**
@@ -144,13 +117,10 @@ abstract class AbstractDeckTreeNode<T : AbstractDeckTreeNode<T>?>(
      * @return
      */
     override fun equals(other: Any?): Boolean {
-        if (other !is AbstractDeckTreeNode<*>) {
+        if (other !is AbstractDeckTreeNode) {
             return false
         }
-        val tree = other
-        return Decks.equalName(fullDeckName, tree.fullDeckName) &&
-            children == null && tree.children == null || // Would be the case if both are null, or the same pointer
-            children != null && children == tree.children
+        return Decks.equalName(fullDeckName, other.fullDeckName)
     }
 
     open fun shouldDisplayCounts(): Boolean {
@@ -178,8 +148,6 @@ abstract class AbstractDeckTreeNode<T : AbstractDeckTreeNode<T>?>(
     open fun knownToHaveRep(): Boolean {
         return false
     }
-
-    abstract fun withChildren(children: List<T>): T
 
     init {
         mNameComponents = Decks.path(fullDeckName)

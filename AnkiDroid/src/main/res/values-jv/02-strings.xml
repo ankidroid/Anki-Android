@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Laci terbuka</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Tutup laci</string>
+    <string name="drawer_open">Laci terbuka</string>
+    <string name="drawer_close">Tutup laci</string>
     <string name="CardEditorCardDeck">Dek kartu:</string>
     <string name="CardEditorNoteDeck">Dek:</string>
     <string name="CardEditorModel">Mengetik:</string>

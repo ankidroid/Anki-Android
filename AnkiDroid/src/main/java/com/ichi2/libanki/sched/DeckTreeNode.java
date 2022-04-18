@@ -22,19 +22,13 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
-public class DeckTreeNode extends AbstractDeckTreeNode<DeckTreeNode> {
+public class DeckTreeNode extends AbstractDeckTreeNode {
     public DeckTreeNode(Collection col, String name, long did) {
         super(col, name, did);
     }
 
-
     @Override
-    public DeckTreeNode withChildren(@NonNull List<? extends DeckTreeNode> children) {
-        Collection col = getCol();
-        String name = getFullDeckName();
-        long did = getDid();
-        DeckTreeNode node = new DeckTreeNode(col, name, did);
-        node.setChildren(children, false);
-        return node;
+    public void processChildren(@NonNull List<? extends AbstractDeckTreeNode> children, boolean addRev) {
+        // intentionally blank
     }
 }

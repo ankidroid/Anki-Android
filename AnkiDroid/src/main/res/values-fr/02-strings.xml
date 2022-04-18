@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX %</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Ouvrir la barre de navigation</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Fermer la barre de navigation</string>
+    <string name="drawer_open">Ouvrir la barre de navigation</string>
+    <string name="drawer_close">Fermer la barre de navigation</string>
     <string name="CardEditorCardDeck">Paquet de cartes :</string>
     <string name="CardEditorNoteDeck">Paquet :</string>
     <string name="CardEditorModel">Type :</string>

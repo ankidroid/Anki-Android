@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX %</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">메뉴 열기</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">메뉴 닫기</string>
+    <string name="drawer_open">메뉴 열기</string>
+    <string name="drawer_close">메뉴 닫기</string>
     <string name="CardEditorCardDeck">카드 뭉치:</string>
     <string name="CardEditorNoteDeck">덱:</string>
     <string name="CardEditorModel">유형:</string>
