@@ -19,6 +19,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filterable
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
@@ -27,13 +29,13 @@ import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.TypedFilter
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * @param tags A reference to the {@link TagsList} passed.
  */
 class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(), Filterable {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        internal val mExpandButton: ImageButton = itemView.findViewById(R.id.id_expand_button)
         internal val mCheckBoxView: CheckBoxTriStates = itemView.findViewById(R.id.tags_dialog_tag_item_checkbox)
         // TextView contains the displayed tag (only the last part)
         internal val mTextView: TextView = itemView.findViewById(R.id.tags_dialog_tag_item_text)
@@ -94,9 +96,11 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         }
         // clicking other parts toggles the expansion state
         vh.itemView.setOnClickListener {
-            changeExpansionState(vh.mPosition)
-            // result of getTagByIndex() will change due to the expansion / collapse
-            notifyDataSetChanged()
+            setExpanderBackgroundImage(vh.mExpandButton, toggleExpansionState(vh.mPosition))
+            // result of getTagByIndex() may change due to the expansion / collapse
+            if (mTree[vh.mPosition].children.isNotEmpty()) {
+                notifyDataSetChanged()
+            }
         }
         return vh
     }
@@ -108,11 +112,14 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         holder.mRawTag = tag
         holder.mPosition = originalPosition
         holder.mLevel = tagParts.size - 1
-        if (mTree[originalPosition].children.isNotEmpty()) {
-            holder.mTextView.text = " ".repeat(3 * holder.mLevel + 1) + (if (mTree[originalPosition].expandState) "v " else "> ") + tagParts.last()
-        } else {
-            holder.mTextView.text = " ".repeat(3 * (holder.mLevel + 1)) + tagParts.last()
-        }
+        holder.mTextView.text = tagParts.last()
+
+        holder.mExpandButton.visibility = if (mTree[originalPosition].children.isNotEmpty()) View.VISIBLE else View.INVISIBLE
+        setExpanderBackgroundImage(holder.mExpandButton, mTree[originalPosition].expandState)
+        val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        lp.setMargins(HIERARCHY_PADDING_VALUE * holder.mLevel, 0, 0, 0)
+        holder.mExpandButton.layoutParams = lp
+
         if (tags.isIndeterminate(tag)) {
             holder.mCheckBoxView.state = CheckBoxTriStates.State.INDETERMINATE
         } else {
@@ -200,7 +207,7 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
     /**
      * Toggle the expansion state of the position-th tag in mFilteredList.
      */
-    private fun changeExpansionState(position: Int) {
+    private fun toggleExpansionState(position: Int): Boolean {
         mTree[position].expandState = !mTree[position].expandState
         val delta = if (mTree[position].expandState) {
             mTree[position].subtreeSize - 1
@@ -219,6 +226,18 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
                 mTreeRoot.subtreeSize += delta
             }
             x = y
+        }
+        return mTree[position].expandState
+    }
+
+    private fun setExpanderBackgroundImage(button: ImageButton, expand: Boolean) {
+        when (expand) {
+            true -> {
+                button.setBackgroundResource(R.drawable.ic_expand_more_black_24dp_xml)
+            }
+            false -> {
+                button.setBackgroundResource(R.drawable.ic_chevron_right_black)
+            }
         }
     }
 
@@ -264,5 +283,9 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         mTreeRoot = TagTreeNode(-1, ArrayList(), 0, true)
         mTree = ArrayList(mFilteredList.size)
         initChildren(false)
+    }
+
+    companion object {
+        const val HIERARCHY_PADDING_VALUE = 40
     }
 }

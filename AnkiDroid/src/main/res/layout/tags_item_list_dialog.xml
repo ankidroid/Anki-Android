@@ -16,6 +16,12 @@
     android:paddingRight="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ImageButton
+        android:id="@+id/id_expand_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_chevron_right_black" />
+
     <TextView
         android:id="@+id/tags_dialog_tag_item_text"
         android:layout_width="0dp"
