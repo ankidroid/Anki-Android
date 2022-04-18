@@ -219,13 +219,13 @@ class NoteEditorTest : RobolectricTest() {
             .withFirstField(initFirstField)
             .withSecondField(initSecondField)
             .build()
-        assertThat(listOf(*editor.currentFieldStrings), contains(initFirstField, initSecondField))
+        assertThat(editor.currentFieldStrings.toList(), contains(initFirstField, initSecondField))
         editor.setFieldValueFromUi(0, newFirstField)
-        assertThat(listOf(*editor.currentFieldStrings), contains(newFirstField, initSecondField))
+        assertThat(editor.currentFieldStrings.toList(), contains(newFirstField, initSecondField))
 
         saveNote(editor)
         waitForAsyncTasksToComplete()
-        val actual = listOf(*editor.currentFieldStrings)
+        val actual = editor.currentFieldStrings.toList()
 
         assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""))
     }
@@ -237,7 +237,7 @@ class NoteEditorTest : RobolectricTest() {
         val i = Intent(ACTION_PROCESS_TEXT)
         i.putExtra(EXTRA_PROCESS_TEXT, "hello\nworld")
         val editor = startActivityNormallyOpenCollectionWithIntent(NoteEditor::class.java, i)
-        val actual = listOf(*editor.currentFieldStrings)
+        val actual = editor.currentFieldStrings.toList()
 
         assertThat(actual, contains("hello\nworld", ""))
     }
