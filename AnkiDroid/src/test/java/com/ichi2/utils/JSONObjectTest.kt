@@ -1084,6 +1084,23 @@ class JSONObjectTest {
         }
     }
 
+    @Test
+    fun testGetThrows() {
+        val `object` = JSONObject()
+        Assert.assertThrows(JSONException::class.java) {
+            `object`.getBoolean("key")
+        }
+        Assert.assertThrows(JSONException::class.java) {
+            `object`.getInt("key")
+        }
+        Assert.assertThrows(JSONException::class.java) {
+            `object`.getLong("key")
+        }
+        Assert.assertThrows(JSONException::class.java) {
+            `object`.getString("key")
+        }
+    }
+
     companion object {
         /**
          * Wraps all the alphanumeric words in a string in quotes
