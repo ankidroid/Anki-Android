@@ -42,7 +42,7 @@ object Permissions {
      * @return
      */
     @JvmStatic
-    fun hasStorageWriteAccessPermission(context: Context): Boolean {
+    private fun hasStorageWriteAccessPermission(context: Context): Boolean {
         return hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
@@ -52,7 +52,7 @@ object Permissions {
      * @return
      */
     @JvmStatic
-    fun hasStorageReadAccessPermission(context: Context): Boolean {
+    private fun hasStorageReadAccessPermission(context: Context): Boolean {
         return hasPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
@@ -62,7 +62,7 @@ object Permissions {
      * @return
      */
     @JvmStatic
-    fun hasStorageReadAndWriteAccessPermission(context: Context): Boolean {
+    fun hasStorageAccessPermission(context: Context): Boolean {
         return hasStorageReadAccessPermission(context) && hasStorageWriteAccessPermission(context)
     }
 

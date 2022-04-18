@@ -84,6 +84,8 @@ import shark.AndroidReferenceMatchers;
 import shark.KeyedWeakReferenceFinder;
 import shark.ReferenceMatcher;
 import timber.log.Timber;
+
+import static com.ichi2.utils.Permissions.hasStorageAccessPermission;
 import static timber.log.Timber.DebugTree;
 
 /**
@@ -349,7 +351,7 @@ public class AnkiDroidApp extends Application {
         CardBrowser.clearLastDeckId();
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        if (Permissions.hasStorageWriteAccessPermission(this)) {
+        if (hasStorageAccessPermission(this)) {
             try {
                 String dir = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                 CollectionHelper.initializeAnkiDroidDirectory(dir);

@@ -32,7 +32,7 @@ import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
-import com.ichi2.utils.Permissions.hasStorageWriteAccessPermission
+import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import timber.log.Timber
 import java.util.function.Consumer
 
@@ -79,7 +79,7 @@ class IntentHandler : Activity() {
      */
     private fun performActionIfStorageAccessible(runnable: Runnable, reloadIntent: Intent, action: String?) {
         if (!ScopedStorageService.isLegacyStorage(this) ||
-            applicationInfo.targetSdkVersion < Build.VERSION_CODES.R && hasStorageWriteAccessPermission(this)
+            applicationInfo.targetSdkVersion < Build.VERSION_CODES.R && hasStorageAccessPermission(this)
         ) {
             Timber.i("User has storage permissions. Running intent: %s", action)
             runnable.run()

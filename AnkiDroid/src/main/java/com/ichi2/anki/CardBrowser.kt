@@ -93,7 +93,7 @@ import com.ichi2.upgrade.Upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.Permissions.hasStorageWriteAccessPermission
+import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.update
 import net.ankiweb.rsdroid.RustCleanup
@@ -490,7 +490,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         super.onCreate(savedInstanceState)
         Timber.d("onCreate()")
-        if (wasLoadedFromExternalTextActionItem() && !hasStorageWriteAccessPermission(this)) {
+        if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this)) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
             showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
             displayDeckPickerForPermissionsDialog()
