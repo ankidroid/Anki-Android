@@ -85,6 +85,7 @@ import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.*
 import com.ichi2.async.Connection.CancellableTaskListener
@@ -1219,13 +1220,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     @KotlinCleanup("?:")
-    fun showImportDialog(id: Int, message: String?) {
-        var newMessage = message
+    fun showImportDialog(id: Int, messageList: List<String>) {
+        val newMessageList = messageList.toMutableList()
         Timber.d("showImportDialog() delegating to ImportDialog")
-        if (newMessage == null) {
-            newMessage = ""
+        if (newMessageList.isEmpty()) {
+            newMessageList.add("")
         }
-        val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, newMessage)
+        val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, newMessageList.toList())
         showAsyncDialogFragment(newFragment)
     }
 
@@ -1368,7 +1369,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     fun restoreFromBackup(path: String?) {
-        importReplace(path)
+        val pathList: List<String> = listOfNotNull(path)
+        importReplace(pathList)
     }
 
     // Helper function to check if there are any saved stacktraces
@@ -1746,13 +1748,15 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     // Callback to import a file -- adding it to existing collection
-    override fun importAdd(importPath: String?) {
+    @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file.")
+    override fun importAdd(importPath: List<String>) {
         Timber.d("importAdd() for file %s", importPath)
         TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
     }
 
     // Callback to import a file -- replacing the existing collection
-    override fun importReplace(importPath: String?) {
+    @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file.")
+    override fun importReplace(importPath: List<String>) {
         TaskManager.launchCollectionTask(ImportReplace(importPath), importReplaceListener())
     }
 
