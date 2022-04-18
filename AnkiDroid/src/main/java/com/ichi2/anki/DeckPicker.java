@@ -424,7 +424,9 @@ public class DeckPicker extends NavigationDrawerActivity implements
 
         //we need to restore here, as we need it before super.onCreate() is called.
         restoreWelcomeMessage(savedInstanceState);
-        SplashScreen.installSplashScreen(this);
+
+        // calling splash screen android 12
+        SplashScreen splashScreen =  SplashScreen.installSplashScreen(this);
 
         // Then set theme and content view
         super.onCreate(savedInstanceState);

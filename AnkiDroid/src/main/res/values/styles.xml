@@ -13,7 +13,7 @@
 
     <style name="Theme_Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/material_theme_grey</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen_logo</item>
         <item name="postSplashScreenTheme">@style/Theme_Light_Compat</item>
     </style>
     <!-- Theme for crash report dialog -->
