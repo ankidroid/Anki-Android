@@ -471,13 +471,14 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     @KotlinCleanup("remove parameters named _")
     @KotlinCleanup("return early and remove else")
     fun requestStoragePermission() {
+        val storagePermissions = arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
         if (mClosedWelcomeMessage) {
             // DEFECT #5847: This fails if the activity is killed.
             // Even if the dialog is showing, we want to show it again.
-            ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                REQUEST_STORAGE_PERMISSION
-            )
+            ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
         } else {
             Timber.i("Displaying initial permission request dialog")
             // Request storage permission if we don't have it (e.g. on Android 6.0+)
@@ -488,10 +489,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .positiveText(R.string.dialog_ok)
                 .onPositive { _: MaterialDialog?, _: DialogAction? ->
                     mClosedWelcomeMessage = true
-                    ActivityCompat.requestPermissions(
-                        this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        REQUEST_STORAGE_PERMISSION
-                    )
+                    ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
                 }
                 .cancelable(false)
                 .canceledOnTouchOutside(false)
@@ -712,8 +710,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.size == 1) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.isNotEmpty()) {
+            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 invalidateOptionsMenu()
                 handleStartup()
             } else {
