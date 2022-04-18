@@ -146,21 +146,21 @@ object ImportUtils {
             }
         }
 
-        private fun handleContentProviderFile(context: Context, intent: Intent, data: ArrayList<Uri>): ImportResult {
+        private fun handleContentProviderFile(context: Context, intent: Intent, dataList: ArrayList<Uri>): ImportResult {
             // Note: intent.getData() can be null. Use data instead.
 
             val tempOutDirList: ArrayList<String> = ArrayList()
 
-            // Iterate over data & append tempOutDir to above arraylist.
-            data.forEach {
-                Timber.v(it.toString())
+            dataList.forEach {
+                // Name it to something more appropriate.
+                var data = it
 
                 // Get the original filename from the content provider URI
-                var filename = getFileNameFromContentProvider(context, it)
+                var filename = getFileNameFromContentProvider(context, data)
 
                 // Hack to fix bug where ContentResolver not returning filename correctly
                 if (filename == null) {
-                    if (intent.type != null && ("application/apkg" == intent.type || hasValidZipFile(context, it))) {
+                    if (intent.type != null && ("application/apkg" == intent.type || hasValidZipFile(context, data))) {
                         // Set a dummy filename if MIME type provided or is a valid zip file
                         filename = "unknown_filename.apkg"
                         Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue")
@@ -183,7 +183,7 @@ object ImportUtils {
                     // Copy to temporary file
                     filename = ensureValidLength(filename)
                     val tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
-                    val errorMessage = if (copyFileToCache(context, it, tempOutDir)) null else context.getString(R.string.import_error_copy_file_to_cache)
+                    val errorMessage = if (copyFileToCache(context, data, tempOutDir)) null else context.getString(R.string.import_error_copy_file_to_cache)
                     // Show import dialog
                     if (errorMessage != null) {
                         AnkiDroidApp.sendExceptionReport(RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed")
@@ -316,7 +316,7 @@ object ImportUtils {
         companion object {
             /**
              * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
-             * @param path path to apkg file which will be imported
+             * @param pathList path to apkg file which will be imported
              */
             private fun sendShowImportFileDialogMsg(pathList: ArrayList<String>) {
 

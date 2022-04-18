@@ -102,15 +102,15 @@ class ImportDialog : AsyncDialogFragment() {
          * A set of dialogs which deal with importing a file
          *
          * @param dialogType An integer which specifies which of the sub-dialogs to show
-         * @param dialogMessage An optional string which can be used to show a custom message
+         * @param dialogMessageList An optional string which can be used to show a custom message
          * or specify import path
          */
         @JvmStatic
-        fun newInstance(dialogType: Int, dialogMessage: ArrayList<String>): ImportDialog {
+        fun newInstance(dialogType: Int, dialogMessageList: ArrayList<String>): ImportDialog {
             val f = ImportDialog()
             val args = Bundle()
             args.putInt("dialogType", dialogType)
-            args.putStringArrayList("dialogMessage", dialogMessage)
+            args.putStringArrayList("dialogMessage", dialogMessageList)
             f.arguments = args
             return f
         }
