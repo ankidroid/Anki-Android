@@ -38,7 +38,6 @@ import androidx.core.content.pm.PackageInfoCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.util.Log;
-import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
@@ -350,7 +349,7 @@ public class AnkiDroidApp extends Application {
         CardBrowser.clearLastDeckId();
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        if (Permissions.hasStorageAccessPermission(this)) {
+        if (Permissions.hasStorageWriteAccessPermission(this)) {
             try {
                 String dir = CollectionHelper.getCurrentAnkiDroidDirectory(this);
                 CollectionHelper.initializeAnkiDroidDirectory(dir);

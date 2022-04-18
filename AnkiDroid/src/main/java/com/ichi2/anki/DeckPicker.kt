@@ -103,7 +103,8 @@ import com.ichi2.libanki.sync.Syncer.ConnectionResultType
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
-import com.ichi2.utils.Permissions.hasStorageAccessPermission
+import com.ichi2.utils.Permissions.hasStorageReadAccessPermission
+import com.ichi2.utils.Permissions.hasStorageReadAndWriteAccessPermission
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 import java.io.File
@@ -387,7 +388,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      * Attempts startup if storage permission has been acquired, else, it requests the permission
      */
     fun handleStartup() {
-        if (hasStorageAccessPermission(this)) {
+        if (hasStorageReadAndWriteAccessPermission(this)) {
             val failure = InitialActivity.getStartupFailureType(this)
             mStartupError = if (failure == null) {
                 // Show any necessary dialogs (e.g. changelog, special messages, etc)
@@ -1321,7 +1322,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     override fun mediaCheck() {
-        TaskManager.launchCollectionTask(CheckMedia(), mediaCheckListener())
+        if (hasStorageReadAccessPermission(this)) {
+            TaskManager.launchCollectionTask(CheckMedia(), mediaCheckListener())
+        } else {
+            requestStoragePermission()
+        }
     }
 
     private fun mediaDeleteListener(): MediaDeleteListener {
