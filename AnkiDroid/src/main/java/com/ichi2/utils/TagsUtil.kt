@@ -42,7 +42,7 @@ object TagsUtil {
     fun getTagParts(tag: String): List<String> {
         val res = ArrayList<String>()
         var lastColons = -2
-        while (lastColons + 2 < tag.length) {
+        while (lastColons + 2 <= tag.length) {
             var nextColons = tag.indexOf("::", lastColons + 2)
             if (nextColons == -1) {
                 nextColons = tag.length
@@ -56,6 +56,22 @@ object TagsUtil {
             lastColons = nextColons
         }
         return res
+    }
+
+    /**
+     * Utility that uniforms a hierarchy tag.
+     */
+    @JvmStatic
+    fun getUniformedTag(tag: String): String {
+        val tagParts = getTagParts(tag)
+        val sb = StringBuilder()
+        for (i in tagParts.indices) {
+            if (i > 0) {
+                sb.append("::")
+            }
+            sb.append(tagParts[i])
+        }
+        return sb.toString()
     }
 
     /**

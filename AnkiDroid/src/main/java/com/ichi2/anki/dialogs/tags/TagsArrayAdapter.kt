@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.dialogs.tags
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -96,7 +97,8 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         }
         // clicking other parts toggles the expansion state
         vh.itemView.setOnClickListener {
-            setExpanderBackgroundImage(vh.mExpandButton, toggleExpansionState(vh.mPosition))
+            toggleExpansionState(vh.mPosition)
+            setExpanderBackgroundImage(vh.mExpandButton, getExpansionState(vh.mPosition))
             // result of getTagByIndex() may change due to the expansion / collapse
             if (mTree[vh.mPosition].children.isNotEmpty()) {
                 notifyDataSetChanged()
@@ -230,6 +232,10 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         return mTree[position].expandState
     }
 
+    private fun getExpansionState(position: Int): Boolean {
+        return mTree[position].expandState
+    }
+
     private fun setExpanderBackgroundImage(button: ImageButton, expand: Boolean) {
         when (expand) {
             true -> {
@@ -241,12 +247,30 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         }
     }
 
+    /**
+     * Expand all ancestors of the tag.
+     * Need to call notifyDataSetChanged() to apply the changes.
+     */
+    private fun expandPathToTag(tag: String) {
+        val ancestors = TagsUtil.getTagAncestors(tag)
+        for (ancestor in ancestors) {
+            val position = mFilteredList.indexOf(ancestor)
+            if (!getExpansionState(position)) {
+                toggleExpansionState(position)
+            }
+        }
+    }
+
     override fun getFilter(): TagsFilter {
         return TagsFilter()
     }
 
     /* Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026 */
     inner class TagsFilter : TypedFilter<String>({ tags.toList() }) {
+        // a target tag may be set so that the path to is is always expanded
+        // it is cleared after the filter is updated
+        private var mExpandTarget: String? = null
+
         override fun filterResults(constraint: CharSequence, items: List<String>): List<String> {
             val tagSet = TreeSet<String>()
 
@@ -271,9 +295,17 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
             mFilteredList.clear()
             mFilteredList.addAll(results)
             // if the search constraint is empty, collapse all tags when constructing the tree
-            initChildren(!constraint.isNullOrEmpty())
             sortData()
+            initChildren(!constraint.isNullOrEmpty())
+            if (!TextUtils.isEmpty(mExpandTarget)) {
+                expandPathToTag(mExpandTarget!!)
+            }
+            mExpandTarget = null
             notifyDataSetChanged()
+        }
+
+        fun setExpandTarget(tag: String?) {
+            mExpandTarget = tag
         }
     }
 

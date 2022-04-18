@@ -19,7 +19,6 @@ import com.ichi2.utils.TagsUtil;
 import com.ichi2.utils.UniqueArrayList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -150,7 +149,11 @@ public class TagsList implements Iterable<String> {
      * @return true if tag was added (new tag)
      */
     public boolean add(String tag) {
-        return mAllTags.add(tag);
+        if (!mAllTags.add(tag)) {
+            return false;
+        }
+        addAncestors(tag);
+        return true;
     }
 
 
@@ -166,7 +169,11 @@ public class TagsList implements Iterable<String> {
             return false;
         }
         mIndeterminateTags.remove(tag);
-        return mCheckedTags.add(tag);
+        if (!mCheckedTags.add(tag)) {
+            return false;
+        }
+        markAncestorsIndeterminate(tag);
+        return true;
     }
 
     /**
@@ -256,20 +263,35 @@ public class TagsList implements Iterable<String> {
      * Initialize the tag hierarchy.
      */
     private void prepareTagHierarchy() {
-        // add virtual tags to build the hierarchy tree
-        ArrayList<String> vTags = new ArrayList<>();
-        for (String tag : mAllTags) {
-            vTags.addAll(TagsUtil.getTagAncestors(tag));
+        List<String> allTags = copyOfAllTagList();
+        for (String tag : allTags) {
+            addAncestors(tag);
         }
-        mAllTags.addAll(vTags);
-
-        // mark ancestors of checked tags as indeterminate (if not a checked tag)
         for (String tag : mCheckedTags) {
-            List<String> ancestors = TagsUtil.getTagAncestors(tag);
-            for (String anc : ancestors) {
-                if (!isChecked(anc)) {
-                    mIndeterminateTags.add(anc);
-                }
+            markAncestorsIndeterminate(tag);
+        }
+    }
+
+
+    /**
+     * Add ancestors of the tag into the set of all tags.
+     */
+    private void addAncestors(String tag) {
+        mAllTags.addAll(TagsUtil.getTagAncestors(tag));
+    }
+
+
+    /**
+     * Mark ancestors of the tag as indeterminate (if not a checked tag).
+     */
+    private void markAncestorsIndeterminate(String tag) {
+        if (!mAllTags.contains(tag)) {
+            return;
+        }
+        List<String> ancestors = TagsUtil.getTagAncestors(tag);
+        for (String anc : ancestors) {
+            if (!isChecked(anc)) {
+                mIndeterminateTags.add(anc);
             }
         }
     }

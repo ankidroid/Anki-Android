@@ -25,6 +25,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
+import com.ichi2.utils.TagsUtil
 
 class TagsDialog : AnalyticsDialogFragment {
     /**
@@ -247,8 +248,9 @@ class TagsDialog : AnalyticsDialogFragment {
     }
 
     @VisibleForTesting
-    fun addTag(tag: String?) {
-        if (!TextUtils.isEmpty(tag)) {
+    fun addTag(rawTag: String?) {
+        if (!TextUtils.isEmpty(rawTag)) {
+            val tag = TagsUtil.getUniformedTag(rawTag!!)
             val feedbackText: String
             if (mTags!!.add(tag)) {
                 if (mNoTagsTextView!!.visibility == View.VISIBLE) {
@@ -262,7 +264,10 @@ class TagsDialog : AnalyticsDialogFragment {
             mTags!!.check(tag)
             mTagsArrayAdapter!!.sortData()
             mTagsArrayAdapter!!.notifyDataSetChanged()
-            mTagsArrayAdapter!!.filter.refresh()
+            // Expand to reveal the newly added tag.
+            val filter = mTagsArrayAdapter!!.filter
+            filter.setExpandTarget(tag)
+            filter.refresh()
             // Show a snackbar to let the user know the tag was added successfully
             showSnackbar(
                 requireActivity(), feedbackText, false, -1, null,
