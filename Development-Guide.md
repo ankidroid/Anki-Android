@@ -318,7 +318,7 @@ In this case, it's necessary to:
 
 ## Code Coverage
 
-In march 2021, only 36% of the code were covered. That is that all of our test only runs 36% of the lines written. Erroneous change in the remaining 64% of lines would not be detected automatically and would impact user experience. One of the best way to improve long-term evolution of the code base would be to increase the coverage. You can go to https://codecov.io/gh/ankidroid/Anki-Android/tree/master/AnkiDroid/src/main/java/com/ichi2 and find functions and part of codes which are not yet tested, and write test for them. 
+In march 2021, only 36% of the code were covered. That is that all of our test only runs 36% of the lines written. Erroneous change in the remaining 64% of lines would not be detected automatically and would impact user experience. One of the best way to improve long-term evolution of the code base would be to increase the coverage. You can go to https://codecov.io/gh/ankidroid/Anki-Android/tree/main/AnkiDroid/src/main/java/com/ichi2 and find functions and part of codes which are not yet tested, and write test for them. 
 
 
 Not 100% of the code have to be covered. In particular, it is useless to cover part of the code that should be rewritten, or ported to rust. Use your own judgement or discuss with maintainers if you have got a doubt. 
