@@ -1085,6 +1085,9 @@ class JSONObjectTest {
             Assert.assertEquals(fromMapJsonObject.getBoolean("key$i"), i % 2 == 0)
         }
     }
+    /**
+     * Tests that exception is caught in the catch statement
+     */
     @Test
     fun testGetThrows() {
         val `object` = JSONObject()
@@ -1101,6 +1104,7 @@ class JSONObjectTest {
             `object`.getString("key")
         }
     }
+
     companion object {
         /**
          * Wraps all the alphanumeric words in a string in quotes
