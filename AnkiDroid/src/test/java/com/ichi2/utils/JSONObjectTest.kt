@@ -37,7 +37,9 @@ Most of the code is:
 package com.ichi2.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.AnkiAssert.assertThrows
 import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.assertThrows
 import junit.framework.TestCase.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull.notNullValue
@@ -1083,24 +1085,22 @@ class JSONObjectTest {
             Assert.assertEquals(fromMapJsonObject.getBoolean("key$i"), i % 2 == 0)
         }
     }
-
     @Test
     fun testGetThrows() {
         val `object` = JSONObject()
-        Assert.assertThrows(JSONException::class.java) {
+        assertThrows<JSONException>() {
             `object`.getBoolean("key")
         }
-        Assert.assertThrows(JSONException::class.java) {
+        assertThrows<JSONException> {
             `object`.getInt("key")
         }
-        Assert.assertThrows(JSONException::class.java) {
+        assertThrows<JSONException> {
             `object`.getLong("key")
         }
-        Assert.assertThrows(JSONException::class.java) {
+        assertThrows<JSONException> {
             `object`.getString("key")
         }
     }
-
     companion object {
         /**
          * Wraps all the alphanumeric words in a string in quotes
