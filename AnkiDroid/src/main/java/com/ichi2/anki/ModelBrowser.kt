@@ -35,6 +35,7 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.CountModels
 import com.ichi2.async.CollectionTask.DeleteModel
 import com.ichi2.async.TaskListenerWithContext
@@ -144,11 +145,13 @@ class ModelBrowser : AnkiActivity() {
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
+    @NeedsTest("Title follows AnkiDroid's language instead of system's")
     public override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
         super.onCreate(savedInstanceState)
+        setTitle(R.string.model_browser_label)
         setContentView(R.layout.model_browser)
         mModelListView = findViewById(R.id.note_type_browser_list)
         enableToolbar()
