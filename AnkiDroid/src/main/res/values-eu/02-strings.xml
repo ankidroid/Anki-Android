@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Open drawer</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Itxi Kutxa</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Itxi Kutxa</string>
     <string name="CardEditorCardDeck">Txartel-sorta:</string>
     <string name="CardEditorNoteDeck">Sorta:</string>
     <string name="CardEditorModel">Mota:</string>

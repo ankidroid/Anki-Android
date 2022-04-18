@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Відкрити шухляду</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Закрити шухляду</string>
+    <string name="drawer_open">Відкрити шухляду</string>
+    <string name="drawer_close">Закрити шухляду</string>
     <string name="CardEditorCardDeck">Колода карток:</string>
     <string name="CardEditorNoteDeck">Колода:</string>
     <string name="CardEditorModel">Тип:</string>

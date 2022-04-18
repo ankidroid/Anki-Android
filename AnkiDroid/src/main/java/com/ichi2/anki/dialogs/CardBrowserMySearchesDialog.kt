@@ -38,19 +38,24 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
             savedFilters?.let {
                 savedFilterKeys = ArrayList(it.keys)
             }
-            buttonItemAdapter = ButtonItemAdapter(savedFilterKeys)
+            buttonItemAdapter = ButtonItemAdapter(savedFilterKeys!!)
             buttonItemAdapter!!.apply {
                 notifyAdapterDataSetChanged() // so the values are sorted.
                 setCallbacks(
-                    { searchName: String? ->
-                        Timber.d("item clicked: %s", searchName)
-                        mySearchesDialogListener!!.onSelection(searchName)
-                        dialog?.dismiss()
+                    object : ButtonItemAdapter.ItemCallback {
+                        override fun onItemClicked(searchName: String) {
+                            Timber.d("item clicked: %s", searchName)
+                            mySearchesDialogListener!!.onSelection(searchName)
+                            dialog?.dismiss()
+                        }
+                    },
+                    object : ButtonItemAdapter.ButtonCallback {
+                        override fun onButtonClicked(searchName: String) {
+                            Timber.d("button clicked: %s", searchName)
+                            removeSearch(searchName)
+                        }
                     }
-                ) { searchName: String ->
-                    Timber.d("button clicked: %s", searchName)
-                    removeSearch(searchName)
-                }
+                )
                 builder.title(resources.getString(R.string.card_browser_list_my_searches_title))
                     .adapter(this, null)
             }

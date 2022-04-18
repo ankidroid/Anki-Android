@@ -108,6 +108,20 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         }
     }
 
+    fun showFloatingActionButton() {
+        if (!mFabMain.isShown) {
+            Timber.i("DeckPicker:: showFloatingActionButton()")
+            mFabMain.visibility = View.VISIBLE
+        }
+    }
+
+    fun hideFloatingActionButton() {
+        if (mFabMain.isShown) {
+            Timber.i("DeckPicker:: hideFloatingActionButton()")
+            mFabMain.visibility = View.GONE
+        }
+    }
+
     init {
         val addNoteButton: FloatingActionButton = view.findViewById(R.id.add_note_action)
         val addSharedButton: FloatingActionButton = view.findViewById(R.id.add_shared_action)

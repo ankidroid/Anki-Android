@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Öppna panel</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Stäng panel</string>
+    <string name="drawer_open">Öppna panel</string>
+    <string name="drawer_close">Stäng panel</string>
     <string name="CardEditorCardDeck">Kortlek:</string>
     <string name="CardEditorNoteDeck">Kortlek:</string>
     <string name="CardEditorModel">Typ:</string>

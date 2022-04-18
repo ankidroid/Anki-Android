@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX %</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Avaa laatikosto</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Sulje laatikosto</string>
+    <string name="drawer_open">Avaa laatikosto</string>
+    <string name="drawer_close">Sulje laatikosto</string>
     <string name="CardEditorCardDeck">Korttipakka:</string>
     <string name="CardEditorNoteDeck">Pakka:</string>
     <string name="CardEditorModel">Tyyppi:</string>

@@ -51,26 +51,8 @@
       </option>
     </JavaCodeStyleSettings>
     <JetCodeStyleSettings>
-      <option name="PACKAGES_TO_USE_STAR_IMPORTS">
-        <value>
-          <package name="java.util" alias="false" withSubpackages="false" />
-          <package name="kotlinx.android.synthetic" alias="false" withSubpackages="true" />
-          <package name="io.ktor" alias="false" withSubpackages="true" />
-        </value>
-      </option>
-      <option name="PACKAGES_IMPORT_LAYOUT">
-        <value>
-          <package name="" alias="false" withSubpackages="true" />
-          <package name="java" alias="false" withSubpackages="true" />
-          <package name="javax" alias="false" withSubpackages="true" />
-          <package name="kotlin" alias="false" withSubpackages="true" />
-          <package name="" alias="true" withSubpackages="true" />
-        </value>
-      </option>
+      <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
     </JetCodeStyleSettings>
-    <XML>
-      <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
-    </XML>
     <codeStyleSettings language="JAVA">
       <option name="RIGHT_MARGIN" value="120" />
       <option name="BLANK_LINES_AROUND_CLASS" value="3" />
@@ -237,6 +219,9 @@
           </section>
         </rules>
       </arrangement>
+    </codeStyleSettings>
+    <codeStyleSettings language="kotlin">
+      <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
     </codeStyleSettings>
   </code_scheme>
 </component>

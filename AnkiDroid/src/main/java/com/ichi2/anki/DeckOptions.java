@@ -755,6 +755,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
     }
 
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onDestroy() {
         super.onDestroy();
