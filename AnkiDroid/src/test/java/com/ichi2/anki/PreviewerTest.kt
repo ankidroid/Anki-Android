@@ -13,163 +13,158 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
-
-import android.app.Activity;
-import android.content.Intent;
-
-import com.ichi2.libanki.Card;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
-
-import android.widget.SeekBar;
-import android.widget.TextView;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(AndroidJUnit4.class)
-public class PreviewerTest extends RobolectricTest {
+import android.app.Activity
+import android.widget.SeekBar
+import android.widget.TextView
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.libanki.Card
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
+@KotlinCleanup("is -> equalTo")
+@RunWith(AndroidJUnit4::class)
+class PreviewerTest : RobolectricTest() {
 
     @Test
-    public void editingNoteDoesNotChangePreviewedCardId() {
+    @Suppress("DEPRECATION")
+    fun editingNoteDoesNotChangePreviewedCardId() {
         // #7801
-        addNoteUsingBasicModel("Hello", "World");
+        addNoteUsingBasicModel("Hello", "World")
 
-        Card cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard();
-        setDeck("Deck", cardToPreview);
+        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
+        setDeck("Deck", cardToPreview)
 
-        Previewer previewer = getPreviewerPreviewing(cardToPreview);
+        val previewer = getPreviewerPreviewing(cardToPreview)
 
-        assertThat("Initially should be previewing selected card", previewer.getCurrentCardId(), is(cardToPreview.getId()));
+        assertThat("Initially should be previewing selected card", previewer.currentCardId, `is`(cardToPreview.id))
 
-        previewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, null);
+        previewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, null)
 
-        advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep()
 
-        assertThat("Should be previewing selected card after edit", previewer.getCurrentCardId(), is(cardToPreview.getId()));
+        assertThat("Should be previewing selected card after edit", previewer.currentCardId, `is`(cardToPreview.id))
     }
 
     @Test
-    public void editingNoteChangesContent() {
+    @Suppress("DEPRECATION")
+    fun editingNoteChangesContent() {
         // #7801
-        addNoteUsingBasicModel("Hello", "World");
+        addNoteUsingBasicModel("Hello", "World")
 
-        Card cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard();
-        setDeck("Deck", cardToPreview);
+        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
+        setDeck("Deck", cardToPreview)
 
-        Previewer previewer = getPreviewerPreviewing(cardToPreview);
+        val previewer = getPreviewerPreviewing(cardToPreview)
 
-        assertThat("Initial content assumption", previewer.getCardContent(), not(containsString("Hi")));
+        assertThat("Initial content assumption", previewer.cardContent, not(containsString("Hi")))
 
-        cardToPreview.note().setField(0, "Hi");
+        cardToPreview.note().setField(0, "Hi")
 
-        previewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, null);
+        previewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, null)
 
-        advanceRobolectricLooperWithSleep();
+        advanceRobolectricLooperWithSleep()
 
-        assertThat("Card content should be updated after editing", previewer.getCardContent(), containsString("Hi"));
+        assertThat("Card content should be updated after editing", previewer.cardContent, containsString("Hi"))
     }
 
     @Test
-    public void previewerShouldNotAccessScheduler() {
-        Card cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard();
-        Previewer previewer = getPreviewerPreviewing(cardToPreview);
+    fun previewerShouldNotAccessScheduler() {
+        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
+        val previewer = getPreviewerPreviewing(cardToPreview)
 
-        assertThat("Previewer is not a reviewer", previewer.canAccessScheduler(), is(false));
-    }
-
-    @Test
-    @Config(qualifiers = "en")
-    public void seekbarOnStart() {
-        Previewer previewer = seekBarHelper();
-        SeekBar s = previewer.findViewById(R.id.preview_progress_seek_bar);
-        TextView t = previewer.findViewById(R.id.preview_progress_text);
-        assertThat("Progress is 0 at the beginning.", s.getProgress(), is(0));
-        assertThat("Progress text at the beginning.", t.getText(), is(previewer.getString(R.string.preview_progress_bar_text, 1, 6)));
+        assertThat("Previewer is not a reviewer", previewer.canAccessScheduler(), `is`(false))
     }
 
     @Test
     @Config(qualifiers = "en")
-    public void seekBarMax() {
-        Previewer previewer = seekBarHelper();
-        SeekBar s = previewer.findViewById(R.id.preview_progress_seek_bar);
-        TextView t = previewer.findViewById(R.id.preview_progress_text);
-        assertThat("Max value of seekbar", s.getMax(), is(5));
-        assertThat("Progress text at the beginning.", t.getText(), is(previewer.getString(R.string.preview_progress_bar_text, 1, 6)));
+    fun seekbarOnStart() {
+        val previewer = seekBarHelper()
+        val s = previewer.findViewById<SeekBar>(R.id.preview_progress_seek_bar)
+        val t = previewer.findViewById<TextView>(R.id.preview_progress_text)
+        assertThat("Progress is 0 at the beginning.", s.progress, `is`(0))
+        assertThat("Progress text at the beginning.", t.text, `is`(previewer.getString(R.string.preview_progress_bar_text, 1, 6)))
     }
 
     @Test
     @Config(qualifiers = "en")
-    public void seekBarOnNavigationForward() {
-        Previewer previewer = seekBarHelper();
-        SeekBar s = previewer.findViewById(R.id.preview_progress_seek_bar);
-        TextView t = previewer.findViewById(R.id.preview_progress_text);
-        int y = s.getProgress();
-        previewer.changePreviewedCard(true);
-        previewer.changePreviewedCard(true);
-        assertThat("Seekbar value when you preview two cards", y, is(s.getProgress() - 2));
-        assertThat("Progress text at the beginning.", t.getText(), is(previewer.getString(R.string.preview_progress_bar_text, 3, 6)));
+    fun seekBarMax() {
+        val previewer = seekBarHelper()
+        val s = previewer.findViewById<SeekBar>(R.id.preview_progress_seek_bar)
+        val t = previewer.findViewById<TextView>(R.id.preview_progress_text)
+        assertThat("Max value of seekbar", s.max, `is`(5))
+        assertThat("Progress text at the beginning.", t.text, `is`(previewer.getString(R.string.preview_progress_bar_text, 1, 6)))
     }
 
     @Test
     @Config(qualifiers = "en")
-    public  void seekBarOnNavigationBackward() {
-        Previewer previewer = seekBarHelper();
-        SeekBar s = previewer.findViewById(R.id.preview_progress_seek_bar);
-        TextView t = previewer.findViewById(R.id.preview_progress_text);
-        previewer.changePreviewedCard(true);
-        previewer.changePreviewedCard(true);
-        int y = s.getProgress();
-        previewer.changePreviewedCard(false);
-        assertThat("Progress text at the beginning.", t.getText(), is(previewer.getString(R.string.preview_progress_bar_text, 2, 6)));
-        previewer.changePreviewedCard(false);
-        assertThat("Seekbar value when you go back two cards", s.getProgress(), is(y - 2));
-        assertThat("Progress text at the beginning.", t.getText(), is(previewer.getString(R.string.preview_progress_bar_text, 1, 6)));
+    fun seekBarOnNavigationForward() {
+        val previewer = seekBarHelper()
+        val s = previewer.findViewById<SeekBar>(R.id.preview_progress_seek_bar)
+        val t = previewer.findViewById<TextView>(R.id.preview_progress_text)
+        val y = s.progress
+        previewer.changePreviewedCard(true)
+        previewer.changePreviewedCard(true)
+        assertThat("Seekbar value when you preview two cards", y, `is`(s.progress - 2))
+        assertThat("Progress text at the beginning.", t.text, `is`(previewer.getString(R.string.preview_progress_bar_text, 3, 6)))
     }
 
-    public Previewer seekBarHelper() {
-        String[] front = {"1", "2", "3", "4", "5", "6"};
-        String[] back = {"7", "8", "9", "10", "11", "12"};
-        Card[] c = new Card[front.length];
-        long[] arrayList = new long[front.length];
-        for(int i = 0; i < front.length; i++) {
-            Card cardToPreview = addNoteUsingBasicModel(front[i], back[i]).firstCard();
-            setDeck("Deck", cardToPreview);
-            long h = cardToPreview.getId();
-            arrayList[i] = h;
-            c[i] = cardToPreview;
+    @Test
+    @Config(qualifiers = "en")
+    fun seekBarOnNavigationBackward() {
+        val previewer = seekBarHelper()
+        val s = previewer.findViewById<SeekBar>(R.id.preview_progress_seek_bar)
+        val t = previewer.findViewById<TextView>(R.id.preview_progress_text)
+        previewer.changePreviewedCard(true)
+        previewer.changePreviewedCard(true)
+        val y = s.progress
+        previewer.changePreviewedCard(false)
+        assertThat("Progress text at the beginning.", t.text, `is`(previewer.getString(R.string.preview_progress_bar_text, 2, 6)))
+        previewer.changePreviewedCard(false)
+        assertThat("Seekbar value when you go back two cards", s.progress, `is`(y - 2))
+        assertThat("Progress text at the beginning.", t.text, `is`(previewer.getString(R.string.preview_progress_bar_text, 1, 6)))
+    }
+
+    fun seekBarHelper(): Previewer {
+        val front = arrayOf("1", "2", "3", "4", "5", "6")
+        val back = arrayOf("7", "8", "9", "10", "11", "12")
+        val c = arrayOfNulls<Card>(front.size)
+        val arrayList = LongArray(front.size)
+        for (i in front.indices) {
+            val cardToPreview = addNoteUsingBasicModel(front[i], back[i]).firstCard()
+            setDeck("Deck", cardToPreview)
+            val h = cardToPreview.id
+            arrayList[i] = h
+            c[i] = cardToPreview
         }
-        return getPreviewerPreviewingList(arrayList, c);
+        return getPreviewerPreviewingList(arrayList, c)
     }
 
-    @SuppressWarnings("SameParameterValue")
-    protected void setDeck(String name, Card card) {
-        long did = addDeck(name);
-        card.setDid(did);
-        card.flush();
+    protected fun setDeck(name: String?, card: Card) {
+        val did = addDeck(name)
+        card.did = did
+        card.flush()
     }
 
-    protected Previewer getPreviewerPreviewingList(long[] arr, Card[] c) {
-        Intent previewIntent = Previewer.getPreviewIntent(getTargetContext(), 0, arr);
-        Previewer previewer = super.startActivityNormallyOpenCollectionWithIntent(Previewer.class, previewIntent);
-        for(int i = 0; i < arr.length; i++) {
-            AbstractFlashcardViewer.setEditorCard(c[i]);
+    protected fun getPreviewerPreviewingList(arr: LongArray, c: Array<Card?>): Previewer {
+        val previewIntent = Previewer.getPreviewIntent(targetContext, 0, arr)
+        val previewer = super.startActivityNormallyOpenCollectionWithIntent(Previewer::class.java, previewIntent)
+        for (i in arr.indices) {
+            AbstractFlashcardViewer.editorCard = c[i]
         }
-        return previewer;
+        return previewer
     }
 
-    protected Previewer getPreviewerPreviewing(Card usableCard) {
-        Intent previewIntent = Previewer.getPreviewIntent(getTargetContext(), 0, new long[] { usableCard.getId() });
-        Previewer previewer = super.startActivityNormallyOpenCollectionWithIntent(Previewer.class, previewIntent);
-        AbstractFlashcardViewer.setEditorCard(usableCard);
-        return previewer;
+    protected fun getPreviewerPreviewing(usableCard: Card): Previewer {
+        val previewIntent = Previewer.getPreviewIntent(targetContext, 0, longArrayOf(usableCard.id))
+        val previewer = super.startActivityNormallyOpenCollectionWithIntent(Previewer::class.java, previewIntent)
+        AbstractFlashcardViewer.editorCard = usableCard
+        return previewer
     }
 }
