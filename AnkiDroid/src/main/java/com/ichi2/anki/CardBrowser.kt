@@ -2165,8 +2165,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             val column2 = v.findViewById<FixedTextView>(R.id.card_column2)
 
             if (isTruncated) {
-                column1.maxLines = 4
-                column2.maxLines = 4
+                column1.maxLines = LINES_VISIBLE_WHEN_COLLAPSED
+                column2.maxLines = LINES_VISIBLE_WHEN_COLLAPSED
+                column1.ellipsize = TextUtils.TruncateAt.END
+                column2.ellipsize = TextUtils.TruncateAt.END
             } else {
                 column1.maxLines = Integer.MAX_VALUE
                 column2.maxLines = Integer.MAX_VALUE
@@ -2706,6 +2708,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
          */
         private const val CHANGE_DECK_KEY = "CHANGE_DECK"
         private const val DEFAULT_FONT_SIZE_RATIO = 100
+        private const val LINES_VISIBLE_WHEN_COLLAPSED = 3
 
         // Should match order of R.array.card_browser_order_labels
         const val CARD_ORDER_NONE = 0
