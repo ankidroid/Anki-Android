@@ -152,6 +152,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
      *            one, and use it's value in the current one.
      * @param p layout params
      */
+    @KotlinCleanup("remove !! from curField.text access")
     private fun createCloneButton(layoutTools: LinearLayout, p: LinearLayout.LayoutParams) {
         // Makes sense only for two and more fields
         if (mNote.numberOfFields > 1) {
@@ -178,7 +179,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
                 }
 
                 // collect clone sources
-                mPossibleClones!!.add(curField.text)
+                mPossibleClones!!.add(curField.text!!)
                 ++numTextFields
             }
 
