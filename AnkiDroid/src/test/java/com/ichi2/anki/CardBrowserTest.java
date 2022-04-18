@@ -22,6 +22,7 @@ import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,6 +39,7 @@ import com.ichi2.libanki.SortOrder;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.testutils.AnkiActivityUtils;
 import com.ichi2.testutils.IntentAssert;
+import com.ichi2.ui.FixedTextView;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -832,4 +834,118 @@ public class CardBrowserTest extends RobolectricTest {
         assertFalse(cards.get(1).isLoaded());
 
     }
+
+    @Test
+    public void truncateAndExpand() {
+        CardBrowser browser = getBrowserWithNotes(3);
+        ShadowActivity shadowActivity = shadowOf(browser);
+        MenuItem truncateOption = shadowActivity.getOptionsMenu().findItem(R.id.action_truncate);
+
+        // Simulating the "Truncate Content" option
+        selectMenuItem(browser, R.id.action_truncate);
+
+        // Ensuring Menu option has changed to expand
+        assertThat(getResourceString(R.string.card_browser_expand), is(truncateOption.getTitle()));
+        // Ensuring Boolean variable isTruncated is true
+        assertTrue(browser.isTruncated());
+
+        // Testing whether each card is truncated and ellipsized
+        for (int i=0; i < browser.mCardsListView.getChildCount(); i++){
+            View row = browser.getMCardsAdapter().getView(i, null, browser.mCardsListView);
+            FixedTextView column1 = row.findViewById(R.id.card_sfld);
+            FixedTextView column2 = row.findViewById(R.id.card_column2);
+
+            // Testing truncation
+            assertThat(browser.LINES_VISIBLE_WHEN_COLLAPSED, is(column1.getMaxLines()));
+            assertThat(browser.LINES_VISIBLE_WHEN_COLLAPSED, is(column2.getMaxLines()));
+
+            // Testing ellipses
+            assertThat(TextUtils.TruncateAt.END, is(column1.getEllipsize()));
+            assertThat(TextUtils.TruncateAt.END, is(column1.getEllipsize()));
+
+        }
+
+
+        // Simulating the "Expand Content" option
+        selectMenuItem(browser, R.id.action_truncate);
+
+        // Ensuring Menu option has changed to truncate
+        assertThat(getResourceString(R.string.card_browser_truncate), is(truncateOption.getTitle()));
+        // Ensuring Boolean variable isTruncated is false
+        assertFalse(browser.isTruncated());
+
+        // Testing whether each card is expanded and not ellipsized
+        for (int i=0; i < browser.mCardsListView.getChildCount(); i++){
+            View row = browser.getMCardsAdapter().getView(i, null, browser.mCardsListView);
+            FixedTextView column1 = row.findViewById(R.id.card_sfld);
+            FixedTextView column2 = row.findViewById(R.id.card_column2);
+
+            // Testing expansion
+            assertThat(Integer.MAX_VALUE, is(column1.getMaxLines()));
+            assertThat(Integer.MAX_VALUE, is(column2.getMaxLines()));
+
+            // Testing not ellipsized
+            assertThat(null, is(column1.getEllipsize()));
+            assertThat(null, is(column1.getEllipsize()));
+
+        }
+    }
+
+    @Test
+    public void truncateAndExpandMultiselectMode() {
+        CardBrowser browser = getBrowserWithNotes(3);
+        selectOneOfManyCards(browser);
+        ShadowActivity shadowActivity = shadowOf(browser);
+        MenuItem truncateOption = shadowActivity.getOptionsMenu().findItem(R.id.action_truncate);
+
+        // Simulating the "Truncate Content" option
+        selectMenuItem(browser, R.id.action_truncate);
+
+        // Ensuring Menu option has changed to expand
+        assertThat(getResourceString(R.string.card_browser_expand), is(truncateOption.getTitle()));
+        // Ensuring Boolean variable isTruncated is true
+        assertTrue(browser.isTruncated());
+
+        // Testing whether each card is truncated and ellipsized
+        for (int i=0; i < browser.mCardsListView.getChildCount(); i++){
+            View row = browser.getMCardsAdapter().getView(i, null, browser.mCardsListView);
+            FixedTextView column1 = row.findViewById(R.id.card_sfld);
+            FixedTextView column2 = row.findViewById(R.id.card_column2);
+
+            // Testing truncation
+            assertThat(browser.LINES_VISIBLE_WHEN_COLLAPSED, is(column1.getMaxLines()));
+            assertThat(browser.LINES_VISIBLE_WHEN_COLLAPSED, is(column2.getMaxLines()));
+
+            // Testing ellipses
+            assertThat(TextUtils.TruncateAt.END, is(column1.getEllipsize()));
+            assertThat(TextUtils.TruncateAt.END, is(column1.getEllipsize()));
+
+        }
+
+
+        // Simulating the "Expand Content" option
+        selectMenuItem(browser, R.id.action_truncate);
+
+        // Ensuring Menu option has changed to truncate
+        assertThat(getResourceString(R.string.card_browser_truncate), is(truncateOption.getTitle()));
+        // Ensuring Boolean variable isTruncated is false
+        assertFalse(browser.isTruncated());
+
+        // Testing whether each card is expanded and not ellipsized
+        for (int i=0; i < browser.mCardsListView.getChildCount(); i++){
+            View row = browser.getMCardsAdapter().getView(i, null, browser.mCardsListView);
+            FixedTextView column1 = row.findViewById(R.id.card_sfld);
+            FixedTextView column2 = row.findViewById(R.id.card_column2);
+
+            // Testing expansion
+            assertThat(Integer.MAX_VALUE, is(column1.getMaxLines()));
+            assertThat(Integer.MAX_VALUE, is(column2.getMaxLines()));
+
+            // Testing not ellipsized
+            assertThat(null, is(column1.getEllipsize()));
+            assertThat(null, is(column1.getEllipsize()));
+
+        }
+    }
+
 }

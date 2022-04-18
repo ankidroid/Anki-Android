@@ -139,7 +139,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     @VisibleForTesting
     var mCardsListView: ListView? = null
     private var mSearchView: CardBrowserSearchView? = null
-    private var mCardsAdapter: MultiColumnListAdapter? = null
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var mCardsAdapter: MultiColumnListAdapter? = null
+
     private var mSearchTerms: String? = null
     private var mRestrictOnDeck: String? = null
     private var mCurrentFlag = 0
@@ -2101,7 +2104,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         return RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index)
     }
 
-    private inner class MultiColumnListAdapter(
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    inner class MultiColumnListAdapter(
         context: Context?,
         private val resource: Int,
         private var fromKeys: Array<Column>,
@@ -2708,7 +2712,9 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
          */
         private const val CHANGE_DECK_KEY = "CHANGE_DECK"
         private const val DEFAULT_FONT_SIZE_RATIO = 100
-        private const val LINES_VISIBLE_WHEN_COLLAPSED = 3
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        const val LINES_VISIBLE_WHEN_COLLAPSED = 3
 
         // Should match order of R.array.card_browser_order_labels
         const val CARD_ORDER_NONE = 0
