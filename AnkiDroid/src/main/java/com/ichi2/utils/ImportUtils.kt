@@ -139,8 +139,7 @@ object ImportUtils {
             val intentUriScheme = intent.data!!.scheme
             return if (intentUriScheme == ContentResolver.SCHEME_CONTENT || intentUriScheme == ContentResolver.SCHEME_FILE || intentUriScheme == ContentResolver.SCHEME_ANDROID_RESOURCE) {
                 Timber.i("Attempting to read content from intent.")
-                val intentDataList: ArrayList<Uri> = ArrayList()
-                intentDataList.add(intent.data!!)
+                val intentDataList: ArrayList<Uri> = arrayListOf(intent.data!!)
                 handleContentProviderFile(context, intent, intentDataList)
             } else {
                 ImportResult.fromErrorString(context.resources.getString(R.string.import_error_unhandled_scheme, intent.data))
