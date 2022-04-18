@@ -1220,13 +1220,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     @KotlinCleanup("?:")
-    fun showImportDialog(id: Int, messageList: List<String>) {
-        val newMessageList = messageList.toMutableList()
+    fun showImportDialog(id: Int, messageList: ArrayList<String>) {
         Timber.d("showImportDialog() delegating to ImportDialog")
-        if (newMessageList.isEmpty()) {
-            newMessageList.add("")
+        if (messageList.isEmpty()) {
+            messageList.add("")
         }
-        val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, newMessageList.toList())
+        val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, messageList)
         showAsyncDialogFragment(newFragment)
     }
 

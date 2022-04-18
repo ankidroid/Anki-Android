@@ -106,11 +106,11 @@ class ImportDialog : AsyncDialogFragment() {
          * or specify import path
          */
         @JvmStatic
-        fun newInstance(dialogType: Int, dialogMessage: List<String>): ImportDialog {
+        fun newInstance(dialogType: Int, dialogMessage: ArrayList<String>): ImportDialog {
             val f = ImportDialog()
             val args = Bundle()
             args.putInt("dialogType", dialogType)
-            args.putStringArrayList("dialogMessage", dialogMessage as ArrayList<String>)
+            args.putStringArrayList("dialogMessage", dialogMessage)
             f.arguments = args
             return f
         }
