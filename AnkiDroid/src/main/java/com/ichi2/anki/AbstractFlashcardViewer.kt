@@ -2528,9 +2528,9 @@ abstract class AbstractFlashcardViewer :
         showDialogFragment(dialog)
     }
 
-    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
+    override fun onSelectedTags(selectedTags: List<String>?, indeterminateTags: List<String>?, option: Int) {
         if (mCurrentCard!!.note().tags != selectedTags) {
-            val tagString = TextUtils.join(" ", selectedTags)
+            val tagString = TextUtils.join(" ", selectedTags!!)
             val note = mCurrentCard!!.note()
             note.setTagsFromStr(tagString)
             note.flush()
