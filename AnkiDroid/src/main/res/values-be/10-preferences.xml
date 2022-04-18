@@ -214,8 +214,8 @@
     <string name="html_javascript_debugging" maxLength="41">Адладка HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Уключыць аддаленыя злучэнні WebView і захаваць картку HTML у каталозе AnkiDroid</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Устаўляць з буфера абмену выявы як PNG</string>
-    <string name="paste_as_png_summary">Стандартна, праграма ўстаўляе выявы ў буфер абмену як файлы JPG для эканоміі дыскавай прасторы. Вы можаце скарыстацца гэтым параметрам для ўстаўкі выяваў PNG замест JPG.</string>
+    <string name="paste_as_png" maxLength="41">Устаўляць з буфера абмену відарысы як PNG</string>
+    <string name="paste_as_png_summary">Стандартна, праграма ўстаўляе відарысы ў буфер абмену як файлы JPG для эканоміі дыскавай прасторы. Вы можаце скарыстацца гэтым параметрам для ўстаўкі відарысаў PNG замест JPG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Націсніце \"Назад\" двойчы для выхаду</string>
     <string name="exit_via_double_tap_back_summ">Для прадухілення нечаканага выхаду з праграмы</string>
     <!-- Allow all files in media imports -->

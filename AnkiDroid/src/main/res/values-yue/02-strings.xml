@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Open drawer</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Close drawer</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Close drawer</string>
     <string name="CardEditorCardDeck">卡組:</string>
     <string name="CardEditorNoteDeck">卡組:</string>
     <string name="CardEditorModel">分類:</string>

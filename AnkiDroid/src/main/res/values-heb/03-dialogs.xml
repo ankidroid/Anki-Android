@@ -82,14 +82,14 @@
     <string name="reset_card_dialog_title">איפוס התקדמות הקלף</string>
     <string name="reset_card_dialog_message">קלף זה יוצב בסוף תור של הקלפים החדשים.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
+        <item quantity="one">קלף אחד אופס</item>
         <item quantity="two">%d cards reset</item>
         <item quantity="many">%d כרטיסיות אופסו</item>
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
+        <item quantity="one">קלף אחד תוזמן מחדש</item>
         <item quantity="two">Reschedule %d cards</item>
         <item quantity="many">תזמון מחדש %d כרטיסים </item>
         <item quantity="other">Reschedule %d cards</item>
@@ -104,7 +104,7 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="one">%d קלף תוזמן מחדש</item>
         <item quantity="two">%d cards rescheduled</item>
-        <item quantity="many">%d cards rescheduled</item>
+        <item quantity="many">%d קלפים תוזמנו מחדש</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
@@ -120,11 +120,11 @@
     <string name="custom_study_new_total_new">קלפים חדשים בחפיסה: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">הוספה/הורדה(“-3”) הגבלת כרטיסים חדשים להיום ב</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+    <string name="custom_study_rev_extend">הוספה/הורדה(“-3”) הגבלת חזרות להיום ב</string>
+    <string name="custom_study_forgotten">חזרה על קלפים נשכחים בx ימים האחרונים </string>
     <string name="custom_study_ahead">עבור כמה ימים ברצונך לשנן מראש?</string>
     <string name="custom_study_random">נא לבחור כמות מסוימת של קלפים מהחפיסה באקראי:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
+    <string name="custom_study_preview">צפייה ראשונית בקלפים חדשים שנוספו בx ימים האחרונים:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="importing_collection">אוסף מיובא&#8230;</string>
     <string name="import_media_count">Importing media files %1$d%%&#8230;</string>
@@ -138,7 +138,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">לשחזר מגיבוי?</string>
     <string name="restore_backup">האוסף שלך יוחלף בעותק ישן יותר. כל תהליך שלא נשמר ילך לאיבוד.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">אחר</string>
     <string name="dialog_cancel">ביטול</string>
     <string name="dialog_ok">אישור</string>
     <string name="dialog_no">לא</string>
@@ -156,7 +156,7 @@
     <string name="dialog_collection_path_not_dir">הנתיב שצוין אינו תיקייה תקנית</string>
     <!-- Media checking -->
     <string name="check_media_title">לבדוק את המדיה?</string>
-    <string name="check_media_warning">This may take a long time with large media collections</string>
+    <string name="check_media_warning">ייתכן שפעולה זו תארך זמן אם מדובר באוסף גדול</string>
     <string name="check_media_message">קבצי המדיה בבדיקה&#8230;</string>
     <string name="check_media_acknowledge">קבצי המדיה נבדקו</string>
     <string name="check_media_failed">בדיקת קבצי המדיה נכשלה</string>
@@ -185,11 +185,11 @@
     <string name="empty_cards_count">קלפים למחיקה: %d</string>
     <string name="empty_cards_deleted">קלפים נמחקו: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">לא מצליח לקבל הרשאת מיקרופון </string>
+    <string name="multimedia_editor_camera_permission_refused">לא מצליח לקבל הרשאת מצלמה. פונקציונליות בוטלה.</string>
+    <string name="multimedia_editor_failed">נכשל בפתיחת עורך מדיה.</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">הרשאת הקלטת שמע נדחתה</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">ברוך בואך ל־AnkiDroid!</string>
     <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
@@ -203,10 +203,10 @@
     <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
     <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">לא ניתן להחליף חפיסה</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="card_viewer_url_decode_error">תקלה בפענוח מידע מקלף</string>
+    <string name="undo_succeeded">\"%s\" בוטל</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
@@ -227,7 +227,7 @@
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">לא ניתן לטעון תצוגת דפדפן קלפים</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
@@ -240,21 +240,21 @@
     <string name="help_item_anki_manual">המדריך של Anki</string>
     <string name="help_item_ankidroid_faq">שאלות ותשובות על AnkiDroid</string>
     <string name="help_title_get_help">קבלת עזרה</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_mailing_list">רשימת תפוצה</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_item_report_bug">דיווח על תקלה</string>
+    <string name="help_title_support_ankidroid">תמיכה בAnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">תרומה</string>
+    <string name="help_item_support_develop_ankidroid">פיתוח</string>
+    <string name="help_item_support_rate_ankidroid">דירוג</string>
+    <string name="help_item_support_other_ankidroid">אחר</string>
     <string name="help_title_community">קהילה</string>
     <string name="help_item_anki_forums">הפורומים של Anki</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">פייסבוק</string>
     <string name="help_item_twitter">טוויטר</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
+    <string name="help_title_privacy">פרטיות</string>
+    <string name="help_item_ankidroid_privacy_policy">מדיניות פרטיות של AnkiDroid</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>

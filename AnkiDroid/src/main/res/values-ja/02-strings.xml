@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">引き出しメニューを開く</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">引き出しメニューを閉じる</string>
+    <string name="drawer_open">引き出しメニューを開く</string>
+    <string name="drawer_close">引き出しメニューを閉じる</string>
     <string name="CardEditorCardDeck">デッキ:</string>
     <string name="CardEditorNoteDeck">デッキ:</string>
     <string name="CardEditorModel">ノートタイプ:</string>

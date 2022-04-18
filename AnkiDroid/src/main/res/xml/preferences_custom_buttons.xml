@@ -86,8 +86,8 @@ TODO: Add a unit test
             android:title="@string/select_tts" />
         <ListPreference
             android:defaultValue="0"
-            android:entries="@array/custom_button_labels_menu_and_disabled"
-            android:entryValues="@array/custom_button_values_menu_and_disabled"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
             android:key="customButtonDeckOptions"
             android:title="@string/menu__deck_options" />
         <ListPreference

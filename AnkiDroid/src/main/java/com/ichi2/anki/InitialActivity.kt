@@ -156,7 +156,7 @@ object InitialActivity {
             // It would be great if we could catch the OutOfSpaceException here
             try {
                 val deckPicker = deckPicker.get()
-                downgradeCollection(deckPicker, deckPicker!!.backupManager)
+                downgradeCollection(deckPicker, deckPicker!!.backupManager!!)
             } catch (e: Exception) {
                 Timber.w(e)
                 mException = e

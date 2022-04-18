@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX %</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">פתיחת מגירה</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">סגירת מגירה</string>
+    <string name="drawer_open">פתיחת מגירה</string>
+    <string name="drawer_close">סגירת מגירה</string>
     <string name="CardEditorCardDeck">חפיסת קלפים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
@@ -126,7 +126,7 @@
     <string name="saving_changes">שומר את השינויים ...</string>
     <string name="reordering_cards">מסדר מחדש את הקלפים&#8230;</string>
     <string name="field_remapping">%1$s (מתוך \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">כרטיס שממופה לכלום ימחק. אם לרשימה אין כרטסיות נותרות, היא תמחק. האם אתה בטוח ברצונך להמשיך?</string>
+    <string name="confirm_map_cards_to_nothing">קלף שממופה לכלום ימחק. אם לרשימה אין קלפים נותרים, היא תימחק. להמשיך?</string>
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d כרטסיה נלמדו ב%2$s</item>
@@ -174,7 +174,9 @@
     <string name="import_log_failed_unzip">נכשל בפריסת החבילה: %s</string>
     <string name="import_log_failed_copy_to">נכשל בהעתקת החבילה ל%s</string>
     <string name="import_log_failed_validate">נכשל אימות החבילה</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">אין מספיק מקום לייבא את החבילה.\n
+צריך \n%1$s \n יש רק %2$s. \n \n
+נסו לפנות מקום בזיכרון המכשיר. לחילופין, סנכרון טופס פחות מקום מייבוא. ניתן לנסות לבצע את הייבוא במכשיר אחר, עם יותר נפח זיכרון, ולעשות סנכרון של המכשיר הנוכחי איתו.</string>
     <string name="import_log_file_cache_cleared">שגיאה בייבוא קובץ, נראה שהמטמון נוקה באמצע התהליך.\nאנא נסה שנית</string>
     <string name="import_succeeded_but_check_database">ייבוא הנתונים הצליח אבל תהליך הניקוי שלאחר הייבוא נכשל. יש להפעיל בדיקת מסד נתונים בהמשך. הגורם: %s</string>
     <string name="import_error_unhandled_request">לא ניתן לעבד בקשת ייבוא</string>
@@ -303,57 +305,57 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">נא להפעיל את המסך המלא כדי להשתמש בהצגת מגירת ניווט עם JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">נא להפעיל את המסך המלא כדי להשתמש בהצגת תפריט אפשרויות עם JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="white_board_image_save_failed">נכשל לשמור תמונת לוח. %s</string>
+    <string name="white_board_image_saved">תמונת לוח נשמרה ל %s</string>
+    <string name="title_whiteboard_pen_color">צבע עט ללוח</string>
+    <string name="title_whiteboard_editor">עורך לוח</string>
     <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
+    <string name="note_importer_empty_cards_found"><![CDATA[נמצאו קלפים ריקים. נא להריץ כלים>קלפים ריקים]]></string>
     <string name="note_importer_error_empty_first_field">שדה ראשון ריק: %s</string>
     <string name="note_importer_error_first_field_matched">שדה ראשון תואם: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">Appeared twice in file: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="note_importer_error_added_duplicate_first_field">נוספה עם כפילות בשדה הראשון: %s</string>
+    <string name="note_importer_error_appeared_twice">מופיע פעמיים בקובץ: %s</string>
+    <string name="note_importer_error_empty_notes">הערה אחת או יותר לא הובאו מאחר והן לא יצרו שום קלף. זה קורה כאשר יש שדות ריקים או כאשר לא בוצע מיפוי של התוכן בקובץ טקסט לשדות המתאימים. </string>
+    <string name="csv_importer_error_invalid_field_count">ל %1$s יש %2$d שדות, צריך %3$d</string>
+    <string name="csv_importer_error_exception">בוטל: %s</string>
+    <string name="user_is_a_robot">זוהה אוטומציה ממוחשבת, אם אתה אנושי, צור קשר עם תמיכת AnkiDroid</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
+        <item quantity="one">%d הערה נוספה</item>
         <item quantity="two">%d notes added</item>
-        <item quantity="many">%d notes added</item>
+        <item quantity="many">%d הערות נוספו</item>
         <item quantity="other">%d notes added</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
+        <item quantity="one">%d הערה עודכנה</item>
         <item quantity="two">%d notes updated</item>
-        <item quantity="many">%d notes updated</item>
+        <item quantity="many">%d הערות עודכנו</item>
         <item quantity="other">%d notes updated</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
+        <item quantity="one">%d הערה ללא שינוי</item>
         <item quantity="two">%d notes unchanged</item>
-        <item quantity="many">%d notes unchanged</item>
+        <item quantity="many">%d הערות ללא שינוי</item>
         <item quantity="other">%d notes unchanged</item>
     </plurals>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="api_version_developer_contact">קלף זה משתמש באפשרויות שאינן נתמכות בAnkiDroid. צור קשר עם המפתח %1$s, או קרא בויקי. %2$s</string>
+    <string name="invalid_json_data">הקלף מכיל תוכן לא תקין. %s</string>
+    <string name="valid_js_api_version">גרסת AnkiDroid JS API לא תקינה.צור קשר עם המפתח %s, או קרא בויקי</string>
+    <string name="update_js_api_version">קיים עדכון ל AnkiDroid JS API. צור קשר עם המפתח %s, או קרא בויקי</string>
     <string name="reviewer_invalid_api_version_visit_documentation">תצוגה</string>
     <string name="anki_js_error_code">(קוד שגיאה: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">השגיאה הועתקה</string>
+    <string name="about_ankidroid_error_copy_debug_info">תקלה בהעתקת הודעת השגיאה</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_could_not_find_image">תקלה בתוכן הקלף: נכשל בטעינת %s</string>
+    <string name="card_viewer_media_relative_protocol">תקלה בתוכן הקלף: נדרש עדכון מדיה</string>
     <string name="cannot_load_http_resource">טעינת משאבי http אינה נתמכת עוד</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">טעינת החפיסה %s נכשלה</string>
     <string name="search_decks">חיפוש בחפיסות</string>
     <string name="ankidroid_init_failed_webview_title">שגיאה מכרעת</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid משתמש בדפדפן המערכת שאינו זמין. זה קורה לפעמים אם המערכת מתקינה עדכונים. נא נסה שנית בעוד כמה דקות. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">גודל גופן</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">הצגת סרגל הכלים</string>
@@ -402,35 +404,35 @@
     <string name="search_using_deck_name">חיפוש באמצעות שם החפיסה</string>
     <string name="home">בית</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
+    <string name="import_mapped_to_field">מופה ל%s</string>
+    <string name="import_mapped_to_tags">מופה לתגיות</string>
     <string name="import_mapped_to_nothing">Ignored</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_card">קלף נקבר</string>
+    <string name="buried_note">הערה נקברה</string>
+    <string name="deleted_note">הערה נמחקה </string>
+    <string name="suspended_card">קלף הוקפא</string>
+    <string name="suspended_note">רשומה הוקפאה</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">הפוך שדה %s לדביק</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Storage migration</string>
     <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
 \n\nIf you uninstall AnkiDroid before the migration, your data will be lost
 \n\nPlease perform the migration as soon as possible</string>
     <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
+    <string name="scoped_storage_term_1">גיביתי את המידע</string>
     <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
     <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_select_all_terms">נא לאשר הכול על מנת למשיך</string>
+    <string name="scoped_storage_learn_more">מידע נוסף</string>
+    <string name="scoped_storage_postpone">לדחות</string>
+    <string name="scoped_storage_migrate">הסבה</string>
     <string name="search_card_js_api_no_results">אין תוצאות לשאילתת החיפוש</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s אינו תוסף JS תקין</string>
     <string name="could_not_create_dir">לא ניתן ליצור תיקיה %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">פריסת הקובץ חורג מנפח הזיכרון הקיים</string>
 </resources>

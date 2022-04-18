@@ -137,11 +137,11 @@ public class SchedTest extends RobolectricTest {
 
     @NonNull
     private DeckDueTreeNode getCountsForDid(double didToFind) {
-        List<DeckDueTreeNode> tree = getCol().getSched().deckDueTree();
+        List<TreeNode<DeckDueTreeNode>> tree = getCol().getSched().deckDueTree();
 
-        for (DeckDueTreeNode node : tree) {
-            if (node.getDid() == didToFind) {
-                return node;
+        for (TreeNode<DeckDueTreeNode> node : tree) {
+            if (node.getValue().getDid() == didToFind) {
+                return node.getValue();
             }
         }
 
@@ -179,7 +179,7 @@ public class SchedTest extends RobolectricTest {
         }
         getCol().getSched().deckDueTree();
         AbstractSched sched = getCol().getSched();
-        List<DeckDueTreeNode> tree = sched.deckDueTree();
+        List<TreeNode<DeckDueTreeNode>> tree = sched.deckDueTree();
         Assert.assertEquals("Tree has not the expected structure", SchedV2Test.expectedTree(getCol(), false), tree);
 
     }
@@ -1252,18 +1252,18 @@ public class SchedTest extends RobolectricTest {
         col.addNote(note);
         col.reset();
         assertEquals(5, col.getDecks().allSortedNames().size());
-        DeckDueTreeNode tree = col.getSched().deckDueTree().get(0);
-        assertEquals("Default", tree.getLastDeckNameComponent());
+        TreeNode<DeckDueTreeNode> tree = col.getSched().deckDueTree().get(0);
+        assertEquals("Default", tree.getValue().getLastDeckNameComponent());
         // sum of child and parent
-        assertEquals(1, tree.getDid());
-        assertEquals(1, tree.getRevCount());
-        assertEquals(1, tree.getNewCount());
+        assertEquals(1, tree.getValue().getDid());
+        assertEquals(1, tree.getValue().getRevCount());
+        assertEquals(1, tree.getValue().getNewCount());
         // child count is just review
-        DeckDueTreeNode child = tree.getChildren().get(0);
-        assertEquals("1", child.getLastDeckNameComponent());
-        assertEquals(default1, child.getDid());
-        assertEquals(1, child.getRevCount());
-        assertEquals(0, child.getNewCount());
+        TreeNode<DeckDueTreeNode> child = tree.getChildren().get(0);
+        assertEquals("1", child.getValue().getLastDeckNameComponent());
+        assertEquals(default1, child.getValue().getDid());
+        assertEquals(1, child.getValue().getRevCount());
+        assertEquals(0, child.getValue().getNewCount());
         // code should not fail if a card has an invalid deck
         c.setDid(12345);
         c.flush();

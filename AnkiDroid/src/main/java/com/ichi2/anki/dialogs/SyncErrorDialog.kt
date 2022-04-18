@@ -25,17 +25,16 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.async.Connection.ConflictResolution
-import com.ichi2.libanki.Collection
+import com.ichi2.libanki.CollectionGetter
 import com.ichi2.utils.contentNullable
 
 class SyncErrorDialog : AsyncDialogFragment() {
-    interface SyncErrorDialogListener {
+    interface SyncErrorDialogListener : CollectionGetter {
         fun showSyncErrorDialog(dialogType: Int)
         fun showSyncErrorDialog(dialogType: Int, message: String?)
         fun loginToSyncServer()
         fun sync()
         fun sync(conflict: ConflictResolution?)
-        val col: Collection?
         fun mediaCheck()
         fun dismissAllDialogFragments()
         fun integrityCheck()

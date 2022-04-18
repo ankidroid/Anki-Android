@@ -66,7 +66,7 @@ public class CollectionHelper {
      * <br>
      * The path also defines the collection that the AnkiDroid API accesses
      */
-    public static final String PREF_DECK_PATH = "deckPath";
+    public static final String PREF_COLLECTION_PATH = "deckPath";
 
     /**
      * Prevents {@link com.ichi2.async.CollectionLoader} from spuriously re-opening the {@link Collection}.
@@ -128,6 +128,18 @@ public class CollectionHelper {
         return getCol(context, new SystemTime());
     }
 
+    /**
+     * Opens the collection without checking to see if the directory exists.
+     *
+     * path should be tested with File.exists() and File.canWrite() before this is called
+     */
+    private Collection openCollection(Context context, @NonNull Time time, String path) {
+        Timber.i("Begin openCollection: %s", path);
+        Collection collection = Storage.Collection(context, path, false, true, time);
+        Timber.i("End openCollection: %s", path);
+        return collection;
+    }
+
     @VisibleForTesting
     public synchronized Collection getCol(Context context, @NonNull Time time) {
         // Open collection
@@ -142,11 +154,34 @@ public class CollectionHelper {
                 return null;
             }
             // Open the database
-            Timber.i("Begin openCollection: %s", path);
-            mCollection = Storage.Collection(context, path, false, true, time);
-            Timber.i("End openCollection: %s", path);
+            mCollection = openCollection(context, time, path);
         }
         return mCollection;
+    }
+
+    /**
+     * Given a path to a .anki2 file returns an open {@link Collection} associated with the path.
+     *
+     * This operation does not call {@link #initializeAnkiDroidDirectory} and does not set the singleton instance's {@link #mCollection}
+     *
+     * @param path The path to collection.anki2
+     * @return An open {@link Collection} object
+     *
+     * @throws StorageAccessException the file at `path` is not writable
+     * @throws StorageAccessException `path` does not exist
+     */
+    public Collection getColFromPath(String path, Context context) throws StorageAccessException {
+        File f = new File(path);
+
+        if (!f.exists()) {
+            throw new StorageAccessException(path + " does not exist");
+        }
+
+        if (!f.canWrite()) {
+            throw new StorageAccessException(path + " is not writable");
+        }
+
+        return openCollection(context, new SystemTime(), path);
     }
 
     /** Collection time if possible, otherwise real time.*/
@@ -200,7 +235,7 @@ public class CollectionHelper {
     /**
      * Create the AnkiDroid directory if it doesn't exist and add a .nomedia file to it if needed.
      *
-     * The AnkiDroid directory is a user preference stored under {@link #PREF_DECK_PATH}, and a sensible
+     * The AnkiDroid directory is a user preference stored under {@link #PREF_COLLECTION_PATH}, and a sensible
      * default is chosen if the preference hasn't been created yet (i.e., on the first run).
      *
      * The presence of a .nomedia file indicates to media scanners that the directory must be
@@ -391,7 +426,7 @@ public class CollectionHelper {
         }
         return PreferenceExtensions.getOrSetString(
                 preferences,
-                PREF_DECK_PATH,
+                PREF_COLLECTION_PATH,
                 () -> getDefaultAnkiDroidDirectory(context));
     }
 

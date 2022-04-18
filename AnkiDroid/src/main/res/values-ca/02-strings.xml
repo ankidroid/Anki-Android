@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Obrir el calaix</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Tancar el calaix</string>
+    <string name="drawer_open">Obrir el calaix</string>
+    <string name="drawer_close">Tancar el calaix</string>
     <string name="CardEditorCardDeck">Paquet de cartes:</string>
     <string name="CardEditorNoteDeck">Paquet:</string>
     <string name="CardEditorModel">Tipus:</string>

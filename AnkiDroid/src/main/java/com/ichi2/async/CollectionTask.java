@@ -60,6 +60,7 @@ import com.ichi2.libanki.importer.AnkiPackageImporter;
 import com.ichi2.libanki.sched.Counts;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.sched.DeckTreeNode;
+import com.ichi2.libanki.sched.TreeNode;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Computation;
 import com.ichi2.utils.JSONArray;
@@ -360,8 +361,8 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
     }
 
-    public static class LoadDeck extends TaskDelegate<Void, List<DeckTreeNode>> {
-        protected List<DeckTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class LoadDeck extends TaskDelegate<Void, List<TreeNode<DeckTreeNode>>> {
+        protected List<TreeNode<DeckTreeNode>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");
             try {
                 // Get due tree
@@ -374,8 +375,8 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class LoadDeckCounts extends TaskDelegate<Void, List<DeckDueTreeNode>> {
-        protected List<DeckDueTreeNode> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+    public static class LoadDeckCounts extends TaskDelegate<Void, List<TreeNode<DeckDueTreeNode>>> {
+        protected List<TreeNode<DeckDueTreeNode>> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundLoadDeckCounts");
             try {
                 // Get due tree
