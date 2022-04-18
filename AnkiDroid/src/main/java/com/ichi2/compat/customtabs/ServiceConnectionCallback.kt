@@ -1,4 +1,4 @@
-//noinspection MissingCopyrightHeader #8659
+// noinspection MissingCopyrightHeader #8659
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,23 +12,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+package com.ichi2.compat.customtabs
 
-package com.ichi2.compat.customtabs;
-
-import androidx.browser.customtabs.CustomTabsClient;
+import androidx.browser.customtabs.CustomTabsClient
 
 /**
  * Callback for events when connecting and disconnecting from Custom Tabs Service.
  */
-public interface ServiceConnectionCallback {
+interface ServiceConnectionCallback {
     /**
      * Called when the service is connected.
      * @param client a CustomTabsClient
      */
-    void onServiceConnected(CustomTabsClient client);
+    fun onServiceConnected(client: CustomTabsClient)
 
     /**
      * Called when the service is disconnected.
      */
-    void onServiceDisconnected();
+    fun onServiceDisconnected()
 }
