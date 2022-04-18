@@ -13,51 +13,48 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import org.hamcrest.MatcherAssert.*
+import org.hamcrest.Matchers.*
+import org.junit.Assert
+import org.junit.Test
+import java.lang.AssertionError
+import java.lang.IllegalArgumentException
+import java.lang.IllegalStateException
 
-import org.junit.Test;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.fail;
-
-public class AnkiAssertTest {
-
+class AnkiAssertTest {
     // We're not going to use the class under test to verify that these are working.
-
     @Test
-    public void assertThrowsNoException() {
+    fun assertThrowsNoException() {
         try {
-            AnkiAssert.assertThrows(() -> { }, IllegalStateException.class);
-            fail("No exception thrown");
-        } catch (AssertionError e) {
-            assertThat(e.getMessage(), containsString("Expected exception: IllegalStateException"));
-            assertThat(e.getMessage(), containsString("No exception thrown"));
+            AnkiAssert.assertThrows({}, IllegalStateException::class.java)
+            Assert.fail("No exception thrown")
+        } catch (e: AssertionError) {
+            assertThat(e.message, containsString("Expected exception: IllegalStateException"))
+            assertThat(e.message, containsString("No exception thrown"))
         }
     }
 
     @Test
-    public void assertThrowsWrongException() {
-        IllegalArgumentException toThrow = new IllegalArgumentException();
+    fun assertThrowsWrongException() {
+        val toThrow = IllegalArgumentException()
         try {
-            AnkiAssert.assertThrows(() -> { throw toThrow; }, IllegalStateException.class);
-            fail("No exception thrown");
-        } catch (AssertionError e) {
-            assertThat(e.getMessage(), containsString("Expected 'IllegalStateException' got 'IllegalArgumentException'"));
-            assertThat(e.getCause(), notNullValue());
-            assertThat(e.getCause(), sameInstance(toThrow));
+            AnkiAssert.assertThrows({ throw toThrow }, IllegalStateException::class.java)
+            Assert.fail("No exception thrown")
+        } catch (e: AssertionError) {
+            assertThat(e.message, containsString("Expected 'IllegalStateException' got 'IllegalArgumentException'"))
+            assertThat(e.cause, notNullValue())
+            assertThat(e.cause, sameInstance(toThrow))
         }
     }
 
     @Test
-    public void assertThrowsSameException() {
-        IllegalStateException ex = new IllegalStateException();
+    fun assertThrowsSameException() {
+        val ex = IllegalStateException()
 
-        IllegalStateException exception = AnkiAssert.assertThrows(() -> { throw ex; }, IllegalStateException.class);
+        val exception = AnkiAssert.assertThrows({ throw ex }, IllegalStateException::class.java)
 
-        assertThat(exception, sameInstance(ex));
+        assertThat(exception, sameInstance(ex))
     }
 }
