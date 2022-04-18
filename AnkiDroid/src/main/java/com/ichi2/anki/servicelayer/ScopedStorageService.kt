@@ -19,13 +19,17 @@ package com.ichi2.anki.servicelayer
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData
+import com.ichi2.utils.FileUtil.getParentsAndSelfRecursive
+import com.ichi2.utils.FileUtil.isDescendantOf
 import timber.log.Timber
 import java.io.File
 
@@ -107,6 +111,52 @@ object ScopedStorageService {
     const val PREF_MIGRATION_DESTINATION = "migrationDestinationPath"
 
     /**
+     * The maximum allowed number of 'AnkiDroid' folders
+     *
+     * Exists as un unreachable bound through normal activity.
+     */
+    private const val MAX_ANKIDROID_DIRECTORIES = 100
+
+    /**
+     * Migrates from the current directory to a directory under scoped storage
+     *
+     * @throws MigrateEssentialFiles.UserActionRequiredException Subclasses define user action required
+     * @throws NoSuchElementException if no directory was valid
+     * @throws IllegalStateException An internal error occurred. Examples:
+     * * If current directory is already under scoped storage
+     * * If destination is not under scoped storage
+     */
+    fun migrateEssentialFiles(context: Context): File {
+        val collectionPath = AnkiDroidApp.getSharedPrefs(context).getString(CollectionHelper.PREF_COLLECTION_PATH, null)!!
+
+        // Get the scoped storage directory to migrate to. This is based on the location
+        // of the current collection path
+        val bestRootDestination = getBestDefaultRootDirectory(context, File(collectionPath))
+
+        // append a folder name to the root destination.
+        // If the root destination was /storage/emulated/0/Android/com.ichi2.anki/files
+        // we add a subfolder name to allow for more than one AnkiDroid data directory to be migrated.
+        // This is useful as:
+        // * Multiple installations of AnkiDroid go to different folders
+        // * It will allow us to add profiles without changing directories again
+        val bestProfileDirectory = (1..MAX_ANKIDROID_DIRECTORIES).asSequence()
+            .map { File(bestRootDestination, "AnkiDroid$it") }
+            .first { !it.exists() } // skip directories which exist
+
+        try {
+            MigrateEssentialFiles.migrateEssentialFiles(context, bestProfileDirectory)
+        } catch (e: Exception) {
+            try {
+                // MigrateEssentialFiles performs a COPY. Delete the data so we don't take up space.
+                bestProfileDirectory.deleteRecursively()
+            } catch (e: Exception) {
+            }
+            throw e
+        }
+        return bestProfileDirectory
+    }
+
+    /**
      * Whether a user data scoped storage migration is taking place
      * This refers to the [MigrateUserData] operation of copying media which can take a long time.
      *
@@ -126,6 +176,48 @@ object ScopedStorageService {
      */
     fun userMigrationIsInProgress(preferences: SharedPreferences) =
         UserDataMigrationPreferences.createInstance(preferences).migrationInProgress
+
+    /**
+     * Given a path, find in which app directory it is contained if any, otherwise return an arbitrary app directory
+     *
+     * If the file is in a non-scoped directory on the SD card, we do not want to move it to main storage
+     * and vice-versa.
+     *
+     * @returns the external directory which best represents the template
+     */
+    @VisibleForTesting
+    internal fun getBestDefaultRootDirectory(context: Context, templatePath: File): File {
+        // List of external paths. Sorted by length to ensure if an external directory if a prefix of another one, it appears first.
+        val externalPaths = CollectionHelper.getAppSpecificExternalDirectories(context)
+            .map { it.canonicalFile }
+
+        // A map that associate to each parents of an external directory path the first external
+        // directory it is a prefix of.
+        // Storing every single parent is not efficient, however, given the expected depth of file,
+        // the extra cost is negligible.
+        val parentToSharedDirectoryPath = HashMap<File, File>()
+        for (externalPath in externalPaths) {
+            for (parent in externalPath.getParentsAndSelfRecursive()) {
+                val firstExternalPathContainedInParent = parentToSharedDirectoryPath.getOrDefault(parent, null)
+                if (firstExternalPathContainedInParent != null) {
+                    // We generally prefer the first shared path. So if we already found a shared path contained in this [parent]
+                    // (and hence all of its parents)
+                    // we prefer this already found shared path and so we can beak.
+                    if (firstExternalPathContainedInParent.isDescendantOf(externalPath)) {
+                        // The only exception is if the new external path is if the new external path is an ancestor of the current one.
+                        // In this case, the new external path is closest to the [parent] and so we prefer it.
+                    } else {
+                        break
+                    }
+                }
+                parentToSharedDirectoryPath[parent] = externalPath
+            }
+        }
+
+        return templatePath.getParentsAndSelfRecursive()
+            .firstNotNullOfOrNull { parent -> parentToSharedDirectoryPath.getOrDefault(parent, null) }!!
+        // ?: externalPaths.first()
+    }
 
     /**
      * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
@@ -204,4 +296,6 @@ object ScopedStorageService {
             }
         }
     }
+
+    private data class DirectoryToExternalDirectory(val ancestorDirectory: File, val externalDirectory: File)
 }
