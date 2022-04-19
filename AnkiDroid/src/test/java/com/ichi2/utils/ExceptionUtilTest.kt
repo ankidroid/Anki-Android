@@ -13,74 +13,74 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import com.ichi2.utils.ExceptionUtil.containsCause
+import com.ichi2.utils.ExceptionUtil.getExceptionMessage
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.Is.`is`
+import org.junit.Test
 
-import org.junit.Test;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-
-public class ExceptionUtilTest {
-
+@KotlinCleanup("is -> equalTo")
+class ExceptionUtilTest {
     @Test
-    public void exceptionMessageSingle() {
-        Exception e = new Exception("Hello");
+    fun exceptionMessageSingle() {
+        val e = Exception("Hello")
 
-        String message = ExceptionUtil.getExceptionMessage(e);
+        val message = getExceptionMessage(e)
 
-        assertThat(message, is("Hello"));
+        assertThat(message, `is`("Hello"))
     }
 
     @Test
-    public void exceptionMessageNested() {
-        Exception inner = new Exception("Inner");
-        Exception e = new Exception("Hello", inner);
+    fun exceptionMessageNested() {
+        val inner = Exception("Inner")
+        val e = Exception("Hello", inner)
 
-        String message = ExceptionUtil.getExceptionMessage(e);
+        val message = getExceptionMessage(e)
 
-        assertThat(message, is("Hello\nInner"));
+        assertThat(message, `is`("Hello\nInner"))
     }
 
     @Test
-    public void exceptionMessageNull() {
-        String message = ExceptionUtil.getExceptionMessage(null);
+    fun exceptionMessageNull() {
+        val message = getExceptionMessage(null)
 
-        assertThat(message, is(""));
+        assertThat(message, `is`(""))
     }
 
     @Test
-    public void exceptionMessageNestedNull() {
+    fun exceptionMessageNestedNull() {
         // a single null should be displayed, a nested null shouldn't be
-        Exception inner = new Exception();
-        Exception e = new Exception("Hello", inner);
+        val inner = Exception()
+        val e = Exception("Hello", inner)
 
-        String message = ExceptionUtil.getExceptionMessage(e);
+        val message = getExceptionMessage(e)
 
-        assertThat(message, is("Hello"));
+        assertThat(message, `is`("Hello"))
     }
 
     @Test
-    public void containsCauseExact() {
-        Exception ex = new IllegalStateException();
-        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(true));
+    fun containsCauseExact() {
+        val ex: Exception = IllegalStateException()
+        assertThat(containsCause(ex, IllegalStateException::class.java), `is`(true))
     }
 
     @Test
-    public void containsCauseNested() {
-        Exception ex = new Exception(new IllegalStateException());
-        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(true));
+    fun containsCauseNested() {
+        val ex = Exception(IllegalStateException())
+        assertThat(containsCause(ex, IllegalStateException::class.java), `is`(true))
     }
 
     @Test
-    public void containsCauseMissing() {
-        Exception ex = new Exception();
-        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(false));
+    fun containsCauseMissing() {
+        val ex = Exception()
+        assertThat(containsCause(ex, IllegalStateException::class.java), `is`(false))
     }
 
     @Test
-    public void containsCauseMissingNested() {
-        Exception ex = new Exception(new Exception());
-        assertThat(ExceptionUtil.containsCause(ex, IllegalStateException.class), is(false));
+    fun containsCauseMissingNested() {
+        val ex = Exception(Exception())
+        assertThat(containsCause(ex, IllegalStateException::class.java), `is`(false))
     }
 }
