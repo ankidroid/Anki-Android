@@ -81,7 +81,7 @@ TODO: Add a unit test
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
-            android:entryValues="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
             android:key="customButtonSelectTts"
             android:title="@string/select_tts" />
         <ListPreference
