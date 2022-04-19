@@ -13,28 +13,25 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import android.content.ContentResolver
+import android.database.Cursor
+import com.ichi2.utils.KotlinCleanup
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
+import org.mockito.kotlin.any
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-
-import org.mockito.Mockito;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
-public class MockContentResolver {
-
-    public static ContentResolver returningCursor(Cursor cursor) {
-        ContentResolver resolver = Mockito.mock(ContentResolver.class);
-        when(resolver.query(any(), any(), any(), any(), any())).thenReturn(cursor);
-        return resolver;
+@KotlinCleanup("when -> whenever")
+@KotlinCleanup("IDE lint")
+object MockContentResolver {
+    fun returningCursor(cursor: Cursor?): ContentResolver {
+        val resolver = mock(ContentResolver::class.java)
+        `when`(resolver.query(any(), any(), any(), any(), any())).thenReturn(cursor)
+        return resolver
     }
 
-    public static ContentResolver returningEmptyCursor() {
-        return returningCursor(MockCursor.getEmpty());
+    fun returningEmptyCursor(): ContentResolver {
+        return returningCursor(MockCursor.getEmpty())
     }
-
-
 }
