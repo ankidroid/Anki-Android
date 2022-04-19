@@ -13,31 +13,24 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import android.content.Context
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.libanki.DB
+import com.ichi2.libanki.Storage
 
-import android.content.Context;
-
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.libanki.DB;
-import com.ichi2.libanki.Storage;
-
-public class DbUtils {
-
-    /** performs a query on an unopened collection */
-    public static void performQuery(Context context, String query) {
-        if (Storage.isInMemory()) {
-            throw new IllegalStateException("cannot use performQuery in memory");
-        }
-
-        DB db = null;
+object DbUtils {
+    /** performs a query on an unopened collection  */
+    @JvmStatic
+    fun performQuery(context: Context?, query: String?) {
+        check(!Storage.isInMemory()) { "cannot use performQuery in memory" }
+        var db: DB? = null
         try {
-            db = new DB(CollectionHelper.getCollectionPath(context));
-            db.executeScript(query);
+            db = DB(CollectionHelper.getCollectionPath(context))
+            db.executeScript(query)
         } finally {
-            if (db != null) {
-                db.close();
-            }
+            db?.close()
         }
     }
 }
