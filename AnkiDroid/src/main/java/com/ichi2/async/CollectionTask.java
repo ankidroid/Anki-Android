@@ -1011,8 +1011,9 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
-    public static class RepairCollection extends TaskDelegate<Void, Boolean> {
-        protected Boolean task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
+    @KotlinCleanup("doesn't work on null collection - only on non-openable")
+    public static class RepairCollection extends UnsafeTaskDelegate<Void, Boolean> {
+        protected Boolean task(@Nullable Collection col, @NonNull ProgressSenderAndCancelListener<Void> collectionTask) {
             Timber.d("doInBackgroundRepairCollection");
             if (col != null) {
                 Timber.i("RepairCollection: Closing collection");
@@ -1112,7 +1113,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
 
 
     @KotlinCleanup("needs to handle null collection")
-    public static class ImportReplace extends TaskDelegate<String, Computation<?>> {
+    public static class ImportReplace extends UnsafeTaskDelegate<String, Computation<?>> {
         private final String mPath;
 
 
@@ -1121,7 +1122,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         }
 
 
-        protected Computation<?> task(@NonNull Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
+        protected Computation<?> task(@Nullable Collection col, @NonNull ProgressSenderAndCancelListener<String> collectionTask) {
             Timber.d("doInBackgroundImportReplace");
             Resources res = AnkiDroidApp.getInstance().getBaseContext().getResources();
             Context context = col.getContext();
