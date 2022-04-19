@@ -61,11 +61,11 @@ import com.ichi2.libanki.sched.Counts;
 import com.ichi2.libanki.sched.DeckDueTreeNode;
 import com.ichi2.libanki.sched.DeckTreeNode;
 import com.ichi2.libanki.sched.TreeNode;
-import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.Computation;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.KotlinCleanup;
 import com.ichi2.utils.SyncStatus;
 import com.ichi2.utils.Triple;
 
@@ -141,15 +141,15 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
         return mContext;
     }
 
-    private final TaskDelegate<Progress, Result> mTask;
-    public TaskDelegate<Progress, Result> getTask() {
+    private final TaskDelegateBase<Progress, Result> mTask;
+    public TaskDelegateBase<Progress, Result> getTask() {
         return mTask;
     }
     private final TaskListener<? super Progress, ? super Result> mListener;
     private CollectionTask mPreviousTask;
 
 
-    protected CollectionTask(TaskDelegate<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener, CollectionTask previousTask) {
+    protected CollectionTask(TaskDelegateBase<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener, CollectionTask previousTask) {
         mTask = task;
         mListener = listener;
         mPreviousTask = previousTask;
@@ -197,7 +197,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             return null;
         }
         // Actually execute the task now that we are at the front of the queue.
-        return mTask.task(getCol(), this);
+        return mTask.execTask(getCol(), this);
     }
 
 
@@ -1020,11 +1020,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
             }
             return BackupManager.repairCollection(col);
         }
-
-        @Override
-        protected boolean requiresOpenCollection() {
-            return false;
-        }
     }
 
 
@@ -1116,6 +1111,7 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
     }
 
 
+    @KotlinCleanup("needs to handle null collection")
     public static class ImportReplace extends TaskDelegate<String, Computation<?>> {
         private final String mPath;
 
@@ -1257,11 +1253,6 @@ public class CollectionTask<Progress, Result> extends BaseAsyncTask<Void, Progre
                 AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3");
                 return ERR;
             }
-        }
-
-        @Override
-        protected boolean requiresOpenCollection() {
-            return false;
         }
     }
 
