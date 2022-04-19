@@ -13,15 +13,13 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.testutils;
+package com.ichi2.testutils
 
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView
 
-public class RecyclerViewUtils {
-
-    public static  <VH extends ViewHolder> VH viewHolderAt(RecyclerView recyclerView, int position) {
-        return (VH) recyclerView.findViewHolderForAdapterPosition(position);
+object RecyclerViewUtils {
+    @Suppress("UNCHECKED_CAST")
+    fun <VH : RecyclerView.ViewHolder?> viewHolderAt(recyclerView: RecyclerView, position: Int): VH {
+        return recyclerView.findViewHolderForAdapterPosition(position) as VH
     }
-
 }
