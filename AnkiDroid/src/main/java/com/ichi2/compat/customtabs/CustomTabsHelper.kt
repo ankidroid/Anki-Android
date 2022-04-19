@@ -1,4 +1,4 @@
-//noinspection MissingCopyrightHeader #8659
+// noinspection MissingCopyrightHeader #8659
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,44 +12,38 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+package com.ichi2.compat.customtabs
 
-package com.ichi2.compat.customtabs;
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
-import androidx.browser.customtabs.CustomTabsService;
-import timber.log.Timber;
-
-import android.text.TextUtils;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.text.TextUtils
+import androidx.browser.customtabs.CustomTabsService
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
 
 /**
  * Helper class for Custom Tabs.
  */
-public class CustomTabsHelper {
-    private static final String TAG = "CustomTabsHelper";
-    static final String STABLE_PACKAGE = "com.android.chrome";
-    static final String BETA_PACKAGE = "com.chrome.beta";
-    static final String DEV_PACKAGE = "com.chrome.dev";
-    static final String LOCAL_PACKAGE = "com.google.android.apps.chrome";
-    private static final String EXTRA_CUSTOM_TABS_KEEP_ALIVE =
-            "android.support.customtabs.extra.KEEP_ALIVE";
+@KotlinCleanup("fix IDE lint issues")
+object CustomTabsHelper {
+    private const val TAG = "CustomTabsHelper"
+    const val STABLE_PACKAGE = "com.android.chrome"
+    const val BETA_PACKAGE = "com.chrome.beta"
+    const val DEV_PACKAGE = "com.chrome.dev"
+    const val LOCAL_PACKAGE = "com.google.android.apps.chrome"
+    private const val EXTRA_CUSTOM_TABS_KEEP_ALIVE = "android.support.customtabs.extra.KEEP_ALIVE"
+    private var sPackageNameToUse: String? = null
 
-    private static String sPackageNameToUse;
-
-    private CustomTabsHelper() {}
-
-    public static void addKeepAliveExtra(Context context, Intent intent) {
-        Intent keepAliveIntent = new Intent().setClassName(
-                context.getPackageName(), KeepAliveService.class.getCanonicalName());
-        intent.putExtra(EXTRA_CUSTOM_TABS_KEEP_ALIVE, keepAliveIntent);
+    @JvmStatic
+    @KotlinCleanup("the !! could be removed and the warning suppressed as it will return a non null value")
+    fun addKeepAliveExtra(context: Context, intent: Intent) {
+        val keepAliveIntent = Intent().setClassName(
+            context.packageName,
+            KeepAliveService::class.java.canonicalName!!
+        )
+        intent.putExtra(EXTRA_CUSTOM_TABS_KEEP_ALIVE, keepAliveIntent)
     }
 
     /**
@@ -57,55 +51,57 @@ public class CustomTabsHelper {
      * the one chosen by the user if there is one, otherwise makes a best effort to return a
      * valid package name.
      *
-     * This is <strong>not</strong> threadsafe.
+     * This is **not** threadsafe.
      *
-     * @param context {@link Context} to use for accessing {@link PackageManager}.
+     * @param context [Context] to use for accessing [PackageManager].
      * @return The package name recommended to use for connecting to custom tabs related components.
      */
-    public static String getPackageNameToUse(Context context) {
-        if (sPackageNameToUse != null) return sPackageNameToUse;
-
-        PackageManager pm = context.getPackageManager();
+    @JvmStatic
+    @KotlinCleanup("AFTER fixing @KotlinCleanup for CustomTabActivityHelper see if context can be non null")
+    fun getPackageNameToUse(context: Context?): String? {
+        if (sPackageNameToUse != null) return sPackageNameToUse
+        val pm = context!!.packageManager
         // Get default VIEW intent handler.
-        Intent activityIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"));
-        ResolveInfo defaultViewHandlerInfo = pm.resolveActivity(activityIntent, 0);
-        String defaultViewHandlerPackageName = null;
+        val activityIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"))
+        val defaultViewHandlerInfo = pm.resolveActivity(activityIntent, 0)
+        var defaultViewHandlerPackageName: String? = null
         if (defaultViewHandlerInfo != null) {
-            defaultViewHandlerPackageName = defaultViewHandlerInfo.activityInfo.packageName;
+            defaultViewHandlerPackageName = defaultViewHandlerInfo.activityInfo.packageName
         }
 
         // Get all apps that can handle VIEW intents.
-        List<ResolveInfo> resolvedActivityList = pm.queryIntentActivities(activityIntent, 0);
-        List<String> packagesSupportingCustomTabs = new ArrayList<>(resolvedActivityList.size());
-        for (ResolveInfo info : resolvedActivityList) {
-            Intent serviceIntent = new Intent();
-            serviceIntent.setAction(CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION);
-            serviceIntent.setPackage(info.activityInfo.packageName);
+        val resolvedActivityList = pm.queryIntentActivities(activityIntent, 0)
+        val packagesSupportingCustomTabs: MutableList<String?> = ArrayList(resolvedActivityList.size)
+        for (info in resolvedActivityList) {
+            val serviceIntent = Intent()
+            serviceIntent.action = CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION
+            serviceIntent.setPackage(info.activityInfo.packageName)
             if (pm.resolveService(serviceIntent, 0) != null) {
-                packagesSupportingCustomTabs.add(info.activityInfo.packageName);
+                packagesSupportingCustomTabs.add(info.activityInfo.packageName)
             }
         }
 
         // Now packagesSupportingCustomTabs contains all apps that can handle both VIEW intents
         // and service calls.
         if (packagesSupportingCustomTabs.isEmpty()) {
-            sPackageNameToUse = null;
-        } else if (packagesSupportingCustomTabs.size() == 1) {
-            sPackageNameToUse = packagesSupportingCustomTabs.get(0);
-        } else if (!TextUtils.isEmpty(defaultViewHandlerPackageName)
-                && !hasSpecializedHandlerIntents(context, activityIntent)
-                && packagesSupportingCustomTabs.contains(defaultViewHandlerPackageName)) {
-            sPackageNameToUse = defaultViewHandlerPackageName;
+            sPackageNameToUse = null
+        } else if (packagesSupportingCustomTabs.size == 1) {
+            sPackageNameToUse = packagesSupportingCustomTabs[0]
+        } else if (!TextUtils.isEmpty(defaultViewHandlerPackageName) &&
+            !hasSpecializedHandlerIntents(context, activityIntent) &&
+            packagesSupportingCustomTabs.contains(defaultViewHandlerPackageName)
+        ) {
+            sPackageNameToUse = defaultViewHandlerPackageName
         } else if (packagesSupportingCustomTabs.contains(STABLE_PACKAGE)) {
-            sPackageNameToUse = STABLE_PACKAGE;
+            sPackageNameToUse = STABLE_PACKAGE
         } else if (packagesSupportingCustomTabs.contains(BETA_PACKAGE)) {
-            sPackageNameToUse = BETA_PACKAGE;
+            sPackageNameToUse = BETA_PACKAGE
         } else if (packagesSupportingCustomTabs.contains(DEV_PACKAGE)) {
-            sPackageNameToUse = DEV_PACKAGE;
+            sPackageNameToUse = DEV_PACKAGE
         } else if (packagesSupportingCustomTabs.contains(LOCAL_PACKAGE)) {
-            sPackageNameToUse = LOCAL_PACKAGE;
+            sPackageNameToUse = LOCAL_PACKAGE
         }
-        return sPackageNameToUse;
+        return sPackageNameToUse
     }
 
     /**
@@ -113,34 +109,31 @@ public class CustomTabsHelper {
      * @param intent The intent to check with.
      * @return Whether there is a specialized handler for the given intent.
      */
-    private static boolean hasSpecializedHandlerIntents(Context context, Intent intent) {
+    private fun hasSpecializedHandlerIntents(context: Context, intent: Intent): Boolean {
         try {
-            PackageManager pm = context.getPackageManager();
-            List<ResolveInfo> handlers = pm.queryIntentActivities(
-                    intent,
-                    PackageManager.GET_RESOLVED_FILTER);
-            if (handlers == null || handlers.isEmpty()) {
-                return false;
+            val pm = context.packageManager
+            val handlers = pm.queryIntentActivities(
+                intent,
+                PackageManager.GET_RESOLVED_FILTER
+            )
+            if (handlers.isEmpty()) {
+                return false
             }
-            for (ResolveInfo resolveInfo : handlers) {
-                IntentFilter filter = resolveInfo.filter;
-                if (filter == null) continue;
-                if (filter.countDataAuthorities() == 0 || filter.countDataPaths() == 0) continue;
-                if (resolveInfo.activityInfo == null) continue;
-                return true;
+            for (resolveInfo in handlers) {
+                val filter = resolveInfo.filter ?: continue
+                if (filter.countDataAuthorities() == 0 || filter.countDataPaths() == 0) continue
+                if (resolveInfo.activityInfo == null) continue
+                return true
             }
-        } catch (RuntimeException e) {
-            Timber.e("Runtime exception while getting specialized handlers");
+        } catch (e: RuntimeException) {
+            Timber.e("Runtime exception while getting specialized handlers")
         }
-        return false;
+        return false
     }
 
     /**
      * @return All possible chrome package names that provide custom tabs feature.
      */
-    public static String[] getPackages() {
-        return new String[]{"", STABLE_PACKAGE, BETA_PACKAGE, DEV_PACKAGE, LOCAL_PACKAGE};
-    }
-
-
+    val packages: Array<String>
+        get() = arrayOf("", STABLE_PACKAGE, BETA_PACKAGE, DEV_PACKAGE, LOCAL_PACKAGE)
 }
