@@ -60,6 +60,7 @@ object ExceptionUtil {
 
     /** Whether the exception is, or contains a cause of a given type  */
     @JvmStatic
+    @KotlinCleanup("convert to containsCause<T>(ex)")
     fun <T> containsCause(ex: Throwable, clazz: Class<T>): Boolean {
         if (clazz.isInstance(ex)) {
             return true
