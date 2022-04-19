@@ -10,67 +10,57 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.ui
 
-package com.ichi2.ui;
+import android.app.Activity
+import android.app.Application
+import android.content.Context
+import android.content.ContextWrapper
+import android.view.ContextThemeWrapper
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.CoreMatchers.*
+import org.hamcrest.MatcherAssert.*
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import kotlin.test.assertEquals
+import kotlin.test.fail
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.view.ContextThemeWrapper;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-@RunWith(RobolectricTestRunner.class)
-public class RtlCompliantActionProviderTest {
-
-
+@RunWith(RobolectricTestRunner::class)
+class RtlCompliantActionProviderTest {
     @Test
-    public void test_unwrapContext_will_get_activity() {
-
-        Activity a = new Activity();
-        Context c = new ContextWrapper(
-                new ContextThemeWrapper(
-                        new ContextWrapper(
-                                a
-                        ),
-                        0
-                )
-        );
-
-        RtlCompliantActionProvider provider = new RtlCompliantActionProvider(c);
-        assertEquals(provider.mActivity, a);
+    fun test_unwrapContext_will_get_activity() {
+        val a = Activity()
+        val c: Context = ContextWrapper(
+            ContextThemeWrapper(
+                ContextWrapper(
+                    a
+                ),
+                0
+            )
+        )
+        val provider = RtlCompliantActionProvider(c)
+        assertEquals(provider.mActivity, a)
     }
 
-
     @Test
-    public void test_unwrapContext_will_throw_on_no_activity() {
-
-        Application a = new Application();
-        Context c = new ContextWrapper(
-                new ContextThemeWrapper(
-                        new ContextWrapper(
-                                a
-                        ),
-                        0
-                )
-        );
-
+    @KotlinCleanup("assertThrows<>")
+    fun test_unwrapContext_will_throw_on_no_activity() {
+        val a = Application()
+        val c: Context = ContextWrapper(
+            ContextThemeWrapper(
+                ContextWrapper(
+                    a
+                ),
+                0
+            )
+        )
         try {
-            RtlCompliantActionProvider provider = new RtlCompliantActionProvider(c);
-        } catch (Exception e) {
-            assertThat(e, instanceOf(ClassCastException.class));
-            return;
+            RtlCompliantActionProvider(c)
+        } catch (e: Exception) {
+            assertThat(e, instanceOf(ClassCastException::class.java))
+            return
         }
-
-        fail("unwrapContext should have thrown a ClassCastException, because the base context is not an activity");
+        fail("unwrapContext should have thrown a ClassCastException, because the base context is not an activity")
     }
-
 }
