@@ -338,6 +338,48 @@ public class FinderTest extends RobolectricTest {
         // assertThrows(Exception.class, () -> col.findCards("flag:12"));
     }
 
+
+    @Test
+    public void test_findCardsHierarchyTag() {
+        Collection col = getCol();
+
+        Note note = col.newNote();
+        note.setItem("Front", "foo");
+        note.setItem("Back", "bar");
+        note.addTag("cat1::some");
+        col.addNote(note);
+
+        note = col.newNote();
+        note.setItem("Front", "foo");
+        note.setItem("Back", "bar");
+        note.addTag("cat1::something");
+        col.addNote(note);
+
+        note = col.newNote();
+        note.setItem("Front", "foo");
+        note.setItem("Front", "bar");
+        note.addTag("cat2::some");
+        col.addNote(note);
+
+        note = col.newNote();
+        note.setItem("Front", "foo");
+        note.setItem("Back", "bar");
+        note.addTag("cat2::some::something");
+        col.addNote(note);
+
+        col.save();
+
+        assertEquals(0, col.findCards("tag:cat").size());
+        assertEquals(4, col.findCards("tag:cat*").size());
+        assertEquals(2, col.findCards("tag:cat1").size());
+        assertEquals(2, col.findCards("tag:cat2").size());
+        assertEquals(1, col.findCards("tag:cat1::some").size());
+        assertEquals(2, col.findCards("tag:cat1::some*").size());
+        assertEquals(1, col.findCards("tag:cat1::something").size());
+        assertEquals(2, col.findCards("tag:cat2::some").size());
+        assertEquals(1, col.findCards("tag:cat2::some::").size());
+    }
+
     @Test
     public void test_deckNameContainingWildcardCanBeSearched() {
         String val = "*Yr1::Med2::CAS4::F4: Renal::BRS (zanki)::HY";

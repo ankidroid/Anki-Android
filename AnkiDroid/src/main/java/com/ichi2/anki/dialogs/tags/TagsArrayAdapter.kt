@@ -98,7 +98,7 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         // clicking other parts toggles the expansion state
         vh.itemView.setOnClickListener {
             toggleExpansionState(vh.mPosition)
-            setExpanderBackgroundImage(vh.mExpandButton, getExpansionState(vh.mPosition))
+            updateExpanderBackgroundImage(vh.mExpandButton, mTree[vh.mPosition])
             // result of getTagByIndex() may change due to the expansion / collapse
             if (mTree[vh.mPosition].children.isNotEmpty()) {
                 notifyDataSetChanged()
@@ -117,7 +117,7 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         holder.mTextView.text = tagParts.last()
 
         holder.mExpandButton.visibility = if (mTree[originalPosition].children.isNotEmpty()) View.VISIBLE else View.INVISIBLE
-        setExpanderBackgroundImage(holder.mExpandButton, mTree[originalPosition].expandState)
+        updateExpanderBackgroundImage(holder.mExpandButton, mTree[originalPosition])
         val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         lp.setMargins(HIERARCHY_PADDING_VALUE * holder.mLevel, 0, 0, 0)
         holder.mExpandButton.layoutParams = lp
@@ -236,13 +236,13 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         return mTree[position].expandState
     }
 
-    private fun setExpanderBackgroundImage(button: ImageButton, expand: Boolean) {
-        when (expand) {
+    private fun updateExpanderBackgroundImage(button: ImageButton, node: TagTreeNode) {
+        when (node.expandState) {
             true -> {
                 button.setBackgroundResource(R.drawable.ic_expand_more_black_24dp_xml)
             }
             false -> {
-                button.setBackgroundResource(R.drawable.ic_chevron_right_black)
+                button.setBackgroundResource(R.drawable.ic_baseline_chevron_right_24)
             }
         }
     }

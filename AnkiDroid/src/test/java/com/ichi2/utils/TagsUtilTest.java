@@ -89,4 +89,48 @@ public class TagsUtilTest {
             assertListEquals(updated, actual);
         }
     }
+
+
+    public static class HierarchyTagUtilsTest {
+        @Test
+        public void test_getTagParts() {
+            assertEquals(TagsUtil.getTagParts("single"), Arrays.asList("single"));
+            assertEquals(TagsUtil.getTagParts(":single:"), Arrays.asList(":single:"));
+
+            assertEquals(TagsUtil.getTagParts("first::second"), Arrays.asList("first", "second"));
+            assertEquals(TagsUtil.getTagParts("first::second:"), Arrays.asList("first", "second:"));
+            assertEquals(TagsUtil.getTagParts("first::second::"), Arrays.asList("first", "second", "blank"));
+            assertEquals(TagsUtil.getTagParts("::first:::::second::"), Arrays.asList("blank", "first", "blank", ":second", "blank"));
+        }
+
+        @Test
+        public void test_getUniformedTag() {
+            assertEquals(TagsUtil.getUniformedTag("abc"), "abc");
+            assertEquals(TagsUtil.getUniformedTag("abc::"), "abc::blank");
+            assertEquals(TagsUtil.getUniformedTag("abc::def::::"), "abc::def::blank::blank");
+        }
+
+        @Test
+        public void test_getTagRoot() {
+            assertEquals(TagsUtil.getTagRoot("abc"), "abc");
+            assertEquals(TagsUtil.getTagRoot("abc:"), "abc:");
+            assertEquals(TagsUtil.getTagRoot("abc::def::ghi"), "abc");
+            assertEquals(TagsUtil.getTagRoot("::careless"), "blank");
+        }
+
+        @Test
+        public void test_getTagAncestors() {
+            assertEquals(TagsUtil.getTagAncestors("foo::bar::aaa::bbb"), Arrays.asList("foo", "foo::bar", "foo::bar::aaa"));
+            assertEquals(TagsUtil.getTagAncestors("foo::::aaa"), Arrays.asList("foo", "foo::blank"));
+            assertEquals(TagsUtil.getTagAncestors("::foo::aaa"), Arrays.asList("blank", "blank::foo"));
+        }
+
+        @Test
+        public void test_compareTag() {
+            assertTrue(TagsUtil.compareTag("aaa::foo", "bbb::bar") < 0);
+            assertTrue(TagsUtil.compareTag("aaa::foo", "aaa::bar") > 0);
+            assertTrue(TagsUtil.compareTag("aaa::foo", "aaa::foo::trailing") < 0);
+            assertTrue(TagsUtil.compareTag("aaa::bbbb", "aaa::bbb::trailing") > 0);
+        }
+    }
 }

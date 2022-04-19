@@ -244,6 +244,25 @@ public class TagsListTest {
 
 
     @Test
+    public void test_constructor_will_complete_hierarchy_for_all_tags() {
+        List<String> allTags = Arrays.asList("cat1", "cat2::aa", "cat3::aa::bb::cc::dd");
+        List<String> checkedTags = Arrays.asList("cat1::aa", "cat1::bb", "cat2::bb::aa", "cat2::bb::bb");
+        TagsList list = new TagsList(
+                allTags,
+                checkedTags
+        );
+        list.sort();
+
+        assertEquals(Arrays.asList("cat1", "cat1::aa", "cat1::bb", "cat2", "cat2::aa", "cat2::bb", "cat2::bb::aa",
+                                   "cat2::bb::bb", "cat3", "cat3::aa", "cat3::aa::bb", "cat3::aa::bb::cc",
+                                   "cat3::aa::bb::cc::dd"), list.copyOfAllTagList());
+        assertEquals(Arrays.asList("cat1::aa", "cat1::bb", "cat2::bb::aa", "cat2::bb::bb"), list.copyOfCheckedTagList());
+        assertEquals("Ancestors of checked tags should be marked as indeterminate",
+                     Arrays.asList("cat1", "cat2", "cat2::bb"), list.copyOfIndeterminateTagList());
+    }
+
+
+    @Test
     public void test_isChecked_index() {
         assertTrue("Tag at index 0 should be checked", mTagsList.isChecked(0));
         assertTrue("Tag at index 3 should be checked", mTagsList.isChecked(3));
@@ -310,6 +329,48 @@ public class TagsListTest {
                 join(TAGS, "anki"), mTagsList.copyOfAllTagList());
         assertSameElementsIgnoreOrder("Adding operations should have nothing to do with the checked status of tags",
                 CHECKED_TAGS, mTagsList.copyOfCheckedTagList());
+    }
+
+
+    @Test
+    public void test_add_hierarchy_tag() {
+        assertTrue("Adding 'language::english' tag should return true",
+                mTagsList.add("language::english"));
+        assertTrue("Adding 'language::other::java' tag should return true",
+                mTagsList.add("language::other::java"));
+        assertTrue("Adding 'language::other::kotlin' tag should return true",
+                mTagsList.add("language::other::kotlin"));
+        assertFalse("Repeatedly adding 'language::english' tag should return false",
+                mTagsList.add("language::english"));
+        assertFalse("Adding 'language::other' tag should return false, for it should have been auto created.",
+                mTagsList.add("language::other"));
+
+        assertTrue(mTagsList.check("language::other::java"));
+        assertTrue("Intermediate tags should marked as indeterminate",
+                mTagsList.copyOfIndeterminateTagList().contains("language::other"));
+
+        assertTrue(mTagsList.add("object::electronic"));
+        assertTrue(mTagsList.check("object::electronic"));
+        assertTrue(mTagsList.add("object::electronic::computer"));
+        assertTrue(mTagsList.check("object::electronic::computer"));
+        assertFalse("Should not mark checked intermediate tags as indeterminate",
+                mTagsList.copyOfIndeterminateTagList().contains("object::electronic"));
+
+        /*
+        assertTrue("Adding 'careless::::unit' tag should return true",
+                mTagsList.add("careless::::unit"));
+        assertTrue("Checking 'careless::blank::unit' tag should return true for it should exists",
+                mTagsList.check("careless::blank::unit"));
+        assertFalse("Checking 'careless::::unit' tag should return false for it should not exists",
+                mTagsList.check("careless::::unit"));
+
+        assertTrue("Adding 'careless::::missing_trailing::' tag should return true",
+                mTagsList.add("careless::::missing_trailing::"));
+        assertTrue("Checking 'careless::blank::missing_trailing::blank' tag should return true for it should exists",
+                mTagsList.check("careless::blank::missing_trailing::blank"));
+        assertFalse("Checking 'careless::::missing_trailing::' tag should return false for it should not exists",
+                mTagsList.check("careless::::missing_trailing::"));
+         */
     }
 
 
