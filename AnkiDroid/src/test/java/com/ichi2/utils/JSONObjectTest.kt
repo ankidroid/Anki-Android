@@ -37,7 +37,9 @@ Most of the code is:
 package com.ichi2.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.AnkiAssert.assertThrows
 import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.assertThrows
 import junit.framework.TestCase.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull.notNullValue
@@ -1081,6 +1083,25 @@ class JSONObjectTest {
         val fromMapJsonObject = JSONObject.fromMap(booleanMap)
         for (i in 0..9) {
             Assert.assertEquals(fromMapJsonObject.getBoolean("key$i"), i % 2 == 0)
+        }
+    }
+    /**
+     * Tests that exception is caught in the catch statement
+     */
+    @Test
+    fun testGetThrows() {
+        val `object` = JSONObject()
+        assertThrows<JSONException>() {
+            `object`.getBoolean("key")
+        }
+        assertThrows<JSONException> {
+            `object`.getInt("key")
+        }
+        assertThrows<JSONException> {
+            `object`.getLong("key")
+        }
+        assertThrows<JSONException> {
+            `object`.getString("key")
         }
     }
 
