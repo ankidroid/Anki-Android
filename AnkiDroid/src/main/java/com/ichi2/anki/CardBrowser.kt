@@ -140,7 +140,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     var mCardsListView: ListView? = null
     private var mSearchView: CardBrowserSearchView? = null
 
-    @VisibleForTesting
     var mCardsAdapter: MultiColumnListAdapter? = null
 
     private var mSearchTerms: String? = null
