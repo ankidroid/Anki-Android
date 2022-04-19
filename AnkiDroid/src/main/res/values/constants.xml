@@ -102,6 +102,7 @@
         <item>@string/gesture_toggle_whiteboard</item>
         <item>@string/gesture_show_hint</item>
         <item>@string/gesture_show_all_hints</item>
+        <item>@string/menu_add_note</item>
     </string-array>
     <string-array name="gestures_values">
         <item>0</item>
@@ -142,6 +143,7 @@
         <item>37</item> <!-- Toggle whiteboard -->
         <item>41</item> <!-- Show hint -->
         <item>42</item> <!-- Show all hints -->
+        <item>43</item> <!-- Add note -->
     </string-array>
     <string-array name="custom_button_values">
         <item>2</item>

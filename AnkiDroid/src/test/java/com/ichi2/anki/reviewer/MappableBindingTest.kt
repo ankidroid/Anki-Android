@@ -35,8 +35,8 @@ class MappableBindingTest {
     fun inequalityTest() {
         val allBindings = getAllBindings()
         // pick an arbitrary key which is not mapped
-        assertThat(allBindings, not(hasItem(unicodeCharacter('a'))))
-        assertThat(allBindings, not(hasItem(keyCode(KeyEvent.KEYCODE_A))))
+        assertThat(allBindings, not(hasItem(unicodeCharacter('l'))))
+        assertThat(allBindings, not(hasItem(keyCode(KeyEvent.KEYCODE_L))))
     }
 
     private fun getAllBindings() = ViewerCommand.allDefaultBindings

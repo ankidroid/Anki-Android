@@ -1142,6 +1142,10 @@ open class Reviewer : AbstractFlashcardViewer() {
                 onMark(mCurrentCard)
                 return true
             }
+            ViewerCommand.COMMAND_ADD_NOTE -> {
+                addNote()
+                return true
+            }
             else -> return super.executeCommand(which)
         }
     }
