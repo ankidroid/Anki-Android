@@ -13,20 +13,16 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import android.app.Application
+import com.ichi2.anki.AnkiDroidApp
 
-import android.app.Application;
-
-import com.ichi2.anki.AnkiDroidApp;
-
-public class EmptyApplication extends Application {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
+class EmptyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
 
         // reset the static state of the app
-        AnkiDroidApp.simulateRestoreFromBackup();
+        AnkiDroidApp.simulateRestoreFromBackup()
     }
 }
