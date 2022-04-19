@@ -452,7 +452,6 @@ public class Finder {
             return "n.tags = \"\"";
         }
         val = val.replace("*", "%");
-        String rawVal = val;
 
         if (!val.startsWith("%")) {
             val = "% " + val;
@@ -462,27 +461,13 @@ public class Finder {
         } else {
             args.add(val);
         }
-
-        val = rawVal;
-        if (!val.startsWith("%")) {
-            val = "%::" + val;
-        }
-        if (val.endsWith("::")) {
-            args.add(val + "%");
-        } else {
-            args.add(val + "::%");
-        }
-        val = rawVal;
-        if (!val.startsWith("%")) {
-            val = "% " + val;
-        }
         if (val.endsWith("::")) {
             args.add(val + "%");
         } else {
             args.add(val + "::%");
         }
 
-        return "((n.tags like ? escape '\\') or (n.tags like ? escape '\\') or (n.tags like ? escape '\\'))";
+        return "((n.tags like ? escape '\\') or (n.tags like ? escape '\\'))";
     }
 
 

@@ -83,7 +83,11 @@ object TagsUtil {
         if (firstColons == -1) {
             firstColons = tag.length
         }
-        return tag.substring(0, firstColons)
+        if (firstColons == 0) {
+            return "blank"
+        } else {
+            return tag.substring(0, firstColons)
+        }
     }
 
     /**
@@ -102,14 +106,6 @@ object TagsUtil {
             res.add(sb.toString())
         }
         return res
-    }
-
-    /**
-     * Check if a tag is a hierarchy tag
-     */
-    @JvmStatic
-    fun isTagHierarchy(tag: String): Boolean {
-        return tag.indexOf("::") != -1
     }
 
     /**
