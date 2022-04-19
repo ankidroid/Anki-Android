@@ -23,16 +23,15 @@ import com.brsanthu.googleanalytics.GoogleAnalytics
 import com.brsanthu.googleanalytics.GoogleAnalyticsBuilder
 import com.brsanthu.googleanalytics.request.ExceptionHit
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.utils.KotlinCleanup
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
-@KotlinCleanup("when -> whenever")
+import org.mockito.kotlin.whenever
+
 class AnalyticsTest {
     @Mock
     private lateinit var mMockContext: Context
@@ -50,24 +49,24 @@ class AnalyticsTest {
         UsageAnalytics.resetForTests()
         MockitoAnnotations.openMocks(this)
 
-        `when`((mMockResources.getBoolean(R.bool.ga_anonymizeIp))).thenReturn(true)
-        `when`(mMockResources.getInteger(R.integer.ga_sampleFrequency))
+        whenever((mMockResources.getBoolean(R.bool.ga_anonymizeIp))).thenReturn(true)
+        whenever(mMockResources.getInteger(R.integer.ga_sampleFrequency))
             .thenReturn(10)
-        `when`(mMockContext.resources)
+        whenever(mMockContext.resources)
             .thenReturn(mMockResources)
-        `when`(mMockContext.getString(R.string.ga_trackingId))
+        whenever(mMockContext.getString(R.string.ga_trackingId))
             .thenReturn("Mock Tracking ID")
-        `when`(mMockContext.getString(R.string.app_name))
+        whenever(mMockContext.getString(R.string.app_name))
             .thenReturn("Mock Application Name")
-        `when`(mMockContext.packageName)
+        whenever(mMockContext.packageName)
             .thenReturn("mock_context")
-        `when`(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
+        whenever(mMockContext.getSharedPreferences("mock_context_preferences", Context.MODE_PRIVATE))
             .thenReturn(mMockSharedPreferences)
-        `when`(mMockSharedPreferences.getBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, false))
+        whenever(mMockSharedPreferences.getBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, false))
             .thenReturn(true)
-        `when`(mMockSharedPreferencesEditor.putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true))
+        whenever(mMockSharedPreferencesEditor.putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true))
             .thenReturn(mMockSharedPreferencesEditor)
-        `when`(mMockSharedPreferences.edit())
+        whenever(mMockSharedPreferences.edit())
             .thenReturn(mMockSharedPreferencesEditor)
     }
 
@@ -88,9 +87,9 @@ class AnalyticsTest {
     fun testSendException() {
         mockStatic(PreferenceManager::class.java).use { _ ->
             mockStatic(GoogleAnalytics::class.java).use { _ ->
-                `when`(PreferenceManager.getDefaultSharedPreferences(ArgumentMatchers.any()))
+                whenever(PreferenceManager.getDefaultSharedPreferences(any()))
                     .thenReturn(mMockSharedPreferences)
-                `when`(GoogleAnalytics.builder())
+                whenever(GoogleAnalytics.builder())
                     .thenReturn(SpyGoogleAnalyticsBuilder())
 
                 // This is actually a Mockito Spy of GoogleAnalyticsImpl
@@ -98,23 +97,23 @@ class AnalyticsTest {
 
                 // no root cause
                 val exception = mock(Exception::class.java)
-                `when`(exception.cause).thenReturn(null)
+                whenever(exception.cause).thenReturn(null)
                 val cause = UsageAnalytics.getCause(exception)
                 verify(exception).cause
-                Assert.assertEquals(exception, cause)
+                assertEquals(exception, cause)
 
                 // a 3-exception chain inside the actual analytics call
                 val childException = mock(Exception::class.java)
-                `when`(childException.cause).thenReturn(null)
-                `when`(childException.toString()).thenReturn("child exception toString()")
+                whenever(childException.cause).thenReturn(null)
+                whenever(childException.toString()).thenReturn("child exception toString()")
                 val parentException = mock(Exception::class.java)
-                `when`(parentException.cause).thenReturn(childException)
+                whenever(parentException.cause).thenReturn(childException)
                 val grandparentException = mock(Exception::class.java)
-                `when`(grandparentException.cause).thenReturn(parentException)
+                whenever(grandparentException.cause).thenReturn(parentException)
 
                 // prepare analytics so we can inspect what happens
                 val spyHit = spy(ExceptionHit())
-                doReturn(spyHit).`when`(analytics)?.exception()
+                doReturn(spyHit).whenever(analytics)?.exception()
                 try {
                     UsageAnalytics.sendAnalyticsException(grandparentException, false)
                 } catch (e: Exception) {
@@ -124,9 +123,9 @@ class AnalyticsTest {
                 verify(parentException).cause
                 verify(childException).cause
                 verify(analytics)?.exception()
-                verify(spyHit).exceptionDescription(ArgumentMatchers.anyString())
+                verify(spyHit).exceptionDescription(anyString())
                 verify(spyHit).sendAsync()
-                Assert.assertEquals(spyHit.exceptionDescription(), "child exception toString()")
+                assertEquals(spyHit.exceptionDescription(), "child exception toString()")
             }
         }
     }
