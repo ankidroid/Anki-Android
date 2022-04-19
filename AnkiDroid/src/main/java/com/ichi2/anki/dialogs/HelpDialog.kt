@@ -147,7 +147,7 @@ object HelpDialog {
         private constructor(`in`: Parcel?) : super(`in`!!)
 
         companion object {
-            val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
+            @JvmField val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
                 override fun createFromParcel(`in`: Parcel): RateAppItem {
                     return RateAppItem(`in`)
                 }
@@ -189,7 +189,7 @@ object HelpDialog {
         }
 
         companion object {
-            val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
+            @JvmField val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
                 override fun createFromParcel(`in`: Parcel): LinkItem {
                     return LinkItem(`in`)
                 }
@@ -231,7 +231,7 @@ object HelpDialog {
         }
 
         companion object {
-            val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
+            @JvmField val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
                 override fun createFromParcel(`in`: Parcel): FunctionItem {
                     return FunctionItem(`in`)
                 }
