@@ -1,4 +1,4 @@
-//noinspection MissingCopyrightHeader #8659
+// noinspection MissingCopyrightHeader #8659
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,38 +12,28 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+package com.ichi2.compat.customtabs
 
-package com.ichi2.compat.customtabs;
-
-import android.content.ComponentName;
-
-import androidx.annotation.NonNull;
-import androidx.browser.customtabs.CustomTabsClient;
-import androidx.browser.customtabs.CustomTabsServiceConnection;
-
-import java.lang.ref.WeakReference;
+import android.content.ComponentName
+import androidx.browser.customtabs.CustomTabsClient
+import androidx.browser.customtabs.CustomTabsServiceConnection
+import java.lang.ref.WeakReference
 
 /**
  * Implementation for the CustomTabsServiceConnection that avoids leaking the
  * ServiceConnectionCallback
  */
-public class ServiceConnection extends CustomTabsServiceConnection {
+class ServiceConnection(connectionCallback: ServiceConnectionCallback) : CustomTabsServiceConnection() {
     // A weak reference to the ServiceConnectionCallback to avoid leaking it.
-    private final WeakReference<ServiceConnectionCallback> mConnectionCallback;
+    private val mConnectionCallback: WeakReference<ServiceConnectionCallback> = WeakReference(connectionCallback)
 
-    public ServiceConnection(ServiceConnectionCallback connectionCallback) {
-        mConnectionCallback = new WeakReference<>(connectionCallback);
+    override fun onCustomTabsServiceConnected(name: ComponentName, client: CustomTabsClient) {
+        val connectionCallback = mConnectionCallback.get()
+        connectionCallback?.onServiceConnected(client)
     }
 
-    @Override
-    public void onCustomTabsServiceConnected(@NonNull ComponentName name, @NonNull CustomTabsClient client) {
-        ServiceConnectionCallback connectionCallback = mConnectionCallback.get();
-        if (connectionCallback != null) connectionCallback.onServiceConnected(client);
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-        ServiceConnectionCallback connectionCallback = mConnectionCallback.get();
-        if (connectionCallback != null) connectionCallback.onServiceDisconnected();
+    override fun onServiceDisconnected(name: ComponentName) {
+        val connectionCallback = mConnectionCallback.get()
+        connectionCallback?.onServiceDisconnected()
     }
 }
