@@ -220,6 +220,56 @@ class TagsDialogTest {
         }
     }
 
+    @Test
+    fun test_AddNewTag_newHierarchicalTag_pathToItShouldBeExpanded() {
+        val type = TagsDialog.DialogType.EDIT_TAGS
+        val allTags = listOf("common::speak", "common::speak::daily", "common::sport::tennis", "common::sport::football")
+        val checkedTags = listOf("common::speak::daily", "common::sport::tennis")
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withArguments(type, checkedTags, allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { f: TagsDialog ->
+            val dialog = f.dialog as MaterialDialog?
+            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            val body = dialog!!.customView
+            val recycler: RecyclerView = body!!.findViewById(R.id.tags_dialog_tags_list)
+            val tag = "common::sport::football::small"
+            f.addTag(tag)
+
+            // v common        [-]
+            //   > speak       [-]
+            //   v sport       [-]
+            //     v football  [-]
+            //       > small   [x]
+            //     - tennis    [x]
+            recycler.measure(0, 0)
+            recycler.layout(0, 0, 100, 1000)
+            Assert.assertEquals(6, recycler.adapter!!.itemCount.toLong())
+            val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
+            val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
+            val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
+            val item3 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 3)
+            val item4 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 4)
+            val item5 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 5)
+            Assert.assertEquals(item0.text, "common")
+            Assert.assertEquals(item1.text, "common::speak")
+            Assert.assertEquals(item2.text, "common::sport")
+            Assert.assertEquals(item3.text, "common::sport::football")
+            Assert.assertEquals(item4.text, "common::sport::football::small")
+            Assert.assertEquals(item5.text, "common::sport::tennis")
+            Assert.assertTrue(item0.mCheckBoxView.isIndeterminate())
+            Assert.assertTrue(item1.mCheckBoxView.isIndeterminate())
+            Assert.assertTrue(item2.mCheckBoxView.isIndeterminate())
+            Assert.assertTrue(item3.mCheckBoxView.isIndeterminate())
+            Assert.assertTrue(item4.mCheckBoxView.isChecked)
+            Assert.assertTrue(item5.mCheckBoxView.isChecked)
+        }
+    }
+
     companion object {
         private fun mockLifecycleOwner(): LifecycleOwner {
             val owner = Mockito.mock(LifecycleOwner::class.java)

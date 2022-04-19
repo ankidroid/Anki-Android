@@ -38,11 +38,13 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal val mExpandButton: ImageButton = itemView.findViewById(R.id.id_expand_button)
         internal val mCheckBoxView: CheckBoxTriStates = itemView.findViewById(R.id.tags_dialog_tag_item_checkbox)
-        // TextView contains the displayed tag (only the last part)
+        // TextView contains the displayed tag (only the last part).
         internal val mTextView: TextView = itemView.findViewById(R.id.tags_dialog_tag_item_text)
-        // RawTag contains the full tag
+        // RawTag contains the full tag.
         internal var mRawTag = String()
+        // Position is used to index the tag in the fully expanded tag node array.
         internal var mPosition = -1
+        // Level of the tag in the hierarchy. Used to calculate the shift distance.
         internal var mLevel = -1
 
         @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -108,18 +110,19 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val originalPosition = getRealPosition(position)
-        val tag = mFilteredList[originalPosition]
+        val realPosition = getRealPosition(position)
+        val tag = mFilteredList[realPosition]
         val tagParts = TagsUtil.getTagParts(tag)
-        holder.mRawTag = tag
-        holder.mPosition = originalPosition
-        holder.mLevel = tagParts.size - 1
-        holder.mTextView.text = tagParts.last()
 
-        holder.mExpandButton.visibility = if (mTree[originalPosition].children.isNotEmpty()) View.VISIBLE else View.INVISIBLE
-        updateExpanderBackgroundImage(holder.mExpandButton, mTree[originalPosition])
+        holder.mTextView.text = tagParts.last()
+        holder.mRawTag = tag
+        holder.mPosition = realPosition
+        holder.mLevel = tagParts.size - 1
+
+        holder.mExpandButton.visibility = if (mTree[realPosition].children.isNotEmpty()) View.VISIBLE else View.INVISIBLE
+        updateExpanderBackgroundImage(holder.mExpandButton, mTree[realPosition])
         val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        lp.setMargins(HIERARCHY_PADDING_VALUE * holder.mLevel, 0, 0, 0)
+        lp.setMargins(HIERARCHY_SHIFT_BASE * holder.mLevel, 0, 0, 0)
         holder.mExpandButton.layoutParams = lp
 
         if (tags.isIndeterminate(tag)) {
@@ -130,15 +133,14 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
     }
 
     /**
-     * Find the position of the index-th available tag in mFilteredList.
-     * Implemented by walking the tree.
+     * Find the position of the index-th visible tag in mFilteredList.
+     * Implemented by walking the tree using subtree size.
      */
     private fun getRealPosition(index: Int): Int {
         var remain = index
         var node = mTreeRoot
         while (remain < node.subtreeSize) {
-            for (i in 0 until node.children.size) {
-                val ch = node.children[i]
+            for (ch in node.children) {
                 val subtreeSize = mTree[ch].getContributeSize()
                 if (remain >= subtreeSize) {
                     remain -= subtreeSize
@@ -158,7 +160,7 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
     }
 
     /**
-     * Return the number of available tags.
+     * Return the number of visible tags.
      */
     override fun getItemCount(): Int {
         return mTreeRoot.subtreeSize
@@ -166,15 +168,17 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
 
     /**
      * Build the tag tree.
+     * The tags have been sorted using the hierarchical comparator, which is also a DFN order.
+     * Use a stack to build the tree without using recursion.
      */
-    private fun initChildren(expandAll: Boolean) {
+    private fun buildTagTree(initExpandState: Boolean) {
         mTreeRoot.children.clear()
         mTreeRoot.subtreeSize = 0
         mTree.clear()
 
         val stack = Stack<Int>()
         for (i in 0 until mFilteredList.size) {
-            mTree.add(TagTreeNode(-1, ArrayList(), 1, expandAll))
+            mTree.add(TagTreeNode(-1, ArrayList(), 1, initExpandState))
             while (!stack.empty()) {
                 if (!mFilteredList[i].startsWith(mFilteredList[stack.peek()] + "::")) {
                     val x = stack.pop()
@@ -208,6 +212,7 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
 
     /**
      * Toggle the expansion state of the position-th tag in mFilteredList.
+     * Return: the toggled expansion state.
      */
     private fun toggleExpansionState(position: Int): Boolean {
         mTree[position].expandState = !mTree[position].expandState
@@ -272,22 +277,22 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         private var mExpandTarget: String? = null
 
         override fun filterResults(constraint: CharSequence, items: List<String>): List<String> {
-            val tagSet = TreeSet<String>()
+            val shownTags = TreeSet<String>()
 
             val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
             val crucialTags = items.filter {
                 it.lowercase(Locale.getDefault()).contains(filterPattern)
             }
-            tagSet.addAll(crucialTags)
+            shownTags.addAll(crucialTags)
 
             // the ancestors should be displayed as well
             for (tag in crucialTags) {
-                tagSet.addAll(TagsUtil.getTagAncestors(tag))
+                shownTags.addAll(TagsUtil.getTagAncestors(tag))
             }
 
-            // show tags in relative order in the original list
+            // show tags in the relative order in original list
             return items.filter {
-                tagSet.contains(it)
+                shownTags.contains(it)
             }
         }
 
@@ -296,7 +301,7 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
             mFilteredList.addAll(results)
             // if the search constraint is empty, collapse all tags when constructing the tree
             sortData()
-            initChildren(!constraint.isNullOrEmpty())
+            buildTagTree(!constraint.isNullOrEmpty())
             if (!TextUtils.isEmpty(mExpandTarget)) {
                 expandPathToTag(mExpandTarget!!)
             }
@@ -314,10 +319,10 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         mFilteredList = ArrayList(tags.toList())
         mTreeRoot = TagTreeNode(-1, ArrayList(), 0, true)
         mTree = ArrayList(mFilteredList.size)
-        initChildren(false)
+        buildTagTree(false)
     }
 
     companion object {
-        const val HIERARCHY_PADDING_VALUE = 40
+        const val HIERARCHY_SHIFT_BASE = 40
     }
 }
