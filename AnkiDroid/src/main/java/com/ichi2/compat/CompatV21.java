@@ -57,30 +57,31 @@ public class CompatV21 implements Compat {
 
     // Until API26, ignore notification channels
     @Override
-    public void setupNotificationChannel(Context context, String id, String name) { /* pre-API26, do nothing */ }
+    public void setupNotificationChannel(@NonNull Context context, @NonNull String id, @NonNull String name) { /* pre-API26, do nothing */ }
 
     // Until API 23 the methods have "current" in the name
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public void setTime(TimePicker picker, int hour, int minute) {
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public void setTime(@NonNull TimePicker picker, int hour, int minute) {
         picker.setCurrentHour(hour);
         picker.setCurrentMinute(minute);
     }
 
     // Until API 26 just specify time, after that specify effect also
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public void vibrate(Context context, long durationMillis) {
-        Vibrator vibratorManager = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public void vibrate(@NonNull Context context, long durationMillis) {
+        Vibrator vibratorManager = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         if (vibratorManager != null) {
             vibratorManager.vibrate(durationMillis);
         }
     }
 
     // Until API31 the MediaRecorder constructor was default, ignoring the Context
+    @NonNull
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public MediaRecorder getMediaRecorder(Context context) {
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public MediaRecorder getMediaRecorder(@NonNull Context context) {
         return new MediaRecorder();
     }
 
@@ -163,13 +164,17 @@ public class CompatV21 implements Compat {
 
     // Until API 23 the methods have "current" in the name
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public int getHour(TimePicker picker) { return picker.getCurrentHour(); }
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public int getHour(@NonNull TimePicker picker) {
+        return picker.getCurrentHour();
+    }
 
     // Until API 23 the methods have "current" in the name
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public int getMinute(TimePicker picker) { return picker.getCurrentMinute(); }
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public int getMinute(@NonNull TimePicker picker) {
+        return picker.getCurrentMinute();
+    }
 
     @Override
     @SuppressWarnings({"deprecation", "RedundantSuppression"})
@@ -178,35 +183,41 @@ public class CompatV21 implements Compat {
     }
     
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public void requestAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
         audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
     }
 
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public void abandonAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
         audioManager.abandonAudioFocus(audioFocusChangeListener);
     }
 
+
+    @NonNull
     @Override
-    public PendingIntent getImmutableActivityIntent(Context context, int requestCode, Intent intent, int flags) {
+    public PendingIntent getImmutableActivityIntent(@NonNull Context context, int requestCode, @NonNull Intent intent, int flags) {
         //noinspection WrongConstant
         return PendingIntent.getActivity(context, requestCode, intent, flags | FLAG_IMMUTABLE);
     }
 
+
+    @NonNull
     @Override
-    public PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, int flags) {
+    public PendingIntent getImmutableBroadcastIntent(@NonNull Context context, int requestCode, @NonNull Intent intent, int flags) {
         //noinspection WrongConstant
         return PendingIntent.getBroadcast(context, requestCode, intent, flags | FLAG_IMMUTABLE);
     }
 
+
+    @NonNull
     @Override
-    @SuppressWarnings({"deprecation", "RedundantSuppression"})
-    public Uri saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException {
+    @SuppressWarnings( {"deprecation", "RedundantSuppression"})
+    public Uri saveImage(@NonNull Context context, @NonNull Bitmap bitmap, @NonNull String baseFileName, @NonNull String extension, @NonNull Bitmap.CompressFormat format, int quality) throws FileNotFoundException {
         File pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File ankiDroidDirectory = new File(pictures, "AnkiDroid");
         if (!ankiDroidDirectory.exists()) {

@@ -10,13 +10,13 @@ import com.ichi2.compat.CompatHelper
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 class TimePreference(context: Context?, attrs: AttributeSet?) : android.preference.DialogPreference(context, attrs) {
-    private var mTimepicker: TimePicker? = null
+    private lateinit var mTimepicker: TimePicker
     private var mHours = 0
     private var mMinutes = 0
     override fun onCreateDialogView(): View {
         mTimepicker = TimePicker(context)
-        mTimepicker!!.setIs24HourView(true)
-        return mTimepicker!!
+        mTimepicker.setIs24HourView(true)
+        return mTimepicker
     }
 
     override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
