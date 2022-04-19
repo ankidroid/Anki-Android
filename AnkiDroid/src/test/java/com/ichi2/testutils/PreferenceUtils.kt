@@ -13,34 +13,25 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import android.content.Context
+import androidx.lifecycle.Lifecycle
+import androidx.test.core.app.ActivityScenario
+import com.ichi2.anki.Preferences
+import java.util.concurrent.atomic.AtomicReference
 
-import android.content.Context;
-import android.content.Intent;
-
-import com.ichi2.anki.Preferences;
-
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
-
-import androidx.lifecycle.Lifecycle;
-import androidx.test.core.app.ActivityScenario;
-
-public class PreferenceUtils {
-
-    public static Set<String> getAllCustomButtonKeys(Context context) {
-        AtomicReference<Set<String>> ret = new AtomicReference<>();
-        Intent i = Preferences.CustomButtonsSettingsFragment.getSubscreenIntent(context);
-        try (ActivityScenario<Preferences> scenario = ActivityScenario.launch(i)) {
-            scenario.moveToState(Lifecycle.State.STARTED);
-            scenario.onActivity(a -> ret.set(a.getLoadedPreferenceKeys()));
+object PreferenceUtils {
+    @JvmStatic
+    fun getAllCustomButtonKeys(context: Context?): Set<String> {
+        val ret = AtomicReference<Set<String>>()
+        val i = Preferences.CustomButtonsSettingsFragment.getSubscreenIntent(context)
+        ActivityScenario.launch<Preferences>(i).use { scenario ->
+            scenario.moveToState(Lifecycle.State.STARTED)
+            scenario.onActivity { a: Preferences -> ret.set(a.loadedPreferenceKeys) }
         }
-        Set<String> preferenceKeys = ret.get();
-        if (preferenceKeys == null) {
-            throw new IllegalStateException("no keys were set");
-        }
-        preferenceKeys.remove("reset_custom_buttons");
-        return preferenceKeys;
+        val preferenceKeys = ret.get()?.toMutableSet() ?: throw IllegalStateException("no keys were set")
+        preferenceKeys.remove("reset_custom_buttons")
+        return preferenceKeys
     }
 }
