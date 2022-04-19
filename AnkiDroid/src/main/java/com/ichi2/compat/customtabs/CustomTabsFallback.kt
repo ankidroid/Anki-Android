@@ -1,4 +1,4 @@
-//noinspection MissingCopyrightHeader #8659
+// noinspection MissingCopyrightHeader #8659
 // Copyright 2015 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,32 +12,34 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package com.ichi2.compat.customtabs;
+package com.ichi2.compat.customtabs
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.compat.customtabs.CustomTabActivityHelper.CustomTabFallback
+import com.ichi2.utils.KotlinCleanup
 
 /**
  * A Fallback that opens a Webview when Custom Tabs is not available
  */
-public class CustomTabsFallback implements CustomTabActivityHelper.CustomTabFallback {
-    @Override
-    public void openUri(Activity activity, Uri uri) {
+class CustomTabsFallback : CustomTabFallback {
+
+    @KotlinCleanup("AFTER fixing @KotlinCleanup for CustomTabActivityHelper see if activity can be non null")
+    override fun openUri(activity: Activity?, uri: Uri?) {
         try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            activity.startActivity(intent);
-        } catch (Exception e) {
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            activity!!.startActivity(intent)
+        } catch (e: Exception) {
             // This can occur if the provider is not exported: #7721
             // this should not happen as we don't reach here if there's no valid browser.
             // and I assume an exported intent will take priority over a non-exported intent.
             // Add an exception report to see if I'm wrong
-            AnkiDroidApp.sendExceptionReport(e, "CustomTabsFallback::openUri");
-            UIUtils.showThemedToast(activity, activity.getString(R.string.web_page_error, uri), false);
+            AnkiDroidApp.sendExceptionReport(e, "CustomTabsFallback::openUri")
+            showThemedToast(activity, activity!!.getString(R.string.web_page_error, uri), false)
         }
     }
 }
