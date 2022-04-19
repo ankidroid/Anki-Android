@@ -57,74 +57,73 @@ import java.util.*
  */
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-@KotlinCleanup("fix `object`")
 class JSONObjectTest {
     @Test
     fun testEmptyObject() {
-        val `object` = JSONObject()
-        assertEquals(0, `object`.length())
+        val testObject = JSONObject()
+        assertEquals(0, testObject.length())
         // bogus (but documented) behaviour: returns null rather than the empty object!
-        assertNull(`object`.names())
+        assertNull(testObject.names())
         // returns null rather than an empty array!
-        assertNull(`object`.toJSONArray(JSONArray()))
-        assertEquals("{}", `object`.toString())
-        assertEquals("{}", `object`.toString(5))
+        assertNull(testObject.toJSONArray(JSONArray()))
+        assertEquals("{}", testObject.toString())
+        assertEquals("{}", testObject.toString(5))
         try {
-            `object`["foo"]
+            testObject["foo"]
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.getBoolean("foo")
+            testObject.getBoolean("foo")
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.getDouble("foo")
+            testObject.getDouble("foo")
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.getInt("foo")
+            testObject.getInt("foo")
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.getJSONArray("foo")
+            testObject.getJSONArray("foo")
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.getJSONObject("foo")
+            testObject.getJSONObject("foo")
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.getLong("foo")
+            testObject.getLong("foo")
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.getString("foo")
+            testObject.getString("foo")
             fail()
         } catch (e: JSONException) {
         }
-        assertFalse(`object`.has("foo"))
-        assertTrue(`object`.isNull("foo")) // isNull also means "is not present"
-        assertNull(`object`.opt("foo"))
-        assertEquals(false, `object`.optBoolean("foo"))
-        assertEquals(true, `object`.optBoolean("foo", true))
-        assertEquals(Double.NaN, `object`.optDouble("foo"), 0.0)
-        assertEquals(5.0, `object`.optDouble("foo", 5.0), 0.0)
-        assertEquals(0, `object`.optInt("foo"))
-        assertEquals(5, `object`.optInt("foo", 5))
-        assertEquals(null, `object`.optJSONArray("foo"))
-        assertEquals(null, `object`.optJSONObject("foo"))
-        assertEquals(0, `object`.optLong("foo"))
-        assertEquals(Long.MAX_VALUE - 1, `object`.optLong("foo", Long.MAX_VALUE - 1))
-        assertEquals("", `object`.optString("foo")) // empty string is default!
-        assertEquals("bar", `object`.optString("foo", "bar"))
-        assertNull(`object`.remove("foo"))
+        assertFalse(testObject.has("foo"))
+        assertTrue(testObject.isNull("foo")) // isNull also means "is not present"
+        assertNull(testObject.opt("foo"))
+        assertEquals(false, testObject.optBoolean("foo"))
+        assertEquals(true, testObject.optBoolean("foo", true))
+        assertEquals(Double.NaN, testObject.optDouble("foo"), 0.0)
+        assertEquals(5.0, testObject.optDouble("foo", 5.0), 0.0)
+        assertEquals(0, testObject.optInt("foo"))
+        assertEquals(5, testObject.optInt("foo", 5))
+        assertEquals(null, testObject.optJSONArray("foo"))
+        assertEquals(null, testObject.optJSONObject("foo"))
+        assertEquals(0, testObject.optLong("foo"))
+        assertEquals(Long.MAX_VALUE - 1, testObject.optLong("foo", Long.MAX_VALUE - 1))
+        assertEquals("", testObject.optString("foo")) // empty string is default!
+        assertEquals("bar", testObject.optString("foo", "bar"))
+        assertNull(testObject.remove("foo"))
     }
 
     @Test
@@ -138,14 +137,14 @@ class JSONObjectTest {
 
     @Test
     fun testGet() {
-        val `object` = JSONObject()
+        val testObject = JSONObject()
         val value = Any()
-        `object`.put("foo", value)
-        `object`.put("bar", Any())
-        `object`.put("baz", Any())
-        assertSame(value, `object`["foo"])
+        testObject.put("foo", value)
+        testObject.put("bar", Any())
+        testObject.put("baz", Any())
+        assertSame(value, testObject["foo"])
         try {
-            `object`["FOO"]
+            testObject["FOO"]
             fail()
         } catch (e: JSONException) {
         }
@@ -153,31 +152,31 @@ class JSONObjectTest {
 
     @Test
     fun testPut() {
-        val `object` = JSONObject()
-        assertSame(`object`, `object`.put("foo", true))
-        `object`.put("foo", false)
-        assertEquals(false, `object`["foo"])
-        `object`.put("foo", 5.0)
-        assertEquals(5.0, `object`["foo"])
-        `object`.put("foo", 0)
-        assertEquals(0, `object`["foo"])
-        `object`.put("bar", Long.MAX_VALUE - 1)
-        assertEquals(Long.MAX_VALUE - 1, `object`["bar"])
-        `object`.put("baz", "x")
-        assertEquals("x", `object`["baz"])
-        `object`.put("bar", JSONObject.NULL)
-        assertSame(JSONObject.NULL, `object`["bar"])
+        val testObject = JSONObject()
+        assertSame(testObject, testObject.put("foo", true))
+        testObject.put("foo", false)
+        assertEquals(false, testObject["foo"])
+        testObject.put("foo", 5.0)
+        assertEquals(5.0, testObject["foo"])
+        testObject.put("foo", 0)
+        assertEquals(0, testObject["foo"])
+        testObject.put("bar", Long.MAX_VALUE - 1)
+        assertEquals(Long.MAX_VALUE - 1, testObject["bar"])
+        testObject.put("baz", "x")
+        assertEquals("x", testObject["baz"])
+        testObject.put("bar", JSONObject.NULL)
+        assertSame(JSONObject.NULL, testObject["bar"])
     }
 
     @Test
     fun testPutNullRemoves() {
-        val `object` = JSONObject()
-        `object`.put("foo", "bar")
-        `object`.put("foo", null)
-        assertEquals(0, `object`.length())
-        assertFalse(`object`.has("foo"))
+        val testObject = JSONObject()
+        testObject.put("foo", "bar")
+        testObject.put("foo", null)
+        assertEquals(0, testObject.length())
+        assertFalse(testObject.has("foo"))
         try {
-            `object`["foo"]
+            testObject["foo"]
             fail()
         } catch (e: JSONException) {
         }
@@ -185,31 +184,31 @@ class JSONObjectTest {
 
     @Test
     fun testPutOpt() {
-        val `object` = JSONObject()
-        `object`.put("foo", "bar")
-        `object`.putOpt("foo", null)
-        assertEquals("bar", `object`["foo"])
-        `object`.putOpt(null, null)
-        assertEquals(1, `object`.length())
-        `object`.putOpt(null, "bar")
-        assertEquals(1, `object`.length())
+        val testObject = JSONObject()
+        testObject.put("foo", "bar")
+        testObject.putOpt("foo", null)
+        assertEquals("bar", testObject["foo"])
+        testObject.putOpt(null, null)
+        assertEquals(1, testObject.length())
+        testObject.putOpt(null, "bar")
+        assertEquals(1, testObject.length())
     }
 
     @Test
     fun testPutOptUnsupportedNumbers() {
-        val `object` = JSONObject()
+        val testObject = JSONObject()
         try {
-            `object`.putOpt("foo", Double.NaN)
+            testObject.putOpt("foo", Double.NaN)
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.putOpt("foo", Double.NEGATIVE_INFINITY)
+            testObject.putOpt("foo", Double.NEGATIVE_INFINITY)
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.putOpt("foo", Double.POSITIVE_INFINITY)
+            testObject.putOpt("foo", Double.POSITIVE_INFINITY)
             fail()
         } catch (e: JSONException) {
         }
@@ -217,61 +216,61 @@ class JSONObjectTest {
 
     @Test
     fun testRemove() {
-        val `object` = JSONObject()
-        `object`.put("foo", "bar")
-        assertEquals(null, `object`.remove(null))
-        assertEquals(null, `object`.remove(""))
-        assertEquals(null, `object`.remove("bar"))
-        assertEquals("bar", `object`.remove("foo"))
-        assertEquals(null, `object`.remove("foo"))
+        val testObject = JSONObject()
+        testObject.put("foo", "bar")
+        assertEquals(null, testObject.remove(null))
+        assertEquals(null, testObject.remove(""))
+        assertEquals(null, testObject.remove("bar"))
+        assertEquals("bar", testObject.remove("foo"))
+        assertEquals(null, testObject.remove("foo"))
     }
 
     @Test
     fun testBooleans() {
-        val `object` = JSONObject()
-        `object`.put("foo", true)
-        `object`.put("bar", false)
-        `object`.put("baz", "true")
-        `object`.put("quux", "false")
-        assertEquals(4, `object`.length())
-        assertEquals(true, `object`.getBoolean("foo"))
-        assertEquals(false, `object`.getBoolean("bar"))
-        assertEquals(true, `object`.getBoolean("baz"))
-        assertEquals(false, `object`.getBoolean("quux"))
-        assertFalse(`object`.isNull("foo"))
-        assertFalse(`object`.isNull("quux"))
-        assertTrue(`object`.has("foo"))
-        assertTrue(`object`.has("quux"))
-        assertFalse(`object`.has("missing"))
-        assertEquals(true, `object`.optBoolean("foo"))
-        assertEquals(false, `object`.optBoolean("bar"))
-        assertEquals(true, `object`.optBoolean("baz"))
-        assertEquals(false, `object`.optBoolean("quux"))
-        assertEquals(false, `object`.optBoolean("missing"))
-        assertEquals(true, `object`.optBoolean("foo", true))
-        assertEquals(false, `object`.optBoolean("bar", true))
-        assertEquals(true, `object`.optBoolean("baz", true))
-        assertEquals(false, `object`.optBoolean("quux", true))
-        assertEquals(true, `object`.optBoolean("missing", true))
-        `object`.put("foo", "truE")
-        `object`.put("bar", "FALSE")
-        assertEquals(true, `object`.getBoolean("foo"))
-        assertEquals(false, `object`.getBoolean("bar"))
-        assertEquals(true, `object`.optBoolean("foo"))
-        assertEquals(false, `object`.optBoolean("bar"))
-        assertEquals(true, `object`.optBoolean("foo", false))
-        assertEquals(false, `object`.optBoolean("bar", false))
+        val testObject = JSONObject()
+        testObject.put("foo", true)
+        testObject.put("bar", false)
+        testObject.put("baz", "true")
+        testObject.put("quux", "false")
+        assertEquals(4, testObject.length())
+        assertEquals(true, testObject.getBoolean("foo"))
+        assertEquals(false, testObject.getBoolean("bar"))
+        assertEquals(true, testObject.getBoolean("baz"))
+        assertEquals(false, testObject.getBoolean("quux"))
+        assertFalse(testObject.isNull("foo"))
+        assertFalse(testObject.isNull("quux"))
+        assertTrue(testObject.has("foo"))
+        assertTrue(testObject.has("quux"))
+        assertFalse(testObject.has("missing"))
+        assertEquals(true, testObject.optBoolean("foo"))
+        assertEquals(false, testObject.optBoolean("bar"))
+        assertEquals(true, testObject.optBoolean("baz"))
+        assertEquals(false, testObject.optBoolean("quux"))
+        assertEquals(false, testObject.optBoolean("missing"))
+        assertEquals(true, testObject.optBoolean("foo", true))
+        assertEquals(false, testObject.optBoolean("bar", true))
+        assertEquals(true, testObject.optBoolean("baz", true))
+        assertEquals(false, testObject.optBoolean("quux", true))
+        assertEquals(true, testObject.optBoolean("missing", true))
+        testObject.put("foo", "truE")
+        testObject.put("bar", "FALSE")
+        assertEquals(true, testObject.getBoolean("foo"))
+        assertEquals(false, testObject.getBoolean("bar"))
+        assertEquals(true, testObject.optBoolean("foo"))
+        assertEquals(false, testObject.optBoolean("bar"))
+        assertEquals(true, testObject.optBoolean("foo", false))
+        assertEquals(false, testObject.optBoolean("bar", false))
     }
 
     @Test
     fun testNumbers() {
-        val `object` = JSONObject()
-        `object`.put("foo", Double.MIN_VALUE)
-        `object`.put("bar", 9223372036854775806L)
-        `object`.put("baz", Double.MAX_VALUE)
-        `object`.put("quux", -0.0)
-        assertEquals(4, `object`.length())
-        val toString = `object`.toString()
+        val testObject = JSONObject()
+        testObject.put("foo", Double.MIN_VALUE)
+        testObject.put("bar", 9223372036854775806L)
+        testObject.put("baz", Double.MAX_VALUE)
+        testObject.put("quux", -0.0)
+        assertEquals(4, testObject.length())
+        val toString = testObject.toString()
         assertTrue(toString, toString.contains("\"foo\":4.9E-324"))
         assertTrue(toString, toString.contains("\"bar\":9223372036854775806"))
         assertTrue(toString, toString.contains("\"baz\":1.7976931348623157E308"))
@@ -281,55 +280,55 @@ class JSONObjectTest {
             toString.contains("\"quux\":-0}") || // no trailing decimal point
                 toString.contains("\"quux\":-0,")
         )
-        assertEquals(Double.MIN_VALUE, `object`["foo"])
-        assertEquals(9223372036854775806L, `object`["bar"])
-        assertEquals(Double.MAX_VALUE, `object`["baz"])
-        assertEquals(-0.0, `object`["quux"])
-        assertEquals(Double.MIN_VALUE, `object`.getDouble("foo"), 0.0)
-        assertEquals(9.223372036854776E18, `object`.getDouble("bar"), 0.0)
-        assertEquals(Double.MAX_VALUE, `object`.getDouble("baz"), 0.0)
-        assertEquals(-0.0, `object`.getDouble("quux"), 0.0)
-        assertEquals(0, `object`.getLong("foo"))
-        assertEquals(9223372036854775806L, `object`.getLong("bar"))
-        assertEquals(Long.MAX_VALUE, `object`.getLong("baz"))
-        assertEquals(0, `object`.getLong("quux"))
-        assertEquals(0, `object`.getInt("foo"))
-        assertEquals(-2, `object`.getInt("bar"))
-        assertEquals(Int.MAX_VALUE, `object`.getInt("baz"))
-        assertEquals(0, `object`.getInt("quux"))
-        assertEquals(Double.MIN_VALUE, `object`.opt("foo"))
-        assertEquals(9223372036854775806L, `object`.optLong("bar"))
-        assertEquals(Double.MAX_VALUE, `object`.optDouble("baz"), 0.0)
-        assertEquals(0, `object`.optInt("quux"))
-        assertEquals(Double.MIN_VALUE, `object`.opt("foo"))
-        assertEquals(9223372036854775806L, `object`.optLong("bar"))
-        assertEquals(Double.MAX_VALUE, `object`.optDouble("baz"), 0.0)
-        assertEquals(0, `object`.optInt("quux"))
-        assertEquals(Double.MIN_VALUE, `object`.optDouble("foo", 5.0), 0.0)
-        assertEquals(9223372036854775806L, `object`.optLong("bar", 1L))
-        assertEquals(Long.MAX_VALUE, `object`.optLong("baz", 1L))
-        assertEquals(0, `object`.optInt("quux", -1))
-        assertEquals("4.9E-324", `object`.getString("foo"))
-        assertEquals("9223372036854775806", `object`.getString("bar"))
-        assertEquals("1.7976931348623157E308", `object`.getString("baz"))
-        assertEquals("-0.0", `object`.getString("quux"))
+        assertEquals(Double.MIN_VALUE, testObject["foo"])
+        assertEquals(9223372036854775806L, testObject["bar"])
+        assertEquals(Double.MAX_VALUE, testObject["baz"])
+        assertEquals(-0.0, testObject["quux"])
+        assertEquals(Double.MIN_VALUE, testObject.getDouble("foo"), 0.0)
+        assertEquals(9.223372036854776E18, testObject.getDouble("bar"), 0.0)
+        assertEquals(Double.MAX_VALUE, testObject.getDouble("baz"), 0.0)
+        assertEquals(-0.0, testObject.getDouble("quux"), 0.0)
+        assertEquals(0, testObject.getLong("foo"))
+        assertEquals(9223372036854775806L, testObject.getLong("bar"))
+        assertEquals(Long.MAX_VALUE, testObject.getLong("baz"))
+        assertEquals(0, testObject.getLong("quux"))
+        assertEquals(0, testObject.getInt("foo"))
+        assertEquals(-2, testObject.getInt("bar"))
+        assertEquals(Int.MAX_VALUE, testObject.getInt("baz"))
+        assertEquals(0, testObject.getInt("quux"))
+        assertEquals(Double.MIN_VALUE, testObject.opt("foo"))
+        assertEquals(9223372036854775806L, testObject.optLong("bar"))
+        assertEquals(Double.MAX_VALUE, testObject.optDouble("baz"), 0.0)
+        assertEquals(0, testObject.optInt("quux"))
+        assertEquals(Double.MIN_VALUE, testObject.opt("foo"))
+        assertEquals(9223372036854775806L, testObject.optLong("bar"))
+        assertEquals(Double.MAX_VALUE, testObject.optDouble("baz"), 0.0)
+        assertEquals(0, testObject.optInt("quux"))
+        assertEquals(Double.MIN_VALUE, testObject.optDouble("foo", 5.0), 0.0)
+        assertEquals(9223372036854775806L, testObject.optLong("bar", 1L))
+        assertEquals(Long.MAX_VALUE, testObject.optLong("baz", 1L))
+        assertEquals(0, testObject.optInt("quux", -1))
+        assertEquals("4.9E-324", testObject.getString("foo"))
+        assertEquals("9223372036854775806", testObject.getString("bar"))
+        assertEquals("1.7976931348623157E308", testObject.getString("baz"))
+        assertEquals("-0.0", testObject.getString("quux"))
     }
 
     @Test
     fun testFloats() {
-        val `object` = JSONObject()
+        val testObject = JSONObject()
         try {
-            `object`.put("foo", Float.NaN)
+            testObject.put("foo", Float.NaN)
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.put("foo", Float.NEGATIVE_INFINITY)
+            testObject.put("foo", Float.NEGATIVE_INFINITY)
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.put("foo", Float.POSITIVE_INFINITY)
+            testObject.put("foo", Float.POSITIVE_INFINITY)
             fail()
         } catch (e: JSONException) {
         }
@@ -359,9 +358,9 @@ class JSONObjectTest {
                 return "x"
             }
         }
-        val `object` = JSONObject()
+        val testObject = JSONObject()
         try {
-            `object`.put("foo", nan)
+            testObject.put("foo", nan)
             fail("Object.put() accepted a NaN (via a custom Number class)")
         } catch (e: JSONException) {
         }
@@ -375,95 +374,95 @@ class JSONObjectTest {
             }
         }
         // foreign object types are accepted and treated as Strings!
-        val `object` = JSONObject()
-        `object`.put("foo", foreign)
-        assertEquals("{\"foo\":\"x\"}", `object`.toString())
+        val testObject = JSONObject()
+        testObject.put("foo", foreign)
+        assertEquals("{\"foo\":\"x\"}", testObject.toString())
     }
 
     @Test
     fun testStrings() {
-        val `object` = JSONObject()
-        `object`.put("foo", "true")
-        `object`.put("bar", "5.5")
-        `object`.put("baz", "9223372036854775806")
-        `object`.put("quux", "null")
-        `object`.put("height", "5\"8' tall")
-        assertTrue(`object`.toString().contains("\"foo\":\"true\""))
-        assertTrue(`object`.toString().contains("\"bar\":\"5.5\""))
-        assertTrue(`object`.toString().contains("\"baz\":\"9223372036854775806\""))
-        assertTrue(`object`.toString().contains("\"quux\":\"null\""))
-        assertTrue(`object`.toString().contains("\"height\":\"5\\\"8' tall\""))
-        assertEquals("true", `object`["foo"])
-        assertEquals("null", `object`.getString("quux"))
-        assertEquals("5\"8' tall", `object`.getString("height"))
-        assertEquals("true", `object`.opt("foo"))
-        assertEquals("5.5", `object`.optString("bar"))
-        assertEquals("true", `object`.optString("foo", "x"))
-        assertFalse(`object`.isNull("foo"))
-        assertEquals(true, `object`.getBoolean("foo"))
-        assertEquals(true, `object`.optBoolean("foo"))
-        assertEquals(true, `object`.optBoolean("foo", false))
-        assertEquals(0, `object`.optInt("foo"))
-        assertEquals(-2, `object`.optInt("foo", -2))
-        assertEquals(5.5, `object`.getDouble("bar"), 0.0)
-        assertEquals(5L, `object`.getLong("bar"))
-        assertEquals(5, `object`.getInt("bar"))
-        assertEquals(5, `object`.optInt("bar", 3))
+        val testObject = JSONObject()
+        testObject.put("foo", "true")
+        testObject.put("bar", "5.5")
+        testObject.put("baz", "9223372036854775806")
+        testObject.put("quux", "null")
+        testObject.put("height", "5\"8' tall")
+        assertTrue(testObject.toString().contains("\"foo\":\"true\""))
+        assertTrue(testObject.toString().contains("\"bar\":\"5.5\""))
+        assertTrue(testObject.toString().contains("\"baz\":\"9223372036854775806\""))
+        assertTrue(testObject.toString().contains("\"quux\":\"null\""))
+        assertTrue(testObject.toString().contains("\"height\":\"5\\\"8' tall\""))
+        assertEquals("true", testObject["foo"])
+        assertEquals("null", testObject.getString("quux"))
+        assertEquals("5\"8' tall", testObject.getString("height"))
+        assertEquals("true", testObject.opt("foo"))
+        assertEquals("5.5", testObject.optString("bar"))
+        assertEquals("true", testObject.optString("foo", "x"))
+        assertFalse(testObject.isNull("foo"))
+        assertEquals(true, testObject.getBoolean("foo"))
+        assertEquals(true, testObject.optBoolean("foo"))
+        assertEquals(true, testObject.optBoolean("foo", false))
+        assertEquals(0, testObject.optInt("foo"))
+        assertEquals(-2, testObject.optInt("foo", -2))
+        assertEquals(5.5, testObject.getDouble("bar"), 0.0)
+        assertEquals(5L, testObject.getLong("bar"))
+        assertEquals(5, testObject.getInt("bar"))
+        assertEquals(5, testObject.optInt("bar", 3))
         // The last digit of the string is a 6 but getLong returns a 7. It's probably parsing as a
         // double and then converting that to a long. This is consistent with JavaScript.
-        assertEquals(9223372036854775807L, `object`.getLong("baz"))
-        assertEquals(9.223372036854776E18, `object`.getDouble("baz"), 0.0)
-        assertEquals(Int.MAX_VALUE, `object`.getInt("baz"))
-        assertFalse(`object`.isNull("quux"))
+        assertEquals(9223372036854775807L, testObject.getLong("baz"))
+        assertEquals(9.223372036854776E18, testObject.getDouble("baz"), 0.0)
+        assertEquals(Int.MAX_VALUE, testObject.getInt("baz"))
+        assertFalse(testObject.isNull("quux"))
         try {
-            `object`.getDouble("quux")
+            testObject.getDouble("quux")
             fail()
         } catch (e: JSONException) {
         }
-        assertEquals(Double.NaN, `object`.optDouble("quux"), 0.0)
-        assertEquals(-1.0, `object`.optDouble("quux", -1.0), 0.0)
-        `object`.put("foo", "TRUE")
-        assertEquals(true, `object`.getBoolean("foo"))
+        assertEquals(Double.NaN, testObject.optDouble("quux"), 0.0)
+        assertEquals(-1.0, testObject.optDouble("quux", -1.0), 0.0)
+        testObject.put("foo", "TRUE")
+        assertEquals(true, testObject.getBoolean("foo"))
     }
 
     @Test
     fun testJSONObjects() {
-        val `object` = JSONObject()
+        val testObject = JSONObject()
         val a = JSONArray()
         val b = JSONObject()
-        `object`.put("foo", a)
-        `object`.put("bar", b)
-        assertSame(a, `object`.getJSONArray("foo"))
-        assertSame(b, `object`.getJSONObject("bar"))
+        testObject.put("foo", a)
+        testObject.put("bar", b)
+        assertSame(a, testObject.getJSONArray("foo"))
+        assertSame(b, testObject.getJSONObject("bar"))
         try {
-            `object`.getJSONObject("foo")
+            testObject.getJSONObject("foo")
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.getJSONArray("bar")
+            testObject.getJSONArray("bar")
             fail()
         } catch (e: JSONException) {
         }
-        assertEquals(a, `object`.optJSONArray("foo"))
-        assertEquals(b, `object`.optJSONObject("bar"))
-        assertEquals(null, `object`.optJSONArray("bar"))
-        assertEquals(null, `object`.optJSONObject("foo"))
+        assertEquals(a, testObject.optJSONArray("foo"))
+        assertEquals(b, testObject.optJSONObject("bar"))
+        assertEquals(null, testObject.optJSONArray("bar"))
+        assertEquals(null, testObject.optJSONObject("foo"))
     }
 
     @Test
     fun testNullCoercionToString() {
-        val `object` = JSONObject()
-        `object`.put("foo", JSONObject.NULL)
-        assertEquals("null", `object`.getString("foo"))
+        val testObject = JSONObject()
+        testObject.put("foo", JSONObject.NULL)
+        assertEquals("null", testObject.getString("foo"))
     }
 
     @Test
     fun testArrayCoercion() {
-        val `object` = JSONObject()
-        `object`.put("foo", "[true]")
+        val testObject = JSONObject()
+        testObject.put("foo", "[true]")
         try {
-            `object`.getJSONArray("foo")
+            testObject.getJSONArray("foo")
             fail()
         } catch (e: JSONException) {
         }
@@ -471,10 +470,10 @@ class JSONObjectTest {
 
     @Test
     fun testObjectCoercion() {
-        val `object` = JSONObject()
-        `object`.put("foo", "{}")
+        val testObject = JSONObject()
+        testObject.put("foo", "{}")
         try {
-            `object`.getJSONObject("foo")
+            testObject.getJSONObject("foo")
             fail()
         } catch (e: JSONException) {
         }
@@ -482,21 +481,21 @@ class JSONObjectTest {
 
     @Test
     fun testAccumulateValueChecking() {
-        val `object` = JSONObject()
+        val testObject = JSONObject()
         try {
-            `object`.accumulate("foo", Double.NaN)
+            testObject.accumulate("foo", Double.NaN)
             fail()
         } catch (e: JSONException) {
         }
-        `object`.accumulate("foo", 1)
+        testObject.accumulate("foo", 1)
         try {
-            `object`.accumulate("foo", Double.NaN)
+            testObject.accumulate("foo", Double.NaN)
             fail()
         } catch (e: JSONException) {
         }
-        `object`.accumulate("foo", 2)
+        testObject.accumulate("foo", 2)
         try {
-            `object`.accumulate("foo", Double.NaN)
+            testObject.accumulate("foo", Double.NaN)
             fail()
         } catch (e: JSONException) {
         }
@@ -504,36 +503,36 @@ class JSONObjectTest {
 
     @Test
     fun testToJSONArray() {
-        val `object` = JSONObject()
+        val testObject = JSONObject()
         val value = Any()
-        `object`.put("foo", true)
-        `object`.put("bar", 5.0)
-        `object`.put("baz", -0.0)
-        `object`.put("quux", value)
+        testObject.put("foo", true)
+        testObject.put("bar", 5.0)
+        testObject.put("baz", -0.0)
+        testObject.put("quux", value)
         val names = JSONArray()
         names.put("baz")
         names.put("quux")
         names.put("foo")
-        val array = `object`.toJSONArray(names)
+        val array = testObject.toJSONArray(names)
         assertEquals(-0.0, array[0])
         assertEquals(value, array[1])
         assertEquals(true, array[2])
-        `object`.put("foo", false)
+        testObject.put("foo", false)
         assertEquals(true, array[2])
     }
 
     @Test
     fun testToJSONArrayMissingNames() {
-        val `object` = JSONObject()
-        `object`.put("foo", true)
-        `object`.put("bar", 5.0)
-        `object`.put("baz", JSONObject.NULL)
+        val testObject = JSONObject()
+        testObject.put("foo", true)
+        testObject.put("bar", 5.0)
+        testObject.put("baz", JSONObject.NULL)
         val names = JSONArray()
         names.put("bar")
         names.put("foo")
         names.put("quux")
         names.put("baz")
-        val array = `object`.toJSONArray(names)
+        val array = testObject.toJSONArray(names)
         assertEquals(4, array.length())
         assertEquals(5.0, array[0])
         assertEquals(true, array[1])
@@ -547,36 +546,36 @@ class JSONObjectTest {
 
     @Test
     fun testToJSONArrayNull() {
-        val `object` = JSONObject()
-        assertEquals(null, `object`.toJSONArray(null))
-        `object`.put("foo", 5)
+        val testObject = JSONObject()
+        assertEquals(null, testObject.toJSONArray(null))
+        testObject.put("foo", 5)
         try {
-            `object`.toJSONArray(null)
+            testObject.toJSONArray(null)
         } catch (e: JSONException) {
         }
     }
 
     @Test
     fun testToJSONArrayEndsUpEmpty() {
-        val `object` = JSONObject()
-        `object`.put("foo", 5)
+        val testObject = JSONObject()
+        testObject.put("foo", 5)
         val array = JSONArray()
         array.put("bar")
-        assertEquals(1, `object`.toJSONArray(array).length())
+        assertEquals(1, testObject.toJSONArray(array).length())
     }
 
     @Test
     fun testToJSONArrayNonString() {
-        val `object` = JSONObject()
-        `object`.put("foo", 5)
-        `object`.put("null", 10)
-        `object`.put("false", 15)
+        val testObject = JSONObject()
+        testObject.put("foo", 5)
+        testObject.put("null", 10)
+        testObject.put("false", 15)
         val names = JSONArray()
         names.put(JSONObject.NULL)
         names.put(false)
         names.put("foo")
         // array elements are converted to strings to do name lookups on the map!
-        val array = `object`.toJSONArray(names)
+        val array = testObject.toJSONArray(names)
         assertEquals(3, array.length())
         assertEquals(10, array[0])
         assertEquals(15, array[1])
@@ -585,19 +584,19 @@ class JSONObjectTest {
 
     @Test
     fun testPutUnsupportedNumbers() {
-        val `object` = JSONObject()
+        val testObject = JSONObject()
         try {
-            `object`.put("foo", Double.NaN)
+            testObject.put("foo", Double.NaN)
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.put("foo", Double.NEGATIVE_INFINITY)
+            testObject.put("foo", Double.NEGATIVE_INFINITY)
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.put("foo", Double.POSITIVE_INFINITY)
+            testObject.put("foo", Double.POSITIVE_INFINITY)
             fail()
         } catch (e: JSONException) {
         }
@@ -605,19 +604,19 @@ class JSONObjectTest {
 
     @Test
     fun testPutUnsupportedNumbersAsObjects() {
-        val `object` = JSONObject()
+        val testObject = JSONObject()
         try {
-            `object`.put("foo", Double.NaN)
+            testObject.put("foo", Double.NaN)
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.put("foo", Double.NEGATIVE_INFINITY)
+            testObject.put("foo", Double.NEGATIVE_INFINITY)
             fail()
         } catch (e: JSONException) {
         }
         try {
-            `object`.put("foo", Double.POSITIVE_INFINITY)
+            testObject.put("foo", Double.POSITIVE_INFINITY)
             fail()
         } catch (e: JSONException) {
         }
@@ -633,26 +632,26 @@ class JSONObjectTest {
         contents["foo"] = Double.NaN
         contents["bar"] = Double.NEGATIVE_INFINITY
         contents["baz"] = Double.POSITIVE_INFINITY
-        val `object` = JSONObject(contents)
-        assertEquals(Double.NaN, `object`["foo"])
-        assertEquals(Double.NEGATIVE_INFINITY, `object`["bar"])
-        assertEquals(Double.POSITIVE_INFINITY, `object`["baz"])
+        val testObject = JSONObject(contents)
+        assertEquals(Double.NaN, testObject["foo"])
+        assertEquals(Double.NEGATIVE_INFINITY, testObject["bar"])
+        assertEquals(Double.POSITIVE_INFINITY, testObject["baz"])
     }
 
     @Test
     fun testToStringWithUnsupportedNumbers() {
         // when the object contains an unsupported number, toString returns null!
-        val `object` = JSONObject(Collections.singletonMap("foo", Double.NaN))
-        assertEquals(null, `object`.toString())
+        val testObject = JSONObject(Collections.singletonMap("foo", Double.NaN))
+        assertEquals(null, testObject.toString())
     }
 
     @Test
     fun testMapConstructorCopiesContents() {
         val contents: MutableMap<String?, Any?> = HashMap()
         contents["foo"] = 5
-        val `object` = JSONObject(contents)
+        val testObject = JSONObject(contents)
         contents["foo"] = 10
-        assertEquals(5, `object`["foo"])
+        assertEquals(5, testObject["foo"])
     }
 
     @Test
@@ -668,9 +667,9 @@ class JSONObjectTest {
 
     @Test
     fun testTokenerConstructor() {
-        val `object` = JSONObject(JSONTokener("{\"foo\": false}"))
-        assertEquals(1, `object`.length())
-        assertEquals(false, `object`["foo"])
+        val testObject = JSONObject(JSONTokener("{\"foo\": false}"))
+        assertEquals(1, testObject.length())
+        assertEquals(false, testObject["foo"])
     }
 
     @Test
@@ -702,9 +701,9 @@ class JSONObjectTest {
 
     @Test
     fun testStringConstructor() {
-        val `object` = JSONObject("{\"foo\": false}")
-        assertEquals(1, `object`.length())
-        assertEquals(false, `object`["foo"])
+        val testObject = JSONObject("{\"foo\": false}")
+        assertEquals(1, testObject.length())
+        assertEquals(false, testObject["foo"])
     }
 
     @Test
@@ -762,86 +761,86 @@ class JSONObjectTest {
 
     @Test
     fun testAccumulateMutatesInPlace() {
-        val `object` = JSONObject()
-        `object`.put("foo", 5)
-        `object`.accumulate("foo", 6)
-        val array = `object`.getJSONArray("foo")
+        val testObject = JSONObject()
+        testObject.put("foo", 5)
+        testObject.accumulate("foo", 6)
+        val array = testObject.getJSONArray("foo")
         assertEquals("[5,6]", array.toString())
-        `object`.accumulate("foo", 7)
+        testObject.accumulate("foo", 7)
         assertEquals("[5,6,7]", array.toString())
     }
 
     @Test
     fun testAccumulateExistingArray() {
         val array = JSONArray()
-        val `object` = JSONObject()
-        `object`.put("foo", array)
-        `object`.accumulate("foo", 5)
+        val testObject = JSONObject()
+        testObject.put("foo", array)
+        testObject.accumulate("foo", 5)
         assertEquals("[5]", array.toString())
     }
 
     @Test
     fun testAccumulatePutArray() {
-        val `object` = JSONObject()
-        `object`.accumulate("foo", 5)
-        assertEquals("{\"foo\":5}", `object`.toString())
-        `object`.accumulate("foo", JSONArray())
-        assertEquals("{\"foo\":[5,[]]}", `object`.toString())
+        val testObject = JSONObject()
+        testObject.accumulate("foo", 5)
+        assertEquals("{\"foo\":5}", testObject.toString())
+        testObject.accumulate("foo", JSONArray())
+        assertEquals("{\"foo\":[5,[]]}", testObject.toString())
     }
 
     @Test
     fun testEmptyStringKey() {
-        val `object` = JSONObject()
-        `object`.put("", 5)
-        assertEquals(5, `object`[""])
-        assertEquals("{\"\":5}", `object`.toString())
+        val testObject = JSONObject()
+        testObject.put("", 5)
+        assertEquals(5, testObject[""])
+        assertEquals("{\"\":5}", testObject.toString())
     }
 
     @Test
     fun testNullValue() {
-        val `object` = JSONObject()
-        `object`.put("foo", JSONObject.NULL)
-        `object`.put("bar", null)
+        val testObject = JSONObject()
+        testObject.put("foo", JSONObject.NULL)
+        testObject.put("bar", null)
         // there are two ways to represent null; each behaves differently!
-        assertTrue(`object`.has("foo"))
-        assertFalse(`object`.has("bar"))
-        assertTrue(`object`.isNull("foo"))
-        assertTrue(`object`.isNull("bar"))
+        assertTrue(testObject.has("foo"))
+        assertFalse(testObject.has("bar"))
+        assertTrue(testObject.isNull("foo"))
+        assertTrue(testObject.isNull("bar"))
     }
 
     @Test
     fun testHas() {
-        val `object` = JSONObject()
-        `object`.put("foo", 5)
-        assertTrue(`object`.has("foo"))
-        assertFalse(`object`.has("bar"))
-        assertFalse(`object`.has(null))
+        val testObject = JSONObject()
+        testObject.put("foo", 5)
+        assertTrue(testObject.has("foo"))
+        assertFalse(testObject.has("bar"))
+        assertFalse(testObject.has(null))
     }
 
     @Test
     fun testOptNull() {
-        val `object` = JSONObject()
-        `object`.put("foo", "bar")
-        assertEquals(null, `object`.opt(null))
-        assertEquals(false, `object`.optBoolean(null))
-        assertEquals(Double.NaN, `object`.optDouble(null), 0.0)
-        assertEquals(0, `object`.optInt(null))
-        assertEquals(0L, `object`.optLong(null))
-        assertEquals(null, `object`.optJSONArray(null))
-        assertEquals(null, `object`.optJSONObject(null))
-        assertEquals("", `object`.optString(null))
-        assertEquals(true, `object`.optBoolean(null, true))
-        assertEquals(0.0, `object`.optDouble(null, 0.0), 0.0)
-        assertEquals(1, `object`.optInt(null, 1))
-        assertEquals(1L, `object`.optLong(null, 1L))
-        assertEquals("baz", `object`.optString(null, "baz"))
+        val testObject = JSONObject()
+        testObject.put("foo", "bar")
+        assertEquals(null, testObject.opt(null))
+        assertEquals(false, testObject.optBoolean(null))
+        assertEquals(Double.NaN, testObject.optDouble(null), 0.0)
+        assertEquals(0, testObject.optInt(null))
+        assertEquals(0L, testObject.optLong(null))
+        assertEquals(null, testObject.optJSONArray(null))
+        assertEquals(null, testObject.optJSONObject(null))
+        assertEquals("", testObject.optString(null))
+        assertEquals(true, testObject.optBoolean(null, true))
+        assertEquals(0.0, testObject.optDouble(null, 0.0), 0.0)
+        assertEquals(1, testObject.optInt(null, 1))
+        assertEquals(1L, testObject.optLong(null, 1L))
+        assertEquals("baz", testObject.optString(null, "baz"))
     }
 
     @Test
     fun testToStringWithIndentFactor() {
-        val `object` = JSONObject()
-        `object`.put("foo", JSONArray(Arrays.asList(5, 6)))
-        `object`.put("bar", JSONObject())
+        val testObject = JSONObject()
+        testObject.put("foo", JSONArray(Arrays.asList(5, 6)))
+        testObject.put("bar", JSONObject())
         val foobar = """{
      "foo": [
           5,
@@ -856,17 +855,17 @@ class JSONObjectTest {
           6
      ]
 }"""
-        val string = `object`.toString(5)
+        val string = testObject.toString(5)
         assertTrue(string, foobar == string || barfoo == string)
     }
 
     @Test
     fun testNames() {
-        val `object` = JSONObject()
-        `object`.put("foo", 5)
-        `object`.put("bar", 6)
-        `object`.put("baz", 7)
-        val array = `object`.names()!!
+        val testObject = JSONObject()
+        testObject.put("foo", 5)
+        testObject.put("bar", 6)
+        testObject.put("baz", 7)
+        val array = testObject.names()!!
         assertTrue(array.toString().contains("foo"))
         assertTrue(array.toString().contains("bar"))
         assertTrue(array.toString().contains("baz"))
@@ -874,10 +873,10 @@ class JSONObjectTest {
 
     @Test
     fun testKeysEmptyObject() {
-        val `object` = JSONObject()
-        assertFalse(`object`.keys().hasNext())
+        val testObject = JSONObject()
+        assertFalse(testObject.keys().hasNext())
         try {
-            `object`.keys().next()
+            testObject.keys().next()
             fail()
         } catch (e: NoSuchElementException) {
         }
@@ -885,11 +884,11 @@ class JSONObjectTest {
 
     @Test
     fun testKeys() {
-        val `object` = JSONObject()
-        `object`.put("foo", 5)
-        `object`.put("bar", 6)
-        `object`.put("foo", 7)
-        val keys = `object`.keys() as Iterator<String>
+        val testObject = JSONObject()
+        testObject.put("foo", 5)
+        testObject.put("bar", 6)
+        testObject.put("foo", 7)
+        val keys = testObject.keys() as Iterator<String>
         val result: MutableSet<String> = HashSet()
         assertTrue(keys.hasNext())
         result.add(keys.next())
@@ -906,12 +905,12 @@ class JSONObjectTest {
 
     @Test
     fun testMutatingKeysMutatesObject() {
-        val `object` = JSONObject()
-        `object`.put("foo", 5)
-        val keys: MutableIterator<*> = `object`.keys()
+        val testObject = JSONObject()
+        testObject.put("foo", 5)
+        val keys: MutableIterator<*> = testObject.keys()
         keys.next()
         keys.remove()
-        assertEquals(0, `object`.length())
+        assertEquals(0, testObject.length())
     }
 
     @Test
@@ -1090,18 +1089,18 @@ class JSONObjectTest {
      */
     @Test
     fun testGetThrows() {
-        val `object` = JSONObject()
+        val testObject = JSONObject()
         assertThrows<JSONException>() {
-            `object`.getBoolean("key")
+            testObject.getBoolean("key")
         }
         assertThrows<JSONException> {
-            `object`.getInt("key")
+            testObject.getInt("key")
         }
         assertThrows<JSONException> {
-            `object`.getLong("key")
+            testObject.getLong("key")
         }
         assertThrows<JSONException> {
-            `object`.getString("key")
+            testObject.getString("key")
         }
     }
 
