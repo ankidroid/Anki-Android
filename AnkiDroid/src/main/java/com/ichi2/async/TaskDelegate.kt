@@ -18,6 +18,12 @@ package com.ichi2.async
 
 import com.ichi2.libanki.Collection
 
+/** @see [TaskDelegate] */
+abstract class TaskDelegateBase<Progress, Result> {
+    protected abstract fun execTask(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
+    protected abstract fun requiresOpenCollection(): Boolean
+}
+
 /**
  * TaskDelegate contains the business logic of background tasks.
  * While CollectionTask deals with all general task features, such as ensuring that no two tasks runs simultaneously
@@ -39,9 +45,11 @@ import com.ichi2.libanki.Collection
  * @param <Progress> The type of values that the task can send to indicates its progress. E.g. a card to display while remaining work is done; the progression of a counter.
  * @param <Result>   The type of result returned by the task at the end. E.g. the tree of decks, counts for a particular deck
  */
-abstract class TaskDelegate<Progress, Result> {
+abstract class TaskDelegate<Progress, Result> : TaskDelegateBase<Progress, Result>() {
+    final override fun execTask(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result =
+        task(col!!, collectionTask)
     protected abstract fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
-    protected open fun requiresOpenCollection(): Boolean {
+    override fun requiresOpenCollection(): Boolean {
         return true
     }
 }
