@@ -50,7 +50,6 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.Locale
 
@@ -61,7 +60,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private set
     var taskHandler: AnkiStatsTaskHandler? = null
         private set
-    private lateinit var mDeckSpinnerSelection: DeckSpinnerSelection
+    private var mDeckSpinnerSelection: DeckSpinnerSelection? = null
     private var mStatsDeckId: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -72,21 +71,23 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_anki_stats)
         initNavigationDrawer(findViewById(android.R.id.content))
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        // Set up the ViewPager with the sections adapter.
+        viewPager = findViewById<ViewPager2?>(R.id.pager).apply {
+            adapter = StatsPagerAdapter(this@Statistics)
+            offscreenPageLimit = 8
+        }
+        slidingTabLayout = findViewById(R.id.sliding_tabs)
+        // Setup Task Handler
+        taskHandler = getInstance(col)
         startLoadingCollection()
     }
 
     override fun onCollectionLoaded(col: Collection) {
         Timber.d("onCollectionLoaded()")
         super.onCollectionLoaded(col)
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        // Set up the ViewPager with the sections adapter.
-        @KotlinCleanup("cleanup: scope function")
-        viewPager = findViewById(R.id.pager)
-        viewPager.adapter = StatsPagerAdapter(this)
-        viewPager.offscreenPageLimit = 8
-        slidingTabLayout = findViewById(R.id.sliding_tabs)
 
         // Fixes #8984: scroll to position 0 in RTL layouts
         val tabObserver = slidingTabLayout.viewTreeObserver
@@ -99,9 +100,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
                 slidingTabLayout.selectTab(slidingTabLayout.getTabAt(0))
             }
         })
-
-        // Setup Task Handler
-        taskHandler = getInstance(col)
 
         // Dirty way to get text size from a TextView with current style, change if possible
         val size = FixedTextView(this).textSize
@@ -118,8 +116,8 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             this, col,
             findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true
         )
-        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
-        mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false)
+        mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
+        mDeckSpinnerSelection!!.selectDeckById(mStatsDeckId, false)
         taskHandler!!.setDeckId(mStatsDeckId)
         viewPager.adapter!!.notifyDataSetChanged()
     }
@@ -130,7 +128,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         super.onResume()
     }
 
-    @KotlinCleanup("cleanup: findItem -> isChecked to nested function")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         // System.err.println("in onCreateOptionsMenu");
@@ -139,20 +136,12 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         // exit if mTaskHandler not initialized yet
         if (taskHandler != null) {
-            when (taskHandler!!.statType) {
-                AxisType.TYPE_MONTH -> {
-                    val monthItem = menu.findItem(R.id.item_time_month)
-                    monthItem.isChecked = true
-                }
-                AxisType.TYPE_YEAR -> {
-                    val yearItem = menu.findItem(R.id.item_time_year)
-                    yearItem.isChecked = true
-                }
-                AxisType.TYPE_LIFE -> {
-                    val lifeItem = menu.findItem(R.id.item_time_all)
-                    lifeItem.isChecked = true
-                }
+            val menuItemToCheck = when (taskHandler!!.statType) {
+                AxisType.TYPE_MONTH -> R.id.item_time_month
+                AxisType.TYPE_YEAR -> R.id.item_time_year
+                AxisType.TYPE_LIFE -> R.id.item_time_all
             }
+            menu.findItem(menuItemToCheck).isChecked = true
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -203,9 +192,9 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         if (deck == null) {
             return
         }
-        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
+        mDeckSpinnerSelection?.initializeActionBarDeckSpinner(this.supportActionBar!!)
         mStatsDeckId = deck.deckId
-        mDeckSpinnerSelection.selectDeckById(mStatsDeckId, true)
+        mDeckSpinnerSelection?.selectDeckById(mStatsDeckId, true)
         taskHandler!!.setDeckId(mStatsDeckId)
         viewPager.adapter!!.notifyDataSetChanged()
     }
@@ -252,7 +241,9 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         override fun onDestroy() {
             cancelTasks()
-            mActivityPager.adapter?.unregisterAdapterDataObserver(mDataObserver)
+            if (this::mActivityPager.isInitialized) {
+                mActivityPager.adapter?.unregisterAdapterDataObserver(mDataObserver)
+            }
             super.onDestroy()
         }
 
