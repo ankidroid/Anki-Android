@@ -20,6 +20,7 @@ import com.ichi2.anki.Preferences.Companion.getDayOffset
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -27,6 +28,7 @@ import org.junit.runner.RunWith
 class PreferencesTest : RobolectricTest() {
     private lateinit var preferences: Preferences
 
+    @Before
     override fun setUp() {
         super.setUp()
         preferences = Preferences()
