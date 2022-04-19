@@ -35,6 +35,7 @@ import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
+import com.ichi2.utils.KotlinCleanup
 import org.acra.ACRA
 import org.acra.config.DialogConfigurationBuilder
 import org.acra.config.LimiterData
@@ -133,6 +134,7 @@ object HelpDialog {
         return createInstance(itemList, R.string.help_title_support_ankidroid)
     }
 
+    @KotlinCleanup("Convert to @Parcelize")
     class RateAppItem : RecursivePictureMenu.Item, Parcelable {
         constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?) : super(titleRes, iconRes, analyticsRes)
 
@@ -159,6 +161,7 @@ object HelpDialog {
         }
     }
 
+    @KotlinCleanup("Convert to @Parcelize")
     class LinkItem : RecursivePictureMenu.Item, Parcelable {
         @StringRes
         private val mUrlLocationRes: Int
@@ -201,6 +204,7 @@ object HelpDialog {
         }
     }
 
+    @KotlinCleanup("Convert to @Parcelize")
     class FunctionItem : RecursivePictureMenu.Item, Parcelable {
 
         private val mFunc: ActivityConsumer
