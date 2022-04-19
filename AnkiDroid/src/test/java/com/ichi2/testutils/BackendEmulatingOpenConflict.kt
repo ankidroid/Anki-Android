@@ -13,49 +13,40 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
-
-import com.ichi2.libanki.DB;
-import com.ichi2.libanki.backend.DroidBackendFactory;
-import com.ichi2.libanki.backend.RustDroidBackend;
-
-import net.ankiweb.rsdroid.BackendException;
-import net.ankiweb.rsdroid.BackendFactory;
-import net.ankiweb.rsdroid.RustBackendFailedException;
-
-import BackendProto.Backend;
-import androidx.annotation.NonNull;
-
-import static org.mockito.Mockito.mock;
+import BackendProto.Backend.BackendError
+import com.ichi2.libanki.DB
+import com.ichi2.libanki.backend.DroidBackendFactory.setOverride
+import com.ichi2.libanki.backend.RustDroidBackend
+import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
+import net.ankiweb.rsdroid.BackendFactory
+import net.ankiweb.rsdroid.RustBackendFailedException
+import org.mockito.Mockito
+import java.lang.RuntimeException
 
 /** Test helper:
  * causes getCol to emulate an exception caused by having another AnkiDroid instance open on the same collection
  */
-public class BackendEmulatingOpenConflict extends RustDroidBackend {
-
-    public BackendEmulatingOpenConflict(BackendFactory backend) {
-        super(backend);
+class BackendEmulatingOpenConflict(backend: BackendFactory?) : RustDroidBackend(backend!!) {
+    override fun openCollectionDatabase(path: String): DB {
+        val error = Mockito.mock(BackendError::class.java)
+        throw BackendDbLockedException(error)
     }
 
-
-    public static void enable() {
-        try {
-            DroidBackendFactory.setOverride(new BackendEmulatingOpenConflict(BackendFactory.createInstance()));
-        } catch (RustBackendFailedException e) {
-            throw new RuntimeException(e);
+    companion object {
+        @JvmStatic
+        fun enable() {
+            try {
+                setOverride(BackendEmulatingOpenConflict(BackendFactory.createInstance()))
+            } catch (e: RustBackendFailedException) {
+                throw RuntimeException(e)
+            }
         }
-    }
 
-
-    public static void disable() {
-        DroidBackendFactory.setOverride(null);
-    }
-
-
-    @Override
-    public DB openCollectionDatabase(@NonNull String path) {
-        Backend.BackendError error = mock(Backend.BackendError.class);
-        throw new BackendException.BackendDbException.BackendDbLockedException(error);
+        @JvmStatic
+        fun disable() {
+            setOverride(null)
+        }
     }
 }
