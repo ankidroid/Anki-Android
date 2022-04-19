@@ -355,22 +355,6 @@ public class TagsListTest {
         assertTrue(mTagsList.check("object::electronic::computer"));
         assertFalse("Should not mark checked intermediate tags as indeterminate",
                 mTagsList.copyOfIndeterminateTagList().contains("object::electronic"));
-
-        /*
-        assertTrue("Adding 'careless::::unit' tag should return true",
-                mTagsList.add("careless::::unit"));
-        assertTrue("Checking 'careless::blank::unit' tag should return true for it should exists",
-                mTagsList.check("careless::blank::unit"));
-        assertFalse("Checking 'careless::::unit' tag should return false for it should not exists",
-                mTagsList.check("careless::::unit"));
-
-        assertTrue("Adding 'careless::::missing_trailing::' tag should return true",
-                mTagsList.add("careless::::missing_trailing::"));
-        assertTrue("Checking 'careless::blank::missing_trailing::blank' tag should return true for it should exists",
-                mTagsList.check("careless::blank::missing_trailing::blank"));
-        assertFalse("Checking 'careless::::missing_trailing::' tag should return false for it should not exists",
-                mTagsList.check("careless::::missing_trailing::"));
-         */
     }
 
 

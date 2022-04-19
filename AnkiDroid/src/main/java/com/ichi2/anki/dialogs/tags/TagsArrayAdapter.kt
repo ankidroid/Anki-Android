@@ -93,6 +93,8 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
             val tag = vh.mRawTag
             if (checkBox.state == CheckBoxTriStates.State.CHECKED) {
                 tags.check(tag)
+                // ancestors may turn into indeterminate
+                notifyDataSetChanged()
             } else if (checkBox.state == CheckBoxTriStates.State.UNCHECKED) {
                 tags.uncheck(tag)
             }
