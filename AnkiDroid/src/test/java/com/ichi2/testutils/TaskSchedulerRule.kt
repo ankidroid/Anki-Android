@@ -13,31 +13,23 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import com.ichi2.anki.RunInBackground
+import org.junit.rules.TestRule
+import org.junit.runner.Description
+import org.junit.runners.model.Statement
 
-import com.ichi2.anki.RunInBackground;
-
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
-
-/** A {@link org.junit.Rule} which detects if the test method has the {@link com.ichi2.anki.RunInBackground} annotation */
-public class TaskSchedulerRule implements TestRule {
-
-    private Boolean mRunInForeground = null;
-
-    @Override
-    public Statement apply(final Statement base, final Description description) {
-        mRunInForeground = description.getAnnotation(RunInBackground.class) == null;
-        return base;
+/** A [org.junit.Rule] which detects if the test method has the [com.ichi2.anki.RunInBackground] annotation  */
+class TaskSchedulerRule : TestRule {
+    private var mRunInForeground: Boolean? = null
+    override fun apply(base: Statement, description: Description): Statement {
+        mRunInForeground = description.getAnnotation(RunInBackground::class.java) == null
+        return base
     }
 
-    /** Whether the currently executing test should be run in the foreground */
-    public boolean shouldRunInForeground() {
-        if (mRunInForeground == null) {
-            throw new IllegalStateException("Rule was queried before apply was called");
-        }
-        return mRunInForeground;
+    /** Whether the currently executing test should be run in the foreground  */
+    fun shouldRunInForeground(): Boolean {
+        return checkNotNull(mRunInForeground) { "Rule was queried before apply was called" }
     }
 }
