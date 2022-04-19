@@ -68,7 +68,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', '
     }
 
     reports {
-        xml.required = true
+        xml.enabled = true
         html.destination htmlOutDir
     }
 
@@ -93,7 +93,7 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest
     }
 
     reports {
-        xml.required = true
+        xml.enabled = true
         html.destination htmlOutDir
     }
 
@@ -118,7 +118,7 @@ task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedPlayDebug
     }
 
     reports {
-        xml.required = true
+        xml.enabled = true
         html.destination htmlOutDir
     }
 
