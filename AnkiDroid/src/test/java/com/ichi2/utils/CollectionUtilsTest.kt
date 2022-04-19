@@ -15,21 +15,19 @@
  */
 package com.ichi2.utils
 
-import com.ichi2.utils.CollectionUtils.getLastListElement
-import com.ichi2.utils.CollectionUtils.addAll
 import com.ichi2.testutils.AnkiAssert
+import com.ichi2.utils.CollectionUtils.addAll
+import com.ichi2.utils.CollectionUtils.getLastListElement
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.junit.Test
-import java.lang.IndexOutOfBoundsException
-import java.util.ArrayList
 
 class CollectionUtilsTest {
-    var mTestList = arrayListOf<Int>(1,2,3)
+    var testList = arrayListOf(1, 2, 3)
 
     @Test
     fun testGetLastListElement() {
-        MatcherAssert.assertThat(getLastListElement(mTestList), CoreMatchers.`is`(3))
+        MatcherAssert.assertThat(getLastListElement(testList), CoreMatchers.`is`(3))
     }
 
     @Test(expected = IndexOutOfBoundsException::class)
@@ -41,7 +39,7 @@ class CollectionUtilsTest {
     @Test
     fun testAddAll() {
         val toTest = arrayListOf<Int>()
-        addAll(toTest, mTestList)
+        addAll(toTest, testList)
         AnkiAssert.assertEqualsArrayList(arrayOf(1, 2, 3), toTest)
     }
 }
