@@ -13,42 +13,38 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import org.junit.Test;
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentFactory
+import androidx.fragment.app.FragmentManager
+import org.junit.Assert
+import org.junit.Test
+import org.mockito.Mockito.*
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentFactory;
-import androidx.fragment.app.FragmentManager;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-public class FragmentFactoryUtilsTest {
-
-
-    private static class TestFragment extends Fragment {}
+@KotlinCleanup("when -> whenever")
+class FragmentFactoryUtilsTest {
+    private class TestFragment : Fragment()
 
     @Test
-    public void test_instantiate() {
-        FragmentActivity activity = mock(FragmentActivity.class);
-        FragmentManager manager = mock(FragmentManager.class);
-        FragmentFactory factory = mock(FragmentFactory.class);
-        ClassLoader classLoader = mock(ClassLoader.class);
+    fun test_instantiate() {
+        val activity = mock(FragmentActivity::class.java)
+        val manager = mock(FragmentManager::class.java)
+        val factory = mock(FragmentFactory::class.java)
+        val classLoader = mock(ClassLoader::class.java)
 
-        TestFragment testFragment = new TestFragment();
+        val testFragment = TestFragment()
 
-        when(activity.getSupportFragmentManager()).thenReturn(manager);
-        when(activity.getClassLoader()).thenReturn(classLoader);
+        `when`(activity.supportFragmentManager).thenReturn(manager)
+        `when`(activity.classLoader).thenReturn(classLoader)
 
-        when(manager.getFragmentFactory()).thenReturn(factory);
-        when(factory.instantiate(classLoader, testFragment.getClass().getName()))
-                .thenReturn(testFragment);
+        `when`(manager.fragmentFactory).thenReturn(factory)
+        `when`(factory.instantiate(classLoader, testFragment.javaClass.name))
+            .thenReturn(testFragment)
 
-
-        Fragment result = FragmentFactoryUtils.instantiate(activity, TestFragment.class);
-        assertEquals(testFragment, result);
-        verify(factory, times(1)).instantiate(classLoader, testFragment.getClass().getName());
+        val result: Fragment = FragmentFactoryUtils.instantiate(activity, TestFragment::class.java)
+        Assert.assertEquals(testFragment, result)
+        verify(factory, times(1)).instantiate(classLoader, testFragment.javaClass.name)
     }
 }
