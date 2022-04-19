@@ -14,111 +14,79 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
-import android.content.res.Resources;
+import android.content.res.Resources
+import androidx.annotation.IntDef
+import androidx.annotation.StringRes
+import com.ichi2.anki.R
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.LanguageUtil.getLocaleCompat
+import timber.log.Timber
+import java.util.*
 
-import com.ichi2.anki.R;
-import com.ichi2.utils.ArrayUtil;
-import com.ichi2.utils.LanguageUtil;
+@KotlinCleanup("IDE-based-lint")
+abstract class UndoAction
+/**
+ * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
+ * It's the caller responsibility to clone the object if necessary. */
+(@field:UNDO_NAME_ID @field:StringRes @param:StringRes @param:UNDO_NAME_ID val undoNameId: Int) {
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(R.string.undo_action_change_deck_multi, R.string.menu_delete_note, R.string.card_browser_delete_card, R.string.card_browser_mark_card, R.string.card_browser_unmark_card, R.string.menu_suspend_card, R.string.card_browser_unsuspend_card, R.string.undo_action_review, R.string.menu_bury_note, R.string.menu_suspend_note, R.string.card_editor_reposition_card, R.string.card_editor_reschedule_card, R.string.menu_bury_card, R.string.card_editor_reset_card)
+    annotation class UNDO_NAME_ID
 
-import java.lang.annotation.Retention;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import timber.log.Timber;
-
-import static java.lang.annotation.RetentionPolicy.SOURCE;
-
-public abstract class UndoAction {
-    @StringRes @UNDO_NAME_ID public final int mUndoNameId;
-
-    @Retention(SOURCE)
-    @IntDef( {
-            R.string.undo_action_change_deck_multi,
-            R.string.menu_delete_note,
-            R.string.card_browser_delete_card,
-            R.string.card_browser_mark_card,
-            R.string.card_browser_unmark_card,
-            R.string.menu_suspend_card,
-            R.string.card_browser_unsuspend_card,
-            R.string.undo_action_review,
-            R.string.menu_bury_note,
-            R.string.menu_suspend_note,
-            R.string.card_editor_reposition_card,
-            R.string.card_editor_reschedule_card,
-            R.string.menu_bury_card,
-            R.string.card_editor_reset_card,
-
-    })
-    public @interface UNDO_NAME_ID {}
-
-
-    /**
-     * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
-     * It's the caller responsibility to clone the object if necessary.*/
-    public UndoAction(@StringRes @UNDO_NAME_ID int undoNameId) {
-        mUndoNameId = undoNameId;
+    private fun getLocale(resources: Resources): Locale {
+        return getLocaleCompat(resources)
     }
 
-    private Locale getLocale(Resources resources) {
-        return LanguageUtil.getLocaleCompat(resources);
-    }
-    public String name(Resources res) {
-        return res.getString(mUndoNameId).toLowerCase(getLocale(res));
+    fun name(res: Resources): String {
+        return res.getString(undoNameId).lowercase(getLocale(res))
     }
 
     /**
      * Return MULTI_CARD when no other action is needed, e.g. for multi card action
      * Return NO_REVIEW when we just need to reset the collection
-     * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer.*/
-    public abstract @Nullable Card undo(@NonNull Collection col);
+     * Returned positive integers are card id. Those ids is the card that was discarded and that may be sent back to the reviewer. */
+    abstract fun undo(col: Collection): Card?
 
-    /**
-     * Create an UndoAction that set back `card` and its siblings to the current states.
-     * @param undoNameId The id of the string representing an action that could be undone
-     * @param card the card currently in the reviewer
-     * @return An UndoAction which, if executed, put back the `card` in the state given here
-     */
-    public static @NonNull UndoAction revertNoteToProvidedState(@StringRes @UNDO_NAME_ID int undoNameId, Card card){
-        return revertToProvidedState(undoNameId, card, card.note().cards());
-    }
+    companion object {
+        /**
+         * Create an UndoAction that set back `card` and its siblings to the current states.
+         * @param undoNameId The id of the string representing an action that could be undone
+         * @param card the card currently in the reviewer
+         * @return An UndoAction which, if executed, put back the `card` in the state given here
+         */
+        fun revertNoteToProvidedState(@StringRes @UNDO_NAME_ID undoNameId: Int, card: Card): UndoAction {
+            return revertToProvidedState(undoNameId, card, card.note().cards())
+        }
 
-    /**
-     * Create an UndoAction that set back `card` and its siblings to the current states.
-     * @param undoNameId The id of the string representing an action that could be undone
-     * @param card the card currently in the reviewer
-     * @return An UndoAction which, if executed, put back the `card` in the state given here
-     */
-    public static @NonNull UndoAction revertCardToProvidedState(@StringRes @UNDO_NAME_ID int undoNameId, Card card){
-        return revertToProvidedState(undoNameId, card, Arrays.asList(card.clone()));
-    }
+        /**
+         * Create an UndoAction that set back `card` and its siblings to the current states.
+         * @param undoNameId The id of the string representing an action that could be undone
+         * @param card the card currently in the reviewer
+         * @return An UndoAction which, if executed, put back the `card` in the state given here
+         */
+        fun revertCardToProvidedState(@StringRes @UNDO_NAME_ID undoNameId: Int, card: Card): UndoAction {
+            return revertToProvidedState(undoNameId, card, Arrays.asList(card.clone()))
+        }
 
-
-    /**
-     * Create an UndoAction that set back `card` and its siblings to the current states.
-     * @param undoNameId The id of the string representing an action that could be undone
-     * @param card the card currently in the reviewer
-     * @param cards The cards that must be reverted
-     * @return An UndoAction which, if executed, put back the `card` in the state given here
-     */
-    private static @NonNull UndoAction revertToProvidedState(@StringRes @UNDO_NAME_ID int undoNameId, Card card, Iterable<Card> cards){
-        return new UndoAction(undoNameId) {
-            public @Nullable
-            Card undo(@NonNull Collection col) {
-                Timber.i("Undo: %d", undoNameId);
-                for (Card cc : cards) {
-                    cc.flush(false);
+        /**
+         * Create an UndoAction that set back `card` and its siblings to the current states.
+         * @param undoNameId The id of the string representing an action that could be undone
+         * @param card the card currently in the reviewer
+         * @param cards The cards that must be reverted
+         * @return An UndoAction which, if executed, put back the `card` in the state given here
+         */
+        private fun revertToProvidedState(@StringRes @UNDO_NAME_ID undoNameId: Int, card: Card, cards: Iterable<Card>): UndoAction {
+            return object : UndoAction(undoNameId) {
+                override fun undo(col: Collection): Card? {
+                    Timber.i("Undo: %d", undoNameId)
+                    for (cc in cards) {
+                        cc.flush(false)
+                    }
+                    return card
                 }
-                return card;
             }
-        };
+        }
     }
 }
