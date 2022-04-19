@@ -13,24 +13,23 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import android.database.Cursor
+import android.database.CursorWrapper
+import com.ichi2.utils.KotlinCleanup
+import org.mockito.Mockito.*
 
-import android.database.Cursor;
-import android.database.CursorWrapper;
-
-import org.mockito.Mockito;
-
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
-
-public class MockCursor {
-
-    public static Cursor getEmpty() {
-        //Couldn't just mock cursor
-        Cursor mockCursor = Mockito.mock(CursorWrapper.class);
-        when(mockCursor.moveToFirst()).thenReturn(false);
-        when(mockCursor.getString(anyInt())).thenThrow(new IllegalStateException());
-        return mockCursor;
-    }
+object MockCursor {
+    @KotlinCleanup("when -> whenever")
+    @KotlinCleanup("mockito-kotlin")
+    @KotlinCleanup("scope function")
+    val empty: Cursor
+        get() {
+            // Couldn't just mock cursor
+            val mockCursor: Cursor = mock(CursorWrapper::class.java)
+            `when`(mockCursor.moveToFirst()).thenReturn(false)
+            `when`(mockCursor.getString(anyInt())).thenThrow(IllegalStateException())
+            return mockCursor
+        }
 }

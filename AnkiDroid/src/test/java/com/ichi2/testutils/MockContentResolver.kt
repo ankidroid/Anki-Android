@@ -32,6 +32,6 @@ object MockContentResolver {
     }
 
     fun returningEmptyCursor(): ContentResolver {
-        return returningCursor(MockCursor.getEmpty())
+        return returningCursor(MockCursor.empty)
     }
 }
