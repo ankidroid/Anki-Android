@@ -100,11 +100,17 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
             }
         }
         // clicking other parts toggles the expansion state
-        vh.mExpandButton.setOnClickListener {
-            onToggleExpansionState(vh.mExpandButton, vh.position)
-        }
         vh.itemView.setOnClickListener {
-            onToggleExpansionState(vh.mExpandButton, vh.position)
+            toggleExpansionState(vh.position)
+            updateExpanderBackgroundImage(vh.mExpandButton, mTree[vh.position])
+            // result of getTagByIndex() may change due to the expansion / collapse
+            if (mTree[vh.position].children.isNotEmpty()) {
+                if (getExpansionState(vh.position)) {
+                    notifyItemRangeInserted(vh.layoutPosition + 1, mTree[vh.position].subtreeSize - 1)
+                } else {
+                    notifyItemRangeRemoved(vh.layoutPosition + 1, mTree[vh.position].subtreeSize - 1)
+                }
+            }
         }
         return vh
     }
@@ -129,15 +135,6 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
             holder.mCheckBoxView.state = CheckBoxTriStates.State.INDETERMINATE
         } else {
             holder.mCheckBoxView.state = if (tags.isChecked(tag)) CheckBoxTriStates.State.CHECKED else CheckBoxTriStates.State.UNCHECKED
-        }
-    }
-
-    private fun onToggleExpansionState(expandButton: ImageButton, position: Int) {
-        toggleExpansionState(position)
-        updateExpanderBackgroundImage(expandButton, mTree[position])
-        // result of getTagByIndex() may change due to the expansion / collapse
-        if (mTree[position].children.isNotEmpty()) {
-            notifyDataSetChanged()
         }
     }
 
