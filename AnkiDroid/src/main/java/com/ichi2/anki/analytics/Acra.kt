@@ -35,7 +35,7 @@ class Acra {
 
         @JvmStatic
         fun onPreferenceChanged(ctx: Context, newValue: String) {
-            AnkiDroidApp.getInstance().setAcraReportingMode(newValue)
+            AnkiDroidApp.getInstance()?.setAcraReportingMode(newValue)
             // If the user changed error reporting, make sure future reports have a chance to post
             AnkiDroidApp.deleteACRALimiterData(ctx)
             // We also need to re-chain our UncaughtExceptionHandlers

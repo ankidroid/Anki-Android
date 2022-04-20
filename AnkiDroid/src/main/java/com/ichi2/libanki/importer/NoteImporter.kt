@@ -328,15 +328,15 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
     }
 
     private fun getQuantityString(@PluralsRes res: Int, quantity: Int): String {
-        return AnkiDroidApp.getAppResources().getQuantityString(res, quantity, quantity)
+        return AnkiDroidApp.getAppResources()!!.getQuantityString(res, quantity, quantity)
     }
 
     protected fun getString(@StringRes res: Int): String {
-        return AnkiDroidApp.getAppResources().getString(res)
+        return AnkiDroidApp.getAppResources()!!.getString(res)
     }
 
     protected fun getString(res: Int, vararg formatArgs: Any): String {
-        return AnkiDroidApp.getAppResources().getString(res, *formatArgs)
+        return AnkiDroidApp.getAppResources()!!.getString(res, *formatArgs)
     }
 
     fun setAllowHtml(allowHtml: Boolean) {

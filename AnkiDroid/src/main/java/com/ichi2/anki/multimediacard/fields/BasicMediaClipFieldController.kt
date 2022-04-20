@@ -116,8 +116,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         mActivity.contentResolver.query(selectedClip!!, queryColumns, null, null, null).use { cursor ->
             if (cursor == null) {
                 showThemedToast(
-                    AnkiDroidApp.getInstance().applicationContext,
-                    AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
+                    AnkiDroidApp.getInstance()?.applicationContext,
+                    AnkiDroidApp.getInstance()?.getString(R.string.multimedia_editor_something_wrong), true
                 )
                 return
             }
@@ -135,8 +135,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                     // about what people are experiencing in the real world and decide later, but without crashing at least
                     AnkiDroidApp.sendExceptionReport(e, "Media Clip addition failed. Name " + mediaClipFullName + " / cursor mime type column type " + cursor.getType(2))
                     showThemedToast(
-                        AnkiDroidApp.getInstance().applicationContext,
-                        AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
+                        AnkiDroidApp.getInstance()?.applicationContext,
+                        AnkiDroidApp.getInstance()?.getString(R.string.multimedia_editor_something_wrong), true
                     )
                     return
                 }
@@ -152,8 +152,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             Timber.e(e, "Could not create temporary media file. ")
             AnkiDroidApp.sendExceptionReport(e, "handleMediaSelection:tempFile")
             showThemedToast(
-                AnkiDroidApp.getInstance().applicationContext,
-                AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
+                AnkiDroidApp.getInstance()?.applicationContext,
+                AnkiDroidApp.getInstance()?.getString(R.string.multimedia_editor_something_wrong), true
             )
             return
         }
@@ -173,8 +173,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
             Timber.e(e, "Unable to copy media file from ContentProvider")
             AnkiDroidApp.sendExceptionReport(e, "handleMediaSelection:copyFromProvider")
             showThemedToast(
-                AnkiDroidApp.getInstance().applicationContext,
-                AnkiDroidApp.getInstance().getString(R.string.multimedia_editor_something_wrong), true
+                AnkiDroidApp.getInstance()?.applicationContext,
+                AnkiDroidApp.getInstance()?.getString(R.string.multimedia_editor_something_wrong), true
             )
         }
     }

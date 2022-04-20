@@ -58,7 +58,7 @@ object LanguageUtil {
      */
     @JvmStatic
     fun getLocale(localeCode: String?): Locale {
-        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)
+        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()?.baseContext)
         return getLocale(localeCode, prefs)
     }
 

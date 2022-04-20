@@ -36,7 +36,7 @@ abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
 
     protected fun res(): Resources {
         return try {
-            AnkiDroidApp.getAppResources()
+            AnkiDroidApp.getAppResources()!!
         } catch (e: Exception) {
             Timber.w(e, "AnkiDroidApp.getAppResources failure. Returning Fragment resources as fallback.")
             resources

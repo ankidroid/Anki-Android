@@ -24,7 +24,7 @@ import com.ichi2.anki.AnkiDroidApp
  * so a test collection path is used
  */
 class TestingApplication : AnkiDroidApp() {
-    override fun attachBaseContext(base: Context?) {
+    override fun attachBaseContext(base: Context) {
         INSTRUMENTATION_TESTING = true
         super.attachBaseContext(base)
     }

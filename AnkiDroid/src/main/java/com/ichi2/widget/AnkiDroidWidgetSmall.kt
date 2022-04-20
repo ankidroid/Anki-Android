@@ -101,7 +101,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                                     WidgetStatus.update(AnkiDroidApp.getInstance())
                                     remounted = false
                                     if (mMountReceiver != null) {
-                                        AnkiDroidApp.getInstance().unregisterReceiver(mMountReceiver)
+                                        AnkiDroidApp.getInstance()?.unregisterReceiver(mMountReceiver)
                                     }
                                 } else {
                                     remounted = true
@@ -112,7 +112,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                     val iFilter = IntentFilter()
                     iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED)
                     iFilter.addDataScheme("file")
-                    AnkiDroidApp.getInstance().registerReceiver(mMountReceiver, iFilter)
+                    AnkiDroidApp.getInstance()?.registerReceiver(mMountReceiver, iFilter)
                 }
             } else {
                 // If we do not have a cached version, always update.

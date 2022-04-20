@@ -41,7 +41,7 @@ class ResetLanguageDialogPreference : DialogPreference {
             }
             Timber.i("Resetting languages")
             if (MetaDB.resetLanguages(context)) {
-                UIUtils.showThemedToast(context, AnkiDroidApp.getAppResources().getString(R.string.reset_confirmation), true)
+                UIUtils.showThemedToast(context, AnkiDroidApp.getAppResources()?.getString(R.string.reset_confirmation), true)
             }
         }
 

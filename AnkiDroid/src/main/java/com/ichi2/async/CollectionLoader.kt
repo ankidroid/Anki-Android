@@ -39,7 +39,7 @@ class CollectionLoader private constructor(private val lifecycleOwner: Lifecycle
         // load collection
         return try {
             Timber.d("CollectionLoader accessing collection")
-            val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance().applicationContext)
+            val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance()?.applicationContext)
             Timber.i("CollectionLoader obtained collection")
             col
         } catch (e: RuntimeException) {

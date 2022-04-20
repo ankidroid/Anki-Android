@@ -259,11 +259,11 @@ object HelpDialog {
             }
             if (AnkiDroidApp.FEEDBACK_REPORT_NEVER == reportMode) {
                 preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, false).apply()
-                AnkiDroidApp.getInstance().acraCoreConfigBuilder
+                AnkiDroidApp.getInstance()!!.getAcraCoreConfigBuilder()
                     .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
                     .setEnabled(true)
                 sendReport(activity)
-                AnkiDroidApp.getInstance().acraCoreConfigBuilder
+                AnkiDroidApp.getInstance()!!.getAcraCoreConfigBuilder()
                     .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
                     .setEnabled(false)
                 preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, true).apply()

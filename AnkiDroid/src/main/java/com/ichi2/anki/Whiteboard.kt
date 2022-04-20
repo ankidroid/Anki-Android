@@ -503,7 +503,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         }
 
         private val displayDimensions: Point
-            get() = getDisplayDimensions(AnkiDroidApp.getInstance().applicationContext)
+            get() = getDisplayDimensions(AnkiDroidApp.getInstance()!!.applicationContext)
     }
 
     init {

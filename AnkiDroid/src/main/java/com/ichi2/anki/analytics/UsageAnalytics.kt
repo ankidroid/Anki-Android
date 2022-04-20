@@ -182,7 +182,7 @@ object UsageAnalytics {
         sAnalytics!!.flush()
         sAnalytics = null
         unInstallDefaultExceptionHandler()
-        initialize(AnkiDroidApp.getInstance().applicationContext)
+        initialize(AnkiDroidApp.getInstance()!!.applicationContext)
     }
 
     /**

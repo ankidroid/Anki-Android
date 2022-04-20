@@ -154,7 +154,7 @@ object ImportUtils {
                 } else {
                     Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile")
                     AnkiDroidApp.sendExceptionReport(RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed")
-                    return ImportResult.fromErrorString(AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing"))
+                    return ImportResult.fromErrorString(AnkiDroidApp.getAppResources()?.getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing"))
                 }
             }
             return if (!isValidPackageName(filename)) {

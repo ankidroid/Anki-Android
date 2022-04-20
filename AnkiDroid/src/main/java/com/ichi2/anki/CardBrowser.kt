@@ -560,7 +560,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn1Index) {
                     mColumn1Index = pos
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext).edit()
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()?.baseContext).edit()
                         .putInt("cardBrowserColumn1", mColumn1Index).apply()
                     val fromMap = mCardsAdapter!!.fromMapping
                     fromMap[0] = COLUMN1_KEYS[mColumn1Index]
@@ -588,7 +588,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn2Index) {
                     mColumn2Index = pos
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext).edit()
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()?.baseContext).edit()
                         .putInt("cardBrowserColumn2", mColumn2Index).apply()
                     val fromMap = mCardsAdapter!!.fromMapping
                     fromMap[1] = COLUMN2_KEYS[mColumn2Index]
@@ -2385,7 +2385,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 Column.CARD -> card.template().optString("name")
                 Column.DUE -> card.dueString
                 Column.EASE -> if (card.type == Consts.CARD_TYPE_NEW) {
-                    AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_new_card)
+                    AnkiDroidApp.getInstance()?.getString(R.string.card_browser_interval_new_card)
                 } else {
                     (card.factor / 10).toString() + "%"
                 }
@@ -2393,8 +2393,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
                 Column.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note().mod)
                 Column.INTERVAL -> when (card.type) {
-                    Consts.CARD_TYPE_NEW -> AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_new_card)
-                    Consts.CARD_TYPE_LRN -> AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_learning_card)
+                    Consts.CARD_TYPE_NEW -> AnkiDroidApp.getInstance()?.getString(R.string.card_browser_interval_new_card)
+                    Consts.CARD_TYPE_LRN -> AnkiDroidApp.getInstance()?.getString(R.string.card_browser_interval_learning_card)
                     else -> Utils.roundedTimeSpanUnformatted(AnkiDroidApp.getInstance(), card.ivl * Stats.SECONDS_PER_DAY)
                 }
                 Column.LAPSES -> Integer.toString(card.lapses)
@@ -2455,8 +2455,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             if (a.startsWith(q)) {
                 a = a.substring(q.length)
             }
-            a = formatQA(a, AnkiDroidApp.getInstance())
-            q = formatQA(q, AnkiDroidApp.getInstance())
+            a = formatQA(a, AnkiDroidApp.getInstance()!!)
+            q = formatQA(q, AnkiDroidApp.getInstance()!!)
             mQa = Pair(q, a)
         }
 
@@ -2704,7 +2704,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         const val CARD_NOT_AVAILABLE = -1
         @JvmStatic
         fun clearLastDeckId() {
-            val context: Context = AnkiDroidApp.getInstance()
+            val context: Context = AnkiDroidApp.getInstance()!!
             context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().remove(LAST_DECK_ID_KEY).apply()
         }
 

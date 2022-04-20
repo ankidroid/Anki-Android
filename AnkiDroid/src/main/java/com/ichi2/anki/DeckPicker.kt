@@ -1194,7 +1194,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     @KotlinCleanup("nullOrEmpty")
     private fun showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
         if (mActivityPaused) {
-            val res = AnkiDroidApp.getAppResources()
+            val res = AnkiDroidApp.getAppResources()!!
             showSimpleNotification(
                 res.getString(R.string.app_name),
                 res.getString(messageResource),
@@ -1212,7 +1212,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                     showSimpleSnackbar(this, messageResource, false)
                 }
             } else {
-                val res = AnkiDroidApp.getAppResources()
+                val res = AnkiDroidApp.getAppResources()!!
                 showSimpleMessageDialog(res.getString(messageResource), syncMessage, false)
             }
         }
@@ -2360,7 +2360,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     internal inner class CheckDatabaseListener : TaskListener<String, Pair<Boolean, CheckDatabaseResult?>>() {
         override fun onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(
-                this@DeckPicker, AnkiDroidApp.getAppResources().getString(R.string.app_name),
+                this@DeckPicker, AnkiDroidApp.getAppResources()?.getString(R.string.app_name),
                 resources.getString(R.string.check_db_message), false
             )
         }

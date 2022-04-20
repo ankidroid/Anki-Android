@@ -342,7 +342,7 @@ public class CollectionHelper {
     @SuppressWarnings("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
     @CheckResult
     public static String getDefaultAnkiDroidDirectory(@NonNull Context context) {
-        if (AnkiDroidApp.TESTING_SCOPED_STORAGE) {
+        if (AnkiDroidApp.getTESTING_SCOPED_STORAGE()) {
             return getAppSpecificExternalAnkiDroidDirectory(context);
         }
         return getLegacyAnkiDroidDirectory();
@@ -419,7 +419,7 @@ public class CollectionHelper {
      */
     public static String getCurrentAnkiDroidDirectory(Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
-        if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
+        if (AnkiDroidApp.getINSTRUMENTATION_TESTING()) {
             // create an "androidTest" directory inside the current collection directory which contains the test data
             // "/AnkiDroid/androidTest" would be a new collection path
             return new File(getDefaultAnkiDroidDirectory(context), "androidTest").getAbsolutePath();

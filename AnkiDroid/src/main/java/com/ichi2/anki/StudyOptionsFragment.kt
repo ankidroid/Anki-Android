@@ -360,7 +360,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             } else {
                 menu.findItem(R.id.action_undo).isVisible = true
                 val res = AnkiDroidApp.getAppResources()
-                menu.findItem(R.id.action_undo).title = res.getString(R.string.studyoptions_congrats_undo, col!!.undoName(res))
+                menu.findItem(R.id.action_undo).title = res?.getString(R.string.studyoptions_congrats_undo, col!!.undoName(res))
             }
             // Set the back button listener
             if (!mFragmented) {

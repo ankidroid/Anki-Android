@@ -259,7 +259,7 @@ abstract class AbstractFlashcardViewer :
     private val mLongClickHandler = newHandler()
     private val mLongClickTestRunnable = Runnable {
         Timber.i("AbstractFlashcardViewer:: onEmulatedLongClick")
-        compat.vibrate(AnkiDroidApp.getInstance().applicationContext, 50)
+        compat.vibrate(AnkiDroidApp.getInstance()!!.applicationContext, 50)
         mLongClickHandler.postDelayed(mStartLongClickAction, 300)
     }
     private val mStartLongClickAction = Runnable { mGestureProcessor.onLongTap() }

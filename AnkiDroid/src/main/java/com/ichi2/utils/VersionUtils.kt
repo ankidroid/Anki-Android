@@ -34,7 +34,7 @@ object VersionUtils {
     val appName: String
         get() {
             var pkgName = AnkiDroidApp.TAG
-            val context: Context = AnkiDroidApp.getInstance()
+            val context: Context = AnkiDroidApp.getInstance()!!
             try {
                 val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
                 pkgName = context.getString(pInfo.applicationInfo.labelRes)
@@ -69,7 +69,7 @@ object VersionUtils {
     @JvmStatic
     val pkgVersionCode: Long
         get() {
-            val context: Context = AnkiDroidApp.getInstance()
+            val context: Context = AnkiDroidApp.getInstance()!!
             try {
                 val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
                 val versionCode = PackageInfoCompat.getLongVersionCode(pInfo)

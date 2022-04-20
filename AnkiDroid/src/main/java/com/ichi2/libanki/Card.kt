@@ -436,7 +436,7 @@ open class Card : Cloneable {
         val date: Long
         val due = due
         date = if (isInDynamicDeck) {
-            return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card)
+            return AnkiDroidApp.getAppResources()!!.getString(R.string.card_browser_due_filtered_card)
         } else if (queue == Consts.QUEUE_TYPE_LRN) {
             due
         } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {

@@ -402,7 +402,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     @JavascriptInterface
     fun ankiIsActiveNetworkMetered(): Boolean {
         return try {
-            val cm = AnkiDroidApp.getInstance().applicationContext
+            val cm = AnkiDroidApp.getInstance()!!.applicationContext
                 .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             cm.isActiveNetworkMetered
         } catch (e: Exception) {

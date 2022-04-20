@@ -45,7 +45,7 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
         super.onCreate(savedInstanceState)
         val dialogBuilder = AlertDialog.Builder(this)
         try {
-            val builder = AnkiDroidApp.getInstance().acraCoreConfigBuilder
+            val builder = AnkiDroidApp.getInstance()!!.getAcraCoreConfigBuilder()
             val dialogConfig = builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java).build() as DialogConfiguration
             dialogBuilder.setIcon(dialogConfig.resIcon())
             dialogBuilder.setTitle(dialogConfig.title())
@@ -92,7 +92,7 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
             // Set the autoreport value to true if ticked
             if (autoReport) {
                 preferences.edit().putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).apply()
-                AnkiDroidApp.getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS)
+                AnkiDroidApp.getInstance()?.setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS)
             }
             // Send the crash report
             mHelper!!.sendCrash(mUserComment!!.text.toString(), "")

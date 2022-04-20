@@ -54,7 +54,7 @@ object AdaptionUtil {
         }
     val isRunningUnderFirebaseTestLab: Boolean
         get() = try {
-            isRunningUnderFirebaseTestLab(AnkiDroidApp.getInstance().contentResolver)
+            isRunningUnderFirebaseTestLab(AnkiDroidApp.getInstance()!!.contentResolver)
         } catch (e: Exception) {
             Timber.w(e)
             false
@@ -123,7 +123,7 @@ object AdaptionUtil {
     }
 
     private val isRunningMiui by lazy {
-        val ctx: Context = AnkiDroidApp.getInstance()
+        val ctx: Context = AnkiDroidApp.getInstance()!!
         (
             isIntentResolved(ctx, Intent("miui.intent.action.OP_AUTO_START").addCategory(Intent.CATEGORY_DEFAULT)) ||
                 isIntentResolved(ctx, Intent().setComponent(ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"))) ||

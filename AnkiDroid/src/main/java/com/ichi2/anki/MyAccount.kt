@@ -236,7 +236,7 @@ class MyAccount : AnkiActivity() {
                 }
             } else {
                 val res = AnkiDroidApp.getAppResources()
-                showSimpleMessageDialog(res.getString(messageResource), loginMessage, false)
+                showSimpleMessageDialog(res?.getString(messageResource), loginMessage, false)
             }
         }
     }
