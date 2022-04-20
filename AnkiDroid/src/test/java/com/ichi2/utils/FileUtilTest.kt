@@ -15,7 +15,7 @@
  */
 package com.ichi2.utils
 
-import org.acra.util.IOUtils.*
+import org.acra.util.IOUtils.writeStringToFile
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.core.IsEqual.equalTo
