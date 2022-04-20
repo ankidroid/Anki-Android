@@ -334,8 +334,6 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.14.3'
     implementation "com.github.zafarkhaja:java-semver:0.9.0" // For AnkiDroid JS API Versioning
     implementation 'com.drakeet.drawer:drawer:1.0.3'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.2'
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
