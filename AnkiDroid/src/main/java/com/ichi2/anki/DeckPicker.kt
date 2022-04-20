@@ -1348,7 +1348,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
     }
 
-    override fun deleteUnused(unused: List<String?>?) {
+    override fun deleteUnused(unused: List<String>) {
         TaskManager.launchCollectionTask(DeleteMedia(unused), mediaDeleteListener())
     }
 
