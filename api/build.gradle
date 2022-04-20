@@ -129,8 +129,8 @@ publishing {
 
 task zipRelease(type: Zip) {
     from layout.buildDirectory.dir('repos/releases')
-    destinationDir buildDir
-    archiveName "${buildDir}/release-${archiveVersion.get()}.zip"
+    destinationDirectory = buildDir
+    archiveFileName = "${buildDir}/release-${archiveVersion.get()}.zip"
 }
 
 // Use this task to make a release you can send to someone
