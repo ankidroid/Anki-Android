@@ -21,17 +21,17 @@ import java.util.stream.Collectors
 object TagsUtil {
     @JvmStatic
     fun getUpdatedTags(
-        previous: List<String?>,
-        selected: List<String?>,
-        indeterminate: List<String?>
-    ): List<String?> {
+        previous: List<String>,
+        selected: List<String>,
+        indeterminate: List<String>
+    ): List<String> {
         if (indeterminate.isEmpty()) {
             return selected
         }
-        val updated: MutableList<String?> = ArrayList()
-        val previousSet: Set<String?> = HashSet(previous)
+        val updated: MutableList<String> = ArrayList()
+        val previousSet: Set<String> = HashSet(previous)
         updated.addAll(selected)
-        updated.addAll(indeterminate.stream().filter { o: String? -> previousSet.contains(o) }.collect(Collectors.toList()))
+        updated.addAll(indeterminate.stream().filter { o: String -> previousSet.contains(o) }.collect(Collectors.toList()))
         return updated
     }
 

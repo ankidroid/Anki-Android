@@ -443,7 +443,7 @@ open class RobolectricTest : CollectionGetter {
 
     @Synchronized
     @Throws(InterruptedException::class)
-    protected fun <Progress, Result : Computation<*>?> waitForTask(task: TaskDelegate<Progress, Result>, timeoutMs: Int) {
+    protected fun <Progress, Result : Computation<*>?> waitForTask(task: TaskDelegateBase<Progress, Result>, timeoutMs: Int) {
         val completed = booleanArrayOf(false)
         val listener: TaskListener<Progress, Result> = object : TaskListener<Progress, Result>() {
             override fun onPreExecute() {}

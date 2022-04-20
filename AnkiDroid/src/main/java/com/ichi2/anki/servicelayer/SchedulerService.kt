@@ -22,8 +22,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.UndoAction.Companion.revertCardToProvidedState
 import com.ichi2.libanki.UndoAction.UNDO_NAME_ID
-import com.ichi2.libanki.UndoAction.revertCardToProvidedState
 import com.ichi2.utils.Computation
 import timber.log.Timber
 import java.util.*

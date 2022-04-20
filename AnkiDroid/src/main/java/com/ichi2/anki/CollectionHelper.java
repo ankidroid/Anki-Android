@@ -66,7 +66,7 @@ public class CollectionHelper {
      * <br>
      * The path also defines the collection that the AnkiDroid API accesses
      */
-    public static final String PREF_DECK_PATH = "deckPath";
+    public static final String PREF_COLLECTION_PATH = "deckPath";
 
     /**
      * Prevents {@link com.ichi2.async.CollectionLoader} from spuriously re-opening the {@link Collection}.
@@ -128,6 +128,18 @@ public class CollectionHelper {
         return getCol(context, new SystemTime());
     }
 
+    /**
+     * Opens the collection without checking to see if the directory exists.
+     *
+     * path should be tested with File.exists() and File.canWrite() before this is called
+     */
+    private Collection openCollection(Context context, @NonNull Time time, String path) {
+        Timber.i("Begin openCollection: %s", path);
+        Collection collection = Storage.Collection(context, path, false, true, time);
+        Timber.i("End openCollection: %s", path);
+        return collection;
+    }
+
     @VisibleForTesting
     public synchronized Collection getCol(Context context, @NonNull Time time) {
         // Open collection
@@ -142,11 +154,34 @@ public class CollectionHelper {
                 return null;
             }
             // Open the database
-            Timber.i("Begin openCollection: %s", path);
-            mCollection = Storage.Collection(context, path, false, true, time);
-            Timber.i("End openCollection: %s", path);
+            mCollection = openCollection(context, time, path);
         }
         return mCollection;
+    }
+
+    /**
+     * Given a path to a .anki2 file returns an open {@link Collection} associated with the path.
+     *
+     * This operation does not call {@link #initializeAnkiDroidDirectory} and does not set the singleton instance's {@link #mCollection}
+     *
+     * @param path The path to collection.anki2
+     * @return An open {@link Collection} object
+     *
+     * @throws StorageAccessException the file at `path` is not writable
+     * @throws StorageAccessException `path` does not exist
+     */
+    public Collection getColFromPath(String path, Context context) throws StorageAccessException {
+        File f = new File(path);
+
+        if (!f.exists()) {
+            throw new StorageAccessException(path + " does not exist");
+        }
+
+        if (!f.canWrite()) {
+            throw new StorageAccessException(path + " is not writable");
+        }
+
+        return openCollection(context, new SystemTime(), path);
     }
 
     /** Collection time if possible, otherwise real time.*/
@@ -200,7 +235,7 @@ public class CollectionHelper {
     /**
      * Create the AnkiDroid directory if it doesn't exist and add a .nomedia file to it if needed.
      *
-     * The AnkiDroid directory is a user preference stored under {@link #PREF_DECK_PATH}, and a sensible
+     * The AnkiDroid directory is a user preference stored under {@link #PREF_COLLECTION_PATH}, and a sensible
      * default is chosen if the preference hasn't been created yet (i.e., on the first run).
      *
      * The presence of a .nomedia file indicates to media scanners that the directory must be
@@ -245,44 +280,6 @@ public class CollectionHelper {
             Timber.w(e);
             return false;
         }
-    }
-
-    /**
-     * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
-     * This directory is stored under {@link #PREF_DECK_PATH}
-     * @return <code>true</code> if AnkiDroid is storing user data in a Legacy Storage Directory.
-     */
-    public static boolean isLegacyStorage(Context context) {
-        String currentDirPath = CollectionHelper.getCurrentAnkiDroidDirectory(context);
-        String externalScopedDirPath = CollectionHelper.getAppSpecificExternalAnkiDroidDirectory(context);
-        String internalScopedDirPath = CollectionHelper.getAppSpecificInternalAnkiDroidDirectory(context);
-
-        File currentDir = new File(currentDirPath);
-        File[] externalScopedDirs = context.getExternalFilesDirs(null);
-        File internalScopedDir = new File(internalScopedDirPath);
-
-        Timber.i("isLegacyStorage(): current dir: %s\nscoped external dir: %s\nscoped internal dir: %s",
-                currentDirPath, externalScopedDirPath, internalScopedDirPath);
-
-        // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
-        // for app-specific external or internal storage - the only directories which will be accessible without
-        // permissions under scoped storage
-        File currentDirParent = currentDir;
-        while (currentDirParent != null) {
-            if (currentDirParent.compareTo(internalScopedDir) == 0) {
-                return false;
-            }
-            for (File externalScopedDir : externalScopedDirs) {
-                if (currentDirParent.compareTo(externalScopedDir) == 0) {
-                    return false;
-                }
-            }
-            currentDirParent = currentDirParent.getParentFile();
-        }
-
-        // If the current AnkiDroid directory isn't a sub directory of the app-specific external or internal storage
-        // directories, then it must be in a legacy storage directory
-        return true;
     }
 
 
@@ -387,6 +384,15 @@ public class CollectionHelper {
 
 
     /**
+     * @return Returns an array of {@link File}s reflecting the directories that AnkiDroid can access without storage permissions
+     * @see android.content.Context#getExternalFilesDirs(String)
+     */
+    @NonNull
+    public static File[] getAppSpecificExternalDirectories(@NonNull Context context) {
+        return context.getExternalFilesDirs(null);
+    }
+
+    /**
      * Returns the absolute path to the private AnkiDroid directory under the app-specific, internal storage directory.
      * <p>
      * AnkiDroid can access this directory without permissions, even under Scoped Storage
@@ -420,7 +426,7 @@ public class CollectionHelper {
         }
         return PreferenceExtensions.getOrSetString(
                 preferences,
-                PREF_DECK_PATH,
+                PREF_COLLECTION_PATH,
                 () -> getDefaultAnkiDroidDirectory(context));
     }
 

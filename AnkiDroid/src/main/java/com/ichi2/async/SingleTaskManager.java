@@ -73,7 +73,7 @@ public class SingleTaskManager extends TaskManager {
      * @return the newly created task
      */
     @Override
-    public <Progress, Result> Cancellable launchCollectionTaskConcrete(TaskDelegate<Progress, Result> task) {
+    public <Progress, Result> Cancellable launchCollectionTaskConcrete(TaskDelegateBase<Progress, Result> task) {
         return launchCollectionTask(task, null);
     }
 
@@ -92,7 +92,7 @@ public class SingleTaskManager extends TaskManager {
      */
     @SuppressWarnings("deprecation") // #7108: AsyncTask
     public <Progress, Result> Cancellable
-    launchCollectionTaskConcrete(@NonNull TaskDelegate<Progress, Result> task,
+    launchCollectionTaskConcrete(@NonNull TaskDelegateBase<Progress, Result> task,
                          @Nullable TaskListener<? super Progress, ? super Result> listener) {
         // Start new task
         CollectionTask<Progress, Result> newTask = new CollectionTask<>(task, listener, mLatestInstance);

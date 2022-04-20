@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">Адкрыць панэль</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">Закрыць панэль</string>
+    <string name="drawer_open">Адкрыць панэль</string>
+    <string name="drawer_close">Закрыць панэль</string>
     <string name="CardEditorCardDeck">Калода картак:</string>
     <string name="CardEditorNoteDeck">Калода:</string>
     <string name="CardEditorModel">Тып:</string>
@@ -111,7 +111,7 @@
     <string name="custom_study_preview_new">Папярэдні прагляд новых картак</string>
     <string name="custom_study_limit_tags">Абмежаваць вызначанымі меткамі</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Змяніць запіс</string>
+    <string name="cardeditor_title_edit_card">Рэдагаваць запіс</string>
     <string name="discard_unsaved_changes">Закрыць і згубіць бягучыя змяненні?</string>
     <string name="note_editor_no_cards_created">Карткі не створаныя. Калі ласка, запоўніце больш палёў.</string>
     <string name="note_editor_no_first_field">Першае поле пустое</string>
@@ -284,7 +284,7 @@
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
     <string name="activity_start_failed_load_url">Памылка загрузкі \'%s\'.</string>
     <string name="activity_start_failed">У сістэме адсутнічае ўсталяваная праграма, якая можа выканаць гэта дзеянне.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Выявы камеры могуць быць надта вялікімі. Магчыма, што вы захочаце сціснуць або змяніць іх памер у адпаведным каталогу]]></string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Відарысы камеры могуць быць надта вялікімі. Магчыма, што вы захочаце сціснуць або змяніць іх памер у адпаведным каталогу]]></string>
     <string name="no_browser_notification">Браўзер не знойдзены. Вы можаце наведаць вэб-старонку з камп\'ютара або мабільнай прылады: </string>
     <string name="web_page_error">Памылка загрузкі старонкі: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Знешнія спасылкі ў картках не падтрымліваюцца.</string>
@@ -292,7 +292,7 @@
     <string name="check_integrity_recovered_deck_name">Адноўленыя карткі</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>
-    <string name="choose_an_image">Выберыце выяву</string>
+    <string name="choose_an_image">Выберыце відарыс</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Вярнуцца да стандартных</string>
     <string name="cloze_sample_text">Гэта {{%1$s::sample}} заданне з пропускамі.</string>
@@ -303,8 +303,8 @@
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Уключыце поўнаэкранны рэжым для паказу навігацыйнай панэлі з дапамогай JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Уключыце поўнаэкранны рэжым для паказу наладаў меню з дапамогай JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Не атрымалася захаваць выяву дошкі. %s</string>
-    <string name="white_board_image_saved">Выява дошкі захавана ў %s</string>
+    <string name="white_board_image_save_failed">Не атрымалася захаваць відарыс дошкі. %s</string>
+    <string name="white_board_image_saved">Відарыс дошкі захаваны ў %s</string>
     <string name="title_whiteboard_pen_color">Колер крэйды дошкі</string>
     <string name="title_whiteboard_editor">Рэдактар дошкі</string>
     <!-- CSV/Note Import -->
@@ -369,10 +369,10 @@
     <string name="before_text">HTML перад вылучэннем</string>
     <string name="after_text">HTML пасля вылучэння</string>
     <string name="add_toolbar_item">Стварыць элемент панэлі інструментаў</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="edit_toolbar_item">Рэдагаваць элемент панэлі інструментаў</string>
+    <string name="toolbar_item_explain_edit_or_remove">Увядзіце HTML, які будзе ўстаўлены да і пасля вылучанага тэксту\n\nДоўгі націск на элемент панэлі інструментаў дазволіць адрэдагаваць або выдаліць яго</string>
     <string name="remove_toolbar_item">Выдаліць элемент панэлі інструментаў?</string>
-    <string name="note_editor_paste_too_large">Надта вялікая выява для ўстаўкі, калі ласка, паспрабуйце ўставіць выяву ўручную</string>
+    <string name="note_editor_paste_too_large">Надта вялікі відарыс для ўстаўкі, калі ласка, паспрабуйце ўставіць відарыс уручную</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Адбываецца рэзервовае капіяванне аперацыйнай сістэмы. Паспрабуйце яшчэ раз</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Паспрабуйце скарыстацца праграмай iManager для таго, каб дазволіць AnkiDroid дадаваць ярлыкі</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш галоўны экран не дазваляе праграме дадаваць ярлыкі</string>
@@ -428,9 +428,9 @@
     <string name="scoped_storage_migrate">Перанесці </string>
     <string name="search_card_js_api_no_results">Пошук не даў ніякіх вынікаў</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon">%s не з\'яўляецца сапраўдным пакетам дадатку JavaScript</string>
+    <string name="could_not_create_dir">Не атрымалася стварыць каталог %s</string>
+    <string name="malicious_archive_entry_outside">Шкодны архіў. Змяшчае запіс па-за межамі мэтавага каталога: %s</string>
+    <string name="malicious_archive_exceeds_limit">Шкодны архіў. Памер перавышае %1$s або змяшчае больш %2$d файлаў</string>
+    <string name="file_extract_exceeds_storage_space">Памер файла перавышае аб\'ём памяці</string>
 </resources>

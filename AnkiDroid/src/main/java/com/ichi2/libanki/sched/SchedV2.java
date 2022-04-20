@@ -67,6 +67,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -571,7 +572,7 @@ public class SchedV2 extends AbstractSched {
      requires multiple database access by deck.  Ignoring this number
      lead to the creation of a tree more quickly.*/
     @Override
-    public @NonNull List<DeckTreeNode> quickDeckDueTree() {
+    public @NonNull List<TreeNode<DeckTreeNode>> quickDeckDueTree() {
         // Similar to deckDueTree, ignoring the numbers
 
         // Similar to deckDueList
@@ -586,12 +587,12 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public @NonNull List<DeckDueTreeNode> deckDueTree() {
+    public @NonNull List<TreeNode<DeckDueTreeNode>> deckDueTree() {
         return deckDueTree(null);
     }
 
     @Nullable
-    public List<DeckDueTreeNode> deckDueTree(@Nullable CancelListener cancelListener) {
+    public List<TreeNode<DeckDueTreeNode>> deckDueTree(@Nullable CancelListener cancelListener) {
         List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
         if (allDecksSorted == null) {
             return null;
@@ -604,7 +605,7 @@ public class SchedV2 extends AbstractSched {
      * @param allDecksSorted the set of all decks of the collection. Sorted.
      * @param checkDone Whether the set of deck was checked. If false, we can't assume all decks have parents
      * and that there is no duplicate. Instead, we'll ignore problems.*/
-    protected @NonNull  <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> allDecksSorted, boolean checkDone) {
+    protected @NonNull <T extends AbstractDeckTreeNode> List<TreeNode<T>> _groupChildren(@NonNull List<T> allDecksSorted, boolean checkDone) {
         return _groupChildren(allDecksSorted, 0, checkDone);
     }
 
@@ -619,8 +620,8 @@ public class SchedV2 extends AbstractSched {
         false, we can't assume all decks have parents and that there
         is no duplicate. Instead, we'll ignore problems.
      */
-    protected @NonNull <T extends AbstractDeckTreeNode<T>> List<T> _groupChildren(@NonNull List<T> sortedDescendants, int depth, boolean checkDone) {
-        List<T> sortedChildren = new ArrayList<>();
+    protected @NonNull <T extends AbstractDeckTreeNode> List<TreeNode<T>> _groupChildren(@NonNull List<T> sortedDescendants, int depth, boolean checkDone) {
+        List<TreeNode<T>> sortedChildren = new ArrayList<>();
         // group and recurse
         ListIterator<T> it = sortedDescendants.listIterator();
         while (it.hasNext()) {
@@ -657,9 +658,15 @@ public class SchedV2 extends AbstractSched {
             }
             // the childrenNode set contains direct child of `child`, but not
             // any descendants of the children of `child`...
-            List<T> childrenNode = _groupChildren(sortedDescendantsOfChild, depth + 1, checkDone);
-            child.setChildren(childrenNode, "std".equals(getName()));
-            sortedChildren.add(child);
+            List<TreeNode<T>> childrenNode = _groupChildren(sortedDescendantsOfChild, depth + 1, checkDone);
+
+            // Add the child nodes, and process the addition
+            TreeNode<T> toAdd = new TreeNode<>(child);
+            toAdd.getChildren().addAll(childrenNode);
+            List<T> childValues = childrenNode.stream().map(TreeNode::getValue).collect(Collectors.toList());
+            child.processChildren(childValues, "std".equals(getName()));
+
+            sortedChildren.add(toAdd);
         }
         return sortedChildren;
     }
@@ -927,7 +934,7 @@ public class SchedV2 extends AbstractSched {
         } else if (spread == Consts.NEW_CARDS_FIRST) {
             return true;
         } else if (mNewCardModulus != 0) {
-            // if the counter has not yet been resetted, this value is
+            // if the counter has not yet been reset, this value is
             // random. This will occur only for the first card of review.
             return (mReps != 0 && (mReps % mNewCardModulus == 0));
         } else {
@@ -984,7 +991,7 @@ public class SchedV2 extends AbstractSched {
 
     /**
      * Maximal number of new card still to see today in deck g. It's computed as:
-     * the number of new card to see by day according to the deck optinos
+     * the number of new card to see by day according to the deck options
      * minus the number of new cards seen today in deck d or a descendant
      * plus the number of extra new cards to see today in deck d, a parent or a descendant.
      *
@@ -1909,12 +1916,12 @@ public class SchedV2 extends AbstractSched {
             int limit = term.getInt(1);
             int order = term.getInt(2);
 
-            String orderlimit = _dynOrder(order, limit);
+            String orderLimit = _dynOrder(order, limit);
             if (!TextUtils.isEmpty(search.trim())) {
                 search = String.format(Locale.US, "(%s)", search);
             }
             search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered", search);
-            ids = mCol.findCards(search, new SortOrder.AfterSqlOrderBy(orderlimit));
+            ids = mCol.findCards(search, new SortOrder.AfterSqlOrderBy(orderLimit));
             if (ids.isEmpty()) {
                 return total;
             }
@@ -2360,7 +2367,7 @@ public class SchedV2 extends AbstractSched {
     /* not in upstream anki. As revDue and newDue, it's used to check
      * what to do when a deck is selected in deck picker. When this
      * method is called, we already know that no cards is due
-     * immedietly. It answers whether cards will be due later in the
+     * immediately. It answers whether cards will be due later in the
      * same deck. */
     public boolean hasCardsTodayAfterStudyAheadLimit() {
         return mCol.getDb().queryScalar(
@@ -2770,11 +2777,11 @@ public class SchedV2 extends AbstractSched {
                     "SELECT min(due) FROM cards WHERE due >= ? AND type = " + Consts.CARD_TYPE_NEW + " AND id NOT IN " + scids,
                     start);
             if (low != 0) {
-                int shiftby = high - low + 1;
+                int shiftBy = high - low + 1;
                 mCol.getDb().execute(
                         "UPDATE cards SET mod = ?, usn = ?, due = due + ?"
                                 + " WHERE id NOT IN " + scids + " AND due >= ? AND type = " + Consts.CARD_TYPE_NEW,
-                        now, mCol.usn(), shiftby, low);
+                        now, mCol.usn(), shiftBy, low);
             }
         }
         // reorder cards

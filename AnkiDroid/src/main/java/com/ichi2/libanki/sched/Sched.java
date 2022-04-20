@@ -611,7 +611,7 @@ public class Sched extends SchedV2 {
 
     /**
      *
-     * @param considerCurrentCard Whether current card should be conted if it is in this deck
+     * @param considerCurrentCard Whether current card should be counted if it is in this deck
      */
     protected int _deckRevLimit(long did, boolean considerCurrentCard) {
         return _deckNewLimit(did, d -> _deckRevLimitSingle(d, considerCurrentCard), considerCurrentCard);
@@ -624,7 +624,7 @@ public class Sched extends SchedV2 {
      * plus the number of extra cards to see today in deck d, a parent or a descendant.
      *
      * Limits of its ancestors are not applied.  Current card is treated the same way as other cards.
-     * @param considerCurrentCard Whether current card should be conted if it is in this deck
+     * @param considerCurrentCard Whether current card should be counted if it is in this deck
      * */
     @Override
     protected int _deckRevLimitSingle(@NonNull Deck d, boolean considerCurrentCard) {
@@ -922,12 +922,12 @@ public class Sched extends SchedV2 {
         String search = terms.getString(0);
         int limit = terms.getInt(1);
         int order = terms.getInt(2);
-        SortOrder orderlimit = new SortOrder.AfterSqlOrderBy(_dynOrder(order, limit));
+        SortOrder orderLimit = new SortOrder.AfterSqlOrderBy(_dynOrder(order, limit));
         if (!TextUtils.isEmpty(search.trim())) {
             search = String.format(Locale.US, "(%s)", search);
         }
         search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered -is:learn", search);
-        List<Long> ids = mCol.findCards(search, orderlimit);
+        List<Long> ids = mCol.findCards(search, orderLimit);
         if (ids.isEmpty()) {
             return ids;
         }

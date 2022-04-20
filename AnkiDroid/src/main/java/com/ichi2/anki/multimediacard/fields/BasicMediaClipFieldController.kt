@@ -161,7 +161,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         // Copy file contents into new temp file. Possibly check file size first and warn if large?
         try {
             mActivity.contentResolver.openInputStream(selectedClip).use { inputStream ->
-                CompatHelper.compat.copyFile(inputStream, clipCopy.absolutePath)
+                CompatHelper.compat.copyFile(inputStream!!, clipCopy.absolutePath)
 
                 // If everything worked, hand off the information
                 mField.setHasTemporaryMedia(true)

@@ -205,9 +205,9 @@ class MoveDirectoryTest : Test21And26(), OperationTest {
         executionContext.logExceptions = true
         var movesProcessed = 0
         val moveDirectory = moveDirectory(source, destinationDirectory)
-        val suboperations = moveDirectory.execute()
-        val moveDirectoryContent = suboperations[0] as MoveDirectoryContent
-        val deleteDirectory = suboperations[1]
+        val subOperations = moveDirectory.execute()
+        val moveDirectoryContent = subOperations[0] as MoveDirectoryContent
+        val deleteDirectory = subOperations[1]
         val moveDirectoryContentSpied = spy(moveDirectoryContent) {
             doAnswer { op ->
                 val operation = op.callRealMethod() as Operation

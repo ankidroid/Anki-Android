@@ -199,12 +199,12 @@ public class YAxis implements Drawable {
         float width = fm.stringWidth(this.name);
         //arrow
 
-        float[] arowheadPos = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(Math.min(plotSheet.getyRange()[1], this.end), field)};
+        float[] arrowheadPos = {plotSheet.xToGraphic(xOffset, field), plotSheet.yToGraphic(Math.min(plotSheet.getyRange()[1], this.end), field)};
         if (!this.isOnFrame) {
-            g.drawLine(arowheadPos[0] - 1, arowheadPos[1] + 1, arowheadPos[0] - 3, arowheadPos[1] + 6);
-            g.drawLine(arowheadPos[0] + 1, arowheadPos[1] + 1, arowheadPos[0] + 3, arowheadPos[1] + 6);
+            g.drawLine(arrowheadPos[0] - 1, arrowheadPos[1] + 1, arrowheadPos[0] - 3, arrowheadPos[1] + 6);
+            g.drawLine(arrowheadPos[0] + 1, arrowheadPos[1] + 1, arrowheadPos[0] + 3, arrowheadPos[1] + 6);
             if (mHasName) {
-                g.drawString(this.name, arowheadPos[0] - 13 - width, arowheadPos[1] + 10);
+                g.drawString(this.name, arrowheadPos[0] - 13 - width, arrowheadPos[1] + 10);
             }
         } else {
 

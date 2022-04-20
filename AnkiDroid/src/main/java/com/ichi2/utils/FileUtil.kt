@@ -24,10 +24,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.lang.Exception
-import java.lang.IllegalArgumentException
-import java.util.AbstractMap
-import kotlin.Throws
+import java.util.*
 
 object FileUtil {
     /** Gets the free disk space given a file  */
@@ -54,9 +51,8 @@ object FileUtil {
     @KotlinCleanup("nonnull uri")
     fun internalizeUri(uri: Uri?, internalFile: File, contentResolver: ContentResolver): File {
         // If we got a real file name, do a copy from it
-        val inputStream: InputStream?
-        inputStream = try {
-            contentResolver.openInputStream(uri!!)
+        val inputStream: InputStream = try {
+            contentResolver.openInputStream(uri!!)!!
         } catch (e: Exception) {
             Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
             throw e
@@ -100,13 +96,29 @@ object FileUtil {
         var directorySize: Long = 0
         val files = listFiles(directory)
         for (file in files) {
-            directorySize += if (file.isDirectory) {
-                getDirectorySize(file)
-            } else {
-                file.length()
-            }
+            directorySize += getSize(file)
         }
         return directorySize
+    }
+
+    /**
+     * Calculates the size of a [File].
+     * If it is a file, returns the size.
+     * If the file does not exist, returns 0
+     * If the file is a directory, recursively explore the directory tree and summing the length of each
+     * file. The time taken to calculate directory size is proportional to the number of files in the directory
+     * and all of its sub-directories. See: [getDirectorySize]
+     * It is assumed that directory contains no symbolic links.
+     *
+     * @param file Abstract representation of the file/directory whose size needs to be calculated
+     * @return Size of the File/Directory in bytes. 0 if the [File] does not exist
+     */
+    @JvmStatic
+    @KotlinCleanup("remove JvmStatic once FileUtilTest is in Kotlin")
+    fun getSize(file: File) = if (file.isDirectory) {
+        getDirectorySize(file)
+    } else {
+        file.length()
     }
 
     /**

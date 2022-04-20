@@ -54,7 +54,7 @@ import java.util.function.Supplier
 class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportDialogListener, ExportCompleteDialogListener {
     private val mDialogsFactory: ExportDialogsFactory
     private val mSaveFileLauncher: ActivityResultLauncher<Intent>
-    private var mExportFileName: String? = null
+    private lateinit var mExportFileName: String
 
     @KotlinCleanup("make msg non-null")
     fun showExportDialog(msg: String?) {
@@ -176,7 +176,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                 Timber.w("exportToProvider() failed - ContentProvider returned null file descriptor for %s", uri)
                 return false
             }
-            if (deleteAfterExport && !File(mExportFileName!!).delete()) {
+            if (deleteAfterExport && !File(mExportFileName).delete()) {
                 Timber.w("Failed to delete temporary export file %s", mExportFileName)
             }
         } catch (e: Exception) {

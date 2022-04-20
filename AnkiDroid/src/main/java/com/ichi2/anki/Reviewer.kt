@@ -71,6 +71,7 @@ import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
@@ -102,11 +103,10 @@ open class Reviewer : AbstractFlashcardViewer() {
     private var mNewCount: SpannableString? = null
     private var mLrnCount: SpannableString? = null
     private var mRevCount: SpannableString? = null
-    @KotlinCleanup("lateinit")
-    private var mTextBarNew: TextView? = null
-    private var mTextBarLearn: TextView? = null
-    private var mTextBarReview: TextView? = null
-    protected var answerTimer: AnswerTimer? = null
+    private lateinit var mTextBarNew: TextView
+    private lateinit var mTextBarLearn: TextView
+    private lateinit var mTextBarReview: TextView
+    protected lateinit var answerTimer: AnswerTimer
     private var mPrefHideDueCount = false
 
     // Whiteboard
@@ -168,19 +168,25 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
         mColorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
+        mTextBarNew = findViewById(R.id.new_number)
+        mTextBarLearn = findViewById(R.id.learn_number)
+        mTextBarReview = findViewById(R.id.review_number)
         startLoadingCollection()
     }
 
     override fun onPause() {
-        answerTimer!!.pause()
+        answerTimer.pause()
         super.onPause()
     }
 
     override fun onResume() {
-        answerTimer!!.resume()
+        answerTimer.resume()
         super.onResume()
     }
 
+    @NeedsTest("is hidden if flag is on app bar")
+    @NeedsTest("is not hidden if flag is not on app bar")
+    @NeedsTest("is not hidden if flag is on app bar and fullscreen is enabled")
     protected val flagToDisplay: Int
         get() {
             val actualValue = mCurrentCard!!.userFlag()
@@ -188,7 +194,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 return CardMarker.FLAG_NONE
             }
             val isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_FLAG)
-            return if (isShownInActionBar != null && isShownInActionBar) {
+            return if (isShownInActionBar != null && isShownInActionBar && !mPrefFullscreenReview) {
                 CardMarker.FLAG_NONE
             } else actualValue
         }
@@ -206,6 +212,9 @@ open class Reviewer : AbstractFlashcardViewer() {
         setRenderWorkaround(this)
     }
 
+    @NeedsTest("is hidden if marked is on app bar")
+    @NeedsTest("is not hidden if marked is not on app bar")
+    @NeedsTest("is not hidden if marked is on app bar and fullscreen is enabled")
     override fun shouldDisplayMark(): Boolean {
         val markValue = super.shouldDisplayMark()
         if (!markValue) {
@@ -214,7 +223,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         val isShownInActionBar = mActionButtons.isShownInActionBar(ActionButtons.RES_MARK)
         // If we don't know, show it.
         // Otherwise, if it's in the action bar, don't show it again.
-        return isShownInActionBar == null || !isShownInActionBar
+        return isShownInActionBar == null || !isShownInActionBar || mPrefFullscreenReview
     }
 
     protected open fun onMark(card: Card?) {
@@ -331,7 +340,6 @@ open class Reviewer : AbstractFlashcardViewer() {
         setRenderWorkaround(this)
     }
 
-    @KotlinCleanup("when")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // 100ms was not enough on my device (Honor 9 Lite -  Android Pie)
         delayedHide(1000)
@@ -339,118 +347,147 @@ open class Reviewer : AbstractFlashcardViewer() {
             return true
         }
         val itemId = item.itemId
-        if (itemId == android.R.id.home) {
-            Timber.i("Reviewer:: Home button pressed")
-            closeReviewer(RESULT_OK, true)
-        } else if (itemId == R.id.action_undo) {
-            Timber.i("Reviewer:: Undo button pressed")
-            if (mShowWhiteboard && whiteboard != null && !whiteboard!!.undoEmpty()) {
-                whiteboard!!.undo()
-            } else {
-                undo()
+        when (itemId) {
+            android.R.id.home -> {
+                Timber.i("Reviewer:: Home button pressed")
+                closeReviewer(RESULT_OK, true)
             }
-        } else if (itemId == R.id.action_reset_card_progress) {
-            Timber.i("Reviewer:: Reset progress button pressed")
-            showResetCardDialog()
-        } else if (itemId == R.id.action_mark_card) {
-            Timber.i("Reviewer:: Mark button pressed")
-            onMark(mCurrentCard)
-        } else if (itemId == R.id.action_replay) {
-            Timber.i("Reviewer:: Replay audio button pressed (from menu)")
-            playSounds(true)
-        } else if (itemId == R.id.action_toggle_mic_tool_bar) {
-            Timber.i("Reviewer:: Record mic")
-            // Check permission to record and request if not granted
-            openOrToggleMicToolbar()
-        } else if (itemId == R.id.action_tag) {
-            Timber.i("Reviewer:: Tag button pressed")
-            showTagsDialog()
-        } else if (itemId == R.id.action_edit) {
-            Timber.i("Reviewer:: Edit note button pressed")
-            editCard()
-            return true
-        } else if (itemId == R.id.action_bury) {
-            Timber.i("Reviewer:: Bury button pressed")
-            if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
-                Timber.d("Bury card due to no submenu")
-                buryCard()
-            }
-        } else if (itemId == R.id.action_suspend) {
-            Timber.i("Reviewer:: Suspend button pressed")
-            if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
-                Timber.d("Suspend card due to no submenu")
-                suspendCard()
-            }
-        } else if (itemId == R.id.action_delete) {
-            Timber.i("Reviewer:: Delete note button pressed")
-            showDeleteNoteDialog()
-        } else if (itemId == R.id.action_change_whiteboard_pen_color) {
-            Timber.i("Reviewer:: Pen Color button pressed")
-            if (mColorPalette!!.visibility == View.GONE) {
-                mColorPalette!!.visibility = View.VISIBLE
-            } else {
-                mColorPalette!!.visibility = View.GONE
-            }
-        } else if (itemId == R.id.action_save_whiteboard) {
-            Timber.i("Reviewer:: Save whiteboard button pressed")
-            if (whiteboard != null) {
-                try {
-                    val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(col.time).path
-                    showThemedToast(this@Reviewer, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true)
-                } catch (e: Exception) {
-                    Timber.w(e)
-                    showThemedToast(this@Reviewer, getString(R.string.white_board_image_save_failed, e.localizedMessage), true)
+            R.id.action_undo -> {
+                Timber.i("Reviewer:: Undo button pressed")
+                if (mShowWhiteboard && whiteboard != null && !whiteboard!!.undoEmpty()) {
+                    whiteboard!!.undo()
+                } else {
+                    undo()
                 }
             }
-        } else if (itemId == R.id.action_clear_whiteboard) {
-            Timber.i("Reviewer:: Clear whiteboard button pressed")
-            if (whiteboard != null) {
-                whiteboard!!.clear()
+            R.id.action_reset_card_progress -> {
+                Timber.i("Reviewer:: Reset progress button pressed")
+                showResetCardDialog()
             }
-        } else if (itemId == R.id.action_hide_whiteboard) { // toggle whiteboard visibility
-            Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard)
-            setWhiteboardVisibility(!mShowWhiteboard)
-            refreshActionBar()
-        } else if (itemId == R.id.action_toggle_whiteboard) {
-            toggleWhiteboard()
-        } else if (itemId == R.id.action_open_deck_options) {
-            val i = Intent(this, DeckOptions::class.java)
-            startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.Direction.FADE)
-        } else if (itemId == R.id.action_select_tts) {
-            Timber.i("Reviewer:: Select TTS button pressed")
-            showSelectTtsDialogue()
-        } else if (itemId == R.id.action_add_note_reviewer) {
-            Timber.i("Reviewer:: Add note button pressed")
-            addNote()
-        } else if (itemId == R.id.action_flag_zero) {
-            Timber.i("Reviewer:: No flag")
-            onFlag(mCurrentCard, CardMarker.FLAG_NONE)
-        } else if (itemId == R.id.action_flag_one) {
-            Timber.i("Reviewer:: Flag one")
-            onFlag(mCurrentCard, CardMarker.FLAG_RED)
-        } else if (itemId == R.id.action_flag_two) {
-            Timber.i("Reviewer:: Flag two")
-            onFlag(mCurrentCard, CardMarker.FLAG_ORANGE)
-        } else if (itemId == R.id.action_flag_three) {
-            Timber.i("Reviewer:: Flag three")
-            onFlag(mCurrentCard, CardMarker.FLAG_GREEN)
-        } else if (itemId == R.id.action_flag_four) {
-            Timber.i("Reviewer:: Flag four")
-            onFlag(mCurrentCard, CardMarker.FLAG_BLUE)
-        } else if (itemId == R.id.action_flag_five) {
-            Timber.i("Reviewer:: Flag five")
-            onFlag(mCurrentCard, CardMarker.FLAG_PINK)
-        } else if (itemId == R.id.action_flag_six) {
-            Timber.i("Reviewer:: Flag six")
-            onFlag(mCurrentCard, CardMarker.FLAG_TURQUOISE)
-        } else if (itemId == R.id.action_flag_seven) {
-            Timber.i("Reviewer:: Flag seven")
-            onFlag(mCurrentCard, CardMarker.FLAG_PURPLE)
-        } else if (itemId == R.id.action_card_info) {
-            Timber.i("Card Viewer:: Card Info")
-            openCardInfo()
-        } else {
-            return super.onOptionsItemSelected(item)
+            R.id.action_mark_card -> {
+                Timber.i("Reviewer:: Mark button pressed")
+                onMark(mCurrentCard)
+            }
+            R.id.action_replay -> {
+                Timber.i("Reviewer:: Replay audio button pressed (from menu)")
+                playSounds(true)
+            }
+            R.id.action_toggle_mic_tool_bar -> {
+                Timber.i("Reviewer:: Record mic")
+                // Check permission to record and request if not granted
+                openOrToggleMicToolbar()
+            }
+            R.id.action_tag -> {
+                Timber.i("Reviewer:: Tag button pressed")
+                showTagsDialog()
+            }
+            R.id.action_edit -> {
+                Timber.i("Reviewer:: Edit note button pressed")
+                editCard()
+            }
+            R.id.action_bury -> {
+                Timber.i("Reviewer:: Bury button pressed")
+                if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
+                    Timber.d("Bury card due to no submenu")
+                    buryCard()
+                }
+            }
+            R.id.action_suspend -> {
+                Timber.i("Reviewer:: Suspend button pressed")
+                if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
+                    Timber.d("Suspend card due to no submenu")
+                    suspendCard()
+                }
+            }
+            R.id.action_delete -> {
+                Timber.i("Reviewer:: Delete note button pressed")
+                showDeleteNoteDialog()
+            }
+            R.id.action_change_whiteboard_pen_color -> {
+                Timber.i("Reviewer:: Pen Color button pressed")
+                if (mColorPalette!!.visibility == View.GONE) {
+                    mColorPalette!!.visibility = View.VISIBLE
+                } else {
+                    mColorPalette!!.visibility = View.GONE
+                }
+            }
+            R.id.action_save_whiteboard -> {
+                Timber.i("Reviewer:: Save whiteboard button pressed")
+                if (whiteboard != null) {
+                    try {
+                        val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(col.time).path
+                        showThemedToast(this@Reviewer, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true)
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        showThemedToast(this@Reviewer, getString(R.string.white_board_image_save_failed, e.localizedMessage), true)
+                    }
+                }
+            }
+            R.id.action_clear_whiteboard -> {
+                Timber.i("Reviewer:: Clear whiteboard button pressed")
+                if (whiteboard != null) {
+                    whiteboard!!.clear()
+                }
+            }
+            R.id.action_hide_whiteboard -> { // toggle whiteboard visibility
+                Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard)
+                setWhiteboardVisibility(!mShowWhiteboard)
+                refreshActionBar()
+            }
+            R.id.action_toggle_whiteboard -> {
+                toggleWhiteboard()
+            }
+            R.id.action_open_deck_options -> {
+                val i = Intent(this, DeckOptions::class.java)
+                startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.Direction.FADE)
+            }
+            R.id.action_select_tts -> {
+                Timber.i("Reviewer:: Select TTS button pressed")
+                showSelectTtsDialogue()
+            }
+            R.id.action_add_note_reviewer -> {
+                Timber.i("Reviewer:: Add note button pressed")
+                addNote()
+            }
+            R.id.action_flag_zero -> {
+                Timber.i("Reviewer:: No flag")
+                onFlag(mCurrentCard, CardMarker.FLAG_NONE)
+            }
+            R.id.action_flag_one -> {
+                Timber.i("Reviewer:: Flag one")
+                onFlag(mCurrentCard, CardMarker.FLAG_RED)
+            }
+            R.id.action_flag_two -> {
+                Timber.i("Reviewer:: Flag two")
+                onFlag(mCurrentCard, CardMarker.FLAG_ORANGE)
+            }
+            R.id.action_flag_three -> {
+                Timber.i("Reviewer:: Flag three")
+                onFlag(mCurrentCard, CardMarker.FLAG_GREEN)
+            }
+            R.id.action_flag_four -> {
+                Timber.i("Reviewer:: Flag four")
+                onFlag(mCurrentCard, CardMarker.FLAG_BLUE)
+            }
+            R.id.action_flag_five -> {
+                Timber.i("Reviewer:: Flag five")
+                onFlag(mCurrentCard, CardMarker.FLAG_PINK)
+            }
+            R.id.action_flag_six -> {
+                Timber.i("Reviewer:: Flag six")
+                onFlag(mCurrentCard, CardMarker.FLAG_TURQUOISE)
+            }
+            R.id.action_flag_seven -> {
+                Timber.i("Reviewer:: Flag seven")
+                onFlag(mCurrentCard, CardMarker.FLAG_PURPLE)
+            }
+            R.id.action_card_info -> {
+                Timber.i("Card Viewer:: Card Info")
+                openCardInfo()
+            }
+            else -> {
+                return super.onOptionsItemSelected(item)
+            }
         }
         return true
     }
@@ -882,7 +919,6 @@ open class Reviewer : AbstractFlashcardViewer() {
         GetCard().runWithHandler(answerCardHandler(false))
     }
 
-    @KotlinCleanup("improve nextIvlStr - make inner function")
     override fun displayAnswerBottomBar() {
         super.displayAnswerBottomBar()
         mOnboarding.onAnswerShown()
@@ -929,13 +965,15 @@ open class Reviewer : AbstractFlashcardViewer() {
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            easeButton1!!.nextTime = sched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_ONE)
-            easeButton2!!.nextTime = sched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_TWO)
+            fun nextIvlStr(button: Int) = sched!!.nextIvlStr(this, mCurrentCard!!, button)
+
+            easeButton1!!.nextTime = nextIvlStr(Consts.BUTTON_ONE)
+            easeButton2!!.nextTime = nextIvlStr(Consts.BUTTON_TWO)
             if (buttonCount > 2) {
-                easeButton3!!.nextTime = sched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_THREE)
+                easeButton3!!.nextTime = nextIvlStr(Consts.BUTTON_THREE)
             }
             if (buttonCount > 3) {
-                easeButton4!!.nextTime = sched!!.nextIvlStr(this, mCurrentCard!!, Consts.BUTTON_FOUR)
+                easeButton4!!.nextTime = nextIvlStr(Consts.BUTTON_FOUR)
             }
         }
     }
@@ -988,9 +1026,9 @@ open class Reviewer : AbstractFlashcardViewer() {
             Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
             else -> Timber.w("Unknown card type %s", sched!!.countIdx(mCurrentCard!!))
         }
-        mTextBarNew!!.text = mNewCount
-        mTextBarLearn!!.text = mLrnCount
-        mTextBarReview!!.text = mRevCount
+        mTextBarNew.text = mNewCount
+        mTextBarLearn.text = mLrnCount
+        mTextBarReview.text = mRevCount
     }
 
     override fun fillFlashcard() {
@@ -998,13 +1036,17 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (!isDisplayingAnswer && mShowWhiteboard && whiteboard != null) {
             whiteboard!!.clear()
         }
+    }
+
+    override fun onPageFinished() {
+        super.onPageFinished()
         onFlagChanged()
         onMarkChanged()
     }
 
     override fun displayCardQuestion() {
         // show timer, if activated in the deck's preferences
-        answerTimer!!.setupForCard(mCurrentCard!!)
+        answerTimer.setupForCard(mCurrentCard!!)
         delayedHide(100)
         super.displayCardQuestion()
     }
@@ -1016,14 +1058,11 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun initLayout() {
-        mTextBarNew = findViewById(R.id.new_number)
-        mTextBarLearn = findViewById(R.id.learn_number)
-        mTextBarReview = findViewById(R.id.review_number)
         super.initLayout()
         if (!mShowRemainingCardCount) {
-            mTextBarNew!!.setVisibility(View.GONE)
-            mTextBarLearn!!.setVisibility(View.GONE)
-            mTextBarReview!!.setVisibility(View.GONE)
+            mTextBarNew.setVisibility(View.GONE)
+            mTextBarLearn.setVisibility(View.GONE)
+            mTextBarReview.setVisibility(View.GONE)
         }
 
         // can't move this into onCreate due to mTopBarLayout
@@ -1034,11 +1073,11 @@ open class Reviewer : AbstractFlashcardViewer() {
 
     override fun switchTopBarVisibility(visible: Int) {
         super.switchTopBarVisibility(visible)
-        answerTimer!!.setVisibility(visible)
+        answerTimer.setVisibility(visible)
         if (mShowRemainingCardCount) {
-            mTextBarNew!!.visibility = visible
-            mTextBarLearn!!.visibility = visible
-            mTextBarReview!!.visibility = visible
+            mTextBarNew.visibility = visible
+            mTextBarLearn.visibility = visible
+            mTextBarReview.visibility = visible
         }
     }
 
@@ -1056,9 +1095,9 @@ open class Reviewer : AbstractFlashcardViewer() {
             setWhiteboardVisibility(mShowWhiteboard)
         }
         if (mShowRemainingCardCount) {
-            mTextBarNew!!.visibility = View.VISIBLE
-            mTextBarLearn!!.visibility = View.VISIBLE
-            mTextBarReview!!.visibility = View.VISIBLE
+            mTextBarNew.visibility = View.VISIBLE
+            mTextBarLearn.visibility = View.VISIBLE
+            mTextBarReview.visibility = View.VISIBLE
         }
     }
 

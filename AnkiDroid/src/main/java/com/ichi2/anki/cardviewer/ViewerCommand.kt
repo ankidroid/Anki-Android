@@ -188,7 +188,7 @@ enum class ViewerCommand(val resourceId: Int, private val preferenceValue: Int) 
         return MappableBinding(keyCode(keyCode), MappableBinding.Screen.Reviewer(side))
     }
 
-    interface CommandProcessor {
+    fun interface CommandProcessor {
         /**
          *
          * example failure: answering an ease on the front of the card

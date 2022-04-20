@@ -48,8 +48,8 @@
     <string name="preference_summary_percentage">XXX%</string>
     <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
-    <string tools:ignore="UnusedResources" name="drawer_open">دراز کھولیں</string>
-    <string tools:ignore="UnusedResources" name="drawer_close">دراز بند کریں</string>
+    <string name="drawer_open">دراز کھولیں</string>
+    <string name="drawer_close">دراز بند کریں</string>
     <string name="CardEditorCardDeck">کارڈ ڈیک:</string>
     <string name="CardEditorNoteDeck">ڈیک:</string>
     <string name="CardEditorModel">قسم:</string>

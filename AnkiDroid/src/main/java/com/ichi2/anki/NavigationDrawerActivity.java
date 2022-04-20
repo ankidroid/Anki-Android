@@ -121,7 +121,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         mDrawerLayout = mainView.findViewById(R.id.drawer_layout);
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // Force transparent status bar with primary dark color underlayed so that the drawer displays under status bar
+        // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
         mDrawerLayout.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimaryDark));
         // Setup toolbar and hamburger
@@ -139,7 +139,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
         }
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);

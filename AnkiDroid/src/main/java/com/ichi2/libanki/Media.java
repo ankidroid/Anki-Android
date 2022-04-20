@@ -34,6 +34,8 @@ import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
+import org.intellij.lang.annotations.Language;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -167,7 +169,7 @@ public class Media {
 
 
     public void _initDB() {
-        String sql = "create table media (\n" +
+        @SuppressWarnings("SpellCheckingInspection") String sql = "create table media (\n" +
                      " fname text not null primary key,\n" +
                      " csum text,           -- null indicates deleted file\n" +
                      " mtime int not null,  -- zero if deleted\n" +
@@ -180,11 +182,12 @@ public class Media {
 
 
     public void maybeUpgrade() {
-        String oldpath = dir() + ".db";
-        File oldDbFile = new File(oldpath);
+        String oldPath = dir() + ".db";
+        File oldDbFile = new File(oldPath);
         if (oldDbFile.exists()) {
-            mDb.execute(String.format(Locale.US, "attach \"%s\" as old", oldpath));
+            mDb.execute(String.format(Locale.US, "attach \"%s\" as old", oldPath));
             try {
+                @SuppressWarnings("SpellCheckingInspection")
                 String sql = "insert into media\n" +
                              " select m.fname, csum, mod, ifnull((select 1 from log l2 where l2.fname=m.fname), 0) as dirty\n" +
                              " from old.media m\n" +
@@ -202,7 +205,7 @@ public class Media {
                 mCol.log("failed to import old media db:" + sw.toString());
             }
             mDb.execute("detach old");
-            File newDbFile = new File(oldpath + ".old");
+            File newDbFile = new File(oldPath + ".old");
             if (newDbFile.exists()) {
                 newDbFile.delete();
             }
@@ -240,11 +243,11 @@ public class Media {
      * In AnkiDroid, adding a media file will not only copy it to the media directory, but will also insert an entry
      * into the media database marking it as a new addition.
      */
-    public String addFile(File ofile) throws IOException, EmptyMediaException {
-        if (ofile == null || ofile.length() == 0) {
+    public String addFile(File oFile) throws IOException, EmptyMediaException {
+        if (oFile == null || oFile.length() == 0) {
             throw new EmptyMediaException();
         }
-        String fname = writeData(ofile);
+        String fname = writeData(oFile);
         markFileAdd(fname);
         return fname;
     }
@@ -256,24 +259,24 @@ public class Media {
      * Unlike the python version of this method, we don't read the file into memory as a string. All our operations are
      * done on streams opened on the file, so there is no second parameter for the string object here.
      */
-    private String writeData(File ofile) throws IOException {
+    private String writeData(File oFile) throws IOException {
         // get the file name
-        String fname = ofile.getName();
+        String fname = oFile.getName();
         // make sure we write it in NFC form and return an NFC-encoded reference
         fname = Utils.nfcNormalized(fname);
-        // ensure it's a valid finename
+        // ensure it's a valid filename
         String base = cleanFilename(fname);
         String[] split = Utils.splitFilename(base);
         String root = split[0];
         String ext = split[1];
         // find the first available name
-        String csum = Utils.fileChecksum(ofile);
+        String csum = Utils.fileChecksum(oFile);
         while (true) {
             fname = root + ext;
             File path = new File(dir(), fname);
             // if it doesn't exist, copy it directly
             if (!path.exists()) {
-                Utils.copyFile(ofile, path);
+                Utils.copyFile(oFile, path);
                 return fname;
             }
             // if it's identical, reuse
@@ -401,7 +404,7 @@ public class Media {
                 String tag = m.group(0);
                 String fname = m.group(fnameIdx);
                 if (fRemotePattern.matcher(fname).find()) {
-                    //dont't do any escaping if remote image
+                    //don't do any escaping if remote image
                 } else {
                     if (unescape) {
                         string = string.replace(tag,tag.replace(fname, Uri.decode(fname)));
@@ -500,10 +503,10 @@ public class Media {
         if (renamedFiles) {
             return check(local);
         }
-        List<String> nohave = new ArrayList<>();
+        List<String> noHave = new ArrayList<>();
         for (String x : allRefs) {
             if (!x.startsWith("_")) {
-                nohave.add(x);
+                noHave.add(x);
             }
         }
         // make sure the media DB is valid
@@ -514,7 +517,7 @@ public class Media {
             _deleteDB();
         }
         List<List<String>> result = new ArrayList<>(3);
-        result.add(nohave);
+        result.add(noHave);
         result.add(unused);
         result.add(invalid);
         return result;
@@ -581,28 +584,28 @@ public class Media {
         /* a fairly safe limit that should work on typical windows
          paths and on eCryptfs partitions, even with a duplicate
          suffix appended */
-        int namemax = 136;
-        int pathmax = 1024; // 240 for windows
+        int nameMax = 136;
+        int pathMax = 1024; // 240 for windows
 
-        // cap namemax based on absolute path
-        int dirlen = fname.length();// ideally, name should be normalized. Without access to nio.Paths library, it's hard to do it really correctly. This is still a better approximation than nothing.
-        int remaining = pathmax - dirlen;
-        namemax = min(remaining, namemax);
-        Assert.that(namemax>0, "The media directory is maximally long. There is no more length available for file name.");
+        // cap nameMax based on absolute path
+        int dirLen = fname.length();// ideally, name should be normalized. Without access to nio.Paths library, it's hard to do it really correctly. This is still a better approximation than nothing.
+        int remaining = pathMax - dirLen;
+        nameMax = min(remaining, nameMax);
+        Assert.that(nameMax>0, "The media directory is maximally long. There is no more length available for file name.");
 
-        if (fname.length() > namemax) {
+        if (fname.length() > nameMax) {
             int lastSlash = fname.indexOf("/");
             int lastDot = fname.indexOf(".");
             if (lastDot == -1 || lastDot < lastSlash) {
                 // no dot, or before last slash
-                fname = fname.substring(0, namemax);
+                fname = fname.substring(0, nameMax);
             } else {
                 String ext = fname.substring(lastDot+1);
                 String head = fname.substring(0, lastDot);
-                int headmax = namemax - ext.length();
-                head = head.substring(0, headmax);
+                int headMax = nameMax - ext.length();
+                head = head.substring(0, headMax);
                 fname = head + ext;
-                Assert.that (fname.length() <= namemax, "The length of the file is greater than the maximal name value.");
+                Assert.that (fname.length() <= nameMax, "The length of the file is greater than the maximal name value.");
             }
         }
 
@@ -862,7 +865,7 @@ public class Media {
         ) {
             z.setMethod(ZipOutputStream.DEFLATED);
 
-            // meta is a list of (fname, zipname), where zipname of null is a deleted file
+            // meta is a list of (fname, zipName), where zipName of null is a deleted file
             // NOTE: In python, meta is a list of tuples that then gets serialized into json and added
             // to the zip as a string. In our version, we use JSON objects from the start to avoid the
             // serialization step. Instead of a list of tuples, we use JSONArrays of JSONArrays.
@@ -875,7 +878,7 @@ public class Media {
                 String fname = cur.getString(0);
                 String csum = cur.getString(1);
                 fnames.add(fname);
-                String normname = Utils.nfcNormalized(fname);
+                String normName = Utils.nfcNormalized(fname);
 
                 if (!TextUtils.isEmpty(csum)) {
                     try {
@@ -889,7 +892,7 @@ public class Media {
                         }
                         z.closeEntry();
                         bis.close();
-                        meta.put(new JSONArray().put(normname).put(Integer.toString(c)));
+                        meta.put(new JSONArray().put(normName).put(Integer.toString(c)));
                         sz += file.length();
                     } catch (FileNotFoundException e) {
                         Timber.w(e);
@@ -899,7 +902,7 @@ public class Media {
                     }
                 } else {
                     mCol.log("-media zip " + fname);
-                    meta.put(new JSONArray().put(normname).put(""));
+                    meta.put(new JSONArray().put(normName).put(""));
                 }
                 if (sz >= Consts.SYNC_MAX_BYTES) {
                     break;

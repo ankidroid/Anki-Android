@@ -24,6 +24,7 @@ import com.ichi2.utils.DeckComparator
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
+import org.intellij.lang.annotations.Language
 import java.util.*
 
 abstract class DeckManager {
@@ -33,7 +34,7 @@ abstract class DeckManager {
      * ***********************************************************
      */
 
-    abstract fun load(decks: String, dconf: String)
+    abstract fun load(@Language("JSON") decks: String, dconf: String)
     @RustCleanup("Unused in V16")
     /** @throws DeckRenameException */
     abstract fun save()

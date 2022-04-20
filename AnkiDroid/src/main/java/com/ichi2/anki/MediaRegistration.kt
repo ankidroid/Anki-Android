@@ -28,10 +28,6 @@ import com.ichi2.utils.ContentResolverUtil.getFileName
 import com.ichi2.utils.FileUtil.getFileNameAndExtension
 import timber.log.Timber
 import java.io.*
-import java.lang.Exception
-import java.lang.NullPointerException
-import java.util.*
-import kotlin.Throws
 
 /**
  * RegisterMediaForWebView is used for registering media in temp path,
@@ -62,7 +58,7 @@ class MediaRegistration(private val context: Context) {
         var bytesWritten: Long
         openInputStreamWithURI(uri).use { copyFd ->
             // no conversion to jpg in cases of gif and jpg and if png image with alpha channel
-            if (shouldConvertToJPG(fileNameAndExtension.value, copyFd!!)) {
+            if (shouldConvertToJPG(fileNameAndExtension.value, copyFd)) {
                 clipCopy = File.createTempFile(fileName, ".jpg")
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
                 // return null if jpg conversion false.
@@ -93,8 +89,8 @@ class MediaRegistration(private val context: Context) {
     }
 
     @Throws(FileNotFoundException::class)
-    private fun openInputStreamWithURI(uri: Uri): InputStream? {
-        return context.contentResolver.openInputStream(uri)
+    private fun openInputStreamWithURI(uri: Uri): InputStream {
+        return context.contentResolver.openInputStream(uri)!!
     }
 
     private fun convertToJPG(file: File): Boolean {

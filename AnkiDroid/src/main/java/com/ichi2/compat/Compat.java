@@ -76,15 +76,24 @@ public interface Compat {
     /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */
     String ACTION_PROCESS_TEXT = "android.intent.action.PROCESS_TEXT";
     String EXTRA_PROCESS_TEXT = "android.intent.extra.PROCESS_TEXT";
-    void setupNotificationChannel(Context context, String id, String name);
-    void setTime(TimePicker picker, int hour, int minute);
-    int getHour(TimePicker picker);
-    int getMinute(TimePicker picker);
-    void vibrate(Context context, long durationMillis);
-    MediaRecorder getMediaRecorder(Context context);
-    void copyFile(String source, String target) throws IOException;
-    long copyFile(String source, OutputStream target) throws IOException;
-    long copyFile(InputStream source, String target) throws IOException;
+    void setupNotificationChannel(@NonNull Context context, @NonNull String id, @NonNull String name);
+
+    void setTime(@NonNull TimePicker picker, int hour, int minute);
+
+    int getHour(@NonNull TimePicker picker);
+
+    int getMinute(@NonNull TimePicker picker);
+
+    void vibrate(@NonNull Context context, long durationMillis);
+
+    @NonNull
+    MediaRecorder getMediaRecorder(@NonNull Context context);
+
+    void copyFile(@NonNull String source, @NonNull String target) throws IOException;
+
+    long copyFile(@NonNull String source, @NonNull OutputStream target) throws IOException;
+
+    long copyFile(@NonNull InputStream source, @NonNull String target) throws IOException;
 
     /**
      * Deletes a provided file/directory. If the file is a directory then the directory must be empty
@@ -119,8 +128,10 @@ public interface Compat {
      */
     void createDirectories(@NonNull File directory) throws IOException;
     boolean hasVideoThumbnail(@NonNull String path);
-    void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
-    void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
+
+    void requestAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
+
+    void abandonAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener, @Nullable AudioFocusRequest audioFocusRequest);
 
     @IntDef(flag = true,
             value = {
@@ -169,7 +180,8 @@ public interface Compat {
      * parameters.  May return null only if {@link PendingIntent#FLAG_NO_CREATE} has been
      * supplied.
      */
-    PendingIntent getImmutableActivityIntent(Context context, int requestCode, Intent intent, @PendingIntentFlags int flags);
+    @NonNull
+    PendingIntent getImmutableActivityIntent(@NonNull Context context, int requestCode, @NonNull Intent intent, @PendingIntentFlags int flags);
 
 
     /**
@@ -195,7 +207,8 @@ public interface Compat {
      * parameters.  May return null only if {@link PendingIntent#FLAG_NO_CREATE} has been
      * supplied.
      */
-    PendingIntent getImmutableBroadcastIntent(Context context, int requestCode, Intent intent, @PendingIntentFlags int flags);
+    @NonNull
+    PendingIntent getImmutableBroadcastIntent(@NonNull Context context, int requestCode, @NonNull Intent intent, @PendingIntentFlags int flags);
 
     /**
      * Writes an image represented by bitmap to the Pictures/AnkiDroid directory under the primary
@@ -212,7 +225,8 @@ public interface Compat {
      * @throws FileNotFoundException if the device's API is <= 28 and has not obtained the
      * WRITE_EXTERNAL_STORAGE permission
      */
-    Uri saveImage(Context context, Bitmap bitmap, String baseFileName, String extension, Bitmap.CompressFormat format, int quality) throws FileNotFoundException;
+    @NonNull
+    Uri saveImage(@NonNull Context context, @NonNull Bitmap bitmap, @NonNull String baseFileName, @NonNull String extension, @NonNull Bitmap.CompressFormat format, int quality) throws FileNotFoundException;
 
     /**
      *
@@ -225,6 +239,7 @@ public interface Compat {
      * that we could not reproduce. See https://github.com/ankidroid/Anki-Android/issues/10358
      * @throws SecurityException – If a security manager exists and its SecurityManager.checkRead(String) method denies read access to the directory
      */
-    @NonNull FileStream contentOfDirectory(File directory) throws IOException  ;
+    @NonNull
+    FileStream contentOfDirectory(@NonNull File directory) throws IOException;
 }
 

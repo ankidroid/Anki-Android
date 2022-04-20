@@ -282,9 +282,11 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         return mPref!!
     }
 
-    override fun onCreate(icicle: Bundle?) {
+    @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION")
+    override fun onCreate(savedInstanceState: Bundle?) {
         setThemeLegacy(this)
-        super.onCreate(icicle)
+        super.onCreate(savedInstanceState)
         UsageAnalytics.sendAnalyticsScreenView(this)
         mCol = CollectionHelper.getInstance().getCol(this)
         if (mCol == null) {
@@ -323,8 +325,8 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         this.title = title
 
         // Add a home button to the actionbar
-        supportActionBar.setHomeButtonEnabled(true)
-        supportActionBar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     @Suppress("deprecation") // Tracked as #5019 on github: addPreferencesFromResource
@@ -353,6 +355,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             closeDeckOptions()
@@ -390,7 +393,9 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         slide(this, ActivityTransitionAnimation.Direction.FADE)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onDestroy() {
+        @Suppress("DEPRECATION")
         super.onDestroy()
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)

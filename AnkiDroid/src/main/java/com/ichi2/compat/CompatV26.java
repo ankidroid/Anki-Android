@@ -62,9 +62,9 @@ public class CompatV26 extends CompatV23 implements Compat {
      * @param name the user-visible name for the channel
      */
     @Override
-    public void setupNotificationChannel(Context context, String id, String name) {
-        Timber.i("Creating notification channel with id/name: %s/%s",id, name);
-        NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+    public void setupNotificationChannel(@NonNull Context context, @NonNull String id, @NonNull String name) {
+        Timber.i("Creating notification channel with id/name: %s/%s", id, name);
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel notificationChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT);
         notificationChannel.setShowBadge(true);
         notificationChannel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -73,8 +73,8 @@ public class CompatV26 extends CompatV23 implements Compat {
 
     @Override
     @SuppressWarnings("deprecation")
-    public void vibrate(Context context, long durationMillis) {
-        Vibrator vibratorManager = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+    public void vibrate(@NonNull Context context, long durationMillis) {
+        Vibrator vibratorManager = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         if (vibratorManager != null) {
             VibrationEffect effect = VibrationEffect.createOneShot(durationMillis, VibrationEffect.DEFAULT_AMPLITUDE);
             vibratorManager.vibrate(effect);
@@ -112,7 +112,7 @@ public class CompatV26 extends CompatV23 implements Compat {
 
 
     @Override
-    public void requestAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+    public void requestAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
         // requestAudioFocus needs NonNull argument
         if (audioFocusRequest != null) {
@@ -121,7 +121,7 @@ public class CompatV26 extends CompatV23 implements Compat {
     }
 
     @Override
-    public void abandonAudioFocus(AudioManager audioManager, AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
+    public void abandonAudioFocus(@NonNull AudioManager audioManager, @NonNull AudioManager.OnAudioFocusChangeListener audioFocusChangeListener,
                                   @Nullable AudioFocusRequest audioFocusRequest) {
         // abandonAudioFocusRequest needs NonNull argument
         if (audioFocusRequest != null) {
@@ -139,7 +139,8 @@ public class CompatV26 extends CompatV23 implements Compat {
      * Hence this method, hasNext and next should be constant in time and space.
      */
     @Override
-    public @NonNull FileStream contentOfDirectory(File directory) throws IOException {
+    public @NonNull
+    FileStream contentOfDirectory(@NonNull File directory) throws IOException {
         final DirectoryStream<Path> paths_stream;
         try {
             paths_stream = newDirectoryStream(directory.toPath());

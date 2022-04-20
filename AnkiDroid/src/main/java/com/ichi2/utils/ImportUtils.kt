@@ -270,7 +270,7 @@ object ImportUtils {
          * @param tempPath temporary path to store the cached file
          * @return whether or not copy was successful
          */
-        protected open fun copyFileToCache(context: Context, data: Uri?, tempPath: String?): Boolean {
+        protected open fun copyFileToCache(context: Context, data: Uri?, tempPath: String): Boolean {
             // Get an input stream to the data in ContentProvider
             val inputStream: InputStream? = try {
                 context.contentResolver.openInputStream(data!!)

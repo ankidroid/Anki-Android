@@ -206,11 +206,11 @@ class TagsDialogTest {
                 val vh = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, i)
                 val tag = vh.text
                 foundAllTags.add(tag)
-                when (vh?.checkboxState) {
+                when (vh.checkboxState) {
                     CheckBoxTriStates.State.INDETERMINATE -> foundIndeterminate.add(tag)
                     CheckBoxTriStates.State.UNCHECKED -> foundUncheckedTags.add(tag)
                     CheckBoxTriStates.State.CHECKED -> foundCheckedTags.add(tag)
-                    else -> Assert.fail("Unknown CheckBoxTriStates.State? " + vh?.checkboxState)
+                    else -> Assert.fail("Unknown CheckBoxTriStates.State? " + vh.checkboxState)
                 }
             }
             ListUtil.assertListEquals(expectedAllTags, foundAllTags)

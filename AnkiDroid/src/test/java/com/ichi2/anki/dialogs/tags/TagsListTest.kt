@@ -17,12 +17,16 @@ package com.ichi2.anki.dialogs.tags
 
 import com.ichi2.testutils.assertFalse
 import com.ichi2.utils.KotlinCleanup
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
+import java.lang.Exception
 import java.util.*
+import kotlin.Throws
 
 // suppressed to have a symmetry in all tests, Arrays.asList(...) should be all you need.
 @KotlinCleanup("Use kotlin functions instead of Arrays.asList")

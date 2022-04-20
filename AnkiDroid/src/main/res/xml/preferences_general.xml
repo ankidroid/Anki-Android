@@ -23,7 +23,7 @@
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/app_name"
-    android:summary="@string/pref_cat_general_summ" >
+    android:summary="@string/pref_cat_general_summ">
     <PreferenceCategory android:title="@string/button_sync" >
         <Preference
             android:dialogTitle="@string/sync_account"
@@ -34,17 +34,17 @@
                 android:targetClass="com.ichi2.anki.MyAccount"
                 android:targetPackage="com.ichi2.anki" />
         </Preference>
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="syncFetchesMedia"
             android:summary="@string/sync_fetch_missing_media_summ"
             android:title="@string/sync_fetch_missing_media" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="automaticSyncMode"
             android:summary="@string/automatic_sync_choice_summ"
             android:title="@string/automatic_sync_choice" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="showSyncStatusBadge"
             android:summary="@string/sync_status_badge_summ"
@@ -61,12 +61,12 @@
             android:key="language"
             android:icon="@drawable/ic_language_black_24dp"
             android:title="@string/language" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="analyticsOptIn"
             android:summary="@string/analytics_summ"
             android:title="@string/analytics_title" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:title="@string/paste_as_png"
             android:summary="@string/paste_as_png_summary"
@@ -87,11 +87,11 @@
             android:entryValues="@array/notification_minimum_cards_due_values"
             android:key="minimumCardsDueForNotification"
             android:title="@string/notification_pref_title" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="widgetVibrate"
             android:title="@string/notification_minimum_cards_due_vibrate" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="widgetBlink"
             android:title="@string/notification_minimum_cards_due_blink" />

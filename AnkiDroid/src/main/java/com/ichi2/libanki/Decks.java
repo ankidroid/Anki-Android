@@ -36,6 +36,8 @@ import com.ichi2.utils.SyncStatus;
 
 import net.ankiweb.rsdroid.RustCleanup;
 
+import org.intellij.lang.annotations.Language;
+
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -257,7 +259,7 @@ public class Decks extends DeckManager {
 
 
     @Override
-    public void load(@NonNull String decks, @NonNull String dconf) {
+    public void load(@NonNull @Language("JSON") String decks, @NonNull String dconf) {
         JSONObject decksarray = new JSONObject(decks);
         JSONArray ids = decksarray.names();
         mDecks = HashUtil.HashMapInit(decksarray.length());
