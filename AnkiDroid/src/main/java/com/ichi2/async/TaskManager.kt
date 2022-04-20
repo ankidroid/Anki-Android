@@ -1,26 +1,22 @@
 /****************************************************************************************
  * Copyright (c) 2021 Arthur Milchior <arthur@milchior.fr>                              *
- *                                                                                      *
+ * *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
  * Foundation; either version 3 of the License, or (at your option) any later           *
  * version.                                                                             *
- *                                                                                      *
+ * *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
  * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
+ * *
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+ */
+package com.ichi2.async
 
-package com.ichi2.async;
-
-import android.content.res.Resources;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
+import android.content.res.Resources
+import androidx.annotation.VisibleForTesting
 
 /**
  * The TaskManager has two related purposes.
@@ -33,148 +29,139 @@ import androidx.annotation.VisibleForTesting;
  *
  * The class itself contains a static element which is the currently used TaskManager. Tasks can be executed on the current TaskManager with the static method launchTaskManager.
  */
-public abstract class TaskManager {
-    @NonNull private static TaskManager sTaskManager = new SingleTaskManager();
+abstract class TaskManager {
+    protected abstract fun removeTaskConcrete(task: CollectionTask<*, *>?): Boolean
+    abstract fun <Progress, Result> launchCollectionTaskConcrete(task: TaskDelegateBase<Progress, Result>?): Cancellable
+    protected abstract fun setLatestInstanceConcrete(task: CollectionTask<*, *>?)
+    abstract fun <Progress, Result> launchCollectionTaskConcrete(
+        task: TaskDelegateBase<Progress, Result>,
+        listener: TaskListener<in Progress, in Result>?
+    ): Cancellable
+
+    abstract fun waitToFinishConcrete()
+    abstract fun waitToFinishConcrete(timeoutSeconds: Int?): Boolean
+    abstract fun cancelCurrentlyExecutingTaskConcrete()
+    abstract fun cancelAllTasksConcrete(taskType: Class<*>?)
+    abstract fun waitForAllToFinishConcrete(timeoutSeconds: Int?): Boolean
 
     /**
-     * @param tm The new task manager
-     * @return The previous one. It may still have tasks running
+     * Helper class for allowing inner function to publish progress of an AsyncTask.
      */
-    @VisibleForTesting
-    public static TaskManager setTaskManager(TaskManager tm) {
-        TaskManager previous = sTaskManager;
-        sTaskManager = tm;
-        return previous;
+    class ProgressCallback<Progress>(task: ProgressSender<Progress>?, val resources: Resources?) {
+        private var mTask: ProgressSender<Progress>? = null
+        fun publishProgress(value: Progress) {
+            mTask?.doProgress(value)
+        }
+
+        init {
+            if (resources != null) {
+                mTask = task
+            } else {
+                mTask = null
+            }
+        }
     }
 
-    protected static boolean removeTask(CollectionTask task) {
-        return sTaskManager.removeTaskConcrete(task);
-    }
-
-    protected abstract boolean removeTaskConcrete(CollectionTask task);
-
-    /**
-     * Starts a new {@link CollectionTask}, with no listener
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param task the task to execute
-     * @return the newly created task
-     */
-    protected static void setLatestInstance(CollectionTask task) {
-        sTaskManager.setLatestInstanceConcrete(task);
-    }
-
-    public static <Progress, Result> Cancellable launchCollectionTask(TaskDelegateBase<Progress, Result> task) {
-        return sTaskManager.launchCollectionTaskConcrete(task);
-    }
-
-    public abstract <Progress, Result> Cancellable launchCollectionTaskConcrete(TaskDelegateBase<Progress, Result> task);
-
-
-    protected abstract void setLatestInstanceConcrete(CollectionTask task);
-
-    /**
-     * Starts a new {@link CollectionTask}, with a listener provided for callbacks during execution
-     * <p>
-     * Tasks will be executed serially, in the order in which they are started.
-     * <p>
-     * This method must be called on the main thread.
-     *
-     * @param task the task to execute
-     * @param listener to the status and result of the task, may be null
-     * @return the newly created task
-     */
-    public static <Progress, Result> Cancellable
-    launchCollectionTask(@NonNull TaskDelegateBase<Progress, Result> task,
-                         @Nullable TaskListener<? super Progress, ? super Result> listener) {
-        return sTaskManager.launchCollectionTaskConcrete(task, listener);
-    }
-
-    public abstract <Progress, Result> Cancellable
-    launchCollectionTaskConcrete(@NonNull TaskDelegateBase<Progress, Result> task,
-                         @Nullable TaskListener<? super Progress, ? super Result> listener);
-
-    /**
-     * Block the current thread until the currently running CollectionTask instance (if any) has finished.
-     */
-    public static void waitToFinish() {
-        sTaskManager.waitToFinishConcrete();
-    };
-    public abstract void waitToFinishConcrete();
-
-    /**
-     * Block the current thread until the currently running CollectionTask instance (if any) has finished.
-     * @param timeoutSeconds timeout in seconds (or null to wait indefinitely)
-     * @return whether or not the previous task was successful or not, OR if an exception occurred (for example: timeout)
-     */
-    public static boolean waitToFinish(@Nullable Integer timeoutSeconds) {
-        return sTaskManager.waitToFinishConcrete(timeoutSeconds);
-    };
-    public abstract boolean waitToFinishConcrete(@Nullable Integer timeoutSeconds);
-
-
-    /** Cancel the current task only if it's of type taskType */
-    public static void cancelCurrentlyExecutingTask() {
-        sTaskManager.cancelCurrentlyExecutingTaskConcrete();
-    }
-    public abstract void cancelCurrentlyExecutingTaskConcrete();
-
-    /** Cancel all tasks of type taskType*/
-    public static void cancelAllTasks(Class taskType) {
-        sTaskManager.cancelAllTasksConcrete(taskType);
-    }
-    public abstract void cancelAllTasksConcrete(Class taskType);
-
-    /**
-     * Block the current thread until all CollectionTasks have finished.
-     * @param timeoutSeconds timeout in seconds
-     * @return whether all tasks exited successfully
-     */
-    @SuppressWarnings("UnusedReturnValue")
-    public static boolean waitForAllToFinish(Integer timeoutSeconds) {
-        return sTaskManager.waitToFinishConcrete(timeoutSeconds);
-    }
-    public abstract boolean waitForAllToFinishConcrete(Integer timeoutSeconds);
-
-
-
+    companion object {
+        private var sTaskManager: TaskManager = SingleTaskManager()
 
         /**
-         * Helper class for allowing inner function to publish progress of an AsyncTask.
+         * @param tm The new task manager
+         * @return The previous one. It may still have tasks running
          */
-    public static class ProgressCallback<Progress> {
-        private final Resources mRes;
-        private final ProgressSender<Progress> mTask;
-
-
-        protected ProgressCallback(ProgressSender<Progress> task, Resources res) {
-            this.mRes = res;
-            if (res != null) {
-                this.mTask = task;
-            } else {
-                this.mTask = null;
-            }
+        @VisibleForTesting
+        fun setTaskManager(tm: TaskManager): TaskManager {
+            val previous = sTaskManager
+            sTaskManager = tm
+            return previous
         }
 
-
-        public Resources getResources() {
-            return mRes;
+        @JvmStatic
+        fun removeTask(task: CollectionTask<*, *>?): Boolean {
+            return sTaskManager.removeTaskConcrete(task)
         }
 
+        /**
+         * Starts a new [CollectionTask], with no listener
+         *
+         *
+         * Tasks will be executed serially, in the order in which they are started.
+         *
+         *
+         * This method must be called on the main thread.
+         *
+         * @param task the task to execute
+         * @return the newly created task
+         */
+        @JvmStatic
+        fun setLatestInstance(task: CollectionTask<*, *>?) {
+            sTaskManager.setLatestInstanceConcrete(task)
+        }
 
-        public void publishProgress(Progress value) {
-            if (mTask != null) {
-                mTask.doProgress(value);
-            }
+        @JvmStatic
+        fun <Progress, Result> launchCollectionTask(task: TaskDelegateBase<Progress, Result>?): Cancellable {
+            return sTaskManager.launchCollectionTaskConcrete(task)
+        }
+
+        /**
+         * Starts a new [CollectionTask], with a listener provided for callbacks during execution
+         *
+         *
+         * Tasks will be executed serially, in the order in which they are started.
+         *
+         *
+         * This method must be called on the main thread.
+         *
+         * @param task the task to execute
+         * @param listener to the status and result of the task, may be null
+         * @return the newly created task
+         */
+        @JvmStatic
+        fun <Progress, Result> launchCollectionTask(
+            task: TaskDelegateBase<Progress, Result>,
+            listener: TaskListener<in Progress, in Result>?
+        ): Cancellable {
+            return sTaskManager.launchCollectionTaskConcrete(task, listener)
+        }
+
+        /**
+         * Block the current thread until the currently running CollectionTask instance (if any) has finished.
+         */
+        fun waitToFinish() {
+            sTaskManager.waitToFinishConcrete()
+        }
+
+        /**
+         * Block the current thread until the currently running CollectionTask instance (if any) has finished.
+         * @param timeoutSeconds timeout in seconds (or null to wait indefinitely)
+         * @return whether or not the previous task was successful or not, OR if an exception occurred (for example: timeout)
+         */
+        @JvmStatic
+        fun waitToFinish(timeoutSeconds: Int?): Boolean {
+            return sTaskManager.waitToFinishConcrete(timeoutSeconds)
+        }
+
+        /** Cancel the current task only if it's of type taskType  */
+        fun cancelCurrentlyExecutingTask() {
+            sTaskManager.cancelCurrentlyExecutingTaskConcrete()
+        }
+
+        /** Cancel all tasks of type taskType */
+        fun cancelAllTasks(taskType: Class<*>?) {
+            sTaskManager.cancelAllTasksConcrete(taskType)
+        }
+
+        /**
+         * Block the current thread until all CollectionTasks have finished.
+         * @param timeoutSeconds timeout in seconds
+         * @return whether all tasks exited successfully
+         */
+        fun waitForAllToFinish(timeoutSeconds: Int?): Boolean {
+            return sTaskManager.waitToFinishConcrete(timeoutSeconds)
+        }
+
+        fun <Progress> progressCallback(task: CollectionTask<Progress, *>?, res: Resources?): ProgressCallback<Progress> {
+            return ProgressCallback<Progress>(task, res)
         }
     }
-
-
-    public static ProgressCallback progressCallback(CollectionTask task, Resources res) {
-        return new ProgressCallback(task, res);
-    }
-
 }
