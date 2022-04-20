@@ -42,7 +42,7 @@ import com.android.tools.lint.checks.StringCasingDetector.StringDeclaration;
 import com.android.tools.lint.detector.api.Context;
 import com.android.tools.lint.detector.api.Implementation;
 import com.android.tools.lint.detector.api.Issue;
-import com.android.tools.lint.detector.api.LintUtils;
+import com.android.tools.lint.detector.api.Lint;
 import com.android.tools.lint.detector.api.Location;
 import com.android.tools.lint.detector.api.ResourceXmlDetector;
 import com.android.tools.lint.detector.api.Scope;
@@ -144,7 +144,7 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
             return;
         }
 
-        LocaleQualifier locale = LintUtils.getLocale(context);
+        LocaleQualifier locale = Lint.getLocale(context);
         Pair<String, String> key = locale != null ?
                 Pair.of(locale.getFull(), text.toLowerCase(Locale.forLanguageTag(locale.getTag()))) :
                 Pair.of("default", text.toLowerCase(Locale.US));
@@ -204,7 +204,7 @@ public class DuplicateCrowdInStrings extends ResourceXmlDetector {
             }
 
 
-            String nameList = LintUtils.formatList(nameValues, nameValues.size(),true);
+            String nameList = Lint.formatList(nameValues, nameValues.size(), true, false);
             // we use both quotes and code styling here so it appears in the console quoted
             String message = String.format("Duplicate string value \"`%s`\", used in %s", prevString, nameList);
             if (caseVaries) {
