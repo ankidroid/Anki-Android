@@ -13,26 +13,20 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import com.ichi2.utils.ArrayUtil.toArrayList
+import org.hamcrest.CoreMatchers
+import org.hamcrest.MatcherAssert
+import org.junit.Test
+import java.util.*
 
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-public class ArrayUtilTest {
-    private final Integer[] mSampleItems = new Integer[] {1, 2, 3, 4, 5, 6};
-
-
+class ArrayUtilTest {
+    private val mSampleItems = arrayOf(1, 2, 3, 4, 5, 6)
     @Test
-    public void arrayToArrayList() {
-        List<Integer> list = new ArrayList<>();
-        Collections.addAll(list, mSampleItems);
-        assertThat(ArrayUtil.toArrayList(mSampleItems), is(list));
+    fun arrayToArrayList() {
+        val list = arrayListOf<Int>()
+        Collections.addAll(list, *mSampleItems)
+        MatcherAssert.assertThat(toArrayList(mSampleItems), CoreMatchers.`is`(list))
     }
 }
