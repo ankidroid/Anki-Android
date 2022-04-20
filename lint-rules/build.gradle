@@ -20,8 +20,6 @@ dependencies {
     compileOnly "com.android.tools.lint:lint-api:$lint_version"
     compileOnly "com.android.tools.lint:lint:$lint_version"
 
-    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     testImplementation "junit:junit:4.13.2"
     testImplementation "com.android.tools.lint:lint:$lint_version"
     testImplementation "com.android.tools.lint:lint-api:$lint_version"
