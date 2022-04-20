@@ -76,8 +76,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.webkit.WebViewCompat;
+import leakcanary.AndroidDebugHeapDumper;
 import leakcanary.AppWatcher;
-import leakcanary.DefaultOnHeapAnalyzedListener;
 import leakcanary.LeakCanary;
 import shark.AndroidMetadataExtractor;
 import shark.AndroidObjectInspectors;
@@ -754,7 +754,8 @@ public class AnkiDroidApp extends Application {
     /**
      * Matching known library leaks or leaks which have been already reported previously.
      */
-    @KotlinCleanup("Only pass referenceMatchers to copy() method after conversion to Kotlin")
+    @SuppressWarnings("deprecation") // deprecated reference will go away with KotlinCleanup
+    @KotlinCleanup("Only pass referenceMatchers to copy() method after conversion to Kotlin - fixes deprecation")
     private void matchKnownMemoryLeaks(List<ReferenceMatcher> knownLeaks) {
         List<ReferenceMatcher> referenceMatchers = AndroidReferenceMatchers.Companion.getAppDefaults();
         referenceMatchers.addAll(knownLeaks);
@@ -766,12 +767,14 @@ public class AnkiDroidApp extends Application {
                 5,
                 referenceMatchers,
                 AndroidObjectInspectors.Companion.getAppDefaults(),
-                DefaultOnHeapAnalyzedListener.Companion.create(),
+                LeakCanary.getConfig().getOnHeapAnalyzedListener(),
                 AndroidMetadataExtractor.INSTANCE,
                 true,
                 7,
                 false,
                 KeyedWeakReferenceFinder.INSTANCE,
+                LeakCanary.getConfig().getHeapDumper(),
+                LeakCanary.getConfig().getEventListeners(),
                 false
         ));
     }
@@ -779,7 +782,8 @@ public class AnkiDroidApp extends Application {
     /**
      * Disable LeakCanary
      */
-    @KotlinCleanup("Only pass relevant arguments to copy() method after conversion to Kotlin")
+    @SuppressWarnings("deprecation") // deprecated reference will go away with KotlinCleanup
+    @KotlinCleanup("Only pass relevant arguments to copy() method after conversion to Kotlin - fixes deprecation")
     private void disableLeakCanary() {
         LeakCanary.setConfig(LeakCanary.getConfig().copy(
                 false,
@@ -787,12 +791,14 @@ public class AnkiDroidApp extends Application {
                 0,
                 AndroidReferenceMatchers.Companion.getAppDefaults(),
                 AndroidObjectInspectors.Companion.getAppDefaults(),
-                DefaultOnHeapAnalyzedListener.Companion.create(),
+                LeakCanary.getConfig().getOnHeapAnalyzedListener(),
                 AndroidMetadataExtractor.INSTANCE,
                 false,
                 0,
                 false,
                 KeyedWeakReferenceFinder.INSTANCE,
+                LeakCanary.getConfig().getHeapDumper(),
+                LeakCanary.getConfig().getEventListeners(),
                 false
         ));
     }
