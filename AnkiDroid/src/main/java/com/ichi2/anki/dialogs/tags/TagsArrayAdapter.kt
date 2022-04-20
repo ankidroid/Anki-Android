@@ -41,15 +41,15 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         // TextView contains the displayed tag (only the last part).
         internal val mTextView: TextView = itemView.findViewById(R.id.tags_dialog_tag_item_text)
         // RawTag contains the full tag.
-        internal var mRawTag = String()
+        internal var rawTag = String()
         // Position is used to index the tag in the fully expanded tag node array.
-        internal var mPosition = -1
+        internal var position = -1
         // Level of the tag in the hierarchy. Used to calculate the shift distance.
-        internal var mLevel = -1
+        internal var level = -1
 
         @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         val text: String
-            get() = mRawTag
+            get() = rawTag
 
         @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         val isChecked: Boolean
@@ -90,7 +90,7 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         // clicking the checkbox toggles the tag's check state
         vh.mCheckBoxView.setOnClickListener {
             val checkBox = vh.mCheckBoxView
-            val tag = vh.mRawTag
+            val tag = vh.rawTag
             if (checkBox.state == CheckBoxTriStates.State.CHECKED) {
                 tags.check(tag)
                 // ancestors may turn into indeterminate
@@ -101,10 +101,10 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         }
         // clicking other parts toggles the expansion state
         vh.itemView.setOnClickListener {
-            toggleExpansionState(vh.mPosition)
-            updateExpanderBackgroundImage(vh.mExpandButton, mTree[vh.mPosition])
+            toggleExpansionState(vh.position)
+            updateExpanderBackgroundImage(vh.mExpandButton, mTree[vh.position])
             // result of getTagByIndex() may change due to the expansion / collapse
-            if (mTree[vh.mPosition].children.isNotEmpty()) {
+            if (mTree[vh.position].children.isNotEmpty()) {
                 notifyDataSetChanged()
             }
         }
@@ -117,14 +117,14 @@ class TagsArrayAdapter(private val tags: TagsList) : RecyclerView.Adapter<TagsAr
         val tagParts = TagsUtil.getTagParts(tag)
 
         holder.mTextView.text = tagParts.last()
-        holder.mRawTag = tag
-        holder.mPosition = realPosition
-        holder.mLevel = tagParts.size - 1
+        holder.rawTag = tag
+        holder.position = realPosition
+        holder.level = tagParts.size - 1
 
         holder.mExpandButton.visibility = if (mTree[realPosition].children.isNotEmpty()) View.VISIBLE else View.INVISIBLE
         updateExpanderBackgroundImage(holder.mExpandButton, mTree[realPosition])
         val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        lp.setMargins(HIERARCHY_SHIFT_BASE * holder.mLevel, 0, 0, 0)
+        lp.setMargins(HIERARCHY_SHIFT_BASE * holder.level, 0, 0, 0)
         holder.mExpandButton.layoutParams = lp
 
         if (tags.isIndeterminate(tag)) {
