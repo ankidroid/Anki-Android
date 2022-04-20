@@ -13,16 +13,17 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import java.util.Comparator
 
-import java.util.Comparator;
+class DeckComparator : Comparator<JSONObject> {
+    override fun compare(lhs: JSONObject, rhs: JSONObject): Int {
+        return DeckNameComparator.INSTANCE.compare(lhs.getString("name"), rhs.getString("name"))
+    }
 
-public class DeckComparator implements Comparator<JSONObject> {
-    public static final DeckComparator INSTANCE = new DeckComparator();
-
-    @Override
-    public int compare(JSONObject lhs, JSONObject rhs) {
-        return DeckNameComparator.INSTANCE.compare(lhs.getString("name"), rhs.getString("name"));
+    companion object {
+        @JvmField
+        val INSTANCE = DeckComparator()
     }
 }
