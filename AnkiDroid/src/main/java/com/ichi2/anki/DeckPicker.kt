@@ -1367,7 +1367,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
     }
 
-    fun restoreFromBackup(path: String?) {
+    fun restoreFromBackup(path: String) {
         importReplace(path)
     }
 
@@ -1746,13 +1746,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     // Callback to import a file -- adding it to existing collection
-    override fun importAdd(importPath: String?) {
+    override fun importAdd(importPath: String) {
         Timber.d("importAdd() for file %s", importPath)
         TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
     }
 
     // Callback to import a file -- replacing the existing collection
-    override fun importReplace(importPath: String?) {
+    override fun importReplace(importPath: String) {
         TaskManager.launchCollectionTask(ImportReplace(importPath), importReplaceListener())
     }
 
