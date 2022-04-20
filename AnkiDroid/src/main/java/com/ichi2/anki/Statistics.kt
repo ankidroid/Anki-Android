@@ -80,8 +80,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             offscreenPageLimit = 8
         }
         slidingTabLayout = findViewById(R.id.sliding_tabs)
-        // Setup Task Handler
-        taskHandler = getInstance(col)
         startLoadingCollection()
     }
 
@@ -89,6 +87,8 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         Timber.d("onCollectionLoaded()")
         super.onCollectionLoaded(col)
 
+        // Setup Task Handler
+        taskHandler = getInstance(col)
         // Fixes #8984: scroll to position 0 in RTL layouts
         val tabObserver = slidingTabLayout.viewTreeObserver
         tabObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
