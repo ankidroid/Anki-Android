@@ -13,41 +13,32 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Test
 
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-public class CollectionUtilsTest {
-
-    List<Integer> mTestList = new ArrayList<Integer>() {{
-        add(1);
-        add(2);
-        add(3);
-    }};
+class CollectionUtilsTest {
+    var testList = arrayListOf(1, 2, 3)
 
     @Test
-    public void testGetLastListElement() {
-        assertThat(CollectionUtils.getLastListElement(mTestList), is(3));
+    @KotlinCleanup("is --> equalTo")
+    fun testGetLastListElement() {
+        assertThat(CollectionUtils.getLastListElement(testList), `is`(3))
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testGetLastOnEmptyList() {
-        List<Integer> emptyList = new ArrayList<>();
-        CollectionUtils.getLastListElement(emptyList);
+    @Test(expected = IndexOutOfBoundsException::class)
+    fun testGetLastOnEmptyList() {
+        val emptyList: List<Int> = ArrayList()
+        CollectionUtils.getLastListElement(emptyList)
     }
 
     @Test
-    public void testAddAll() {
-        List<Integer> toTest = new ArrayList<>();
-        CollectionUtils.addAll(toTest, mTestList);
-        assertEqualsArrayList(new Integer [] {1, 2, 3}, toTest);
+    fun testAddAll() {
+        val toTest = arrayListOf<Int>()
+        CollectionUtils.addAll(toTest, testList)
+        assertEqualsArrayList(arrayOf(1, 2, 3), toTest)
     }
 }
