@@ -152,7 +152,7 @@ Sync Intent [
 ```
 *Note: A previous version of this documentation had a Target type of Service instead. Since a recent (mid 2017) Tasker update this no longer works, and Target must be changed to Activity in order to function properly, as discussed at https://groups.google.com/forum/#!topic/tasker/KJISOpinu4U.*
 
-As an example, if you import [this XML file](https://raw.githubusercontent.com/ankidroid/apisample/master/AnkiDroid_Sync.prf.xml) into a Tasker profile, it will trigger AnkiDroid to sync when the power is plugged in. See the [Tasker FAQ](http://tasker.dinglisch.net/userguide/en/faqs/faq-how.html#q) for instructions on how to import profiles.
+As an example, if you import [this XML file](https://raw.githubusercontent.com/ankidroid/apisample/main/AnkiDroid_Sync.prf.xml) into a Tasker profile, it will trigger AnkiDroid to sync when the power is plugged in. See the [Tasker FAQ](http://tasker.dinglisch.net/userguide/en/faqs/faq-how.html#q) for instructions on how to import profiles.
 For the App Automate you can import [this example Flow](https://llamalab.com/automate/community/flows/3963) to sync every 8 hours and a quarter hour after you closed the app.
 
 Sync can also be triggered when your device is connected to your computer via USB, or a terminal emulator that has the `am` tool from Android Debug Bridge such as [Termux](https://github.com/termux/):
@@ -161,7 +161,7 @@ Sync can also be triggered when your device is connected to your computer via US
 
 # Low-level API
 
-The Instant-add API is a high-level wrapper around the lower level [ContentProvider]() based API. The ContentProvider API contains more features than the Instant-add API, but is more complicated to use. Check the [source code](https://github.com/ankidroid/Anki-Android/tree/master/AnkiDroid/src/main/java/com/ichi2/anki/provider) itself and the accompanying [FlashCardsContract](https://github.com/ankidroid/Anki-Android/blob/master/api/src/main/java/com/ichi2/anki/FlashCardsContract.java) file in the API. The open-source [AnkiDroid-Wear](https://github.com/wlky/AnkiDroid-Wear) app may also be useful as an example of how to use the low-level API.
+The Instant-add API is a high-level wrapper around the lower level [ContentProvider]() based API. The ContentProvider API contains more features than the Instant-add API, but is more complicated to use. Check the [source code](https://github.com/ankidroid/Anki-Android/tree/main/AnkiDroid/src/main/java/com/ichi2/anki/provider) itself and the accompanying [FlashCardsContract](https://github.com/ankidroid/Anki-Android/blob/main/api/src/main/java/com/ichi2/anki/FlashCardsContract.java) file in the API. The open-source [AnkiDroid-Wear](https://github.com/wlky/AnkiDroid-Wear) app may also be useful as an example of how to use the low-level API.
 
 # React-Native API Wrapper
 

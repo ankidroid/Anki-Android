@@ -24,7 +24,7 @@ For each language we need:
   * At least one screenshot on a ~10inch screen
 
 Here are all screenshots we have, so you can see which ones are missing:
-https://github.com/ankidroid/Anki-Android/tree/master/docs/marketing/screenshots
+https://github.com/ankidroid/Anki-Android/tree/main/docs/marketing/screenshots
 
 Send the images to the [forum](http://groups.google.com/group/anki-android) so that we can use them to improve the Play Store page, the Wiki, etc.
 

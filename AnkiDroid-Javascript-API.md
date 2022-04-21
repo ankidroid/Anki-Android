@@ -4,8 +4,8 @@
 
 This api allow deck developer to add functionality to cards that can call native functions defined in AnkiDroid. This can be used to design whole new layout for buttons, cards info, top bar card counts, mark, flag etc. 
 <br> View this files also for additional information.
-<br>[AbstractFlashcardViewer.java](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/java/com/ichi2/anki/AbstractFlashcardViewer.java#L3404)
-<br>[card.js](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/scripts/card.js#L78)
+<br>[AbstractFlashcardViewer.java](https://github.com/ankidroid/Anki-Android/blob/main/AnkiDroid/src/main/java/com/ichi2/anki/AbstractFlashcardViewer.java#L3404)
+<br>[card.js](https://github.com/ankidroid/Anki-Android/blob/main/AnkiDroid/src/main/assets/scripts/card.js#L78)
 
 ## API return values
 

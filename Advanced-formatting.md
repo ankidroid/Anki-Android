@@ -160,7 +160,7 @@ A third party AnkiDroid user made his code open source: you can get it, along wi
 document.documentElement.classList.contains("android"); //AnkiDroid
 ```
 
-See: https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/main/assets/card_template.html#L2 or https://github.com/ankidroid/Anki-Android/issues/6886
+See: https://github.com/ankidroid/Anki-Android/blob/main/AnkiDroid/src/main/assets/card_template.html#L2 or https://github.com/ankidroid/Anki-Android/issues/6886
 
 ### Hide content during execution of `onUpdateHook`
 
