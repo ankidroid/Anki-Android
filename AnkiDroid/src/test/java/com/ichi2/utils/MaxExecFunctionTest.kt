@@ -13,61 +13,50 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import org.junit.Before
+import org.junit.Test
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-public class MaxExecFunctionTest {
-
-    private Runnable mFunction;
+class MaxExecFunctionTest {
+    private var mFunction: Runnable? = null
 
     @Before
-    public void before(){
-        mFunction = mock(Runnable.class);
+    fun before() {
+        mFunction = mock(Runnable::class.java)
     }
 
     @Test
-    public void doNotExceedMaxExecs(){
-        final MaxExecFunction m = new MaxExecFunction(3, mFunction);
-
-        for (int i = 0; i < 50; i++) {
-            m.exec();
+    fun doNotExceedMaxExecs() {
+        val m = MaxExecFunction(3, mFunction!!)
+        for (i in 0..49) {
+            m.exec()
         }
-
-        verify(mFunction,times(3)).run();
+        verify(mFunction, times(3))?.run()
     }
 
     @Test
-    public void onlyOnceForAReference(){
-        final Object ref = new Object();
-        final MaxExecFunction m = new MaxExecFunction(3, mFunction);
-
-        for (int i = 0; i < 50; i++) {
-            m.execOnceForReference(ref);
+    fun onlyOnceForAReference() {
+        val ref = Any()
+        val m = MaxExecFunction(3, mFunction!!)
+        for (i in 0..49) {
+            m.execOnceForReference(ref)
         }
-
-        verify(mFunction,times(1)).run();
+        verify(mFunction, times(1))?.run()
     }
 
-
     @Test
-    public void doNotExceedMaxExecsWithMultipleReferences(){
-        final MaxExecFunction m = new MaxExecFunction(3, mFunction);
-
-        for (int i = 0; i < 10; i++) {
-            final Object ref = new Object();
-            for (int j = 0; j < 10; j++) {
-                m.execOnceForReference(ref);
+    fun doNotExceedMaxExecsWithMultipleReferences() {
+        val m = MaxExecFunction(3, mFunction!!)
+        for (i in 0..9) {
+            val ref = Any()
+            for (j in 0..9) {
+                m.execOnceForReference(ref)
             }
         }
-
-        verify(mFunction,times(3)).run();
+        verify(mFunction, times(3))?.run()
     }
-
 }
