@@ -26,4 +26,5 @@
     <string name="app_theme_key">appTheme</string>
     <string name="day_theme_key">dayTheme</string>
     <string name="night_theme_key">nightTheme</string>
+    <string name="gestures_preference">gestures</string>
 </resources>

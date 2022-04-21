@@ -28,26 +28,26 @@
     <SwitchPreference
         android:defaultValue="false"
         android:disableDependentsState="false"
-        android:key="gestures"
+        android:key="@string/gestures_preference"
         android:summary="@string/gestures_summ"
         android:title="@string/gestures" />
     <SwitchPreference
         android:defaultValue="false"
-        android:dependency="gestures"
+        android:dependency="@string/gestures_preference"
         android:disableDependentsState="false"
         android:key="gestureCornerTouch"
         android:summary="@string/gestures_corner_touch_summary"
         android:title="@string/gestures_corner_touch" />
     <SwitchPreference
         android:defaultValue="false"
-        android:dependency="gestures"
+        android:dependency="@string/gestures_preference"
         android:disableDependentsState="false"
         android:key="gestureFullScreenNavigationDrawer"
         android:summary="@string/gestures_fullscreen_nav_drawer_summary"
         android:title="@string/gestures_full_screen_nav_drawer" />
     <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="100"
-        android:dependency="gestures"
+        android:dependency="@string/gestures_preference"
         android:dialogMessage="@string/preference_summary_literal"
         android:key="swipeSensitivity"
         android:max="180"
@@ -59,35 +59,35 @@
     <PreferenceCategory android:title="@string/pref_cat_actions" >
         <ListPreference
             android:defaultValue="0"
-            android:dependency="gestures"
+            android:dependency="@string/gestures_preference"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
             android:key="gestureSwipeUp"
             android:title="@string/gestures_swipe_up" />
         <ListPreference
             android:defaultValue="0"
-            android:dependency="gestures"
+            android:dependency="@string/gestures_preference"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
             android:key="gestureSwipeDown"
             android:title="@string/gestures_swipe_down" />
         <ListPreference
             android:defaultValue="6"
-            android:dependency="gestures"
+            android:dependency="@string/gestures_preference"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
             android:key="gestureSwipeLeft"
             android:title="@string/gestures_swipe_left" />
         <ListPreference
             android:defaultValue="2"
-            android:dependency="gestures"
+            android:dependency="@string/gestures_preference"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
             android:key="gestureSwipeRight"
             android:title="@string/gestures_swipe_right" />
         <ListPreference
             android:defaultValue="0"
-            android:dependency="gestures"
+            android:dependency="@string/gestures_preference"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
             android:key="gestureDoubleTap"
@@ -101,7 +101,7 @@
             android:title="@string/gestures_corner_tap_top_left" />
         <ListPreference
             android:defaultValue="1"
-            android:dependency="gestures"
+            android:dependency="@string/gestures_preference"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
             android:key="gestureTapTop"
@@ -115,7 +115,7 @@
             android:title="@string/gestures_corner_tap_top_right" />
         <ListPreference
             android:defaultValue="1"
-            android:dependency="gestures"
+            android:dependency="@string/gestures_preference"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
             android:key="gestureTapLeft"
@@ -129,7 +129,7 @@
             android:title="@string/gestures_corner_tap_middle_center" />
         <ListPreference
             android:defaultValue="1"
-            android:dependency="gestures"
+            android:dependency="@string/gestures_preference"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
             android:key="gestureTapRight"
@@ -143,7 +143,7 @@
             android:title="@string/gestures_corner_tap_bottom_left" />
         <ListPreference
             android:defaultValue="1"
-            android:dependency="gestures"
+            android:dependency="@string/gestures_preference"
             android:entries="@array/gestures_labels"
             android:entryValues="@array/gestures_values"
             android:key="gestureTapBottom"
