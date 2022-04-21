@@ -13,84 +13,83 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import android.content.ContentResolver
+import android.database.Cursor
+import android.database.sqlite.SQLiteException
+import android.net.Uri
+import android.webkit.MimeTypeMap
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.utils.ContentResolverUtil.getFileName
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.Is.`is`
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
+import org.robolectric.Shadows
+import org.robolectric.annotation.Config
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteException;
-import android.net.Uri;
-import android.webkit.MimeTypeMap;
-
-import com.ichi2.testutils.EmptyApplication;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Shadows;
-import org.robolectric.annotation.Config;
-
-import androidx.annotation.NonNull;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static android.content.ContentResolver.SCHEME_CONTENT;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-@RunWith(AndroidJUnit4.class) // needs a URI instance
-@Config(application = EmptyApplication.class)
-public class ContentResolverUtilTest {
+@RunWith(AndroidJUnit4::class) // needs a URI instance
+@Config(application = EmptyApplication::class)
+@KotlinCleanup("when --> whenever")
+@KotlinCleanup("IDE-based lint")
+@KotlinCleanup("is --> equalTo")
+class ContentResolverUtilTest {
 
     @Test
-    public void testViaQueryWorking() {
-        Uri uri = Uri.parse("http://example.com/test.jpeg");
-        ContentResolver mock = mock(ContentResolver.class);
+    @KotlinCleanup("is --> equalTo")
+    fun testViaQueryWorking() {
+        val uri = Uri.parse("http://example.com/test.jpeg")
+        val mock = mock(ContentResolver::class.java)
 
-        setQueryReturning(mock, cursorReturning("filename_from_cursor.jpg"));
+        setQueryReturning(mock, cursorReturning("filename_from_cursor.jpg"))
 
-        String filename = ContentResolverUtil.getFileName(mock, uri);
+        val filename = getFileName(mock, uri)
 
-        assertThat(filename, is("filename_from_cursor.jpg"));
+        assertThat(filename, `is`("filename_from_cursor.jpg"))
     }
 
     @Test
-    public void testViaMimeType() {
+    fun testViaMimeType() {
         // #7748: Query can fail on some phones, so fall back to MIME
         // values obtained via: content://com.google.android.inputmethod.latin.fileprovider/content/tenor_gif/tenor_gif187746302992141903.gif
-        Uri uri = mock(Uri.class);
-        when(uri.getScheme()).thenReturn(SCHEME_CONTENT);
+        val uri = mock(Uri::class.java)
+        `when`(uri.scheme).thenReturn(ContentResolver.SCHEME_CONTENT)
 
-        ContentResolver mock = mock(ContentResolver.class);
-        setQueryThrowing(mock, new SQLiteException("no such column: _display_name (code 1 SQLITE_ERROR[1]): , " +
-                "while compiling: SELECT _display_name FROM ClipboardImageTable WHERE (id=855) ORDER BY _data"));
+        val mock = mock(ContentResolver::class.java)
+        setQueryThrowing(
+            mock,
+            SQLiteException(
+                "no such column: _display_name (code 1 SQLITE_ERROR[1]): , " +
+                    "while compiling: SELECT _display_name FROM ClipboardImageTable WHERE (id=855) ORDER BY _data"
+            )
+        )
 
-        when(mock.getType(any())).thenReturn("image/gif");
+        `when`(mock.getType(any())).thenReturn("image/gif")
         // required for Robolectric
-        Shadows.shadowOf(MimeTypeMap.getSingleton()).addExtensionMimeTypMapping("gif", "image/gif");
+        Shadows.shadowOf(MimeTypeMap.getSingleton()).addExtensionMimeTypMapping("gif", "image/gif")
 
-        String filename = ContentResolverUtil.getFileName(mock, uri);
-
+        val filename = getFileName(mock, uri)
 
         // maybe we could do better here, but general guidance is to not parse the uri string
-        assertThat(filename, is("image.gif"));
+        assertThat(filename, `is`("image.gif"))
     }
 
-
-    @NonNull
-    protected Cursor cursorReturning(@SuppressWarnings("SameParameterValue") String value) {
-        Cursor cursor = mock(Cursor.class);
-        when(cursor.getString(0)).thenReturn(value);
-        return cursor;
+    protected fun cursorReturning(value: String): Cursor {
+        val cursor = mock(Cursor::class.java)
+        `when`(cursor.getString(0)).thenReturn(value)
+        return cursor
     }
 
-
-    protected void setQueryReturning(ContentResolver mock, Cursor cursorToReturn) {
-        when(mock.query(any(), any(), any(), any(), any())).thenReturn(cursorToReturn);
+    protected fun setQueryReturning(mock: ContentResolver, cursorToReturn: Cursor?) {
+        `when`(mock.query(any(), any(), any(), any(), any())).thenReturn(cursorToReturn)
     }
 
-    protected void setQueryThrowing(ContentResolver mock, Throwable ex) {
-        when(mock.query(any(), any(), any(), any(), any())).thenThrow(ex);
+    protected fun setQueryThrowing(mock: ContentResolver, ex: Throwable?) {
+        `when`(mock.query(any(), any(), any(), any(), any())).thenThrow(ex)
     }
 }
