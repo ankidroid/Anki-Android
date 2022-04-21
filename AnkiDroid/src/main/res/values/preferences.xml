@@ -27,4 +27,5 @@
     <string name="day_theme_key">dayTheme</string>
     <string name="night_theme_key">nightTheme</string>
     <string name="gestures_preference">gestures</string>
+    <string name="gestures_corner_touch_preference">gestureCornerTouch</string>
 </resources>
