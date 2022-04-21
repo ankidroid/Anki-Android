@@ -580,7 +580,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             this,
             R.array.browser_column2_headings, android.R.layout.simple_spinner_item
         )
-        //The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
+        // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
         column2Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
         cardsColumn2Spinner.adapter = column2Adapter
         // Create a new list adapter with updated column map any time the user changes the column
