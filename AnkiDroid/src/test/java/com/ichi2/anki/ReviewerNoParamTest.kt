@@ -13,386 +13,361 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.content.Intent
+import android.graphics.Color
+import androidx.annotation.CheckResult
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.cardviewer.Gesture.SWIPE_DOWN
+import com.ichi2.anki.cardviewer.Gesture.SWIPE_LEFT
+import com.ichi2.anki.cardviewer.Gesture.SWIPE_RIGHT
+import com.ichi2.anki.cardviewer.Gesture.SWIPE_UP
+import com.ichi2.anki.cardviewer.GestureProcessor
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.model.WhiteboardPenColor
+import com.ichi2.anki.reviewer.FullScreenMode
+import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
+import com.ichi2.libanki.Consts
+import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.database.NotImplementedException
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.greaterThan
+import org.hamcrest.Matchers.`is`
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
-
-import com.ichi2.anki.cardviewer.Gesture;
-import com.ichi2.anki.cardviewer.GestureProcessor;
-import com.ichi2.anki.cardviewer.ViewerCommand;
-import com.ichi2.anki.model.WhiteboardPenColor;
-import com.ichi2.anki.reviewer.FullScreenMode;
-import com.ichi2.libanki.Consts;
-
-import net.ankiweb.rsdroid.database.NotImplementedException;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.android.controller.ActivityController;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-
-/** A non-parameterized ReviewerTest - we should probably rename ReviewerTest in future */
-@RunWith(AndroidJUnit4.class)
-public class ReviewerNoParamTest extends RobolectricTest {
-    public static final int DEFAULT_LIGHT_PEN_COLOR = Color.BLACK;
-    public static final int ARBITRARY_PEN_COLOR_VALUE = 555;
-
-
+/** A non-parameterized ReviewerTest - we should probably rename ReviewerTest in future  */
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("IDE-lint")
+@KotlinCleanup("`is` -> equalTo")
+class ReviewerNoParamTest : RobolectricTest() {
     @Before
-    @Override
-    public void setUp() {
-        super.setUp();
+    override fun setUp() {
+        super.setUp()
         // This doesn't do an upgrade in the correct place
-        MetaDB.resetDB(getTargetContext());
+        MetaDB.resetDB(targetContext)
     }
 
     @Test
-    public void defaultWhiteboardColorIsUsedOnFirstRun() {
-        Whiteboard whiteboard = startReviewerForWhiteboard();
+    fun defaultWhiteboardColorIsUsedOnFirstRun() {
+        val whiteboard = startReviewerForWhiteboard()
 
-        assertThat("Pen color defaults to black", whiteboard.getPenColor(), is(DEFAULT_LIGHT_PEN_COLOR));
+        assertThat("Pen color defaults to black", whiteboard.penColor, `is`(DEFAULT_LIGHT_PEN_COLOR))
     }
 
     @Test
-    public void whiteboardLightModeColorIsUsed() {
-        storeLightModeColor(ARBITRARY_PEN_COLOR_VALUE);
+    fun whiteboardLightModeColorIsUsed() {
+        storeLightModeColor(ARBITRARY_PEN_COLOR_VALUE)
 
-        Whiteboard whiteboard = startReviewerForWhiteboard();
+        val whiteboard = startReviewerForWhiteboard()
 
-        assertThat("Pen color defaults to black", whiteboard.getPenColor(), is(555));
+        assertThat("Pen color defaults to black", whiteboard.penColor, `is`(555))
     }
 
     @Test
-    public void whiteboardDarkModeColorIsUsed() {
-        storeDarkModeColor(555);
+    fun whiteboardDarkModeColorIsUsed() {
+        storeDarkModeColor(555)
 
-        Whiteboard whiteboard = startReviewerForWhiteboardInDarkMode();
+        val whiteboard = startReviewerForWhiteboardInDarkMode()
 
-        assertThat("Pen color defaults to black", whiteboard.getPenColor(), is(555));
-    }
-
-
-    @Test
-    public void whiteboardPenColorChangeChangesDatabaseLight() {
-        Whiteboard whiteboard = startReviewerForWhiteboard();
-
-        whiteboard.setPenColor(ARBITRARY_PEN_COLOR_VALUE);
-
-        WhiteboardPenColor penColor = getPenColor();
-        assertThat("Light pen color is changed", penColor.getLightPenColor(), is(ARBITRARY_PEN_COLOR_VALUE));
+        assertThat("Pen color defaults to black", whiteboard.penColor, `is`(555))
     }
 
     @Test
-    public void whiteboardPenColorChangeChangesDatabaseDark() {
-        Whiteboard whiteboard = startReviewerForWhiteboardInDarkMode();
+    fun whiteboardPenColorChangeChangesDatabaseLight() {
+        val whiteboard = startReviewerForWhiteboard()
 
-        whiteboard.setPenColor(ARBITRARY_PEN_COLOR_VALUE);
+        whiteboard.penColor = ARBITRARY_PEN_COLOR_VALUE
 
-        WhiteboardPenColor penColor = getPenColor();
-        assertThat("Dark pen color is changed", penColor.getDarkPenColor(), is(ARBITRARY_PEN_COLOR_VALUE));
-    }
-
-
-    @Test
-    public void whiteboardDarkPenColorIsNotUsedInLightMode() {
-        storeDarkModeColor(555);
-
-        Whiteboard whiteboard = startReviewerForWhiteboard();
-
-        assertThat("Pen color defaults to black, even if dark mode color is changed", whiteboard.getPenColor(), is(DEFAULT_LIGHT_PEN_COLOR));
+        val penColor = penColor
+        assertThat("Light pen color is changed", penColor.lightPenColor, `is`(ARBITRARY_PEN_COLOR_VALUE))
     }
 
     @Test
-    public void differentDeckPenColorDoesNotAffectCurrentDeck() {
-        long did = 2L;
-        storeLightModeColor(ARBITRARY_PEN_COLOR_VALUE, did);
+    fun whiteboardPenColorChangeChangesDatabaseDark() {
+        val whiteboard = startReviewerForWhiteboardInDarkMode()
 
-        Whiteboard whiteboard = startReviewerForWhiteboard();
+        whiteboard.penColor = ARBITRARY_PEN_COLOR_VALUE
 
-        assertThat("Pen color defaults to black", whiteboard.getPenColor(), is(DEFAULT_LIGHT_PEN_COLOR));
-    }
-
-
-    @Test
-    public void flippingCardHidesFullscreen() {
-        addNoteUsingBasicModel("Hello", "World");
-        ReviewerExt reviewer = startReviewerFullScreen();
-
-        int hideCount = reviewer.getDelayedHideCount();
-
-        reviewer.displayCardAnswer();
-
-        assertThat("Hide should be called after flipping a card", reviewer.getDelayedHideCount(), greaterThan(hideCount));
-    }
-
-
-    @Test
-    public void showingCardHidesFullScreen() {
-        addNoteUsingBasicModel("Hello", "World");
-        ReviewerExt reviewer = startReviewerFullScreen();
-
-        reviewer.displayCardAnswer();
-        advanceRobolectricLooperWithSleep();
-
-        int hideCount = reviewer.getDelayedHideCount();
-
-        reviewer.answerCard(Consts.BUTTON_ONE);
-        advanceRobolectricLooperWithSleep();
-
-        assertThat("Hide should be called after answering a card", reviewer.getDelayedHideCount(), greaterThan(hideCount));
+        val penColor = penColor
+        assertThat("Dark pen color is changed", penColor.darkPenColor, `is`(ARBITRARY_PEN_COLOR_VALUE))
     }
 
     @Test
-    public void undoingCardHidesFullScreen() {
-        addNoteUsingBasicModel("Hello", "World");
-        ReviewerExt reviewer = startReviewerFullScreen();
+    fun whiteboardDarkPenColorIsNotUsedInLightMode() {
+        storeDarkModeColor(555)
 
-        reviewer.displayCardAnswer();
-        advanceRobolectricLooperWithSleep();
-        reviewer.answerCard(Consts.BUTTON_ONE);
-        advanceRobolectricLooperWithSleep();
+        val whiteboard = startReviewerForWhiteboard()
 
-        int hideCount = reviewer.getDelayedHideCount();
+        assertThat("Pen color defaults to black, even if dark mode color is changed", whiteboard.penColor, `is`(DEFAULT_LIGHT_PEN_COLOR))
+    }
 
-        reviewer.executeCommand(ViewerCommand.COMMAND_UNDO);
-        advanceRobolectricLooperWithSleep();
+    @Test
+    fun differentDeckPenColorDoesNotAffectCurrentDeck() {
+        val did = 2L
+        storeLightModeColor(ARBITRARY_PEN_COLOR_VALUE, did)
 
+        val whiteboard = startReviewerForWhiteboard()
 
-        assertThat("Hide should be called after answering a card", reviewer.getDelayedHideCount(), greaterThan(hideCount));
+        assertThat("Pen color defaults to black", whiteboard.penColor, `is`(DEFAULT_LIGHT_PEN_COLOR))
+    }
+
+    @Test
+    fun flippingCardHidesFullscreen() {
+        addNoteUsingBasicModel("Hello", "World")
+        val reviewer = startReviewerFullScreen()
+
+        val hideCount = reviewer.delayedHideCount
+
+        reviewer.displayCardAnswer()
+
+        assertThat("Hide should be called after flipping a card", reviewer.delayedHideCount, greaterThan(hideCount))
+    }
+
+    @Test
+    fun showingCardHidesFullScreen() {
+        addNoteUsingBasicModel("Hello", "World")
+        val reviewer = startReviewerFullScreen()
+
+        reviewer.displayCardAnswer()
+        advanceRobolectricLooperWithSleep()
+
+        val hideCount = reviewer.delayedHideCount
+
+        reviewer.answerCard(Consts.BUTTON_ONE)
+        advanceRobolectricLooperWithSleep()
+
+        assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
+    }
+
+    @Test
+    fun undoingCardHidesFullScreen() {
+        addNoteUsingBasicModel("Hello", "World")
+        val reviewer = startReviewerFullScreen()
+
+        reviewer.displayCardAnswer()
+        advanceRobolectricLooperWithSleep()
+        reviewer.answerCard(Consts.BUTTON_ONE)
+        advanceRobolectricLooperWithSleep()
+
+        val hideCount = reviewer.delayedHideCount
+
+        reviewer.executeCommand(ViewerCommand.COMMAND_UNDO)
+        advanceRobolectricLooperWithSleep()
+
+        assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
     }
 
     @Test
     @RunInBackground
-    public void defaultDrawerConflictIsTrueIfGesturesEnabled() {
-        enableGestureSetting();
-        ReviewerExt reviewer = startReviewerFullScreen();
+    fun defaultDrawerConflictIsTrueIfGesturesEnabled() {
+        enableGestureSetting()
+        val reviewer = startReviewerFullScreen()
 
-        assertThat(reviewer.hasDrawerSwipeConflicts(), is(true));
+        assertThat(reviewer.hasDrawerSwipeConflicts(), `is`(true))
     }
 
-
     @Test
-    public void noDrawerConflictsBeforeOnCreate() {
-        enableGestureSetting();
-        ActivityController<Reviewer> controller = Robolectric.buildActivity(Reviewer.class, new Intent());
+    fun noDrawerConflictsBeforeOnCreate() {
+        enableGestureSetting()
+        val controller = Robolectric.buildActivity(Reviewer::class.java, Intent())
         try {
-            assertThat("no conflicts before onCreate", controller.get().hasDrawerSwipeConflicts(), is(false));
+            assertThat("no conflicts before onCreate", controller.get().hasDrawerSwipeConflicts(), `is`(false))
         } finally {
             try {
-                enableGesture(Gesture.SWIPE_UP);
-            } catch (Exception e) {
+                enableGesture(Gesture.SWIPE_UP)
+            } catch (e: Exception) {
                 // ignore
             }
         }
     }
 
     @Test
-    public void noDrawerConflictsIfGesturesDisabled() {
-        disableGestureSetting();
-        enableGesture(Gesture.SWIPE_UP);
-        ReviewerExt reviewer = startReviewerFullScreen();
-        assertThat("gestures should be disabled", getGestureProcessor().isEnabled(), is(false));
-        assertThat(reviewer.hasDrawerSwipeConflicts(), is(false));
-    }
-
-
-    @Test
-    public void noDrawerConflictsIfNoGestures() {
-        enableGestureSetting();
-        disableConflictGestures();
-        ReviewerExt reviewer = startReviewerFullScreen();
-        assertThat("gestures should be enabled", getGestureProcessor().isEnabled(), is(true));
-        assertThat("no conflicts, so no conflicts detected", reviewer.hasDrawerSwipeConflicts(), is(false));
+    fun noDrawerConflictsIfGesturesDisabled() {
+        disableGestureSetting()
+        enableGesture(Gesture.SWIPE_UP)
+        val reviewer = startReviewerFullScreen()
+        assertThat("gestures should be disabled", gestureProcessor.isEnabled, `is`(false))
+        assertThat(reviewer.hasDrawerSwipeConflicts(), `is`(false))
     }
 
     @Test
-    @RunInBackground
-    public void drawerConflictsIfUp() {
-        enableGestureSetting();
-        disableConflictGestures();
-        enableGesture(Gesture.SWIPE_UP);
-        ReviewerExt reviewer = startReviewerFullScreen();
-        assertThat("gestures should be enabled", getGestureProcessor().isEnabled(), is(true));
-        assertThat(reviewer.hasDrawerSwipeConflicts(), is(true));
-    }
-
-
-    @Test
-    @RunInBackground
-    public void drawerConflictsIfDown() {
-        enableGestureSetting();
-        disableConflictGestures();
-        enableGesture(Gesture.SWIPE_DOWN);
-        ReviewerExt reviewer = startReviewerFullScreen();
-        assertThat("gestures should be enabled", getGestureProcessor().isEnabled(), is(true));
-        assertThat(reviewer.hasDrawerSwipeConflicts(), is(true));
+    fun noDrawerConflictsIfNoGestures() {
+        enableGestureSetting()
+        disableConflictGestures()
+        val reviewer = startReviewerFullScreen()
+        assertThat("gestures should be enabled", gestureProcessor.isEnabled, `is`(true))
+        assertThat("no conflicts, so no conflicts detected", reviewer.hasDrawerSwipeConflicts(), `is`(false))
     }
 
     @Test
     @RunInBackground
-    public void drawerConflictsIfRight() {
-        enableGestureSetting();
-        disableConflictGestures();
-        enableGesture(Gesture.SWIPE_RIGHT);
-        ReviewerExt reviewer = startReviewerFullScreen();
-        assertThat("gestures should be enabled", getGestureProcessor().isEnabled(), is(true));
-        assertThat(reviewer.hasDrawerSwipeConflicts(), is(true));
-    }
-
-
-    @Test
-    public void normalReviewerFitsSystemWindows() {
-        Reviewer reviewer = startReviewer();
-        assertThat(reviewer.fitsSystemWindows(), is(true));
+    fun drawerConflictsIfUp() {
+        enableGestureSetting()
+        disableConflictGestures()
+        enableGesture(Gesture.SWIPE_UP)
+        val reviewer = startReviewerFullScreen()
+        assertThat("gestures should be enabled", gestureProcessor.isEnabled, `is`(true))
+        assertThat(reviewer.hasDrawerSwipeConflicts(), `is`(true))
     }
 
     @Test
-    public void fullscreenDoesNotFitSystemWindow() {
-        ReviewerExt reviewer = startReviewerFullScreen();
-        assertThat(reviewer.fitsSystemWindows(), is(false));
+    @RunInBackground
+    fun drawerConflictsIfDown() {
+        enableGestureSetting()
+        disableConflictGestures()
+        enableGesture(Gesture.SWIPE_DOWN)
+        val reviewer = startReviewerFullScreen()
+        assertThat("gestures should be enabled", gestureProcessor.isEnabled, `is`(true))
+        assertThat(reviewer.hasDrawerSwipeConflicts(), `is`(true))
     }
 
-    protected GestureProcessor getGestureProcessor() {
-        GestureProcessor gestureProcessor = new GestureProcessor(null);
-        gestureProcessor.init(AnkiDroidApp.getSharedPrefs(this.getTargetContext()));
-        return gestureProcessor;
+    @Test
+    @RunInBackground
+    fun drawerConflictsIfRight() {
+        enableGestureSetting()
+        disableConflictGestures()
+        enableGesture(Gesture.SWIPE_RIGHT)
+        val reviewer = startReviewerFullScreen()
+        assertThat("gestures should be enabled", gestureProcessor.isEnabled, `is`(true))
+        assertThat(reviewer.hasDrawerSwipeConflicts(), `is`(true))
     }
 
-    protected void disableConflictGestures() {
-        disableGestures(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT);
+    @Test
+    fun normalReviewerFitsSystemWindows() {
+        val reviewer = startReviewer()
+        assertThat(reviewer.fitsSystemWindows(), `is`(true))
     }
 
-    private void enableGestureSetting() {
-        setGestureSetting(true);
+    @Test
+    fun fullscreenDoesNotFitSystemWindow() {
+        val reviewer = startReviewerFullScreen()
+        assertThat(reviewer.fitsSystemWindows(), `is`(false))
     }
 
-    private void disableGestureSetting() {
-        setGestureSetting(false);
-    }
-
-    private void setGestureSetting(boolean value) {
-        Editor settings = AnkiDroidApp.getSharedPrefs(getTargetContext()).edit();
-        settings.putBoolean(GestureProcessor.PREF_KEY, value);
-        settings.apply();
-    }
-
-    private void disableGestures(Gesture... gestures) {
-        Editor settings = AnkiDroidApp.getSharedPrefs(getTargetContext()).edit();
-        for (Gesture g: gestures) {
-            String k = getKey(g);
-            settings.putString(k, ViewerCommand.COMMAND_NOTHING.toPreferenceString());
+    protected val gestureProcessor: GestureProcessor
+        get() {
+            val gestureProcessor = GestureProcessor(null)
+            gestureProcessor.init(AnkiDroidApp.getSharedPrefs(targetContext))
+            return gestureProcessor
         }
-        settings.apply();
+
+    protected fun disableConflictGestures() {
+        disableGestures(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT)
     }
 
-    /** Enables a gesture (without changing the overall setting of whether gestures are allowed) */
-    private void enableGesture(Gesture gesture) {
-        Editor settings = AnkiDroidApp.getSharedPrefs(getTargetContext()).edit();
-        String k = getKey(gesture);
-        settings.putString(k, ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1.toPreferenceString());
-        settings.apply();
+    private fun enableGestureSetting() {
+        setGestureSetting(true)
     }
 
-    private String getKey(Gesture gesture) {
-        switch (gesture) {
-            case SWIPE_UP: return "gestureSwipeUp";
-            case SWIPE_DOWN: return "gestureSwipeDown";
-            case SWIPE_LEFT: return "gestureSwipeLeft";
-            case SWIPE_RIGHT: return "gestureSwipeRight";
-            default: throw new NotImplementedException(gesture.toString());
+    private fun disableGestureSetting() {
+        setGestureSetting(false)
+    }
+
+    @KotlinCleanup(".edit {}")
+    private fun setGestureSetting(value: Boolean) {
+        val settings = AnkiDroidApp.getSharedPrefs(targetContext).edit()
+        settings.putBoolean(GestureProcessor.PREF_KEY, value)
+        settings.apply()
+    }
+
+    @KotlinCleanup(".edit {}")
+    private fun disableGestures(vararg gestures: Gesture) {
+        val settings = AnkiDroidApp.getSharedPrefs(targetContext).edit()
+        for (g in gestures) {
+            val k = getKey(g)
+            settings.putString(k, ViewerCommand.COMMAND_NOTHING.toPreferenceString())
+        }
+        settings.apply()
+    }
+
+    /** Enables a gesture (without changing the overall setting of whether gestures are allowed)  */
+    @KotlinCleanup(".edit {}")
+    private fun enableGesture(gesture: Gesture) {
+        val settings = AnkiDroidApp.getSharedPrefs(targetContext).edit()
+        val k = getKey(gesture)
+        settings.putString(k, ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1.toPreferenceString())
+        settings.apply()
+    }
+
+    private fun getKey(gesture: Gesture): String {
+        return when (gesture) {
+            SWIPE_UP -> "gestureSwipeUp"
+            SWIPE_DOWN -> "gestureSwipeDown"
+            SWIPE_LEFT -> "gestureSwipeLeft"
+            SWIPE_RIGHT -> "gestureSwipeRight"
+            else -> throw NotImplementedException(gesture.toString())
         }
     }
 
-    private ReviewerExt startReviewerFullScreen() {
-        SharedPreferences sharedPrefs = AnkiDroidApp.getSharedPrefs(getTargetContext());
-        FullScreenMode.setPreference(sharedPrefs, FullScreenMode.BUTTONS_ONLY);
-        ReviewerExt reviewer = ReviewerTest.startReviewer(this, ReviewerExt.class);
-        return reviewer;
+    private fun startReviewerFullScreen(): ReviewerExt {
+        val sharedPrefs = AnkiDroidApp.getSharedPrefs(targetContext)
+        setPreference(sharedPrefs, FullScreenMode.BUTTONS_ONLY)
+        return ReviewerTest.startReviewer(this, ReviewerExt::class.java)
     }
 
-    protected void storeDarkModeColor(@SuppressWarnings("SameParameterValue") int value) {
-        MetaDB.storeWhiteboardPenColor(getTargetContext(), Consts.DEFAULT_DECK_ID, false, value);
+    protected fun storeDarkModeColor(value: Int) {
+        MetaDB.storeWhiteboardPenColor(targetContext, Consts.DEFAULT_DECK_ID, false, value)
     }
 
-    protected void storeLightModeColor(@SuppressWarnings("SameParameterValue") int value, Long did) {
-        MetaDB.storeWhiteboardPenColor(getTargetContext(), did, false, value);
+    protected fun storeLightModeColor(value: Int, did: Long?) {
+        MetaDB.storeWhiteboardPenColor(targetContext, did!!, false, value)
     }
 
-    protected void storeLightModeColor(@SuppressWarnings("SameParameterValue") int value) {
-        MetaDB.storeWhiteboardPenColor(getTargetContext(), Consts.DEFAULT_DECK_ID, true, value);
+    protected fun storeLightModeColor(value: Int) {
+        MetaDB.storeWhiteboardPenColor(targetContext, Consts.DEFAULT_DECK_ID, true, value)
     }
 
-    private void enableDarkMode() {
-        AnkiDroidApp.getSharedPrefs(getTargetContext()).edit().putBoolean("invertedColors", true).apply();
+    private fun enableDarkMode() {
+        AnkiDroidApp.getSharedPrefs(targetContext).edit().putBoolean("invertedColors", true).apply()
     }
 
-    @NonNull
-    protected WhiteboardPenColor getPenColor() {
-        return MetaDB.getWhiteboardPenColor(getTargetContext(), Consts.DEFAULT_DECK_ID);
-    }
+    protected val penColor: WhiteboardPenColor
+        get() = MetaDB.getWhiteboardPenColor(targetContext, Consts.DEFAULT_DECK_ID)
 
     @CheckResult
-    @NonNull
-    protected Whiteboard startReviewerForWhiteboard() {
+    protected fun startReviewerForWhiteboard(): Whiteboard {
         // we need a card for the reviewer to start
-        addNoteUsingBasicModel("Hello", "World");
+        addNoteUsingBasicModel("Hello", "World")
 
-        Reviewer reviewer = startReviewer();
+        val reviewer = startReviewer()
 
-        reviewer.toggleWhiteboard();
+        reviewer.toggleWhiteboard()
 
-        Whiteboard whiteboard = reviewer.getWhiteboard();
-        if (whiteboard == null) {
-            throw new IllegalStateException("Could not get whiteboard");
-        }
-        return whiteboard;
+        return reviewer.whiteboard
+            ?: throw IllegalStateException("Could not get whiteboard")
     }
 
     @CheckResult
-    @NonNull
-    protected Whiteboard startReviewerForWhiteboardInDarkMode() {
-        addNoteUsingBasicModel("Hello", "World");
+    protected fun startReviewerForWhiteboardInDarkMode(): Whiteboard {
+        addNoteUsingBasicModel("Hello", "World")
 
-        Reviewer reviewer = startReviewer();
-        enableDarkMode();
-        reviewer.toggleWhiteboard();
+        val reviewer = startReviewer()
+        enableDarkMode()
+        reviewer.toggleWhiteboard()
 
-        Whiteboard whiteboard = reviewer.getWhiteboard();
-        if (whiteboard == null) {
-            throw new IllegalStateException("Could not get whiteboard");
-        }
-        return whiteboard;
+        return reviewer.whiteboard
+            ?: throw IllegalStateException("Could not get whiteboard")
     }
 
-
-    private Reviewer startReviewer() {
-        return ReviewerTest.startReviewer(this);
+    private fun startReviewer(): Reviewer {
+        return ReviewerTest.startReviewer(this)
     }
 
-    private static class ReviewerExt extends Reviewer {
-
-        int mDelayedCount = 0;
-        @Override
-        protected void delayedHide(int delayMillis) {
-            mDelayedCount++;
-            super.delayedHide(delayMillis);
+    private class ReviewerExt : Reviewer() {
+        var delayedHideCount = 0
+        override fun delayedHide(delayMillis: Int) {
+            delayedHideCount++
+            super.delayedHide(delayMillis)
         }
+    }
 
-        public int getDelayedHideCount() {
-            return mDelayedCount;
-        }
+    companion object {
+        const val DEFAULT_LIGHT_PEN_COLOR = Color.BLACK
+        const val ARBITRARY_PEN_COLOR_VALUE = 555
     }
 }
