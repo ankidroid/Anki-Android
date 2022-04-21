@@ -398,7 +398,7 @@ public class AnkiDroidApp extends Application {
     }
 
     /** Used when we don't have an exception to throw, but we know something is wrong and want to diagnose it */
-    public static void sendExceptionReport(@NonNull String message, String origin) {
+    public static void sendExceptionReport(String message, String origin) {
         sendExceptionReport(new ManuallyReportedException(message), origin, null);
     }
 
