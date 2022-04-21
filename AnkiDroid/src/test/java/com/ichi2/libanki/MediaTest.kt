@@ -13,21 +13,17 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import com.ichi2.anki.RobolectricTest;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.testutils.AnkiAssert.assertEqualsArrayList;
-import static org.junit.Assert.assertEquals;
-
-@RunWith(AndroidJUnit4.class)
-public class MediaTest extends RobolectricTest {
+@RunWith(AndroidJUnit4::class)
+class MediaTest : RobolectricTest() {
     /*****************
      ** Media        *
      *****************/
@@ -51,25 +47,27 @@ public class MediaTest extends RobolectricTest {
        assertEquals("foo-7c211433f02071597741e6ff5a8ea34789abbf43.jpg", col.getMedia().addFile(path));
        } */
     @Test
-    public void test_strings() {
-        Collection col = getCol();
-        long mid = col.getModels().current().getLong("id");
-        assertEquals(0, col.getMedia().filesInStr(mid, "aoeu").size());
-        assertEqualsArrayList(new String[] {"foo.jpg"}, col.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg'>ao"));
-        assertEqualsArrayList(new String[] {"foo.jpg"}, col.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg' style='test'>ao"));
-        assertEqualsArrayList(new String[] {"foo.jpg", "bar.jpg"}, col.getMedia().filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao"));
-        assertEqualsArrayList(new String[] {"foo.jpg"}, col.getMedia().filesInStr(mid, "aoeu<img src=foo.jpg style=bar>ao"));
-        assertEqualsArrayList(new String[] {"one", "two"}, col.getMedia().filesInStr(mid, "<img src=one><img src=two>"));
-        assertEqualsArrayList(new String[] {"foo.jpg"}, col.getMedia().filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao"));
-        assertEqualsArrayList(new String[] {"foo.jpg", "fo"},
-                col.getMedia().filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao"));
-        assertEqualsArrayList(new String[] {"foo.mp3"}, col.getMedia().filesInStr(mid, "aou[sound:foo.mp3]aou"));
-        assertEquals("aoeu", col.getMedia().strip("aoeu"));
-        assertEquals("aoeuaoeu", col.getMedia().strip("aoeu[sound:foo.mp3]aoeu"));
-        assertEquals("aoeu", col.getMedia().strip("a<img src=yo>oeu"));
-        assertEquals("aoeu", Media.escapeImages("aoeu"));
-        assertEquals("<img src='http://foo.com'>", Media.escapeImages("<img src='http://foo.com'>"));
-        assertEquals("<img src=\"foo%20bar.jpg\">", Media.escapeImages("<img src=\"foo bar.jpg\">"));
+    fun test_strings() {
+        val col = col
+        val mid = col.models.current()!!.getLong("id")
+        assertEquals(0, col.media.filesInStr(mid, "aoeu").size.toLong())
+        assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, "aoeu<img src='foo.jpg'>ao"))
+        assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, "aoeu<img src='foo.jpg' style='test'>ao"))
+        assertEqualsArrayList(arrayOf("foo.jpg", "bar.jpg"), col.media.filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao"))
+        assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, "aoeu<img src=foo.jpg style=bar>ao"))
+        assertEqualsArrayList(arrayOf("one", "two"), col.media.filesInStr(mid, "<img src=one><img src=two>"))
+        assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao"))
+        assertEqualsArrayList(
+            arrayOf("foo.jpg", "fo"),
+            col.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao")
+        )
+        assertEqualsArrayList(arrayOf("foo.mp3"), col.media.filesInStr(mid, "aou[sound:foo.mp3]aou"))
+        assertEquals("aoeu", col.media.strip("aoeu"))
+        assertEquals("aoeuaoeu", col.media.strip("aoeu[sound:foo.mp3]aoeu"))
+        assertEquals("aoeu", col.media.strip("a<img src=yo>oeu"))
+        assertEquals("aoeu", Media.escapeImages("aoeu"))
+        assertEquals("<img src='http://foo.com'>", Media.escapeImages("<img src='http://foo.com'>"))
+        assertEquals("<img src=\"foo%20bar.jpg\">", Media.escapeImages("<img src=\"foo bar.jpg\">"))
     }
 
     /* TODO: file
