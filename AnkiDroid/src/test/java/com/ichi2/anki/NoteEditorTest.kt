@@ -25,8 +25,8 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.editorCard
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
-import com.ichi2.compat.Compat.ACTION_PROCESS_TEXT
-import com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT
+import com.ichi2.compat.Compat.Companion.ACTION_PROCESS_TEXT
+import com.ichi2.compat.Compat.Companion.EXTRA_PROCESS_TEXT
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks.CURRENT_DECK
 import com.ichi2.libanki.Model
