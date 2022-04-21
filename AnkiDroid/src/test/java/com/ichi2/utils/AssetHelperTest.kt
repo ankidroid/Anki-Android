@@ -13,20 +13,18 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Test
 
-import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-public class AssetHelperTest {
-
+class AssetHelperTest {
     @Test
-    public void guessMimeTypeTest() {
-        assertThat(AssetHelper.guessMimeType("test.txt"), is("text/plain"));
-        assertThat(AssetHelper.guessMimeType("test.png"), is("image/png"));
-        assertThat(AssetHelper.guessMimeType("test.zip"), is("application/zip"));
+    @KotlinCleanup("is --> equalTo")
+    fun guessMimeTypeTest() {
+        assertThat(AssetHelper.guessMimeType("test.txt"), `is`("text/plain"))
+        assertThat(AssetHelper.guessMimeType("test.png"), `is`("image/png"))
+        assertThat(AssetHelper.guessMimeType("test.zip"), `is`("application/zip"))
     }
 }
