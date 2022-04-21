@@ -41,7 +41,7 @@ runPrettier () {
     fi
 
     # Run prettier over all Javascript files
-    npx --yes prettier --ignore-unknown --write AnkiDroid/**/*.js
+    npx prettier --ignore-unknown --write AnkiDroid/**/*.js
 
     echo "Completed npx prettier run."
     echo "$CHANGED_JS_FILES" | while read -r file; do
