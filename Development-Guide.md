@@ -78,14 +78,14 @@ Increasing [test coverage](https://github.com/ankidroid/Anki-Android/wiki/Develo
 If you want to create your own feature, please post a feature request [via an issue](https://github.com/ankidroid/Anki-Android/issues/new?assignees=&labels=&template=feature_request.md&title=) so that the core contributors can confirm whether it would be accepted. 
 
 # Source code
-First, register here on GitHub, and follow the [instructions](https://help.github.com/articles/fork-a-repo/) on GitHub on the Anki-Android repository to fork and clone the code. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the master branch](https://github.com/ankidroid/Anki-Android/commits/master.atom).
+First, register here on GitHub, and follow the [instructions](https://help.github.com/articles/fork-a-repo/) on GitHub on the Anki-Android repository to fork and clone the code. If you want to be notified about each new improvement/bugfix, please subscribe to the [commits feed for the main branch](https://github.com/ankidroid/Anki-Android/commits/main.atom).
 
 ## Android Studio
 The next step is to install [Android Studio and the Android SDK](https://developer.android.com/sdk/index.html). Open Android Studio and choose "Open Project", then select the folder where you earlier cloned the Github repository to (we will refer to this folder as `%AnkiDroidRoot%`).
 
 On opening the project it should start to build and should eventually prompt you to install the following missing SDK components. Install them one by one as you get prompted:
 
-  * Android SDK Build-tools and Android SDK platform (version must match "buildToolsVersion" and "compileSdkVersion" in the project's [build.gradle file](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/build.gradle))
+  * Android SDK Build-tools and Android SDK platform (version must match "buildToolsVersion" and "compileSdkVersion" in the project's [build.gradle file](https://github.com/ankidroid/Anki-Android/blob/main/AnkiDroid/build.gradle))
   * Android Support Repository (latest version)
   * Android Support Library (latest version)
 
@@ -138,11 +138,11 @@ git remote add upstream https://github.com/ankidroid/Anki-Android.git
 ```
 
 ### Making a new pull request
-Now if want to make a new change to the code base, we create a new 'feature branch' based off the latest version of the master branch:
+Now if want to make a new change to the code base, we create a new 'feature branch' based off the latest version of the main branch:
 
 ```
-git checkout master
-git pull upstream master
+git checkout main
+git pull upstream main
 git checkout -b my-feature-branch 
 # make your changes to the source code
 git push origin HEAD
@@ -154,10 +154,10 @@ On navigating to the [main AnkiDroid repository](https://github.com/ankidroid/An
 If changes are made to the AnkiDroid repository that conflict with the changes in your pull request in-between creating the feature branch and your changes getting merged into the main repository, it may be necessary to rebase your code:
 
 ```
-git checkout master
-git pull upstream master
+git checkout main
+git pull upstream main
 git checkout my-feature-branch # or just "git checkout -" to save typing
-git rebase master
+git rebase main
 # it may be necessary to resolve merge conflicts here
 # if you need to update the existing pull request, you should do a 'force' push
 git push origin HEAD -f
@@ -170,7 +170,7 @@ There are two kinds of test in AnkiDroid. Unit test and on-device integration te
 ```
 
 ### Unit tests
-There are unit tests defined in the `AnkiDroid/src/test` directory, with [an extendable test superclass available using the Robolectric framework](https://github.com/ankidroid/Anki-Android/blob/master/AnkiDroid/src/test/java/com/ichi2/anki/RobolectricTest.java) to make standard Android services available, including sqlite so you can operate on Anki Collections in your tests - each Collection created on the fly prior to each test method and deleted afterwards for isolation. You can run these tests by selecting them directly from AndroidStudio for individual tests or all tests from one file, or you can run them from the command line and generate a coverage report to verify the effect of your testing from the command line using:
+There are unit tests defined in the `AnkiDroid/src/test` directory, with [an extendable test superclass available using the Robolectric framework](https://github.com/ankidroid/Anki-Android/blob/main/AnkiDroid/src/test/java/com/ichi2/anki/RobolectricTest.java) to make standard Android services available, including sqlite so you can operate on Anki Collections in your tests - each Collection created on the fly prior to each test method and deleted afterwards for isolation. You can run these tests by selecting them directly from AndroidStudio for individual tests or all tests from one file, or you can run them from the command line and generate a coverage report to verify the effect of your testing from the command line using:
 ```
 ./gradlew jacocoUnitTestReport
 ```
@@ -264,7 +264,7 @@ A translation consists of a key (used to reference the translation from Java), a
 
 <details><summary>Example of the correct file to modify</summary>
 
-![demo](https://github.com/imaryandokania/catsapi/blob/master/Screenshot%202021-03-15%20at%2010.36.53%20AM.png)
+![demo](https://github.com/imaryandokania/catsapi/blob/main/Screenshot%202021-03-15%20at%2010.36.53%20AM.png)
 
 </details>
 
@@ -307,7 +307,7 @@ See the [[separate wiki page|Database-Structure]] for a description of the datab
 See the [[Release Procedure Wiki Page|Release-Procedure]]
 
 ## Localization Administration
-Updating the master strings from Git to Crowdin is a pretty delicate thing. Uploading an empty string.xml for instance would delete all translations. And uploading changed strings delete as well all translations. This is the desired behavior in most cases, but when just some English typos are corrected this shouldn't destroy all translations.
+Updating the main strings from Git to Crowdin is a pretty delicate thing. Uploading an empty string.xml for instance would delete all translations. And uploading changed strings delete as well all translations. This is the desired behavior in most cases, but when just some English typos are corrected this shouldn't destroy all translations.
 
 In this case, it's necessary to:
 
@@ -352,7 +352,7 @@ The flow for dependency updates is a circle
 - the locally up-to-date dependency updates branch will be force-pushed back to the github dependency-updates branch
 - the cycle repeats: dependabot makes PRs to the dependency-updates branch, etc
 
-If dependabot needs configuration changes (to ignore a dependency or a version), the configuration should be done in the [`.github/dependabot.yaml`](https://github.com/ankidroid/Anki-Android/blob/master/.github/dependabot.yml) file, not via any UI interaction. The difference is that the YAML config is reviewable text while the UI modifies some opaque database and thus is not manageable or reviewable.
+If dependabot needs configuration changes (to ignore a dependency or a version), the configuration should be done in the [`.github/dependabot.yaml`](https://github.com/ankidroid/Anki-Android/blob/main/.github/dependabot.yml) file, not via any UI interaction. The difference is that the YAML config is reviewable text while the UI modifies some opaque database and thus is not manageable or reviewable.
 
 ## HTML javascript inspection
 Sometimes you need to look at the HTML and javascript generated by AnkiDroid as it displays cards. There are two ways to do this, either by looking at the raw HTML as a file or by watching it live on the device
