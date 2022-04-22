@@ -31,6 +31,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import java.io.IOException
+import java.net.URL
 import kotlin.collections.HashSet
 
 @RunWith(AndroidJUnit4::class)
@@ -114,5 +115,23 @@ class AddonModelTest : RobolectricTest() {
         reviewerEnabledAddonSet = mPrefs.getStringSet(REVIEWER_ADDON, HashSet())
         assertEquals(0, reviewerEnabledAddonSet?.size)
         assertFalse(reviewerEnabledAddonSet!!.contains(addonModel.name))
+    }
+
+    @Test
+    fun getAddonModelListFromJsonTest() {
+        shadowOf(getMainLooper()).idle()
+
+        val url = URL("https://raw.githubusercontent.com/krmanik/anki-js-addon-json/main/test-js-addon.json")
+        val result = getAddonModelListFromJson(url)
+
+        // first addon name and tgz download url
+        val addon1 = result.first[0]
+        assertEquals(addon1.name, "ankidroid-js-addon-progress-bar")
+        addon1.dist["tarball"]?.let { assertTrue(it.endsWith(".tgz")) }
+
+        // second addon name and tgz download url
+        val addon2 = result.first[1]
+        assertEquals(addon2.name, "valid-ankidroid-js-addon-test")
+        addon2.dist["tarball"]?.let { assertTrue(it.endsWith(".tgz")) }
     }
 }
