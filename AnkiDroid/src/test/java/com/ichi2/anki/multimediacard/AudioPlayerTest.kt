@@ -13,152 +13,151 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.multimediacard
 
-package com.ichi2.anki.multimediacard;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import com.ichi2.utils.KotlinCleanup
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TemporaryFolder
+import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.robolectric.shadows.ShadowMediaPlayer
+import org.robolectric.shadows.util.DataSource
+import java.io.File
+import java.io.IOException
+import kotlin.Throws
 
-import com.ichi2.anki.RobolectricTest;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
-
-import org.robolectric.shadows.ShadowMediaPlayer;
-import org.robolectric.shadows.util.DataSource;
-
-import java.io.File;
-import java.io.IOException;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.testutils.AnkiAssert.assertDoesNotThrow;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-@RunWith(AndroidJUnit4.class)
-public class AudioPlayerTest extends RobolectricTest {
-
-    private AudioPlayer mAudioPlayer;
-    private File mFile;
+@RunWith(AndroidJUnit4::class)
+class AudioPlayerTest : RobolectricTest() {
+    @KotlinCleanup("lateinit")
+    private var mAudioPlayer: AudioPlayer? = null
+    private lateinit var mFile: File
 
     @Rule
-    public TemporaryFolder tempDirectory = new TemporaryFolder();
+    @JvmField
+    var temporaryDirectory = TemporaryFolder()
 
     @Before
-    public void before() throws IOException {
-        mAudioPlayer = new AudioPlayer();
-        mFile = tempDirectory.newFile("testaudio.wav");
+    @Throws(IOException::class)
+    fun before() {
+        mAudioPlayer = AudioPlayer()
+        mFile = temporaryDirectory.newFile("testaudio.wav")
 
-        ShadowMediaPlayer testPlayer = new ShadowMediaPlayer();
-        DataSource fileSource = DataSource.toDataSource(mFile.getAbsolutePath());
-        ShadowMediaPlayer.MediaInfo fileInfo = new ShadowMediaPlayer.MediaInfo();
-        testPlayer.addMediaInfo(fileSource, fileInfo);
+        val fileSource = DataSource.toDataSource(mFile.absolutePath)
+        val fileInfo = ShadowMediaPlayer.MediaInfo()
+        ShadowMediaPlayer.addMediaInfo(fileSource, fileInfo)
     }
 
     @Test
-    public void testPlayOnce() throws IOException {
-        Runnable stoppingListener = mock(Runnable.class);
-        Runnable stoppedListener = mock(Runnable.class);
+    @Throws(IOException::class)
+    fun testPlayOnce() {
+        val stoppingListener = mock(Runnable::class.java)
+        val stoppedListener = mock(Runnable::class.java)
 
-        mAudioPlayer.setOnStoppingListener(stoppingListener);
-        mAudioPlayer.setOnStoppedListener(stoppedListener);
+        mAudioPlayer!!.setOnStoppingListener(stoppingListener)
+        mAudioPlayer!!.setOnStoppedListener(stoppedListener)
 
-        runTasksInBackground();
-        mAudioPlayer.play(mFile.getAbsolutePath());
-        advanceRobolectricLooper();
-        //audio should play and finish, with each listener only running once
-        verify(stoppingListener, times(1)).run();
-        verify(stoppedListener, times(1)).run();
-
+        runTasksInBackground()
+        mAudioPlayer!!.play(mFile.absolutePath)
+        advanceRobolectricLooper()
+        // audio should play and finish, with each listener only running once
+        verify(stoppingListener, times(1)).run()
+        verify(stoppedListener, times(1)).run()
     }
 
     @Test
-    public void testPlayMultipleTimes() throws IOException {
-        Runnable stoppingListener = mock(Runnable.class);
-        Runnable stoppedListener = mock(Runnable.class);
+    @Throws(IOException::class)
+    fun testPlayMultipleTimes() {
+        val stoppingListener = mock(Runnable::class.java)
+        val stoppedListener = mock(Runnable::class.java)
 
-        mAudioPlayer.setOnStoppingListener(stoppingListener);
-        mAudioPlayer.setOnStoppedListener(stoppedListener);
+        mAudioPlayer!!.setOnStoppingListener(stoppingListener)
+        mAudioPlayer!!.setOnStoppedListener(stoppedListener)
 
-        runTasksInBackground();
-        mAudioPlayer.play(mFile.getAbsolutePath());
-        advanceRobolectricLooper();
-        mAudioPlayer.play(mFile.getAbsolutePath());
-        advanceRobolectricLooper();
-        mAudioPlayer.play(mFile.getAbsolutePath());
-        advanceRobolectricLooper();
-        //audio should play and finish three times, with each listener running 3 times total
-        verify(stoppingListener, times(3)).run();
-        verify(stoppedListener, times(3)).run();
-
+        runTasksInBackground()
+        mAudioPlayer!!.play(mFile.absolutePath)
+        advanceRobolectricLooper()
+        mAudioPlayer!!.play(mFile.absolutePath)
+        advanceRobolectricLooper()
+        mAudioPlayer!!.play(mFile.absolutePath)
+        advanceRobolectricLooper()
+        // audio should play and finish three times, with each listener running 3 times total
+        verify(stoppingListener, times(3)).run()
+        verify(stoppedListener, times(3)).run()
     }
 
     @Test
-    public void testPausing() throws IOException {
-        Runnable stoppingListener = mock(Runnable.class);
-        Runnable stoppedListener = mock(Runnable.class);
+    @Throws(IOException::class)
+    fun testPausing() {
+        val stoppingListener = mock(Runnable::class.java)
+        val stoppedListener = mock(Runnable::class.java)
 
-        mAudioPlayer.setOnStoppingListener(stoppingListener);
-        mAudioPlayer.setOnStoppedListener(stoppedListener);
+        mAudioPlayer!!.setOnStoppingListener(stoppingListener)
+        mAudioPlayer!!.setOnStoppedListener(stoppedListener)
 
-        runTasksInBackground();
-        mAudioPlayer.play(mFile.getAbsolutePath());
-        mAudioPlayer.pause();
-        advanceRobolectricLooper();
-        //audio is paused, and the listeners should not have run yet
-        verify(stoppingListener, times(0)).run();
-        verify(stoppedListener, times(0)).run();
+        runTasksInBackground()
+        mAudioPlayer!!.play(mFile.absolutePath)
+        mAudioPlayer!!.pause()
+        advanceRobolectricLooper()
+        // audio is paused, and the listeners should not have run yet
+        verify(stoppingListener, times(0)).run()
+        verify(stoppedListener, times(0)).run()
 
-        mAudioPlayer.start();
-        advanceRobolectricLooper();
-        //audio should have finished now after it unpauses, and the listeners should have run once
-        verify(stoppingListener, times(1)).run();
-        verify(stoppedListener, times(1)).run();
+        mAudioPlayer!!.start()
+        advanceRobolectricLooper()
+        // audio should have finished now after it unpauses, and the listeners should have run once
+        verify(stoppingListener, times(1)).run()
+        verify(stoppedListener, times(1)).run()
     }
 
     @Test
-    public void testAbruptStop() throws IOException {
-        Runnable stoppingListener = mock(Runnable.class);
-        Runnable stoppedListener = mock(Runnable.class);
+    @Throws(IOException::class)
+    fun testAbruptStop() {
+        val stoppingListener = mock(Runnable::class.java)
+        val stoppedListener = mock(Runnable::class.java)
 
-        mAudioPlayer.setOnStoppingListener(stoppingListener);
-        mAudioPlayer.setOnStoppedListener(stoppedListener);
+        mAudioPlayer!!.setOnStoppingListener(stoppingListener)
+        mAudioPlayer!!.setOnStoppedListener(stoppedListener)
 
-        runTasksInBackground();
-        mAudioPlayer.play(mFile.getAbsolutePath());
-        mAudioPlayer.stop();
-        advanceRobolectricLooper();
+        runTasksInBackground()
+        mAudioPlayer!!.play(mFile.absolutePath)
+        mAudioPlayer!!.stop()
+        advanceRobolectricLooper()
         // audio was stopped prior to completion, and on investigation of the "stop" listeners,
         // it appears they are hooked to the *completion* of the audio, so it appears correct that
         // no "stop" listeners were called as the audio did not in fact complete
-        verify(stoppingListener, times(0)).run();
-        verify(stoppedListener, times(0)).run();
+        verify(stoppingListener, times(0)).run()
+        verify(stoppedListener, times(0)).run()
     }
 
     @Test
-    public void testPlayOnceWithNullListeners() {
-        mAudioPlayer.setOnStoppingListener(null);
-        mAudioPlayer.setOnStoppedListener(null);
-        assertDoesNotThrow(() -> {
+    fun testPlayOnceWithNullListeners() {
+        mAudioPlayer!!.setOnStoppingListener(null)
+        mAudioPlayer!!.setOnStoppedListener(null)
+        assertDoesNotThrow {
             try {
-                runTasksInBackground();
-                mAudioPlayer.play(mFile.getAbsolutePath());
-                advanceRobolectricLooper();
-            } catch (IOException e) {
-                assert false; //shouldn't have an IOException
+                runTasksInBackground()
+                mAudioPlayer!!.play(mFile.absolutePath)
+                advanceRobolectricLooper()
+            } catch (e: IOException) {
+                assert(
+                    false // shouldn't have an IOException
+                )
             }
-        });
-        advanceRobolectricLooper();
-
+        }
+        advanceRobolectricLooper()
     }
 
-    //tests if the stop() function successfully catches an IOException
+    // tests if the stop() function successfully catches an IOException
     @Test
-    public void testStopWithIOException() {
-        ShadowMediaPlayer.addException(DataSource.toDataSource(mFile.getAbsolutePath()), new IOException("Expected"));
-        assertDoesNotThrow( () -> {mAudioPlayer.stop();});
+    fun testStopWithIOException() {
+        ShadowMediaPlayer.addException(DataSource.toDataSource(mFile.absolutePath), IOException("Expected"))
+        assertDoesNotThrow { mAudioPlayer!!.stop() }
     }
 }
