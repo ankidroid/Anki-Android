@@ -42,6 +42,7 @@ public class IssueRegistry extends com.android.tools.lint.client.api.IssueRegist
         issues.add(DirectCalendarInstanceUsage.ISSUE);
         issues.add(DirectDateInstantiation.ISSUE);
         issues.add(DirectGregorianInstantiation.ISSUE);
+        issues.add(DirectSDK_INTUsage.ISSUE);
         issues.add(DirectSnackbarMakeUsage.ISSUE);
         issues.add(DirectSystemCurrentTimeMillisUsage.ISSUE);
         issues.add(DirectSystemTimeInstantiation.ISSUE);
