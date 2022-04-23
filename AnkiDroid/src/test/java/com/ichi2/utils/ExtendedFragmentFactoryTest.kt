@@ -13,91 +13,81 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import com.ichi2.testutils.MockFragmentClassLoader;
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentFactory
+import androidx.fragment.app.FragmentManager
+import com.ichi2.testutils.MockFragmentClassLoader
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import org.mockito.Mockito.*
+import javax.annotation.Nonnull
 
-import org.junit.Test;
+@KotlinCleanup("when --> whenever")
+class ExtendedFragmentFactoryTest {
 
-import javax.annotation.Nonnull;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentFactory;
-import androidx.fragment.app.FragmentManager;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-public class ExtendedFragmentFactoryTest {
-
-
-    @Nonnull
-    private static final ClassLoader fakeClassLoader = new MockFragmentClassLoader();
-
-    static class TestFragmentFactoryTest extends ExtendedFragmentFactory {
-        public TestFragmentFactoryTest() {
+    internal class TestFragmentFactoryTest : ExtendedFragmentFactory {
+        constructor() {
         }
-        public TestFragmentFactoryTest(@NonNull FragmentFactory baseFactory) {
-            super(baseFactory);
+
+        constructor(baseFactory: FragmentFactory) : super(baseFactory) {
         }
     }
 
-
     @Test
-    public void willCallBaseFactory() {
-        final FragmentFactory baseFF = mock(FragmentFactory.class);
-        final ExtendedFragmentFactory testFF = new TestFragmentFactoryTest(baseFF);
+    fun willCallBaseFactory() {
+        val baseFF = mock(FragmentFactory::class.java)
+        val testFF: ExtendedFragmentFactory = TestFragmentFactoryTest(baseFF)
 
-        testFF.instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
+        testFF.instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME)
 
-        verify(baseFF, times(1)).instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
+        verify(baseFF, times(1)).instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME)
     }
 
-
     @Test
-    public void testAttachToActivity() {
-        final AppCompatActivity activity = mock(AppCompatActivity.class);
-        final FragmentManager fragmentManager = mock(FragmentManager.class);
-        final FragmentFactory baseFactory = mock(FragmentFactory.class);
+    fun testAttachToActivity() {
+        val activity = mock(AppCompatActivity::class.java)
+        val fragmentManager = mock(FragmentManager::class.java)
+        val baseFactory = mock(FragmentFactory::class.java)
 
-        when(activity.getSupportFragmentManager()).thenReturn(fragmentManager);
-        when(fragmentManager.getFragmentFactory()).thenReturn(baseFactory);
+        `when`(activity.supportFragmentManager).thenReturn(fragmentManager)
+        `when`(fragmentManager.fragmentFactory).thenReturn(baseFactory)
 
-        final ExtendedFragmentFactory testFF = new TestFragmentFactoryTest();
+        val testFF: ExtendedFragmentFactory = TestFragmentFactoryTest()
+        val result = testFF.attachToActivity<ExtendedFragmentFactory>(activity)
 
-        final ExtendedFragmentFactory result = testFF.attachToActivity(activity);
+        assertEquals(testFF, result)
 
-        assertEquals(testFF, result);
+        verify(fragmentManager, times(1)).fragmentFactory = testFF
 
-        verify(fragmentManager, times(1)).setFragmentFactory(testFF);
+        testFF.instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME)
 
-        testFF.instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
-
-        verify(baseFactory, times(1)).instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
+        verify(baseFactory, times(1)).instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME)
     }
 
-
     @Test
-    public void testAttachToFragmentManager() {
-        final FragmentManager fragmentManager = mock(FragmentManager.class);
-        final FragmentFactory baseFactory = mock(FragmentFactory.class);
+    fun testAttachToFragmentManager() {
+        val fragmentManager = mock(FragmentManager::class.java)
+        val baseFactory = mock(FragmentFactory::class.java)
 
-        when(fragmentManager.getFragmentFactory()).thenReturn(baseFactory);
+        `when`(fragmentManager.fragmentFactory).thenReturn(baseFactory)
 
-        final ExtendedFragmentFactory testFF = new TestFragmentFactoryTest();
+        val testFF: ExtendedFragmentFactory = TestFragmentFactoryTest()
 
-        final ExtendedFragmentFactory result = testFF.attachToFragmentManager(fragmentManager);
+        val result = testFF.attachToFragmentManager<ExtendedFragmentFactory>(fragmentManager)
 
-        assertEquals(testFF, result);
+        assertEquals(testFF, result)
 
-        verify(fragmentManager, times(1)).setFragmentFactory(testFF);
+        verify(fragmentManager, times(1)).fragmentFactory = testFF
 
-        testFF.instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
+        testFF.instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME)
 
-        verify(baseFactory, times(1)).instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME);
+        verify(baseFactory, times(1)).instantiate(fakeClassLoader, MockFragmentClassLoader.FAKE_CLASS_NAME)
+    }
+
+    companion object {
+        @Nonnull
+        private val fakeClassLoader: ClassLoader = MockFragmentClassLoader()
     }
 }
