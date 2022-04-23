@@ -312,6 +312,8 @@ dependencies {
     // RobolectricTest.java: replace RustBackendLoader.init(); with RustBackendLoader.loadRsdroid(path);
     // A path for a testing library is typically under rsdroid-testing/assets
     testImplementation "io.github.david-allison-1:anki-android-backend-testing:$ankidroid_backend_version"
+    // A path for a testing library which provide Parameterized Test
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.2"
 
     // May need a resolution strategy for support libs to our versions
     implementation "ch.acra:acra-http:$acra_version"
