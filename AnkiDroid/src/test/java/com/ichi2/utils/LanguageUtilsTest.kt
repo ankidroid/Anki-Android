@@ -13,130 +13,136 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.collect.Sets
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.utils.LanguageUtil.getLocale
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.contains
+import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.oneOf
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
+import java.util.*
 
-import android.content.SharedPreferences;
-
-import com.google.common.collect.Sets;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.testutils.EmptyApplication;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static java.util.Arrays.asList;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.oneOf;
-
-@RunWith(AndroidJUnit4.class)
-@Config(application = EmptyApplication.class)
-public class LanguageUtilsTest {
-
-    /** The value of CURRENT_LANGUAGES before the last language update */
-    private static final String[] PREVIOUS_LANGUAGES = {"af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
-            "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",
-            "gu-IN", "heb", "hi", "hr", "hu", "hy-AM", "ind", "is", "it", "ja", "jv", "ka", "kk", "km", "kn", "ko", "ku",
-            "ky", "lt", "lv", "mk", "ml-IN", "mn", "mr", "ms", "my", "nl", "nn-NO", "no", "or", "pa-IN", "pl", "pt-BR", "pt-PT",
-            "ro", "ru", "sat", "sk", "sl", "sq", "sr", "ss", "sv-SE", "sw", "ta", "te", "tg", "tgl", "th", "ti", "tn", "tr",
-            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu" };
-
-     /**
-      * This should match {@link LanguageUtil#APP_LANGUAGES}
-      * Before updating this, copy the variable declaration to PREVIOUS_LANGUAGES
-      */
-    private static final String[] CURRENT_LANGUAGES = {"af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
-             "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",
-             "gu-IN", "heb", "hi", "hr", "hu", "hy-AM", "ind", "is", "it", "ja", "jv", "ka", "kk", "km", "kn", "ko", "ku",
-             "ky", "lt", "lv", "mk", "ml-IN", "mn", "mr", "ms", "my", "nl", "nn-NO", "no", "or", "pa-IN", "pl", "pt-BR", "pt-PT",
-             "ro", "ru", "sat", "sc", "sk", "sl", "sq", "sr", "ss", "sv-SE", "sw", "ta", "te", "tg", "tgl", "th", "ti", "tn", "tr",
-             "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu" };
-
-    /** Languages which were removed for good reason */
-    private static final HashSet<String> previousLanguageExclusions = Sets.newHashSet(
-            "pt_PT", //pt-PT
-            "pt_BR", //pt-BR
-            "sv",    //sv-SE
-            "zh_CN", //zh-CN
-            "zh_TW"  //zh-TW
-    );
-
+@RunWith(AndroidJUnit4::class)
+@Config(application = EmptyApplication::class)
+@KotlinCleanup("Replace asList with Kotlin function")
+@KotlinCleanup("is --> equalTo")
+class LanguageUtilsTest {
     @Test
-    public void testNoLanguageIsRemoved() {
-        HashSet<String> languages = new HashSet<>();
-        Collections.addAll(languages, LanguageUtil.APP_LANGUAGES);
-
-        List<String> previousLanguages = new ArrayList<>(asList(PREVIOUS_LANGUAGES));
-        previousLanguages.removeAll(previousLanguageExclusions);
-
-        for (String language: previousLanguages) {
-            assertThat(languages, hasItem(language));
+    fun testNoLanguageIsRemoved() {
+        val languages = HashSet<String?>()
+        Collections.addAll(languages, *LanguageUtil.APP_LANGUAGES)
+        val previousLanguages: MutableList<String> = ArrayList(Arrays.asList(*PREVIOUS_LANGUAGES))
+        previousLanguages.removeAll(previousLanguageExclusions)
+        for (language in previousLanguages) {
+            assertThat(languages, hasItem(language))
         }
     }
 
     @Test
-    public void testCurrentLanguagesHaveNotChanged() {
-        List<String> actual = asList(LanguageUtil.APP_LANGUAGES);
-        assertThat("Languages have been updated, please modify test variables: " +
-                "PREVIOUS_LANGUAGES and CURRENT_LANGUAGES", actual, contains(CURRENT_LANGUAGES));
+    fun testCurrentLanguagesHaveNotChanged() {
+        val actual = Arrays.asList(*LanguageUtil.APP_LANGUAGES)
+        assertThat(
+            "Languages have been updated, please modify test variables: " +
+                "PREVIOUS_LANGUAGES and CURRENT_LANGUAGES",
+            actual, contains(*CURRENT_LANGUAGES)
+        )
     }
 
     @Test
     @Config(qualifiers = "en")
-    public void localeTwoLetterCodeResolves() {
-        assertThat("A locale with a 3-letter code resolves correctly",
-                getLocale("af").getDisplayLanguage(),
-                is("Afrikaans"));
+    fun localeTwoLetterCodeResolves() {
+        assertThat(
+            "A locale with a 3-letter code resolves correctly",
+            getLocale("af").displayLanguage,
+            `is`("Afrikaans")
+        )
     }
 
     @Test
     @Config(qualifiers = "en")
-    public void localeThreeLetterCodeResolves() {
-        assertThat("A locale with a 3-letter code resolves correctly",
-                getLocale("fil").getDisplayLanguage(),
-                is("Filipino"));
+    fun localeThreeLetterCodeResolves() {
+        assertThat(
+            "A locale with a 3-letter code resolves correctly",
+            getLocale("fil").displayLanguage,
+            `is`("Filipino")
+        )
     }
 
     @Test
     @Config(qualifiers = "en")
-    public void localeTwoLetterRegionalVariantResolves() {
-        assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                getLocale("pt-BR").getDisplayName(),
-                is("Portuguese (Brazil)"));
-        assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                getLocale("pt_BR").getDisplayName(),
-                is("Portuguese (Brazil)"));
+    fun localeTwoLetterRegionalVariantResolves() {
+        assertThat(
+            "A locale with a 2-letter code and regional variant resolves correctly",
+            getLocale("pt-BR").displayName,
+            `is`("Portuguese (Brazil)")
+        )
+        assertThat(
+            "A locale with a 2-letter code and regional variant resolves correctly",
+            getLocale("pt_BR").displayName,
+            `is`("Portuguese (Brazil)")
+        )
     }
 
     @Test
     @Config(qualifiers = "en")
-    public void localeThreeLetterRegionalVariantResolves() {
-        assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                getLocale("yue-TW").getDisplayName(),
-                oneOf("yue (Taiwan)", "Cantonese (Taiwan)"));
-        
-        assertThat("A locale with a 2-letter code and regional variant resolves correctly",
-                getLocale("yue_TW").getDisplayName(),
-                oneOf("yue (Taiwan)", "Cantonese (Taiwan)"));
+    fun localeThreeLetterRegionalVariantResolves() {
+        assertThat(
+            "A locale with a 2-letter code and regional variant resolves correctly",
+            getLocale("yue-TW").displayName,
+            oneOf("yue (Taiwan)", "Cantonese (Taiwan)")
+        )
+        assertThat(
+            "A locale with a 2-letter code and regional variant resolves correctly",
+            getLocale("yue_TW").displayName,
+            oneOf("yue (Taiwan)", "Cantonese (Taiwan)")
+        )
     }
 
-    @NonNull
-    private Locale getLocale(String localeCode) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(ApplicationProvider.getApplicationContext());
-        return LanguageUtil.getLocale(localeCode, prefs);
+    private fun getLocale(localeCode: String): Locale {
+        val prefs = AnkiDroidApp.getSharedPrefs(ApplicationProvider.getApplicationContext())
+        return getLocale(localeCode, prefs)
+    }
+
+    companion object {
+        /** The value of CURRENT_LANGUAGES before the last language update  */
+        private val PREVIOUS_LANGUAGES = arrayOf(
+            "af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
+            "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",
+            "gu-IN", "heb", "hi", "hr", "hu", "hy-AM", "ind", "is", "it", "ja", "jv", "ka", "kk", "km", "kn", "ko", "ku",
+            "ky", "lt", "lv", "mk", "ml-IN", "mn", "mr", "ms", "my", "nl", "nn-NO", "no", "or", "pa-IN", "pl", "pt-BR", "pt-PT",
+            "ro", "ru", "sat", "sk", "sl", "sq", "sr", "ss", "sv-SE", "sw", "ta", "te", "tg", "tgl", "th", "ti", "tn", "tr",
+            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu"
+        )
+
+        /**
+         * This should match [LanguageUtil.APP_LANGUAGES]
+         * Before updating this, copy the variable declaration to PREVIOUS_LANGUAGES
+         */
+        private val CURRENT_LANGUAGES = arrayOf(
+            "af", "am", "ar", "az", "be", "bg", "bn", "ca", "ckb", "cs", "da",
+            "de", "el", "en", "eo", "es-AR", "es-ES", "et", "eu", "fa", "fi", "fil", "fr", "fy-NL", "ga-IE", "gl", "got",
+            "gu-IN", "heb", "hi", "hr", "hu", "hy-AM", "ind", "is", "it", "ja", "jv", "ka", "kk", "km", "kn", "ko", "ku",
+            "ky", "lt", "lv", "mk", "ml-IN", "mn", "mr", "ms", "my", "nl", "nn-NO", "no", "or", "pa-IN", "pl", "pt-BR", "pt-PT",
+            "ro", "ru", "sat", "sc", "sk", "sl", "sq", "sr", "ss", "sv-SE", "sw", "ta", "te", "tg", "tgl", "th", "ti", "tn", "tr",
+            "ts", "tt-RU", "uk", "ur-PK", "uz", "ve", "vi", "wo", "xh", "yue", "zh-CN", "zh-TW", "zu"
+        )
+
+        /** Languages which were removed for good reason  */
+        private val previousLanguageExclusions = Sets.newHashSet(
+            "pt_PT", // pt-PT
+            "pt_BR", // pt-BR
+            "sv", // sv-SE
+            "zh_CN", // zh-CN
+            "zh_TW" // zh-TW
+        )
     }
 }
