@@ -15,7 +15,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
     <color name="theme_light_primary">@color/material_light_blue_500</color>
     <color name="theme_light_primary_dark">@color/material_light_blue_700</color>
     <color name="theme_light_primary_light">@color/material_light_blue_100</color>
-    <color name="theme_light_accent">@color/material_light_blue_800</color>
+    <color name="theme_light_accent">@color/material_light_blue_600</color>
     <color name="theme_light_primary_text">@color/black</color>
     <color name="theme_light_secondary_text">#de000000</color>  <!-- 87 percent black -->
     <color name="theme_light_row_current">#ececec</color>
