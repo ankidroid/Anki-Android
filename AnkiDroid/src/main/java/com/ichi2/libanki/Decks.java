@@ -697,6 +697,11 @@ public class Decks extends DeckManager {
         }
         for(int i = 0; i < path.length - 1; i++) {
             String p = path[i];
+            // Fix bugs in issue #11026
+            // Extra check if the parent name was blank when deck is created
+            if ("".equals(p)) {
+                p = "blank";
+            }
             if (TextUtils.isEmpty(s)) {
                 s += p;
             } else {
