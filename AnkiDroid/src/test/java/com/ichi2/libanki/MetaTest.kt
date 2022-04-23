@@ -13,25 +13,22 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import com.ichi2.anki.RobolectricTest;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-@RunWith(AndroidJUnit4.class)
-public class MetaTest extends RobolectricTest {
-
+@KotlinCleanup("is -> equalTo")
+@RunWith(AndroidJUnit4::class)
+class MetaTest : RobolectricTest() {
     @Test
-    public void ensureDatabaseIsInMemory() {
-        String path = getCol().getDb().getPath();
-        assertThat("Default test database should be in-memory.", path, is(":memory:"));
+    fun ensureDatabaseIsInMemory() {
+        val path = col.db.path
+        assertThat("Default test database should be in-memory.", path, `is`(":memory:"))
     }
 }
