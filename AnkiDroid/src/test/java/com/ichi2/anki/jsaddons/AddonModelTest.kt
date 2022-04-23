@@ -119,19 +119,17 @@ class AddonModelTest : RobolectricTest() {
 
     @Test
     fun getAddonModelListFromJsonTest() {
-        shadowOf(getMainLooper()).idle()
-
         val url = URL("https://raw.githubusercontent.com/krmanik/anki-js-addon-json/main/test-js-addon.json")
         val result = getAddonModelListFromJson(url)
 
         // first addon name and tgz download url
         val addon1 = result.first[0]
         assertEquals(addon1.name, "ankidroid-js-addon-progress-bar")
-        addon1.dist["tarball"]?.let { assertTrue(it.endsWith(".tgz")) }
+        assertTrue(addon1.dist["tarball"]!!.endsWith(".tgz"))
 
         // second addon name and tgz download url
         val addon2 = result.first[1]
         assertEquals(addon2.name, "valid-ankidroid-js-addon-test")
-        addon2.dist["tarball"]?.let { assertTrue(it.endsWith(".tgz")) }
+        assertTrue(addon2.dist["tarball"]!!.endsWith(".tgz"))
     }
 }

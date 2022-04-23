@@ -23,7 +23,6 @@ import com.ichi2.anki.jsaddons.AddonsConst.ANKIDROID_JS_ADDON_KEYWORDS
 import com.ichi2.anki.jsaddons.AddonsConst.NOTE_EDITOR_ADDON
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.anki.jsaddons.NpmUtils.validateName
-import org.acra.collections.ImmutableList
 import org.acra.collections.ImmutableMap
 import timber.log.Timber
 import java.io.File
@@ -150,7 +149,7 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
 }
 
 /**
- * Get list of AddonModel from json containing arrays of addons package info
+ * Get list of AddonModel from json containing arrays of addons package info from network
  *
  * @param packageJsonUrl package json url containing arrays of addon packages info
  * @return Pair with list of valid addonModel and error list
@@ -159,6 +158,7 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
 fun getAddonModelListFromJson(packageJsonUrl: URL): Pair<List<AddonModel>, List<String>> {
     val errorList: MutableList<String> = ArrayList()
     val mapper = AnkiSerialization.objectMapper
+    // network request to fetch json from given url
     val addonsData = mapper.readValue(packageJsonUrl, object : TypeReference<MutableList<AddonData>>() {})
 
     val addonsModelList = mutableListOf<AddonModel>()
@@ -167,11 +167,11 @@ fun getAddonModelListFromJson(packageJsonUrl: URL): Pair<List<AddonModel>, List<
 
         if (result.first == null) {
             Timber.i("Not a valid addon for AnkiDroid, the errors for the addon:\n %s", result.second.toString())
-            errorList.add(result.second.toString())
+            errorList.addAll(result.second)
             continue
         }
         addonsModelList.add(result.first!!)
     }
 
-    return Pair(addonsModelList, ImmutableList(errorList))
+    return Pair(addonsModelList, errorList.toList())
 }
