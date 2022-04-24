@@ -294,7 +294,7 @@ public class TagsList implements Iterable<String> {
      * Initialize the tag hierarchy.
      */
     private void prepareTagHierarchy() {
-        List<String> allTags = copyOfAllTagList();
+        List<String> allTags = new ArrayList<>(mAllTags);
         for (String tag : allTags) {
             addAncestors(tag);
         }
