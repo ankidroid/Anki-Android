@@ -39,6 +39,7 @@ public interface IField extends Serializable {
 
 
     // For mixed type
+    @Nullable
     String getHtml();
 
 
@@ -62,6 +63,7 @@ public interface IField extends Serializable {
 
 
     // For Text type
+    @Nullable
     String getText();
 
 

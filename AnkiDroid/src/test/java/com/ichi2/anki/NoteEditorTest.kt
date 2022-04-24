@@ -17,7 +17,6 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.content.Intent
-import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
@@ -26,8 +25,8 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.editorCard
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
-import com.ichi2.compat.Compat.ACTION_PROCESS_TEXT
-import com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT
+import com.ichi2.compat.Compat.Companion.ACTION_PROCESS_TEXT
+import com.ichi2.compat.Compat.Companion.EXTRA_PROCESS_TEXT
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks.CURRENT_DECK
 import com.ichi2.libanki.Model
@@ -48,15 +47,12 @@ import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("IDE lint")
-@KotlinCleanup("is -> equalTo")
-@KotlinCleanup("n.findViewById<View>(R.id.X) as TextView -> findViewById<TextView>")
-@KotlinCleanup("Objects.requireNonNull -> assertNotNull - removes the !! after")
 class NoteEditorTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
     fun verifyCardsList() {
         val n = getNoteEditorEditingExistingBasicNote("Test", "Note", DECK_LIST)
-        assertThat("Cards list is correct", (n.findViewById<View>(R.id.CardEditorCardsButton) as TextView).text.toString(), `is`("Cards: Card 1"))
+        assertThat("Cards list is correct", (n.findViewById<TextView>(R.id.CardEditorCardsButton)).text.toString(), equalTo("Cards: Card 1"))
     }
 
     @Test
@@ -65,13 +61,13 @@ class NoteEditorTest : RobolectricTest() {
         n.performPreview()
         val intent = shadowOf(n).nextStartedActivityForResult
         val noteEditorBundle = intent.intent.getBundleExtra("noteEditorBundle")
-        assertThat("Bundle set to add note style", noteEditorBundle!!.getBoolean("addNote"), `is`(true))
+        assertThat("Bundle set to add note style", noteEditorBundle!!.getBoolean("addNote"), equalTo(true))
         val fieldsBundle = noteEditorBundle.getBundle("editFields")
         assertThat("Bundle has fields", fieldsBundle, notNullValue())
-        assertThat("Bundle has fields edited value", fieldsBundle!!.getString("0"), `is`("Preview Test"))
-        assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), `is`(ArrayList<Any>()))
-        assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), `is`(false))
-        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), `is`(true))
+        assertThat("Bundle has fields edited value", fieldsBundle!!.getString("0"), equalTo("Preview Test"))
+        assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), equalTo(ArrayList<Any>()))
+        assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), equalTo(false))
+        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), equalTo(true))
     }
 
     @Test
@@ -87,7 +83,7 @@ class NoteEditorTest : RobolectricTest() {
         // Assert
         val intent = shadowOf(n).nextStartedActivityForResult
         val actualField = MultimediaEditFieldActivity.getFieldFromIntent(intent.intent)
-        assertThat("Provided value should be the updated value", actualField.formattedValue, `is`("Good Afternoon"))
+        assertThat("Provided value should be the updated value", actualField.formattedValue, equalTo("Good Afternoon"))
     }
 
     @Test
@@ -96,7 +92,7 @@ class NoteEditorTest : RobolectricTest() {
             .withNoFirstField()
             .build()
         val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, `is`(R.string.note_editor_no_first_field))
+        assertThat(actualResourceId, equalTo(R.string.note_editor_no_first_field))
     }
 
     @Test
@@ -107,7 +103,7 @@ class NoteEditorTest : RobolectricTest() {
             .withThirdField("C")
             .build()
         val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, `is`(R.string.note_editor_no_cards_created_all_fields))
+        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created_all_fields))
     }
 
     @Test
@@ -117,7 +113,7 @@ class NoteEditorTest : RobolectricTest() {
             .withThirdField("C")
             .build()
         val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, `is`(R.string.note_editor_no_cards_created))
+        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created))
     }
 
     @Test
@@ -126,7 +122,7 @@ class NoteEditorTest : RobolectricTest() {
             .withNoFirstField()
             .build()
         val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, `is`(R.string.note_editor_no_cloze_delations))
+        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cloze_delations))
     }
 
     @Test
@@ -135,7 +131,7 @@ class NoteEditorTest : RobolectricTest() {
             .withFirstField("NoCloze")
             .build()
         val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, `is`(R.string.note_editor_no_cloze_delations))
+        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cloze_delations))
     }
 
     @Test
@@ -144,7 +140,7 @@ class NoteEditorTest : RobolectricTest() {
             .withFirstField("front is not enough")
             .build()
         val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, `is`(R.string.note_editor_no_cards_created))
+        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created))
     }
 
     @Test
@@ -154,7 +150,7 @@ class NoteEditorTest : RobolectricTest() {
             .withFirstField("no cloze deletions")
             .build()
         saveNote(editor)
-        assertThat(cardCount, `is`(initialCards))
+        assertThat(cardCount, equalTo(initialCards))
     }
 
     @Test
@@ -164,7 +160,7 @@ class NoteEditorTest : RobolectricTest() {
             .withFirstField("{{c1::AnkiDroid}} is fantastic")
             .build()
         saveNote(editor)
-        assertThat(cardCount, `is`(initialCards + 1))
+        assertThat(cardCount, equalTo(initialCards + 1))
     }
 
     @Test
@@ -176,7 +172,7 @@ class NoteEditorTest : RobolectricTest() {
             .withSecondField("{{c1::AnkiDroid}} is fantastic")
             .build()
         saveNote(editor)
-        assertThat(cardCount, `is`(initialCards))
+        assertThat(cardCount, equalTo(initialCards))
     }
 
     @Test
@@ -188,7 +184,7 @@ class NoteEditorTest : RobolectricTest() {
                 assertThat("Pressing back should finish the activity", noteEditor.isFinishing)
             }
             val result = scenario.result
-            assertThat("Activity should be cancelled as no changes were made", result.resultCode, `is`(Activity.RESULT_CANCELED))
+            assertThat("Activity should be cancelled as no changes were made", result.resultCode, equalTo(Activity.RESULT_CANCELED))
         }
     }
 
@@ -204,9 +200,9 @@ class NoteEditorTest : RobolectricTest() {
         col.set_config(CURRENT_DECK, Consts.DEFAULT_DECK_ID) // Change DID if going through default path
         val copyNoteIntent = getCopyNoteIntent(editor)
         val newNoteEditor = super.startActivityNormallyOpenCollectionWithIntent(NoteEditor::class.java, copyNoteIntent)
-        assertThat("Selected deck ID should be the current deck id", editor.deckId, `is`(currentDid))
-        assertThat("Deck ID in the intent should be the selected deck id", copyNoteIntent.getLongExtra(NoteEditor.EXTRA_DID, DECK_ID_NOT_FOUND.toLong()), `is`(currentDid))
-        assertThat("Deck ID in the new note should be the ID provided in the intent", newNoteEditor.deckId, `is`(currentDid))
+        assertThat("Selected deck ID should be the current deck id", editor.deckId, equalTo(currentDid))
+        assertThat("Deck ID in the intent should be the selected deck id", copyNoteIntent.getLongExtra(NoteEditor.EXTRA_DID, DECK_ID_NOT_FOUND.toLong()), equalTo(currentDid))
+        assertThat("Deck ID in the new note should be the ID provided in the intent", newNoteEditor.deckId, equalTo(currentDid))
     }
 
     @Test
@@ -223,13 +219,13 @@ class NoteEditorTest : RobolectricTest() {
             .withFirstField(initFirstField)
             .withSecondField(initSecondField)
             .build()
-        assertThat(Arrays.asList(*editor.currentFieldStrings), contains(initFirstField, initSecondField))
+        assertThat(editor.currentFieldStrings.toList(), contains(initFirstField, initSecondField))
         editor.setFieldValueFromUi(0, newFirstField)
-        assertThat(Arrays.asList(*editor.currentFieldStrings), contains(newFirstField, initSecondField))
+        assertThat(editor.currentFieldStrings.toList(), contains(newFirstField, initSecondField))
 
         saveNote(editor)
         waitForAsyncTasksToComplete()
-        val actual = Arrays.asList(*editor.currentFieldStrings)
+        val actual = editor.currentFieldStrings.toList()
 
         assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""))
     }
@@ -241,7 +237,7 @@ class NoteEditorTest : RobolectricTest() {
         val i = Intent(ACTION_PROCESS_TEXT)
         i.putExtra(EXTRA_PROCESS_TEXT, "hello\nworld")
         val editor = startActivityNormallyOpenCollectionWithIntent(NoteEditor::class.java, i)
-        val actual = Arrays.asList(*editor.currentFieldStrings)
+        val actual = editor.currentFieldStrings.toList()
 
         assertThat(actual, contains("hello\nworld", ""))
     }
@@ -258,9 +254,9 @@ class NoteEditorTest : RobolectricTest() {
         // #7522
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
         editor.setFieldValueFromUi(1, "Hello")
-        assertThat(editor.currentFieldStrings[1], `is`("Hello"))
+        assertThat(editor.currentFieldStrings[1], equalTo("Hello"))
         editor.clearField(1)
-        assertThat(editor.currentFieldStrings[1], `is`(""))
+        assertThat(editor.currentFieldStrings[1], equalTo(""))
     }
 
     @Test
@@ -270,7 +266,7 @@ class NoteEditorTest : RobolectricTest() {
         editor.insertStringInField(field, "Hello")
         field.setSelection(3)
         editor.insertStringInField(field, "World")
-        assertThat(editor.getFieldForTest(0).text.toString(), `is`("HelWorldlo"))
+        assertThat(editor.getFieldForTest(0).text.toString(), equalTo("HelWorldlo"))
     }
 
     @Test
@@ -280,7 +276,7 @@ class NoteEditorTest : RobolectricTest() {
         editor.insertStringInField(field, "12345")
         field.setSelection(2, 3) // select "3"
         editor.insertStringInField(field, "World")
-        assertThat(editor.getFieldForTest(0).text.toString(), `is`("12World45"))
+        assertThat(editor.getFieldForTest(0).text.toString(), equalTo("12World45"))
     }
 
     @Test
@@ -291,14 +287,14 @@ class NoteEditorTest : RobolectricTest() {
         editor.insertStringInField(field, "12345")
         field.setSelection(3, 2) // select "3" (right to left)
         editor.insertStringInField(field, "World")
-        assertThat(editor.getFieldForTest(0).text.toString(), `is`("12World45"))
+        assertThat(editor.getFieldForTest(0).text.toString(), equalTo("12World45"))
     }
 
     @Test
     fun defaultsToCapitalized() {
         // Requested in #3758, this seems like a sensible default
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
-        assertThat("Fields should have their first word capitalized by default", editor.getFieldForTest(0).isCapitalized, `is`(true))
+        assertThat("Fields should have their first word capitalized by default", editor.getFieldForTest(0).isCapitalized, equalTo(true))
     }
 
     @Test
@@ -311,7 +307,7 @@ class NoteEditorTest : RobolectricTest() {
         col.models.save(cloze)
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
         editor.setCurrentlySelectedModel(cloze.getLong("id"))
-        assertThat(editor.deckId, `is`(Consts.DEFAULT_DECK_ID))
+        assertThat(editor.deckId, equalTo(Consts.DEFAULT_DECK_ID))
     }
 
     private fun getCopyNoteIntent(editor: NoteEditor): Intent {
@@ -446,7 +442,7 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         init {
-            requireNotNull(model) { "model was null" }
+            assertNotNull(model) { "model was null" }
             mModel = model
         }
     }

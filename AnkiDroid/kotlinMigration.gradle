@@ -48,7 +48,7 @@ def className = ""
 enum Source {
     MAIN("/src/main/java"),
     TEST("/src/test/java"),
-    ANDROID_TEST("/src/androidTest/java") // untested
+    ANDROID_TEST("/src/androidTest/java")
     public String path
     private Source(String pathSubset) {
         this.path = pathSubset

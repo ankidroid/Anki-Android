@@ -310,13 +310,13 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * Gathers the final selection of tags and type of cards,
      * Generates the search screen for the custom study deck.
      */
-    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
+    override fun onSelectedTags(selectedTags: List<String>?, indeterminateTags: List<String>?, option: Int) {
         val sb = StringBuilder()
         when (option) {
             1 -> sb.append("is:new ")
             2 -> sb.append("is:due ")
         }
-        val arr: MutableList<String?> = ArrayList(selectedTags.size)
+        val arr: MutableList<String?> = ArrayList(selectedTags!!.size)
         if (selectedTags.isNotEmpty()) {
             for (tag in selectedTags) {
                 arr.add(String.format("tag:'%s'", tag))

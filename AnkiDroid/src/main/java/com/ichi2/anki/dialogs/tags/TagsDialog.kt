@@ -126,7 +126,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
     private val tagsDialogListener: TagsDialogListener
         get() = mListener
-            ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)
+            ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)!!
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         @SuppressLint("InflateParams") val tagsDialogView = LayoutInflater.from(activity).inflate(R.layout.tags_dialog, null, false)

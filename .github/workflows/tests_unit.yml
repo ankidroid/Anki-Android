@@ -28,6 +28,10 @@ on:
       - '**/*.gradle'
       - 'gradle/**'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   unit:
     name: JUnit Tests
@@ -40,10 +44,6 @@ jobs:
     #env:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
     steps:
-      - uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          all_but_latest: true
-
       - uses: actions/checkout@v3
         with:
           fetch-depth: 50

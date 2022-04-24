@@ -28,3 +28,4 @@ dependencies {
     testImplementation "com.android.tools.lint:lint-tests:$lint_version"
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
 }
+apply from: "./kotlinMigration-lint.gradle"

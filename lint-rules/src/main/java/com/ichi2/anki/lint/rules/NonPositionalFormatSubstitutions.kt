@@ -54,7 +54,7 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
         )
     }
 
-    override fun appliesTo(directoryType: ResourceFolderType): Boolean = directoryType == ResourceFolderType.VALUES
+    override fun appliesTo(folderType: ResourceFolderType): Boolean = folderType == ResourceFolderType.VALUES
 
     override fun getApplicableElements() = listOf(SdkConstants.TAG_STRING)
 
