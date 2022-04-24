@@ -15,39 +15,32 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.utils;
+package com.ichi2.utils
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.hamcrest.CoreMatchers
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.lessThan;
-
-@RunWith(AndroidJUnit4.class)
-public class NamedJSONComparatorTest {
-
+@RunWith(AndroidJUnit4::class)
+class NamedJSONComparatorTest {
     @Test
-    public void checkIfReturnsCorrectValueForSameNames() {
-        JSONObject firstObject = new JSONObject();
-        firstObject.put("name", "TestName");
-
-        JSONObject secondObject = new JSONObject();
-        secondObject.put("name", "TestName");
-
-        assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), equalTo(0));
+    fun checkIfReturnsCorrectValueForSameNames() {
+        val firstObject = JSONObject()
+        firstObject.put("name", "TestName")
+        val secondObject = JSONObject()
+        secondObject.put("name", "TestName")
+        MatcherAssert.assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), CoreMatchers.equalTo(0))
     }
 
     @Test
-    public void checkIfReturnsCorrectValueForDifferentNames() {
-        JSONObject firstObject = new JSONObject();
-        firstObject.put("name", "TestName1");
-
-        JSONObject secondObject = new JSONObject();
-        secondObject.put("name", "TestName2");
-
-        assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), lessThan(0));
+    fun checkIfReturnsCorrectValueForDifferentNames() {
+        val firstObject = JSONObject()
+        firstObject.put("name", "TestName1")
+        val secondObject = JSONObject()
+        secondObject.put("name", "TestName2")
+        MatcherAssert.assertThat(NamedJSONComparator.INSTANCE.compare(firstObject, secondObject), Matchers.lessThan(0))
     }
 }
