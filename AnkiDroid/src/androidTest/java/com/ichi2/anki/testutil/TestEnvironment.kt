@@ -13,13 +13,13 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.testutil
 
-package com.ichi2.anki.testutil;
+import java.util.*
 
-import java.util.Locale;
-
-public class TestEnvironment {
-    public static boolean isDisplayingDefaultEnglishStrings() {
-        return "en-US".equals(Locale.getDefault().toLanguageTag());
+object TestEnvironment {
+    @JvmStatic
+    fun isDisplayingDefaultEnglishStrings(): Boolean {
+        return "en-US" == Locale.getDefault().toLanguageTag()
     }
 }
