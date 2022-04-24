@@ -1,4 +1,4 @@
-/***************************************************************************************
+/****************************************************************************************
  *                                                                                      *
  * Copyright (c) 2020 Mike Hardy <github@mikehardy.net>                                 *
  *                                                                                      *
@@ -15,62 +15,60 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.tests;
-import android.content.Context;
-import android.os.Build;
+package com.ichi2.anki.tests
 
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.libanki.Collection;
+import android.content.Context
+import android.os.Build
+import androidx.test.platform.app.InstrumentationRegistry
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.libanki.Collection
+import java.io.File
+import java.io.IOException
 
-import java.io.File;
-import java.io.IOException;
+abstract class InstrumentedTest {
+    protected val col: Collection
+        get() = CollectionHelper.getInstance().getCol(testContext)
 
-import androidx.test.platform.app.InstrumentationRegistry;
-
-public abstract class InstrumentedTest {
-
-    /**
-     * This is how google detects emulators in flutter and how react-native does it in the device info module
-     * https://github.com/react-native-community/react-native-device-info/blob/bb505716ff50e5900214fcbcc6e6434198010d95/android/src/main/java/com/learnium/RNDeviceInfo/RNDeviceModule.java#L185
-     * @return boolean true if the execution environment is most likely an emulator
-     */
-    public static boolean isEmulator() {
-        return (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
-                || Build.FINGERPRINT.startsWith("generic")
-                || Build.FINGERPRINT.startsWith("unknown")
-                || Build.HARDWARE.contains("goldfish")
-                || Build.HARDWARE.contains("ranchu")
-                || Build.MODEL.contains("google_sdk")
-                || Build.MODEL.contains("Emulator")
-                || Build.MODEL.contains("Android SDK built for x86")
-                || Build.MANUFACTURER.contains("Genymotion")
-                || Build.PRODUCT.contains("sdk_google")
-                || Build.PRODUCT.contains("google_sdk")
-                || Build.PRODUCT.contains("sdk")
-                || Build.PRODUCT.contains("sdk_x86")
-                || Build.PRODUCT.contains("vbox86p")
-                || Build.PRODUCT.contains("emulator")
-                || Build.PRODUCT.contains("simulator");
-    }
-
-    protected Collection getCol() {
-        return CollectionHelper.getInstance().getCol(getTestContext());
-    }
-
-    protected Collection getEmptyCol() throws IOException {
-        return Shared.getEmptyCol(getTestContext());
-    }
+    @get:Throws(IOException::class)
+    protected val emptyCol: Collection
+        get() = Shared.getEmptyCol(testContext)
 
     /**
      * @return A File object pointing to a directory in which temporary test files can be placed. The directory is
-     *         emptied on every invocation of this method so it is suitable to use at the start of each test.
-     *         Only add files (and not subdirectories) to this directory.
+     * emptied on every invocation of this method so it is suitable to use at the start of each test.
+     * Only add files (and not subdirectories) to this directory.
      */
-    protected File getTestDir() {
-        return Shared.getTestDir(getTestContext());
-    }
+    protected val testDir: File
+        get() = Shared.getTestDir(testContext)
+    protected val testContext: Context
+        get() = InstrumentationRegistry.getInstrumentation().targetContext
 
-    protected Context getTestContext() {
-        return InstrumentationRegistry.getInstrumentation().getTargetContext();
+    companion object {
+        /**
+         * This is how google detects emulators in flutter and how react-native does it in the device info module
+         * https://github.com/react-native-community/react-native-device-info/blob/bb505716ff50e5900214fcbcc6e6434198010d95/android/src/main/java/com/learnium/RNDeviceInfo/RNDeviceModule.java#L185
+         * @return boolean true if the execution environment is most likely an emulator
+         */
+        @JvmStatic
+        fun isEmulator(): Boolean {
+            return (
+                Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic") ||
+                    Build.FINGERPRINT.startsWith("generic") ||
+                    Build.FINGERPRINT.startsWith("unknown") ||
+                    Build.HARDWARE.contains("goldfish") ||
+                    Build.HARDWARE.contains("ranchu") ||
+                    Build.MODEL.contains("google_sdk") ||
+                    Build.MODEL.contains("Emulator") ||
+                    Build.MODEL.contains("Android SDK built for x86") ||
+                    Build.MANUFACTURER.contains("Genymotion") ||
+                    Build.PRODUCT.contains("sdk_google") ||
+                    Build.PRODUCT.contains("google_sdk") ||
+                    Build.PRODUCT.contains("sdk") ||
+                    Build.PRODUCT.contains("sdk_x86") ||
+                    Build.PRODUCT.contains("vbox86p") ||
+                    Build.PRODUCT.contains("emulator") ||
+                    Build.PRODUCT.contains("simulator")
+                )
+        }
     }
 }
