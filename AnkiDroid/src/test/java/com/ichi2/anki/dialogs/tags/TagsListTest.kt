@@ -21,6 +21,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
@@ -469,6 +470,10 @@ class TagsListTest {
     }
 
     @Test // #8807
+    @Ignore(
+        "Collections.singletonList() triggers infinite recursion. " +
+            "Need solution to only mock the sort() method."
+    )
     fun test_sort_will_not_call_collectionsSort() {
         Mockito.mockStatic(Collections::class.java).use { MockCollection ->
             assertEquals(TAGS, tagsList!!.copyOfAllTagList())

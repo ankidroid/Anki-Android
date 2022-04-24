@@ -249,8 +249,8 @@ class TagsDialog : AnalyticsDialogFragment {
 
     @VisibleForTesting
     fun addTag(rawTag: String?) {
-        if (!TextUtils.isEmpty(rawTag)) {
-            val tag = TagsUtil.getUniformedTag(rawTag!!)
+        if (!rawTag.isNullOrEmpty()) {
+            val tag = TagsUtil.getUniformedTag(rawTag)
             val feedbackText: String
             if (mTags!!.add(tag)) {
                 if (mNoTagsTextView!!.visibility == View.VISIBLE) {

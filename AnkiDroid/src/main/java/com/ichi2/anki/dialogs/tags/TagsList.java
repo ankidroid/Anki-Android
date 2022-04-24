@@ -66,7 +66,9 @@ public class TagsList implements Iterable<String> {
     /**
      * Construct a new {@link TagsList} with possibility of indeterminate tags,
      *
-     * for a tag to be in indeterminate state it should be present in checkedTags and also in uncheckedTags
+     * for a tag to be in indeterminate state it should be present in checkedTags and also in uncheckedTags,
+     *
+     * hierarchical tags will have their ancestors added temporarily
      *
      * @param allTags A list of all available tags
      *                any duplicates will be ignored
@@ -144,8 +146,9 @@ public class TagsList implements Iterable<String> {
 
     /**
      * Adds a tag to the list if it is not already present.
+     * If the tag is hierarchical, its ancestors will also be added temporarily.
      *
-     * @param tag  the tag to add
+     * @param tag the tag to add
      * @return true if tag was added (new tag)
      */
     public boolean add(String tag) {
@@ -158,13 +161,15 @@ public class TagsList implements Iterable<String> {
 
 
     /**
-     * Mark a tag as checked tag
+     * Mark a tag as checked tag.
+     * Optionally mark ancestors as indeterminate
      *
      * @param tag the tag to be checked (case-insensitive)
+     * @param processAncestors whether mark ancestors as indeterminate or not
      * @return true if the tag changed its check status
      *         false if the tag was already checked or not in the list
      */
-    public boolean check(String tag) {
+    public boolean check(String tag, boolean processAncestors) {
         if (!mAllTags.contains(tag)) {
             return false;
         }
@@ -172,8 +177,18 @@ public class TagsList implements Iterable<String> {
         if (!mCheckedTags.add(tag)) {
             return false;
         }
-        markAncestorsIndeterminate(tag);
+        if (processAncestors) {
+            markAncestorsIndeterminate(tag);
+        }
         return true;
+    }
+
+    /**
+     * Mark a tag as checked tag.
+     * @see #check(String, boolean)
+     */
+    public boolean check(String tag) {
+        return check(tag, true);
     }
 
     /**
@@ -185,6 +200,22 @@ public class TagsList implements Iterable<String> {
      */
     public boolean uncheck(String tag) {
         return mIndeterminateTags.remove(tag) || mCheckedTags.remove(tag);
+    }
+
+
+    /**
+     * Mark a tag as indeterminate tag
+     *
+     * @param tag the tag to be turned into indeterminate (case-insensitive)
+     * @return true if the tag changes into indeterminate
+     *         false if the tag was already indeterminate, or not in the list
+     */
+    public boolean setIndeterminate(String tag) {
+        if (!mAllTags.contains(tag)) {
+            return false;
+        }
+        mCheckedTags.remove(tag);
+        return mIndeterminateTags.add(tag);
     }
 
 
@@ -275,6 +306,8 @@ public class TagsList implements Iterable<String> {
 
     /**
      * Add ancestors of the tag into the set of all tags.
+     *
+     * @param tag The tag whose ancestors will be added.
      */
     private void addAncestors(String tag) {
         mAllTags.addAll(TagsUtil.getTagAncestors(tag));
@@ -283,17 +316,16 @@ public class TagsList implements Iterable<String> {
 
     /**
      * Mark ancestors of the tag as indeterminate (if not a checked tag).
+     *
+     * @param tag The tag whose ancestors will be marked as indeterminate if they are not checked.
      */
     private void markAncestorsIndeterminate(String tag) {
         if (!mAllTags.contains(tag)) {
             return;
         }
-        List<String> ancestors = TagsUtil.getTagAncestors(tag);
-        for (String anc : ancestors) {
-            if (!isChecked(anc)) {
-                mIndeterminateTags.add(anc);
-            }
-        }
+        TagsUtil.getTagAncestors(tag)
+                .stream().filter(s -> !isChecked(s))
+                .forEach(this::setIndeterminate);
     }
 
 

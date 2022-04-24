@@ -104,10 +104,6 @@ class CheckBoxTriStates : AppCompatCheckBox {
         return mState != State.UNCHECKED
     }
 
-    fun isIndeterminate(): Boolean {
-        return mState == State.INDETERMINATE
-    }
-
     fun setCycleBackToIndeterminate(cycleBackToIndeterminate: Boolean) {
         mCycleBackToIndeterminate = cycleBackToIndeterminate
     }
