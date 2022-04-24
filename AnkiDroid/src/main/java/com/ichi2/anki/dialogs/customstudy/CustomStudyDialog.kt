@@ -229,7 +229,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         deck.put("extendRev", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(0, n)
-                        onLimitsExtended(true)
+                        onLimitsExtended(jumpToReviewer)
                         // Check if review card limit modified
                         if (oldRevValue != n) {
                             // Mark the status as hasChanged
