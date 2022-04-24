@@ -26,10 +26,13 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.utils.FileOperation
 import junit.framework.TestCase.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.StringEndsWith.endsWith
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import java.io.File
 import java.io.IOException
 import kotlin.collections.HashSet
 
@@ -37,6 +40,7 @@ import kotlin.collections.HashSet
 class AddonModelTest : RobolectricTest() {
     private lateinit var validNpmPackageJson: String
     private lateinit var notValidNpmPackageJson: String
+    private lateinit var addonsPackageListTestJson: String
     private lateinit var mapper: ObjectMapper
     private lateinit var mPrefs: SharedPreferences
 
@@ -54,6 +58,7 @@ class AddonModelTest : RobolectricTest() {
 
         validNpmPackageJson = FileOperation.getFileResource("valid-ankidroid-js-addon-test.json")
         notValidNpmPackageJson = FileOperation.getFileResource("not-valid-ankidroid-js-addon-test.json")
+        addonsPackageListTestJson = FileOperation.getFileResource("test-js-addon.json")
     }
 
     @Test
@@ -114,5 +119,21 @@ class AddonModelTest : RobolectricTest() {
         reviewerEnabledAddonSet = mPrefs.getStringSet(REVIEWER_ADDON, HashSet())
         assertEquals(0, reviewerEnabledAddonSet?.size)
         assertFalse(reviewerEnabledAddonSet!!.contains(addonModel.name))
+    }
+
+    @Test
+    fun getAddonModelListFromJsonTest() {
+        val url = File(addonsPackageListTestJson).toURI().toURL()
+        val result = getAddonModelListFromJson(url)
+
+        // first addon name and tgz download url
+        val addon1 = result.first[0]
+        assertEquals(addon1.name, "ankidroid-js-addon-progress-bar")
+        assertThat(addon1.dist["tarball"], endsWith(".tgz"))
+
+        // second addon name and tgz download url
+        val addon2 = result.first[1]
+        assertEquals(addon2.name, "valid-ankidroid-js-addon-test")
+        assertThat(addon2.dist["tarball"], endsWith(".tgz"))
     }
 }
