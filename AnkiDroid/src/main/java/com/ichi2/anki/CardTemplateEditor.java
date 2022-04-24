@@ -109,6 +109,13 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
     private HashMap<Integer, Integer> mEditorViewId;
     private int mStartingOrdId;
 
+
+    @Nullable
+    public List<String> getFieldNames() {
+        return mFieldNames;
+    }
+
+
     private static final String EDITOR_POSITION_KEY = "editorPosition";
     private static final String EDITOR_VIEW_ID_KEY = "editorViewId";
     private static final String EDITOR_MODEL_ID = "modelId";
@@ -167,7 +174,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         enableToolbar();
         startLoadingCollection();
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -239,11 +245,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
     public TemporaryModel getTempModel() {
         return mTempModel;
-    }
-
-    @Nullable
-    public List<String> getFieldNames() {
-        return mFieldNames;
     }
 
     @VisibleForTesting
@@ -610,7 +611,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 menu.findItem(R.id.action_add_deck_override).setVisible(false);
             } else {
                 JSONObject template = getCurrentTemplate();
-                
                 @StringRes int overrideStringRes = R.string.card_template_editor_deck_override_off;
 
                 if (template != null && template.has("did") && !template.isNull("did")) {
@@ -631,36 +631,6 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             super.onCreateOptionsMenu(menu, inflater);
         }
 
-        private boolean isFmtValid(){
-            boolean isValid = true;
-            JSONObject template = getCurrentTemplate();
-
-            if (template != null && mTemplateEditor.getFieldNames() != null){
-                String tempAFMT = template.getString("afmt");
-                String tempQFMT = template.getString("qfmt");
-
-                List<String> fieldNames = new ArrayList<>(mTemplateEditor.getFieldNames());
-                fieldNames.add("FrontSide");
-                try {
-                    Matcher matcher = Pattern.compile("\\{\\{([^\\{\\}])\\}\\}").matcher(tempAFMT + tempQFMT);
-
-                    while (matcher.find()) {
-                        String fmt = matcher.group(1);
-                        Timber.i("CardTemplateEditor:: FMT %s", fmt);
-
-                        if (!fieldNames.contains(fmt)) {
-                            isValid = false;
-                            break;
-                        }
-                    }
-                } catch (Exception e) {
-                    isValid = false;
-                    Timber.e(e);
-                }
-            }
-
-            return isValid;
-        }
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -712,7 +682,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return true;
             } else if (itemId == R.id.action_confirm) {
                 Timber.i("CardTemplateEditor:: Save model button pressed");
-                if (modelHasChanged() && isFmtValid()) {
+                if (modelHasChanged() && isFormatValid()) {
                     View confirmButton = mTemplateEditor.findViewById(R.id.action_confirm);
                     if (confirmButton != null) {
                         if (!confirmButton.isEnabled()) {
@@ -737,6 +707,37 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return super.onOptionsItemSelected(item);
             }
             return super.onOptionsItemSelected(item);
+        }
+
+
+        private boolean isFormatValid() {
+            boolean valid = true;
+            JSONObject template = getCurrentTemplate();
+
+            if (template != null && mTemplateEditor.getFieldNames() != null){
+                String tempAFMT = template.getString("afmt");
+                String tempQFMT = template.getString("qfmt");
+
+                List<String> fieldNames = new ArrayList<>(mTemplateEditor.getFieldNames());
+                fieldNames.add("FrontSide");
+                try{
+                    Matcher matcher = Pattern.compile("\\{\\{([^\\{\\}]*)\\}\\}").matcher(tempQFMT+tempAFMT);
+
+                    while (matcher.find()){
+                        String format = matcher.group(1);
+                        Timber.i("CardTemplateEditor:: FMT %s", format);
+
+                        if (!fieldNames.contains(format)){
+                            valid = false;
+                            break;
+                        }
+                    }
+                }catch (Exception e){
+                    valid = false;
+                    Timber.e(e);
+                }
+            }
+            return valid;
         }
 
 
@@ -1048,6 +1049,9 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             // Set up question & answer formats
             newTemplate.put("qfmt", oldTemplate.getString("qfmt"));
             newTemplate.put("afmt", oldTemplate.getString("afmt"));
+            Timber.i("Invoke addNewTemplate(), %s", newTemplate);
+            System.out.println("get qfmt" + oldTemplate.getString("qfmt"));
+            System.out.println("get afmt" + oldTemplate.getString("afmt"));
             // Reverse the front and back if only one template
             if (templates.length() == 1) {
                 flipQA(newTemplate);
