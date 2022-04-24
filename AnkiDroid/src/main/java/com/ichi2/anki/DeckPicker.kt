@@ -471,7 +471,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     @KotlinCleanup("remove parameters named _")
     @KotlinCleanup("return early and remove else")
     fun requestStoragePermission() {
-        if (mClosedWelcomeMessage) {
+        val sharedPrefsIsntEmpty = AnkiDroidApp.getSharedPrefs(this).all.isNotEmpty()
+        if (mClosedWelcomeMessage || sharedPrefsIsntEmpty) {
             // DEFECT #5847: This fails if the activity is killed.
             // Even if the dialog is showing, we want to show it again.
             ActivityCompat.requestPermissions(
