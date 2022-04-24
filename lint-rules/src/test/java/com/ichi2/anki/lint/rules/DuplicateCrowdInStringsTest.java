@@ -49,6 +49,12 @@ public class DuplicateCrowdInStringsTest {
             "   <string name=\"hello2\" comment=\"hello\">a</string>\n" +
             "</resources>";
 
+    @Language("XML")
+    private final String mIgnoredFile = "<resources tools:ignore=\"AAA,DuplicateCrowdInStrings\">\n" +
+            "   <string name=\"hello\">a</string>\n" +
+            "   <string name=\"hello2\">a</string>\n" +
+            "</resources>";
+
     @Test
     public void duplicateStringsInSameFileDetected() {
         // This appears to be a bug in StringCasingDetector - string is self-referential.
@@ -102,6 +108,17 @@ public class DuplicateCrowdInStringsTest {
         .allowMissingSdk()
         .allowCompilationErrors()
         .files(xml("res/values/string.xml", mDuplicateBothValid))
+        .issues(DuplicateCrowdInStrings.ISSUE)
+        .run()
+        .expectErrorCount(0);
+    }
+
+    @Test
+    public void ignoredFilePasses() {
+        lint()
+        .allowMissingSdk()
+        .allowCompilationErrors()
+        .files(xml("res/values/string.xml", mIgnoredFile))
         .issues(DuplicateCrowdInStrings.ISSUE)
         .run()
         .expectErrorCount(0);

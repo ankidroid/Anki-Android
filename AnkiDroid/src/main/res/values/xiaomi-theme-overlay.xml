@@ -14,6 +14,6 @@
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
     <style name="ThemeOverlay.Xiaomi" parent="" />
 </resources>
