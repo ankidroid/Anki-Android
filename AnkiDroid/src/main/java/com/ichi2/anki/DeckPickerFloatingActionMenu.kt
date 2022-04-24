@@ -134,15 +134,14 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
         val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
-        isFABOpen = false
-        isCreateDeckOpen = false
         mFabMain.setOnClickListener {
             if (!isFABOpen || isCreateDeckOpen) {
                 showFloatingActionMenu()
+                isCreateDeckOpen = false
             } else {
                 closeFloatingActionMenu()
+                isCreateDeckOpen = false
             }
-            isCreateDeckOpen = false
         }
         mFabBGLayout.setOnClickListener { closeFloatingActionMenu() }
         val addDeckListener = View.OnClickListener {
