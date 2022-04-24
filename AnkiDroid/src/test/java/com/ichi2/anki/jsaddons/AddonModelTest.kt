@@ -32,14 +32,15 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import java.io.File
 import java.io.IOException
-import java.net.URL
 import kotlin.collections.HashSet
 
 @RunWith(AndroidJUnit4::class)
 class AddonModelTest : RobolectricTest() {
     private lateinit var validNpmPackageJson: String
     private lateinit var notValidNpmPackageJson: String
+    private lateinit var addonsPackageListTestJson: String
     private lateinit var mapper: ObjectMapper
     private lateinit var mPrefs: SharedPreferences
 
@@ -57,6 +58,7 @@ class AddonModelTest : RobolectricTest() {
 
         validNpmPackageJson = FileOperation.getFileResource("valid-ankidroid-js-addon-test.json")
         notValidNpmPackageJson = FileOperation.getFileResource("not-valid-ankidroid-js-addon-test.json")
+        addonsPackageListTestJson = FileOperation.getFileResource("test-js-addon.json")
     }
 
     @Test
@@ -121,7 +123,7 @@ class AddonModelTest : RobolectricTest() {
 
     @Test
     fun getAddonModelListFromJsonTest() {
-        val url = URL("https://raw.githubusercontent.com/krmanik/anki-js-addon-json/main/test-js-addon.json")
+        val url = File(addonsPackageListTestJson).toURI().toURL()
         val result = getAddonModelListFromJson(url)
 
         // first addon name and tgz download url

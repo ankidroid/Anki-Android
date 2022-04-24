@@ -166,7 +166,7 @@ fun getAddonModelListFromJson(packageJsonUrl: URL): Pair<List<AddonModel>, List<
         val result = getAddonModelFromAddonData(addon)
 
         if (result.first == null) {
-            Timber.i("Not a valid addon for AnkiDroid, the errors for the addon:\n %s", result.second.toString())
+            Timber.i("Not a valid addon for AnkiDroid, the errors for the addon:\n %s", result.second)
             errorList.addAll(result.second)
             continue
         }
