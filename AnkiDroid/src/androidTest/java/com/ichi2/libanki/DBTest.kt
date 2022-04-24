@@ -13,27 +13,24 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.not
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.util.*
 
-import com.ichi2.anki.tests.InstrumentedTest;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.Locale;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
-
-@RunWith(AndroidJUnit4.class)
-public class DBTest extends InstrumentedTest {
-    /** mDatabase.disableWriteAheadLogging(); is called in DB init */
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("is --> equalTo")
+class DBTest : InstrumentedTest() {
+    /** mDatabase.disableWriteAheadLogging(); is called in DB init  */
     @Test
-    public void writeAheadLoggingIsDisabled() {
+    fun writeAheadLoggingIsDisabled() {
         // An old comment noted that explicitly disabling the WAL was no longer necessary after API 16:
         // https://github.com/ankidroid/Anki-Android/commit/6e34663ba9d09dc8b023230811c3185b72ee7eec#diff-4fdbf41d84a547a45edad66ae1f543128d1118b0e831a12916b4fac11b483688
 
@@ -41,8 +38,7 @@ public class DBTest extends InstrumentedTest {
         // Please see the following for implementation details
         // https://github.com/ankidroid/Anki-Android/pull/7977#issuecomment-751780273
         // https://www.sqlite.org/pragma.html#pragma_journal_mode
-        String journalMode = getCol().getDb().queryString("PRAGMA journal_mode");
-
-        assertThat(journalMode.toLowerCase(Locale.ROOT), not(is("wal")));
+        val journalMode = col.db.queryString("PRAGMA journal_mode")
+        assertThat(journalMode.lowercase(Locale.ROOT), not(`is`("wal")))
     }
 }
