@@ -107,9 +107,7 @@ then
     SOURCE=TEST
 elif [[ $FILEPATH == *AnkiDroid/src/androidTest* ]];
 then
-    echo "The added file is in AnkiDroid/src/AndroidTest, which our two-commits system don't support."
-    exit 1
-     #SOURCE=ANDROID_TEST
+    SOURCE=ANDROID_TEST
 else
     echo "The added/deleted file is not in AnkiDroid/src/' main or test or AndroidTest"
     exit 1
