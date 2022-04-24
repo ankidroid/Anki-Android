@@ -118,23 +118,6 @@
 
 
 
-    <!-- Our New style for Overflow on StudyOption Fragment -->
-    <!-- Action bar. Currently all action bar text is white in every theme. -->
-    <style name="OverflowStyle" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <!-- Colors: hamburger, title text, overflow icon -->
-        <item name="android:textColorPrimary">@color/white</item>
-        <!-- Colors: subtitle text -->
-        <item name="android:textColorSecondary">@color/white</item>
-        <!-- Overflow menu style -->
-        <item name="popupTheme">@style/ActionBar.Popup</item>
-
-        <!-- New Overflow icon -->
-        <item name="android:actionOverflowButtonStyle">@style/TuneIconOverflow</item>
-
-    </style>
-
-
-
 
     <!-- For all other action bar popups like overflow menu (except spinner dropdown in Lollipop). -->
     <style name="ActionBar.Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
@@ -190,12 +173,6 @@
     <style name="custom_material_dialog_content">
         <!--<item name="android:textColor">?attr/md_content_color</item>-->
         <item name="android:textSize">@dimen/md_content_textsize</item>
-    </style>
-
-
-    <!-- New overflow  for DeckOverview-->
-    <style name="TuneIconOverflow" parent="android:style/Widget.Holo.ActionButton.Overflow" >
-        <item name="android:src">@drawable/ic_tune_white</item>
     </style>
 
 </resources>
