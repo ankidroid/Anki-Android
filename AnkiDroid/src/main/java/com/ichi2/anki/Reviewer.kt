@@ -81,7 +81,6 @@ import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
-import com.ichi2.utils.HandlerUtils.postOnNewHandler
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
@@ -134,6 +133,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     // Preferences from the collection
     private var mShowRemainingCardCount = false
     private val mActionButtons = ActionButtons(this)
+    private var mOverflowMenuIsOpen = false
 
     @JvmField
     @VisibleForTesting
@@ -172,6 +172,18 @@ open class Reviewer : AbstractFlashcardViewer() {
         mTextBarLearn = findViewById(R.id.learn_number)
         mTextBarReview = findViewById(R.id.review_number)
         startLoadingCollection()
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+
+        savedInstanceState.putBoolean("mOverflowMenuIsOpen", mOverflowMenuIsOpen)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        mOverflowMenuIsOpen = savedInstanceState.getBoolean("mOverflowMenuIsOpen", false)
     }
 
     override fun onPause() {
@@ -656,11 +668,11 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
-        postOnNewHandler {
-            for (i in 0 until menu.size()) {
-                val menuItem = menu.getItem(i)
-                shouldUseDefaultColor(menuItem)
-            }
+        Timber.d("onMenuOpened()")
+        mOverflowMenuIsOpen = true
+        for (i in 0 until menu.size()) {
+            val menuItem = menu.getItem(i)
+            shouldUseDefaultColor(menuItem)
         }
         return super.onMenuOpened(featureId, menu)
     }
@@ -677,10 +689,13 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun onPanelClosed(featureId: Int, menu: Menu) {
+        Timber.d("onPanelClosed()")
+        mOverflowMenuIsOpen = false
         postDelayedOnNewHandler({ refreshActionBar() }, 100)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        Timber.d("onCreateOptionsMenu()")
         // NOTE: This is called every time a new question is shown via invalidate options menu
         menuInflater.inflate(R.menu.reviewer, menu)
         displayIconsOnTv(menu)
@@ -808,6 +823,9 @@ open class Reviewer : AbstractFlashcardViewer() {
         suspend_icon.icon.mutate().alpha = alpha
         setupSubMenu(menu, R.id.action_schedule, ScheduleProvider(this))
         mOnboarding.onCreate()
+        if (mOverflowMenuIsOpen)
+            for (i in 0 until menu.size())
+                shouldUseDefaultColor(menu.getItem(i))
         return super.onCreateOptionsMenu(menu)
     }
 
