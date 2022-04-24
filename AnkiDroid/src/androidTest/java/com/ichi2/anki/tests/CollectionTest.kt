@@ -15,29 +15,28 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki.tests;
+package com.ichi2.anki.tests
 
-import android.Manifest;
-import androidx.test.rule.GrantPermissionRule;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertNotNull;
+import android.Manifest
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
+import com.ichi2.utils.KotlinCleanup
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 /**
  * This test case verifies that the directory initialization works even if the app is not yet fully initialized.
  */
-@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class CollectionTest extends InstrumentedTest {
-
-    @Rule
-    public GrantPermissionRule mRuntimePermissionRule =
-            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("Fix IDE lint")
+class CollectionTest : InstrumentedTest() {
+    @get:Rule
+    var runtimePermissionRule = GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     @Test
-    public void testOpenCollection() {
-        assertNotNull("Collection could not be opened", getCol());
+    fun testOpenCollection() {
+        assertNotNull("Collection could not be opened", col)
     }
 }
