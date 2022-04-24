@@ -80,6 +80,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         mLinearLayout.alpha = 1f
         mStudyOptionsFrame?.let { it.alpha = 1f }
         isFABOpen = false
+        isCreateDeckOpen = false
         mFabBGLayout.visibility = View.GONE
         if (animationEnabled()) {
             // Close with animation
@@ -96,7 +97,6 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
                         mAddNoteLayout.visibility = View.GONE
                         mAddSharedLayout.visibility = View.GONE
                         mAddDeckLayout.visibility = View.GONE
-                        isCreateDeckOpen = false
                     }
                 }
 
@@ -136,11 +136,6 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
         isFABOpen = false
         isCreateDeckOpen = false
-        /***
-         * Called when the FAB is clicked.Be responsible for judging whether
-         * FloatingActionMenu should be turned off or on through isFABOpen's
-         * status and isCreateDeckOpen's status
-         */
         mFabMain.setOnClickListener {
             if (!isFABOpen || isCreateDeckOpen) {
                 showFloatingActionMenu()
@@ -150,11 +145,6 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
             isCreateDeckOpen = false
         }
         mFabBGLayout.setOnClickListener { closeFloatingActionMenu() }
-        /***
-         * Called when the "Create Deck" is clicked.Be responsible for
-         * closeFloatingActionMenu,open "Create Deck Menu",set the status
-         * of isFABOpen and isCreateDeckOpen
-         */
         val addDeckListener = View.OnClickListener {
             if (isFABOpen) {
                 closeFloatingActionMenu()
