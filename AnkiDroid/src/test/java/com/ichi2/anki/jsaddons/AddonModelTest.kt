@@ -26,6 +26,8 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.utils.FileOperation
 import junit.framework.TestCase.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.StringEndsWith.endsWith
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -125,11 +127,11 @@ class AddonModelTest : RobolectricTest() {
         // first addon name and tgz download url
         val addon1 = result.first[0]
         assertEquals(addon1.name, "ankidroid-js-addon-progress-bar")
-        assertTrue(addon1.dist["tarball"]!!.endsWith(".tgz"))
+        assertThat(addon1.dist["tarball"], endsWith(".tgz"))
 
         // second addon name and tgz download url
         val addon2 = result.first[1]
         assertEquals(addon2.name, "valid-ankidroid-js-addon-test")
-        assertTrue(addon2.dist["tarball"]!!.endsWith(".tgz"))
+        assertThat(addon2.dist["tarball"], endsWith(".tgz"))
     }
 }
