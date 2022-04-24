@@ -47,7 +47,6 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         mLinearLayout.alpha = 0.5f
         mStudyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
-        isCreateDeckOpen = false
         if (animationEnabled()) {
             // Show with animation
             mAddNoteLayout.visibility = View.VISIBLE
@@ -80,7 +79,6 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         mLinearLayout.alpha = 1f
         mStudyOptionsFrame?.let { it.alpha = 1f }
         isFABOpen = false
-        isCreateDeckOpen = false
         mFabBGLayout.visibility = View.GONE
         if (animationEnabled()) {
             // Close with animation
@@ -115,7 +113,6 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         if (!mFabMain.isShown) {
             Timber.i("DeckPicker:: showFloatingActionButton()")
             mFabMain.visibility = View.VISIBLE
-            isCreateDeckOpen = false
         }
     }
 
@@ -123,7 +120,6 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         if (mFabMain.isShown) {
             Timber.i("DeckPicker:: hideFloatingActionButton()")
             mFabMain.visibility = View.GONE
-            isCreateDeckOpen = false
         }
     }
 
@@ -134,6 +130,8 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
         val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
+        var isFABOpen = false
+        var isCreateDeckOpen = false
         mFabMain.setOnClickListener {
             if (!isFABOpen || isCreateDeckOpen) {
                 showFloatingActionMenu()
