@@ -13,38 +13,34 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.tests
 
-package com.ichi2.anki.tests;
+import com.ichi2.libanki.Storage
+import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendException
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers.`is`
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.Timeout
+import java.io.IOException
+import java.util.concurrent.TimeUnit
 
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Storage;
-
-import net.ankiweb.rsdroid.BackendException;
-
-import org.hamcrest.MatcherAssert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.Timeout;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
-import static org.hamcrest.Matchers.is;
-
-public class RustTest extends InstrumentedTest {
-
+@KotlinCleanup("is --> equalTo")
+class RustTest : InstrumentedTest() {
     /** Ensure that the database isn't be locked
      * This happened before the database code was converted to use the Rust backend.
-      */
-    @Rule
-    public Timeout timeout = new Timeout(30, TimeUnit.SECONDS);
+     */
+    @get:Rule
+    var timeout = Timeout(30, TimeUnit.SECONDS)
 
     @Test
-    public void collectionIsVersion11AfterOpen() throws BackendException, IOException {
+    @Throws(BackendException::class, IOException::class)
+    fun collectionIsVersion11AfterOpen() {
         // This test will be decommissioned, but before we get an upgrade strategy, we need to ensure we're not upgrading the database.
-        String path = Shared.getTestFilePath(getTestContext(), "initial_version_2_12_1.anki2");
-        Collection collection = Storage.Collection(getTestContext(), path);
-        int ver = collection.getDb().queryScalar("select ver from col");
-        MatcherAssert.assertThat(ver, is(11));
+        val path = Shared.getTestFilePath(testContext, "initial_version_2_12_1.anki2")
+        val collection = Storage.Collection(testContext, path)
+        val ver = collection.db.queryScalar("select ver from col")
+        MatcherAssert.assertThat(ver, `is`(11))
     }
 }
