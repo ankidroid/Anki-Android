@@ -32,6 +32,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
     private val mLinearLayout: LinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
     var isFABOpen = false
+    var isCreateDeckOpen = false
 
     @Suppress("unused")
     val isFragmented: Boolean
@@ -130,10 +131,12 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
         mFabMain.setOnClickListener {
-            if (!isFABOpen) {
+            if (!isFABOpen || isCreateDeckOpen) {
                 showFloatingActionMenu()
+                isCreateDeckOpen = false
             } else {
                 closeFloatingActionMenu()
+                isCreateDeckOpen = false
             }
         }
         mFabBGLayout.setOnClickListener { closeFloatingActionMenu() }
@@ -143,6 +146,8 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
                 val createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
+                isFABOpen=true
+                isCreateDeckOpen=true
             }
         }
         addDeckButton.setOnClickListener(addDeckListener)
