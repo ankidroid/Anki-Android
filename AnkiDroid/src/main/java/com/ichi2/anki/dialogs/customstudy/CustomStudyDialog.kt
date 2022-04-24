@@ -208,24 +208,30 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     STUDY_NEW -> {
                         AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendNew", n).apply()
                         val deck = collection.decks.get(did)
+                        // Get old value of new card limit
                         val oldNewValue = deck.get("extendNew")
                         deck.put("extendNew", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(n, 0)
                         onLimitsExtended(jumpToReviewer)
+                        // Check if new card limit modified
                         if (oldNewValue != n) {
+                            // Mark the status as hasChanged
                             SyncStatus.markDataAsChanged()
                         }
                     }
                     STUDY_REV -> {
                         AnkiDroidApp.getSharedPrefs(requireActivity()).edit().putInt("extendRev", n).apply()
                         val deck = collection.decks.get(did)
+                        // Get old value of review card limit
                         val oldRevValue = deck.get("extendRev")
                         deck.put("extendRev", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(0, n)
                         onLimitsExtended(jumpToReviewer)
+                        // Check if review card limit modified
                         if (oldRevValue != n) {
+                            // Mark the status as hasChanged
                             SyncStatus.markDataAsChanged()
                         }
                     }
