@@ -166,7 +166,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         }
     }
 
-    private fun getJsApiListMap(): HashMap<String, Boolean>? {
+    protected fun getJsApiListMap(): HashMap<String, Boolean>? {
         return mJsApiListMap
     }
 
@@ -517,5 +517,12 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             val jsonEncodedString = org.json.JSONObject.quote(searchResult.toString())
             webView.evaluateJavascript("ankiSearchCard($jsonEncodedString)", null)
         }
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardDue(days: Int): Boolean {
+        // the function is overridden in Reviewer.kt
+        // it may be called in previewer so just return true value here
+        return true
     }
 }

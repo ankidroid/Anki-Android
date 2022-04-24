@@ -22,6 +22,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.utils.JSONObject
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -46,7 +48,8 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         data.put("developer", "dev@mail.com")
 
         // this will be changed when new api added
-        val expected = "{\"suspendNote\":true,\"markCard\":true,\"suspendCard\":true,\"buryCard\":true,\"toggleFlag\":true,\"buryNote\":true}"
+        // TODO - make this test to auto add api from list
+        val expected = "{\"setCardDue\":true,\"suspendNote\":true,\"markCard\":true,\"suspendCard\":true,\"buryCard\":true,\"toggleFlag\":true,\"buryNote\":true}"
 
         waitForAsyncTasksToComplete()
         assertThat(javaScriptFunction.init(data.toString()), equalTo(expected))
@@ -306,5 +309,42 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     private fun startReviewer(): Reviewer {
         return ReviewerTest.startReviewer(this)
+    }
+
+    @Test
+    fun ankiSetCardDueTest() {
+        val models = col.models
+        val decks = col.decks
+        val didA = addDeck("Test")
+        val basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name))
+        basic!!.put("did", didA)
+        addNoteUsingBasicModel("foo", "bar")
+        addNoteUsingBasicModel("baz", "bak")
+        decks.select(didA)
+
+        val reviewer: Reviewer = startReviewer()
+        waitForAsyncTasksToComplete()
+
+        val javaScriptFunction = reviewer.javaScriptFunction()
+        // init js api
+        javaScriptFunction.init(initJsApiContract())
+        // get card id for testing due
+        val cardId = javaScriptFunction.ankiGetCardId()
+
+        // test that card rescheduled for 15 days interval and returned true
+        assertTrue("Card rescheduled, so returns true", javaScriptFunction.ankiSetCardDue(15))
+        waitForAsyncTasksToComplete()
+
+        // verify that it did get rescheduled
+        // --------------------------------
+        val cardAfterRescheduleCards = col.getCard(cardId)
+        assertEquals("Card is rescheduled", 15, cardAfterRescheduleCards.due)
+    }
+
+    private fun initJsApiContract(): String {
+        val data = JSONObject()
+        data.put("version", "0.0.1")
+        data.put("developer", "test@example.com")
+        return data.toString()
     }
 }
