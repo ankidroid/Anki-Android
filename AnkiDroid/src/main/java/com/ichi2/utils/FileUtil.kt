@@ -24,10 +24,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.lang.Exception
-import java.lang.IllegalArgumentException
-import java.util.AbstractMap
-import kotlin.Throws
+import java.util.*
 
 object FileUtil {
     /** Gets the free disk space given a file  */
@@ -54,9 +51,8 @@ object FileUtil {
     @KotlinCleanup("nonnull uri")
     fun internalizeUri(uri: Uri?, internalFile: File, contentResolver: ContentResolver): File {
         // If we got a real file name, do a copy from it
-        val inputStream: InputStream?
-        inputStream = try {
-            contentResolver.openInputStream(uri!!)
+        val inputStream: InputStream = try {
+            contentResolver.openInputStream(uri!!)!!
         } catch (e: Exception) {
             Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
             throw e

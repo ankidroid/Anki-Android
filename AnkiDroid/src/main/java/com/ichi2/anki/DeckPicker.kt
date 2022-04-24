@@ -96,7 +96,6 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
-import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
@@ -217,8 +216,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         get() = BackupManager()
     private val mImportAddListener = ImportAddListener(this)
 
-    private class ImportAddListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Triple<AnkiPackageImporter, Boolean, String?>>(deckPicker) {
-        override fun actualOnPostExecute(context: DeckPicker, result: Triple<AnkiPackageImporter, Boolean, String?>) {
+    private class ImportAddListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Triple<AnkiPackageImporter?, Boolean, String?>>(deckPicker) {
+        override fun actualOnPostExecute(context: DeckPicker, result: Triple<AnkiPackageImporter?, Boolean, String?>) {
             if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
                 context.mProgressDialog!!.dismiss()
             }
@@ -229,7 +228,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 context.showSimpleMessageDialog(result.third)
             } else {
                 Timber.i("Import: Add succeeded")
-                val imp = result.first
+                val imp = result.first!!
                 context.showSimpleMessageDialog(TextUtils.join("\n", imp.log))
                 context.updateDeckList()
             }
@@ -471,14 +470,15 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     @KotlinCleanup("remove parameters named _")
     @KotlinCleanup("return early and remove else")
     fun requestStoragePermission() {
+        val storagePermissions = arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
         val sharedPrefsIsntEmpty = AnkiDroidApp.getSharedPrefs(this).all.isNotEmpty()
         if (mClosedWelcomeMessage || sharedPrefsIsntEmpty) {
             // DEFECT #5847: This fails if the activity is killed.
             // Even if the dialog is showing, we want to show it again.
-            ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                REQUEST_STORAGE_PERMISSION
-            )
+            ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
         } else {
             Timber.i("Displaying initial permission request dialog")
             // Request storage permission if we don't have it (e.g. on Android 6.0+)
@@ -489,10 +489,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .positiveText(R.string.dialog_ok)
                 .onPositive { _: MaterialDialog?, _: DialogAction? ->
                     mClosedWelcomeMessage = true
-                    ActivityCompat.requestPermissions(
-                        this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        REQUEST_STORAGE_PERMISSION
-                    )
+                    ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
                 }
                 .cancelable(false)
                 .canceledOnTouchOutside(false)
@@ -713,8 +710,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.size == 1) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.isNotEmpty()) {
+            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 invalidateOptionsMenu()
                 handleStartup()
             } else {
@@ -1355,7 +1352,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
     }
 
-    override fun deleteUnused(unused: List<String?>?) {
+    override fun deleteUnused(unused: List<String>) {
         TaskManager.launchCollectionTask(DeleteMedia(unused), mediaDeleteListener())
     }
 
@@ -1374,7 +1371,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
     }
 
-    fun restoreFromBackup(path: String?) {
+    fun restoreFromBackup(path: String) {
         importReplace(path)
     }
 
@@ -1753,13 +1750,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     // Callback to import a file -- adding it to existing collection
-    override fun importAdd(importPath: String?) {
+    override fun importAdd(importPath: String) {
         Timber.d("importAdd() for file %s", importPath)
         TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
     }
 
     // Callback to import a file -- replacing the existing collection
-    override fun importReplace(importPath: String?) {
+    override fun importReplace(importPath: String) {
         TaskManager.launchCollectionTask(ImportReplace(importPath), importReplaceListener())
     }
 
@@ -1975,7 +1972,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         if (quick) {
             TaskManager.launchCollectionTask(LoadDeck(), updateDeckListListener())
         } else {
-            TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener<DeckDueTreeNode>())
+            TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener())
         }
     }
 
@@ -2209,12 +2206,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         return SimpleProgressListener(this)
     }
 
-    private class SimpleProgressListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, DeckStudyData>(deckPicker) {
+    private class SimpleProgressListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, DeckStudyData?>(deckPicker) {
         override fun actualOnPreExecute(context: DeckPicker) {
             context.showProgressBar()
         }
 
-        override fun actualOnPostExecute(context: DeckPicker, result: DeckStudyData) {
+        override fun actualOnPostExecute(context: DeckPicker, result: DeckStudyData?) {
             context.updateDeckList()
             if (context.mFragmented) {
                 context.loadStudyOptionsFragment(false)

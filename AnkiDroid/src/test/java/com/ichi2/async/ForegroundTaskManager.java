@@ -17,6 +17,7 @@
 package com.ichi2.async;
 
 import com.ichi2.libanki.CollectionGetter;
+import com.ichi2.utils.KotlinCleanup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,7 +38,7 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public <Progress, Result> Cancellable launchCollectionTaskConcrete(TaskDelegate<Progress, Result> task) {
+    public <Progress, Result> Cancellable launchCollectionTaskConcrete(TaskDelegateBase<Progress, Result> task) {
         return launchCollectionTaskConcrete(task, null);
     }
 
@@ -49,20 +50,21 @@ public class ForegroundTaskManager extends TaskManager {
 
     @Override
     public <Progress, Result> Cancellable launchCollectionTaskConcrete(
-            @NonNull TaskDelegate<Progress, Result> task,
+            @NonNull TaskDelegateBase<Progress, Result> task,
             @Nullable TaskListener<? super Progress, ? super Result> listener) {
         return executeTaskWithListener(task, listener, mColGetter);
     }
 
+    @KotlinCleanup("getCol should be allowed to return null: maybe getColSafe here?")
     public static <Progress, Result> Cancellable executeTaskWithListener(
-            @NonNull TaskDelegate<Progress, Result> task,
+            @NonNull TaskDelegateBase<Progress, Result> task,
             @Nullable TaskListener<? super Progress, ? super Result> listener, CollectionGetter colGetter) {
         if (listener != null) {
             listener.onPreExecute();
         }
         final Result res;
         try {
-            res = task.task(colGetter.getCol(), new MockTaskManager<>(listener));
+            res = task.execTask(colGetter.getCol(), new MockTaskManager<>(listener));
         } catch (Exception e) {
             Timber.w(e, "A new failure may have something to do with running in the foreground.");
             throw e;
@@ -125,7 +127,7 @@ public class ForegroundTaskManager extends TaskManager {
     public static class EmptyTask<Progress, Result> extends
             CollectionTask<Progress, Result> {
 
-        protected EmptyTask(TaskDelegate<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener) {
+        protected EmptyTask(TaskDelegateBase<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener) {
             super(task, listener, null);
         }
     }

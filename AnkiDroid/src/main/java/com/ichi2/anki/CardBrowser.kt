@@ -170,7 +170,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         if (result.resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...")
             TaskManager.launchCollectionTask(
-                UpdateNote(sCardBrowserCard, false, false),
+                UpdateNote(sCardBrowserCard!!, false, false),
                 updateCardHandler()
             )
         }
@@ -1451,7 +1451,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             // Perform database query to get all card ids
             TaskManager.launchCollectionTask(
                 SearchCards(
-                    searchText,
+                    searchText!!,
                     if (mOrder == CARD_ORDER_NONE) NoOrdering() else UseCollectionOrdering(),
                     numCardsToRender(),
                     mColumn1Index,
@@ -1512,10 +1512,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
 
     @RustCleanup("this isn't how Desktop Anki does it")
-    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
+    override fun onSelectedTags(selectedTags: List<String>?, indeterminateTags: List<String>?, option: Int) {
         when (mTagsDialogListenerAction) {
-            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, option)
-            TagsDialogListenerAction.EDIT_TAGS -> editSelectedCardsTags(selectedTags, indeterminateTags)
+            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags!!, option)
+            TagsDialogListenerAction.EDIT_TAGS -> editSelectedCardsTags(selectedTags!!, indeterminateTags!!)
             else -> {}
         }
     }
@@ -1930,7 +1930,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
     private val mRenderQAHandler = RenderQAHandler(this)
 
-    private class RenderQAHandler(browser: CardBrowser?) : TaskListenerWithContext<CardBrowser?, Int, Pair<CardCollection<CardCache>, List<Long>>>(browser) {
+    private class RenderQAHandler(browser: CardBrowser?) : TaskListenerWithContext<CardBrowser?, Int, Pair<CardCollection<CardCache>, List<Long>>?>(browser) {
         override fun actualOnProgressUpdate(context: CardBrowser?, value: Int) {
             // Note: This is called every time a card is rendered.
             // It blocks the long-click callback while the task is running, so usage of the task should be minimized
@@ -1941,7 +1941,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             Timber.d("Starting Q&A background rendering")
         }
 
-        override fun actualOnPostExecute(context: CardBrowser?, result: Pair<CardCollection<CardCache>, List<Long>>) {
+        override fun actualOnPostExecute(context: CardBrowser?, result: Pair<CardCollection<CardCache>, List<Long>>?) {
+            if (result == null) {
+                return
+            }
             val cardsIdsToHide = result.second
             if (cardsIdsToHide != null) {
                 try {
@@ -1968,10 +1971,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     private val mCheckSelectedCardsHandler = CheckSelectedCardsHandler(this)
 
-    private class CheckSelectedCardsHandler(browser: CardBrowser?) : ListenerWithProgressBar<Void?, Pair<Boolean, Boolean>>(browser) {
-        override fun actualOnPostExecute(context: CardBrowser?, result: Pair<Boolean, Boolean>) {
+    private class CheckSelectedCardsHandler(browser: CardBrowser?) : ListenerWithProgressBar<Void?, Pair<Boolean, Boolean>?>(browser) {
+        override fun actualOnPostExecute(context: CardBrowser?, result: Pair<Boolean, Boolean>?) {
             context!!.hideProgressBar()
-            if (context.mActionBarMenu != null) {
+            if (context.mActionBarMenu != null && result != null) {
                 val hasUnsuspended = result.first
                 val hasUnmarked = result.second
                 setMenuIcons(context, hasUnsuspended, hasUnmarked, context.mActionBarMenu!!)
@@ -2076,7 +2079,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
     }
 
-    protected fun renderBrowserQAParams(firstVisibleItem: Int, visibleItemCount: Int, cards: CardCollection<CardCache>?): RenderBrowserQA {
+    protected fun renderBrowserQAParams(firstVisibleItem: Int, visibleItemCount: Int, cards: CardCollection<CardCache>): RenderBrowserQA {
         return RenderBrowserQA(cards, firstVisibleItem, visibleItemCount, mColumn1Index, mColumn2Index)
     }
 
@@ -2620,7 +2623,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     // should only be called from changeDeck()
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun executeChangeCollectionTask(ids: List<Long>?, newDid: Long) {
+    fun executeChangeCollectionTask(ids: List<Long>, newDid: Long) {
         mNewDid = newDid // line required for unit tests, not necessary, but a noop in regular call.
         TaskManager.launchCollectionTask(
             ChangeDeckMulti(ids, newDid),

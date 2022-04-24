@@ -32,7 +32,7 @@ class CollectionTaskCheckDatabaseTest : AbstractCollectionTaskTest() {
         advanceRobolectricLooper()
         val result = super.execute(CheckDatabase())!!
         assertThat("The result should specify a failure", result.first, `is`(false))
-        val checkDbResult = result.second
+        val checkDbResult = result.second!!
         assertThat("The result should specify the database was locked", checkDbResult.databaseLocked)
     }
 

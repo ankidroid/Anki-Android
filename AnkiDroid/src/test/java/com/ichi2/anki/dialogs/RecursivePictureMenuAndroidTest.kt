@@ -20,7 +20,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RunInBackground
 import com.ichi2.anki.dialogs.utils.RecursivePictureMenuUtil
-import com.ichi2.utils.ArrayUtil
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Ignore
@@ -54,7 +53,7 @@ class RecursivePictureMenuAndroidTest : RecursivePictureMenuUtilTest() {
     @Ignore("Not implemented")
     fun removeFromRoot() {
         val header: RecursivePictureMenu.Item = getHeaderWithSubItems(1)
-        val allItems = ArrayUtil.toArrayList(arrayOf(header))
+        val allItems = arrayListOf(header)
         RecursivePictureMenu.removeFrom(allItems, header)
 
         // Do we return, or check to see if the list is mutated?
