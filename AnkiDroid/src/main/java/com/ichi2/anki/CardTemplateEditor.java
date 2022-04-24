@@ -1056,8 +1056,8 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             newTemplate.put("qfmt", oldTemplate.getString("qfmt"));
             newTemplate.put("afmt", oldTemplate.getString("afmt"));
             Timber.i("Invoke addNewTemplate(), %s", newTemplate);
-            Timber.i("get qfmt" + oldTemplate.getString("qfmt"));
-            Timber.i("get afmt" + oldTemplate.getString("afmt"));
+            Timber.i("get qfmt %s", oldTemplate.getString("qfmt"));
+            Timber.i("get afmt %s", oldTemplate.getString("afmt"));
             // Reverse the front and back if only one template
             if (templates.length() == 1) {
                 flipQA(newTemplate);
