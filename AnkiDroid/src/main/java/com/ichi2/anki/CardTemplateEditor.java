@@ -175,6 +175,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         startLoadingCollection();
     }
 
+    
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putAll(getTempModel().toBundle());
@@ -611,6 +612,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 menu.findItem(R.id.action_add_deck_override).setVisible(false);
             } else {
                 JSONObject template = getCurrentTemplate();
+                
                 @StringRes int overrideStringRes = R.string.card_template_editor_deck_override_off;
 
                 if (template != null && template.has("did") && !template.isNull("did")) {
@@ -710,6 +712,10 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         }
 
 
+        /***
+        * Check whether the user-enter field names are in the supported field names list mFieldNames
+        * @return The result of to-save template format validation
+        */
         private boolean isFormatValid() {
             boolean valid = true;
             JSONObject template = getCurrentTemplate();
@@ -721,7 +727,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 List<String> fieldNames = new ArrayList<>(mTemplateEditor.getFieldNames());
                 fieldNames.add("FrontSide");
                 try{
-                    Matcher matcher = Pattern.compile("\\{\\{([^\\{\\}]*)\\}\\}").matcher(tempQFMT+tempAFMT);
+                    Matcher matcher = Pattern.compile("\\{\\{([^\\{\\}]*)\\}\\}").matcher(tempQFMT + tempAFMT);
 
                     while (matcher.find()){
                         String format = matcher.group(1);
