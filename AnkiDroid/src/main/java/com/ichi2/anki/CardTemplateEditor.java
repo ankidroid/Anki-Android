@@ -631,6 +631,36 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
             super.onCreateOptionsMenu(menu, inflater);
         }
 
+        private boolean isFmtValid(){
+            boolean isValid = true;
+            JSONObject template = getCurrentTemplate();
+
+            if (template != null && mTemplateEditor.getFieldNames() != null){
+                String tempAFMT = template.getString("afmt");
+                String tempQFMT = template.getString("qfmt");
+
+                List<String> fieldNames = new ArrayList<>(mTemplateEditor.getFieldNames());
+                fieldNames.add("FrontSide");
+                try {
+                    Matcher matcher = Pattern.compile("\\{\\{([^\\{\\}])\\}\\}").matcher(tempAFMT + tempQFMT);
+
+                    while (matcher.find()) {
+                        String fmt = matcher.group(1);
+                        Timber.i("CardTemplateEditor:: FMT %s", fmt);
+
+                        if (!fieldNames.contains(fmt)) {
+                            isValid = false;
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    isValid = false;
+                    Timber.e(e);
+                }
+            }
+
+            return isValid;
+        }
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -682,41 +712,13 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return true;
             } else if (itemId == R.id.action_confirm) {
                 Timber.i("CardTemplateEditor:: Save model button pressed");
-                boolean isFMTValid = true;
-                JSONObject template = getCurrentTemplate();
-
-                if (template != null && mTemplateEditor.getFieldNames() != null){
-                    String tempAFMT = template.getString("afmt");
-                    String tempQFMT = template.getString("qfmt");
-
-                    List<String> fieldNames = new ArrayList<>(mTemplateEditor.getFieldNames());
-                    fieldNames.add("FrontSide");
-                    try {
-                    	Matcher matcher = Pattern.compile("\\{\\{([^\\{\\}])\\}\\}").matcher(tempAFMT + tempQFMT);
-
-                    	while (matcher.find()) {
-                        	String fmt = matcher.group(1);
-                        	Timber.i("CardTemplateEditor:: FMT %s", fmt);
-
-                        	if (!fieldNames.contains(fmt)) {
-                            		isFMTValid = false;
-                            		break;
-                        	}
-                    	}
-                    } catch (Exception e) {
-                    	isFMTValid = false;
-                    	Timber.e(e);
-                    }
-                }
-
-                if (modelHasChanged() && isFMTValid) {
+                if (modelHasChanged() && isFmtValid()) {
                     View confirmButton = mTemplateEditor.findViewById(R.id.action_confirm);
                     if (confirmButton != null) {
                         if (!confirmButton.isEnabled()) {
                             Timber.d("CardTemplateEditor::discarding extra click after button disabled");
                             return true;
                         }
-
                         confirmButton.setEnabled(false);
                     }
                     tempModel.saveToDatabase(saveModelAndExitHandler());
