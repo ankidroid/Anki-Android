@@ -50,6 +50,7 @@ import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.SyncStatus
 import timber.log.Timber
 import java.util.*
 
