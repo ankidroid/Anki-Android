@@ -68,10 +68,10 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">%d menit lagi</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="other">%d jam %d mnt lagi</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="other">%d hari %d jam lagi</item>
     </plurals>
     <string name="no_cards_placeholder_title">Koleksi kosong</string>

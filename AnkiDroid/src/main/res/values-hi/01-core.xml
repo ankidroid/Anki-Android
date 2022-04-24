@@ -70,11 +70,11 @@
         <item quantity="one">%d मिनट शेष</item>
         <item quantity="other">%d मिनट बचे हैं</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d घंटे %d बचे हैं</item>
         <item quantity="other">%d घंटे %d बचे हैं</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d दिन %d बचे हैं</item>
         <item quantity="other">%d दिन %d बचे हैं</item>
     </plurals>

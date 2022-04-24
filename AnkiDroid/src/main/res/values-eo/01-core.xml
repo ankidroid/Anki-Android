@@ -70,11 +70,11 @@
         <item quantity="one">ankoraŭ %d minuto</item>
         <item quantity="other">ankoraŭ %d minutoj</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">ankoraŭ %d horo %d</item>
         <item quantity="other">ankoraŭ %d horoj %d</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">ankoraŭ %d tago %d</item>
         <item quantity="other">ankoraŭ %d tagoj %d</item>
     </plurals>

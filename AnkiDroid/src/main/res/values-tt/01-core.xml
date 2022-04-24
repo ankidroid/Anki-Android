@@ -68,10 +68,10 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">%d минут калды</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="other">%d сәгатъ %d калды</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="other">%d көн %d калды</item>
     </plurals>
     <string name="no_cards_placeholder_title">Коллекция буш</string>

@@ -70,11 +70,11 @@
         <item quantity="one">Απέμεινε %d λεπτό</item>
         <item quantity="other">Απόμειναν %d λεπτά</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">Απομένει %d ώρα %d</item>
         <item quantity="other">Απομένουν %d ώρες %d</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">Απομένει %d ημέρα %d</item>
         <item quantity="other">Απομένουν %d ημέρες %d</item>
     </plurals>

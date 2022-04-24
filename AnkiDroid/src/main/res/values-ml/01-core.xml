@@ -70,11 +70,11 @@
         <item quantity="one">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
         <item quantity="other">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">മണിക്കൂർ</item>
         <item quantity="other">മണിക്കൂറുകൾ</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">ദിവസങ്ങളിൽ</item>
         <item quantity="other">%d ദിവസം %d ശേഷിക്കുന്നു</item>
     </plurals>

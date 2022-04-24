@@ -70,11 +70,11 @@
         <item quantity="one">Mancat %d minutu</item>
         <item quantity="other">Mancant %d minutos</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">Mancat %d ora %d</item>
         <item quantity="other">Mancant %d oras %d</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">Mancat %d die %d</item>
         <item quantity="other">Mancant %d dies %d</item>
     </plurals>

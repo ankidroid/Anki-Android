@@ -74,13 +74,13 @@
         <item quantity="many">zbývá %d minuty</item>
         <item quantity="other">zbývá %d minut</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">Zbývá %d hodina %d</item>
         <item quantity="few">Zbývají %d hodiny %d</item>
         <item quantity="many">Zbývá %d hodiny %d</item>
         <item quantity="other">Zbývá %d hodin %d</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">Zbývá %d den %d</item>
         <item quantity="few">Zbývají %d dny %d</item>
         <item quantity="many">Zbývá %d dne %d</item>

@@ -78,7 +78,7 @@
         <item quantity="many">%d دقيقة متبقية</item>
         <item quantity="other">%d دقيقة متبقية</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="zero">تبقى %d ساعة و%d دقيقة</item>
         <item quantity="one">تبقى %d ساعة و%d دقيقة</item>
         <item quantity="two">تبقى %d ساعة و%d دقيقة</item>
@@ -86,7 +86,7 @@
         <item quantity="many">تبقى %d ساعة و%d دقيقة</item>
         <item quantity="other">تبقى %d ساعة و%d دقيقة</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="zero">تبقى %d يوم و%d ساعة</item>
         <item quantity="one">تبقى %d يوم و%d ساعة</item>
         <item quantity="two">تبقى %d يوم و%d ساعة</item>

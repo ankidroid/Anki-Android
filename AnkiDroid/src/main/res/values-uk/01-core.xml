@@ -74,13 +74,13 @@
         <item quantity="many">Залишилося %d хвилин</item>
         <item quantity="other">Залишилося %d хвилини</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">залишилася %d година %d</item>
         <item quantity="few">залишилося %d години %d </item>
         <item quantity="many">залишилося %d годин %d </item>
         <item quantity="other">залишилося %d годин %d</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">залишився %d день, %d </item>
         <item quantity="few">залишилося %d дні %d</item>
         <item quantity="many">залишилося %d днів %d</item>

@@ -70,11 +70,11 @@
         <item quantity="one">%d minut kvar</item>
         <item quantity="other">%d minuter kvar</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d timme %d kvar</item>
         <item quantity="other">%d timmar %d kvar</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d dag %d kvar</item>
         <item quantity="other">%d dagar %d kvar</item>
     </plurals>

@@ -70,11 +70,11 @@
         <item quantity="one">%d minutit jäänud</item>
         <item quantity="other">%d minutit jäänud</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d tund %d jäänud</item>
         <item quantity="other">%d tundi %d jäänud</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d päev %d jäänud</item>
         <item quantity="other">%d päeva %d jäänud</item>
     </plurals>

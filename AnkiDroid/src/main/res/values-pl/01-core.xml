@@ -74,13 +74,13 @@
         <item quantity="many">Zostało %d minut</item>
         <item quantity="other">Zostało %d minut</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">Została %d godzina %d</item>
         <item quantity="few">Zostały %d godziny %d</item>
         <item quantity="many">Zostało %d godzin %d</item>
         <item quantity="other">Zostało %d godzin %d</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">Został %d dzień %d</item>
         <item quantity="few">Zostały %d dni %d</item>
         <item quantity="many">Zostało %d dni %d</item>

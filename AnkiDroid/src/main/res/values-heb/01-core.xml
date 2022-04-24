@@ -74,13 +74,13 @@
         <item quantity="many">נותרו %d דקות</item>
         <item quantity="other">נותרו %d דקות</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d שעה %d נותרה </item>
         <item quantity="two">%d שעות %d נותרו</item>
         <item quantity="many">%d שעות %d נותרו</item>
         <item quantity="other">%d שעות %d נותרו</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">נותרו %d ימים ו %d שעות</item>
         <item quantity="two">נותרו %d ימים ו %d שעות</item>
         <item quantity="many">נותרו %d ימים ו %d שעות</item>
