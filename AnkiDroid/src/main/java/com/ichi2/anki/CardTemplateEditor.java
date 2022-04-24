@@ -691,21 +691,21 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
                     List<String> fieldNames = new ArrayList<>(mTemplateEditor.getFieldNames());
                     fieldNames.add("FrontSide");
-                    try{
-                    Matcher matcher = Pattern.compile("\\{\\{([^\\{\\}])\\}\\}").matcher(tempAFMT + tempQFMT);
+                    try {
+                    	Matcher matcher = Pattern.compile("\\{\\{([^\\{\\}])\\}\\}").matcher(tempAFMT + tempQFMT);
 
-                    while (matcher.find()){
-                        String fmt = matcher.group(1);
-                        Timber.i("CardTemplateEditor:: FMT %s", fmt);
+                    	while (matcher.find()) {
+                        	String fmt = matcher.group(1);
+                        	Timber.i("CardTemplateEditor:: FMT %s", fmt);
 
-                        if (!fieldNames.contains(fmt)){
-                            isFMTValid = false;
-                            break;
-                        }
-                    }
-                    }catch (Exception e){
-                        isFMTValid = false;
-                        Timber.e(e);
+                        	if (!fieldNames.contains(fmt)) {
+                            		isFMTValid = false;
+                            		break;
+                        	}
+                    	}
+                    } catch (Exception e) {
+                    	isFMTValid = false;
+                    	Timber.e(e);
                     }
                 }
 
