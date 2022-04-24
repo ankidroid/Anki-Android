@@ -69,10 +69,10 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">เหลืออีก %d นาที</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="other">เหลืออีก %d ชั่วโมง %d</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="other">เหลืออีก %d day %d </item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>

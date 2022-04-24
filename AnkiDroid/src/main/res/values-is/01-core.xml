@@ -70,11 +70,11 @@
         <item quantity="one">%d mínuta enn</item>
         <item quantity="other">%d mínutur enn</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d klúkkutími %d enn</item>
         <item quantity="other">%d klúkkutímar %d enn</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d dagur %d enn</item>
         <item quantity="other">%d dagar %d enn</item>
     </plurals>

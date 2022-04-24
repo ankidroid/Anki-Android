@@ -70,11 +70,11 @@
         <item quantity="one">%d minute restante</item>
         <item quantity="other">%d minutes restantes</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d heure %d restante</item>
         <item quantity="other">%d heures %d restantes</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d jour %d restant</item>
         <item quantity="other">%d jours %d restants</item>
     </plurals>

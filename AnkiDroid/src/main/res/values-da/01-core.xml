@@ -70,11 +70,11 @@
         <item quantity="one">%d minutter tilbage</item>
         <item quantity="other">%d minutter tilbage</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d time %d tilbage</item>
         <item quantity="other">%d timer %d tilbage</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d dag %d tilbage</item>
         <item quantity="other">%d dage %d tilbage</item>
     </plurals>

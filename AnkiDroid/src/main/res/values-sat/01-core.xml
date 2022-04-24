@@ -70,11 +70,11 @@
         <item quantity="one">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱟᱡ ᱟᱠᱟᱱᱟ</item>
         <item quantity="other">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱟᱡ ᱟᱠᱟᱱᱟ</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d ᱴᱚᱲᱚᱝ %d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
         <item quantity="other">%d ᱴᱚᱲᱚᱝ %d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d ᱫᱤᱱ %d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
         <item quantity="other">%d ᱫᱤᱱ %d ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ</item>
     </plurals>

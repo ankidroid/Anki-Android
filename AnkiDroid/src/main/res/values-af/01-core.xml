@@ -70,11 +70,11 @@
         <item quantity="one">%d minuut oor</item>
         <item quantity="other">%d minute oor</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d hour %d left</item>
         <item quantity="other">Ure Oor</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d day %d left</item>
         <item quantity="other">Dae oor</item>
     </plurals>

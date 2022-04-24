@@ -68,10 +68,10 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">剩余%d分钟</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="other">剩余 %d 小时 %d</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="other">剩余 %d 天 %d</item>
     </plurals>
     <string name="no_cards_placeholder_title">收藏为空</string>

@@ -72,12 +72,12 @@
         <item quantity="few">%d minute preostale</item>
         <item quantity="other">%d minuta preostalo</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d sat %d preostalo</item>
         <item quantity="few">%d sati %d preostalo</item>
         <item quantity="other">%d sati %d preostalo</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d dan %d preostalo</item>
         <item quantity="few">%d dana %d preostalo</item>
         <item quantity="other">%d dana %d preostalo</item>

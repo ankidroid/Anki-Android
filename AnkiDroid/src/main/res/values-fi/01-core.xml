@@ -70,11 +70,11 @@
         <item quantity="one">%d minuutti jäljellä</item>
         <item quantity="other">%d minuuttia jäljellä</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d tunti %d jäljellä</item>
         <item quantity="other">%d tuntia %d jäljellä</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d päivä %d jäljellä</item>
         <item quantity="other">%d päivää %d jäljellä</item>
     </plurals>

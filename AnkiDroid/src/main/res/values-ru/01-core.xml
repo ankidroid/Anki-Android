@@ -74,13 +74,13 @@
         <item quantity="many">Осталось %d минут</item>
         <item quantity="other">Осталось %d минут</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d час %d остался</item>
         <item quantity="few">%d час %d остались</item>
         <item quantity="many">%d час %d остались</item>
         <item quantity="other">%d час %d осталось</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d день %d остался</item>
         <item quantity="few">%d дня %d остались</item>
         <item quantity="many">%d дней %d остались</item>

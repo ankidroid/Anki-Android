@@ -72,12 +72,12 @@
         <item quantity="few">%d minutes left</item>
         <item quantity="other">%d minutes left</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d hour %d left</item>
         <item quantity="few">%d hours %d left</item>
         <item quantity="other">%d hours %d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d day %d left</item>
         <item quantity="few">%d days %d left</item>
         <item quantity="other">%d days %d left</item>

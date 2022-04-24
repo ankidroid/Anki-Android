@@ -70,11 +70,11 @@
         <item quantity="one">%d dakika kaldı</item>
         <item quantity="other">%d dakika kaldı</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d saat kaldı</item>
         <item quantity="other">%d saat kaldı</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d gün kaldı</item>
         <item quantity="other">%d gün kaldı</item>
     </plurals>

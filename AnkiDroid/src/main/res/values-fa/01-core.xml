@@ -70,11 +70,11 @@
         <item quantity="one">%d دقیقه باقیمانده</item>
         <item quantity="other">%d دقیقه باقیمانده</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d ساعت %d باقیمانده است</item>
         <item quantity="other">%d ساعت %d باقیمانده است</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d روز %d باقیمانده است</item>
         <item quantity="other">%d روز %d باقیمانده است</item>
     </plurals>

@@ -70,11 +70,11 @@
         <item quantity="one">%d நிமிடம் விட்டுவிட்டது</item>
         <item quantity="other">%d நிமிடம் விட்டுவிட்டது</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d hour %d left</item>
         <item quantity="other">%d மணி %d மீதம்</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d day %d left</item>
         <item quantity="other">%d நாட்கள் %d மீதம்</item>
     </plurals>

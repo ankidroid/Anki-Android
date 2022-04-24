@@ -70,11 +70,11 @@
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d минута қалды</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d hour %d left</item>
         <item quantity="other">%d сағат %d қалды</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d күн %d қалды</item>
         <item quantity="other">%d days %d left</item>
     </plurals>

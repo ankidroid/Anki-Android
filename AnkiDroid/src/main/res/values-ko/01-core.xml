@@ -68,10 +68,10 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">%d분 남음</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="other">%d 시간 남음</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="other">%d일 %d시간 남음</item>
     </plurals>
     <string name="no_cards_placeholder_title">이 컬렉션은 비어 있습니다</string>

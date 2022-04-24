@@ -71,11 +71,11 @@
         <item quantity="one">%d minut qoldi</item>
         <item quantity="other">%d minutes left</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
+    <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%d soat %d qoldi</item>
         <item quantity="other">%d hours %d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
+    <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%d kun %d qoldi</item>
         <item quantity="other">%d days %d left</item>
     </plurals>
