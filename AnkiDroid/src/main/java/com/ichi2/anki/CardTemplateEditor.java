@@ -74,6 +74,7 @@ import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -238,6 +239,11 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
     public TemporaryModel getTempModel() {
         return mTempModel;
+    }
+
+    @Nullable
+    public List<String> getFieldNames() {
+        return mFieldNames;
     }
 
     @VisibleForTesting
@@ -676,13 +682,41 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
                 return true;
             } else if (itemId == R.id.action_confirm) {
                 Timber.i("CardTemplateEditor:: Save model button pressed");
-                if (modelHasChanged()) {
+                boolean isFMTValid = true;
+                JSONObject template = getCurrentTemplate();
+
+                if (template != null && mTemplateEditor.getFieldNames() != null){
+                    String tempAFMT = template.getString("afmt");
+                    String tempQFMT = template.getString("qfmt");
+
+                    List<String> fieldNames = new ArrayList<>(mTemplateEditor.getFieldNames());
+                    fieldNames.add("FrontSide");
+                    try{
+                    Matcher matcher = Pattern.compile("\\{\\{([^\\{\\}])\\}\\}").matcher(tempAFMT + tempQFMT);
+
+                    while (matcher.find()){
+                        String fmt = matcher.group(1);
+                        Timber.i("CardTemplateEditor:: FMT %s", fmt);
+
+                        if (!fieldNames.contains(fmt)){
+                            isFMTValid = false;
+                            break;
+                        }
+                    }
+                    }catch (Exception e){
+                        isFMTValid = false;
+                        Timber.e(e);
+                    }
+                }
+
+                if (modelHasChanged() && isFMTValid) {
                     View confirmButton = mTemplateEditor.findViewById(R.id.action_confirm);
                     if (confirmButton != null) {
                         if (!confirmButton.isEnabled()) {
                             Timber.d("CardTemplateEditor::discarding extra click after button disabled");
                             return true;
                         }
+
                         confirmButton.setEnabled(false);
                     }
                     tempModel.saveToDatabase(saveModelAndExitHandler());
