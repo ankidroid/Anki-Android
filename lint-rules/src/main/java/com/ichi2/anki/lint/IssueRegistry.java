@@ -7,6 +7,7 @@ import com.android.tools.lint.detector.api.Issue;
 import com.ichi2.anki.lint.rules.ConstantJavaFieldDetector;
 import com.ichi2.anki.lint.rules.CopyrightHeaderExists;
 import com.ichi2.anki.lint.rules.DirectCalendarInstanceUsage;
+import com.ichi2.anki.lint.rules.DirectSdkIntUsage;
 import com.ichi2.anki.lint.rules.DirectSnackbarMakeUsage;
 import com.ichi2.anki.lint.rules.DirectSystemTimeInstantiation;
 import com.ichi2.anki.lint.rules.DirectSystemCurrentTimeMillisUsage;
@@ -61,6 +62,7 @@ public class IssueRegistry extends com.android.tools.lint.client.api.IssueRegist
         issues.add(FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH);
         issues.add(VariableNamingDetector.ISSUE);
         issues.add(InvalidStringFormatDetector.ISSUE);
+        issues.add(DirectSdkIntUsage.ISSUE);
         return issues;
     }
 
