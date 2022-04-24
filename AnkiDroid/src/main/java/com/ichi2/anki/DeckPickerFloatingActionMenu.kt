@@ -31,6 +31,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
     private val mFabBGLayout: View = view.findViewById(R.id.fabBGLayout)
     private val mLinearLayout: LinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
+    
     var isFABOpen = false
     var isCreateDeckOpen = false
 
@@ -130,6 +131,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
         val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
+        
         var isFABOpen = false
         var isCreateDeckOpen = false
         mFabMain.setOnClickListener {
