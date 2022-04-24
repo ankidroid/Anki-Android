@@ -13,26 +13,26 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.testutil
 
-package com.ichi2.anki.testutil;
-
-public class ThreadUtils {
-    public static void sleep(int timeMs) {
+object ThreadUtils {
+    @JvmStatic
+    fun sleep(timeMs: Int) {
         try {
-            Thread.sleep(timeMs);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.sleep(timeMs.toLong())
+        } catch (e: InterruptedException) {
+            throw RuntimeException(e)
         }
     }
 
-
-    public static void runAndJoin(Runnable runnable, int timeout) {
-        Thread t = new Thread(runnable);
-        t.start();
+    @Suppress("Unused")
+    fun runAndJoin(runnable: Runnable, timeout: Int) {
+        val t = Thread(runnable)
+        t.start()
         try {
-            t.join(timeout);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            t.join(timeout.toLong())
+        } catch (e: InterruptedException) {
+            throw RuntimeException(e)
         }
     }
 }
