@@ -12,7 +12,7 @@ import com.ichi2.anki.lint.rules.DirectSystemTimeInstantiation;
 import com.ichi2.anki.lint.rules.DirectSystemCurrentTimeMillisUsage;
 import com.ichi2.anki.lint.rules.DirectDateInstantiation;
 import com.ichi2.anki.lint.rules.DirectGregorianInstantiation;
-import com.ichi2.anki.lint.rules.DirectSDK_INTUsage;
+import com.ichi2.anki.lint.rules.DirectSdkIntUsage;
 import com.ichi2.anki.lint.rules.DirectToastMakeTextUsage;
 import com.ichi2.anki.lint.rules.InvalidStringFormatDetector;
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector;
@@ -43,7 +43,7 @@ public class IssueRegistry extends com.android.tools.lint.client.api.IssueRegist
         issues.add(DirectCalendarInstanceUsage.ISSUE);
         issues.add(DirectDateInstantiation.ISSUE);
         issues.add(DirectGregorianInstantiation.ISSUE);
-        issues.add(DirectSDK_INTUsage.ISSUE);
+        issues.add(DirectSdkIntUsage.ISSUE);
         issues.add(DirectSnackbarMakeUsage.ISSUE);
         issues.add(DirectSystemCurrentTimeMillisUsage.ISSUE);
         issues.add(DirectSystemTimeInstantiation.ISSUE);
