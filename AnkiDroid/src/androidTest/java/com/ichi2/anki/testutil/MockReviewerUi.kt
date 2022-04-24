@@ -13,36 +13,27 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.testutil
 
-package com.ichi2.anki.testutil;
+import com.ichi2.anki.reviewer.ReviewerUi
+import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 
-import com.ichi2.anki.reviewer.ReviewerUi;
+class MockReviewerUi : ReviewerUi {
+    override var isDisplayingAnswer = false
+        private set
+    override val controlBlocked: ControlBlock?
+        get() = null
 
-public class MockReviewerUi implements ReviewerUi {
-    private boolean mDisplayingAnswer;
-
-
-    public static ReviewerUi displayingAnswer() {
-        MockReviewerUi mockReviewerUi = new MockReviewerUi();
-        mockReviewerUi.mDisplayingAnswer = true;
-        return mockReviewerUi;
+    override fun isControlBlocked(): Boolean {
+        return false
     }
 
-
-    @Override
-    public ControlBlock getControlBlocked() {
-        return null;
-    }
-
-
-    @Override
-    public boolean isControlBlocked() {
-        return false;
-    }
-
-
-    @Override
-    public boolean isDisplayingAnswer() {
-        return mDisplayingAnswer;
+    companion object {
+        @JvmStatic
+        fun displayingAnswer(): ReviewerUi {
+            val mockReviewerUi = MockReviewerUi()
+            mockReviewerUi.isDisplayingAnswer = true
+            return mockReviewerUi
+        }
     }
 }
