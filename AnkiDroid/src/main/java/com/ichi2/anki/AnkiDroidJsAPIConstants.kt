@@ -29,6 +29,8 @@ object AnkiDroidJsAPIConstants {
     const val ankiJsErrorCodeBuryNote: Int = 5
     const val ankiJsErrorCodeSuspendNote: Int = 6
 
+    const val ankiJsErrorCodeSetDue: Int = 7
+
     // js api developer contact
     const val sCurrentJsApiVersion = "0.0.1"
     const val sMinimumJsApiVersion = "0.0.1"
@@ -41,6 +43,8 @@ object AnkiDroidJsAPIConstants {
     const val SUSPEND_CARD = "suspendCard"
     const val SUSPEND_NOTE = "suspendNote"
 
+    const val SET_CARD_DUE = "setCardDue"
+
     fun initApiMap(): HashMap<String, Boolean> {
         val jsApiListMap = HashMap<String, Boolean>()
         jsApiListMap[MARK_CARD] = false
@@ -50,6 +54,8 @@ object AnkiDroidJsAPIConstants {
         jsApiListMap[BURY_NOTE] = false
         jsApiListMap[SUSPEND_CARD] = false
         jsApiListMap[SUSPEND_NOTE] = false
+
+        jsApiListMap[SET_CARD_DUE] = false
 
         return jsApiListMap
     }
