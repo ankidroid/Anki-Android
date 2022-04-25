@@ -13,22 +13,14 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.libanki.sched
 
-package com.ichi2.libanki.sched;
+import com.ichi2.libanki.Collection
+import com.ichi2.utils.KotlinCleanup
 
-import com.ichi2.libanki.Collection;
-
-import java.util.List;
-
-import androidx.annotation.NonNull;
-
-public class DeckTreeNode extends AbstractDeckTreeNode {
-    public DeckTreeNode(Collection col, String name, long did) {
-        super(col, name, did);
-    }
-
-    @Override
-    public void processChildren(@NonNull List<? extends AbstractDeckTreeNode> children, boolean addRev) {
+@KotlinCleanup("confusing nullability for col, verify real nullability after code related to scheduling is fully migrated to kotlin")
+class DeckTreeNode(col: Collection?, name: String, did: Long) : AbstractDeckTreeNode(col!!, name, did) {
+    override fun processChildren(children: List<AbstractDeckTreeNode>, addRev: Boolean) {
         // intentionally blank
     }
 }
