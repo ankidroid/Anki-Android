@@ -172,10 +172,6 @@ android {
 
     testOptions {
         animationsDisabled true
-
-        unitTests {
-            includeAndroidResources = true
-        }
     }
 
     compileOptions {
@@ -184,31 +180,12 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
-    testOptions.unitTests.all {
-        testLogging {
-            events "failed", "skipped"
-            showStackTraces = true
-            exceptionFormat = "full"
-        }
-
-        maxParallelForks = gradleTestMaxParallelForks
-        forkEvery = 40
-        maxHeapSize = "2048m"
-        minHeapSize = "1024m"
-        systemProperties['junit.jupiter.execution.parallel.enabled'] = true
-        systemProperties['junit.jupiter.execution.parallel.mode.default'] = "concurrent"
-    }
     sourceSets {
         debug {
             manifest.srcFile 'src/test/AndroidManifest.xml'
         }
     }
     ndkVersion "22.0.7026061"
-
-    ktlint {
-        version = "0.45.1"
-        disabledRules = ["no-wildcard-imports"]
-    }
 }
 
 play {
@@ -222,17 +199,6 @@ amazon {
     replaceEdit = true
 }
 
-// Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:deprecation" << "-Xlint:fallthrough" << "-Xmaxwarns" << "1000" << "-Werror"
-
-    // https://guides.gradle.org/performance/#compiling_java
-    // 1- fork improves things over time with repeated builds, doesn't harm CI single builds
-    options.fork = true
-    // 2- incremental will be the default in the future and can help now
-    options.incremental = true
-}
-
 // Install Git pre-commit hook for Ktlint
 task installGitHook(type: Copy) {
     from new File(rootProject.rootDir, 'pre-commit')
@@ -240,29 +206,6 @@ task installGitHook(type: Copy) {
     fileMode 0755
 }
 tasks.getByPath(':AnkiDroid:preBuild').dependsOn installGitHook
-
-/**
-Kotlin allows concrete function implementations inside interfaces.
-For those to work when Kotlin compilation targets the JVM backend, you have to enable the interoperability via
-'freeCompilerArgs' in your gradle file, and you have to choose one of the appropriate '-Xjvm-default' modes.
-
-https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces
-
-    and we used "all" because we don't have downstream consumers
-    https://docs.gradle.org/current/userguide/task_configuration_avoidance.html
- */
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        allWarningsAsErrors = true
-        freeCompilerArgs = ['-Xjvm-default=all'] 
-    }
-}
-
-//Workaround for: https://github.com/pinterest/ktlint/issues/1216
-//To be removed when upstream gets patched
-tasks.withType(org.jlleitschuh.gradle.ktlint.worker.KtLintWorkAction) {
-    workerMaxHeapSize = "2048m"
-}
 
 apply from: "./robolectricDownloader.gradle"
 apply from: "./jacoco.gradle"

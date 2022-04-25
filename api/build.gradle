@@ -25,25 +25,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    testOptions.unitTests.all {
-        testLogging {
-            events "failed", "skipped"
-            showStackTraces = true
-            exceptionFormat = "full"
-        }
-
-        maxParallelForks = gradleTestMaxParallelForks
-        systemProperties['junit.jupiter.execution.parallel.enabled'] = true
-        systemProperties['junit.jupiter.execution.parallel.mode.default'] = "concurrent"
     }
 }
 
@@ -146,14 +130,3 @@ publishMavenJavaPublicationToMavenRepository.dependsOn(assemble)
 publish.dependsOn(assemble)
 generateRelease.dependsOn(publish)
 generateRelease.dependsOn(zipRelease)
-
-// Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:deprecation" << "-Xmaxwarns" << "1000" << "-Werror"
-
-    // https://guides.gradle.org/performance/#compiling_java
-    // 1- fork improves things over time with repeated builds, doesn't harm CI single builds
-    options.fork = true
-    // 2- incremental will be the default in the future and can help now
-    options.incremental = true
-}
