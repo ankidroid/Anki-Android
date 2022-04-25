@@ -1664,7 +1664,7 @@ abstract class AbstractFlashcardViewer :
                 true
             }
             ViewerCommand.COMMAND_CARD_INFO -> {
-                openCardInfo()
+                openCardInfo(fromGesture)
                 true
             }
             ViewerCommand.COMMAND_TAG -> {
@@ -1742,14 +1742,15 @@ abstract class AbstractFlashcardViewer :
         closeReviewer(RESULT_ABORT_AND_SYNC, true)
     }
 
-    protected fun openCardInfo() {
+    @JvmOverloads
+    protected fun openCardInfo(fromGesture: Gesture? = null) {
         if (mCurrentCard == null) {
             showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
             return
         }
         val intent = Intent(this, CardInfo::class.java)
         intent.putExtra("cardId", mCurrentCard!!.id)
-        startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.FADE)
+        startActivityWithAnimation(intent, getAnimationTransitionFromGesture(fromGesture))
     }
 
     /** Displays a snackbar which does not obscure the answer buttons  */
