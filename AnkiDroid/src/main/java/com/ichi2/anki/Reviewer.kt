@@ -1104,7 +1104,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override fun executeCommand(which: ViewerCommand): Boolean {
+    override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
         if (isControlBlocked() && which !== ViewerCommand.COMMAND_EXIT) {
             return false
         }
@@ -1149,7 +1149,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 addNote()
                 return true
             }
-            else -> return super.executeCommand(which)
+            else -> return super.executeCommand(which, fromGesture)
         }
     }
 
