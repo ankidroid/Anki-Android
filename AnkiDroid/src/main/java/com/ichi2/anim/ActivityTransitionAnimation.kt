@@ -22,6 +22,8 @@ object ActivityTransitionAnimation {
             } else {
                 activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out)
             }
+            Direction.RIGHT -> activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out)
+            Direction.LEFT -> activity.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out)
             Direction.FADE -> activity.overridePendingTransition(R.anim.fade_out, R.anim.fade_in)
             Direction.UP -> activity.overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out)
             Direction.DIALOG_EXIT -> activity.overridePendingTransition(R.anim.none, R.anim.dialog_exit)
@@ -38,6 +40,8 @@ object ActivityTransitionAnimation {
         return when (direction) {
             Direction.START -> if (isRightToLeft(activity)) ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_right_in, R.anim.slide_right_out) else ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_left_in, R.anim.slide_left_out)
             Direction.END -> if (isRightToLeft(activity)) ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_left_in, R.anim.slide_left_out) else ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_right_in, R.anim.slide_right_out)
+            Direction.RIGHT -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_right_in, R.anim.slide_right_out)
+            Direction.LEFT -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_left_in, R.anim.slide_left_out)
             Direction.FADE -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.fade_out, R.anim.fade_in)
             Direction.UP -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_up_in, R.anim.slide_up_out)
             Direction.DIALOG_EXIT -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.none, R.anim.dialog_exit)
@@ -53,6 +57,6 @@ object ActivityTransitionAnimation {
     }
 
     enum class Direction {
-        START, END, FADE, UP, DEFAULT, DIALOG_EXIT, NONE
+        START, END, FADE, UP, RIGHT, LEFT, DEFAULT, DIALOG_EXIT, NONE
     }
 }
