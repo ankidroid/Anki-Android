@@ -140,6 +140,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     var mCardsListView: ListView? = null
     private var mSearchView: CardBrowserSearchView? = null
 
+    @JvmField
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var mCardsAdapter: MultiColumnListAdapter? = null
 
     private var mSearchTerms: String? = null
@@ -230,6 +232,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var isInMultiSelectMode = false
         private set
+    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var isTruncated = false
         private set
     private val mCheckedCards = Collections.synchronizedSet(LinkedHashSet<CardCache>())

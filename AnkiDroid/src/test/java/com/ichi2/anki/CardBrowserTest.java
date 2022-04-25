@@ -851,7 +851,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         // Testing whether each card is truncated and ellipsized
         for (int i=0; i < browser.mCardsListView.getChildCount(); i++){
-            View row = browser.getMCardsAdapter().getView(i, null, browser.mCardsListView);
+            View row = browser.mCardsAdapter.getView(i, null, browser.mCardsListView);
             FixedTextView column1 = row.findViewById(R.id.card_sfld);
             FixedTextView column2 = row.findViewById(R.id.card_column2);
 
@@ -876,7 +876,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         // Testing whether each card is expanded and not ellipsized
         for (int i=0; i < browser.mCardsListView.getChildCount(); i++){
-            View row = browser.getMCardsAdapter().getView(i, null, browser.mCardsListView);
+            View row = browser.mCardsAdapter.getView(i, null, browser.mCardsListView);
             FixedTextView column1 = row.findViewById(R.id.card_sfld);
             FixedTextView column2 = row.findViewById(R.id.card_column2);
 
@@ -908,7 +908,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         // Testing whether each card is truncated and ellipsized
         for (int i=0; i < browser.mCardsListView.getChildCount(); i++){
-            View row = browser.getMCardsAdapter().getView(i, null, browser.mCardsListView);
+            View row = browser.mCardsAdapter.getView(i, null, browser.mCardsListView);
             FixedTextView column1 = row.findViewById(R.id.card_sfld);
             FixedTextView column2 = row.findViewById(R.id.card_column2);
 
@@ -933,7 +933,7 @@ public class CardBrowserTest extends RobolectricTest {
 
         // Testing whether each card is expanded and not ellipsized
         for (int i=0; i < browser.mCardsListView.getChildCount(); i++){
-            View row = browser.getMCardsAdapter().getView(i, null, browser.mCardsListView);
+            View row = browser.mCardsAdapter.getView(i, null, browser.mCardsListView);
             FixedTextView column1 = row.findViewById(R.id.card_sfld);
             FixedTextView column2 = row.findViewById(R.id.card_column2);
 
