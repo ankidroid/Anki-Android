@@ -74,7 +74,7 @@ jobs:
           timeout_minutes: 15
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew packagePlayDebug packagePlayDebugAndroidTest
+          command: ./gradlew packagePlayDebug packagePlayDebugAndroidTest --daemon
 
         # This appears to be 'Cache Size: ~1230 MB (1290026823 B)' based on watching action logs
         # Repo limit is 10GB; branch caches are independent; branches may read default branch cache.
@@ -141,7 +141,7 @@ jobs:
           disable-animations: true
           script: |
             $ANDROID_HOME/platform-tools/adb logcat '*:D' > adb-log.txt &
-            ./gradlew uninstallAll jacocoAndroidTestReport
+            ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
       - name: Compress Emulator Log
         if: always()
