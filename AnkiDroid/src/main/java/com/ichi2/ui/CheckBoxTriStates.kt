@@ -36,6 +36,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
     private var mState: State = State.UNCHECKED
     @KotlinCleanup("move setter function here")
     private var mCycleBackToIndeterminate = false
+    private var mCycleIndeterminateToChecked = false
 
     /**
      * This is the listener set to the super class which is going to be invoked each
@@ -85,7 +86,11 @@ class CheckBoxTriStates : AppCompatCheckBox {
 
     override fun toggle() {
         when (mState) {
-            State.INDETERMINATE -> state = State.UNCHECKED
+            State.INDETERMINATE -> state = if (mCycleIndeterminateToChecked) {
+                State.CHECKED
+            } else {
+                State.UNCHECKED
+            }
             State.UNCHECKED -> state = State.CHECKED
             State.CHECKED -> state = if (mCycleBackToIndeterminate) {
                 State.INDETERMINATE
@@ -106,6 +111,10 @@ class CheckBoxTriStates : AppCompatCheckBox {
 
     fun setCycleBackToIndeterminate(cycleBackToIndeterminate: Boolean) {
         mCycleBackToIndeterminate = cycleBackToIndeterminate
+    }
+
+    fun setCycleIndeterminateToChecked(cycleIndeterminateToChecked: Boolean) {
+        mCycleIndeterminateToChecked = cycleIndeterminateToChecked
     }
 
     override fun setOnCheckedChangeListener(listener: OnCheckedChangeListener?) {

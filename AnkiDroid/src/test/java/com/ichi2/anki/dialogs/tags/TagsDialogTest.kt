@@ -241,32 +241,36 @@ class TagsDialogTest {
             f.addTag(tag)
 
             // v common        [-]
-            //   > speak       [-]
+            //   v speak       [-]
+            //     - daily     [x]
             //   v sport       [-]
             //     v football  [-]
             //       > small   [x]
             //     - tennis    [x]
             recycler.measure(0, 0)
             recycler.layout(0, 0, 100, 1000)
-            Assert.assertEquals(6, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals(7, recycler.adapter!!.itemCount.toLong())
             val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
             val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
             val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
             val item3 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 3)
             val item4 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 4)
             val item5 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 5)
+            val item6 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 6)
             Assert.assertEquals("common", item0.text)
             Assert.assertEquals("common::speak", item1.text)
-            Assert.assertEquals("common::sport", item2.text)
-            Assert.assertEquals("common::sport::football", item3.text)
-            Assert.assertEquals("common::sport::football::small", item4.text)
-            Assert.assertEquals("common::sport::tennis", item5.text)
+            Assert.assertEquals("common::speak::daily", item2.text)
+            Assert.assertEquals("common::sport", item3.text)
+            Assert.assertEquals("common::sport::football", item4.text)
+            Assert.assertEquals("common::sport::football::small", item5.text)
+            Assert.assertEquals("common::sport::tennis", item6.text)
             Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item0.mCheckBoxView.state)
             Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item1.mCheckBoxView.state)
-            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item2.mCheckBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, item2.mCheckBoxView.state)
             Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item3.mCheckBoxView.state)
-            Assert.assertTrue(item4.mCheckBoxView.isChecked)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item4.mCheckBoxView.state)
             Assert.assertTrue(item5.mCheckBoxView.isChecked)
+            Assert.assertTrue(item6.mCheckBoxView.isChecked)
         }
     }
 

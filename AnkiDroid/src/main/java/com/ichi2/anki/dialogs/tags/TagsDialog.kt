@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
 
@@ -129,6 +130,7 @@ class TagsDialog : AnalyticsDialogFragment {
         get() = mListener
             ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)!!
 
+    @NeedsTest("All checked tags should be visible when the dialog opens (paths to them should be expanded).")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         @SuppressLint("InflateParams") val tagsDialogView = LayoutInflater.from(activity).inflate(R.layout.tags_dialog, null, false)
         mTagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list)
@@ -136,7 +138,7 @@ class TagsDialog : AnalyticsDialogFragment {
         tagsListRecyclerView?.requestFocus()
         val tagsListLayout: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         tagsListRecyclerView?.layoutManager = tagsListLayout
-        mTagsArrayAdapter = TagsArrayAdapter(mTags!!)
+        mTagsArrayAdapter = TagsArrayAdapter(mTags!!, resources)
         tagsListRecyclerView?.adapter = mTagsArrayAdapter
         mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview)
         val noTagsTextView: TextView? = mNoTagsTextView
@@ -170,17 +172,19 @@ class TagsDialog : AnalyticsDialogFragment {
         return dialog
     }
 
+    @NeedsTest("Verify that a space input is converted into '::' properly.")
     private fun adjustToolbar(tagsDialogView: View) {
         val toolbar: Toolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar)
         toolbar.title = mDialogTitle
         toolbar.inflateMenu(R.menu.tags_dialog_menu)
 
         // disallow inputting the 'space' character
+        // inputting a 'space' will add '::' instead for UX related to hierarchical tags
         val addTagFilter = InputFilter { source: CharSequence, start: Int, end: Int, _: Spanned?, _: Int, _: Int ->
             var i = start
             while (i < end) {
                 if (source[i] == ' ') {
-                    return@InputFilter ""
+                    return@InputFilter "::"
                 }
                 i++
             }
