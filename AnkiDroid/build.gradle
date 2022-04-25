@@ -306,7 +306,7 @@ dependencies {
     // build with ./gradlew rsdroid:assembleRelease
     // In my experience, using `files()` currently requires a reindex operation.
     // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
-    implementation 'com.google.protobuf:protobuf-java:3.20.0' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-java:3.20.1' // This is required when loading from a file
     implementation "io.github.david-allison-1:anki-android-backend:$ankidroid_backend_version"
     // build with ./gradlew rsdroid-testing:assembleRelease
     // RobolectricTest.java: replace RustBackendLoader.init(); with RustBackendLoader.loadRsdroid(path);
@@ -336,19 +336,17 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.14.3'
     implementation "com.github.zafarkhaja:java-semver:0.9.0" // For AnkiDroid JS API Versioning
     implementation 'com.drakeet.drawer:drawer:1.0.3'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.2'
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
     // build via AnkiDroidApp.
-    implementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+    implementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
     api project(":api")
 
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'
-    testImplementation 'org.mockito:mockito-inline:4.4.0'
+    testImplementation 'org.mockito:mockito-inline:4.5.1'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
     testImplementation 'org.hamcrest:hamcrest:2.2'
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
