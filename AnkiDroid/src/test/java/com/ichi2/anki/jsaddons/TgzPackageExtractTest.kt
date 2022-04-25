@@ -71,41 +71,6 @@ class TgzPackageExtractTest : RobolectricTest() {
     }
 
     /**
-     * Test if extracted file exists in the output folder.
-     * The current test will extract in .tgz in following structure
-     * tempAddonDir
-     * - package
-     * - index.js
-     * - README.md
-     * - package.json
-     *
-     * @throws IOException
-     * @throws ArchiveException
-     */
-    @Test
-    @Throws(IOException::class, ArchiveException::class)
-    fun extractTarGzipToAddonFolderTest() {
-        // extract file to tempAddonFolder, the function first unGzip .tgz to .tar then unTar(extract) .tar file
-        addonPackage.extractTarGzipToAddonFolder(File(tarballPath), addonDir)
-
-        // test if package folder exists
-        val packagePath = File(addonDir, "package")
-        assertThat(packagePath, anExistingDirectory())
-
-        // test if index.js extracted successfully
-        val indexJsPath = File(packagePath, "index.js")
-        assertThat(indexJsPath, anExistingFile())
-
-        // test if README.md extracted successfully
-        val readmePath = File(packagePath, "README.md")
-        assertThat(readmePath, anExistingFile())
-
-        // test if package.json extracted successfully
-        val packageJsonPath = File(packagePath, "package.json")
-        assertThat(packageJsonPath, anExistingFile())
-    }
-
-    /**
      * Test if .tar file unTar successfully to temp folder
      *
      * @throws IOException
