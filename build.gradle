@@ -71,7 +71,9 @@ subprojects {
         }
 
         ktlint {
-            version = "0.45.1"
+            // remove version override when ktlint gradle plugin releases with 0.45+ transitive
+            // check here https://github.com/JLLeitschuh/ktlint-gradle/blob/ddd465e28d77b879384886e1eef5666ebe518b4d/plugin/gradle/libs.versions.toml#L3
+            version = "0.45.2"
             disabledRules = ["no-wildcard-imports"]
         }
 
@@ -90,12 +92,6 @@ subprojects {
                 allWarningsAsErrors = true
                 freeCompilerArgs = ['-Xjvm-default=all']
             }
-        }
-
-        // Workaround for: https://github.com/pinterest/ktlint/issues/1216
-        // To be removed when upstream gets patched
-        tasks.withType(org.jlleitschuh.gradle.ktlint.worker.KtLintWorkAction) {
-            workerMaxHeapSize = "2048m"
         }
     }
 }
