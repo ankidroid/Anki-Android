@@ -14,142 +14,129 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
-import com.ichi2.anki.TestUtils;
-
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipFile;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.libanki.Utils.nonEmptyFields;
-import static com.ichi2.utils.FileOperation.getFileResource;
-import static org.junit.Assert.assertEquals;
-
-
-@RunWith(AndroidJUnit4.class)
-public class UtilsTest {
-
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.TestUtils
+import com.ichi2.utils.FileOperation.Companion.getFileResource
+import com.ichi2.utils.KotlinCleanup
+import org.apache.commons.compress.archivers.zip.ZipFile
+import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.io.File
+import java.io.IOException
+import java.lang.Exception
+import java.util.*
+import kotlin.Throws
+@KotlinCleanup("IDE Lint")
+@RunWith(AndroidJUnit4::class)
+class UtilsTest {
     @Test
-    public void testZipWithPathTraversal() {
-
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL resource = classLoader.getResource("path-traversal.zip");
+    fun testZipWithPathTraversal() {
+        val classLoader = javaClass.classLoader
+        val resource = classLoader!!.getResource("path-traversal.zip")
         try {
-            File file = new File(resource.toURI());
-            ZipFile zipFile = new ZipFile(file);
-            Enumeration<ZipArchiveEntry> zipEntries = zipFile.getEntries();
+            val file = File(resource.toURI())
+            val zipFile = ZipFile(file)
+            val zipEntries = zipFile.entries
             while (zipEntries.hasMoreElements()) {
-                ZipArchiveEntry ze2 = zipEntries.nextElement();
-                Utils.unzipFiles(zipFile, "/tmp", new String[]{ze2.getName()}, null);
+                val ze2 = zipEntries.nextElement()
+                Utils.unzipFiles(zipFile, "/tmp", arrayOf(ze2.name), null)
             }
-            Assert.fail("Expected an IOException");
-        }
-        catch (Exception e) {
-            Assert.assertEquals("File is outside extraction target directory.", e.getMessage());
+            Assert.fail("Expected an IOException")
+        } catch (e: Exception) {
+            assertEquals("File is outside extraction target directory.", e.message)
         }
     }
 
     @Test
-    public void testInvalidPaths() {
+    fun testInvalidPaths() {
         try {
-            File tmpDir = new File("/tmp");
-            Assert.assertFalse(Utils.isInside(new File(tmpDir, "../foo"), tmpDir));
-            Assert.assertFalse(Utils.isInside(new File(tmpDir, "/tmp/one/../../../foo"), tmpDir));
-        } catch (IOException ioe) {
-            Assert.fail("Unexpected exception: " + ioe);
+            val tmpDir = File("/tmp")
+            Assert.assertFalse(Utils.isInside(File(tmpDir, "../foo"), tmpDir))
+            Assert.assertFalse(Utils.isInside(File(tmpDir, "/tmp/one/../../../foo"), tmpDir))
+        } catch (ioe: IOException) {
+            Assert.fail("Unexpected exception: $ioe")
         }
     }
 
     @Test
-    public void testValidPaths() {
+    fun testValidPaths() {
         try {
-            File tmpDir = new File("/tmp");
-            Assert.assertTrue(Utils.isInside(new File(tmpDir, "test/file/path/no/parent"), tmpDir));
-            Assert.assertTrue(Utils.isInside(new File(tmpDir, "/tmp/absolute/path"), tmpDir));
-            Assert.assertTrue(Utils.isInside(new File(tmpDir, "test/file/../../"), tmpDir));
-        } catch (IOException ioe) {
-            Assert.fail("Unexpected exception: " + ioe);
+            val tmpDir = File("/tmp")
+            Assert.assertTrue(Utils.isInside(File(tmpDir, "test/file/path/no/parent"), tmpDir))
+            Assert.assertTrue(Utils.isInside(File(tmpDir, "/tmp/absolute/path"), tmpDir))
+            Assert.assertTrue(Utils.isInside(File(tmpDir, "test/file/../../"), tmpDir))
+        } catch (ioe: IOException) {
+            Assert.fail("Unexpected exception: $ioe")
         }
     }
 
     @Test
-    public void testCopyFile() throws Exception {
-        String resourcePath = getFileResource("path-traversal.zip");
-        File copy = File.createTempFile("testCopyFileToStream", ".zip");
-        copy.deleteOnExit();
-        Utils.copyFile(new File(resourcePath), copy);
-        Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.getCanonicalPath()));
+    @Throws(Exception::class)
+    fun testCopyFile() {
+        val resourcePath = getFileResource("path-traversal.zip")
+        val copy = File.createTempFile("testCopyFileToStream", ".zip")
+        copy.deleteOnExit()
+        Utils.copyFile(File(resourcePath), copy)
+        assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.canonicalPath))
     }
 
     @Test
-    public void testSplit() {
-        Assert.assertArrayEquals(new String[]{"foo", "bar"}, Utils.splitFields("foobar"));
-        Assert.assertArrayEquals(new String[]{"", "foo", "", "", ""}, Utils.splitFields("foo"));
+    fun testSplit() {
+        Assert.assertArrayEquals(arrayOf("foo", "bar"), Utils.splitFields("foobar"))
+        Assert.assertArrayEquals(arrayOf("", "foo", "", "", ""), Utils.splitFields("foo"))
     }
 
     @Test
-    public void nonEmptyFieldsTest() {
-        Map<String, String> m = new HashMap<>();
-        Set<String> s = new HashSet<>();
-        Assert.assertEquals(s, nonEmptyFields(m));
-        m.put("miam", "");
-        Assert.assertEquals(s, nonEmptyFields(m));
-        m.put("foo", "   ");
-        Assert.assertEquals(s, nonEmptyFields(m));
-        m.put("bar", " plop  ");
-        s.add("bar");
-        Assert.assertEquals(s, nonEmptyFields(m));
+    fun nonEmptyFieldsTest() {
+        val m: MutableMap<String, String> = HashMap()
+        val s: MutableSet<String> = HashSet()
+        assertEquals(s, Utils.nonEmptyFields(m))
+        m["miam"] = ""
+        assertEquals(s, Utils.nonEmptyFields(m))
+        m["foo"] = "   "
+        assertEquals(s, Utils.nonEmptyFields(m))
+        m["bar"] = " plop  "
+        s.add("bar")
+        assertEquals(s, Utils.nonEmptyFields(m))
     }
 
-
     @Test
-    public void test_stripHTML_will_remove_tags() {
-        final List<String> strings = Arrays.asList(
-                "<>",
-                "<1>",
-                "<asdasd>",
-                "<\n>",
-                "<\\qwq>",
-                "<aa\nsd\nas\n?\n>"
-        );
-
-        for (String s : strings) {
-            assertEquals(s.replace("\n","\\n") + " should be removed.",
-                    "", Utils.stripHTML(s));
+    fun test_stripHTML_will_remove_tags() {
+        val strings = Arrays.asList(
+            "<>",
+            "<1>",
+            "<asdasd>",
+            "<\n>",
+            "<\\qwq>",
+            "<aa\nsd\nas\n?\n>"
+        )
+        for (s in strings) {
+            assertEquals(
+                s.replace("\n", "\\n") + " should be removed.",
+                "", Utils.stripHTML(s)
+            )
         }
     }
 
     @Test
-    public void test_stripHTML_will_remove_comments() {
-        final List<String> strings = Arrays.asList(
-                "<!---->",
-                "<!--dd-->",
-                "<!--asd asd asd-->",
-                "<!--\n-->",
-                "<!--\nsd-->",
-                "<!--lkl\nklk\n-->"
-        );
-
-        for (String s : strings) {
-            assertEquals(s.replace("\n","\\n") + " should be removed.",
-                    "", Utils.stripHTML(s));
+    fun test_stripHTML_will_remove_comments() {
+        val strings = Arrays.asList(
+            "<!---->",
+            "<!--dd-->",
+            "<!--asd asd asd-->",
+            "<!--\n-->",
+            "<!--\nsd-->",
+            "<!--lkl\nklk\n-->"
+        )
+        for (s in strings) {
+            assertEquals(
+                s.replace("\n", "\\n") + " should be removed.",
+                "", Utils.stripHTML(s)
+            )
         }
     }
 }
