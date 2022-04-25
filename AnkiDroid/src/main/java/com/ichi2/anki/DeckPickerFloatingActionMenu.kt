@@ -17,11 +17,13 @@ package com.ichi2.anki
 
 import android.animation.Animator
 import android.content.Context
+import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.dialogs.CreateDeckDialog
+import com.ichi2.anki.ui.DoubleTapListener
 import timber.log.Timber
 
 class DeckPickerFloatingActionMenu(private val context: Context, view: View, private val deckPicker: DeckPicker) {
@@ -130,13 +132,21 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
         val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
-        mFabMain.setOnClickListener {
-            if (!isFABOpen) {
-                showFloatingActionMenu()
-            } else {
-                closeFloatingActionMenu()
+        mFabMain.setOnTouchListener(object : DoubleTapListener(context) {
+            override fun onDoubleTap(e: MotionEvent?) {
+                addNote()
             }
-        }
+
+            override fun onUnconfirmedSingleTap(e: MotionEvent?) {
+                // we use an unconfirmed tap as we don't want any visual delay in tapping the +
+                // and opening the menu.
+                if (!isFABOpen) {
+                    showFloatingActionMenu()
+                } else {
+                    closeFloatingActionMenu()
+                }
+            }
+        })
         mFabBGLayout.setOnClickListener { closeFloatingActionMenu() }
         val addDeckListener = View.OnClickListener {
             if (isFABOpen) {
@@ -157,10 +167,18 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         addSharedLabel.setOnClickListener(addSharedListener)
         val addNoteListener = View.OnClickListener {
             Timber.d("configureFloatingActionsMenu::addNoteButton::onClickListener - Adding Note")
-            closeFloatingActionMenu()
-            deckPicker.addNote()
+            addNote()
         }
         addNoteButton.setOnClickListener(addNoteListener)
         addNoteLabel.setOnClickListener(addNoteListener)
+    }
+
+    /**
+     * Closes the FAB menu and opens the [NoteEditor]
+     * @see DeckPicker.addNote
+     */
+    private fun addNote() {
+        closeFloatingActionMenu()
+        deckPicker.addNote()
     }
 }
