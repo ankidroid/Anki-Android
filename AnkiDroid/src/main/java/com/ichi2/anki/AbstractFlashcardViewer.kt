@@ -840,7 +840,8 @@ abstract class AbstractFlashcardViewer :
         finishWithoutAnimation()
     }
 
-    protected open fun editCard() {
+    @JvmOverloads
+    protected open fun editCard(fromGesture: Gesture? = null) {
         if (mCurrentCard == null) {
             // This should never occurs. It means the review button was pressed while there is no more card in the reviewer.
             return
@@ -848,7 +849,7 @@ abstract class AbstractFlashcardViewer :
         val editCard = Intent(this@AbstractFlashcardViewer, NoteEditor::class.java)
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER)
         editorCard = mCurrentCard
-        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, ActivityTransitionAnimation.Direction.START)
+        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, getAnimationTransitionFromGesture(fromGesture))
     }
 
     fun generateQuestionSoundList() {
@@ -1659,7 +1660,7 @@ abstract class AbstractFlashcardViewer :
                 true
             }
             ViewerCommand.COMMAND_EDIT -> {
-                editCard()
+                editCard(fromGesture)
                 true
             }
             ViewerCommand.COMMAND_CARD_INFO -> {
