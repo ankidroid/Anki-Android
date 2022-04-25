@@ -28,7 +28,7 @@ import com.ichi2.utils.JSONException
 import timber.log.Timber
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-class StepsPreference : android.preference.EditTextPreference {
+class StepsPreference : AutoFocusEditTextPreference {
     private val mAllowEmpty: Boolean
 
     @Suppress("unused")

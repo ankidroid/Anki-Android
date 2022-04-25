@@ -25,7 +25,7 @@ import com.ichi2.anki.AnkiDroidApp
 import timber.log.Timber
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
-open class NumberRangePreference : android.preference.EditTextPreference {
+open class NumberRangePreference : AutoFocusEditTextPreference {
     protected val mMin: Int
     private val mMax: Int
 
