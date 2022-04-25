@@ -2591,5 +2591,19 @@ abstract class AbstractFlashcardViewer :
         @KotlinCleanup("moved from SelectEaseHandler")
         // maximum screen distance from initial touch where we will consider a click related to the touch
         private const val CLICK_ACTION_THRESHOLD = 200
+
+        /**
+         * @return if [gesture] is a swipe, a transition to the same direction of the swipe
+         * else return [ActivityTransitionAnimation.Direction.FADE]
+         */
+        fun getAnimationTransitionFromGesture(gesture: Gesture?): ActivityTransitionAnimation.Direction {
+            return when (gesture) {
+                Gesture.SWIPE_UP -> ActivityTransitionAnimation.Direction.UP
+                Gesture.SWIPE_DOWN -> ActivityTransitionAnimation.Direction.DOWN
+                Gesture.SWIPE_RIGHT -> ActivityTransitionAnimation.Direction.RIGHT
+                Gesture.SWIPE_LEFT -> ActivityTransitionAnimation.Direction.LEFT
+                else -> ActivityTransitionAnimation.Direction.FADE
+            }
+        }
     }
 }
