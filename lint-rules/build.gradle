@@ -6,11 +6,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-ktlint {
-    version = "0.45.1"
-    disabledRules = ["no-wildcard-imports"]
-}
-
 repositories {
     google()
     mavenCentral()
