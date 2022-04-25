@@ -8,7 +8,7 @@ import android.widget.EditText
 interface AutoFocusable {
     fun autoFocus(editText: EditText) {
         editText.requestFocus()
-        editText.selectAll() // todo may change
+        editText.setSelection(editText.text.length)
     }
 }
 
