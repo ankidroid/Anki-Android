@@ -20,10 +20,11 @@ dependencies {
     compileOnly "com.android.tools.lint:lint-api:$lint_version"
     compileOnly "com.android.tools.lint:lint:$lint_version"
 
-    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.hamcrest:hamcrest:$hamcrest_version"
+    testImplementation "org.hamcrest:hamcrest-library:$hamcrest_version"
+    testImplementation 'junit:junit:4.13.2'
     testImplementation "com.android.tools.lint:lint:$lint_version"
     testImplementation "com.android.tools.lint:lint-api:$lint_version"
     testImplementation "com.android.tools.lint:lint-tests:$lint_version"
-    testImplementation 'org.hamcrest:hamcrest-all:1.3'
 }
 apply from: "./kotlinMigration-lint.gradle"
