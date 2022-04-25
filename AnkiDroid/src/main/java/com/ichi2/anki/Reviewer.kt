@@ -652,10 +652,10 @@ open class Reviewer : AbstractFlashcardViewer() {
         showDialogFragment(dialog)
     }
 
-    private fun addNote() {
+    private fun addNote(fromGesture: Gesture? = null) {
         val intent = Intent(this, NoteEditor::class.java)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-        startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.Direction.START)
+        startActivityForResultWithAnimation(intent, ADD_NOTE, getAnimationTransitionFromGesture(fromGesture))
     }
 
     override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
@@ -1146,7 +1146,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 return true
             }
             ViewerCommand.COMMAND_ADD_NOTE -> {
-                addNote()
+                addNote(fromGesture)
                 return true
             }
             else -> return super.executeCommand(which, fromGesture)
