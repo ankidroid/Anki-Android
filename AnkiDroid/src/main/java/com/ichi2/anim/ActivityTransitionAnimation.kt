@@ -26,7 +26,7 @@ object ActivityTransitionAnimation {
             Direction.UP -> activity.overridePendingTransition(R.anim.slide_up_in, R.anim.slide_up_out)
             Direction.DIALOG_EXIT -> activity.overridePendingTransition(R.anim.none, R.anim.dialog_exit)
             Direction.NONE -> activity.overridePendingTransition(R.anim.none, R.anim.none)
-            Direction.DOWN -> {
+            Direction.DEFAULT -> {
             }
             else -> {
             }
@@ -42,7 +42,7 @@ object ActivityTransitionAnimation {
             Direction.UP -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_up_in, R.anim.slide_up_out)
             Direction.DIALOG_EXIT -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.none, R.anim.dialog_exit)
             Direction.NONE -> ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.none, R.anim.none)
-            Direction.DOWN -> // this is the default animation, we shouldn't try to override it
+            Direction.DEFAULT -> // this is the default animation, we shouldn't try to override it
                 ActivityOptionsCompat.makeBasic()
             else -> ActivityOptionsCompat.makeBasic()
         }
@@ -53,6 +53,6 @@ object ActivityTransitionAnimation {
     }
 
     enum class Direction {
-        START, END, FADE, UP, DOWN, DIALOG_EXIT, NONE
+        START, END, FADE, UP, DEFAULT, DIALOG_EXIT, NONE
     }
 }
