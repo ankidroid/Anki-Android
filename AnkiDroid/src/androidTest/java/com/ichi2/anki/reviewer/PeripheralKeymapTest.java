@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewer;
 
 import android.view.KeyEvent;
 
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.anki.testutil.MockReviewerUi;
 
@@ -42,7 +43,7 @@ public class PeripheralKeymapTest {
         // #7736 Ensures that a numpad key is passed through (mostly testing num lock)
         List<ViewerCommand> processed = new ArrayList<>();
 
-        PeripheralKeymap peripheralKeymap = new PeripheralKeymap(MockReviewerUi.displayingAnswer(), processed::add);
+        PeripheralKeymap peripheralKeymap = new PeripheralKeymap(MockReviewerUi.displayingAnswer(), (ViewerCommand e, Gesture i) -> processed.add(e) );
         peripheralKeymap.setup();
 
         peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_NUMPAD_1, getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1));

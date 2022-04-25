@@ -1611,7 +1611,7 @@ abstract class AbstractFlashcardViewer :
         return dismiss(BuryNote(mCurrentCard!!)) { showThemedToast(this, R.string.buried_note, true) }
     }
 
-    override fun executeCommand(which: ViewerCommand): Boolean {
+    override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
         return if (isControlBlocked() && which !== ViewerCommand.COMMAND_EXIT) {
             false
         } else when (which) {
@@ -1719,6 +1719,10 @@ abstract class AbstractFlashcardViewer :
                 false
             }
         }
+    }
+
+    fun executeCommand(which: ViewerCommand): Boolean {
+        return executeCommand(which, fromGesture = null)
     }
 
     protected open fun replayVoice() {
