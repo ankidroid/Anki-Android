@@ -16,6 +16,7 @@
 package com.ichi2.anki
 
 import android.animation.Animator
+import android.content.Context
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -23,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import timber.log.Timber
 
-class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicker) {
+class DeckPickerFloatingActionMenu(private val context: Context, view: View, private val deckPicker: DeckPicker) {
     private val mFabMain: FloatingActionButton = view.findViewById(R.id.fab_main)
     private val mAddSharedLayout: LinearLayout = view.findViewById(R.id.add_shared_layout)
     private val mAddDeckLayout: LinearLayout = view.findViewById(R.id.add_deck_layout)
@@ -38,7 +39,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         get() = mStudyOptionsFrame != null
 
     private fun animationEnabled(): Boolean {
-        val preferences = AnkiDroidApp.getSharedPrefs(deckPicker)
+        val preferences = AnkiDroidApp.getSharedPrefs(context)
         return !preferences.getBoolean("safeDisplay", false)
     }
 
@@ -140,7 +141,7 @@ class DeckPickerFloatingActionMenu(view: View, private val deckPicker: DeckPicke
         val addDeckListener = View.OnClickListener {
             if (isFABOpen) {
                 closeFloatingActionMenu()
-                val createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+                val createDeckDialog = CreateDeckDialog(context, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
             }

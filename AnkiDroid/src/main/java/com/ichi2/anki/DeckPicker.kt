@@ -367,7 +367,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         mPullToSyncWrapper.viewTreeObserver.addOnScrollChangedListener { mPullToSyncWrapper.isEnabled = mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0 }
 
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
-        mFloatingActionMenu = DeckPickerFloatingActionMenu(view, this)
+        mFloatingActionMenu = DeckPickerFloatingActionMenu(this, view, this)
 
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view)
 
