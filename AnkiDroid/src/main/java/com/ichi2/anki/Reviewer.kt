@@ -41,6 +41,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.*
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -134,6 +135,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     private var mShowRemainingCardCount = false
     private val mActionButtons = ActionButtons(this)
     private var mOverflowMenuIsOpen = false
+    private lateinit var mToolbar: Toolbar
 
     @JvmField
     @VisibleForTesting
@@ -171,6 +173,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         mTextBarNew = findViewById(R.id.new_number)
         mTextBarLearn = findViewById(R.id.learn_number)
         mTextBarReview = findViewById(R.id.review_number)
+        mToolbar = findViewById(R.id.toolbar)
         startLoadingCollection()
     }
 
@@ -683,8 +686,11 @@ open class Reviewer : AbstractFlashcardViewer() {
     private fun shouldUseDefaultColor(menuItem: MenuItem) {
         val drawable = menuItem.icon
         if (drawable != null && !isFlagResource(menuItem.itemId)) {
-            drawable.mutate()
-            drawable.setTint(ResourcesCompat.getColor(resources, R.color.material_blue_600, null))
+            val itemIsOverflowing = mToolbar.findViewById<View>(menuItem.itemId) == null
+            if (itemIsOverflowing) {
+                drawable.mutate()
+                drawable.setTint(ResourcesCompat.getColor(resources, R.color.material_blue_600, null))
+            }
         }
     }
 
