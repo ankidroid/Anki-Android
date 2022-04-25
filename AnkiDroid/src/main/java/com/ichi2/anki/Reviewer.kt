@@ -694,6 +694,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         postDelayedOnNewHandler({ refreshActionBar() }, 100)
     }
 
+    // Related to https://github.com/ankidroid/Anki-Android/pull/11061#issuecomment-1107868455
+    @NeedsTest("Order of operations needs Testing around Menu (Overflow) Icons and their colors.")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
         // NOTE: This is called every time a new question is shown via invalidate options menu
