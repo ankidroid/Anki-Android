@@ -382,7 +382,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return true
         }
 
-        override fun editCard() {
+        override fun editCard(fromGesture: Gesture?) {
             editCardCalled = true
         }
 
