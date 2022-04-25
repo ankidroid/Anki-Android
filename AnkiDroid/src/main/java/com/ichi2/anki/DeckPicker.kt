@@ -835,7 +835,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     private fun finishWithAnimation() {
-        super.finishWithAnimation(DOWN)
+        super.finishWithAnimation(DEFAULT)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
