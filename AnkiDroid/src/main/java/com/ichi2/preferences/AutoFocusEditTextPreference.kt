@@ -20,22 +20,19 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
+import com.ichi2.utils.AndroidUiUtils.setFocusAndOpenKeyboard
 
 interface AutoFocusable {
-    fun autoFocus(editText: EditText) {
-        editText.requestFocus()
-        editText.setSelection(editText.text.length)
+    fun autoFocusAndMoveCursorToEnd(editText: EditText) {
+        // focus EditText and place cursor at the end of text
+        setFocusAndOpenKeyboard(editText) { editText.setSelection(editText.text.length) }
     }
 }
 
 @Suppress("deprecation")
-open class AutoFocusEditTextPreference : android.preference.EditTextPreference, AutoFocusable {
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context?) : super(context)
-
+open class AutoFocusEditTextPreference(context: Context?, attrs: AttributeSet?) : android.preference.EditTextPreference(context, attrs), AutoFocusable {
     override fun onBindView(view: View?) {
         super.onBindView(view)
-        autoFocus(editText)
+        autoFocusAndMoveCursorToEnd(editText)
     }
 }

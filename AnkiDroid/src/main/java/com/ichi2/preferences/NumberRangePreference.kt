@@ -21,11 +21,12 @@ import android.text.InputFilter.LengthFilter
 import android.text.InputType
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.view.View
 import com.ichi2.anki.AnkiDroidApp
 import timber.log.Timber
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
-open class NumberRangePreference : AutoFocusEditTextPreference {
+open class NumberRangePreference : android.preference.EditTextPreference, AutoFocusable {
     protected val mMin: Int
     private val mMax: Int
 
@@ -45,6 +46,11 @@ open class NumberRangePreference : AutoFocusEditTextPreference {
         mMin = getMinFromAttributes(null)
         mMax = getMaxFromAttributes(null)
         updateSettings()
+    }
+
+    override fun onBindView(view: View?) {
+        super.onBindView(view)
+        autoFocusAndMoveCursorToEnd(editText)
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {

@@ -56,7 +56,7 @@ class IncrementerNumberRangePreference : NumberRangePreference, AutoFocusable {
 
     override fun onBindView(view: View?) {
         super.onBindView(view)
-        autoFocus(editText)
+        autoFocusAndMoveCursorToEnd(editText)
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {
