@@ -26,6 +26,7 @@ import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsException
 import com.ichi2.anki.exception.ManuallyReportedException
+import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.setDataDirectorySuffix
 import org.acra.ACRA
@@ -33,6 +34,8 @@ import org.acra.ReportField
 import org.acra.config.*
 import org.acra.sender.HttpSender
 import timber.log.Timber
+import java.util.*
+import kotlin.collections.HashMap
 
 object CrashReportService {
 
@@ -46,6 +49,8 @@ object CrashReportService {
     private lateinit var mAcraCoreConfigBuilder: CoreConfigurationBuilder
     private lateinit var mApplication: Application
     private const val WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME"
+    private const val MIN_INTERVAL_MS = 60000
+    private const val EXCEPTION_MESSAGE = "Exception report sent by user manually"
 
     /**
      * Temporary method to access the CoreConfigurationBuilder until all classes that require access
@@ -285,5 +290,75 @@ object CrashReportService {
         deleteACRALimiterData(ctx)
         // We also need to re-chain our UncaughtExceptionHandlers
         UsageAnalytics.reInitialize()
+    }
+
+    /**
+     * @return the status of the report, true if the report was sent, false if the report is already
+     *  submitted
+     */
+    @JvmStatic
+    fun sendReport(ankiActivity: AnkiActivity): Boolean {
+        val preferences = AnkiDroidApp.getSharedPrefs(ankiActivity)
+        val reportMode = preferences.getString(FEEDBACK_REPORT_KEY, "")
+        return if (FEEDBACK_REPORT_NEVER == reportMode) {
+            preferences.edit { putBoolean(ACRA.PREF_DISABLE_ACRA, false) }
+            mAcraCoreConfigBuilder
+                .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
+                .setEnabled(true)
+            val sendStatus = sendReportFor(ankiActivity)
+            mAcraCoreConfigBuilder
+                .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
+                .setEnabled(false)
+            preferences.edit { putBoolean(ACRA.PREF_DISABLE_ACRA, true) }
+            sendStatus
+        } else {
+            sendReportFor(ankiActivity)
+        }
+    }
+
+    private fun sendReportFor(activity: AnkiActivity): Boolean {
+        val currentTimestamp = activity.col.time.intTimeMS()
+        val lastReportTimestamp = getTimestampOfLastReport(activity)
+        return if (currentTimestamp - lastReportTimestamp > MIN_INTERVAL_MS) {
+            deleteACRALimiterData(activity)
+            sendExceptionReport(
+                UserSubmittedException(EXCEPTION_MESSAGE),
+                "AnkiDroidApp.HelpDialog"
+            )
+            true
+        } else {
+            false
+        }
+    }
+
+    /**
+     * Check the ACRA report store and return the timestamp of the last report.
+     *
+     * @param activity the Activity used for Context access when interrogating ACRA reports
+     * @return the timestamp of the most recent report, or -1 if no reports at all
+     */
+    // Upstream issue for access to field/method: https://github.com/ACRA/acra/issues/843
+    private fun getTimestampOfLastReport(activity: AnkiActivity): Long {
+        try {
+            // The ACRA LimiterData holds a timestamp for every generated report
+            val limiterData = LimiterData.load(activity)
+            val limiterDataListField = limiterData.javaClass.getDeclaredField("list")
+            limiterDataListField.isAccessible = true
+            @Suppress("UNCHECKED_CAST")
+            val limiterDataList = limiterDataListField[limiterData] as List<LimiterData.ReportMetadata>
+            for (report in limiterDataList) {
+                if (report.exceptionClass != UserSubmittedException::class.java.name) {
+                    continue
+                }
+                val timestampMethod = report.javaClass.getDeclaredMethod("getTimestamp")
+                timestampMethod.isAccessible = true
+                val timestamp = timestampMethod.invoke(report) as Calendar
+                // Limiter ensures there is only one report for the class, so if we found it, return it
+                return timestamp.timeInMillis
+            }
+        } catch (e: Exception) {
+            Timber.w(e, "Unexpected exception checking for recent reports")
+        }
+        return -1
     }
 }
