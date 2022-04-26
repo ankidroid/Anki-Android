@@ -14,12 +14,12 @@
 # * Open your pull request in AnkiDroid's github.
 
 function sedcompat() {
-    if [[ $unamestr == 'Darwin' ]]; then
-        #specific case for Mac OSX
-        sed -E -i ''  $1 $2
-    else
-        sed -i  $1 $2
-    fi
+  if [[ $unamestr == 'Darwin' ]]; then
+    #specific case for Mac OSX
+    sed -E -i '' $1 $2
+  else
+    sed -i $1 $2
+  fi
 }
 
 # Getting file paths
@@ -28,21 +28,19 @@ function sedcompat() {
 # Deleted files
 # ------------
 # The deleted file(s). Normally a single one.
-DELETED=$(git status |grep "deleted:"| sed "s/[ \t]*deleted:[ \t]*//" | awk '$1=$1')
+DELETED=$(git status | grep "deleted:" | sed "s/[ \t]*deleted:[ \t]*//" | awk '$1=$1')
 echo "DELETED='$DELETED'"
 
 # Checking there is a single deleted file
 # Repeating the DELETED line because otherwise wc don't see new lines
-NB_DELETED=$(git status |grep "deleted:"| sed "s/[ \t]*deleted:[ \t]*//" | wc -l | awk '$1=$1')
+NB_DELETED=$(git status | grep "deleted:" | sed "s/[ \t]*deleted:[ \t]*//" | wc -l | awk '$1=$1')
 echo "NB_DELETED=$NB_DELETED"
-if [[ $NB_DELETED -lt 0 ]];
-then
-    echo "No file deleted"
-    exit 1
-elif [[ $NB_DELETED -gt 1 ]];
-then
-    echo "More than one file deleted"
-    exit 1
+if [[ $NB_DELETED -lt 0 ]]; then
+  echo "No file deleted"
+  exit 1
+elif [[ $NB_DELETED -gt 1 ]]; then
+  echo "More than one file deleted"
+  exit 1
 fi
 
 # The file path without extension
@@ -50,12 +48,10 @@ FILEPATH=$(echo $DELETED | sed "s/.java$//")
 echo "FILEPATH='$FILEPATH'"
 
 # Checking that the file is Java
-if [[ $DELETED != "$FILEPATH.java" ]];
-then
-    echo "Deleted file is not Java"
-    exit 1
+if [[ $DELETED != "$FILEPATH.java" ]]; then
+  echo "Deleted file is not Java"
+  exit 1
 fi
-
 
 # The added file is $FILEPATH.kt
 FILEPATH_JAVA=$DELETED
@@ -64,30 +60,27 @@ FILEPATH_JAVA=$DELETED
 # ------------
 
 # The added file(s). Normally a single one.
-ADDED=$(git status |grep "new file"| sed "s/[ \t]*new file:[ \t]*//" | awk '$1=$1')
+ADDED=$(git status | grep "new file" | sed "s/[ \t]*new file:[ \t]*//" | awk '$1=$1')
 echo "ADDED='$ADDED'"
 
 # Checking there is a single file added
-NB_ADDED=$(git status |grep "new file"| sed "s/[ \t]*new file:[ \t]*//" | wc -l | awk '$1=$1')
+NB_ADDED=$(git status | grep "new file" | sed "s/[ \t]*new file:[ \t]*//" | wc -l | awk '$1=$1')
 echo "NB_ADDED=$NB_ADDED"
-if [[ $NB_ADDED -lt 1 ]];
-then
-    echo "No file added (you may have to add the new file manually if it was not done)"
-    exit 1
-elif [[ $NB_ADDED -gt 1 ]];
-then
-    echo "More than one file added"
-    exit 1
+if [[ $NB_ADDED -lt 1 ]]; then
+  echo "No file added (you may have to add the new file manually if it was not done)"
+  exit 1
+elif [[ $NB_ADDED -gt 1 ]]; then
+  echo "More than one file added"
+  exit 1
 fi
 
 # The added file is $FILEPATH.java
 FILEPATH_KT=$ADDED
 
 # Checking that the file added is the same as the one removed
-if [[ $ADDED != "$FILEPATH.kt" ]];
-then
-    echo "Added file is not the deleted file in kotlin"
-    exit 1
+if [[ $ADDED != "$FILEPATH.kt" ]]; then
+  echo "Added file is not the deleted file in kotlin"
+  exit 1
 fi
 
 # Computing values for AnkiDroid/kotlinMigration.gradle and
@@ -99,19 +92,16 @@ FILENAME=$(basename -- "$FILEPATH")
 echo "FILENAME=$FILENAME"
 
 # SOURCE is the value for "source" variable in AnkiDroid/kotlinMigration.gradle
-if [[ $FILEPATH == *AnkiDroid/src/main* ]] ;
-then
-    SOURCE=MAIN
-elif [[ $FILEPATH == *AnkiDroid/src/test* ]];
-then
-    SOURCE=TEST
-elif [[ $FILEPATH == *AnkiDroid/src/androidTest* ]];
-then
-    SOURCE=ANDROID_TEST
+if [[ $FILEPATH == *AnkiDroid/src/main* ]]; then
+  SOURCE=MAIN
+elif [[ $FILEPATH == *AnkiDroid/src/test* ]]; then
+  SOURCE=TEST
+elif [[ $FILEPATH == *AnkiDroid/src/androidTest* ]]; then
+  SOURCE=ANDROID_TEST
 else
-    echo "The added/deleted file is not in AnkiDroid/src/' main or test or AndroidTest"
-    exit 1
-fi;
+  echo "The added/deleted file is not in AnkiDroid/src/' main or test or AndroidTest"
+  exit 1
+fi
 echo "SOURCE='$SOURCE'"
 
 # The path, as we want it in "SOURCE" in AnkiDroid/kotlinMigration.gradle.
