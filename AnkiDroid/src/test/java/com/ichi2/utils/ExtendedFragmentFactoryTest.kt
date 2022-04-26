@@ -21,10 +21,12 @@ import androidx.fragment.app.FragmentManager
 import com.ichi2.testutils.MockFragmentClassLoader
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.kotlin.whenever
 import javax.annotation.Nonnull
 
-@KotlinCleanup("when --> whenever")
 class ExtendedFragmentFactoryTest {
 
     internal class TestFragmentFactoryTest : ExtendedFragmentFactory {
@@ -51,8 +53,8 @@ class ExtendedFragmentFactoryTest {
         val fragmentManager = mock(FragmentManager::class.java)
         val baseFactory = mock(FragmentFactory::class.java)
 
-        `when`(activity.supportFragmentManager).thenReturn(fragmentManager)
-        `when`(fragmentManager.fragmentFactory).thenReturn(baseFactory)
+        whenever(activity.supportFragmentManager).thenReturn(fragmentManager)
+        whenever(fragmentManager.fragmentFactory).thenReturn(baseFactory)
 
         val testFF: ExtendedFragmentFactory = TestFragmentFactoryTest()
         val result = testFF.attachToActivity<ExtendedFragmentFactory>(activity)
@@ -71,7 +73,7 @@ class ExtendedFragmentFactoryTest {
         val fragmentManager = mock(FragmentManager::class.java)
         val baseFactory = mock(FragmentFactory::class.java)
 
-        `when`(fragmentManager.fragmentFactory).thenReturn(baseFactory)
+        whenever(fragmentManager.fragmentFactory).thenReturn(baseFactory)
 
         val testFF: ExtendedFragmentFactory = TestFragmentFactoryTest()
 
