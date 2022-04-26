@@ -13,7 +13,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
 -->
 <resources>
     <color name="theme_light_primary">@color/material_light_blue_500</color>
-    <color name="theme_light_primary_dark">@color/material_light_blue_700</color>
+    <color name="theme_light_primary_dark">@color/material_light_blue_600</color>
     <color name="theme_light_primary_light">@color/material_light_blue_100</color>
     <color name="theme_light_accent">@color/material_light_blue_600</color>
     <color name="theme_light_primary_text">@color/black</color>
@@ -136,6 +136,13 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="popupBackgroundColor">@android:color/white</item>
 
         <item name="editTextDisabled">@color/material_grey_500</item>
+
+<!--        Preference category title color-->
+        <item name="preferenceCategoryTitleTextColor">@color/black</item>
+    </style>
+
+    <style name="toggle_buttos_style" parent="Preference.SwitchPreferenceCompat">
+        <item name="colorAccent">@color/black</item>
     </style>
 
     <!-- Preferences screens -->
