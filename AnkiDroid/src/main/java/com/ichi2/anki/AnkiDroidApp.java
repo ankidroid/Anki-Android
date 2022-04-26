@@ -73,6 +73,7 @@ import java.util.regex.Pattern;
 
 import androidx.webkit.WebViewCompat;
 import timber.log.Timber;
+
 import static timber.log.Timber.DebugTree;
 
 /**

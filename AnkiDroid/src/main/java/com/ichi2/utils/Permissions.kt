@@ -37,13 +37,33 @@ object Permissions {
     }
 
     /**
-     * Check if we have permission to access the external storage
+     * Check if we have write access permission to the external storage
+     * @param context
+     * @return
+     */
+    @JvmStatic
+    private fun hasStorageWriteAccessPermission(context: Context): Boolean {
+        return hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
+
+    /**
+     * Check if we have read access permission to the external storage
+     * @param context
+     * @return
+     */
+    @JvmStatic
+    private fun hasStorageReadAccessPermission(context: Context): Boolean {
+        return hasPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
+
+    /**
+     * Check if we have read and write access permission to the external storage
      * @param context
      * @return
      */
     @JvmStatic
     fun hasStorageAccessPermission(context: Context): Boolean {
-        return hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        return hasStorageReadAccessPermission(context) && hasStorageWriteAccessPermission(context)
     }
 
     @JvmStatic
