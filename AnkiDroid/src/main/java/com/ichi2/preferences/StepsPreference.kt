@@ -20,6 +20,7 @@ import android.content.Context
 import android.text.InputType
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.view.View
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -28,7 +29,7 @@ import com.ichi2.utils.JSONException
 import timber.log.Timber
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-class StepsPreference : android.preference.EditTextPreference {
+class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
     private val mAllowEmpty: Boolean
 
     @Suppress("unused")
@@ -47,6 +48,11 @@ class StepsPreference : android.preference.EditTextPreference {
     constructor(context: Context?) : super(context) {
         mAllowEmpty = getAllowEmptyFromAttributes(null)
         updateSettings()
+    }
+
+    override fun onBindView(view: View?) {
+        super.onBindView(view)
+        autoFocusAndMoveCursorToEnd(editText)
     }
 
     /**
