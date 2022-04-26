@@ -137,15 +137,10 @@ APIs. It's visible when there aren't enough decks to fill the screen.
 
         <item name="editTextDisabled">@color/material_grey_500</item>
 
-<!--        Preference category title color-->
+        <!--Preference category title color-->
         <item name="preferenceCategoryTitleTextColor">@color/black</item>
     </style>
 
-    <style name="toggle_buttos_style" parent="Preference.SwitchPreferenceCompat">
-        <item name="colorAccent">@color/black</item>
-    </style>
-
-    <!-- Preferences screens -->
     <!-- Theme for showing legacy ActionBar without explicitly including a toolbar -->
     <style name="LegacyActionBarLight" parent="Theme_Light">
         <item name="windowActionBar">true</item>
