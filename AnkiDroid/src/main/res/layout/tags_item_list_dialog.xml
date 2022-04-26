@@ -37,5 +37,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
-        app:cycle_back_to_indeterminate="false"/>
+        app:cycle_checked_to_indeterminate="false"
+        app:cycle_indeterminate_to_checked="false"/>
 </LinearLayout>

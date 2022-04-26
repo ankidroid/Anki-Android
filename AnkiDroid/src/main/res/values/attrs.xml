@@ -129,6 +129,7 @@
     <attr name="editTextDisabled" format="color"/>
 
     <declare-styleable name="CheckBoxTriStates">
-        <attr name="cycle_back_to_indeterminate" format="boolean" />
+        <attr name="cycle_checked_to_indeterminate" format="boolean" />
+        <attr name="cycle_indeterminate_to_checked" format="boolean" />
     </declare-styleable>
 </resources>

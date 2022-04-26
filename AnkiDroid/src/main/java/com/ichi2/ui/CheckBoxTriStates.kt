@@ -35,8 +35,8 @@ class CheckBoxTriStates : AppCompatCheckBox {
 
     private var mState: State = State.UNCHECKED
     @KotlinCleanup("move setter function here")
-    private var mCycleBackToIndeterminate = false
-    private var mCycleIndeterminateToChecked = false
+    var cycleCheckedToIndeterminate = false
+    var cycleIndeterminateToChecked = false
 
     /**
      * This is the listener set to the super class which is going to be invoked each
@@ -85,14 +85,14 @@ class CheckBoxTriStates : AppCompatCheckBox {
         }
 
     override fun toggle() {
-        when (mState) {
-            State.INDETERMINATE -> state = if (mCycleIndeterminateToChecked) {
+        state = when (mState) {
+            State.INDETERMINATE -> if (cycleIndeterminateToChecked) {
                 State.CHECKED
             } else {
                 State.UNCHECKED
             }
-            State.UNCHECKED -> state = State.CHECKED
-            State.CHECKED -> state = if (mCycleBackToIndeterminate) {
+            State.UNCHECKED -> State.CHECKED
+            State.CHECKED -> if (cycleCheckedToIndeterminate) {
                 State.INDETERMINATE
             } else {
                 State.UNCHECKED
@@ -107,14 +107,6 @@ class CheckBoxTriStates : AppCompatCheckBox {
 
     override fun isChecked(): Boolean {
         return mState != State.UNCHECKED
-    }
-
-    fun setCycleBackToIndeterminate(cycleBackToIndeterminate: Boolean) {
-        mCycleBackToIndeterminate = cycleBackToIndeterminate
-    }
-
-    fun setCycleIndeterminateToChecked(cycleIndeterminateToChecked: Boolean) {
-        mCycleIndeterminateToChecked = cycleIndeterminateToChecked
     }
 
     override fun setOnCheckedChangeListener(listener: OnCheckedChangeListener?) {
@@ -133,7 +125,8 @@ class CheckBoxTriStates : AppCompatCheckBox {
         val superState = super.onSaveInstanceState()
         val ss = SavedState(superState)
         ss.state = mState
-        ss.cycleBackToIndeterminate = mCycleBackToIndeterminate
+        ss.cycleCheckedToIndeterminate = cycleCheckedToIndeterminate
+        ss.cycleIndeterminateToChecked = cycleIndeterminateToChecked
         return ss
     }
 
@@ -143,20 +136,26 @@ class CheckBoxTriStates : AppCompatCheckBox {
         val ss = state as SavedState
         super.onRestoreInstanceState(ss.superState)
         this.state = ss.state
-        setCycleBackToIndeterminate(ss.cycleBackToIndeterminate)
+        cycleCheckedToIndeterminate = ss.cycleCheckedToIndeterminate
+        cycleIndeterminateToChecked = ss.cycleIndeterminateToChecked
         requestLayout()
         mRestoring = false
     }
 
     private fun init(context: Context, attrs: AttributeSet?) {
-        mCycleBackToIndeterminate = true
+        cycleCheckedToIndeterminate = true
+        cycleIndeterminateToChecked = false
         if (attrs != null) {
             val a = context.theme.obtainStyledAttributes(
                 attrs, R.styleable.CheckBoxTriStates, 0, 0
             )
-            mCycleBackToIndeterminate = a.getBoolean(
-                R.styleable.CheckBoxTriStates_cycle_back_to_indeterminate,
-                mCycleBackToIndeterminate
+            cycleCheckedToIndeterminate = a.getBoolean(
+                R.styleable.CheckBoxTriStates_cycle_checked_to_indeterminate,
+                cycleCheckedToIndeterminate
+            )
+            cycleIndeterminateToChecked = a.getBoolean(
+                R.styleable.CheckBoxTriStates_cycle_indeterminate_to_checked,
+                cycleIndeterminateToChecked
             )
         }
         updateBtn()
@@ -176,18 +175,21 @@ class CheckBoxTriStates : AppCompatCheckBox {
     @KotlinCleanup("https://stackoverflow.com/a/69476454")
     private class SavedState : BaseSavedState {
         lateinit var state: State
-        var cycleBackToIndeterminate = false
+        var cycleCheckedToIndeterminate = false
+        var cycleIndeterminateToChecked = false
 
         internal constructor(superState: Parcelable?) : super(superState) {}
         private constructor(`in`: Parcel) : super(`in`) {
             state = State.values()[`in`.readInt()]
-            cycleBackToIndeterminate = `in`.readInt() != 0
+            cycleCheckedToIndeterminate = `in`.readInt() != 0
+            cycleIndeterminateToChecked = `in`.readInt() != 0
         }
 
         override fun writeToParcel(out: Parcel, flags: Int) {
             super.writeToParcel(out, flags)
             out.writeValue(state)
-            out.writeInt(if (cycleBackToIndeterminate) 1 else 0)
+            out.writeInt(if (cycleCheckedToIndeterminate) 1 else 0)
+            out.writeInt(if (cycleIndeterminateToChecked) 1 else 0)
         }
 
         override fun toString(): String {
@@ -195,7 +197,8 @@ class CheckBoxTriStates : AppCompatCheckBox {
                 "CheckboxTriState.SavedState{" +
                     Integer.toHexString(System.identityHashCode(this)) +
                     " state=" + state +
-                    " cycleBackToIndeterminate=" + cycleBackToIndeterminate + "}"
+                    " cycleCheckedToIndeterminate=" + cycleCheckedToIndeterminate +
+                    " cycleIndeterminateToChecked=" + cycleIndeterminateToChecked + "}"
                 )
         }
 

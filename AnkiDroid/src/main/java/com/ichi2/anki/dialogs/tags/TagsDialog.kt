@@ -269,9 +269,10 @@ class TagsDialog : AnalyticsDialogFragment {
             mTagsArrayAdapter!!.sortData()
             mTagsArrayAdapter!!.notifyDataSetChanged()
             // Expand to reveal the newly added tag.
-            val filter = mTagsArrayAdapter!!.filter
-            filter.setExpandTarget(tag)
-            filter.refresh()
+            mTagsArrayAdapter!!.filter.apply {
+                setExpandTarget(tag)
+                refresh()
+            }
             // Show a snackbar to let the user know the tag was added successfully
             showSnackbar(
                 requireActivity(), feedbackText, false, -1, null,

@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.CheckBoxTriStates
+import com.ichi2.ui.CheckBoxTriStates.State.*
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.TypedFilter
 import java.util.*
@@ -66,7 +67,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
      * @param subtreeCheckedCnt The number of checked nodes in the subtree (self included). This exists
      * because we want to dynamically turn a checkbox from unchecked into indeterminate if at least one of its
      * descendants is checked, or from indeterminate to unchecked if all of its descendants are unchecked.
-     * @param vh The reference to current bound [ViewHolder]. A node bound with some [ViewHolder] must have [vh] nonnull.
+     * @param vh The reference to currently bound [ViewHolder]. A node bound with some [ViewHolder] must have [vh] nonnull.
      * @see onBindViewHolder for the binding
      */
     @NeedsTest("Make sure that the data structure works properly.")
@@ -80,6 +81,16 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         var subtreeCheckedCnt: Int,
         var vh: ViewHolder?
     ) {
+        /**
+         * Get or set the checkbox state of the currently bound ViewHolder.
+         * [vh] must be nonnull.
+         */
+        private var checkBoxState: CheckBoxTriStates.State
+            get() = vh!!.mCheckBoxView.state
+            set(state) {
+                vh!!.mCheckBoxView.state = state
+            }
+
         /**
          * Return the number of visible nodes in the subtree.
          * If [isExpanded] is set to false, the subtree is collapsed, only the node itself is visible.
@@ -123,8 +134,8 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         fun updateCheckBoxCycleStyle(tags: TagsList) {
             val realSubtreeCnt = subtreeCheckedCnt - if (tags.isChecked(tag)) 1 else 0
             val hasDescendantChecked = realSubtreeCnt > 0
-            vh!!.mCheckBoxView.setCycleIndeterminateToChecked(hasDescendantChecked)
-            vh!!.mCheckBoxView.setCycleBackToIndeterminate(hasDescendantChecked)
+            vh!!.mCheckBoxView.cycleIndeterminateToChecked = hasDescendantChecked
+            vh!!.mCheckBoxView.cycleCheckedToIndeterminate = hasDescendantChecked
         }
 
         /**
@@ -138,16 +149,16 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
          * @param tags The [TagsList] that manages tags.
          */
         fun onCheckStateChanged(tags: TagsList) {
-            val delta = if (vh!!.mCheckBoxView.state == CheckBoxTriStates.State.CHECKED) 1 else -1
+            val delta = if (checkBoxState == CHECKED) 1 else -1
             fun update(node: TagTreeNode) {
                 node.subtreeCheckedCnt += delta
-                if (node.vh!!.mCheckBoxView.state == CheckBoxTriStates.State.UNCHECKED && node.subtreeCheckedCnt > 0) {
+                if (node.checkBoxState == UNCHECKED && node.subtreeCheckedCnt > 0) {
                     tags.setIndeterminate(node.tag)
-                    node.vh!!.mCheckBoxView.state = CheckBoxTriStates.State.INDETERMINATE
+                    node.checkBoxState = INDETERMINATE
                 }
-                if (node.vh!!.mCheckBoxView.state == CheckBoxTriStates.State.INDETERMINATE && node.subtreeCheckedCnt == 0) {
+                if (node.checkBoxState == INDETERMINATE && node.subtreeCheckedCnt == 0) {
                     tags.uncheck(node.tag)
-                    node.vh!!.mCheckBoxView.state = CheckBoxTriStates.State.UNCHECKED
+                    node.checkBoxState = UNCHECKED
                 }
                 node.updateCheckBoxCycleStyle(tags)
             }
@@ -215,9 +226,9 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         vh.mCheckBoxView.setOnClickListener {
             val checkBox = vh.mCheckBoxView
             when (checkBox.state) {
-                CheckBoxTriStates.State.CHECKED -> tags.check(vh.node.tag, false)
-                CheckBoxTriStates.State.UNCHECKED -> tags.uncheck(vh.node.tag)
-                CheckBoxTriStates.State.INDETERMINATE -> tags.setIndeterminate(vh.node.tag)
+                CHECKED -> tags.check(vh.node.tag, false)
+                UNCHECKED -> tags.uncheck(vh.node.tag)
+                INDETERMINATE -> tags.setIndeterminate(vh.node.tag)
             }
             vh.node.onCheckStateChanged(tags)
         }
@@ -262,9 +273,9 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         holder.mTextView.text = TagsUtil.getTagParts(holder.node.tag).last()
 
         if (tags.isIndeterminate(holder.node.tag)) {
-            holder.mCheckBoxView.state = CheckBoxTriStates.State.INDETERMINATE
+            holder.mCheckBoxView.state = INDETERMINATE
         } else {
-            holder.mCheckBoxView.state = if (tags.isChecked(holder.node.tag)) CheckBoxTriStates.State.CHECKED else CheckBoxTriStates.State.UNCHECKED
+            holder.mCheckBoxView.state = if (tags.isChecked(holder.node.tag)) CHECKED else UNCHECKED
         }
         holder.node.updateCheckBoxCycleStyle(tags)
     }
