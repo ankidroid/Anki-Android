@@ -72,12 +72,12 @@
         <item quantity="other">%d minutes left</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%d soat %d qoldi</item>
-        <item quantity="other">%d hours %d left</item>
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%d kun %d qoldi</item>
-        <item quantity="other">%d days %d left</item>
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Kartalar qo\'shishni\n+ belgisi orqali boshlang</string>
@@ -159,7 +159,7 @@
     <string name="rebuild_cram_label">Qayta qurish</string>
     <string name="empty_cram_label">Bo\'sh</string>
     <string name="create_subdeck">Palubani o‘rnini bosuvchi narsa yaratish</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">I</string>
     <string name="custom_study_deck_name">Qo\'shimcha shug\'ullanish</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">This deck is empty</string>

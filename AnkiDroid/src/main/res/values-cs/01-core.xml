@@ -75,16 +75,16 @@
         <item quantity="other">zbývá %d minut</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">Zbývá %d hodina %d</item>
-        <item quantity="few">Zbývají %d hodiny %d</item>
-        <item quantity="many">Zbývá %d hodiny %d</item>
-        <item quantity="other">Zbývá %d hodin %d</item>
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="few">%1$d hours %2$d left</item>
+        <item quantity="many">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Zbývá %d den %d</item>
-        <item quantity="few">Zbývají %d dny %d</item>
-        <item quantity="many">Zbývá %d dne %d</item>
-        <item quantity="other">Zbývá %d dní %d</item>
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="few">%1$d days %2$d left</item>
+        <item quantity="many">%1$d days %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kolekce je prázdná</string>
     <string name="no_cards_placeholder_description">Začněte přidávat karty\npoužitím ikony +.</string>

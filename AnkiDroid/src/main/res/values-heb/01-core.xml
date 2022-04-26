@@ -75,16 +75,16 @@
         <item quantity="other">נותרו %d דקות</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%d שעה %d נותרה </item>
-        <item quantity="two">%d שעות %d נותרו</item>
-        <item quantity="many">%d שעות %d נותרו</item>
-        <item quantity="other">%d שעות %d נותרו</item>
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="two">%1$d hours %2$d left</item>
+        <item quantity="many">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">נותרו %d ימים ו %d שעות</item>
-        <item quantity="two">נותרו %d ימים ו %d שעות</item>
-        <item quantity="many">נותרו %d ימים ו %d שעות</item>
-        <item quantity="other">%d ימים ו %d שעות נותרו</item>
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="two">%1$d days %2$d left</item>
+        <item quantity="many">%1$d days %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">האוסף ריק</string>
     <string name="no_cards_placeholder_description">אפשר להוסיף קלפים\n
@@ -209,7 +209,7 @@
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">זה ייצור קלף אחד. להמשיך?</item>
         <item quantity="two">This will create %1$d cards. Proceed?</item>
-        <item quantity="many">זה ייצור %d קלפים. להמשיך?</item>
+        <item quantity="many">זה ייצור %1$d  קלפים. להמשיך?</item>
         <item quantity="other">This will create %1$d cards. Proceed?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">

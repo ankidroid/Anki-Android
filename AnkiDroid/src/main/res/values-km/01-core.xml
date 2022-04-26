@@ -69,10 +69,10 @@
         <item quantity="other">នៅសល់​ %d​ នាទី</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">នៅ​សល់​ %d ម៉ោង</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">នៅសល់​ %d ថ្ងៃ</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">ចាប់ផ្តើមដាក់កាត\nដោយចុចសញ្ញា +</string>

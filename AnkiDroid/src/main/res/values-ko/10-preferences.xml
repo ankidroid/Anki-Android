@@ -61,8 +61,8 @@
     <string name="pref_cat_gestures" maxLength="41">제스쳐</string>
     <string name="pref_cat_gestures_summ">버튼 대신 탭과 밀기 사용</string>
     <string name="pref_cat_actions" maxLength="41">작업</string>
-    <string name="pref_cat_controls" maxLength="41">제어</string>
-    <string name="pref_cat_controls_summ">글쇠와 다른 장치들 설정</string>
+    <string name="pref_cat_controls" maxLength="41">컨트롤</string>
+    <string name="pref_cat_controls_summ">키보드 및 다른 장치 설정</string>
     <string name="pref_cat_advanced" maxLength="41">고급 설정</string>
     <string name="pref_cat_advanced_summ">최적화 및 실험적 기능</string>
     <string name="pref_cat_performance" maxLength="41">성능</string>
@@ -82,7 +82,7 @@
     <string name="image_zoom" maxLength="41">이미지 확대</string>
     <string name="button_size" maxLength="41">정답 버튼 크기</string>
     <string name="card_browser_font_size" maxLength="41">카드 탐색기 글꼴 크기 조정</string>
-    <string name="card_browser_hide_media" maxLength="41">카드탐색기서 파일이름 보이기</string>
+    <string name="card_browser_hide_media" maxLength="41">카드 탐색기에서 파일명 보기</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid 디렉토리</string>
     <string name="fullscreen_review" maxLength="41">전체 화면 모드</string>
@@ -98,8 +98,8 @@
     </string-array>
     <string name="gestures" maxLength="41">제스처 사용</string>
     <string name="gestures_summ">응답 및 카드 편집 등의 작업에 제스쳐 할당</string>
-    <string name="gestures_corner_touch" maxLength="41">아홉군데누르기</string>
-    <string name="gestures_corner_touch_summary">화면모퉁이의 누르기짜임새를 허용하기</string>
+    <string name="gestures_corner_touch" maxLength="41">9점 터치</string>
+    <string name="gestures_corner_touch_summary">화면 모서리의 터치 제스쳐 허용</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_swipe_up" maxLength="41">위로 밀기</string>
@@ -187,12 +187,12 @@
     <string name="learn_cutoff" maxLength="41">미리 학습하기 시간 설정</string>
     <string name="time_limit" maxLength="41">타임박스 시간 설정</string>
     <string name="time_limit_summ">XXX 분</string>
-    <string name="new_timezone" maxLength="41">새시간대다루기</string>
-    <string name="day_offset_with_description" maxLength="41">다음날의 시작</string>
+    <string name="new_timezone" maxLength="41">새 시간대 다루기</string>
+    <string name="day_offset_with_description" maxLength="41">다음 날의 시작</string>
     <string name="day_offset_summ">자정으로부터 지난 XXX 시간</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">한밤</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">자정</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">오후 11시</string>
-    <string name="sched_v2" maxLength="41">브이2일정표</string>
+    <string name="sched_v2" maxLength="41">V2 스케쥴러</string>
     <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
     <string name="sched_ver_toggle_title">확인</string>
     <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
@@ -208,14 +208,14 @@
     <string name="custom_buttons_setting_if_room">공간이 있는 경우 표시</string>
     <string name="custom_buttons_setting_menu_only">메뉴만</string>
     <string name="reset_custom_buttons" maxLength="41">기본값으로 초기화</string>
-    <string name="thirdparty_apps_title" maxLength="41">바깥응용프로그람접속기어플들</string>
+    <string name="thirdparty_apps_title" maxLength="41">타사 API 앱</string>
     <string name="thirdparty_apps_summary">Ankidroid API를 사용하는 어플 목록 보기 (사전, 편집기 등)</string>
     <string name="html_javascript_debugging" maxLength="41">HTML 자바스크립트 디버깅</string>
-    <string name="html_javascript_debugging_summ">웹보기련결조종을 활성화하고, 카드HTML을 암기드로이드명부에다 갈무리하세요. </string>
+    <string name="html_javascript_debugging_summ">원격 WebView 연결을 활성화하고, 카드 HTML을 AnkiDroid 디렉토리에 저장하기</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">포착화면을 PNG규격으로 붙여넣기</string>
-    <string name="paste_as_png_summary">기본암기가 포착화면에다 JPG파일로 그림을 붙여넣음으로써 저장공간을 아낍니다. 이 선택지로 PNG그림으로 대신 붙여넣을수도 있습니다. </string>
-    <string name="exit_via_double_tap_back" maxLength="41">뒤로 가거나 나가려면 뒤로가기를 둘이 누르세요.</string>
+    <string name="paste_as_png" maxLength="41">클립보드 이미지를 PNG로 붙여넣기</string>
+    <string name="paste_as_png_summary">기본적으로 Anki는 클립보드의 이미지를 JPG로 저장해 저장 공간을 절약합니다. 이 옵션을 사용해 대신 PNG 이미지를 사용할 수 있습니다.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">뒤로가기 버튼 두번 눌러 돌아가기/나가기</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>

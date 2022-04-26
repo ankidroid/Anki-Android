@@ -71,12 +71,12 @@
         <item quantity="other">დარჩა %d წუთი</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">დარჩა %d საათი %d</item>
-        <item quantity="other">დარჩა %d საათი %d</item>
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">დარჩა %d დღე %d</item>
-        <item quantity="other">დარჩა %d დღე %d</item>
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">კოლექცია ცარიელია</string>
     <string name="no_cards_placeholder_description">ატვირთეთ ბარათები\n+ნიშნით</string>

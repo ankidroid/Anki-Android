@@ -71,12 +71,12 @@
         <item quantity="other">Mancant %d minutos</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">Mancat %d ora %d</item>
-        <item quantity="other">Mancant %d oras %d</item>
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Mancat %d die %d</item>
-        <item quantity="other">Mancant %d dies %d</item>
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Sa colletzione est bòida</string>
     <string name="no_cards_placeholder_description">Incumintza a annànghere cartas\n

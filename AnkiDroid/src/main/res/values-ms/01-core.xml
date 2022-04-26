@@ -69,10 +69,10 @@
         <item quantity="other">%d minit tinggal</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%d jam %d minit tinggal</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%d hari %d jam tinggal</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Koleksi kosong</string>
     <string name="no_cards_placeholder_description">Mula menambah kad\ndengan menggunakan ikon +.</string>

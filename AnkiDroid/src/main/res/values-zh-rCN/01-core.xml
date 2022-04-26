@@ -69,10 +69,10 @@
         <item quantity="other">剩余%d分钟</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">剩余 %d 小时 %d</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">剩余 %d 天 %d</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">收藏为空</string>
     <string name="no_cards_placeholder_description">开始添加卡牌\n使用 + 图标。</string>
