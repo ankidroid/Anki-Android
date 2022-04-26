@@ -495,6 +495,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        updateSearchDecksIconVisibility(menu)
         // Null check to prevent crash when col inaccessible
         // #9081: sync leaves the collection closed, thus colIsOpen() is insufficient, carefully open the collection if possible
         return if (CollectionHelper.getInstance().getColSafe(this) == null) {
@@ -559,10 +560,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 menu.findItem(R.id.action_undo).title = undo
             }
 
-            // Remove the filter - not necessary and search has other implications for new users.
-            menu.findItem(R.id.deck_picker_action_filter).isVisible = col.decks.count() >= 10
+            updateSearchDecksIconVisibility(menu)
         }
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun updateSearchDecksIconVisibility(menu: Menu) {
+        menu.findItem(R.id.deck_picker_action_filter).isVisible = col.decks.count() >= 10
     }
 
     @VisibleForTesting
@@ -2038,6 +2042,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         if (mFocusedDeck != current) {
             scrollDecklistToDeck(current)
             mFocusedDeck = current
+        }
+
+        // if Deck Count may have changed, update SearchDeck icon Visibility
+        val deckCount = col.decks.count()
+        if (deckCount == 9 || deckCount == 10) {
+            invalidateOptionsMenu()
         }
     }
 
