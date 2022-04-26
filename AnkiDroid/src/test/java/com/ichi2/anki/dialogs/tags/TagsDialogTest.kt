@@ -17,6 +17,7 @@ package com.ichi2.anki.dialogs.tags
 
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.RadioGroup
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
@@ -519,6 +520,47 @@ class TagsDialogTest {
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(4).checkboxState)
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
             Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+        }
+    }
+
+    @Test // #11089
+    fun test_SearchTag_spaceWillBeFilteredCorrectly() {
+        val type = TagsDialog.DialogType.FILTER_BY_TAG
+        val allTags = listOf("hello::world")
+        val checkedTags = emptyList<String>()
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withArguments(type, checkedTags, allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { f: TagsDialog ->
+            val dialog = f.dialog as MaterialDialog?
+            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            val editText = f.getSearchView()!!.findViewById<EditText>(R.id.search_src_text)!!
+
+            editText.setText("hello ")
+            Assert.assertEquals(
+                "The space should be replaced by '::' without mistakenly clear everything.",
+                "hello::", editText.text.toString()
+            )
+
+            editText.setText("hello")
+            editText.text.insert(5, " ")
+            Assert.assertEquals("Should complete 2 colons.", "hello::", editText.text.toString())
+
+            editText.setText("hello:")
+            editText.text.insert(6, " ")
+            Assert.assertEquals("Should complete 1 colon.", "hello::", editText.text.toString())
+
+            editText.setText("hello::")
+            editText.text.insert(7, " ")
+            Assert.assertEquals("Should do nothing.", "hello::", editText.text.toString())
+
+            editText.setText("")
+            editText.text.insert(0, " ")
+            Assert.assertEquals("Should not crash.", "::", editText.text.toString())
         }
     }
 

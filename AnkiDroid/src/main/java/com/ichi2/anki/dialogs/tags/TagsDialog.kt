@@ -172,23 +172,49 @@ class TagsDialog : AnalyticsDialogFragment {
         return dialog
     }
 
-    @NeedsTest("Verify that a space input is converted into '::' properly.")
     private fun adjustToolbar(tagsDialogView: View) {
         val toolbar: Toolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar)
         toolbar.title = mDialogTitle
         toolbar.inflateMenu(R.menu.tags_dialog_menu)
 
-        // disallow inputting the 'space' character
-        // inputting a 'space' will add '::' instead for UX related to hierarchical tags
-        val addTagFilter = InputFilter { source: CharSequence, start: Int, end: Int, _: Spanned?, _: Int, _: Int ->
-            var i = start
-            while (i < end) {
-                if (source[i] == ' ') {
-                    return@InputFilter "::"
-                }
-                i++
+        // space is not allowed in a tag
+        // for UX of hierarchical tag, inputting a space will instead insert "::" at the cursor
+        // if there are already some colons in front of the cursor, complete to 2 colons
+        // for example:
+        //   "tag"   -- input a space --> "tag::"
+        //   "tag:"  -- input a space --> "tag::"
+        //   "tag::" -- input a space --> "tag::"
+        val addTagFilter = InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
+            if (!source.subSequence(start, end).contains(' ')) {
+                return@InputFilter null
             }
-            null
+            var previousColonsCnt = 0
+            if (dest != null) {
+                val previousPart = dest.substring(0, destStart)
+                if (previousPart.endsWith("::")) {
+                    previousColonsCnt = 2
+                } else if (previousPart.endsWith(":")) {
+                    previousColonsCnt = 1
+                }
+            }
+            val sb = StringBuilder()
+            for (char in source.subSequence(start, end)) {
+                if (char == ' ') {
+                    if (previousColonsCnt == 0) {
+                        sb.append("::")
+                    } else if (previousColonsCnt == 1) {
+                        sb.append(":")
+                    }
+                } else {
+                    sb.append(char)
+                }
+                previousColonsCnt = if (char == ':') {
+                    previousColonsCnt + 1
+                } else {
+                    0
+                }
+            }
+            sb
         }
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
         toolbarAddItem.setOnMenuItemClickListener {
@@ -279,6 +305,11 @@ class TagsDialog : AnalyticsDialogFragment {
                 mDialog!!.view.findViewById(R.id.tags_dialog_snackbar), null
             )
         }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    internal fun getSearchView(): SearchView? {
+        return mToolbarSearchView
     }
 
     companion object {
