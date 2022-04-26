@@ -172,7 +172,7 @@ echo "reset source"
 
 # Adding all files because the commit must contains all modifications made in other file
 # to use the conversion of FILENAME.
-git commit -am "refactor: Convert $FILENAME.kt to Kotlin
+git commit -am "refactor: Convert $FILENAME to Kotlin
 
 $PACKAGE_NAME"
 echo "second commit"
