@@ -17,27 +17,28 @@ package com.ichi2.anki.analytics
 
 import android.content.Context
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 
 class Acra {
     companion object {
 
         fun enableWithAskDialog(ctx: Context) {
-            val askKey = AnkiDroidApp.FEEDBACK_REPORT_ASK
-            AnkiDroidApp.getSharedPrefs(ctx).edit().putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, askKey).apply()
+            val askKey = CrashReportService.FEEDBACK_REPORT_ASK
+            AnkiDroidApp.getSharedPrefs(ctx).edit().putString(CrashReportService.FEEDBACK_REPORT_KEY, askKey).apply()
             onPreferenceChanged(ctx, askKey)
         }
 
         fun disableAcra(ctx: Context) {
-            val askKey = AnkiDroidApp.FEEDBACK_REPORT_NEVER
-            AnkiDroidApp.getSharedPrefs(ctx).edit().putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, askKey).apply()
+            val askKey = CrashReportService.FEEDBACK_REPORT_NEVER
+            AnkiDroidApp.getSharedPrefs(ctx).edit().putString(CrashReportService.FEEDBACK_REPORT_KEY, askKey).apply()
             onPreferenceChanged(ctx, askKey)
         }
 
         @JvmStatic
         fun onPreferenceChanged(ctx: Context, newValue: String) {
-            AnkiDroidApp.getInstance().setAcraReportingMode(newValue)
+            CrashReportService.setAcraReportingMode(newValue)
             // If the user changed error reporting, make sure future reports have a chance to post
-            AnkiDroidApp.deleteACRALimiterData(ctx)
+            CrashReportService.deleteACRALimiterData(ctx)
             // We also need to re-chain our UncaughtExceptionHandlers
             UsageAnalytics.reInitialize()
         }

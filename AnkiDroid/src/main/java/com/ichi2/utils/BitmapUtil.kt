@@ -23,7 +23,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
@@ -70,7 +70,7 @@ object BitmapUtil {
             }
         } catch (e: Exception) {
             // #5513 - We don't know the reason for the crash, let's find out.
-            AnkiDroidApp.sendExceptionReport(e, "BitmapUtil decodeFile")
+            CrashReportService.sendExceptionReport(e, "BitmapUtil decodeFile")
         }
         return bmp
     }

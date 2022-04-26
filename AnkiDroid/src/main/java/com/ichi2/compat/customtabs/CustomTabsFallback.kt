@@ -17,7 +17,7 @@ package com.ichi2.compat.customtabs
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.compat.customtabs.CustomTabActivityHelper.CustomTabFallback
@@ -38,7 +38,7 @@ class CustomTabsFallback : CustomTabFallback {
             // this should not happen as we don't reach here if there's no valid browser.
             // and I assume an exported intent will take priority over a non-exported intent.
             // Add an exception report to see if I'm wrong
-            AnkiDroidApp.sendExceptionReport(e, "CustomTabsFallback::openUri")
+            CrashReportService.sendExceptionReport(e, "CustomTabsFallback::openUri")
             showThemedToast(activity, activity!!.getString(R.string.web_page_error, uri), false)
         }
     }

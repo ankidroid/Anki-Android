@@ -58,6 +58,7 @@ import android.widget.TextView;
 
 import com.canhub.cropper.CropImage;
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CrashReportService;
 import com.ichi2.anki.DrawingActivity;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
@@ -383,7 +384,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 if (result != null) {
                     String error = String.valueOf(result.getError());
                     Timber.w(error, "cropImage threw an error");
-                    AnkiDroidApp.sendExceptionReport(error, "cropImage threw an error");;
+                    CrashReportService.sendExceptionReport(error, "cropImage threw an error");;
                 }
             }
             return;
@@ -395,7 +396,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
                 handleSelectImageIntent(data);
                 mImageFileSizeWarning.setVisibility(View.GONE);
             } catch (Exception e) {
-                AnkiDroidApp.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent");
+                CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent");
                 Timber.e(e, "Failed to select image");
                 showSomethingWentWrong();
                 return;
@@ -744,7 +745,7 @@ public class BasicImageFieldController extends FieldControllerBase implements IF
         } catch (Exception e) {
             // #6628 - What would cause this? Is the fallback is effective? Telemetry to diagnose more:
             Timber.w(e, "getUriForFile failed on %s - attempting fallback", file);
-            AnkiDroidApp.sendExceptionReport(e, "BasicImageFieldController", "Unexpected getUriForFile failure on " + file, true);
+            CrashReportService.sendExceptionReport(e, "BasicImageFieldController", "Unexpected getUriForFile failure on " + file, true);
         }
 
         return Uri.fromFile(file);

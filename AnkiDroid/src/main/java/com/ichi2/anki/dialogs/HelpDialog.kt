@@ -24,6 +24,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -252,18 +253,18 @@ object HelpDialog {
 
         override fun onClicked(activity: AnkiActivity) {
             val preferences = AnkiDroidApp.getSharedPrefs(activity)
-            val reportMode = preferences.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "")
+            val reportMode = preferences.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
             if (isUserATestClient) {
                 showThemedToast(activity, activity.getString(R.string.user_is_a_robot), false)
                 return
             }
-            if (AnkiDroidApp.FEEDBACK_REPORT_NEVER == reportMode) {
+            if (CrashReportService.FEEDBACK_REPORT_NEVER == reportMode) {
                 preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, false).apply()
-                AnkiDroidApp.getInstance().acraCoreConfigBuilder
+                CrashReportService.getAcraCoreConfigBuilder()
                     .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
                     .setEnabled(true)
                 sendReport(activity)
-                AnkiDroidApp.getInstance().acraCoreConfigBuilder
+                CrashReportService.getAcraCoreConfigBuilder()
                     .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
                     .setEnabled(false)
                 preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, true).apply()
@@ -307,8 +308,8 @@ object HelpDialog {
             val currentTimestamp = activity.col.time.intTimeMS()
             val lastReportTimestamp = getTimestampOfLastReport(activity)
             if (currentTimestamp - lastReportTimestamp > MIN_INTERVAL_MS) {
-                AnkiDroidApp.deleteACRALimiterData(activity)
-                AnkiDroidApp.sendExceptionReport(
+                CrashReportService.deleteACRALimiterData(activity)
+                CrashReportService.sendExceptionReport(
                     UserSubmittedException(EXCEPTION_MESSAGE),
                     "AnkiDroidApp.HelpDialog"
                 )

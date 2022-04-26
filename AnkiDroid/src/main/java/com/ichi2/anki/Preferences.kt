@@ -563,8 +563,8 @@ class Preferences : AnkiActivity() {
                             }
                         }
                     }
-                    AnkiDroidApp.FEEDBACK_REPORT_KEY -> {
-                        val value = prefs!!.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "")
+                    CrashReportService.FEEDBACK_REPORT_KEY -> {
+                        val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
                         onPreferenceChanged(preferencesActivity, value!!)
                     }
                     "syncAccount" -> {

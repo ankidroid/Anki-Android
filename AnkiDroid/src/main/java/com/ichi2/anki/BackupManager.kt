@@ -49,7 +49,7 @@ open class BackupManager {
             performBackup(colFile, backupFile)
         } catch (e: Exception) {
             Timber.w(e)
-            AnkiDroidApp.sendExceptionReport(e, "performBackupInForeground")
+            CrashReportService.sendExceptionReport(e, "performBackupInForeground")
             false
         }
     }
