@@ -69,10 +69,10 @@
         <item quantity="other">残り約 %d 分</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">残り約 %d 時間 %d 分</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">残り約 %d 日と %d 時間</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">まだデッキがありません</string>
     <string name="no_cards_placeholder_description">＋アイコンから\nカードを追加してください</string>

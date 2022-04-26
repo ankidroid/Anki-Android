@@ -71,12 +71,12 @@
         <item quantity="other">%d минути остава</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%d час %d остава</item>
-        <item quantity="other">%d часа %d остават</item>
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%d ден %d остава</item>
-        <item quantity="other">%d дни %d остават</item>
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Колекцията е празна</string>
     <string name="no_cards_placeholder_description">Започнете да добавяте карти\nкато използвате иконата +.</string>

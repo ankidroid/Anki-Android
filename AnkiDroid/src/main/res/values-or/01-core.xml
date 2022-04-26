@@ -71,12 +71,12 @@
         <item quantity="other">%d ମିନିଟ୍ ବାକି ଅଛି</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%d ଘଣ୍ଟା %d ବାକି ଅଛି</item>
-        <item quantity="other">%d ଘଣ୍ଟା %d ବାକି ଅଛି</item>
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%d ଦିନ %d ବାକି ଅଛି</item>
-        <item quantity="other">%d ଦିନ %d ବାକି ଅଛି</item>
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">ସଂଗ୍ରହ ଖାଲି ଅଛି</string>
     <string name="no_cards_placeholder_description">+ ଆଇକନ୍ ବ୍ୟବହାର କରି\nପତ୍ର ଯୋଡ଼ିବା ଆରମ୍ଭ କରନ୍ତୁ।</string>
@@ -87,8 +87,8 @@
     </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ</string>
-    <string name="show_answer">ଉତ୍ତର ଦେଖନ୍ତୁ</string>
-    <string name="hide_answer">ଉତ୍ତର ଲୁଚାନ୍ତୁ</string>
+    <string name="show_answer">ଉତ୍ତର ଦେଖାଅ</string>
+    <string name="hide_answer">ଉତ୍ତର ଲୁଚାଅ</string>
     <string name="ease_button_again">ପୁଣି</string>
     <string name="ease_button_hard">କଠିନ</string>
     <string name="ease_button_good">ଭଲ</string>

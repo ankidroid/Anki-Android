@@ -69,10 +69,10 @@
         <item quantity="other">còn %d phút</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">Còn %d giờ %d</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">Còn %d ngày %d</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Bộ sưu tập trống</string>
     <string name="no_cards_placeholder_description">Hãy thêm thẻ\nbằng biểu tượng +</string>

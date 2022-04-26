@@ -177,7 +177,7 @@
     <string name="multimedia_editor_audio_permission_denied">Permeso al registri sonon rifuzita</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">Bonvenon al AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid bezonas aliron al la konservejo, kiu estos uzata nur por konservi viajn kolektojn, aŭdvidaĵojn de kartaroj kaj sekurkopiojn. La fontkodo de la aplikaĵo AnkiDroid estas malferma, kreata de volontuloj kaj konfidata de milionoj.\n\nSe vi havas iujn demandojn, bonvolu legi la enaplikaĵan manlibron aŭ vizitu niajn forumojn.\n\nDankon por provi AnkiDroid!\n–AnkiDroid-teamo</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid bezonas aliron al la konservejo, kiu estos uzata nur por konservi viajn kolektojn, aŭdvidaĵojn de kartaroj kaj sekurkopiojn. La fontkodo de la aplikaĵo AnkiDroid estas malferma, kreata de volontuloj kaj konfidata de milionoj.\n\nSe vi havas iun demandon, bonvolu legi la enaplikaĵan manlibron aŭ vizitu niajn forumojn.\n\nDankon pro provi AnkiDroid!\n–AnkiDroid-teamo</string>
     <string name="mutimedia_editor_assertion_failed">Nekonata eraro okazis dum montri la altnivelan redaktilon</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualigita</string>

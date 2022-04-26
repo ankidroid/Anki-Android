@@ -71,12 +71,12 @@
         <item quantity="other">%d دقیقه باقیمانده</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%d ساعت %d باقیمانده است</item>
-        <item quantity="other">%d ساعت %d باقیمانده است</item>
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%d روز %d باقیمانده است</item>
-        <item quantity="other">%d روز %d باقیمانده است</item>
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">مجموعه خالی است</string>
     <string name="no_cards_placeholder_description">با استفاده از دکمه +\nشروع به اضافه کردن کارت‌ها کنيد</string>
