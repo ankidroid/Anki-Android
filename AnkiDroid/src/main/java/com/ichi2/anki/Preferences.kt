@@ -107,11 +107,11 @@ class Preferences : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
         setThemeLegacy(this)
-        enableToolbar()
-
-        // Add a home button to the actionbar
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        enableToolbar().apply {
+            // Add a home button to the actionbar
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+        }
         title = resources.getText(R.string.preferences_title)
 
         val fragment = getInitialFragment(intent)

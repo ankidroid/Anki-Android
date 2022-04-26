@@ -88,11 +88,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         setContentView(R.layout.model_field_editor)
 
         fieldLabelView = findViewById(R.id.note_type_editor_fields)
-        enableToolbar()
-
-        supportActionBar?.let {
-            it.setTitle(R.string.model_field_editor_title)
-            it.subtitle = intent.getStringExtra("title")
+        enableToolbar().apply {
+            setTitle(R.string.model_field_editor_title)
+            subtitle = intent.getStringExtra("title")
         }
         startLoadingCollection()
     }

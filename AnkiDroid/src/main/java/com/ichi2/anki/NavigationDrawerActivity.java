@@ -33,6 +33,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
@@ -50,6 +51,7 @@ import android.view.View;
 import com.ichi2.anki.dialogs.HelpDialog;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.HandlerUtils;
+import com.ichi2.utils.KotlinCleanup;
 
 import java.util.Arrays;
 
@@ -116,6 +118,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     }
 
     // Navigation drawer initialisation
+    @KotlinCleanup("use .apply on enableToolbar")
     protected void initNavigationDrawer(View mainView) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         mDrawerLayout = mainView.findViewById(R.id.drawer_layout);
