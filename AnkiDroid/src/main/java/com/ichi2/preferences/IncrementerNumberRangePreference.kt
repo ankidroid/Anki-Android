@@ -28,7 +28,7 @@ import java.lang.NumberFormatException
 
 // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use IncrementerNumberRangePreferenceCompat
 @Suppress("deprecation")
-class IncrementerNumberRangePreference : NumberRangePreference, AutoFocusable {
+class IncrementerNumberRangePreference : NumberRangePreference {
     private val mLinearLayout = LinearLayout(context)
     private val mEditText = editText // Get default EditText from parent
     private val mIncrementButton = Button(context)
@@ -52,11 +52,6 @@ class IncrementerNumberRangePreference : NumberRangePreference, AutoFocusable {
         mLinearLayout.addView(mEditText)
         mLinearLayout.addView(mIncrementButton)
         return mLinearLayout
-    }
-
-    override fun onBindView(view: View?) {
-        super.onBindView(view)
-        autoFocusAndMoveCursorToEnd(editText)
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {
