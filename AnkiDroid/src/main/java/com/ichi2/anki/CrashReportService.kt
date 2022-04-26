@@ -23,6 +23,7 @@ import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.webkit.WebViewCompat
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog
+import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsException
 import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.utils.KotlinCleanup
@@ -275,5 +276,14 @@ object CrashReportService {
         } catch (e: Exception) {
             Timber.w(e, "Unable to clear ACRA limiter data")
         }
+    }
+
+    @JvmStatic
+    fun onPreferenceChanged(ctx: Context, newValue: String) {
+        setAcraReportingMode(newValue)
+        // If the user changed error reporting, make sure future reports have a chance to post
+        deleteACRALimiterData(ctx)
+        // We also need to re-chain our UncaughtExceptionHandlers
+        UsageAnalytics.reInitialize()
     }
 }

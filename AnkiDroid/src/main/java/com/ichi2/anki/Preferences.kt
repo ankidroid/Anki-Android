@@ -49,7 +49,6 @@ import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.OnboardingUtils.Companion.reset
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.analytics.Acra.Companion.onPreferenceChanged
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -565,7 +564,7 @@ class Preferences : AnkiActivity() {
                     }
                     CrashReportService.FEEDBACK_REPORT_KEY -> {
                         val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
-                        onPreferenceChanged(preferencesActivity, value!!)
+                        CrashReportService.onPreferenceChanged(preferencesActivity, value!!)
                     }
                     "syncAccount" -> {
                         val preferences = AnkiDroidApp.getSharedPrefs(preferencesActivity.baseContext)
