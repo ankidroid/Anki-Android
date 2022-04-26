@@ -14,11 +14,13 @@
 # * Open your pull request in AnkiDroid's github.
 
 function sedcompat() {
+  # shellcheck disable=SC2154
+  # unamestr is referenced but not assigned
   if [[ $unamestr == 'Darwin' ]]; then
     #specific case for Mac OSX
-    sed -E -i '' $1 $2
+    sed -E -i '' "$1" "$2"
   else
-    sed -i $1 $2
+    sed -i "$1" "$2"
   fi
 }
 
@@ -44,7 +46,7 @@ elif [[ $NB_DELETED -gt 1 ]]; then
 fi
 
 # The file path without extension
-FILEPATH=$(echo $DELETED | sed "s/.java$//")
+FILEPATH=${DELETED//.java/}
 echo "FILEPATH='$FILEPATH'"
 
 # Checking that the file is Java
@@ -106,11 +108,12 @@ echo "SOURCE='$SOURCE'"
 
 # The path, as we want it in "SOURCE" in AnkiDroid/kotlinMigration.gradle.
 # That is, the path after AnkiDroid/src/(main|test|androidTest)/java
-PATH_IN_SOURCE=$(echo $FILEPATH | sed "s:^AnkiDroid/src/.*/java::")
+# shellcheck disable=SC2001
+PATH_IN_SOURCE=$(echo "$FILEPATH" | sed "s:^AnkiDroid/src/.*/java::")
 echo "PATH_IN_SOURCE=$PATH_IN_SOURCE"
 
 # The package name of the file modified
-PACKAGE_NAME=$(echo $PATH_IN_SOURCE | sed "s:/:.:g" | sed "s:^.::")
+PACKAGE_NAME=$(echo "$PATH_IN_SOURCE" | sed "s:/:.:g" | sed "s:^.::")
 echo "PACKAGE_NAME=$PACKAGE_NAME"
 
 ############
@@ -124,7 +127,7 @@ echo "stash"
 # Creating first commit
 #########################
 # Moving .java to .kotlin without actually converting the file
-git mv $FILEPATH_JAVA $FILEPATH_KT
+git mv "$FILEPATH_JAVA" "$FILEPATH_KT"
 echo "mv .java .kt"
 # In sed, instead of "/", we use ":" as separator. This is because "/" are in filepath while ":" are not
 # Modifying className value in kotlinMigration.gradle
@@ -144,13 +147,13 @@ echo "first commit"
 ## Creating second commit
 #########################
 # Removing the java file with .kt name to be able to pop the actual kotlin file
-git rm $FILEPATH_KT
+git rm "$FILEPATH_KT"
 echo "remove .kt"
 # Getting back all files stashed above
 git stash pop
 echo "pop"
 # We must add the new file explicitly, as it won't be seen by `git -a`
-git add $FILEPATH_KT
+git add "$FILEPATH_KT"
 echo "add kt"
 # Setting back className in kotlinMigration.gradle to its original value
 sed -i.bak "s:def className = .*:def className = \"\":" AnkiDroid/kotlinMigration.gradle
