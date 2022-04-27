@@ -28,7 +28,6 @@ import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsException
 import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.setDataDirectorySuffix
 import org.acra.ACRA
 import org.acra.ReportField
@@ -55,20 +54,13 @@ object CrashReportService {
     private var dialogEnabled = true
     @JvmStatic
     private lateinit var toastText: String
-    private lateinit var mAcraCoreConfigBuilder: CoreConfigurationBuilder
+    @JvmStatic
+    lateinit var acraCoreConfigBuilder: CoreConfigurationBuilder
+        private set
     private lateinit var mApplication: Application
     private const val WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME"
     private const val MIN_INTERVAL_MS = 60000
     private const val EXCEPTION_MESSAGE = "Exception report sent by user manually"
-
-    /**
-     * Temporary method to access the CoreConfigurationBuilder until all classes that require access
-     *  to the CoreConfigurationBuilder are migrated to kotlin.
-     */
-    @KotlinCleanup("once EVERY class using this method gets migrated to kotlin remove it and expose mAcraCoreConfigBuilder with a private setter")
-    fun getAcraCoreConfigBuilder(): CoreConfigurationBuilder {
-        return mAcraCoreConfigBuilder
-    }
 
     private fun createAcraCoreConfigBuilder(): CoreConfigurationBuilder {
         val builder = CoreConfigurationBuilder(mApplication)
@@ -136,7 +128,7 @@ object CrashReportService {
         toastText = mApplication.getString(R.string.feedback_auto_toast_text)
 
         // Setup logging and crash reporting
-        mAcraCoreConfigBuilder = createAcraCoreConfigBuilder()
+        acraCoreConfigBuilder = createAcraCoreConfigBuilder()
         if (BuildConfig.DEBUG) {
             setDebugACRAConfig(AnkiDroidApp.getSharedPrefs(mApplication))
         } else {
@@ -208,7 +200,7 @@ object CrashReportService {
      * @param acraCoreConfigBuilder the full ACRA config to initialize ACRA with
      */
     private fun setAcraConfigBuilder(acraCoreConfigBuilder: CoreConfigurationBuilder) {
-        this.mAcraCoreConfigBuilder = acraCoreConfigBuilder
+        this.acraCoreConfigBuilder = acraCoreConfigBuilder
         ACRA.init(mApplication, acraCoreConfigBuilder)
         ACRA.getErrorReporter().putCustomData(WEBVIEW_VER_NAME, fetchWebViewInformation()[WEBVIEW_VER_NAME])
         ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation()["WEBVIEW_VER_CODE"])
