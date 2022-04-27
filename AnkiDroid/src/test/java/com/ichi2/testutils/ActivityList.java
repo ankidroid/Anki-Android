@@ -43,6 +43,7 @@ import com.ichi2.anki.SharedDecksActivity;
 import com.ichi2.anki.Statistics;
 import com.ichi2.anki.StudyOptionsActivity;
 import com.ichi2.anki.VideoPlayer;
+import com.ichi2.anki.jsaddons.AddonsBrowser;
 import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 import com.ichi2.anki.multimediacard.activity.TranslationActivity;
@@ -96,7 +97,8 @@ public class ActivityList {
                 get(CardInfo.class),
                 get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
                 get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),
-                get(SharedDecksActivity.class)
+                get(SharedDecksActivity.class),
+                get(AddonsBrowser.class)
         );
     }
 

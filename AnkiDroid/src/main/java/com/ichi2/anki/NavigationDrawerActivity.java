@@ -49,6 +49,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ichi2.anki.dialogs.HelpDialog;
+import com.ichi2.anki.jsaddons.AddonsBrowser;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.HandlerUtils;
 import com.ichi2.utils.KotlinCleanup;
@@ -79,6 +80,7 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
     public static final int REQUEST_PREFERENCES_UPDATE = 100;
     public static final int REQUEST_BROWSE_CARDS = 101;
     public static final int REQUEST_STATISTICS = 102;
+    public static final int REQUEST_ADDONS = 103;
     public static final String FULL_SCREEN_NAVIGATION_DRAWER = "gestureFullScreenNavigationDrawer";
 
     /**
@@ -386,6 +388,10 @@ public abstract class NavigationDrawerActivity extends AnkiActivity implements N
                 Timber.i("Navigating to stats");
                 Intent intent = new Intent(NavigationDrawerActivity.this, Statistics.class);
                 startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START);
+            } else if (itemId == R.id.nav_addons) {
+                Timber.i("Navigating to addons");
+                Intent intent = new Intent(NavigationDrawerActivity.this, AddonsBrowser.class);
+                startActivityForResultWithAnimation(intent, REQUEST_ADDONS, START);
             } else if (itemId == R.id.nav_settings) {
                 Timber.i("Navigating to settings");
                 // Remember the theme we started with so we can restart the Activity if it changes

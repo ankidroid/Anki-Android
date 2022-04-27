@@ -436,4 +436,22 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+
+    <string name="addon_package_name">Addon Package Name</string>
+    <string name="addon_version">Addon Version</string>
+    <string name="ankidroid_js_api_version">AnkiDroid JS API Version</string>
+    <string name="addon_type" comment="Addon type reviewer or note-editor">Type </string>
+    <string name="addon_author">Author</string>
+    <string name="addon_license">License</string>
+    <string name="addon_homepage">Homepage</string>
+    <string name="addon_details">Details</string>
+
+    <string name="addons">Addons</string>
+    <string name="javascript_addons">JavaScript Addons</string>
+    
+    <string name="addon_enabled">%s addon enabled</string>
+    <string name="addon_disabled">%s addon disabled</string>
+    <string name="confirm_remove_addon">Do you want to remove \'%s\'?</string>
+    <string name="failed_to_remove_addon">Failed to remove addon. Try again or remove it manually</string>
+    <string name="no_addons_found">No addons found, Get addons from options menu</string>
 </resources>
