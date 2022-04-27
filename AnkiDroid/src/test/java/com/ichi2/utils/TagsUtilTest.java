@@ -107,8 +107,8 @@ public class TagsUtilTest {
         @Test
         public void test_getUniformedTag() {
             assertEquals("abc", TagsUtil.getUniformedTag("abc"));
-            assertEquals("abc::blank", TagsUtil.getUniformedTag("abc::"));
-            assertEquals("abc::def::blank::blank", TagsUtil.getUniformedTag("abc::def::::"));
+            assertEquals("Should remove trailing '::'", "abc", TagsUtil.getUniformedTag("abc::"));
+            assertEquals("Should replace empty immediate parts to 'blank'", "abc::def::blank", TagsUtil.getUniformedTag("abc::def::::"));
         }
 
         @Test

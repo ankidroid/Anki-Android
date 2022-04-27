@@ -35,24 +35,33 @@ object TagsUtil {
         return updated
     }
 
+    private const val blankSubstituent = "blank"
+
     /**
      * Utility method that decomposes a hierarchy tag into several parts.
+     * Replace empty parts to "blank".
      */
     @JvmStatic
     fun getTagParts(tag: String): List<String> {
         val parts = tag.split("::").asSequence()
         return parts.map {
             // same as the way Anki Desktop deals with an empty tag subpart
-            it.ifEmpty { "blank" }
+            it.ifEmpty { blankSubstituent }
         }.toList()
     }
 
     /**
      * Utility that uniforms a hierarchy tag.
+     * Remove trailing '::'.
      */
     @JvmStatic
     fun getUniformedTag(tag: String): String {
-        return getTagParts(tag).joinToString("::")
+        val parts = getTagParts(tag)
+        return if (tag.endsWith("::") && parts.last() == blankSubstituent) {
+            parts.subList(0, parts.size - 1)
+        } else {
+            parts
+        }.joinToString("::")
     }
 
     /**
