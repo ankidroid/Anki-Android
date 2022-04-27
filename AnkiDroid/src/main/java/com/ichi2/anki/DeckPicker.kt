@@ -168,7 +168,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         val did = view.tag as Long
         if (!col.decks.children(did).isEmpty()) {
             col.decks.collapse(did)
-            renderPage()
+            renderPage(deckCount) // no change in deck count
             dismissAllDialogFragments()
         }
     }
@@ -566,7 +566,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     private fun updateSearchDecksIconVisibility(menu: Menu) {
-        menu.findItem(R.id.deck_picker_action_filter).isVisible = col.decks.count() >= 10
+        menu.findItem(R.id.deck_picker_action_filter).isVisible = deckCount >= 10
     }
 
     @VisibleForTesting
@@ -1940,7 +1940,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 return
             }
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
-            context.renderPage()
+            context.renderPage(context.deckCount)
             // Update the mini statistics bar as well
             AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
             Timber.d("Startup - Deck List UI Completed")
@@ -1966,7 +1966,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
     }
 
-    fun renderPage() {
+    fun renderPage(deckCountBeforeChange: Int) {
         if (mDueTree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
@@ -2044,9 +2044,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             mFocusedDeck = current
         }
 
-        // if Deck Count may have changed, update SearchDeck icon Visibility
-        val deckCount = col.decks.count()
-        if (deckCount == 9 || deckCount == 10) {
+        if (deckCountBeforeChange != deckCount) {
+            // update SearchDeck Icon visibility
             invalidateOptionsMenu()
         }
     }
