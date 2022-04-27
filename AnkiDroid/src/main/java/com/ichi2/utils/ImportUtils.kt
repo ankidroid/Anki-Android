@@ -31,6 +31,7 @@ import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.compat.CompatHelper
@@ -110,7 +111,7 @@ object ImportUtils {
             return try {
                 handleFileImportInternal(context, intent)
             } catch (e: Exception) {
-                AnkiDroidApp.sendExceptionReport(e, "handleFileImport")
+                CrashReportService.sendExceptionReport(e, "handleFileImport")
                 Timber.e(e, "failed to handle import intent")
                 ImportResult.fromErrorString(context.getString(R.string.import_error_exception, e.localizedMessage))
             }
@@ -153,7 +154,7 @@ object ImportUtils {
                     Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue")
                 } else {
                     Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile")
-                    AnkiDroidApp.sendExceptionReport(RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed")
+                    CrashReportService.sendExceptionReport(RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed")
                     return ImportResult.fromErrorString(AnkiDroidApp.getAppResources().getString(R.string.import_error_content_provider, AnkiDroidApp.getManualUrl() + "#importing"))
                 }
             }
@@ -173,7 +174,7 @@ object ImportUtils {
                 val errorMessage = if (copyFileToCache(context, data, tempOutDir)) null else context.getString(R.string.import_error_copy_file_to_cache)
                 // Show import dialog
                 if (errorMessage != null) {
-                    AnkiDroidApp.sendExceptionReport(RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed")
+                    CrashReportService.sendExceptionReport(RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed")
                     return ImportResult.fromErrorString(errorMessage)
                 }
                 val validateZipResult = validateZipFile(context, tempOutDir)
@@ -413,7 +414,7 @@ object ImportUtils {
                 }
 
                 // If we don't have a good string, send a silent exception that we can better handle this in the future
-                AnkiDroidApp.sendExceptionReport(e, "Import - invalid zip", "improve UI message here", true)
+                CrashReportService.sendExceptionReport(e, "Import - invalid zip", "improve UI message here", true)
                 return ctx.getString(R.string.import_log_failed_unzip, e.localizedMessage)
             }
         }

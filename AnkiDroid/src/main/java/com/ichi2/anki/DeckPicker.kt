@@ -190,7 +190,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             // Maybe later don't report if collectionIsOpen is false?
             Timber.w(e)
             val info = "$deckId colOpen:$collectionIsOpen"
-            AnkiDroidApp.sendExceptionReport(e, "deckPicker::onDeckClick", info)
+            CrashReportService.sendExceptionReport(e, "deckPicker::onDeckClick", info)
             displayFailedToOpenDeck(deckId)
         }
     }
@@ -1222,7 +1222,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     // Callback method to submit error report
     fun sendErrorReport() {
-        AnkiDroidApp.sendExceptionReport(RuntimeException(), "DeckPicker.sendErrorReport")
+        CrashReportService.sendExceptionReport(RuntimeException(), "DeckPicker.sendErrorReport")
     }
 
     private fun repairCollectionTask(): RepairCollectionTask {
@@ -1525,7 +1525,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 }
             } catch (e: IllegalArgumentException) {
                 Timber.e(e, "Could not dismiss mProgressDialog. The Activity must have been destroyed while the AsyncTask was running")
-                AnkiDroidApp.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog")
+                CrashReportService.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog")
             }
             val syncMessage = data.message
             Timber.i("Sync Listener: onPostExecute: Data: %s", data.toString())

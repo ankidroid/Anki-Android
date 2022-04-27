@@ -893,7 +893,7 @@ abstract class AbstractFlashcardViewer :
                 else -> 0
             }
         } catch (e: RuntimeException) {
-            AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-getRecommendedEase")
+            CrashReportService.sendExceptionReport(e, "AbstractReviewer-getRecommendedEase")
             closeReviewer(DeckPicker.RESULT_DB_ERROR, true)
             0
         }

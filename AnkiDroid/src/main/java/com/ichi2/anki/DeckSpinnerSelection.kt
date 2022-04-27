@@ -215,7 +215,7 @@ class DeckSpinnerSelection(
      */
     fun selectAllDecks(): Boolean {
         if (!showAllDecks) {
-            AnkiDroidApp.sendExceptionReport("selectAllDecks was called while `showAllDecks is false`", "DeckSpinnerSelection:selectAllDecks")
+            CrashReportService.sendExceptionReport("selectAllDecks was called while `showAllDecks is false`", "DeckSpinnerSelection:selectAllDecks")
             return false
         }
         spinner.setSelection(0)

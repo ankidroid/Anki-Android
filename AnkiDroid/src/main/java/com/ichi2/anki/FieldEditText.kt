@@ -127,7 +127,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
                             onImagePaste(uri)
                         } catch (e: Exception) {
                             Timber.w(e)
-                            AnkiDroidApp.sendExceptionReport(e, "NoteEditor::onImage")
+                            CrashReportService.sendExceptionReport(e, "NoteEditor::onImage")
                             return remaining
                         }
                     }

@@ -929,7 +929,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         buttonCount = try {
             this.buttonCount
         } catch (e: RuntimeException) {
-            AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-showEaseButtons")
+            CrashReportService.sendExceptionReport(e, "AbstractReviewer-showEaseButtons")
             closeReviewer(DeckPicker.RESULT_DB_ERROR, true)
             return
         }

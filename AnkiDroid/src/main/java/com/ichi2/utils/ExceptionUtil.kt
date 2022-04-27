@@ -17,7 +17,7 @@ package com.ichi2.utils
 
 import android.content.Context
 import androidx.annotation.CheckResult
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import java.io.PrintWriter
@@ -81,7 +81,7 @@ object ExceptionUtil {
         try {
             runnable.invoke()
         } catch (e: Exception) {
-            AnkiDroidApp.sendExceptionReport(e, origin)
+            CrashReportService.sendExceptionReport(e, origin)
             UIUtils.showThemedToast(
                 context, context.getString(R.string.multimedia_editor_something_wrong), true
             )

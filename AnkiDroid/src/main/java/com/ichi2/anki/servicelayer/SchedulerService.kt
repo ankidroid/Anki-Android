@@ -17,7 +17,7 @@
 package com.ichi2.anki.servicelayer
 
 import androidx.annotation.StringRes
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.libanki.*
@@ -228,7 +228,7 @@ class SchedulerService {
                 Computation.ok(maybeNextCard)
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", this.javaClass)
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundDismissNote")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundDismissNote")
                 Computation.err()
             }
         }

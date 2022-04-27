@@ -25,6 +25,7 @@ import android.content.ContentValues;
 import android.text.TextUtils;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CrashReportService;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.backend.exception.DeckRenameException;
 
@@ -204,7 +205,7 @@ public class Decks extends DeckManager {
             }
             String foundName = deck.getString("name");
             if (!equalName(name, foundName)) {
-                AnkiDroidApp.sendExceptionReport("We looked for deck \"" + name + "\" and instead got deck \"" + foundName + "\".", "Decks - byName");
+                CrashReportService.sendExceptionReport("We looked for deck \"" + name + "\" and instead got deck \"" + foundName + "\".", "Decks - byName");
             }
             return deck;
         }

@@ -18,6 +18,7 @@ package com.ichi2.libanki.backend
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Consts
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustBackendFailedException
@@ -45,7 +46,7 @@ object DroidBackendFactory {
                 backendFactory = BackendFactory.createInstance()
             } catch (e: RustBackendFailedException) {
                 Timber.w(e, "Rust backend failed to load - falling back to Java")
-                AnkiDroidApp.sendExceptionReport(e, "DroidBackendFactory::getInstance")
+                CrashReportService.sendExceptionReport(e, "DroidBackendFactory::getInstance")
             }
         }
         val instance = getInstance(backendFactory)

@@ -16,7 +16,7 @@
 
 package com.ichi2.async
 
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.utils.MethodLogger.log
 import com.ichi2.utils.Threads
 
@@ -35,7 +35,7 @@ open class BaseAsyncTask<Params, Progress, Result> : android.os.AsyncTask<Params
             log()
         }
         if (isCancelled) {
-            AnkiDroidApp.sendExceptionReport("onPostExecute called with task cancelled. This should never occur !", "BaseAsyncTask - onPostExecute")
+            CrashReportService.sendExceptionReport("onPostExecute called with task cancelled. This should never occur !", "BaseAsyncTask - onPostExecute")
         }
         Threads.checkMainThread()
         super.onPostExecute(result)
