@@ -51,21 +51,21 @@ import java.util.*
  * Activity used now with Glosbe.com to enable translation of words.
  * FIXME why isn't this extending from our base classes?
  */
-@KotlinCleanup("lateinit")
+
 open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
-    private var mSource: String? = null
-    private var mTranslation: String? = null
-    private var mLanguageLister: LanguagesListerGlosbe? = null
-    private var mSpinnerFrom: Spinner? = null
-    private var mSpinnerTo: Spinner? = null
-    private var mLoadingLayout: View? = null
-    private var mLoadingLayoutTitle: TextView? = null
-    private var mLoadingLayoutMessage: TextView? = null
+    private lateinit var mSource: String
+    private lateinit var mTranslation: String
+    private lateinit var mLanguageLister: LanguagesListerGlosbe
+    private lateinit var mSpinnerFrom: Spinner
+    private lateinit var mSpinnerTo: Spinner
+    private lateinit var mLoadingLayout: View
+    private lateinit var mLoadingLayoutTitle: TextView
+    private lateinit var mLoadingLayoutMessage: TextView
     private lateinit var mMainLayout: LinearLayout
-    private var mWebServiceAddress: String? = null
-    private var mPossibleTranslations: ArrayList<String>? = null
-    private var mLangCodeTo: String? = null
-    private var mTranslationLoadPost: BackgroundPost? = null
+    private lateinit var mWebServiceAddress: String
+    private lateinit var mPossibleTranslations: ArrayList<String>
+    private lateinit var mLangCodeTo: String
+    private lateinit var mTranslationLoadPost: BackgroundPost
     private fun finishCancel() {
         val resultData = Intent()
         setResult(RESULT_CANCELED, resultData)
@@ -91,7 +91,7 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
         mLoadingLayoutTitle = findViewById(R.id.progress_bar_layout_title)
         mLoadingLayoutMessage = findViewById(R.id.progress_bar_layout_message)
         mSource = try {
-            intent.extras!!.getString(EXTRA_SOURCE)
+            intent.extras!!.getString(EXTRA_SOURCE)!!
         } catch (e: Exception) {
             Timber.w(e)
             ""
@@ -110,10 +110,10 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
         mSpinnerFrom = Spinner(this)
         val adapter = ArrayAdapter(
             this, android.R.layout.simple_spinner_item,
-            mLanguageLister!!.languages
+            mLanguageLister.languages
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        mSpinnerFrom!!.adapter = adapter
+        mSpinnerFrom.adapter = adapter
         mMainLayout.addView(mSpinnerFrom)
         val tvTo: TextView = FixedTextView(this)
         tvTo.text = getText(R.string.multimedia_editor_trans_to)
@@ -121,25 +121,25 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
         mSpinnerTo = Spinner(this)
         val adapterTo = ArrayAdapter(
             this, android.R.layout.simple_spinner_item,
-            mLanguageLister!!.languages
+            mLanguageLister.languages
         )
         adapterTo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        mSpinnerTo!!.adapter = adapterTo
+        mSpinnerTo.adapter = adapterTo
         mMainLayout.addView(mSpinnerTo)
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
 
         // Try to set spinner value to last selected position
         val fromLang = preferences.getString("translatorLastLanguageFrom", "")
         val toLang = preferences.getString("translatorLastLanguageTo", "")
-        mSpinnerFrom!!.setSelection(getSpinnerIndex(mSpinnerFrom!!, fromLang))
-        mSpinnerTo!!.setSelection(getSpinnerIndex(mSpinnerTo!!, toLang))
+        mSpinnerFrom.setSelection(getSpinnerIndex(mSpinnerFrom, fromLang))
+        mSpinnerTo.setSelection(getSpinnerIndex(mSpinnerTo, toLang))
         // Setup button
         val btnDone = Button(this)
         btnDone.text = getText(R.string.multimedia_editor_trans_translate)
         btnDone.setOnClickListener {
             // Remember currently selected language
-            val fromLang1 = mSpinnerFrom!!.selectedItem.toString()
-            val toLang1 = mSpinnerTo!!.selectedItem.toString()
+            val fromLang1 = mSpinnerFrom.selectedItem.toString()
+            val toLang1 = mSpinnerTo.selectedItem.toString()
             preferences.edit().putString("translatorLastLanguageFrom", fromLang1).apply()
             preferences.edit().putString("translatorLastLanguageTo", toLang1).apply()
             // Get translation
@@ -150,13 +150,13 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
 
     private fun showProgressBar(title: CharSequence, message: CharSequence) {
         mMainLayout.visibility = View.GONE
-        mLoadingLayout!!.visibility = View.VISIBLE
-        mLoadingLayoutTitle!!.text = title
-        mLoadingLayoutMessage!!.text = message
+        mLoadingLayout.visibility = View.VISIBLE
+        mLoadingLayoutTitle.text = title
+        mLoadingLayoutMessage.text = message
     }
 
     private fun hideProgressBar() {
-        mLoadingLayout!!.visibility = View.GONE
+        mLoadingLayout.visibility = View.GONE
         mMainLayout.visibility = View.VISIBLE
     }
 
@@ -192,7 +192,7 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
         mWebServiceAddress = computeAddress()
         try {
             mTranslationLoadPost = BackgroundPost()
-            mTranslationLoadPost!!.execute()
+            mTranslationLoadPost.execute()
         } catch (e: Exception) {
             Timber.w(e)
             hideProgressBar()
@@ -202,18 +202,18 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
 
     private fun computeAddress(): String {
         var address = "https://glosbe.com/gapi/translate?from=FROMLANG&dest=TOLANG&format=json&phrase=SOURCE&pretty=true"
-        val strFrom = mSpinnerFrom!!.selectedItem.toString()
+        val strFrom = mSpinnerFrom.selectedItem.toString()
         // Conversion to iso, lister created before.
-        val langCodeFrom = mLanguageLister!!.getCodeFor(strFrom)
-        val strTo = mSpinnerTo!!.selectedItem.toString()
-        mLangCodeTo = mLanguageLister!!.getCodeFor(strTo)
+        val langCodeFrom = mLanguageLister.getCodeFor(strFrom)
+        val strTo = mSpinnerTo.selectedItem.toString()
+        mLangCodeTo = mLanguageLister.getCodeFor(strTo)!!
         val query: String? = try {
             URLEncoder.encode(mSource, "utf-8")
         } catch (e: UnsupportedEncodingException) {
             Timber.w(e)
-            mSource!!.replace(" ", "%20")
+            mSource.replace(" ", "%20")
         }
-        address = address.replace("FROMLANG".toRegex(), langCodeFrom!!).replace("TOLANG".toRegex(), mLangCodeTo!!)
+        address = address.replace("FROMLANG".toRegex(), langCodeFrom!!).replace("TOLANG".toRegex(), mLangCodeTo)
             .replace("SOURCE".toRegex(), query!!)
         return address
     }
@@ -227,7 +227,7 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
     }
 
     private fun showPickTranslationDialog() {
-        if (mTranslation!!.startsWith("FAILED")) {
+        if (mTranslation.startsWith("FAILED")) {
             returnFailure(getText(R.string.multimedia_editor_trans_getting_failure).toString())
             return
         }
@@ -247,7 +247,7 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
         }
 
         if (!resp.result!!.contentEquals("ok")) {
-            if (!mSource!!.lowercase(Locale.getDefault()).contentEquals(mSource)) {
+            if (!mSource.lowercase(Locale.getDefault()).contentEquals(mSource)) {
                 showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case))
             }
 
@@ -257,8 +257,8 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
 
         mPossibleTranslations = parseJson(resp, mLangCodeTo)
 
-        if (mPossibleTranslations!!.isEmpty()) {
-            if (!mSource!!.lowercase(Locale.getDefault()).contentEquals(mSource)) {
+        if (mPossibleTranslations.isEmpty()) {
+            if (!mSource.lowercase(Locale.getDefault()).contentEquals(mSource)) {
                 showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case))
             }
 
@@ -299,7 +299,7 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
     }
 
     override fun onClick(dialog: DialogInterface, which: Int) {
-        mTranslation = mPossibleTranslations!![which]
+        mTranslation = mPossibleTranslations[which]
         returnTheTranslation()
     }
 
