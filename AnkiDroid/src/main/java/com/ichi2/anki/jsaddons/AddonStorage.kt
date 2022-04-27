@@ -24,9 +24,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Utils
+import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.IOException
 
 /**
@@ -35,6 +35,7 @@ import java.io.IOException
 class AddonStorage(val context: Context) {
     private val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
     private var addonsHomeDir: File = File(currentAnkiDroidDirectory, "addons")
+    private val REQUIRED_MIN_SPACE: Long = 10485760 // 10MB, minimum space for extracting the tar file
 
     /**
      * Untar and ungzip a tar.gz file to a AnkiDroid/addons directory.
@@ -43,10 +44,7 @@ class AddonStorage(val context: Context) {
      * @param addonName the current selected addon name, so it is extracted in addons directory
      *                         e.g. AnkiDroid/addons/addon-name/
      * @return the temp directory.
-     * @throws FileNotFoundException if .tgz file or ungzipped file i.e. .tar file not found
-     * @throws IOException
      */
-    @Throws(Exception::class)
     fun extractTarGzipToAddonDir(tarballFile: File, addonName: String) {
         val packageExtract = TgzPackageExtract(context)
         val addonsPackageDir = getSelectedAddonDir(addonName)
@@ -61,10 +59,9 @@ class AddonStorage(val context: Context) {
             return
         }
 
-        // Make sure we have 2x the tar file size in free space (1x for tar file, 1x for unarchived tar file contents
-        val requiredMinSpace = tarballFile.length() * 2
+        // For selected addons dir, the required space must be half of the total space
         val availableSpace = Utils.determineBytesAvailable(addonsPackageDir.canonicalPath)
-        TgzPackageExtract.InsufficientSpaceException.throwIfInsufficientSpace(context, requiredMinSpace, availableSpace)
+        TgzPackageExtract.InsufficientSpaceException.throwIfInsufficientSpace(context, REQUIRED_MIN_SPACE, availableSpace)
 
         // If space available then unGZip it
         val tarTempFile = packageExtract.unGzip(tarballFile, addonsPackageDir)
@@ -108,6 +105,7 @@ class AddonStorage(val context: Context) {
      * @param addonName
      * @return some-addon dir e.g. AnkiDroid/addons/some-addon/
      */
+    @KotlinCleanup("Remove null")
     fun getSelectedAddonDir(addonName: String): File {
         addonsHomeDir = getCurrentProfileAddonDir()!!
         return File(addonsHomeDir, addonName)
