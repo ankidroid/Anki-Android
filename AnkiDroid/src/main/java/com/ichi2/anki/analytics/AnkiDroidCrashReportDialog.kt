@@ -26,12 +26,8 @@ import android.widget.EditText
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import org.acra.config.ACRAConfigurationException
-import org.acra.config.DialogConfiguration
-import org.acra.config.DialogConfigurationBuilder
 import org.acra.dialog.CrashReportDialog
 import org.acra.dialog.CrashReportDialogHelper
-import timber.log.Timber
 
 /**
  * This file will appear to have static type errors because BaseCrashReportDialog extends android.support.XXX
@@ -45,16 +41,10 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val dialogBuilder = AlertDialog.Builder(this)
-        try {
-            val builder = CrashReportService.getAcraCoreConfigBuilder()
-            val dialogConfig = builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java).build() as DialogConfiguration
-            dialogBuilder.setIcon(dialogConfig.resIcon())
-            dialogBuilder.setTitle(dialogConfig.title())
-            dialogBuilder.setPositiveButton(dialogConfig.positiveButtonText(), this@AnkiDroidCrashReportDialog)
-            dialogBuilder.setNegativeButton(dialogConfig.negativeButtonText(), this@AnkiDroidCrashReportDialog)
-        } catch (ace: ACRAConfigurationException) {
-            Timber.e(ace, "Unable to initialize ACRA while creating ACRA dialog?")
-        }
+        dialogBuilder.setIcon(R.drawable.logo_star_144dp)
+        dialogBuilder.setTitle(R.string.feedback_title)
+        dialogBuilder.setPositiveButton(getString(R.string.feedback_report), this@AnkiDroidCrashReportDialog)
+        dialogBuilder.setNegativeButton(R.string.dialog_cancel, this@AnkiDroidCrashReportDialog)
         mHelper = CrashReportDialogHelper(this, intent)
         dialogBuilder.setView(buildCustomView(savedInstanceState))
         val dialog = dialogBuilder.create()
