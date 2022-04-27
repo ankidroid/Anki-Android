@@ -47,6 +47,14 @@ object CrashReportService {
     const val FEEDBACK_REPORT_ALWAYS = "0"
 
     /** Our ACRA configurations, initialized during Application.onCreate()  */
+    @JvmStatic
+    private var logcatArgs = arrayOf(
+        "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S"
+    )
+    @JvmStatic
+    private var dialogEnabled = true
+    @JvmStatic
+    private lateinit var toastText: String
     private lateinit var mAcraCoreConfigBuilder: CoreConfigurationBuilder
     private lateinit var mApplication: Application
     private const val WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME"
@@ -62,7 +70,7 @@ object CrashReportService {
         return mAcraCoreConfigBuilder
     }
 
-    fun createAcraCoreConfigBuilder(): CoreConfigurationBuilder {
+    private fun createAcraCoreConfigBuilder(): CoreConfigurationBuilder {
         val builder = CoreConfigurationBuilder(mApplication)
             .setBuildConfigClass(org.acra.dialog.BuildConfig::class.java)
             .setExcludeMatchingSharedPreferencesKeys("username", "hkey")
@@ -94,7 +102,7 @@ object CrashReportService {
                 ReportField.MEDIA_CODEC_LIST,
                 ReportField.THREAD_DETAILS
             )
-            .setLogcatArguments("-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S")
+            .setLogcatArguments(*logcatArgs)
         builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
             .setReportDialogClass(AnkiDroidCrashReportDialog::class.java)
             .setResCommentPrompt(R.string.empty_string)
@@ -102,13 +110,13 @@ object CrashReportService {
             .setResText(R.string.feedback_default_text)
             .setResPositiveButtonText(R.string.feedback_report)
             .setResIcon(R.drawable.logo_star_144dp)
-            .setEnabled(true)
+            .setEnabled(dialogEnabled)
         builder.getPluginConfigurationBuilder(HttpSenderConfigurationBuilder::class.java)
             .setHttpMethod(HttpSender.Method.PUT)
             .setUri(BuildConfig.ACRA_URL)
             .setEnabled(true)
         builder.getPluginConfigurationBuilder(ToastConfigurationBuilder::class.java)
-            .setResText(R.string.feedback_auto_toast_text)
+            .setText(toastText)
             .setEnabled(true)
         builder.getPluginConfigurationBuilder(LimiterConfigurationBuilder::class.java)
             .setExceptionClassLimit(1000)
@@ -125,6 +133,8 @@ object CrashReportService {
     @JvmStatic
     fun initialize(application: Application) {
         mApplication = application
+        toastText = mApplication.getString(R.string.feedback_auto_toast_text)
+
         // Setup logging and crash reporting
         mAcraCoreConfigBuilder = createAcraCoreConfigBuilder()
         if (BuildConfig.DEBUG) {
@@ -153,17 +163,15 @@ object CrashReportService {
         } else {
             editor.putBoolean(ACRA.PREF_DISABLE_ACRA, false)
             // Switch between auto-report via toast and manual report via dialog
-            val builder: CoreConfigurationBuilder = mAcraCoreConfigBuilder
-            val dialogBuilder = builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-            val toastBuilder = builder.getPluginConfigurationBuilder(ToastConfigurationBuilder::class.java)
             if (value == FEEDBACK_REPORT_ALWAYS) {
-                dialogBuilder.setEnabled(false)
-                toastBuilder.setResText(R.string.feedback_auto_toast_text)
+                dialogEnabled = false
+                toastText = mApplication.getString(R.string.feedback_auto_toast_text)
             } else if (value == FEEDBACK_REPORT_ASK) {
-                dialogBuilder.setEnabled(true)
-                toastBuilder.setResText(R.string.feedback_for_manual_toast_text)
+                setAcraConfigBuilder(createAcraCoreConfigBuilder())
+                dialogEnabled = true
+                toastText = mApplication.getString(R.string.feedback_for_manual_toast_text)
             }
-            setAcraConfigBuilder(builder)
+            setAcraConfigBuilder(createAcraCoreConfigBuilder())
         }
         editor.apply()
     }
@@ -180,8 +188,8 @@ object CrashReportService {
         setAcraReportingMode(FEEDBACK_REPORT_NEVER)
         prefs.edit { putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER) }
         // Use a wider logcat filter in case crash reporting manually re-enabled
-        val logcatArgs = arrayOf("-t", "300", "-v", "long", "ACRA:S")
-        setAcraConfigBuilder(mAcraCoreConfigBuilder.setLogcatArguments(*logcatArgs))
+        logcatArgs = arrayOf("-t", "300", "-v", "long", "ACRA:S")
+        setAcraConfigBuilder(createAcraCoreConfigBuilder())
     }
 
     /**
@@ -295,13 +303,11 @@ object CrashReportService {
         val reportMode = preferences.getString(FEEDBACK_REPORT_KEY, "")
         return if (FEEDBACK_REPORT_NEVER == reportMode) {
             preferences.edit { putBoolean(ACRA.PREF_DISABLE_ACRA, false) }
-            mAcraCoreConfigBuilder
-                .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-                .setEnabled(true)
+            toastText = mApplication.getString(R.string.feedback_for_manual_toast_text)
+            setAcraConfigBuilder(createAcraCoreConfigBuilder())
             val sendStatus = sendReportFor(ankiActivity)
-            mAcraCoreConfigBuilder
-                .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-                .setEnabled(false)
+            dialogEnabled = false
+            setAcraConfigBuilder(createAcraCoreConfigBuilder())
             preferences.edit { putBoolean(ACRA.PREF_DISABLE_ACRA, true) }
             sendStatus
         } else {
