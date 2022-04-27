@@ -438,6 +438,7 @@ public class MultimediaEditFieldActivity extends AnkiActivity
 
     /** Intermediate class to hold state for the onRequestPermissionsResult callback */
     private final static class ChangeUIRequest {
+        @NonNull
         private final IField mNewField;
         private final int mState;
         private boolean mRequiresPermissionCheck = true;
@@ -449,11 +450,12 @@ public class MultimediaEditFieldActivity extends AnkiActivity
         /** A change in UI via access to the activity. Not (yet) cancellable */
         public static final int EXTERNAL_FIELD_CHANGE = 2;
 
-        private ChangeUIRequest(IField field, int state) {
+        private ChangeUIRequest(@NonNull IField field, int state) {
             this.mNewField = field;
             this.mState = state;
         }
 
+        @NonNull
         private IField getField() {
             return mNewField;
         }
@@ -462,11 +464,11 @@ public class MultimediaEditFieldActivity extends AnkiActivity
             return new ChangeUIRequest(field, ACTIVITY_LOAD);
         }
 
-        private static ChangeUIRequest uiChange(IField field) {
+        private static ChangeUIRequest uiChange(@NonNull IField field) {
             return new ChangeUIRequest(field, UI_CHANGE);
         }
 
-        private static ChangeUIRequest fieldChange(IField field) {
+        private static ChangeUIRequest fieldChange(@NonNull IField field) {
             return new ChangeUIRequest(field, EXTERNAL_FIELD_CHANGE);
         }
 
