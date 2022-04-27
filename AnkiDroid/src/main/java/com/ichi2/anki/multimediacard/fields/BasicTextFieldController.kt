@@ -52,11 +52,11 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
 
     // This is used to copy from another field value to this field
     private var mPossibleClones: ArrayList<String>? = null
-    override fun createUI(context: Context, layout: LinearLayout?) {
+    override fun createUI(context: Context, layout: LinearLayout) {
         mEditText = FixedEditText(mActivity)
         mEditText!!.minLines = 3
         mEditText!!.setText(mField.text)
-        layout!!.addView(mEditText, LinearLayout.LayoutParams.MATCH_PARENT)
+        layout.addView(mEditText, LinearLayout.LayoutParams.MATCH_PARENT)
         val layoutTools = LinearLayout(mActivity)
         layoutTools.orientation = LinearLayout.HORIZONTAL
         layout.addView(layoutTools)
