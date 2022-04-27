@@ -62,15 +62,8 @@ object CrashReportService {
         return mAcraCoreConfigBuilder
     }
 
-    /**
-     * Use this method to initialize the ACRA CoreConfigurationBuilder in Application.onCreate().
-     * The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same
-     * data directory. Analytics falls back to a sensible default if this is not set.
-     */
-    fun initialize(application: Application) {
-        mApplication = application
-        // Setup logging and crash reporting
-        mAcraCoreConfigBuilder = CoreConfigurationBuilder(application)
+    fun createAcraCoreConfigBuilder(): CoreConfigurationBuilder {
+        val builder = CoreConfigurationBuilder(mApplication)
             .setBuildConfigClass(org.acra.dialog.BuildConfig::class.java)
             .setExcludeMatchingSharedPreferencesKeys("username", "hkey")
             .setReportContent(
@@ -102,7 +95,7 @@ object CrashReportService {
                 ReportField.THREAD_DETAILS
             )
             .setLogcatArguments("-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S")
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
+        builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
             .setReportDialogClass(AnkiDroidCrashReportDialog::class.java)
             .setResCommentPrompt(R.string.empty_string)
             .setResTitle(R.string.feedback_title)
@@ -110,17 +103,30 @@ object CrashReportService {
             .setResPositiveButtonText(R.string.feedback_report)
             .setResIcon(R.drawable.logo_star_144dp)
             .setEnabled(true)
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(HttpSenderConfigurationBuilder::class.java)
+        builder.getPluginConfigurationBuilder(HttpSenderConfigurationBuilder::class.java)
             .setHttpMethod(HttpSender.Method.PUT)
             .setUri(BuildConfig.ACRA_URL)
             .setEnabled(true)
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(ToastConfigurationBuilder::class.java)
+        builder.getPluginConfigurationBuilder(ToastConfigurationBuilder::class.java)
             .setResText(R.string.feedback_auto_toast_text)
             .setEnabled(true)
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(LimiterConfigurationBuilder::class.java)
+        builder.getPluginConfigurationBuilder(LimiterConfigurationBuilder::class.java)
             .setExceptionClassLimit(1000)
             .setStacktraceLimit(1)
             .setEnabled(true)
+        return builder
+    }
+
+    /**
+     * Use this method to initialize the ACRA CoreConfigurationBuilder in Application.onCreate().
+     * The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same
+     * data directory. Analytics falls back to a sensible default if this is not set.
+     */
+    @JvmStatic
+    fun initialize(application: Application) {
+        mApplication = application
+        // Setup logging and crash reporting
+        mAcraCoreConfigBuilder = createAcraCoreConfigBuilder()
         if (BuildConfig.DEBUG) {
             setDebugACRAConfig(AnkiDroidApp.getSharedPrefs(mApplication))
         } else {
