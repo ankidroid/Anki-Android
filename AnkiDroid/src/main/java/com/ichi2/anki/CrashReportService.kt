@@ -114,6 +114,10 @@ object CrashReportService {
             .setExceptionClassLimit(1000)
             .setStacktraceLimit(1)
             .setEnabled(true)
+        ACRA.init(mApplication, builder)
+        acraCoreConfigBuilder = builder
+        ACRA.getErrorReporter().putCustomData(WEBVIEW_VER_NAME, fetchWebViewInformation()[WEBVIEW_VER_NAME])
+        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation()["WEBVIEW_VER_CODE"])
         return builder
     }
 
@@ -128,7 +132,6 @@ object CrashReportService {
         toastText = mApplication.getString(R.string.feedback_auto_toast_text)
 
         // Setup logging and crash reporting
-        acraCoreConfigBuilder = createAcraCoreConfigBuilder()
         if (BuildConfig.DEBUG) {
             setDebugACRAConfig(AnkiDroidApp.getSharedPrefs(mApplication))
         } else {
@@ -159,11 +162,11 @@ object CrashReportService {
                 dialogEnabled = false
                 toastText = mApplication.getString(R.string.feedback_auto_toast_text)
             } else if (value == FEEDBACK_REPORT_ASK) {
-                setAcraConfigBuilder(createAcraCoreConfigBuilder())
+                createAcraCoreConfigBuilder()
                 dialogEnabled = true
                 toastText = mApplication.getString(R.string.feedback_for_manual_toast_text)
             }
-            setAcraConfigBuilder(createAcraCoreConfigBuilder())
+            createAcraCoreConfigBuilder()
         }
         editor.apply()
     }
@@ -181,7 +184,7 @@ object CrashReportService {
         prefs.edit { putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER) }
         // Use a wider logcat filter in case crash reporting manually re-enabled
         logcatArgs = arrayOf("-t", "300", "-v", "long", "ACRA:S")
-        setAcraConfigBuilder(createAcraCoreConfigBuilder())
+        createAcraCoreConfigBuilder()
     }
 
     /**
@@ -193,17 +196,6 @@ object CrashReportService {
     fun setProductionACRAConfig(prefs: SharedPreferences) {
         // Enable or disable crash reporting based on user setting
         setAcraReportingMode(prefs.getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)!!)
-    }
-
-    /**
-     * Set the ACRA ConfigurationBuilder and **re-initialize the ACRA system** with the contents
-     * @param acraCoreConfigBuilder the full ACRA config to initialize ACRA with
-     */
-    private fun setAcraConfigBuilder(acraCoreConfigBuilder: CoreConfigurationBuilder) {
-        this.acraCoreConfigBuilder = acraCoreConfigBuilder
-        ACRA.init(mApplication, acraCoreConfigBuilder)
-        ACRA.getErrorReporter().putCustomData(WEBVIEW_VER_NAME, fetchWebViewInformation()[WEBVIEW_VER_NAME])
-        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation()["WEBVIEW_VER_CODE"])
     }
 
     private fun fetchWebViewInformation(): HashMap<String, String> {
@@ -296,10 +288,10 @@ object CrashReportService {
         return if (FEEDBACK_REPORT_NEVER == reportMode) {
             preferences.edit { putBoolean(ACRA.PREF_DISABLE_ACRA, false) }
             toastText = mApplication.getString(R.string.feedback_for_manual_toast_text)
-            setAcraConfigBuilder(createAcraCoreConfigBuilder())
+            createAcraCoreConfigBuilder()
             val sendStatus = sendReportFor(ankiActivity)
             dialogEnabled = false
-            setAcraConfigBuilder(createAcraCoreConfigBuilder())
+            createAcraCoreConfigBuilder()
             preferences.edit { putBoolean(ACRA.PREF_DISABLE_ACRA, true) }
             sendStatus
         } else {
