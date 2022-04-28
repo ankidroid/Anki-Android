@@ -103,6 +103,17 @@ Perform ```Easy``` button click
 <button onclick="buttonAnswerEase4();">Easy From JS</button>
 ```
 
+## Reschedule card with x days 
+* #### Name
+```AnkiDroidJS.ankiSetCardDue(int)```
+* #### Info
+Reschedule card with x days. This will set the interval of the card to x
+* #### Usage
+```javascript
+<button onclick="AnkiDroidJS.ankiSetCardDue(5);">Reschedule card in 5 days</button>
+```
+
+
 
 ## Mark / Unmark current card
 * #### Name
