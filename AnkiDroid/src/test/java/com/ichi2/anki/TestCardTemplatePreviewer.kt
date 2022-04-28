@@ -16,12 +16,10 @@
 package com.ichi2.anki
 
 import android.view.View
-import com.ichi2.utils.KotlinCleanup
 
-@KotlinCleanup("IDE lint")
 class TestCardTemplatePreviewer : CardTemplatePreviewer() {
     var showingAnswer = false
-        protected set
+        private set
 
     fun disableDoubleClickPrevention() {
         mLastClickTime = (AnkiDroidApp.getSharedPrefs(baseContext).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL) * -2).toLong()
