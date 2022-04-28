@@ -78,21 +78,21 @@
         <item quantity="many">%d دقيقة متبقية</item>
         <item quantity="other">%d دقيقة متبقية</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="zero">تبقى %d ساعة و%d دقيقة</item>
-        <item quantity="one">تبقى %d ساعة و%d دقيقة</item>
-        <item quantity="two">تبقى %d ساعة و%d دقيقة</item>
-        <item quantity="few">تبقى %d ساعات و%d دقيقة</item>
-        <item quantity="many">تبقى %d ساعة و%d دقيقة</item>
-        <item quantity="other">تبقى %d ساعة و%d دقيقة</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="zero">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="two">%1$d hours %2$d left</item>
+        <item quantity="few">%1$d hours %2$d left</item>
+        <item quantity="many">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="zero">تبقى %d يوم و%d ساعة</item>
-        <item quantity="one">تبقى %d يوم و%d ساعة</item>
-        <item quantity="two">تبقى %d يوم و%d ساعة</item>
-        <item quantity="few">تبقى %d أيام و%d ساعة</item>
-        <item quantity="many">تبقى %d يومًا و%d ساعة</item>
-        <item quantity="other">تبقى %d أيام و%d ساعة</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="zero">%1$d days %2$d left</item>
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="two">%1$d days %2$d left</item>
+        <item quantity="few">%1$d days %2$d left</item>
+        <item quantity="many">%1$d days %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">المجموعة فارغة</string>
     <string name="no_cards_placeholder_description">ابدأ بإضافة بطاقات\nباستخدام أيقونة +.</string>

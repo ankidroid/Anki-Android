@@ -49,7 +49,6 @@ import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.OnboardingUtils.Companion.reset
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.analytics.Acra.Companion.onPreferenceChanged
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -107,11 +106,11 @@ class Preferences : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
         setThemeLegacy(this)
-        enableToolbar()
-
-        // Add a home button to the actionbar
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        enableToolbar().apply {
+            // Add a home button to the actionbar
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+        }
         title = resources.getText(R.string.preferences_title)
 
         val fragment = getInitialFragment(intent)
@@ -563,9 +562,9 @@ class Preferences : AnkiActivity() {
                             }
                         }
                     }
-                    AnkiDroidApp.FEEDBACK_REPORT_KEY -> {
-                        val value = prefs!!.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "")
-                        onPreferenceChanged(preferencesActivity, value!!)
+                    CrashReportService.FEEDBACK_REPORT_KEY -> {
+                        val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
+                        CrashReportService.onPreferenceChanged(preferencesActivity, value!!)
                     }
                     "syncAccount" -> {
                         val preferences = AnkiDroidApp.getSharedPrefs(preferencesActivity.baseContext)

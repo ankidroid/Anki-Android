@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.ichi2.anki.cardviewer.Gesture;
 import com.ichi2.anki.cardviewer.PreviewLayout;
 import com.ichi2.anki.cardviewer.ViewerCommand;
 import com.ichi2.libanki.Collection;
@@ -266,7 +267,7 @@ public class Previewer extends AbstractFlashcardViewer {
 
 
     @Override
-    public boolean executeCommand(@NonNull ViewerCommand which) {
+    public boolean executeCommand(@NonNull ViewerCommand which, Gesture fromGesture) {
         /* do nothing */
         return false;
     }

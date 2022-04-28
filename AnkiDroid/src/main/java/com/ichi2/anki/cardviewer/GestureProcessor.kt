@@ -92,7 +92,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
     private fun execute(gesture: Gesture?): Boolean? {
         val command = mapGestureToCommand(gesture)
         return if (command != null) {
-            processor?.executeCommand(command)
+            processor?.executeCommand(command, gesture)
         } else {
             false
         }

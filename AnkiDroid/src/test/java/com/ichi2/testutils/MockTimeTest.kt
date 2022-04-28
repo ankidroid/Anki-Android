@@ -15,16 +15,14 @@
  */
 package com.ichi2.testutils
 
-import com.ichi2.utils.KotlinCleanup
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
-@KotlinCleanup("Function name should start with lowercase letter")
 class MockTimeTest {
     @Test
-    fun DateTest() {
+    fun dateTest() {
         val time = MockTime(2020, 7, 7, 7, 0, 0, 0, 0)
-        Assert.assertEquals(1596783600000L, time.intTimeMS())
-        Assert.assertEquals(1596783600000L, MockTime.timeStamp(2020, 7, 7, 7, 0, 0))
+        assertEquals(1596783600000L, time.intTimeMS())
+        assertEquals(1596783600000L, MockTime.timeStamp(2020, 7, 7, 7, 0, 0))
     }
 }

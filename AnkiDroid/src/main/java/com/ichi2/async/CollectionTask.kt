@@ -170,7 +170,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note")
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAddNote")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundAddNote")
                 return false
             }
             return true
@@ -206,7 +206,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note")
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateNote")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateNote")
                 return Computation.ERR
             }
             return Computation.OK
@@ -230,7 +230,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
             } catch (e: RuntimeException) {
                 Timber.w(e, "doInBackgroundUpdateMultipleNotes - RuntimeException on updating multiple note")
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUpdateMultipleNotes")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateMultipleNotes")
                 return Computation.ERR
             }
             return Computation.OK
@@ -390,7 +390,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
                 return Computation.err()
             }
             // pass cards back so more actions can be performed by the caller
@@ -820,7 +820,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 ZipFile(File(path))
             } catch (e: IOException) {
                 Timber.e(e, "doInBackgroundImportReplace - Error while unzipping")
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace0")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace0")
                 return Computation.ERR
             }
             try {
@@ -830,7 +830,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
                 Utils.unzipFiles(zip, dir.absolutePath, arrayOf(colname, "media"), null)
             } catch (e: IOException) {
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - unzip")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace - unzip")
                 return Computation.ERR
             }
             val colFile = File(dir, colname).absolutePath
@@ -852,7 +852,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     Timber.w(e2)
                     // do nothing
                 }
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace - open col")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace - open col")
                 return Computation.ERR
             } finally {
                 tmpCol?.close()
@@ -912,15 +912,15 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 Computation.OK
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundImportReplace - RuntimeException")
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace1")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace1")
                 Computation.ERR
             } catch (e: FileNotFoundException) {
                 Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException")
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace2")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace2")
                 Computation.ERR
             } catch (e: IOException) {
                 Timber.e(e, "doInBackgroundImportReplace - IOException")
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundImportReplace3")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace3")
                 Computation.ERR
             }
         }

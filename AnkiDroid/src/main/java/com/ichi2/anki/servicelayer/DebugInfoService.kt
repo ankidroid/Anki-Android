@@ -19,7 +19,7 @@ package com.ichi2.anki.servicelayer
 import android.content.Context
 import android.os.Build
 import android.webkit.WebView
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import org.acra.util.Installation
@@ -70,12 +70,12 @@ object DebugInfoService {
         try {
             return WebView(context).settings.userAgentString
         } catch (e: Throwable) {
-            AnkiDroidApp.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occurred while extracting webview user agent")
+            CrashReportService.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occurred while extracting webview user agent")
         }
         return null
     }
 
     private fun isSendingCrashReports(context: Context): Boolean {
-        return AnkiDroidApp.isAcraEnabled(context, false)
+        return CrashReportService.isAcraEnabled(context, false)
     }
 }

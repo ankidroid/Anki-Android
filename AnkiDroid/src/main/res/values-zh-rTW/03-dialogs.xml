@@ -184,7 +184,7 @@
     <string name="card_browser_deck_change_error">無法變更牌組</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">解碼卡片中資料時出錯</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">復原 %s</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">無法處理牌組選項：%s</string>
     <!-- Database Errors-->

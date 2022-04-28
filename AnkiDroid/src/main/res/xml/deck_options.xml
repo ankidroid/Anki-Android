@@ -29,7 +29,7 @@
                 android:key="currentConf"
                 android:title="@string/deck_conf_current_group" />
 
-            <EditTextPreference
+            <com.ichi2.preferences.AutoFocusEditTextPreference
                 android:key="confAdd"
                 android:summary="@string/deck_conf_add_summ"
                 android:title="@string/deck_conf_add" />
@@ -43,7 +43,7 @@
                 android:positiveButtonText="@string/dialog_positive_remove"
                 android:title="@string/dialog_positive_remove" />
 
-            <EditTextPreference
+            <com.ichi2.preferences.AutoFocusEditTextPreference
                 android:key="confRename"
                 android:title="@string/deck_conf_rename" />
 
@@ -229,7 +229,7 @@
                 android:title="@string/deck_conf_reminders_time"
                 android:dependency="reminderEnabled" />
         </PreferenceScreen>
-        <EditTextPreference
+        <com.ichi2.preferences.AutoFocusEditTextPreference
             android:key="desc"
             android:title="@string/deck_conf_deck_description" />
 </PreferenceScreen>

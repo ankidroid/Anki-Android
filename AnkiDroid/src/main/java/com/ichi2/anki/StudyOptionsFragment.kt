@@ -392,7 +392,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (mToolbar != null) {
             configureToolbar() // FIXME we were crashing here because mToolbar is null #8913
         } else {
-            AnkiDroidApp.sendExceptionReport("mToolbar null after return from tablet review session? Issue 8913", "StudyOptionsFragment")
+            CrashReportService.sendExceptionReport("mToolbar null after return from tablet review session? Issue 8913", "StudyOptionsFragment")
         }
         if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             closeStudyOptions(result.resultCode)

@@ -47,14 +47,16 @@ object AndroidUiUtils {
     /**
      * Focuses on View and opens the soft keyboard.
      * @param view The View which requires the focus to be set (typically an EditText).
+     * @param runnable The Optional Runnable that will be executed at the end.
      */
     @JvmStatic
-    fun setFocusAndOpenKeyboard(view: View) {
+    fun setFocusAndOpenKeyboard(view: View, runnable: Runnable? = null) {
         //  Required on some Android 9, 10 devices to show keyboard: https://stackoverflow.com/a/7784904
         view.postDelayed({
             view.requestFocus()
             val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+            runnable?.run()
         }, 200)
     }
 }

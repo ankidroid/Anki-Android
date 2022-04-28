@@ -154,8 +154,7 @@ class ModelBrowser : AnkiActivity() {
         setTitle(R.string.model_browser_label)
         setContentView(R.layout.model_browser)
         mModelListView = findViewById(R.id.note_type_browser_list)
-        enableToolbar()
-        mActionBar = supportActionBar
+        mActionBar = enableToolbar()
         startLoadingCollection()
     }
 

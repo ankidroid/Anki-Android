@@ -67,6 +67,14 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
         if ("values" != context.file.parentFile.name) {
             return
         }
+
+        // parentNode == resources, as we only apply this to <string>
+        element.parentNode.attributes.getNamedItem("tools:ignore")?.let {
+            if (it.nodeValue.contains(ID)) {
+                return
+            }
+        }
+
         val childNodes = element.childNodes
         if (childNodes.length > 0) {
             if (childNodes.length == 1) {
@@ -157,12 +165,14 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
     companion object {
         private val IMPLEMENTATION_XML = Implementation(DuplicateCrowdInStrings::class.java, ALL_RESOURCES_SCOPE)
 
+        const val ID = "DuplicateCrowdInStrings"
+
         /**
          * Whether there are any duplicate strings, including capitalization adjustments.
          */
         @JvmField
         var ISSUE: Issue = Issue.create(
-            "DuplicateCrowdInStrings",
+            ID,
             "Duplicate Strings (CrowdIn)",
             "Duplicate strings are ambiguous for translators." +
                 "This lint check looks for duplicate strings, including differences for strings" +

@@ -452,7 +452,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             // normally we wouldn't want to log this much, but we need to know how deep the corruption is to fix the
             // issue
             Timber.w("Invalid Dynamic Deck: %s", dyn)
-            AnkiDroidApp.sendExceptionReport("Custom Study Deck had no terms", "CustomStudyDialog - createCustomStudySession")
+            CrashReportService.sendExceptionReport("Custom Study Deck had no terms", "CustomStudyDialog - createCustomStudySession")
             showThemedToast(this.context, getString(R.string.custom_study_rebuild_deck_corrupt), false)
             return
         }

@@ -35,7 +35,7 @@ class PeripheralKeymapTest {
     fun flagAndAnswerDoNotConflict() {
         val processed: MutableList<ViewerCommand> = ArrayList()
 
-        val peripheralKeymap = PeripheralKeymap(MockReviewerUi(), { e: ViewerCommand -> processed.add(e) })
+        val peripheralKeymap = PeripheralKeymap(MockReviewerUi()) { e: ViewerCommand, _ -> processed.add(e) }
         peripheralKeymap.setup(mock(SharedPreferences::class.java))
         val event = mock(KeyEvent::class.java)
         `when`(event.unicodeChar).thenReturn(0)

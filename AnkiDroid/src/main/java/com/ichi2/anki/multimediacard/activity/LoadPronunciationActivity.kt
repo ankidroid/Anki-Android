@@ -36,7 +36,6 @@ import com.ichi2.anki.web.HttpFetcher.fetchThroughHttp
 import com.ichi2.async.Connection
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
-import com.ichi2.utils.KotlinCleanup
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
@@ -51,23 +50,22 @@ import java.util.*
  * When activity finished, it passes the filepath as another extra to the caller.
  * FIXME why isn't this extending AnkiActivity?
  */
-@KotlinCleanup("lateinit")
 open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListener {
-    var source: String? = null
-    private var mTranslationAddress: String? = null
-    private var mPronunciationAddress: String? = null
-    private var mMp3Address: String? = null
-    private var mActivity: LoadPronunciationActivity? = null
-    private var mLanguageLister: LanguageListerBeolingus? = null
-    private var mSpinnerFrom: Spinner? = null
-    private var mMainLayout: LinearLayout? = null
-    private var mLoadingLayoutTitle: TextView? = null
-    private var mLoadingLayoutMessage: TextView? = null
-    private var mLoadingLayout: View? = null
+    private var mStopped = false
+    private lateinit var source: String
+    private lateinit var mTranslationAddress: String
+    private lateinit var mPronunciationAddress: String
+    private lateinit var mMp3Address: String
+    private lateinit var mActivity: LoadPronunciationActivity
+    private lateinit var mLoadingLayoutTitle: TextView
+    private lateinit var mLoadingLayoutMessage: TextView
+    private lateinit var mLoadingLayout: View
+    private lateinit var mMainLayout: LinearLayout
     private var mPostTranslation: BackgroundPost? = null
     private var mPostPronunciation: BackgroundPost? = null
     private var mDownloadMp3Task: DownloadFileTask? = null
-    private var mStopped = false
+    private lateinit var mLanguageLister: LanguageListerBeolingus
+    private lateinit var mSpinnerFrom: Spinner
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         disableXiaomiForceDarkMode(this)
@@ -83,7 +81,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
             }
         }
         setContentView(R.layout.activity_load_pronounciation)
-        source = intent.extras!!.getString(EXTRA_SOURCE)
+        source = intent.extras!!.getString(EXTRA_SOURCE)!!
         mMainLayout = findViewById(R.id.layoutInLoadPronActivity)
         mLoadingLayout = findViewById(R.id.progress_bar_layout)
         mLoadingLayoutTitle = findViewById(R.id.progress_bar_layout_title)
@@ -92,14 +90,14 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         mSpinnerFrom = Spinner(this)
         val adapter = ArrayAdapter(
             this, android.R.layout.simple_spinner_item,
-            mLanguageLister!!.languages
+            mLanguageLister.languages
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        mSpinnerFrom!!.adapter = adapter
-        mMainLayout!!.addView(mSpinnerFrom)
+        mSpinnerFrom.adapter = adapter
+        mMainLayout.addView(mSpinnerFrom)
         val buttonLoadPronunciation = Button(this)
         buttonLoadPronunciation.text = gtxt(R.string.multimedia_editor_pron_load)
-        mMainLayout!!.addView(buttonLoadPronunciation)
+        mMainLayout.addView(buttonLoadPronunciation)
         buttonLoadPronunciation.setOnClickListener(this@LoadPronunciationActivity::onLoadPronunciation)
         val saveButton = Button(this)
         saveButton.text = "Save"
@@ -119,15 +117,15 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     }
 
     private fun showProgressBar(title: CharSequence, message: CharSequence) {
-        mMainLayout!!.visibility = View.GONE
-        mLoadingLayout!!.visibility = View.VISIBLE
-        mLoadingLayoutTitle!!.text = title
-        mLoadingLayoutMessage!!.text = message
+        mMainLayout.visibility = View.GONE
+        mLoadingLayout.visibility = View.VISIBLE
+        mLoadingLayoutTitle.text = title
+        mLoadingLayoutMessage.text = message
     }
 
     private fun hideProgressBar() {
-        mLoadingLayout!!.visibility = View.GONE
-        mMainLayout!!.visibility = View.VISIBLE
+        mLoadingLayout.visibility = View.GONE
+        mMainLayout.visibility = View.VISIBLE
     }
 
     /**
@@ -159,7 +157,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
      * translation. Second time it loads a page with the link to mp3 pronunciation file.
      */
     @Suppress("deprecation") // #7108: AsyncTask
-    protected inner class BackgroundPost : android.os.AsyncTask<Void?, Void?, String?>() {
+    inner class BackgroundPost : android.os.AsyncTask<Void?, Void?, String?>() {
         /**
          * @return Used to know, which of the posts finished, to differentiate.
          *
@@ -195,14 +193,14 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
      * @author zaur This is to load finally the MP3 file with pronunciation.
      */
     @Suppress("deprecation") // #7108: AsyncTask
-    @KotlinCleanup("make mAddress lateInit")
+
     private inner class DownloadFileTask : android.os.AsyncTask<Void?, Void?, String?>() {
-        private var mAddress: String? = null
+        private lateinit var mAddress: String
         override fun doInBackground(vararg p0: Void?): String {
-            return downloadFileToSdCard(mAddress!!, mActivity!!, "pronunc")
+            return downloadFileToSdCard(mAddress, mActivity, "pronunc")
         }
 
-        fun setAddress(address: String?) {
+        fun setAddress(address: String) {
             mAddress = address
         }
 
@@ -228,7 +226,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
             mPronunciationAddress = BeolingusParser.getPronunciationAddressFromTranslation(result, source)
             if (mPronunciationAddress.contentEquals("no")) {
                 failNoPronunciation()
-                if (!source!!.lowercase(Locale.getDefault()).contentEquals(source)) {
+                if (!source.lowercase(Locale.getDefault()).contentEquals(source)) {
                     showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case))
                 }
                 return
@@ -318,13 +316,13 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     private fun computeAddressOfTranslationPage(): String {
         // Service name has to be replaced from the language lister.
         var address = "https://dict.tu-chemnitz.de/dings.cgi?lang=en&service=SERVICE&opterrors=0&optpro=0&query=Welt"
-        val strFrom = mSpinnerFrom!!.selectedItem.toString()
-        val langCodeFrom = mLanguageLister!!.getCodeFor(strFrom)
+        val strFrom = mSpinnerFrom.selectedItem.toString()
+        val langCodeFrom = mLanguageLister.getCodeFor(strFrom)
         val query: String? = try {
             URLEncoder.encode(source, "utf-8")
         } catch (e: UnsupportedEncodingException) {
             Timber.w(e)
-            source!!.replace(" ", "%20")
+            source.replace(" ", "%20")
         }
         address = address.replace("SERVICE".toRegex(), langCodeFrom!!).replace("Welt".toRegex(), query!!)
         return address

@@ -195,6 +195,6 @@ enum class ViewerCommand(val resourceId: Int, private val preferenceValue: Int) 
          *
          * example failure: answering an ease on the front of the card
          */
-        fun executeCommand(which: ViewerCommand): Boolean
+        fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean
     }
 }

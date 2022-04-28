@@ -157,8 +157,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      */
     private var mFocusedDeck: Long = 0
 
-    /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth  */
-    private var mClosedWelcomeMessage = false
     private var mToolbarSearchView: SearchView? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
@@ -192,7 +190,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             // Maybe later don't report if collectionIsOpen is false?
             Timber.w(e)
             val info = "$deckId colOpen:$collectionIsOpen"
-            AnkiDroidApp.sendExceptionReport(e, "deckPicker::onDeckClick", info)
+            CrashReportService.sendExceptionReport(e, "deckPicker::onDeckClick", info)
             displayFailedToOpenDeck(deckId)
         }
     }
@@ -297,9 +295,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         mExportingDelegate = ActivityExportingDelegate(this) { col }
         mCustomStudyDialogFactory = CustomStudyDialogFactory({ col }, this).attachToActivity(this)
         mContextMenuFactory = DeckPickerContextMenu.Factory { col }.attachToActivity(this)
-
-        // we need to restore here, as we need it before super.onCreate() is called.
-        restoreWelcomeMessage(savedInstanceState)
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)
@@ -474,7 +469,10 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
-        if (mClosedWelcomeMessage) {
+        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
+
+        val welcomeDialogDismissed = sharedPrefs.getBoolean("welcomeDialogDismissed", false)
+        if (welcomeDialogDismissed) {
             // DEFECT #5847: This fails if the activity is killed.
             // Even if the dialog is showing, we want to show it again.
             ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
@@ -487,7 +485,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .content(R.string.collection_load_welcome_request_permissions_details)
                 .positiveText(R.string.dialog_ok)
                 .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                    mClosedWelcomeMessage = true
+                    sharedPrefs.edit().putBoolean("welcomeDialogDismissed", true).apply()
                     ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
                 }
                 .cancelable(false)
@@ -759,7 +757,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage)
         savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.isFABOpen)
     }
 
@@ -835,7 +832,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     private fun finishWithAnimation() {
-        super.finishWithAnimation(DOWN)
+        super.finishWithAnimation(DEFAULT)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
@@ -863,16 +860,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             else -> {}
         }
         return super.onKeyUp(keyCode, event)
-    }
-
-    // ----------------------------------------------------------------------------
-    // CUSTOM METHODS
-    // ----------------------------------------------------------------------------
-    private fun restoreWelcomeMessage(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            return
-        }
-        mClosedWelcomeMessage = savedInstanceState.getBoolean("mClosedWelcomeMessage")
     }
 
     /**
@@ -1235,7 +1222,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     // Callback method to submit error report
     fun sendErrorReport() {
-        AnkiDroidApp.sendExceptionReport(RuntimeException(), "DeckPicker.sendErrorReport")
+        CrashReportService.sendExceptionReport(RuntimeException(), "DeckPicker.sendErrorReport")
     }
 
     private fun repairCollectionTask(): RepairCollectionTask {
@@ -1318,7 +1305,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     override fun mediaCheck() {
-        TaskManager.launchCollectionTask(CheckMedia(), mediaCheckListener())
+        if (hasStorageAccessPermission(this)) {
+            TaskManager.launchCollectionTask(CheckMedia(), mediaCheckListener())
+        } else {
+            requestStoragePermission()
+        }
     }
 
     private fun mediaDeleteListener(): MediaDeleteListener {
@@ -1534,7 +1525,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 }
             } catch (e: IllegalArgumentException) {
                 Timber.e(e, "Could not dismiss mProgressDialog. The Activity must have been destroyed while the AsyncTask was running")
-                AnkiDroidApp.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog")
+                CrashReportService.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog")
             }
             val syncMessage = data.message
             Timber.i("Sync Listener: onPostExecute: Data: %s", data.toString())

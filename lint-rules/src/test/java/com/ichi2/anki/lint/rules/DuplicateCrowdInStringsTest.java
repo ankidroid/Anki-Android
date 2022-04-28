@@ -50,9 +50,14 @@ public class DuplicateCrowdInStringsTest {
             "</resources>";
 
     @Language("XML")
-    private final String mIgnoredFile = "<resources tools:ignore=\"AAA,DuplicateCrowdInStrings\">\n" +
+    private final String mIgnoredFile = "<resources xmlns:tools=\"http://schemas.android.com/tools\" tools:ignore=\"AAA,DuplicateCrowdInStrings\">\n" +
             "   <string name=\"hello\">a</string>\n" +
             "   <string name=\"hello2\">a</string>\n" +
+            "</resources>";
+
+    @Language("XML")
+    private final String mNotIgnored = "<resources>\n" +
+            "   <string name=\"hello3\">a</string>\n" +
             "</resources>";
 
     @Test
@@ -115,10 +120,11 @@ public class DuplicateCrowdInStringsTest {
 
     @Test
     public void ignoredFilePasses() {
+        // TODO: this doesn't work over two files. If the tools:ignore is removed, only the single file fails
         lint()
         .allowMissingSdk()
         .allowCompilationErrors()
-        .files(xml("res/values/string.xml", mIgnoredFile))
+        .files(xml("res/values/constants.xml", mIgnoredFile), xml("res/values/strings.xml", mNotIgnored))
         .issues(DuplicateCrowdInStrings.ISSUE)
         .run()
         .expectErrorCount(0);

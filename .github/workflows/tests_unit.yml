@@ -60,11 +60,13 @@ jobs:
         run: java -fullversion 2>&1 | grep '11.0'
         shell: bash
 
-      - name: Gradle Cache
-        uses: actions/cache@v3
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
         with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-v2
+          # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
+          # Builds on other branches will only read from main branch cache writes
+          # Comment this and the with: above out for performance testing on a branch
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
       - name: Gradle Dependency Download
         uses: nick-invision/retry@v2
@@ -72,10 +74,12 @@ jobs:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew robolectricSdkDownload
+          command: ./gradlew robolectricSdkDownload --daemon
 
       - name: Run Unit Tests
-        run: ./gradlew jacocoUnitTestReport
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: jacocoUnitTestReport --daemon
 
       - name: Submit Coverage
         # This can fail on timeouts etc, wrap with retry

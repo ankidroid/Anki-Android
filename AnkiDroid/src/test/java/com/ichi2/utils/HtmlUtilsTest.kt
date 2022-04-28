@@ -19,37 +19,36 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.HtmlUtils.escape
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-@KotlinCleanup("`is` -> equalTo")
 class HtmlUtilsTest {
     @Test
     fun japaneseIsNotEscaped() {
-        assertThat(escape("飲む"), `is`("飲む"))
+        assertThat(escape("飲む"), equalTo("飲む"))
     }
 
     @Test
     fun angleBraceIsEscaped() {
-        assertThat(escape("<"), `is`("&lt;"))
+        assertThat(escape("<"), equalTo("&lt;"))
     }
 
     @Test
     fun ampersandIsEscaped() {
-        assertThat(escape("&"), `is`("&amp;"))
+        assertThat(escape("&"), equalTo("&amp;"))
     }
 
     @Test
     fun newLineIsNotEscaped() {
-        assertThat(escape("\n"), `is`("\n"))
+        assertThat(escape("\n"), equalTo("\n"))
     }
 
     @Test
     fun returnIsNotEscaped() {
-        assertThat(escape("\r"), `is`("\r"))
+        assertThat(escape("\r"), equalTo("\r"))
     }
 }
