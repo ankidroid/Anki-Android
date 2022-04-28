@@ -64,4 +64,25 @@ object ActivityTransitionAnimation {
     enum class Direction : Parcelable {
         START, END, FADE, UP, DOWN, RIGHT, LEFT, DEFAULT, DIALOG_EXIT, NONE
     }
+
+    /**
+     * @return inverse transition of [direction]
+     * if there isn't one, return the same [direction]
+     */
+    fun getInverseTransition(direction: Direction): Direction {
+        return when (direction) {
+            // Directional transitions which should return their opposites
+            Direction.RIGHT -> Direction.LEFT
+            Direction.LEFT -> Direction.RIGHT
+            Direction.UP -> Direction.DOWN
+            Direction.DOWN -> Direction.UP
+            Direction.START -> Direction.END
+            Direction.END -> Direction.START
+            // Non-directional transitions which should return themselves
+            Direction.FADE -> Direction.FADE
+            Direction.DEFAULT -> Direction.DEFAULT
+            Direction.NONE -> Direction.NONE
+            Direction.DIALOG_EXIT -> Direction.DIALOG_EXIT
+        }
+    }
 }
