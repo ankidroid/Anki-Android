@@ -26,11 +26,11 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mockStatic
 import org.mockito.Mockito.never
 import java.util.*
+import java.util.Collections.reverse
+import java.util.Collections.sort
 
-@KotlinCleanup("Use Kotlin stdlib instead of Java Collection static method call")
-@KotlinCleanup("Use Kotlin's method instead of Arrays.asList")
 class UniqueArrayListTest {
-    private val mDupData = Arrays.asList(
+    private val mDupData = listOf(
         "55",
         "TEst",
         "TEst",
@@ -47,7 +47,7 @@ class UniqueArrayListTest {
         "55"
     )
 
-    private val mNoDupData = Arrays.asList(
+    private val mNoDupData = listOf(
         "55",
         "TEst",
         "12",
@@ -62,7 +62,7 @@ class UniqueArrayListTest {
 
     @Test
     fun testOrderIsMaintained() {
-        val longs = Arrays.asList(1, 1, 2, 3, 4, 1, 5, 1, 6, 7, 8, 9, 10, 11, 1, 12, 13)
+        val longs = listOf(1, 1, 2, 3, 4, 1, 5, 1, 6, 7, 8, 9, 10, 11, 1, 12, 13)
         val uniqueList = UniqueArrayList.from(longs)
 
         assertTrue(uniqueList.indexOf(5) > uniqueList.indexOf(1))
@@ -71,34 +71,34 @@ class UniqueArrayListTest {
     @Test
     @KotlinCleanup("")
     fun test_Sorting() {
-        val longs = Arrays.asList(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
+        val longs = listOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
         val uniqueList = UniqueArrayList.from(longs)
-        Collections.sort(longs)
+        sort(longs)
         uniqueList.sort()
         assertListEquals(longs, uniqueList)
     }
 
     @Test // #8807
     fun test_sorting_will_not_call_collectionsSort() {
-        val longs = Arrays.asList(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
+        val longs = listOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
 
         val sorted: ArrayList<Int> = ArrayList(longs)
-        Collections.sort(sorted)
+        sorted.sort()
 
         mockStatic(Collections::class.java).use { MockCollection ->
             val uniqueList = UniqueArrayList.from(longs)
             uniqueList.sort()
             assertListEquals(sorted, uniqueList)
 
-            MockCollection.verify({ Collections.sort(any(), any<Comparator<in Any>>()) }, never())
+            MockCollection.verify({ sort(any(), any<Comparator<in Any>>()) }, never())
         }
     }
 
     @Test
     fun test_uniqueness_after_sorting() {
-        val longs = Arrays.asList(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
+        val longs = mutableListOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
         val uniqueList = UniqueArrayList.from(longs)
-        Collections.sort(longs)
+        longs.sort()
         uniqueList.sort()
         assertListEquals(longs, uniqueList)
 
@@ -114,14 +114,14 @@ class UniqueArrayListTest {
 
     @Test
     fun test_comparator() {
-        val list = Arrays.asList("TarekkMA", "TarekkMA", "TarekkmA", "tarekkma")
+        val list = listOf("TarekkMA", "TarekkMA", "TarekkmA", "tarekkma")
         val uniqueList = UniqueArrayList.from(list, String.CASE_INSENSITIVE_ORDER)
 
         assertEquals(1, uniqueList.size.toLong())
         assertEquals("TarekkMA", uniqueList[0])
 
         uniqueList.clear()
-        Collections.reverse(list)
+        reverse(list)
         uniqueList.addAll(list)
 
         assertEquals(1, uniqueList.size.toLong())
@@ -130,9 +130,9 @@ class UniqueArrayListTest {
 
     @Test
     fun test_add_unique_after_sorting() {
-        val longs = Arrays.asList(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
+        val longs = listOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
         val uniqueList = UniqueArrayList.from(longs)
-        Collections.sort(longs)
+        sort(longs)
         uniqueList.sort()
         assertEquals(longs, uniqueList)
         uniqueList.addAll(longs)
@@ -162,7 +162,7 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        assertListEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList)
+        assertListEquals(listOf("a", "Z", "f"), uniqueArrayList)
     }
 
     @Test
@@ -172,7 +172,7 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        assertListEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList)
+        assertListEquals(listOf("a", "Z", "f"), uniqueArrayList)
 
         uniqueArrayList.add("a")
         uniqueArrayList.add("Z")
@@ -184,7 +184,7 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        assertListEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList)
+        assertListEquals(listOf("a", "Z", "f"), uniqueArrayList)
     }
 
     @Test
@@ -197,7 +197,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.set(1, "m")
 
-        assertListEquals(Arrays.asList("a", "m", "f"), uniqueArrayList)
+        assertListEquals(listOf("a", "m", "f"), uniqueArrayList)
         assertEquals("Z", res)
     }
 
@@ -211,7 +211,7 @@ class UniqueArrayListTest {
 
         val res = uniqueArrayList.set(1, "a")
 
-        assertListEquals(Arrays.asList("a", "f"), uniqueArrayList)
+        assertListEquals(listOf("a", "f"), uniqueArrayList)
         assertEquals("Z", res)
     }
 
@@ -223,7 +223,7 @@ class UniqueArrayListTest {
         uniqueArrayList[0] = "b"
         uniqueArrayList.add("a")
 
-        assertListEquals(Arrays.asList("b", "a"), uniqueArrayList)
+        assertListEquals(listOf("b", "a"), uniqueArrayList)
     }
 
     @Test
@@ -234,9 +234,9 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        val res = uniqueArrayList.addAll(Arrays.asList("a", "Z", "f"))
+        val res = uniqueArrayList.addAll(listOf("a", "Z", "f"))
 
-        assertListEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList)
+        assertListEquals(listOf("a", "Z", "f"), uniqueArrayList)
         assertFalse(res)
     }
 
@@ -248,9 +248,9 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        val res = uniqueArrayList.addAll(Arrays.asList("w", "x", "y"))
+        val res = uniqueArrayList.addAll(listOf("w", "x", "y"))
 
-        assertListEquals(Arrays.asList("a", "Z", "f", "w", "x", "y"), uniqueArrayList)
+        assertListEquals(listOf("a", "Z", "f", "w", "x", "y"), uniqueArrayList)
         assertTrue(res)
     }
 
@@ -262,9 +262,9 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        val res = uniqueArrayList.addAll(Arrays.asList("f", "Y", "Z"))
+        val res = uniqueArrayList.addAll(listOf("f", "Y", "Z"))
 
-        assertListEquals(Arrays.asList("a", "Z", "f", "Y"), uniqueArrayList)
+        assertListEquals(listOf("a", "Z", "f", "Y"), uniqueArrayList)
         assertTrue(res)
     }
 
@@ -276,9 +276,9 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        val res = uniqueArrayList.addAll(1, Arrays.asList("a", "Z", "f"))
+        val res = uniqueArrayList.addAll(1, listOf("a", "Z", "f"))
 
-        assertListEquals(Arrays.asList("a", "Z", "f"), uniqueArrayList)
+        assertListEquals(listOf("a", "Z", "f"), uniqueArrayList)
         assertFalse(res)
     }
 
@@ -290,9 +290,9 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        val res = uniqueArrayList.addAll(1, Arrays.asList("w", "x", "y"))
+        val res = uniqueArrayList.addAll(1, listOf("w", "x", "y"))
 
-        assertListEquals(Arrays.asList("a", "w", "x", "y", "Z", "f"), uniqueArrayList)
+        assertListEquals(listOf("a", "w", "x", "y", "Z", "f"), uniqueArrayList)
         assertTrue(res)
     }
 
@@ -304,9 +304,9 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        val res = uniqueArrayList.addAll(1, Arrays.asList("f", "Y", "Z"))
+        val res = uniqueArrayList.addAll(1, listOf("f", "Y", "Z"))
 
-        assertListEquals(Arrays.asList("a", "Y", "Z", "f"), uniqueArrayList)
+        assertListEquals(listOf("a", "Y", "Z", "f"), uniqueArrayList)
         assertTrue(res)
     }
 
@@ -318,9 +318,9 @@ class UniqueArrayListTest {
         uniqueArrayList.add("Z")
         uniqueArrayList.add("f")
 
-        val res = uniqueArrayList.addAll(uniqueArrayList.size, Arrays.asList("w", "x", "y"))
+        val res = uniqueArrayList.addAll(uniqueArrayList.size, listOf("w", "x", "y"))
 
-        assertListEquals(Arrays.asList("a", "Z", "f", "w", "x", "y"), uniqueArrayList)
+        assertListEquals(listOf("a", "Z", "f", "w", "x", "y"), uniqueArrayList)
         assertTrue(res)
     }
 
@@ -328,14 +328,14 @@ class UniqueArrayListTest {
     fun test_addAll_order_1() {
         val uniqueArrayList = UniqueArrayList<Int>()
 
-        val l1 = Arrays.asList(1, 2, 3, 4, 5)
+        val l1 = listOf(1, 2, 3, 4, 5)
         assertTrue(uniqueArrayList.addAll(l1))
         assertListEquals(l1, uniqueArrayList)
 
-        val l2 = Arrays.asList(5, 4, 3, 2, 1, 0)
+        val l2 = listOf(5, 4, 3, 2, 1, 0)
         assertTrue(uniqueArrayList.addAll(0, l2))
 
-        val l3 = Arrays.asList(0, 1, 2, 3, 4, 5)
+        val l3 = listOf(0, 1, 2, 3, 4, 5)
         assertListEquals(l3, uniqueArrayList)
     }
 
@@ -343,11 +343,11 @@ class UniqueArrayListTest {
     fun test_addAll_order_2() {
         val uniqueArrayList = UniqueArrayList<Int>()
 
-        val l1 = Arrays.asList(1, 2, 3, 4, 5)
+        val l1 = listOf(1, 2, 3, 4, 5)
         assertTrue(uniqueArrayList.addAll(l1))
         assertListEquals(l1, uniqueArrayList)
 
-        val l2 = Arrays.asList(0, 1, 2, 3, 4, 5)
+        val l2 = listOf(0, 1, 2, 3, 4, 5)
         assertTrue(uniqueArrayList.addAll(0, l2))
 
         assertListEquals(l2, uniqueArrayList)
@@ -355,7 +355,7 @@ class UniqueArrayListTest {
 
     @Test
     fun test_clear() {
-        val longs = Arrays.asList(1, 1, 2, 3, 4, 1, 5, 1, 6, 7, 8, 9, 10, 11, 1, 12, 13)
+        val longs = listOf(1, 1, 2, 3, 4, 1, 5, 1, 6, 7, 8, 9, 10, 11, 1, 12, 13)
         val uniqueList = UniqueArrayList.from(longs)
 
         assertFalse(uniqueList.isEmpty())
@@ -367,7 +367,7 @@ class UniqueArrayListTest {
 
     @Test
     fun test_remove_object() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         assertNotEquals(-1, uniqueList.indexOf(1L).toLong())
@@ -379,7 +379,7 @@ class UniqueArrayListTest {
 
     @Test
     fun test_remove_index() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         assertNotEquals(-1, uniqueList.indexOf(1L).toLong())
@@ -391,7 +391,7 @@ class UniqueArrayListTest {
 
     @Test
     fun test_contain() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         assertTrue(uniqueList.contains(1L))
@@ -400,7 +400,7 @@ class UniqueArrayListTest {
 
     @Test
     fun test_get_by_index() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         assertEquals(1L, uniqueList[0])
@@ -411,7 +411,7 @@ class UniqueArrayListTest {
 
     @Test
     fun test_indexOf_and_lastIndexOf() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         assertEquals(0, uniqueList.indexOf(1L).toLong())
@@ -429,14 +429,14 @@ class UniqueArrayListTest {
 
     @Test
     fun test_iterator() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         val list: MutableList<Long> = ArrayList()
         uniqueList.iterator().forEachRemaining { e: Long -> list.add(e) }
 
         assertEquals(
-            Arrays.asList(
+            listOf(
                 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
             ),
             list
@@ -445,14 +445,14 @@ class UniqueArrayListTest {
 
     @Test
     fun test_listIterator() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         val list: MutableList<Long> = ArrayList()
         uniqueList.listIterator().forEachRemaining { e: Long -> list.add(e) }
 
         assertEquals(
-            Arrays.asList(
+            listOf(
                 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
             ),
             list
@@ -461,14 +461,14 @@ class UniqueArrayListTest {
 
     @Test
     fun test_listIterator_index() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         val list: MutableList<Long> = ArrayList()
         uniqueList.listIterator(5).forEachRemaining { e: Long -> list.add(e) }
 
         assertEquals(
-            Arrays.asList(
+            listOf(
                 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
             ),
             list
@@ -477,11 +477,11 @@ class UniqueArrayListTest {
 
     @Test
     fun test_subList() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         assertEquals(
-            Arrays.asList(
+            listOf(
                 6L, 7L, 8L, 9L, 10L
             ),
             uniqueList.subList(5, 10)
@@ -490,33 +490,33 @@ class UniqueArrayListTest {
 
     @Test
     fun test_containsAll() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
-        assertTrue(uniqueList.containsAll(Arrays.asList(1L, 10L, 13L)))
-        assertFalse(uniqueList.containsAll(Arrays.asList(1L, 130L, 13L)))
-        assertFalse(uniqueList.containsAll(Arrays.asList(-1L, 130L, 1003L)))
+        assertTrue(uniqueList.containsAll(listOf(1L, 10L, 13L)))
+        assertFalse(uniqueList.containsAll(listOf(1L, 130L, 13L)))
+        assertFalse(uniqueList.containsAll(listOf(-1L, 130L, 1003L)))
     }
 
     @Test
     fun test_retainAll() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         assertNotEquals(2, uniqueList.size.toLong())
-        uniqueList.retainAll(Arrays.asList(1L, 3L))
+        uniqueList.retainAll(listOf(1L, 3L))
         assertEquals(2, uniqueList.size.toLong())
-        assertEquals(Arrays.asList(1L, 3L), uniqueList)
+        assertEquals(listOf(1L, 3L), uniqueList)
     }
 
     @Test
     fun test_isEmpty() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
         assertFalse(uniqueList.isEmpty())
         uniqueList.removeAll(
-            Arrays.asList(
+            listOf(
                 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
             )
         )
@@ -525,10 +525,10 @@ class UniqueArrayListTest {
 
     @Test
     fun test_toArray() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
-        val arr = Arrays.asList(
+        val arr = listOf(
             1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
         )
 
@@ -537,10 +537,10 @@ class UniqueArrayListTest {
 
     @Test
     fun test_toArrayType() {
-        val longs = Arrays.asList(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
+        val longs = listOf(1L, 1L, 2L, 3L, 4L, 1L, 5L, 1L, 6L, 7L, 8L, 9L, 10L, 11L, 1L, 12L, 13L)
         val uniqueList = UniqueArrayList.from(longs)
 
-        val arr = Arrays.asList(
+        val arr = listOf(
             1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
         )
 
