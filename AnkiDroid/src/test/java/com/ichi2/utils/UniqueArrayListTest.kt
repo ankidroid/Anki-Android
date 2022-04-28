@@ -26,8 +26,6 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mockStatic
 import org.mockito.Mockito.never
 import java.util.*
-import java.util.Collections.reverse
-import java.util.Collections.sort
 
 class UniqueArrayListTest {
     private val mDupData = listOf(
@@ -71,16 +69,16 @@ class UniqueArrayListTest {
     @Test
     @KotlinCleanup("")
     fun test_Sorting() {
-        val longs = listOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
+        val longs = mutableListOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
         val uniqueList = UniqueArrayList.from(longs)
-        sort(longs)
+        longs.sort()
         uniqueList.sort()
         assertListEquals(longs, uniqueList)
     }
 
     @Test // #8807
     fun test_sorting_will_not_call_collectionsSort() {
-        val longs = listOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
+        val longs = mutableListOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
 
         val sorted: ArrayList<Int> = ArrayList(longs)
         sorted.sort()
@@ -90,7 +88,7 @@ class UniqueArrayListTest {
             uniqueList.sort()
             assertListEquals(sorted, uniqueList)
 
-            MockCollection.verify({ sort(any(), any<Comparator<in Any>>()) }, never())
+            MockCollection.verify({ Collections.sort(any(), any<Comparator<in Any>>()) }, never())
         }
     }
 
@@ -114,14 +112,14 @@ class UniqueArrayListTest {
 
     @Test
     fun test_comparator() {
-        val list = listOf("TarekkMA", "TarekkMA", "TarekkmA", "tarekkma")
+        val list = mutableListOf("TarekkMA", "TarekkMA", "TarekkmA", "tarekkma")
         val uniqueList = UniqueArrayList.from(list, String.CASE_INSENSITIVE_ORDER)
 
         assertEquals(1, uniqueList.size.toLong())
         assertEquals("TarekkMA", uniqueList[0])
 
         uniqueList.clear()
-        reverse(list)
+        list.reverse()
         uniqueList.addAll(list)
 
         assertEquals(1, uniqueList.size.toLong())
@@ -130,9 +128,9 @@ class UniqueArrayListTest {
 
     @Test
     fun test_add_unique_after_sorting() {
-        val longs = listOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
+        val longs = mutableListOf(10, 9, 7, 3, 2, -1, 5, 1, 65, -656)
         val uniqueList = UniqueArrayList.from(longs)
-        sort(longs)
+        longs.sort()
         uniqueList.sort()
         assertEquals(longs, uniqueList)
         uniqueList.addAll(longs)
