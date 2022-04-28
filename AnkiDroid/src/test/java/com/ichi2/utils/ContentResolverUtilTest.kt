@@ -24,24 +24,21 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.ContentResolverUtil.getFileName
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.Is.`is`
+import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
+import org.mockito.kotlin.whenever
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class) // needs a URI instance
 @Config(application = EmptyApplication::class)
-@KotlinCleanup("when --> whenever")
 @KotlinCleanup("IDE-based lint")
-@KotlinCleanup("is --> equalTo")
 class ContentResolverUtilTest {
 
     @Test
-    @KotlinCleanup("is --> equalTo")
     fun testViaQueryWorking() {
         val uri = Uri.parse("http://example.com/test.jpeg")
         val mock = mock(ContentResolver::class.java)
@@ -50,7 +47,7 @@ class ContentResolverUtilTest {
 
         val filename = getFileName(mock, uri)
 
-        assertThat(filename, `is`("filename_from_cursor.jpg"))
+        assertThat(filename, equalTo("filename_from_cursor.jpg"))
     }
 
     @Test
@@ -58,7 +55,7 @@ class ContentResolverUtilTest {
         // #7748: Query can fail on some phones, so fall back to MIME
         // values obtained via: content://com.google.android.inputmethod.latin.fileprovider/content/tenor_gif/tenor_gif187746302992141903.gif
         val uri = mock(Uri::class.java)
-        `when`(uri.scheme).thenReturn(ContentResolver.SCHEME_CONTENT)
+        whenever(uri.scheme).thenReturn(ContentResolver.SCHEME_CONTENT)
 
         val mock = mock(ContentResolver::class.java)
         setQueryThrowing(
@@ -69,27 +66,27 @@ class ContentResolverUtilTest {
             )
         )
 
-        `when`(mock.getType(any())).thenReturn("image/gif")
+        whenever(mock.getType(any())).thenReturn("image/gif")
         // required for Robolectric
         Shadows.shadowOf(MimeTypeMap.getSingleton()).addExtensionMimeTypMapping("gif", "image/gif")
 
         val filename = getFileName(mock, uri)
 
         // maybe we could do better here, but general guidance is to not parse the uri string
-        assertThat(filename, `is`("image.gif"))
+        assertThat(filename, equalTo("image.gif"))
     }
 
-    protected fun cursorReturning(value: String): Cursor {
+    private fun cursorReturning(value: String): Cursor {
         val cursor = mock(Cursor::class.java)
-        `when`(cursor.getString(0)).thenReturn(value)
+        whenever(cursor.getString(0)).thenReturn(value)
         return cursor
     }
 
-    protected fun setQueryReturning(mock: ContentResolver, cursorToReturn: Cursor?) {
-        `when`(mock.query(any(), any(), any(), any(), any())).thenReturn(cursorToReturn)
+    private fun setQueryReturning(mock: ContentResolver, cursorToReturn: Cursor?) {
+        whenever(mock.query(any(), any(), any(), any(), any())).thenReturn(cursorToReturn)
     }
 
-    protected fun setQueryThrowing(mock: ContentResolver, ex: Throwable?) {
-        `when`(mock.query(any(), any(), any(), any(), any())).thenThrow(ex)
+    private fun setQueryThrowing(mock: ContentResolver, ex: Throwable?) {
+        whenever(mock.query(any(), any(), any(), any(), any())).thenThrow(ex)
     }
 }
