@@ -716,7 +716,8 @@ public class Decks extends DeckManager {
                 throw DeckRenameException.filteredAncestor(name, s);
             }
         }
-        name = s + "::" + path[path.length - 1];
+        String lastDeck = path[path.length - 1];
+        name = s + "::" + (lastDeck.isEmpty() ? "blank" : lastDeck);
         return name;
     }
 
