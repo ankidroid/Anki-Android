@@ -1,86 +1,71 @@
 //noinspection MissingCopyrightHeader #8659
+package com.wildplot.android.rendering
 
-package com.wildplot.android.rendering;
+import com.ichi2.utils.KotlinCleanup
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 
-
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
-
-import static java.lang.String.format;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-final class PieChartTestParametersBuilder {
-    private final double[] mValues;
-    private final int mNumberOfValues;
-    private final double mSum;
-    private final double mFirstSectorAngle;
-    private final double[] mStartAngles;
-    private final double[] mArcLengths;
-    private final ColorWrap[] mColors;
-
-    PieChartTestParametersBuilder(double[] values,
-                                  double firstSectorAngle) {
-        if (values.length < 1) {
-            throw new IllegalArgumentException("Empty array of values");
+@KotlinCleanup("`when` -> whenever")
+internal class PieChartTestParametersBuilder(
+    values: DoubleArray,
+    firstSectorAngle: Double
+) {
+    private val mValues: DoubleArray
+    private val mNumberOfValues: Int
+    private val mSum: Double
+    private val mFirstSectorAngle: Double
+    val startAngles: DoubleArray
+    val arcLengths: DoubleArray
+    val colors: Array<ColorWrap?>
+    @KotlinCleanup(" Use .sum()")
+    private fun calcSum(values: DoubleArray): Double {
+        var sum = 0.0
+        for (v in values) {
+            sum += v
         }
-        mValues = values;
-        mNumberOfValues = values.length;
-        mSum = calcSum(values);
-        if (mSum == 0) {
-            throw new IllegalArgumentException(
-                    format("All %d values are zero", values.length));
-        }
-        mFirstSectorAngle = firstSectorAngle;
-        mStartAngles = new double[mNumberOfValues];
-        mArcLengths = new double[mNumberOfValues];
-        mColors = new ColorWrap[mNumberOfValues];
-        calcArcLengths();
-        calcStartAngles();
-        fillColors();
+        return sum
     }
 
-    private double calcSum(double[] values) {
-        double sum = 0.;
-        for (double v : values) {
-            sum += v;
-        }
-        return sum;
-    }
-
-    private void calcArcLengths() {
-        for (int i = 0; i < mNumberOfValues; i++) {
-            mArcLengths[i] = 360.0 * mValues[i] / mSum;
+    private fun calcArcLengths() {
+        for (i in 0 until mNumberOfValues) {
+            arcLengths[i] = 360.0 * mValues[i] / mSum
         }
     }
 
-    private void calcStartAngles() {
-        mStartAngles[0] = mFirstSectorAngle;
-        for (int i = 1; i < mNumberOfValues; i++) {
-            mStartAngles[i] = mStartAngles[i - 1] + mArcLengths[i - 1];
+    private fun calcStartAngles() {
+        startAngles[0] = mFirstSectorAngle
+        for (i in 1 until mNumberOfValues) {
+            startAngles[i] = startAngles[i - 1] + arcLengths[i - 1]
         }
     }
 
-    private void fillColors() {
-        for (int i = 0; i < mNumberOfValues; i++) {
-            mColors[i] = createColorMock(i);
+    private fun fillColors() {
+        for (i in 0 until mNumberOfValues) {
+            colors[i] = createColorMock(i)
         }
     }
 
-    private ColorWrap createColorMock(int i) {
-        ColorWrap c = mock(ColorWrap.class);
-        when(c.getColorValue()).thenReturn(i);
-        return c;
+    private fun createColorMock(i: Int): ColorWrap {
+        val c = mock(ColorWrap::class.java)
+        `when`(c.colorValue).thenReturn(i)
+        return c
     }
 
-    double[] getStartAngles() {
-        return mStartAngles;
-    }
-
-    double[] getArcLengths() {
-        return mArcLengths;
-    }
-
-    ColorWrap[] getColors() {
-        return mColors;
+    init {
+        @KotlinCleanup("move initialization to declaration whenever possible")
+        @KotlinCleanup(".isNotEmpty()")
+        require(values.size >= 1) { "Empty array of values" }
+        mValues = values
+        mNumberOfValues = values.size
+        mSum = calcSum(values)
+        require(mSum != 0.0) { String.format("All %d values are zero", values.size) }
+        mFirstSectorAngle = firstSectorAngle
+        startAngles = DoubleArray(mNumberOfValues)
+        arcLengths = DoubleArray(mNumberOfValues)
+        colors = arrayOfNulls(mNumberOfValues)
+        calcArcLengths()
+        calcStartAngles()
+        fillColors()
     }
 }
