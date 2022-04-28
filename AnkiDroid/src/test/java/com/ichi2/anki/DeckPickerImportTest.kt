@@ -13,59 +13,52 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.content.Intent
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.dialogs.AsyncDialogFragment
+import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers
+import org.junit.Assert.fail
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import android.content.Intent;
-
-import com.ichi2.anki.dialogs.AsyncDialogFragment;
-import com.ichi2.anki.dialogs.ImportDialog;
-
-import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.fail;
-
-@RunWith(AndroidJUnit4.class)
-public class DeckPickerImportTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+class DeckPickerImportTest : RobolectricTest() {
     @Test
-    public void importAddShowsImportDialog() {
-        DeckPickerImport deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport.class, new Intent());
+    fun importAddShowsImportDialog() {
+        val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
 
-        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, "");
+        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, "")
 
-        assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog.class));
+        assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog::class.java))
     }
 
     @Test
-    public void replaceShowsImportDialog() {
-        DeckPickerImport deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport.class, new Intent());
+    fun replaceShowsImportDialog() {
+        val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
 
-        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, "");
+        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, "")
 
-        assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog.class));
+        assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog::class.java))
     }
 
-    private static class DeckPickerImport extends DeckPicker {
-
-        private AsyncDialogFragment mDialogFragment;
-
-        private Class<?> getAsyncDialogFragmentClass() {
+    private class DeckPickerImport : DeckPicker() {
+        private var mDialogFragment: AsyncDialogFragment? = null
+        @KotlinCleanup("invert if and return early")
+        fun getAsyncDialogFragmentClass(): Class<*> {
             if (mDialogFragment == null) {
-                fail("No async fragment shown");
+                fail("No async fragment shown")
             }
-            return mDialogFragment.getClass();
+            return mDialogFragment!!.javaClass
         }
 
-        @Override
-        public void showAsyncDialogFragment(AsyncDialogFragment newFragment) {
-            this.mDialogFragment = newFragment;
-            super.showAsyncDialogFragment(newFragment);
+        override fun showAsyncDialogFragment(newFragment: AsyncDialogFragment) {
+            mDialogFragment = newFragment
+            super.showAsyncDialogFragment(newFragment)
         }
     }
 }
