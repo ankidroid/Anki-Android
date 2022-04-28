@@ -17,13 +17,13 @@ package com.ichi2.anki.stats
 
 import android.R
 import android.webkit.WebView
+import com.ichi2.anki.R.string.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.themes.Themes.getColorFromAttr
-import com.ichi2.utils.KotlinCleanup
 import java.util.*
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
@@ -32,7 +32,6 @@ import kotlin.math.roundToLong
  * @param webView for resources access
  */
 class OverviewStatsBuilder(private val webView: WebView, private val col: Collection, private val deckId: Long, private val type: AxisType) {
-    @KotlinCleanup("nullability of OverviewStats")
     class OverviewStats {
         var forecastTotalReviews = 0
         var forecastAverageReviews = 0.0
@@ -61,12 +60,10 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
         var averageInterval = 0.0
         @JvmField
         var longestInterval = 0.0
-        @JvmField
-        var newCardsOverview: AnswerButtonsOverview? = null
-        @JvmField
-        var youngCardsOverview: AnswerButtonsOverview? = null
-        @JvmField
-        var matureCardsOverview: AnswerButtonsOverview? = null
+        lateinit var newCardsOverview: AnswerButtonsOverview
+        lateinit var youngCardsOverview: AnswerButtonsOverview
+        lateinit var matureCardsOverview: AnswerButtonsOverview
+
         @JvmField
         var totalCards: Long = 0
         @JvmField
@@ -117,7 +114,7 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
         stringBuilder.append(_title(res.getString(type.descriptionId)))
         val allDaysStudied = oStats.daysStudied == oStats.allDays
         val daysStudied = res.getString(
-            com.ichi2.anki.R.string.stats_overview_days_studied,
+            stats_overview_days_studied,
             (oStats.daysStudied.toFloat() / oStats.allDays.toFloat() * 100).toInt(),
             oStats.daysStudied, oStats.allDays
         )
@@ -126,88 +123,87 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
         // Fill in the forecast summaries first
         calculateForecastOverview(type, oStats)
         val l = Locale.getDefault()
-        stringBuilder.append(_subtitle(res.getString(com.ichi2.anki.R.string.stats_forecast).uppercase(l)))
-        @KotlinCleanup("com.ichi2.R.string... => R.string...")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_forecast_total, oStats.forecastTotalReviews))
+        stringBuilder.append(_subtitle(res.getString(stats_forecast).uppercase(l)))
+        stringBuilder.append(res.getString(stats_overview_forecast_total, oStats.forecastTotalReviews))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_forecast_average, oStats.forecastAverageReviews))
+        stringBuilder.append(res.getString(stats_overview_forecast_average, oStats.forecastAverageReviews))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_forecast_due_tomorrow, oStats.forecastDueTomorrow))
+        stringBuilder.append(res.getString(stats_overview_forecast_due_tomorrow, oStats.forecastDueTomorrow))
         stringBuilder.append("<br>")
 
         // REVIEW COUNT
-        stringBuilder.append(_subtitle(res.getString(com.ichi2.anki.R.string.stats_review_count).uppercase(l)))
+        stringBuilder.append(_subtitle(res.getString(stats_review_count).uppercase(l)))
         stringBuilder.append(daysStudied)
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_forecast_total, oStats.totalReviews))
+        stringBuilder.append(res.getString(stats_overview_forecast_total, oStats.totalReviews))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_reviews_per_day_studydays, oStats.reviewsPerDayOnStudyDays))
+        stringBuilder.append(res.getString(stats_overview_reviews_per_day_studydays, oStats.reviewsPerDayOnStudyDays))
         if (!allDaysStudied) {
             stringBuilder.append("<br>")
-            stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_reviews_per_day_all, oStats.reviewsPerDayOnAll))
+            stringBuilder.append(res.getString(stats_overview_reviews_per_day_all, oStats.reviewsPerDayOnAll))
         }
         stringBuilder.append("<br>")
 
         // TODO: AnkiDroid uses 30 days on 2020-06-09, whereas Anki Desktop used 31
 
         // REVIEW TIME
-        stringBuilder.append(_subtitle(res.getString(com.ichi2.anki.R.string.stats_review_time).uppercase(l)))
+        stringBuilder.append(_subtitle(res.getString(stats_review_time).uppercase(l)))
         stringBuilder.append(daysStudied)
         stringBuilder.append("<br>")
         // TODO: Anki Desktop allows changing to hours / days here.
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_total_time_in_period, oStats.totalTime.roundToInt()))
+        stringBuilder.append(res.getString(stats_overview_total_time_in_period, oStats.totalTime.roundToInt()))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_time_per_day_studydays, oStats.timePerDayOnStudyDays))
+        stringBuilder.append(res.getString(stats_overview_time_per_day_studydays, oStats.timePerDayOnStudyDays))
         if (!allDaysStudied) {
             stringBuilder.append("<br>")
-            stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_time_per_day_all, oStats.timePerDayOnAll))
+            stringBuilder.append(res.getString(stats_overview_time_per_day_all, oStats.timePerDayOnAll))
         }
         val cardsPerMinute: Double = if (oStats.totalTime == 0.0) 0.0 else oStats.totalReviews.toDouble() / oStats.totalTime
         val averageAnswerTime: Double = if (oStats.totalReviews == 0) 0.0 else oStats.totalTime * 60 / oStats.totalReviews.toDouble()
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_average_answer_time, averageAnswerTime, cardsPerMinute))
+        stringBuilder.append(res.getString(stats_overview_average_answer_time, averageAnswerTime, cardsPerMinute))
         stringBuilder.append("<br>")
 
         // ADDED
-        stringBuilder.append(_subtitle(res.getString(com.ichi2.anki.R.string.stats_added).uppercase(l)))
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_total_new_cards, oStats.totalNewCards))
+        stringBuilder.append(_subtitle(res.getString(stats_added).uppercase(l)))
+        stringBuilder.append(res.getString(stats_overview_total_new_cards, oStats.totalNewCards))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_new_cards_per_day, oStats.newCardsPerDay))
+        stringBuilder.append(res.getString(stats_overview_new_cards_per_day, oStats.newCardsPerDay))
         stringBuilder.append("<br>")
 
         // INTERVALS
-        stringBuilder.append(_subtitle(res.getString(com.ichi2.anki.R.string.stats_review_intervals).uppercase(l)))
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_average_interval))
+        stringBuilder.append(_subtitle(res.getString(stats_review_intervals).uppercase(l)))
+        stringBuilder.append(res.getString(stats_overview_average_interval))
         stringBuilder.append(Utils.roundedTimeSpan(webView.context, (oStats.averageInterval * Stats.SECONDS_PER_DAY).roundToLong()))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_longest_interval))
+        stringBuilder.append(res.getString(stats_overview_longest_interval))
         stringBuilder.append(Utils.roundedTimeSpan(webView.context, (oStats.longestInterval * Stats.SECONDS_PER_DAY).roundToLong()))
 
         // ANSWER BUTTONS
-        stringBuilder.append(_subtitle(res.getString(com.ichi2.anki.R.string.stats_answer_buttons).uppercase(l)))
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_answer_buttons_learn, oStats.newCardsOverview!!.percentage, oStats.newCardsOverview!!.correct, oStats.newCardsOverview!!.total))
+        stringBuilder.append(_subtitle(res.getString(stats_answer_buttons).uppercase(l)))
+        stringBuilder.append(res.getString(stats_overview_answer_buttons_learn, oStats.newCardsOverview.percentage, oStats.newCardsOverview.correct, oStats.newCardsOverview.total))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_answer_buttons_young, oStats.youngCardsOverview!!.percentage, oStats.youngCardsOverview!!.correct, oStats.youngCardsOverview!!.total))
+        stringBuilder.append(res.getString(stats_overview_answer_buttons_young, oStats.youngCardsOverview.percentage, oStats.youngCardsOverview.correct, oStats.youngCardsOverview.total))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_answer_buttons_mature, oStats.matureCardsOverview!!.percentage, oStats.matureCardsOverview!!.correct, oStats.matureCardsOverview!!.total))
+        stringBuilder.append(res.getString(stats_overview_answer_buttons_mature, oStats.matureCardsOverview.percentage, oStats.matureCardsOverview.correct, oStats.matureCardsOverview.total))
 
         // CARD TYPES
-        stringBuilder.append(_subtitle(res.getString(com.ichi2.anki.R.string.title_activity_template_editor).uppercase(l)))
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_card_types_total_cards, oStats.totalCards))
+        stringBuilder.append(_subtitle(res.getString(title_activity_template_editor).uppercase(l)))
+        stringBuilder.append(res.getString(stats_overview_card_types_total_cards, oStats.totalCards))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_card_types_total_notes, oStats.totalNotes))
+        stringBuilder.append(res.getString(stats_overview_card_types_total_notes, oStats.totalNotes))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_card_types_lowest_ease, oStats.lowestEase))
+        stringBuilder.append(res.getString(stats_overview_card_types_lowest_ease, oStats.lowestEase))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_card_types_average_ease, oStats.averageEase))
+        stringBuilder.append(res.getString(stats_overview_card_types_average_ease, oStats.averageEase))
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_overview_card_types_highest_ease, oStats.highestEase))
+        stringBuilder.append(res.getString(stats_overview_card_types_highest_ease, oStats.highestEase))
     }
 
     private fun appendTodaysStats(stringBuilder: StringBuilder) {
         val stats = Stats(col, deckId)
         val todayStats = stats.calculateTodayStats()
-        stringBuilder.append(_title(webView.resources.getString(com.ichi2.anki.R.string.stats_today)))
+        stringBuilder.append(_title(webView.resources.getString(stats_today)))
         val res = webView.resources
         val minutes = (todayStats[THETIME_INDEX] / 60.0).roundToInt()
         val span = res.getQuantityString(com.ichi2.anki.R.plurals.time_span_minutes, minutes, minutes)
@@ -218,18 +214,18 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
             )
         )
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_today_again_count, todayStats[FAILED_INDEX]))
+        stringBuilder.append(res.getString(stats_today_again_count, todayStats[FAILED_INDEX]))
         if (todayStats[CARDS_INDEX] > 0) {
             stringBuilder.append(" ")
-            stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_today_correct_count, (1 - todayStats[FAILED_INDEX] / todayStats[CARDS_INDEX].toFloat()) * 100.0))
+            stringBuilder.append(res.getString(stats_today_correct_count, (1 - todayStats[FAILED_INDEX] / todayStats[CARDS_INDEX].toFloat()) * 100.0))
         }
         stringBuilder.append("<br>")
-        stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_today_type_breakdown, todayStats[LRN_INDEX], todayStats[REV_INDEX], todayStats[RELRN_INDEX], todayStats[FILT_INDEX]))
+        stringBuilder.append(res.getString(stats_today_type_breakdown, todayStats[LRN_INDEX], todayStats[REV_INDEX], todayStats[RELRN_INDEX], todayStats[FILT_INDEX]))
         stringBuilder.append("<br>")
         if (todayStats[MCNT_INDEX] != 0) {
-            stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_today_mature_cards, todayStats[MSUM_INDEX], todayStats[MCNT_INDEX], todayStats[MSUM_INDEX] / todayStats[MCNT_INDEX].toFloat() * 100.0))
+            stringBuilder.append(res.getString(stats_today_mature_cards, todayStats[MSUM_INDEX], todayStats[MCNT_INDEX], todayStats[MSUM_INDEX] / todayStats[MCNT_INDEX].toFloat() * 100.0))
         } else {
-            stringBuilder.append(res.getString(com.ichi2.anki.R.string.stats_today_no_mature_cards))
+            stringBuilder.append(res.getString(stats_today_no_mature_cards))
         }
     }
 
