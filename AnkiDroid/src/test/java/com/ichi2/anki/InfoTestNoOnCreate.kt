@@ -13,48 +13,48 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import com.ichi2.testutils.AnkiAssert
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.LanguageUtil
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.ParameterizedRobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.annotation.Config
+import java.util.*
 
-import com.ichi2.testutils.AnkiAssert;
-import com.ichi2.testutils.EmptyApplication;
-import com.ichi2.utils.LanguageUtil;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.ParameterizedRobolectricTestRunner;
-import org.robolectric.ParameterizedRobolectricTestRunner.Parameter;
-import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
-
-import java.util.Arrays;
-
-@RunWith(ParameterizedRobolectricTestRunner.class)
-@Config(application = EmptyApplication.class)
-public class InfoTestNoOnCreate extends RobolectricTest {
-
-    @Parameter
-    public String locale;
-
-    @Parameters(name = "{index} locale:{0}")
-    public static java.util.Collection<String> initParameters() {
-        return Arrays.asList(LanguageUtil.APP_LANGUAGES);
-    }
-
+@RunWith(ParameterizedRobolectricTestRunner::class)
+@Config(application = EmptyApplication::class)
+class InfoTestNoOnCreate : RobolectricTest() {
+    @JvmField
+    @ParameterizedRobolectricTestRunner.Parameter
+    @KotlinCleanup("locale non-null")
+    var locale: String? = null
     @Before
-    public void before() {
-        if (locale.contains("-")) {
-            String[] localeParts = locale.split("-");
-            RuntimeEnvironment.setQualifiers(localeParts[0] + "-r" + localeParts[1]);
+    fun before() {
+        if (locale!!.contains("-")) {
+            val localeParts = locale!!.split("-")
+            RuntimeEnvironment.setQualifiers(localeParts[0] + "-r" + localeParts[1])
         } else {
-            RuntimeEnvironment.setQualifiers(locale);
+            RuntimeEnvironment.setQualifiers(locale)
         }
     }
 
     @Test
-    public void testCreatingActivityWithLocale() {
-        AnkiAssert.assertDoesNotThrow(() -> Info.getAboutAnkiDroidHtml(getTargetContext().getResources(), "#FFFFFF"));
+    fun testCreatingActivityWithLocale() {
+        AnkiAssert.assertDoesNotThrow { Info.getAboutAnkiDroidHtml(targetContext.resources, "#FFFFFF") }
+    }
+
+    companion object {
+        @JvmStatic
+        @ParameterizedRobolectricTestRunner.Parameters(name = "{index} locale:{0}")
+        @KotlinCleanup("Arrays.asList")
+        fun initParameters(): Collection<String> {
+            return Arrays.asList(*LanguageUtil.APP_LANGUAGES)
+        }
     }
 }
