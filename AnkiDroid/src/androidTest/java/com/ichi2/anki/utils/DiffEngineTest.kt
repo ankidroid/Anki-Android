@@ -13,31 +13,25 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.utils
 
-package com.ichi2.anki.utils;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.utils.DiffEngine
+import org.junit.Assert.assertArrayEquals
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import com.ichi2.utils.DiffEngine;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.junit.Assert.assertArrayEquals;
-
-@RunWith(AndroidJUnit4.class)
-public class DiffEngineTest {
-
+@RunWith(AndroidJUnit4::class)
+class DiffEngineTest {
 
     @Test
-    public void testSimpleDiff() {
-        DiffEngine diffEngine = new DiffEngine();
-        String[] diffs = diffEngine.diffedHtmlStrings("typed", "correct");
-        String[] expectedDiffs = {
-                "<span class=\"typeBad\">corr</span><span class=\"typeGood\">e</span><span class=\"typeBad\">ct</span>",
-                "<span class=\"typeMissed\">typ</span><span class=\"typeGood\">e</span><span class=\"typeMissed\">d</span>"
-        };
-        assertArrayEquals("Diff results were unexpected", expectedDiffs, diffs);
+    fun testSimpleDiff() {
+        val diffEngine = DiffEngine()
+        val diffs = diffEngine.diffedHtmlStrings("typed", "correct")
+        val expectedDiffs = arrayOf(
+            "<span class=\"typeBad\">corr</span><span class=\"typeGood\">e</span><span class=\"typeBad\">ct</span>",
+            "<span class=\"typeMissed\">typ</span><span class=\"typeGood\">e</span><span class=\"typeMissed\">d</span>"
+        )
+        assertArrayEquals("Diff results were unexpected", expectedDiffs, diffs)
     }
 }
