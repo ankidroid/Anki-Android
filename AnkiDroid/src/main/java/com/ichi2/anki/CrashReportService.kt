@@ -63,10 +63,11 @@ object CrashReportService {
     private const val EXCEPTION_MESSAGE = "Exception report sent by user manually"
 
     private fun createAcraCoreConfigBuilder(): CoreConfigurationBuilder {
-        val builder = CoreConfigurationBuilder(mApplication)
-            .setBuildConfigClass(org.acra.dialog.BuildConfig::class.java)
-            .setExcludeMatchingSharedPreferencesKeys("username", "hkey")
-            .setReportContent(
+        val builder = CoreConfigurationBuilder()
+            .withBuildConfigClass(org.acra.dialog.BuildConfig::class.java)
+            .withExcludeMatchingSharedPreferencesKeys("username", "hkey")
+            .withSharedPreferencesName("acra")
+            .withReportContent(
                 ReportField.REPORT_ID,
                 ReportField.APP_VERSION_CODE,
                 ReportField.APP_VERSION_NAME,
@@ -94,30 +95,40 @@ object CrashReportService {
                 ReportField.MEDIA_CODEC_LIST,
                 ReportField.THREAD_DETAILS
             )
-            .setLogcatArguments(*logcatArgs)
-        builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-            .setReportDialogClass(AnkiDroidCrashReportDialog::class.java)
-            .setResCommentPrompt(R.string.empty_string)
-            .setResTitle(R.string.feedback_title)
-            .setResText(R.string.feedback_default_text)
-            .setResPositiveButtonText(R.string.feedback_report)
-            .setResIcon(R.drawable.logo_star_144dp)
-            .setEnabled(dialogEnabled)
-        builder.getPluginConfigurationBuilder(HttpSenderConfigurationBuilder::class.java)
-            .setHttpMethod(HttpSender.Method.PUT)
-            .setUri(BuildConfig.ACRA_URL)
-            .setEnabled(true)
-        builder.getPluginConfigurationBuilder(ToastConfigurationBuilder::class.java)
-            .setText(toastText)
-            .setEnabled(true)
-        builder.getPluginConfigurationBuilder(LimiterConfigurationBuilder::class.java)
-            .setExceptionClassLimit(1000)
-            .setStacktraceLimit(1)
-            .setEnabled(true)
+            .withLogcatArguments(*logcatArgs)
+            .withPluginConfigurations(
+                DialogConfigurationBuilder()
+                    .withReportDialogClass(AnkiDroidCrashReportDialog::class.java)
+                    .withCommentPrompt(mApplication.getString(R.string.empty_string))
+                    .withTitle(mApplication.getString(R.string.feedback_title))
+                    .withText(mApplication.getString(R.string.feedback_default_text))
+                    .withPositiveButtonText(mApplication.getString(R.string.feedback_report))
+                    .withResIcon(R.drawable.logo_star_144dp)
+                    .withEnabled(dialogEnabled)
+                    .build(),
+                HttpSenderConfigurationBuilder()
+                    .withHttpMethod(HttpSender.Method.PUT)
+                    .withUri(BuildConfig.ACRA_URL)
+                    .withEnabled(true)
+                    .build(),
+                ToastConfigurationBuilder()
+                    .withText(toastText)
+                    .withEnabled(true)
+                    .build(),
+                LimiterConfigurationBuilder()
+                    .withExceptionClassLimit(1000)
+                    .withStacktraceLimit(1)
+                    .withDeleteReportsOnAppUpdate(true)
+                    .withResetLimitsOnAppUpdate(true)
+                    .withEnabled(true)
+                    .build()
+            )
         ACRA.init(mApplication, builder)
         acraCoreConfigBuilder = builder
-        ACRA.getErrorReporter().putCustomData(WEBVIEW_VER_NAME, fetchWebViewInformation()[WEBVIEW_VER_NAME])
-        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation()["WEBVIEW_VER_CODE"])
+        fetchWebViewInformation().let {
+            ACRA.errorReporter.putCustomData(WEBVIEW_VER_NAME, it[WEBVIEW_VER_NAME] ?: "")
+            ACRA.errorReporter.putCustomData("WEBVIEW_VER_CODE", it["WEBVIEW_VER_CODE"] ?: "")
+        }
         return builder
     }
 
@@ -129,6 +140,13 @@ object CrashReportService {
     @JvmStatic
     fun initialize(application: Application) {
         mApplication = application
+        // FIXME ACRA needs to reinitialize after language is changed, but with the new language
+        //   this is difficult because the Application (AnkiDroidApp) does not change it's baseContext
+        //   perhaps a solution could be to change AnkiDroidApp to have a context wrapper that it sets
+        //   as baseContext, and that wrapper allows a resources/configuration update, then
+        //   in GeneralSettingsFragment for the language dialog change listener, the context wrapper
+        //   could be updated directly with the new locale code so that calling getString on would fetch
+        //   the new language string ?
         toastText = mApplication.getString(R.string.feedback_auto_toast_text)
 
         // Setup logging and crash reporting
@@ -232,16 +250,18 @@ object CrashReportService {
     fun sendExceptionReport(e: Throwable, origin: String?, additionalInfo: String?, onlyIfSilent: Boolean) {
         sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
+        val reportMode = AnkiDroidApp.getSharedPrefs(mApplication.applicationContext).getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
         if (onlyIfSilent) {
-            val reportMode = AnkiDroidApp.getSharedPrefs(mApplication.applicationContext).getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
             if (FEEDBACK_REPORT_ALWAYS != reportMode) {
                 Timber.i("sendExceptionReport - onlyIfSilent true, but ACRA is not 'always accept'. Skipping report send.")
                 return
             }
         }
-        ACRA.getErrorReporter().putCustomData("origin", origin)
-        ACRA.getErrorReporter().putCustomData("additionalInfo", additionalInfo)
-        ACRA.getErrorReporter().handleException(e)
+        if (FEEDBACK_REPORT_NEVER != reportMode) {
+            ACRA.errorReporter.putCustomData("origin", origin ?: "")
+            ACRA.errorReporter.putCustomData("additionalInfo", additionalInfo ?: "")
+            ACRA.errorReporter.handleException(e)
+        }
     }
 
     fun isProperServiceProcess(): Boolean {
