@@ -15,28 +15,21 @@ package com.ichi2.utils
 
 import com.ichi2.utils.MapUtil.getKeyByValue
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
-import org.junit.Before
 import org.junit.Test
-import java.util.HashMap
 
-@KotlinCleanup("`is` -> equalTo")
-@KotlinCleanup("Use Kotlin's HashMap instead of Java's")
 class MapUtilTest {
-    private lateinit var mMap: MutableMap<Int, String>
-    @Before
-    fun initializeMap() {
-        mMap = HashMap()
-        mMap[12] = "Anki"
-        mMap[5] = "AnkiMobile"
-        mMap[20] = "AnkiDroid"
-        mMap[30] = "AnkiDesktop"
-    }
+    private var mMap = hashMapOf(
+        12 to "Anki",
+        5 to "AnkiMobile",
+        20 to "AnkiDroid",
+        30 to "AnkiDesktop"
+    )
 
     @Test
     fun getKeyByValueIsEqualTest() {
-        assertThat(getKeyByValue(mMap, "AnkiDroid"), `is`(20))
+        assertThat(getKeyByValue(mMap, "AnkiDroid"), equalTo(20))
     }
 
     @Test
