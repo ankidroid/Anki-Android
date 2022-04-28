@@ -4,9 +4,11 @@ package com.ichi2.anim
 
 import android.app.Activity
 import android.content.Context
+import android.os.Parcelable
 import android.util.LayoutDirection
 import androidx.core.app.ActivityOptionsCompat
 import com.ichi2.anki.R
+import kotlinx.parcelize.Parcelize
 
 object ActivityTransitionAnimation {
     @JvmStatic
@@ -58,7 +60,8 @@ object ActivityTransitionAnimation {
         return c.resources.configuration.layoutDirection == LayoutDirection.RTL
     }
 
-    enum class Direction {
+    @Parcelize
+    enum class Direction : Parcelable {
         START, END, FADE, UP, DOWN, RIGHT, LEFT, DEFAULT, DIALOG_EXIT, NONE
     }
 }
