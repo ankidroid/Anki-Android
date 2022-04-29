@@ -13,53 +13,47 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.lint.rules
 
-package com.ichi2.anki.lint.rules;
-
-import com.android.tools.lint.detector.api.Context;
-import com.android.tools.lint.detector.api.Detector;
-import com.android.tools.lint.detector.api.Implementation;
-import com.android.tools.lint.detector.api.Issue;
-import com.android.tools.lint.detector.api.Location;
-import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.SourceCodeScanner;
-import com.google.common.annotations.Beta;
-import com.google.common.annotations.VisibleForTesting;
-import com.ichi2.anki.lint.utils.Constants;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.uast.UClass;
-import org.jetbrains.uast.UElement;
-
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.regex.Pattern;
+import com.android.tools.lint.detector.api.*
+import com.google.common.annotations.Beta
+import com.google.common.annotations.VisibleForTesting
+import com.ichi2.anki.lint.utils.Constants
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import org.jetbrains.uast.UClass
+import org.jetbrains.uast.UElement
+import java.util.*
+import java.util.regex.Pattern
 
 /**
  * Ensures that a GPLv3-compatible copyright header exists in all files.
  *
  * Provides instructions and documentation for a long-term fix if this is triggered.
  *
- * @see #EXPLANATION
+ * @see .EXPLANATION
  */
-@SuppressWarnings("UnstableApiUsage")
 @Beta
-public class CopyrightHeaderExists extends Detector implements SourceCodeScanner {
-    /** This string matches GPLv3 under all current circumstances. It does not currently work if split over two lines */
-    private static final Pattern COPYRIGHT_PATTERN = Pattern.compile("version 3 of the License, or \\(at");
-    /**
-     * &#64;SuppressWarnings doesn't work as it's the first statement, so allow suppression via:
-     * <pre>//noinspection MissingCopyrightHeader &lt;reason&gt;</pre>
-     */
-    private static final Pattern IGNORE_CHECK_PATTERN = Pattern.compile("MissingCopyrightHeader");
+@KotlinCleanup("IDE lint")
+class CopyrightHeaderExists : Detector(), SourceCodeScanner {
 
-    @VisibleForTesting
-    static final String ID = "MissingCopyrightHeader";
-    @VisibleForTesting
-    static final String DESCRIPTION = "All files in AnkiDroid must contain a GPLv3-compatible copyright header";
-    private static final String EXPLANATION = "All files in AnkiDroid must contain a " +
+    companion object {
+        /** This string matches GPLv3 under all current circumstances. It does not currently work if split over two lines  */
+        private val COPYRIGHT_PATTERN = Pattern.compile("version 3 of the License, or \\(at")
+
+        /**
+         * &#64;SuppressWarnings doesn't work as it's the first statement, so allow suppression via:
+         * <pre>//noinspection MissingCopyrightHeader &lt;reason&gt;</pre>
+         */
+        private val IGNORE_CHECK_PATTERN = Pattern.compile("MissingCopyrightHeader")
+
+        @JvmField
+        @VisibleForTesting
+        val ID = "MissingCopyrightHeader"
+
+        @JvmField
+        @VisibleForTesting
+        val DESCRIPTION = "All files in AnkiDroid must contain a GPLv3-compatible copyright header"
+        private const val EXPLANATION = "All files in AnkiDroid must contain a " +
             "GPLv3-compatible copyright header" +
             "The copyright header can be set in " +
             "Settings - Editor - Copyright - Copyright Profiles - Add Profile - AnkiDroid. " +
@@ -69,9 +63,10 @@ public class CopyrightHeaderExists extends Detector implements SourceCodeScanner
             "If the file is under a GPL-Compatible License (https://www.gnu.org/licenses/license-list.en.html#GPLCompatibleLicenses) " +
             "then this warning may be suppressed either via adding a GPL header added alongside the license: " +
             "https://softwarefreedom.org/resources/2007/gpl-non-gpl-collaboration.html#x1-40002.2 + or " +
-            "\"//noinspection MissingCopyrightHeader <reason>\" may be added as the first line of the file.";
-    private static final Implementation implementation = new Implementation(CopyrightHeaderExists.class, EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES));
-    public static final Issue ISSUE = Issue.create(
+            "\"//noinspection MissingCopyrightHeader <reason>\" may be added as the first line of the file."
+        private val implementation = Implementation(CopyrightHeaderExists::class.java, EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES))
+        @JvmField
+        val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,
             EXPLANATION,
@@ -79,40 +74,35 @@ public class CopyrightHeaderExists extends Detector implements SourceCodeScanner
             Constants.ANKI_CODE_STYLE_PRIORITY,
             Constants.ANKI_CODE_STYLE_SEVERITY,
             implementation
-    );
-
-    @Nullable
-    @Override
-    public List<Class<? extends UElement>> getApplicableUastTypes() {
-        return Collections.singletonList(UClass.class);
+        )
     }
 
-    @Override
-    public void afterCheckFile(@NotNull Context context) {
+    override fun getApplicableUastTypes(): List<Class<out UElement?>>? {
+        return listOf(UClass::class.java)
+    }
 
-        CharSequence contents = context.getContents();
-        if (contents == null
-                || COPYRIGHT_PATTERN.matcher(contents).find()
-                || IGNORE_CHECK_PATTERN.matcher(contents).find())
-        {
-            return;
+    override fun afterCheckFile(context: Context) {
+        val contents = context.getContents()
+        if (contents == null || COPYRIGHT_PATTERN.matcher(contents).find() ||
+            IGNORE_CHECK_PATTERN.matcher(contents).find()
+        ) {
+            return
         }
 
         // select from the start to the first line with content
-        int end = 0;
-        boolean foundChar = false;
-        for (int i = 0; i < contents.length(); i++) {
-            foundChar |= !Character.isWhitespace(contents.charAt(i));
-            if (foundChar && contents.charAt(i) == '\n') {
-                end = i;
-                break;
+        var end = 0
+        var foundChar = false
+        for (i in 0 until contents.length) {
+            foundChar = foundChar or !Character.isWhitespace(contents[i])
+            if (foundChar && contents[i] == '\n') {
+                end = i
+                break
             }
         }
 
         // If there is no line break, highlight the contents
-        int endOffset = end == 0 ? contents.length() : end;
-
-        Location location = Location.create(context.file, contents.subSequence(0, endOffset), 0, endOffset);
-        context.report(ISSUE, location, DESCRIPTION);
+        val endOffset = if (end == 0) contents.length else end
+        val location: Location = Location.create(context.file, contents.subSequence(0, endOffset), 0, endOffset)
+        context.report(ISSUE, location, DESCRIPTION)
     }
 }
