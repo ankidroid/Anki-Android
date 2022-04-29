@@ -13,43 +13,37 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.lint.rules
 
-package com.ichi2.anki.lint.rules;
-
-import com.android.tools.lint.client.api.JavaEvaluator;
-import com.android.tools.lint.detector.api.Detector;
-import com.android.tools.lint.detector.api.Implementation;
-import com.android.tools.lint.detector.api.Issue;
-import com.android.tools.lint.detector.api.JavaContext;
-import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.SourceCodeScanner;
-import com.google.common.annotations.VisibleForTesting;
-import com.ichi2.anki.lint.utils.Constants;
-import com.ichi2.anki.lint.utils.LintUtils;
-import com.intellij.psi.PsiMethod;
-
-import com.android.annotations.NonNull;
-import com.android.annotations.Nullable;
-import org.jetbrains.uast.UCallExpression;
-import org.jetbrains.uast.UClass;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.android.tools.lint.detector.api.*
+import com.google.common.annotations.VisibleForTesting
+import com.ichi2.anki.lint.utils.Constants
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import com.ichi2.anki.lint.utils.LintUtils
+import com.intellij.psi.PsiMethod
+import org.jetbrains.uast.UCallExpression
 
 /**
  * This custom Lint rules will raise an error if a developer uses the {android.widget.Toast#makeText(...)} method instead
  * of using the method provided by the UIUtils class {com.ichi2.anki.UIUtils#showThemedToast(...)}.
  */
-public class DirectToastMakeTextUsage extends Detector implements SourceCodeScanner {
+@KotlinCleanup("IDE lint")
+@KotlinCleanup("mutableListOf")
+class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
 
-    @VisibleForTesting
-    static final String ID = "DirectToastMakeTextUsage";
-    @VisibleForTesting
-    static final String DESCRIPTION = "Use UIUtils.showThemedToast instead of Toast.makeText";
-    private static final String EXPLANATION = "To improve code consistency within the codebase you should use UIUtils.showThemedToast in place" +
-            " of the library Toast.makeText(...).show(). This ensures also that the toast is actually displayed after being created";
-    private static final Implementation implementation = new Implementation(DirectToastMakeTextUsage.class, Scope.JAVA_FILE_SCOPE);
-    public static final Issue ISSUE = Issue.create(
+    companion object {
+        @JvmField
+        @VisibleForTesting
+        val ID = "DirectToastMakeTextUsage"
+
+        @JvmField
+        @VisibleForTesting
+        val DESCRIPTION = "Use UIUtils.showThemedToast instead of Toast.makeText"
+        private const val EXPLANATION = "To improve code consistency within the codebase you should use UIUtils.showThemedToast in place" +
+            " of the library Toast.makeText(...).show(). This ensures also that the toast is actually displayed after being created"
+        private val implementation = Implementation(DirectToastMakeTextUsage::class.java, Scope.JAVA_FILE_SCOPE)
+        @JvmField
+        val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,
             EXPLANATION,
@@ -57,34 +51,26 @@ public class DirectToastMakeTextUsage extends Detector implements SourceCodeScan
             Constants.ANKI_CODE_STYLE_PRIORITY,
             Constants.ANKI_CODE_STYLE_SEVERITY,
             implementation
-    );
-
-    public DirectToastMakeTextUsage() {
-
+        )
     }
 
-    @Nullable
-    @Override
-    public List<String> getApplicableMethodNames() {
-        List<String> forbiddenToastMethods = new ArrayList<>();
-        forbiddenToastMethods.add("makeText");
-        return forbiddenToastMethods;
+    override fun getApplicableMethodNames(): List<String>? {
+        val forbiddenToastMethods: MutableList<String> = ArrayList()
+        forbiddenToastMethods.add("makeText")
+        return forbiddenToastMethods
     }
 
-
-    @Override
-    public void visitMethodCall(@NonNull JavaContext context, @NonNull UCallExpression node, @NonNull PsiMethod method) {
-        super.visitMethodCall(context, node, method);
-        JavaEvaluator evaluator = context.getEvaluator();
-        List<UClass> foundClasses = context.getUastFile().getClasses();
+    override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
+        super.visitMethodCall(context, node, method)
+        val evaluator = context.evaluator
+        val foundClasses = context.uastFile!!.classes
         if (!LintUtils.isAnAllowedClass(foundClasses, "UIUtils") && evaluator.isMemberInClass(method, "android.widget.Toast")) {
             context.report(
-                    ISSUE,
-                    node,
-                    context.getCallLocation(node, true, true),
-                    DESCRIPTION
-            );
+                ISSUE,
+                node,
+                context.getCallLocation(node, true, true),
+                DESCRIPTION
+            )
         }
     }
-
 }
