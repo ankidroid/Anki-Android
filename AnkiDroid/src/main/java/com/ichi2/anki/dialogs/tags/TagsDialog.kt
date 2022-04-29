@@ -24,7 +24,9 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
+import com.ichi2.utils.TagsUtil
 
 class TagsDialog : AnalyticsDialogFragment {
     /**
@@ -128,6 +130,7 @@ class TagsDialog : AnalyticsDialogFragment {
         get() = mListener
             ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)!!
 
+    @NeedsTest("All checked tags should be visible when the dialog opens (paths to them should be expanded).")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         @SuppressLint("InflateParams") val tagsDialogView = LayoutInflater.from(activity).inflate(R.layout.tags_dialog, null, false)
         mTagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list)
@@ -135,7 +138,7 @@ class TagsDialog : AnalyticsDialogFragment {
         tagsListRecyclerView?.requestFocus()
         val tagsListLayout: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         tagsListRecyclerView?.layoutManager = tagsListLayout
-        mTagsArrayAdapter = TagsArrayAdapter(mTags!!)
+        mTagsArrayAdapter = TagsArrayAdapter(mTags!!, resources)
         tagsListRecyclerView?.adapter = mTagsArrayAdapter
         mNoTagsTextView = tagsDialogView.findViewById(R.id.tags_dialog_no_tags_textview)
         val noTagsTextView: TextView? = mNoTagsTextView
@@ -174,16 +177,44 @@ class TagsDialog : AnalyticsDialogFragment {
         toolbar.title = mDialogTitle
         toolbar.inflateMenu(R.menu.tags_dialog_menu)
 
-        // disallow inputting the 'space' character
-        val addTagFilter = InputFilter { source: CharSequence, start: Int, end: Int, _: Spanned?, _: Int, _: Int ->
-            var i = start
-            while (i < end) {
-                if (source[i] == ' ') {
-                    return@InputFilter ""
-                }
-                i++
+        // space is not allowed in a tag
+        // for UX of hierarchical tag, inputting a space will instead insert "::" at the cursor
+        // if there are already some colons in front of the cursor, complete to 2 colons
+        // for example:
+        //   "tag"   -- input a space --> "tag::"
+        //   "tag:"  -- input a space --> "tag::"
+        //   "tag::" -- input a space --> "tag::"
+        val addTagFilter = InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
+            if (!source.subSequence(start, end).contains(' ')) {
+                return@InputFilter null
             }
-            null
+            var previousColonsCnt = 0
+            if (dest != null) {
+                val previousPart = dest.substring(0, destStart)
+                if (previousPart.endsWith("::")) {
+                    previousColonsCnt = 2
+                } else if (previousPart.endsWith(":")) {
+                    previousColonsCnt = 1
+                }
+            }
+            val sb = StringBuilder()
+            for (char in source.subSequence(start, end)) {
+                if (char == ' ') {
+                    if (previousColonsCnt == 0) {
+                        sb.append("::")
+                    } else if (previousColonsCnt == 1) {
+                        sb.append(":")
+                    }
+                } else {
+                    sb.append(char)
+                }
+                previousColonsCnt = if (char == ':') {
+                    previousColonsCnt + 1
+                } else {
+                    0
+                }
+            }
+            sb
         }
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
         toolbarAddItem.setOnMenuItemClickListener {
@@ -247,8 +278,9 @@ class TagsDialog : AnalyticsDialogFragment {
     }
 
     @VisibleForTesting
-    fun addTag(tag: String?) {
-        if (!TextUtils.isEmpty(tag)) {
+    fun addTag(rawTag: String?) {
+        if (!rawTag.isNullOrEmpty()) {
+            val tag = TagsUtil.getUniformedTag(rawTag)
             val feedbackText: String
             if (mTags!!.add(tag)) {
                 if (mNoTagsTextView!!.visibility == View.VISIBLE) {
@@ -262,13 +294,22 @@ class TagsDialog : AnalyticsDialogFragment {
             mTags!!.check(tag)
             mTagsArrayAdapter!!.sortData()
             mTagsArrayAdapter!!.notifyDataSetChanged()
-            mTagsArrayAdapter!!.filter.refresh()
+            // Expand to reveal the newly added tag.
+            mTagsArrayAdapter!!.filter.apply {
+                setExpandTarget(tag)
+                refresh()
+            }
             // Show a snackbar to let the user know the tag was added successfully
             showSnackbar(
                 requireActivity(), feedbackText, false, -1, null,
                 mDialog!!.view.findViewById(R.id.tags_dialog_snackbar), null
             )
         }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    internal fun getSearchView(): SearchView? {
+        return mToolbarSearchView
     }
 
     companion object {

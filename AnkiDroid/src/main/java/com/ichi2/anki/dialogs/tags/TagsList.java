@@ -15,10 +15,10 @@
  */
 package com.ichi2.anki.dialogs.tags;
 
+import com.ichi2.utils.TagsUtil;
 import com.ichi2.utils.UniqueArrayList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -66,7 +66,9 @@ public class TagsList implements Iterable<String> {
     /**
      * Construct a new {@link TagsList} with possibility of indeterminate tags,
      *
-     * for a tag to be in indeterminate state it should be present in checkedTags and also in uncheckedTags
+     * for a tag to be in indeterminate state it should be present in checkedTags and also in uncheckedTags,
+     *
+     * hierarchical tags will have their ancestors added temporarily
      *
      * @param allTags A list of all available tags
      *                any duplicates will be ignored
@@ -80,18 +82,17 @@ public class TagsList implements Iterable<String> {
         mCheckedTags.addAll(checkedTags);
         mAllTags = UniqueArrayList.from(allTags, String.CASE_INSENSITIVE_ORDER);
         mAllTags.addAll(mCheckedTags);
+        mIndeterminateTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         if (uncheckedTags != null) {
             mAllTags.addAll(uncheckedTags);
-            mIndeterminateTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             // intersection between mCheckedTags and uncheckedTags
             mIndeterminateTags.addAll(mCheckedTags);
             Set<String> uncheckedSet = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             uncheckedSet.addAll(uncheckedTags);
             mIndeterminateTags.retainAll(uncheckedSet);
             mCheckedTags.removeAll(mIndeterminateTags);
-        } else {
-            mIndeterminateTags = Collections.emptySet();
         }
+        prepareTagHierarchy();
     }
 
 
@@ -145,28 +146,49 @@ public class TagsList implements Iterable<String> {
 
     /**
      * Adds a tag to the list if it is not already present.
+     * If the tag is hierarchical, its ancestors will also be added temporarily.
      *
-     * @param tag  the tag to add
+     * @param tag the tag to add
      * @return true if tag was added (new tag)
      */
     public boolean add(String tag) {
-        return mAllTags.add(tag);
+        if (!mAllTags.add(tag)) {
+            return false;
+        }
+        addAncestors(tag);
+        return true;
     }
 
 
     /**
-     * Mark a tag as checked tag
+     * Mark a tag as checked tag.
+     * Optionally mark ancestors as indeterminate
      *
      * @param tag the tag to be checked (case-insensitive)
+     * @param processAncestors whether mark ancestors as indeterminate or not
      * @return true if the tag changed its check status
      *         false if the tag was already checked or not in the list
      */
-    public boolean check(String tag) {
+    public boolean check(String tag, boolean processAncestors) {
         if (!mAllTags.contains(tag)) {
             return false;
         }
         mIndeterminateTags.remove(tag);
-        return mCheckedTags.add(tag);
+        if (!mCheckedTags.add(tag)) {
+            return false;
+        }
+        if (processAncestors) {
+            markAncestorsIndeterminate(tag);
+        }
+        return true;
+    }
+
+    /**
+     * Mark a tag as checked tag.
+     * @see #check(String, boolean)
+     */
+    public boolean check(String tag) {
+        return check(tag, true);
     }
 
     /**
@@ -178,6 +200,22 @@ public class TagsList implements Iterable<String> {
      */
     public boolean uncheck(String tag) {
         return mIndeterminateTags.remove(tag) || mCheckedTags.remove(tag);
+    }
+
+
+    /**
+     * Mark a tag as indeterminate tag
+     *
+     * @param tag the tag to be turned into indeterminate (case-insensitive)
+     * @return true if the tag changes into indeterminate
+     *         false if the tag was already indeterminate, or not in the list
+     */
+    public boolean setIndeterminate(String tag) {
+        if (!mAllTags.contains(tag)) {
+            return false;
+        }
+        mCheckedTags.remove(tag);
+        return mIndeterminateTags.add(tag);
     }
 
 
@@ -253,18 +291,60 @@ public class TagsList implements Iterable<String> {
 
 
     /**
+     * Initialize the tag hierarchy.
+     */
+    private void prepareTagHierarchy() {
+        List<String> allTags = new ArrayList<>(mAllTags);
+        for (String tag : allTags) {
+            addAncestors(tag);
+        }
+        for (String tag : mCheckedTags) {
+            markAncestorsIndeterminate(tag);
+        }
+    }
+
+
+    /**
+     * Add ancestors of the tag into the set of all tags.
+     *
+     * @param tag The tag whose ancestors will be added.
+     */
+    private void addAncestors(String tag) {
+        mAllTags.addAll(TagsUtil.getTagAncestors(tag));
+    }
+
+
+    /**
+     * Mark ancestors of the tag as indeterminate (if not a checked tag).
+     *
+     * @param tag The tag whose ancestors will be marked as indeterminate if they are not checked.
+     */
+    private void markAncestorsIndeterminate(String tag) {
+        if (!mAllTags.contains(tag)) {
+            return;
+        }
+        TagsUtil.getTagAncestors(tag)
+                .stream().filter(s -> !isChecked(s))
+                .forEach(this::setIndeterminate);
+    }
+
+
+    /**
      * Sort the tag list alphabetically ignoring the case, with priority for checked tags
+     * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     public void sort() {
         mAllTags.sort((lhs, rhs) -> {
-            boolean lhsChecked = isChecked(lhs) || isIndeterminate(lhs);
-            boolean rhsChecked = isChecked(rhs) || isIndeterminate(rhs);
+            String lhsRoot = TagsUtil.getTagRoot(lhs);
+            String rhsRoot = TagsUtil.getTagRoot(rhs);
+            boolean lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot);
+            boolean rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot);
 
             if (lhsChecked != rhsChecked) {
                 // checked tags must appear first
                 return lhsChecked ? -1 : 1;
             } else {
-                return lhs.compareToIgnoreCase(rhs);
+                return TagsUtil.compareTag(lhs, rhs);
             }
         });
     }
