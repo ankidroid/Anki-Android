@@ -1,40 +1,34 @@
-package com.ichi2.anki.lint.rules;
+package com.ichi2.anki.lint.rules
 
-import com.android.tools.lint.client.api.JavaEvaluator;
-import com.android.tools.lint.detector.api.Detector;
-import com.android.tools.lint.detector.api.Implementation;
-import com.android.tools.lint.detector.api.Issue;
-import com.android.tools.lint.detector.api.JavaContext;
-import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.SourceCodeScanner;
-import com.google.common.annotations.VisibleForTesting;
-import com.ichi2.anki.lint.utils.Constants;
-import com.ichi2.anki.lint.utils.LintUtils;
-import com.intellij.psi.PsiMethod;
-
-import com.android.annotations.NonNull;
-import com.android.annotations.Nullable;
-import org.jetbrains.uast.UCallExpression;
-import org.jetbrains.uast.UClass;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import com.android.tools.lint.detector.api.*
+import com.google.common.annotations.VisibleForTesting
+import com.ichi2.anki.lint.utils.Constants
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import com.ichi2.anki.lint.utils.LintUtils
+import com.intellij.psi.PsiMethod
+import org.jetbrains.uast.UCallExpression
 
 /**
- * This custom Lint rules will raise an error if a developer uses the {@link Calendar#getInstance()} method instead
- * of using the {@link Calendar} provided by the collection's getTime() method.
+ * This custom Lint rules will raise an error if a developer uses the [Calendar.getInstance] method instead
+ * of using the [Calendar] provided by the collection's getTime() method.
  */
-public class DirectCalendarInstanceUsage extends Detector implements SourceCodeScanner {
+@KotlinCleanup("IDE Lint")
+@KotlinCleanup("Ignore @Beta")
+class DirectCalendarInstanceUsage : Detector(), SourceCodeScanner {
 
-    @VisibleForTesting
-    static final String ID = "DirectCalendarInstanceUsage";
-    @VisibleForTesting
-    static final String DESCRIPTION = "Use the collection's getTime() method instead of directly creating Calendar instances";
-    private static final String EXPLANATION = "Manually creating Calendar instances means time cannot be controlled " +
-            "during testing. Calendar instances must be obtained through the collection's getTime() method";
-    private static final Implementation implementation = new Implementation(DirectCalendarInstanceUsage.class, Scope.JAVA_FILE_SCOPE);
-    public static final Issue ISSUE = Issue.create(
+    companion object {
+        @JvmField
+        @VisibleForTesting
+        val ID = "DirectCalendarInstanceUsage"
+
+        @JvmField
+        @VisibleForTesting
+        val DESCRIPTION = "Use the collection's getTime() method instead of directly creating Calendar instances"
+        private const val EXPLANATION = "Manually creating Calendar instances means time cannot be controlled " +
+            "during testing. Calendar instances must be obtained through the collection's getTime() method"
+        private val implementation = Implementation(DirectCalendarInstanceUsage::class.java, Scope.JAVA_FILE_SCOPE)
+        @JvmField
+        val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,
             EXPLANATION,
@@ -42,34 +36,26 @@ public class DirectCalendarInstanceUsage extends Detector implements SourceCodeS
             Constants.ANKI_TIME_PRIORITY,
             Constants.ANKI_TIME_SEVERITY,
             implementation
-    );
-
-
-    public DirectCalendarInstanceUsage() {
+        )
     }
 
-
-    @Nullable
-    @Override
-    public List<String> getApplicableMethodNames() {
-        List<String> forbiddenMethods = new ArrayList<>();
-        forbiddenMethods.add("getInstance");
-        return forbiddenMethods;
+    @KotlinCleanup("mutableListOf")
+    override fun getApplicableMethodNames(): List<String>? {
+        val forbiddenMethods: MutableList<String> = ArrayList()
+        forbiddenMethods.add("getInstance")
+        return forbiddenMethods
     }
 
-
-    @Override
-    public void visitMethodCall(@NonNull JavaContext context, @NonNull UCallExpression node, @NonNull PsiMethod method) {
-        super.visitMethodCall(context, node, method);
-        JavaEvaluator evaluator = context.getEvaluator();
-        List<UClass> foundClasses = context.getUastFile().getClasses();
+    override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
+        super.visitMethodCall(context, node, method)
+        val evaluator = context.evaluator
+        val foundClasses = context.uastFile!!.classes
         if (!LintUtils.isAnAllowedClass(foundClasses, "Time") && evaluator.isMemberInClass(method, "java.util.Calendar")) {
             context.report(
-                    ISSUE,
-                    context.getCallLocation(node, true, true),
-                    DESCRIPTION
-            );
+                ISSUE,
+                context.getCallLocation(node, true, true),
+                DESCRIPTION
+            )
         }
     }
-
 }
