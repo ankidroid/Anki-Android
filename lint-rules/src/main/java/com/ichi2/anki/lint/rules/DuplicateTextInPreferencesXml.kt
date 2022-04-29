@@ -1,33 +1,29 @@
-package com.ichi2.anki.lint.rules;
+package com.ichi2.anki.lint.rules
 
-import com.android.annotations.Nullable;
-import com.android.resources.ResourceFolderType;
-import com.android.tools.lint.detector.api.Implementation;
-import com.android.tools.lint.detector.api.Issue;
-import com.android.tools.lint.detector.api.ResourceXmlDetector;
-import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.XmlContext;
-import com.android.tools.lint.detector.api.XmlScannerConstants;
-import com.google.common.annotations.VisibleForTesting;
-import com.ichi2.anki.lint.utils.Constants;
-
-import org.w3c.dom.Element;
-
-import java.util.Collection;
+import com.android.resources.ResourceFolderType
+import com.android.tools.lint.detector.api.*
+import com.google.common.annotations.VisibleForTesting
+import com.ichi2.anki.lint.utils.Constants
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import org.w3c.dom.Element
 
 /**
  * A Lint check to prevent using the same string for the title and summary of a preference.
  */
-public class DuplicateTextInPreferencesXml extends ResourceXmlDetector {
+@KotlinCleanup("IDe lint")
+class DuplicateTextInPreferencesXml : ResourceXmlDetector() {
 
-    @VisibleForTesting
-    static final String ID = "DuplicateTextInPreferencesXml";
-    @VisibleForTesting
-    static final String DESCRIPTION = "Do not use the same string for the title and summary of a preference";
-    private static final String EXPLANATION = "Use different strings for the title and summary of a preference to better " +
-            "explain what that preference is for";
-    private static final Implementation implementation = new Implementation(DuplicateTextInPreferencesXml.class, Scope.RESOURCE_FILE_SCOPE);
-    public static final Issue ISSUE = Issue.create(
+    companion object {
+        @VisibleForTesting
+        val ID = "DuplicateTextInPreferencesXml"
+
+        @VisibleForTesting
+        val DESCRIPTION = "Do not use the same string for the title and summary of a preference"
+        private const val EXPLANATION = "Use different strings for the title and summary of a preference to better " +
+            "explain what that preference is for"
+        private val implementation = Implementation(DuplicateTextInPreferencesXml::class.java, Scope.RESOURCE_FILE_SCOPE)
+        @JvmField
+        val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,
             EXPLANATION,
@@ -35,36 +31,26 @@ public class DuplicateTextInPreferencesXml extends ResourceXmlDetector {
             Constants.ANKI_TIME_PRIORITY,
             Constants.ANKI_TIME_SEVERITY,
             implementation
-    );
-    private static final String ATTR_TITLE = "android:title";
-    private static final String ATTR_SUMMARY = "android:summary";
-
-
-    public DuplicateTextInPreferencesXml() {
+        )
+        private const val ATTR_TITLE = "android:title"
+        private const val ATTR_SUMMARY = "android:summary"
     }
 
-
-    @Nullable
-    @Override
-    public Collection<String> getApplicableElements() {
-        return XmlScannerConstants.ALL;
+    override fun getApplicableElements(): Collection<String>? {
+        return ALL
     }
 
-
-    @Override
-    public void visitElement(XmlContext context, Element element) {
+    override fun visitElement(context: XmlContext, element: Element) {
         if (element.hasAttribute(ATTR_TITLE) && element.hasAttribute(ATTR_SUMMARY)) {
-            String titleValue = element.getAttribute(ATTR_TITLE);
-            String summaryValue = element.getAttribute(ATTR_SUMMARY);
-            if (titleValue.equals(summaryValue)) {
-                context.report(ISSUE, element, context.getLocation(element), DESCRIPTION);
+            val titleValue = element.getAttribute(ATTR_TITLE)
+            val summaryValue = element.getAttribute(ATTR_SUMMARY)
+            if (titleValue == summaryValue) {
+                context.report(ISSUE, element, context.getLocation(element), DESCRIPTION)
             }
         }
     }
 
-
-    @Override
-    public boolean appliesTo(ResourceFolderType directoryType) {
-        return directoryType == ResourceFolderType.XML;
+    override fun appliesTo(folderType: ResourceFolderType): Boolean {
+        return folderType == ResourceFolderType.XML
     }
 }
