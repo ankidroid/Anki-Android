@@ -1,39 +1,34 @@
-package com.ichi2.anki.lint.rules;
+package com.ichi2.anki.lint.rules
 
-import com.android.tools.lint.client.api.JavaEvaluator;
-import com.android.tools.lint.detector.api.Detector;
-import com.android.tools.lint.detector.api.Implementation;
-import com.android.tools.lint.detector.api.Issue;
-import com.android.tools.lint.detector.api.JavaContext;
-import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.SourceCodeScanner;
-import com.google.common.annotations.VisibleForTesting;
-import com.ichi2.anki.lint.utils.Constants;
-import com.ichi2.anki.lint.utils.LintUtils;
-import com.intellij.psi.PsiMethod;
-
-import com.android.annotations.NonNull;
-import com.android.annotations.Nullable;
-import org.jetbrains.uast.UCallExpression;
-import org.jetbrains.uast.UClass;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.android.tools.lint.detector.api.*
+import com.google.common.annotations.VisibleForTesting
+import com.ichi2.anki.lint.utils.Constants
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import com.ichi2.anki.lint.utils.LintUtils
+import com.intellij.psi.PsiMethod
+import org.jetbrains.uast.UCallExpression
 
 /**
- * This custom Lint rules will raise an error if a developer uses the {@link System#currentTimeMillis()} method instead
+ * This custom Lint rules will raise an error if a developer uses the [System.currentTimeMillis] method instead
  * of using the time provided by the new Time class.
  */
-public class DirectSystemCurrentTimeMillisUsage extends Detector implements SourceCodeScanner {
+@KotlinCleanup("IDE lint")
+@KotlinCleanup("mutableListOf")
+class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
 
-    @VisibleForTesting
-    static final String ID = "DirectSystemCurrentTimeMillisUsage";
-    @VisibleForTesting
-    static final String DESCRIPTION = "Use the collection's getTime() method instead of System.currentTimeMillis()";
-    private static final String EXPLANATION = "Using time directly means time values cannot be controlled during testing. " +
-            "Time values like System.currentTimeMillis() must be obtained through the Time obtained from a Collection";
-    private static final Implementation implementation = new Implementation(DirectSystemCurrentTimeMillisUsage.class, Scope.JAVA_FILE_SCOPE);
-    public static final Issue ISSUE = Issue.create(
+    companion object {
+        @JvmField
+        @VisibleForTesting
+        val ID = "DirectSystemCurrentTimeMillisUsage"
+
+        @JvmField
+        @VisibleForTesting
+        val DESCRIPTION = "Use the collection's getTime() method instead of System.currentTimeMillis()"
+        private const val EXPLANATION = "Using time directly means time values cannot be controlled during testing. " +
+            "Time values like System.currentTimeMillis() must be obtained through the Time obtained from a Collection"
+        private val implementation = Implementation(DirectSystemCurrentTimeMillisUsage::class.java, Scope.JAVA_FILE_SCOPE)
+        @JvmField
+        val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,
             EXPLANATION,
@@ -41,34 +36,25 @@ public class DirectSystemCurrentTimeMillisUsage extends Detector implements Sour
             Constants.ANKI_TIME_PRIORITY,
             Constants.ANKI_TIME_SEVERITY,
             implementation
-    );
-
-
-    public DirectSystemCurrentTimeMillisUsage() {
+        )
     }
 
-
-    @Nullable
-    @Override
-    public List<String> getApplicableMethodNames() {
-        List<String> forbiddenSystemMethods = new ArrayList<>();
-        forbiddenSystemMethods.add("currentTimeMillis");
-        return forbiddenSystemMethods;
+    override fun getApplicableMethodNames(): List<String>? {
+        val forbiddenSystemMethods: MutableList<String> = ArrayList()
+        forbiddenSystemMethods.add("currentTimeMillis")
+        return forbiddenSystemMethods
     }
 
-
-    @Override
-    public void visitMethodCall(@NonNull JavaContext context, @NonNull UCallExpression node, @NonNull PsiMethod method) {
-        super.visitMethodCall(context, node, method);
-        JavaEvaluator evaluator = context.getEvaluator();
-        List<UClass> foundClasses = context.getUastFile().getClasses();
+    override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
+        super.visitMethodCall(context, node, method)
+        val evaluator = context.evaluator
+        val foundClasses = context.uastFile!!.classes
         if (!LintUtils.isAnAllowedClass(foundClasses, "SystemTime") && evaluator.isMemberInClass(method, "java.lang.System")) {
             context.report(
-                    ISSUE,
-                    context.getCallLocation(node, true, true),
-                    DESCRIPTION
-            );
+                ISSUE,
+                context.getCallLocation(node, true, true),
+                DESCRIPTION
+            )
         }
     }
-
 }
