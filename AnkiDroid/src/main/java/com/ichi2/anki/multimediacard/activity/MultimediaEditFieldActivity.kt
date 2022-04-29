@@ -16,549 +16,458 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.multimediacard.activity
 
-package com.ichi2.anki.multimediacard.activity;
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.LinearLayout
+import androidx.annotation.VisibleForTesting
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote
+import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.utils.CheckCameraPermission
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.Permissions
+import timber.log.Timber
+import java.io.File
+import java.text.DecimalFormat
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
+@KotlinCleanup("IDE-based lint")
+@KotlinCleanup("lateinit")
+class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCallback {
+    private var mField: IField? = null
+    private var mNote: IMultimediaEditableNote? = null
+    private var mFieldIndex = 0
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.core.app.ActivityCompat;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
+    @get:VisibleForTesting
+    var fieldController: IFieldController? = null
+        private set
 
-import com.ichi2.anki.AnkiActivity;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.fields.MediaClipField;
-import com.ichi2.anki.multimediacard.fields.AudioRecordingField;
-import com.ichi2.anki.multimediacard.fields.BasicControllerFactory;
-import com.ichi2.anki.multimediacard.fields.BasicImageFieldController;
-import com.ichi2.anki.multimediacard.fields.EFieldType;
-import com.ichi2.anki.multimediacard.fields.IControllerFactory;
-import com.ichi2.anki.multimediacard.fields.IField;
-import com.ichi2.anki.multimediacard.fields.IFieldController;
-import com.ichi2.anki.multimediacard.fields.ImageField;
-import com.ichi2.anki.multimediacard.fields.TextField;
-import com.ichi2.utils.CheckCameraPermission;
-import com.ichi2.utils.Permissions;
-
-import java.io.File;
-import java.text.DecimalFormat;
-
-import timber.log.Timber;
-
-public class MultimediaEditFieldActivity extends AnkiActivity
-        implements ActivityCompat.OnRequestPermissionsResultCallback {
-
-    public static final String EXTRA_RESULT_FIELD = "edit.field.result.field";
-    public static final String EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index";
-
-    public static final String EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index";
-    public static final String EXTRA_FIELD = "multim.card.ed.extra.field";
-    public static final String EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note";
-
-    private static final String BUNDLE_KEY_SHUT_OFF = "key.edit.field.shut.off";
-    private static final int REQUEST_AUDIO_PERMISSION = 0;
-    private static final int REQUEST_CAMERA_PERMISSION = 1;
-
-    public static final int IMAGE_LIMIT = 1024 * 1024; // 1MB in bytes
-
-    private IField mField;
-    private IMultimediaEditableNote mNote;
-    private int mFieldIndex;
-
-    private IFieldController mFieldController;
     /**
      * Cached copy of the current request to change a field
      * Used to access past state from OnRequestPermissionsResultCallback
-     * */
-    private ChangeUIRequest mCurrentChangeRequest;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+     */
+    private var mCurrentChangeRequest: ChangeUIRequest? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
-            return;
+            return
         }
-        super.onCreate(savedInstanceState);
-
-        Bundle controllerBundle = null;
+        super.onCreate(savedInstanceState)
+        var controllerBundle: Bundle? = null
         if (savedInstanceState != null) {
-            Timber.i("onCreate - saved bundle exists");
-            boolean b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false);
-            controllerBundle = savedInstanceState.getBundle("controllerBundle");
+            Timber.i("onCreate - saved bundle exists")
+            val b = savedInstanceState.getBoolean(BUNDLE_KEY_SHUT_OFF, false)
+            controllerBundle = savedInstanceState.getBundle("controllerBundle")
             if (controllerBundle == null && b) {
-                Timber.i("onCreate - saved bundle has BUNDLE_KEY_SHUT_OFF and no controller bundle, terminating");
-                finishCancel();
-                return;
+                Timber.i("onCreate - saved bundle has BUNDLE_KEY_SHUT_OFF and no controller bundle, terminating")
+                finishCancel()
+                return
             }
         }
-
-        setTitle(R.string.title_activity_edit_text);
-        setContentView(R.layout.multimedia_edit_field_activity);
-        View mainView = findViewById(android.R.id.content);
-        enableToolbar(mainView);
-
-        Intent intent = this.getIntent();
-        mField = getFieldFromIntent(intent);
-
-        mNote = (IMultimediaEditableNote) intent.getSerializableExtra(EXTRA_WHOLE_NOTE);
-
-        mFieldIndex = intent.getIntExtra(EXTRA_FIELD_INDEX, 0);
-
+        setTitle(R.string.title_activity_edit_text)
+        setContentView(R.layout.multimedia_edit_field_activity)
+        val mainView = findViewById<View>(android.R.id.content)
+        enableToolbar(mainView)
+        val intent = this.intent
+        mField = getFieldFromIntent(intent)
+        mNote = intent.getSerializableExtra(EXTRA_WHOLE_NOTE) as IMultimediaEditableNote?
+        mFieldIndex = intent.getIntExtra(EXTRA_FIELD_INDEX, 0)
         if (mField == null) {
-            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_failed), false);
-            finishCancel();
-            return;
+            UIUtils.showThemedToast(this, getString(R.string.multimedia_editor_failed), false)
+            finishCancel()
+            return
         }
-
-        recreateEditingUi(ChangeUIRequest.init(mField), controllerBundle);
+        recreateEditingUi(ChangeUIRequest.init(mField!!), controllerBundle)
     }
 
-    @VisibleForTesting
-    public static IField getFieldFromIntent(Intent intent) {
-        return (IField) intent.getExtras().getSerializable(EXTRA_FIELD);
+    private fun finishCancel() {
+        Timber.d("Completing activity via finishCancel()")
+        val resultData = Intent()
+        setResult(RESULT_CANCELED, resultData)
+        finishWithoutAnimation()
     }
 
-
-    private void finishCancel() {
-        Timber.d("Completing activity via finishCancel()");
-        Intent resultData = new Intent();
-        setResult(RESULT_CANCELED, resultData);
-        finishWithoutAnimation();
-    }
-
-    private boolean performPermissionRequest(IField field) {
+    private fun performPermissionRequest(field: IField): Boolean {
         // Request permission to record if audio field
-        if (field instanceof AudioRecordingField && !Permissions.canRecordAudio(this)) {
-            Timber.d("Requesting Audio Permissions");
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.RECORD_AUDIO},
-                    REQUEST_AUDIO_PERMISSION);
-            return true;
+        if (field is AudioRecordingField && !Permissions.canRecordAudio(this)) {
+            Timber.d("Requesting Audio Permissions")
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.RECORD_AUDIO),
+                REQUEST_AUDIO_PERMISSION
+            )
+            return true
         }
 
         // Request permission to use the camera if image field
-        if (field instanceof ImageField && CheckCameraPermission.manifestContainsPermission(this) &&
-                !Permissions.canUseCamera(this)) {
-            Timber.d("Requesting Camera Permissions");
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
-                    REQUEST_CAMERA_PERMISSION);
-            return true;
+        if (field is ImageField && CheckCameraPermission.manifestContainsPermission(this) &&
+            !Permissions.canUseCamera(this)
+        ) {
+            Timber.d("Requesting Camera Permissions")
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.CAMERA),
+                REQUEST_CAMERA_PERMISSION
+            )
+            return true
         }
-
-        return false;
+        return false
     }
 
-    /** Sets various properties required for IFieldController to be in a valid state */
-    private void setupUIController(IFieldController fieldController, @Nullable Bundle savedInstanceState) {
-        fieldController.setField(mField);
-        fieldController.setFieldIndex(mFieldIndex);
-        fieldController.setNote(mNote);
-        fieldController.setEditingActivity(this);
-        fieldController.loadInstanceState(savedInstanceState);
+    /** Sets various properties required for IFieldController to be in a valid state  */
+    @KotlinCleanup("scope function")
+    private fun setupUIController(fieldController: IFieldController, savedInstanceState: Bundle?) {
+        fieldController.setField(mField!!)
+        fieldController.setFieldIndex(mFieldIndex)
+        fieldController.setNote(mNote)
+        fieldController.setEditingActivity(this)
+        fieldController.loadInstanceState(savedInstanceState)
     }
 
-    private void recreateEditingUi(ChangeUIRequest newUI) {
-        this.recreateEditingUi(newUI, null);
-    }
+    private fun recreateEditingUi(newUI: ChangeUIRequest, savedInstanceState: Bundle? = null) {
+        Timber.d("recreateEditingUi()")
 
-    private void recreateEditingUi(ChangeUIRequest newUI, @Nullable Bundle savedInstanceState) {
-        Timber.d("recreateEditingUi()");
+        // Permissions are checked async, save our current state to allow continuation
+        mCurrentChangeRequest = newUI
 
-        //Permissions are checked async, save our current state to allow continuation
-        mCurrentChangeRequest = newUI;
-
-        //If we went through the permission check once, we don't need to do it again.
-        //As we only get here a second time if we have the required permissions
-        if (newUI.getRequiresPermissionCheck() && performPermissionRequest(newUI.getField())) {
-            newUI.markAsPermissionRequested();
-            return;
+        // If we went through the permission check once, we don't need to do it again.
+        // As we only get here a second time if we have the required permissions
+        if (newUI.requiresPermissionCheck && performPermissionRequest(newUI.field)) {
+            newUI.markAsPermissionRequested()
+            return
         }
-
-        IControllerFactory controllerFactory = BasicControllerFactory.getInstance();
-
-        IFieldController fieldController = controllerFactory.createControllerForField(newUI.getField());
-
+        val controllerFactory = BasicControllerFactory.instance
+        val fieldController = controllerFactory.createControllerForField(newUI.field)
         if (fieldController == null) {
-            Timber.w("Field controller creation failed");
-            UIRecreationHandler.onControllerCreationFailed(newUI, this);
-            return;
+            Timber.w("Field controller creation failed")
+            UIRecreationHandler.onControllerCreationFailed(newUI, this)
+            return
         }
-
-        UIRecreationHandler.onPreFieldControllerReplacement(mFieldController);
-
-        mFieldController = fieldController;
-        mField = newUI.getField();
-
-        setupUIController(mFieldController, savedInstanceState);
-
-        LinearLayout linearLayout = findViewById(R.id.LinearLayoutInScrollViewFieldEdit);
-
-        linearLayout.removeAllViews();
-
-        mFieldController.createUI(this, linearLayout);
-
-        UIRecreationHandler.onPostUICreation(newUI, this);
+        UIRecreationHandler.onPreFieldControllerReplacement(this.fieldController)
+        this.fieldController = fieldController
+        mField = newUI.field
+        setupUIController(this.fieldController!!, savedInstanceState)
+        val linearLayout = findViewById<LinearLayout>(R.id.LinearLayoutInScrollViewFieldEdit)
+        linearLayout.removeAllViews()
+        fieldController.createUI(this, linearLayout)
+        UIRecreationHandler.onPostUICreation(newUI, this)
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Timber.d("onCreateOptionsMenu() - mField.getType() = %s", mField.getType());
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        Timber.d("onCreateOptionsMenu() - mField.getType() = %s", mField!!.type)
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_edit_text, menu);
-        menu.findItem(R.id.multimedia_edit_field_to_text).setVisible(mField.getType() != EFieldType.TEXT);
-        menu.findItem(R.id.multimedia_edit_field_to_audio).setVisible(mField.getType() != EFieldType.AUDIO_RECORDING);
-        menu.findItem(R.id.multimedia_edit_field_to_audio_clip).setVisible(mField.getType() != EFieldType.MEDIA_CLIP);
-        menu.findItem(R.id.multimedia_edit_field_to_image).setVisible(mField.getType() != EFieldType.IMAGE);
-        return true;
+        menuInflater.inflate(R.menu.activity_edit_text, menu)
+        menu.findItem(R.id.multimedia_edit_field_to_text).isVisible = mField!!.type !== EFieldType.TEXT
+        menu.findItem(R.id.multimedia_edit_field_to_audio).isVisible = mField!!.type !== EFieldType.AUDIO_RECORDING
+        menu.findItem(R.id.multimedia_edit_field_to_audio_clip).isVisible = mField!!.type !== EFieldType.MEDIA_CLIP
+        menu.findItem(R.id.multimedia_edit_field_to_image).isVisible = mField!!.type !== EFieldType.IMAGE
+        return true
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
         if (itemId == R.id.multimedia_edit_field_to_text) {
-            Timber.i("To text field button pressed");
-            toTextField();
-            return true;
+            Timber.i("To text field button pressed")
+            toTextField()
+            return true
         } else if (itemId == R.id.multimedia_edit_field_to_image) {
-            Timber.i("To image button pressed");
-            toImageField();
-            return true;
+            Timber.i("To image button pressed")
+            toImageField()
+            return true
         } else if (itemId == R.id.multimedia_edit_field_to_audio) {
-            Timber.i("To audio recording button pressed");
-            toAudioRecordingField();
-            return true;
+            Timber.i("To audio recording button pressed")
+            toAudioRecordingField()
+            return true
         } else if (itemId == R.id.multimedia_edit_field_to_audio_clip) {
-            Timber.i("To audio clip button pressed");
-            toAudioClipField();
-            return true;
+            Timber.i("To audio clip button pressed")
+            toAudioClipField()
+            return true
         } else if (itemId == R.id.multimedia_edit_field_done) {
-            Timber.i("Save button pressed");
-            done();
-            return true;
+            Timber.i("Save button pressed")
+            done()
+            return true
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-
-    protected void done() {
-        mFieldController.onDone();
-
-        boolean bChangeToText = false;
-
-        if (mField.getType() == EFieldType.IMAGE) {
-            if (mField.getImagePath() == null) {
-                bChangeToText = true;
+    @KotlinCleanup("rename: bChangeToText")
+    protected fun done() {
+        fieldController!!.onDone()
+        var bChangeToText = false
+        if (mField!!.type === EFieldType.IMAGE) {
+            if (mField!!.imagePath == null) {
+                bChangeToText = true
             }
-
             if (!bChangeToText) {
-                File f = new File(mField.getImagePath());
+                val f = File(mField!!.imagePath)
                 if (!f.exists()) {
-                    bChangeToText = true;
+                    bChangeToText = true
                 } else {
-                    long length = f.length();
+                    val length = f.length()
                     if (length > IMAGE_LIMIT) {
-                        showLargeFileCropDialog((float) (1.0 * length / IMAGE_LIMIT));
-                        return;
+                        showLargeFileCropDialog((1.0 * length / IMAGE_LIMIT).toFloat())
+                        return
                     }
                 }
             }
-        } else if (mField.getType() == EFieldType.AUDIO_RECORDING) {
-            if (mField.getAudioPath() == null) {
-                bChangeToText = true;
+        } else if (mField!!.type === EFieldType.AUDIO_RECORDING) {
+            if (mField!!.audioPath == null) {
+                bChangeToText = true
             }
-
             if (!bChangeToText) {
-                File f = new File(mField.getAudioPath());
+                val f = File(mField!!.audioPath!!)
                 if (!f.exists()) {
-                    bChangeToText = true;
+                    bChangeToText = true
                 }
             }
         }
-
         if (bChangeToText) {
-            mField = null;
+            mField = null
         }
-        saveAndExit();
+        saveAndExit()
     }
 
-
-    protected void toAudioRecordingField() {
-        if (mField.getType() != EFieldType.AUDIO_RECORDING) {
-            ChangeUIRequest request = ChangeUIRequest.uiChange(new AudioRecordingField());
-            recreateEditingUi(request);
-        }
-    }
-
-    protected void toAudioClipField() {
-        if (mField.getType() != EFieldType.MEDIA_CLIP) {
-            ChangeUIRequest request = ChangeUIRequest.uiChange(new MediaClipField());
-            recreateEditingUi(request);
+    protected fun toAudioRecordingField() {
+        if (mField!!.type !== EFieldType.AUDIO_RECORDING) {
+            val request = ChangeUIRequest.uiChange(AudioRecordingField())
+            recreateEditingUi(request)
         }
     }
 
-
-    protected void toImageField() {
-        if (mField.getType() != EFieldType.IMAGE) {
-            ChangeUIRequest request = ChangeUIRequest.uiChange(new ImageField());
-            recreateEditingUi(request);
-        }
-
-    }
-
-
-    protected void toTextField() {
-        if (mField.getType() != EFieldType.TEXT) {
-            ChangeUIRequest request = ChangeUIRequest.uiChange(new TextField());
-            recreateEditingUi(request);
+    protected fun toAudioClipField() {
+        if (mField!!.type !== EFieldType.MEDIA_CLIP) {
+            val request = ChangeUIRequest.uiChange(MediaClipField())
+            recreateEditingUi(request)
         }
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Timber.d("onActivityResult()");
-        if (mFieldController != null) {
-            mFieldController.onActivityResult(requestCode, resultCode, data);
+    protected fun toImageField() {
+        if (mField!!.type !== EFieldType.IMAGE) {
+            val request = ChangeUIRequest.uiChange(ImageField())
+            recreateEditingUi(request)
         }
-
-        super.onActivityResult(requestCode, resultCode, data);
-        supportInvalidateOptionsMenu();
     }
 
+    protected fun toTextField() {
+        if (mField!!.type !== EFieldType.TEXT) {
+            val request = ChangeUIRequest.uiChange(TextField())
+            recreateEditingUi(request)
+        }
+    }
 
-    private void recreateEditingUIUsingCachedRequest() {
-        Timber.d("recreateEditingUIUsingCachedRequest()");
+    @Suppress("deprecation") // onActivityResult + supportInvalidateOptionsMenu
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Timber.d("onActivityResult()")
+        if (fieldController != null) {
+            fieldController!!.onActivityResult(requestCode, resultCode, data)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+        supportInvalidateOptionsMenu()
+    }
+
+    private fun recreateEditingUIUsingCachedRequest() {
+        Timber.d("recreateEditingUIUsingCachedRequest()")
         if (mCurrentChangeRequest == null) {
-            cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before using cached request");
-            return;
+            cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before using cached request")
+            return
         }
-        recreateEditingUi(mCurrentChangeRequest);
+        recreateEditingUi(mCurrentChangeRequest!!)
     }
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (mCurrentChangeRequest == null) {
-            cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before requesting permissions");
-            return;
+            cancelActivityWithAssertionFailure("mCurrentChangeRequest should be set before requesting permissions")
+            return
         }
-
-        Timber.d("onRequestPermissionsResult. Code: %d", requestCode);
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.length == 1) {
-
+        Timber.d("onRequestPermissionsResult. Code: %d", requestCode)
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.size == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                recreateEditingUIUsingCachedRequest();
-                return;
+                recreateEditingUIUsingCachedRequest()
+                return
             }
-
-            UIUtils.showThemedToast(this,
-                    getResources().getString(R.string.multimedia_editor_audio_permission_refused),
-                    true);
-
-            UIRecreationHandler.onRequiredPermissionDenied(mCurrentChangeRequest, this);
-
+            UIUtils.showThemedToast(
+                this,
+                resources.getString(R.string.multimedia_editor_audio_permission_refused),
+                true
+            )
+            UIRecreationHandler.onRequiredPermissionDenied(mCurrentChangeRequest!!, this)
         }
-        if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.length == 1) {
+        if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.size == 1) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                UIUtils.showThemedToast(this,
-                        getResources().getString(R.string.multimedia_editor_camera_permission_refused),
-                        true);
+                UIUtils.showThemedToast(
+                    this,
+                    resources.getString(R.string.multimedia_editor_camera_permission_refused),
+                    true
+                )
             }
 
             // We check permissions to set visibility on the camera button, just recreate
-            recreateEditingUIUsingCachedRequest();
+            recreateEditingUIUsingCachedRequest()
         }
     }
 
-
-    private void cancelActivityWithAssertionFailure(String logMessage) {
-        Timber.e(logMessage);
-        UIUtils.showThemedToast(this, getString(R.string.mutimedia_editor_assertion_failed), false);
-        finishCancel();
+    private fun cancelActivityWithAssertionFailure(logMessage: String) {
+        Timber.e(logMessage)
+        UIUtils.showThemedToast(this, getString(R.string.mutimedia_editor_assertion_failed), false)
+        finishCancel()
     }
 
-
-    public void handleFieldChanged(IField newField) {
-        recreateEditingUi(ChangeUIRequest.fieldChange(newField));
+    fun handleFieldChanged(newField: IField) {
+        recreateEditingUi(ChangeUIRequest.fieldChange(newField))
     }
 
-    public void showLargeFileCropDialog(float length) {
-        BasicImageFieldController imageFieldController = (BasicImageFieldController) mFieldController;
-        DecimalFormat decimalFormat = new DecimalFormat(".00");
-        String size = decimalFormat.format(length);
-        String content = getString(R.string.save_dialog_content, size);
-        imageFieldController.showCropDialog(content, (dialog, which) -> saveAndExit());
+    fun showLargeFileCropDialog(length: Float) {
+        val imageFieldController = fieldController as BasicImageFieldController?
+        val decimalFormat = DecimalFormat(".00")
+        val size = decimalFormat.format(length.toDouble())
+        val content = getString(R.string.save_dialog_content, size)
+        imageFieldController!!.showCropDialog(content) { _, _ -> saveAndExit() }
     }
 
-
-    private void saveAndExit() {
-        Intent resultData = new Intent();
-        resultData.putExtra(EXTRA_RESULT_FIELD, mField);
-        resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex);
-        setResult(RESULT_OK, resultData);
-        finishWithoutAnimation();
+    @KotlinCleanup("scope function")
+    private fun saveAndExit() {
+        val resultData = Intent()
+        resultData.putExtra(EXTRA_RESULT_FIELD, mField)
+        resultData.putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex)
+        setResult(RESULT_OK, resultData)
+        finishWithoutAnimation()
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mFieldController != null) {
-            mFieldController.onDestroy();
+    override fun onDestroy() {
+        if (fieldController != null) {
+            fieldController!!.onDestroy()
         }
-        super.onDestroy();
+        super.onDestroy()
     }
 
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        Timber.d("onSaveInstanceState - saving state");
+    override fun onSaveInstanceState(outState: Bundle) {
+        Timber.d("onSaveInstanceState - saving state")
 
         // This is used to tell the whole activity to shut down if it is restored from Activity restart.
         // Why? I am not really sure. Perhaps to avoid terrible bugs due to not implementing things correctly?
-        outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true);
+        outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true)
 
         // We will give field controllers a chance to save / restore across restarts though.
         // If this bundle is not null, on restore, we should continue across Activity restart.
-        if (mFieldController != null) {
-            Bundle controllerBundle = mFieldController.saveInstanceState();
+        if (fieldController != null) {
+            val controllerBundle = fieldController!!.saveInstanceState()
             if (controllerBundle != null) {
-                outState.putBundle("controllerBundle", mFieldController.saveInstanceState());
+                outState.putBundle("controllerBundle", fieldController!!.saveInstanceState())
             }
         }
-        super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState)
     }
 
-    /** Intermediate class to hold state for the onRequestPermissionsResult callback */
-    private final static class ChangeUIRequest {
-        @NonNull
-        private final IField mNewField;
-        private final int mState;
-        private boolean mRequiresPermissionCheck = true;
+    /** Intermediate class to hold state for the onRequestPermissionsResult callback  */
+    @KotlinCleanup("change constants to enum")
+    private class ChangeUIRequest private constructor(val field: IField, val state: Int) {
+        var requiresPermissionCheck = true
+            private set
 
-        /** Initial request when activity is created */
-        public static final int ACTIVITY_LOAD = 0;
-        /** A change in UI via the menu options. Cancellable */
-        public static final int UI_CHANGE = 1;
-        /** A change in UI via access to the activity. Not (yet) cancellable */
-        public static final int EXTERNAL_FIELD_CHANGE = 2;
-
-        private ChangeUIRequest(@NonNull IField field, int state) {
-            this.mNewField = field;
-            this.mState = state;
+        fun markAsPermissionRequested() {
+            requiresPermissionCheck = false
         }
 
-        @NonNull
-        private IField getField() {
-            return mNewField;
-        }
+        companion object {
+            /** Initial request when activity is created  */
+            const val ACTIVITY_LOAD = 0
 
-        private static ChangeUIRequest init(@NonNull IField field) {
-            return new ChangeUIRequest(field, ACTIVITY_LOAD);
-        }
+            /** A change in UI via the menu options. Cancellable  */
+            const val UI_CHANGE = 1
 
-        private static ChangeUIRequest uiChange(@NonNull IField field) {
-            return new ChangeUIRequest(field, UI_CHANGE);
-        }
+            /** A change in UI via access to the activity. Not (yet) cancellable  */
+            const val EXTERNAL_FIELD_CHANGE = 2
+            fun init(field: IField): ChangeUIRequest {
+                return ChangeUIRequest(field, ACTIVITY_LOAD)
+            }
 
-        private static ChangeUIRequest fieldChange(@NonNull IField field) {
-            return new ChangeUIRequest(field, EXTERNAL_FIELD_CHANGE);
-        }
+            fun uiChange(field: IField): ChangeUIRequest {
+                return ChangeUIRequest(field, UI_CHANGE)
+            }
 
-        private boolean getRequiresPermissionCheck() {
-            return mRequiresPermissionCheck;
-        }
-
-        private void markAsPermissionRequested() {
-            mRequiresPermissionCheck = false;
-        }
-
-        private int getState() {
-            return mState;
+            fun fieldChange(field: IField): ChangeUIRequest {
+                return ChangeUIRequest(field, EXTERNAL_FIELD_CHANGE)
+            }
         }
     }
 
     /**
      * Class to contain logic relating to decisions made when recreating a UI.
      * Can later be converted to a non-static class to allow testing of the logic.
-     * */
-    private static final class UIRecreationHandler {
-
-        /** Raised just before the field controller is replaced */
-        private static void onPreFieldControllerReplacement(IFieldController previousFieldController) {
-            Timber.d("onPreFieldControllerReplacement");
-            //on init, we don't need to do anything
+     */
+    private object UIRecreationHandler {
+        /** Raised just before the field controller is replaced  */
+        fun onPreFieldControllerReplacement(previousFieldController: IFieldController?) {
+            Timber.d("onPreFieldControllerReplacement")
+            // on init, we don't need to do anything
             if (previousFieldController == null) {
-                return;
+                return
             }
 
-            //Otherwise, clean up the previous screen.
-            previousFieldController.onFocusLost();
+            // Otherwise, clean up the previous screen.
+            previousFieldController.onFocusLost()
         }
 
         /**
          * Raised when we were supplied with a field that could not generate a UI controller
          * Currently: We used a field for which we didn't know how to generate the UI
-         * */
-        private static void onControllerCreationFailed(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
-            Timber.d("onControllerCreationFailed. State: %d", request.getState());
-            switch (request.getState()) {
-                case ChangeUIRequest.ACTIVITY_LOAD:
-                case ChangeUIRequest.EXTERNAL_FIELD_CHANGE:
-                    //TODO: (Optional) change in functionality. Previously we'd be left with a menu, but no UI.
-                    activity.finishCancel();
-                    break;
-                case ChangeUIRequest.UI_CHANGE:
-                    break;
-                default:
-                    Timber.e("onControllerCreationFailed: Unhandled state: %s", request.getState());
-                    break;
+         */
+        fun onControllerCreationFailed(request: ChangeUIRequest, activity: MultimediaEditFieldActivity) {
+            Timber.d("onControllerCreationFailed. State: %d", request.state)
+            when (request.state) {
+                ChangeUIRequest.ACTIVITY_LOAD, ChangeUIRequest.EXTERNAL_FIELD_CHANGE -> // TODO: (Optional) change in functionality. Previously we'd be left with a menu, but no UI.
+                    activity.finishCancel()
+                ChangeUIRequest.UI_CHANGE -> {}
+                else -> Timber.e("onControllerCreationFailed: Unhandled state: %s", request.state)
             }
         }
 
-        private static void onPostUICreation(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
-            Timber.d("onPostUICreation. State: %d", request.getState());
-            switch (request.getState()) {
-                case ChangeUIRequest.UI_CHANGE:
-                case ChangeUIRequest.EXTERNAL_FIELD_CHANGE:
-                    activity.supportInvalidateOptionsMenu();
-                    break;
-                case ChangeUIRequest.ACTIVITY_LOAD:
-                    break;
-                default:
-                    Timber.e("onPostUICreation: Unhandled state: %s", request.getState());
-                    break;
+        @Suppress("deprecation") // supportInvalidateOptionsMenu
+        fun onPostUICreation(request: ChangeUIRequest, activity: MultimediaEditFieldActivity) {
+            Timber.d("onPostUICreation. State: %d", request.state)
+            when (request.state) {
+                ChangeUIRequest.UI_CHANGE, ChangeUIRequest.EXTERNAL_FIELD_CHANGE -> activity.supportInvalidateOptionsMenu()
+                ChangeUIRequest.ACTIVITY_LOAD -> {}
+                else -> Timber.e("onPostUICreation: Unhandled state: %s", request.state)
             }
         }
 
-        private static void onRequiredPermissionDenied(ChangeUIRequest request, MultimediaEditFieldActivity activity) {
-            Timber.d("onRequiredPermissionDenied. State: %d", request.getState());
-            switch (request.mState) {
-                case ChangeUIRequest.ACTIVITY_LOAD:
-                    activity.finishCancel();
-                    break;
-                case ChangeUIRequest.UI_CHANGE:
-                    return;
-                case ChangeUIRequest.EXTERNAL_FIELD_CHANGE:
-                    activity.recreateEditingUIUsingCachedRequest();
-                    break;
-                default:
-                    Timber.e("onRequiredPermissionDenied: Unhandled state: %s", request.getState());
-                    activity.finishCancel();
-                    break;
+        fun onRequiredPermissionDenied(request: ChangeUIRequest, activity: MultimediaEditFieldActivity) {
+            Timber.d("onRequiredPermissionDenied. State: %d", request.state)
+            when (request.state) {
+                ChangeUIRequest.ACTIVITY_LOAD -> activity.finishCancel()
+                ChangeUIRequest.UI_CHANGE -> return
+                ChangeUIRequest.EXTERNAL_FIELD_CHANGE -> activity.recreateEditingUIUsingCachedRequest()
+                else -> {
+                    Timber.e("onRequiredPermissionDenied: Unhandled state: %s", request.state)
+                    activity.finishCancel()
+                }
             }
         }
     }
 
-    @VisibleForTesting
-    IFieldController getFieldController() {
-        return mFieldController;
+    companion object {
+        const val EXTRA_RESULT_FIELD = "edit.field.result.field"
+        const val EXTRA_RESULT_FIELD_INDEX = "edit.field.result.field.index"
+        const val EXTRA_FIELD_INDEX = "multim.card.ed.extra.field.index"
+        const val EXTRA_FIELD = "multim.card.ed.extra.field"
+        const val EXTRA_WHOLE_NOTE = "multim.card.ed.extra.whole.note"
+        private const val BUNDLE_KEY_SHUT_OFF = "key.edit.field.shut.off"
+        private const val REQUEST_AUDIO_PERMISSION = 0
+        private const val REQUEST_CAMERA_PERMISSION = 1
+        const val IMAGE_LIMIT = 1024 * 1024 // 1MB in bytes
+        @KotlinCleanup("see if we can make this non-null")
+        @VisibleForTesting
+        fun getFieldFromIntent(intent: Intent): IField? {
+            return intent.extras!!.getSerializable(EXTRA_FIELD) as IField?
+        }
     }
 }
