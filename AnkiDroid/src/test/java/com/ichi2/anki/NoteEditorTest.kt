@@ -82,7 +82,7 @@ class NoteEditorTest : RobolectricTest() {
 
         // Assert
         val intent = shadowOf(n).nextStartedActivityForResult
-        val actualField = MultimediaEditFieldActivity.getFieldFromIntent(intent.intent)
+        val actualField = MultimediaEditFieldActivity.getFieldFromIntent(intent.intent)!!
         assertThat("Provided value should be the updated value", actualField.formattedValue, equalTo("Good Afternoon"))
     }
 
