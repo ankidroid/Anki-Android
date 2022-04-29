@@ -27,14 +27,37 @@ import com.ichi2.utils.KotlinCleanup
 /**
  * Based on https://gist.github.com/kevin-barrientos/d75a5baa13a686367d45d17aaec7f030.
  */
-@KotlinCleanup("IDE-based lint")
 class CheckBoxTriStates : AppCompatCheckBox {
     enum class State {
         INDETERMINATE, UNCHECKED, CHECKED
     }
 
     private var mState: State = State.UNCHECKED
-    @KotlinCleanup("move setter function here")
+
+    override fun setChecked(checked: Boolean) {
+        mState = if (checked) {
+            State.CHECKED
+        } else {
+            State.UNCHECKED
+        }
+    }
+
+    private fun setCycleBackToIndeterminate(cycleBackToIndeterminate: Boolean) {
+        mCycleBackToIndeterminate = cycleBackToIndeterminate
+    }
+
+    override fun setOnCheckedChangeListener(listener: OnCheckedChangeListener?) {
+
+        // we never truly set the listener to the client implementation, instead we only hold
+        // a reference to it and invoke it when needed.
+        if (mPrivateListener !== listener) {
+            mClientListener = listener
+        }
+
+        // always use our implementation
+        super.setOnCheckedChangeListener(mPrivateListener)
+    }
+
     private var mCycleBackToIndeterminate = false
 
     /**
@@ -70,24 +93,21 @@ class CheckBoxTriStates : AppCompatCheckBox {
         init(context, attrs)
     }
 
-    @KotlinCleanup("use ?.let")
     var state: State
         get() = mState
         set(state) {
             if (!mRestoring && mState != state) {
                 mState = state
-                if (mClientListener != null) {
-                    mClientListener!!.onCheckedChanged(this, this.isChecked)
-                }
+                mClientListener?.onCheckedChanged(this, this.isChecked)
                 updateBtn()
             }
         }
 
     override fun toggle() {
-        when (mState) {
-            State.INDETERMINATE -> state = State.UNCHECKED
-            State.UNCHECKED -> state = State.CHECKED
-            State.CHECKED -> state = if (mCycleBackToIndeterminate) {
+        state = when (mState) {
+            State.INDETERMINATE -> State.UNCHECKED
+            State.UNCHECKED -> State.CHECKED
+            State.CHECKED -> if (mCycleBackToIndeterminate) {
                 State.INDETERMINATE
             } else {
                 State.UNCHECKED
@@ -95,46 +115,24 @@ class CheckBoxTriStates : AppCompatCheckBox {
         }
     }
 
-    @KotlinCleanup("Should be according to code style.")
-    override fun setChecked(checked: Boolean) {
-        mState = if (checked) State.CHECKED else State.UNCHECKED
-    }
-
     override fun isChecked(): Boolean {
         return mState != State.UNCHECKED
     }
 
-    fun setCycleBackToIndeterminate(cycleBackToIndeterminate: Boolean) {
-        mCycleBackToIndeterminate = cycleBackToIndeterminate
-    }
-
-    override fun setOnCheckedChangeListener(listener: OnCheckedChangeListener?) {
-
-        // we never truly set the listener to the client implementation, instead we only hold
-        // a reference to it and invoke it when needed.
-        if (mPrivateListener !== listener) {
-            mClientListener = listener
-        }
-
-        // always use our implementation
-        super.setOnCheckedChangeListener(mPrivateListener)
-    }
-
     override fun onSaveInstanceState(): Parcelable? {
         val superState = super.onSaveInstanceState()
-        val ss = SavedState(superState)
-        ss.state = mState
-        ss.cycleBackToIndeterminate = mCycleBackToIndeterminate
-        return ss
+        val savedState = SavedState(superState)
+        savedState.state = mState
+        savedState.cycleBackToIndeterminate = mCycleBackToIndeterminate
+        return savedState
     }
 
-    @KotlinCleanup("fix 'ss' variable name")
     override fun onRestoreInstanceState(state: Parcelable) {
         mRestoring = true // indicates that the ui is restoring its state
-        val ss = state as SavedState
-        super.onRestoreInstanceState(ss.superState)
-        this.state = ss.state
-        setCycleBackToIndeterminate(ss.cycleBackToIndeterminate)
+        val savedState = state as SavedState
+        super.onRestoreInstanceState(savedState.superState)
+        this.state = savedState.state
+        setCycleBackToIndeterminate(savedState.cycleBackToIndeterminate)
         requestLayout()
         mRestoring = false
     }
@@ -155,8 +153,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
     }
 
     private fun updateBtn() {
-        val btnDrawable: Int
-        btnDrawable = when (mState) {
+        val btnDrawable: Int = when (mState) {
             State.UNCHECKED -> R.drawable.ic_baseline_check_box_outline_blank_24
             State.CHECKED -> R.drawable.ic_baseline_check_box_24
             else -> R.drawable.ic_baseline_indeterminate_check_box_24
