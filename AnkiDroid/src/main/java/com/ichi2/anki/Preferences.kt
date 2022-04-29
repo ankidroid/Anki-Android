@@ -140,6 +140,12 @@ class Preferences : AnkiActivity() {
             return
 
         actionBar.title = when (fragment) {
+            is GeneralSettingsFragment -> resources.getString(R.string.pref_cat_general)
+            is ReviewingSettingsFragment -> resources.getString(R.string.pref_cat_reviewing)
+            is GesturesSettingsFragment -> resources.getString(R.string.pref_cat_gestures)
+            is ControlsSettingsFragment -> resources.getString(R.string.pref_cat_controls)
+            is AdvancedSettingsFragment -> resources.getString(R.string.pref_cat_advanced)
+            is AppearanceSettingsFragment -> resources.getString(R.string.pref_cat_appearance)
             is AdvancedStatisticsSettingsFragment -> resources.getString(R.string.advanced_statistics_title)
             is CustomSyncServerSettingsFragment -> resources.getString(R.string.custom_sync_server_title)
             is CustomButtonsSettingsFragment -> resources.getString(R.string.custom_buttons)
