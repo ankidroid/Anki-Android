@@ -13,37 +13,30 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.lint.rules
 
-package com.ichi2.anki.lint.rules;
+import com.android.tools.lint.detector.api.*
+import com.google.common.annotations.VisibleForTesting
+import com.ichi2.anki.lint.utils.Constants
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import com.intellij.psi.PsiMethod
+import org.jetbrains.uast.UCallExpression
 
-import com.android.tools.lint.client.api.JavaEvaluator;
-import com.android.tools.lint.detector.api.Detector;
-import com.android.tools.lint.detector.api.Implementation;
-import com.android.tools.lint.detector.api.Issue;
-import com.android.tools.lint.detector.api.JavaContext;
-import com.android.tools.lint.detector.api.LintFix;
-import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.SourceCodeScanner;
-import com.google.common.annotations.VisibleForTesting;
-import com.ichi2.anki.lint.utils.Constants;
-import com.intellij.psi.PsiMethod;
+@KotlinCleanup("IDE Lint")
+@KotlinCleanup("mutableListOf")
+class PrintStackTraceUsage : Detector(), SourceCodeScanner {
 
-import com.android.annotations.NonNull;
-import com.android.annotations.Nullable;
-import org.jetbrains.uast.UCallExpression;
+    companion object {
+        @JvmField
+        @VisibleForTesting
+        val ID = "PrintStackTraceUsage"
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class PrintStackTraceUsage extends Detector implements SourceCodeScanner {
-
-    @VisibleForTesting
-    static final String ID = "PrintStackTraceUsage";
-    @VisibleForTesting
-    static final String DESCRIPTION = "Use Timber to log exceptions (typically Timber.w if non-fatal)";
-    private static final String EXPLANATION = "AnkiDroid exclusively uses Timber for logging exceptions. See: https://github.com/ankidroid/Anki-Android/wiki/Code-style#logging";
-    private static final Implementation implementation = new Implementation(PrintStackTraceUsage.class, Scope.JAVA_FILE_SCOPE);
-    public static final Issue ISSUE = Issue.create(
+        @VisibleForTesting
+        val DESCRIPTION = "Use Timber to log exceptions (typically Timber.w if non-fatal)"
+        private const val EXPLANATION = "AnkiDroid exclusively uses Timber for logging exceptions. See: https://github.com/ankidroid/Anki-Android/wiki/Code-style#logging"
+        private val implementation = Implementation(PrintStackTraceUsage::class.java, Scope.JAVA_FILE_SCOPE)
+        @JvmField
+        val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,
             EXPLANATION,
@@ -51,42 +44,37 @@ public class PrintStackTraceUsage extends Detector implements SourceCodeScanner 
             Constants.ANKI_CODE_STYLE_PRIORITY,
             Constants.ANKI_CODE_STYLE_SEVERITY,
             implementation
-    );
-
-    @Nullable
-    @Override
-    public List<String> getApplicableMethodNames() {
-        List<String> forbiddenMethods = new ArrayList<>();
-        forbiddenMethods.add("printStackTrace");
-        return forbiddenMethods;
+        )
     }
 
+    override fun getApplicableMethodNames(): List<String>? {
+        val forbiddenMethods: MutableList<String> = ArrayList()
+        forbiddenMethods.add("printStackTrace")
+        return forbiddenMethods
+    }
 
-    @Override
-    public void visitMethodCall(@NonNull JavaContext context, @NonNull UCallExpression node, @NonNull PsiMethod method) {
-        super.visitMethodCall(context, node, method);
-        JavaEvaluator evaluator = context.getEvaluator();
+    @KotlinCleanup("remove comment about semicolon")
+    override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
+        super.visitMethodCall(context, node, method)
+        val evaluator = context.evaluator
 
         // if we have arguments, we're not writing to stdout, so it's an OK call
-        boolean hasArguments = node.getValueArgumentCount() != 0;
+        val hasArguments = node.valueArgumentCount != 0
         if (hasArguments || !evaluator.isMemberInSubClassOf(method, "java.lang.Throwable", false)) {
-            return;
+            return
         }
-
-        LintFix fix = LintFix.create()
-                .replace()
-                .select(node.asSourceString())
-                // We don't need a semicolon here
-                .with("Timber.w(" + node.getReceiver().asSourceString() + ")")
-                .autoFix()
-                .build();
-
+        val fix = LintFix.create()
+            .replace()
+            .select(node.asSourceString())
+            // We don't need a semicolon here
+            .with("Timber.w(" + node.receiver!!.asSourceString() + ")")
+            .autoFix()
+            .build()
         context.report(
-                ISSUE,
-                context.getCallLocation(node, true, true),
-                DESCRIPTION,
-                fix
-        );
+            ISSUE,
+            context.getCallLocation(node, true, true),
+            DESCRIPTION,
+            fix
+        )
     }
-
 }
