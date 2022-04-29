@@ -13,32 +13,32 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.lint.rules
 
-package com.ichi2.anki.lint.rules;
+import com.android.tools.lint.detector.api.*
+import com.google.common.annotations.VisibleForTesting
+import com.ichi2.anki.lint.utils.Constants
+import com.ichi2.anki.lint.utils.ImportStatementDetector
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import org.jetbrains.uast.UImportStatement
 
-import com.android.annotations.NonNull;
-import com.android.tools.lint.detector.api.Implementation;
-import com.android.tools.lint.detector.api.Issue;
-import com.android.tools.lint.detector.api.JavaContext;
-import com.android.tools.lint.detector.api.Scope;
-import com.android.tools.lint.detector.api.SourceCodeScanner;
-import com.google.common.annotations.VisibleForTesting;
-import com.ichi2.anki.lint.utils.Constants;
-import com.ichi2.anki.lint.utils.ImportStatementDetector;
+@KotlinCleanup("IDE lint - ignore 'Beta'")
+class InconsistentAnnotationUsage : ImportStatementDetector(), SourceCodeScanner {
 
-import org.jetbrains.uast.UElement;
-import org.jetbrains.uast.UImportStatement;
+    companion object {
+        @JvmField
+        @VisibleForTesting
+        val ID = "InconsistentAnnotationUsage"
 
-public class InconsistentAnnotationUsage extends ImportStatementDetector implements SourceCodeScanner {
-    @VisibleForTesting
-    static final String ID = "InconsistentAnnotationUsage";
-    @VisibleForTesting
-    static final String DESCRIPTION = "Use androidx.annotation.NonNull and androidx.annotation.Nullable. See explanation for IDE-level fix";
-    private static final String EXPLANATION = "AnkiDroid uses androidx nullability annotations over JetBrains for nullability. " +
+        @JvmField
+        @VisibleForTesting
+        val DESCRIPTION = "Use androidx.annotation.NonNull and androidx.annotation.Nullable. See explanation for IDE-level fix"
+        private const val EXPLANATION = "AnkiDroid uses androidx nullability annotations over JetBrains for nullability. " +
             "The annotations library can be specified in Settings - Inspections - Java - Probable Bugs - Nullability Problems - @NonNull/@Nullable problems. " +
-            "Search in Settings for '@Nullable problems'";
-    private static final Implementation implementation = new Implementation(InconsistentAnnotationUsage.class, Scope.JAVA_FILE_SCOPE);
-    public static final Issue ISSUE = Issue.create(
+            "Search in Settings for '@Nullable problems'"
+        private val implementation = Implementation(InconsistentAnnotationUsage::class.java, Scope.JAVA_FILE_SCOPE)
+        @JvmField
+        val ISSUE: Issue = Issue.create(
             ID,
             DESCRIPTION,
             EXPLANATION,
@@ -46,29 +46,22 @@ public class InconsistentAnnotationUsage extends ImportStatementDetector impleme
             Constants.ANKI_TIME_PRIORITY,
             Constants.ANKI_TIME_SEVERITY,
             implementation
-    );
-
-    public InconsistentAnnotationUsage() {
-
+        )
     }
 
-
-    @Override
-    public void visitImportStatement(@NonNull JavaContext context, @NonNull UImportStatement node) {
-
-        UElement importReference = node.getImportReference();
+    override fun visitImportStatement(context: JavaContext, node: UImportStatement) {
+        val importReference = node.importReference
         if (importReference != null && isJetbrains(importReference.asRenderString())) {
             context.report(
-                    ISSUE,
-                    node,
-                    context.getLocation(node),
-                    DESCRIPTION
-            );
+                ISSUE,
+                node,
+                context.getLocation(node),
+                DESCRIPTION
+            )
         }
     }
 
-
-    private boolean isJetbrains(String importReference) {
-        return importReference.equals("org.jetbrains.annotations.NotNull") || importReference.equals("org.jetbrains.annotations.Nullable");
+    private fun isJetbrains(importReference: String): Boolean {
+        return importReference == "org.jetbrains.annotations.NotNull" || importReference == "org.jetbrains.annotations.Nullable"
     }
 }
