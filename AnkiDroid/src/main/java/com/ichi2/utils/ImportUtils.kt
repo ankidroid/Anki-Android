@@ -117,7 +117,6 @@ object ImportUtils {
             }
         }
 
-        // Added to remove exception handlers
         private fun handleFileImportInternal(context: Context, intent: Intent): ImportResult {
             if (intent.data == null) {
                 Timber.i("No intent data. Attempting to read clip data.")
@@ -126,15 +125,21 @@ object ImportUtils {
                 ) {
                     return ImportResult.fromErrorString(context.getString(R.string.import_error_unhandled_request))
                 }
-                val clipUri = intent.clipData!!.getItemAt(0).uri
-                return handleContentProviderFile(context, intent, clipUri)
+                val clipUriList: ArrayList<Uri> = ArrayList()
+                // Iterate over clipUri & create clipUriList
+                // Pass clipUri list.
+                for (i in 0 until intent.clipData!!.itemCount) {
+                    intent.clipData?.getItemAt(i)?.let { clipUriList.add(it.uri) }
+                }
+                return handleContentProviderFile(context, intent, clipUriList)
             }
 
             // If Uri is of scheme which is supported by ContentResolver, read the contents
             val intentUriScheme = intent.data!!.scheme
             return if (intentUriScheme == ContentResolver.SCHEME_CONTENT || intentUriScheme == ContentResolver.SCHEME_FILE || intentUriScheme == ContentResolver.SCHEME_ANDROID_RESOURCE) {
                 Timber.i("Attempting to read content from intent.")
-                handleContentProviderFile(context, intent, intent.data)
+                val intentDataList: ArrayList<Uri> = arrayListOf(intent.data!!)
+                handleContentProviderFile(context, intent, intentDataList)
             } else {
                 ImportResult.fromErrorString(context.resources.getString(R.string.import_error_unhandled_scheme, intent.data))
             }
@@ -343,7 +348,7 @@ object ImportUtils {
         companion object {
             /**
              * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
-             * @param path path to apkg file which will be imported
+             * @param pathList path to apkg file which will be imported
              */
             private fun sendShowImportFileDialogMsg(pathList: ArrayList<String>) {
 
