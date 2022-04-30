@@ -191,7 +191,7 @@
     <string name="card_browser_deck_change_error">Deste değiştirilemedi</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Karttaki verinin kod çözme hatası</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">%s Geri alındı</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Deste seçenekleri işlenemedi: %s</string>
     <!-- Database Errors-->

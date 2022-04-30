@@ -406,4 +406,6 @@
     <string name="malicious_archive_entry_outside">ହାନୀକାରକ ଅଭିଲେଖାଗାର। ଲକ୍ଷ୍ୟସ୍ଥଳ ଡିରେକ୍ଟୋରୀ ବାହାରେ ଏଣ୍ଟ୍ରି ଧାରଣ କରେ: %s</string>
     <string name="malicious_archive_exceeds_limit">ହାନୀକାରକ ଅଭିଲେଖାଗାର। ଆକାର %1$s ଅତିକ୍ରମ କରେ କିମ୍ୱା %2$dରୁ ଅଧିକ ଫାଇଲ୍ ଧାରଣ କରେ</string>
     <string name="file_extract_exceeds_storage_space">ଫାଇଲ୍ ଏକ୍ସଟ୍ରାକ୍ଟ କରିବାରେ ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଅତିକ୍ରମ ହେଉଛି</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

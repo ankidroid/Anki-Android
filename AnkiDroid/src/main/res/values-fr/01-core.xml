@@ -71,12 +71,12 @@
         <item quantity="other">%d minutes restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d heure %2$d restant</item>
+        <item quantity="other">%1$d heures %2$d restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d jour %2$d restant</item>
+        <item quantity="other">%1$d jours %2$d restants</item>
     </plurals>
     <string name="no_cards_placeholder_title">La collection est vide</string>
     <string name="no_cards_placeholder_description">Ajoutez de nouvelles cartes\nen utilisant l\'icône +</string>
@@ -163,7 +163,7 @@
     <string name="custom_study_deck_exists">Merci de renommer d\'abord le paquet d\'étude personnalisée.</string>
     <string name="empty_deck">Ce paquet est vide</string>
     <string name="search_deck" comment="Deck search for selecting it">Recherche de paquet</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Chercher un deck</string>
     <string name="empty_deck_add_note">Ajouter une carte</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
     <string name="studyoptions_empty">Ce paquet est vide. Appuyez sur le bouton + pour ajouter du contenu.</string>
