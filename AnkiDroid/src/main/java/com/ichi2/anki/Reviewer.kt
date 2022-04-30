@@ -1544,7 +1544,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 return false
             }
 
-            if (days < 1 || days > 9999) {
+            if (days < 0 || days > 9999) {
                 showDeveloperContact(ankiJsErrorCodeSetDue)
                 return false
             }
