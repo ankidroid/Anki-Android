@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">ہاں</string>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">ڈیک</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">کارڈ براؤزر</string>
@@ -63,7 +63,7 @@
     <string name="collapse">بند کریں</string>
     <string name="study_more">مزید مطالعہ کریں</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">کیا حال ہے</item>
+        <item quantity="one">%1$d card due (%2$s)</item>
         <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">

@@ -44,29 +44,29 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">ဟုတ်ကဲ့</string>
     <!-- Navigation drawer items-->
     <string name="decks">hola</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
-    <string name="statistics">Statistics</string>
-    <string name="settings">Settings</string>
-    <string name="help">Help</string>
-    <string name="drawing">Drawing</string>
-    <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_due_today">Due today:</string>
-    <string name="studyoptions_new_total">Total new cards:</string>
-    <string name="studyoptions_total_cards">Total cards:</string>
-    <string name="studyoptions_eta">Estimated time (min):</string>
-    <string name="studyoptions_start">Study</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ကတ် ရှာ</string>
+    <string name="statistics">စာရင်း</string>
+    <string name="settings">ဆက်တင်</string>
+    <string name="help">အကူအညီ</string>
+    <string name="drawing">ရုပ်ပုံရေးဆွဲ</string>
+    <string name="send_feedback">တုန့်ပြန်ချက်ပေးပို့ပါ</string>
+    <string name="studyoptions_due_today">တစ်နေ့တာလေ့လာမှုပမာဏ</string>
+    <string name="studyoptions_new_total">ကတ်အသစ်စုစုပေါင်း</string>
+    <string name="studyoptions_total_cards">ကတ်စုစုပေါင်း</string>
+    <string name="studyoptions_eta">ခန့်မှန်းကြာချိန်</string>
+    <string name="studyoptions_start">လေ့လာ</string>
     <!-- DeckPicker.java -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">တိုးချဲ့ပါ</string>
+    <string name="collapse">ဖျက်</string>
+    <string name="study_more">ထပ်လေ့လာ</string>
     <plurals name="deckpicker_title">
         <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d မိနစ်ကျန်သေးသည်</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="other">%1$d hours %2$d left</item>
@@ -74,30 +74,30 @@
     <plurals name="reviewer_window_title_days_new">
         <item quantity="other">%1$d days %2$d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">အစုအဝေး</string>
+    <string name="no_cards_placeholder_description">ကတ်ထပ်ထည့်</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="other">%1$dကတ်ကိုဒီနေ့%2$sမှာလေ့လာခဲ့</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
-    <string name="show_answer">Show answer</string>
-    <string name="hide_answer">Hide answer</string>
-    <string name="ease_button_again">Again</string>
-    <string name="ease_button_hard">Hard</string>
+    <string name="type_answer_hint">အဖြေရေးပါ</string>
+    <string name="show_answer">‌အဖြေပြပါ</string>
+    <string name="hide_answer">အဖြေဖျောက်ပါ</string>
+    <string name="ease_button_again">ထပ်လုပ်</string>
+    <string name="ease_button_hard">ခက်ခဲ</string>
     <string name="ease_button_good">ကောင်းတယ်</string>
     <string name="ease_button_easy">လွယ်တယ်</string>
-    <string name="studyoptions_congrats_undo">Undo %s</string>
+    <string name="studyoptions_congrats_undo">%s ကို ပြန်ဖြည်ပါ</string>
     <string name="menu_import">သွင်းကုန်</string>
     <string name="undo">ပယ်ဖျက်ပါ</string>
     <string name="undo_action_review">နောက်ဆုံးသုံးသပ်ချက်</string>
     <string name="undo_action_change_deck_multi">ကုန်းပတ်ကိုပြောင်းပါ</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="move_all_to_deck">Deckကိုရွှေ့ပါ</string>
     <string name="unbury">ဖယ်ရှားပါ (တစ်စုံတစ်ယောက်သို့မဟုတ်တစ်ခုခု)</string>
     <string name="rename_deck">ကုန်းပတ်အမည်ပြောင်းပါ</string>
     <string name="create_shortcut">ဖြတ်လမ်းဖန်တီ</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">ကတ်ရှာဖွေ</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ထည့်ပါ</string>
     <string name="menu_add_note">မှတ်ချက်ထည့်ပါ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">အကောင့်အားတိုက်ဆိုင်ညှိယူပါ</string>
@@ -111,32 +111,32 @@
     <string name="menu_bury">သင်္ဂြိုဟ် (သို့မဟုတ်)
 
 ထားသို့မဟုတ်မြေပြင်အောက်မှာပုန်းရှောင်။</string>
-    <string name="menu_suspend">Suspend</string>
-    <string name="menu_delete_note">Delete note</string>
+    <string name="menu_suspend">ဆိုင်းငံ့</string>
+    <string name="menu_delete_note">မှတ်စုကို ဖျက်ပစ်ပါ</string>
     <string name="menu_flag">အလံ</string>
     <string name="menu_flag_card">ကဒ်အလံ</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
-    <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-    <string name="menu_search">Lookup in %1$s</string>
-    <string name="menu_mark_note">Mark note</string>
-    <string name="menu_unmark_note">Unmark note</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
-    <string name="new_deck">Create deck</string>
-    <string name="new_dynamic_deck">Create filtered deck</string>
-    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+    <string name="menu_flag_card_zero">အလံမသတ်မှတ်</string>
+    <string name="menu_flag_card_one">အနီရောင်အလံ</string>
+    <string name="menu_flag_card_two">လိမ္မော်ရောင်အလံ</string>
+    <string name="menu_flag_card_three">အစိမ်းရောင်အလံ</string>
+    <string name="menu_flag_card_four">အပြာရောင်အလံ</string>
+    <string name="menu_flag_card_five">ပန်းရောင်အလံ</string>
+    <string name="menu_flag_card_six">စိမ်းပြာရောင်အလံ</string>
+    <string name="menu_flag_card_seven">ခရမ်းနုရောင်အလံ</string>
+    <string name="menu_edit_tags">ကတ်ပြားပြင်ဆင်</string>
+    <string name="delete_note_message">မှတ်စု နဲ့ ကတ်တွေဖြတ်မှာကျိန်းသေလား\n%s</string>
+    <string name="menu_search">%1$s တိုးတက်လာ</string>
+    <string name="menu_mark_note">မှတ်သား</string>
+    <string name="menu_unmark_note">မှတ်သားမှုဖျက်</string>
+    <string name="menu_toggle_mic_tool_bar">အသံထွက်စစ်</string>
+    <string name="new_deck">လုပ်ငန်းအသစ်ဖန်တီး</string>
+    <string name="new_dynamic_deck">ထပ်ဆင့်လုပ်ငန်းဖန်းတီး</string>
+    <string name="directory_inaccessible">AnkiDroidအဘိဓာန်မရနိုင်ပါ</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">ဆက်လုပ်ဆောင်နိုင်ဖို့AnkiDroidအတွက်နေရာချပေးပါ</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -144,21 +144,21 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mo</string>
-    <string name="time_quantity_years">%.1f yr</string>
+    <string name="time_quantity_seconds">%d ကြာချိန်</string>
+    <string name="time_quantity_minutes">%d မိနစ်</string>
+    <string name="time_quantity_hours_minutes">%1$d နာရီ %2$d မိနစ်</string>
+    <string name="time_quantity_hours">%d ကြာချိန်</string>
+    <string name="time_quantity_days">%d ရက်</string>
+    <string name="time_quantity_days_hours">%1$d နာရီ %2$d မိနစ်</string>
+    <string name="time_quantity_months">%.1f ကြာချိန်</string>
+    <string name="time_quantity_years">%.1f ကြာချိန်</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">Rebuild</string>
+    <string name="rebuild_filtered_deck">ထပ်ဆင့်လုပ်ငန်းပြန်တည်ဆောက်</string>
+    <string name="rebuild_cram_label">ပြန်လည်တည်ဆောက်</string>
     <string name="empty_cram_label">ဗလာ (သို့မဟုတ်)
 ဘာမှမရှိဘူး</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="create_subdeck">လုပ်ငန်းအသစ်ဖန်တီး</string>
+    <string name="empty_filtered_deck">ထပ်ဆင့်လုပ်ငန်းကိုဖျက်ပစ်နေသည်</string>
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">This deck is empty</string>

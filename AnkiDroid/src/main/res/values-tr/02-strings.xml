@@ -342,7 +342,7 @@
     <string name="before_text">Seçimden önce HTML</string>
     <string name="after_text">Seçimden sonra HTML</string>
     <string name="add_toolbar_item">Araç çubuğu öğesi yarat</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="edit_toolbar_item">Araç çubuğu öğesini düzenle</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Araç çubuğu öğesini sil?</string>
     <string name="note_editor_paste_too_large">Görsel yapıştırmak için çok büyük, lütfen görseli elle ekleyin</string>
@@ -401,9 +401,11 @@
     <string name="scoped_storage_migrate">Taşı</string>
     <string name="search_card_js_api_no_results">Arama sonuç vermedi</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="not_valid_js_addon">%s geçerli bir javascript eklenti paketi değil</string>
+    <string name="could_not_create_dir">Klasör oluşturma hatası %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">Dosya çıkartımı depolama alanını aşıyor</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

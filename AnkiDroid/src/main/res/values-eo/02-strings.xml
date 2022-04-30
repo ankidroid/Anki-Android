@@ -406,4 +406,6 @@
     <string name="malicious_archive_entry_outside">Erara arĥivo: ĝi enhavas elementon ekster la alcela dosierujo: %s</string>
     <string name="malicious_archive_exceeds_limit">Erara arĥivo: ĝia grando superas %1$s aŭ ĝi enhavas pli ol %2$d dosieroj</string>
     <string name="file_extract_exceeds_storage_space">Elpakigota(j) dosiero(j) superas la disponeblan spacon</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

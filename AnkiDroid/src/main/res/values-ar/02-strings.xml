@@ -456,4 +456,6 @@
     <string name="malicious_archive_entry_outside">أرشيف خبيث. يحتوي على مدخلة خارج المجلد الهدف: %s</string>
     <string name="malicious_archive_exceeds_limit">أرشيف خبيث. يتخطى الحجم %1$s أو يحتوي على أكثر من %2$d ملف</string>
     <string name="file_extract_exceeds_storage_space">يتخطى الملف المستخرج مساحة التخزين</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>
