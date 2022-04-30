@@ -20,6 +20,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Collection
 import timber.log.Timber
 
@@ -44,7 +45,7 @@ class CollectionLoader private constructor(private val lifecycleOwner: Lifecycle
             col
         } catch (e: RuntimeException) {
             Timber.e(e, "loadInBackground - RuntimeException on opening collection")
-            AnkiDroidApp.sendExceptionReport(e, "CollectionLoader.loadInBackground")
+            CrashReportService.sendExceptionReport(e, "CollectionLoader.loadInBackground")
             null
         }
     }

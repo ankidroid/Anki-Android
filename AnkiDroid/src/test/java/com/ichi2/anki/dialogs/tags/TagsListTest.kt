@@ -21,6 +21,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
@@ -173,6 +174,30 @@ class TagsListTest {
     }
 
     @Test
+    fun test_constructor_will_complete_hierarchy_for_all_tags() {
+        val allTags = listOf("cat1", "cat2::aa", "cat3::aa::bb::cc::dd")
+        val checkedTags = listOf("cat1::aa", "cat1::bb", "cat2::bb::aa", "cat2::bb::bb")
+        val list = TagsList(
+            allTags,
+            checkedTags
+        )
+        list.sort()
+        assertEquals(
+            listOf(
+                "cat1", "cat1::aa", "cat1::bb", "cat2", "cat2::aa", "cat2::bb", "cat2::bb::aa",
+                "cat2::bb::bb", "cat3", "cat3::aa", "cat3::aa::bb", "cat3::aa::bb::cc",
+                "cat3::aa::bb::cc::dd"
+            ),
+            list.copyOfAllTagList()
+        )
+        assertEquals(listOf("cat1::aa", "cat1::bb", "cat2::bb::aa", "cat2::bb::bb"), list.copyOfCheckedTagList())
+        assertEquals(
+            "Ancestors of checked tags should be marked as indeterminate",
+            listOf("cat1", "cat2", "cat2::bb"), list.copyOfIndeterminateTagList()
+        )
+    }
+
+    @Test
     fun test_isChecked_index() {
         assertTrue("Tag at index 0 should be checked", tagsList!!.isChecked(0))
         assertTrue("Tag at index 3 should be checked", tagsList!!.isChecked(3))
@@ -240,6 +265,43 @@ class TagsListTest {
         assertSameElementsIgnoreOrder(
             "Adding operations should have nothing to do with the checked status of tags",
             CHECKED_TAGS, tagsList!!.copyOfCheckedTagList()
+        )
+    }
+
+    @Test
+    fun test_add_hierarchy_tag() {
+        assertTrue(
+            "Adding 'language::english' tag should return true",
+            tagsList!!.add("language::english")
+        )
+        assertTrue(
+            "Adding 'language::other::java' tag should return true",
+            tagsList!!.add("language::other::java")
+        )
+        assertTrue(
+            "Adding 'language::other::kotlin' tag should return true",
+            tagsList!!.add("language::other::kotlin")
+        )
+        assertFalse(
+            "Repeatedly adding 'language::english' tag should return false",
+            tagsList!!.add("language::english")
+        )
+        assertFalse(
+            "Adding 'language::other' tag should return false, for it should have been auto created.",
+            tagsList!!.add("language::other")
+        )
+        assertTrue(tagsList!!.check("language::other::java"))
+        assertTrue(
+            "Intermediate tags should marked as indeterminate",
+            tagsList!!.copyOfIndeterminateTagList().contains("language::other")
+        )
+        assertTrue(tagsList!!.add("object::electronic"))
+        assertTrue(tagsList!!.check("object::electronic"))
+        assertTrue(tagsList!!.add("object::electronic::computer"))
+        assertTrue(tagsList!!.check("object::electronic::computer"))
+        assertFalse(
+            "Should not mark checked intermediate tags as indeterminate",
+            tagsList!!.copyOfIndeterminateTagList().contains("object::electronic")
         )
     }
 
@@ -408,6 +470,10 @@ class TagsListTest {
     }
 
     @Test // #8807
+    @Ignore(
+        "Collections.singletonList() triggers infinite recursion. " +
+            "Need solution to only mock the sort() method."
+    )
     fun test_sort_will_not_call_collectionsSort() {
         Mockito.mockStatic(Collections::class.java).use { MockCollection ->
             assertEquals(TAGS, tagsList!!.copyOfAllTagList())

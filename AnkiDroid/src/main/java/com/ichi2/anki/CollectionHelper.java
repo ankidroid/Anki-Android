@@ -208,7 +208,7 @@ public class CollectionHelper {
             return null;
         } catch (Exception e) {
             Timber.w(e);
-            AnkiDroidApp.sendExceptionReport(e, "CollectionHelper.getColSafe");
+            CrashReportService.sendExceptionReport(e, "CollectionHelper.getColSafe");
             return null;
         }
     }

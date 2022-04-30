@@ -17,6 +17,7 @@ package com.ichi2.anki.dialogs.tags
 
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.RadioGroup
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
@@ -217,6 +218,349 @@ class TagsDialogTest {
             ListUtil.assertListEquals(expectedCheckedTags, foundCheckedTags)
             ListUtil.assertListEquals(expectedUncheckedTags, foundUncheckedTags)
             ListUtil.assertListEquals(expectedIndeterminate, foundIndeterminate)
+        }
+    }
+
+    @Test
+    fun test_AddNewTag_newHierarchicalTag_pathToItShouldBeExpanded() {
+        val type = TagsDialog.DialogType.EDIT_TAGS
+        val allTags = listOf("common::speak", "common::speak::daily", "common::sport::tennis", "common::sport::football")
+        val checkedTags = listOf("common::speak::daily", "common::sport::tennis")
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withArguments(type, checkedTags, allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { f: TagsDialog ->
+            val dialog = f.dialog as MaterialDialog?
+            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            val body = dialog!!.customView
+            val recycler: RecyclerView = body!!.findViewById(R.id.tags_dialog_tags_list)
+            val tag = "common::sport::football::small"
+            f.addTag(tag)
+
+            // v common        [-]
+            //   v speak       [-]
+            //     - daily     [x]
+            //   v sport       [-]
+            //     v football  [-]
+            //       > small   [x]
+            //     - tennis    [x]
+            recycler.measure(0, 0)
+            recycler.layout(0, 0, 100, 1000)
+            Assert.assertEquals(7, recycler.adapter!!.itemCount.toLong())
+            val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
+            val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
+            val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
+            val item3 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 3)
+            val item4 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 4)
+            val item5 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 5)
+            val item6 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 6)
+            Assert.assertEquals("common", item0.text)
+            Assert.assertEquals("common::speak", item1.text)
+            Assert.assertEquals("common::speak::daily", item2.text)
+            Assert.assertEquals("common::sport", item3.text)
+            Assert.assertEquals("common::sport::football", item4.text)
+            Assert.assertEquals("common::sport::football::small", item5.text)
+            Assert.assertEquals("common::sport::tennis", item6.text)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item0.mCheckBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item1.mCheckBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, item2.mCheckBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item3.mCheckBoxView.state)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, item4.mCheckBoxView.state)
+            Assert.assertTrue(item5.mCheckBoxView.isChecked)
+            Assert.assertTrue(item6.mCheckBoxView.isChecked)
+        }
+    }
+
+    @Test
+    fun test_AddNewTag_newHierarchicalTag_willUniformHierarchicalTag() {
+        val type = TagsDialog.DialogType.EDIT_TAGS
+        val allTags = listOf("common")
+        val checkedTags = listOf("common")
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withArguments(type, checkedTags, allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { f: TagsDialog ->
+            val dialog = f.dialog as MaterialDialog?
+            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            val body = dialog!!.customView
+            val recycler: RecyclerView = body!!.findViewById(R.id.tags_dialog_tags_list)
+            val tag = "common::::careless"
+            f.addTag(tag)
+
+            // v common        [x]
+            //   > blank       [-]
+            //     - careless  [x]
+            recycler.measure(0, 0)
+            recycler.layout(0, 0, 100, 1000)
+            Assert.assertEquals(3, recycler.adapter!!.itemCount.toLong())
+            val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
+            val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
+            val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
+            Assert.assertEquals("common", item0.text)
+            Assert.assertEquals("common::blank", item1.text)
+            Assert.assertEquals("common::blank::careless", item2.text)
+            Assert.assertTrue(item0.mCheckBoxView.isChecked)
+            Assert.assertTrue(item1.mCheckBoxView.state == CheckBoxTriStates.State.INDETERMINATE)
+            Assert.assertTrue(item2.mCheckBoxView.isChecked)
+        }
+    }
+
+    @Test
+    fun test_SearchTag_showAllRelevantTags() {
+        val type = TagsDialog.DialogType.FILTER_BY_TAG
+        val allTags = listOf(
+            "common::speak", "common::speak::tennis", "common::sport::tennis",
+            "common::sport::football", "common::sport::football::small"
+        )
+        val checkedTags = listOf(
+            "common::speak::tennis", "common::sport::tennis",
+            "common::sport::football::small"
+        )
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withArguments(type, checkedTags, allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { f: TagsDialog ->
+            val dialog = f.dialog as MaterialDialog?
+            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            val body = dialog!!.customView
+            val recycler: RecyclerView = body!!.findViewById(R.id.tags_dialog_tags_list)
+            val adapter = recycler.adapter!! as TagsArrayAdapter
+            adapter.filter.filter("tennis")
+
+            // v common        [-]
+            //   v speak       [-]
+            //     - tennis    [x]
+            //   v sport       [-]
+            //     - tennis    [x]
+            recycler.measure(0, 0)
+            recycler.layout(0, 0, 100, 1000)
+            Assert.assertEquals(5, recycler.adapter!!.itemCount.toLong())
+            val item0 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
+            val item1 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1)
+            val item2 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 2)
+            val item3 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 3)
+            val item4 = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 4)
+            Assert.assertEquals("common", item0.text)
+            Assert.assertEquals("common::speak", item1.text)
+            Assert.assertEquals("common::speak::tennis", item2.text)
+            Assert.assertEquals("common::sport", item3.text)
+            Assert.assertEquals("common::sport::tennis", item4.text)
+        }
+    }
+
+    @Test
+    fun test_SearchTag_willInheritExpandState() {
+        val type = TagsDialog.DialogType.FILTER_BY_TAG
+        val allTags = listOf("common::speak", "common::sport::tennis")
+        val checkedTags = emptyList<String>()
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withArguments(type, checkedTags, allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { f: TagsDialog ->
+            val dialog = f.dialog as MaterialDialog?
+            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            val body = dialog!!.customView
+            val recycler: RecyclerView = body!!.findViewById(R.id.tags_dialog_tags_list)
+
+            fun updateLayout() {
+                recycler.measure(0, 0)
+                recycler.layout(0, 0, 100, 2000)
+            }
+
+            val adapter = recycler.adapter!! as TagsArrayAdapter
+            adapter.filter.filter("sport")
+            updateLayout()
+            // v common     [ ]
+            //   v sport    [ ]
+            //     - tennis [ ]
+            Assert.assertEquals(3, recycler.adapter!!.itemCount.toLong())
+
+            adapter.filter.filter("")
+            updateLayout()
+            // v common     [ ]
+            //   - speak    [ ]
+            //   v sport    [ ]
+            //     - tennis [ ]
+            Assert.assertEquals(4, recycler.adapter!!.itemCount.toLong())
+        }
+    }
+
+    @Test
+    fun test_checkTags_intermediateTagsShouldToggleDynamically() {
+        val type = TagsDialog.DialogType.FILTER_BY_TAG
+        val allTags = listOf(
+            "common::speak", "common::speak::tennis", "common::sport::tennis",
+            "common::sport::football", "common::sport::football::small"
+        )
+        val checkedTags = emptyList<String>()
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withArguments(type, checkedTags, allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { f: TagsDialog ->
+            val dialog = f.dialog as MaterialDialog?
+            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            val body = dialog!!.customView
+            val recycler: RecyclerView = body!!.findViewById(R.id.tags_dialog_tags_list)
+
+            fun getItem(index: Int): TagsArrayAdapter.ViewHolder {
+                return RecyclerViewUtils.viewHolderAt(recycler, index)
+            }
+            fun updateLayout() {
+                recycler.measure(0, 0)
+                recycler.layout(0, 0, 100, 2000)
+            }
+            updateLayout()
+            getItem(0).itemView.performClick()
+            updateLayout()
+            getItem(1).itemView.performClick()
+            updateLayout()
+            getItem(3).itemView.performClick()
+            updateLayout()
+            getItem(4).itemView.performClick()
+            updateLayout()
+            // v common        [ ]
+            //   v speak       [ ]
+            //     - tennis    [ ]
+            //   v sport       [ ]
+            //     v football  [ ]
+            //       - small   [ ]
+            //     - tennis    [ ]
+            Assert.assertEquals(7, recycler.adapter!!.itemCount.toLong())
+
+            getItem(2).mCheckBoxView.performClick()
+            updateLayout()
+            getItem(5).mCheckBoxView.performClick()
+            updateLayout()
+            // v common        [-]
+            //   v speak       [-]
+            //     - tennis    [x]
+            //   v sport       [-]
+            //     v football  [-]
+            //       - small   [x]
+            //     - tennis    [ ]
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(1).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(2).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(3).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(4).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+
+            getItem(2).mCheckBoxView.performClick()
+            updateLayout()
+            getItem(5).mCheckBoxView.performClick()
+            updateLayout()
+            // v common        [ ]
+            //   v speak       [ ]
+            //     - tennis    [ ]
+            //   v sport       [ ]
+            //     v football  [ ]
+            //       - small   [ ]
+            //     - tennis    [ ]
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(0).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(3).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(4).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+
+            getItem(5).mCheckBoxView.performClick()
+            updateLayout()
+            // v common        [-]
+            //   v speak       [ ]
+            //     - tennis    [ ]
+            //   v sport       [-]
+            //     v football  [-]
+            //       - small   [x]
+            //     - tennis    [ ]
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(3).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(4).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(5).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+
+            getItem(3).mCheckBoxView.performClick()
+            updateLayout()
+            getItem(5).mCheckBoxView.performClick()
+            updateLayout()
+            // v common        [-]
+            //   v speak       [ ]
+            //     - tennis    [ ]
+            //   v sport       [x]
+            //     v football  [ ]
+            //       - small   [ ]
+            //     - tennis    [ ]
+            Assert.assertEquals(CheckBoxTriStates.State.INDETERMINATE, getItem(0).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(1).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(2).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.CHECKED, getItem(3).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(4).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(5).checkboxState)
+            Assert.assertEquals(CheckBoxTriStates.State.UNCHECKED, getItem(6).checkboxState)
+        }
+    }
+
+    @Test // #11089
+    fun test_SearchTag_spaceWillBeFilteredCorrectly() {
+        val type = TagsDialog.DialogType.FILTER_BY_TAG
+        val allTags = listOf("hello::world")
+        val checkedTags = emptyList<String>()
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withArguments(type, checkedTags, allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { f: TagsDialog ->
+            val dialog = f.dialog as MaterialDialog?
+            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            val editText = f.getSearchView()!!.findViewById<EditText>(R.id.search_src_text)!!
+
+            editText.setText("hello ")
+            Assert.assertEquals(
+                "The space should be replaced by '::' without mistakenly clear everything.",
+                "hello::", editText.text.toString()
+            )
+
+            editText.setText("hello")
+            editText.text.insert(5, " ")
+            Assert.assertEquals("Should complete 2 colons.", "hello::", editText.text.toString())
+
+            editText.setText("hello:")
+            editText.text.insert(6, " ")
+            Assert.assertEquals("Should complete 1 colon.", "hello::", editText.text.toString())
+
+            editText.setText("hello::")
+            editText.text.insert(7, " ")
+            Assert.assertEquals("Should do nothing.", "hello::", editText.text.toString())
+
+            editText.setText("")
+            editText.text.insert(0, " ")
+            Assert.assertEquals("Should not crash.", "::", editText.text.toString())
         }
     }
 

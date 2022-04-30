@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.pm.PackageInfoCompat
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import timber.log.Timber
 import java.lang.NullPointerException
 
@@ -83,7 +84,7 @@ object VersionUtils {
                 } else if (context.packageName == null) {
                     Timber.e("getPkgVersionCode() null package name?")
                 }
-                AnkiDroidApp.sendExceptionReport(npe, "Unexpected exception getting version code?")
+                CrashReportService.sendExceptionReport(npe, "Unexpected exception getting version code?")
                 Timber.e(npe, "Unexpected exception getting version code?")
             }
             return 0

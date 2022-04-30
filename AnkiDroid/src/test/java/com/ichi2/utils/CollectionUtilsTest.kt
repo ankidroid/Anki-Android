@@ -16,7 +16,7 @@
 package com.ichi2.utils
 
 import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
-import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
@@ -24,9 +24,8 @@ class CollectionUtilsTest {
     var testList = arrayListOf(1, 2, 3)
 
     @Test
-    @KotlinCleanup("is --> equalTo")
     fun testGetLastListElement() {
-        assertThat(CollectionUtils.getLastListElement(testList), `is`(3))
+        assertThat(CollectionUtils.getLastListElement(testList), equalTo(3))
     }
 
     @Test(expected = IndexOutOfBoundsException::class)

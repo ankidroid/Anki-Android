@@ -27,6 +27,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CrashReportService;
 import com.ichi2.anki.R;
 import com.ichi2.anki.UIUtils;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -451,7 +452,7 @@ public class Collection implements CollectionGetter {
                 }
             } catch (RuntimeException e) {
                 Timber.w(e);
-                AnkiDroidApp.sendExceptionReport(e, "closeDB");
+                CrashReportService.sendExceptionReport(e, "closeDB");
             }
             if (!mServer) {
                 mDb.getDatabase().disableWriteAheadLogging();
@@ -1504,13 +1505,13 @@ public class Collection implements CollectionGetter {
                         mDb.getDatabase().setTransactionSuccessful();
                     } catch (Exception e) {
                         Timber.e(e, "Failed to execute integrity check");
-                        AnkiDroidApp.sendExceptionReport(e, "fixIntegrity");
+                        CrashReportService.sendExceptionReport(e, "fixIntegrity");
                     } finally {
                         try {
                             mDb.getDatabase().endTransaction();
                         } catch (Exception e) {
                             Timber.e(e, "Failed to end integrity check transaction");
-                            AnkiDroidApp.sendExceptionReport(e, "fixIntegrity - endTransaction");
+                            CrashReportService.sendExceptionReport(e, "fixIntegrity - endTransaction");
                         }
                     }
                 };
@@ -1528,7 +1529,7 @@ public class Collection implements CollectionGetter {
             return result.markAsLocked();
         } catch (RuntimeException e) {
             Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundCheckDatabase");
+            CrashReportService.sendExceptionReport(e, "doInBackgroundCheckDatabase");
             return result.markAsFailed();
         } finally {
             //if the database was locked, we never got the transaction.
@@ -1565,7 +1566,7 @@ public class Collection implements CollectionGetter {
             optimize(notifyProgress);
         } catch (Exception e) {
             Timber.e(e, "optimize");
-            AnkiDroidApp.sendExceptionReport(e, "fixIntegrity - optimize");
+            CrashReportService.sendExceptionReport(e, "fixIntegrity - optimize");
         }
         file = new File(mPath);
         long newSize = file.length();
@@ -1924,7 +1925,7 @@ public class Collection implements CollectionGetter {
                         String details = String.format(Locale.ROOT, "deleteNotesWithWrongFieldCounts row: %d col: %d",
                                 currentRow,
                                 cur.getColumnCount());
-                        AnkiDroidApp.sendExceptionReport(ex, details);
+                        CrashReportService.sendExceptionReport(ex, details);
                         firstException = ex;
                     }
                 }

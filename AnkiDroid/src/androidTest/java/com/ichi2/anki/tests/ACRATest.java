@@ -25,6 +25,7 @@ import androidx.annotation.StringRes;
 import androidx.test.annotation.UiThreadTest;
 import androidx.test.rule.GrantPermissionRule;
 
+import com.ichi2.anki.CrashReportService;
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 
@@ -47,8 +48,8 @@ import java.lang.reflect.Method;
 
 import timber.log.Timber;
 
-import static com.ichi2.anki.AnkiDroidApp.FEEDBACK_REPORT_ALWAYS;
-import static com.ichi2.anki.AnkiDroidApp.FEEDBACK_REPORT_ASK;
+import static com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ALWAYS;
+import static com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ASK;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertArrayEquals;
@@ -77,41 +78,13 @@ public class ACRATest extends InstrumentedTest {
         mApp.onCreate();
     }
 
-    /**
-     * helper method to invoke private method to set acra config builder
-     *
-     * @param mode either Debug or Production, used to construct method name to invoke
-     * @param prefs the preferences to use during method invocation
-     * @exception NoSuchFieldException if the method isn't found, possibly IllegalAccess or InvocationAccess as well
-     */
-    private void setAcraConfig(String mode, SharedPreferences prefs) throws Exception {
-        Method method = findSetAcraConfigMethod(mode);
-        method.setAccessible(true);
-        method.invoke(mApp, prefs);
-    }
-
-    /** @return the method: "set[Debug/Production]ACRAConfig" on the application instance */
-    private Method findSetAcraConfigMethod(String mode) {
-        Class<?> clazz = mApp.getClass();
-        String methodName = "set" + mode + "ACRAConfig";
-        while (clazz != null) {
-            try {
-                return clazz.getDeclaredMethod(methodName, SharedPreferences.class);
-            } catch (NoSuchMethodException e) {
-                clazz = clazz.getSuperclass();
-            }
-        }
-        throw new IllegalStateException(methodName + " not found");
-    }
-
-
     @Test
     public void testDebugConfiguration() throws Exception {
 
         // Debug mode overrides all saved state so no setup needed
-        setAcraConfig("Debug");
+        CrashReportService.setDebugACRAConfig(getSharedPrefs());
         assertArrayEquals("Debug logcat arguments not set correctly",
-                mApp.getAcraCoreConfigBuilder().build().logcatArguments().toArray(),
+                CrashReportService.getAcraCoreConfigBuilder().build().logcatArguments().toArray(),
                 new ImmutableList<>(mDebugLogcatArguments).toArray());
         verifyDebugACRAPreferences();
     }
@@ -121,20 +94,20 @@ public class ACRATest extends InstrumentedTest {
                 getSharedPrefs()
                         .getBoolean(ACRA.PREF_DISABLE_ACRA, true));
         assertEquals("ACRA feedback was not turned off correctly",
-                AnkiDroidApp.FEEDBACK_REPORT_NEVER,
+                CrashReportService.FEEDBACK_REPORT_NEVER,
                 getSharedPrefs()
-                        .getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "undefined"));
+                        .getString(CrashReportService.FEEDBACK_REPORT_KEY, "undefined"));
     }
 
     @Test
     public void testProductionConfigurationUserDisabled() throws Exception {
 
         // set up as if the user had prefs saved to disable completely
-        setReportConfig(AnkiDroidApp.FEEDBACK_REPORT_NEVER);
+        setReportConfig(CrashReportService.FEEDBACK_REPORT_NEVER);
 
         // ACRA initializes production logcat via annotation and we can't mock Build.DEBUG
         // That means we are restricted from verifying production logcat args and this is the debug case again
-        setAcraConfig("Production");
+        CrashReportService.setProductionACRAConfig(getSharedPrefs());
         verifyDebugACRAPreferences();
     }
 
@@ -144,7 +117,7 @@ public class ACRATest extends InstrumentedTest {
         setReportConfig(FEEDBACK_REPORT_ASK);
 
         // If the user is set to ask, then it's production, with interaction mode dialog
-        setAcraConfig("Production");
+        CrashReportService.setProductionACRAConfig(getSharedPrefs());
         verifyACRANotDisabled();
 
         assertToastMessage(R.string.feedback_for_manual_toast_text);
@@ -162,7 +135,7 @@ public class ACRATest extends InstrumentedTest {
 
         // If the user is set to always, then it's production, with interaction mode toast
         // will be useful with ACRA 5.2.0
-        setAcraConfig("Production");
+        CrashReportService.setProductionACRAConfig(getSharedPrefs());
 
         // The same class/method combo is only sent once, so we face a new method each time (should test that system later)
         Exception crash = new Exception("testCrashReportSend at " + System.currentTimeMillis());
@@ -173,28 +146,28 @@ public class ACRATest extends InstrumentedTest {
 
         // one send should work
         CrashReportData crashData = new CrashReportDataFactory(getTestContext(),
-                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build()).createCrashData(new ReportBuilder().exception(crash));
+                CrashReportService.getAcraCoreConfigBuilder().build()).createCrashData(new ReportBuilder().exception(crash));
 
         assertTrue(new LimitingReportAdministrator().shouldSendReport(
                 getTestContext(),
-                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build(),
+                CrashReportService.getAcraCoreConfigBuilder().build(),
                 crashData)
         );
 
         // A second send should not work
         assertFalse(new LimitingReportAdministrator().shouldSendReport(
                 getTestContext(),
-                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build(),
+                CrashReportService.getAcraCoreConfigBuilder().build(),
                 crashData)
         );
 
         // Now let's clear data
-        AnkiDroidApp.deleteACRALimiterData(getTestContext());
+        CrashReportService.deleteACRALimiterData(getTestContext());
 
         // A third send should work again
         assertTrue(new LimitingReportAdministrator().shouldSendReport(
                 getTestContext(),
-                AnkiDroidApp.getInstance().getAcraCoreConfigBuilder().build(),
+                CrashReportService.getAcraCoreConfigBuilder().build(),
                 crashData)
         );
     }
@@ -206,7 +179,7 @@ public class ACRATest extends InstrumentedTest {
         setReportConfig(FEEDBACK_REPORT_ALWAYS);
 
         // If the user is set to always, then it's production, with interaction mode toast
-        setAcraConfig("Production");
+        CrashReportService.setProductionACRAConfig(getSharedPrefs());
         verifyACRANotDisabled();
 
         assertToastMessage(R.string.feedback_auto_toast_text);
@@ -221,7 +194,7 @@ public class ACRATest extends InstrumentedTest {
         setReportConfig(FEEDBACK_REPORT_ALWAYS);
 
         // If the user is set to ask, then it's production, with interaction mode dialog
-        setAcraConfig("Production");
+        CrashReportService.setProductionACRAConfig(getSharedPrefs());
         verifyACRANotDisabled();
 
         assertDialogEnabledStatus("dialog should be disabled when status is ALWAYS", false);
@@ -239,7 +212,7 @@ public class ACRATest extends InstrumentedTest {
         setReportConfig(FEEDBACK_REPORT_ASK);
 
         // If the user is set to ask, then it's production, with interaction mode dialog
-        setAcraConfig("Production");
+        CrashReportService.setProductionACRAConfig(getSharedPrefs());
         verifyACRANotDisabled();
 
         assertToastMessage(R.string.feedback_for_manual_toast_text);
@@ -251,12 +224,12 @@ public class ACRATest extends InstrumentedTest {
 
 
     private void setAcraReportingMode(String feedbackReportAlways) {
-        AnkiDroidApp.getInstance().setAcraReportingMode(feedbackReportAlways);
+        CrashReportService.setAcraReportingMode(feedbackReportAlways);
     }
 
 
     private void assertDialogEnabledStatus(String message, boolean isEnabled) throws ACRAConfigurationException {
-        CoreConfiguration config = mApp.getAcraCoreConfigBuilder().build();
+        CoreConfiguration config = CrashReportService.getAcraCoreConfigBuilder().build();
         for (Configuration configuration : config.pluginConfigurations()) {
             // Make sure the dialog is set to pop up
             if (configuration.getClass().toString().contains("Dialog")) {
@@ -267,7 +240,7 @@ public class ACRATest extends InstrumentedTest {
 
 
     private void assertToastIsEnabled() throws ACRAConfigurationException {
-        CoreConfiguration config = mApp.getAcraCoreConfigBuilder().build();
+        CoreConfiguration config = CrashReportService.getAcraCoreConfigBuilder().build();
         for (Configuration configuration : config.pluginConfigurations()) {
 
             if (configuration.getClass().toString().contains("Toast")) {
@@ -277,7 +250,7 @@ public class ACRATest extends InstrumentedTest {
     }
 
     private void assertToastMessage(@StringRes int res) throws ACRAConfigurationException {
-        CoreConfiguration config = mApp.getAcraCoreConfigBuilder().build();
+        CoreConfiguration config = CrashReportService.getAcraCoreConfigBuilder().build();
         for (Configuration configuration : config.pluginConfigurations()) {
 
             if (configuration.getClass().toString().contains("Toast")) {
@@ -293,17 +266,10 @@ public class ACRATest extends InstrumentedTest {
                 getSharedPrefs().getBoolean(ACRA.PREF_DISABLE_ACRA, false));
     }
 
-
-    private void setAcraConfig(String production) throws Exception {
-        setAcraConfig(production, getSharedPrefs());
-    }
-
-
     private void setReportConfig(String feedbackReportAsk) {
         getSharedPrefs().edit()
-                .putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, feedbackReportAsk).commit();
+                .putString(CrashReportService.FEEDBACK_REPORT_KEY, feedbackReportAsk).commit();
     }
-
 
     private SharedPreferences getSharedPrefs() {
         return AnkiDroidApp.getSharedPrefs(getTestContext());

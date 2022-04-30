@@ -166,7 +166,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                 }
             } catch (JSONException e) {
                 Timber.e(e, "DeckOptions - cacheValues");
-                AnkiDroidApp.sendExceptionReport(e, "DeckOptions: cacheValues");
+                CrashReportService.sendExceptionReport(e, "DeckOptions: cacheValues");
                 Resources r = DeckOptions.this.getResources();
                 UIUtils.showThemedToast(DeckOptions.this, r.getString(R.string.deck_options_corrupt, e.getLocalizedMessage()), false);
                 finish();
@@ -450,7 +450,7 @@ public class DeckOptions extends AppCompatPreferenceActivity implements OnShared
                     mCol.getDecks().save(mOptions);
                 } catch (RuntimeException e) {
                     Timber.e(e, "DeckOptions - RuntimeException on saving conf");
-                    AnkiDroidApp.sendExceptionReport(e, "DeckOptionsSaveConf");
+                    CrashReportService.sendExceptionReport(e, "DeckOptionsSaveConf");
                     setResult(DeckPicker.RESULT_DB_ERROR);
                     finish();
                 }

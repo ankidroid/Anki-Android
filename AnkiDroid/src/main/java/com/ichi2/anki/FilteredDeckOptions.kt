@@ -161,7 +161,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
                     mCol!!.decks.save(mDeck!!)
                 } catch (e: RuntimeException) {
                     Timber.e(e, "RuntimeException on saving deck")
-                    AnkiDroidApp.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck")
+                    CrashReportService.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck")
                     setResult(DeckPicker.RESULT_DB_ERROR)
                     finish()
                 }

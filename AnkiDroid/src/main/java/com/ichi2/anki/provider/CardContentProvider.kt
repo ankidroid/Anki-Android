@@ -1147,7 +1147,7 @@ class CardContentProvider : ContentProvider() {
             }
         } catch (e: RuntimeException) {
             Timber.e(e, "answerCard - RuntimeException on answering card")
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundAnswerCard")
+            CrashReportService.sendExceptionReport(e, "doInBackgroundAnswerCard")
         }
     }
 
@@ -1167,7 +1167,7 @@ class CardContentProvider : ContentProvider() {
             })
         } catch (e: RuntimeException) {
             Timber.e(e, "buryOrSuspendCard - RuntimeException on burying or suspending card")
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundBurySuspendCard")
+            CrashReportService.sendExceptionReport(e, "doInBackgroundBurySuspendCard")
         }
     }
 
