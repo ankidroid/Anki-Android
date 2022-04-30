@@ -298,7 +298,7 @@ object ImportUtils {
 
         fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
             Timber.e("showImportUnsuccessfulDialog() message %s", errorMessage)
-            val title = activity.resources.getString(R.string.import_log_no_apkg)
+            val title = activity.resources.getString(R.string.import_title_error)
             MaterialDialog.Builder(activity)
                 .title(title)
                 .content(errorMessage!!)
@@ -348,7 +348,7 @@ object ImportUtils {
         companion object {
             /**
              * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
-             * @param pathList path to apkg file which will be imported
+             * @param pathList list of path(s) to apkg file which will be imported
              */
             private fun sendShowImportFileDialogMsg(pathList: ArrayList<String>) {
 
