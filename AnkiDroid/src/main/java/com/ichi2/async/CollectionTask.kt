@@ -783,146 +783,160 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ImportAdd(private val path: String) : TaskDelegate<String, Triple<AnkiPackageImporter?, Boolean, String?>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Triple<AnkiPackageImporter?, Boolean, String?> {
+    class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, Triple<List<AnkiPackageImporter>?, Boolean, String?>>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Triple<List<AnkiPackageImporter>?, Boolean, String?> {
             Timber.d("doInBackgroundImportAdd")
             val res = AnkiDroidApp.getInstance().baseContext.resources
-            val imp = AnkiPackageImporter(col, path)
-            imp.setProgressCallback(TaskManager.ProgressCallback(collectionTask, res))
-            try {
-                imp.run()
-            } catch (e: ImportExportException) {
-                Timber.w(e)
-                return Triple(null, true, e.message)
+
+            var impList = arrayListOf<AnkiPackageImporter>()
+            var errFlag = false
+            var errList: String? = null
+
+            for (path in pathList) {
+                val imp = AnkiPackageImporter(col, path)
+
+                imp.setProgressCallback(TaskManager.ProgressCallback(collectionTask, res))
+                try {
+                    imp.run()
+                    impList.add(imp)
+                } catch (e: ImportExportException) {
+                    Timber.w(e)
+                    errFlag = true
+                    errList += File(path).name + "\n" + e.message + "\n"
+                }
             }
-            return Triple(imp, false, null)
+
+            return Triple(if (impList.isEmpty()) null else impList, errFlag, errList)
         }
     }
 
     @KotlinCleanup("needs to handle null collection")
-    class ImportReplace(private val path: String) : TaskDelegate<String, Computation<*>>() {
+    class ImportReplace(private val pathList: List<String>) : TaskDelegate<String, Computation<*>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Computation<*> {
             Timber.d("doInBackgroundImportReplace")
             val res = AnkiDroidApp.getInstance().baseContext.resources
             val context = col.context
 
-            // extract the deck from the zip file
-            val colPath = CollectionHelper.getCollectionPath(context)
-            val dir = File(File(colPath).parentFile, "tmpzip")
-            if (dir.exists()) {
-                BackupManager.removeDir(dir)
-            }
-
-            // from anki2.py
-            var colname = "collection.anki21"
-            val zip: ZipFile
-            zip = try {
-                ZipFile(File(path))
-            } catch (e: IOException) {
-                Timber.e(e, "doInBackgroundImportReplace - Error while unzipping")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace0")
-                return Computation.ERR
-            }
-            try {
-                // v2 scheduler?
-                if (zip.getEntry(colname) == null) {
-                    colname = CollectionHelper.COLLECTION_FILENAME
+            for (path in pathList) {
+                // extract the deck from the zip file
+                val colPath = CollectionHelper.getCollectionPath(context)
+                val dir = File(File(colPath).parentFile, "tmpzip")
+                if (dir.exists()) {
+                    BackupManager.removeDir(dir)
                 }
-                Utils.unzipFiles(zip, dir.absolutePath, arrayOf(colname, "media"), null)
-            } catch (e: IOException) {
-                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace - unzip")
-                return Computation.ERR
-            }
-            val colFile = File(dir, colname).absolutePath
-            if (!File(colFile).exists()) {
-                return Computation.ERR
-            }
-            var tmpCol: Collection? = null
-            try {
-                tmpCol = Storage.Collection(context, colFile)
-                if (!tmpCol.validCollection()) {
-                    tmpCol.close()
+
+                // from anki2.py
+                var colname = "collection.anki21"
+                val zip: ZipFile
+                zip = try {
+                    ZipFile(File(path))
+                } catch (e: IOException) {
+                    Timber.e(e, "doInBackgroundImportReplace - Error while unzipping")
+                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace0")
                     return Computation.ERR
                 }
-            } catch (e: Exception) {
-                Timber.e("Error opening new collection file... probably it's invalid")
                 try {
-                    tmpCol!!.close()
-                } catch (e2: Exception) {
-                    Timber.w(e2)
-                    // do nothing
+                    // v2 scheduler?
+                    if (zip.getEntry(colname) == null) {
+                        colname = CollectionHelper.COLLECTION_FILENAME
+                    }
+                    Utils.unzipFiles(zip, dir.absolutePath, arrayOf(colname, "media"), null)
+                } catch (e: IOException) {
+                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace - unzip")
+                    return Computation.ERR
                 }
-                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace - open col")
-                return Computation.ERR
-            } finally {
-                tmpCol?.close()
-            }
-            collectionTask.doProgress(res.getString(R.string.importing_collection))
-            try {
-                CollectionHelper.getInstance().getCol(context)
-                // unload collection
-                CollectionHelper.getInstance().closeCollection(true, "Importing new collection")
-                CollectionHelper.getInstance().lockCollection()
-            } catch (e: Exception) {
-                Timber.w(e)
-            }
-            // overwrite collection
-            val f = File(colFile)
-            if (!f.renameTo(File(colPath))) {
-                // Exit early if this didn't work
-                return Computation.ERR
-            }
-            return try {
-                CollectionHelper.getInstance().unlockCollection()
+                val colFile = File(dir, colname).absolutePath
+                if (!File(colFile).exists()) {
+                    return Computation.ERR
+                }
+                var tmpCol: Collection? = null
+                try {
+                    tmpCol = Storage.Collection(context, colFile)
+                    if (!tmpCol.validCollection()) {
+                        tmpCol.close()
+                        return Computation.ERR
+                    }
+                } catch (e: Exception) {
+                    Timber.e("Error opening new collection file... probably it's invalid")
+                    try {
+                        tmpCol!!.close()
+                    } catch (e2: Exception) {
+                        Timber.w(e2)
+                        // do nothing
+                    }
+                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace - open col")
+                    return Computation.ERR
+                } finally {
+                    tmpCol?.close()
+                }
+                collectionTask.doProgress(res.getString(R.string.importing_collection))
+                try {
+                    CollectionHelper.getInstance().getCol(context)
+                    // unload collection
+                    CollectionHelper.getInstance().closeCollection(true, "Importing new collection")
+                    CollectionHelper.getInstance().lockCollection()
+                } catch (e: Exception) {
+                    Timber.w(e)
+                }
+                // overwrite collection
+                val f = File(colFile)
+                if (!f.renameTo(File(colPath))) {
+                    // Exit early if this didn't work
+                    return Computation.ERR
+                }
+                return try {
+                    CollectionHelper.getInstance().unlockCollection()
 
-                // because users don't have a backup of media, it's safer to import new
-                // data and rely on them running a media db check to get rid of any
-                // unwanted media. in the future we might also want to duplicate this step
-                // import media
-                val nameToNum = HashMap<String, String>()
-                val numToName = HashMap<String, String>()
-                val mediaMapFile = File(dir.absolutePath, "media")
-                if (mediaMapFile.exists()) {
-                    factory.createParser(mediaMapFile).use { jp ->
-                        var name: String
-                        var num: String
-                        check(jp.nextToken() == JsonToken.START_OBJECT) { "Expected content to be an object" }
-                        while (jp.nextToken() != JsonToken.END_OBJECT) {
-                            num = jp.currentName()
-                            name = jp.nextTextValue()
-                            nameToNum[name] = num
-                            numToName[num] = name
+                    // because users don't have a backup of media, it's safer to import new
+                    // data and rely on them running a media db check to get rid of any
+                    // unwanted media. in the future we might also want to duplicate this step
+                    // import media
+                    val nameToNum = HashMap<String, String>()
+                    val numToName = HashMap<String, String>()
+                    val mediaMapFile = File(dir.absolutePath, "media")
+                    if (mediaMapFile.exists()) {
+                        factory.createParser(mediaMapFile).use { jp ->
+                            var name: String
+                            var num: String
+                            check(jp.nextToken() == JsonToken.START_OBJECT) { "Expected content to be an object" }
+                            while (jp.nextToken() != JsonToken.END_OBJECT) {
+                                num = jp.currentName()
+                                name = jp.nextTextValue()
+                                nameToNum[name] = num
+                                numToName[num] = name
+                            }
                         }
                     }
-                }
-                val mediaDir = Media.getCollectionMediaPath(colPath)
-                val total = nameToNum.size
-                var i = 0
-                for ((file, c) in nameToNum) {
-                    val of = File(mediaDir, file)
-                    if (!of.exists()) {
-                        Utils.unzipFiles(zip, mediaDir, arrayOf(c), numToName)
+                    val mediaDir = Media.getCollectionMediaPath(colPath)
+                    val total = nameToNum.size
+                    var i = 0
+                    for ((file, c) in nameToNum) {
+                        val of = File(mediaDir, file)
+                        if (!of.exists()) {
+                            Utils.unzipFiles(zip, mediaDir, arrayOf(c), numToName)
+                        }
+                        ++i
+                        collectionTask.doProgress(res.getString(R.string.import_media_count, (i + 1) * 100 / total))
                     }
-                    ++i
-                    collectionTask.doProgress(res.getString(R.string.import_media_count, (i + 1) * 100 / total))
+                    zip.close()
+                    // delete tmp dir
+                    BackupManager.removeDir(dir)
+                    Computation.OK
+                } catch (e: RuntimeException) {
+                    Timber.e(e, "doInBackgroundImportReplace - RuntimeException")
+                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace1")
+                    Computation.ERR
+                } catch (e: FileNotFoundException) {
+                    Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException")
+                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace2")
+                    Computation.ERR
+                } catch (e: IOException) {
+                    Timber.e(e, "doInBackgroundImportReplace - IOException")
+                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace3")
+                    Computation.ERR
                 }
-                zip.close()
-                // delete tmp dir
-                BackupManager.removeDir(dir)
-                Computation.OK
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundImportReplace - RuntimeException")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace1")
-                Computation.ERR
-            } catch (e: FileNotFoundException) {
-                Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace2")
-                Computation.ERR
-            } catch (e: IOException) {
-                Timber.e(e, "doInBackgroundImportReplace - IOException")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace3")
-                Computation.ERR
             }
+            return Computation.OK
         }
     }
 
