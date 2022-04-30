@@ -48,6 +48,7 @@ import androidx.core.view.ActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
 import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
@@ -1550,6 +1551,18 @@ open class Reviewer : AbstractFlashcardViewer() {
 
             val cardIds = listOf(currentCard!!.id)
             RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
+            return true
+        }
+
+        @JavascriptInterface
+        override fun ankiResetProgress(): Boolean {
+            val apiList = getJsApiListMap()!!
+            if (!apiList[RESET_PROGRESS]!!) {
+                showDeveloperContact(ankiJsErrorCodeDefault)
+                return false
+            }
+            val cardIds = listOf(currentCard!!.id)
+            ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge))
             return true
         }
     }

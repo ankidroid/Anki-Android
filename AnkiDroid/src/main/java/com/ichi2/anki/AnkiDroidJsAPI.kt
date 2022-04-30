@@ -527,4 +527,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         // it may be called in previewer so just return true value here
         return true
     }
+
+    @JavascriptInterface
+    open fun ankiResetProgress(): Boolean {
+        // the function is overridden in Reviewer.kt
+        // it may be called in previewer so just return true value here
+        return true
+    }
 }
