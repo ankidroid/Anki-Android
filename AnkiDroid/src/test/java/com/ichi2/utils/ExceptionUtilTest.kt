@@ -18,10 +18,9 @@ package com.ichi2.utils
 import com.ichi2.utils.ExceptionUtil.containsCause
 import com.ichi2.utils.ExceptionUtil.getExceptionMessage
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.Is.`is`
+import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Test
 
-@KotlinCleanup("is -> equalTo")
 class ExceptionUtilTest {
     @Test
     fun exceptionMessageSingle() {
@@ -29,7 +28,7 @@ class ExceptionUtilTest {
 
         val message = getExceptionMessage(e)
 
-        assertThat(message, `is`("Hello"))
+        assertThat(message, equalTo("Hello"))
     }
 
     @Test
@@ -39,14 +38,14 @@ class ExceptionUtilTest {
 
         val message = getExceptionMessage(e)
 
-        assertThat(message, `is`("Hello\nInner"))
+        assertThat(message, equalTo("Hello\nInner"))
     }
 
     @Test
     fun exceptionMessageNull() {
         val message = getExceptionMessage(null)
 
-        assertThat(message, `is`(""))
+        assertThat(message, equalTo(""))
     }
 
     @Test
@@ -57,30 +56,30 @@ class ExceptionUtilTest {
 
         val message = getExceptionMessage(e)
 
-        assertThat(message, `is`("Hello"))
+        assertThat(message, equalTo("Hello"))
     }
 
     @Test
     fun containsCauseExact() {
         val ex: Exception = IllegalStateException()
-        assertThat(containsCause(ex, IllegalStateException::class.java), `is`(true))
+        assertThat(containsCause(ex, IllegalStateException::class.java), equalTo(true))
     }
 
     @Test
     fun containsCauseNested() {
         val ex = Exception(IllegalStateException())
-        assertThat(containsCause(ex, IllegalStateException::class.java), `is`(true))
+        assertThat(containsCause(ex, IllegalStateException::class.java), equalTo(true))
     }
 
     @Test
     fun containsCauseMissing() {
         val ex = Exception()
-        assertThat(containsCause(ex, IllegalStateException::class.java), `is`(false))
+        assertThat(containsCause(ex, IllegalStateException::class.java), equalTo(false))
     }
 
     @Test
     fun containsCauseMissingNested() {
         val ex = Exception(Exception())
-        assertThat(containsCause(ex, IllegalStateException::class.java), `is`(false))
+        assertThat(containsCause(ex, IllegalStateException::class.java), equalTo(false))
     }
 }

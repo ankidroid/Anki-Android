@@ -26,15 +26,13 @@ import com.ichi2.libanki.Card
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.StrictMock.Companion.strictMock
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.mockito.Mockito.*
+import org.mockito.kotlin.whenever
 import java.util.concurrent.locks.Lock
 
 @RequiresApi(api = Build.VERSION_CODES.O) // onRenderProcessGone & RenderProcessGoneDetail
-@KotlinCleanup("IDE-lint")
-@KotlinCleanup("`when` -> whenever")
-@KotlinCleanup("`is` -> equalTo")
 class OnRenderProcessGoneDelegateTest {
     @Test
     fun singleCallCausesRefresh() {
@@ -44,7 +42,7 @@ class OnRenderProcessGoneDelegateTest {
         callOnRenderProcessGone(delegate)
 
         verify(mock, times(1)).displayCardQuestion()
-        assertThat(delegate.displayedToast, `is`(true))
+        assertThat(delegate.displayedToast, equalTo(true))
     }
 
     @Test
@@ -64,7 +62,7 @@ class OnRenderProcessGoneDelegateTest {
                 .description("displayCardQuestion should not be called again as the screen should close")
         )
             .displayCardQuestion()
-        assertThat(delegate.displayedDialog, `is`(true))
+        assertThat(delegate.displayedDialog, equalTo(true))
         verify(mock, times(1).description("After the dialog, the screen should be closed")).finishWithoutAnimation()
     }
 
@@ -85,7 +83,7 @@ class OnRenderProcessGoneDelegateTest {
                 .description("displayCardQuestion should be called again as the app was minimised")
         )
             .displayCardQuestion()
-        assertThat(delegate.displayedDialog, `is`(false))
+        assertThat(delegate.displayedDialog, equalTo(false))
     }
 
     @Test
@@ -103,13 +101,13 @@ class OnRenderProcessGoneDelegateTest {
         val mock = viewer
         val delegate = getInstance(mock)
 
-        doReturn(null).`when`(mock).currentCard
+        doReturn(null).whenever(mock).currentCard
         callOnRenderProcessGone(delegate)
 
         verify(mock, times(1)).destroyWebViewFrame()
         verify(mock, never()).recreateWebViewFrame()
 
-        assertThat("A toast should be displayed", delegate.displayedToast, `is`(true))
+        assertThat("A toast should be displayed", delegate.displayedToast, equalTo(true))
         verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation()
     }
 
@@ -118,61 +116,61 @@ class OnRenderProcessGoneDelegateTest {
         val mock = minimisedViewer
         val delegate = getInstance(mock)
 
-        doReturn(null).`when`(mock).currentCard
+        doReturn(null).whenever(mock).currentCard
         callOnRenderProcessGone(delegate)
 
         verify(mock, times(1)).destroyWebViewFrame()
         verify(mock, never()).recreateWebViewFrame()
 
-        assertThat("A toast should not be displayed as the screen is minimised", delegate.displayedToast, `is`(false))
+        assertThat("A toast should not be displayed as the screen is minimised", delegate.displayedToast, equalTo(false))
         verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation()
     }
 
-    protected fun callOnRenderProcessGone(delegate: OnRenderProcessGoneDelegateImpl) {
+    private fun callOnRenderProcessGone(delegate: OnRenderProcessGoneDelegateImpl) {
         callOnRenderProcessGone(delegate, delegate.target.webView)
     }
 
     @KotlinCleanup("webview nullability")
     private fun callOnRenderProcessGone(delegate: OnRenderProcessGoneDelegateImpl, webView: WebView?) {
         val result = delegate.onRenderProcessGone(webView!!, crashDetail)
-        assertThat("onRenderProcessGone should only return false if we want the app killed", result, `is`(true))
+        assertThat("onRenderProcessGone should only return false if we want the app killed", result, equalTo(true))
     }
 
-    protected val minimisedViewer: AbstractFlashcardViewer
+    private val minimisedViewer: AbstractFlashcardViewer
         get() = getViewer(Lifecycle.State.CREATED)
-    protected val viewer: AbstractFlashcardViewer
+    private val viewer: AbstractFlashcardViewer
         get() = getViewer(Lifecycle.State.STARTED)
 
     private fun getViewer(state: Lifecycle.State): AbstractFlashcardViewer {
         val mockWebView = mock(WebView::class.java)
         val mock = strictMock(AbstractFlashcardViewer::class.java)
-        doReturn(mock(Lock::class.java)).`when`(mock).writeLock
-        doReturn(mock(Resources::class.java)).`when`(mock).resources
-        doReturn(mockWebView).`when`(mock).webView
-        doReturn(mock(Card::class.java)).`when`(mock).currentCard
-        doReturn(lifecycleOf(state)).`when`(mock).lifecycle
-        doNothing().`when`(mock).destroyWebViewFrame()
-        doNothing().`when`(mock).recreateWebViewFrame()
-        doNothing().`when`(mock).displayCardQuestion()
-        doNothing().`when`(mock).finishWithoutAnimation()
+        doReturn(mock(Lock::class.java)).whenever(mock).writeLock
+        doReturn(mock(Resources::class.java)).whenever(mock).resources
+        doReturn(mockWebView).whenever(mock).webView
+        doReturn(mock(Card::class.java)).whenever(mock).currentCard
+        doReturn(lifecycleOf(state)).whenever(mock).lifecycle
+        doNothing().whenever(mock).destroyWebViewFrame()
+        doNothing().whenever(mock).recreateWebViewFrame()
+        doNothing().whenever(mock).displayCardQuestion()
+        doNothing().whenever(mock).finishWithoutAnimation()
         return mock
     }
 
     private fun lifecycleOf(state: Lifecycle.State): Lifecycle {
         val ret = mock(Lifecycle::class.java)
-        `when`(ret.currentState).thenReturn(state)
+        whenever(ret.currentState).thenReturn(state)
         return ret
     }
 
-    protected fun getInstance(mock: AbstractFlashcardViewer?): OnRenderProcessGoneDelegateImpl {
+    private fun getInstance(mock: AbstractFlashcardViewer?): OnRenderProcessGoneDelegateImpl {
         return spy(OnRenderProcessGoneDelegateImpl(mock))
     }
 
     // this value doesn't matter for now as it only defines a string
-    protected val crashDetail: RenderProcessGoneDetail
+    private val crashDetail: RenderProcessGoneDetail
         get() {
             val mock = mock(RenderProcessGoneDetail::class.java)
-            `when`(mock.didCrash()).thenReturn(true) // this value doesn't matter for now as it only defines a string
+            whenever(mock.didCrash()).thenReturn(true) // this value doesn't matter for now as it only defines a string
             return mock
         }
 

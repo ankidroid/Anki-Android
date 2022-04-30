@@ -41,7 +41,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
 
     private lateinit var tvAudioClip: FixedTextView
 
-    override fun createUI(context: Context, layout: LinearLayout?) {
+    override fun createUI(context: Context, layout: LinearLayout) {
         ankiCacheDirectory = context.externalCacheDir?.absolutePath
         // #9639: .opus is application/octet-stream in API 26,
         // requires a workaround as we don't want to enable application/octet-stream by default
@@ -55,7 +55,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
                 ACTIVITY_SELECT_AUDIO_CLIP
             )
         }
-        layout!!.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT)
+        layout.addView(btnLibrary, ViewGroup.LayoutParams.MATCH_PARENT)
         val btnVideo = Button(mActivity).apply {
             text = mActivity.getText(R.string.multimedia_editor_import_video)
             setOnClickListener {
