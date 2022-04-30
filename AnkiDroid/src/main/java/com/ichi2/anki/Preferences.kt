@@ -64,6 +64,7 @@ import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.CustomSyncServer.getSyncBaseUrlOrDefault
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.anki.web.CustomSyncServer.isEnabled
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -139,6 +140,7 @@ class Preferences : AnkiActivity() {
         if (actionBar == null)
             return
 
+        @NeedsTest("check all settings fragments have defined titles")
         actionBar.title = when (fragment) {
             is GeneralSettingsFragment -> resources.getString(R.string.pref_cat_general)
             is ReviewingSettingsFragment -> resources.getString(R.string.pref_cat_reviewing)
