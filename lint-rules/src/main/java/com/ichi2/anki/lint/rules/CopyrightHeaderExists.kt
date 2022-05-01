@@ -13,13 +13,14 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@file:Suppress("UnstableApiUsage")
+
 package com.ichi2.anki.lint.rules
 
 import com.android.tools.lint.detector.api.*
 import com.google.common.annotations.Beta
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
-import com.ichi2.anki.lint.utils.KotlinCleanup
 import org.jetbrains.uast.UClass
 import org.jetbrains.uast.UElement
 import java.util.*
@@ -33,7 +34,6 @@ import java.util.regex.Pattern
  * @see .EXPLANATION
  */
 @Beta
-@KotlinCleanup("IDE lint")
 class CopyrightHeaderExists : Detector(), SourceCodeScanner {
 
     companion object {
@@ -46,13 +46,11 @@ class CopyrightHeaderExists : Detector(), SourceCodeScanner {
          */
         private val IGNORE_CHECK_PATTERN = Pattern.compile("MissingCopyrightHeader")
 
-        @JvmField
         @VisibleForTesting
-        val ID = "MissingCopyrightHeader"
+        const val ID = "MissingCopyrightHeader"
 
-        @JvmField
         @VisibleForTesting
-        val DESCRIPTION = "All files in AnkiDroid must contain a GPLv3-compatible copyright header"
+        const val DESCRIPTION = "All files in AnkiDroid must contain a GPLv3-compatible copyright header"
         private const val EXPLANATION = "All files in AnkiDroid must contain a " +
             "GPLv3-compatible copyright header" +
             "The copyright header can be set in " +
@@ -77,7 +75,7 @@ class CopyrightHeaderExists : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableUastTypes(): List<Class<out UElement?>>? {
+    override fun getApplicableUastTypes(): List<Class<out UElement?>> {
         return listOf(UClass::class.java)
     }
 
@@ -92,7 +90,7 @@ class CopyrightHeaderExists : Detector(), SourceCodeScanner {
         // select from the start to the first line with content
         var end = 0
         var foundChar = false
-        for (i in 0 until contents.length) {
+        for (i in contents.indices) {
             foundChar = foundChar or !Character.isWhitespace(contents[i])
             if (foundChar && contents[i] == '\n') {
                 end = i
