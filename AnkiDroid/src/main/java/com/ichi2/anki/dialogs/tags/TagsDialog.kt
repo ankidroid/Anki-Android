@@ -156,9 +156,14 @@ class TagsDialog : AnalyticsDialogFragment {
             mDialogTitle = resources.getString(R.string.card_details_tags)
             optionsGroup.visibility = View.GONE
             mPositiveText = getString(R.string.dialog_ok)
+            mTagsArrayAdapter!!.setTagLongClickListener { v ->
+                createAddTagDialog(v.tag as String)
+                true
+            }
         } else {
             mDialogTitle = resources.getString(R.string.studyoptions_limit_select_tags)
             mPositiveText = getString(R.string.select)
+            mTagsArrayAdapter!!.setTagLongClickListener { false }
         }
         adjustToolbar(tagsDialogView)
         val builder = MaterialDialog.Builder(requireActivity())
@@ -177,45 +182,6 @@ class TagsDialog : AnalyticsDialogFragment {
         toolbar.title = mDialogTitle
         toolbar.inflateMenu(R.menu.tags_dialog_menu)
 
-        // space is not allowed in a tag
-        // for UX of hierarchical tag, inputting a space will instead insert "::" at the cursor
-        // if there are already some colons in front of the cursor, complete to 2 colons
-        // for example:
-        //   "tag"   -- input a space --> "tag::"
-        //   "tag:"  -- input a space --> "tag::"
-        //   "tag::" -- input a space --> "tag::"
-        val addTagFilter = InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
-            if (!source.subSequence(start, end).contains(' ')) {
-                return@InputFilter null
-            }
-            var previousColonsCnt = 0
-            if (dest != null) {
-                val previousPart = dest.substring(0, destStart)
-                if (previousPart.endsWith("::")) {
-                    previousColonsCnt = 2
-                } else if (previousPart.endsWith(":")) {
-                    previousColonsCnt = 1
-                }
-            }
-            val sb = StringBuilder()
-            for (char in source.subSequence(start, end)) {
-                if (char == ' ') {
-                    if (previousColonsCnt == 0) {
-                        sb.append("::")
-                    } else if (previousColonsCnt == 1) {
-                        sb.append(":")
-                    }
-                } else {
-                    sb.append(char)
-                }
-                previousColonsCnt = if (char == ':') {
-                    previousColonsCnt + 1
-                } else {
-                    0
-                }
-            }
-            sb
-        }
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
         toolbarAddItem.setOnMenuItemClickListener {
             val query = mToolbarSearchView!!.query.toString()
@@ -223,16 +189,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 addTag(query)
                 mToolbarSearchView!!.setQuery("", true)
             } else {
-                val addTagBuilder = MaterialDialog.Builder(requireActivity())
-                    .title(getString(R.string.add_tag))
-                    .negativeText(R.string.dialog_cancel)
-                    .positiveText(R.string.dialog_ok)
-                    .inputType(InputType.TYPE_CLASS_TEXT)
-                    .input(R.string.tag_name, R.string.empty_string) { _: MaterialDialog?, input: CharSequence -> addTag(input.toString()) }
-                val addTagDialog = addTagBuilder.build()
-                val inputET = requireDialogInputEditText(addTagDialog)
-                inputET.filters = arrayOf(addTagFilter)
-                addTagDialog.show()
+                createAddTagDialog(null)
             }
             true
         }
@@ -277,6 +234,27 @@ class TagsDialog : AnalyticsDialogFragment {
             ?: throw IllegalStateException("MaterialDialog $dialog does not have an input edit text.")
     }
 
+    /**
+     * Create an add tag dialog.
+     * @param prefixTag: The tag to be prefilled into the EditText section. A trailing '::' will be appended.
+     */
+    private fun createAddTagDialog(prefixTag: String?) {
+        val addTagBuilder = MaterialDialog.Builder(requireActivity())
+            .title(getString(R.string.add_tag))
+            .negativeText(R.string.dialog_cancel)
+            .positiveText(R.string.dialog_ok)
+            .inputType(InputType.TYPE_CLASS_TEXT)
+            .input(R.string.tag_name, R.string.empty_string) { _: MaterialDialog?, input: CharSequence -> addTag(input.toString()) }
+        val addTagDialog = addTagBuilder.build()
+        val inputET = requireDialogInputEditText(addTagDialog)
+        inputET.filters = arrayOf(addTagFilter)
+        if (!prefixTag.isNullOrEmpty()) {
+            // utilize the addTagFilter to append '::' properly by appending a space to prefixTag
+            inputET.setText("$prefixTag ")
+        }
+        addTagDialog.show()
+    }
+
     @VisibleForTesting
     fun addTag(rawTag: String?) {
         if (!rawTag.isNullOrEmpty()) {
@@ -317,5 +295,47 @@ class TagsDialog : AnalyticsDialogFragment {
         private const val CHECKED_TAGS_KEY = "checked_tags"
         private const val UNCHECKED_TAGS_KEY = "unchecked_tags"
         private const val ALL_TAGS_KEY = "all_tags"
+
+        /**
+         * The filter that constrains the inputted tag.
+         * Space is not allowed in a tag. For UX of hierarchical tag, inputting a space will instead
+         * insert "::" at the cursor. If there are already some colons in front of the cursor,
+         * complete to 2 colons. For example:
+         *   "tag"   -- input a space --> "tag::"
+         *   "tag:"  -- input a space --> "tag::"
+         *   "tag::" -- input a space --> "tag::"
+         */
+        private val addTagFilter = InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
+            if (!source.subSequence(start, end).contains(' ')) {
+                return@InputFilter null
+            }
+            var previousColonsCnt = 0
+            if (dest != null) {
+                val previousPart = dest.substring(0, destStart)
+                if (previousPart.endsWith("::")) {
+                    previousColonsCnt = 2
+                } else if (previousPart.endsWith(":")) {
+                    previousColonsCnt = 1
+                }
+            }
+            val sb = StringBuilder()
+            for (char in source.subSequence(start, end)) {
+                if (char == ' ') {
+                    if (previousColonsCnt == 0) {
+                        sb.append("::")
+                    } else if (previousColonsCnt == 1) {
+                        sb.append(":")
+                    }
+                } else {
+                    sb.append(char)
+                }
+                previousColonsCnt = if (char == ':') {
+                    previousColonsCnt + 1
+                } else {
+                    0
+                }
+            }
+            sb
+        }
     }
 }

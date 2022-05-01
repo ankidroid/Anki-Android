@@ -214,8 +214,21 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
      */
     private val mTagToIsExpanded: HashMap<String, Boolean>
 
+    /**
+     * Long click listener for each tag item. Used to add a subtag for the clicked tag.
+     */
+    private var mTagLongClickListener: View.OnLongClickListener? = null
+
     fun sortData() {
         tags.sort()
+    }
+
+    /**
+     * Set the long click listener for each tag item.
+     * View.tag is bound with the actual tag.
+     */
+    fun setTagLongClickListener(listener: View.OnLongClickListener?) {
+        mTagLongClickListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -250,12 +263,15 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
                 vh.mCheckBoxView.performClick()
             }
         }
+        // long clicking a tag opens the add tag dialog with the current tag as the prefix
+        vh.itemView.setOnLongClickListener(mTagLongClickListener)
         return vh
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.node = getVisibleTagTreeNode(position)!!
         holder.node.vh = holder
+        holder.itemView.tag = holder.node.tag
 
         if (mHasVisibleNestedTag) {
             holder.mExpandButton.visibility = if (holder.node.isNotLeaf()) View.VISIBLE else View.INVISIBLE
