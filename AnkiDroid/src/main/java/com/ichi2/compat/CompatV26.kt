@@ -23,8 +23,10 @@ import android.content.Context
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
+import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import com.ichi2.utils.KotlinCleanup
@@ -55,15 +57,11 @@ open class CompatV26 : CompatV23(), Compat {
         manager.createNotificationChannel(notificationChannel)
     }
 
-    @Suppress("DEPRECATION")
-    @KotlinCleanup("when solving the deprecation of Context.VIBRATOR_SERVICE fix the SENSELESS_COMPARISON warning")
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun vibrate(context: Context, durationMillis: Long) {
-        val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        @Suppress("SENSELESS_COMPARISON")
-        if (vibratorManager != null) {
-            val effect = VibrationEffect.createOneShot(durationMillis, VibrationEffect.DEFAULT_AMPLITUDE)
-            vibratorManager.vibrate(effect)
-        }
+        val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as Vibrator
+        val effect = VibrationEffect.createOneShot(durationMillis, VibrationEffect.DEFAULT_AMPLITUDE)
+        vibratorManager.vibrate(effect)
     }
 
     @Throws(IOException::class)
@@ -130,27 +128,25 @@ open class CompatV26 : CompatV23(), Compat {
     @Throws(IOException::class)
     @KotlinCleanup("fix IDE lint issues")
     override fun contentOfDirectory(directory: File): FileStream {
-        val paths_stream: DirectoryStream<Path>
-        paths_stream = try {
+        val pathsStream: DirectoryStream<Path> = try {
             newDirectoryStream(directory.toPath())
         } catch (e: IOException) {
             if (e is NoSuchFileException) {
-                val nsfe = e
                 throw FileNotFoundException(
                     """
-                    ${nsfe.file}
-                    ${nsfe.cause}
-                    ${nsfe.stackTrace}
+                    ${e.file}
+                    ${e.cause}
+                    ${e.stackTrace}
                     """.trimIndent()
                 )
             }
             throw e
         }
-        val paths: Iterator<Path> = paths_stream.iterator()
+        val paths: Iterator<Path> = pathsStream.iterator()
         return object : FileStream {
             @Throws(IOException::class)
             override fun close() {
-                paths_stream.close()
+                pathsStream.close()
             }
 
             @Throws(IOException::class)
