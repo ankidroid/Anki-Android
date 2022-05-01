@@ -180,7 +180,7 @@ abstract class ModelManager(protected val col: Collection) {
      * @throws ConfirmModSchemaException
      */
     @Throws(ConfirmModSchemaException::class)
-    abstract fun change(m: Model, nid: Long, newModel: Model, fmap: Map<Int, Int>?, cmap: Map<Int, Int>?)
+    abstract fun change(m: Model, nid: Long, newModel: Model, fmap: Map<Int, Int?>?, cmap: Map<Int, Int?>?)
 
     /*
       Schema hash ***********************************************************************************************

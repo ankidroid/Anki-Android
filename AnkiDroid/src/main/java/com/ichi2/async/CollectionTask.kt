@@ -159,6 +159,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         listener?.onCancelled()
     }
 
+    @KotlinCleanup("non-null return")
     class AddNote(private val note: Note) : TaskDelegate<Int, Boolean?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): Boolean {
             Timber.d("doInBackgroundAddNote")
