@@ -1,29 +1,27 @@
+@file:Suppress("UnstableApiUsage")
+
 package com.ichi2.anki.lint.rules
 
 import com.android.tools.lint.detector.api.*
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
-import com.ichi2.anki.lint.utils.KotlinCleanup
 import com.ichi2.anki.lint.utils.LintUtils
 import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
+import java.util.GregorianCalendar
 
 /**
  * This custom Lint rules will raise an error if a developer creates [GregorianCalendar] instances directly
  * instead of using the collection's getTime() method.
  */
-@KotlinCleanup("IDE lint")
-@KotlinCleanup("mutableListOf")
 class DirectGregorianInstantiation : Detector(), SourceCodeScanner {
 
     companion object {
-        @JvmField
         @VisibleForTesting
-        val ID = "DirectGregorianInstantiation"
+        const val ID = "DirectGregorianInstantiation"
 
-        @JvmField
         @VisibleForTesting
-        val DESCRIPTION = "Use the collection's getTime() method instead of directly creating GregorianCalendar instances"
+        const val DESCRIPTION = "Use the collection's getTime() method instead of directly creating GregorianCalendar instances"
         private const val EXPLANATION = "Creating GregorianCalendar instances directly is not allowed, as it " +
             "prevents control of time during testing. Use the collection's getTime() method instead"
         private val implementation = Implementation(DirectGregorianInstantiation::class.java, Scope.JAVA_FILE_SCOPE)
@@ -39,16 +37,12 @@ class DirectGregorianInstantiation : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableMethodNames(): List<String>? {
-        val forbiddenMethods: MutableList<String> = ArrayList()
-        forbiddenMethods.add("from")
-        return forbiddenMethods
+    override fun getApplicableMethodNames(): List<String> {
+        return mutableListOf("from")
     }
 
-    override fun getApplicableConstructorTypes(): List<String>? {
-        val forbiddenConstructors: MutableList<String> = ArrayList()
-        forbiddenConstructors.add("java.util.GregorianCalendar")
-        return forbiddenConstructors
+    override fun getApplicableConstructorTypes(): List<String> {
+        return mutableListOf("java.util.GregorianCalendar")
     }
 
     override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
@@ -58,7 +52,7 @@ class DirectGregorianInstantiation : Detector(), SourceCodeScanner {
         if (!LintUtils.isAnAllowedClass(foundClasses, "Time") && evaluator.isMemberInClass(method, "java.util.GregorianCalendar")) {
             context.report(
                 ISSUE,
-                context.getCallLocation(node, true, true),
+                context.getCallLocation(node, includeReceiver = true, includeArguments = true),
                 DESCRIPTION
             )
         }
