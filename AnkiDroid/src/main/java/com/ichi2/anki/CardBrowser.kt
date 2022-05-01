@@ -1684,17 +1684,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     /**
      * Removes cards from view. Doesn't delete them in model (database).
-     */
-    private fun removeNotesView(cards: Array<Card>, reorderCards: Boolean) {
-        val cardIds: MutableList<Long> = java.util.ArrayList(cards.size)
-        for (c in cards) {
-            cardIds.add(c.id)
-        }
-        removeNotesView(cardIds, reorderCards)
-    }
-
-    /**
-     * Removes cards from view. Doesn't delete them in model (database).
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
     private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
@@ -1769,7 +1758,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
         override fun actualOnProgressUpdate(context: CardBrowser?, value: Array<Card>) {
             // we don't need to reorder cards here as we've already deselected all notes,
-            context!!.removeNotesView(value, false)
+            context!!.removeNotesView(value.map { it.id }, false)
             mCardsDeleted = value.size
         }
 
