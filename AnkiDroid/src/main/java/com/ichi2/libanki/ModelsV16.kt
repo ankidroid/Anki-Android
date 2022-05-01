@@ -534,7 +534,7 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
         save(m)
     }
 
-    override fun change(m: NoteType, nid: Long, newModel: NoteType, fmap: Map<Int, Int>?, cmap: Map<Int, Int>?) {
+    override fun change(m: NoteType, nid: Long, newModel: NoteType, fmap: Map<Int, Int?>?, cmap: Map<Int, Int?>?) {
         change(m, listOf(nid), newModel, Optional.ofNullable(fmap), Optional.ofNullable(cmap))
     }
 
