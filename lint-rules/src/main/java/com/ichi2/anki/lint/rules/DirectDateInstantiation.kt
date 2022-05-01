@@ -1,9 +1,10 @@
+@file:Suppress("UnstableApiUsage")
+
 package com.ichi2.anki.lint.rules
 
 import com.android.tools.lint.detector.api.*
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
-import com.ichi2.anki.lint.utils.KotlinCleanup
 import com.ichi2.anki.lint.utils.LintUtils
 import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
@@ -12,16 +13,13 @@ import org.jetbrains.uast.UCallExpression
  * This custom Lint rules will raise an error if a developer instantiates the [java.util.Date] class directly
  * instead of using a [java.util.Date] provided through the collection's getTime() method.
  */
-@KotlinCleanup("IDE Lint")
 class DirectDateInstantiation : Detector(), SourceCodeScanner {
     companion object {
-        @JvmField
         @VisibleForTesting
-        val ID = "DirectDateInstantiation"
+        const val ID = "DirectDateInstantiation"
 
-        @JvmField
         @VisibleForTesting
-        val DESCRIPTION = "Use the collection's getTime() method instead of directly instantiating Date"
+        const val DESCRIPTION = "Use the collection's getTime() method instead of directly instantiating Date"
         private const val EXPLANATION = "Creating Date instances directly means dates cannot be controlled during" +
             " testing, so it is not allowed. Use the collection's getTime() method instead"
         private val implementation = Implementation(DirectDateInstantiation::class.java, Scope.JAVA_FILE_SCOPE)
@@ -37,9 +35,8 @@ class DirectDateInstantiation : Detector(), SourceCodeScanner {
         )
     }
 
-    @KotlinCleanup("mutableListOf")
-    override fun getApplicableConstructorTypes(): List<String>? {
-        val forbiddenConstructors: MutableList<String> = ArrayList()
+    override fun getApplicableConstructorTypes(): List<String> {
+        val forbiddenConstructors: MutableList<String> = mutableListOf()
         forbiddenConstructors.add("java.util.Date")
         return forbiddenConstructors
     }
