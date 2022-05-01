@@ -16,17 +16,15 @@
 package com.ichi2.anki.tests
 
 import com.ichi2.libanki.Storage
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendException
 import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.Timeout
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-@KotlinCleanup("is --> equalTo")
 class RustTest : InstrumentedTest() {
     /** Ensure that the database isn't be locked
      * This happened before the database code was converted to use the Rust backend.
@@ -41,6 +39,6 @@ class RustTest : InstrumentedTest() {
         val path = Shared.getTestFilePath(testContext, "initial_version_2_12_1.anki2")
         val collection = Storage.Collection(testContext, path)
         val ver = collection.db.queryScalar("select ver from col")
-        MatcherAssert.assertThat(ver, `is`(11))
+        MatcherAssert.assertThat(ver, equalTo(11))
     }
 }
