@@ -34,11 +34,11 @@ import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowActivity
 import timber.log.Timber
-import kotlin.test.junit.JUnitAsserter.assertEquals
-import kotlin.test.junit.JUnitAsserter.assertNotEquals
-import kotlin.test.junit.JUnitAsserter.assertNotNull
-import kotlin.test.junit.JUnitAsserter.assertNull
-import kotlin.test.junit.JUnitAsserter.assertTrue
+import kotlin.test.junit5.JUnit5Asserter.assertEquals
+import kotlin.test.junit5.JUnit5Asserter.assertNotEquals
+import kotlin.test.junit5.JUnit5Asserter.assertNotNull
+import kotlin.test.junit5.JUnit5Asserter.assertNull
+import kotlin.test.junit5.JUnit5Asserter.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CardTemplateEditorTest : RobolectricTest() {

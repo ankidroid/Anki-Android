@@ -9,6 +9,7 @@ buildscript {
     ext.acra_version = '5.7.0'
     ext.ankidroid_backend_version = '0.1.10'
     ext.hamcrest_version = '2.2'
+    ext.junit_version = '5.8.2'
 
     repositories {
         google()
@@ -44,6 +45,7 @@ subprojects {
                 includeAndroidResources = true
             }
             project.android.testOptions.unitTests.all {
+                useJUnitPlatform()
                 testLogging {
                     events "failed", "skipped"
                     showStackTraces = true

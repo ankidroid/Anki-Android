@@ -29,9 +29,9 @@ import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
-import kotlin.test.junit.JUnitAsserter.assertEquals
-import kotlin.test.junit.JUnitAsserter.assertNotNull
-import kotlin.test.junit.JUnitAsserter.assertNull
+import kotlin.test.junit5.JUnit5Asserter.assertEquals
+import kotlin.test.junit5.JUnit5Asserter.assertNotNull
+import kotlin.test.junit5.JUnit5Asserter.assertNull
 
 /**
  * Test for [BackupManager] without [RobolectricTest]. For performance
