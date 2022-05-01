@@ -24,7 +24,7 @@ import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.junit.JUnitAsserter.assertNull
+import kotlin.test.junit5.JUnit5Asserter.assertNull
 
 class StringUtilTest {
     @Test
