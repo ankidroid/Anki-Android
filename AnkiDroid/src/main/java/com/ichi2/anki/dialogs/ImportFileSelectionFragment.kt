@@ -21,7 +21,8 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.dialogs.HelpDialog.FunctionItem
+import com.ichi2.anki.dialogs.RecursiveMenuDialog.Companion.createInstance
+import com.ichi2.anki.dialogs.RecursiveMenuItemAction.*
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -30,34 +31,20 @@ import timber.log.Timber
 @NeedsTest("Selecting COLPKG does not allow multiple files")
 @NeedsTest("Restore backup dialog does not allow multiple files")
 class ImportFileSelectionFragment {
+
     companion object {
         @JvmStatic
-        @KotlinCleanup("convert importItems to java ArrayList")
-        fun createInstance(@Suppress("UNUSED_PARAMETER") context: DeckPicker): RecursivePictureMenu {
+        fun createInstance(@Suppress("UNUSED_PARAMETER") context: DeckPicker): RecursiveMenuDialog {
             // this needs a deckPicker for now. See use of PICK_APKG_FILE
-
-            // This is required for serialization of the lambda
-            class OpenFilePicker(var multiple: Boolean = false) : FunctionItem.ActivityConsumer {
-                override fun consume(activity: AnkiActivity) {
-                    openImportFilePicker(activity, multiple)
-                }
-            }
-
-            val importItems = arrayListOf<RecursivePictureMenu.Item>(
-                FunctionItem(
-                    R.string.import_deck_package,
-                    R.drawable.ic_manual_black_24dp,
-                    UsageAnalytics.Actions.IMPORT_APKG_FILE,
-                    OpenFilePicker(true)
-                ),
-                FunctionItem(
-                    R.string.import_collection_package,
-                    R.drawable.ic_manual_black_24dp,
-                    UsageAnalytics.Actions.IMPORT_COLPKG_FILE,
-                    OpenFilePicker()
-                ),
+            val menuItems = arrayOf(
+                RecursiveMenuItem(R.string.import_deck_package, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.IMPORT_APKG_FILE, 1, null, true, Importer(true)),
+                RecursiveMenuItem(R.string.import_collection_package, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.IMPORT_COLPKG_FILE, 2, null, true, Importer())
             )
-            return RecursivePictureMenu.createInstance(ArrayList(importItems), R.string.menu_import)
+            @KotlinCleanup(
+                "refactor this method to use its own dialog(maybe PickStringDialogFragment?) " +
+                    "and let RecursiveMenuDialog to handle only the help/support menu dialogs)"
+            )
+            return createInstance(menuItems, R.string.menu_import)
         }
 
         // needs to be static for serialization

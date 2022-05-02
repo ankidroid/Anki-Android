@@ -310,7 +310,7 @@ abstract class NavigationDrawerActivity :
                 (this as? Statistics)?.finishWithAnimation(FADE)
             } else if (itemId == R.id.nav_help) {
                 Timber.i("Navigating to help")
-                showDialogFragment(HelpDialog.createInstance(this))
+                showDialogFragment(HelpDialog.createInstance())
             } else if (itemId == R.id.support_ankidroid) {
                 Timber.i("Navigating to support AnkiDroid")
                 showDialogFragment(HelpDialog.createInstanceForSupportAnkiDroid(this))
