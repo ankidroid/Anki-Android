@@ -22,14 +22,9 @@ import com.ichi2.utils.JSONObject;
 
 import org.apache.http.util.Asserts;
 import org.junit.Test;
-import org.junit.jupiter.api.Nested;
 import org.junit.runner.RunWith;
-import org.robolectric.ParameterizedRobolectricTestRunner;
-import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -54,6 +49,7 @@ public class DecksTest extends RobolectricTest {
             "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
             "cmxieunwoogyxsctnjmv::INSBGDS",
             "::foobar", // Addition test for issue #11026
+            "A::", "::A", "::", "::A::", "::::", "A::B::", "::A::B", "::A::B::" // Additional tests for #11131
     };
     @Test
     public void ensureDeckList() {
@@ -288,39 +284,5 @@ public class DecksTest extends RobolectricTest {
         DeckConfig config = decks.confForDid(d.getLong("id"));
 
         assertThat("If a config is not found, return the default", config.getLong("id"), is(1L));
-    }
-
-    @Nested
-    @RunWith(ParameterizedRobolectricTestRunner.class)
-    public static class EmptyStringDeckTreeTest extends RobolectricTest {
-        @Parameters(name = "\"{0}\"")
-        public static Iterable<String> deckNames() {
-            return Arrays.asList("A::", "::A", "::", "::A::", "::::", "A::B::", "::A::B", "::A::B::");
-        }
-
-
-        private final String mDeckName;
-
-
-        public EmptyStringDeckTreeTest(String deckName) {
-            this.mDeckName = deckName;
-        }
-
-
-        @Test
-        public void ensureEmptyStringsGetRenamedToBlank() {
-            DeckManager decks = getCol().getDecks();
-
-            String escapedPath = decks.name(addDeck(mDeckName));
-            assertThat("Decks should be added", decks.count(), is(1 + mDeckName.split("::", -1).length));
-            assertThat("Deck Hierarchy created correctly", escapedPath, is(escapeEmptyDeckNames(mDeckName)));
-        }
-
-
-        private String escapeEmptyDeckNames(String deckName) {
-            return Arrays.stream(deckName.split("::", -1))
-                    .map(dn -> dn.isEmpty() ? "blank" : dn)
-                    .collect(Collectors.joining("::"));
-        }
     }
 }
