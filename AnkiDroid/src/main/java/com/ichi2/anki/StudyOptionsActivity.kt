@@ -67,8 +67,8 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
     }
 
     @Suppress("deprecation") // #10086
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intent)
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         Timber.d("onActivityResult (requestCode = %d, resultCode = %d)", requestCode, resultCode)
     }
 
