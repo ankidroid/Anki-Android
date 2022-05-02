@@ -3,7 +3,7 @@ package com.wildplot.android.rendering
 
 import android.graphics.Color
 import com.ichi2.utils.KotlinCleanup
-import com.wildplot.android.rendering.PieChartTest.createRectangleMock
+import com.wildplot.android.rendering.PieChartTest.Companion.createRectangleMock
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
 import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap

@@ -1,120 +1,141 @@
 //noinspection MissingCopyrightHeader #8659
+package com.wildplot.android.rendering
 
-package com.wildplot.android.rendering;
+import android.graphics.Color
+import com.ichi2.utils.KotlinCleanup
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
+import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
+import org.mockito.ArgumentMatchers.anyFloat
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.anyString
+import org.mockito.ArgumentMatchers.floatThat
+import org.mockito.Mock
+import org.mockito.MockedStatic
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.mockStatic
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
+import org.mockito.MockitoAnnotations
+import java.lang.IllegalArgumentException
 
-import android.graphics.Color;
-
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
-import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.MockitoAnnotations;
-
-import static org.mockito.ArgumentMatchers.anyFloat;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.floatThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-public class PieChartTest {
-    private static final double PRECISION = 1E-3F;
+@KotlinCleanup("`when` -> whenever")
+class PieChartTest {
+    @Mock
+    @KotlinCleanup("lateinit")
+    private val mGraphics: GraphicsWrap? = null
 
     @Mock
-    private GraphicsWrap mGraphics;
+    @KotlinCleanup("lateinit")
+    private val mPlot: PlotSheet? = null
 
-    @Mock
-    private PlotSheet mPlot;
+    @KotlinCleanup("lateinit")
+    private var mPieChart: PieChart? = null
 
-    private PieChart mPieChart;
-
-    private MockedStatic<Color> mColorMockedStatic;
-
+    @KotlinCleanup("lateinit")
+    private var mColorMockedStatic: MockedStatic<Color>? = null
 
     @Before
-    public void setUp() {
-        mColorMockedStatic = mockStatic(Color.class);
-        MockitoAnnotations.openMocks(this);
-        when(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0);
-        when(mPlot.getFrameThickness()).thenReturn(new float[]{0, 0, 0, 0});
+    fun setUp() {
+        mColorMockedStatic = mockStatic(Color::class.java)
+        MockitoAnnotations.openMocks(this)
+        `when`(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0)
+        `when`(mPlot!!.frameThickness).thenReturn(floatArrayOf(0f, 0f, 0f, 0f))
 
-        FontMetricsWrap fm = mock(FontMetricsWrap.class);
-        when(fm.getHeight()).thenReturn(10f);
-        when(fm.stringWidth(anyString())).thenReturn(30f);
-        when(mGraphics.getFontMetrics()).thenReturn(fm);
+        val fm = mock(FontMetricsWrap::class.java)
+        `when`(fm.height).thenReturn(10f)
+        `when`(fm.stringWidth(anyString())).thenReturn(30f)
+        `when`(mGraphics!!.fontMetrics).thenReturn(fm)
     }
 
     @After
-    public void tearDown() {
-        mColorMockedStatic.close();
+    fun tearDown() {
+        mColorMockedStatic!!.close()
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void constructorShouldThrowIfSizesMismatch() {
-        new PieChart(mPlot, new double[]{1, 1}, new ColorWrap[]{ColorWrap.RED});
-    }
-
-    @Test
-    public void paintShouldNotDrawAnythingIfValuesAreZero() {
-        mPieChart = new PieChart(mPlot, new double[]{0, 0}, new ColorWrap[]{
-                ColorWrap.RED, ColorWrap.GREEN});
-        mPieChart.paint(mGraphics);
-        verify(mGraphics, never()).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
-                anyFloat(), anyFloat());
+    @Test(expected = IllegalArgumentException::class)
+    fun constructorShouldThrowIfSizesMismatch() {
+        PieChart(mPlot!!, doubleArrayOf(1.0, 1.0), arrayOf(ColorWrap.RED))
     }
 
     @Test
-    public void paintShouldDrawFullRedCircleIfOneValue() {
-        mPieChart = new PieChart(mPlot, new double[]{1.}, new ColorWrap[]{
-                ColorWrap.RED});
-        RectangleWrap r = createRectangleMock(100, 100);
-        when(mGraphics.getClipBounds()).thenReturn(r);
-        mPieChart.paint(mGraphics);
-        verify(mGraphics).setColor(ColorWrap.RED);
-        verify(mGraphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
-                floatThat(closeTo(-90F)),
-                floatThat(closeTo(360F)));
+    fun paintShouldNotDrawAnythingIfValuesAreZero() {
+        mPieChart = PieChart(
+            mPlot!!, doubleArrayOf(0.0, 0.0),
+            arrayOf(
+                ColorWrap.RED, ColorWrap.GREEN
+            )
+        )
+        mPieChart!!.paint(mGraphics!!)
+        verify(mGraphics, never()).fillArc(
+            anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+            anyFloat(), anyFloat()
+        )
     }
 
     @Test
-    public void paintShouldDrawTwoSectorsWithGivenColors() {
-        mPieChart = new PieChart(mPlot, new double[]{1, 1}, new ColorWrap[]{
-                ColorWrap.RED, ColorWrap.GREEN});
-        RectangleWrap r = createRectangleMock(100, 100);
-        when(mGraphics.getClipBounds()).thenReturn(r);
-
-        mPieChart.paint(mGraphics);
-
-        verify(mGraphics).setColor(ColorWrap.RED);
-        verify(mGraphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
-                floatThat(closeTo(-90F)),
-                floatThat(closeTo(180F)));
-
-        verify(mGraphics).setColor(ColorWrap.GREEN);
-        verify(mGraphics).fillArc(anyFloat(), anyFloat(), anyFloat(), anyFloat(),
-                floatThat(closeTo(90F)),
-                floatThat(closeTo(180F)));
+    fun paintShouldDrawFullRedCircleIfOneValue() {
+        mPieChart = PieChart(
+            mPlot!!, doubleArrayOf(1.0),
+            arrayOf(
+                ColorWrap.RED
+            )
+        )
+        val r = createRectangleMock(100, 100)
+        `when`(mGraphics!!.clipBounds).thenReturn(r)
+        mPieChart!!.paint(mGraphics)
+        verify(mGraphics).color = ColorWrap.RED
+        verify(mGraphics).fillArc(
+            anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+            floatThat(closeTo(-90.0)),
+            floatThat(closeTo(360.0))
+        )
     }
 
-    public static RectangleWrap createRectangleMock(int width, int height) {
-        RectangleWrap r = mock(RectangleWrap.class);
-        r.width = width;
-        r.height = height;
-        when(r.width()).thenReturn(width);
-        when(r.height()).thenReturn(height);
-        return r;
+    @Test
+    fun paintShouldDrawTwoSectorsWithGivenColors() {
+        mPieChart = PieChart(
+            mPlot!!, doubleArrayOf(1.0, 1.0),
+            arrayOf(
+                ColorWrap.RED, ColorWrap.GREEN
+            )
+        )
+        val r = createRectangleMock(100, 100)
+        `when`(mGraphics!!.clipBounds).thenReturn(r)
+
+        mPieChart!!.paint(mGraphics)
+        verify(mGraphics).color = ColorWrap.RED
+        verify(mGraphics).fillArc(
+            anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+            floatThat(closeTo(-90.0)),
+            floatThat(closeTo(180.0))
+        )
+        verify(mGraphics).color = ColorWrap.GREEN
+        verify(mGraphics).fillArc(
+            anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+            floatThat(closeTo(90.0)),
+            floatThat(closeTo(180.0))
+        )
     }
 
-    private static FloatMatcher closeTo(double v) {
-        return FloatMatcher.closeTo(v, PRECISION);
+    companion object {
+        private const val PRECISION = 1E-3
+        fun createRectangleMock(width: Int, height: Int): RectangleWrap {
+            val r = mock(RectangleWrap::class.java)
+            r.width = width
+            r.height = height
+            `when`(r.width()).thenReturn(width)
+            `when`(r.height()).thenReturn(height)
+            return r
+        }
+
+        private fun closeTo(v: Double): FloatMatcher {
+            return FloatMatcher.closeTo(v, PRECISION)
+        }
     }
 }
