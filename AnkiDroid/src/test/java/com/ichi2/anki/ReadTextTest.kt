@@ -98,7 +98,7 @@ class ReadTextTest : RobolectricTest() {
         initializeTts(context, mock(AbstractFlashcardViewer.ReadTextListener::class.java))
     }
 
-    protected fun storeLanguage(i: Int, french: String?) {
+    protected fun storeLanguage(i: Int, french: String) {
         MetaDB.storeLanguage(targetContext, i.toLong(), 1, QUESTION, french)
         advanceRobolectricLooperWithSleep()
         advanceRobolectricLooperWithSleep()
