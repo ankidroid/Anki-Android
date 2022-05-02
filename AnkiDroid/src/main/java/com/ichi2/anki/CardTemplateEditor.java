@@ -851,7 +851,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
         private SaveModelAndExitHandler saveModelAndExitHandler() {
             return new SaveModelAndExitHandler(this);
         }
-        static class SaveModelAndExitHandler extends TaskListenerWithContext<CardTemplateFragment, Void, Pair<Boolean, String>> {
+        public static class SaveModelAndExitHandler extends TaskListenerWithContext<CardTemplateFragment, Void, Pair<Boolean, String>> {
             public SaveModelAndExitHandler(CardTemplateFragment templateFragment) {
                 super(templateFragment);
             }
