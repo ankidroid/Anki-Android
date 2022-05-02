@@ -13,21 +13,17 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.utils
 
-package com.ichi2.libanki.utils;
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.contains
+import org.junit.Test
 
-import org.junit.Test;
-
-import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-
-public class StringUtilsTest {
+class StringUtilsTest {
     // I feel we could do with more regression cover here
     @Test
-    public void testSplitOnWhitespace() {
-        List<String> split = StringUtils.splitOnWhitespace("\na\na\rb  a\tzz\n\n");
-        assertThat(split, contains("a", "a", "b", "a", "zz"));
+    fun testSplitOnWhitespace() {
+        val split = StringUtils.splitOnWhitespace("\na\na\rb  a\tzz\n\n")
+        assertThat(split, contains("a", "a", "b", "a", "zz"))
     }
 }
