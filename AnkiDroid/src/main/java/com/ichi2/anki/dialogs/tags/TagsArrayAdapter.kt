@@ -216,19 +216,12 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
 
     /**
      * Long click listener for each tag item. Used to add a subtag for the clicked tag.
+     * The full tag is passed through View.tag
      */
-    private var mTagLongClickListener: View.OnLongClickListener? = null
+    var tagLongClickListener: View.OnLongClickListener? = null
 
     fun sortData() {
         tags.sort()
-    }
-
-    /**
-     * Set the long click listener for each tag item.
-     * View.tag is bound with the actual tag.
-     */
-    fun setTagLongClickListener(listener: View.OnLongClickListener?) {
-        mTagLongClickListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -264,7 +257,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
             }
         }
         // long clicking a tag opens the add tag dialog with the current tag as the prefix
-        vh.itemView.setOnLongClickListener(mTagLongClickListener)
+        vh.itemView.setOnLongClickListener(tagLongClickListener)
         return vh
     }
 

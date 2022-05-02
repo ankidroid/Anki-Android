@@ -130,7 +130,10 @@ class TagsDialog : AnalyticsDialogFragment {
         get() = mListener
             ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)!!
 
-    @NeedsTest("All checked tags should be visible when the dialog opens (paths to them should be expanded).")
+    @NeedsTest(
+        "In EDIT_TAGS dialog, long-clicking a tag should open the add tag dialog with the clicked tag" +
+            "filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click."
+    )
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         @SuppressLint("InflateParams") val tagsDialogView = LayoutInflater.from(activity).inflate(R.layout.tags_dialog, null, false)
         mTagsListRecyclerView = tagsDialogView.findViewById(R.id.tags_dialog_tags_list)
@@ -156,14 +159,14 @@ class TagsDialog : AnalyticsDialogFragment {
             mDialogTitle = resources.getString(R.string.card_details_tags)
             optionsGroup.visibility = View.GONE
             mPositiveText = getString(R.string.dialog_ok)
-            mTagsArrayAdapter!!.setTagLongClickListener { v ->
+            mTagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { v ->
                 createAddTagDialog(v.tag as String)
                 true
             }
         } else {
             mDialogTitle = resources.getString(R.string.studyoptions_limit_select_tags)
             mPositiveText = getString(R.string.select)
-            mTagsArrayAdapter!!.setTagLongClickListener { false }
+            mTagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { false }
         }
         adjustToolbar(tagsDialogView)
         val builder = MaterialDialog.Builder(requireActivity())
@@ -236,8 +239,10 @@ class TagsDialog : AnalyticsDialogFragment {
 
     /**
      * Create an add tag dialog.
+     *
      * @param prefixTag: The tag to be prefilled into the EditText section. A trailing '::' will be appended.
      */
+    @NeedsTest("The prefixTag should be prefilled properly")
     private fun createAddTagDialog(prefixTag: String?) {
         val addTagBuilder = MaterialDialog.Builder(requireActivity())
             .title(getString(R.string.add_tag))
