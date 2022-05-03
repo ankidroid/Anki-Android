@@ -63,9 +63,8 @@ import static com.ichi2.anki.TestUtils.clickChildViewWithId;
 import static com.ichi2.anki.TestUtils.getActivityInstance;
 import static com.ichi2.anki.TestUtils.isScreenSw600dp;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
 
@@ -210,26 +209,28 @@ public class DeckPickerTest {
 
 
     private void ensureIsGone(int iconId) {
-        boolean searchDeckIconIsVisible = true;
-        try {
-            ViewInteraction icon = onView(withId(iconId));
-            icon.check(isGone());
-        } catch (NoMatchingViewException e) {
-            searchDeckIconIsVisible = false;
-        }
-        assertFalse("Icon should be invisible", searchDeckIconIsVisible);
+        checkVisibility(iconId, false);
     }
 
 
     private void ensureIsVisible(int iconId) {
+        checkVisibility(iconId, true);
+    }
+
+
+    private void checkVisibility(int iconId, boolean expectedVisibility) {
         boolean searchDeckIconIsVisible = true;
         try {
             ViewInteraction icon = onView(withId(iconId));
-            icon.check(isVisible());
+            if (expectedVisibility) {
+                icon.check(isVisible());
+            } else {
+                icon.check(isGone());
+            }
         } catch (NoMatchingViewException e) {
             searchDeckIconIsVisible = false;
         }
-        assertTrue("Icon should be visible", searchDeckIconIsVisible);
+        assertEquals("Icon should be " + (expectedVisibility ? "" : "in") + "visible", searchDeckIconIsVisible, expectedVisibility);
     }
 
 
