@@ -235,13 +235,13 @@ public class TokenizerTest extends RobolectricTest {
             tokenizer.next();
             fail();
         } catch (TemplateError.NoClosingBrackets exc) {
-            assertThat(exc.mRemaining, is("{{!ien nnr"));
+            assertThat(exc.getRemaining(), is("{{!ien nnr"));
         }
         try {
             legacy_tokenizer.next();
             fail();
         } catch (TemplateError.NoClosingBrackets exc) {
-            assertThat(exc.mRemaining, is("<%!ien nnr"));
+            assertThat(exc.getRemaining(), is("<%!ien nnr"));
         }
         assertThat(tokenizer.hasNext(), is(false));
     }

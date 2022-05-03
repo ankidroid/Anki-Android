@@ -13,88 +13,42 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.libanki.template
 
-package com.ichi2.libanki.template;
+import android.content.Context
+import com.ichi2.anki.R
 
-import android.content.Context;
+abstract class TemplateError : NoSuchElementException() {
 
-import com.ichi2.anki.R;
+    abstract fun message(context: Context): String
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public abstract class TemplateError extends NoSuchElementException {
-    public abstract String message(Context context);
-
-    public static class NoClosingBrackets extends TemplateError {
-        public final @NonNull String mRemaining;
-
-        public NoClosingBrackets(String remaining) {
-            mRemaining = remaining;
-        }
-
-
-        public String message(Context context) {
-            return context.getString(R.string.missing_closing_bracket, mRemaining);
+    class NoClosingBrackets(val remaining: String) : TemplateError() {
+        override fun message(context: Context): String {
+            return context.getString(R.string.missing_closing_bracket, remaining)
         }
     }
 
-    public static class ConditionalNotClosed extends TemplateError {
-        public final @NonNull String mFieldName;
-
-        public ConditionalNotClosed(String fieldName) {
-            mFieldName = fieldName;
-        }
-
-        public String message(Context context) {
-            return context.getString(R.string.open_tag_not_closed, mFieldName);
+    class ConditionalNotClosed(val fieldName: String) : TemplateError() {
+        override fun message(context: Context): String {
+            return context.getString(R.string.open_tag_not_closed, fieldName)
         }
     }
 
-    public static class WrongConditionalClosed extends TemplateError {
-        public final @NonNull String mExpected;
-        public final @NonNull String mFound;
-
-
-        public WrongConditionalClosed(@NonNull String expected, @NonNull String found) {
-            this.mExpected = expected;
-            this.mFound = found;
-        }
-
-
-        public String message(Context context) {
-            return context.getString(R.string.wrong_tag_closed, mFound, mExpected);
+    class WrongConditionalClosed(val expected: String, val found: String) : TemplateError() {
+        override fun message(context: Context): String {
+            return context.getString(R.string.wrong_tag_closed, found, expected)
         }
     }
 
-    public static class ConditionalNotOpen extends TemplateError {
-        public final @NonNull String mClosed;
-
-
-        public ConditionalNotOpen(@NonNull String closed) {
-            mClosed = closed;
-        }
-
-        public String message(Context context) {
-            return context.getString(R.string.closed_tag_not_open, mClosed);
+    class ConditionalNotOpen(val closed: String) : TemplateError() {
+        override fun message(context: Context): String {
+            return context.getString(R.string.closed_tag_not_open, closed)
         }
     }
 
-    public static class FieldNotFound extends TemplateError {
-        public final @NonNull List<String> mFilters;
-        public final @NonNull String mField;
-
-
-        public FieldNotFound(@NonNull List<String> filters, @NonNull String field) {
-            this.mFilters = filters;
-            this.mField = field;
-        }
-
-        public String message(Context context) {
-            return context.getString(R.string.no_field, mField);
+    class FieldNotFound(val filters: List<String>, val field: String) : TemplateError() {
+        override fun message(context: Context): String {
+            return context.getString(R.string.no_field, field)
         }
     }
 }
