@@ -13,53 +13,58 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.libanki.template
 
-package com.ichi2.libanki.template;
+import com.ichi2.utils.KotlinCleanup
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+object FuriganaFilters {
+    private val r = Pattern.compile(" ?([^ >]+?)\\[(.+?)]")
+    private const val RUBY = "<ruby><rb>$1</rb><rt>$2</rt></ruby>"
 
-public class FuriganaFilters {
-    private static final Pattern r = Pattern.compile(" ?([^ >]+?)\\[(.+?)]");
-
-    private static final String RUBY = "<ruby><rb>$1</rb><rt>$2</rt></ruby>";
-
-    private static String noSound(Matcher match, String replacement) {
-        if (match.group(2).startsWith("sound:")) {
+    @JvmStatic
+    @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    @KotlinCleanup("handle the nullability of match.group")
+    private fun noSound(match: Matcher, replacement: String): String {
+        return if (match.group(2).startsWith("sound:")) {
             // return without modification
-            return match.group(0);
+            match.group(0)!!
         } else {
-            return r.matcher(match.group(0)).replaceAll(replacement);
+            r.matcher(match.group(0)!!).replaceAll(replacement)
         }
     }
 
-    public static String kanjiFilter(String txt) {
-        Matcher m = r.matcher(txt);
-        StringBuffer sb = new StringBuffer();
+    @JvmStatic
+    fun kanjiFilter(txt: String): String {
+        val m = r.matcher(txt)
+        val sb = StringBuffer()
         while (m.find()) {
-            m.appendReplacement(sb, noSound(m, "$1"));
+            m.appendReplacement(sb, noSound(m, "$1"))
         }
-        m.appendTail(sb);
-        return sb.toString();
+        m.appendTail(sb)
+        return sb.toString()
     }
 
-    public static String kanaFilter(String txt) {
-        Matcher m = r.matcher(txt);
-        StringBuffer sb = new StringBuffer();
+    @JvmStatic
+    fun kanaFilter(txt: String): String {
+        val m = r.matcher(txt)
+        val sb = StringBuffer()
         while (m.find()) {
-            m.appendReplacement(sb, noSound(m, "$2"));
+            m.appendReplacement(sb, noSound(m, "$2"))
         }
-        m.appendTail(sb);
-        return sb.toString();
+        m.appendTail(sb)
+        return sb.toString()
     }
 
-    public static String furiganaFilter(String txt) {
-        Matcher m = r.matcher(txt);
-        StringBuffer sb = new StringBuffer();
+    @JvmStatic
+    fun furiganaFilter(txt: String): String {
+        val m = r.matcher(txt)
+        val sb = StringBuffer()
         while (m.find()) {
-            m.appendReplacement(sb, noSound(m, RUBY));
+            m.appendReplacement(sb, noSound(m, RUBY))
         }
-        m.appendTail(sb);
-        return sb.toString();
+        m.appendTail(sb)
+        return sb.toString()
     }
 }
