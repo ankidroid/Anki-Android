@@ -31,7 +31,6 @@ import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
-import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.libanki.FilteredDeckUtil;
 import com.ichi2.utils.JSONArray;
@@ -103,7 +102,7 @@ public class SchedV2Test extends RobolectricTest {
      * @return
      */
     @KotlinCleanup("reduce code")
-    protected static List<TreeNode<DeckDueTreeNode>> expectedTree(Collection col, boolean addRev) throws DeckRenameException {
+    protected static List<TreeNode<DeckDueTreeNode>> expectedTree(Collection col, boolean addRev) {
         AbstractSched sched = col.getSched();
 
         // deck IDs are based on the collection time. Changed to being hardcoded during Kotlin conversion.
@@ -252,7 +251,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
-    public void ensureDeckTree() throws DeckRenameException {
+    public void ensureDeckTree() {
         for (String deckName : TEST_DECKS) {
             addDeck(deckName);
         }

@@ -30,7 +30,6 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.libanki.backend.exception.DeckRenameException;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.MutableTime;
 import com.ichi2.utils.JSONArray;
@@ -174,7 +173,7 @@ public class SchedTest extends RobolectricTest {
 
 
     @Test
-    public void ensureDeckTree() throws DeckRenameException {
+    public void ensureDeckTree() {
         for (String deckName : TEST_DECKS) {
             addDeck(deckName);
         }
