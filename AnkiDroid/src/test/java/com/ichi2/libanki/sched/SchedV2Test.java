@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -119,8 +118,8 @@ public class SchedV2Test extends RobolectricTest {
         DeckDueTreeNode s = new DeckDueTreeNode(col, "scxipjiyozczaaczoawo", 1596783600420L, 0, 0, 0);
         DeckDueTreeNode f = new DeckDueTreeNode(col, "blank::foobar", 1596783600540L, 0, 0, 0);
         DeckDueTreeNode b = new DeckDueTreeNode(col, "blank", 1596783600520L, 0, 0, 0);
-        DeckDueTreeNode aBlank = new DeckDueTreeNode(col, "A::blank", col.getDecks().id("A::blank"), 0, 0, 0);
-        DeckDueTreeNode a = new DeckDueTreeNode(col, "A", col.getDecks().id("A"), 0, 0, 0);
+        DeckDueTreeNode aBlank = new DeckDueTreeNode(col, "A::blank", 1596783600580L, 0, 0, 0);
+        DeckDueTreeNode a = new DeckDueTreeNode(col, "A", 1596783600560L, 0, 0, 0);
 
 
         TreeNode<DeckDueTreeNode> cazNode = new TreeNode<>(caz);
