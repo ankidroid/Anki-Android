@@ -86,4 +86,8 @@
     <item
         android:id="@+id/action_select_all"
         android:title="@string/card_browser_select_all"/>
+
+    <item
+        android:id="@+id/action_truncate"
+        android:title="@string/card_browser_truncate" />
 </menu>
