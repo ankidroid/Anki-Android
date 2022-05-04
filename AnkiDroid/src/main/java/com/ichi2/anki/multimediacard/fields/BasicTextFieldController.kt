@@ -46,16 +46,15 @@ import java.io.File
  * <p>
  * Controllers work with the edit field activity and create UI on it to edit a field.
  */
-@KotlinCleanup("lateinit")
 class BasicTextFieldController : FieldControllerBase(), IFieldController, DialogInterface.OnClickListener {
-    private var mEditText: EditText? = null
+    private lateinit var mEditText: EditText
 
     // This is used to copy from another field value to this field
     private var mPossibleClones: ArrayList<String>? = null
     override fun createUI(context: Context, layout: LinearLayout) {
         mEditText = FixedEditText(mActivity)
-        mEditText!!.minLines = 3
-        mEditText!!.setText(mField.text)
+        mEditText.minLines = 3
+        mEditText.setText(mField.text)
         layout.addView(mEditText, LinearLayout.LayoutParams.MATCH_PARENT)
         val layoutTools = LinearLayout(mActivity)
         layoutTools.orientation = LinearLayout.HORIZONTAL
@@ -83,7 +82,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         val clearButton = Button(mActivity)
         clearButton.text = gtxt(R.string.multimedia_editor_text_field_editing_clear)
         layoutTools.addView(clearButton, p)
-        clearButton.setOnClickListener { mEditText!!.setText("") }
+        clearButton.setOnClickListener { mEditText.setText("") }
     }
 
     /**
@@ -94,7 +93,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         val btnPronounce = Button(mActivity)
         btnPronounce.text = gtxt(R.string.multimedia_editor_text_field_editing_say)
         btnPronounce.setOnClickListener {
-            val source = mEditText!!.text.toString()
+            val source = mEditText.text.toString()
             if (source.isEmpty()) {
                 showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text))
                 return@setOnClickListener
@@ -111,7 +110,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         val btnTranslate = Button(mActivity)
         btnTranslate.text = gtxt(R.string.multimedia_editor_text_field_editing_translate)
         btnTranslate.setOnClickListener {
-            val source = mEditText!!.text.toString()
+            val source = mEditText.text.toString()
 
             // Checks and warnings
             if (source.isEmpty()) {
@@ -212,21 +211,21 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
             // Translation returned.
             try {
                 val translation = data!!.extras!![TranslationActivity.EXTRA_TRANSLATION].toString()
-                mEditText!!.setText(translation)
+                mEditText.setText(translation)
             } catch (e: Exception) {
                 Timber.w(e)
                 showToast(gtxt(R.string.multimedia_editor_something_wrong))
             }
         } else if (requestCode == REQUEST_CODE_PRONUNCIATION && resultCode == Activity.RESULT_OK) {
             try {
-                val pronuncPath = data!!.extras!![LoadPronunciationActivity.EXTRA_PRONUNCIATION_FILE_PATH]
+                val pronouncePath = data!!.extras!![LoadPronunciationActivity.EXTRA_PRONUNCIATION_FILE_PATH]
                     .toString()
-                val f = File(pronuncPath)
+                val f = File(pronouncePath)
                 if (!f.exists()) {
                     showToast(gtxt(R.string.multimedia_editor_pron_pronunciation_failed))
                 }
                 val af: AudioField = AudioRecordingField()
-                af.audioPath = pronuncPath
+                af.audioPath = pronouncePath
                 // This is done to delete the file later.
                 af.setHasTemporaryMedia(true)
                 mActivity.handleFieldChanged(af)
@@ -237,7 +236,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         } else if (requestCode == REQUEST_CODE_TRANSLATE_COLORDICT && resultCode == Activity.RESULT_OK) {
             // String subject = data.getStringExtra(Intent.EXTRA_SUBJECT);
             val text = data!!.getStringExtra(Intent.EXTRA_TEXT)
-            mEditText!!.setText(text)
+            mEditText.setText(text)
         }
     }
 
@@ -247,12 +246,12 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
 
     // When Done button is clicked
     override fun onDone() {
-        mField.text = mEditText!!.text.toString()
+        mField.text = mEditText.text.toString()
     }
 
     // This is when the dialog for clone ends
     override fun onClick(dialog: DialogInterface, which: Int) {
-        mEditText!!.setText(mPossibleClones!![which])
+        mEditText.setText(mPossibleClones!![which])
     }
 
     /**
@@ -277,7 +276,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         val EXTRA_MARGIN_BOTTOM = "EXTRA_MARGIN_BOTTOM"
         val EXTRA_MARGIN_RIGHT = "EXTRA_MARGIN_RIGHT"
         val intent = Intent(PICK_RESULT_ACTION)
-        intent.putExtra(EXTRA_QUERY, mEditText!!.text.toString()) // Search
+        intent.putExtra(EXTRA_QUERY, mEditText.text.toString()) // Search
         // Query
         intent.putExtra(EXTRA_FULLSCREEN, false) //
         // intent.putExtra(EXTRA_HEIGHT, 400); //400pixel, if you don't specify,
@@ -292,7 +291,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
     }
 
     private fun startTranslationWithGlosbe() {
-        val source = mEditText!!.text.toString()
+        val source = mEditText.text.toString()
         val intent = Intent(mActivity, TranslationActivity::class.java)
         intent.putExtra(TranslationActivity.EXTRA_SOURCE, source)
         mActivity.startActivityForResultWithoutAnimation(intent, REQUEST_CODE_TRANSLATE_GLOSBE)
