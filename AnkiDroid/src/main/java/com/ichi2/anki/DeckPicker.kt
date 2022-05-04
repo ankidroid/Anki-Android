@@ -181,7 +181,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         try {
             collectionIsOpen = colIsOpen()
             handleDeckSelection(deckId, selectionType)
-            if (mFragmented) {
+            if (fragmented) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
                 // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
                 mDeckListAdapter.notifyDataSetChanged()
@@ -305,10 +305,10 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment)
         // set protected variable from NavigationDrawerActivity
-        mFragmented = mStudyoptionsFrame != null && mStudyoptionsFrame!!.visibility == View.VISIBLE
+        fragmented = mStudyoptionsFrame != null && mStudyoptionsFrame!!.visibility == View.VISIBLE
 
         // Open StudyOptionsFragment if in fragmented mode
-        if (mFragmented && !mStartupError) {
+        if (fragmented && !mStartupError) {
             loadStudyOptionsFragment(false)
         }
         registerExternalStorageListener()
@@ -335,7 +335,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         mRecyclerView.addItemDecoration(dividerDecorator)
 
         // Add background to Deckpicker activity
-        val view = if (mFragmented) findViewById(R.id.deckpicker_xl_view) else findViewById<View>(R.id.root_layout)
+        val view = if (fragmented) findViewById(R.id.deckpicker_xl_view) else findViewById<View>(R.id.root_layout)
 
         var hasDeckPickerBackground = false
         try {
@@ -550,7 +550,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             displaySyncBadge(menu)
 
             // Show / hide undo
-            if (mFragmented || !col.undoAvailable()) {
+            if (fragmented || !col.undoAvailable()) {
                 menu.findItem(R.id.action_undo).isVisible = false
             } else {
                 val res = resources
@@ -1698,7 +1698,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 supportInvalidateOptionsMenu()
                 updateDeckList()
                 WidgetStatus.update(this@DeckPicker)
-                if (mFragmented) {
+                if (fragmented) {
                     try {
                         loadStudyOptionsFragment(false)
                     } catch (e: IllegalStateException) {
@@ -1794,7 +1794,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     private fun openStudyOptions(withDeckOptions: Boolean) {
-        if (mFragmented) {
+        if (fragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions)
         } else {
@@ -1808,7 +1808,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     private fun openReviewerOrStudyOptions(selectionType: DeckSelectionType) {
         when (selectionType) {
             DeckSelectionType.DEFAULT -> {
-                if (mFragmented) {
+                if (fragmented) {
                     openStudyOptions(false)
                 } else {
                     openReviewer()
@@ -1861,7 +1861,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback)
             // Check if we need to update the fragment or update the deck list. The same checks
             // are required for all snackbars below.
-            if (mFragmented) {
+            if (fragmented) {
                 // Tablets must always show the study options that corresponds to the current deck,
                 // regardless of whether the deck is currently reviewable or not.
                 openStudyOptions(false)
@@ -1879,7 +1879,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 this, R.string.empty_deck, false, R.string.empty_deck_add_note,
                 { addNote() }, findViewById(R.id.root_layout), mSnackbarShowHideCallback
             )
-            if (mFragmented) {
+            if (fragmented) {
                 openStudyOptions(false)
             } else {
                 updateDeckList()
@@ -1893,7 +1893,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 )
                 showDialogFragment(d)
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback)
-            if (mFragmented) {
+            if (fragmented) {
                 openStudyOptions(false)
             } else {
                 updateDeckList()
@@ -1927,7 +1927,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             Timber.i("Updating deck list UI")
             context.hideProgressBar()
             // Make sure the fragment is visible
-            if (context.mFragmented) {
+            if (context.fragmented) {
                 context.mStudyoptionsFrame!!.visibility = View.VISIBLE
             }
             if (result == null) {
@@ -2098,7 +2098,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             dismissAllDialogFragments()
             mDeckListAdapter.notifyDataSetChanged()
             updateDeckList()
-            if (mFragmented) {
+            if (fragmented) {
                 loadStudyOptionsFragment(false)
             }
         }
@@ -2169,7 +2169,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             // In fragmented mode, if the deleted deck was the current deck, we need to reload
             // the study options fragment with a valid deck and re-center the deck list to the
             // new current deck. Otherwise we just update the list normally.
-            if (context.mFragmented && mRemovingCurrent) {
+            if (context.fragmented && mRemovingCurrent) {
                 context.updateDeckList()
                 context.openStudyOptions(false)
             } else {
@@ -2199,7 +2199,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
         override fun actualOnPostExecute(context: DeckPicker, result: DeckStudyData?) {
             context.updateDeckList()
-            if (context.mFragmented) {
+            if (context.fragmented) {
                 context.loadStudyOptionsFragment(false)
             }
         }
@@ -2216,7 +2216,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     override fun onAttachedToWindow() {
-        if (!mFragmented) {
+        if (!fragmented) {
             val window = window
             window.setFormat(PixelFormat.RGBA_8888)
         }
@@ -2237,7 +2237,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     override fun onExtendStudyLimits() {
-        if (mFragmented) {
+        if (fragmented) {
             fragment!!.refreshInterface(true)
         }
         updateDeckList()
@@ -2335,7 +2335,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             dismissAllDialogFragments()
             mDeckListAdapter.notifyDataSetChanged()
             updateDeckList()
-            if (mFragmented) {
+            if (fragmented) {
                 loadStudyOptionsFragment(false)
             }
         }
