@@ -178,8 +178,10 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
                 }
 
                 // collect clone sources
-                mPossibleClones!!.add(curField.text!!)
-                ++numTextFields
+                curField.let {
+                    it.text?.let { it1 -> mPossibleClones?.add(it1) }
+                    ++numTextFields
+                }
             }
 
             // Nothing to clone from
