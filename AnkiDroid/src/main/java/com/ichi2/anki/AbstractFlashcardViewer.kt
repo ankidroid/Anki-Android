@@ -546,9 +546,9 @@ abstract class AbstractFlashcardViewer :
     val isFullscreen: Boolean
         get() = !supportActionBar!!.isShowing
 
-    override fun onConfigurationChanged(config: Configuration) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         // called when screen rotated, etc, since recreating the Webview is too expensive
-        super.onConfigurationChanged(config)
+        super.onConfigurationChanged(newConfig)
         refreshActionBar()
     }
 
