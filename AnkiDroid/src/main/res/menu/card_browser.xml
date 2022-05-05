@@ -89,5 +89,9 @@
 
     <item
         android:id="@+id/action_truncate"
-        android:title="@string/card_browser_truncate" />
+        android:checkable="true"
+        android:checked="false"
+        android:title="@string/card_browser_truncate"
+        ankidroid:showAsAction="never"/>
+
 </menu>

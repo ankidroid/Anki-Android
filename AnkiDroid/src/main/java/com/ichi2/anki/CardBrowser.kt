@@ -1200,14 +1200,14 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     private fun onTruncate() {
         val truncate = mActionBarMenu!!.findItem(R.id.action_truncate)
 
-        if (truncate.title == resources.getString(R.string.card_browser_truncate)) {
-            isTruncated = true
-            mCardsAdapter!!.notifyDataSetChanged()
-            truncate.title = resources.getString(R.string.card_browser_expand)
-        } else {
+        if (truncate.isChecked) {
             isTruncated = false
             mCardsAdapter!!.notifyDataSetChanged()
-            truncate.title = resources.getString(R.string.card_browser_truncate)
+            truncate.setChecked(false)
+        } else {
+            isTruncated = true
+            mCardsAdapter!!.notifyDataSetChanged()
+            truncate.setChecked(true)
         }
     }
 
