@@ -206,6 +206,7 @@
         <activity
             android:name="com.ichi2.anki.CardBrowser"
             android:label="@string/card_browser"
+            android:theme="@style/Theme_Dark_Compat.Launcher"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker"
@@ -230,6 +231,7 @@
         <activity
             android:name="com.ichi2.anki.Reviewer"
             android:exported="true"
+            android:theme="@style/Theme_Dark_Compat.Launcher"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".DeckPicker">
@@ -302,6 +304,7 @@
         <activity
             android:name="com.ichi2.anki.NoteEditor"
             android:label="@string/fact_adder_intent_title"
+            android:theme="@style/Theme_Dark_Compat.Launcher"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             >
