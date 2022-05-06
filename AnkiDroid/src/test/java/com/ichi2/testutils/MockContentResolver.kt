@@ -17,17 +17,14 @@ package com.ichi2.testutils
 
 import android.content.ContentResolver
 import android.database.Cursor
-import com.ichi2.utils.KotlinCleanup
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
 import org.mockito.kotlin.any
+import org.mockito.kotlin.whenever
 
-@KotlinCleanup("when -> whenever")
-@KotlinCleanup("IDE lint")
 object MockContentResolver {
-    fun returningCursor(cursor: Cursor?): ContentResolver {
+    private fun returningCursor(cursor: Cursor?): ContentResolver {
         val resolver = mock(ContentResolver::class.java)
-        `when`(resolver.query(any(), any(), any(), any(), any())).thenReturn(cursor)
+        whenever(resolver.query(any(), any(), any(), any(), any())).thenReturn(cursor)
         return resolver
     }
 

@@ -1,5 +1,5 @@
 plugins {
- // Gradle plugin portal 
+ // Gradle plugin portal
  id 'com.github.triplet.play' version '3.7.0'
 }
 
@@ -53,8 +53,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600162
-        versionName="2.16alpha62"
+        versionCode=21600163
+        versionName="2.16alpha63"
         minSdkVersion 21
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 29 // change .travis.yml platform download at same time
@@ -264,7 +264,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.webkit:webkit:1.4.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'com.google.android.material:material:1.6.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
     implementation 'com.github.CanHub:Android-Image-Cropper:3.1.3'
 
@@ -278,7 +278,8 @@ dependencies {
     // A path for a testing library is typically under rsdroid-testing/assets
     testImplementation "io.github.david-allison-1:anki-android-backend-testing:$ankidroid_backend_version"
     // A path for a testing library which provide Parameterized Test
-    testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.2"
+    testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
 
     // May need a resolution strategy for support libs to our versions
     implementation "ch.acra:acra-http:$acra_version"
@@ -310,7 +311,7 @@ dependencies {
 
     api project(":api")
 
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'
+    testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
     testImplementation 'org.mockito:mockito-inline:4.5.1'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
     testImplementation "org.hamcrest:hamcrest:$hamcrest_version"

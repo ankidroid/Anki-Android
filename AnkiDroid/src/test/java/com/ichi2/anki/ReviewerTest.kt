@@ -41,8 +41,8 @@ import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
 import java.util.*
-import kotlin.test.junit.JUnitAsserter.assertNotNull
-import kotlin.test.junit.JUnitAsserter.assertNull
+import kotlin.test.junit5.JUnit5Asserter.assertNotNull
+import kotlin.test.junit5.JUnit5Asserter.assertNull
 
 @KotlinCleanup("`is` -> equalTo()")
 @KotlinCleanup("redundant `val col = col`")

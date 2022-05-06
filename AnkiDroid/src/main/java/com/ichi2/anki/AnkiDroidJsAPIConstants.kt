@@ -42,6 +42,7 @@ object AnkiDroidJsAPIConstants {
     const val SUSPEND_CARD = "suspendCard"
     const val SUSPEND_NOTE = "suspendNote"
     const val SET_CARD_DUE = "setCardDue"
+    const val RESET_PROGRESS = "setCardDue"
 
     fun initApiMap(): HashMap<String, Boolean> {
         val jsApiListMap = HashMap<String, Boolean>()
@@ -53,6 +54,7 @@ object AnkiDroidJsAPIConstants {
         jsApiListMap[SUSPEND_CARD] = false
         jsApiListMap[SUSPEND_NOTE] = false
         jsApiListMap[SET_CARD_DUE] = false
+        jsApiListMap[RESET_PROGRESS] = false
 
         return jsApiListMap
     }

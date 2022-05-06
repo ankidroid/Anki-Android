@@ -17,19 +17,20 @@ import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.RELINQUIS
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SHOW_ANSWER
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NOOP
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS
+import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.libanki.StdModels
-import com.ichi2.libanki.Tuple
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
@@ -72,27 +73,10 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         }
     }
 
-    /***
-     * @param testcase A tuple with string and int as a testcase. The string is the input url and
-     *                 the int is the actual answer.
-     */
     @ParameterizedTest
-    @MethodSource("testcaseProvider")
-    fun getSignalFromUrlTest(testcase: Tuple<String, Int>) {
-        assertEquals(testcase.first, testcase.second)
-    }
-
-    fun testcaseProvider(): Stream<Tuple<String, Int>> {
-        return Stream.of(
-            Tuple("signal:show_answer", SHOW_ANSWER),
-            Tuple("signal:typefocus", TYPE_FOCUS),
-            Tuple("signal:relinquishFocus", RELINQUISH_FOCUS),
-            Tuple("signal:answer_ease1", ANSWER_ORDINAL_1),
-            Tuple("signal:answer_ease2", ANSWER_ORDINAL_2),
-            Tuple("signal:answer_ease3", ANSWER_ORDINAL_3),
-            Tuple("signal:answer_ease4", ANSWER_ORDINAL_4),
-            Tuple("signal:answer_ease0", SIGNAL_NOOP)
-        )
+    @MethodSource("getSignalFromUrlTest_args")
+    fun getSignalFromUrlTest(url: String, signal: Int) {
+        assertEquals(getSignalFromUrl(url), signal)
     }
 
     @Test
@@ -267,5 +251,20 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         advanceRobolectricLooperWithSleep()
         return multimediaController
+    }
+    companion object {
+        @JvmStatic
+        fun getSignalFromUrlTest_args(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of("signal:show_answer", SHOW_ANSWER),
+                Arguments.of("signal:typefocus", TYPE_FOCUS),
+                Arguments.of("signal:relinquishFocus", RELINQUISH_FOCUS),
+                Arguments.of("signal:answer_ease1", ANSWER_ORDINAL_1),
+                Arguments.of("signal:answer_ease2", ANSWER_ORDINAL_2),
+                Arguments.of("signal:answer_ease3", ANSWER_ORDINAL_3),
+                Arguments.of("signal:answer_ease4", ANSWER_ORDINAL_4),
+                Arguments.of("signal:answer_ease0", SIGNAL_NOOP)
+            )
+        }
     }
 }

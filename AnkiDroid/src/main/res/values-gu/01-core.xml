@@ -51,7 +51,7 @@
     <string name="statistics">આંકડાઓ</string>
     <string name="settings">સેટિંગ્સ</string>
     <string name="help">મદદ</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">આકૃતિ</string>
     <string name="send_feedback">અનુભવ કહો</string>
     <string name="studyoptions_due_today">આજનાં બાકી</string>
     <string name="studyoptions_new_total">ટોટલ નવા</string>
@@ -60,15 +60,15 @@
     <string name="studyoptions_start">શરૂ કરો</string>
     <!-- DeckPicker.java -->
     <string name="expand">></string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="collapse">સંકોચવું</string>
+    <string name="study_more">વધુ અભ્યાસ કરો</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>
         <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d મિનિટ બાકી</item>
+        <item quantity="other">%d મિનિટો બાકી</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
@@ -78,41 +78,41 @@
         <item quantity="one">%1$d day %2$d left</item>
         <item quantity="other">%1$d days %2$d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">સૂચિ ખાલી છે</string>
+    <string name="no_cards_placeholder_description">કાર્ડસ જોડવાનું શરૂ કરો \n તે માટે + ચિહ્ન વાપરો.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="one">%1$d  કાર્ડસનો અભ્યાસ કર્યો %2$s આજે.</item>
+        <item quantity="other">%1$d કાર્ડસનો અભ્યાસ કર્યો %2$s આજે.</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
-    <string name="show_answer">Show answer</string>
-    <string name="hide_answer">Hide answer</string>
-    <string name="ease_button_again">Again</string>
-    <string name="ease_button_hard">Hard</string>
-    <string name="ease_button_good">Good</string>
-    <string name="ease_button_easy">Easy</string>
-    <string name="studyoptions_congrats_undo">Undo %s</string>
-    <string name="menu_import">Import</string>
-    <string name="undo">Undo</string>
-    <string name="undo_action_review">last review</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Add</string>
-    <string name="menu_add_note">Add note</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
-    <string name="menu_dismiss_note">Hide / delete</string>
-    <string name="menu_bury_card">Bury card</string>
-    <string name="menu_bury_note">Bury note</string>
-    <string name="menu_suspend_card">Suspend card</string>
-    <string name="menu_suspend_note">Suspend note</string>
-    <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Suspend</string>
+    <string name="type_answer_hint">ઉત્તર દાખલ કરો</string>
+    <string name="show_answer">ઉત્તર બતાવો</string>
+    <string name="hide_answer">ઉત્તર છુપાવો</string>
+    <string name="ease_button_again">ફરીથી</string>
+    <string name="ease_button_hard">અઘરૂ</string>
+    <string name="ease_button_good">સારુ</string>
+    <string name="ease_button_easy">સરળ</string>
+    <string name="studyoptions_congrats_undo">બદલાવ નકારો %s</string>
+    <string name="menu_import">આયાત</string>
+    <string name="undo">પૂર્વવત્ કરો</string>
+    <string name="undo_action_review">છેલ્લું પુનરાવર્તન</string>
+    <string name="undo_action_change_deck_multi">થપ્પી બદલો</string>
+    <string name="move_all_to_deck">બધી થપ્પી ખસેડી</string>
+    <string name="unbury">પાછું લાવો</string>
+    <string name="rename_deck">થપ્પીનું નામ બદલો </string>
+    <string name="create_shortcut">ટૂંકો રસ્તો બનાવો</string>
+    <string name="browse_cards">કાર્ડસ જોવો</string>
+    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ઉમેરો</string>
+    <string name="menu_add_note">નોંધ ઉમેરો</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ખાતું સિંક્રનાઇઝ કરો </string>
+    <string name="menu_dismiss_note">છુપાવો / કાઢો</string>
+    <string name="menu_bury_card">કાર્ડ કાઢો</string>
+    <string name="menu_bury_note">નોંધ કાઢો</string>
+    <string name="menu_suspend_card">કાર્ડ સસ્પેન્ડ કરો</string>
+    <string name="menu_suspend_note">નોંધ સસ્પેન્ડ કરો </string>
+    <string name="menu_bury">કાઢો</string>
+    <string name="menu_suspend">સસ્પેન્ડ</string>
     <string name="menu_delete_note">Delete note</string>
     <string name="menu_flag">Flag</string>
     <string name="menu_flag_card">Flag card</string>

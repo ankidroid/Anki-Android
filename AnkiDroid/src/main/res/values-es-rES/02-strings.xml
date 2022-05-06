@@ -406,4 +406,6 @@
     <string name="malicious_archive_entry_outside">Archivo malicioso. Contiene entrada fuera del dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Archivo malicioso. El tamaño excede %1$s o contiene más de %2$d archivos</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

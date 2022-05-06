@@ -46,7 +46,7 @@
 <resources>
     <string name="yes">はい</string>
     <!-- Navigation drawer items-->
-    <string name="decks">デッキ</string>
+    <string name="decks">デッキリスト</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">カードブラウザ</string>
     <string name="statistics">統計情報</string>
     <string name="settings">設定</string>
@@ -69,10 +69,10 @@
         <item quantity="other">残り約 %d 分</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">残り約%1$d時間%2$d分</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">残り約%1$d日と%2$d時間</item>
     </plurals>
     <string name="no_cards_placeholder_title">まだデッキがありません</string>
     <string name="no_cards_placeholder_description">＋アイコンから\nカードを追加してください</string>
