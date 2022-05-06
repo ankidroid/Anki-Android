@@ -21,12 +21,11 @@ import org.mockito.MockedStatic
 import org.mockito.Mockito
 import org.mockito.Mockito.inOrder
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.whenever
 import java.util.*
 import java.util.Arrays.asList
 
-@KotlinCleanup("`when` -> whenever")
 @RunWith(Parameterized::class)
 class PieChartParameterizedTest {
     @Parameterized.Parameter
@@ -59,16 +58,16 @@ class PieChartParameterizedTest {
     fun setUp() {
         colorMockedStatic = Mockito.mockStatic(Color::class.java)
         MockitoAnnotations.openMocks(this)
-        `when`(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0)
-        `when`(plot!!.frameThickness).thenReturn(floatArrayOf(0f, 0f, 0f, 0f))
+        whenever(Color.argb(anyInt(), anyInt(), anyInt(), anyInt())).thenReturn(0)
+        whenever(plot!!.frameThickness).thenReturn(floatArrayOf(0f, 0f, 0f, 0f))
 
         val fm = mock(FontMetricsWrap::class.java)
-        `when`(fm.height).thenReturn(10f)
-        `when`(fm.stringWidth(any(String::class.java))).thenReturn(30f)
-        `when`(graphics!!.fontMetrics).thenReturn(fm)
+        whenever(fm.height).thenReturn(10f)
+        whenever(fm.stringWidth(any(String::class.java))).thenReturn(30f)
+        whenever(graphics!!.fontMetrics).thenReturn(fm)
 
         val r = createRectangleMock(100, 100)
-        `when`(graphics!!.clipBounds).thenReturn(r)
+        whenever(graphics!!.clipBounds).thenReturn(r)
         pieChart = PieChart(plot!!, values, colors)
     }
 
