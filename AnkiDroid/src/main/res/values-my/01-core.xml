@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">ကတ်စုစုပေါင်း</string>
     <string name="studyoptions_eta">ခန့်မှန်းကြာချိန်</string>
     <string name="studyoptions_start">လေ့လာ</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">တိုးချဲ့ပါ</string>
     <string name="collapse">ဖျက်</string>
     <string name="study_more">ထပ်လေ့လာ</string>

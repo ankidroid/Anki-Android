@@ -61,7 +61,7 @@
     <string name="filter_tags">태그 필터링</string>
     <string name="no_tags">아직 추가된 태그가 없습니다.</string>
     <string name="updated_version">버전 %s로 업데이트됨</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">칠판 저장</string>
     <string name="enable_whiteboard">화이트보드 활성화</string>
     <string name="disable_whiteboard">화이트보드 비활성화</string>

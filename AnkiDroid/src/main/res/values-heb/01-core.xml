@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">סך כל הקלפים:</string>
     <string name="studyoptions_eta">זמן משוער (דקות):</string>
     <string name="studyoptions_start">לימוד</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">הרחב</string>
     <string name="collapse">צמצם</string>
     <string name="study_more">תוספות</string>

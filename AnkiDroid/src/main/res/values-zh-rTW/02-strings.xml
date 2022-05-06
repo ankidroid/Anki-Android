@@ -61,7 +61,7 @@
     <string name="filter_tags">篩選標籤</string>
     <string name="no_tags">你還沒新增任何標籤</string>
     <string name="updated_version">更新到版本 %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">儲存白板</string>
     <string name="enable_whiteboard">開啟白板</string>
     <string name="disable_whiteboard">關閉白板</string>

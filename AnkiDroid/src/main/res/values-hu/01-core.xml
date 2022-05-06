@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Összes kártya:</string>
     <string name="studyoptions_eta">Becsült idő (perc):</string>
     <string name="studyoptions_start">Gyakorlás</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Nagyítás</string>
     <string name="collapse">Összeomlás</string>
     <string name="study_more">Tanulj többet</string>

@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Iš viso kortelių:</string>
     <string name="studyoptions_eta">Numatytas laikas (min):</string>
     <string name="studyoptions_start">Mokytis</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Išskleisti</string>
     <string name="collapse">Suskleisti</string>
     <string name="study_more">Mokytis toliau</string>

@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Total kartu:</string>
     <string name="studyoptions_eta">Estimasi waktu (mnt):</string>
     <string name="studyoptions_start">Belajar</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Perluas</string>
     <string name="collapse">Tutup</string>
     <string name="study_more">Belajar lagi</string>

@@ -61,7 +61,7 @@
     <string name="filter_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
     <string name="no_tags">ನೀವು ಇನ್ನೂ ಯಾವುದೇ ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸೇರಿಸಿಲ್ಲ</string>
     <string name="updated_version">ಆವೃತ್ತಿ%s ಗೆ ನವೀಕರಿಸಲಾಗಿದೆ</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ಉಳಿಸಿ</string>
     <string name="enable_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="disable_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>

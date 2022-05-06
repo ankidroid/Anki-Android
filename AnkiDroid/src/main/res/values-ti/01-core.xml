@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">ጠቅላላ ካርድታት:</string>
     <string name="studyoptions_eta">ዝተገመተ ግዜ:</string>
     <string name="studyoptions_start">መጽናዕቲ</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">ዘርግሕ</string>
     <string name="collapse">ኣብ ሓደ ኣኪብ</string>
     <string name="study_more">መጽናዕቲ ወስኽ</string>

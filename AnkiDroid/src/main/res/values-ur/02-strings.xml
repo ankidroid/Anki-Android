@@ -61,7 +61,7 @@
     <string name="filter_tags">ٹیگز کو فلٹر کریں</string>
     <string name="no_tags">آپ نے ابھی تک کوئی ٹیگ شامل نہیں کیے</string>
     <string name="updated_version">اپڈیٹ کر دیا گیا ورژن %s پہ</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">وائٹ بورڈ فعال کریں</string>
     <string name="disable_whiteboard">وائٹ بورڈ غیرفعال کریں</string>

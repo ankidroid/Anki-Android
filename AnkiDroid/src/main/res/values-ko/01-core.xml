@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">전체 카드:</string>
     <string name="studyoptions_eta">예상 소요 시간 (분):</string>
     <string name="studyoptions_start">학습</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">확장</string>
     <string name="collapse">감추기</string>
     <string name="study_more">더 학습하기</string>

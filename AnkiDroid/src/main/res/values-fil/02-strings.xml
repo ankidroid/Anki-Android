@@ -61,7 +61,7 @@
     <string name="filter_tags">I-filter ang mga tag</string>
     <string name="no_tags">Wala ka pang naidagdag na anumang mga tag</string>
     <string name="updated_version">Nai-update na sa bersyong %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Paganahin ang whiteboard</string>
     <string name="disable_whiteboard">Huwag paganahin ang whiteboard</string>

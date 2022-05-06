@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Cártaí iomlán:</string>
     <string name="studyoptions_eta">Am meastar (noim):</string>
     <string name="studyoptions_start">Staidéar</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
     <string name="study_more">Study more</string>

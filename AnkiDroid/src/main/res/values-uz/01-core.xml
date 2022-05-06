@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Barcha kartalar:</string>
     <string name="studyoptions_eta">Taxminiy vaqt (min):</string>
     <string name="studyoptions_start">O\'rganish</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Kengaytirish</string>
     <string name="collapse">Toraytirish</string>
     <string name="study_more">Ko\'proq o\'rganish</string>

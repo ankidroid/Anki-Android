@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">एकुण कार्ड:</string>
     <string name="studyoptions_eta">अदमासें वेळ(मिनिटांमधे):</string>
     <string name="studyoptions_start">अभ्यास शुरू करा</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">विस्तृत करा</string>
     <string name="collapse">कोसळणे</string>
     <string name="study_more">अधिक अभ्यास करा</string>

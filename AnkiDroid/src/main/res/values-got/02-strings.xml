@@ -61,7 +61,7 @@
     <string name="filter_tags">Filter tags</string>
     <string name="no_tags">Nauh ni biaiaukt sokeiniwaurd</string>
     <string name="updated_version">Updated to version %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Brukei ƕeitabaurd</string>
     <string name="disable_whiteboard">Unsatei ƕeitabaurd</string>

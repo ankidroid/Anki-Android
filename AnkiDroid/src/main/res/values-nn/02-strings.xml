@@ -61,7 +61,7 @@
     <string name="filter_tags">Filtrer etiketter</string>
     <string name="no_tags">Du har ikke lagt til noen etiketter ennå.</string>
     <string name="updated_version">Oppdatert til versjon %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Aktiver tavle</string>
     <string name="disable_whiteboard">Deaktiver tavle</string>

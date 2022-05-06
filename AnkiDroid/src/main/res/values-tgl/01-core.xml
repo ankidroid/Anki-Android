@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Bilang ng mga baraha:</string>
     <string name="studyoptions_eta">Tinatayang oras (minuto):</string>
     <string name="studyoptions_start">Pagaralan</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Palawakin</string>
     <string name="collapse">Ipakita lamang ang balangkas</string>
     <string name="study_more">Pagaralan pa</string>

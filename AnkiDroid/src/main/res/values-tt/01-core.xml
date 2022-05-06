@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Барлыгы кәртләр:</string>
     <string name="studyoptions_eta">Чамалы вакыт (мин.):</string>
     <string name="studyoptions_start">Өйрәнергә</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Тулысынча күрсәтү</string>
     <string name="collapse">Борып ябу</string>
     <string name="study_more">Тагын укырга</string>

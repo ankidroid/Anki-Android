@@ -61,7 +61,7 @@
     <string name="filter_tags">סנן תגיות</string>
     <string name="no_tags">עוד לא הוספת שום תגיות</string>
     <string name="updated_version">עודקן לגירסה %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">שמור לוח</string>
     <string name="enable_whiteboard">לאפשר ציור</string>
     <string name="disable_whiteboard">בטל הציור</string>

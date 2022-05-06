@@ -48,6 +48,7 @@
     <string name="disabled">Адключана</string>
     <string name="enabled">Уключана</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category">General</string>
     <string name="pref_cat_general_summ">Агульныя налады</string>
     <string name="pref_cat_reviewing" maxLength="41">Паўтарэнне</string>
     <string name="pref_cat_reviewing_summ">Налады паўтарэнняў, якія не залежаць ад калоды</string>
@@ -257,7 +258,7 @@
     <string name="deck_conf_new_cards" maxLength="41">Новыя карткі</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Паўтарэнні</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Памылкі</string>
-    <string name="deck_conf_general" maxLength="41">Агульныя</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Агульныя</string>
     <string name="deck_conf_reminders" maxLength="41">Напаміны</string>
     <string name="deck_conf_steps" maxLength="41">Крокі (у хвілінах)</string>
     <string name="deck_conf_order" maxLength="41">Парадак</string>

@@ -61,7 +61,7 @@
     <string name="filter_tags">Отобрать по меткам</string>
     <string name="no_tags">Пока меток нет</string>
     <string name="updated_version">Обновлено до версии %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Сохранить написанное</string>
     <string name="enable_whiteboard">Включить доску</string>
     <string name="disable_whiteboard">Отключить доску</string>

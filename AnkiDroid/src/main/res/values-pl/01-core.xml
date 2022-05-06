@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Łącznie kart:</string>
     <string name="studyoptions_eta">Szacowany czas (min):</string>
     <string name="studyoptions_start">Ucz się teraz</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Rozwiń</string>
     <string name="collapse">Zwiń</string>
     <string name="study_more">Studiuj więcej</string>

@@ -61,7 +61,7 @@
     <string name="filter_tags">Filtruoti žymes</string>
     <string name="no_tags">Dar nepridėjote jokių žymių</string>
     <string name="updated_version">Atnaujinta versija %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Įjungti rašymo lentą</string>
     <string name="disable_whiteboard">Išjungti rašymo lentą</string>

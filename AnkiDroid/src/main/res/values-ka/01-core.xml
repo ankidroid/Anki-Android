@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">ბარათები ჯამში:</string>
     <string name="studyoptions_eta">მიახლოებითი დრო (წუთი):</string>
     <string name="studyoptions_start">სწავლა</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">გაშლა</string>
     <string name="collapse">ჩაკეცვა</string>
     <string name="study_more">მეტის სწავლა</string>

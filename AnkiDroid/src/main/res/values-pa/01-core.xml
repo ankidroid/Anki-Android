@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">ਕੁੱਲ ਕਾਰਡ</string>
     <string name="studyoptions_eta">ਅਨੁਮਾਨਿਤ ਸਮਾਂ (ਮਿੰਟ)</string>
     <string name="studyoptions_start">ਪੜ੍ਹਾਈ</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">ਫੈਲਾਓ</string>
     <string name="collapse">Collapse</string>
     <string name="study_more">ਹੋਰ ਅਧਿਐਨ ਕਰੋ</string>

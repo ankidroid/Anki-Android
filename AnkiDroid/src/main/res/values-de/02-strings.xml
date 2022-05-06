@@ -61,7 +61,7 @@
     <string name="filter_tags">Schlagwörter filtern</string>
     <string name="no_tags">Sie haben noch keine Schlagwörter hinzugefügt.</string>
     <string name="updated_version">Aktualisiert auf Version %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Whiteboard speichern</string>
     <string name="enable_whiteboard">Whiteboard aktivieren</string>
     <string name="disable_whiteboard">Whiteboard ausschalten</string>

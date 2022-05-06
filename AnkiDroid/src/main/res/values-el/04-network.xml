@@ -54,7 +54,7 @@
     <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
     <string name="not_logged_in_title">Σύνδεση στο AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Διεύθυνση email</string>
     <string name="password">Κωδικός</string>
     <string name="log_in">Σύνδεση</string>

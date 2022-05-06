@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Total carduri:</string>
     <string name="studyoptions_eta">Timp estimat (min):</string>
     <string name="studyoptions_start">Studiază Acum</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Extinde</string>
     <string name="collapse">Colaps</string>
     <string name="study_more">Studiaza mai mult </string>

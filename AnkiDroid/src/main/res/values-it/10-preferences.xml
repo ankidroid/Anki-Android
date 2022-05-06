@@ -48,6 +48,7 @@
     <string name="disabled">Disabilitato</string>
     <string name="enabled">Abilitato</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category">General</string>
     <string name="pref_cat_general_summ">Impostazioni generali</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetizioni</string>
     <string name="pref_cat_reviewing_summ">Impostazioni di ripetizione non specifiche per il mazzo</string>
@@ -139,7 +140,7 @@
     <string name="automatic_sync_choice_summ">Sincronizza automaticamente all\'avvio/uscita se l\'ultima sincronizzazione è stata più di 10 minuti fa.</string>
     <string name="sync_status_badge" maxLength="41">Visualizza stato di sincronizzazione</string>
     <string name="sync_status_badge_summ">Cambia l\'icona di sincronizzazione quando le modifiche possono essere caricate</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema di giorno</string>
     <string name="night_theme" maxLength="41">Tema notturno</string>
     <string name="default_font" maxLength="41">Carattere predefinito</string>
@@ -254,7 +255,7 @@
     <string name="deck_conf_new_cards" maxLength="41">Carte nuove</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Ripetizioni</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Errori</string>
-    <string name="deck_conf_general" maxLength="41">Generale</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Generale</string>
     <string name="deck_conf_reminders" maxLength="41">Promemoria</string>
     <string name="deck_conf_steps" maxLength="41">Passi (in minuti)</string>
     <string name="deck_conf_order" maxLength="41">Ordine</string>

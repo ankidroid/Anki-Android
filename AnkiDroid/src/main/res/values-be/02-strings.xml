@@ -61,7 +61,7 @@
     <string name="filter_tags">Фільтраваць меткі</string>
     <string name="no_tags">Вы пакуль не дадалі ніводнай меткі</string>
     <string name="updated_version">Абноўлена да версіі %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Захаваць дошку</string>
     <string name="enable_whiteboard">Уключыць дошку</string>
     <string name="disable_whiteboard">Адключыць дошку</string>
