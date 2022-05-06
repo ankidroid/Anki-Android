@@ -61,7 +61,7 @@
     <string name="filter_tags">Фільтр позначок</string>
     <string name="no_tags">Ви ще не додали жодної позначки</string>
     <string name="updated_version">Оновлено до версії %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Зберегти написане</string>
     <string name="enable_whiteboard">Увімкнути дошку</string>
     <string name="disable_whiteboard">Вимкнути дошку</string>

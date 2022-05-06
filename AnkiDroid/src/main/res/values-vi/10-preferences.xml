@@ -48,6 +48,7 @@
     <string name="disabled">Đã tắt</string>
     <string name="enabled">Đã bật</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category">General</string>
     <string name="pref_cat_general_summ">Cài đặt chung</string>
     <string name="pref_cat_reviewing" maxLength="41">Ôn tập/ Xem lại</string>
     <string name="pref_cat_reviewing_summ">Cài đặt bộ ôn tập không có chủ đề cụ thể</string>
@@ -253,7 +254,7 @@
     <string name="deck_conf_new_cards" maxLength="41">Thẻ mới</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Nhận xét</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Vòng lặp</string>
-    <string name="deck_conf_general" maxLength="41">Chung</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Chung</string>
     <string name="deck_conf_reminders" maxLength="41">Nhắc nhở</string>
     <string name="deck_conf_steps" maxLength="41">Các bước (tính bằng phút)</string>
     <string name="deck_conf_order" maxLength="41">Thứ tự</string>

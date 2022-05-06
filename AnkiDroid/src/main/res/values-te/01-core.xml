@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">మొత్తం కార్డులు:</string>
     <string name="studyoptions_eta">అంచనా వేసిన సమయం(కనీస):</string>
     <string name="studyoptions_start">స్టడీ</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">విస్తరించు</string>
     <string name="collapse">కుదించు</string>
     <string name="study_more">బాగా చదువు</string>

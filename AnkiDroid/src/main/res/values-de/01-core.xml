@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Karten gesamt:</string>
     <string name="studyoptions_eta">Geschätzte Zeit (min):</string>
     <string name="studyoptions_start">Lernen</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Ausklappen</string>
     <string name="collapse">Einklappen</string>
     <string name="study_more">Weiter lernen</string>

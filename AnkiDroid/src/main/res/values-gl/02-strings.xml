@@ -61,7 +61,7 @@
     <string name="filter_tags">Filtrar etiquetas</string>
     <string name="no_tags">Aínda non engadiches ningunha etiqueta.</string>
     <string name="updated_version">Actualizado á versión %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Activar encerado</string>
     <string name="disable_whiteboard">Desactivar encerado</string>

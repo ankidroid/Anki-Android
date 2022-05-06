@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">ആകെ കാർഡുകൾ:</string>
     <string name="studyoptions_eta">കണക്കാക്കിയ സമയം (മിനിറ്റ്):</string>
     <string name="studyoptions_start">പഠനം</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">വികസിപ്പിക്കുക</string>
     <string name="collapse">ചുരുക്കുക</string>
     <string name="study_more">കൂടുതൽ പഠിക്കുക</string>

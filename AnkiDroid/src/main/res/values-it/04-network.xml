@@ -54,7 +54,7 @@
     <string name="connection_error_message">Si è verificato un errore di rete.</string>
     <string name="not_logged_in_title">Accedi ad AnkiWeb</string>
     <string name="login_create_account_message">È necessario accedere ad un account di terzi per utilizzare il servizio di sincronizzazione cloud. Puoi crearne uno nel passaggio successivo.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Indirizzo di posta elettronica</string>
     <string name="password">Password</string>
     <string name="log_in">Accedi</string>

@@ -61,7 +61,7 @@
     <string name="filter_tags">ଟ୍ୟାଗ୍ ଶୋଧନ</string>
     <string name="no_tags">ଆପଣ ଏ ଯାଏଁ କୌଣସି ଟ୍ୟାଗ ଯୋଡ଼ିନାହାନ୍ତି</string>
     <string name="updated_version">ସଂସ୍କରଣ %s କୁ ଅଦ୍ୟତନ କରାଗଲା</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">ଧଳାପଟା ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
     <string name="enable_whiteboard">ଧଳାପଟା ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="disable_whiteboard">ଧଳାପଟା ଅକ୍ଷମ କରନ୍ତୁ</string>
@@ -407,5 +407,5 @@
     <string name="malicious_archive_exceeds_limit">ହାନୀକାରକ ଅଭିଲେଖାଗାର। ଆକାର %1$s ଅତିକ୍ରମ କରେ କିମ୍ୱା %2$dରୁ ଅଧିକ ଫାଇଲ୍ ଧାରଣ କରେ</string>
     <string name="file_extract_exceeds_storage_space">ଫାଇଲ୍ ଏକ୍ସଟ୍ରାକ୍ଟ କରିବାରେ ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଅତିକ୍ରମ ହେଉଛି</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">\'%s\' ଟ୍ୟାଗଟିକୁ ପ୍ରସାରିବା</string>
 </resources>

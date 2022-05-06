@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Kabuuan ng mga kard:</string>
     <string name="studyoptions_eta">Tinatayang oras (minuto):</string>
     <string name="studyoptions_start">Pag-aaral</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Palawakin</string>
     <string name="collapse">Itiklop</string>
     <string name="study_more">Suriin ang iba pa</string>

@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Всего карточек:</string>
     <string name="studyoptions_eta">Расчётное время (мин.):</string>
     <string name="studyoptions_start">Учить</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Развернуть</string>
     <string name="collapse">Свернуть</string>
     <string name="study_more">Учить ещё</string>

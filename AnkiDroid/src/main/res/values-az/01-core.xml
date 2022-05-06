@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Ümumi kart:</string>
     <string name="studyoptions_eta">Təxmini vaxt (dəq):</string>
     <string name="studyoptions_start">Öyrənməyə başla</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Genişləndir</string>
     <string name="collapse">Daralt</string>
     <string name="study_more">Daha çox öyrən</string>

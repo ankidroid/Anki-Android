@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Totalt antall kort:</string>
     <string name="studyoptions_eta">Tidsestimat (min.):</string>
     <string name="studyoptions_start">Studer nå</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Utvid</string>
     <string name="collapse">Skjul</string>
     <string name="study_more">Studer mer</string>

@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">هەموو کارتەکان:</string>
     <string name="studyoptions_eta">کاتی مەزەندە کراو (خولەک):</string>
     <string name="studyoptions_start">Niha fêr bibe</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
     <string name="study_more">Study more</string>

@@ -61,7 +61,7 @@
     <string name="filter_tags">ఫిల్టర్ ట్యాగ్లు</string>
     <string name="no_tags">మీరు ఇంకా ఏ ట్యాగ్లను జోడించలేదు</string>
     <string name="updated_version">సంస్కరణకు నవీకరించబడింది %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">వైట్బోర్డ్ ప్రారంభించండి</string>
     <string name="disable_whiteboard">వైట్బోర్డ్ను ఆపివేయి</string>

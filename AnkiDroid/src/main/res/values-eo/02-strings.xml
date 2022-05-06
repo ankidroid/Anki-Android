@@ -61,7 +61,7 @@
     <string name="filter_tags">Filtri etikedojn</string>
     <string name="no_tags">Vi ankoraŭ aldonis neniun etikedon</string>
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Konservi skribtabulon</string>
     <string name="enable_whiteboard">Aktivigi skribtabulon</string>
     <string name="disable_whiteboard">Malaktivigi skribtabulon</string>

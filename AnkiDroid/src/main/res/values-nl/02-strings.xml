@@ -61,7 +61,7 @@
     <string name="filter_tags">Op labels filteren</string>
     <string name="no_tags">Je hebt nog geen labels toegevoegd.</string>
     <string name="updated_version">Geüpdatet naar versie %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Schrijfbord opslaan</string>
     <string name="enable_whiteboard">Whiteboard inschakelen</string>
     <string name="disable_whiteboard">Whiteboard uitschakelen</string>

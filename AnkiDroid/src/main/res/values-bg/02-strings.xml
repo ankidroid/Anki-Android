@@ -61,7 +61,7 @@
     <string name="filter_tags">Филтър на етикети</string>
     <string name="no_tags">Все още не сте добавили етикети</string>
     <string name="updated_version">Обновено до версия %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Запазете бялата дъска</string>
     <string name="enable_whiteboard">Разрешаване на бяла дъска</string>
     <string name="disable_whiteboard">Забраняване на бяла дъска</string>

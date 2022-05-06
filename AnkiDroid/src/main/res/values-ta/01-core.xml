@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">மொத்த அட்டைகள்</string>
     <string name="studyoptions_eta">கணிக்கப்பட்ட நேரம் (நிமிடங்கள்)</string>
     <string name="studyoptions_start">படி</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">விரிவாக்கு</string>
     <string name="collapse">சரிவு</string>
     <string name="study_more">இன்னும் படி</string>

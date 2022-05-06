@@ -61,7 +61,7 @@
     <string name="filter_tags">ടാഗുകൾ ഫിൽട്ടർ ചെയ്യുക</string>
     <string name="no_tags">നിങ്ങൾ ഇതുവരെ ടാഗുകളൊന്നും ചേർത്തിട്ടില്ല</string>
     <string name="updated_version">%S പതിപ്പിലേക്ക് അപ്‌ഡേറ്റുചെയ്‌തു</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">വൈറ്റ്ബോർഡ് സംരക്ഷിക്കുക</string>
     <string name="enable_whiteboard">വൈറ്റ്ബോർഡ് പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="disable_whiteboard">വൈറ്റ്ബോർഡ് അപ്രാപ്തമാക്കുക</string>

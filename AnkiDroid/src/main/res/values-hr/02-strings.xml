@@ -61,7 +61,7 @@
     <string name="filter_tags">Filtriraj oznake</string>
     <string name="no_tags">Niste još dodali ni jednu oznaku </string>
     <string name="updated_version">Ažurirano na verziju %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Omogući ploču</string>
     <string name="disable_whiteboard">Onemogući ploču </string>

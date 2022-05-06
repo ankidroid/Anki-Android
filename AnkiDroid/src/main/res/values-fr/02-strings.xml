@@ -61,7 +61,7 @@
     <string name="filter_tags">Filtrer les étiquettes</string>
     <string name="no_tags">Vous n\'avez pas encore ajouté d\'étiquettes</string>
     <string name="updated_version">Mis à jour à la version %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Enregistrer le tableau blanc</string>
     <string name="enable_whiteboard">Activer le tableau blanc</string>
     <string name="disable_whiteboard">Désactiver le tableau blanc</string>

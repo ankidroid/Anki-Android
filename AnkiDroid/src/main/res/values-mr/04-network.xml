@@ -54,7 +54,7 @@
     <string name="connection_error_message">नेटवर्क त्रुटी आली</string>
     <string name="not_logged_in_title">AnkiWeb मध्ये लॉग इन करा</string>
     <string name="login_create_account_message">क्लाऊड समक्रमण सेवा वापरण्यासाठी आपण तृतीय पक्षाच्या खात्यात लॉग इन केले पाहिजे. आपण पुढील चरणात एक तयार करू शकता.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">ईमेल पत्ता</string>
     <string name="password">संकेतशब्द</string>
     <string name="log_in">लॉग इन</string>

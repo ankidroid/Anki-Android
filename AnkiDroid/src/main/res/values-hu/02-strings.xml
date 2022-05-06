@@ -61,7 +61,7 @@
     <string name="filter_tags">Címkék szűrése</string>
     <string name="no_tags">Még nem hoztál létre címkéket</string>
     <string name="updated_version">%s verzióra frissítve</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Rajztábla mentése</string>
     <string name="enable_whiteboard">Rajztábla be</string>
     <string name="disable_whiteboard">Rajztábla ki</string>

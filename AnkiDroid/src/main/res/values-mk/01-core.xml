@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Вкупни картички:</string>
     <string name="studyoptions_eta">Просечно време (мин.):</string>
     <string name="studyoptions_start">Учи</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Прошири</string>
     <string name="collapse">Колапс</string>
     <string name="study_more">Учи повеке</string>

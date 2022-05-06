@@ -61,7 +61,7 @@
     <string name="filter_tags">Etiket filtrele</string>
     <string name="no_tags">Henüz herhangi bir etiket eklemediniz.</string>
     <string name="updated_version">%s versiyonuna güncellendi</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Yazı tahtasını kaydet</string>
     <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
     <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>

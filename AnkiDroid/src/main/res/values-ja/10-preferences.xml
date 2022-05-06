@@ -48,6 +48,7 @@
     <string name="disabled">無効</string>
     <string name="enabled">有効</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category">General</string>
     <string name="pref_cat_general_summ">一般設定</string>
     <string name="pref_cat_reviewing" maxLength="41">カードの学習</string>
     <string name="pref_cat_reviewing_summ">特定のデッキに限定されない設定</string>
@@ -253,7 +254,7 @@
     <string name="deck_conf_new_cards" maxLength="41">新規カードと基本学習</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">復習</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">忘却と再基本学習</string>
-    <string name="deck_conf_general" maxLength="41">一般</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
     <string name="deck_conf_reminders" maxLength="41">リマインダー</string>
     <string name="deck_conf_steps" maxLength="41">学習ステップ（分）</string>
     <string name="deck_conf_order" maxLength="41">順序</string>
@@ -326,14 +327,14 @@
     <string name="binding_add_key">キーを追加</string>
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">問題</string>
-    <string name="card_side_answer">解答</string>
-    <string name="card_side_both">問題 &amp; 解答</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="card_side_selection_title">カードの表面と裏面、どちらでの操作ですか？</string>
+    <string name="card_side_question">表面</string>
+    <string name="card_side_answer">裏面</string>
+    <string name="card_side_both">表面と裏面の両方</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">表面で %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">裏面で %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">&lt;unk&gt;%s を削除</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="bindings_already_bound">このキーには既に %s の操作を割り当て済みです</string>
 </resources>

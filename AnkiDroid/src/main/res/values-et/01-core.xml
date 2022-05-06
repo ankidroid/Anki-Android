@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Kokku kaarte:</string>
     <string name="studyoptions_eta">Eeldatav aeg (min):</string>
     <string name="studyoptions_start">Õpi</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Laienda</string>
     <string name="collapse">Kahanda</string>
     <string name="study_more">Õpi veel</string>

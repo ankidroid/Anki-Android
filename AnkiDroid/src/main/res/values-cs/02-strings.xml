@@ -61,7 +61,7 @@
     <string name="filter_tags">Filtrovat štítky</string>
     <string name="no_tags">Ještě jste nepřidali žádné štítky</string>
     <string name="updated_version">Aktualizováno na verzi %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Uložit tabuli</string>
     <string name="enable_whiteboard">Povolit tabuli</string>
     <string name="disable_whiteboard">Zakázat tabuli</string>
@@ -431,7 +431,7 @@
     <string name="could_not_create_dir">Nepodařilo se vytvořit adresář %s</string>
     <string name="malicious_archive_entry_outside">Škodlivý archiv. Obsahuje záznam mimo cílový adresář: %s</string>
     <string name="malicious_archive_exceeds_limit">Škodlivý archiv. Velikost přesahuje %1$s nebo obsahuje více než %2$d souborů</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">Rozbalený soubor je větší, než úložiště</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Rozbalit štítek „%s“</string>
 </resources>
