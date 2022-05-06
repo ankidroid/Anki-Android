@@ -13,55 +13,52 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.parsing.AtomTypes;
+package com.wildplot.android.parsing.AtomTypes
 
-import android.annotation.SuppressLint;
-
-import com.wildplot.android.parsing.Atom;
-import com.wildplot.android.parsing.ExpressionFormatException;
-import com.wildplot.android.parsing.TreeElement;
-
-import timber.log.Timber;
+import android.annotation.SuppressLint
+import com.ichi2.utils.KotlinCleanup
+import com.wildplot.android.parsing.Atom.AtomType
+import com.wildplot.android.parsing.ExpressionFormatException
+import com.wildplot.android.parsing.TreeElement
+import timber.log.Timber
+import java.lang.NumberFormatException
+import kotlin.Throws
 
 @SuppressLint("NonPublicNonStaticFieldName")
-public class NumberAtom implements TreeElement {
+class NumberAtom(factorString: String) : TreeElement {
 
-    private Atom.AtomType atomType = Atom.AtomType.NUMBER;
-    private Double value;
+    private var atomType = AtomType.NUMBER
+    private var value: Double? = null
 
-
-    public NumberAtom(String factorString) {
+    init {
         try {
-            this.value = Double.parseDouble(factorString);
-        } catch (NumberFormatException e) {
-            Timber.w(e);
-            atomType = Atom.AtomType.INVALID;
-        }
-
-    }
-
-
-    public Atom.AtomType getAtomType() {
-        return atomType;
-    }
-
-
-    @Override
-    public double getValue() throws ExpressionFormatException {
-        if (atomType != Atom.AtomType.INVALID) {
-            return value;
-        } else {
-            throw new ExpressionFormatException("Number is Invalid, cannot parse");
+            value = factorString.toDouble()
+        } catch (e: NumberFormatException) {
+            Timber.w(e)
+            atomType = AtomType.INVALID
         }
     }
 
+    @KotlinCleanup("Make atomType val with private setter.")
+    fun getAtomType(): AtomType {
+        return atomType
+    }
 
-    @Override
-    public boolean isVariable() throws ExpressionFormatException {
-        if (atomType != Atom.AtomType.INVALID) {
-            return false;
+    @Throws(ExpressionFormatException::class)
+    override fun getValue(): Double {
+        return if (atomType != AtomType.INVALID) {
+            value!!
         } else {
-            throw new ExpressionFormatException("Number is Invalid, cannot parse");
+            throw ExpressionFormatException("Number is Invalid, cannot parse")
+        }
+    }
+
+    @Throws(ExpressionFormatException::class)
+    override fun isVariable(): Boolean {
+        return if (atomType != AtomType.INVALID) {
+            false
+        } else {
+            throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
     }
 }
