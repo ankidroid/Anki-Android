@@ -37,7 +37,6 @@ import com.ichi2.anki.multimediacard.activity.TranslationActivity
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
 
@@ -50,7 +49,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
     private lateinit var mEditText: EditText
 
     // This is used to copy from another field value to this field
-    private var mPossibleClones: ArrayList<String>? = null
+    private lateinit var mPossibleClones: ArrayList<String>
     override fun createUI(context: Context, layout: LinearLayout) {
         mEditText = FixedEditText(mActivity)
         mEditText.minLines = 3
@@ -151,7 +150,6 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
      *            one, and use it's value in the current one.
      * @param p layout params
      */
-    @KotlinCleanup("remove !! from curField.text access")
     private fun createCloneButton(layoutTools: LinearLayout, p: LinearLayout.LayoutParams) {
         // Makes sense only for two and more fields
         if (mNote.numberOfFields > 1) {
@@ -165,23 +163,13 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
                 if (curField.type !== EFieldType.TEXT) {
                     continue
                 }
-                if (curField.text == null) {
+                val currFieldText = curField.text ?: continue
+                if (currFieldText.isEmpty() || currFieldText.contentEquals(mField.text)) {
                     continue
                 }
-                if (curField.text.isNullOrEmpty()) {
-                    continue
-                }
-
-                // as well as the same field
-                if (curField.text?.contentEquals(mField.text) == true) {
-                    continue
-                }
-
                 // collect clone sources
-                curField.let {
-                    it.text?.let { it1 -> mPossibleClones?.add(it1) }
-                    ++numTextFields
-                }
+                mPossibleClones.add(currFieldText)
+                numTextFields++
             }
 
             // Nothing to clone from
