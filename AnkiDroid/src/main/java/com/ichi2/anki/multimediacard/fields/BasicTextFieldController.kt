@@ -241,7 +241,7 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
 
     // This is when the dialog for clone ends
     override fun onClick(dialog: DialogInterface, which: Int) {
-        mEditText.setText(mPossibleClones!![which])
+        mEditText.setText(mPossibleClones[which])
     }
 
     /**
