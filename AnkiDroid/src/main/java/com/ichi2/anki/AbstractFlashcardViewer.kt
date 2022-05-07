@@ -557,7 +557,6 @@ abstract class AbstractFlashcardViewer :
     protected abstract fun setTitle()
 
     // Finish initializing the activity after the collection has been correctly loaded
-    @Suppress("deprecation") // supportInvalidateOptionsMenu
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         sched = col.sched
@@ -590,7 +589,7 @@ abstract class AbstractFlashcardViewer :
         // Initialize text-to-speech. This is an asynchronous operation.
         mTTS.initialize(this, ReadTextListener())
         updateActionBar()
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
     // Saves deck each time Reviewer activity loses focus
@@ -1818,9 +1817,8 @@ abstract class AbstractFlashcardViewer :
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 
-    @Suppress("deprecation") // supportInvalidateOptionsMenu
     protected fun refreshActionBar() {
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
     /** Fixing bug 720: <input></input> focus, thanks to pablomouzo on android issue 7189  */
