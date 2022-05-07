@@ -757,7 +757,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         refreshState()
     }
 
-    @Suppress("deprecation") // supportInvalidateOptionsMenu: deprecated in Java
     fun refreshState() {
         mActivityPaused = false
         if (mSyncOnResume) {
@@ -778,7 +777,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             TaskManager.launchCollectionTask(LoadCollectionComplete())
         }
         // Update sync status (if we've come back from a screen)
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
@@ -1719,8 +1718,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 }
                 // Mark sync as completed - then refresh the sync icon
                 SyncStatus.markSyncCompleted()
-                @Suppress("deprecation")
-                supportInvalidateOptionsMenu()
+                invalidateOptionsMenu()
                 updateDeckList()
                 WidgetStatus.update(this@DeckPicker)
                 if (fragmented) {
