@@ -31,7 +31,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.MaterialDialog.ListCallback
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
@@ -39,8 +38,8 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleSelectionDialogHandler
-import com.ichi2.anki.dialogs.ModelEditorContextMenu
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.Companion.newInstance
+import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.async.CollectionTask.AddField
@@ -73,9 +72,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private var collection: Collection? = null
     private var noteFields: JSONArray? = null
     private var mod: Model? = null
-    private var contextMenu: ModelEditorContextMenu? = null
     private var fieldNameInput: EditText? = null
-    private val confirmDialogCancel = Runnable { dismissContextMenu() }
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -131,8 +128,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldLabelView?.let {
             it.adapter = fieldLabelAdapter
             it.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-                contextMenu = newInstance(fieldLabels!![position], mContextMenuListener)
-                showDialogFragment(contextMenu)
+                showDialogFragment(newInstance(fieldLabels!![position]))
                 currentPos = position
             }
         }
@@ -208,10 +204,8 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                                 e1.log()
                                 // This should never be thrown
                             }
-                            dismissContextMenu()
                         }
                         c.setConfirm(confirm)
-                        c.setCancel(confirmDialogCancel)
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
                     collection!!.models.update(mod!!)
@@ -244,7 +238,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         val confirm = Runnable {
             collection!!.modSchemaNoCheck()
             deleteField()
-            dismissContextMenu()
         }
 
         if (fieldLabels!!.size < 2) {
@@ -255,14 +248,12 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                 ConfirmationDialog().let {
                     it.setArgs(resources.getString(R.string.field_delete_warning))
                     it.setConfirm(confirm)
-                    it.setCancel(confirmDialogCancel)
                     showDialogFragment(it)
                 }
             } catch (e: ConfirmModSchemaException) {
                 e.log()
                 ConfirmationDialog().let {
                     it.setConfirm(confirm)
-                    it.setCancel(confirmDialogCancel)
                     it.setArgs(resources.getString(R.string.full_sync_confirmation))
                     showDialogFragment(it)
                 }
@@ -308,10 +299,8 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                                 e1.log()
                                 // This should never be thrown
                             }
-                            dismissContextMenu()
                         }
                         c.setConfirm(confirm)
-                        c.setCancel(confirmDialogCancel)
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
                 }
@@ -365,13 +354,11 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                                         ),
                                         listener
                                     )
-                                    dismissContextMenu()
                                 } catch (e1: JSONException) {
                                     throw RuntimeException(e1)
                                 }
                             }
                             c.setConfirm(confirm)
-                            c.setCancel(confirmDialogCancel)
                             this@ModelFieldEditor.showDialogFragment(c)
                         }
                     }
@@ -384,16 +371,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // ----------------------------------------------------------------------------
     // HELPER METHODS
     // ----------------------------------------------------------------------------
-    /*
-     * Useful when a confirmation dialog is created within another dialog
-     */
-    private fun dismissContextMenu() {
-        if (contextMenu != null) {
-            contextMenu!!.dismiss()
-            contextMenu = null
-        }
-    }
-
     private fun dismissProgressBar() {
         if (progressDialog != null) {
             progressDialog!!.dismiss()
@@ -430,10 +407,8 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             val confirm = Runnable {
                 collection!!.modSchemaNoCheck()
                 TaskManager.launchCollectionTask(ChangeSortField(mod!!, currentPos), listener)
-                dismissContextMenu()
             }
             c.setConfirm(confirm)
-            c.setCancel(confirmDialogCancel)
             this@ModelFieldEditor.showDialogFragment(c)
         }
     }
@@ -519,20 +494,21 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         closeActivity()
     }
 
-    @KotlinCleanup("Add @RequiresApi instead of using check in if condition")
-    private val mContextMenuListener = ListCallback { _: MaterialDialog?, _: View?, selection: Int, _: CharSequence? ->
-        when (selection) {
-            ModelEditorContextMenu.SORT_FIELD -> sortByField()
-            ModelEditorContextMenu.FIELD_REPOSITION -> repositionFieldDialog()
-            ModelEditorContextMenu.FIELD_DELETE -> deleteFieldDialog()
-            ModelEditorContextMenu.FIELD_RENAME -> renameFieldDialog()
-            ModelEditorContextMenu.FIELD_TOGGLE_STICKY -> toggleStickyField()
-            else -> {
+    fun handleAction(contextMenuAction: ModelEditorContextMenuAction) {
+        supportFragmentManager.popBackStackImmediate()
+        when (contextMenuAction) {
+            ModelEditorContextMenuAction.Sort -> sortByField()
+            ModelEditorContextMenuAction.Reposition -> repositionFieldDialog()
+            ModelEditorContextMenuAction.Delete -> deleteFieldDialog()
+            ModelEditorContextMenuAction.Rename -> renameFieldDialog()
+            ModelEditorContextMenuAction.ToggleSticky -> toggleStickyField()
+            ModelEditorContextMenuAction.AddLanguageHint -> {
+                Timber.i("displaying locale hint dialog")
+                // localeHintDialog() is safe to be called here without the check but we can't
+                // suppress @RequiresApi just for the method call, we would have to do it on
+                // handleAction() which is not ok
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    if (selection == ModelEditorContextMenu.FIELD_ADD_LANGUAGE_HINT) {
-                        Timber.i("displaying locale hint dialog")
-                        localeHintDialog()
-                    }
+                    localeHintDialog()
                 }
             }
         }
