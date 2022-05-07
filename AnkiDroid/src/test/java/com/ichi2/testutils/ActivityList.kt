@@ -13,141 +13,106 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import androidx.annotation.CheckResult
+import com.canhub.cropper.CropImageActivity
+import com.ichi2.anki.*
+import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.multimediacard.activity.TranslationActivity
+import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
+import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
+import com.ichi2.utils.KotlinCleanup
+import org.robolectric.Robolectric
+import org.robolectric.android.controller.ActivityController
+import java.util.*
+import java.util.function.Function
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-
-import com.canhub.cropper.CropImageActivity;
-import com.ichi2.anki.CardBrowser;
-import com.ichi2.anki.CardInfo;
-import com.ichi2.anki.CardTemplateBrowserAppearanceEditor;
-import com.ichi2.anki.CardTemplateEditor;
-import com.ichi2.anki.CardTemplatePreviewer;
-import com.ichi2.anki.DeckOptions;
-import com.ichi2.anki.DeckPicker;
-import com.ichi2.anki.DrawingActivity;
-import com.ichi2.anki.FilteredDeckOptions;
-import com.ichi2.anki.Info;
-import com.ichi2.anki.IntentHandler;
-import com.ichi2.anki.ModelBrowser;
-import com.ichi2.anki.ModelFieldEditor;
-import com.ichi2.anki.MyAccount;
-import com.ichi2.anki.NoteEditor;
-import com.ichi2.anki.Preferences;
-import com.ichi2.anki.Previewer;
-import com.ichi2.anki.Reviewer;
-import com.ichi2.anki.SharedDecksActivity;
-import com.ichi2.anki.Statistics;
-import com.ichi2.anki.StudyOptionsActivity;
-import com.ichi2.anki.VideoPlayer;
-import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity;
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
-import com.ichi2.anki.multimediacard.activity.TranslationActivity;
-import com.ichi2.anki.services.ReminderService;
-
-import org.robolectric.Robolectric;
-import org.robolectric.android.controller.ActivityController;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Function;
-
-import androidx.annotation.CheckResult;
-
-import static com.ichi2.anki.CardTemplateBrowserAppearanceEditor.INTENT_ANSWER_FORMAT;
-import static com.ichi2.anki.CardTemplateBrowserAppearanceEditor.INTENT_QUESTION_FORMAT;
-import static com.ichi2.testutils.ActivityList.ActivityLaunchParam.get;
-
-public class ActivityList {
+@KotlinCleanup("asList() --> mutableListOf()")
+object ActivityList {
     // TODO: This needs a test to ensure that all activities are valid with the given intents
     // Otherwise, ActivityStartupUnderBackup and other classes could be flaky
     @CheckResult
-    public static List<ActivityLaunchParam> allActivitiesAndIntents() {
+    fun allActivitiesAndIntents(): List<ActivityLaunchParam> {
         return Arrays.asList(
-                get(DeckPicker.class),
-                // IntentHandler has unhandled intents
-                get(IntentHandler.class, ctx -> ReminderService.getReviewDeckIntent(ctx, 1L)),
-                get(StudyOptionsActivity.class),
-                get(CardBrowser.class),
-                get(ModelBrowser.class),
-                get(ModelFieldEditor.class),
-                // Likely has unhandled intents
-                get(Reviewer.class),
-                get(VideoPlayer.class),
-                get(MyAccount.class),
-                get(Preferences.class),
-                get(DeckOptions.class),
-                get(CropImageActivity.class),
-                get(FilteredDeckOptions.class),
-                get(DrawingActivity.class),
-                // Info has unhandled intents
-                get(Info.class),
-                // NoteEditor has unhandled intents
-                get(NoteEditor.class),
-                get(Statistics.class),
-                get(Previewer.class),
-                get(CardTemplatePreviewer.class),
-                get(MultimediaEditFieldActivity.class),
-                get(TranslationActivity.class),
-                get(LoadPronunciationActivity.class),
-                get(CardInfo.class),
-                get(CardTemplateEditor.class, ActivityList::intentForCardTemplateEditor),
-                get(CardTemplateBrowserAppearanceEditor.class, ActivityList::intentForCardTemplateBrowserAppearanceEditor),
-                get(SharedDecksActivity.class)
-        );
+            get(DeckPicker::class.java), // IntentHandler has unhandled intents
+            ActivityLaunchParam[
+                IntentHandler::class.java, { ctx: Context? ->
+                    getReviewDeckIntent(
+                        ctx!!, 1L
+                    )
+                }
+            ],
+            get(StudyOptionsActivity::class.java),
+            get(CardBrowser::class.java),
+            get(ModelBrowser::class.java),
+            get(ModelFieldEditor::class.java), // Likely has unhandled intents
+            get(Reviewer::class.java),
+            get(VideoPlayer::class.java),
+            get(MyAccount::class.java),
+            get(Preferences::class.java),
+            get(DeckOptions::class.java),
+            get(CropImageActivity::class.java),
+            get(FilteredDeckOptions::class.java),
+            get(DrawingActivity::class.java), // Info has unhandled intents
+            get(Info::class.java), // NoteEditor has unhandled intents
+            get(NoteEditor::class.java),
+            get(Statistics::class.java),
+            get(Previewer::class.java),
+            get(CardTemplatePreviewer::class.java),
+            get(MultimediaEditFieldActivity::class.java),
+            get(TranslationActivity::class.java),
+            get(LoadPronunciationActivity::class.java),
+            get(CardInfo::class.java),
+            ActivityLaunchParam[CardTemplateEditor::class.java, { intentForCardTemplateEditor() }],
+            ActivityLaunchParam[CardTemplateBrowserAppearanceEditor::class.java, { intentForCardTemplateBrowserAppearanceEditor() }],
+            get(SharedDecksActivity::class.java)
+        )
     }
 
-
-    private static Intent intentForCardTemplateBrowserAppearanceEditor(Context context) {
+    private fun intentForCardTemplateBrowserAppearanceEditor(): Intent {
         // bundle != null
-        Intent intent = new Intent();
-        intent.putExtra(INTENT_QUESTION_FORMAT, "{{Front}}");
-        intent.putExtra(INTENT_ANSWER_FORMAT, "{{FrontSide}}\n{{Back}}");
-        return intent;
+        val intent = Intent()
+        intent.putExtra(CardTemplateBrowserAppearanceEditor.INTENT_QUESTION_FORMAT, "{{Front}}")
+        intent.putExtra(
+            CardTemplateBrowserAppearanceEditor.INTENT_ANSWER_FORMAT,
+            "{{FrontSide}}\n{{Back}}"
+        )
+        return intent
     }
 
-
-    private static Intent intentForCardTemplateEditor(Context ctx) {
-        Intent intent = new Intent();
-        intent.putExtra("modelId", 1L);
-        return intent;
+    private fun intentForCardTemplateEditor(): Intent {
+        val intent = Intent()
+        intent.putExtra("modelId", 1L)
+        return intent
     }
 
+    class ActivityLaunchParam(
+        var activity: Class<out Activity?>,
+        private var intentBuilder: Function<Context?, Intent>
+    ) {
+        val simpleName: String
+            get() = activity.simpleName
 
-    public static class ActivityLaunchParam {
-        public Class<? extends Activity> mActivity;
-        public Function<Context, Intent> mIntentBuilder;
-
-
-        public ActivityLaunchParam(Class<? extends Activity> clazz, Function<Context, Intent> intent) {
-            mActivity = clazz;
-            mIntentBuilder = intent;
+        fun build(context: Context?): ActivityController<out Activity?> {
+            return Robolectric.buildActivity(activity, intentBuilder.apply(context))
         }
 
+        val className: String
+            get() = activity.name
 
-        public static ActivityLaunchParam get(Class<? extends Activity> clazz) {
-            return get(clazz, c -> new Intent());
-        }
-
-        public static ActivityLaunchParam get(Class<? extends Activity> clazz, Function<Context, Intent> i) {
-            return new ActivityLaunchParam(clazz, i);
-        }
-
-        public String getSimpleName() {
-            return mActivity.getSimpleName();
-        }
-
-
-        public ActivityController<? extends Activity> build(Context context) {
-            return Robolectric.buildActivity(mActivity, mIntentBuilder.apply(context));
-        }
-
-
-        public String getClassName() {
-            return this.mActivity.getName();
+        companion object {
+            @JvmOverloads
+            operator fun get(
+                clazz: Class<out Activity?>,
+                i: Function<Context?, Intent> = Function { Intent() }
+            ): ActivityLaunchParam {
+                return ActivityLaunchParam(clazz, i)
+            }
         }
     }
 }
