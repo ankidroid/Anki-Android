@@ -5,59 +5,63 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
+import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.MaterialDialog.ListCallback
+import com.ichi2.anki.ModelFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction.AddLanguageHint
+import timber.log.Timber
 
-class ModelEditorContextMenu : AnalyticsDialogFragment() {
+/**
+ * Note: the class is declared as open only to support testing.
+ */
+open class ModelEditorContextMenu : AnalyticsDialogFragment() {
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val entries = arrayOfNulls<String>(entryCount)
-        entries[FIELD_REPOSITION] = resources.getString(R.string.model_field_editor_reposition_menu)
-        entries[SORT_FIELD] = resources.getString(R.string.model_field_editor_sort_field)
-        entries[FIELD_RENAME] = resources.getString(R.string.model_field_editor_rename)
-        entries[FIELD_DELETE] = resources.getString(R.string.model_field_editor_delete)
-        entries[FIELD_TOGGLE_STICKY] = resources.getString(R.string.model_field_editor_toggle_sticky)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            entries[FIELD_ADD_LANGUAGE_HINT] = resources.getString(R.string.model_field_editor_language_hint)
+        // add only the actions which can be done at the current API level
+        var availableItems = if (isAtLeastAtN()) {
+            ModelEditorContextMenuAction.values().toList()
+        } else {
+            ModelEditorContextMenuAction.values().filterNot { it == AddLanguageHint }
         }
+        availableItems = availableItems.sortedBy { it.order }
         return MaterialDialog.Builder(requireActivity())
-            .title(requireArguments().getString("label")!!)
-            .items(*entries)
-            .itemsCallback(mContextMenuListener!!)
+            .title(requireArguments().getString(KEY_LABEL)!!)
+            .items(availableItems.map { resources.getString(it.actionTextId) })
+            .itemsCallback { _, _, position, _ ->
+                (activity as? ModelFieldEditor)?.run { handleAction(availableItems[position]) }
+                    ?: Timber.e("ContextMenu used from outside of its target activity!")
+            }
             .build()
     }
 
-    private val entryCount: Int
-        get() {
-            var entryCount = 5
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                entryCount++
-            }
-            return entryCount
-        }
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    protected open fun isAtLeastAtN() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+
+    enum class ModelEditorContextMenuAction(val order: Int, @StringRes val actionTextId: Int) {
+        Reposition(0, R.string.model_field_editor_reposition_menu),
+        Sort(1, R.string.model_field_editor_sort_field),
+        Rename(2, R.string.model_field_editor_rename),
+        Delete(3, R.string.model_field_editor_delete),
+        ToggleSticky(4, R.string.model_field_editor_toggle_sticky),
+
+        /**
+         * This action will be possible only when the api level of the platform is at least at [Build.VERSION_CODES.N].
+         */
+        AddLanguageHint(5, R.string.model_field_editor_language_hint)
+    }
 
     companion object {
-        const val FIELD_REPOSITION = 0
-        const val SORT_FIELD = 1
-        const val FIELD_RENAME = 2
-        const val FIELD_DELETE = 3
-        const val FIELD_TOGGLE_STICKY = 4
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        const val KEY_LABEL = "key_label"
 
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        const val FIELD_ADD_LANGUAGE_HINT = 5
-        private var mContextMenuListener: ListCallback? = null
         @JvmStatic
-        fun newInstance(label: String?, contextMenuListener: ListCallback?): ModelEditorContextMenu {
-            val n = ModelEditorContextMenu()
-            mContextMenuListener = contextMenuListener
-            val b = Bundle()
-            b.putString("label", label)
-            mContextMenuListener = contextMenuListener
-            n.arguments = b
-            return n
+        fun newInstance(label: String): ModelEditorContextMenu = ModelEditorContextMenu().apply {
+            arguments = bundleOf(KEY_LABEL to label)
         }
     }
 }
