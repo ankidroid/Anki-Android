@@ -4,20 +4,19 @@ package com.wildplot.android.rendering
 import com.ichi2.utils.KotlinCleanup
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
+import org.mockito.kotlin.whenever
 
-@KotlinCleanup("`when` -> whenever")
 internal class PieChartTestParametersBuilder(
     values: DoubleArray,
     firstSectorAngle: Double
 ) {
-    private val mValues: DoubleArray
-    private val mNumberOfValues: Int
-    private val mSum: Double
-    private val mFirstSectorAngle: Double
-    val startAngles: DoubleArray
-    val arcLengths: DoubleArray
-    val colors: Array<ColorWrap?>
+    private val mValues: DoubleArray = values
+    private val mNumberOfValues: Int = values.size
+    private val mSum: Double = calcSum(values)
+    private val mFirstSectorAngle: Double = firstSectorAngle
+    val startAngles: DoubleArray = DoubleArray(mNumberOfValues)
+    val arcLengths: DoubleArray = DoubleArray(mNumberOfValues)
+    val colors: Array<ColorWrap?> = arrayOfNulls(mNumberOfValues)
     @KotlinCleanup(" Use .sum()")
     private fun calcSum(values: DoubleArray): Double {
         var sum = 0.0
@@ -48,22 +47,13 @@ internal class PieChartTestParametersBuilder(
 
     private fun createColorMock(i: Int): ColorWrap {
         val c = mock(ColorWrap::class.java)
-        `when`(c.colorValue).thenReturn(i)
+        whenever(c.colorValue).thenReturn(i)
         return c
     }
 
     init {
-        @KotlinCleanup("move initialization to declaration whenever possible")
-        @KotlinCleanup(".isNotEmpty()")
-        require(values.size >= 1) { "Empty array of values" }
-        mValues = values
-        mNumberOfValues = values.size
-        mSum = calcSum(values)
+        require(values.isNotEmpty()) { "Empty array of values" }
         require(mSum != 0.0) { String.format("All %d values are zero", values.size) }
-        mFirstSectorAngle = firstSectorAngle
-        startAngles = DoubleArray(mNumberOfValues)
-        arcLengths = DoubleArray(mNumberOfValues)
-        colors = arrayOfNulls(mNumberOfValues)
         calcArcLengths()
         calcStartAngles()
         fillColors()
