@@ -16,14 +16,12 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@KotlinCleanup("is -> equalTo")
 @RunWith(AndroidJUnit4::class)
 class CardInfoModelTest : RobolectricTest() {
     private var mModel: CardInfo.CardInfoModel? = null
@@ -67,6 +65,6 @@ class CardInfoModelTest : RobolectricTest() {
     @Test
     fun ensureFilteredCardIsMarkedAsSuch() {
         // differs from Anki Desktop - provides date in 1700
-        assertThat(mModel!!.due, `is`("(filtered)"))
+        assertThat(mModel!!.due, equalTo("(filtered)"))
     }
 }
