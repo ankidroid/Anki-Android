@@ -52,6 +52,7 @@ import java.lang.RuntimeException
 import java.util.ArrayList
 
 @KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
+@NeedsTest("add tests to ensure changes(renames & deletions) to the list of note types are visible in the UI")
 class ModelBrowser : AnkiActivity() {
     private var modelDisplayAdapter: DisplayPairAdapter? = null
     private var mModelListView: ListView? = null
