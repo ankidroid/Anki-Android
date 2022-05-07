@@ -496,7 +496,10 @@ class ModelBrowser : AnkiActivity() {
     /*
      * For display in the main list via an ArrayAdapter
      */
-    inner class DisplayPairAdapter(context: Context?, items: ArrayList<DisplayPair>?) : ArrayAdapter<DisplayPair?>(context!!, R.layout.model_browser_list_item, R.id.model_list_item_1, items!!.toList()) {
+    inner class DisplayPairAdapter(
+        context: Context,
+        items: ArrayList<DisplayPair>?
+    ) : ArrayAdapter<DisplayPair>(context, R.layout.model_browser_list_item, R.id.model_list_item_1, items!!) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val _convertView = convertView ?: LayoutInflater.from(context).inflate(R.layout.model_browser_list_item, parent, false)
             val item = getItem(position)
