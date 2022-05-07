@@ -17,18 +17,16 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@KotlinCleanup("is -> equalTo")
 @RunWith(AndroidJUnit4::class)
 class MetaTest : RobolectricTest() {
     @Test
     fun ensureDatabaseIsInMemory() {
         val path = col.db.path
-        assertThat("Default test database should be in-memory.", path, `is`(":memory:"))
+        assertThat("Default test database should be in-memory.", path, equalTo(":memory:"))
     }
 }
