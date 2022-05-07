@@ -298,7 +298,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             Timber.d("CardBrowser::RepositionCardHandler() onPreExecute")
         }
 
-        @Suppress("deprecation") // super.supportInvalidateOptionsMenu
         override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute")
             context.mReloadRequired = true
@@ -308,7 +307,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 context.resources.getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true
             )
             context.reloadCards(result.value.result)
-            context.supportInvalidateOptionsMenu()
+            context.invalidateOptionsMenu()
         }
     }
 
@@ -321,7 +320,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             Timber.d("CardBrowser::ResetProgressCardHandler() onPreExecute")
         }
 
-        @Suppress("deprecation") // supportInvalidateOptionsMenu
         override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute")
             context.mReloadRequired = true
@@ -331,7 +329,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 context.resources.getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true
             )
             context.reloadCards(result.value.result)
-            context.supportInvalidateOptionsMenu()
+            context.invalidateOptionsMenu()
         }
     }
 
@@ -344,7 +342,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             Timber.d("CardBrowser::RescheduleCardHandler() onPreExecute")
         }
 
-        @Suppress("deprecation") // supportInvalidateOptionsMenu
         override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute")
             context.mReloadRequired = true
@@ -354,7 +351,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 context.resources.getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true
             )
             context.reloadCards(result.value.result)
-            context.supportInvalidateOptionsMenu()
+            context.invalidateOptionsMenu()
         }
     }
 
@@ -855,7 +852,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     @KotlinCleanup("Add a few variables to get rid of the !!")
-    @Suppress("deprecation") // supportInvalidateOptionsMenu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
         mActionBarMenu = menu
@@ -880,7 +876,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                     mSearchView!!.setQuery(mSearchTerms!!, false)
                     searchCards()
                     // invalidate options menu so that disappeared icons would appear again
-                    supportInvalidateOptionsMenu()
+                    invalidateOptionsMenu()
                     mTempSearchQuery = null
                     return true
                 }
@@ -903,7 +899,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 }
             })
             // Fixes #6500 - keep the search consistent if coming back from note editor
-            // Fixes #9010 - consistent search after drawer change calls supportInvalidateOptionsMenu (mTempSearchQuery)
+            // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu (mTempSearchQuery)
             if (!TextUtils.isEmpty(mTempSearchQuery) || !TextUtils.isEmpty(mSearchTerms)) {
                 mSearchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
                 val toUse = if (!TextUtils.isEmpty(mTempSearchQuery)) mTempSearchQuery else mSearchTerms
@@ -2590,7 +2586,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     /**
      * Turn on Multi-Select Mode so that the user can select multiple cards at once.
      */
-    @Suppress("deprecation") // supportInvalidateOptionsMenu
     private fun loadMultiSelectMode() {
         if (isInMultiSelectMode) {
             return
@@ -2603,13 +2598,12 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         mActionBarTitle!!.text = checkedCardCount().toString()
         mDeckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
         // reload the actionbar using the multi-select mode actionbar
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
     /**
      * Turn off Multi-Select Mode and return to normal state
      */
-    @Suppress("deprecation") // supportInvalidateOptionsMenu
     private fun endMultiSelectMode() {
         Timber.d("endMultiSelectMode()")
         mCheckedCards.clear()
@@ -2620,7 +2614,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         // update adapter to remove check boxes
         mCardsAdapter!!.notifyDataSetChanged()
         // update action bar
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
         mDeckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
         mActionBarTitle!!.visibility = View.GONE
     }

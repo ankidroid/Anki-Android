@@ -551,7 +551,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("FLAKY: Robolectric getOptionsMenu does not require supportInvalidateOptionsMenu - so would not fail")
+    @Ignore("FLAKY: Robolectric getOptionsMenu does not require invalidateOptionsMenu - so would not fail")
     fun rescheduleUndoTest() {
         val b = getBrowserWithNotes(1)
 
