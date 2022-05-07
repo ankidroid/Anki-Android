@@ -24,8 +24,7 @@ import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.getStartupFailureType
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
-import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
@@ -35,7 +34,6 @@ import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowEnvironment
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("`is` -> equalTo")
 class InitialActivityWithConflictTest : RobolectricTest() {
     @Before
     override fun setUp() {
@@ -56,7 +54,7 @@ class InitialActivityWithConflictTest : RobolectricTest() {
 
             val f = getStartupFailureType(targetContext)
 
-            assertThat("A conflict should be returned", f, `is`(StartupFailure.DATABASE_LOCKED))
+            assertThat("A conflict should be returned", f, equalTo(StartupFailure.DATABASE_LOCKED))
         } finally {
             setupForDefault()
         }
