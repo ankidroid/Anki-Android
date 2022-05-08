@@ -783,6 +783,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
+    @KotlinCleanup("Use StringBuilder to concatenate the strings")
     class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, Triple<List<AnkiPackageImporter>?, Boolean, String?>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Triple<List<AnkiPackageImporter>?, Boolean, String?> {
             Timber.d("doInBackgroundImportAdd")
@@ -794,7 +795,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
 
             for (path in pathList) {
                 val imp = AnkiPackageImporter(col, path)
-
                 imp.setProgressCallback(TaskManager.ProgressCallback(collectionTask, res))
                 try {
                     imp.run()
@@ -816,19 +816,17 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             Timber.d("doInBackgroundImportReplace")
             val res = AnkiDroidApp.getInstance().baseContext.resources
             val context = col.context
+            val colPath = CollectionHelper.getCollectionPath(context)
+            // extract the deck from the zip file
+            val dir = File(File(colPath).parentFile, "tmpzip")
+            if (dir.exists()) {
+                BackupManager.removeDir(dir)
+            }
+            // from anki2.py
+            var colname = "collection.anki21"
 
             for (path in pathList) {
-                // extract the deck from the zip file
-                val colPath = CollectionHelper.getCollectionPath(context)
-                val dir = File(File(colPath).parentFile, "tmpzip")
-                if (dir.exists()) {
-                    BackupManager.removeDir(dir)
-                }
-
-                // from anki2.py
-                var colname = "collection.anki21"
-                val zip: ZipFile
-                zip = try {
+                val zip: ZipFile = try {
                     ZipFile(File(path))
                 } catch (e: IOException) {
                     Timber.e(e, "doInBackgroundImportReplace - Error while unzipping")

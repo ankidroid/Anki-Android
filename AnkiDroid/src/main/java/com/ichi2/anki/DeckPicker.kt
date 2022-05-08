@@ -249,8 +249,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 if (result.third != null) {
                     errorMsg += result.third
                 }
-                if (errorMsg.isNotBlank() or errorMsg.isNotEmpty()) {
-                    dialogMsg += context.resources.getString(R.string.import_stats_error, errorMsg)
+                if (errorMsg.isNotEmpty()) {
+                    dialogMsg += "\n\n" + context.resources.getString(R.string.import_stats_error, errorMsg)
                 }
 
                 context.showSimpleMessageDialog(dialogMsg)

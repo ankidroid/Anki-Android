@@ -225,7 +225,6 @@ object ImportUtils {
 
             var apkgCount = 0
             var colpkgCount = 0
-            var otherCount = 0
 
             for (data in dataList) {
                 var fileName = getFileNameFromContentProvider(context, data)
@@ -235,9 +234,6 @@ object ImportUtils {
                     }
                     isCollectionPackage(fileName) -> {
                         colpkgCount += 1
-                    }
-                    else -> {
-                        otherCount += 1
                     }
                 }
             }
