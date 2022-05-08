@@ -343,13 +343,6 @@
             >
         </activity>
         <activity
-            android:name="com.ichi2.anki.multimediacard.activity.TranslationActivity"
-            android:label="@string/title_activity_translation"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|locale|screenSize"
-            >
-        </activity>
-        <activity
             android:name="com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity"
             android:label="@string/multimedia_editor_text_field_editing_say"
             android:exported="false"

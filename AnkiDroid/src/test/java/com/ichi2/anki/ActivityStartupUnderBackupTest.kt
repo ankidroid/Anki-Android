@@ -19,7 +19,6 @@ import android.app.Activity
 import android.os.Looper.getMainLooper
 import com.canhub.cropper.CropImageActivity
 import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
-import com.ichi2.anki.multimediacard.activity.TranslationActivity
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
 import com.ichi2.testutils.EmptyApplication
@@ -58,7 +57,6 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
         notYetHandled(VideoPlayer::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(LoadPronunciationActivity::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(Preferences::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
-        notYetHandled(TranslationActivity::class.java.simpleName, "Not working (or implemented) - inherits from FragmentActivity")
         notYetHandled(DeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(FilteredDeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
     }
