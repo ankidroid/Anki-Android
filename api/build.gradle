@@ -131,3 +131,5 @@ publishMavenJavaPublicationToMavenRepository.dependsOn(assemble)
 publish.dependsOn(assemble)
 generateRelease.dependsOn(publish)
 generateRelease.dependsOn(zipRelease)
+
+apply from: "./kotlinMigration-api.gradle"
