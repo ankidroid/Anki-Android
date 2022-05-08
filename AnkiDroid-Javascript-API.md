@@ -107,7 +107,7 @@ Perform ```Easy``` button click
 * #### Name
 ```AnkiDroidJS.ankiSetCardDue(int)```
 * #### Info
-Reschedule card with x days. This will set the interval of the card to x
+Reschedule card with x days. This will set the interval of the card to x (cf this [issue](https://github.com/ankidroid/Anki-Android/issues/11275))
 * #### Usage
 ```javascript
 <button onclick="AnkiDroidJS.ankiSetCardDue(5);">Reschedule card in 5 days</button>
