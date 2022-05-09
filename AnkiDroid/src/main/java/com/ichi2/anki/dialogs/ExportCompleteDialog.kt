@@ -41,7 +41,7 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
 
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        val exportPath = requireArguments().getString("exportPath")
+        val exportPath = requireArguments().getString("exportPath")!!
         val dialogBuilder = MaterialDialog.Builder(requireActivity())
             .title(getNotificationTitle())
             .content(getNotificationMessage())
@@ -50,11 +50,11 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
             .negativeText(R.string.export_save_button)
             .onPositive { _: MaterialDialog?, _: DialogAction? ->
                 listener.dismissAllDialogFragments()
-                listener.emailFile(exportPath!!)
+                listener.emailFile(exportPath)
             }
             .onNegative { _: MaterialDialog?, _: DialogAction? ->
                 listener.dismissAllDialogFragments()
-                listener.saveExportFile(exportPath!!)
+                listener.saveExportFile(exportPath)
             }
             .neutralText(R.string.dialog_cancel)
             .onNeutral { _: MaterialDialog?, _: DialogAction? -> listener.dismissAllDialogFragments() }

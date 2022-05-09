@@ -145,12 +145,12 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 
     private fun saveFileCallback(result: ActivityResult) {
-        val isSuccessful = true.exportToProvider(result.data!!)
+        val isSuccessful = exportToProvider(result.data!!, true)
         @StringRes val message = if (isSuccessful) R.string.export_save_apkg_successful else R.string.export_save_apkg_unsuccessful
         showSimpleSnackbar(activity, activity.getString(message), isSuccessful)
     }
 
-    private fun Boolean.exportToProvider(intent: Intent): Boolean {
+    private fun exportToProvider(intent: Intent, deleteAfterExport: Boolean): Boolean {
         if (intent.data == null) {
             Timber.e("exportToProvider() provided with insufficient intent data %s", intent)
             return false
@@ -170,7 +170,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                 Timber.w("exportToProvider() failed - ContentProvider returned null file descriptor for %s", uri)
                 return false
             }
-            if (this && !File(mExportFileName).delete()) {
+            if (deleteAfterExport && !File(mExportFileName).delete()) {
                 Timber.w("Failed to delete temporary export file %s", mExportFileName)
             }
         } catch (e: Exception) {
