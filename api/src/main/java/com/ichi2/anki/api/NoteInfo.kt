@@ -14,76 +14,76 @@
  * You should have received a copy of the GNU Lesser General Public License along with  *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.api
 
-package com.ichi2.anki.api;
-
-import android.database.Cursor;
-import com.ichi2.anki.FlashCardsContract;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
+import android.database.Cursor
+import com.ichi2.anki.FlashCardsContract
+import java.util.*
 
 /**
  * Representation of the contents of a note in AnkiDroid.
  */
-public final class NoteInfo {
-    private final long mId;
-    private final String[] mFields;
-    private final Set<String> mTags;
+class NoteInfo {
+    private val id: Long
+    private val fields: Array<String>
+    private val tags: Set<String>
 
-    /**
-     * Static initializer method to build a NoteInfo object from a Cursor
-     * @param cursor from a query to FlashCardsContract.Note.CONTENT_URI
-     * @return a NoteInfo object or null if the cursor was not valid
-     */
-    static NoteInfo buildFromCursor(Cursor cursor) {
-        try {
-            int idIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note._ID);
-            int fldsIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note.FLDS);
-            int tagsIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note.TAGS);
-            String[] fields = Utils.splitFields(cursor.getString(fldsIndex));
-            long id = cursor.getLong(idIndex);
-            Set<String> tags = new HashSet<>(Arrays.asList(Utils.splitTags(cursor.getString(tagsIndex))));
-            return new NoteInfo(id, fields, tags);
-        } catch (Exception e) {
-            return null;
+    companion object {
+        /**
+         * Static initializer method to build a NoteInfo object from a Cursor
+         * @param cursor from a query to FlashCardsContract.Note.CONTENT_URI
+         * @return a NoteInfo object or null if the cursor was not valid
+         */
+        @JvmStatic
+        fun buildFromCursor(cursor: Cursor): NoteInfo? {
+            return try {
+                val idIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note._ID)
+                val fldsIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note.FLDS)
+                val tagsIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note.TAGS)
+                val fields = Utils.splitFields(cursor.getString(fldsIndex))
+                val id = cursor.getLong(idIndex)
+                val tags: Set<String> =
+                    HashSet(Arrays.asList(*Utils.splitTags(cursor.getString(tagsIndex))))
+                NoteInfo(id, fields, tags)
+            } catch (e: Exception) {
+                null
+            }
         }
     }
 
-    private NoteInfo(long id, String[] fields, Set<String> tags) {
-        mId = id;
-        mFields = fields;
-        mTags = tags;
+    private constructor(id: Long, fields: Array<String>, tags: Set<String>) {
+        this.id = id
+        this.fields = fields
+        this.tags = tags
     }
 
     /**
      * Clone a NoteInfo object
      * @param parent the object to clone
      */
-    public NoteInfo(NoteInfo parent) {
-        mId = parent.getId();
-        mFields = parent.getFields().clone();
-        mTags = new HashSet<>(parent.getTags());
+    constructor(parent: NoteInfo) {
+        id = parent.id
+        fields = parent.fields.clone()
+        tags = HashSet(parent.tags)
     }
 
-    /** Note ID */
-    public long getId() {
-        return mId;
+    /** Note ID  */
+    fun getId(): Long {
+        return id
     }
 
-    /** The array of fields */
-    public String[] getFields() {
-        return mFields;
+    /** The array of fields  */
+    fun getFields(): Array<String> {
+        return fields
     }
 
-    /** The set of tags */
-    public Set<String> getTags() {
-        return mTags;
+    /** The set of tags  */
+    fun getTags(): Set<String?> {
+        return tags
     }
 
-    /** The first field **/
-    public String getKey() {
-        return getFields()[0];
+    /** The first field  */
+    fun getKey(): String {
+        return getFields()[0]
     }
 }
