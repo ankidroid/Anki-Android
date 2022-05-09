@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">مجموع البطاقات:</string>
     <string name="studyoptions_eta">الوقت المقدر (دقيقة):</string>
     <string name="studyoptions_start">دراسة</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">وَسِّعْ</string>
     <string name="collapse">قَلِّصْ</string>
     <string name="study_more">ادرس أكثر</string>

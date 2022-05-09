@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Σύνολο καρτών:</string>
     <string name="studyoptions_eta">Εκτιμώμενη διάρκεια (λεπτά):</string>
     <string name="studyoptions_start">Μελέτη</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Ανάπυξη</string>
     <string name="collapse">Σύμπτυξη</string>
     <string name="study_more">Περισσότερη μελέτη</string>

@@ -54,7 +54,7 @@
     <string name="connection_error_message">May maling naganap sa network</string>
     <string name="not_logged_in_title">Mag-login sa AnkiWeb</string>
     <string name="login_create_account_message">Kailangang mag-login sa isang hiwalay na account upang gumamit ng serbisyong mag-sisingkronisa sa cloud. Maari kang gumawa ng isa sa susunod na hakbang.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Email address</string>
     <string name="password">Password</string>
     <string name="log_in">Mag-login</string>

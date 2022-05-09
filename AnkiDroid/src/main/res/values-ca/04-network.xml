@@ -54,7 +54,7 @@
     <string name="connection_error_message">S\'ha produït un error de xarxa</string>
     <string name="not_logged_in_title">Entra a AnkiWeb</string>
     <string name="login_create_account_message">Cal estar registrat a un compte de tercers per utilitzar el servei de sincronització de núvol. Pods crear-ne uns en el pròxim pas.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Adreça de correu electrònic</string>
     <string name="password">Contrasenya</string>
     <string name="log_in">Inicia la sessió</string>

@@ -61,7 +61,7 @@
     <string name="filter_tags">Ṭĕga philṭara karā</string>
     <string name="no_tags">You haven’t added any tags yet</string>
     <string name="updated_version">Āvr̥ttīmadhyē adyatanita kēlē%s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">व्हाईटबोर्ड जतन करा</string>
     <string name="enable_whiteboard">Vhā\'iṭabōrḍa sakṣama karā</string>
     <string name="disable_whiteboard">Vhā\'iṭabōrḍa akṣama karā</string>

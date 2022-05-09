@@ -54,7 +54,7 @@
     <string name="connection_error_message">Произошла ошибка сети</string>
     <string name="not_logged_in_title">Войти в AnkiWeb</string>
     <string name="login_create_account_message">Чтобы использовать синхронизацию, вы должны войти учётную запись, предоставляемую третьей стороной. Вы можете создать запись на следующем шаге.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Адрес электронной почты</string>
     <string name="password">Пароль</string>
     <string name="log_in">Войти</string>

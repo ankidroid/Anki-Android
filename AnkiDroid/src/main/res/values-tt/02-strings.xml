@@ -61,7 +61,7 @@
     <string name="filter_tags">Тамгаларны фильтрлау</string>
     <string name="no_tags">Тамгаларны өстәмәдегез әле</string>
     <string name="updated_version">%s версиясенә яңартылды</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Язылганны сакларга</string>
     <string name="enable_whiteboard">Тактаны кабызу</string>
     <string name="disable_whiteboard">Тактаны сүндерү</string>

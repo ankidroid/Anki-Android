@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Celkový počet kartičiek:</string>
     <string name="studyoptions_eta">Odhadovaný čas (min):</string>
     <string name="studyoptions_start">Študovať teraz</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Rozbaliť</string>
     <string name="collapse">Zbaliť</string>
     <string name="study_more">Študovať viac</string>

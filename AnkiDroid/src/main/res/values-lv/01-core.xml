@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Kopējais kāršu skaits:</string>
     <string name="studyoptions_eta">Paredzētais laiks (min):</string>
     <string name="studyoptions_start">Studēt</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Paplašināt</string>
     <string name="collapse">Sakļaut</string>
     <string name="study_more">Studēt vairāk</string>

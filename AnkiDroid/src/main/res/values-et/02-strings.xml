@@ -61,7 +61,7 @@
     <string name="filter_tags">Filtri silte</string>
     <string name="no_tags">Sa pole veel lisanud ühtegi silti</string>
     <string name="updated_version">Uuendatud versioonini %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Salvesta tahvel</string>
     <string name="enable_whiteboard">Enable whiteboard</string>
     <string name="disable_whiteboard">Disable whiteboard</string>

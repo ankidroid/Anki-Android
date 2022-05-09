@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">カード総数:</string>
     <string name="studyoptions_eta">推定学習時間 (分):</string>
     <string name="studyoptions_start">学習開始</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
     <string name="study_more">さらに学習</string>

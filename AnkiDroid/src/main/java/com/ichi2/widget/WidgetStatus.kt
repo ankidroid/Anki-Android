@@ -25,6 +25,7 @@ import com.ichi2.anki.Preferences
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.async.BaseAsyncTask
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.widget.AnkiDroidWidgetSmall.UpdateService
 import timber.log.Timber
 
@@ -61,12 +62,14 @@ object WidgetStatus {
 
     /** Returns the status of each of the decks.  */
     @JvmStatic
+    @KotlinCleanup("make context non-null")
     fun fetchSmall(context: Context?): IntArray {
-        return MetaDB.getWidgetSmallStatus(context)
+        return MetaDB.getWidgetSmallStatus(context!!)
     }
 
+    @KotlinCleanup("make context non-null")
     fun fetchDue(context: Context?): Int {
-        return MetaDB.getNotificationStatus(context)
+        return MetaDB.getNotificationStatus(context!!)
     }
 
     private class UpdateDeckStatusAsyncTask : BaseAsyncTask<Context?, Void?, Context?>() {
@@ -87,15 +90,16 @@ object WidgetStatus {
         }
 
         @Suppress("deprecation") // #7108: AsyncTask
+        @KotlinCleanup("make result non-null")
         override fun onPostExecute(result: Context?) {
             super.onPostExecute(result)
             Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()")
-            MetaDB.storeSmallWidgetStatus(result, sSmallWidgetStatus)
+            MetaDB.storeSmallWidgetStatus(result!!, sSmallWidgetStatus)
             if (sSmallWidgetEnabled) {
-                result?.let { UpdateService().doUpdate(it) }
+                UpdateService().doUpdate(result)
             }
             val intent = Intent(NotificationService.INTENT_ACTION)
-            val appContext = result!!.applicationContext
+            val appContext = result.applicationContext
             LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent)
         }
 

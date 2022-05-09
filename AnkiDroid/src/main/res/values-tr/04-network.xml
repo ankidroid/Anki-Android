@@ -54,7 +54,7 @@
     <string name="connection_error_message">Bir ağ hatası meydana geldi.</string>
     <string name="not_logged_in_title">AnkiWeb\'e giriş yap</string>
     <string name="login_create_account_message">Bulut senkronizasyon hizmetini kullanmak için üçüncü parti bir hesaba giriş yapmanız gerekiyor. Hesabı bir sonraki adımda açabilirsiniz.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Eposta adresi</string>
     <string name="password">Şifre</string>
     <string name="log_in">Giriş yap</string>

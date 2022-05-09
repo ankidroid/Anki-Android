@@ -39,7 +39,7 @@
     <string name="no_tags">You haven’t added any tags yet</string>
     <string name="updated_version">Updated to version %s</string>
 
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Enable whiteboard</string>
     <string name="disable_whiteboard">Disable whiteboard</string>

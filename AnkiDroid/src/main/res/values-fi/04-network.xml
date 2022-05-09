@@ -54,7 +54,7 @@
     <string name="connection_error_message">Tapahtui verkkovirhe.</string>
     <string name="not_logged_in_title">Kirjaudu AnkiWebiin</string>
     <string name="login_create_account_message">Sinun tulee kirjautua kolmannen osapuolen käyttäjätilille käyttääksesi pilvisynkronointipalvelua. Voit luoda uuden tilin seuraavassa vaiheessa.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Sähköpostiosoite</string>
     <string name="password">Salasana</string>
     <string name="log_in">Kirjaudu sisään</string>

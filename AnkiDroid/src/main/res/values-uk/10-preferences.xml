@@ -48,6 +48,7 @@
     <string name="disabled">Вимкнено</string>
     <string name="enabled">Ввімкнено</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category">General</string>
     <string name="pref_cat_general_summ">Основні налаштування</string>
     <string name="pref_cat_reviewing" maxLength="41">Навчання</string>
     <string name="pref_cat_reviewing_summ">Параметри навчання, які впливають на всі колоди</string>
@@ -257,7 +258,7 @@
     <string name="deck_conf_new_cards" maxLength="41">Нові картки</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторювані картки</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Забуті</string>
-    <string name="deck_conf_general" maxLength="41">Загальні</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Загальні</string>
     <string name="deck_conf_reminders" maxLength="41">Нагадування</string>
     <string name="deck_conf_steps" maxLength="41">Кроки (в хвилинах)</string>
     <string name="deck_conf_order" maxLength="41">Порядок</string>

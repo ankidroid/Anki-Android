@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Celkem karet:</string>
     <string name="studyoptions_eta">Odhadovaný čas (min):</string>
     <string name="studyoptions_start">Studovat</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Rozbalit</string>
     <string name="collapse">Sbalit</string>
     <string name="study_more">Vlastní studium</string>
@@ -69,22 +69,22 @@
         <item quantity="other">%1$d karet ke zkoušení (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="one">zbývá %d minuta</item>
-        <item quantity="few">zbývají %d minuty</item>
-        <item quantity="many">zbývá %d minuty</item>
-        <item quantity="other">zbývá %d minut</item>
+        <item quantity="one">Zbývá %d minuta</item>
+        <item quantity="few">Zbývají %d minuty</item>
+        <item quantity="many">Zbývá %d minuty</item>
+        <item quantity="other">Zbývá %d minut</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Zbývá %1$d hodina %2$d</item>
+        <item quantity="few">Zbývají %1$d hodiny %2$d</item>
+        <item quantity="many">Zbývá %1$d hodiny %2$d</item>
+        <item quantity="other">Zbývá %1$d hodin %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Zbývá %1$d den %2$d</item>
+        <item quantity="few">Zbývají %1$d dny %2$d</item>
+        <item quantity="many">Zbývá %1$d dne %2$d</item>
+        <item quantity="other">Zbývá %1$d dní %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kolekce je prázdná</string>
     <string name="no_cards_placeholder_description">Začněte přidávat karty\npoužitím ikony +.</string>
@@ -173,7 +173,7 @@
     <string name="custom_study_deck_exists">Nejdříve přejmenujte stávající balíček vlastního učení</string>
     <string name="empty_deck">Tento balíček je prázdný</string>
     <string name="search_deck" comment="Deck search for selecting it">Hledat balíček</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hledat balíček</string>
     <string name="empty_deck_add_note">Přidat kartu</string>
     <string name="invalid_deck_name">Neplatný název balíčku</string>
     <string name="studyoptions_empty">Tento balíček je prázdný. Stiskněte tlačítko +, abyste přidali nový obsah.</string>

@@ -61,7 +61,7 @@
     <string name="filter_tags">Զտել պիտակները</string>
     <string name="no_tags">Դուք դեռ չեք ավելացրել որևէ պիտակներ</string>
     <string name="updated_version">Արդիացվեց մինչև %s տարբերակ</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Միացնել գրատախտակը</string>
     <string name="disable_whiteboard">Անջատել գրատախտակը</string>

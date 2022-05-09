@@ -61,7 +61,7 @@
     <string name="filter_tags">Nîşanan fîlître bike</string>
     <string name="no_tags">You haven’t added any tags yet</string>
     <string name="updated_version">نوێکرایەوە بۆ وەشانی %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">چاڵاککردنی تەختەسپی</string>
     <string name="disable_whiteboard">ناچاڵاککردنی تەختەسپی</string>

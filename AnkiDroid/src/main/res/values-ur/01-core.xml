@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">کل کارڈ:</string>
     <string name="studyoptions_eta">تخمینی بقیہ وقت (منٹ):</string>
     <string name="studyoptions_start">مطالعہ</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">پھیلائیں</string>
     <string name="collapse">بند کریں</string>
     <string name="study_more">مزید مطالعہ کریں</string>

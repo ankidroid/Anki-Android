@@ -46,7 +46,7 @@
 <resources>
     <string name="yes">já</string>
     <!-- Navigation drawer items-->
-    <string name="decks">Decks</string>
+    <string name="decks">spilastokkar</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
     <string name="statistics">Statistics</string>
     <string name="settings">Stillingar</string>
@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Samtal spilanna:</string>
     <string name="studyoptions_eta">Estimated time (min):</string>
     <string name="studyoptions_start">Læra</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
     <string name="study_more">Læra meira</string>

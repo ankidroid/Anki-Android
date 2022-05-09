@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Քարտերի քանակը՝</string>
     <string name="studyoptions_eta">Գնահատված ժամանակ (րոպե)՝</string>
     <string name="studyoptions_start">Սովորել</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Ընդարձակել</string>
     <string name="collapse">Կոծկել</string>
     <string name="study_more">Սովորել ավելին</string>

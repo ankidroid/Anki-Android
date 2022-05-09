@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Tổng số thẻ:</string>
     <string name="studyoptions_eta">Thời gian ước tính (phút):</string>
     <string name="studyoptions_start">Bắt đầu học</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Mở rộng</string>
     <string name="collapse">Thu gọn</string>
     <string name="study_more">Học thêm</string>

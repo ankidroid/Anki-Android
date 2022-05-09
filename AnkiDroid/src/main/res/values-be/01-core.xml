@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Усяго картак:</string>
     <string name="studyoptions_eta">Засталося часу (хвілін):</string>
     <string name="studyoptions_start">Вучыць</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Разгарнуць</string>
     <string name="collapse">Згарнуць</string>
     <string name="study_more">Вучыць яшчэ</string>

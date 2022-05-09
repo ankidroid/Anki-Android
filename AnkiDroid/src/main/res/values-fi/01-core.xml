@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Kortteja yhteensä:</string>
     <string name="studyoptions_eta">Arvioitu aika (min):</string>
     <string name="studyoptions_start">Opiskele nyt</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Laajenna</string>
     <string name="collapse">Pienennä</string>
     <string name="study_more">Opiskele lisää</string>

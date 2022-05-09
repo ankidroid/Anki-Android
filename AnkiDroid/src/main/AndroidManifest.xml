@@ -182,11 +182,6 @@
             android:configChanges="keyboardHidden|locale|orientation|screenSize"
             android:parentActivityName=".DeckPicker"
             >
-            <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker"
-                />
         </activity>
 
         <!-- Context menu item name is the label, context is the system language -->
@@ -210,11 +205,6 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker"
             >
-            <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker"
-                />
         </activity>
         <activity
             android:name=".ModelBrowser"
@@ -233,11 +223,6 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".DeckPicker">
-            <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker"
-                />
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -334,11 +319,6 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:parentActivityName=".DeckPicker"
             >
-            <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ichi2.anki.DeckPicker"
-                />
         </activity>
         <activity
             android:name="com.ichi2.anki.Previewer"

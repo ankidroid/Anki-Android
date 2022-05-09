@@ -54,7 +54,7 @@
     <string name="connection_error_message">Telah terjadi masalah jaringan</string>
     <string name="not_logged_in_title">Masuk ke AnkiWeb</string>
     <string name="login_create_account_message">Kamu harus masuk ke akun pihak ketiga untuk menggunakan layanan sinkronisasi awan. Kamu bisa membuatnya di langkah berikutnya.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Alamat surel</string>
     <string name="password">Kata Sandi</string>
     <string name="log_in">Masuk</string>

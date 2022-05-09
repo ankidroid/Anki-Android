@@ -58,12 +58,12 @@
     <string name="studyoptions_total_cards">ટોટલ પત્તા</string>
     <string name="studyoptions_eta">અનુમાનીત સમય બાકી</string>
     <string name="studyoptions_start">શરૂ કરો</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">></string>
     <string name="collapse">સંકોચવું</string>
     <string name="study_more">વધુ અભ્યાસ કરો</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d card due (%2$s)</item>
+        <item quantity="one">%1$d કાડઁ પૂર્ણ(%2$s)</item>
         <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
@@ -71,12 +71,12 @@
         <item quantity="other">%d મિનિટો બાકી</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d કલાક %2$d બાકી</item>
+        <item quantity="other">%1$d કલાકો %2$d બાકી</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d દિવસ %2$d બાકી</item>
+        <item quantity="other">%1$d દિવસો %2$d બાકી</item>
     </plurals>
     <string name="no_cards_placeholder_title">સૂચિ ખાલી છે</string>
     <string name="no_cards_placeholder_description">કાર્ડસ જોડવાનું શરૂ કરો \n તે માટે + ચિહ્ન વાપરો.</string>
@@ -113,7 +113,7 @@
     <string name="menu_suspend_note">નોંધ સસ્પેન્ડ કરો </string>
     <string name="menu_bury">કાઢો</string>
     <string name="menu_suspend">સસ્પેન્ડ</string>
-    <string name="menu_delete_note">Delete note</string>
+    <string name="menu_delete_note">નોંધ કાયમ માટે કાઢી નાખો</string>
     <string name="menu_flag">Flag</string>
     <string name="menu_flag_card">Flag card</string>
     <string name="menu_flag_card_zero">No flag</string>
@@ -125,19 +125,19 @@
     <string name="menu_flag_card_six">Turquoise flag</string>
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Edit tags</string>
-    <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
-    <string name="menu_search">Lookup in %1$s</string>
-    <string name="menu_mark_note">Mark note</string>
-    <string name="menu_unmark_note">Unmark note</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="delete_note_message">આ નોંધ અને તેના તમામ કાડઁ ખરેખર કાઢી નાખીએ ?\n%s</string>
+    <string name="menu_search">%1$s માં જુઓ </string>
+    <string name="menu_mark_note">નોંધ ચિહ્નિત કરો</string>
+    <string name="menu_unmark_note">ચિહ્નિત નોંધોમાથી કાઢો</string>
+    <string name="menu_toggle_mic_tool_bar">ઊચ્ચારણ તપાસો</string>
     <string name="new_deck">Create deck</string>
     <string name="new_dynamic_deck">Create filtered deck</string>
-    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+    <string name="directory_inaccessible">AnkiDroid શબ્દાવલિ પહોંચ બહાર છે</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">ચાલુ રાખવા માટે AnkiDroid ને ‘Storage’નો હક આપો</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -145,9 +145,9 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
+    <string name="time_quantity_seconds">%d ઓ</string>
+    <string name="time_quantity_minutes">%d મિનિટ </string>
+    <string name="time_quantity_hours_minutes">%1$d કલાક %2$d મિનિટ</string>
     <string name="time_quantity_hours">%d h</string>
     <string name="time_quantity_days">%d d</string>
     <string name="time_quantity_days_hours">%1$d d %2$d h</string>

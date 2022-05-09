@@ -438,7 +438,7 @@ public class CardTemplateEditor extends AnkiActivity implements DeckSelectionDia
 
 
             BottomNavigationView bottomNavigation = mainView.findViewById(R.id.card_template_editor_bottom_navigation);
-            bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            bottomNavigation.setOnItemSelectedListener(item -> {
                 int currentSelectedId = item.getItemId();
                 mTemplateEditor.mEditorViewId.put(position, currentSelectedId);
                 if (currentSelectedId == R.id.styling_edit) {

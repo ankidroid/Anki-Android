@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Укупно картица:</string>
     <string name="studyoptions_eta">Очекивано време (мин):</string>
     <string name="studyoptions_start">Започни учење</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Прошири</string>
     <string name="collapse">Умањи</string>
     <string name="study_more">Учити више</string>

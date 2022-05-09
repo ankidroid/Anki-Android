@@ -54,7 +54,7 @@
     <string name="connection_error_message">Došlo k chybě sítě</string>
     <string name="not_logged_in_title">Přihlásit se k AnkiWeb</string>
     <string name="login_create_account_message">Musíte se přihlásit k účtu třetí strany, abyste mohli používat službu synchronizace do cloudu. Účet si můžete vytvořit v dalším kroku.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Emailová adresa</string>
     <string name="password">Heslo</string>
     <string name="log_in">Přihlášení</string>

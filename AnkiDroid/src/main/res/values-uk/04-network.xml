@@ -54,7 +54,7 @@
     <string name="connection_error_message">Виникла помилка мережі</string>
     <string name="not_logged_in_title">Ввійти в AnkiWeb</string>
     <string name="login_create_account_message">Ви повинні увійти до стороннього профілю, щоб використовувати хмарну синхронізацію. Ви можете створити профіль на наступному кроці.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Електронна пошта</string>
     <string name="password">Пароль</string>
     <string name="log_in">Ввійти</string>

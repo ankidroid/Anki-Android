@@ -61,7 +61,7 @@
     <string name="filter_tags">टैग छानें</string>
     <string name="no_tags">अपने अभी तक कोई टैग नहीं जोड़ा है</string>
     <string name="updated_version">%s संस्करण को अद्यतित किया गया</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">श्वेतपट्ट सहेजें</string>
     <string name="enable_whiteboard">श्वेतपट्ट सक्षम करें</string>
     <string name="disable_whiteboard">श्वेतपट्ट अक्षम करें</string>

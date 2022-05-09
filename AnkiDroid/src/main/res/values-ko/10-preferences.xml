@@ -48,6 +48,7 @@
     <string name="disabled">비활성화됨</string>
     <string name="enabled">활성화됨</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category">General</string>
     <string name="pref_cat_general_summ">일반 설정</string>
     <string name="pref_cat_reviewing" maxLength="41">복습</string>
     <string name="pref_cat_reviewing_summ">특정 카드 묶음에 한정되지 않은 복습 설정</string>
@@ -253,7 +254,7 @@
     <string name="deck_conf_new_cards" maxLength="41">새 카드</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">복습 횟수</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">학습경과 시간</string>
-    <string name="deck_conf_general" maxLength="41">일반</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">일반</string>
     <string name="deck_conf_reminders" maxLength="41">알림</string>
     <string name="deck_conf_steps" maxLength="41">학습단계(분)</string>
     <string name="deck_conf_order" maxLength="41">순서</string>

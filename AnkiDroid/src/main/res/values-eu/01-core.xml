@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Txartelak guztira:</string>
     <string name="studyoptions_eta">Aurreikusitako denbora (min):</string>
     <string name="studyoptions_start">Ikasi</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Hedatu</string>
     <string name="collapse">Tolestu</string>
     <string name="study_more">Ikasi gehiago</string>

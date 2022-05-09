@@ -61,7 +61,7 @@
     <string name="filter_tags">ট্যাগ ফিল্টার করুন</string>
     <string name="no_tags">আপনি এখনো কোন ট্যাগ যুক্ত করেননি</string>
     <string name="updated_version">%s সংস্করণে আপডেট করা হয়েছে</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">হোয়াইটবোর্ডে রাখো</string>
     <string name="enable_whiteboard">হোয়াইটবোর্ড সক্রিয় করুন</string>
     <string name="disable_whiteboard">হোয়াইটবোর্ড নিষ্ক্রিয় করুন</string>

@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">মোট কার্ড:</string>
     <string name="studyoptions_eta">আনুমানিক সময় (মিনিট):</string>
     <string name="studyoptions_start">অধ্যয়ন</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">প্রসারণ করুন</string>
     <string name="collapse">সঙ্কোচন</string>
     <string name="study_more">আরও পড়ুন</string>

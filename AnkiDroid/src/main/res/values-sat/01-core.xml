@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚᱺ</string>
     <string name="studyoptions_eta">ᱚᱱᱩᱢᱟᱱ ᱥᱚᱢᱚᱭ (ᱴᱤᱯᱤᱡ)ᱺ</string>
     <string name="studyoptions_start">ᱯᱟᱲᱦᱟᱣ</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">ᱣᱤᱥᱛᱟᱨ ᱢᱮ</string>
     <string name="collapse">ᱦᱚᱯᱚᱱ ᱢᱮ</string>
     <string name="study_more">ᱟᱨᱦᱚᱸ ᱯᱟᱰᱦᱣ ᱢᱮ</string>

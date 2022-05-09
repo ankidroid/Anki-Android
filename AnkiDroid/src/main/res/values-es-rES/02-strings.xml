@@ -61,7 +61,7 @@
     <string name="filter_tags">Filtrar etiquetas</string>
     <string name="no_tags">Todavía no has añadido cualquier etiqueta.</string>
     <string name="updated_version">Actualizado a la versión %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Guardar pizarra</string>
     <string name="enable_whiteboard">Activar pizarra</string>
     <string name="disable_whiteboard">Desactivar pizarra</string>

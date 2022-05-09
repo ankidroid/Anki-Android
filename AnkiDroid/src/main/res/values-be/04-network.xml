@@ -54,7 +54,7 @@
     <string name="connection_error_message">Узніклі праблемы са злучэннем</string>
     <string name="not_logged_in_title">Увайсці ў AnkiWeb</string>
     <string name="login_create_account_message">Вам неабходна аўтарызавацца ў адным з воблачных сэрвісаў, каб скарыстацца гэтым тыпам сінхранізацыі. Вы можаце зарэгістравацца ў воблачным сэрвісе на наступным кроку.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Электронная пошта</string>
     <string name="password">Пароль</string>
     <string name="log_in">Увайсці</string>

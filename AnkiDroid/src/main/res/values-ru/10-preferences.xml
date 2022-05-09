@@ -48,6 +48,7 @@
     <string name="disabled">Выкл.</string>
     <string name="enabled">Включено</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category">General</string>
     <string name="pref_cat_general_summ">Общие настройки</string>
     <string name="pref_cat_reviewing" maxLength="41">Учёба</string>
     <string name="pref_cat_reviewing_summ">Настройки обучения, не зависящие от колоды</string>
@@ -256,7 +257,7 @@
     <string name="deck_conf_new_cards" maxLength="41">Новые карточки</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторяемые</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Забытые</string>
-    <string name="deck_conf_general" maxLength="41">Общие</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Общие</string>
     <string name="deck_conf_reminders" maxLength="41">Напоминания</string>
     <string name="deck_conf_steps" maxLength="41">Шаги (в минутах)</string>
     <string name="deck_conf_order" maxLength="41">Порядок</string>

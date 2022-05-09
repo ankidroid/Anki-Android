@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Cartas totales:</string>
     <string name="studyoptions_eta">Tempus previstu (min):</string>
     <string name="studyoptions_start">Istùdia</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Ismànnia</string>
     <string name="collapse">Mìnima</string>
     <string name="study_more">Istùdia de prus</string>

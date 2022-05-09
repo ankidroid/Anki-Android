@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Jumlah kad:</string>
     <string name="studyoptions_eta">Masa anggaran (min):</string>
     <string name="studyoptions_start">Ulang kaji</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Kembangkan</string>
     <string name="collapse">Tutupkan</string>
     <string name="study_more">Ulangkaji lebih</string>

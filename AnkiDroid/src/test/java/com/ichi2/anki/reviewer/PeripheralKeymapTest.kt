@@ -19,17 +19,13 @@ import android.content.SharedPreferences
 import android.view.KeyEvent
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
-import org.hamcrest.Matchers.`is`
 import org.junit.Test
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
+import org.mockito.kotlin.whenever
 
-@KotlinCleanup("IDE lint")
-@KotlinCleanup("`is` -> equalTo`")
-@KotlinCleanup("`when` -> whenever`")
 class PeripheralKeymapTest {
     @Test
     fun flagAndAnswerDoNotConflict() {
@@ -38,17 +34,17 @@ class PeripheralKeymapTest {
         val peripheralKeymap = PeripheralKeymap(MockReviewerUi()) { e: ViewerCommand, _ -> processed.add(e) }
         peripheralKeymap.setup(mock(SharedPreferences::class.java))
         val event = mock(KeyEvent::class.java)
-        `when`(event.unicodeChar).thenReturn(0)
-        `when`(event.isCtrlPressed).thenReturn(true)
-        `when`(event.getUnicodeChar(0)).thenReturn(49)
-        `when`(event.keyCode).thenReturn(KeyEvent.KEYCODE_1)
+        whenever(event.unicodeChar).thenReturn(0)
+        whenever(event.isCtrlPressed).thenReturn(true)
+        whenever(event.getUnicodeChar(0)).thenReturn(49)
+        whenever(event.keyCode).thenReturn(KeyEvent.KEYCODE_1)
 
-        assertThat(event.unicodeChar.toChar(), `is`('\u0000'))
-        assertThat(event.getUnicodeChar(0).toChar(), `is`('1'))
+        assertThat(event.unicodeChar.toChar(), equalTo('\u0000'))
+        assertThat(event.getUnicodeChar(0).toChar(), equalTo('1'))
         peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_1, event)
 
         assertThat<List<ViewerCommand>>(processed, hasSize(1))
-        assertThat(processed[0], `is`(ViewerCommand.COMMAND_TOGGLE_FLAG_RED))
+        assertThat(processed[0], equalTo(ViewerCommand.COMMAND_TOGGLE_FLAG_RED))
     }
 
     private class MockReviewerUi : ReviewerUi {

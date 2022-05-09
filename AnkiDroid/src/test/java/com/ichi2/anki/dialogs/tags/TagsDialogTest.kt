@@ -222,6 +222,57 @@ class TagsDialogTest {
     }
 
     @Test
+    fun test_TagsDialog_expandPathToCheckedTagsUponOpening() {
+        val type = TagsDialog.DialogType.FILTER_BY_TAG
+        val allTags = listOf(
+            "fruit::apple", "fruit::pear", "fruit::pear::big", "sport::football", "sport::tennis", "book"
+        )
+        val checkedTags = listOf(
+            "fruit::pear::big", "sport::tennis"
+        )
+        val args = TagsDialog(ParametersUtils.whatever())
+            .withArguments(type, checkedTags, allTags)
+            .arguments
+        val mockListener = Mockito.mock(TagsDialogListener::class.java)
+        val factory = TagsDialogFactory(mockListener)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        scenario.moveToState(Lifecycle.State.STARTED)
+        scenario.onFragment { f: TagsDialog ->
+            val dialog = f.dialog as MaterialDialog?
+            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            val body = dialog!!.customView
+            val recycler: RecyclerView = body!!.findViewById(R.id.tags_dialog_tags_list)
+
+            fun getItem(index: Int): TagsArrayAdapter.ViewHolder {
+                return RecyclerViewUtils.viewHolderAt(recycler, index)
+            }
+            fun updateLayout() {
+                recycler.measure(0, 0)
+                recycler.layout(0, 0, 100, 2000)
+            }
+            updateLayout()
+
+            // v fruit         [-]
+            //   - apple       [ ]
+            //   v pear        [-]
+            //     - big       [x]
+            // v sport         [-]
+            //   - football    [ ]
+            //   - tennis      [x]
+            // - book          [ ]
+            Assert.assertEquals(8, recycler.adapter!!.itemCount.toLong())
+            Assert.assertEquals("fruit", getItem(0).text)
+            Assert.assertEquals("fruit::apple", getItem(1).text)
+            Assert.assertEquals("fruit::pear", getItem(2).text)
+            Assert.assertEquals("fruit::pear::big", getItem(3).text)
+            Assert.assertEquals("sport", getItem(4).text)
+            Assert.assertEquals("sport::football", getItem(5).text)
+            Assert.assertEquals("sport::tennis", getItem(6).text)
+            Assert.assertEquals("book", getItem(7).text)
+        }
+    }
+
+    @Test
     fun test_AddNewTag_newHierarchicalTag_pathToItShouldBeExpanded() {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val allTags = listOf("common::speak", "common::speak::daily", "common::sport::tennis", "common::sport::football")
@@ -402,7 +453,7 @@ class TagsDialogTest {
     }
 
     @Test
-    fun test_checkTags_intermediateTagsShouldToggleDynamically() {
+    fun test_CheckTags_intermediateTagsShouldToggleDynamically() {
         val type = TagsDialog.DialogType.FILTER_BY_TAG
         val allTags = listOf(
             "common::speak", "common::speak::tennis", "common::sport::tennis",

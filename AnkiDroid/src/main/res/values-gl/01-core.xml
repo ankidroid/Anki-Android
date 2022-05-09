@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Total de cartóns:</string>
     <string name="studyoptions_eta">Tempo estimado (min):</string>
     <string name="studyoptions_start">Estudar</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Expandir</string>
     <string name="collapse">Contraer</string>
     <string name="study_more">Estudar máis</string>

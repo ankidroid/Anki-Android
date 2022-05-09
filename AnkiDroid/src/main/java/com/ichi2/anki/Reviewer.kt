@@ -1337,9 +1337,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override fun getCurrentCardId(): Long? {
-        return mCurrentCard!!.id
-    }
+    override val currentCardId: Long?
+        get() = mCurrentCard!!.id
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)

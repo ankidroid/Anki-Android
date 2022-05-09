@@ -61,7 +61,7 @@
     <string name="filter_tags">Tag filter</string>
     <string name="no_tags">Anda belum menambahkan tag</string>
     <string name="updated_version">Diperbarui ke versi %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Aktifkan papan tulis</string>
     <string name="disable_whiteboard">Nonaktifkan papan tulis</string>

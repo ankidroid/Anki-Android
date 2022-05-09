@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">ସମୁଦାୟ ପତ୍ର:</string>
     <string name="studyoptions_eta">ଆନୁମାନିକ ସମୟ (ମିନିଟ୍):</string>
     <string name="studyoptions_start">ଅଧ୍ୟୟନ</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">ପ୍ରସାରଣ</string>
     <string name="collapse">ସଙ୍କୋଚନ</string>
     <string name="study_more">ଅଧିକ ଅଧ୍ୟୟନ କରନ୍ତୁ</string>

@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Kartoj tute:</string>
     <string name="studyoptions_eta">Proksimuma tempo (min):</string>
     <string name="studyoptions_start">Lerni</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Etendi</string>
     <string name="collapse">Maletendi</string>
     <string name="study_more">Lerni pli</string>

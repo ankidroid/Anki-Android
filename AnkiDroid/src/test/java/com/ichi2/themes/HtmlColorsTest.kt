@@ -16,16 +16,14 @@
 package com.ichi2.themes
 
 import com.ichi2.themes.HtmlColors.invertColors
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 
-@KotlinCleanup("`is` -> equalTo")
 class HtmlColorsTest {
     @Test
     fun testDleColorInversion() {
         // An invalid color code should not be changed.
-        assertThat(invertColors(" color:DLE "), `is`(" color:DLE "))
+        assertThat(invertColors(" color:DLE "), equalTo(" color:DLE "))
     }
 }

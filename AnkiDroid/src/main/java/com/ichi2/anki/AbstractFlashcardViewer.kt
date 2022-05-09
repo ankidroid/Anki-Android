@@ -656,11 +656,11 @@ abstract class AbstractFlashcardViewer :
         } else super.onKeyDown(keyCode, event)
     }
 
-    public override fun getCurrentCardId(): Long? {
-        return if (mCurrentCard == null) {
+    @KotlinCleanup("Use ?:")
+    public override val currentCardId: Long?
+        get() = if (mCurrentCard == null) {
             null
         } else mCurrentCard!!.id
-    }
 
     private fun processHardwareButtonScroll(keyCode: Int, card: WebView?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {

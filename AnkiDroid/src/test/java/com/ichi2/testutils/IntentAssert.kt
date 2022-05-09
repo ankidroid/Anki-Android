@@ -16,12 +16,10 @@
 package com.ichi2.testutils
 
 import android.content.Intent
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import kotlin.test.assertNotNull
 
-@KotlinCleanup("`is` -> equalTo")
 object IntentAssert {
     @JvmStatic
     fun doesNotHaveExtra(intent: Intent, extraKey: String?) {
@@ -34,6 +32,6 @@ object IntentAssert {
         val keySet = assertNotNull(intent.extras).keySet()
         assertThat(String.format("Intent should have extra '%s'", extraKey), keySet, hasItem(extraKey))
 
-        assertThat(intent.getLongExtra(extraKey, -1337), `is`(value))
+        assertThat(intent.getLongExtra(extraKey, -1337), equalTo(value))
     }
 }

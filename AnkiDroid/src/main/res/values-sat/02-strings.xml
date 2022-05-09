@@ -61,7 +61,7 @@
     <string name="filter_tags">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ </string>
     <string name="no_tags">ᱟᱢ ᱴᱮᱜ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱠᱟᱜᱼᱟᱢ </string>
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ  </string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ </string>
     <string name="enable_whiteboard">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ </string>
     <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ </string>

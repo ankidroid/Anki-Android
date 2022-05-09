@@ -54,7 +54,7 @@
     <string name="connection_error_message">ఒక నెట్వర్క్ లోపం సంభవించింది</string>
     <string name="not_logged_in_title">AnkiWeb కు లాగిన్ అవ్వండి</string>
     <string name="login_create_account_message">క్లౌడ్ సమకాలీకరణ సేవను ఉపయోగించడానికి మీరు మూడవ పక్ష ఖాతాకు లాగిన్ చేయాలి. మీరు తదుపరి దశను సృష్టించవచ్చు.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">ఇమెయిల్</string>
     <string name="password">పాస్వర్డ్</string>
     <string name="log_in">లాగ్ ఇన్</string>

@@ -61,7 +61,7 @@
     <string name="filter_tags">Filtrera etiketter</string>
     <string name="no_tags">Du har inte lagt till några etiketter än.</string>
     <string name="updated_version">Uppdaterad till version %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Spara whiteboarden</string>
     <string name="enable_whiteboard">Aktivera whiteboard</string>
     <string name="disable_whiteboard">Avaktivera whiteboard</string>

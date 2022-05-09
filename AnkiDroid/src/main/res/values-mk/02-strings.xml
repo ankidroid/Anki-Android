@@ -61,7 +61,7 @@
     <string name="filter_tags">Филтрирај тагови</string>
     <string name="no_tags">Уште не сте додавале некој таг</string>
     <string name="updated_version">Ажуриран на верзија %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Овозможи табла</string>
     <string name="disable_whiteboard">Оневозможи табла</string>
