@@ -659,6 +659,16 @@ open class Reviewer : AbstractFlashcardViewer() {
         startActivityForResultWithAnimation(intent, ADD_NOTE, getAnimationTransitionFromGesture(fromGesture))
     }
 
+    protected fun openCardInfo(fromGesture: Gesture? = null) {
+        if (mCurrentCard == null) {
+            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
+            return
+        }
+        val intent = Intent(this, CardInfo::class.java)
+        intent.putExtra("cardId", mCurrentCard!!.id)
+        startActivityWithAnimation(intent, getAnimationTransitionFromGesture(fromGesture))
+    }
+
     override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
         postOnNewHandler {
             for (i in 0 until menu.size()) {
@@ -1148,6 +1158,10 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
             ViewerCommand.COMMAND_ADD_NOTE -> {
                 addNote(fromGesture)
+                return true
+            }
+            ViewerCommand.COMMAND_CARD_INFO -> {
+                openCardInfo(fromGesture)
                 return true
             }
             else -> return super.executeCommand(which, fromGesture)

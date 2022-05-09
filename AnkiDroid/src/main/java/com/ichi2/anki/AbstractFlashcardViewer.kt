@@ -1663,10 +1663,6 @@ abstract class AbstractFlashcardViewer :
                 editCard(fromGesture)
                 true
             }
-            ViewerCommand.COMMAND_CARD_INFO -> {
-                openCardInfo(fromGesture)
-                true
-            }
             ViewerCommand.COMMAND_TAG -> {
                 showTagsDialog()
                 true
@@ -1740,17 +1736,6 @@ abstract class AbstractFlashcardViewer :
 
     private fun abortAndSync() {
         closeReviewer(RESULT_ABORT_AND_SYNC, true)
-    }
-
-    @JvmOverloads
-    protected fun openCardInfo(fromGesture: Gesture? = null) {
-        if (mCurrentCard == null) {
-            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
-            return
-        }
-        val intent = Intent(this, CardInfo::class.java)
-        intent.putExtra("cardId", mCurrentCard!!.id)
-        startActivityWithAnimation(intent, getAnimationTransitionFromGesture(fromGesture))
     }
 
     /** Displays a snackbar which does not obscure the answer buttons  */
