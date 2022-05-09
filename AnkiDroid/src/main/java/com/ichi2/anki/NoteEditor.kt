@@ -1149,8 +1149,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     val col = col
                     val extras = data!!.extras ?: return
                     val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
-                    val field =
-                        extras[MultimediaEditFieldActivity.EXTRA_RESULT_FIELD] as IField? ?: return
+                    val field = extras[MultimediaEditFieldActivity.EXTRA_RESULT_FIELD] as IField? ?: return
+                    if (field.imagePath == null && field.audioPath == null) {
+                        Timber.i("field imagePath and audioPath are both null")
+                        return
+                    }
                     val note = getCurrentMultimediaEditableNote(col)
                     note!!.setField(index, field)
                     val fieldEditText = mEditFields!![index]
