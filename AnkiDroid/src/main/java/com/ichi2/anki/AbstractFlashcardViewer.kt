@@ -49,6 +49,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.UIUtils.getSnackbar
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -74,6 +75,7 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.PreloadNextCard
 import com.ichi2.async.CollectionTask.UpdateNote
 import com.ichi2.async.TaskListener
@@ -841,15 +843,18 @@ abstract class AbstractFlashcardViewer :
     }
 
     @JvmOverloads
+    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected open fun editCard(fromGesture: Gesture? = null) {
         if (mCurrentCard == null) {
             // This should never occurs. It means the review button was pressed while there is no more card in the reviewer.
             return
         }
         val editCard = Intent(this@AbstractFlashcardViewer, NoteEditor::class.java)
+        val animation = getAnimationTransitionFromGesture(fromGesture)
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
+        editCard.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         editorCard = mCurrentCard
-        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, getAnimationTransitionFromGesture(fromGesture))
+        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, animation)
     }
 
     fun generateQuestionSoundList() {
