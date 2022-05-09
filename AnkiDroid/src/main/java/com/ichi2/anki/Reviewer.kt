@@ -664,14 +664,17 @@ open class Reviewer : AbstractFlashcardViewer() {
         startActivityForResultWithAnimation(intent, ADD_NOTE, animation)
     }
 
+    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected fun openCardInfo(fromGesture: Gesture? = null) {
         if (mCurrentCard == null) {
             showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
             return
         }
         val intent = Intent(this, CardInfo::class.java)
+        val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra("cardId", mCurrentCard!!.id)
-        startActivityWithAnimation(intent, getAnimationTransitionFromGesture(fromGesture))
+        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        startActivityWithAnimation(intent, animation)
     }
 
     override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
