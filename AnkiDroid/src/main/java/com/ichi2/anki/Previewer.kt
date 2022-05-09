@@ -34,7 +34,6 @@ import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 /**
@@ -42,26 +41,25 @@ import timber.log.Timber
  * to begin showing them. Special rules are applied if the list size is 1 (i.e., no scrolling
  * buttons will be shown).
  */
-@KotlinCleanup("IDE lint")
-@KotlinCleanup("lateinit")
+
 class Previewer : AbstractFlashcardViewer() {
-    private var mCardList: LongArray? = null
+    private lateinit var mCardList: LongArray
     private var mIndex = 0
     private var mShowingAnswer = false
-    private var mProgressSeekBar: SeekBar? = null
-    private var mProgressText: TextView? = null
+    private lateinit var mProgressSeekBar: SeekBar
+    private lateinit var mProgressText: TextView
 
     /** Communication with Browser  */
     private var mReloadRequired = false
     private var mNoteChanged = false
-    protected var previewLayout: PreviewLayout? = null
+    private var previewLayout: PreviewLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
         Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
-        mCardList = intent.getLongArrayExtra("cardList")
+        mCardList = intent.getLongArrayExtra("cardList")!!
         mIndex = intent.getIntExtra("index", -1)
         if (savedInstanceState != null) {
             mIndex = savedInstanceState.getInt("index", mIndex)
@@ -69,7 +67,7 @@ class Previewer : AbstractFlashcardViewer() {
             mReloadRequired = savedInstanceState.getBoolean("reloadRequired")
             mNoteChanged = savedInstanceState.getBoolean("noteChanged")
         }
-        if (mCardList!!.size == 0 || mIndex < 0 || mIndex > mCardList!!.size - 1) {
+        if (mCardList.isEmpty() || mIndex < 0 || mIndex > mCardList.size - 1) {
             Timber.e("Previewer started with empty card list or invalid index")
             finishWithoutAnimation()
             return
@@ -87,21 +85,21 @@ class Previewer : AbstractFlashcardViewer() {
         val progressLayout = findViewById<LinearLayout>(R.id.preview_progress_layout)
 
         // Show layout only when the cardList is bigger than 1
-        if (mCardList!!.size > 1) {
+        if (mCardList.size > 1) {
             progressLayout.visibility = View.VISIBLE
-            mProgressSeekBar!!.setMax(mCardList!!.size - 1)
+            mProgressSeekBar.max = mCardList.size - 1
             setSeekBarListener()
             updateProgress()
         }
     }
 
     private fun setSeekBarListener() {
-        mProgressSeekBar!!.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+        mProgressSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     mIndex = progress
                     updateProgress()
-                    currentCard = col.getCard(mCardList!![mIndex])
+                    currentCard = col.getCard(mCardList[mIndex])
                     displayCardQuestion()
                 }
             }
@@ -111,8 +109,8 @@ class Previewer : AbstractFlashcardViewer() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                if (mIndex >= 0 && mIndex < mCardList!!.size) {
-                    currentCard = col.getCard(mCardList!![mIndex])
+                if (mIndex >= 0 && mIndex < mCardList.size) {
+                    currentCard = col.getCard(mCardList[mIndex])
                     displayCardQuestion()
                 }
             }
@@ -121,7 +119,7 @@ class Previewer : AbstractFlashcardViewer() {
 
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
-        currentCard = col.getCard(mCardList!![mIndex])
+        currentCard = col.getCard(mCardList[mIndex])
         displayCardQuestion()
         if (mShowingAnswer) {
             displayCardAnswer()
@@ -135,13 +133,13 @@ class Previewer : AbstractFlashcardViewer() {
     private fun getNextIndex(newCardList: List<Long>): Int {
         val validIndices = HashSet(newCardList)
         for (i in mIndex downTo 0) {
-            if (validIndices.contains(mCardList!![i])) {
-                return newCardList.indexOf(mCardList!![i])
+            if (validIndices.contains(mCardList[i])) {
+                return newCardList.indexOf(mCardList[i])
             }
         }
         for (i in mIndex + 1 until validIndices.size) {
-            if (validIndices.contains(mCardList!![i])) {
-                return newCardList.indexOf(mCardList!![i])
+            if (validIndices.contains(mCardList[i])) {
+                return newCardList.indexOf(mCardList[i])
             }
         }
         throw IllegalStateException("newCardList was empty")
@@ -228,7 +226,7 @@ class Previewer : AbstractFlashcardViewer() {
         }
         mIndex = getNextIndex(newCardList)
         mCardList = Utils.collection2Array(newCardList)
-        currentCard = col.getCard(mCardList!![mIndex])
+        currentCard = col.getCard(mCardList[mIndex])
         displayCardQuestion()
     }
 
@@ -240,7 +238,7 @@ class Previewer : AbstractFlashcardViewer() {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun changePreviewedCard(nextCard: Boolean) {
         mIndex = if (nextCard) mIndex + 1 else mIndex - 1
-        currentCard = col.getCard(mCardList!![mIndex])
+        currentCard = col.getCard(mCardList[mIndex])
         displayCardQuestion()
         updateProgress()
     }
@@ -258,20 +256,20 @@ class Previewer : AbstractFlashcardViewer() {
 
         // If we are in single-card mode, we show the "Show Answer" button on the question side
         // and hide navigation buttons.
-        if (mCardList!!.size == 1) {
+        if (mCardList.size == 1) {
             previewLayout!!.hideNavigationButtons()
             return
         }
         previewLayout!!.setPrevButtonEnabled(mIndex > 0)
-        previewLayout!!.setNextButtonEnabled(mIndex < mCardList!!.size - 1)
+        previewLayout!!.setNextButtonEnabled(mIndex < mCardList.size - 1)
     }
 
     private fun updateProgress() {
-        if (mProgressSeekBar!!.progress != mIndex) {
-            mProgressSeekBar!!.progress = mIndex
+        if (mProgressSeekBar.progress != mIndex) {
+            mProgressSeekBar.progress = mIndex
         }
-        val progress = getString(R.string.preview_progress_bar_text, mIndex + 1, mCardList!!.size)
-        mProgressText!!.text = progress
+        val progress = getString(R.string.preview_progress_bar_text, mIndex + 1, mCardList.size)
+        mProgressText.text = progress
     }
 
     private val resultIntent: Intent
