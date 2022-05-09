@@ -847,7 +847,7 @@ abstract class AbstractFlashcardViewer :
             return
         }
         val editCard = Intent(this@AbstractFlashcardViewer, NoteEditor::class.java)
-        editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER)
+        editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
         editorCard = mCurrentCard
         startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, getAnimationTransitionFromGesture(fromGesture))
     }
