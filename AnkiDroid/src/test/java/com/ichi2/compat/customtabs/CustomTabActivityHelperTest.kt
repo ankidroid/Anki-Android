@@ -25,7 +25,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.ArgumentMatchers.anyString
@@ -34,6 +33,8 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
 import org.robolectric.RobolectricTestRunner
 
 @KotlinCleanup("`when` -> whenever")
@@ -69,7 +70,7 @@ class CustomTabActivityHelperTest {
         `when`(activity.packageManager).thenReturn(packageManager)
         `when`(packageManager.queryIntentActivities(any(), anyInt())).thenReturn(emptyList())
 
-        CustomTabActivityHelper.openCustomTab(activity, null, null, fallback)
+        CustomTabActivityHelper.openCustomTab(activity, mock(), mock(), fallback)
 
         verify(fallback, times(1)).openUri(any(), any())
     }
