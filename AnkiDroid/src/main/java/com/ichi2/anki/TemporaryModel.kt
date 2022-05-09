@@ -96,7 +96,7 @@ class TemporaryModel(model: Model) {
         addTemplateChange(ChangeType.DELETE, ord)
     }
 
-    fun saveToDatabase(listener: SaveModelAndExitHandler?) {
+    fun saveToDatabase(listener: SaveModelAndExitHandler) {
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempModelFiles()
