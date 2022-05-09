@@ -25,11 +25,11 @@ import java.io.File
 class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
     interface ExportCompleteDialogListener {
         fun dismissAllDialogFragments()
-        fun emailFile(path: String?)
-        fun saveExportFile(exportPath: String?)
+        fun emailFile(path: String)
+        fun saveExportFile(exportPath: String)
     }
 
-    fun withArguments(exportPath: String?): ExportCompleteDialog {
+    fun withArguments(exportPath: String): ExportCompleteDialog {
         var args = this.arguments
         if (args == null) {
             args = Bundle()
@@ -50,11 +50,11 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
             .negativeText(R.string.export_save_button)
             .onPositive { _: MaterialDialog?, _: DialogAction? ->
                 listener.dismissAllDialogFragments()
-                listener.emailFile(exportPath)
+                listener.emailFile(exportPath!!)
             }
             .onNegative { _: MaterialDialog?, _: DialogAction? ->
                 listener.dismissAllDialogFragments()
-                listener.saveExportFile(exportPath)
+                listener.saveExportFile(exportPath!!)
             }
             .neutralText(R.string.dialog_cancel)
             .onNeutral { _: MaterialDialog?, _: DialogAction? -> listener.dismissAllDialogFragments() }

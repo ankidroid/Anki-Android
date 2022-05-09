@@ -36,7 +36,6 @@ import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeUtils
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -56,14 +55,12 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     private val mSaveFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var mExportFileName: String
 
-    @KotlinCleanup("make msg non-null")
-    fun showExportDialog(msg: String?) {
-        activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg!!))
+    fun showExportDialog(msg: String) {
+        activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg))
     }
 
-    @KotlinCleanup("make msg non-null")
-    fun showExportDialog(msg: String?, did: Long) {
-        activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg!!, did))
+    fun showExportDialog(msg: String, did: Long) {
+        activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg, did))
     }
 
     override fun exportApkg(path: String?, did: Long?, includeSched: Boolean, includeMedia: Boolean) {
@@ -94,11 +91,10 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         activity.dismissAllDialogFragments()
     }
 
-    @KotlinCleanup("make path non-null")
     @SuppressLint("StringFormatInvalid")
-    override fun emailFile(path: String?) {
+    override fun emailFile(path: String) {
         // Make sure the file actually exists
-        val attachment = File(path!!)
+        val attachment = File(path)
         if (!attachment.exists()) {
             Timber.e("Specified apkg file %s does not exist", path)
             showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
@@ -127,10 +123,9 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         }
     }
 
-    @KotlinCleanup("make exportPath non-null")
-    override fun saveExportFile(exportPath: String?) {
+    override fun saveExportFile(exportPath: String) {
         // Make sure the file actually exists
-        val attachment = File(exportPath!!)
+        val attachment = File(exportPath)
         if (!attachment.exists()) {
             Timber.e("saveExportFile() Specified apkg file %s does not exist", exportPath)
             showSimpleSnackbar(activity, R.string.export_save_apkg_unsuccessful, false)
@@ -150,14 +145,13 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 
     private fun saveFileCallback(result: ActivityResult) {
-        val isSuccessful = exportToProvider(result.data, true)
+        val isSuccessful = true.exportToProvider(result.data!!)
         @StringRes val message = if (isSuccessful) R.string.export_save_apkg_successful else R.string.export_save_apkg_unsuccessful
         showSimpleSnackbar(activity, activity.getString(message), isSuccessful)
     }
 
-    @KotlinCleanup("make intent non-null")
-    private fun exportToProvider(intent: Intent?, deleteAfterExport: Boolean): Boolean {
-        if (intent == null || intent.data == null) {
+    private fun Boolean.exportToProvider(intent: Intent): Boolean {
+        if (intent.data == null) {
             Timber.e("exportToProvider() provided with insufficient intent data %s", intent)
             return false
         }
@@ -176,7 +170,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                 Timber.w("exportToProvider() failed - ContentProvider returned null file descriptor for %s", uri)
                 return false
             }
-            if (deleteAfterExport && !File(mExportFileName).delete()) {
+            if (this && !File(mExportFileName).delete()) {
                 Timber.w("Failed to delete temporary export file %s", mExportFileName)
             }
         } catch (e: Exception) {
