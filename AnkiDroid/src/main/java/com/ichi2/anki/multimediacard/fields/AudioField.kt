@@ -77,12 +77,12 @@ abstract class AudioField : FieldBase(), IField {
     abstract override fun getName(): String?
     abstract override fun setName(name: String)
     override fun getFormattedValue(): String {
-        var formattedValue = ""
-        val file = File(audioPath!!)
-        if (file.exists()) {
-            formattedValue = String.format("[sound:%s]", file.name)
+        if (audioPath == null) {
+            return ""
         }
-        return formattedValue
+        val file = File(audioPath!!)
+
+        return if (file.exists()) String.format("[sound:%s]", file.name) else ""
     }
 
     override fun setFormattedString(col: Collection, value: String) {
