@@ -391,7 +391,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 finishWithoutAnimation()
                 return
             }
-            CALLER_REVIEWER -> {
+            CALLER_REVIEWER_EDIT -> {
                 mCurrentEditedCard = AbstractFlashcardViewer.editorCard
                 if (mCurrentEditedCard == null) {
                     finishWithoutAnimation()
@@ -2182,7 +2182,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         // calling activity
         const val CALLER_NO_CALLER = 0
-        const val CALLER_REVIEWER = 1
+        const val CALLER_REVIEWER_EDIT = 1
         const val CALLER_STUDYOPTIONS = 2
         const val CALLER_DECKPICKER = 3
         const val CALLER_REVIEWER_ADD = 11

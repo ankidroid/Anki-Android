@@ -366,7 +366,7 @@ class NoteEditorTest : RobolectricTest() {
         val i = Intent()
         when (from) {
             REVIEWER -> {
-                i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER)
+                i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
                 editorCard = n.firstCard()
             }
             DECK_LIST -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
