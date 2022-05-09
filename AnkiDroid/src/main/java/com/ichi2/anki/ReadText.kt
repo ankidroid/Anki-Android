@@ -30,7 +30,6 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.TTSTag
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
@@ -75,9 +74,8 @@ object ReadText {
         }
     }
 
-    @KotlinCleanup("make SoundSide non-null")
-    private fun getLanguage(did: Long, ord: Int, qa: SoundSide?): String {
-        return MetaDB.getLanguage(mReviewer!!.get()!!, did, ord, qa!!)
+    private fun getLanguage(did: Long, ord: Int, qa: SoundSide): String {
+        return MetaDB.getLanguage(mReviewer!!.get()!!, did, ord, qa)
     }
 
     /**
