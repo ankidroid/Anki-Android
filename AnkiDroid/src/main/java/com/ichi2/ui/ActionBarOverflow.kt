@@ -19,8 +19,6 @@ import android.util.Pair
 import android.view.MenuItem
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import com.ichi2.ui.ActionBarOverflow.PrivateMethodAccessor
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.lang.reflect.Method
 
@@ -28,11 +26,10 @@ import java.lang.reflect.Method
  * Detection of whether an item is in the ActionBar overflow
  * WARN: When making changes to this code, also test with Proguard
  */
-@KotlinCleanup("fix IDE lint issues")
 object ActionBarOverflow {
     // Idea from: https://stackoverflow.com/a/29208483
-    internal const val NATIVE_CLASS = "com.android.internal.view.menu.MenuItemImpl"
-    internal const val ANDROIDX_CLASS = "androidx.appcompat.view.menu.MenuItemImpl"
+    private const val NATIVE_CLASS = "com.android.internal.view.menu.MenuItemImpl"
+    private const val ANDROIDX_CLASS = "androidx.appcompat.view.menu.MenuItemImpl"
     private var sNativeClassRef: Class<*>? = null
     private var sAndroidXClassRef: Class<*>? = null
     private var sNativeIsActionButton: Method? = null
@@ -136,7 +133,6 @@ object ActionBarOverflow {
     }
 
     init {
-        @KotlinCleanup("simply use a lambda because the interface is fun")
-        setupMethods(PrivateMethodAccessor { obj: String, className: String -> getPrivateMethodHandleSystemErrors(obj, className) })
+        setupMethods(::getPrivateMethodHandleSystemErrors)
     }
 }
