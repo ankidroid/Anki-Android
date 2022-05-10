@@ -20,6 +20,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.ListView
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -35,6 +36,7 @@ import com.ichi2.libanki.SortOrder.NoOrdering
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.IntentAssert
+import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
@@ -44,7 +46,6 @@ import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.notNullValue
-import org.hamcrest.core.Is.`is`
 import org.junit.Assert
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -659,14 +660,14 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("Result should contain one card", cardBrowser.cardCount, equalTo(1))
     }
 
-    protected fun assertUndoDoesNotContain(browser: CardBrowser, @StringRes resId: Int) {
+    private fun assertUndoDoesNotContain(browser: CardBrowser, @StringRes resId: Int) {
         val shadowActivity = shadowOf(browser)
         val item = shadowActivity.optionsMenu.findItem(R.id.action_undo)
         val expected = browser.getString(resId)
         assertThat(item.title.toString(), not(containsString(expected.lowercase(Locale.getDefault()))))
     }
 
-    protected fun assertUndoContains(browser: CardBrowser, @StringRes resId: Int) {
+    private fun assertUndoContains(browser: CardBrowser, @StringRes resId: Int) {
         val shadowActivity = shadowOf(browser)
         val item = shadowActivity.optionsMenu.findItem(R.id.action_undo)
         val expected = browser.getString(resId)
@@ -740,7 +741,7 @@ class CardBrowserTest : RobolectricTest() {
     private fun getBrowserWithNotes(count: Int, cardBrowserClass: Class<out CardBrowser>): CardBrowser {
         ensureCollectionLoadIsSynchronous()
         for (i in 0 until count) {
-            addNoteUsingBasicModel(Integer.toString(i), "back")
+            addNoteUsingBasicModel(i.toString(), "back")
         }
         val multimediaController = Robolectric.buildActivity(cardBrowserClass, Intent())
             .create().start()
@@ -788,5 +789,59 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(2, equalTo(cards.size()))
         assertTrue(cards[0].isLoaded)
         assertFalse(cards[1].isLoaded)
+    }
+
+    @Test
+    fun truncateAndExpand() {
+        val cardBrowser = getBrowserWithNotes(3)
+        val shadowActivity = shadowOf(cardBrowser)
+        val truncateOption = shadowActivity.optionsMenu.findItem(R.id.action_truncate)
+
+        // Simulating check "Truncate content"
+        selectMenuItem(cardBrowser, R.id.action_truncate)
+
+        // "Truncate content" is checked
+        assertTrue(truncateOption.isChecked)
+        // "isTruncated" variable set to true
+        assertTrue(cardBrowser.isTruncated)
+
+        // Testing whether each card is truncated and ellipsized
+        for (i in 0 until (cardBrowser.mCardsListView!!.childCount)) {
+            val row = cardBrowser.mCardsAdapter!!.getView(i, null, cardBrowser.mCardsListView!!)
+            val column1 = row.findViewById<FixedTextView>(R.id.card_sfld)
+            val column2 = row.findViewById<FixedTextView>(R.id.card_column2)
+
+            // Testing truncation
+            assertTrue(column1.maxLines == CardBrowser.LINES_VISIBLE_WHEN_COLLAPSED)
+            assertTrue(column2.maxLines == CardBrowser.LINES_VISIBLE_WHEN_COLLAPSED)
+
+            // Testing ellipses
+            assertTrue(column1.ellipsize == TextUtils.TruncateAt.END)
+            assertTrue(column2.ellipsize == TextUtils.TruncateAt.END)
+        }
+
+        // Simulating uncheck "Truncate content"
+        selectMenuItem(cardBrowser, R.id.action_truncate)
+
+        // "Truncate content" is unchecked
+        assertFalse(truncateOption.isChecked)
+
+        // "isTruncate" variable set to false
+        assertFalse(cardBrowser.isTruncated)
+
+        // Testing whether each card is expanded and not ellipsized
+        for (i in 0 until (cardBrowser.mCardsListView!!.childCount)) {
+            val row = cardBrowser.mCardsAdapter!!.getView(i, null, cardBrowser.mCardsListView!!)
+            val column1 = row.findViewById<FixedTextView>(R.id.card_sfld)
+            val column2 = row.findViewById<FixedTextView>(R.id.card_column2)
+
+            // Testing expansion
+            assertTrue(column1.maxLines == Integer.MAX_VALUE)
+            assertTrue(column2.maxLines == Integer.MAX_VALUE)
+
+            // Testing not ellipsized
+            assertTrue(column1.ellipsize == null)
+            assertTrue(column2.ellipsize == null)
+        }
     }
 }
