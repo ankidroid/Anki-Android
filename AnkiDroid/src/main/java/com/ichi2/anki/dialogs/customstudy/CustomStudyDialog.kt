@@ -189,8 +189,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
         // deck id
         val did = requireArguments().getLong("did")
-        // Whether or not to jump straight to the reviewer
-        val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
+        // Whether or not to jump straight to the reviewer, default true.
+        val jumpToReviewer = true
         // Set builder parameters
         val builder = MaterialDialog.Builder(requireActivity())
             .customView(v, true)
@@ -214,7 +214,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         deck.put("extendNew", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(n, 0)
-                        onLimitsExtended(true)
+                        onLimitsExtended(jumpToReviewer)
                         // Check if new card limit modified
                         if (oldNewValue != n) {
                             // Mark the status as hasChanged
