@@ -559,13 +559,13 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         mOrderAsc = upgradeJSONIfNecessary(getCol(), "sortBackwards", false)
         mCards.reset()
         mCardsListView = findViewById(R.id.card_browser_list)
-        // Create a spinner for column 1
+        // Create a spinner for column1
         val cardsColumn1Spinner = findViewById<Spinner>(R.id.browser_column1_spinner)
         val column1Adapter = ArrayAdapter.createFromResource(
             this,
             R.array.browser_column1_headings, android.R.layout.simple_spinner_item
         )
-        column1Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
+        column1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         cardsColumn1Spinner.adapter = column1Adapter
         mColumn1Index = AnkiDroidApp.getSharedPrefs(baseContext).getInt("cardBrowserColumn1", 0)
         cardsColumn1Spinner.onItemSelectedListener = object : OnItemSelectedListener {
@@ -593,8 +593,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             this,
             R.array.browser_column2_headings, android.R.layout.simple_spinner_item
         )
-        // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
-        column2Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
+        column2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         cardsColumn2Spinner.adapter = column2Adapter
         // Create a new list adapter with updated column map any time the user changes the column
         cardsColumn2Spinner.onItemSelectedListener = object : OnItemSelectedListener {
