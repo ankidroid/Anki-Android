@@ -23,7 +23,6 @@ import android.annotation.SuppressLint;
 import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.anki.testutil.ThreadUtils;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,7 +57,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibilit
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
-import static com.ichi2.anki.AnkiDroidApp.INSTRUMENTATION_TESTING;
 import static com.ichi2.anki.TestUtils.clickChildViewWithId;
 import static com.ichi2.anki.TestUtils.getActivityInstance;
 import static com.ichi2.anki.TestUtils.isScreenSw600dp;
@@ -70,13 +68,6 @@ import static org.junit.Assume.assumeTrue;
 
 @SuppressLint("DirectSystemCurrentTimeMillisUsage")
 public class DeckPickerTest {
-    @Before
-    public void setup() {
-        INSTRUMENTATION_TESTING = true;
-        deleteAllDecks();
-    }
-
-
     private void deleteAllDecks() {
         deleteAllNotes();
 
@@ -162,6 +153,10 @@ public class DeckPickerTest {
 
     @Test
     public void deckNormalCreationAndDeletionMakesSearchDecksIconVisible() {
+        // Run the test only on emulator.
+        assumeTrue(InstrumentedTest.isEmulator());
+        deleteAllDecks();
+
         int iconId = R.id.deck_picker_action_filter;
         ensureIsGone(iconId);
 
@@ -179,6 +174,10 @@ public class DeckPickerTest {
 
     @Test
     public void subdeckCreationAndDeletionMakesSearchDecksIconVisible() {
+        // Run the test only on emulator.
+        assumeTrue(InstrumentedTest.isEmulator());
+        deleteAllDecks();
+
         int iconId = R.id.deck_picker_action_filter;
         ensureIsGone(iconId);
 

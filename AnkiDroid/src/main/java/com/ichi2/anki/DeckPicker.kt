@@ -168,7 +168,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         val did = view.tag as Long
         if (!col.decks.children(did).isEmpty()) {
             col.decks.collapse(did)
-            renderPage(deckCount) // no change in deck count
+            renderPage()
             dismissAllDialogFragments()
         }
     }
@@ -1940,7 +1940,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 return
             }
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
-            context.renderPage(context.deckCount)
+            context.renderPage()
             // Update the mini statistics bar as well
             AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
             Timber.d("Startup - Deck List UI Completed")
@@ -1966,7 +1966,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
     }
 
-    fun renderPage(deckCountBeforeChange: Int) {
+    fun renderPage() {
         if (mDueTree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
@@ -2044,10 +2044,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             mFocusedDeck = current
         }
 
-        if (deckCountBeforeChange != deckCount) {
-            // update SearchDeck Icon visibility
-            invalidateOptionsMenu()
-        }
+        // update SearchDeck Icon visibility
+        invalidateOptionsMenu()
     }
 
     // Callback to show study options for currently selected deck
