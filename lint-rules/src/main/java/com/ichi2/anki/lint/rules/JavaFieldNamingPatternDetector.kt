@@ -13,83 +13,57 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.lint.rules
 
-package com.ichi2.anki.lint.rules;
+import com.android.tools.lint.client.api.UElementHandler
+import com.android.tools.lint.detector.api.Detector
+import com.android.tools.lint.detector.api.JavaContext
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import org.jetbrains.uast.UElement
+import org.jetbrains.uast.UField
+import org.jetbrains.uast.UVariable
 
-import com.android.annotations.NonNull;
-import com.android.tools.lint.client.api.UElementHandler;
-import com.android.tools.lint.detector.api.Detector;
-import com.android.tools.lint.detector.api.JavaContext;
-
-import com.android.annotations.Nullable;
-import org.jetbrains.uast.UElement;
-import org.jetbrains.uast.UField;
-import org.jetbrains.uast.UVariable;
-
-import java.util.Collections;
-import java.util.List;
-
-public abstract class JavaFieldNamingPatternDetector extends Detector implements Detector.UastScanner {
-
-    @Nullable
-    @Override
-    public UElementHandler createUastHandler(@NonNull JavaContext context) {
-        return new VariableNamingHandler(context);
+@KotlinCleanup("IDE Lint")
+abstract class JavaFieldNamingPatternDetector : Detector(), Detector.UastScanner {
+    override fun createUastHandler(context: JavaContext): UElementHandler? {
+        return VariableNamingHandler(context)
     }
 
-
-    @Nullable
-    @Override
-    public List<Class<? extends UElement>> getApplicableUastTypes() {
-        return Collections.singletonList(UVariable.class);
+    override fun getApplicableUastTypes(): List<Class<out UElement?>>? {
+        return listOf(UVariable::class.java)
     }
 
-    private class VariableNamingHandler extends UElementHandler {
-
-        private final JavaContext mContext;
-
-
-        public VariableNamingHandler(JavaContext context) {
-            this.mContext = context;
-        }
-
-
-        @Override
-        public void visitVariable(@NonNull UVariable node) {
+    private inner class VariableNamingHandler(private val mContext: JavaContext) :
+        UElementHandler() {
+        override fun visitVariable(node: UVariable) {
             // Only apply naming patterns to Java
-            if (mContext.file.getAbsolutePath().endsWith(".kt")) {
-                return;
+            if (mContext.file.absolutePath.endsWith(".kt")) {
+                return
             }
 
             // HACK: Using visitField didn't return any results
-            if (!(node instanceof UField)) {
-                return;
+            if (node !is UField) {
+                return
             }
-
             if (!isApplicable(node)) {
-                return;
+                return
             }
-
-            String variableName = node.getName();
-
-            if (variableName == null) {
-                return;
-            }
-
+            val variableName = node.name
             if (meetsNamingStandards(variableName)) {
-                return;
+                return
             }
-
-            reportVariable(mContext, node, variableName);
+            reportVariable(mContext, node, variableName)
         }
     }
 
+    /** If the lint check is applicable to the given variable  */
+    protected abstract fun isApplicable(variable: UVariable): Boolean
+    protected abstract fun meetsNamingStandards(variableName: String): Boolean
 
-    /** If the lint check is applicable to the given variable */
-    protected abstract boolean isApplicable(@NonNull UVariable variable);
-
-    protected abstract boolean meetsNamingStandards(@NonNull String variableName);
-
-    /** Report the problematic variable to the lint checker */
-    protected abstract void reportVariable(@NonNull JavaContext context, @NonNull UVariable node, @NonNull String variableName);
+    /** Report the problematic variable to the lint checker  */
+    protected abstract fun reportVariable(
+        context: JavaContext,
+        node: UVariable,
+        variableName: String
+    )
 }

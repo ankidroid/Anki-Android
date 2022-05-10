@@ -61,19 +61,21 @@ class ConstantJavaFieldDetector : JavaFieldNamingPatternDetector() {
         return !foundLower
     }
 
-    override fun reportVariable(context: JavaContext, node: UVariable, variableNameParam: String) {
-        var variableName = variableNameParam
+    @KotlinCleanup("extract method: setting 'variableWithoutPrefix'")
+    @KotlinCleanup("define replacement after setting 'variableWithoutPrefix'")
+    override fun reportVariable(context: JavaContext, node: UVariable, variableName: String) {
+        var variableWithoutPrefix = variableName
         val replacement = StringBuilder()
         // If the s prefix was accidentally applied, remove it.
-        if ((variableName.startsWith("s") || variableName.startsWith("m")) && variableName.length > 1 && Character.isUpperCase(variableName[1])) {
-            variableName = variableName.substring(1)
+        if ((variableWithoutPrefix.startsWith("s") || variableWithoutPrefix.startsWith("m")) && variableWithoutPrefix.length > 1 && Character.isUpperCase(variableWithoutPrefix[1])) {
+            variableWithoutPrefix = variableWithoutPrefix.substring(1)
         }
-        replacement.append(variableName.uppercase(Locale.ROOT))
+        replacement.append(variableWithoutPrefix.uppercase(Locale.ROOT))
 
         // explicitly skip 0.
         // Work from the end to the start so we can handle string length changes
-        for (i in variableName.length - 1 downTo 1) {
-            val c = variableName[i]
+        for (i in variableWithoutPrefix.length - 1 downTo 1) {
+            val c = variableWithoutPrefix[i]
             if (Character.isUpperCase(c)) {
                 replacement.insert(i, '_')
             }
