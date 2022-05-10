@@ -168,8 +168,14 @@
     <string name="import_title">Importuojama</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Pridėti</string>
     <string name="import_message_replace_confirm">Jūsų turima kolekcija bus ištrinta ir pakeista %s failo duomenimis</string>
-    <string name="import_message_add_confirm">Ar norite į kolekciją įtraukti „%s“? Tai gali ilgai užtrukti</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Tai negaliojantis „Anki“ paketo failas</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
     <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>
@@ -184,6 +190,9 @@
     <string name="import_error_content_provider">Pažymėto failo „AnkiDroid“ automatiškai įkelti negali. Norėdami sužinoti, kaip „anki“ failus galėtumėte įkelti rankiniu būdu, prašome perskaityti vartotojo vadovą: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Pakeičiama kolekcija&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Įtraukti mokymosi laiko planavimą</string>

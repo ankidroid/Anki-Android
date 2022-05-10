@@ -118,7 +118,10 @@
     <string name="import_progress">• İthalat qeydləri: %1$d%%\n• Kartları idxal etmək: %2$d%%\n • Post-processing: %3$d%%</string>
     <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
     <string name="import_update_ignored">Qeydin növü dəyişdirildiyi üçün bəzi yeniliklər nəzərə alınmadı</string>
-    <string name="import_complete_count">Kartlar idxal olunur: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD kart doludur</string>
     <string name="sd_card_almost_full_title">SD kart demək olar ki doludur.</string>
     <string name="no_space_to_downgrade_title">No space</string>

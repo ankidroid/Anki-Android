@@ -168,8 +168,14 @@
     <string name="import_title">מתבצע ייבוא</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">הוספה</string>
     <string name="import_message_replace_confirm">אפשרות זאת תמחק את האוסף הנוכחי שלך ותחליפו במידע מקובץ %s</string>
-    <string name="import_message_add_confirm">הוסף את \"%s\" לאוסף. פעולה זו עלולה להמשך זמן רב</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="two">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">קובץ זה אינו קובץ חבילה תקין</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">נכשל בפריסת החבילה: %s</string>
     <string name="import_log_failed_copy_to">נכשל בהעתקת החבילה ל%s</string>
     <string name="import_log_failed_validate">נכשל אימות החבילה</string>
@@ -186,6 +192,9 @@
     <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache()‎ נכשלה (כנראה שנגמר המקום)</string>
     <string name="import_error_unhandled_scheme">ייבוא שלא טופל מאת: „%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">האוסף מוחלף&#8230;</string>
     <string name="import_interrupted">הייבוא נפסק: AnkiDroid נסגר</string>
     <string name="export_include_schedule">כולל תזמון</string>

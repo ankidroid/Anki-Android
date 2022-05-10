@@ -71,8 +71,8 @@
         <item quantity="other">noch %d Minuten</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d Stunde %2$d übrig</item>
+        <item quantity="other">%1$d Stunden %2$d verbleiben</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>

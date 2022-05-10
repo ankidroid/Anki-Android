@@ -93,6 +93,7 @@
     <string name="card_browser_no_cards_in_deck">没有在牌组 “%s” 中找到卡片</string>
     <string name="card_browser_search_all_decks">搜索全部牌组</string>
     <string name="card_browser_unknown_deck_name">未知</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d 张卡牌已删除</item>
     </plurals>

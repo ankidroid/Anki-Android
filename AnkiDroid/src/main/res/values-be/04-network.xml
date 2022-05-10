@@ -48,7 +48,7 @@
     <string name="youre_offline">Вы па-за сеткай</string>
     <string name="sync_even_if_offline">Усё роўна спрабаваць</string>
     <string name="sync_error">Памылка сінхранізацыі</string>
-    <string name="vague_error">Памылка</string>
+    <string name="vague_error" comment="Network error dialog title">Памылка</string>
     <string name="retry">Паўтарыць</string>
     <string name="menu_get_shared_decks">Атрымаць агульнадаступныя калоды</string>
     <string name="connection_error_message">Узніклі праблемы са злучэннем</string>

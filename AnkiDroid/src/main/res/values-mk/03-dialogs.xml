@@ -118,7 +118,10 @@
     <string name="import_progress">• Внесување на белешки: %1$d%%\n• Внесување картички: %2$d%%\n• Пост-обработка: %3$d%%</string>
     <string name="import_update_details">Ажурирани %1$d од %2$d постоечки белешки.</string>
     <string name="import_update_ignored">Некои ажурирања беа игнорирани бидејќи типот на белешка се променил</string>
-    <string name="import_complete_count">Увезени картички: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD картичката е полна</string>
     <string name="sd_card_almost_full_title">SD картичката е речиси полна</string>
     <string name="no_space_to_downgrade_title">No space</string>

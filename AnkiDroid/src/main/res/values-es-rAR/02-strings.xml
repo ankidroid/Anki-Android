@@ -162,8 +162,12 @@
     <string name="import_title">Importando</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Añadir</string>
     <string name="import_message_replace_confirm">Esta operación eliminará la colección existente y la reemplazará con los datos del archivo %s. ¿Está seguro?</string>
-    <string name="import_message_add_confirm">¿Añadir \"%s\" a la colección? Esto podría tomar mucho tiempo</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Este no es un archivo de paquete Anki válido</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
     <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
     <string name="import_log_failed_validate">falló la validación apkg</string>
@@ -178,6 +182,9 @@
     <string name="import_error_content_provider">El archivo seleccionado no puede ser importado automáticamente por AnkiDroid. Por favor, revise el manual de usuario para cómo importar manualmente archivos de anki: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() falló (posiblemente fuera de espacio de almacenamiento)</string>
     <string name="import_error_unhandled_scheme">Importación no controlada de: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Reemplazando colección&#8230;</string>
     <string name="import_interrupted">Importación interrumpida</string>
     <string name="export_include_schedule">Incluir programación</string>

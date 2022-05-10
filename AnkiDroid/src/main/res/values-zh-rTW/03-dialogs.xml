@@ -112,7 +112,9 @@
     <string name="import_progress">• 正在匯入筆記: %1$d%%\n• 正在匯入卡片: %2$d%%\n• 正在後期處理: %3$d%%</string>
     <string name="import_update_details">現有筆記%2$d條，已更新%1$d條。</string>
     <string name="import_update_ignored">忽略了某些更新，因為這些筆記的類型已改變</string>
-    <string name="import_complete_count">卡片已匯入：%d</string>
+    <plurals name="import_complete_message">
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD 卡空間已滿</string>
     <string name="sd_card_almost_full_title">SD 卡空間快滿</string>
     <string name="no_space_to_downgrade_title">沒有空間</string>

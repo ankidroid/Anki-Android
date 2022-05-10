@@ -48,7 +48,7 @@
     <string name="youre_offline">Çevrimdışısınız</string>
     <string name="sync_even_if_offline">Tekrar dene</string>
     <string name="sync_error">Senkronizasyon hatası</string>
-    <string name="vague_error">Hata</string>
+    <string name="vague_error" comment="Network error dialog title">Hata</string>
     <string name="retry">Yeniden Dene</string>
     <string name="menu_get_shared_decks">Paylaşılan desteler edin</string>
     <string name="connection_error_message">Bir ağ hatası meydana geldi.</string>

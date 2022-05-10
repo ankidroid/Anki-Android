@@ -48,7 +48,7 @@
     <string name="youre_offline">Ниси на мрежи</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Грешка синхронизације</string>
-    <string name="vague_error">Грешка</string>
+    <string name="vague_error" comment="Network error dialog title">Грешка</string>
     <string name="retry">Понови</string>
     <string name="menu_get_shared_decks">Преузми дељене шпилове</string>
     <string name="connection_error_message">Грешка у мрежи.</string>

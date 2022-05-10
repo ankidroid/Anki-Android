@@ -162,8 +162,12 @@
     <string name="import_title">ഇറക്കുമതി ചെയ്യുന്നു</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ചേർക്കുക</string>
     <string name="import_message_replace_confirm">ഇത് നിങ്ങളുടെ നിലവിലുള്ള ശേഖരം ഇല്ലാതാക്കുകയും %s ഫയലിന്റെ ഡാറ്റ ഉപയോഗിച്ച് മാറ്റിസ്ഥാപിക്കുകയും ചെയ്യും</string>
-    <string name="import_message_add_confirm">ശേഖരത്തിൽ “%s” ചേർക്കണോ? ഇതിന് വളരെയധികം സമയമെടുത്തേക്കാം</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">ഇതൊരു സാധുവായ അങ്കി പാക്കേജ് ഫയലല്ല</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">apkg അൺ‌സിപ്പ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു:%s</string>
     <string name="import_log_failed_copy_to">%s ലേക്ക് apkg പകർത്തുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="import_log_failed_validate">apkg മൂല്യനിർണ്ണയം പരാജയപ്പെട്ടു</string>
@@ -178,6 +182,9 @@
     <string name="import_error_content_provider">തിരഞ്ഞെടുത്ത ഫയൽ AnkiDroid സ്വപ്രേരിതമായി ഇറക്കുമതി ചെയ്യാൻ കഴിയില്ല. അങ്കി ഫയലുകൾ എങ്ങനെ സ്വമേധയാ ഇറക്കുമതി ചെയ്യാമെന്നതിനുള്ള ഉപയോക്തൃ മാനുവൽ കാണുക: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() പരാജയപ്പെട്ടു (ഒരുപക്ഷേ സംഭരണ ​​സ്ഥലത്തിന് പുറത്തായിരിക്കാം)</string>
     <string name="import_error_unhandled_scheme">ഇതിൽ നിന്ന് നിയന്ത്രിക്കാത്ത ഇറക്കുമതി: “%s\"</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">ശേഖരം മാറ്റിസ്ഥാപിക്കുന്നു&#8230;</string>
     <string name="import_interrupted">ഇറക്കുമതി തടസ്സപ്പെട്ടു: അങ്കിഡ്രോയിഡ് അടച്ചു</string>
     <string name="export_include_schedule">ഷെഡ്യൂളിംഗ് ഉൾപ്പെടുത്തുക</string>

@@ -48,7 +48,7 @@
     <string name="youre_offline">Þú ert án nettengingar</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Sync error</string>
-    <string name="vague_error">Error</string>
+    <string name="vague_error" comment="Network error dialog title">Error</string>
     <string name="retry">Retry</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">A network error has occurred</string>

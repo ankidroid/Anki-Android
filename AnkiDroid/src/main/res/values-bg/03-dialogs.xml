@@ -118,7 +118,10 @@
     <string name="import_progress">• Импортирани бележки: %1$d%%\n• Импортирани карти: %2$d%%\n• Обработени: %3$d%%</string>
     <string name="import_update_details">Актуализирани са %1$d от %2$d съществуващи бележки.</string>
     <string name="import_update_ignored">Някои актуализации са игнорирани, защото е променен типа на бележките</string>
-    <string name="import_complete_count">Внесени карти: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD картата е пълна</string>
     <string name="sd_card_almost_full_title">SD картата е почти пълна</string>
     <string name="no_space_to_downgrade_title">No space</string>

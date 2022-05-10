@@ -94,6 +94,7 @@
     <string name="card_browser_no_cards_in_deck">Aucune carte trouvée dans le paquet « %s »</string>
     <string name="card_browser_search_all_decks">Rechercher dans tous les paquets</string>
     <string name="card_browser_unknown_deck_name">Inconnu</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d carte supprimée</item>
         <item quantity="other">%d cartes supprimées</item>

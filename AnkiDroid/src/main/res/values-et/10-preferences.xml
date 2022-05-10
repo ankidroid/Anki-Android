@@ -48,7 +48,7 @@
     <string name="disabled">Keelatud</string>
     <string name="enabled">Lubatud</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Üldised seaded</string>
     <string name="pref_cat_reviewing" maxLength="41">Kordamine</string>
     <string name="pref_cat_reviewing_summ">Mitte kaardipaki spetsiifilised korrdaja seaded</string>

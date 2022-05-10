@@ -168,8 +168,14 @@
     <string name="import_title">Импорт</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
-    <string name="import_message_add_confirm">Добавить «%s» в коллекцию? Это может занять много времени</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Не удалось распаковать apkg: %s</string>
     <string name="import_log_failed_copy_to">Не удалось скопировать apkg в %s</string>
     <string name="import_log_failed_validate">Не удалось проверить apkg</string>
@@ -184,6 +190,9 @@
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() не удалось. Возможно недостаточно места</string>
     <string name="import_error_unhandled_scheme">Необработанный импорт из «%s»</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Коллекция заменяется&#8230;</string>
     <string name="import_interrupted">Импорт прерван</string>
     <string name="export_include_schedule">Вместе с расписанием</string>

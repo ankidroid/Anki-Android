@@ -48,7 +48,7 @@
     <string name="youre_offline">ଆପଣ ଅଫଲାଇନ ଅଛନ୍ତି</string>
     <string name="sync_even_if_offline">ତଥାପି ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="sync_error">ସିଙ୍କ୍ ତ୍ରୁଟି</string>
-    <string name="vague_error">ତ୍ରୁଟି</string>
+    <string name="vague_error" comment="Network error dialog title">ତ୍ରୁଟି</string>
     <string name="retry">ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="menu_get_shared_decks">ଅଂଶିଦାରୀ ତାସଖଣ୍ଡ ପାଆନ୍ତୁ</string>
     <string name="connection_error_message">ଏକ ନେଟୱର୍କ ତ୍ରୁଟି ଘଟିଛି</string>

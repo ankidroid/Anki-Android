@@ -48,7 +48,7 @@
     <string name="youre_offline">ᱟᱢ ᱫᱚ ᱚᱯᱷᱞᱟᱭᱤᱱ ᱨᱮ</string>
     <string name="sync_even_if_offline">ᱡᱮᱞᱠᱟᱭ ᱢᱮ</string>
     <string name="sync_error">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ </string>
-    <string name="vague_error">ᱵᱷᱩᱞ</string>
+    <string name="vague_error" comment="Network error dialog title">ᱵᱷᱩᱞ</string>
     <string name="retry">ᱫᱼᱪᱮᱥᱴᱟ </string>
     <string name="menu_get_shared_decks">ᱥᱟᱡᱟᱣᱟ ᱠᱟᱱ ᱰᱮᱠ ᱠᱚ ᱧᱟᱢ ᱢᱮ </string>
     <string name="connection_error_message">ᱱᱮᱴᱣᱟᱨᱠ ᱦᱩᱰᱟᱹᱜ ᱦᱩᱭ ᱮᱱᱟ</string>

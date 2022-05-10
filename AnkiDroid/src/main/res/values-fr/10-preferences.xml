@@ -48,7 +48,7 @@
     <string name="disabled">Désactivé</string>
     <string name="enabled">Activé</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Général</string>
     <string name="pref_cat_general_summ">Paramètres généraux</string>
     <string name="pref_cat_reviewing" maxLength="41">Révision</string>
     <string name="pref_cat_reviewing_summ">Paramètres de révision indépendants du paquet</string>

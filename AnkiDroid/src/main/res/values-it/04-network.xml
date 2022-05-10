@@ -48,7 +48,7 @@
     <string name="youre_offline">Sei scollegato</string>
     <string name="sync_even_if_offline">Prova comunque</string>
     <string name="sync_error">Errore di sincronizzazione</string>
-    <string name="vague_error">Errore</string>
+    <string name="vague_error" comment="Network error dialog title">Errore</string>
     <string name="retry">Riprova</string>
     <string name="menu_get_shared_decks">Ottieni mazzi condivisi</string>
     <string name="connection_error_message">Si è verificato un errore di rete.</string>

@@ -162,8 +162,12 @@
     <string name="import_title">आयात</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">जोड़ें</string>
     <string name="import_message_replace_confirm">यह अपने मौजूदा संग्रह को हटाने और यह फ़ाइल %s का डेटा के साथ बदलना होगा। क्या आपको यकीन है?</string>
-    <string name="import_message_add_confirm">\"%s\" को संग्रह में जोड़ें? यह एक लंबा समय लग सकता है</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">यह एक मान्य Anki पैकेज फ़ाइल नहीं है</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">apkg को अनज़िप करने में विफल:%s</string>
     <string name="import_log_failed_copy_to">एपीके को %s में कॉपी करने में विफल</string>
     <string name="import_log_failed_validate">apkg सत्यापन विफल रहा</string>
@@ -178,6 +182,9 @@
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache () विफल (संभवतः संग्रहण स्थान से बाहर)</string>
     <string name="import_error_unhandled_scheme">से अनहेल्दी आयात: \"%s\"</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">संग्रह की जगह.. ।</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
     <string name="export_include_schedule">शेड्यूलिंग शामिल करें</string>

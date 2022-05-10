@@ -118,7 +118,10 @@
     <string name="import_progress">• Importált megjegyzések: %1$d%%\n• importált kártyák: %2$d%%\n• utómunka: %3$d%%</string>
     <string name="import_update_details">Frissített %1$d %2$d meglévő jegyzetek.</string>
     <string name="import_update_ignored">Néhány frissítést figyelmen kívül hagytak, mert a jegyzet típusa megváltozott</string>
-    <string name="import_complete_count">Importált kártyák: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD kártya tele</string>
     <string name="sd_card_almost_full_title">Az SD kártya már majdnem tele van</string>
     <string name="no_space_to_downgrade_title">No space</string>

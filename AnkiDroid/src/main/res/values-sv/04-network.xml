@@ -48,7 +48,7 @@
     <string name="youre_offline">Du är offline</string>
     <string name="sync_even_if_offline">Försök ändå</string>
     <string name="sync_error">Synkroniseringsfel</string>
-    <string name="vague_error">Fel</string>
+    <string name="vague_error" comment="Network error dialog title">Fel</string>
     <string name="retry">Försök igen</string>
     <string name="menu_get_shared_decks">Hämta delade kortlekar</string>
     <string name="connection_error_message">Ett nätverksfel har uppstått.</string>
