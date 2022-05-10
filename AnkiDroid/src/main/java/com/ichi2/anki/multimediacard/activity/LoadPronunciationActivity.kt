@@ -36,9 +36,7 @@ import com.ichi2.anki.web.HttpFetcher.fetchThroughHttp
 import com.ichi2.async.Connection
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
@@ -54,6 +52,7 @@ import java.util.*
  * FIXME why isn't this extending AnkiActivity?
  */
 open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListener {
+    private var job: Job = Job()
     private var mStopped = false
     private lateinit var source: String
     private lateinit var mTranslationAddress: String
@@ -134,7 +133,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     /**
      * @param v Start of the story.
      */
-    private fun onLoadPronunciation(@Suppress("UNUSED_PARAMETER")v: View?) {
+    private fun onLoadPronunciation(@Suppress("UNUSED_PARAMETER") v: View?) {
         if (!Connection.isOnline()) {
             showToast(gtxt(R.string.network_no_connection))
             return
@@ -194,20 +193,22 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     /**
      * @author zaur This is to load finally the MP3 file with pronunciation.
      */
-    @Suppress("deprecation") // #7108: AsyncTask
 
-    private inner class DownloadFileTask : android.os.AsyncTask<Void?, Void?, String?>() {
-        private lateinit var mAddress: String
-        override fun doInBackground(vararg p0: Void?): String {
-            return downloadFileToSdCard(mAddress, mActivity, "pronunc")
+    inner class DownloadFileTask {
+        lateinit var mAddress: String
+
+        suspend fun downloadFileTask() = withContext(Dispatchers.IO) {
+            return@withContext downloadFileToSdCard(mAddress, mActivity, "pronunc")
         }
 
         fun setAddress(address: String) {
             mAddress = address
         }
 
-        override fun onPostExecute(result: String?) {
-            receiveMp3File(result)
+        fun receiveMp3FileTask(result: String?) {
+            CoroutineScope(Dispatchers.IO).launch {
+                receiveMp3FileTask(result)
+            }
         }
     }
 
@@ -259,15 +260,18 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
             }
 
             // Download MP3 file
-            try {
-                showProgressBar(gtxt(R.string.multimedia_editor_general_downloading))
-                mDownloadMp3Task = DownloadFileTask()
-                mDownloadMp3Task!!.setAddress(mMp3Address)
-                mDownloadMp3Task!!.execute()
-            } catch (e: Exception) {
-                Timber.w(e)
-                hideProgressBar()
-                showToast(gtxt(R.string.multimedia_editor_something_wrong))
+            CoroutineScope(Dispatchers.Default).launch {
+                try {
+                    showProgressBar(gtxt(R.string.multimedia_editor_general_downloading))
+                    mDownloadMp3Task = DownloadFileTask()
+                    mDownloadMp3Task!!.downloadFileTask()
+                    mDownloadMp3Task!!.setAddress(mMp3Address)
+                    mDownloadMp3Task!!.receiveMp3FileTask(mMp3Address)
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    hideProgressBar()
+                    showToast(gtxt(R.string.multimedia_editor_something_wrong))
+                }
             }
         }
     }
@@ -317,7 +321,8 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
 
     private fun computeAddressOfTranslationPage(): String {
         // Service name has to be replaced from the language lister.
-        var address = "https://dict.tu-chemnitz.de/dings.cgi?lang=en&service=SERVICE&opterrors=0&optpro=0&query=Welt"
+        var address =
+            "https://dict.tu-chemnitz.de/dings.cgi?lang=en&service=SERVICE&opterrors=0&optpro=0&query=Welt"
         val strFrom = mSpinnerFrom.selectedItem.toString()
         val langCodeFrom = mLanguageLister.getCodeFor(strFrom)
         val query: String? = try {
@@ -326,7 +331,8 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
             Timber.w(e)
             source.replace(" ", "%20")
         }
-        address = address.replace("SERVICE".toRegex(), langCodeFrom!!).replace("Welt".toRegex(), query!!)
+        address =
+            address.replace("SERVICE".toRegex(), langCodeFrom!!).replace("Welt".toRegex(), query!!)
         return address
     }
 
@@ -348,14 +354,16 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         finish()
     }
 
-    @Suppress("deprecation") // #7108: AsyncTask
     private fun stopAllTasks() {
-        var t: android.os.AsyncTask<*, *, *>? = mPostTranslation
+        var t = mPostTranslation
         stopTaskGracefully(t)
         t = mPostPronunciation
         stopTaskGracefully(t)
-        t = mDownloadMp3Task
-        stopTaskGracefully(t)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 
     override fun onPause() {
@@ -375,6 +383,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         const val EXTRA_SOURCE = "com.ichi2.anki.LoadPronounciationActivity.extra.source"
 
         // Passed out as a result
-        const val EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path"
+        const val EXTRA_PRONUNCIATION_FILE_PATH =
+            "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path"
     }
 }
