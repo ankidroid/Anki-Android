@@ -15,15 +15,13 @@
  */
 package com.ichi2.anki.dialogs.tags
 
-import com.ichi2.utils.UniqueArrayList.Companion.from
-import com.ichi2.utils.TagsUtil.getTagAncestors
-import com.ichi2.utils.UniqueArrayList.sort
-import com.ichi2.utils.TagsUtil.getTagRoot
 import com.ichi2.utils.TagsUtil.compareTag
-import kotlin.jvm.JvmOverloads
+import com.ichi2.utils.TagsUtil.getTagAncestors
+import com.ichi2.utils.TagsUtil.getTagRoot
 import com.ichi2.utils.UniqueArrayList
-import com.ichi2.utils.TagsUtil
+import com.ichi2.utils.UniqueArrayList.Companion.from
 import java.util.*
+import kotlin.jvm.JvmOverloads
 
 /**
  * A container class that keeps track of tags and their status, handling of tags are done in a case insensitive matter
@@ -35,7 +33,7 @@ class TagsList @JvmOverloads constructor(
     allTags: List<String>,
     checkedTags: List<String>,
     uncheckedTags: List<String>? = null
-) : Iterable<String?> {
+) : Iterable<String> {
     /**
      * A Set containing the currently selected tags
      */
@@ -297,7 +295,7 @@ class TagsList @JvmOverloads constructor(
         }
         getTagAncestors(tag)
             .stream().filter { s: String -> !isChecked(s) }
-            .forEach { tag: String -> setIndeterminate(tag) }
+            .forEach(::setIndeterminate)
     }
 
     /**
@@ -305,20 +303,22 @@ class TagsList @JvmOverloads constructor(
      * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     fun sort() {
-        mAllTags.sort(Comparator { lhs: String?, rhs: String? ->
-            val lhsRoot = getTagRoot(
-                lhs!!
-            )
-            val rhsRoot = getTagRoot(rhs!!)
-            val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
-            val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
-            if (lhsChecked != rhsChecked) {
-                // checked tags must appear first
-                return@sort if (lhsChecked) -1 else 1
-            } else {
-                return@sort compareTag(lhs, rhs)
+        mAllTags.sortWith(
+            Comparator { lhs: String?, rhs: String? ->
+                val lhsRoot = getTagRoot(
+                    lhs!!
+                )
+                val rhsRoot = getTagRoot(rhs!!)
+                val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
+                val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
+                if (lhsChecked != rhsChecked) {
+                    // checked tags must appear first
+                    return@Comparator if (lhsChecked) -1 else 1
+                } else {
+                    return@Comparator compareTag(lhs, rhs)
+                }
             }
-        })
+        )
     }
 
     /**
