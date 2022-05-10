@@ -24,7 +24,9 @@ import com.android.tools.lint.detector.api.ResourceXmlDetector
 import com.android.tools.lint.detector.api.Scope.Companion.ALL_RESOURCES_SCOPE
 import com.android.tools.lint.detector.api.XmlContext
 import com.android.utils.forEach
-import com.ichi2.anki.lint.utils.Constants.*
+import com.ichi2.anki.lint.utils.Constants.ANKI_XML_CATEGORY
+import com.ichi2.anki.lint.utils.Constants.ANKI_XML_PRIORITY
+import com.ichi2.anki.lint.utils.Constants.ANKI_XML_SEVERITY
 import com.ichi2.anki.lint.utils.StringFormatDetector
 import org.w3c.dom.Element
 import org.w3c.dom.Node
