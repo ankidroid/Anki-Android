@@ -117,7 +117,7 @@
 
     <!-- For all other action bar popups like overflow menu (except spinner dropdown in Lollipop). -->
     <style name="ActionBar.Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:drawSelectorOnTop">true</item>
         <item name="android:textColorPrimary">?attr/actionBarPopupTextColor</item>
         <item name="android:textColorSecondary">?attr/actionBarPopupTextColor</item>
         <item name="android:colorBackground">?attr/popupBackgroundColor</item>
@@ -150,13 +150,8 @@
         <item name="android:layout_height">48dp</item>
     </style>
 
-    <style name="card_browser_spinner_child_height">
-        <item name="android:layout_height">36dp</item>
-    </style>
-
-
     <style name="reviewer_whiteboard_editor_button_style">
-        <item name="android:layout_height">40dp</item>ac
+        <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_margin">5dp</item>
     </style>
