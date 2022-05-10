@@ -30,6 +30,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.os.Parcelable
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
@@ -48,6 +49,7 @@ import androidx.core.view.ActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
 import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
@@ -653,10 +655,26 @@ open class Reviewer : AbstractFlashcardViewer() {
         showDialogFragment(dialog)
     }
 
+    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     private fun addNote(fromGesture: Gesture? = null) {
         val intent = Intent(this, NoteEditor::class.java)
+        val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-        startActivityForResultWithAnimation(intent, ADD_NOTE, getAnimationTransitionFromGesture(fromGesture))
+        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        startActivityForResultWithAnimation(intent, ADD_NOTE, animation)
+    }
+
+    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
+    protected fun openCardInfo(fromGesture: Gesture? = null) {
+        if (mCurrentCard == null) {
+            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
+            return
+        }
+        val intent = Intent(this, CardInfo::class.java)
+        val animation = getAnimationTransitionFromGesture(fromGesture)
+        intent.putExtra("cardId", mCurrentCard!!.id)
+        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        startActivityWithAnimation(intent, animation)
     }
 
     override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
@@ -1148,6 +1166,10 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
             ViewerCommand.COMMAND_ADD_NOTE -> {
                 addNote(fromGesture)
+                return true
+            }
+            ViewerCommand.COMMAND_CARD_INFO -> {
+                openCardInfo(fromGesture)
                 return true
             }
             else -> return super.executeCommand(which, fromGesture)

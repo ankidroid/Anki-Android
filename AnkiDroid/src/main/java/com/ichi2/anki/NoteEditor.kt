@@ -20,12 +20,16 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -45,6 +49,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.FieldEditText.ImagePasteListener
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -391,7 +396,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 finishWithoutAnimation()
                 return
             }
-            CALLER_REVIEWER -> {
+            CALLER_REVIEWER_EDIT -> {
                 mCurrentEditedCard = AbstractFlashcardViewer.editorCard
                 if (mCurrentEditedCard == null) {
                     finishWithoutAnimation()
@@ -1079,6 +1084,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         // ensure there are no orphans from possible edit previews
         TemporaryModel.clearTempModelFiles()
+
+        // Set the finish animation if there is one on the intent which created the activity
+        val animation = getIntent().getParcelableExtra<Parcelable>(FINISH_ANIMATION_EXTRA)
+        if (animation is ActivityTransitionAnimation.Direction) {
+            finishWithAnimation(animation)
+            return
+        }
+
         if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
             finishWithAnimation(NONE)
         } else {
@@ -2185,7 +2198,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         // calling activity
         const val CALLER_NO_CALLER = 0
-        const val CALLER_REVIEWER = 1
+        const val CALLER_REVIEWER_EDIT = 1
         const val CALLER_STUDYOPTIONS = 2
         const val CALLER_DECKPICKER = 3
         const val CALLER_REVIEWER_ADD = 11
