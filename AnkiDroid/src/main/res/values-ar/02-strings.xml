@@ -174,8 +174,16 @@
     <string name="import_title">استيراد</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
-    <string name="import_message_add_confirm">هل تريد إضافة “%s” إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="zero">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="two">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">ليس هذا ملف حزمة أنكي صالحًا</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">فشل فك ضغط ملف apkg: %s</string>
     <string name="import_log_failed_copy_to">فشل نسخ ملف apkg إلى %s</string>
     <string name="import_log_failed_validate">فشل التحقق من صحة ملف apkg</string>
@@ -190,6 +198,9 @@
     <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
     <string name="import_error_copy_file_to_cache">فشلت copyFileToCache() (ربما بسبب نفاذ مساحة التخزين)</string>
     <string name="import_error_unhandled_scheme">استيراد غير معالج من: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">يجري استبدال المجموعة&#8230;</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
     <string name="export_include_schedule">تضمين معلومات الجدولة</string>
@@ -394,8 +405,8 @@
     <string name="before_text">HTML قبل المحدد</string>
     <string name="after_text">HTML بعد المحدد</string>
     <string name="add_toolbar_item">إنشاء عنصر شريط أدوات</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="edit_toolbar_item">تعديل عنصر شريط الأدوات</string>
+    <string name="toolbar_item_explain_edit_or_remove">أدخل أكواد HTML التي يجب إضافتها قبل النص المحدد وبعده.\n\nاضغط ضغطة مطولة على عنصر بشريط الأدوات لتعديله أو حذفه.</string>
     <string name="remove_toolbar_item">هل تريد حذف عنصر شريط الأدوات؟</string>
     <string name="note_editor_paste_too_large">الصورة كبيرة جدًا للصق، أضف الصورة يدويًا</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        النسخ الاحتياطي للأندرويد قيد التقدم. الرجاء المحاولة مجددًا</string>
@@ -457,5 +468,5 @@
     <string name="malicious_archive_exceeds_limit">أرشيف خبيث. يتخطى الحجم %1$s أو يحتوي على أكثر من %2$d ملف</string>
     <string name="file_extract_exceeds_storage_space">يتخطى الملف المستخرج مساحة التخزين</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">إسدال الوسم \"%s\"</string>
 </resources>

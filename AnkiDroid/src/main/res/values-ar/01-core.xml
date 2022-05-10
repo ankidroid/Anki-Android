@@ -79,20 +79,20 @@
         <item quantity="other">%d دقيقة متبقية</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="zero">%1$d hours %2$d left</item>
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="two">%1$d hours %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="zero">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="one">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="two">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="few">تبقى %1$d ساعات و%2$d دقيقة</item>
+        <item quantity="many">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="other">تبقى %1$d ساعة و%2$d دقيقة</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="zero">%1$d days %2$d left</item>
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="two">%1$d days %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="zero">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="one">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="two">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="few">تبقى %1$d أيام و%2$d ساعات</item>
+        <item quantity="many">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="other">تبقى %1$d يوم و%2$d ساعة</item>
     </plurals>
     <string name="no_cards_placeholder_title">المجموعة فارغة</string>
     <string name="no_cards_placeholder_description">ابدأ بإضافة بطاقات\nباستخدام أيقونة +.</string>
@@ -224,7 +224,7 @@
         <item quantity="other">سيؤدي هذا إلى إنشاء %1$d بطاقة. هل تريد المتابعة؟</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="zero">حذف نوع البطاقة \"%2$s\"، والبطاقات %1$d؟</item>
+        <item quantity="zero">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
         <item quantity="one">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
         <item quantity="two">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
         <item quantity="few">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقات المتعلقة به؟</item>

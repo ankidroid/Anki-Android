@@ -48,7 +48,7 @@
     <string name="youre_offline">Je bent offline</string>
     <string name="sync_even_if_offline">Toch proberen</string>
     <string name="sync_error">Syncronisatiefout</string>
-    <string name="vague_error">Error</string>
+    <string name="vague_error" comment="Network error dialog title">Error</string>
     <string name="retry">Opnieuw proberen</string>
     <string name="menu_get_shared_decks">Publieke leersets ophalen</string>
     <string name="connection_error_message">Een netwerkfout is opgetreden.</string>

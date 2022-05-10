@@ -48,7 +48,7 @@
     <string name="disabled">Nonaktif</string>
     <string name="enabled">Aktif</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Pengaturan umum</string>
     <string name="pref_cat_reviewing" maxLength="41">Mengulas</string>
     <string name="pref_cat_reviewing_summ">Pengaturan ulasan yang bukan tentang dek</string>

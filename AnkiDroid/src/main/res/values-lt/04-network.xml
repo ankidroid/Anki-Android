@@ -48,7 +48,7 @@
     <string name="youre_offline">Esate neprisijungę</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Susinchronizuoti nepavyko</string>
-    <string name="vague_error">Klaida</string>
+    <string name="vague_error" comment="Network error dialog title">Klaida</string>
     <string name="retry">Bandyti dar kartą</string>
     <string name="menu_get_shared_decks">Gauti pasidalintų rinkinių</string>
     <string name="connection_error_message">Atsirado tinklo klaida</string>

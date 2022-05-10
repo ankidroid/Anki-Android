@@ -48,7 +48,7 @@
     <string name="youre_offline">You are offline</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Σφάλμα συγχρονισμού</string>
-    <string name="vague_error">Σφάλμα</string>
+    <string name="vague_error" comment="Network error dialog title">Σφάλμα</string>
     <string name="retry">Ξαναδοκίμασε</string>
     <string name="menu_get_shared_decks">Λήψη κοινόχρηστων τραπουλών</string>
     <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>

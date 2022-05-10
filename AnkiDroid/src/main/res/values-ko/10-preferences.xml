@@ -48,7 +48,7 @@
     <string name="disabled">비활성화됨</string>
     <string name="enabled">활성화됨</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">일반 설정</string>
     <string name="pref_cat_reviewing" maxLength="41">복습</string>
     <string name="pref_cat_reviewing_summ">특정 카드 묶음에 한정되지 않은 복습 설정</string>

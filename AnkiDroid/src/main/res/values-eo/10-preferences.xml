@@ -48,7 +48,7 @@
     <string name="disabled">Malaktiva</string>
     <string name="enabled">Aktiva</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Ĝeneralaj agordoj</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetado</string>
     <string name="pref_cat_reviewing_summ">Komunaj agordoj de ripetado por ĉiuj kartaroj</string>

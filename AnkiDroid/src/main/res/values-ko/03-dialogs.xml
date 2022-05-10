@@ -112,7 +112,9 @@
     <string name="import_progress">• 노트 가져오기: %1$d%%\n• 카드 가져오기: %2$d%%\n• 후처리: %3$d%%</string>
     <string name="import_update_details">기존 노트 %2$d 중 %1$d 업데이트 했습니다.</string>
     <string name="import_update_ignored">노트 유형이 변경되었으므로 일부 업데이트는 무시되었습니다.</string>
-    <string name="import_complete_count">카드 가져옴: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD 카드 꽉 참</string>
     <string name="sd_card_almost_full_title">SD 카드 거의 꽉 참</string>
     <string name="no_space_to_downgrade_title">빈 공간 없음</string>

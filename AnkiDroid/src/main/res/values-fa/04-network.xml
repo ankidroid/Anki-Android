@@ -48,7 +48,7 @@
     <string name="youre_offline">به شبکه متصل نیستيد</string>
     <string name="sync_even_if_offline">انجام بده</string>
     <string name="sync_error">خطا در همگام سازی</string>
-    <string name="vague_error">خطا</string>
+    <string name="vague_error" comment="Network error dialog title">خطا</string>
     <string name="retry">تلاش مجدد</string>
     <string name="menu_get_shared_decks">دريافت كارتهاي اشتراكي</string>
     <string name="connection_error_message">خطاي شبكه رخ داده است.</string>

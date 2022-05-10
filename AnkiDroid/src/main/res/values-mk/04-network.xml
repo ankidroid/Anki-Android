@@ -48,7 +48,7 @@
     <string name="youre_offline">Вие сте офлајн</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Грешка во синхорнизација</string>
-    <string name="vague_error">Грешка</string>
+    <string name="vague_error" comment="Network error dialog title">Грешка</string>
     <string name="retry">Обидете се повторно</string>
     <string name="menu_get_shared_decks">Добијте заеднички decks</string>
     <string name="connection_error_message">Се случи грешка во мрежата</string>

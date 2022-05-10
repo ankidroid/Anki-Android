@@ -48,7 +48,7 @@
     <string name="youre_offline">オフラインです</string>
     <string name="sync_even_if_offline">再試行してください</string>
     <string name="sync_error">同期エラー</string>
-    <string name="vague_error">エラー</string>
+    <string name="vague_error" comment="Network error dialog title">エラー</string>
     <string name="retry">再実行</string>
     <string name="menu_get_shared_decks">共有デッキをダウンロード</string>
     <string name="connection_error_message">ネットワークエラーが発生しました</string>

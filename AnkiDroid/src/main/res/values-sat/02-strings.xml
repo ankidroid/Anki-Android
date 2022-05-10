@@ -162,8 +162,12 @@
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ᱥᱮᱞᱮᱫ</string>
     <string name="import_message_replace_confirm">ᱱᱚᱶᱟ ᱫᱚ ᱴᱩᱢᱟᱞ ᱜᱮᱫ ᱜᱤᱰᱤᱟᱭ ᱟᱨ ᱚᱱᱟ ᱵᱚᱫᱚᱞ ᱛᱮ ᱚᱱᱟ ᱨᱮᱛ ᱨᱮ ᱥᱟᱹᱠᱷᱤᱭᱟᱹᱛ ᱚᱞᱟᱭ  %s</string>
-    <string name="import_message_add_confirm">“%s” ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱥᱮᱞᱮᱫ ᱟᱢ ? ᱱᱚᱶᱟ ᱡᱟᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱰᱮᱟᱜᱼᱟᱭ</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">ᱱᱚᱶᱟ ᱫᱚ ᱵᱦᱮᱞᱤᱰ Anki ᱯᱮᱠ ᱵᱟᱝ ᱠᱟᱱᱟ</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">apkg ᱠᱷᱩᱞᱟᱹ ᱦᱩᱲᱟᱜᱺ %s</string>
     <string name="import_log_failed_copy_to">apkg ᱠᱷᱚᱱ %s ᱱᱚᱠᱚᱞ ᱦᱩᱲᱟᱜ</string>
     <string name="import_log_failed_validate">apkg ᱯᱩᱥᱴᱚᱣ ᱵᱷᱩᱞ</string>
@@ -178,6 +182,9 @@
     <string name="import_error_content_provider">ᱪᱚᱭᱚᱱᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() ᱦᱩᱲᱟᱜ (ᱫᱚᱦᱚ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱯᱟᱞᱮ)</string>
     <string name="import_error_unhandled_scheme">ᱵᱟᱝ ᱡᱩᱛ ᱟᱭᱟᱛ:“%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">ᱴᱩᱢᱟᱹ ᱳᱪᱳᱜᱳᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="import_interrupted">ᱨᱮᱫ ᱟᱠᱚᱴ ᱮᱱᱟ</string>
     <string name="export_include_schedule">ᱥᱮᱰᱤᱭᱩᱞ ᱨᱮ ᱢᱮᱥᱟᱭ ᱯᱮ</string>

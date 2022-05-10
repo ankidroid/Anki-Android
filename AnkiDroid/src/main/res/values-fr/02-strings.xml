@@ -162,8 +162,12 @@
     <string name="import_title">Importation en cours</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
-    <string name="import_message_add_confirm">Ajouter « %s » à la collection ? Cette opération peut durer longtemps</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Échec de la décompression de l\'APKG : %s</string>
     <string name="import_log_failed_copy_to">Échec de la copie de l\'APKG vers %s</string>
     <string name="import_log_failed_validate">La validation de l\'APKG a échoué</string>
@@ -178,6 +182,9 @@
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() a échoué (peut être un manque d\'espace de stockage)</string>
     <string name="import_error_unhandled_scheme">Importation non gérée depuis : \"%s\"</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
     <string name="import_interrupted">Importation interrompue : AnkiDroid a fermé</string>
     <string name="export_include_schedule">Inclure la planification</string>
@@ -405,5 +412,5 @@
     <string name="malicious_archive_exceeds_limit">Archive malveillante. La taille dépasse %1$s ou contient plus de %2$d fichiers</string>
     <string name="file_extract_exceeds_storage_space">L\'extraction de fichiers dépasse la capacité de stockage</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Développer le tag \'%s\'</string>
 </resources>

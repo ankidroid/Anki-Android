@@ -159,8 +159,11 @@
     <string name="import_title">Đang nhập</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Thêm</string>
     <string name="import_message_replace_confirm">Thao tác này sẽ xoá tất cả bộ sưu tập hiện hữu và thay nó bằng dữ liệu của tệp %s</string>
-    <string name="import_message_add_confirm">Thêm \"%s\" vào bộ sưu tập? Có thể hơi lâu</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Đây không phải là gói tệp tin Anki hợp lệ</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Không giải nén được apkg: %s</string>
     <string name="import_log_failed_copy_to">Không sao chép được apkg sang %s</string>
     <string name="import_log_failed_validate">không xác thực được apkg</string>
@@ -175,6 +178,9 @@
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp anki: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() không thành công (có thể hết dung lượng lưu trữ)</string>
     <string name="import_error_unhandled_scheme">Việc nhập chưa xử lý từ: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Đang thay thế bộ sưu tập&#8230;</string>
     <string name="import_interrupted">Nhập dữ liệu bị gián đoạn: AnkiDroid đã bị đóng</string>
     <string name="export_include_schedule">Gồm cả việc lên lịch</string>

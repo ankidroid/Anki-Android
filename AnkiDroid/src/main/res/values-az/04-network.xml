@@ -48,7 +48,7 @@
     <string name="youre_offline">Aktiv deyilsiniz</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Sinxronizasiya xətası</string>
-    <string name="vague_error">Xəta</string>
+    <string name="vague_error" comment="Network error dialog title">Xəta</string>
     <string name="retry">yeniden</string>
     <string name="menu_get_shared_decks">Paylaşılan katları alın</string>
     <string name="connection_error_message">Bir səhv baş verdi</string>

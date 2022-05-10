@@ -48,7 +48,7 @@
     <string name="disabled">Оневозможи</string>
     <string name="enabled">Овозможи</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Општи поднесувања</string>
     <string name="pref_cat_reviewing" maxLength="41">Повторуање</string>
     <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>

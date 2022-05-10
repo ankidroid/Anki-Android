@@ -48,7 +48,7 @@
     <string name="disabled">Devredışı</string>
     <string name="enabled">Etkin</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Genel ayarlar</string>
     <string name="pref_cat_reviewing" maxLength="41">Çalışma</string>
     <string name="pref_cat_reviewing_summ">Desteye özel olmayan çalışma ayarları</string>

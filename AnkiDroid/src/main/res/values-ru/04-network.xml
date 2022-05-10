@@ -48,7 +48,7 @@
     <string name="youre_offline">Вы не в сети</string>
     <string name="sync_even_if_offline">Всё равно попробовать</string>
     <string name="sync_error">Ошибка синхронизации</string>
-    <string name="vague_error">Ошибка</string>
+    <string name="vague_error" comment="Network error dialog title">Ошибка</string>
     <string name="retry">Повторить</string>
     <string name="menu_get_shared_decks">Скачать колоды</string>
     <string name="connection_error_message">Произошла ошибка сети</string>

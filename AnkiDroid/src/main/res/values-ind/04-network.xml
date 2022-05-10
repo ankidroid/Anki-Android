@@ -48,7 +48,7 @@
     <string name="youre_offline">Kamu sedang offline</string>
     <string name="sync_even_if_offline">Coba saja</string>
     <string name="sync_error">Gagal mensinkronisasi</string>
-    <string name="vague_error">Gagal</string>
+    <string name="vague_error" comment="Network error dialog title">Gagal</string>
     <string name="retry">Coba Lagi</string>
     <string name="menu_get_shared_decks">Cari dek yang telah dibagi</string>
     <string name="connection_error_message">Telah terjadi masalah jaringan</string>

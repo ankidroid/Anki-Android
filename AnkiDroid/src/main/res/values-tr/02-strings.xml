@@ -162,8 +162,12 @@
     <string name="import_title">İçeri Aktarılıyor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ekle</string>
     <string name="import_message_replace_confirm">Bu, varolan koleksiyonu silerek %s dosyasının verileriyle değiştirir. Emin misiniz?</string>
-    <string name="import_message_add_confirm">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir.</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Bu geçerli bir Anki paketi dosyası değil</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Apkg zipten çıkarılamadı: %s</string>
     <string name="import_log_failed_copy_to">apkg\'yi %s\'e kopyalama başarısız</string>
     <string name="import_log_failed_validate">apkg onaylama başarısız</string>
@@ -178,6 +182,9 @@
     <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() başarısız oldu (belki depolama alanı bitmiştir)</string>
     <string name="import_error_unhandled_scheme">Şurdan ele alınmayan içeri aktarım: \"%s\"</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Koleksiyon değiştiriliyor&#8230;</string>
     <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
     <string name="export_include_schedule">Zamanlama dâhil</string>

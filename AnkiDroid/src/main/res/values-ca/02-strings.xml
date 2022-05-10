@@ -162,8 +162,12 @@
     <string name="import_title">S\'està important</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Afegeix</string>
     <string name="import_message_replace_confirm">Això suprimirà la vostra col·lecció actual i la reemplaçarà amb les dades del fitxer %s. Esteu segur que ho voleu?</string>
-    <string name="import_message_add_confirm">Afegeix \"%s\" a la col·lecció? Això pot trigar molt de temps</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Aquest no és un fitxer de paquet Anki vàlid</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
     <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
     <string name="import_log_failed_validate">Error al validar apkg</string>
@@ -178,6 +182,9 @@
     <string name="import_error_content_provider">El fitxer seleccionat no s\'ha importat automàticament per AnkiDroid. Consulteu el manual d\'usuari per com importar arxius anki manualment: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() ha fallat (segurament s\'ha acabat l\'espai d\'emmagatzemament)</string>
     <string name="import_error_unhandled_scheme">Importació de: \"%s\" no gestionada</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Substituint la col·lecció&#8230;</string>
     <string name="import_interrupted">Importació interrompuda: AnkiDroid s\'ha tancat</string>
     <string name="export_include_schedule">Incloueu la planificació</string>

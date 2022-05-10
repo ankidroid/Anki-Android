@@ -162,8 +162,12 @@
     <string name="import_title">Importeren</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Toevoegen</string>
     <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
-    <string name="import_message_add_confirm">“%s” aan de collectie toevoegen? Dit kan lang duren</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Dit is geen geldig Anki-pakketbestand</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Fout bij het uitpakken van apkg: %s</string>
     <string name="import_log_failed_copy_to">Fout bij het kopiëren van apkg naar %s</string>
     <string name="import_log_failed_validate">apkg-validatie mislukt</string>
@@ -178,6 +182,9 @@
     <string name="import_error_content_provider">Het selecteerde bestand kon niet automatisch geïmporteerd worden door AnkiDroid. Bekijk de gebruikershandleiding om te zien hoe je anki bestanden handmatig importeert: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() is mislukt (mogelijk uit gebrek aan opslagruimte)</string>
     <string name="import_error_unhandled_scheme">Niet-afgehandelde import vanuit:%s\"</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Collectie vervangen&#8230;</string>
     <string name="import_interrupted">Importeren onderbroken</string>
     <string name="export_include_schedule">Inclusief de planning</string>

@@ -48,7 +48,7 @@
     <string name="disabled">غیر فعال شده</string>
     <string name="enabled">فعال شده</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">تنظیمات کلی</string>
     <string name="pref_cat_reviewing" maxLength="41">بازبینی</string>
     <string name="pref_cat_reviewing_summ">تنظیمات مرور بدون اختصاص به دسته ای خاص</string>
