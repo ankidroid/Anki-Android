@@ -37,14 +37,14 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
     @Test
     fun constructionWithoutDataGivesNoError() {
         val controller: IFieldController = validControllerNoImage
-        assertThat(controller, instanceOf(BasicImageFieldController::class.java))
+        assertThat("construction of image field without data should not give an error", controller, instanceOf(BasicImageFieldController::class.java))
     }
 
     @Test
     fun constructionWithDataSucceeds() {
         grantCameraPermission()
         val controller = getControllerForField(imageFieldWithData(), emptyNote, 0)
-        assertThat(controller, instanceOf(BasicImageFieldController::class.java))
+        assertThat("construction of image field with data should succeed", controller, instanceOf(BasicImageFieldController::class.java))
     }
 
     @Test
