@@ -22,12 +22,11 @@ import android.net.Uri
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CheckBox
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.util.DialogUtils
 import com.ichi2.anki.*
 import com.ichi2.anki.cardviewer.CardAppearance
-import com.ichi2.ui.FixedTextView
+import com.ichi2.anki.databinding.ScopedStorageConfirmationBinding
 import timber.log.Timber
 
 typealias OpenUri = (Uri) -> Unit
@@ -76,39 +75,33 @@ object ScopedStorageMigrationDialog {
  * Then performs a migration to scoped storage
  */
 object ScopedStorageMigrationConfirmationDialog {
+    private lateinit var binding: ScopedStorageConfirmationBinding
     fun showDialog(ctx: Context, initiateScopedStorage: Runnable): Dialog {
-        val li = LayoutInflater.from(ctx)
-        val view = li.inflate(R.layout.scoped_storage_confirmation, null)
+        binding = ScopedStorageConfirmationBinding.inflate(LayoutInflater.from(ctx))
 
         // scoped_storage_terms_message requires a format arg: estimated time taken
-        val textView = view.findViewById<FixedTextView>(R.id.scoped_storage_content)
-        textView.text = ctx.getString(R.string.scoped_storage_terms_message, "??? minutes")
-
-        val userWillNotUninstall = view.findViewById<CheckBox>(R.id.scoped_storage_no_uninstall)
-        val noAnkiWeb = view.findViewById<CheckBox>(R.id.scoped_storage_no_ankiweb)
-        val ifAnkiWeb = view.findViewById<CheckBox>(R.id.scoped_storage_ankiweb)
+        binding.scopedStorageContent.text = ctx.getString(R.string.scoped_storage_terms_message, "??? minutes")
 
         // If the user has an AnkiWeb account, ask them to sync, otherwise ask them to backup
         val hasAnkiWebAccount = Preferences.hasAnkiWebAccount(AnkiDroidApp.getSharedPrefs(ctx))
-
-        val backupMethodToDisable = if (hasAnkiWebAccount) noAnkiWeb else ifAnkiWeb
-        val backupMethodToUse = if (hasAnkiWebAccount) ifAnkiWeb else noAnkiWeb
+        val backupMethodToDisable = if (hasAnkiWebAccount) binding.scopedStorageNoAnkiweb else binding.scopedStorageAnkiweb
+        val backupMethodToUse = if (hasAnkiWebAccount) binding.scopedStorageAnkiweb else binding.scopedStorageNoAnkiweb
 
         backupMethodToDisable.visibility = View.GONE
 
         // hack: should be performed in custom_material_dialog_content style
         getContentColor(ctx)?.let {
-            textView.setTextColor(it)
-            userWillNotUninstall.setTextColor(it)
-            noAnkiWeb.setTextColor(it)
-            ifAnkiWeb.setTextColor(it)
+            binding.scopedStorageContent.setTextColor(it)
+            binding.scopedStorageNoUninstall.setTextColor(it)
+            binding.scopedStorageNoAnkiweb.setTextColor(it)
+            binding.scopedStorageAnkiweb.setTextColor(it)
         }
 
-        val checkboxesRequiredToContinue = listOf(userWillNotUninstall, backupMethodToUse)
+        val checkboxesRequiredToContinue = listOf(binding.scopedStorageNoUninstall, backupMethodToUse)
 
         return MaterialDialog.Builder(ctx)
             .title(R.string.scoped_storage_title)
-            .customView(view, true)
+            .customView(binding.root, true)
             .positiveText(R.string.scoped_storage_migrate)
             .onPositive { dialog, _ ->
                 if (checkboxesRequiredToContinue.all { x -> x.isChecked }) {

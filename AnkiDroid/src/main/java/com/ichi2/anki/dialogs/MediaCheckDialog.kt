@@ -8,11 +8,10 @@ import android.os.Message
 import android.text.TextUtils
 import android.text.method.ScrollingMovementMethod
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.MediaCheckDialogBodyBinding
 import java.util.*
 
 class MediaCheckDialog : AsyncDialogFragment() {
@@ -77,15 +76,13 @@ class MediaCheckDialog : AsyncDialogFragment() {
                     
                     $report
                 """.trimIndent()
-                val dialogBody = layoutInflater.inflate(R.layout.media_check_dialog_body, null) as LinearLayout
-                val reportTextView = dialogBody.findViewById<TextView>(R.id.reportTextView)
-                val fileListTextView = dialogBody.findViewById<TextView>(R.id.fileListTextView)
-                reportTextView.text = reportStr
+                val binding = MediaCheckDialogBodyBinding.inflate(layoutInflater)
+                binding.reportTextView.text = reportStr
                 if (unused.isNotEmpty()) {
-                    reportTextView.append(getString(R.string.unused_strings))
-                    fileListTextView.append(TextUtils.join("\n", unused))
-                    fileListTextView.isScrollbarFadingEnabled = unused.size <= fileListTextView.maxLines
-                    fileListTextView.movementMethod = ScrollingMovementMethod.getInstance()
+                    binding.reportTextView.append(getString(R.string.unused_strings))
+                    binding.fileListTextView.append(TextUtils.join("\n", unused))
+                    binding.fileListTextView.isScrollbarFadingEnabled = unused.size <= binding.fileListTextView.maxLines
+                    binding.fileListTextView.movementMethod = ScrollingMovementMethod.getInstance()
                     builder.negativeText(res().getString(R.string.dialog_cancel))
                         .positiveText(res().getString(R.string.check_media_delete_unused))
                         .onNegative { _: MaterialDialog?, _: DialogAction? ->
@@ -97,12 +94,12 @@ class MediaCheckDialog : AsyncDialogFragment() {
                             dismissAllDialogFragments()
                         }
                 } else {
-                    fileListTextView.visibility = View.GONE
+                    binding.fileListTextView.visibility = View.GONE
                     builder.negativeText(res().getString(R.string.dialog_ok))
                         .onNegative { _: MaterialDialog?, _: DialogAction? -> (activity as MediaCheckDialogListener?)!!.dismissAllDialogFragments() }
                 }
                 builder
-                    .customView(dialogBody, false)
+                    .customView(binding.root, false)
                     .cancelable(false)
                     .show()
             }

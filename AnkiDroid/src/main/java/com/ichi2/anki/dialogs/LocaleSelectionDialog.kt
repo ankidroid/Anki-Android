@@ -20,7 +20,6 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Filter
@@ -34,6 +33,8 @@ import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.databinding.LocaleDialogFragmentTextviewBinding
+import com.ichi2.anki.databinding.LocaleSelectionDialogBinding
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleListAdapter.TextViewHolder
 import com.ichi2.ui.RecyclerSingleTouchAdapter
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
@@ -43,6 +44,7 @@ import java.util.*
 /** Locale selection dialog. Note: this must be dismissed onDestroy if not called from an activity implementing LocaleSelectionDialogHandler  */
 class LocaleSelectionDialog : AnalyticsDialogFragment() {
     private var mDialogHandler: LocaleSelectionDialogHandler? = null
+    private lateinit var binding: LocaleSelectionDialogBinding
 
     interface LocaleSelectionDialogHandler {
         fun onSelectedLocale(selectedLocale: Locale)
@@ -67,15 +69,14 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity: Activity = requireActivity()
-        val tagsDialogView = LayoutInflater.from(activity)
-            .inflate(R.layout.locale_selection_dialog, activity.findViewById(R.id.root_layout), false)
+        binding = LocaleSelectionDialogBinding.inflate(layoutInflater)
         val adapter = LocaleListAdapter(Locale.getAvailableLocales())
-        setupRecyclerView(activity, tagsDialogView, adapter)
-        inflateMenu(tagsDialogView, adapter)
+        setupRecyclerView(activity, binding.localeDialogSelectionList, adapter)
+        inflateMenu(binding.localeDialogSelectionToolbar, adapter)
         // Only show a negative button, use the RecyclerView for positive actions
         val builder = MaterialDialog.Builder(activity)
             .negativeText(getString(R.string.dialog_cancel))
-            .customView(tagsDialogView, false)
+            .customView(binding.root, false)
             .onNegative { _: MaterialDialog?, _: DialogAction? -> mDialogHandler!!.onLocaleSelectionCancelled() }
         val dialog: Dialog = builder.build()
         val window = dialog.window
@@ -85,8 +86,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         return dialog
     }
 
-    private fun setupRecyclerView(activity: Activity, tagsDialogView: View, adapter: LocaleListAdapter) {
-        val recyclerView: RecyclerView = tagsDialogView.findViewById(R.id.locale_dialog_selection_list)
+    private fun setupRecyclerView(activity: Activity, recyclerView: RecyclerView, adapter: LocaleListAdapter) {
         recyclerView.requestFocus()
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
@@ -101,8 +101,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         )
     }
 
-    private fun inflateMenu(tagsDialogView: View, adapter: LocaleListAdapter) {
-        val toolbar: Toolbar = tagsDialogView.findViewById(R.id.locale_dialog_selection_toolbar)
+    private fun inflateMenu(toolbar: Toolbar, adapter: LocaleListAdapter) {
         toolbar.setTitle(R.string.locale_selection_dialog_title)
         toolbar.inflateMenu(R.menu.locale_dialog_search_bar)
         val searchItem = toolbar.menu.findItem(R.id.locale_dialog_action_search)
@@ -139,9 +138,11 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
             parent: ViewGroup,
             viewType: Int
         ): TextViewHolder {
-            val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.locale_dialog_fragment_textview, parent, false) as TextView
-            return TextViewHolder(v)
+            val bindingRowView = LocaleDialogFragmentTextviewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent, false
+            )
+            return TextViewHolder(bindingRowView.localeDialogFragmentTextView)
         }
 
         override fun onBindViewHolder(holder: TextViewHolder, position: Int) =

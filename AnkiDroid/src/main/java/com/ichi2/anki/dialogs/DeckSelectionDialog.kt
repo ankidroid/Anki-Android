@@ -19,7 +19,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
@@ -35,6 +34,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.databinding.DeckPickerDialogBinding
+import com.ichi2.anki.databinding.DeckPickerDialogListItemBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.annotations.NeedsTest
@@ -68,35 +69,33 @@ import java.util.Objects.requireNonNull
 @NeedsTest("simulate 'don't keep activities'")
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private var mDialog: MaterialDialog? = null
+    private lateinit var binding: DeckPickerDialogBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = true
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialogView = LayoutInflater.from(activity)
-            .inflate(R.layout.deck_picker_dialog, null, false)
-        val summary = dialogView.findViewById<TextView>(R.id.deck_picker_dialog_summary)
+        binding = DeckPickerDialogBinding.inflate(layoutInflater)
         val arguments = requireArguments()
         if (getSummaryMessage(arguments) == null) {
-            summary.visibility = View.GONE
+            binding.deckPickerDialogSummary.visibility = View.GONE
         } else {
-            summary.visibility = View.VISIBLE
-            summary.text = getSummaryMessage(arguments)
+            binding.deckPickerDialogSummary.visibility = View.VISIBLE
+            binding.deckPickerDialogSummary.text = getSummaryMessage(arguments)
         }
-        val recyclerView: RecyclerView = dialogView.findViewById(R.id.deck_picker_dialog_list)
-        recyclerView.requestFocus()
+        binding.deckPickerDialogList.requestFocus()
         val deckLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireActivity())
-        recyclerView.layoutManager = deckLayoutManager
-        val dividerItemDecoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
-        recyclerView.addItemDecoration(dividerItemDecoration)
+        binding.deckPickerDialogList.layoutManager = deckLayoutManager
+        val dividerItemDecoration = DividerItemDecoration(binding.deckPickerDialogList.context, DividerItemDecoration.VERTICAL)
+        binding.deckPickerDialogList.addItemDecoration(dividerItemDecoration)
         val decks: List<SelectableDeck> = getDeckNames(arguments)
         val adapter = DecksArrayAdapter(decks)
-        recyclerView.adapter = adapter
-        adjustToolbar(dialogView, adapter)
+        binding.deckPickerDialogList.adapter = adapter
+        adjustToolbar(binding.deckPickerDialogToolbar, adapter)
         var builder = MaterialDialog.Builder(requireActivity())
             .neutralText(R.string.dialog_cancel)
-            .customView(dialogView, false)
+            .customView(binding.root, false)
         if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
             builder = builder.negativeText(R.string.restore_default).onNegative { _: MaterialDialog?, _: DialogAction? -> onDeckSelected(null) }
         }
@@ -115,8 +114,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private val title: String?
         get() = requireNonNull(requireArguments().getString(TITLE))
 
-    private fun adjustToolbar(dialogView: View, adapter: DecksArrayAdapter) {
-        val toolbar: Toolbar = dialogView.findViewById(R.id.deck_picker_dialog_toolbar)
+    private fun adjustToolbar(toolbar: Toolbar, adapter: DecksArrayAdapter) {
         toolbar.title = title
         toolbar.inflateMenu(R.menu.deck_picker_dialog_menu)
         val searchItem = toolbar.menu.findItem(R.id.deck_picker_dialog_action_filter)
@@ -257,9 +255,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.deck_picker_dialog_list_item, parent, false)
-            return ViewHolder(v.findViewById(R.id.deck_picker_dialog_list_item_value))
+            val dialogBinding = DeckPickerDialogListItemBinding.inflate(layoutInflater, parent, false)
+            return ViewHolder(dialogBinding.deckPickerDialogListItemValue)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
