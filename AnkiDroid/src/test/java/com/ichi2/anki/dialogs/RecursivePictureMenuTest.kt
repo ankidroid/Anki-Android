@@ -17,18 +17,16 @@ package com.ichi2.anki.dialogs
 
 import com.ichi2.anki.R
 import com.ichi2.testutils.AnkiAssert
-import com.ichi2.utils.ArrayUtil.toArrayList
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
-import java.util.*
 
 class RecursivePictureMenuTest : RecursivePictureMenuUtilTest() {
     @Test
     fun removeChild() {
         val header = getHeaderWithSubItems(1)
         val child = header.children[0]
-        val allItems = toArrayList(arrayOf<RecursivePictureMenu.Item>(header))
+        val allItems = arrayListOf(header)
         RecursivePictureMenu.removeFrom(allItems, child)
         MatcherAssert.assertThat("child should be removed", header.children, Matchers.hasSize(0))
     }
@@ -36,7 +34,7 @@ class RecursivePictureMenuTest : RecursivePictureMenuUtilTest() {
     @Test
     fun removeNotExisting() {
         val header = getHeaderWithSubItems(1)
-        val allItems = toArrayList(arrayOf<RecursivePictureMenu.Item>(header))
+        val allItems = arrayListOf(header)
         AnkiAssert.assertDoesNotThrow { RecursivePictureMenu.removeFrom(allItems, getItemLinkingTo(R.string.link_anki_manual)) }
     }
 }

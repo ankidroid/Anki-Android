@@ -54,7 +54,7 @@
     <string name="connection_error_message">Се случи грешка во мрежата</string>
     <string name="not_logged_in_title">Логирај се на AnkiWeb</string>
     <string name="login_create_account_message">Мора да се најавите на сметка на трета страна за да ја користите услугата за синхронизација на облак. Можете да го креирате во следниов чекор.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Имејл адреса</string>
     <string name="password">Лозинка</string>
     <string name="log_in">Логирај се</string>

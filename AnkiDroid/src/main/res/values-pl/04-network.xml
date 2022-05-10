@@ -54,7 +54,7 @@
     <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
     <string name="not_logged_in_title">Zaloguj się do AnkiWeb</string>
     <string name="login_create_account_message">Musisz zalogować się na konto zewnętrznego serwisu aby korzystać z usługi synchronizacji w chmurze. Możesz utworzyć nowe konto w następnym kroku.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Adres e-mail</string>
     <string name="password">Hasło</string>
     <string name="log_in">Zaloguj się</string>

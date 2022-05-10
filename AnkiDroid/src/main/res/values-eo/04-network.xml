@@ -54,7 +54,7 @@
     <string name="connection_error_message">Reta eraro okazis</string>
     <string name="not_logged_in_title">Ensalutu en AnkiWeb</string>
     <string name="login_create_account_message">Ensalutu uzante konton de ekstera liveranto por uzi la samtempigan servon. Via povas krei konton je la venonta etapo.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Retpoŝta adreso</string>
     <string name="password">Pasvorto</string>
     <string name="log_in">Ensaluti</string>

@@ -546,9 +546,9 @@ abstract class AbstractFlashcardViewer :
     val isFullscreen: Boolean
         get() = !supportActionBar!!.isShowing
 
-    override fun onConfigurationChanged(config: Configuration) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         // called when screen rotated, etc, since recreating the Webview is too expensive
-        super.onConfigurationChanged(config)
+        super.onConfigurationChanged(newConfig)
         refreshActionBar()
     }
 
@@ -656,11 +656,11 @@ abstract class AbstractFlashcardViewer :
         } else super.onKeyDown(keyCode, event)
     }
 
-    public override fun getCurrentCardId(): Long? {
-        return if (mCurrentCard == null) {
+    @KotlinCleanup("Use ?:")
+    public override val currentCardId: Long?
+        get() = if (mCurrentCard == null) {
             null
         } else mCurrentCard!!.id
-    }
 
     private fun processHardwareButtonScroll(keyCode: Int, card: WebView?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
@@ -747,7 +747,7 @@ abstract class AbstractFlashcardViewer :
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...")
                 TaskManager.launchCollectionTask(
-                    UpdateNote(editorCard, true, canAccessScheduler()),
+                    UpdateNote(editorCard!!, true, canAccessScheduler()),
                     mUpdateCardHandler
                 )
                 onEditedNoteChanged()
@@ -840,7 +840,8 @@ abstract class AbstractFlashcardViewer :
         finishWithoutAnimation()
     }
 
-    protected open fun editCard() {
+    @JvmOverloads
+    protected open fun editCard(fromGesture: Gesture? = null) {
         if (mCurrentCard == null) {
             // This should never occurs. It means the review button was pressed while there is no more card in the reviewer.
             return
@@ -848,7 +849,7 @@ abstract class AbstractFlashcardViewer :
         val editCard = Intent(this@AbstractFlashcardViewer, NoteEditor::class.java)
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER)
         editorCard = mCurrentCard
-        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, ActivityTransitionAnimation.Direction.START)
+        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, getAnimationTransitionFromGesture(fromGesture))
     }
 
     fun generateQuestionSoundList() {
@@ -892,7 +893,7 @@ abstract class AbstractFlashcardViewer :
                 else -> 0
             }
         } catch (e: RuntimeException) {
-            AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-getRecommendedEase")
+            CrashReportService.sendExceptionReport(e, "AbstractReviewer-getRecommendedEase")
             closeReviewer(DeckPicker.RESULT_DB_ERROR, true)
             0
         }
@@ -1611,7 +1612,7 @@ abstract class AbstractFlashcardViewer :
         return dismiss(BuryNote(mCurrentCard!!)) { showThemedToast(this, R.string.buried_note, true) }
     }
 
-    override fun executeCommand(which: ViewerCommand): Boolean {
+    override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
         return if (isControlBlocked() && which !== ViewerCommand.COMMAND_EXIT) {
             false
         } else when (which) {
@@ -1659,11 +1660,11 @@ abstract class AbstractFlashcardViewer :
                 true
             }
             ViewerCommand.COMMAND_EDIT -> {
-                editCard()
+                editCard(fromGesture)
                 true
             }
             ViewerCommand.COMMAND_CARD_INFO -> {
-                openCardInfo()
+                openCardInfo(fromGesture)
                 true
             }
             ViewerCommand.COMMAND_TAG -> {
@@ -1721,6 +1722,10 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
+    fun executeCommand(which: ViewerCommand): Boolean {
+        return executeCommand(which, fromGesture = null)
+    }
+
     protected open fun replayVoice() {
         // intentionally blank
     }
@@ -1737,14 +1742,15 @@ abstract class AbstractFlashcardViewer :
         closeReviewer(RESULT_ABORT_AND_SYNC, true)
     }
 
-    protected fun openCardInfo() {
+    @JvmOverloads
+    protected fun openCardInfo(fromGesture: Gesture? = null) {
         if (mCurrentCard == null) {
             showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
             return
         }
         val intent = Intent(this, CardInfo::class.java)
         intent.putExtra("cardId", mCurrentCard!!.id)
-        startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.FADE)
+        startActivityWithAnimation(intent, getAnimationTransitionFromGesture(fromGesture))
     }
 
     /** Displays a snackbar which does not obscure the answer buttons  */
@@ -2587,5 +2593,19 @@ abstract class AbstractFlashcardViewer :
         @KotlinCleanup("moved from SelectEaseHandler")
         // maximum screen distance from initial touch where we will consider a click related to the touch
         private const val CLICK_ACTION_THRESHOLD = 200
+
+        /**
+         * @return if [gesture] is a swipe, a transition to the same direction of the swipe
+         * else return [ActivityTransitionAnimation.Direction.FADE]
+         */
+        fun getAnimationTransitionFromGesture(gesture: Gesture?): ActivityTransitionAnimation.Direction {
+            return when (gesture) {
+                Gesture.SWIPE_UP -> ActivityTransitionAnimation.Direction.UP
+                Gesture.SWIPE_DOWN -> ActivityTransitionAnimation.Direction.DOWN
+                Gesture.SWIPE_RIGHT -> ActivityTransitionAnimation.Direction.RIGHT
+                Gesture.SWIPE_LEFT -> ActivityTransitionAnimation.Direction.LEFT
+                else -> ActivityTransitionAnimation.Direction.FADE
+            }
+        }
     }
 }

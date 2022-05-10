@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Открыть панель</string>
     <string name="drawer_close">Закрыть панель</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Отобрать по меткам</string>
     <string name="no_tags">Пока меток нет</string>
     <string name="updated_version">Обновлено до версии %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Сохранить написанное</string>
     <string name="enable_whiteboard">Включить доску</string>
     <string name="disable_whiteboard">Отключить доску</string>
@@ -169,7 +168,7 @@
     <string name="import_title">Импорт</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
-    <string name="import_message_add_confirm">Добавить \"%s\" в коллекцию? Это может занять много времени</string>
+    <string name="import_message_add_confirm">Добавить «%s» в коллекцию? Это может занять много времени</string>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
     <string name="import_log_failed_unzip">Не удалось распаковать apkg: %s</string>
     <string name="import_log_failed_copy_to">Не удалось скопировать apkg в %s</string>
@@ -190,7 +189,7 @@
     <string name="export_include_schedule">Вместе с расписанием</string>
     <string name="export_include_media">Вместе с медиафайлами</string>
     <string name="confirm_apkg_export">Экспортировать коллекцию в пакет Anki?</string>
-    <string name="confirm_apkg_export_deck">Экспортировать \"%s\" в файл apkg?</string>
+    <string name="confirm_apkg_export_deck">Экспортировать «%s» в файл apkg?</string>
     <string name="export_in_progress">Пакет Anki экспортируется&#8230;</string>
     <string name="export_successful_title">Отправить Anki-пакет?</string>
     <string name="export_send_button">Отправить</string>
@@ -282,7 +281,7 @@
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Этот файл требует новой версии Anki.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Не удалось загрузить \"%s\".</string>
+    <string name="activity_start_failed_load_url">Не удалось загрузить «%s».</string>
     <string name="activity_start_failed">В системе нет приложения, которое может выполнить это действие.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Фотографии могут быть большими. Возможно, вы захотите сжать или изменить размер изображений в папке медиаданных]]></string>
     <string name="no_browser_notification">Браузер не найден. Посетите сайт с компьютера или телефона: </string>
@@ -433,4 +432,6 @@
     <string name="malicious_archive_entry_outside">Вредоносный архив. Содержит запись за пределами целевого каталога: %s</string>
     <string name="malicious_archive_exceeds_limit">Вредоносный архив. Размер превышает %1$s или содержит более %2$d файлов</string>
     <string name="file_extract_exceeds_storage_space">Размер файла превышает объём памяти</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

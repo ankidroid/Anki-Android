@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">തുറക്കുക ഡ്രോയർ</string>
     <string name="drawer_close">ഡ്രോയർ അടയ്‌ക്കുക</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">ടാഗുകൾ ഫിൽട്ടർ ചെയ്യുക</string>
     <string name="no_tags">നിങ്ങൾ ഇതുവരെ ടാഗുകളൊന്നും ചേർത്തിട്ടില്ല</string>
     <string name="updated_version">%S പതിപ്പിലേക്ക് അപ്‌ഡേറ്റുചെയ്‌തു</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">വൈറ്റ്ബോർഡ് സംരക്ഷിക്കുക</string>
     <string name="enable_whiteboard">വൈറ്റ്ബോർഡ് പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="disable_whiteboard">വൈറ്റ്ബോർഡ് അപ്രാപ്തമാക്കുക</string>
@@ -407,4 +406,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

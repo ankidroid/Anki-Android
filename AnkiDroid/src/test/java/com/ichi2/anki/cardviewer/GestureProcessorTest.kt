@@ -17,52 +17,47 @@ package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
 import android.view.ViewConfiguration
-import com.ichi2.utils.KotlinCleanup
 import io.mockk.every
+import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasSize
 import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Test
-import org.mockito.Mockito.*
-import org.mockito.kotlin.eq
 
-@KotlinCleanup("use mockk for all mocking")
-@KotlinCleanup("`when` -> whenever()")
-@KotlinCleanup("IDE lint")
 class GestureProcessorTest : ViewerCommand.CommandProcessor {
     private val mSut = GestureProcessor(this)
     private val mExecutedCommands: MutableList<ViewerCommand> = ArrayList()
-    override fun executeCommand(which: ViewerCommand): Boolean {
+    override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
         mExecutedCommands.add(which)
         return true
     }
 
-    fun singleResult(): ViewerCommand {
+    private fun singleResult(): ViewerCommand {
         assertThat<List<ViewerCommand>>(mExecutedCommands, hasSize(1))
         return mExecutedCommands[0]
     }
 
     @Test
     fun integrationTest() {
-        val prefs = mock(SharedPreferences::class.java, RETURNS_DEEP_STUBS)
-        `when`(prefs.getString(nullable(String::class.java), nullable(String::class.java))).thenReturn("0")
-        `when`(prefs.getString(eq("gestureTapCenter"), nullable(String::class.java))).thenReturn("1")
-        `when`(prefs.getBoolean(eq("gestureCornerTouch"), anyBoolean())).thenReturn(true)
+        val prefs = mockk<SharedPreferences>(relaxed = true)
+        every { prefs.getString(any(), any()) } returns "0"
+        every { prefs.getString("gestureTapCenter", any()) } returns "1"
+        every { prefs.getBoolean("gestureCornerTouch", any()) } returns true
         mSut.init(prefs)
         mSut.onTap(100, 100, 50f, 50f)
-        assertThat(singleResult(), `is`(ViewerCommand.COMMAND_SHOW_ANSWER))
+        assertThat(singleResult(), equalTo(ViewerCommand.COMMAND_SHOW_ANSWER))
     }
 
     companion object {
-        @KotlinCleanup("scope function")
         @BeforeClass
         @JvmStatic
         fun before() {
             mockkStatic(ViewConfiguration::class)
-            every { ViewConfiguration.get(any()) } answers { mock(ViewConfiguration::class.java) }
+            every { ViewConfiguration.get(any()) } answers { mockk(relaxed = true) }
         }
 
         @JvmStatic

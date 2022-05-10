@@ -49,7 +49,6 @@ import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.OnboardingUtils.Companion.reset
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.analytics.Acra.Companion.onPreferenceChanged
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -65,6 +64,7 @@ import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.CustomSyncServer.getSyncBaseUrlOrDefault
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.anki.web.CustomSyncServer.isEnabled
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -107,11 +107,11 @@ class Preferences : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
         setThemeLegacy(this)
-        enableToolbar()
-
-        // Add a home button to the actionbar
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        enableToolbar().apply {
+            // Add a home button to the actionbar
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+        }
         title = resources.getText(R.string.preferences_title)
 
         val fragment = getInitialFragment(intent)
@@ -140,7 +140,14 @@ class Preferences : AnkiActivity() {
         if (actionBar == null)
             return
 
+        @NeedsTest("check all settings fragments have defined titles")
         actionBar.title = when (fragment) {
+            is GeneralSettingsFragment -> resources.getString(R.string.pref_cat_general)
+            is ReviewingSettingsFragment -> resources.getString(R.string.pref_cat_reviewing)
+            is GesturesSettingsFragment -> resources.getString(R.string.pref_cat_gestures)
+            is ControlsSettingsFragment -> resources.getString(R.string.pref_cat_controls)
+            is AdvancedSettingsFragment -> resources.getString(R.string.pref_cat_advanced)
+            is AppearanceSettingsFragment -> resources.getString(R.string.pref_cat_appearance)
             is AdvancedStatisticsSettingsFragment -> resources.getString(R.string.advanced_statistics_title)
             is CustomSyncServerSettingsFragment -> resources.getString(R.string.custom_sync_server_title)
             is CustomButtonsSettingsFragment -> resources.getString(R.string.custom_buttons)
@@ -454,9 +461,9 @@ class Preferences : AnkiActivity() {
             prefs!!.registerOnSharedPreferenceChangeListener(this)
             // syncAccount's summary can change while preferences are still open (user logs
             // in from preferences screen), so we need to update it here.
-            updatePreference(activity as Preferences?, prefs, "syncAccount")
-            updatePreference(activity as Preferences?, prefs, "custom_sync_server_link")
-            updatePreference(activity as Preferences?, prefs, "advanced_statistics_link")
+            updatePreference(activity as Preferences, prefs, "syncAccount")
+            updatePreference(activity as Preferences, prefs, "custom_sync_server_link")
+            updatePreference(activity as Preferences, prefs, "advanced_statistics_link")
         }
 
         override fun onPause() {
@@ -465,7 +472,7 @@ class Preferences : AnkiActivity() {
         }
 
         override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-            updatePreference(activity as Preferences?, sharedPreferences, key)
+            updatePreference(activity as Preferences, sharedPreferences, key)
         }
 
         @Suppress("deprecation") // setTargetFragment
@@ -494,7 +501,7 @@ class Preferences : AnkiActivity() {
          * @param prefs instance of SharedPreferences
          * @param key key in prefs which is being updated
          */
-        private fun updatePreference(preferencesActivity: Preferences?, prefs: SharedPreferences?, key: String) {
+        private fun updatePreference(preferencesActivity: Preferences, prefs: SharedPreferences?, key: String) {
             try {
                 val screen = preferenceScreen
                 val pref = screen.findPreference<Preference>(key)
@@ -505,51 +512,52 @@ class Preferences : AnkiActivity() {
                 // Handle special cases
                 when (key) {
                     CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, CustomSyncServer.PREFERENCE_CUSTOM_SYNC_BASE, CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER -> // This may be a tad hasty - performed before "back" is pressed.
-                        handleSyncServerPreferenceChange(preferencesActivity!!.baseContext)
+                        handleSyncServerPreferenceChange(preferencesActivity.baseContext)
                     "timeoutAnswer" -> {
                         val keepScreenOn = screen.findPreference<SwitchPreference>("keepScreenOn")
                         keepScreenOn!!.isChecked = (pref as SwitchPreference).isChecked
                     }
-                    LANGUAGE -> preferencesActivity!!.closePreferences()
+                    LANGUAGE -> preferencesActivity.closePreferences()
                     SHOW_PROGRESS -> {
-                        preferencesActivity!!.col.set_config("dueCounts", (pref as SwitchPreference).isChecked)
+                        preferencesActivity.col.set_config("dueCounts", (pref as SwitchPreference).isChecked)
                         preferencesActivity.col.setMod()
                     }
                     SHOW_ESTIMATE -> {
-                        preferencesActivity!!.col.set_config("estTimes", (pref as SwitchPreference).isChecked)
+                        preferencesActivity.col.set_config("estTimes", (pref as SwitchPreference).isChecked)
                         preferencesActivity.col.setMod()
                     }
                     NEW_SPREAD -> {
-                        preferencesActivity!!.col.set_config("newSpread", (pref as ListPreference).value.toInt())
+                        preferencesActivity.col.set_config("newSpread", (pref as ListPreference).value.toInt())
                         preferencesActivity.col.setMod()
                     }
                     TIME_LIMIT -> {
-                        preferencesActivity!!.col.set_config("timeLim", (pref as NumberRangePreferenceCompat).getValue() * 60)
+                        preferencesActivity.col.set_config("timeLim", (pref as NumberRangePreferenceCompat).getValue() * 60)
                         preferencesActivity.col.setMod()
                     }
                     LEARN_CUTOFF -> {
-                        preferencesActivity!!.col.set_config("collapseTime", (pref as NumberRangePreferenceCompat).getValue() * 60)
+                        preferencesActivity.col.set_config("collapseTime", (pref as NumberRangePreferenceCompat).getValue() * 60)
                         preferencesActivity.col.setMod()
                     }
                     USE_CURRENT -> {
-                        preferencesActivity!!.col.set_config("addToCur", "0" == (pref as ListPreference).value)
+                        preferencesActivity.col.set_config("addToCur", "0" == (pref as ListPreference).value)
                         preferencesActivity.col.setMod()
                     }
                     AUTOMATIC_ANSWER_ACTION -> {
-                        preferencesActivity!!.col.set_config(AutomaticAnswerAction.CONFIG_KEY, (pref as ListPreference).value.toInt())
+                        preferencesActivity.col.set_config(AutomaticAnswerAction.CONFIG_KEY, (pref as ListPreference).value.toInt())
                         preferencesActivity.col.setMod()
                     }
                     DAY_OFFSET -> {
-                        preferencesActivity!!.setDayOffset((pref as SeekBarPreferenceCompat).value)
+                        preferencesActivity.setDayOffset((pref as SeekBarPreferenceCompat).value)
                     }
                     PASTE_PNG -> {
-                        preferencesActivity!!.col.set_config("pastePNG", (pref as SwitchPreference).isChecked)
+
+                        preferencesActivity.col.set_config("pastePNG", (pref as SwitchPreference).isChecked)
                         preferencesActivity.col.setMod()
                     }
                     MINIMUM_CARDS_DUE_FOR_NOTIFICATION -> {
                         val listPreference = screen.findPreference<ListPreference>(MINIMUM_CARDS_DUE_FOR_NOTIFICATION)
                         if (listPreference != null) {
-                            preferencesActivity!!.updateNotificationPreference(listPreference)
+                            preferencesActivity.updateNotificationPreference(listPreference)
                             if (listPreference.value.toInt() < PENDING_NOTIFICATIONS_ONLY) {
                                 scheduleNotification(preferencesActivity.col.time, preferencesActivity)
                             } else {
@@ -562,12 +570,12 @@ class Preferences : AnkiActivity() {
                             }
                         }
                     }
-                    AnkiDroidApp.FEEDBACK_REPORT_KEY -> {
-                        val value = prefs!!.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "")
-                        onPreferenceChanged(preferencesActivity!!, value!!)
+                    CrashReportService.FEEDBACK_REPORT_KEY -> {
+                        val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
+                        CrashReportService.onPreferenceChanged(preferencesActivity, value!!)
                     }
                     "syncAccount" -> {
-                        val preferences = AnkiDroidApp.getSharedPrefs(preferencesActivity!!.baseContext)
+                        val preferences = AnkiDroidApp.getSharedPrefs(preferencesActivity.baseContext)
                         val username = preferences.getString("username", "")
                         val syncAccount = screen.findPreference<Preference>("syncAccount")
                         if (syncAccount != null) {
@@ -579,7 +587,7 @@ class Preferences : AnkiActivity() {
                         }
                     }
                     "providerEnabled" -> {
-                        val providerName = ComponentName(preferencesActivity!!, "com.ichi2.anki.provider.CardContentProvider")
+                        val providerName = ComponentName(preferencesActivity, "com.ichi2.anki.provider.CardContentProvider")
                         val pm = preferencesActivity.packageManager
                         val state: Int
                         if ((pref as SwitchPreference).isChecked) {
@@ -592,7 +600,7 @@ class Preferences : AnkiActivity() {
                         pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
                     }
                     NEW_TIMEZONE_HANDLING -> {
-                        if (preferencesActivity!!.col.schedVer() != 1 && preferencesActivity.col.isUsingRustBackend) {
+                        if (preferencesActivity.col.schedVer() != 1 && preferencesActivity.col.isUsingRustBackend) {
                             val sched = preferencesActivity.col.sched
                             val wasEnabled = sched._new_timezone_enabled()
                             val isEnabled = (pref as SwitchPreference).isChecked
@@ -609,14 +617,14 @@ class Preferences : AnkiActivity() {
                             }
                         }
                     }
-                    CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity!!)
-                    AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity!!)
+                    CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
+                    AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                     "gestureCornerTouch" -> {
                         GesturesSettingsFragment.updateGestureCornerTouch(preferencesActivity, screen)
                     }
                 }
                 // Update the summary text to reflect new value
-                preferencesActivity!!.updateSummary(pref)
+                preferencesActivity.updateSummary(pref)
             } catch (e: BadTokenException) {
                 Timber.e(e, "Preferences: BadTokenException on showDialog")
             } catch (e: NumberFormatException) {

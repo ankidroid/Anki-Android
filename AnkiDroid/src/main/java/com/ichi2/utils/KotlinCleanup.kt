@@ -20,7 +20,7 @@ package com.ichi2.utils
 @Target(
     AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
     AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION,
-    AnnotationTarget.FIELD, AnnotationTarget.PROPERTY
+    AnnotationTarget.FIELD, AnnotationTarget.PROPERTY, AnnotationTarget.LOCAL_VARIABLE
 )
 @Retention(AnnotationRetention.SOURCE)
 @Repeatable

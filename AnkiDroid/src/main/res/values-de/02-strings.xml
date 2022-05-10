@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX %</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Navigationsleiste öffnen</string>
     <string name="drawer_close">Navigationsleiste schließen</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Schlagwörter filtern</string>
     <string name="no_tags">Sie haben noch keine Schlagwörter hinzugefügt.</string>
     <string name="updated_version">Aktualisiert auf Version %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Whiteboard speichern</string>
     <string name="enable_whiteboard">Whiteboard aktivieren</string>
     <string name="disable_whiteboard">Whiteboard ausschalten</string>
@@ -343,7 +342,7 @@
     <string name="before_text">HTML vor Auswahl</string>
     <string name="after_text">HTML nach Auswahl</string>
     <string name="add_toolbar_item">Werkzeugleiste-Element erstellen</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="edit_toolbar_item">Toolbar Element bearbeiten</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Element der Werkzeugleiste entfernen?</string>
     <string name="note_editor_paste_too_large">Das Bild ist zu groß zum Einfügen, bitte fügen Sie das Bild manuell ein</string>
@@ -407,4 +406,6 @@
     <string name="malicious_archive_entry_outside">Schädliches Archiv. Enthält Eintrag außerhalb des Zielverzeichnisses: %s</string>
     <string name="malicious_archive_exceeds_limit">Schädliches Archiv. Größe überschreitet %1$s oder enthält mehr als %2$d Dateien</string>
     <string name="file_extract_exceeds_storage_space">Datei-Extrahierung überschreitet Speicherplatz</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

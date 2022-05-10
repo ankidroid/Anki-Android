@@ -54,7 +54,7 @@
     <string name="connection_error_message">네트워크 오류가 발생했습니다.</string>
     <string name="not_logged_in_title">AnkiWeb에 로그인</string>
     <string name="login_create_account_message">클라우드 동기화 서비스를 사용하기 위해서는 제3자 계정에 로그인해야 합니다. 다음 단계에서 만들 수 있습니다.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">이메일 주소</string>
     <string name="password">암호</string>
     <string name="log_in">로그인</string>

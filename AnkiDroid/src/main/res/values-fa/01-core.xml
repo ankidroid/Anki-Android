@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">کل کارتها:</string>
     <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
     <string name="studyoptions_start">مرور کردن</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">گسترش</string>
     <string name="collapse">بستن</string>
     <string name="study_more">بیشتر بخوانید</string>
@@ -70,13 +70,13 @@
         <item quantity="one">%d دقیقه باقیمانده</item>
         <item quantity="other">%d دقیقه باقیمانده</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d ساعت %d باقیمانده است</item>
-        <item quantity="other">%d ساعت %d باقیمانده است</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d روز %d باقیمانده است</item>
-        <item quantity="other">%d روز %d باقیمانده است</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">مجموعه خالی است</string>
     <string name="no_cards_placeholder_description">با استفاده از دکمه +\nشروع به اضافه کردن کارت‌ها کنيد</string>

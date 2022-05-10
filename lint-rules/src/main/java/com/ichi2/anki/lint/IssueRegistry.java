@@ -1,5 +1,7 @@
 package com.ichi2.anki.lint;
 
+import com.android.annotations.Nullable;
+import com.android.tools.lint.client.api.Vendor;
 import com.android.tools.lint.detector.api.ApiKt;
 import com.android.tools.lint.detector.api.Issue;
 import com.ichi2.anki.lint.rules.ConstantJavaFieldDetector;
@@ -65,5 +67,16 @@ public class IssueRegistry extends com.android.tools.lint.client.api.IssueRegist
     @Override
     public int getApi() {
         return ApiKt.CURRENT_API;
+    }
+
+    @Nullable
+    @Override
+    public Vendor getVendor() {
+        return new Vendor(
+                "AnkiDroid",
+                "com.ichi2.anki:lint-rules",
+                "https://github.com/ankidroid/Anki-Android/issues",
+                "https://github.com/ankidroid/Anki-Android"
+        );
     }
 }

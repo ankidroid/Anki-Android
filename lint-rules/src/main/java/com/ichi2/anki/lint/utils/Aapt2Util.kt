@@ -37,13 +37,43 @@
 
 package com.ichi2.anki.lint.utils
 
+import com.ichi2.anki.lint.utils.Aapt2Util.FormatData.DateFormatData
+import com.ichi2.anki.lint.utils.Aapt2Util.FormatData.StringFormatData
+
 /**
+ * CHANGELOG:
+ *
  * Converted from C++
  * https://cs.android.com/android/platform/superproject/+/master:frameworks/base/tools/aapt2/util/Util.cpp;drc=fbb7fe0da32896a871dd395845f1f510b075f8d5
+ *
+ * 2022-04-24: Introduced [FormatData] as return type from [verifyJavaStringFormat]
  */
 object Aapt2Util {
 
-    fun verifyJavaStringFormat(str: String): Boolean {
+    /**
+     * Format string data.
+     * @see [verifyJavaStringFormat]
+     */
+    sealed class FormatData {
+        /** Format string representing a date */
+        object DateFormatData : FormatData()
+        /**
+         * Data regarding a string which will be passed into getString or getQuantityString
+         * @param argCount The number of arguments
+         * @param hasNonPositionalArguments Whether the string contains any non-positional arguments: %1$s
+         * @param string The format string, for debugging
+         */
+        data class StringFormatData(val argCount: Int, val hasNonPositionalArguments: Boolean, val string: String) : FormatData() {
+            /**
+             * Multiple arguments were specified, but some or all were non positional.
+             * Translated strings may rearrange the order of the arguments,
+             * which will break the string.
+             */
+            val isInvalid = argCount > 1 && hasNonPositionalArguments
+        }
+    }
+
+    fun verifyJavaStringFormat(str: String): FormatData {
 
         var argCount = 0
         var nonpositional = false
@@ -108,17 +138,17 @@ object Aapt2Util {
                  */
                 if (index < str.length) {
                     when (c()) {
-                        'D' -> return true
-                        'F' -> return true
-                        'K' -> return true
-                        'M' -> return true
-                        'W' -> return true
-                        'Z' -> return true
-                        'k' -> return true
-                        'm' -> return true
-                        'w' -> return true
-                        'y' -> return true
-                        'z' -> return true
+                        'D' -> return DateFormatData
+                        'F' -> return DateFormatData
+                        'K' -> return DateFormatData
+                        'M' -> return DateFormatData
+                        'W' -> return DateFormatData
+                        'Z' -> return DateFormatData
+                        'k' -> return DateFormatData
+                        'm' -> return DateFormatData
+                        'w' -> return DateFormatData
+                        'y' -> return DateFormatData
+                        'z' -> return DateFormatData
                     }
                 }
             }
@@ -128,13 +158,11 @@ object Aapt2Util {
             }
         }
 
-        if (argCount > 1 && nonpositional) {
-            // Multiple arguments were specified, but some or all were non positional.
-            // Translated strings may rearrange the order of the arguments, which will break the
-            // string.
-            return false
-        }
-        return true
+        return StringFormatData(
+            argCount = argCount,
+            hasNonPositionalArguments = nonpositional,
+            string = str
+        )
     }
 
     /**

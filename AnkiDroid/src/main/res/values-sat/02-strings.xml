@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ </string>
     <string name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ </string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ </string>
     <string name="no_tags">ᱟᱢ ᱴᱮᱜ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱠᱟᱜᱼᱟᱢ </string>
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ  </string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ </string>
     <string name="enable_whiteboard">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ </string>
     <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ </string>
@@ -407,4 +406,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

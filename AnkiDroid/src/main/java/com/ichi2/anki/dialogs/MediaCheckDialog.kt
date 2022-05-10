@@ -20,7 +20,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
         fun showMediaCheckDialog(dialogType: Int)
         fun showMediaCheckDialog(dialogType: Int, checkList: List<List<String>>)
         fun mediaCheck()
-        fun deleteUnused(unused: List<String?>?)
+        fun deleteUnused(unused: List<String>)
         fun dismissAllDialogFragments()
     }
 

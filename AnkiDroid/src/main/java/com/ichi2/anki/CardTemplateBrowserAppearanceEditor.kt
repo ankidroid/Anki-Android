@@ -25,7 +25,6 @@ import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 
@@ -37,16 +36,12 @@ import timber.log.Timber
 class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     private lateinit var mQuestionEditText: EditText
     private lateinit var mAnswerEditText: EditText
-    @KotlinCleanup("Use ?:")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
         super.onCreate(savedInstanceState)
-        var bundle = savedInstanceState
-        if (bundle == null) {
-            bundle = intent.extras
-        }
+        val bundle = savedInstanceState ?: intent.extras
         if (bundle == null) {
             UIUtils.showThemedToast(this, getString(R.string.card_template_editor_card_browser_appearance_failed), true)
             finishActivityWithFade(this)
@@ -60,20 +55,24 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         return true
     }
 
-    @KotlinCleanup("use when")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_confirm) {
-            Timber.i("Save pressed")
-            saveAndExit()
-            return true
-        } else if (item.itemId == R.id.action_restore_default) {
-            Timber.i("Restore Default pressed")
-            showRestoreDefaultDialog()
-            return true
-        } else if (item.itemId == android.R.id.home) {
-            Timber.i("Back Pressed")
-            closeWithDiscardWarning()
-            return true
+        when (item.itemId) {
+            R.id.action_confirm -> {
+                Timber.i("Save pressed")
+                saveAndExit()
+                return true
+            }
+            R.id.action_restore_default -> {
+                Timber.i("Restore Default pressed")
+                showRestoreDefaultDialog()
+                return true
+            }
+            android.R.id.home -> {
+                Timber.i("Back Pressed")
+                closeWithDiscardWarning()
+                return true
+            }
+            else -> {}
         }
         return super.onOptionsItemSelected(item)
     }
@@ -99,14 +98,13 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
             .show()
     }
 
-    @KotlinCleanup("remove variable and call .show() directly on builder")
     private fun showRestoreDefaultDialog() {
-        val builder: MaterialDialog.Builder = MaterialDialog.Builder(this)
+        MaterialDialog.Builder(this)
             .positiveText(R.string.dialog_ok)
             .negativeText(R.string.dialog_cancel)
             .content(R.string.card_template_browser_appearance_restore_default_dialog)
             .onPositive { _, _ -> restoreDefaultAndClose() }
-        builder.show()
+            .show()
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
@@ -125,6 +123,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         mAnswerEditText.setText(bundle.getString(INTENT_ANSWER_FORMAT))
 
         enableToolbar()
+        setTitle(R.string.card_template_browser_appearance_title)
     }
 
     private fun answerHasChanged(intent: Intent): Boolean {
@@ -140,9 +139,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     private val answerFormat: String
         get() = getTextValue(mAnswerEditText)
 
-    @KotlinCleanup("make editText non-null")
-    private fun getTextValue(editText: EditText?): String {
-        return editText!!.text.toString()
+    private fun getTextValue(editText: EditText): String {
+        return editText.text.toString()
     }
 
     private fun restoreDefaultAndClose() {
@@ -167,10 +165,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         finishActivityWithFade(this)
     }
 
-    @KotlinCleanup("remove redundant intent variable")
     fun hasChanges(): Boolean {
         return try {
-            val intent = intent
             questionHasChanged(intent) || answerHasChanged(intent)
         } catch (e: Exception) {
             Timber.w(e, "Failed to detect changes. Assuming true")

@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">全部卡片数量：</string>
     <string name="studyoptions_eta">预计所需时间（分钟）：</string>
     <string name="studyoptions_start">开始学习</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">展开</string>
     <string name="collapse">折叠</string>
     <string name="study_more">学习更多</string>
@@ -68,11 +68,11 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">剩余%d分钟</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="other">剩余 %d 小时 %d</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="other">剩余 %1$d 小时 %2$d</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="other">剩余 %d 天 %d</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="other">剩余 %1$d 天 %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">收藏为空</string>
     <string name="no_cards_placeholder_description">开始添加卡牌\n使用 + 图标。</string>

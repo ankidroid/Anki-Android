@@ -24,24 +24,23 @@ import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.libanki.StdModels
-import com.ichi2.testutils.AnkiAssert
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
 import java.util.*
+import java.util.stream.Stream
 
 @RequiresApi(api = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("extract the deprecated method")
-@KotlinCleanup("`is` -> equalTo")
-@KotlinCleanup("import: assertDoesNotThrow")
-@KotlinCleanup("rename: `val viewer = viewer`")
 class AbstractFlashcardViewerTest : RobolectricTest() {
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
         var answered: Int? = null
@@ -50,7 +49,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         override fun performReload() {
             // intentionally blank
         }
-        @KotlinCleanup("make base property public and remove")
+
         val typedInput get() = super.typedInputText
 
         override fun answerCard(ease: Int) {
@@ -74,53 +73,10 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         }
     }
 
-    @Test
-    fun relinquishFocusIsParsedFromSignal() {
-        val url = "signal:relinquishFocus" // confirmed data from JS transition via debugger.
-        assertEquals(RELINQUISH_FOCUS, getSignalFromUrl(url))
-    }
-
-    @Test
-    fun typeFocusIsParsedFromSignal() {
-        val url = "signal:typefocus"
-        assertEquals(TYPE_FOCUS, getSignalFromUrl(url))
-    }
-
-    @Test
-    fun showAnswerIsParsedFromSignal() {
-        val url = "signal:show_answer"
-        assertEquals(SHOW_ANSWER, getSignalFromUrl(url))
-    }
-
-    // I'd love to turn these int parameterised tests, but it feels like more overhead for just 4 tests.
-    @Test
-    fun ease1IsParsedFromSignal() {
-        val url = "signal:answer_ease1"
-        assertEquals(ANSWER_ORDINAL_1, getSignalFromUrl(url))
-    }
-
-    @Test
-    fun ease2IsParsedFromSignal() {
-        val url = "signal:answer_ease2"
-        assertEquals(ANSWER_ORDINAL_2, getSignalFromUrl(url))
-    }
-
-    @Test
-    fun ease3IsParsedFromSignal() {
-        val url = "signal:answer_ease3"
-        assertEquals(ANSWER_ORDINAL_3, getSignalFromUrl(url))
-    }
-
-    @Test
-    fun ease4IsParsedFromSignal() {
-        val url = "signal:answer_ease4"
-        assertEquals(ANSWER_ORDINAL_4, getSignalFromUrl(url))
-    }
-
-    @Test
-    fun invalidEaseIsParsedFromSignal() {
-        val url = "signal:answer_ease0"
-        assertEquals(SIGNAL_NOOP, getSignalFromUrl(url))
+    @ParameterizedTest
+    @MethodSource("getSignalFromUrlTest_args")
+    fun getSignalFromUrlTest(url: String, signal: Int) {
+        assertEquals(getSignalFromUrl(url), signal)
     }
 
     @Test
@@ -128,20 +84,19 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         // #5944 - input came in as: 'typeblurtext:%'. We've fixed the encoding, but want to make sure there's no crash
         // as JS can call this function with arbitrary data.
         val url = "typeblurtext:%"
-
-        val viewer = viewer
-        AnkiAssert.assertDoesNotThrow { viewer.handleUrlFromJavascript(url) }
+        val viewer: NonAbstractFlashcardViewer = getViewer(true)
+        assertDoesNotThrow { viewer.handleUrlFromJavascript(url) }
     }
 
     @Test
     fun validEncodingSetsAnswerCorrectly() {
         // 你好%
         val url = "typeblurtext:%E4%BD%A0%E5%A5%BD%25"
-        val viewer = viewer
+        val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
         viewer.handleUrlFromJavascript(url)
 
-        assertThat(viewer.typedInput, `is`("你好%"))
+        assertThat(viewer.typedInput, equalTo("你好%"))
     }
 
     @Test
@@ -150,9 +105,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         // 7363
         addNoteUsingBasicTypedModel("Hello", "World")
 
-        val viewer = viewer
+        val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
-        assertThat(viewer.correctTypedAnswer, `is`("World"))
+        assertThat(viewer.correctTypedAnswer, equalTo("World"))
 
         waitForAsyncTasksToComplete()
 
@@ -165,7 +120,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        assertThat(viewer.correctTypedAnswer, `is`("David"))
+        assertThat(viewer.correctTypedAnswer, equalTo("David"))
     }
 
     @Test
@@ -174,9 +129,9 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         // 7363
         addNoteUsingBasicTypedModel("Hello", "World")
 
-        val viewer = viewer
+        val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
-        assertThat(viewer.correctTypedAnswer, `is`("World"))
+        assertThat(viewer.correctTypedAnswer, equalTo("World"))
 
         viewer.displayCardAnswer()
 
@@ -193,7 +148,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        assertThat(viewer.correctTypedAnswer, `is`("David"))
+        assertThat(viewer.correctTypedAnswer, equalTo("David"))
         assertThat(viewer.cardContent, not(containsString("World")))
         assertThat(viewer.cardContent, containsString("David"))
     }
@@ -202,12 +157,13 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun testCommandPerformsAnswerCard() {
         // Regression for #8527/#8572
         // Note: Couldn't get a spy working, so overriding the method
-        val viewer = viewer
 
-        assertThat("Displaying question", viewer.isDisplayingAnswer, `is`(false))
+        val viewer: NonAbstractFlashcardViewer = getViewer(true)
+
+        assertThat("Displaying question", viewer.isDisplayingAnswer, equalTo(false))
         viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
 
-        assertThat("Displaying answer", viewer.isDisplayingAnswer, `is`(true))
+        assertThat("Displaying answer", viewer.isDisplayingAnswer, equalTo(true))
 
         viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
 
@@ -216,7 +172,6 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @Test
     fun defaultLanguageIsNull() {
-        val viewer = viewer
         assertThat(viewer.hintLocale, nullValue())
     }
 
@@ -243,11 +198,11 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun automaticAnswerDisabledProperty() {
         val controller = getViewerController(true)
         val viewer = controller.get()
-        assertThat("not disabled initially", viewer.mAutomaticAnswer.isDisabled, `is`(false))
+        assertThat("not disabled initially", viewer.mAutomaticAnswer.isDisabled, equalTo(false))
         controller.pause()
-        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled, `is`(true))
+        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled, equalTo(true))
         controller.resume()
-        assertThat("enabled after resume", viewer.mAutomaticAnswer.isDisabled, `is`(false))
+        assertThat("enabled after resume", viewer.mAutomaticAnswer.isDisabled, equalTo(false))
     }
 
     @Test
@@ -258,7 +213,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         viewer.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
         assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true))
         controller.pause()
-        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled, `is`(true))
+        assertThat("disabled after pause", viewer.mAutomaticAnswer.isDisabled, equalTo(true))
         assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false))
         viewer.mOnRenderProcessGoneDelegate.onRenderProcessGone(viewer.webView!!, mock(RenderProcessGoneDetail::class.java))
         assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false))
@@ -296,5 +251,20 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         advanceRobolectricLooperWithSleep()
         return multimediaController
+    }
+    companion object {
+        @JvmStatic
+        fun getSignalFromUrlTest_args(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of("signal:show_answer", SHOW_ANSWER),
+                Arguments.of("signal:typefocus", TYPE_FOCUS),
+                Arguments.of("signal:relinquishFocus", RELINQUISH_FOCUS),
+                Arguments.of("signal:answer_ease1", ANSWER_ORDINAL_1),
+                Arguments.of("signal:answer_ease2", ANSWER_ORDINAL_2),
+                Arguments.of("signal:answer_ease3", ANSWER_ORDINAL_3),
+                Arguments.of("signal:answer_ease4", ANSWER_ORDINAL_4),
+                Arguments.of("signal:answer_ease0", SIGNAL_NOOP)
+            )
+        }
     }
 }

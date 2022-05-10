@@ -48,6 +48,7 @@
     <string name="disabled">Devredışı</string>
     <string name="enabled">Etkin</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category">General</string>
     <string name="pref_cat_general_summ">Genel ayarlar</string>
     <string name="pref_cat_reviewing" maxLength="41">Çalışma</string>
     <string name="pref_cat_reviewing_summ">Desteye özel olmayan çalışma ayarları</string>
@@ -139,7 +140,7 @@
     <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
     <string name="sync_status_badge" maxLength="41">Senkronizasyon durumunu göster</string>
     <string name="sync_status_badge_summ">Değişiklikler yüklenebildiğinde senkronizasyon simgesini değiştir</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Gündüz teması</string>
     <string name="night_theme" maxLength="41">Gece teması</string>
     <string name="default_font" maxLength="41">Varsayılan yazı tipi</string>
@@ -254,7 +255,7 @@
     <string name="deck_conf_new_cards" maxLength="41">Yeni kartlar</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Çalışma</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Hatâlar</string>
-    <string name="deck_conf_general" maxLength="41">Genel</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Genel</string>
     <string name="deck_conf_reminders" maxLength="41">Hatırlatmalar</string>
     <string name="deck_conf_steps" maxLength="41">Adımlar (dakika)</string>
     <string name="deck_conf_order" maxLength="41">Sıralama</string>

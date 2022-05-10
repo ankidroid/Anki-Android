@@ -24,6 +24,7 @@ import android.os.Bundle;
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public abstract class FieldControllerBase implements IFieldController {
@@ -35,12 +36,13 @@ public abstract class FieldControllerBase implements IFieldController {
 
 
     @Override
-    public void setField(IField field) {
+    public void setField(@NonNull IField field) {
         mField = field;
     }
 
 
     @Override
+    // current code seems to require note to be nullable!
     public void setNote(IMultimediaEditableNote note) {
         mNote = note;
     }
@@ -53,13 +55,13 @@ public abstract class FieldControllerBase implements IFieldController {
 
 
     @Override
-    public void setEditingActivity(MultimediaEditFieldActivity activity) {
+    public void setEditingActivity(@NonNull MultimediaEditFieldActivity activity) {
         mActivity = activity;
     }
 
 
     @Override
-    public void loadInstanceState(Bundle savedInstancedState) { /* Default implementation does nothing */ }
+    public void loadInstanceState(@Nullable Bundle savedInstancedState) { /* Default implementation does nothing */ }
 
 
     @Override

@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">ہاں</string>
+    <string name="yes">yes</string>
     <!-- Navigation drawer items-->
     <string name="decks">ڈیک</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">کارڈ براؤزر</string>
@@ -58,25 +58,25 @@
     <string name="studyoptions_total_cards">کل کارڈ:</string>
     <string name="studyoptions_eta">تخمینی بقیہ وقت (منٹ):</string>
     <string name="studyoptions_start">مطالعہ</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">پھیلائیں</string>
     <string name="collapse">بند کریں</string>
     <string name="study_more">مزید مطالعہ کریں</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">کیا حال ہے</item>
+        <item quantity="one">%1$d card due (%2$s)</item>
         <item quantity="other">%1$d cards due (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d منٹ باقی</item>
         <item quantity="other">%d منٹ باقی</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>

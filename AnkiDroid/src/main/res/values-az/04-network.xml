@@ -54,7 +54,7 @@
     <string name="connection_error_message">Bir səhv baş verdi</string>
     <string name="not_logged_in_title">AnkiWeb-ə daxil olun</string>
     <string name="login_create_account_message">Bulud senkronizasyon xidmətindən istifadə etmək üçün üçüncü tərəf hesabına daxil olmalısınız.Bir sonrakı addımda bir yarada bilərsiniz.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">E-poçt ünvanı</string>
     <string name="password">parol</string>
     <string name="log_in">Daxil olmaq</string>

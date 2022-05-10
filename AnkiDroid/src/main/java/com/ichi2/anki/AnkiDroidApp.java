@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -34,57 +33,31 @@ import android.os.LocaleList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.core.content.pm.PackageInfoCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.util.Log;
-import android.view.ViewConfiguration;
 import android.webkit.CookieManager;
 
-import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog;
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu;
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu;
-import com.ichi2.anki.exception.ManuallyReportedException;
 import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
-import com.ichi2.utils.KotlinCleanup;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
-import com.ichi2.utils.WebViewDebugging;
-
-import org.acra.ACRA;
-import org.acra.ReportField;
-import org.acra.config.CoreConfigurationBuilder;
-import org.acra.config.DialogConfigurationBuilder;
-import org.acra.config.HttpSenderConfigurationBuilder;
-import org.acra.config.LimiterConfigurationBuilder;
-import org.acra.config.LimiterData;
-import org.acra.config.ToastConfigurationBuilder;
-import org.acra.sender.HttpSender;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.webkit.WebViewCompat;
-import leakcanary.AppWatcher;
-import leakcanary.DefaultOnHeapAnalyzedListener;
-import leakcanary.LeakCanary;
-import shark.AndroidMetadataExtractor;
-import shark.AndroidObjectInspectors;
-import shark.AndroidReferenceMatchers;
-import shark.KeyedWeakReferenceFinder;
-import shark.ReferenceMatcher;
 import timber.log.Timber;
+
+import static com.ichi2.anki.CrashReportService.sendExceptionReport;
 import static timber.log.Timber.DebugTree;
 
 /**
@@ -116,15 +89,7 @@ public class AnkiDroidApp extends Application {
      */
     public static boolean TESTING_USE_V16_BACKEND = false;
 
-    private static final String WEBVIEW_VER_NAME = "WEBVIEW_VER_NAME";
-
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
-
-    // ACRA constants used for stored preferences
-    public static final String FEEDBACK_REPORT_KEY = "reportErrorMode";
-    public static final String FEEDBACK_REPORT_ASK = "2";
-    public static final String FEEDBACK_REPORT_NEVER = "1";
-    public static final String FEEDBACK_REPORT_ALWAYS = "0";
 
     // Tag for logging messages.
     public static final String TAG = "AnkiDroid";
@@ -140,9 +105,6 @@ public class AnkiDroidApp extends Application {
      * all collections should have.
      */
     public static final int CHECK_DB_AT_VERSION = 21000172;
-
-    /** Our ACRA configurations, initialized during onCreate() */
-    private CoreConfigurationBuilder mAcraCoreConfigBuilder;
 
     /** An exception if the WebView subsystem fails to load */
     @Nullable
@@ -166,37 +128,6 @@ public class AnkiDroidApp extends Application {
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public static void simulateRestoreFromBackup() {
         sInstance = null;
-    }
-
-
-    public static boolean isAcraEnabled(Context context, boolean defaultValue) {
-        if (!getSharedPrefs(context).contains(ACRA.PREF_DISABLE_ACRA)) {
-            // we shouldn't use defaultValue below, as it would be inverted which complicated understanding.
-            Timber.w("No default value for '%s'", ACRA.PREF_DISABLE_ACRA);
-            return defaultValue;
-        }
-        return !getSharedPrefs(context).getBoolean(ACRA.PREF_DISABLE_ACRA, true);
-    }
-
-
-    /**
-     * Get the ACRA ConfigurationBuilder - use this followed by setting it to modify the config
-     * @return ConfigurationBuilder for the current ACRA config
-     */
-    public CoreConfigurationBuilder getAcraCoreConfigBuilder() {
-        return mAcraCoreConfigBuilder;
-    }
-
-
-    /**
-     * Set the ACRA ConfigurationBuilder and <b>re-initialize the ACRA system</b> with the contents
-     * @param acraCoreConfigBuilder the full ACRA config to initialize ACRA with
-     */
-    private void setAcraConfigBuilder(CoreConfigurationBuilder acraCoreConfigBuilder) {
-        this.mAcraCoreConfigBuilder = acraCoreConfigBuilder;
-        ACRA.init(this, acraCoreConfigBuilder);
-        ACRA.getErrorReporter().putCustomData(WEBVIEW_VER_NAME, fetchWebViewInformation().get(WEBVIEW_VER_NAME));
-        ACRA.getErrorReporter().putCustomData("WEBVIEW_VER_CODE", fetchWebViewInformation().get("WEBVIEW_VER_CODE"));
     }
 
     @Override
@@ -230,91 +161,19 @@ public class AnkiDroidApp extends Application {
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
 
-        // Setup logging and crash reporting
-        mAcraCoreConfigBuilder = new CoreConfigurationBuilder(this)
-                .setBuildConfigClass(org.acra.dialog.BuildConfig.class)
-                .setExcludeMatchingSharedPreferencesKeys("username", "hkey")
-                .setReportContent(ReportField.REPORT_ID,
-                        ReportField.APP_VERSION_CODE,
-                        ReportField.APP_VERSION_NAME,
-                        ReportField.PACKAGE_NAME,
-                        ReportField.FILE_PATH,
-                        ReportField.PHONE_MODEL,
-                        ReportField.ANDROID_VERSION,
-                        ReportField.BUILD,
-                        ReportField.BRAND,
-                        ReportField.PRODUCT,
-                        ReportField.TOTAL_MEM_SIZE,
-                        ReportField.AVAILABLE_MEM_SIZE,
-                        ReportField.BUILD_CONFIG,
-                        ReportField.CUSTOM_DATA,
-                        ReportField.STACK_TRACE,
-                        ReportField.STACK_TRACE_HASH,
-                        ReportField.CRASH_CONFIGURATION,
-                        ReportField.USER_COMMENT,
-                        ReportField.USER_APP_START_DATE,
-                        ReportField.USER_CRASH_DATE,
-                        ReportField.LOGCAT,
-                        ReportField.INSTALLATION_ID,
-                        ReportField.ENVIRONMENT,
-                        ReportField.SHARED_PREFERENCES,
-                        ReportField.MEDIA_CODEC_LIST,
-                        ReportField.THREAD_DETAILS)
-                .setLogcatArguments("-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S");
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class)
-                .setReportDialogClass(AnkiDroidCrashReportDialog.class)
-                .setResCommentPrompt(R.string.empty_string)
-                .setResTitle(R.string.feedback_title)
-                .setResText(R.string.feedback_default_text)
-                .setResPositiveButtonText(R.string.feedback_report)
-                .setResIcon(R.drawable.logo_star_144dp)
-                .setEnabled(true);
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(HttpSenderConfigurationBuilder.class)
-                .setHttpMethod(HttpSender.Method.PUT)
-                .setUri(BuildConfig.ACRA_URL)
-                .setEnabled(true);
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(ToastConfigurationBuilder.class)
-                .setResText(R.string.feedback_auto_toast_text)
-                .setEnabled(true);
-        mAcraCoreConfigBuilder.getPluginConfigurationBuilder(LimiterConfigurationBuilder.class)
-                .setExceptionClassLimit(1000)
-                .setStacktraceLimit(1)
-                .setEnabled(true);
+        CrashReportService.initialize(this);
 
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag
             Timber.plant(new DebugTree());
-            setDebugACRAConfig(preferences);
-
-            List<ReferenceMatcher> referenceMatchers = new ArrayList<>();
-            // Add known memory leaks to 'referenceMatchers'
-            matchKnownMemoryLeaks(referenceMatchers);
-
-            // AppWatcher manual install if not already installed
-            if (!AppWatcher.INSTANCE.isInstalled()) {
-                AppWatcher.INSTANCE.manualInstall(this);
-            }
-
-            // Show 'Leaks' app launcher. It has been removed by default via constants.xml.
-            LeakCanary.INSTANCE.showLeakDisplayActivityLauncherIcon(true);
+            LeakCanaryConfiguration.setInitialConfigFor(this);
         } else {
             Timber.plant(new ProductionCrashReportingTree());
-            setProductionACRAConfig(preferences);
-            disableLeakCanary();
+            LeakCanaryConfiguration.disable();
         }
         Timber.tag(TAG);
 
         Timber.d("Startup - Application Start");
-
-        // The ACRA process needs a WebView for optimal UsageAnalytics values but it can't have the same data directory.
-        // Analytics falls back to a sensible default if this is not set.
-        if (ACRA.isACRASenderServiceProcess() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            try {
-                WebViewDebugging.setDataDirectorySuffix("acra");
-            } catch (Exception e) {
-                Timber.w(e, "Failed to set WebView data directory");
-            }
-        }
 
         // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
         UsageAnalytics.initialize(this);
@@ -323,7 +182,7 @@ public class AnkiDroidApp extends Application {
         }
 
         //Stop after analytics and logging are initialised.
-        if (ACRA.isACRASenderServiceProcess()) {
+        if (CrashReportService.isProperServiceProcess()) {
             Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process");
             return;
         }
@@ -420,52 +279,6 @@ public class AnkiDroidApp extends Application {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
-    /** Used when we don't have an exception to throw, but we know something is wrong and want to diagnose it */
-    public static void sendExceptionReport(@NonNull String message, String origin) {
-        sendExceptionReport(new ManuallyReportedException(message), origin, null);
-    }
-
-    public static void sendExceptionReport(Throwable e, String origin) {
-        sendExceptionReport(e, origin, null);
-    }
-
-
-    public static void sendExceptionReport(Throwable e, String origin, @Nullable String additionalInfo) {
-        sendExceptionReport(e, origin, additionalInfo, false);
-    }
-
-
-    public static void sendExceptionReport(Throwable e, String origin, @Nullable String additionalInfo, boolean onlyIfSilent) {
-        UsageAnalytics.sendAnalyticsException(e, false);
-
-        sSentExceptionReportHack = true;
-
-        if (onlyIfSilent) {
-            String reportMode = getSharedPrefs(getInstance().getApplicationContext()).getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK);
-            if (!FEEDBACK_REPORT_ALWAYS.equals(reportMode)) {
-                Timber.i("sendExceptionReport - onlyIfSilent true, but ACRA is not 'always accept'. Skipping report send.");
-                return;
-            }
-        }
-
-        ACRA.getErrorReporter().putCustomData("origin", origin);
-        ACRA.getErrorReporter().putCustomData("additionalInfo", additionalInfo);
-        ACRA.getErrorReporter().handleException(e);
-    }
-
-    /**
-     * If you want to make sure that the next exception of any time is posted, you need to clear limiter data
-     *
-     * @param context the context leading to the directory with ACRA limiter data
-     */
-    public static void deleteACRALimiterData(Context context) {
-        try {
-            new LimiterData().store(context);
-        } catch (Exception e) {
-            Timber.w(e, "Unable to clear ACRA limiter data");
-        }
-    }
-
     /**
      *  Returns a Context with the correct, saved language, to be attached using attachBase().
      *  For old APIs directly sets language using deprecated functions
@@ -528,61 +341,6 @@ public class AnkiDroidApp extends Application {
 
         return newConfig;
     }
-
-    /**
-     * Turns ACRA reporting off completely and persists it to shared prefs
-     * But expands logcat search in case developer manually re-enables it
-     *
-     * @param prefs SharedPreferences object the reporting state is persisted in
-     */
-    private void setDebugACRAConfig(SharedPreferences prefs) {
-        // Disable crash reporting
-        setAcraReportingMode(FEEDBACK_REPORT_NEVER);
-        prefs.edit().putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER).apply();
-        // Use a wider logcat filter in case crash reporting manually re-enabled
-        String [] logcatArgs = { "-t", "300", "-v", "long", "ACRA:S"};
-        setAcraConfigBuilder(getAcraCoreConfigBuilder().setLogcatArguments(logcatArgs));
-    }
-
-
-    /**
-     * Puts ACRA Reporting mode into user-specified mode, with default of "ask first"
-     *
-     * @param prefs SharedPreferences object the reporting state is persisted in
-     */
-    private void setProductionACRAConfig(SharedPreferences prefs) {
-        // Enable or disable crash reporting based on user setting
-        setAcraReportingMode(prefs.getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK));
-    }
-
-
-    /**
-     * Set the reporting mode for ACRA based on the value of the FEEDBACK_REPORT_KEY preference
-     * @param value value of FEEDBACK_REPORT_KEY preference
-     */
-    public void setAcraReportingMode(String value) {
-        SharedPreferences.Editor editor = getSharedPrefs(this).edit();
-        // Set the ACRA disable value
-        if (value.equals(FEEDBACK_REPORT_NEVER)) {
-            editor.putBoolean(ACRA.PREF_DISABLE_ACRA, true);
-        } else {
-            editor.putBoolean(ACRA.PREF_DISABLE_ACRA, false);
-            // Switch between auto-report via toast and manual report via dialog
-            CoreConfigurationBuilder builder = getAcraCoreConfigBuilder();
-            DialogConfigurationBuilder dialogBuilder = builder.getPluginConfigurationBuilder(DialogConfigurationBuilder.class);
-            ToastConfigurationBuilder toastBuilder = builder.getPluginConfigurationBuilder(ToastConfigurationBuilder.class);
-            if (value.equals(FEEDBACK_REPORT_ALWAYS)) {
-                dialogBuilder.setEnabled(false);
-                toastBuilder.setResText(R.string.feedback_auto_toast_text);
-            } else if (value.equals(FEEDBACK_REPORT_ASK)) {
-                dialogBuilder.setEnabled(true);
-                toastBuilder.setResText(R.string.feedback_for_manual_toast_text);
-            }
-            setAcraConfigBuilder(builder);
-        }
-        editor.apply();
-    }
-
 
     public static Intent getMarketIntent(Context context) {
         final String uri = context.getString(CompatHelper.isKindle() ? R.string.link_market_kindle : R.string.link_market);
@@ -730,70 +488,5 @@ public class AnkiDroidApp extends Application {
                     break;
             }
         }
-    }
-
-    @NonNull
-    private HashMap<String, String> fetchWebViewInformation() {
-        HashMap<String, String> webViewInfo = new HashMap<>();
-        webViewInfo.put(WEBVIEW_VER_NAME, "");
-        webViewInfo.put("WEBVIEW_VER_CODE", "");
-        try {
-            PackageInfo pi = WebViewCompat.getCurrentWebViewPackage(this);
-            if (pi == null) {
-                Timber.w("Could not get WebView package information");
-                return webViewInfo;
-            }
-            webViewInfo.put(WEBVIEW_VER_NAME, pi.versionName);
-            webViewInfo.put("WEBVIEW_VER_CODE", String.valueOf(PackageInfoCompat.getLongVersionCode(pi)));
-        } catch (Throwable e) {
-            Timber.w(e);
-        }
-        return webViewInfo;
-    }
-
-    /**
-     * Matching known library leaks or leaks which have been already reported previously.
-     */
-    @KotlinCleanup("Only pass referenceMatchers to copy() method after conversion to Kotlin")
-    private void matchKnownMemoryLeaks(List<ReferenceMatcher> knownLeaks) {
-        List<ReferenceMatcher> referenceMatchers = AndroidReferenceMatchers.Companion.getAppDefaults();
-        referenceMatchers.addAll(knownLeaks);
-
-        // Passing default values will not be required after migration to Kotlin.
-        LeakCanary.setConfig(LeakCanary.getConfig().copy(
-                true,
-                false,
-                5,
-                referenceMatchers,
-                AndroidObjectInspectors.Companion.getAppDefaults(),
-                DefaultOnHeapAnalyzedListener.Companion.create(),
-                AndroidMetadataExtractor.INSTANCE,
-                true,
-                7,
-                false,
-                KeyedWeakReferenceFinder.INSTANCE,
-                false
-        ));
-    }
-
-    /**
-     * Disable LeakCanary
-     */
-    @KotlinCleanup("Only pass relevant arguments to copy() method after conversion to Kotlin")
-    private void disableLeakCanary() {
-        LeakCanary.setConfig(LeakCanary.getConfig().copy(
-                false,
-                false,
-                0,
-                AndroidReferenceMatchers.Companion.getAppDefaults(),
-                AndroidObjectInspectors.Companion.getAppDefaults(),
-                DefaultOnHeapAnalyzedListener.Companion.create(),
-                AndroidMetadataExtractor.INSTANCE,
-                false,
-                0,
-                false,
-                KeyedWeakReferenceFinder.INSTANCE,
-                false
-        ));
     }
 }

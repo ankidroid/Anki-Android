@@ -22,15 +22,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.IntentHandler.Companion.getLaunchType
 import com.ichi2.anki.IntentHandler.LaunchType
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("`is` -> equalTo")
 class IntentHandlerTest {
     // COULD_BE_BETTER: We're testing class internals here, would like to see these tests be replaced with
     // higher-level tests at a later date when we better extract dependencies
@@ -40,7 +38,7 @@ class IntentHandlerTest {
 
         val expected = getLaunchType(intent)
 
-        assertThat(expected, `is`(LaunchType.FILE_IMPORT))
+        assertThat(expected, equalTo(LaunchType.FILE_IMPORT))
     }
 
     @Test
@@ -49,7 +47,7 @@ class IntentHandlerTest {
 
         val expected = getLaunchType(intent)
 
-        assertThat(expected, `is`(LaunchType.SYNC))
+        assertThat(expected, equalTo(LaunchType.SYNC))
     }
 
     @Test
@@ -58,7 +56,7 @@ class IntentHandlerTest {
 
         val expected = getLaunchType(intent)
 
-        assertThat(expected, `is`(LaunchType.REVIEW))
+        assertThat(expected, equalTo(LaunchType.REVIEW))
     }
 
     @Test
@@ -67,7 +65,7 @@ class IntentHandlerTest {
 
         val expected = getLaunchType(intent)
 
-        assertThat(expected, `is`(LaunchType.DEFAULT_START_APP_IF_NEW))
+        assertThat(expected, equalTo(LaunchType.DEFAULT_START_APP_IF_NEW))
     }
 
     @Test
@@ -78,6 +76,6 @@ class IntentHandlerTest {
 
         val expected = getLaunchType(intent)
 
-        assertThat(expected, `is`(LaunchType.DEFAULT_START_APP_IF_NEW))
+        assertThat(expected, equalTo(LaunchType.DEFAULT_START_APP_IF_NEW))
     }
 }

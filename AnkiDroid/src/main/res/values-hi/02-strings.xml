@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">दराज़ खोलें</string>
     <string name="drawer_close">दराज़ बंद करें</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">टैग छानें</string>
     <string name="no_tags">अपने अभी तक कोई टैग नहीं जोड़ा है</string>
     <string name="updated_version">%s संस्करण को अद्यतित किया गया</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">श्वेतपट्ट सहेजें</string>
     <string name="enable_whiteboard">श्वेतपट्ट सक्षम करें</string>
     <string name="disable_whiteboard">श्वेतपट्ट अक्षम करें</string>
@@ -135,7 +134,7 @@
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
         <item quantity="one">%1$d मिनट</item>
-        <item quantity="other">मिनट</item>
+        <item quantity="other">मिनट %1$d</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid कार्ड</string>
     <string name="note_editor_copy_note">नोट कॉपी करें</string>
@@ -407,4 +406,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

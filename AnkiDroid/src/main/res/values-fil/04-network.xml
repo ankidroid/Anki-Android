@@ -54,7 +54,7 @@
     <string name="connection_error_message">May network error na nangyari</string>
     <string name="not_logged_in_title">Mag log in sa AnkiWeb</string>
     <string name="login_create_account_message">Kailangan mong mag login sa isang third party na account upang magamit ang cloud sync service. Maari kang gumawa ng isa sa mga susunod na hakbang.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Email address</string>
     <string name="password">Password</string>
     <string name="log_in">Mag login</string>

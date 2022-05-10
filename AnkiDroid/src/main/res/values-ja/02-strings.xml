@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">引き出しメニューを開く</string>
     <string name="drawer_close">引き出しメニューを閉じる</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">フィルター (前方一致検索)</string>
     <string name="no_tags">まだタグが一つも作成されていません</string>
     <string name="updated_version">バージョン%sへアップデートしました</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">ホワイトボードの内容を保存</string>
     <string name="enable_whiteboard">ホワイトボード機能をオン</string>
     <string name="disable_whiteboard">ホワイトボード機能をオフ</string>
@@ -394,4 +393,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Montri tirmenuon</string>
     <string name="drawer_close">Kaŝi tirmenuon</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Filtri etikedojn</string>
     <string name="no_tags">Vi ankoraŭ aldonis neniun etikedon</string>
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Konservi skribtabulon</string>
     <string name="enable_whiteboard">Aktivigi skribtabulon</string>
     <string name="disable_whiteboard">Malaktivigi skribtabulon</string>
@@ -343,8 +342,8 @@
     <string name="before_text">HTML antaŭ elektaĵo</string>
     <string name="after_text">HTML post elektaĵo</string>
     <string name="add_toolbar_item">Krei elementon de ilarstrio</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="edit_toolbar_item">Redakti elementon de ilarstrio</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enigu HTML-kodon, kiu estos aldonita antaŭ kaj post la elektita teksto\n\nFrapetadu elementon de ilarstrio por redakti aŭ forigi ĝin</string>
     <string name="remove_toolbar_item">Ĉu forigi elementon de ilarstrio?</string>
     <string name="note_editor_paste_too_large">La bildo estas tro granda por alglui, enmetu la bildon permane</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Restarigado de Android-sekurkopio. Reprovu</string>
@@ -402,9 +401,11 @@
     <string name="scoped_storage_migrate">Movi datumojn</string>
     <string name="search_card_js_api_no_results">Serĉ-rezulto estas malplena</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon">%s ne estas ĝusta JavaScript-aldonaĵ-pakaĵo</string>
+    <string name="could_not_create_dir">Ne povis krei dosierujon %s</string>
+    <string name="malicious_archive_entry_outside">Erara arĥivo: ĝi enhavas elementon ekster la alcela dosierujo: %s</string>
+    <string name="malicious_archive_exceeds_limit">Erara arĥivo: ĝia grando superas %1$s aŭ ĝi enhavas pli ol %2$d dosieroj</string>
+    <string name="file_extract_exceeds_storage_space">Elpakigota(j) dosiero(j) superas la disponeblan spacon</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

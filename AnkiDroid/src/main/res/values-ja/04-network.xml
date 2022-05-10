@@ -54,7 +54,7 @@
     <string name="connection_error_message">ネットワークエラーが発生しました</string>
     <string name="not_logged_in_title">AnkiWebへのログイン</string>
     <string name="login_create_account_message">サードパーティーのクラウド同期サービスを使用するため、このサービスのアカウントにログインする必要があります。（アカウントをお持ちでない場合は、ログイン画面の下部から新規登録の手続きが行えます。）</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">登録済みアカウントのメールアドレス</string>
     <string name="password">パスワード</string>
     <string name="log_in">ログイン</string>

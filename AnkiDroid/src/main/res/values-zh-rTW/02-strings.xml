@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">開啟側欄</string>
     <string name="drawer_close">關閉側欄</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">篩選標籤</string>
     <string name="no_tags">你還沒新增任何標籤</string>
     <string name="updated_version">更新到版本 %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">儲存白板</string>
     <string name="enable_whiteboard">開啟白板</string>
     <string name="disable_whiteboard">關閉白板</string>
@@ -330,7 +329,7 @@
     <string name="before_text">選取內容前的 HTML</string>
     <string name="after_text">選取內容後的 HTML</string>
     <string name="add_toolbar_item">建立工具列項目</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="edit_toolbar_item">編輯工具列項目</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">是否移除工具列項目？</string>
     <string name="note_editor_paste_too_large">此圖像太大，無法貼上，請手動插入</string>
@@ -394,4 +393,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

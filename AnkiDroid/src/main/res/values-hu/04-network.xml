@@ -54,7 +54,7 @@
     <string name="connection_error_message">Hálózati hiba történt.</string>
     <string name="not_logged_in_title">Bejelentkezés az AnkiWebre</string>
     <string name="login_create_account_message">A cloud sync használatához be kell jelentkezned egy felhasználói fiókkal. A következő lépésben létrehozhatsz egyet.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Email cím</string>
     <string name="password">Jelszó</string>
     <string name="log_in">Bejelentkezés</string>

@@ -28,16 +28,16 @@ on:
       - '**/*.gradle'
       - 'gradle/**'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lintDebug:
     name: Lint Debug
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          all_but_latest: true
-
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -54,11 +54,13 @@ jobs:
         run: java -fullversion 2>&1 | grep '11.0'
         shell: bash
 
-      - name: Gradle Cache
-        uses: actions/cache@v3
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
         with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}-v1
+          # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
+          # Builds on other branches will only read from main branch cache writes
+          # Comment this and the with: above out for performance testing on a branch
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
@@ -67,19 +69,15 @@ jobs:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew :AnkiDroid:compilePlayDebugJavaWithJavac compileLint lint-rules:compileTestJava
+          command: ./gradlew :AnkiDroid:compilePlayDebugJavaWithJavac compileLint lint-rules:compileTestJava --daemon
 
       - name: Run Lint Debug
-        # "lint" is run under the 'Amazon' flavor, so slow in CI
-        # "lintPlayRelease" doesn't test androidTest
-        # "lintPlayDebug" doesn't test the API
-        run: ./gradlew lintPlayDebug :api:lintDebug
-
-      - name: Test Lint Rules
-        run: ./gradlew lint-rules:test
-
-      - name: Ktlint Check
-        run: ./gradlew ktlintCheck
+        uses: gradle/gradle-build-action@v2
+        with:
+          # "lint" is run under the 'Amazon' flavor, so slow in CI
+          # "lintPlayRelease" doesn't test androidTest
+          # "lintPlayDebug" doesn't test the API
+          arguments: lintPlayDebug :api:lintDebug ktLintCheck lint-rules:test --daemon
 
       - name: Prettify code
         uses: creyD/prettier_action@v4.2

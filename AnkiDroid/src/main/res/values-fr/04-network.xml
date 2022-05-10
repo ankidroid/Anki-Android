@@ -54,7 +54,7 @@
     <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
     <string name="not_logged_in_title">Se connecter à AnkiWeb</string>
     <string name="login_create_account_message">Vous devez vous connecter à un service tiers pour utiliser le service de synchronisation. Vous pouvez créer un compte à l’étape suivante.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Adresse électronique</string>
     <string name="password">Mot de passe</string>
     <string name="log_in">Se connecter</string>

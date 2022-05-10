@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ଡ୍ରର୍ ଖୋଲନ୍ତୁ</string>
     <string name="drawer_close">ଡ୍ରର୍ ବନ୍ଦ କରନ୍ତୁ</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">ଟ୍ୟାଗ୍ ଶୋଧନ</string>
     <string name="no_tags">ଆପଣ ଏ ଯାଏଁ କୌଣସି ଟ୍ୟାଗ ଯୋଡ଼ିନାହାନ୍ତି</string>
     <string name="updated_version">ସଂସ୍କରଣ %s କୁ ଅଦ୍ୟତନ କରାଗଲା</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">ଧଳାପଟା ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
     <string name="enable_whiteboard">ଧଳାପଟା ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="disable_whiteboard">ଧଳାପଟା ଅକ୍ଷମ କରନ୍ତୁ</string>
@@ -158,7 +157,7 @@
     <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ତାସଖଣ୍ଡ ତାଲିକା ସ୍କ୍ରିନରେ ଥିବା ଅଧିକ ବିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ରଗୁଡ଼ିକ” ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ।</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
     <string name="delete_deck">ତାସଖଣ୍ଡ ବିଲୋପ ହେଉଛି&#8230;</string>
-    <string name="show_hint">%s ଦେଖନ୍ତୁ</string>
+    <string name="show_hint">%s ଦେଖାଅ</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି କରୁଛି</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
@@ -407,4 +406,6 @@
     <string name="malicious_archive_entry_outside">ହାନୀକାରକ ଅଭିଲେଖାଗାର। ଲକ୍ଷ୍ୟସ୍ଥଳ ଡିରେକ୍ଟୋରୀ ବାହାରେ ଏଣ୍ଟ୍ରି ଧାରଣ କରେ: %s</string>
     <string name="malicious_archive_exceeds_limit">ହାନୀକାରକ ଅଭିଲେଖାଗାର। ଆକାର %1$s ଅତିକ୍ରମ କରେ କିମ୍ୱା %2$dରୁ ଅଧିକ ଫାଇଲ୍ ଧାରଣ କରେ</string>
     <string name="file_extract_exceeds_storage_space">ଫାଇଲ୍ ଏକ୍ସଟ୍ରାକ୍ଟ କରିବାରେ ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଅତିକ୍ରମ ହେଉଛି</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">\'%s\' ଟ୍ୟାଗଟିକୁ ପ୍ରସାରିବା</string>
 </resources>

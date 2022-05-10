@@ -18,6 +18,12 @@ package com.ichi2.async
 
 import com.ichi2.libanki.Collection
 
+/** @see [TaskDelegate] */
+abstract class TaskDelegateBase<Progress, Result> {
+    abstract fun execTask(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
+    abstract fun requiresOpenCollection(): Boolean
+}
+
 /**
  * TaskDelegate contains the business logic of background tasks.
  * While CollectionTask deals with all general task features, such as ensuring that no two tasks runs simultaneously
@@ -39,9 +45,23 @@ import com.ichi2.libanki.Collection
  * @param <Progress> The type of values that the task can send to indicates its progress. E.g. a card to display while remaining work is done; the progression of a counter.
  * @param <Result>   The type of result returned by the task at the end. E.g. the tree of decks, counts for a particular deck
  */
-abstract class TaskDelegate<Progress, Result> {
+abstract class TaskDelegate<Progress, Result> : TaskDelegateBase<Progress, Result>() {
+    final override fun execTask(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result =
+        task(col!!, collectionTask)
     protected abstract fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
-    protected open fun requiresOpenCollection(): Boolean {
-        return true
-    }
+    final override fun requiresOpenCollection(): Boolean = true
+}
+
+/**
+ * A [TaskDelegate] which allows the collection to be null, or when `getCol` can fail (for example if it can't be opened)
+ *
+ * @param <Progress> The type of values that the task can send to indicates its progress. E.g. a card to display while remaining work is done; the progression of a counter.
+ * @param <Result>   The type of result returned by the task at the end. E.g. the tree of decks, counts for a particular deck
+ * @see [TaskDelegate]
+ */
+abstract class UnsafeTaskDelegate<Progress, Result> : TaskDelegateBase<Progress, Result>() {
+    final override fun execTask(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result =
+        task(col, collectionTask)
+    protected abstract fun task(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
+    final override fun requiresOpenCollection(): Boolean = false
 }

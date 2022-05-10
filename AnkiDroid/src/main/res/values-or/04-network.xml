@@ -54,7 +54,7 @@
     <string name="connection_error_message">ଏକ ନେଟୱର୍କ ତ୍ରୁଟି ଘଟିଛି</string>
     <string name="not_logged_in_title">AnkiWeb ରେ ଲଗ୍ ଇନ୍ କରନ୍ତୁ</string>
     <string name="login_create_account_message">କ୍ଲାଉଡ୍ ସିଙ୍କ୍ ସେବା ବ୍ୟବହାର କରିବାକୁ ଆପଣ ଏକ ତୃତୀୟ ପକ୍ଷ ଆକାଉଣ୍ଟକୁ ଲଗ୍ ଇନ୍ କରିବା ଆବଶ୍ୟକ। ଆପଣ ପରବର୍ତ୍ତୀ ପଦକ୍ଷେପରେ ଗୋଟିଏ ସୃଷ୍ଟି କରିପାରିବେ।</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">ଇମେଲ୍ ଠିକଣା</string>
     <string name="password">ପାସ୍‍ୱାର୍ଡ଼</string>
     <string name="log_in">ଲଗ୍‌ ଇନ୍‌</string>

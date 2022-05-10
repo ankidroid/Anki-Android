@@ -24,6 +24,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_1
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_2
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_3
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
+import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import com.ichi2.anki.servicelayer.AnkiMethod
 import com.ichi2.anki.servicelayer.SchedulerService.BuryNote
@@ -381,7 +382,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return true
         }
 
-        override fun editCard() {
+        override fun editCard(fromGesture: Gesture?) {
             editCardCalled = true
         }
 

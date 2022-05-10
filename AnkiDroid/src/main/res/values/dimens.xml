@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,DuplicateCrowdInStrings">
     <!-- Material UI side margin: http://web.archive.org/web/20180105203433if_/https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-keylines-spacing -->
     <dimen name="side_margin">16dp</dimen>
     <dimen name="touch_target">48dp</dimen>

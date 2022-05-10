@@ -54,7 +54,7 @@
     <string name="connection_error_message">אירעה שגיאת רשת</string>
     <string name="not_logged_in_title">כניסה ל־AnkiWeb</string>
     <string name="login_create_account_message">יש להתחבר לחשבון צד שלישי כדי להשתמש בשירות הסנכרון בענן. ניתן ליצור חשבון כזה מיד בשלב הקרוב.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">כתובת דוא״ל</string>
     <string name="password">ססמה</string>
     <string name="log_in">כניסה</string>

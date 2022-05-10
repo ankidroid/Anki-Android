@@ -54,7 +54,7 @@
     <string name="connection_error_message">A network error has ocurred.</string>
     <string name="not_logged_in_title">Conectaţi-vă la AnkiWeb</string>
     <string name="login_create_account_message">Trebuie să va conectaţi la un terţ contul pentru a utiliza serviciul de sincronizare nor. Puteţi crea unul în pasul următor.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Adresa de e-mail</string>
     <string name="password">Parolă</string>
     <string name="log_in">Logare</string>

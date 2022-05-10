@@ -20,7 +20,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.async.CollectionTask.ImportReplace
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.BackupManagerTestUtilities
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
@@ -29,8 +28,6 @@ import org.junit.runner.RunWith
 import java.io.File
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("auto lint")
-@KotlinCleanup("`is` -> equalTo`")
 class BackupManagerIntegrationTest : RobolectricTest() {
     @Test
     @Ignore("Fails on line: if (!f.renameTo(new File(colPath))) {")
@@ -45,14 +42,14 @@ class BackupManagerIntegrationTest : RobolectricTest() {
 
         waitForTask(ImportReplace(path), 1000)
 
-        assertThat("database should be read-write", this.col.db.database.isReadOnly, `is`(false))
+        assertThat("database should be read-write", this.col.db.database.isReadOnly, equalTo(false))
         AnkiAssert.assertDoesNotThrow { addNoteUsingBasicModel("Hello", "World") }
     }
 
     private fun createBackup(): String {
         return try {
             BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
-            assertThat("Backup should work", BackupManager.performBackupInBackground(col.path, col.time), `is`(true))
+            assertThat("Backup should work", BackupManager.performBackupInBackground(col.path, col.time), equalTo(true))
             spinUntilBackupExists(1000)
         } finally {
             BackupManagerTestUtilities.reset()
@@ -65,7 +62,7 @@ class BackupManagerIntegrationTest : RobolectricTest() {
         while (true) {
             val colFile = File(col.path)
             val backups = BackupManager.getBackups(colFile)
-            if (backups.size > 0) {
+            if (backups.isNotEmpty()) {
                 return backups[0].absolutePath
             }
             if (System.currentTimeMillis() - time > timeoutMs) {

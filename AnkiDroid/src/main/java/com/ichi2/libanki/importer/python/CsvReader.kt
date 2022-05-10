@@ -24,20 +24,20 @@ import android.annotation.SuppressLint
 import androidx.annotation.CheckResult
 
 @SuppressLint("NonPublicNonStaticFieldName")
-class CsvReader(data: Iterator<String>, delimiter: Char, inputDialect: CsvDialect?) : Iterable<List<String>> {
+class CsvReader(data: Iterator<String>, delimiter: Char, inputDialect: CsvDialect?) : Iterable<List<String>?> {
     @JvmField
     val dialect: CsvDialect
     @JvmField
     var input_iter: Iterator<String>?
     var iter: CsvReaderIterator? = null
-    override fun iterator(): MutableIterator<List<String>> {
+    override fun iterator(): MutableIterator<List<String>?> {
         if (iter == null) {
             iter = CsvReaderIterator(this)
         }
         return iter!!
     }
 
-    operator fun next(): List<String> {
+    operator fun next(): List<String>? {
         return iterator().next()
     }
 

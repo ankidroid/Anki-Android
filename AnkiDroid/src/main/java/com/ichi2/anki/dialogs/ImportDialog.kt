@@ -25,8 +25,8 @@ import java.net.URLDecoder
 
 class ImportDialog : AsyncDialogFragment() {
     interface ImportDialogListener {
-        fun importAdd(importPath: String?)
-        fun importReplace(importPath: String?)
+        fun importAdd(importPath: String)
+        fun importReplace(importPath: String)
         fun dismissAllDialogFragments()
     }
 

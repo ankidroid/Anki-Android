@@ -19,27 +19,23 @@ import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Media
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
+import org.mockito.kotlin.whenever
 import java.io.File
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("`when` -> whenever")
-@KotlinCleanup("Remove redundants Mockito. qualifiers")
 class ImageFieldTest {
     /** #5237 - quotation marks on Android differed from Windows  */
     @Test
     fun imageValueIsConsistentWithAnkiDesktop() {
         // Arrange
-        val mockedFile = Mockito.mock(File::class.java)
-        Mockito.`when`(mockedFile.exists()).thenReturn(true)
-        Mockito.`when`(mockedFile.name).thenReturn("paste-abc.jpg")
+        val mockedFile = mock(File::class.java)
+        whenever(mockedFile.exists()).thenReturn(true)
+        whenever(mockedFile.name).thenReturn("paste-abc.jpg")
 
         // Act
         val actual = ImageField.formatImageFileName(mockedFile)
@@ -105,12 +101,12 @@ class ImageFieldTest {
     }
 
     @CheckResult
-    protected fun collectionWithMediaDirectory(dir: String): Collection {
+    private fun collectionWithMediaDirectory(dir: String): Collection {
         val media = mock(Media::class.java)
-        `when`(media.dir()).thenReturn(dir)
+        whenever(media.dir()).thenReturn(dir)
 
         val collectionMock = mock(Collection::class.java)
-        `when`(collectionMock.media).thenReturn(media)
+        whenever(collectionMock.media).thenReturn(media)
         return collectionMock
     }
 }

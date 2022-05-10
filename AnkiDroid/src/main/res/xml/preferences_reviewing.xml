@@ -162,21 +162,21 @@
             android:title="@string/timeout_answer_text" />
         <ListPreference
             android:entries="@array/automatic_answer_options"
-            android:dependency="timeoutAnswer"
+            android:dependency="@string/timeout_answer_preference"
             android:entryValues="@array/automatic_answer_values"
             android:defaultValue="0"
             android:key="@string/automatic_answer_action_preference"
             android:title="@string/timeout_answer" />
         <com.ichi2.preferences.SeekBarPreferenceCompat
             android:defaultValue="20"
-            android:dependency="timeoutAnswer"
+            android:dependency="@string/timeout_answer_preference"
             android:key="@string/timeout_answer_seconds_preference"
             android:max="30"
             android:summary="@string/timeout_answer_seconds_summ"
             android:title="@string/timeout_answer_seconds" />
         <com.ichi2.preferences.SeekBarPreferenceCompat
             android:defaultValue="60"
-            android:dependency="timeoutAnswer"
+            android:dependency="@string/timeout_answer_preference"
             android:key="@string/timeout_question_seconds_preference"
             android:max="60"
             android:summary="@string/timeout_answer_seconds_summ"

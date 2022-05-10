@@ -48,6 +48,10 @@ import androidx.core.view.ActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
+import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
@@ -649,10 +653,10 @@ open class Reviewer : AbstractFlashcardViewer() {
         showDialogFragment(dialog)
     }
 
-    private fun addNote() {
+    private fun addNote(fromGesture: Gesture? = null) {
         val intent = Intent(this, NoteEditor::class.java)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-        startActivityForResultWithAnimation(intent, ADD_NOTE, ActivityTransitionAnimation.Direction.START)
+        startActivityForResultWithAnimation(intent, ADD_NOTE, getAnimationTransitionFromGesture(fromGesture))
     }
 
     override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
@@ -926,7 +930,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         buttonCount = try {
             this.buttonCount
         } catch (e: RuntimeException) {
-            AnkiDroidApp.sendExceptionReport(e, "AbstractReviewer-showEaseButtons")
+            CrashReportService.sendExceptionReport(e, "AbstractReviewer-showEaseButtons")
             closeReviewer(DeckPicker.RESULT_DB_ERROR, true)
             return
         }
@@ -1101,7 +1105,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override fun executeCommand(which: ViewerCommand): Boolean {
+    override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
         if (isControlBlocked() && which !== ViewerCommand.COMMAND_EXIT) {
             return false
         }
@@ -1142,7 +1146,11 @@ open class Reviewer : AbstractFlashcardViewer() {
                 onMark(mCurrentCard)
                 return true
             }
-            else -> return super.executeCommand(which)
+            ViewerCommand.COMMAND_ADD_NOTE -> {
+                addNote(fromGesture)
+                return true
+            }
+            else -> return super.executeCommand(which, fromGesture)
         }
     }
 
@@ -1329,9 +1337,8 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override fun getCurrentCardId(): Long? {
-        return mCurrentCard!!.id
-    }
+    override val currentCardId: Long?
+        get() = mCurrentCard!!.id
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -1526,6 +1533,36 @@ open class Reviewer : AbstractFlashcardViewer() {
         @JavascriptInterface
         override fun ankiGetNextTime4(): String {
             return easeButton4!!.nextTime
+        }
+
+        @JavascriptInterface
+        override fun ankiSetCardDue(days: Int): Boolean {
+            val apiList = getJsApiListMap()!!
+            if (!apiList[SET_CARD_DUE]!!) {
+                showDeveloperContact(ankiJsErrorCodeDefault)
+                return false
+            }
+
+            if (days < 0 || days > 9999) {
+                showDeveloperContact(ankiJsErrorCodeSetDue)
+                return false
+            }
+
+            val cardIds = listOf(currentCard!!.id)
+            RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
+            return true
+        }
+
+        @JavascriptInterface
+        override fun ankiResetProgress(): Boolean {
+            val apiList = getJsApiListMap()!!
+            if (!apiList[RESET_PROGRESS]!!) {
+                showDeveloperContact(ankiJsErrorCodeDefault)
+                return false
+            }
+            val cardIds = listOf(currentCard!!.id)
+            ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge))
+            return true
         }
     }
 

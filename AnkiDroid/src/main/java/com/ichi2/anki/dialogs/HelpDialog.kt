@@ -24,6 +24,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -31,15 +32,10 @@ import com.ichi2.anki.dialogs.HelpDialog.FunctionItem.ActivityConsumer
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Companion.createInstance
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Companion.removeFrom
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader
-import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
-import org.acra.ACRA
-import org.acra.config.DialogConfigurationBuilder
-import org.acra.config.LimiterData
-import org.acra.config.LimiterData.ReportMetadata
-import timber.log.Timber
+import com.ichi2.utils.KotlinCleanup
 import java.io.Serializable
 import java.util.*
 
@@ -133,6 +129,7 @@ object HelpDialog {
         return createInstance(itemList, R.string.help_title_support_ankidroid)
     }
 
+    @KotlinCleanup("Convert to @Parcelize")
     class RateAppItem : RecursivePictureMenu.Item, Parcelable {
         constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String?) : super(titleRes, iconRes, analyticsRes)
 
@@ -147,7 +144,7 @@ object HelpDialog {
         private constructor(`in`: Parcel?) : super(`in`!!)
 
         companion object {
-            val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
+            @JvmField val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
                 override fun createFromParcel(`in`: Parcel): RateAppItem {
                     return RateAppItem(`in`)
                 }
@@ -159,6 +156,7 @@ object HelpDialog {
         }
     }
 
+    @KotlinCleanup("Convert to @Parcelize")
     class LinkItem : RecursivePictureMenu.Item, Parcelable {
         @StringRes
         private val mUrlLocationRes: Int
@@ -189,7 +187,7 @@ object HelpDialog {
         }
 
         companion object {
-            val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
+            @JvmField val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
                 override fun createFromParcel(`in`: Parcel): LinkItem {
                     return LinkItem(`in`)
                 }
@@ -201,6 +199,7 @@ object HelpDialog {
         }
     }
 
+    @KotlinCleanup("Convert to @Parcelize")
     class FunctionItem : RecursivePictureMenu.Item, Parcelable {
 
         private val mFunc: ActivityConsumer
@@ -231,7 +230,7 @@ object HelpDialog {
         }
 
         companion object {
-            val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
+            @JvmField val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
                 override fun createFromParcel(`in`: Parcel): FunctionItem {
                     return FunctionItem(`in`)
                 }
@@ -247,68 +246,12 @@ object HelpDialog {
         constructor(@StringRes titleRes: Int, @DrawableRes iconRes: Int, analyticsRes: String) : super(titleRes, iconRes, analyticsRes)
 
         override fun onClicked(activity: AnkiActivity) {
-            val preferences = AnkiDroidApp.getSharedPrefs(activity)
-            val reportMode = preferences.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "")
             if (isUserATestClient) {
                 showThemedToast(activity, activity.getString(R.string.user_is_a_robot), false)
                 return
             }
-            if (AnkiDroidApp.FEEDBACK_REPORT_NEVER == reportMode) {
-                preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, false).apply()
-                AnkiDroidApp.getInstance().acraCoreConfigBuilder
-                    .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-                    .setEnabled(true)
-                sendReport(activity)
-                AnkiDroidApp.getInstance().acraCoreConfigBuilder
-                    .getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java)
-                    .setEnabled(false)
-                preferences.edit().putBoolean(ACRA.PREF_DISABLE_ACRA, true).apply()
-            } else {
-                sendReport(activity)
-            }
-        }
-
-        /**
-         * Check the ACRA report store and return the timestamp of the last report.
-         *
-         * @param activity the Activity used for Context access when interrogating ACRA reports
-         * @return the timestamp of the most recent report, or -1 if no reports at all
-         */
-        // Upstream issue for access to field/method: https://github.com/ACRA/acra/issues/843
-        private fun getTimestampOfLastReport(activity: AnkiActivity): Long {
-            try {
-                // The ACRA LimiterData holds a timestamp for every generated report
-                val limiterData = LimiterData.load(activity)
-                val limiterDataListField = limiterData.javaClass.getDeclaredField("list")
-                limiterDataListField.isAccessible = true
-                @Suppress("UNCHECKED_CAST")
-                val limiterDataList = limiterDataListField[limiterData] as List<ReportMetadata>
-                for (report in limiterDataList) {
-                    if (report.exceptionClass != UserSubmittedException::class.java.name) {
-                        continue
-                    }
-                    val timestampMethod = report.javaClass.getDeclaredMethod("getTimestamp")
-                    timestampMethod.isAccessible = true
-                    val timestamp = timestampMethod.invoke(report) as Calendar
-                    // Limiter ensures there is only one report for the class, so if we found it, return it
-                    return timestamp.timeInMillis
-                }
-            } catch (e: Exception) {
-                Timber.w(e, "Unexpected exception checking for recent reports")
-            }
-            return -1
-        }
-
-        private fun sendReport(activity: AnkiActivity) {
-            val currentTimestamp = activity.col.time.intTimeMS()
-            val lastReportTimestamp = getTimestampOfLastReport(activity)
-            if (currentTimestamp - lastReportTimestamp > MIN_INTERVAL_MS) {
-                AnkiDroidApp.deleteACRALimiterData(activity)
-                AnkiDroidApp.sendExceptionReport(
-                    UserSubmittedException(EXCEPTION_MESSAGE),
-                    "AnkiDroidApp.HelpDialog"
-                )
-            } else {
+            val wasReportSent = CrashReportService.sendReport(activity)
+            if (!wasReportSent) {
                 showThemedToast(
                     activity, activity.getString(R.string.help_dialog_exception_report_debounce),
                     true
@@ -321,8 +264,7 @@ object HelpDialog {
         override fun remove(toRemove: RecursivePictureMenu.Item?) {}
 
         companion object {
-            private const val MIN_INTERVAL_MS = 60000
-            private const val EXCEPTION_MESSAGE = "Exception report sent by user manually"
+
             val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
                 override fun createFromParcel(`in`: Parcel): ExceptionReportItem {
                     return ExceptionReportItem(`in`)

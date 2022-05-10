@@ -54,7 +54,7 @@
     <string name="connection_error_message">नेटवर्क में कोई त्रुटि हुई</string>
     <string name="not_logged_in_title">AnkiWeb में लॉग इन करें</string>
     <string name="login_create_account_message">क्लाउड समकालन सेवा का उपयोग करने के लिए आपको किसी तीसरा पक्ष खाते में लॉग इन करना होगा। आप अगले चरण में खाता बना सकते हैं।</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">ईमेल पता</string>
     <string name="password">पासवर्ड</string>
     <string name="log_in">लॉग इन करें</string>
