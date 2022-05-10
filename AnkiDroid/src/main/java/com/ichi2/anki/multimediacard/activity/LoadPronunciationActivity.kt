@@ -36,6 +36,9 @@ import com.ichi2.anki.web.HttpFetcher.fetchThroughHttp
 import com.ichi2.async.Connection
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
@@ -131,8 +134,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     /**
      * @param v Start of the story.
      */
-    @Suppress("deprecation") // #7108: AsyncTask
-    private fun onLoadPronunciation(@Suppress("UNUSED_PARAMETER") v: View?) {
+    private fun onLoadPronunciation(@Suppress("UNUSED_PARAMETER")v: View?) {
         if (!Connection.isOnline()) {
             showToast(gtxt(R.string.network_no_connection))
             return
@@ -140,15 +142,15 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         val message = gtxt(R.string.multimedia_editor_searching_word)
         showProgressBar(message)
         mTranslationAddress = computeAddressOfTranslationPage()
-        try {
-            mPostTranslation = BackgroundPost()
-            mPostTranslation!!.address = mTranslationAddress
-            // post.setStopper(PRONUNC_STOPPER);
-            mPostTranslation!!.execute()
-        } catch (e: Exception) {
-            Timber.w(e)
-            hideProgressBar()
-            showToast(gtxt(R.string.multimedia_editor_something_wrong))
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                mPostTranslation = BackgroundPost()
+                mPostTranslation!!.address = mTranslationAddress
+            } catch (e: Exception) {
+                Timber.w(e)
+                hideProgressBar()
+                showToast(gtxt(R.string.multimedia_editor_something_wrong))
+            }
         }
     }
 
