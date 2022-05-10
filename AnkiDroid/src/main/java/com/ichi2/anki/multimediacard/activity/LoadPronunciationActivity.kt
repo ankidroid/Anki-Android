@@ -30,7 +30,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus
-import com.ichi2.anki.runtimetools.TaskOperations.stopTaskGracefully
 import com.ichi2.anki.web.HttpFetcher.downloadFileToSdCard
 import com.ichi2.anki.web.HttpFetcher.fetchThroughHttp
 import com.ichi2.async.Connection
@@ -157,8 +156,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
      * @author zaur This class is used two times. First time from Beolingus it requests a page with the word
      * translation. Second time it loads a page with the link to mp3 pronunciation file.
      */
-    @Suppress("deprecation") // #7108: AsyncTask
-    inner class BackgroundPost : android.os.AsyncTask<Void?, Void?, String?>() {
+    inner class BackgroundPost {
         /**
          * @return Used to know, which of the posts finished, to differentiate.
          *
@@ -166,8 +164,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
          */
         var address: String? = null
 
-        // private String mStopper;
-        override fun doInBackground(vararg p0: Void?): String {
+        suspend fun fetchThroughHttp() = withContext(Dispatchers.IO) {
             // TMP CODE for quick testing
             // if (mAddress.contentEquals(mTranslationAddress))
             // {
@@ -179,10 +176,10 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
             // }
 
             // Should be just this
-            return fetchThroughHttp(address, "ISO-8859-1")
+            return@withContext fetchThroughHttp(address, "ISO-8859-1")
         }
 
-        override fun onPostExecute(@Language("HTML") result: String?) {
+        suspend fun processPostFinished(@Language("HTML") result: String?) {
             // Result here is the whole HTML of the page
             // this is passed to ask for address and differentiate, which of the
             // post has finished.
@@ -207,13 +204,12 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
 
         fun receiveMp3FileTask(result: String?) {
             CoroutineScope(Dispatchers.IO).launch {
-                receiveMp3FileTask(result)
+                receiveMp3File(result)
             }
         }
     }
 
-    @Suppress("deprecation") // #7108: AsyncTask
-    protected fun processPostFinished(post: BackgroundPost, @Language("HTML") result: String) {
+    protected suspend fun processPostFinished(post: BackgroundPost, @Language("HTML") result: String) {
         if (mStopped) {
             return
         }
@@ -238,7 +234,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
                 showProgressBar(gtxt(R.string.multimedia_editor_pron_looking_up))
                 mPostPronunciation = BackgroundPost()
                 mPostPronunciation!!.address = mPronunciationAddress
-                mPostPronunciation!!.execute()
+                mPostPronunciation!!.fetchThroughHttp()
             } catch (e: Exception) {
                 Timber.w(e)
                 hideProgressBar()
@@ -331,8 +327,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
             Timber.w(e)
             source.replace(" ", "%20")
         }
-        address =
-            address.replace("SERVICE".toRegex(), langCodeFrom!!).replace("Welt".toRegex(), query!!)
+        address = address.replace("SERVICE".toRegex(), langCodeFrom!!).replace("Welt".toRegex(), query!!)
         return address
     }
 
@@ -348,28 +343,24 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     override fun onCancel(dialog: DialogInterface) {
         mStopped = true
         hideProgressBar()
-        stopAllTasks()
+        job.cancel()
         val resultData = Intent()
         setResult(RESULT_CANCELED, resultData)
         finish()
     }
 
-    private fun stopAllTasks() {
-        var t = mPostTranslation
-        stopTaskGracefully(t)
-        t = mPostPronunciation
-        stopTaskGracefully(t)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        job.cancel()
-    }
+//    private fun stopAllTasks() {
+//        var t = mPostTranslation
+//        stopTaskGracefully(t)
+//        t = mPostPronunciation
+//        stopTaskGracefully(t)
+//        t = mDownloadMp3Task  /* causing type mismatch */
+//        stopTaskGracefully(t)
+//    }
 
     override fun onPause() {
         super.onPause()
         hideProgressBar()
-        stopAllTasks()
     }
 
     private fun gtxt(id: Int): String {
