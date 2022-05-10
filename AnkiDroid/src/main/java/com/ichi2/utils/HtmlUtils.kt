@@ -30,6 +30,17 @@ object HtmlUtils {
     }
 
     @JvmStatic
+    fun converttoparagraph(html: String?): String? {
+        if (html == null) {
+            return null
+        }
+        val changetoparagraph = html.replace("\r\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
+
+        return changetoparagraph.replace("\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
+    }
+
+
+    @JvmStatic
     fun escape(html: String): String {
         return TextUtils.htmlEncode(html)
     }
