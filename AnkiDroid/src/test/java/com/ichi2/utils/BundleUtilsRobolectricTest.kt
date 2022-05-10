@@ -17,10 +17,31 @@
 
 package com.ichi2.utils
 
-import android.os.Bundle
+import androidx.core.os.bundleOf
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.assertThrows
+import com.ichi2.utils.BundleUtils.getSerializableWithCast
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
-object ArgumentUtils {
-    inline fun <reified T> Bundle.getSerializableWithCast(key: String): T {
-        return getSerializable(key) as T
+@RunWith(RobolectricTestRunner::class)
+@Config(application = EmptyApplication::class)
+class BundleUtilsRobolectricTest {
+
+    @Test
+    fun shouldReturnValueIfCastIsSuccessful() {
+        val bundle = bundleOf("Example" to 1)
+        assertEquals(bundle.getSerializableWithCast<Int>("Example"), 1)
+    }
+
+    @Test
+    fun shouldThrowExceptionIfCastIsUnsuccessful() {
+        val bundle = bundleOf("Example" to "Value")
+        assertThrows<ClassCastException> {
+            bundle.getSerializableWithCast<Int>("Example")
+        }
     }
 }

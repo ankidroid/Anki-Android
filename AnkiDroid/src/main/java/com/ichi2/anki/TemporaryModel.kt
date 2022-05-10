@@ -56,7 +56,7 @@ class TemporaryModel(model: Model) {
     private fun loadTemplateChanges(bundle: Bundle) {
         try {
             @Suppress("UNCHECKED_CAST")
-            @KotlinCleanup("make sure bundle.getSerializable() returns the expected types")
+            @KotlinCleanup("use bundle.getSerializableWithCast() to improve nullability")
             mTemplateChanges =
                 (bundle.getSerializable("mTemplateChanges") as ArrayList<Array<Any>>)
         } catch (e: ClassCastException) {
