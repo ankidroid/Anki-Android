@@ -665,7 +665,7 @@ public class Anki2Importer extends Importer {
             cards.clear();
             insertRevlog(revlog);
             revlog.clear();
-            mLog.add(getRes().getString(R.string.import_complete_count, totalCardCount));
+            mCardCount = totalCardCount;
             mDst.getDb().getDatabase().setTransactionSuccessful();
         } finally {
             DB.safeEndInTransaction(mDst.getDb());

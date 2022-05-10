@@ -25,6 +25,7 @@ import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,9 @@ public abstract class Importer {
     protected boolean mNeedMapper = false;
     protected boolean mNeedDelimiter = false;
     protected @NonNull String mFile;
+    protected String mFileName;
     protected List<String> mLog;
+    protected Integer mCardCount;
     protected final Collection mCol;
     protected int mTotal;
 
@@ -49,9 +52,11 @@ public abstract class Importer {
 
     public Importer(Collection col, @NonNull String file) {
         mFile = file;
+        mFileName = new File(file).getName();
         mLog = new ArrayList<>();
         mCol = col;
         mTotal = 0;
+        mCardCount = 0;
         mContext = col.getContext();
     }
 
@@ -93,4 +98,8 @@ public abstract class Importer {
     public List<String> getLog() {
         return mLog;
     }
+
+    public Integer getCardCount() { return mCardCount; }
+
+    public String getFileName() { return mFileName; }
 }
