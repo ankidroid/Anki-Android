@@ -25,8 +25,8 @@ import java.net.URLDecoder
 
 class ImportDialog : AsyncDialogFragment() {
     interface ImportDialogListener {
-        fun importAdd(importPath: String)
-        fun importReplace(importPath: String)
+        fun importAdd(importPath: List<String>)
+        fun importReplace(importPath: List<String>)
         fun dismissAllDialogFragments()
     }
 
@@ -36,28 +36,29 @@ class ImportDialog : AsyncDialogFragment() {
         val res = resources
         val builder = MaterialDialog.Builder(requireActivity())
         builder.cancelable(true)
-        val dialogMessage = requireArguments().getString("dialogMessage")!!
+        val dialogMessageList = requireArguments().getStringArrayList("dialogMessage")!!
+        // Iterate over dialog message list & create display filename
+        val displayFileName = dialogMessageList.joinToString("\n") { filenameFromPath(convertToDisplayName(it)) }
+
         return when (type) {
             DIALOG_IMPORT_ADD_CONFIRM -> {
-                val displayFileName = convertToDisplayName(dialogMessage)
                 builder.title(res.getString(R.string.import_title))
-                    .content(res.getString(R.string.import_message_add_confirm, filenameFromPath(displayFileName)))
+                    .content(res.getQuantityString(R.plurals.import_files_message_add_confirm, dialogMessageList.size, displayFileName))
                     .positiveText(R.string.import_message_add)
                     .negativeText(R.string.dialog_cancel)
                     .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                        (activity as ImportDialogListener?)!!.importAdd(dialogMessage)
+                        (activity as ImportDialogListener?)!!.importAdd(dialogMessageList)
                         dismissAllDialogFragments()
                     }
                     .show()
             }
             DIALOG_IMPORT_REPLACE_CONFIRM -> {
-                val displayFileName = convertToDisplayName(dialogMessage)
                 builder.title(res.getString(R.string.import_title))
                     .content(res.getString(R.string.import_message_replace_confirm, displayFileName))
                     .positiveText(R.string.dialog_positive_replace)
                     .negativeText(R.string.dialog_cancel)
                     .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                        (activity as ImportDialogListener?)!!.importReplace(dialogMessage)
+                        (activity as ImportDialogListener?)!!.importReplace(dialogMessageList)
                         dismissAllDialogFragments()
                     }
                     .show()
@@ -97,15 +98,15 @@ class ImportDialog : AsyncDialogFragment() {
          * A set of dialogs which deal with importing a file
          *
          * @param dialogType An integer which specifies which of the sub-dialogs to show
-         * @param dialogMessage An optional string which can be used to show a custom message
+         * @param dialogMessageList An optional ArrayList of string(s) which can be used to show a custom message
          * or specify import path
          */
         @JvmStatic
-        fun newInstance(dialogType: Int, dialogMessage: String): ImportDialog {
+        fun newInstance(dialogType: Int, dialogMessageList: ArrayList<String>): ImportDialog {
             val f = ImportDialog()
             val args = Bundle()
             args.putInt("dialogType", dialogType)
-            args.putString("dialogMessage", dialogMessage)
+            args.putStringArrayList("dialogMessage", dialogMessageList)
             f.arguments = args
             return f
         }
