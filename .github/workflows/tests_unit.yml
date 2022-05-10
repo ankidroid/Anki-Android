@@ -62,6 +62,7 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+        timeout-minutes: 5
         with:
           # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
           # Builds on other branches will only read from main branch cache writes
