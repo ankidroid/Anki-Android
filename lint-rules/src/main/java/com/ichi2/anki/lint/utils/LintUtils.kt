@@ -1,16 +1,8 @@
-package com.ichi2.anki.lint.utils;
+package com.ichi2.anki.lint.utils
 
-import org.jetbrains.uast.UClass;
+import org.jetbrains.uast.UClass
 
-import java.util.List;
-
-public class LintUtils {
-
-    private LintUtils() {
-        // no instantiation
-    }
-
-
+object LintUtils {
     /**
      * A helper method to check for special classes(Time and SystemTime) where the rules related to time apis shouldn't
      * be applied.
@@ -19,18 +11,18 @@ public class LintUtils {
      * @param allowedClasses  the list of classes where the checks should be ignored
      * @return true if this is a class where the checks should not be applied, false otherwise
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public static boolean isAnAllowedClass(List<UClass> classes, String... allowedClasses) {
-        boolean isInAllowedClass = false;
-        for (int i = 0; i < classes.size(); i++) {
-            final String className = classes.get(i).getName();
-            for (String allowedClass: allowedClasses) {
-                if (className.equals(allowedClass)) {
-                    isInAllowedClass = true;
-                    break;
+    @JvmStatic
+    fun isAnAllowedClass(classes: List<UClass>, vararg allowedClasses: String): Boolean {
+        var isInAllowedClass = false
+        for (i in classes.indices) {
+            val className = classes[i].name!!
+            for (allowedClass in allowedClasses) {
+                if (className == allowedClass) {
+                    isInAllowedClass = true
+                    break
                 }
             }
         }
-        return isInAllowedClass;
+        return isInAllowedClass
     }
 }
