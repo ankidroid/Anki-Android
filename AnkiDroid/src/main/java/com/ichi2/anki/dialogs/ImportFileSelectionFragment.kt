@@ -33,9 +33,9 @@ class ImportFileSelectionFragment {
             // this needs a deckPicker for now. See use of PICK_APKG_FILE
 
             // This is required for serialization of the lambda
-            val openFilePicker = object : FunctionItem.ActivityConsumer {
+            class OpenFilePicker(var multiple: Boolean = false) : FunctionItem.ActivityConsumer {
                 override fun consume(activity: AnkiActivity) {
-                    openImportFilePicker(activity)
+                    openImportFilePicker(activity, multiple)
                 }
             }
 
@@ -44,13 +44,13 @@ class ImportFileSelectionFragment {
                     R.string.import_deck_package,
                     R.drawable.ic_manual_black_24dp,
                     UsageAnalytics.Actions.IMPORT_APKG_FILE,
-                    openFilePicker
+                    OpenFilePicker(true)
                 ),
                 FunctionItem(
                     R.string.import_collection_package,
                     R.drawable.ic_manual_black_24dp,
                     UsageAnalytics.Actions.IMPORT_COLPKG_FILE,
-                    openFilePicker
+                    OpenFilePicker()
                 ),
             )
             return RecursivePictureMenu.createInstance(ArrayList(importItems), R.string.menu_import)
@@ -58,7 +58,7 @@ class ImportFileSelectionFragment {
 
         // needs to be static for serialization
         @JvmStatic
-        fun openImportFilePicker(activity: AnkiActivity) {
+        fun openImportFilePicker(activity: AnkiActivity, multiple: Boolean = false) {
             Timber.d("openImportFilePicker() delegating to file picker intent")
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
@@ -66,7 +66,7 @@ class ImportFileSelectionFragment {
             intent.putExtra("android.content.extra.SHOW_ADVANCED", true)
             intent.putExtra("android.content.extra.FANCY", true)
             intent.putExtra("android.content.extra.SHOW_FILESIZE", true)
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple)
             activity.startActivityForResultWithoutAnimation(intent, DeckPicker.PICK_APKG_FILE)
         }
     }
