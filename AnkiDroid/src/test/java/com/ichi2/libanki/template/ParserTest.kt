@@ -17,7 +17,7 @@ package com.ichi2.libanki.template
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.template.TokenizerTest.new_to_legacy_template
+import com.ichi2.libanki.template.TokenizerTest.Companion.new_to_legacy_template
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
