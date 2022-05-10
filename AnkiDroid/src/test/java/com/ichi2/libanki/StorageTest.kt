@@ -119,7 +119,7 @@ open class StorageTest : RobolectricTest() {
             decks = loadDecksV16(col)
             dConf = loadDConf(col)
             tags = JSONObject(
-                col.mTags.all().stream()
+                col.tags.all().stream()
                     .map { x: String -> Pair(x, 0) }
                     .collect(Collectors.toMap({ x: Pair<String?, Int?> -> x.first }, { x: Pair<String?, Int?> -> x.second }))
             )

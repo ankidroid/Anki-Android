@@ -136,7 +136,7 @@ class ReminderService : BroadcastReceiver() {
 
         // Avoid crashes if the deck option group is deleted while we
         // are working
-        if (col.db == null || col.decks.getConf(dConfId) == null) {
+        if (col.dbClosed || col.decks.getConf(dConfId) == null) {
             Timber.d("Deck option %s became unavailable while ReminderService was working. Ignoring", dConfId)
             return null
         }

@@ -15,346 +15,313 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabaseLockedException;
-import android.text.TextUtils;
-import android.util.Pair;
-
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CrashReportService;
-import com.ichi2.anki.R;
-import com.ichi2.anki.UIUtils;
-import com.ichi2.anki.analytics.UsageAnalytics;
-import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.async.CancelListener;
-import com.ichi2.async.CollectionTask;
-import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput;
-import com.ichi2.libanki.backend.DroidBackend;
-import com.ichi2.async.ProgressSender;
-import com.ichi2.async.TaskManager;
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
-import com.ichi2.libanki.exception.NoSuchDeckException;
-import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
-import com.ichi2.libanki.hooks.ChessFilter;
-import com.ichi2.libanki.sched.AbstractSched;
-import com.ichi2.libanki.sched.Sched;
-import com.ichi2.libanki.sched.SchedV2;
-import com.ichi2.libanki.template.ParsedNode;
-import com.ichi2.libanki.template.TemplateError;
-import com.ichi2.libanki.utils.Time;
-import com.ichi2.upgrade.Upgrade;
-import com.ichi2.utils.FunctionalInterfaces;
-import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.KotlinCleanup;
-import com.ichi2.utils.VersionUtils;
-
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
-
-import net.ankiweb.rsdroid.RustCleanup;
-
-import org.jetbrains.annotations.Contract;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.Set;
-import java.util.function.Consumer;
-import java.util.regex.Pattern;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.sqlite.db.SupportSQLiteDatabase;
-import androidx.sqlite.db.SupportSQLiteStatement;
-import timber.log.Timber;
-
-import static com.ichi2.async.CancelListener.isCancelled;
+import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.content.Context
+import android.content.res.Resources
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabaseLockedException
+import android.text.TextUtils
+import android.util.Pair
+import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils
+import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.async.CancelListener
+import com.ichi2.async.CancelListener.Companion.isCancelled
+import com.ichi2.async.CollectionTask
+import com.ichi2.async.CollectionTask.PartialSearch
+import com.ichi2.async.ProgressSender
+import com.ichi2.async.TaskManager
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.backend.DroidBackend
+import com.ichi2.libanki.backend.exception.BackendNotSupportedException
+import com.ichi2.libanki.exception.NoSuchDeckException
+import com.ichi2.libanki.exception.UnknownDatabaseVersionException
+import com.ichi2.libanki.hooks.ChessFilter
+import com.ichi2.libanki.sched.AbstractSched
+import com.ichi2.libanki.sched.Sched
+import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.libanki.template.ParsedNode
+import com.ichi2.libanki.template.TemplateError
+import com.ichi2.libanki.utils.Time
+import com.ichi2.upgrade.Upgrade
+import com.ichi2.utils.*
+import net.ankiweb.rsdroid.RustCleanup
+import org.jetbrains.annotations.Contract
+import timber.log.Timber
+import java.io.*
+import java.lang.NullPointerException
+import java.util.*
+import java.util.concurrent.LinkedBlockingDeque
+import java.util.function.Consumer
+import java.util.regex.Pattern
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
 // tracked, so unused tags can only be removed from the list with a DB check.
 //
 // This module manages the tag cache and tags for notes.
+@KotlinCleanup("IDE Lint")
+@KotlinCleanup("Fix @Contract annotations to work in Kotlin")
+@KotlinCleanup("TextUtils -> Kotlin isNotEmpty()")
+@KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
+@KotlinCleanup("ids.size != 0")
+open class Collection @VisibleForTesting constructor(
+    /**
+     * @return The context that created this Collection.
+     */
+    val context: Context,
+    db: DB,
+    val path: String,
+    var server: Boolean,
+    private var debugLog: Boolean, // Not in libAnki.
+    val time: Time,
+    protected val droidBackend: DroidBackend
+) : CollectionGetter {
 
-@SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
-        "PMD.NPathComplexity","PMD.MethodNamingConventions","PMD.AvoidBranchingStatementAsLastInLoop",
-        "PMD.SwitchStmtsShouldHaveDefault","PMD.CollapsibleIfStatements","PMD.EmptyIfStmt","PMD.ExcessiveMethodLength"})
-public class Collection implements CollectionGetter {
+    @get:JvmName("isDbClosed")
+    var dbClosed = false
+        private set
 
-    private final Context mContext;
+    /** Allows a mock db to be inserted for testing  */
+    @set:VisibleForTesting
+    var db: DB = db
+        get() {
+            if (dbClosed) {
+                throw NullPointerException("DB Closed")
+            }
+            return field
+        }
+        set(value) {
+            dbClosed = false
+            field = value
+        }
+    /**
+     * Getters/Setters ********************************************************** *************************************
+     */
 
-    private DB mDb;
-    private boolean mServer;
-    //private double mLastSave;
-    private final Media mMedia;
-    protected DeckManager mDecks;
-    protected ModelManager mModels;
-    protected TagManager mTags;
-    protected ConfigManager mConf;
+    // private double mLastSave;
+    val media: Media
 
-    private AbstractSched mSched;
+    lateinit var decks: DeckManager
+        protected set
 
-    private long mStartTime;
-    private int mStartReps;
+    @KotlinCleanup("change to lazy")
+    private var _models: ModelManager? = null
+    val tags: TagManager
+
+    @KotlinCleanup(
+        "move accessor methods here, maybe reconsider return type." +
+            "See variable: conf"
+    )
+    private var _config: ConfigManager? = null
+
+    @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
+    lateinit var sched: AbstractSched
+        protected set
+
+    private var mStartTime: Long
+    private var mStartReps: Int
 
     // BEGIN: SQL table columns
-    private long mCrt;
-    private long mMod;
-    private long mScm;
-    private boolean mDty;
-    private int mUsn;
-    private long mLs;
+    var crt: Long = 0
+    var mod: Long = 0
+    var scm: Long = 0
+    var dirty: Boolean = false
+    private var mUsn = 0
+    private var mLs: Long = 0
     // END: SQL table columns
 
+    /* this getter is only for syncing routines, use usn() instead elsewhere */
+    val usnForSync
+        get() = mUsn
+
     // API 21: Use a ConcurrentLinkedDeque
-    private LinkedBlockingDeque<UndoAction> mUndo;
+    @KotlinCleanup("consider making this immutable")
+    private lateinit var undo: LinkedBlockingDeque<UndoAction>
 
-    private final @NonNull String mPath;
-    protected final DroidBackend mDroidBackend;
-    private boolean mDebugLog;
-    private PrintWriter mLogHnd;
+    private var mLogHnd: PrintWriter? = null
 
-    private static final Pattern fClozePatternQ = Pattern.compile("\\{\\{(?!type:)(.*?)cloze:");
-    private static final Pattern fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:");
-    private static final Pattern fClozeTagStart = Pattern.compile("<%cloze:");
-
-    /**
-     * This is only used for collections which were created before
-     * the new collections default was v2
-     * In that case, 'schedVer' is not set, so this default is used.
-     * See: #8926
-     * */
-    private static final int fDefaultSchedulerVersion = 1;
-    private static final List<Integer> fSupportedSchedulerVersions = Arrays.asList(1, 2);
-
-    // Not in libAnki.
-    private final Time mTime;
-
-    // other options
-    public static final String DEFAULT_CONF = "{"
-            +
-            // review options
-            "\"activeDecks\": [1], " + "\"curDeck\": 1, " + "\"newSpread\": " + Consts.NEW_CARDS_DISTRIBUTE + ", "
-            + "\"collapseTime\": 1200, " + "\"timeLim\": 0, " + "\"estTimes\": true, " + "\"dueCounts\": true, \"dayLearnFirst\":false, "
-            +
-            // other config
-            "\"curModel\": null, " + "\"nextPos\": 1, " + "\"sortType\": \"noteFld\", "
-            + "\"sortBackwards\": false, \"addToCur\": true }"; // add new to currently selected deck?
-
-    private static final int UNDO_SIZE_MAX = 20;
-
-    @VisibleForTesting
-    public Collection(Context context, DB db, @NonNull String path, boolean server, boolean log, @NonNull Time time, @NonNull DroidBackend droidBackend) {
-        mContext = context;
-        mDebugLog = log;
-        mDb = db;
-        mPath = path;
-        mTime = time;
-        mDroidBackend = droidBackend;
-        _openLog();
-        log(path, VersionUtils.getPkgVersionName());
-        mServer = server;
-        //mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
-        clearUndo();
-        mMedia = new Media(this, server);
-        mTags = initTags();
-        load();
-        if (mCrt == 0) {
-            mCrt = UIUtils.getDayStart(getTime()) / 1000;
+    init {
+        _openLog()
+        log(path, VersionUtils.pkgVersionName)
+        // mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
+        clearUndo()
+        media = Media(this, server)
+        tags = initTags()
+        load()
+        if (crt == 0L) {
+            crt = UIUtils.getDayStart(time) / 1000
         }
-        mStartReps = 0;
-        mStartTime = 0;
-        _loadScheduler();
-        if (!get_config("newBury", false)) {
-            set_config("newBury", true);
+        mStartReps = 0
+        mStartTime = 0
+        _loadScheduler()
+        if (!get_config("newBury", false)!!) {
+            set_config("newBury", true)
         }
     }
 
-
-
-    protected DeckManager initDecks(String deckConf) {
-        DeckManager deckManager = new Decks(this);
-        // getModels().load(loadColumn("models")); This code has been
+    @KotlinCleanup("remove :DeckManager, remove ? on return value")
+    protected open fun initDecks(deckConf: String?): DeckManager? {
+        val deckManager: DeckManager = Decks(this)
+        // models.load(loadColumn("models")); This code has been
         // moved to `CollectionHelper::loadLazyCollection` for
         // efficiency Models are loaded lazily on demand. The
         // application layer can asynchronously pre-fetch those parts;
         // otherwise they get loaded when required.
-        deckManager.load(loadColumn("decks"), deckConf);
-        return deckManager;
+        deckManager.load(loadColumn("decks"), deckConf!!)
+        return deckManager
     }
 
-
-    @NonNull
-    protected ConfigManager initConf(String conf) {
-        return new Config(conf);
+    @KotlinCleanup("make non-null")
+    protected open fun initConf(conf: String?): ConfigManager {
+        return Config(conf!!)
     }
 
-    @NonNull
-    protected TagManager initTags() {
-        return new Tags(this);
+    protected open fun initTags(): TagManager {
+        return Tags(this)
     }
 
-    @NonNull
-    protected ModelManager initModels() {
-        Models models = new Models(this);
-        models.load(loadColumn("models"));
-        return models;
+    protected open fun initModels(): ModelManager {
+        val models = Models(this)
+        models.load(loadColumn("models"))
+        return models
     }
 
-
-    public String name() {
+    fun name(): String {
         // TODO:
-        return (new File(mPath)).getName().replace(".anki2", "");
+        return File(path).name.replace(".anki2", "")
     }
-
 
     /**
      * Scheduler
      * ***********************************************************
      */
-
-
-    public int schedVer() {
-        int ver = get_config("schedVer", fDefaultSchedulerVersion);
-        if (fSupportedSchedulerVersions.contains(ver)) {
-            return ver;
+    fun schedVer(): Int {
+        val ver = get_config("schedVer", fDefaultSchedulerVersion)!!
+        return if (fSupportedSchedulerVersions.contains(ver)) {
+            ver
         } else {
-            throw new RuntimeException("Unsupported scheduler version");
+            throw RuntimeException("Unsupported scheduler version")
         }
     }
 
     // Note: Additional members in the class duplicate this
-    private void _loadScheduler() {
-        int ver = schedVer();
+    private fun _loadScheduler() {
+        val ver = schedVer()
         if (ver == 1) {
-            mSched = new Sched(this);
+            sched = Sched(this)
         } else if (ver == 2) {
-            mSched = new SchedV2(this);
-            if (!getServer() && isUsingRustBackend()) {
+            sched = SchedV2(this)
+            if (!server && isUsingRustBackend) {
                 try {
-                    set_config("localOffset", getSched()._current_timezone_offset());
-                } catch (BackendNotSupportedException e) {
-                    throw e.alreadyUsingRustBackend();
+                    set_config("localOffset", sched._current_timezone_offset())
+                } catch (e: BackendNotSupportedException) {
+                    throw e.alreadyUsingRustBackend()
                 }
             }
         }
     }
 
-    public void changeSchedulerVer(Integer ver) throws ConfirmModSchemaException {
+    @Throws(ConfirmModSchemaException::class)
+    fun changeSchedulerVer(ver: Int) {
         if (ver == schedVer()) {
-            return;
+            return
         }
         if (!fSupportedSchedulerVersions.contains(ver)) {
-            throw new RuntimeException("Unsupported scheduler version");
+            throw RuntimeException("Unsupported scheduler version")
         }
-        modSchema();
+        modSchema()
         @SuppressLint("VisibleForTests")
-        SchedV2 v2Sched = new SchedV2(this);
-        clearUndo();
+        val v2Sched = SchedV2(this)
+        clearUndo()
         if (ver == 1) {
-            v2Sched.moveToV1();
+            v2Sched.moveToV1()
         } else {
-            v2Sched.moveToV2();
+            v2Sched.moveToV2()
         }
-        set_config("schedVer", ver);
-        _loadScheduler();
+        set_config("schedVer", ver)
+        _loadScheduler()
     }
-
 
     /**
      * DB-related *************************************************************** ********************************
      */
-
-    public void load() {
-        Cursor cursor = null;
-        String deckConf = "";
+    @KotlinCleanup("Cleanup: make cursor a val + move cursor and cursor.close() to the try block")
+    fun load() {
+        var cursor: Cursor? = null
+        var deckConf: String?
         try {
             // Read in deck table columns
-            cursor = mDb.query(
-                    "SELECT crt, mod, scm, dty, usn, ls, " +
-                    "conf, dconf, tags FROM col");
+            cursor = db.query(
+                "SELECT crt, mod, scm, dty, usn, ls, " +
+                    "conf, dconf, tags FROM col"
+            )
             if (!cursor.moveToFirst()) {
-                return;
+                return
             }
-            mCrt = cursor.getLong(0);
-            mMod = cursor.getLong(1);
-            mScm = cursor.getLong(2);
-            mDty = cursor.getInt(3) == 1; // No longer used
-            mUsn = cursor.getInt(4);
-            mLs = cursor.getLong(5);
-            mConf = initConf(cursor.getString(6));
-            deckConf = cursor.getString(7);
-            mTags.load(cursor.getString(8));
+            crt = cursor.getLong(0)
+            mod = cursor.getLong(1)
+            scm = cursor.getLong(2)
+            dirty = cursor.getInt(3) == 1 // No longer used
+            mUsn = cursor.getInt(4)
+            mLs = cursor.getLong(5)
+            _config = initConf(cursor.getString(6))
+            deckConf = cursor.getString(7)
+            tags.load(cursor.getString(8))
         } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            cursor?.close()
         }
-        mDecks = initDecks(deckConf);
+        decks = initDecks(deckConf)!!
     }
 
-    private static int sChunk = 0;
-
-    private int getChunk() {
-        if (sChunk != 0) {
-            return sChunk;
-        }
-        // This is valid for the framework sqlite as far back as Android 5 / SDK21
-        // https://github.com/aosp-mirror/platform_frameworks_base/blob/ba35a77c7c4494c9eb74e87d8eaa9a7205c426d2/core/res/res/values/config.xml#L1141
-        final int WINDOW_SIZE_KB = 2048;
-        int cursorWindowSize = WINDOW_SIZE_KB * 1024;
-
+    @KotlinCleanup("make sChunk lazy and remove this")
+    private val chunk: Int
         // reduce the actual size a little bit.
         // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
-        sChunk = (int) (cursorWindowSize * 15. / 16.);
-        return sChunk;
-    }
+        get() {
+            if (sChunk != 0) {
+                return sChunk
+            }
+            // This is valid for the framework sqlite as far back as Android 5 / SDK21
+            // https://github.com/aosp-mirror/platform_frameworks_base/blob/ba35a77c7c4494c9eb74e87d8eaa9a7205c426d2/core/res/res/values/config.xml#L1141
+            val WINDOW_SIZE_KB = 2048
+            val cursorWindowSize = WINDOW_SIZE_KB * 1024
 
-    public String loadColumn(String columnName) {
-        int pos = 1;
-        StringBuilder buf = new StringBuilder();
+            // reduce the actual size a little bit.
+            // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
+            sChunk = (cursorWindowSize * 15.0 / 16.0).toInt()
+            return sChunk
+        }
 
+    fun loadColumn(columnName: String): String {
+        var pos = 1
+        val buf = StringBuilder()
         while (true) {
-            try (Cursor cursor = mDb.query("SELECT substr(" + columnName + ", ?, ?) FROM col",
-                    Integer.toString(pos), Integer.toString(getChunk()))) {
+            db.query(
+                "SELECT substr($columnName, ?, ?) FROM col",
+                Integer.toString(pos), Integer.toString(chunk)
+            ).use { cursor ->
                 if (!cursor.moveToFirst()) {
-                    return buf.toString();
+                    return buf.toString()
                 }
-                String res = cursor.getString(0);
-                if (res.length() == 0) {
-                      break;
+                val res = cursor.getString(0)
+                if (res.length == 0) {
+                    return buf.toString()
                 }
-                buf.append(res);
-                if (res.length() < getChunk()) {
-                    break;
+                buf.append(res)
+                if (res.length < chunk) {
+                    return buf.toString()
                 }
-                pos += getChunk();
+                pos += chunk
             }
         }
-        return buf.toString();
     }
 
     /**
@@ -362,119 +329,120 @@ public class Collection implements CollectionGetter {
      * if you modify properties of this object or the conf dict.
      */
     @RustCleanup("no longer required in v16 - all update immediately")
-    public void setMod() {
-        mDb.setMod(true);
+    fun setMod() {
+        db.mod = true
     }
-
-
-    public void flush() {
-        flush(0);
-    }
-
 
     /**
      * Flush state to DB, updating mod time.
      */
-    public void flush(long mod) {
-        Timber.i("flush - Saving information to DB...");
-        mMod = (mod == 0 ? getTime().intTimeMS() : mod);
-        ContentValues values = new ContentValues();
-        values.put("crt", mCrt);
-        values.put("mod", mMod);
-        values.put("scm", mScm);
-        values.put("dty", mDty ? 1 : 0);
-        values.put("usn", mUsn);
-        values.put("ls", mLs);
+    @KotlinCleanup("scope function")
+    @JvmOverloads
+    fun flush(mod: Long = 0) {
+        Timber.i("flush - Saving information to DB...")
+        this.mod = if (mod == 0L) time.intTimeMS() else mod
+        val values = ContentValues()
+        values.put("crt", this.crt)
+        values.put("mod", this.mod)
+        values.put("scm", scm)
+        values.put("dty", if (dirty) 1 else 0)
+        values.put("usn", mUsn)
+        values.put("ls", mLs)
         if (flushConf()) {
-            values.put("conf", Utils.jsonToString(getConf()));
+            values.put("conf", Utils.jsonToString(conf))
         }
-        mDb.update("col", values);
+        db.update("col", values)
     }
 
-
-    protected boolean flushConf() {
-        return true;
+    protected open fun flushConf(): Boolean {
+        return true
     }
-
 
     /**
      * Flush, commit DB, and take out another write lock.
      */
-    public synchronized void save() {
-        save(null, 0);
+    @Synchronized
+    fun save() {
+        save(null, 0)
     }
 
-
-    public synchronized void save(long mod) {
-        save(null, mod);
+    @Synchronized
+    fun save(mod: Long) {
+        save(null, mod)
     }
 
-    public synchronized void save(String name) {
-        save(name, 0);
+    @Synchronized
+    fun save(name: String?) {
+        save(name, 0)
     }
 
-
-    public synchronized void save(String name, long mod) {
+    @Synchronized
+    @KotlinCleanup("remove name")
+    @KotlinCleanup("JvmOverloads")
+    fun save(@Suppress("UNUSED_PARAMETER") name: String?, mod: Long) {
         // let the managers conditionally flush
-        getModels().flush();
-        mDecks.flush();
-        mTags.flush();
+        models.flush()
+        decks.flush()
+        tags.flush()
         // and flush deck + bump mod if db has been changed
-        if (mDb.getMod()) {
-            flush(mod);
-            mDb.commit();
-            mDb.setMod(false);
+        if (db.mod) {
+            flush(mod)
+            db.commit()
+            db.mod = false
         }
         // undoing non review operation is handled differently in ankidroid
 //        _markOp(name);
-        //mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
+        // mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
     }
 
     /**
      * Disconnect from DB.
      */
-    public synchronized void close() {
-        close(true);
+    @Synchronized
+    fun close() {
+        close(true)
     }
 
-    public synchronized void close(boolean save) {
-        close(save, false);
+    @Synchronized
+    fun close(save: Boolean) {
+        close(save, false)
     }
 
-    public synchronized void close(boolean save, boolean downgrade) {
-        if (mDb != null) {
+    @Synchronized
+    @KotlinCleanup("JvmOverloads")
+    @KotlinCleanup("remove/rename val db")
+    fun close(save: Boolean, downgrade: Boolean) {
+        if (!dbClosed) {
             try {
-                SupportSQLiteDatabase db = mDb.getDatabase();
+                val db = db.database
                 if (save) {
-                    mDb.executeInTransaction(this::save);
+                    this.db.executeInTransaction({ this.save() })
                 } else {
-                    DB.safeEndInTransaction(db);
+                    DB.safeEndInTransaction(db)
                 }
-            } catch (RuntimeException e) {
-                Timber.w(e);
-                CrashReportService.sendExceptionReport(e, "closeDB");
+            } catch (e: RuntimeException) {
+                Timber.w(e)
+                CrashReportService.sendExceptionReport(e, "closeDB")
             }
-            if (!mServer) {
-                mDb.getDatabase().disableWriteAheadLogging();
+            if (!server) {
+                db.database.disableWriteAheadLogging()
             }
-            mDroidBackend.closeCollection(mDb, downgrade);
-            mDb = null;
-            mMedia.close();
-            _closeLog();
-            Timber.i("Collection closed");
+            droidBackend.closeCollection(db, downgrade)
+            dbClosed = true
+            media.close()
+            _closeLog()
+            Timber.i("Collection closed")
         }
     }
 
-
-    public void reopen() {
-        Timber.i("Reopening Database");
-        if (mDb == null) {
-            mDb = mDroidBackend.openCollectionDatabase(mPath);
-            mMedia.connect();
-            _openLog();
+    fun reopen() {
+        Timber.i("Reopening Database")
+        if (dbClosed) {
+            db = droidBackend.openCollectionDatabase(path)
+            media.connect()
+            _openLog()
         }
     }
-
 
     /** Note: not in libanki.  Mark schema modified to force a full
      * sync, but with the confirmation checking function disabled This
@@ -482,9 +450,9 @@ public class Collection implements CollectionGetter {
      * is used so that the type does not states that an exception is
      * thrown when in fact it is never thrown.
      */
-    public void modSchemaNoCheck() {
-        mScm = getTime().intTimeMS();
-        setMod();
+    fun modSchemaNoCheck() {
+        scm = time.intTimeMS()
+        setMod()
     }
 
     /** Mark schema modified to force a full sync.
@@ -492,151 +460,143 @@ public class Collection implements CollectionGetter {
      * If the user chooses to confirm then modSchemaNoCheck should be called, after which the exception can
      * be safely ignored, and the outer code called again.
      *
-     * @throws ConfirmModSchemaException */
-    public void modSchema() throws ConfirmModSchemaException {
+     * @throws ConfirmModSchemaException
+     */
+    @Throws(ConfirmModSchemaException::class)
+    fun modSchema() {
         if (!schemaChanged()) {
             /* In Android we can't show a dialog which blocks the main UI thread
              Therefore we can't wait for the user to confirm if they want to do
              a full sync here, and we instead throw an exception asking the outer
              code to handle the user's choice */
-            throw new ConfirmModSchemaException();
+            throw ConfirmModSchemaException()
         }
-        modSchemaNoCheck();
+        modSchemaNoCheck()
     }
 
-
-    /** True if schema changed since last sync. */
-    public boolean schemaChanged() {
-        return mScm > mLs;
+    /** True if schema changed since last sync.  */
+    fun schemaChanged(): Boolean {
+        return scm > mLs
     }
 
-
-    public int usn() {
-        if (mServer) {
-            return mUsn;
+    @KotlinCleanup("maybe change to getter")
+    fun usn(): Int {
+        return if (server) {
+            mUsn
         } else {
-            return -1;
+            -1
         }
     }
 
-
-    /** called before a full upload */
-    public void beforeUpload() {
-        String[] tables = new String[] { "notes", "cards", "revlog" };
-        for (String t : tables) {
-            mDb.execute("UPDATE " + t + " SET usn=0 WHERE usn=-1");
+    /** called before a full upload  */
+    fun beforeUpload() {
+        val tables = arrayOf("notes", "cards", "revlog")
+        for (t in tables) {
+            db.execute("UPDATE $t SET usn=0 WHERE usn=-1")
         }
         // we can save space by removing the log of deletions
-        mDb.execute("delete from graves");
-        mUsn += 1;
-        getModels().beforeUpload();
-        mTags.beforeUpload();
-        mDecks.beforeUpload();
-        modSchemaNoCheck();
-        mLs = mScm;
-        Timber.i("Compacting database before full upload");
+        db.execute("delete from graves")
+        mUsn += 1
+        models.beforeUpload()
+        tags.beforeUpload()
+        decks.beforeUpload()
+        modSchemaNoCheck()
+        mLs = scm
+        Timber.i("Compacting database before full upload")
         // ensure db is compacted before upload
-        mDb.execute("vacuum");
-        mDb.execute("analyze");
+        db.execute("vacuum")
+        db.execute("analyze")
         // downgrade the collection
-        close(true, true);
+        close(true, true)
     }
-
 
     /**
      * Object creation helpers **************************************************
      * *********************************************
      */
-
-    public Card getCard(long id) {
-        return new Card(this, id);
+    fun getCard(id: Long): Card {
+        return Card(this, id)
     }
 
-    public Card.Cache getCardCache(long id) {
-        return new Card.Cache(this, id);
+    fun getCardCache(id: Long): Card.Cache {
+        return Card.Cache(this, id)
     }
 
-
-    public Note getNote(long id) {
-        return new Note(this, id);
+    fun getNote(id: Long): Note {
+        return Note(this, id)
     }
-
 
     /**
      * Utils ******************************************************************** ***************************
      */
-
-    public int nextID(String type) {
-        type = "next" + Character.toUpperCase(type.charAt(0)) + type.substring(1);
-        int id;
-        try {
-            id = get_config_int(type);
-        } catch (JSONException e) {
-            Timber.w(e);
-            id = 1;
+    @KotlinCleanup("combine first two lines (use typeParam)")
+    fun nextID(typeParam: String): Int {
+        var type = typeParam
+        type = "next" + Character.toUpperCase(type[0]) + type.substring(1)
+        val id: Int
+        id = try {
+            get_config_int(type)
+        } catch (e: JSONException) {
+            Timber.w(e)
+            1
         }
-        set_config(type, id + 1);
-        return id;
+        set_config(type, id + 1)
+        return id
     }
-
 
     /**
      * Rebuild the queue and reload data after DB modified.
      */
-    public void reset() {
-        mSched.deferReset();
+    fun reset() {
+        sched.deferReset()
     }
-
 
     /**
      * Deletion logging ********************************************************* **************************************
      */
-
-    public void _logRem(long[] ids, int type) {
-        for (long id : ids) {
-            ContentValues values = new ContentValues();
-            values.put("usn", usn());
-            values.put("oid", id);
-            values.put("type", type);
-            mDb.insert("graves", values);
+    @KotlinCleanup("scope function")
+    fun _logRem(ids: LongArray, type: Int) {
+        for (id in ids) {
+            val values = ContentValues()
+            values.put("usn", usn())
+            values.put("oid", id)
+            values.put("type", type)
+            db.insert("graves", values)
         }
     }
 
-    public void _logRem(java.util.Collection<Long> ids, @Consts.REM_TYPE int type) {
-        for (long id : ids) {
-            ContentValues values = new ContentValues();
-            values.put("usn", usn());
-            values.put("oid", id);
-            values.put("type", type);
-            mDb.insert("graves", values);
+    @KotlinCleanup("scope function")
+    @KotlinCleanup("combine with above")
+    fun _logRem(ids: kotlin.collections.Collection<Long>, @Consts.REM_TYPE type: Int) {
+        for (id in ids) {
+            val values = ContentValues()
+            values.put("usn", usn())
+            values.put("oid", id)
+            values.put("type", type)
+            db.insert("graves", values)
         }
     }
-
 
     /**
      * Notes ******************************************************************** ***************************
      */
-
-    public int noteCount() {
-        return mDb.queryScalar("SELECT count() FROM notes");
+    fun noteCount(): Int {
+        return db.queryScalar("SELECT count() FROM notes")
     }
-
+    /**
+     * Return a new note with the model derived from the deck or the configuration
+     * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
+     * the configuration (curModel)
+     * @return The new note
+     */
     /**
      * Return a new note with the default model from the deck
      * @return The new note
      */
-    public @NonNull Note newNote() {
-        return newNote(true);
-    }
-
-    /**
-     * Return a new note with the model derived from the deck or the configuration
-     * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
-     *                the configuration (curModel)
-     * @return The new note
-     */
-    public @NonNull Note newNote(boolean forDeck) {
-        return newNote(getModels().current(forDeck));
+    @KotlinCleanup("combine comments")
+    @JvmOverloads
+    fun newNote(forDeck: Boolean = true): Note {
+        return newNote(models.current(forDeck))
     }
 
     /**
@@ -644,86 +604,81 @@ public class Collection implements CollectionGetter {
      * @param m The model to use for the new note
      * @return The new note
      */
-    public @NonNull Note newNote(Model m) {
-        return new Note(this, m);
+    @KotlinCleanup("non-null")
+    fun newNote(m: Model?): Note {
+        return Note(this, m!!)
     }
-
-
-    /**
-     * @param note A note to add if it generates card
-     * @return Number of card added.
-     */
-    public int addNote(@NonNull Note note) {
-        return addNote(note, Models.AllowEmpty.ONLY_CLOZE);
-    }
-
     /**
      * Add a note and cards to the collection. If allowEmpty, at least one card is generated.
      * @param note  The note to add to the collection
      * @param allowEmpty Whether we accept to add it even if it should generate no card. Useful to import note even if buggy
      * @return Number of card added
      */
-    public int addNote(@NonNull Note note, Models.AllowEmpty allowEmpty) {
+    /**
+     * @param note A note to add if it generates card
+     * @return Number of card added.
+     */
+    @KotlinCleanup("combine comments")
+    @KotlinCleanup("allowEmpty: non-null")
+    @JvmOverloads
+    fun addNote(note: Note, allowEmpty: Models.AllowEmpty? = Models.AllowEmpty.ONLY_CLOZE): Int {
         // check we have card models available, then save
-        ArrayList<JSONObject> cms = findTemplates(note, allowEmpty);
+        val cms = findTemplates(note, allowEmpty)
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
         if (cms.isEmpty()) {
-            return 0;
+            return 0
         }
-        note.flush();
+        note.flush()
         // deck conf governs which of these are used
-        int due = nextID("pos");
+        val due = nextID("pos")
         // add cards
-        int ncards = 0;
-        for (JSONObject template : cms) {
-            _newCard(note, template, due);
-            ncards += 1;
+        var ncards = 0
+        for (template in cms) {
+            _newCard(note, template, due)
+            ncards += 1
         }
-        return ncards;
+        return ncards
     }
 
-
-    public void remNotes(long[] ids) {
-        ArrayList<Long> list = mDb
-                .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids));
-        remCards(list);
+    fun remNotes(ids: LongArray?) {
+        val list = db
+            .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids))
+        remCards(list)
     }
-
 
     /**
      * Bulk delete notes by ID. Don't call this directly.
      */
-    public void _remNotes(java.util.Collection<Long> ids) {
+    fun _remNotes(ids: kotlin.collections.Collection<Long>) {
         if (ids.isEmpty()) {
-            return;
+            return
         }
-        String strids = Utils.ids2str(ids);
+        val strids = Utils.ids2str(ids)
         // we need to log these independently of cards, as one side may have
         // more card templates
-        _logRem(ids, Consts.REM_NOTE);
-        mDb.execute("DELETE FROM notes WHERE id IN " + strids);
+        _logRem(ids, Consts.REM_NOTE)
+        db.execute("DELETE FROM notes WHERE id IN $strids")
     }
-
 
     /*
       Card creation ************************************************************ ***********************************
      */
-
-    public ArrayList<JSONObject> findTemplates(Note note) {
-        return findTemplates(note, Models.AllowEmpty.ONLY_CLOZE);
-    }
 
     /**
      * @param note A note
      * @param allowEmpty whether we allow to have a card which is actually empty if it is necessary to return a non-empty list
      * @return (active), non-empty templates.
      */
-    public ArrayList<JSONObject> findTemplates(Note note, Models.AllowEmpty allowEmpty) {
-        Model model = note.model();
-        ArrayList<Integer> avail = Models.availOrds(model, note.getFields(), allowEmpty);
-        return _tmplsFromOrds(model, avail);
+    @KotlinCleanup("allowEmpty: non-null")
+    @JvmOverloads
+    fun findTemplates(
+        note: Note,
+        allowEmpty: Models.AllowEmpty? = Models.AllowEmpty.ONLY_CLOZE
+    ): ArrayList<JSONObject> {
+        val model = note.model()
+        val avail = Models.availOrds(model, note.fields, allowEmpty!!)
+        return _tmplsFromOrds(model, avail)
     }
-
 
     /**
      * @param model A note type
@@ -731,54 +686,57 @@ public class Collection implements CollectionGetter {
      * @return One template by element i of avail, for the i-th card. For standard template, avail should contains only existing ords.
      * for cloze, avail should contains only non-negative numbers, and the i-th card is a copy of the first card, with a different ord.
      */
-    private ArrayList<JSONObject> _tmplsFromOrds(Model model, ArrayList<Integer> avail) {
-        JSONArray tmpls;
-        if (model.isStd()) {
-            tmpls = model.getJSONArray("tmpls");
-            ArrayList<JSONObject> ok = new ArrayList<>(avail.size());
-            for (Integer ord : avail) {
-                ok.add(tmpls.getJSONObject(ord));
+    @KotlinCleanup("extract 'ok' and return without the return if")
+    private fun _tmplsFromOrds(model: Model, avail: ArrayList<Int>): ArrayList<JSONObject> {
+        val tmpls: JSONArray
+        return if (model.isStd) {
+            tmpls = model.getJSONArray("tmpls")
+            val ok = ArrayList<JSONObject>(avail.size)
+            for (ord in avail) {
+                ok.add(tmpls.getJSONObject(ord))
             }
-            return ok;
+            ok
         } else {
             // cloze - generate temporary templates from first
-            JSONObject template0 = model.getJSONArray("tmpls").getJSONObject(0);
-            ArrayList<JSONObject> ok = new ArrayList<>(avail.size());
-            for (int ord : avail) {
-                JSONObject t = template0.deepClone();
-                t.put("ord", ord);
-                ok.add(t);
+            val template0 = model.getJSONArray("tmpls").getJSONObject(0)
+            val ok = ArrayList<JSONObject>(avail.size)
+            for (ord in avail) {
+                val t = template0.deepClone()
+                t.put("ord", ord)
+                ok.add(t)
             }
-            return ok;
+            ok
         }
     }
-
 
     /**
      * Generate cards for non-empty templates, return ids to remove.
      */
-    public ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model) {
-        return genCards(Utils.collection2Array(nids), model);
+    @KotlinCleanup("Check CollectionTask<Int?, Int> - should be fine")
+    @KotlinCleanup("change to ArrayList!")
+    fun genCards(nids: kotlin.collections.Collection<Long?>?, model: Model): ArrayList<Long>? {
+        return genCards<CollectionTask<Int?, Int>>(Utils.collection2Array(nids), model)
     }
 
-    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(java.util.Collection<Long> nids, @NonNull Model model, @Nullable T task) {
-       return genCards(Utils.collection2Array(nids), model, task);
+    fun <T> genCards(
+        nids: kotlin.collections.Collection<Long?>?,
+        model: Model,
+        task: T?
+    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+        return genCards(Utils.collection2Array(nids), model, task)
     }
 
-    public ArrayList<Long> genCards(java.util.Collection<Long> nids, long mid) {
-        return genCards(nids, getModels().get(mid));
+    fun genCards(nids: kotlin.collections.Collection<Long?>?, mid: Long): ArrayList<Long>? {
+        return genCards(nids, models.get(mid)!!)
     }
 
-    public ArrayList<Long> genCards(long[] nids, @NonNull Model model) {
-        return genCards(nids, model, null);
-    }
-
-    public ArrayList<Long> genCards(long nid, @NonNull Model model) {
-        return genCards(nid, model, null);
-    }
-
-    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(long nid, @NonNull Model model, @Nullable T task) {
-        return genCards("(" + nid + ")", model, task);
+    @JvmOverloads
+    fun <T> genCards(
+        nid: Long,
+        model: Model,
+        task: T? = null
+    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+        return genCards("($nid)", model, task)
     }
 
     /**
@@ -786,10 +744,15 @@ public class Collection implements CollectionGetter {
      * @param task Task to check for cancellation and update number of card processed
      * @return Cards that should be removed because they should not be generated
      */
-    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(long[] nids, @NonNull Model model, @Nullable T task) {
+    @JvmOverloads
+    fun <T> genCards(
+        nids: LongArray?,
+        model: Model,
+        task: T? = null
+    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
         // build map of (nid,ord) so we don't create dupes
-        String snids = Utils.ids2str(nids);
-        return genCards(snids, model, task);
+        val snids = Utils.ids2str(nids)
+        return genCards(snids, model, task)
     }
 
     /**
@@ -798,496 +761,557 @@ public class Collection implements CollectionGetter {
      * @param task Task to check for cancellation and update number of card processed
      * @return Cards that should be removed because they should not be generated
      * @param <T>
-     */
-    public <T extends ProgressSender<Integer> & CancelListener> ArrayList<Long> genCards(String snids, @NonNull Model model, @Nullable T task) {
-        int nbCount = noteCount();
+     </T> */
+    @KotlinCleanup("see if we can cleanup if (!have.containsKey(nid)) { to a default dict or similar?")
+    fun <T> genCards(
+        snids: String,
+        model: Model,
+        task: T?
+    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+        val nbCount = noteCount()
         // For each note, indicates ords of cards it contains
-        HashMap<Long, HashMap<Integer, Long>> have = HashUtil.HashMapInit(nbCount);
+        val have = HashUtil.HashMapInit<Long, HashMap<Int, Long>>(nbCount)
         // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
-        HashMap<Long, Long> dids = HashUtil.HashMapInit(nbCount);
+        val dids = HashUtil.HashMapInit<Long, Long>(nbCount)
         // For each note, an arbitrary due of one of its due card processed, if any exists
-        HashMap<Long, Long> dues = HashUtil.HashMapInit(nbCount);
-        List<ParsedNode> nodes = null;
+        val dues = HashUtil.HashMapInit<Long, Long>(nbCount)
+        var nodes: List<ParsedNode?>? = null
         if (model.getInt("type") != Consts.MODEL_CLOZE) {
-            nodes = model.parsedNodes();
+            nodes = model.parsedNodes()
         }
-        try (Cursor cur = mDb.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in " + snids)) {
-            while (cur.moveToNext()) {
-                if (isCancelled(task)) {
-                    Timber.v("Empty card cancelled");
-                    return null;
-                }
-                @NonNull Long id = cur.getLong(0);
-                @NonNull Long nid = cur.getLong(1);
-                @NonNull Integer ord = cur.getInt(2);
-                @NonNull Long did = cur.getLong(3);
-                @NonNull Long due = cur.getLong(4);
-                @Consts.CARD_TYPE int type = cur.getInt(5);
-
-                // existing cards
-                if (!have.containsKey(nid)) {
-                    have.put(nid, new HashMap<>());
-                }
-                have.get(nid).put(ord, id);
-                // and their dids
-                if (dids.containsKey(nid)) {
-                    if (dids.get(nid) != 0 && !Utils.equals(dids.get(nid), did)) {
-                        // cards are in two or more different decks; revert to model default
-                        dids.put(nid, 0L);
+        db.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in $snids")
+            .use { cur ->
+                while (cur.moveToNext()) {
+                    if (isCancelled(task)) {
+                        Timber.v("Empty card cancelled")
+                        return null
                     }
-                } else {
-                    // first card or multiple cards in same deck
-                    dids.put(nid, did);
-                }
-                if (!dues.containsKey(nid) && type == Consts.CARD_TYPE_NEW) {
-                    dues.put(nid, due);
+                    val id = cur.getLong(0)
+                    val nid = cur.getLong(1)
+                    val ord = cur.getInt(2)
+                    val did = cur.getLong(3)
+                    val due = cur.getLong(4)
+                    @Consts.CARD_TYPE val type = cur.getInt(5)
+
+                    // existing cards
+                    if (!have.containsKey(nid)) {
+                        have[nid] = HashMap()
+                    }
+                    have[nid]!![ord] = id
+                    // and their dids
+                    if (dids.containsKey(nid)) {
+                        if (dids[nid] != 0L && !Utils.equals(dids[nid], did)) {
+                            // cards are in two or more different decks; revert to model default
+                            dids[nid] = 0L
+                        }
+                    } else {
+                        // first card or multiple cards in same deck
+                        dids[nid] = did
+                    }
+                    if (!dues.containsKey(nid) && type == Consts.CARD_TYPE_NEW) {
+                        dues[nid] = due
+                    }
                 }
             }
-        }
         // build cards for each note
-        ArrayList<Object[]> data = new ArrayList<>();
-        long ts = getTime().maxID(mDb);
-        long now = getTime().intTime();
-        ArrayList<Long> rem = new ArrayList<>(mDb.queryScalar("SELECT count() FROM notes where id in " + snids));
-        int usn = usn();
-        try (Cursor cur = mDb.query("SELECT id, flds FROM notes WHERE id IN " + snids)) {
+        val data = ArrayList<Array<Any>>()
+        @Suppress("UNUSED_VARIABLE")
+        var ts = time.maxID(db)
+        val now = time.intTime()
+        val rem =
+            ArrayList<Long>(db.queryScalar("SELECT count() FROM notes where id in $snids"))
+        val usn = usn()
+        db.query("SELECT id, flds FROM notes WHERE id IN $snids").use { cur ->
             while (cur.moveToNext()) {
                 if (isCancelled(task)) {
-                    Timber.v("Empty card cancelled");
-                    return null;
+                    Timber.v("Empty card cancelled")
+                    return null
                 }
-                @NonNull Long nid = cur.getLong(0);
-                String flds = cur.getString(1);
-                ArrayList<Integer> avail = Models.availOrds(model, Utils.splitFields(flds), nodes, Models.AllowEmpty.TRUE);
-                if (task != null) {
-                    task.doProgress(avail.size());
-                }
-                Long did = dids.get(nid);
+                val nid = cur.getLong(0)
+                val flds = cur.getString(1)
+                val avail = Models.availOrds(model, Utils.splitFields(flds), nodes, Models.AllowEmpty.TRUE)
+                task?.doProgress(avail.size)
+                var did = dids[nid]
                 // use sibling due if there is one, else use a new id
-                @NonNull Long due;
-                if (dues.containsKey(nid)) {
-                    due = dues.get(nid);
+                var due: Long
+                due = if (dues.containsKey(nid)) {
+                    dues[nid]!!
                 } else {
-                    due = (long) nextID("pos");
+                    nextID("pos").toLong()
                 }
                 if (did == null || did == 0L) {
-                    did = model.getDid();
+                    did = model.did
                 }
                 // add any missing cards
-                ArrayList<JSONObject> tmpls = _tmplsFromOrds(model, avail);
-                for (JSONObject t : tmpls) {
-                    int tord = t.getInt("ord");
-                    boolean doHave = have.containsKey(nid) && have.get(nid).containsKey(tord);
+                val tmpls = _tmplsFromOrds(model, avail)
+                for (t in tmpls) {
+                    val tord = t.getInt("ord")
+                    val doHave = have.containsKey(nid) && have[nid]!!.containsKey(tord)
                     if (!doHave) {
                         // check deck is not a cram deck
-                        long ndid;
+                        var ndid: Long
                         try {
-                            ndid = t.optLong("did", 0);
-                            if (ndid != 0) {
-                                did = ndid;
+                            ndid = t.optLong("did", 0)
+                            if (ndid != 0L) {
+                                did = ndid
                             }
-                        } catch (JSONException e) {
-                            Timber.w(e);
+                        } catch (e: JSONException) {
+                            Timber.w(e)
                             // do nothing
                         }
-                        if (getDecks().isDyn(did)) {
-                            did = 1L;
+                        if (decks.isDyn(did!!)) {
+                            did = 1L
                         }
                         // if the deck doesn't exist, use default instead
-                        did = mDecks.get(did).getLong("id");
+                        did = decks.get(did).getLong("id")
                         // give it a new id instead
-                        data.add(new Object[] { ts, nid, did, tord, now, usn, due});
-                        ts += 1;
+                        data.add(arrayOf(ts, nid, did, tord, now, usn, due))
+                        ts += 1
                     }
                 }
                 // note any cards that need removing
                 if (have.containsKey(nid)) {
-                    for (Map.Entry<Integer, Long> n : have.get(nid).entrySet()) {
-                        if (!avail.contains(n.getKey())) {
-                            rem.add(n.getValue());
+                    for ((key, value) in have[nid]!!) {
+                        if (!avail.contains(key)) {
+                            rem.add(value)
                         }
                     }
                 }
             }
         }
         // bulk update
-        mDb.executeMany("INSERT INTO cards VALUES (?,?,?,?,?,?,0,0,?,0,0,0,0,0,0,0,0,\"\")", data);
-        return rem;
+        db.executeMany(
+            "INSERT INTO cards VALUES (?,?,?,?,?,?,0,0,?,0,0,0,0,0,0,0,0,\"\")",
+            data
+        )
+        return rem
     }
 
     /**
      * Create a new card.
      */
-    private Card _newCard(Note note, JSONObject template, int due) {
-        boolean flush = true;
-        return _newCard(note, template, due, flush);
+    @KotlinCleanup("inline flush = true with a named arg")
+    private fun _newCard(note: Note, template: JSONObject, due: Int): Card {
+        val flush = true
+        return _newCard(note, template, due, flush)
     }
 
-    private Card _newCard(Note note, JSONObject template, int due, long did) {
-        boolean flush = true;
-        return _newCard(note, template, due, did, flush);
+    @KotlinCleanup("remove - unused")
+    private fun _newCard(note: Note, template: JSONObject, due: Int, did: Long): Card {
+        val flush = true
+        return _newCard(note, template, due, did, flush)
     }
 
-    private Card _newCard(Note note, JSONObject template, int due, boolean flush) {
-        long did = 0L;
-        return _newCard(note, template, due, did, flush);
+    private fun _newCard(note: Note, template: JSONObject, due: Int, flush: Boolean): Card {
+        val did = 0L
+        return _newCard(note, template, due, did, flush)
     }
 
-    private Card _newCard(Note note, JSONObject template, int due, long parameterDid, boolean flush) {
-        Card card = new Card(this);
-        return getNewLinkedCard(card, note, template, due, parameterDid, flush);
+    @KotlinCleanup("JvmOverloads")
+    private fun _newCard(
+        note: Note,
+        template: JSONObject,
+        due: Int,
+        parameterDid: Long,
+        flush: Boolean
+    ): Card {
+        val card = Card(this)
+        return getNewLinkedCard(card, note, template, due, parameterDid, flush)
     }
 
     // This contains the original libanki implementation of _newCard, with the added parameter that
     // you pass the Card object in. This allows you to work on 'Card' subclasses that may not have
     // actual backing store (for instance, if you are previewing unsaved changes on templates)
     // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
-    public Card getNewLinkedCard(Card card, Note note, JSONObject template, int due, long parameterDid, boolean flush) {
-        long nid = note.getId();
-        card.setNid(nid);
-        int ord = template.getInt("ord");
-        card.setOrd(ord);
-        long did = mDb.queryLongScalar("select did from cards where nid = ? and ord = ?", nid, ord);
+    @KotlinCleanup("use card.nid in the query to remove the need for a few variables.")
+    @KotlinCleanup("1 -> Consts.DEFAULT_DECK_ID")
+    fun getNewLinkedCard(
+        card: Card,
+        note: Note,
+        template: JSONObject,
+        due: Int,
+        parameterDid: Long,
+        flush: Boolean
+    ): Card {
+        val nid = note.id
+        card.nid = nid
+        val ord = template.getInt("ord")
+        card.ord = ord
+        var did =
+            db.queryLongScalar("select did from cards where nid = ? and ord = ?", nid, ord)
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
-        if (did == 0) {
-            did = template.optLong("did", 0);
-            if (did > 0 && mDecks.get(did, false) != null) {
-            } else if (parameterDid != 0) {
-                did = parameterDid;
+        if (did == 0L) {
+            did = template.optLong("did", 0)
+            if (did > 0 && decks.get(did, false) != null) {
+            } else if (parameterDid != 0L) {
+                did = parameterDid
             } else {
-                did = note.model().optLong("did", 0);
+                did = note.model().optLong("did", 0)
             }
         }
-        card.setDid(did);
+        card.did = did
         // if invalid did, use default instead
-        Deck deck = mDecks.get(card.getDid());
-        if (deck.isDyn()) {
+        val deck = decks.get(card.did)
+        if (deck.isDyn) {
             // must not be a filtered deck
-            card.setDid(1);
+            card.did = 1
         } else {
-            card.setDid(deck.getLong("id"));
+            card.did = deck.getLong("id")
         }
-        card.setDue(_dueForDid(card.getDid(), due));
+        card.due = _dueForDid(card.did, due).toLong()
         if (flush) {
-            card.flush();
+            card.flush()
         }
-        return card;
+        return card
     }
 
-
-    public int _dueForDid(long did, int due) {
-        DeckConfig conf = mDecks.confForDid(did);
+    @KotlinCleanup("scope function for random")
+    @KotlinCleanup("use Kotlin's random library instead of Java's")
+    fun _dueForDid(did: Long, due: Int): Int {
+        val conf = decks.confForDid(did)
         // in order due?
-        if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_DUE) {
-            return due;
+        return if (conf.getJSONObject("new")
+            .getInt("order") == Consts.NEW_CARDS_DUE
+        ) {
+            due
         } else {
             // random mode; seed with note ts so all cards of this note get
             // the same random number
-            Random r = new Random();
-            r.setSeed(due);
-            return r.nextInt(Math.max(due, 1000) - 1) + 1;
+            val r = Random()
+            r.setSeed(due.toLong())
+            r.nextInt(Math.max(due, 1000) - 1) + 1
         }
     }
-
 
     /**
      * Cards ******************************************************************** ***************************
      */
+    val isEmpty: Boolean
+        get() = db.queryScalar("SELECT 1 FROM cards LIMIT 1") == 0
 
-    public boolean isEmpty() {
-        return mDb.queryScalar("SELECT 1 FROM cards LIMIT 1") == 0;
+    fun cardCount(): Int {
+        return db.queryScalar("SELECT count() FROM cards")
     }
-
-
-    public int cardCount() {
-        return mDb.queryScalar("SELECT count() FROM cards");
-    }
-
 
     // NOT IN LIBANKI //
-    public int cardCount(Long... dids) {
-        return mDb.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids));
+    fun cardCount(vararg dids: Long?): Int {
+        return db.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids))
     }
 
-    public boolean isEmptyDeck(Long... dids) {
-        return cardCount(dids) == 0;
+    fun isEmptyDeck(vararg dids: Long?): Boolean {
+        return cardCount(*dids) == 0
     }
-
 
     /**
      * Bulk delete cards by ID.
      */
-    public void remCards(List<Long> ids) {
-        remCards(ids, true);
+    fun remCards(ids: List<Long>) {
+        remCards(ids, true)
     }
 
-    public void remCards(java.util.Collection<Long> ids, boolean notes) {
+    @KotlinCleanup("JvmOverloads")
+    fun remCards(ids: kotlin.collections.Collection<Long>, notes: Boolean) {
         if (ids.isEmpty()) {
-            return;
+            return
         }
-        String sids = Utils.ids2str(ids);
-        List<Long> nids = mDb.queryLongList("SELECT nid FROM cards WHERE id IN " + sids);
+        val sids = Utils.ids2str(ids)
+        var nids: List<Long> = db.queryLongList("SELECT nid FROM cards WHERE id IN $sids")
         // remove cards
-        _logRem(ids, Consts.REM_CARD);
-        mDb.execute("DELETE FROM cards WHERE id IN " + sids);
+        _logRem(ids, Consts.REM_CARD)
+        db.execute("DELETE FROM cards WHERE id IN $sids")
         // then notes
         if (!notes) {
-            return;
+            return
         }
-        nids = mDb.queryLongList("SELECT id FROM notes WHERE id IN " + Utils.ids2str(nids)
-                        + " AND id NOT IN (SELECT nid FROM cards)");
-        _remNotes(nids);
+        nids = db.queryLongList(
+            "SELECT id FROM notes WHERE id IN " + Utils.ids2str(nids) +
+                " AND id NOT IN (SELECT nid FROM cards)"
+        )
+        _remNotes(nids)
     }
 
-
-    public <T extends ProgressSender<Integer> & CancelListener> List<Long> emptyCids(@Nullable T task) {
-        List<Long> rem = new ArrayList<>();
-        for (Model m : getModels().all()) {
-            rem.addAll(genCards(getModels().nids(m), m, task));
+    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int?>?, T : CancelListener? {
+        val rem: MutableList<Long> = ArrayList()
+        for (m in models.all()) {
+            rem.addAll(genCards(models.nids(m), m, task)!!)
         }
-        return rem;
+        return rem
     }
 
-
-    public String emptyCardReport(List<Long> cids) {
-        StringBuilder rep = new StringBuilder();
-        try (Cursor cur = mDb.query("select group_concat(ord+1), count(), flds from cards c, notes n "
-                                           + "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid")) {
+    fun emptyCardReport(cids: List<Long>?): String {
+        val rep = StringBuilder()
+        db.query(
+            "select group_concat(ord+1), count(), flds from cards c, notes n " +
+                "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid"
+        ).use { cur ->
             while (cur.moveToNext()) {
-                String ords = cur.getString(0);
-                //int cnt = cur.getInt(1);  // present but unused upstream as well
-                String flds = cur.getString(2);
-                rep.append(String.format("Empty card numbers: %s\nFields: %s\n\n", ords, flds.replace("\u001F", " / ")));
+                val ords = cur.getString(0)
+                // int cnt = cur.getInt(1);  // present but unused upstream as well
+                val flds = cur.getString(2)
+                rep.append(
+                    String.format(
+                        "Empty card numbers: %s\nFields: %s\n\n",
+                        ords,
+                        flds.replace("\u001F", " / ")
+                    )
+                )
             }
         }
-        return rep.toString();
+        return rep.toString()
     }
 
     /**
      * Field checksums and sorting fields ***************************************
      * ********************************************************
      */
-
-    private ArrayList<Object[]> _fieldData(String snids) {
-        ArrayList<Object[]> result = new ArrayList<>(mDb.queryScalar("SELECT count() FROM notes WHERE id IN" + snids));
-        try (Cursor cur = mDb.query("SELECT id, mid, flds FROM notes WHERE id IN " + snids)) {
+    @KotlinCleanup("return List<class>")
+    private fun _fieldData(snids: String): ArrayList<Array<Any>> {
+        val result = ArrayList<Array<Any>>(
+            db.queryScalar("SELECT count() FROM notes WHERE id IN$snids")
+        )
+        db.query("SELECT id, mid, flds FROM notes WHERE id IN $snids").use { cur ->
             while (cur.moveToNext()) {
-                result.add(new Object[] { cur.getLong(0), cur.getLong(1), cur.getString(2) });
+                result.add(arrayOf(cur.getLong(0), cur.getLong(1), cur.getString(2)))
             }
         }
-        return result;
-    }
-
-
-    /** Update field checksums and sort cache, after find&replace, etc.
-     * @param nids*/
-    public void updateFieldCache(java.util.Collection<Long> nids) {
-        String snids = Utils.ids2str(nids);
-        updateFieldCache(snids);
+        return result
     }
 
     /** Update field checksums and sort cache, after find&replace, etc.
-     * @param nids*/
-    public void updateFieldCache(long[] nids) {
-        String snids = Utils.ids2str(nids);
-        updateFieldCache(snids);
+     * @param nids
+     */
+    fun updateFieldCache(nids: kotlin.collections.Collection<Long>?) {
+        val snids = Utils.ids2str(nids)
+        updateFieldCache(snids)
     }
 
     /** Update field checksums and sort cache, after find&replace, etc.
-     * @param snids comma separated nids*/
-    public void updateFieldCache(String snids) {
-        ArrayList<Object[]> data = _fieldData(snids);
-        ArrayList<Object[]> r = new ArrayList<>(data.size());
-        for (Object[] o : data) {
-            String[] fields = Utils.splitFields((String) o[2]);
-            Model model = getModels().get((Long) o[1]);
-            if (model == null) {
-                // note point to invalid model
-                continue;
-            }
-            Pair<String, Long> csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, getModels().sortIdx(model));
-            r.add(new Object[] {csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o[0] });
+     * @param nids
+     */
+    fun updateFieldCache(nids: LongArray?) {
+        val snids = Utils.ids2str(nids)
+        updateFieldCache(snids)
+    }
+
+    /** Update field checksums and sort cache, after find&replace, etc.
+     * @param snids comma separated nids
+     */
+    fun updateFieldCache(snids: String) {
+        val data = _fieldData(snids)
+        val r = ArrayList<Array<Any>>(data.size)
+        for (o in data) {
+            val fields = Utils.splitFields(o[2] as String)
+            val model = models.get((o[1] as Long))
+                ?: // note point to invalid model
+                continue
+            val csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, models.sortIdx(model))
+            r.add(arrayOf(csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o[0]))
         }
         // apply, relying on calling code to bump usn+mod
-        mDb.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r);
+        db.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r)
     }
-
-
     /*
       Q/A generation *********************************************************** ************************************
      */
-
     /**
      * Returns hash of id, question, answer.
      */
-    @NonNull
-    public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags) {
-        return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null);
+    fun _renderQA(
+        cid: Long,
+        model: Model,
+        did: Long,
+        ord: Int,
+        tags: String,
+        flist: Array<String?>,
+        flags: Int
+    ): HashMap<String, String> {
+        return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null)
     }
 
-
     @RustCleanup("#8951 - Remove FrontSide added to the front")
-    @NonNull
-    public HashMap<String, String> _renderQA(long cid, Model model, long did, int ord, String tags, String[] flist, int flags, boolean browser, String qfmt, String afmt) {
+    fun _renderQA(
+        cid: Long,
+        model: Model,
+        did: Long,
+        ord: Int,
+        tags: String,
+        flist: Array<String?>,
+        flags: Int,
+        browser: Boolean,
+        qfmtParam: String?,
+        afmtParam: String?
+    ): HashMap<String, String> {
         // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
         // unpack fields and create dict
-        Map<String, Pair<Integer, JSONObject>> fmap = Models.fieldMap(model);
-        Set<Map.Entry<String, Pair<Integer, JSONObject>>> maps = fmap.entrySet();
-        Map<String, String> fields = HashUtil.HashMapInit(maps.size() + 8);
-        for (Map.Entry<String, Pair<Integer, JSONObject>> entry : maps) {
-            fields.put(entry.getKey(), flist[entry.getValue().first]);
+        var qfmt = qfmtParam
+        var afmt = afmtParam
+        val fmap = Models.fieldMap(model)
+        val maps: Set<Map.Entry<String, Pair<Int, JSONObject>>> = fmap.entries
+        val fields: MutableMap<String, String?> = HashUtil.HashMapInit(maps.size + 8)
+        for ((key, value) in maps) {
+            fields[key] = flist[value.first]
         }
-        int cardNum = ord + 1;
-        fields.put("Tags", tags.trim());
-        fields.put("Type", model.getString("name"));
-        fields.put("Deck", mDecks.name(did));
-        String baseName = Decks.basename(fields.get("Deck"));
-        fields.put("Subdeck", baseName);
-        fields.put("CardFlag", _flagNameFromCardFlags(flags));
-        JSONObject template;
-        if (model.isStd()) {
-            template = model.getJSONArray("tmpls").getJSONObject(ord);
+        val cardNum = ord + 1
+        fields["Tags"] = tags.trim { it <= ' ' }
+        fields["Type"] = model.getString("name")
+        fields["Deck"] = decks.name(did)
+        val baseName = Decks.basename(fields["Deck"])
+        fields["Subdeck"] = baseName
+        fields["CardFlag"] = _flagNameFromCardFlags(flags)
+        val template: JSONObject
+        template = if (model.isStd) {
+            model.getJSONArray("tmpls").getJSONObject(ord)
         } else {
-            template = model.getJSONArray("tmpls").getJSONObject(0);
+            model.getJSONArray("tmpls").getJSONObject(0)
         }
-        fields.put("Card", template.getString("name"));
-        fields.put(String.format(Locale.US, "c%d", cardNum), "1");
+        fields["Card"] = template.getString("name")
+        fields[String.format(Locale.US, "c%d", cardNum)] = "1"
         // render q & a
-        HashMap<String, String> d = HashUtil.HashMapInit(2);
-        d.put("id", Long.toString(cid));
-        qfmt = TextUtils.isEmpty(qfmt) ? template.getString("qfmt") : qfmt;
-        afmt = TextUtils.isEmpty(afmt) ? template.getString("afmt") : afmt;
-        for (Pair<String, String> p : new Pair[]{new Pair<>("q", qfmt), new Pair<>("a", afmt)}) {
-            String type = p.first;
-            String format = p.second;
-            if ("q".equals(type)) {
-                format = fClozePatternQ.matcher(format).replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum));
-                format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum));
-                fields.put("FrontSide", "");
+        val d = HashUtil.HashMapInit<String, String>(2)
+        d["id"] = java.lang.Long.toString(cid)
+        qfmt = if (TextUtils.isEmpty(qfmt)) template.getString("qfmt") else qfmt
+        afmt = if (TextUtils.isEmpty(afmt)) template.getString("afmt") else afmt
+        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt!!), Pair("a", afmt!!))) {
+            val type = p.first
+            var format = p.second
+            if ("q" == type) {
+                format = fClozePatternQ.matcher(format)
+                    .replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum))
+                format = fClozeTagStart.matcher(format)
+                    .replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum))
+                fields["FrontSide"] = ""
             } else {
-                format = fClozePatternA.matcher(format).replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum));
-                format = fClozeTagStart.matcher(format).replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum));
+                format = fClozePatternA.matcher(format)
+                    .replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum))
+                format = fClozeTagStart.matcher(format)
+                    .replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum))
                 // the following line differs from libanki // TODO: why?
-                fields.put("FrontSide", d.get("q")); // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                fields["FrontSide"] =
+                    d["q"] // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
-            String html;
-            try {
-                html = ParsedNode.parse_inner(format).render(fields, "q".equals(type), getContext());
-            } catch (TemplateError er) {
-                Timber.w(er);
-                html = er.message(getContext());
+            var html: String
+            html = try {
+                ParsedNode.parse_inner(format).render(fields, "q" == type, context)
+            } catch (er: TemplateError) {
+                Timber.w(er)
+                er.message(context)
             }
-            html = ChessFilter.fenToChessboard(html, getContext());
+            html = ChessFilter.fenToChessboard(html, context)
             if (!browser) {
                 // browser don't show image. So compiling LaTeX actually remove information.
-                html = LaTeX.mungeQA(html, this, model);
+                html = LaTeX.mungeQA(html, this, model)
             }
-            d.put(type, html);
+            d[type] = html
             // empty cloze?
-            if ("q".equals(type) && model.isCloze()) {
+            if ("q" == type && model.isCloze) {
                 if (Models._availClozeOrds(model, flist, false).isEmpty()) {
-                    String link = String.format("<a href=\"%s\">%s</a>", mContext.getResources().getString(R.string.link_ankiweb_docs_cloze_deletion), "help");
-                    System.out.println(link);
-                    d.put("q", mContext.getString(R.string.empty_cloze_warning, link));
+                    val link = String.format(
+                        "<a href=\"%s\">%s</a>",
+                        context.resources.getString(R.string.link_ankiweb_docs_cloze_deletion),
+                        "help"
+                    )
+                    println(link)
+                    d["q"] = context.getString(R.string.empty_cloze_warning, link)
                 }
             }
         }
-        return d;
+        return d
     }
-
 
     /**
      * Return [cid, nid, mid, did, ord, tags, flds, flags] db query
      */
-    public ArrayList<Object[]> _qaData() {
-        return _qaData("");
-    }
-
-
-    public ArrayList<Object[]> _qaData(String where) {
-        ArrayList<Object[]> data = new ArrayList<>();
-        try (Cursor cur = mDb.query(
-                    "SELECT c.id, n.id, n.mid, c.did, c.ord, "
-                            + "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where)) {
+    @JvmOverloads
+    @KotlinCleanup("either remove or return class - probably remove?")
+    fun _qaData(where: String = ""): ArrayList<Array<Any?>> {
+        val data = ArrayList<Array<Any?>>()
+        db.query(
+            "SELECT c.id, n.id, n.mid, c.did, c.ord, " +
+                "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where
+        ).use { cur ->
             while (cur.moveToNext()) {
-                data.add(new Object[] { cur.getLong(0), cur.getLong(1),
-                        getModels().get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
-                        cur.getString(5), cur.getString(6), cur.getInt(7)});
+                data.add(
+                    arrayOf(
+                        cur.getLong(0), cur.getLong(1),
+                        models.get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
+                        cur.getString(5), cur.getString(6), cur.getInt(7)
+                    )
+                )
             }
         }
-        return data;
+        return data
     }
 
-    public String _flagNameFromCardFlags(int flags){
-        int flag = flags & 0b111;
-        if (flag == 0) {
-            return "";
-        }
-        return "flag"+flag;
+    fun _flagNameFromCardFlags(flags: Int): String {
+        val flag = flags and 0b111
+        return if (flag == 0) {
+            ""
+        } else "flag$flag"
     }
-
     /*
       Finding cards ************************************************************ ***********************************
      */
-
-    /** Return a list of card ids */
+    /** Return a list of card ids  */
     @KotlinCleanup("set reasonable defaults")
-    public List<Long> findCards(String search) {
-        return findCards(search, new SortOrder.NoOrdering());
+    fun findCards(search: String?): List<Long> {
+        return findCards(search, SortOrder.NoOrdering())
     }
 
     /**
      * @return A list of card ids
      * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
      */
-    public List<Long> findCards(String search, @NonNull SortOrder order) {
-        return new Finder(this).findCards(search, order);
+    fun findCards(search: String?, order: SortOrder): List<Long> {
+        return Finder(this).findCards(search, order)
     }
+
     /**
      * @return A list of card ids
      * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
      */
-    public List<Long> findCards(String search, @NonNull SortOrder order, CollectionTask.PartialSearch task) {
-        return new Finder(this).findCards(search, order, task);
+    @KotlinCleanup("non-null")
+    open fun findCards(search: String?, order: SortOrder, task: PartialSearch?): List<Long?>? {
+        return Finder(this).findCards(search, order, task)
     }
 
-
-    /** Return a list of note ids */
-    public List<Long> findNotes(String query) {
-        return new Finder(this).findNotes(query);
+    /** Return a list of note ids  */
+    fun findNotes(query: String?): List<Long> {
+        return Finder(this).findNotes(query)
     }
 
-
-    public int findReplace(List<Long> nids, String src, String dst) {
-        return Finder.findReplace(this, nids, src, dst);
+    fun findReplace(nids: List<Long?>?, src: String?, dst: String?): Int {
+        return Finder.findReplace(this, nids, src, dst)
     }
 
-
-    public int findReplace(List<Long> nids, String src, String dst, boolean regex) {
-        return Finder.findReplace(this, nids, src, dst, regex);
+    fun findReplace(nids: List<Long?>?, src: String?, dst: String?, regex: Boolean): Int {
+        return Finder.findReplace(this, nids, src, dst, regex)
     }
 
-
-    public int findReplace(List<Long> nids, String src, String dst, String field) {
-        return Finder.findReplace(this, nids, src, dst, field);
+    fun findReplace(nids: List<Long?>?, src: String?, dst: String?, field: String?): Int {
+        return Finder.findReplace(this, nids, src, dst, field)
     }
 
-
-    public int findReplace(List<Long> nids, String src, String dst, boolean regex, String field, boolean fold) {
-        return Finder.findReplace(this, nids, src, dst, regex, field, fold);
+    @KotlinCleanup("JvmOverloads")
+    @KotlinCleanup("make non-null")
+    fun findReplace(
+        nids: List<Long?>?,
+        src: String?,
+        dst: String?,
+        regex: Boolean,
+        field: String?,
+        fold: Boolean
+    ): Int {
+        return Finder.findReplace(this, nids, src, dst, regex, field, fold)
     }
 
-
-    public List<Pair<String, List<Long>>> findDupes(String fieldName) {
-        return Finder.findDupes(this, fieldName, "");
+    fun findDupes(fieldName: String?): List<Pair<String, List<Long>>> {
+        return Finder.findDupes(this, fieldName, "")
     }
 
-
-    public List<Pair<String, List<Long>>> findDupes(String fieldName, String search) {
-        return Finder.findDupes(this, fieldName, search);
+    @KotlinCleanup("JvmOverloads")
+    fun findDupes(fieldName: String?, search: String?): List<Pair<String, List<Long>>> {
+        return Finder.findDupes(this, fieldName, search)
     }
-
-
     /*
       Stats ******************************************************************** ***************************
      */
@@ -1295,41 +1319,37 @@ public class Collection implements CollectionGetter {
     // cardstats
     // stats
 
-    /**
+    /*
      * Timeboxing *************************************************************** ********************************
      */
 
-    public void setTimeLimit(long seconds) {
-        set_config("timeLim", seconds);
+    var timeLimit: Long
+        get() = get_config_long("timeLim")
+        set(seconds) {
+            set_config("timeLim", seconds)
+        }
+
+    fun startTimebox() {
+        mStartTime = time.intTime()
+        mStartReps = sched.reps
     }
-
-
-    public long getTimeLimit() {
-        return get_config_long("timeLim");
-    }
-
-
-    public void startTimebox() {
-        mStartTime = getTime().intTime();
-        mStartReps = mSched.getReps();
-    }
-
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
-    public Pair<Integer, Integer> timeboxReached() {
-        if (get_config_long("timeLim") == 0) {
+    fun timeboxReached(): Pair<Int, Int>? {
+        if (get_config_long("timeLim") == 0L) {
             // timeboxing disabled
-            return null;
+            return null
         }
-        long elapsed = getTime().intTime() - mStartTime;
-        if (elapsed > get_config_long("timeLim")) {
-            return new Pair<>(get_config_int("timeLim"), mSched.getReps() - mStartReps);
-        }
-        return null;
+        val elapsed = time.intTime() - mStartTime
+        return if (elapsed > get_config_long("timeLim")) {
+            Pair(
+                get_config_int("timeLim"),
+                sched.reps - mStartReps
+            )
+        } else null
     }
 
-
-    /**
+    /*
      * Undo ********************************************************************* **************************
      */
 
@@ -1339,776 +1359,888 @@ public class Collection implements CollectionGetter {
      * in the checkpoint case, [2, "action name"]
      * wasLeech should have been recorded for each card, not globally
      */
-    public void clearUndo() {
-        mUndo = new LinkedBlockingDeque<>();
+    fun clearUndo() {
+        undo = LinkedBlockingDeque<UndoAction>()
     }
 
-
-    /** Undo menu item name, or "" if undo unavailable. */
+    /** Undo menu item name, or "" if undo unavailable.  */
     @VisibleForTesting
-    public @Nullable UndoAction undoType() {
-        if (!mUndo.isEmpty()) {
-            return mUndo.getLast();
-        }
-        return null;
-    }
-    public String undoName(Resources res) {
-        UndoAction type = undoType();
-        if (type != null) {
-            return type.name(res);
-        }
-        return "";
+    fun undoType(): UndoAction? {
+        return if (!undo.isEmpty()) {
+            undo.getLast()
+        } else null
     }
 
-    public boolean undoAvailable() {
-        Timber.d("undoAvailable() undo size: %s", mUndo.size());
-        return !mUndo.isEmpty();
+    fun undoName(res: Resources?): String {
+        val type = undoType()
+        return type?.name(res!!) ?: ""
     }
 
-    public @Nullable Card undo() {
-        UndoAction lastUndo = mUndo.removeLast();
-        Timber.d("undo() of type %s", lastUndo.getClass());
-        return lastUndo.undo(this);
+    fun undoAvailable(): Boolean {
+        Timber.d("undoAvailable() undo size: %s", undo.size)
+        return !undo.isEmpty()
     }
 
-    public void markUndo(@NonNull UndoAction undo) {
-        Timber.d("markUndo() of type %s", undo.getClass());
-        mUndo.add(undo);
-        while (mUndo.size() > UNDO_SIZE_MAX) {
-            mUndo.removeFirst();
+    fun undo(): Card? {
+        val lastUndo: UndoAction = undo.removeLast()
+        Timber.d("undo() of type %s", lastUndo.javaClass)
+        return lastUndo.undo(this)
+    }
+
+    fun markUndo(undoAction: UndoAction) {
+        Timber.d("markUndo() of type %s", undoAction.javaClass)
+        undo.add(undoAction)
+        while (undo.size > UNDO_SIZE_MAX) {
+            undo.removeFirst()
         }
     }
 
-
-    public void onCreate() {
-        mDroidBackend.useNewTimezoneCode(this);
-        set_config("schedVer", 2);
+    open fun onCreate() {
+        droidBackend.useNewTimezoneCode(this)
+        set_config("schedVer", 2)
         // we need to reload the scheduler: this was previously loaded as V1
-        _loadScheduler();
+        _loadScheduler()
     }
 
-
-    @Nullable
-    public TemplateRenderOutput render_output(@NonNull Card c, boolean reload, boolean browser) {
-        return render_output_legacy(c, reload, browser);
+    open fun render_output(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput? {
+        return render_output_legacy(c, reload, browser)
     }
 
-
-    @NonNull
     @RustCleanup("Hack for Card Template Previewer, needs review")
-    public TemplateRenderOutput render_output_legacy(@NonNull Card c, boolean reload, boolean browser) {
-        Note f = c.note(reload);
-        Model m = c.model();
-        JSONObject t = c.template();
-        long did;
-        if (c.isInDynamicDeck()) {
-            did = c.getODid();
+    @KotlinCleanup("named params")
+    fun render_output_legacy(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput {
+        val f = c.note(reload)
+        val m = c.model()
+        val t = c.template()
+        val did: Long
+        did = if (c.isInDynamicDeck) {
+            c.oDid
         } else {
-            did = c.getDid();
+            c.did
         }
-        HashMap<String, String> qa;
-        if (browser) {
-            String bqfmt = t.getString("bqfmt");
-            String bafmt = t.getString("bafmt");
-            qa = _renderQA(c.getId(), m, did, c.getOrd(), f.stringTags(), f.getFields(), c.internalGetFlags(), browser, bqfmt, bafmt);
+        val qa: HashMap<String, String>
+        qa = if (browser) {
+            val bqfmt = t.getString("bqfmt")
+            val bafmt = t.getString("bafmt")
+            _renderQA(
+                c.id,
+                m,
+                did,
+                c.ord,
+                f.stringTags(),
+                f.fields,
+                c.internalGetFlags(),
+                browser,
+                bqfmt,
+                bafmt
+            )
         } else {
-            qa = _renderQA(c.getId(), m, did, c.getOrd(), f.stringTags(), f.getFields(), c.internalGetFlags());
+            _renderQA(c.id, m, did, c.ord, f.stringTags(), f.fields, c.internalGetFlags())
         }
-
-        return new TemplateRenderOutput(
-                qa.get("q"),
-                qa.get("a"),
-                null,
-                null,
-                c.model().getString("css"));
+        return TemplateRenderOutput(
+            qa["q"]!!,
+            qa["a"]!!,
+            null,
+            null,
+            c.model().getString("css")
+        )
     }
-
 
     @VisibleForTesting
-    public static class UndoReview extends UndoAction {
-        private final boolean mWasLeech;
-        @NonNull private final Card mClonedCard;
-        public UndoReview(boolean wasLeech, @NonNull Card clonedCard) {
-            super(R.string.undo_action_review);
-            mClonedCard = clonedCard;
-            mWasLeech = wasLeech;
-        }
-
-        @NonNull
-        @Override
-        public Card undo(@NonNull Collection col) {
-            col.getSched().undoReview(mClonedCard, mWasLeech);
-            return mClonedCard;
+    class UndoReview(private val wasLeech: Boolean, private val clonedCard: Card) :
+        UndoAction(R.string.undo_action_review) {
+        override fun undo(col: Collection): Card {
+            col.sched.undoReview(clonedCard, wasLeech)
+            return clonedCard
         }
     }
 
-    public void markReview(Card card) {
-        boolean wasLeech = card.note().hasTag("leech");
-        Card clonedCard = card.clone();
-        markUndo(new UndoReview(wasLeech, clonedCard));
+    fun markReview(card: Card) {
+        val wasLeech = card.note().hasTag("leech")
+        val clonedCard = card.clone()
+        markUndo(UndoReview(wasLeech, clonedCard))
     }
 
     /**
      * DB maintenance *********************************************************** ************************************
      */
-
-
     /*
      * Basic integrity check for syncing. True if ok.
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean basicCheck() {
+    @KotlinCleanup("have getIds() return a list of mids and define idsToStr over it")
+    fun basicCheck(): Boolean {
         // cards without notes
-        if (mDb.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
-            return false;
+        if (db.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
+            return false
         }
-        boolean badNotes = mDb.queryScalar(
-                "select 1 from notes where id not in (select distinct nid from cards) " +
-                "or mid not in " +  Utils.ids2str(getModels().ids()) + " limit 1") > 0;
+        val badNotes = db.queryScalar(
+            "select 1 from notes where id not in (select distinct nid from cards) " +
+                "or mid not in " + Utils.ids2str(models.ids()) + " limit 1"
+        ) > 0
         // notes without cards or models
         if (badNotes) {
-            return false;
+            return false
         }
         // invalid ords
-        for (JSONObject m : getModels().all()) {
+        for (m in models.all()) {
             // ignore clozes
             if (m.getInt("type") != Consts.MODEL_STD) {
-                continue;
+                continue
             }
             // Make a list of valid ords for this model
-            JSONArray tmpls = m.getJSONArray("tmpls");
-
-            boolean badOrd = mDb.queryScalar("select 1 from cards where (ord < 0 or ord >= ?) and nid in ( " +
-                                             "select id from notes where mid = ?) limit 1",
-                                             tmpls.length(), m.getLong("id")) > 0;
+            val tmpls = m.getJSONArray("tmpls")
+            val badOrd = db.queryScalar(
+                "select 1 from cards where (ord < 0 or ord >= ?) and nid in ( " +
+                    "select id from notes where mid = ?) limit 1",
+                tmpls.length(), m.getLong("id")
+            ) > 0
             if (badOrd) {
-                return false;
+                return false
             }
         }
-        return true;
+        return true
     }
 
-
-    /** Fix possible problems and rebuild caches. */
-    public CheckDatabaseResult fixIntegrity(TaskManager.ProgressCallback<String> progressCallback) {
-        File file = new File(mPath);
-        CheckDatabaseResult result = new CheckDatabaseResult(file.length());
-        final int[] currentTask = {1};
-        int totalTasks = (getModels().all().size() * 4) + 27; // a few fixes are in all-models loops, the rest are one-offs
-        Runnable notifyProgress = () -> fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks);
-        Consumer<FunctionalInterfaces.FunctionThrowable<Runnable, List<String>, JSONException>> executeIntegrityTask =
-                function -> {
-                    //DEFECT: notifyProgress will lag if an exception is thrown.
-                    try {
-                        mDb.getDatabase().beginTransaction();
-                        result.addAll(function.apply(notifyProgress));
-                        mDb.getDatabase().setTransactionSuccessful();
-                    } catch (Exception e) {
-                        Timber.e(e, "Failed to execute integrity check");
-                        CrashReportService.sendExceptionReport(e, "fixIntegrity");
-                    } finally {
-                        try {
-                            mDb.getDatabase().endTransaction();
-                        } catch (Exception e) {
-                            Timber.e(e, "Failed to end integrity check transaction");
-                            CrashReportService.sendExceptionReport(e, "fixIntegrity - endTransaction");
-                        }
-                    }
-                };
+    /** Fix possible problems and rebuild caches.  */
+    @KotlinCleanup("Convert FunctionThrowable to ::method (as it was done in the Java)")
+    fun fixIntegrity(progressCallback: TaskManager.ProgressCallback<String>): CheckDatabaseResult {
+        var file = File(path)
+        val result = CheckDatabaseResult(file.length())
+        val currentTask = intArrayOf(1)
+        // a few fixes are in all-models loops, the rest are one-offs
+        val totalTasks = models.all().size * 4 + 27
+        val notifyProgress = Runnable { fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks) }
+        val executeIntegrityTask = Consumer { function: FunctionalInterfaces.FunctionThrowable<Runnable, List<String?>?, JSONException?> ->
+            // DEFECT: notifyProgress will lag if an exception is thrown.
+            try {
+                db.database.beginTransaction()
+                result.addAll(function.apply(notifyProgress))
+                db.database.setTransactionSuccessful()
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to execute integrity check")
+                CrashReportService.sendExceptionReport(e, "fixIntegrity")
+            } finally {
+                try {
+                    db.database.endTransaction()
+                } catch (e: Exception) {
+                    Timber.e(e, "Failed to end integrity check transaction")
+                    CrashReportService.sendExceptionReport(e, "fixIntegrity - endTransaction")
+                }
+            }
+        }
         try {
-            mDb.getDatabase().beginTransaction();
-            save();
-            notifyProgress.run();
-
-            if (!mDb.getDatabase().isDatabaseIntegrityOk()) {
-                return result.markAsFailed();
+            db.database.beginTransaction()
+            save()
+            notifyProgress.run()
+            if (!db.database.isDatabaseIntegrityOk) {
+                return result.markAsFailed()
             }
-            mDb.getDatabase().setTransactionSuccessful();
-        } catch (SQLiteDatabaseLockedException ex) {
-            Timber.w(ex,"doInBackgroundCheckDatabase - Database locked");
-            return result.markAsLocked();
-        } catch (RuntimeException e) {
-            Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card");
-            CrashReportService.sendExceptionReport(e, "doInBackgroundCheckDatabase");
-            return result.markAsFailed();
+            db.database.setTransactionSuccessful()
+        } catch (ex: SQLiteDatabaseLockedException) {
+            Timber.w(ex, "doInBackgroundCheckDatabase - Database locked")
+            return result.markAsLocked()
+        } catch (e: RuntimeException) {
+            Timber.e(e, "doInBackgroundCheckDatabase - RuntimeException on marking card")
+            CrashReportService.sendExceptionReport(e, "doInBackgroundCheckDatabase")
+            return result.markAsFailed()
         } finally {
-            //if the database was locked, we never got the transaction.
-            if (mDb.getDatabase().inTransaction()) {
-                mDb.getDatabase().endTransaction();
+            // if the database was locked, we never got the transaction.
+            if (db.database.inTransaction()) {
+                db.database.endTransaction()
             }
         }
-
-        executeIntegrityTask.accept(this::deleteNotesWithMissingModel);
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                deleteNotesWithMissingModel(
+                    notifyProgressParam
+                )
+            }
+        )
         // for each model
-        for (Model m : getModels().all()) {
-            executeIntegrityTask.accept((callback) -> deleteCardsWithInvalidModelOrdinals(callback, m));
-            executeIntegrityTask.accept((callback) -> deleteNotesWithWrongFieldCounts(callback, m));
+        for (m in models.all()) {
+            executeIntegrityTask.accept(
+                FunctionalInterfaces.FunctionThrowable { callback: Runnable ->
+                    deleteCardsWithInvalidModelOrdinals(
+                        callback,
+                        m
+                    )
+                }
+            )
+            executeIntegrityTask.accept(
+                FunctionalInterfaces.FunctionThrowable { callback: Runnable ->
+                    deleteNotesWithWrongFieldCounts(
+                        callback,
+                        m
+                    )
+                }
+            )
         }
-        executeIntegrityTask.accept(this::deleteNotesWithMissingCards);
-        executeIntegrityTask.accept(this::deleteCardsWithMissingNotes);
-        executeIntegrityTask.accept(this::removeOriginalDuePropertyWhereInvalid);
-        executeIntegrityTask.accept(this::removeDynamicPropertyFromNonDynamicDecks);
-        executeIntegrityTask.accept(this::removeDeckOptionsFromDynamicDecks);
-        executeIntegrityTask.accept(this::resetInvalidDeckOptions);
-        executeIntegrityTask.accept(this::rebuildTags);
-        executeIntegrityTask.accept(this::updateFieldCache);
-        executeIntegrityTask.accept(this::fixNewCardDuePositionOverflow);
-        executeIntegrityTask.accept(this::resetNewCardInsertionPosition);
-        executeIntegrityTask.accept(this::fixExcessiveReviewDueDates);
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                deleteNotesWithMissingCards(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                deleteCardsWithMissingNotes(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                removeOriginalDuePropertyWhereInvalid(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                removeDynamicPropertyFromNonDynamicDecks(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                removeDeckOptionsFromDynamicDecks(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                resetInvalidDeckOptions(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                rebuildTags(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                this.updateFieldCache(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                fixNewCardDuePositionOverflow(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                resetNewCardInsertionPosition(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                fixExcessiveReviewDueDates(
+                    notifyProgressParam
+                )
+            }
+        )
         // v2 sched had a bug that could create decimal intervals
-        executeIntegrityTask.accept(this::fixDecimalCardsData);
-        executeIntegrityTask.accept(this::fixDecimalRevLogData);
-        executeIntegrityTask.accept(this::restoreMissingDatabaseIndices);
-        executeIntegrityTask.accept(this::ensureModelsAreNotEmpty);
-        executeIntegrityTask.accept((progressNotifier) -> this.ensureCardsHaveHomeDeck(progressNotifier, result));
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                fixDecimalCardsData(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                fixDecimalRevLogData(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                restoreMissingDatabaseIndices(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
+                ensureModelsAreNotEmpty(
+                    notifyProgressParam
+                )
+            }
+        )
+        executeIntegrityTask.accept(
+            FunctionalInterfaces.FunctionThrowable { progressNotifier: Runnable ->
+                ensureCardsHaveHomeDeck(
+                    progressNotifier,
+                    result
+                )
+            }
+        )
         // and finally, optimize (unable to be done inside transaction).
         try {
-            optimize(notifyProgress);
-        } catch (Exception e) {
-            Timber.e(e, "optimize");
-            CrashReportService.sendExceptionReport(e, "fixIntegrity - optimize");
+            optimize(notifyProgress)
+        } catch (e: Exception) {
+            Timber.e(e, "optimize")
+            CrashReportService.sendExceptionReport(e, "fixIntegrity - optimize")
         }
-        file = new File(mPath);
-        long newSize = file.length();
-        result.setNewSize(newSize);
+        file = File(path)
+        val newSize = file.length()
+        result.setNewSize(newSize)
         // if any problems were found, force a full sync
         if (result.hasProblems()) {
-            modSchemaNoCheck();
+            modSchemaNoCheck()
         }
-        logProblems(result.getProblems());
-        return result;
+        logProblems(result.problems)
+        return result
     }
 
+    @KotlinCleanup(".toHashMap rather than HashSetInit UNLESS it proves to be a large performance gain")
+    private fun resetInvalidDeckOptions(notifyProgress: Runnable): List<String?> {
+        Timber.d("resetInvalidDeckOptions")
+        // 6454
+        notifyProgress.run()
 
-    private List<String> resetInvalidDeckOptions(Runnable notifyProgress) {
-        Timber.d("resetInvalidDeckOptions");
-        //6454
-        notifyProgress.run();
-
-        //obtain a list of all valid dconf IDs
-        List<DeckConfig> allConf = getDecks().allConf();
-        HashSet<Long> configIds  = HashUtil.HashSetInit(allConf.size());
-
-        for (DeckConfig conf : allConf) {
-            configIds.add(conf.getLong("id"));
+        // obtain a list of all valid dconf IDs
+        val allConf = decks.allConf()
+        val configIds = HashUtil.HashSetInit<Long>(allConf.size)
+        for (conf in allConf) {
+            configIds.add(conf.getLong("id"))
         }
-
-        notifyProgress.run();
-
-        int changed = 0;
-
-        for (Deck d : getDecks().all()) {
-            //dynamic decks do not have dconf
+        notifyProgress.run()
+        @KotlinCleanup("use count { }")
+        var changed = 0
+        for (d in decks.all()) {
+            // dynamic decks do not have dconf
             if (Decks.isDynamic(d)) {
-                continue;
+                continue
             }
-
             if (!configIds.contains(d.getLong("conf"))) {
-                Timber.d("Reset %s's config to default", d.optString("name", "unknown deck"));
-                d.put("conf", Consts.DEFAULT_DECK_CONFIG_ID);
-                changed++;
+                Timber.d("Reset %s's config to default", d.optString("name", "unknown deck"))
+                d.put("conf", Consts.DEFAULT_DECK_CONFIG_ID)
+                changed++
             }
         }
-
-        List<String> ret = new ArrayList<>(1);
-
+        val ret: MutableList<String?> = ArrayList(1)
         if (changed > 0) {
-            ret.add("Fixed " + changed + " decks with invalid config");
-            getDecks().save();
+            ret.add("Fixed $changed decks with invalid config")
+            decks.save()
         }
-
-        return ret;
+        return ret
     }
-
 
     /**
      * #5932 - a card may not have a home deck if:
-     * <ul>>
-     * <li>It is in a dynamic deck, and has odid = 0.</li>
-     * <li>It is in a dynamic deck, and the odid refers to a dynamic deck.</li>
-     * </ul>
+     * >
+     *  * It is in a dynamic deck, and has odid = 0.
+     *  * It is in a dynamic deck, and the odid refers to a dynamic deck.
+     *
      * Both of these cases can be fixed by moving the decks to a known-good deck
      */
-    private List<String> ensureCardsHaveHomeDeck(Runnable notifyProgress, CheckDatabaseResult result) {
-        Timber.d("ensureCardsHaveHomeDeck()");
+    private fun ensureCardsHaveHomeDeck(
+        notifyProgress: Runnable,
+        result: CheckDatabaseResult
+    ): List<String?> {
+        Timber.d("ensureCardsHaveHomeDeck()")
+        notifyProgress.run()
 
-        notifyProgress.run();
-
-        //get the deck Ids to query
-        Long[] dynDeckIds = getDecks().allDynamicDeckIds();
-        //make it mutable
-        List<Long> dynIdsAndZero = new ArrayList<>(Arrays.asList(dynDeckIds));
-        dynIdsAndZero.add(0L);
-
-        ArrayList<Long> cardIds = mDb.queryLongList("select id from cards where did in " +
+        // get the deck Ids to query
+        val dynDeckIds = decks.allDynamicDeckIds()
+        // make it mutable
+        val dynIdsAndZero: MutableList<Long> = ArrayList(Arrays.asList(*dynDeckIds))
+        dynIdsAndZero.add(0L)
+        val cardIds = db.queryLongList(
+            "select id from cards where did in " +
                 Utils.ids2str(dynDeckIds) +
                 "and odid in " +
-                Utils.ids2str(dynIdsAndZero));
-
-        notifyProgress.run();
-
+                Utils.ids2str(dynIdsAndZero)
+        )
+        notifyProgress.run()
         if (cardIds.isEmpty()) {
-            return Collections.emptyList();
+            return emptyList<String>()
         }
 
-        //we use a ! prefix to keep it at the top of the deck list
-        String recoveredDeckName = "! " + mContext.getString(R.string.check_integrity_recovered_deck_name);
-        Long nextDeckId = getDecks().id_safe(recoveredDeckName);
-
-        getDecks().flush();
-
-        mDb.execute("update cards " +
-                        "set did = ?, " +
-                        "odid = 0," +
-                        "mod = ?, " +
-                        "usn = ? " +
-                        "where did in " +
-                        Utils.ids2str(dynDeckIds) +
-                        "and odid in " +
-                        Utils.ids2str(dynIdsAndZero), nextDeckId, getTime().intTime(), usn());
-
-
-        result.setCardsWithFixedHomeDeckCount(cardIds.size());
-
-        String message = String.format(Locale.US, "Fixed %d cards with no home deck", cardIds.size());
-        return Collections.singletonList(message);
+        // we use a ! prefix to keep it at the top of the deck list
+        val recoveredDeckName =
+            "! " + context.getString(R.string.check_integrity_recovered_deck_name)
+        val nextDeckId = decks.id_safe(recoveredDeckName)
+        decks.flush()
+        db.execute(
+            "update cards " +
+                "set did = ?, " +
+                "odid = 0," +
+                "mod = ?, " +
+                "usn = ? " +
+                "where did in " +
+                Utils.ids2str(dynDeckIds) +
+                "and odid in " +
+                Utils.ids2str(dynIdsAndZero),
+            nextDeckId, time.intTime(), usn()
+        )
+        result.cardsWithFixedHomeDeckCount = cardIds.size
+        val message = String.format(Locale.US, "Fixed %d cards with no home deck", cardIds.size)
+        return listOf(message)
     }
 
-
-    private ArrayList<String> ensureModelsAreNotEmpty(Runnable notifyProgress) {
-        Timber.d("ensureModelsAreNotEmpty()");
-        ArrayList<String> problems = new ArrayList<>(1);
-        notifyProgress.run();
-        if (getModels().ensureNotEmpty()) {
-            problems.add("Added missing note type.");
+    private fun ensureModelsAreNotEmpty(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("ensureModelsAreNotEmpty()")
+        val problems = ArrayList<String?>(1)
+        notifyProgress.run()
+        if (models.ensureNotEmpty()) {
+            problems.add("Added missing note type.")
         }
-        return problems;
+        return problems
     }
 
-
-    private ArrayList<String> restoreMissingDatabaseIndices(Runnable notifyProgress) {
-        Timber.d("restoreMissingDatabaseIndices");
-        ArrayList<String> problems = new ArrayList<>(1);
+    private fun restoreMissingDatabaseIndices(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("restoreMissingDatabaseIndices")
+        val problems = ArrayList<String?>(1)
         // DB must have indices. Older versions of AnkiDroid didn't create them for new collections.
-        notifyProgress.run();
-        int ixs = mDb.queryScalar("select count(name) from sqlite_master where type = 'index'");
+        notifyProgress.run()
+        val ixs = db.queryScalar("select count(name) from sqlite_master where type = 'index'")
         if (ixs < 7) {
-            problems.add("Indices were missing.");
-            Storage.addIndices(mDb);
+            problems.add("Indices were missing.")
+            Storage.addIndices(db)
         }
-        return problems;
+        return problems
     }
 
-    private ArrayList<String> fixDecimalCardsData(Runnable notifyProgress) {
-        Timber.d("fixDecimalCardsData");
-        ArrayList<String> problems = new ArrayList<>(1);
-        notifyProgress.run();
-        SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
-                "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)");
-        int rowCount = s.executeUpdateDelete();
+    private fun fixDecimalCardsData(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("fixDecimalCardsData")
+        val problems = ArrayList<String?>(1)
+        notifyProgress.run()
+        val s = db.database.compileStatement(
+            "update cards set ivl=round(ivl),due=round(due) where ivl!=round(ivl) or due!=round(due)"
+        )
+        val rowCount = s.executeUpdateDelete()
         if (rowCount > 0) {
-            problems.add("Fixed " + rowCount + " cards with v2 scheduler bug.");
+            problems.add("Fixed $rowCount cards with v2 scheduler bug.")
         }
-        return problems;
+        return problems
     }
 
-
-    private ArrayList<String> fixDecimalRevLogData(Runnable notifyProgress) {
-        Timber.d("fixDecimalRevLogData()");
-        ArrayList<String> problems = new ArrayList<>(1);
-        notifyProgress.run();
-        SupportSQLiteStatement s = mDb.getDatabase().compileStatement(
-                "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)");
-        int rowCount = s.executeUpdateDelete();
+    private fun fixDecimalRevLogData(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("fixDecimalRevLogData()")
+        val problems = ArrayList<String?>(1)
+        notifyProgress.run()
+        val s = db.database.compileStatement(
+            "update revlog set ivl=round(ivl),lastIvl=round(lastIvl) where ivl!=round(ivl) or lastIvl!=round(lastIvl)"
+        )
+        val rowCount = s.executeUpdateDelete()
         if (rowCount > 0) {
-            problems.add("Fixed " + rowCount + " review history entries with v2 scheduler bug.");
+            problems.add("Fixed $rowCount review history entries with v2 scheduler bug.")
         }
-        return problems;
+        return problems
     }
 
-
-    private ArrayList<String> fixExcessiveReviewDueDates(Runnable notifyProgress) {
-        Timber.d("fixExcessiveReviewDueDates()");
-        ArrayList<String> problems = new ArrayList<>(1);
-        notifyProgress.run();
+    private fun fixExcessiveReviewDueDates(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("fixExcessiveReviewDueDates()")
+        val problems = ArrayList<String?>(1)
+        notifyProgress.run()
         // reviews should have a reasonable due #
-        ArrayList<Long> ids = mDb.queryLongList("SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000");
-        notifyProgress.run();
+        val ids =
+            db.queryLongList("SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000")
+        notifyProgress.run()
         if (!ids.isEmpty()) {
-            problems.add("Reviews had incorrect due date.");
-            mDb.execute("UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(ids), mSched.getToday(), getTime().intTime(), usn());
+            problems.add("Reviews had incorrect due date.")
+            db.execute(
+                "UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(
+                    ids
+                ),
+                sched.today, time.intTime(), usn()
+            )
         }
-        return problems;
+        return problems
     }
 
-
-    private List<String> resetNewCardInsertionPosition(Runnable notifyProgress) throws JSONException {
-        Timber.d("resetNewCardInsertionPosition");
-        notifyProgress.run();
+    @Throws(JSONException::class)
+    private fun resetNewCardInsertionPosition(notifyProgress: Runnable): List<String?> {
+        Timber.d("resetNewCardInsertionPosition")
+        notifyProgress.run()
         // new card position
-        set_config("nextPos", mDb.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = " + Consts.CARD_TYPE_NEW));
-        return Collections.emptyList();
+        set_config(
+            "nextPos",
+            db.queryScalar("SELECT max(due) + 1 FROM cards WHERE type = " + Consts.CARD_TYPE_NEW)
+        )
+        return emptyList<String>()
     }
 
-
-    private List<String> fixNewCardDuePositionOverflow(Runnable notifyProgress) {
-        Timber.d("fixNewCardDuePositionOverflow");
+    private fun fixNewCardDuePositionOverflow(notifyProgress: Runnable): List<String?> {
+        Timber.d("fixNewCardDuePositionOverflow")
         // new cards can't have a due position > 32 bits
-        notifyProgress.run();
-        mDb.execute("UPDATE cards SET due = 1000000, mod = ?, usn = ? WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW, getTime().intTime(), usn());
-        return Collections.emptyList();
+        notifyProgress.run()
+        db.execute(
+            "UPDATE cards SET due = 1000000, mod = ?, usn = ? WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW,
+            time.intTime(),
+            usn()
+        )
+        return emptyList<String>()
     }
 
-
-    private List<String> updateFieldCache(Runnable notifyProgress) {
-        Timber.d("updateFieldCache");
+    private fun updateFieldCache(notifyProgress: Runnable): List<String?> {
+        Timber.d("updateFieldCache")
         // field cache
-        for (Model m : getModels().all()) {
-            notifyProgress.run();
-            updateFieldCache(getModels().nids(m));
+        for (m in models.all()) {
+            notifyProgress.run()
+            updateFieldCache(models.nids(m))
         }
-        return Collections.emptyList();
+        return emptyList<String>()
     }
 
-
-    private List<String> rebuildTags(Runnable notifyProgress) {
-        Timber.d("rebuildTags");
+    private fun rebuildTags(notifyProgress: Runnable): List<String?> {
+        Timber.d("rebuildTags")
         // tags
-        notifyProgress.run();
-        mTags.registerNotes();
-        return Collections.emptyList();
+        notifyProgress.run()
+        tags.registerNotes()
+        return emptyList<String>()
     }
 
-
-    private ArrayList<String> removeDeckOptionsFromDynamicDecks(Runnable notifyProgress) {
-        Timber.d("removeDeckOptionsFromDynamicDecks()");
-        ArrayList<String> problems = new ArrayList<>(1);
-        //#5708 - a dynamic deck should not have "Deck Options"
-        notifyProgress.run();
-        int fixCount = 0;
-        for (long id : mDecks.allDynamicDeckIds()) {
+    private fun removeDeckOptionsFromDynamicDecks(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("removeDeckOptionsFromDynamicDecks()")
+        val problems = ArrayList<String?>(1)
+        // #5708 - a dynamic deck should not have "Deck Options"
+        notifyProgress.run()
+        @KotlinCleanup(".count { }")
+        var fixCount = 0
+        for (id in decks.allDynamicDeckIds()) {
             try {
                 if (hasDeckOptions(id)) {
-                    removeDeckOptions(id);
-                    fixCount++;
+                    removeDeckOptions(id)
+                    fixCount++
                 }
-            } catch (NoSuchDeckException e) {
-                Timber.w(e, "Unable to find dynamic deck %d", id);
+            } catch (e: NoSuchDeckException) {
+                Timber.w(e, "Unable to find dynamic deck %d", id)
             }
         }
         if (fixCount > 0) {
-            mDecks.save();
-            problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount));
+            decks.save()
+            problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount))
         }
-        return problems;
+        return problems
     }
 
-
-    private Deck getDeckOrFail(long deckId) throws NoSuchDeckException {
-        Deck deck = getDecks().get(deckId, false);
-        if (deck == null) {
-            throw new NoSuchDeckException(deckId);
-        }
-        return deck;
+    @Throws(NoSuchDeckException::class)
+    private fun getDeckOrFail(deckId: Long): Deck {
+        return decks.get(deckId, false) ?: throw NoSuchDeckException(deckId)
     }
 
-    private boolean hasDeckOptions(long deckId) throws NoSuchDeckException {
-        return getDeckOrFail(deckId).has("conf");
+    @Throws(NoSuchDeckException::class)
+    private fun hasDeckOptions(deckId: Long): Boolean {
+        return getDeckOrFail(deckId).has("conf")
     }
 
-
-    private void removeDeckOptions(long deckId) throws NoSuchDeckException {
-        getDeckOrFail(deckId).remove("conf");
+    @Throws(NoSuchDeckException::class)
+    private fun removeDeckOptions(deckId: Long) {
+        getDeckOrFail(deckId).remove("conf")
     }
 
-
-    private ArrayList<String> removeDynamicPropertyFromNonDynamicDecks(Runnable notifyProgress) {
-        Timber.d("removeDynamicPropertyFromNonDynamicDecks()");
-        ArrayList<String> problems = new ArrayList<>(1);
-        ArrayList<Long> dids = new ArrayList<>(mDecks.count());
-        for (long id : mDecks.allIds()) {
-            if (!mDecks.isDyn(id)) {
-                dids.add(id);
+    private fun removeDynamicPropertyFromNonDynamicDecks(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("removeDynamicPropertyFromNonDynamicDecks()")
+        val problems = ArrayList<String?>(1)
+        val dids = ArrayList<Long>(decks.count())
+        for (id in decks.allIds()) {
+            if (!decks.isDyn(id)) {
+                dids.add(id)
             }
         }
-        notifyProgress.run();
+        notifyProgress.run()
         // cards with odid set when not in a dyn deck
-        ArrayList<Long> ids = mDb.queryLongList(
-                "select id from cards where odid > 0 and did in " + Utils.ids2str(dids));
-        notifyProgress.run();
-        if (ids.size() != 0) {
-            problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
-            mDb.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids));
+        val ids = db.queryLongList(
+            "select id from cards where odid > 0 and did in " + Utils.ids2str(dids)
+        )
+        notifyProgress.run()
+        if (ids.size != 0) {
+            problems.add("Fixed " + ids.size + " card(s) with invalid properties.")
+            db.execute("update cards set odid=0, odue=0 where id in " + Utils.ids2str(ids))
         }
-        return problems;
+        return problems
     }
 
-
-    private ArrayList<String> removeOriginalDuePropertyWhereInvalid(Runnable notifyProgress) {
-        Timber.d("removeOriginalDuePropertyWhereInvalid()");
-        ArrayList<String> problems = new ArrayList<>(1);
-        notifyProgress.run();
+    private fun removeOriginalDuePropertyWhereInvalid(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("removeOriginalDuePropertyWhereInvalid()")
+        val problems = ArrayList<String?>(1)
+        notifyProgress.run()
         // cards with odue set when it shouldn't be
-        ArrayList<Long> ids = mDb.queryLongList(
-                "select id from cards where odue > 0 and (type= " + Consts.CARD_TYPE_LRN + " or queue=" + Consts.QUEUE_TYPE_REV + ") and not odid");
-        notifyProgress.run();
-        if (ids.size() != 0) {
-            problems.add("Fixed " + ids.size() + " card(s) with invalid properties.");
-            mDb.execute("update cards set odue=0 where id in " + Utils.ids2str(ids));
+        val ids = db.queryLongList(
+            "select id from cards where odue > 0 and (type= " + Consts.CARD_TYPE_LRN + " or queue=" + Consts.QUEUE_TYPE_REV + ") and not odid"
+        )
+        notifyProgress.run()
+        if (ids.size != 0) {
+            problems.add("Fixed " + ids.size + " card(s) with invalid properties.")
+            db.execute("update cards set odue=0 where id in " + Utils.ids2str(ids))
         }
-        return problems;
+        return problems
     }
 
-
-    private ArrayList<String> deleteCardsWithMissingNotes(Runnable notifyProgress) {
-        Timber.d("deleteCardsWithMissingNotes()");
-        ArrayList<String> problems = new ArrayList<>(1);
-        notifyProgress.run();
+    private fun deleteCardsWithMissingNotes(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("deleteCardsWithMissingNotes()")
+        val problems = ArrayList<String?>(1)
+        notifyProgress.run()
         // cards with missing notes
-        ArrayList<Long> ids = mDb.queryLongList(
-                "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)");
-        notifyProgress.run();
-        if (ids.size() != 0) {
-            problems.add("Deleted " + ids.size() + " card(s) with missing note.");
-            remCards(ids);
+        val ids = db.queryLongList(
+            "SELECT id FROM cards WHERE nid NOT IN (SELECT id FROM notes)"
+        )
+        notifyProgress.run()
+        if (ids.size != 0) {
+            problems.add("Deleted " + ids.size + " card(s) with missing note.")
+            remCards(ids)
         }
-        return problems;
+        return problems
     }
 
-
-    private ArrayList<String> deleteNotesWithMissingCards(Runnable notifyProgress) {
-        Timber.d("deleteNotesWithMissingCards()");
-        ArrayList<String> problems = new ArrayList<>(1);
-        notifyProgress.run();
+    private fun deleteNotesWithMissingCards(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("deleteNotesWithMissingCards()")
+        val problems = ArrayList<String?>(1)
+        notifyProgress.run()
         // delete any notes with missing cards
-        ArrayList<Long> ids = mDb.queryLongList(
-                "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)");
-        notifyProgress.run();
-        if (ids.size() != 0) {
-            problems.add("Deleted " + ids.size() + " note(s) with missing no cards.");
-            _remNotes(ids);
+        val ids = db.queryLongList(
+            "SELECT id FROM notes WHERE id NOT IN (SELECT DISTINCT nid FROM cards)"
+        )
+        notifyProgress.run()
+        if (ids.size != 0) {
+            problems.add("Deleted " + ids.size + " note(s) with missing no cards.")
+            _remNotes(ids)
         }
-        return problems;
+        return problems
     }
 
-
-    private ArrayList<String> deleteNotesWithWrongFieldCounts(Runnable notifyProgress, JSONObject m) throws JSONException {
-        Timber.d("deleteNotesWithWrongFieldCounts");
-        ArrayList<String> problems = new ArrayList<>(1);
+    @Throws(JSONException::class)
+    private fun deleteNotesWithWrongFieldCounts(
+        notifyProgress: Runnable,
+        m: JSONObject
+    ): ArrayList<String?> {
+        Timber.d("deleteNotesWithWrongFieldCounts")
+        val problems = ArrayList<String?>(1)
         // notes with invalid field counts
-        ArrayList<Long> ids = new ArrayList<>();
-        notifyProgress.run();
-        try (Cursor cur = mDb.query("select id, flds from notes where mid = ?",  m.getLong("id"))) {
-            Timber.i("cursor size: %d", cur.getCount());
-            int currentRow = 0;
+        val ids = ArrayList<Long>()
+        notifyProgress.run()
+        db.query("select id, flds from notes where mid = ?", m.getLong("id")).use { cur ->
+            Timber.i("cursor size: %d", cur.count)
+            var currentRow = 0
 
-            //Since we loop through all rows, we only want one exception
-            @Nullable Exception firstException = null;
+            // Since we loop through all rows, we only want one exception
+            var firstException: Exception? = null
             while (cur.moveToNext()) {
                 try {
-                    String flds = cur.getString(1);
-                    long id = cur.getLong(0);
-                    int fldsCount = 0;
-                    for (int i = 0; i < flds.length(); i++) {
-                        if (flds.charAt(i) == 0x1f) {
-                            fldsCount++;
+                    val flds = cur.getString(1)
+                    val id = cur.getLong(0)
+                    @KotlinCleanup("count { }")
+                    var fldsCount = 0
+                    for (i in 0 until flds.length) {
+                        if (flds[i].code == 0x1f) {
+                            fldsCount++
                         }
                     }
                     if (fldsCount + 1 != m.getJSONArray("flds").length()) {
-                        ids.add(id);
+                        ids.add(id)
                     }
-                } catch (IllegalStateException ex) {
+                } catch (ex: IllegalStateException) {
                     // DEFECT: Theory that is this an OOM is discussed in #5852
                     // We store one exception to stop excessive logging
-                    Timber.i(ex,  "deleteNotesWithWrongFieldCounts - Exception on row %d. Columns: %d", currentRow, cur.getColumnCount());
+                    Timber.i(
+                        ex,
+                        "deleteNotesWithWrongFieldCounts - Exception on row %d. Columns: %d",
+                        currentRow,
+                        cur.columnCount
+                    )
                     if (firstException == null) {
-                        String details = String.format(Locale.ROOT, "deleteNotesWithWrongFieldCounts row: %d col: %d",
-                                currentRow,
-                                cur.getColumnCount());
-                        CrashReportService.sendExceptionReport(ex, details);
-                        firstException = ex;
+                        val details = String.format(
+                            Locale.ROOT, "deleteNotesWithWrongFieldCounts row: %d col: %d",
+                            currentRow,
+                            cur.columnCount
+                        )
+                        CrashReportService.sendExceptionReport(ex, details)
+                        firstException = ex
                     }
                 }
-                currentRow++;
+                currentRow++
             }
-            Timber.i("deleteNotesWithWrongFieldCounts - completed successfully");
-            notifyProgress.run();
+            Timber.i("deleteNotesWithWrongFieldCounts - completed successfully")
+            notifyProgress.run()
             if (!ids.isEmpty()) {
-                problems.add("Deleted " + ids.size() + " note(s) with wrong field count.");
-                _remNotes(ids);
+                problems.add("Deleted " + ids.size + " note(s) with wrong field count.")
+                _remNotes(ids)
             }
         }
-        return problems;
+        return problems
     }
 
-
-    private ArrayList<String> deleteCardsWithInvalidModelOrdinals(Runnable notifyProgress, Model m) throws JSONException {
-        Timber.d("deleteCardsWithInvalidModelOrdinals()");
-        ArrayList<String> problems = new ArrayList<>(1);
-        notifyProgress.run();
-        if (m.isStd()) {
-            JSONArray tmpls = m.getJSONArray("tmpls");
-            ArrayList<Integer> ords = new ArrayList<>(tmpls.length());
-            for (JSONObject tmpl: tmpls.jsonObjectIterable()) {
-                ords.add(tmpl.getInt("ord"));
+    @Throws(JSONException::class)
+    private fun deleteCardsWithInvalidModelOrdinals(
+        notifyProgress: Runnable,
+        m: Model
+    ): ArrayList<String?> {
+        Timber.d("deleteCardsWithInvalidModelOrdinals()")
+        val problems = ArrayList<String?>(1)
+        notifyProgress.run()
+        if (m.isStd) {
+            val tmpls = m.getJSONArray("tmpls")
+            val ords = ArrayList<Int>(tmpls.length())
+            for (tmpl in tmpls.jsonObjectIterable()) {
+                ords.add(tmpl.getInt("ord"))
             }
             // cards with invalid ordinal
-            ArrayList<Long> ids = mDb.queryLongList(
-                    "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
-                            "SELECT id FROM notes WHERE mid = ?)", m.getLong("id"));
+            val ids = db.queryLongList(
+                "SELECT id FROM cards WHERE ord NOT IN " + Utils.ids2str(ords) + " AND nid IN ( " +
+                    "SELECT id FROM notes WHERE mid = ?)",
+                m.getLong("id")
+            )
             if (!ids.isEmpty()) {
-                problems.add("Deleted " + ids.size() + " card(s) with missing template.");
-                remCards(ids);
+                problems.add("Deleted " + ids.size + " card(s) with missing template.")
+                remCards(ids)
             }
         }
-        return problems;
+        return problems
     }
 
-
-    private ArrayList<String> deleteNotesWithMissingModel(Runnable notifyProgress) {
-        Timber.d("deleteNotesWithMissingModel()");
-        ArrayList<String> problems = new ArrayList<>(1);
+    private fun deleteNotesWithMissingModel(notifyProgress: Runnable): ArrayList<String?> {
+        Timber.d("deleteNotesWithMissingModel()")
+        val problems = ArrayList<String?>(1)
         // note types with a missing model
-        notifyProgress.run();
-        ArrayList<Long> ids = mDb.queryLongList(
-                "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(getModels().ids()));
-        notifyProgress.run();
-        if (ids.size() != 0) {
-            problems.add("Deleted " + ids.size() + " note(s) with missing note type.");
-            _remNotes(ids);
+        notifyProgress.run()
+        val ids = db.queryLongList(
+            "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(
+                models.ids()
+            )
+        )
+        notifyProgress.run()
+        if (ids.size != 0) {
+            problems.add("Deleted " + ids.size + " note(s) with missing note type.")
+            _remNotes(ids)
         }
-        return problems;
+        return problems
     }
 
-
-    public void optimize(Runnable progressCallback) {
-        Timber.i("executing VACUUM statement");
-        progressCallback.run();
-        mDb.execute("VACUUM");
-        Timber.i("executing ANALYZE statement");
-        progressCallback.run();
-        mDb.execute("ANALYZE");
+    fun optimize(progressCallback: Runnable) {
+        Timber.i("executing VACUUM statement")
+        progressCallback.run()
+        db.execute("VACUUM")
+        Timber.i("executing ANALYZE statement")
+        progressCallback.run()
+        db.execute("ANALYZE")
     }
 
-
-    private void fixIntegrityProgress(TaskManager.ProgressCallback<String> progressCallback, int current, int total) {
+    private fun fixIntegrityProgress(
+        progressCallback: TaskManager.ProgressCallback<String>,
+        current: Int,
+        total: Int
+    ) {
         progressCallback.publishProgress(
-                progressCallback.getResources().getString(R.string.check_db_message) + " " + current + " / " + total);
+            progressCallback.resources.getString(R.string.check_db_message) + " " + current + " / " + total
+        )
     }
-
-
     /*
       Logging
       ***********************************************************
      */
-
     /**
      * Track database corruption problems and post analytics events for tracking
      *
      * @param integrityCheckProblems list of problems, the first 10 will be used
      */
-    private void logProblems(List<String> integrityCheckProblems) {
-
+    private fun logProblems(integrityCheckProblems: List<String?>) {
         if (!integrityCheckProblems.isEmpty()) {
-            StringBuffer additionalInfo = new StringBuffer();
-            for (int i = 0; ((i < 10) && (integrityCheckProblems.size()) > i); i++) {
-                additionalInfo.append(integrityCheckProblems.get(i)).append("\n");
+            val additionalInfo = StringBuffer()
+            var i = 0
+            while (i < 10 && integrityCheckProblems.size > i) {
+                additionalInfo.append(integrityCheckProblems[i]).append("\n")
                 // log analytics event so we can see trends if user allows it
-                UsageAnalytics.sendAnalyticsEvent("DatabaseCorruption", integrityCheckProblems.get(i));
+                UsageAnalytics.sendAnalyticsEvent("DatabaseCorruption", integrityCheckProblems[i]!!)
+                i++
             }
-            Timber.i("fixIntegrity() Problem list (limited to first 10):\n%s", additionalInfo);
+            Timber.i("fixIntegrity() Problem list (limited to first 10):\n%s", additionalInfo)
         } else {
-            Timber.i("fixIntegrity() no problems found");
+            Timber.i("fixIntegrity() no problems found")
         }
     }
 
-    public void log(Object... args) {
-        if (!mDebugLog) {
-            return;
+    @KotlinCleanup("changed array to mutable list")
+    fun log(vararg argsParam: Any?) {
+        val args = argsParam.toMutableList()
+        if (!debugLog) {
+            return
         }
-        StackTraceElement trace = Thread.currentThread().getStackTrace()[3];
+        val trace = Thread.currentThread().stackTrace[3]
         // Overwrite any args that need special handling for an appropriate string representation
-        for (int i = 0; i < args.length; i++) {
-            if (args[i] instanceof long[]) {
-                args[i] = Arrays.toString((long []) args[i]);
+        for (i in 0 until args.size) {
+            if (args[i] is LongArray) {
+                args[i] = Arrays.toString(args[i] as LongArray?)
             }
         }
-        String s = String.format("[%s] %s:%s(): %s", getTime().intTime(), trace.getFileName(), trace.getMethodName(),
-                TextUtils.join(",  ", args));
-        writeLog(s);
+        val s = String.format(
+            "[%s] %s:%s(): %s", time.intTime(), trace.fileName, trace.methodName,
+            TextUtils.join(",  ", args)
+        )
+        writeLog(s)
     }
 
-
-    private void writeLog(String s) {
+    @KotlinCleanup("remove !! with scope function")
+    private fun writeLog(s: String) {
         if (mLogHnd != null) {
             try {
-                mLogHnd.println(s);
-            } catch (Exception e) {
-                Timber.w(e, "Failed to write to collection log");
+                mLogHnd!!.println(s)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to write to collection log")
             }
         }
-        Timber.d(s);
+        Timber.d(s)
     }
 
-
-    private void _openLog() {
-        Timber.i("Opening Collection Log");
-        if (!mDebugLog) {
-            return;
+    private fun _openLog() {
+        Timber.i("Opening Collection Log")
+        if (!debugLog) {
+            return
         }
         try {
-            File lpath = new File(mPath.replaceFirst("\\.anki2$", ".log"));
-            if (lpath.exists() && lpath.length() > 10*1024*1024) {
-                File lpath2 = new File(lpath + ".old");
+            val lpath = File(path.replaceFirst("\\.anki2$".toRegex(), ".log"))
+            if (lpath.exists() && lpath.length() > 10 * 1024 * 1024) {
+                val lpath2 = File("$lpath.old")
                 if (lpath2.exists()) {
-                    lpath2.delete();
+                    lpath2.delete()
                 }
-                lpath.renameTo(lpath2);
+                lpath.renameTo(lpath2)
             }
-            mLogHnd = new PrintWriter(new BufferedWriter(new FileWriter(lpath, true)), true);
-        } catch (IOException e) {
+            mLogHnd = PrintWriter(BufferedWriter(FileWriter(lpath, true)), true)
+        } catch (e: IOException) {
             // turn off logging if we can't open the log file
-            Timber.e("Failed to open collection.log file - disabling logging");
-            mDebugLog = false;
+            Timber.e("Failed to open collection.log file - disabling logging")
+            debugLog = false
         }
     }
 
-
-    private void _closeLog() {
-        Timber.i("Closing Collection Log");
+    @KotlinCleanup("remove !! via scope function")
+    private fun _closeLog() {
+        Timber.i("Closing Collection Log")
         if (mLogHnd != null) {
-            mLogHnd.close();
-            mLogHnd = null;
+            mLogHnd!!.close()
+            mLogHnd = null
         }
     }
 
     /**
      * Card Flags *****************************************************************************************************
      */
-    public void setUserFlag(int flag, List<Long> cids)  {
-        assert (0<= flag && flag <= 7);
-        mDb.execute("update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(cids),
-                    0b111, flag, usn(), getTime().intTime());
+    fun setUserFlag(flag: Int, cids: List<Long>?) {
+        assert(0 <= flag && flag <= 7)
+        db.execute(
+            "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
+                cids
+            ),
+            7, flag, usn(), time.intTime()
+        )
     }
-
-    /**
-     * Getters/Setters ********************************************************** *************************************
-     */
-
-    public DB getDb() {
-        return mDb;
-    }
-
-
-    public DeckManager getDecks() {
-        return mDecks;
-    }
-
-
-    public Media getMedia() {
-        return mMedia;
-    }
-
 
     /**
      * On first call, load the model if it was not loaded.
@@ -2123,412 +2255,330 @@ public class Collection implements CollectionGetter {
      *
      * @return The model manager
      */
-    public final synchronized ModelManager getModels() {
-        if (mModels == null) {
-            mModels = initModels();
+    val models: ModelManager
+        get() {
+            if (_models == null) {
+                _models = initModels()
+            }
+            return _models!!
         }
-        return mModels;
+
+    /** Check if this collection is valid.  */
+    fun validCollection(): Boolean {
+        // TODO: more validation code
+        return models.validateModel()
     }
 
-    /** Check if this collection is valid. */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean validCollection() {
-        //TODO: more validation code
-        return getModels().validateModel();
-    }
-
-    public JSONObject getConf() {
-        return mConf.getJson();
-    }
-
-
-    public void setConf(JSONObject conf) {
-        // Anki sometimes set sortBackward to 0/1 instead of
-        // False/True. This should be repaired before setting mConf;
-        // otherwise this may save a faulty value in mConf, and if
-        // it's done just before the value is read, this may lead to
-        // bug #5523. This bug should occur only for people using anki
-        // prior to version 2.16 and has been corrected with
-        // dae/anki#347
-        Upgrade.upgradeJSONIfNecessary(this, "sortBackwards", false);
-        mConf.setJson(conf);
-    }
+    // Anki sometimes set sortBackward to 0/1 instead of
+    // False/True. This should be repaired before setting mConf;
+    // otherwise this may save a faulty value in mConf, and if
+    // it's done just before the value is read, this may lead to
+    // bug #5523. This bug should occur only for people using anki
+    // prior to version 2.16 and has been corrected with
+    // dae/anki#347
+    var conf: JSONObject
+        get() = _config!!.json
+        set(conf) {
+            // Anki sometimes set sortBackward to 0/1 instead of
+            // False/True. This should be repaired before setting mConf;
+            // otherwise this may save a faulty value in mConf, and if
+            // it's done just before the value is read, this may lead to
+            // bug #5523. This bug should occur only for people using anki
+            // prior to version 2.16 and has been corrected with
+            // dae/anki#347
+            Upgrade.upgradeJSONIfNecessary(this, "sortBackwards", false)
+            _config!!.json = conf
+        }
 
     // region JSON-Related Config
-
     // Anki Desktop has a get_config and set_config method handling an "Any"
     // We're not dynamically typed, so add additional methods for each JSON type that
     // we can handle
-
     // methods with a default can be named `get_config` as the `defaultValue` argument defines the return type
     // NOTE: get_config("key", 1) and get_config("key", 1L) will return different types
-
-
-    public boolean has_config(@NonNull String key) {
+    fun has_config(key: String): Boolean {
         // not in libAnki
-        return mConf.has(key);
+        return _config!!.has(key)
     }
 
-    public boolean has_config_not_null(String key) {
+    fun has_config_not_null(key: String): Boolean {
         // not in libAnki
-        return has_config(key) && !mConf.isNull(key);
+        return has_config(key) && !_config!!.isNull(key)
     }
 
-    /** @throws JSONException object does not exist or can't be cast */
-    public boolean get_config_boolean(@NonNull String key) {
-        return mConf.getBoolean(key);
+    /** @throws JSONException object does not exist or can't be cast
+     */
+    fun get_config_boolean(key: String): Boolean {
+        return _config!!.getBoolean(key)
     }
 
-    /** @throws JSONException object does not exist or can't be cast */
-    public long get_config_long(@NonNull String key) {
-        return mConf.getLong(key);
+    /** @throws JSONException object does not exist or can't be cast
+     */
+    fun get_config_long(key: String): Long {
+        return _config!!.getLong(key)
     }
 
-    /** @throws JSONException object does not exist or can't be cast */
-    public int get_config_int(@NonNull String key) {
-        return mConf.getInt(key);
+    /** @throws JSONException object does not exist or can't be cast
+     */
+    fun get_config_int(key: String): Int {
+        return _config!!.getInt(key)
     }
 
-    /** @throws JSONException object does not exist or can't be cast */
-    public double get_config_double(@NonNull String key) {
-        return mConf.getDouble(key);
+    /** @throws JSONException object does not exist or can't be cast
+     */
+    fun get_config_double(key: String): Double {
+        return _config!!.getDouble(key)
     }
 
     /**
      * Edits to this object are not persisted to preferences.
      * @throws JSONException object does not exist or can't be cast
      */
-    public JSONObject get_config_object(@NonNull String key) {
-        return new JSONObject(mConf.getJSONObject(key));
+    fun get_config_object(key: String): JSONObject {
+        return JSONObject(_config!!.getJSONObject(key))
     }
 
     /** Edits to the array are not persisted to the preferences
      * @throws JSONException object does not exist or can't be cast
      */
-    @NonNull
-    public JSONArray get_config_array(@NonNull String key) {
-        return new JSONArray(mConf.getJSONArray(key));
+    fun get_config_array(key: String): JSONArray {
+        return JSONArray(_config!!.getJSONArray(key))
     }
 
     /**
      * If the value is null in the JSON, a string of "null" will be returned
      * @throws JSONException object does not exist, or can't be cast
      */
-    @NonNull
-    public String get_config_string(@NonNull String key) {
-        return mConf.getString(key);
-    }
-
-    @Nullable
-    @Contract("_, !null -> !null")
-    public Boolean get_config(@NonNull String key, @Nullable Boolean defaultValue) {
-        if (mConf.isNull(key)) {
-            return defaultValue;
-        }
-        return mConf.getBoolean(key);
-    }
-
-    @Nullable
-    @Contract("_, !null -> !null")
-    public Long get_config(@NonNull String key, @Nullable Long defaultValue) {
-        if (mConf.isNull(key)) {
-            return defaultValue;
-        }
-        return mConf.getLong(key);
-    }
-
-    @Nullable
-    @Contract("_, !null -> !null")
-    public Integer get_config(@NonNull String key, @Nullable Integer defaultValue) {
-        if (mConf.isNull(key)) {
-            return defaultValue;
-        }
-        return mConf.getInt(key);
+    fun get_config_string(key: String): String {
+        return _config!!.getString(key)
     }
 
     @Contract("_, !null -> !null")
-    public Double get_config(@NonNull String key, @Nullable Double defaultValue) {
-        if (mConf.isNull(key)) {
-            return defaultValue;
-        }
-        return mConf.getDouble(key);
+    fun get_config(key: String, defaultValue: Boolean?): Boolean? {
+        return if (_config!!.isNull(key)) {
+            defaultValue
+        } else _config!!.getBoolean(key)
     }
 
-    @Nullable
     @Contract("_, !null -> !null")
-    public String get_config(@NonNull String key, @Nullable String defaultValue) {
-        if (mConf.isNull(key)) {
-            return defaultValue;
-        }
-        return mConf.getString(key);
+    fun get_config(key: String, defaultValue: Long?): Long? {
+        return if (_config!!.isNull(key)) {
+            defaultValue
+        } else _config!!.getLong(key)
     }
 
-    /** Edits to the config are not persisted to the preferences */
-    @Nullable
     @Contract("_, !null -> !null")
-    public JSONObject get_config(@NonNull String key, @Nullable JSONObject defaultValue) {
-        if (mConf.isNull(key)) {
-            return defaultValue == null ? null : new JSONObject(defaultValue);
-        }
-        return new JSONObject(mConf.getJSONObject(key));
+    fun get_config(key: String, defaultValue: Int?): Int? {
+        return if (_config!!.isNull(key)) {
+            defaultValue
+        } else _config!!.getInt(key)
     }
 
-    /** Edits to the array are not persisted to the preferences */
-    @Nullable
     @Contract("_, !null -> !null")
-    public JSONArray get_config(@NonNull String key, @Nullable JSONArray defaultValue) {
-        if (mConf.isNull(key)) {
-            return defaultValue == null ? null : new JSONArray(defaultValue);
-        }
-        return new JSONArray(mConf.getJSONArray(key));
+    fun get_config(key: String, defaultValue: Double?): Double? {
+        return if (_config!!.isNull(key)) {
+            defaultValue
+        } else _config!!.getDouble(key)
     }
 
-    public void set_config(@NonNull String key, boolean value) {
-        setMod();
-        mConf.put(key, value);
+    @Contract("_, !null -> !null")
+    fun get_config(key: String, defaultValue: String?): String? {
+        return if (_config!!.isNull(key)) {
+            defaultValue
+        } else _config!!.getString(key)
     }
 
-    public void set_config(@NonNull String key, long value) {
-        setMod();
-        mConf.put(key, value);
+    /** Edits to the config are not persisted to the preferences  */
+    @Contract("_, !null -> !null")
+    fun get_config(key: String, defaultValue: JSONObject?): JSONObject? {
+        return if (_config!!.isNull(key)) {
+            if (defaultValue == null) null else JSONObject(defaultValue)
+        } else JSONObject(_config!!.getJSONObject(key))
     }
 
-    public void set_config(@NonNull String key, int value) {
-        setMod();
-        mConf.put(key, value);
+    /** Edits to the array are not persisted to the preferences  */
+    @Contract("_, !null -> !null")
+    fun get_config(key: String, defaultValue: JSONArray?): JSONArray? {
+        return if (_config!!.isNull(key)) {
+            if (defaultValue == null) null else JSONArray(defaultValue)
+        } else JSONArray(_config!!.getJSONArray(key))
     }
 
-    public void set_config(@NonNull String key, double value) {
-        setMod();
-        mConf.put(key, value);
+    fun set_config(key: String, value: Boolean) {
+        setMod()
+        _config!!.put(key, value)
     }
 
-    public void set_config(@NonNull String key, String value) {
-        setMod();
-        mConf.put(key, value);
+    fun set_config(key: String, value: Long) {
+        setMod()
+        _config!!.put(key, value)
     }
 
-    public void set_config(@NonNull String key, JSONArray value) {
-        setMod();
-        mConf.put(key, value);
+    fun set_config(key: String, value: Int) {
+        setMod()
+        _config!!.put(key, value)
     }
 
-    public void set_config(@NonNull String key, JSONObject value) {
-        setMod();
-        mConf.put(key, value);
+    fun set_config(key: String, value: Double) {
+        setMod()
+        _config!!.put(key, value)
     }
 
-    public void remove_config(@NonNull String key) {
-        setMod();
-        mConf.remove(key);
+    fun set_config(key: String, value: String?) {
+        setMod()
+        _config!!.put(key, value!!)
+    }
+
+    fun set_config(key: String, value: JSONArray?) {
+        setMod()
+        _config!!.put(key, value!!)
+    }
+
+    fun set_config(key: String, value: JSONObject?) {
+        setMod()
+        _config!!.put(key, value!!)
+    }
+
+    fun remove_config(key: String) {
+        setMod()
+        _config!!.remove(key)
     }
 
     //endregion
 
-    public long getScm() {
-        return mScm;
+    @KotlinCleanup("merge with `mLs`")
+    fun setLs(ls: Long) {
+        mLs = ls
     }
 
-
-    public boolean getServer() {
-        return mServer;
+    fun setUsnAfterSync(usn: Int) {
+        mUsn = usn
     }
 
-
-    public void setLs(long ls) {
-        mLs = ls;
+    fun crtCalendar(): Calendar {
+        return Time.calendar((crt * 1000).toLong())
     }
 
-
-    public void setUsnAfterSync(int usn) {
-        mUsn = usn;
+    fun crtGregorianCalendar(): GregorianCalendar {
+        return Time.gregorianCalendar((crt * 1000).toLong())
     }
 
-
-    public long getMod() {
-        return mMod;
-    }
-
-
-    /* this getter is only for syncing routines, use usn() instead elsewhere */
-    public int getUsnForSync() {
-        return mUsn;
-    }
-
-
-    public TagManager getTags() {
-        return mTags;
-    }
-
-
-    public long getCrt() {
-        return mCrt;
-    }
-
-    public Calendar crtCalendar() {
-        return Time.calendar(getCrt() * 1000);
-    }
-
-    public GregorianCalendar crtGregorianCalendar() {
-        return Time.gregorianCalendar(getCrt() * 1000);
-    }
-
-
-    public void setCrt(long crt) {
-        mCrt = crt;
-    }
-
-
-    public AbstractSched getSched() {
-        return mSched;
-    }
-
-
-    public String getPath() {
-        return mPath;
-    }
-
-
-    public void setServer(boolean server) {
-        mServer = server;
-    }
-
-    public boolean getDirty() {
-        return mDty;
-    }
-
-    /**
-     * @return The context that created this Collection.
-     */
-    public Context getContext() {
-        return mContext;
-    }
-
-    /** Not in libAnki */
+    /** Not in libAnki  */
     @CheckResult
-    public List<Long> filterToValidCards(long[] cards) {
-        return getDb().queryLongList("select id from cards where id in " + Utils.ids2str(cards));
+    fun filterToValidCards(cards: LongArray?): List<Long> {
+        return db.queryLongList("select id from cards where id in " + Utils.ids2str(cards))
     }
 
-    public int queryVer() throws UnknownDatabaseVersionException {
-        try {
-            return getDb().queryScalar("select ver from col");
-        } catch (Exception e) {
-            throw new UnknownDatabaseVersionException(e);
+    @Throws(UnknownDatabaseVersionException::class)
+    fun queryVer(): Int {
+        return try {
+            db.queryScalar("select ver from col")
+        } catch (e: Exception) {
+            throw UnknownDatabaseVersionException(e)
         }
     }
 
-    //This duplicates _loadScheduler (but returns the value and sets the report limit).
-    public AbstractSched createScheduler(int reportLimit) {
-        int ver = schedVer();
+    // This duplicates _loadScheduler (but returns the value and sets the report limit).
+    fun createScheduler(reportLimit: Int): AbstractSched? {
+        val ver = schedVer()
         if (ver == 1) {
-            mSched = new Sched(this);
+            sched = Sched(this)
         } else if (ver == 2) {
-            mSched = new SchedV2(this);
+            sched = SchedV2(this)
         }
-        mSched.setReportLimit(reportLimit);
-        return mSched;
+        sched.setReportLimit(reportLimit)
+        return sched
     }
 
-    public boolean isUsingRustBackend() {
-        return mDroidBackend.isUsingRustBackend();
-    }
+    val isUsingRustBackend: Boolean
+        get() = droidBackend.isUsingRustBackend()
+    open val backend: DroidBackend
+        get() = droidBackend
 
-    public DroidBackend getBackend() {
-        return mDroidBackend;
-    }
+    class CheckDatabaseResult(private val oldSize: Long) {
+        private val mProblems: MutableList<String?> = ArrayList()
+        var cardsWithFixedHomeDeckCount = 0
+        private var mNewSize: Long = 0
 
-    /** Allows a mock db to be inserted for testing */
-    @VisibleForTesting
-    public void setDb(DB database) {
-        this.mDb = database;
-    }
+        /** When the database was locked  */
+        var databaseLocked = false
+            private set
 
-    public static class CheckDatabaseResult {
-        private final List<String> mProblems = new ArrayList<>();
-        private final long mOldSize;
-        private int mFixedCardsWithNoHomeDeckCount;
-        private long mNewSize;
-        /** When the database was locked */
-        private boolean mLocked = false;
-        /** When the check failed with an error (or was locked) */
-        private boolean mFailed = false;
-
-
-        public CheckDatabaseResult(long oldSize) {
-            mOldSize = oldSize;
+        /** When the check failed with an error (or was locked)  */
+        var failed = false
+        fun addAll(strings: List<String?>?) {
+            mProblems.addAll(strings!!)
         }
 
-        public void addAll(List<String> strings) {
-            mProblems.addAll(strings);
+        fun hasProblems(): Boolean {
+            return !mProblems.isEmpty()
         }
 
-        public void setCardsWithFixedHomeDeckCount(int count) {
-            this.mFixedCardsWithNoHomeDeckCount = count;
+        val problems: List<String?>
+            get() = mProblems
+
+        fun setNewSize(size: Long) {
+            mNewSize = size
         }
 
-        public boolean hasProblems() {
-            return !mProblems.isEmpty();
+        val sizeChangeInKb: Double
+            get() = (oldSize - mNewSize) / 1024.0
+
+        fun markAsFailed(): CheckDatabaseResult {
+            failed = true
+            return this
         }
 
-
-        public List<String> getProblems() {
-            return mProblems;
+        fun markAsLocked(): CheckDatabaseResult {
+            setLocked(true)
+            return markAsFailed()
         }
 
-
-        public int getCardsWithFixedHomeDeckCount() {
-            return mFixedCardsWithNoHomeDeckCount;
-        }
-
-        public void setNewSize(long size) {
-            this.mNewSize = size;
-        }
-
-        public double getSizeChangeInKb() {
-            return (mOldSize - mNewSize) / 1024.0;
-        }
-
-
-        public void setFailed(boolean failedIntegrity) {
-            this.mFailed = failedIntegrity;
-        }
-
-        public CheckDatabaseResult markAsFailed() {
-            this.setFailed(true);
-            return this;
-        }
-
-        public CheckDatabaseResult markAsLocked() {
-            this.setLocked(true);
-            return markAsFailed();
-        }
-
-        private void setLocked(boolean value) {
-            mLocked = value;
-        }
-
-        public boolean getDatabaseLocked() {
-            return mLocked;
-        }
-
-
-        public boolean getFailed() {
-            return mFailed;
+        private fun setLocked(value: Boolean) {
+            databaseLocked = value
         }
     }
-
-    @NonNull
-    public Time getTime() {
-        return mTime;
-    }
-
 
     /**
      * Allows a collection to be used as a CollectionGetter
      * @return Itself.
      */
-    public Collection getCol() {
-        return this;
+    override fun getCol(): Collection {
+        return this
+    }
+
+    /** https://stackoverflow.com/questions/62150333/lateinit-property-mock-object-has-not-been-initialized */
+    @VisibleForTesting
+    fun setScheduler(sched: AbstractSched) {
+        this.sched = sched
+    }
+
+    companion object {
+        @KotlinCleanup("Use kotlin's regex methods")
+        private val fClozePatternQ = Pattern.compile("\\{\\{(?!type:)(.*?)cloze:")
+        private val fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:")
+        private val fClozeTagStart = Pattern.compile("<%cloze:")
+
+        /**
+         * This is only used for collections which were created before
+         * the new collections default was v2
+         * In that case, 'schedVer' is not set, so this default is used.
+         * See: #8926
+         */
+        private const val fDefaultSchedulerVersion = 1
+        private val fSupportedSchedulerVersions = Arrays.asList(1, 2)
+
+        // other options
+        const val DEFAULT_CONF = (
+            "{" +
+                // review options
+                "\"activeDecks\": [1], " + "\"curDeck\": 1, " + "\"newSpread\": " + Consts.NEW_CARDS_DISTRIBUTE + ", " +
+                "\"collapseTime\": 1200, " + "\"timeLim\": 0, " + "\"estTimes\": true, " + "\"dueCounts\": true, \"dayLearnFirst\":false, " +
+                // other config
+                "\"curModel\": null, " + "\"nextPos\": 1, " + "\"sortType\": \"noteFld\", " +
+                "\"sortBackwards\": false, \"addToCur\": true }"
+            ) // add new to currently selected deck?
+        private const val UNDO_SIZE_MAX = 20
+        private var sChunk = 0
     }
 }

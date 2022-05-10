@@ -628,7 +628,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             val searchResult: MutableList<CardCache> = ArrayList()
             val searchResult_: List<Long>
             searchResult_ = try {
-                col.findCards(query, order, PartialSearch(searchResult, column1Index, column2Index, numCardsToRender, collectionTask, col))
+                col.findCards(query, order, PartialSearch(searchResult, column1Index, column2Index, numCardsToRender, collectionTask, col))!!.requireNoNulls()
             } catch (e: Exception) {
                 // exception can occur via normal operation
                 Timber.w(e)
@@ -1252,8 +1252,9 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class FindEmptyCards : TaskDelegate<Int, List<Long?>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): List<Long> {
+    @KotlinCleanup("make non-null")
+    class FindEmptyCards : TaskDelegate<Int?, List<Long?>?>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int?>): List<Long> {
             return col.emptyCids(collectionTask)
         }
     }
