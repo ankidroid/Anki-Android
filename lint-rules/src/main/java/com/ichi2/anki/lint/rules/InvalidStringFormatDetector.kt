@@ -68,7 +68,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
 
         element.childNodes
             .forEach { child ->
-                val isStringResource = child.nodeType == Node.TEXT_NODE &&
+                val isStringResource = (child.nodeType == Node.TEXT_NODE || child.nodeType == Node.CDATA_SECTION_NODE) &&
                     TAG_STRING == element.localName
                 val isStringArrayOrPlurals = child.nodeType == Node.ELEMENT_NODE &&
                     (
