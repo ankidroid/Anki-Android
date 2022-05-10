@@ -39,7 +39,6 @@ object HtmlUtils {
         return changetoparagraph.replace("\t","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
     }
 
-
     @JvmStatic
     fun escape(html: String): String {
         return TextUtils.htmlEncode(html)
