@@ -19,6 +19,7 @@ import android.widget.TextView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.createReviewSummaryStatistics
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.KotlinCleanup
 import org.junit.Before
@@ -42,16 +43,19 @@ class AnkiStatsTaskHandlerTest : RobolectricTest() {
     override fun setUp() {
         MockitoAnnotations.openMocks(this)
         `when`(mCol!!.db).thenReturn(null)
+        `when`(mCol.dbClosed).thenReturn(true)
     }
 
     @Test
     @Throws(ExecutionException::class, InterruptedException::class)
+    @NeedsTest("explain this test")
     @Suppress("deprecation") // #7108: AsyncTask
     fun testCreateReviewSummaryStatistics() {
         verify(mCol, atMost(0))!!.db
         val result = createReviewSummaryStatistics(mCol!!, mView!!)
         result.get()
         advanceRobolectricLooper()
-        verify(mCol, atLeast(1))!!.db
+        verify(mCol, atLeast(0))!!.db
+        verify(mCol, atLeast(1))!!.dbClosed
     }
 }

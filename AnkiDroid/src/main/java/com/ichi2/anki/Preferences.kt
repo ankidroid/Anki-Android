@@ -407,7 +407,7 @@ class Preferences : AnkiActivity() {
     private fun closePreferences() {
         finish()
         slide(this, ActivityTransitionAnimation.Direction.FADE)
-        if (col != null && col.db != null) {
+        if (col != null && !col.dbClosed) {
             col.save()
         }
     }

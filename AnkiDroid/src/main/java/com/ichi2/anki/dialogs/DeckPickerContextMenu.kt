@@ -143,7 +143,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 (activity as DeckPicker?)!!.createSubDeckDialog(deckId)
             }
             DeckPickerContextMenuOption.BROWSE_CARDS -> {
-                collection.decks?.select(deckId)
+                collection.decks.select(deckId)
                 val intent = Intent(activity, CardBrowser::class.java)
                 (activity as DeckPicker?)!!.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
             }

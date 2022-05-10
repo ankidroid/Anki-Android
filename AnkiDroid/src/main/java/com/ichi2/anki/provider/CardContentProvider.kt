@@ -238,7 +238,7 @@ class CardContentProvider : ContentProvider() {
                 val proj = sanitizeNoteProjection(projection)
                 val query = selection ?: ""
                 val noteIds = col.findNotes(query)
-                if (noteIds != null && !noteIds.isEmpty()) {
+                if (!noteIds.isEmpty()) {
                     val sel = String.format("id in (%s)", TextUtils.join(",", noteIds))
                     val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, sel, null, null, order, null)
                     col.db.database.query(sql)
@@ -680,7 +680,7 @@ class CardContentProvider : ContentProvider() {
             }
             MODELS_ID_EMPTY_CARDS -> {
                 val model = col.models.get(getModelIdFromUri(uri, col)) ?: return -1
-                val cids: List<Long> = col.genCards(col.models.nids(model), model)
+                val cids: List<Long> = col.genCards(col.models.nids(model), model)!!
                 col.remCards(cids)
                 cids.size
             }
@@ -907,7 +907,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID -> throw IllegalArgumentException("Not possible to insert model with specific ID")
             MODELS_ID_TEMPLATES -> {
                 run {
-                    val models: ModelManager = col.getModels()
+                    val models: ModelManager = col.models
                     val mid: Long = getModelIdFromUri(uri, col)
                     val existingModel: Model? = models.get(mid)
                     if (existingModel == null) {
@@ -938,7 +938,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_TEMPLATES_ID -> throw IllegalArgumentException("Not possible to insert template with specific ORD")
             MODELS_ID_FIELDS -> {
                 run {
-                    val models: ModelManager = col.getModels()
+                    val models: ModelManager = col.models
                     val mid: Long = getModelIdFromUri(uri, col)
                     val existingModel: Model? = models.get(mid)
                     if (existingModel == null) {

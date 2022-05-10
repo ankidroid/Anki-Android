@@ -2251,7 +2251,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         return HandleEmptyCardListener(this)
     }
 
-    private class HandleEmptyCardListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Int, List<Long?>?>(deckPicker) {
+    private class HandleEmptyCardListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Int?, List<Long?>?>(deckPicker) {
         private val mNumberOfCards: Int = deckPicker.col.cardCount()
         private val mOnePercent: Int = mNumberOfCards / 100
         private var mIncreaseSinceLastUpdate = 0
@@ -2281,7 +2281,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             context.mProgressDialog!!.setCanceledOnTouchOutside(false)
         }
 
-        override fun actualOnProgressUpdate(context: DeckPicker, value: Int) {
+        @KotlinCleanup("don't handle null")
+        override fun actualOnProgressUpdate(context: DeckPicker, value: Int?) {
+            if (value == null) {
+                return
+            }
             mIncreaseSinceLastUpdate += value
             // Increase each time at least a percent of card has been processed since last update
             if (mIncreaseSinceLastUpdate > mOnePercent) {
@@ -2310,7 +2314,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 val dialog = ConfirmationDialog()
                 dialog.setArgs(msg)
                 val confirm = Runnable {
-                    context.col.remCards(result)
+                    context.col.remCards(result.requireNoNulls())
                     showSimpleSnackbar(
                         context,
                         String.format(

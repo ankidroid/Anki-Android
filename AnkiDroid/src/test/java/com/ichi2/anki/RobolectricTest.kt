@@ -169,7 +169,7 @@ open class RobolectricTest : CollectionGetter {
 
         try {
             if (CollectionHelper.getInstance().colIsOpen()) {
-                CollectionHelper.getInstance().getCol(targetContext).getBackend().debugEnsureNoOpenPointers()
+                CollectionHelper.getInstance().getCol(targetContext).backend.debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
             CollectionHelper.getInstance().closeCollection(false, "RobolectricTest: End")

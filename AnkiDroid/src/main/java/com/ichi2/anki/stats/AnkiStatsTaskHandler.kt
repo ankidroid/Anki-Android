@@ -184,7 +184,7 @@ class AnkiStatsTaskHandler private constructor(private val collectionData: Colle
                 val collection = params[0]!!.first
                 val textView = params[0]!!.second
                 mTextView = WeakReference(textView)
-                if (!mIsRunning || collection == null || collection.db == null) {
+                if (!mIsRunning || collection == null || collection.dbClosed) {
                     Timber.d("Quitting DeckPreviewStatistics before execution")
                     return null
                 } else {
