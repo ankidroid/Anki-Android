@@ -87,4 +87,13 @@ class StudyOptionsFragmentTest {
         assertEquals("a\na", result.toString())
     }
     /* end #5188 */
+    
+    /* Check for \t tab-space in formatDescription html */
+    @Test
+    fun checkfortabspaceinhtml() {
+        val result = formatDescription("a\ta")
+        assertEquals("a\u00A0\u00A0\u00A0\u00A0\u00A0a", result.toString())
+    }
 }
+}
+
