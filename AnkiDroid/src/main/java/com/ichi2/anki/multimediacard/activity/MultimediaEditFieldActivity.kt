@@ -262,14 +262,14 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         }
     }
 
-    @Suppress("deprecation") // onActivityResult + supportInvalidateOptionsMenu
+    @Suppress("deprecation") // onActivityResult
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Timber.d("onActivityResult()")
         if (fieldController != null) {
             fieldController!!.onActivityResult(requestCode, resultCode, data)
         }
         super.onActivityResult(requestCode, resultCode, data)
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
     private fun recreateEditingUIUsingCachedRequest() {
@@ -430,11 +430,10 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             }
         }
 
-        @Suppress("deprecation") // supportInvalidateOptionsMenu
         fun onPostUICreation(request: ChangeUIRequest, activity: MultimediaEditFieldActivity) {
             Timber.d("onPostUICreation. State: %d", request.state)
             when (request.state) {
-                ChangeUIRequest.UI_CHANGE, ChangeUIRequest.EXTERNAL_FIELD_CHANGE -> activity.supportInvalidateOptionsMenu()
+                ChangeUIRequest.UI_CHANGE, ChangeUIRequest.EXTERNAL_FIELD_CHANGE -> activity.invalidateOptionsMenu()
                 ChangeUIRequest.ACTIVITY_LOAD -> {}
                 else -> Timber.e("onPostUICreation: Unhandled state: %s", request.state)
             }

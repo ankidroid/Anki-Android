@@ -104,7 +104,6 @@ abstract class NavigationDrawerActivity :
 
     // Navigation drawer initialisation
     @KotlinCleanup("use .apply on enableToolbar")
-    @Suppress("deprecation") // supportInvalidateOptionsMenu(
     protected fun initNavigationDrawer(mainView: View) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         mDrawerLayout = mainView.findViewById(R.id.drawer_layout)
@@ -132,7 +131,7 @@ abstract class NavigationDrawerActivity :
 
             override fun onDrawerClosed(drawerView: View) {
                 super.onDrawerClosed(drawerView)
-                supportInvalidateOptionsMenu()
+                invalidateOptionsMenu()
 
                 // If animations are disabled, this is executed before onNavigationItemSelected is called
                 // PERF: May be able to reduce this delay
@@ -146,7 +145,7 @@ abstract class NavigationDrawerActivity :
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-                supportInvalidateOptionsMenu()
+                invalidateOptionsMenu()
             }
         }
         if (mDrawerLayout is ClosableDrawerLayout) {

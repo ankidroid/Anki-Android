@@ -209,7 +209,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     /** When a deck is selected via Deck Override  */
-    @Suppress("deprecation") // supportInvalidateOptionsMenu()
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (tempModel!!.model.isCloze) {
             Timber.w("Attempted to set deck for cloze model")
@@ -240,7 +239,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         UIUtils.showThemedToast(this, message, true)
 
         // Deck Override can change from "on" <-> "off"
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
