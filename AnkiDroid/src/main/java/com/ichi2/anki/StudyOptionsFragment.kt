@@ -50,6 +50,7 @@ import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.HtmlUtils.converttoparagraph
 import timber.log.Timber
 
 class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
@@ -716,7 +717,10 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             val withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc)
             // #5188 - fromHtml displays newlines as " "
             val withFixedNewlines = convertNewlinesToHtml(withStrippedTags)
-            return HtmlCompat.fromHtml(withFixedNewlines!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+            val fixedparagraphhtmlusage = converttoparagraph(withFixedNewlines)
+
+            return HtmlCompat.fromHtml(fixedparagraphhtmlusage!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
     }
 }
