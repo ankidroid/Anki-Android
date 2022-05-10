@@ -32,55 +32,57 @@
  *
  *  https://android.googlesource.com/platform/tools/base/+/2856eb45fc34aff6c86ab8729d545c147dfd9c19/lint/libs/lint_checks/src/main/java/com/android/tools/lint/checks/StringFormatDetector.java
  */
+package com.ichi2.anki.lint.utils
 
-package com.ichi2.anki.lint.utils;
+import org.w3c.dom.Node
+import java.lang.StringBuilder
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-public class StringFormatDetector {
-
-    public static void addText(StringBuilder sb, Node node) {
-        short nodeType = node.getNodeType();
+object StringFormatDetector {
+    fun addText(sb: StringBuilder, node: Node) {
+        val nodeType = node.nodeType
         if (nodeType == Node.TEXT_NODE || nodeType == Node.CDATA_SECTION_NODE) {
-            sb.append(stripQuotes(node.getNodeValue().trim()));
+            sb.append(stripQuotes(node.nodeValue.trim { it <= ' ' }))
         } else {
-            NodeList childNodes = node.getChildNodes();
-            for (int i = 0, n = childNodes.getLength(); i < n; i++) {
-                addText(sb, childNodes.item(i));
+            val childNodes = node.childNodes
+            var i = 0
+            val n = childNodes.length
+            while (i < n) {
+                addText(sb, childNodes.item(i))
+                i++
             }
         }
     }
 
     /**
-     * Removes all the unescaped quotes. See <a
-     * href="http://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling">Escaping
-     * apostrophes and quotes</a>
+     * Removes all the unescaped quotes. See [Escaping
+ * apostrophes and quotes](http://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling)
      */
-    public static String stripQuotes(String s) {
-        StringBuilder sb = new StringBuilder();
-        boolean isEscaped = false;
-        boolean isQuotedBlock = false;
-        for (int i = 0, len = s.length(); i < len; i++) {
-            char current = s.charAt(i);
+    fun stripQuotes(s: String): String {
+        val sb = StringBuilder()
+        var isEscaped = false
+        var isQuotedBlock = false
+        var i = 0
+        val len = s.length
+        while (i < len) {
+            val current = s[i]
             if (isEscaped) {
-                sb.append(current);
-                isEscaped = false;
+                sb.append(current)
+                isEscaped = false
             } else {
-                isEscaped = current == '\\'; // Next char will be escaped so we will just copy it
+                isEscaped = current == '\\' // Next char will be escaped so we will just copy it
                 if (current == '"') {
-                    isQuotedBlock = !isQuotedBlock;
+                    isQuotedBlock = !isQuotedBlock
                 } else if (current == '\'') {
                     if (isQuotedBlock) {
                         // We only add single quotes when they are within a quoted block
-                        sb.append(current);
+                        sb.append(current)
                     }
                 } else {
-                    sb.append(current);
+                    sb.append(current)
                 }
             }
+            i++
         }
-
-        return sb.toString();
+        return sb.toString()
     }
 }
