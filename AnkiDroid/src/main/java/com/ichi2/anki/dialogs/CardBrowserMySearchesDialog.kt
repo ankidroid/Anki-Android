@@ -10,7 +10,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.ui.ButtonItemAdapter
-import com.ichi2.utils.ArgumentUtils.getSerializableWithCast
+import com.ichi2.utils.BundleUtils.getSerializableWithCast
 import timber.log.Timber
 
 // TODO: Add different classes for the two different dialogs

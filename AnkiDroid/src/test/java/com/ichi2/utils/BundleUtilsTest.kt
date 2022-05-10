@@ -20,7 +20,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.*
 import org.mockito.kotlin.whenever
-import java.util.*
+import kotlin.random.Random
 import kotlin.test.assertNull
 
 class BundleUtilsTest {
@@ -44,9 +44,8 @@ class BundleUtilsTest {
     }
 
     @Test
-    @KotlinCleanup("Use Kotlin's Random instead of Java's")
     fun test_GetNullableLong_Found_ReturnIt() {
-        val expected = Random().nextLong()
+        val expected = Random.Default.nextLong()
         val b = mock(Bundle::class.java)
 
         whenever(b.containsKey(anyString())).thenReturn(true)

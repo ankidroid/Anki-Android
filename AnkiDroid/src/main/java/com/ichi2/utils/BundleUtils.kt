@@ -49,4 +49,8 @@ object BundleUtils {
         }
         return getLong(key)
     }
+
+    inline fun <reified T> Bundle.getSerializableWithCast(key: String): T {
+        return getSerializable(key) as T
+    }
 }
