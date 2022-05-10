@@ -13,41 +13,27 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.lint.utils
 
-package com.ichi2.anki.lint.utils;
+import com.android.tools.lint.client.api.UElementHandler
+import com.android.tools.lint.detector.api.Detector
+import com.android.tools.lint.detector.api.JavaContext
+import org.jetbrains.uast.UElement
+import org.jetbrains.uast.UImportStatement
 
-import com.android.tools.lint.client.api.UElementHandler;
-import com.android.tools.lint.detector.api.Detector;
-import com.android.tools.lint.detector.api.JavaContext;
-
-import com.android.annotations.NonNull;
-import com.android.annotations.Nullable;
-import org.jetbrains.uast.UElement;
-import org.jetbrains.uast.UImportStatement;
-
-import java.util.Collections;
-import java.util.List;
-
-public abstract class ImportStatementDetector extends Detector {
-
-    public abstract void visitImportStatement(@NonNull JavaContext context, @NonNull UImportStatement node);
-
-
-    @Nullable
-    @Override
-    public List<Class<? extends UElement>> getApplicableUastTypes() {
-        return Collections.singletonList(UImportStatement.class);
+@KotlinCleanup("IDE lint")
+abstract class ImportStatementDetector : Detector() {
+    abstract fun visitImportStatement(context: JavaContext, node: UImportStatement)
+    override fun getApplicableUastTypes(): List<Class<out UElement?>>? {
+        return listOf(UImportStatement::class.java)
     }
 
-    @Nullable
-    @Override
-    public UElementHandler createUastHandler(@NonNull JavaContext context) {
-        return new UElementHandler() {
-            @Override
-            public void visitImportStatement(@NonNull UImportStatement node) {
+    override fun createUastHandler(context: JavaContext): UElementHandler? {
+        return object : UElementHandler() {
+            override fun visitImportStatement(node: UImportStatement) {
                 // do not call super
-                ImportStatementDetector.this.visitImportStatement(context, node);
+                this@ImportStatementDetector.visitImportStatement(context, node)
             }
-        };
+        }
     }
 }
