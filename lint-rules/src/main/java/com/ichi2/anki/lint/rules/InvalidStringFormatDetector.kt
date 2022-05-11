@@ -56,9 +56,9 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
             ANKI_XML_SEVERITY,
             IMPLEMENTATION_XML
         )
-    }
 
-    private val INVALID_FORMAT_PATTERN = Pattern.compile("[^%]+%").toRegex()
+        private val INVALID_FORMAT_PATTERN = Pattern.compile("[^%]+%").toRegex()
+    }
 
     override fun appliesTo(folderType: ResourceFolderType): Boolean =
         EnumSet.of(ResourceFolderType.VALUES).contains(folderType)

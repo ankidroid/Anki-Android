@@ -21,7 +21,6 @@ import com.android.tools.lint.detector.api.Issue
 import com.android.tools.lint.detector.api.JavaContext
 import com.android.tools.lint.detector.api.Scope
 import com.ichi2.anki.lint.utils.Constants
-import com.ichi2.anki.lint.utils.KotlinCleanup
 import org.jetbrains.uast.UElement
 import org.jetbrains.uast.UVariable
 import org.jetbrains.uast.UastVisibility
@@ -30,7 +29,6 @@ import java.util.*
 /**
  * https://github.com/ankidroid/Anki-Android/wiki/Code-style#non-public-non-static-field-names-should-start-with-m
  */
-@KotlinCleanup("IDE Lint")
 class NonPublicNonStaticJavaFieldDetector : JavaFieldNamingPatternDetector() {
 
     companion object {
@@ -50,9 +48,7 @@ class NonPublicNonStaticJavaFieldDetector : JavaFieldNamingPatternDetector() {
         if (variable.isStatic) {
             return false
         }
-        return if (variable.visibility == UastVisibility.PUBLIC) {
-            false
-        } else true
+        return variable.visibility != UastVisibility.PUBLIC
     }
 
     override fun meetsNamingStandards(variableName: String): Boolean {

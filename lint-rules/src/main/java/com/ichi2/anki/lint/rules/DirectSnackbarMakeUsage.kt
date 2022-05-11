@@ -29,18 +29,15 @@ import org.jetbrains.uast.UCallExpression
  * instead of using the method provided by the UIUtils class {com.ichi2.anki.UIUtils#showSimpleSnackbar(...)}
  * or {com.ichi2.anki.UIUtils#showSnackbar(...)}.
  */
-@KotlinCleanup("IDE lint")
 @KotlinCleanup("mutableListOf")
 class DirectSnackbarMakeUsage : Detector(), SourceCodeScanner {
 
     companion object {
-        @JvmField
         @VisibleForTesting
-        val ID = "DirectSnackbarMakeUsage"
+        const val ID = "DirectSnackbarMakeUsage"
 
-        @JvmField
         @VisibleForTesting
-        val DESCRIPTION = "Use UIUtils.showSimpleSnackbar or UIUtils.showSnackbar instead of Snackbar.make"
+        const val DESCRIPTION = "Use UIUtils.showSimpleSnackbar or UIUtils.showSnackbar instead of Snackbar.make"
         private const val EXPLANATION = "To improve code consistency within the codebase you should use UIUtils.showSimpleSnackbar or UIUtils.showSnackbar " +
             "in place of the library Snackbar.make(...).show()"
         private val implementation = Implementation(DirectSnackbarMakeUsage::class.java, Scope.JAVA_FILE_SCOPE)
@@ -56,7 +53,7 @@ class DirectSnackbarMakeUsage : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableMethodNames(): List<String>? {
+    override fun getApplicableMethodNames(): List<String> {
         val forbiddenMethods: MutableList<String> = ArrayList()
         forbiddenMethods.add("make")
         return forbiddenMethods
@@ -72,7 +69,7 @@ class DirectSnackbarMakeUsage : Detector(), SourceCodeScanner {
             context.report(
                 ISSUE,
                 node,
-                context.getCallLocation(node, true, true),
+                context.getCallLocation(node, includeReceiver = true, includeArguments = true),
                 DESCRIPTION
             )
         }
