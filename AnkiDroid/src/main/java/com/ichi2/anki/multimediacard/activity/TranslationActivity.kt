@@ -31,6 +31,8 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.AnkiSerialization
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.databinding.ActivityTranslationBinding
+import com.ichi2.anki.databinding.ProgressBarLayoutBinding
 import com.ichi2.anki.multimediacard.glosbe.json.Response
 import com.ichi2.anki.multimediacard.language.LanguagesListerGlosbe
 import com.ichi2.anki.multimediacard.language.LanguagesListerGlosbe.Companion.requestToResponseLangCode
@@ -53,15 +55,13 @@ import java.util.*
  */
 @KotlinCleanup("lateinit")
 open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
+    private lateinit var binding: ActivityTranslationBinding
+    private lateinit var progressBarLayoutBinding: ProgressBarLayoutBinding
     private var mSource: String? = null
     private var mTranslation: String? = null
     private var mLanguageLister: LanguagesListerGlosbe? = null
     private var mSpinnerFrom: Spinner? = null
     private var mSpinnerTo: Spinner? = null
-    private var mLoadingLayout: View? = null
-    private var mLoadingLayoutTitle: TextView? = null
-    private var mLoadingLayoutMessage: TextView? = null
-    private lateinit var mMainLayout: LinearLayout
     private var mWebServiceAddress: String? = null
     private var mPossibleTranslations: ArrayList<String>? = null
     private var mLangCodeTo: String? = null
@@ -86,10 +86,9 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
                 return
             }
         }
-        setContentView(R.layout.activity_translation)
-        mLoadingLayout = findViewById(R.id.progress_bar_layout)
-        mLoadingLayoutTitle = findViewById(R.id.progress_bar_layout_title)
-        mLoadingLayoutMessage = findViewById(R.id.progress_bar_layout_message)
+        binding = ActivityTranslationBinding.inflate(layoutInflater)
+        progressBarLayoutBinding = ProgressBarLayoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         mSource = try {
             intent.extras!!.getString(EXTRA_SOURCE)
         } catch (e: Exception) {
@@ -99,13 +98,12 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
 
         // If translation fails this is a default - source will be returned.
         mTranslation = mSource
-        mMainLayout = findViewById(R.id.MainLayoutInTranslationActivity)
         val tv: TextView = FixedTextView(this)
         tv.text = getText(R.string.multimedia_editor_trans_poweredglosbe)
-        mMainLayout.addView(tv)
+        binding.MainLayoutInTranslationActivity.addView(tv)
         val tvFrom: TextView = FixedTextView(this)
         tvFrom.text = getText(R.string.multimedia_editor_trans_from)
-        mMainLayout.addView(tvFrom)
+        binding.MainLayoutInTranslationActivity.addView(tvFrom)
         mLanguageLister = LanguagesListerGlosbe()
         mSpinnerFrom = Spinner(this)
         val adapter = ArrayAdapter(
@@ -114,10 +112,10 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         mSpinnerFrom!!.adapter = adapter
-        mMainLayout.addView(mSpinnerFrom)
+        binding.MainLayoutInTranslationActivity.addView(mSpinnerFrom)
         val tvTo: TextView = FixedTextView(this)
         tvTo.text = getText(R.string.multimedia_editor_trans_to)
-        mMainLayout.addView(tvTo)
+        binding.MainLayoutInTranslationActivity.addView(tvTo)
         mSpinnerTo = Spinner(this)
         val adapterTo = ArrayAdapter(
             this, android.R.layout.simple_spinner_item,
@@ -125,7 +123,7 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
         )
         adapterTo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         mSpinnerTo!!.adapter = adapterTo
-        mMainLayout.addView(mSpinnerTo)
+        binding.MainLayoutInTranslationActivity.addView(mSpinnerTo)
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
 
         // Try to set spinner value to last selected position
@@ -145,19 +143,19 @@ open class TranslationActivity : FragmentActivity(), DialogInterface.OnClickList
             // Get translation
             translate()
         }
-        mMainLayout.addView(btnDone)
+        binding.MainLayoutInTranslationActivity.addView(btnDone)
     }
 
     private fun showProgressBar(title: CharSequence, message: CharSequence) {
-        mMainLayout.visibility = View.GONE
-        mLoadingLayout!!.visibility = View.VISIBLE
-        mLoadingLayoutTitle!!.text = title
-        mLoadingLayoutMessage!!.text = message
+        binding.MainLayoutInTranslationActivity.visibility = View.GONE
+        progressBarLayoutBinding.progressBarLayout.visibility = View.VISIBLE
+        progressBarLayoutBinding.progressBarLayoutTitle.text = title
+        progressBarLayoutBinding.progressBarLayoutMessage.text = message
     }
 
     private fun hideProgressBar() {
-        mLoadingLayout!!.visibility = View.GONE
-        mMainLayout.visibility = View.VISIBLE
+        progressBarLayoutBinding.progressBarLayout.visibility = View.GONE
+        binding.MainLayoutInTranslationActivity.visibility = View.VISIBLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
