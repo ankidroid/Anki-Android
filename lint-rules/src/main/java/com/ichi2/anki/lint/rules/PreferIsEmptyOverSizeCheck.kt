@@ -28,7 +28,7 @@ import org.jetbrains.uast.*
 import java.util.*
 import java.util.regex.Pattern
 
-@KotlinCleanup("remove after all converted")
+@KotlinCleanup("Remove this class once there's no Java in AnkiDroid")
 class PreferIsEmptyOverSizeCheck : Detector(), UastScanner {
 
     companion object {
