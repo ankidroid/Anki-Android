@@ -46,19 +46,11 @@ class ConstantJavaFieldDetector : JavaFieldNamingPatternDetector() {
             )
     }
 
-    @KotlinCleanup("use filter/any")
-    override fun meetsNamingStandards(variableName: String): Boolean {
-        var foundLower = false
-        for (c in variableName.toCharArray()) {
-            if (Character.isLowerCase(c)) {
-                foundLower = true
-                break
-            }
-        }
-
-        // if 0-length, or no lowercase letters - should be OK
-        return !foundLower
-    }
+    /**
+     * @return `true` if 0-length, or no lowercase letters
+     */
+    override fun meetsNamingStandards(variableName: String) =
+        variableName.all { it.isUpperCase() }
 
     @KotlinCleanup("extract method: setting 'variableWithoutPrefix'")
     @KotlinCleanup("define replacement after setting 'variableWithoutPrefix'")
