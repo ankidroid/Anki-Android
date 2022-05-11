@@ -90,7 +90,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
     @Test
     fun invalidImageResultDoesNotCrashController() {
         val controller = validControllerNoImage
-        val activity = setupActivityMock(controller, controller.mActivity)
+        val activity = setupActivityMock(controller, controller.getActivity())
         val mock = MockContentResolver.returningEmptyCursor()
         whenever(activity.contentResolver).thenReturn(mock)
 

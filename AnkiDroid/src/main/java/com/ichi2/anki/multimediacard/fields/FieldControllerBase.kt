@@ -16,57 +16,44 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.multimediacard.fields
 
-package com.ichi2.anki.multimediacard.fields;
+import android.os.Bundle
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.utils.KotlinCleanup
 
-import android.os.Bundle;
+abstract class FieldControllerBase : IFieldController {
+    @KotlinCleanup("transform mActivity into a property")
+    protected lateinit var mActivity: MultimediaEditFieldActivity
+    protected lateinit var mField: IField
+    protected lateinit var mNote: IMultimediaEditableNote
+    protected var mIndex = 0
 
-import com.ichi2.anki.multimediacard.IMultimediaEditableNote;
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public abstract class FieldControllerBase implements IFieldController {
-
-    protected MultimediaEditFieldActivity mActivity;
-    protected IField mField;
-    protected IMultimediaEditableNote mNote;
-    protected int mIndex;
-
-
-    @Override
-    public void setField(@NonNull IField field) {
-        mField = field;
+    override fun setField(field: IField) {
+        mField = field
     }
 
-
-    @Override
-    // current code seems to require note to be nullable!
-    public void setNote(IMultimediaEditableNote note) {
-        mNote = note;
+    override fun setNote(note: IMultimediaEditableNote) {
+        mNote = note
     }
 
-
-    @Override
-    public void setFieldIndex(int index) {
-        mIndex = index;
+    override fun setFieldIndex(index: Int) {
+        mIndex = index
     }
 
-
-    @Override
-    public void setEditingActivity(@NonNull MultimediaEditFieldActivity activity) {
-        mActivity = activity;
+    override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
+        mActivity = activity
     }
 
+    fun getActivity(): MultimediaEditFieldActivity {
+        return mActivity
+    }
 
-    @Override
-    public void loadInstanceState(@Nullable Bundle savedInstancedState) { /* Default implementation does nothing */ }
+    override fun loadInstanceState(savedInstanceState: Bundle?) { /* Default implementation does nothing */
+    }
 
-
-    @Override
-    @Nullable
-    public Bundle saveInstanceState() {
-        return null;
+    override fun saveInstanceState(): Bundle? {
+        return null
     }
 }

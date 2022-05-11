@@ -42,7 +42,7 @@ interface IFieldController {
 
     // This is guaranteed to be called before create UI, so that the controller
     // is aware of the note.
-    fun setNote(note: IMultimediaEditableNote?)
+    fun setNote(note: IMultimediaEditableNote)
 
     // This is guaranteed to be called before create UI, so that the controller
     // is aware of the field index in the note.
