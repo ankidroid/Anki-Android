@@ -13,6 +13,7 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@file:Suppress("UnstableApiUsage")
 package com.ichi2.anki.lint.utils
 
 import com.android.tools.lint.client.api.UElementHandler
@@ -21,7 +22,6 @@ import com.android.tools.lint.detector.api.JavaContext
 import org.jetbrains.uast.UElement
 import org.jetbrains.uast.UImportStatement
 
-@KotlinCleanup("IDE lint")
 abstract class ImportStatementDetector : Detector() {
     abstract fun visitImportStatement(context: JavaContext, node: UImportStatement)
     override fun getApplicableUastTypes(): List<Class<out UElement?>>? {

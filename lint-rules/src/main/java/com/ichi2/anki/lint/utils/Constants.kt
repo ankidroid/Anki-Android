@@ -1,3 +1,4 @@
+@file:Suppress("UnstableApiUsage")
 package com.ichi2.anki.lint.utils
 
 import com.android.tools.lint.detector.api.Category
@@ -7,7 +8,6 @@ import com.android.tools.lint.detector.api.Severity
 /**
  * Hold some constants applicable to all lint issues.
  */
-@KotlinCleanup("IDE Lint")
 object Constants {
     /**
      * A special [Category] which groups the Lint issues related to the usage of the new SystemTime class as a

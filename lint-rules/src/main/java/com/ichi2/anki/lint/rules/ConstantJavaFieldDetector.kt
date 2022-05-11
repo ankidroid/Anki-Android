@@ -13,6 +13,7 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@file:Suppress("UnstableApiUsage")
 package com.ichi2.anki.lint.rules
 
 import com.android.tools.lint.detector.api.Implementation
@@ -30,8 +31,6 @@ import java.util.*
  * https://github.com/ankidroid/Anki-Android/wiki/Code-style#constant-final-variables-names-must-be-all-uppercase-using-underscore-to-separate-words
  * Constant (final variables) names must be all uppercase using underscore to separate words.
  */
-@KotlinCleanup("IDE warnings")
-@KotlinCleanup("Ignore unstable API warning")
 @KotlinCleanup("Remove after all are converted")
 class ConstantJavaFieldDetector : JavaFieldNamingPatternDetector() {
     override fun isApplicable(variable: UVariable): Boolean {

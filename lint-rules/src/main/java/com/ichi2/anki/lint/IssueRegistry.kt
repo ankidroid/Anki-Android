@@ -1,3 +1,4 @@
+@file:Suppress("UnstableApiUsage")
 package com.ichi2.anki.lint
 
 import com.android.tools.lint.client.api.IssueRegistry
