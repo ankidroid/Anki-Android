@@ -52,15 +52,11 @@ class ConstantJavaFieldDetector : JavaFieldNamingPatternDetector() {
     override fun meetsNamingStandards(variableName: String) =
         variableName.all { it.isUpperCase() }
 
-    @KotlinCleanup("extract method: setting 'variableWithoutPrefix'")
-    @KotlinCleanup("define replacement after setting 'variableWithoutPrefix'")
     override fun reportVariable(context: JavaContext, node: UVariable, variableName: String) {
-        var variableWithoutPrefix = variableName
+        // If the s/m prefix was accidentally applied, remove it
+        // Once we have no Hungarian prefixes, we can easily convert camelCase to CONSTANT_CASE
+        val variableWithoutPrefix = variableName.removeHungarianPrefix("m", "s")
         val replacement = StringBuilder()
-        // If the s prefix was accidentally applied, remove it.
-        if ((variableWithoutPrefix.startsWith("s") || variableWithoutPrefix.startsWith("m")) && variableWithoutPrefix.length > 1 && Character.isUpperCase(variableWithoutPrefix[1])) {
-            variableWithoutPrefix = variableWithoutPrefix.substring(1)
-        }
         replacement.append(variableWithoutPrefix.uppercase(Locale.ROOT))
 
         // explicitly skip 0.
@@ -77,6 +73,25 @@ class ConstantJavaFieldDetector : JavaFieldNamingPatternDetector() {
         // cast the node as it's ambiguous between two interfaces
         val uNode: UElement = node
         context.report(ISSUE, uNode, context.getNameLocation(uNode), "Field should be named: '$replacement'")
+    }
+
+    /**
+     * If [this] starts with any of the prefixes AND the next letter is uppercase, then remove it
+     *
+     * Example:
+     * if [prefixes] are `["m", "s"]`
+     *
+     * * s -> s
+     * * somethingCool -> somethingCool
+     * * sHello -> Hello
+     * * mActive -> Active
+     */
+    @Suppress("SameParameterValue")
+    private fun String.removeHungarianPrefix(vararg prefixes: String): String {
+        if ((prefixes.any { prefix -> this.startsWith(prefix) }) && length > 1 && this[1].isUpperCase()) {
+            return this.substring(1)
+        }
+        return this
     }
 
     companion object {
