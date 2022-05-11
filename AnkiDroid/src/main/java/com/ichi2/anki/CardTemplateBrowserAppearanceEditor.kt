@@ -23,6 +23,7 @@ import android.view.MenuItem
 import android.widget.EditText
 import androidx.annotation.CheckResult
 import com.afollestad.materialdialogs.MaterialDialog
+import com.ichi2.anki.databinding.CardBrowserAppearanceBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.utils.JSONObject
 import org.jetbrains.annotations.Contract
@@ -34,8 +35,7 @@ import timber.log.Timber
  * We do not allow the user to change the font size as this can be done in the Appearance settings.
  */
 class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
-    private lateinit var mQuestionEditText: EditText
-    private lateinit var mAnswerEditText: EditText
+    private lateinit var binding: CardBrowserAppearanceBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -114,13 +114,11 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private fun initializeUiFromBundle(bundle: Bundle) {
-        setContentView(R.layout.card_browser_appearance)
+        binding = CardBrowserAppearanceBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        mQuestionEditText = findViewById(R.id.question_format)
-        mQuestionEditText.setText(bundle.getString(INTENT_QUESTION_FORMAT))
-
-        mAnswerEditText = findViewById(R.id.answer_format)
-        mAnswerEditText.setText(bundle.getString(INTENT_ANSWER_FORMAT))
+        binding.questionFormat.setText(bundle.getString(INTENT_QUESTION_FORMAT))
+        binding.answerFormat.setText(bundle.getString(INTENT_ANSWER_FORMAT))
 
         enableToolbar()
         setTitle(R.string.card_template_browser_appearance_title)
@@ -135,9 +133,9 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private val questionFormat: String
-        get() = getTextValue(mQuestionEditText)
+        get() = getTextValue(binding.questionFormat)
     private val answerFormat: String
-        get() = getTextValue(mAnswerEditText)
+        get() = getTextValue(binding.answerFormat)
 
     private fun getTextValue(editText: EditText): String {
         return editText.text.toString()
@@ -145,8 +143,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
     private fun restoreDefaultAndClose() {
         Timber.i("Restoring Default and Closing")
-        mQuestionEditText.setText(VALUE_USE_DEFAULT)
-        mAnswerEditText.setText(VALUE_USE_DEFAULT)
+        binding.questionFormat.setText(VALUE_USE_DEFAULT)
+        binding.answerFormat.setText(VALUE_USE_DEFAULT)
         saveAndExit()
     }
 
