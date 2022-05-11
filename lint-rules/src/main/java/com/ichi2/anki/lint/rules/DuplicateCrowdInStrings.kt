@@ -57,9 +57,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
         return folderType == ResourceFolderType.VALUES
     }
 
-    override fun getApplicableElements(): Collection<String> {
-        return listOf(TAG_STRING)
-    }
+    override fun getApplicableElements() = listOf(TAG_STRING)
 
     override fun visitElement(context: XmlContext, element: Element) {
         // Only check the golden copy - not the translated sources.

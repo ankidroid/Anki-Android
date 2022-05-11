@@ -23,7 +23,6 @@ import com.ichi2.anki.lint.utils.KotlinCleanup
 import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
 
-@KotlinCleanup("mutableListOf")
 class PrintStackTraceUsage : Detector(), SourceCodeScanner {
 
     companion object {
@@ -46,11 +45,7 @@ class PrintStackTraceUsage : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableMethodNames(): List<String> {
-        val forbiddenMethods: MutableList<String> = ArrayList()
-        forbiddenMethods.add("printStackTrace")
-        return forbiddenMethods
-    }
+    override fun getApplicableMethodNames() = mutableListOf("printStackTrace")
 
     @KotlinCleanup("remove comment about semicolon")
     override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {

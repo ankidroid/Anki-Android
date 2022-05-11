@@ -19,7 +19,6 @@ package com.ichi2.anki.lint.rules
 import com.android.tools.lint.detector.api.*
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
-import com.ichi2.anki.lint.utils.KotlinCleanup
 import com.ichi2.anki.lint.utils.LintUtils
 import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
@@ -29,7 +28,6 @@ import org.jetbrains.uast.UCallExpression
  * instead of using the method provided by the UIUtils class {com.ichi2.anki.UIUtils#showSimpleSnackbar(...)}
  * or {com.ichi2.anki.UIUtils#showSnackbar(...)}.
  */
-@KotlinCleanup("mutableListOf")
 class DirectSnackbarMakeUsage : Detector(), SourceCodeScanner {
 
     companion object {
@@ -53,11 +51,7 @@ class DirectSnackbarMakeUsage : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableMethodNames(): List<String> {
-        val forbiddenMethods: MutableList<String> = ArrayList()
-        forbiddenMethods.add("make")
-        return forbiddenMethods
-    }
+    override fun getApplicableMethodNames() = mutableListOf("make")
 
     override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
         super.visitMethodCall(context, node, method)

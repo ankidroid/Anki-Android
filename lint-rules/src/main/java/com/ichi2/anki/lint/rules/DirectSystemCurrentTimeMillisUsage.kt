@@ -4,7 +4,6 @@ package com.ichi2.anki.lint.rules
 import com.android.tools.lint.detector.api.*
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
-import com.ichi2.anki.lint.utils.KotlinCleanup
 import com.ichi2.anki.lint.utils.LintUtils
 import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
@@ -13,7 +12,6 @@ import org.jetbrains.uast.UCallExpression
  * This custom Lint rules will raise an error if a developer uses the [System.currentTimeMillis] method instead
  * of using the time provided by the new Time class.
  */
-@KotlinCleanup("mutableListOf")
 class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
 
     companion object {
@@ -37,11 +35,7 @@ class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableMethodNames(): List<String> {
-        val forbiddenSystemMethods: MutableList<String> = ArrayList()
-        forbiddenSystemMethods.add("currentTimeMillis")
-        return forbiddenSystemMethods
-    }
+    override fun getApplicableMethodNames() = mutableListOf("currentTimeMillis")
 
     override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
         super.visitMethodCall(context, node, method)

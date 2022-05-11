@@ -58,12 +58,8 @@ class PreferIsEmptyOverSizeCheck : Detector(), UastScanner {
         return BinaryExpressionHandler(context)
     }
 
-    override fun getApplicableUastTypes(): List<Class<out UElement>> {
-        val allowed: MutableList<Class<out UElement>> = ArrayList(2)
-        allowed.add(UBinaryExpression::class.java)
-        allowed.add(UCallExpression::class.java)
-        return allowed
-    }
+    override fun getApplicableUastTypes() =
+        mutableListOf(UBinaryExpression::class.java, UCallExpression::class.java)
 
     /**
      * Report the problematic comparison expression to the lint checker and compute the fix to apply

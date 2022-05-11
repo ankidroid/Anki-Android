@@ -31,9 +31,7 @@ import org.jetbrains.uast.UVariable
 
 class VariableNamingDetector : Detector(), Detector.UastScanner {
 
-    override fun getApplicableUastTypes(): List<Class<out UElement>> {
-        return listOf(UVariable::class.java)
-    }
+    override fun getApplicableUastTypes() = listOf(UVariable::class.java)
 
     private fun reportVariable(context: JavaContext, node: UVariable) {
         context.report(
