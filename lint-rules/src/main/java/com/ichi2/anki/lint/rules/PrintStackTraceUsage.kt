@@ -19,7 +19,6 @@ package com.ichi2.anki.lint.rules
 import com.android.tools.lint.detector.api.*
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
-import com.ichi2.anki.lint.utils.KotlinCleanup
 import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
 
@@ -47,7 +46,6 @@ class PrintStackTraceUsage : Detector(), SourceCodeScanner {
 
     override fun getApplicableMethodNames() = mutableListOf("printStackTrace")
 
-    @KotlinCleanup("remove comment about semicolon")
     override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
@@ -60,7 +58,6 @@ class PrintStackTraceUsage : Detector(), SourceCodeScanner {
         val fix = LintFix.create()
             .replace()
             .select(node.asSourceString())
-            // We don't need a semicolon here
             .with("Timber.w(" + node.receiver!!.asSourceString() + ")")
             .autoFix()
             .build()
