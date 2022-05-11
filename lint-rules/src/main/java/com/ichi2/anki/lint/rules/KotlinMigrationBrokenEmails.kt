@@ -28,7 +28,7 @@ import java.util.regex.Pattern
 
 @Beta
 class KotlinMigrationBrokenEmails : Detector(), SourceCodeScanner {
-    override fun getApplicableUastTypes(): List<Class<out UElement?>>? {
+    override fun getApplicableUastTypes(): List<Class<out UElement?>> {
         return listOf(UClass::class.java)
     }
 

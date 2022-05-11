@@ -20,20 +20,16 @@ import com.android.tools.lint.detector.api.*
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
 import com.ichi2.anki.lint.utils.ImportStatementDetector
-import com.ichi2.anki.lint.utils.KotlinCleanup
 import org.jetbrains.uast.UImportStatement
 
-@KotlinCleanup("IDE lint")
 class InconsistentAnnotationUsage : ImportStatementDetector(), SourceCodeScanner {
 
     companion object {
-        @JvmField
         @VisibleForTesting
-        val ID = "InconsistentAnnotationUsage"
+        const val ID = "InconsistentAnnotationUsage"
 
-        @JvmField
         @VisibleForTesting
-        val DESCRIPTION = "Use androidx.annotation.NonNull and androidx.annotation.Nullable. See explanation for IDE-level fix"
+        const val DESCRIPTION = "Use androidx.annotation.NonNull and androidx.annotation.Nullable. See explanation for IDE-level fix"
         private const val EXPLANATION = "AnkiDroid uses androidx nullability annotations over JetBrains for nullability. " +
             "The annotations library can be specified in Settings - Inspections - Java - Probable Bugs - Nullability Problems - @NonNull/@Nullable problems. " +
             "Search in Settings for '@Nullable problems'"

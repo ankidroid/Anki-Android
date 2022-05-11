@@ -23,14 +23,12 @@ import com.ichi2.anki.lint.utils.KotlinCleanup
 import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
 
-@KotlinCleanup("IDE Lint")
 @KotlinCleanup("mutableListOf")
 class PrintStackTraceUsage : Detector(), SourceCodeScanner {
 
     companion object {
-        @JvmField
         @VisibleForTesting
-        val ID = "PrintStackTraceUsage"
+        const val ID = "PrintStackTraceUsage"
 
         @VisibleForTesting
         val DESCRIPTION = "Use Timber to log exceptions (typically Timber.w if non-fatal)"
@@ -48,7 +46,7 @@ class PrintStackTraceUsage : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableMethodNames(): List<String>? {
+    override fun getApplicableMethodNames(): List<String> {
         val forbiddenMethods: MutableList<String> = ArrayList()
         forbiddenMethods.add("printStackTrace")
         return forbiddenMethods
@@ -73,7 +71,7 @@ class PrintStackTraceUsage : Detector(), SourceCodeScanner {
             .build()
         context.report(
             ISSUE,
-            context.getCallLocation(node, true, true),
+            context.getCallLocation(node, includeReceiver = true, includeArguments = true),
             DESCRIPTION,
             fix
         )

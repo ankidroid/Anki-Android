@@ -13,18 +13,15 @@ import org.jetbrains.uast.UCallExpression
  * This custom Lint rules will raise an error if a developer uses the [System.currentTimeMillis] method instead
  * of using the time provided by the new Time class.
  */
-@KotlinCleanup("IDE lint")
 @KotlinCleanup("mutableListOf")
 class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
 
     companion object {
-        @JvmField
         @VisibleForTesting
-        val ID = "DirectSystemCurrentTimeMillisUsage"
+        const val ID = "DirectSystemCurrentTimeMillisUsage"
 
-        @JvmField
         @VisibleForTesting
-        val DESCRIPTION = "Use the collection's getTime() method instead of System.currentTimeMillis()"
+        const val DESCRIPTION = "Use the collection's getTime() method instead of System.currentTimeMillis()"
         private const val EXPLANATION = "Using time directly means time values cannot be controlled during testing. " +
             "Time values like System.currentTimeMillis() must be obtained through the Time obtained from a Collection"
         private val implementation = Implementation(DirectSystemCurrentTimeMillisUsage::class.java, Scope.JAVA_FILE_SCOPE)
@@ -40,7 +37,7 @@ class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableMethodNames(): List<String>? {
+    override fun getApplicableMethodNames(): List<String> {
         val forbiddenSystemMethods: MutableList<String> = ArrayList()
         forbiddenSystemMethods.add("currentTimeMillis")
         return forbiddenSystemMethods
@@ -53,7 +50,7 @@ class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
         if (!LintUtils.isAnAllowedClass(foundClasses, "SystemTime") && evaluator.isMemberInClass(method, "java.lang.System")) {
             context.report(
                 ISSUE,
-                context.getCallLocation(node, true, true),
+                context.getCallLocation(node, includeReceiver = true, includeArguments = true),
                 DESCRIPTION
             )
         }

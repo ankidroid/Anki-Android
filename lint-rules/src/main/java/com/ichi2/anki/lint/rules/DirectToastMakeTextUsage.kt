@@ -28,18 +28,15 @@ import org.jetbrains.uast.UCallExpression
  * This custom Lint rules will raise an error if a developer uses the {android.widget.Toast#makeText(...)} method instead
  * of using the method provided by the UIUtils class {com.ichi2.anki.UIUtils#showThemedToast(...)}.
  */
-@KotlinCleanup("IDE lint")
 @KotlinCleanup("mutableListOf")
 class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
 
     companion object {
-        @JvmField
         @VisibleForTesting
-        val ID = "DirectToastMakeTextUsage"
+        const val ID = "DirectToastMakeTextUsage"
 
-        @JvmField
         @VisibleForTesting
-        val DESCRIPTION = "Use UIUtils.showThemedToast instead of Toast.makeText"
+        const val DESCRIPTION = "Use UIUtils.showThemedToast instead of Toast.makeText"
         private const val EXPLANATION = "To improve code consistency within the codebase you should use UIUtils.showThemedToast in place" +
             " of the library Toast.makeText(...).show(). This ensures also that the toast is actually displayed after being created"
         private val implementation = Implementation(DirectToastMakeTextUsage::class.java, Scope.JAVA_FILE_SCOPE)
@@ -55,7 +52,7 @@ class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableMethodNames(): List<String>? {
+    override fun getApplicableMethodNames(): List<String> {
         val forbiddenToastMethods: MutableList<String> = ArrayList()
         forbiddenToastMethods.add("makeText")
         return forbiddenToastMethods
@@ -69,7 +66,7 @@ class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
             context.report(
                 ISSUE,
                 node,
-                context.getCallLocation(node, true, true),
+                context.getCallLocation(node, includeReceiver = true, includeArguments = true),
                 DESCRIPTION
             )
         }

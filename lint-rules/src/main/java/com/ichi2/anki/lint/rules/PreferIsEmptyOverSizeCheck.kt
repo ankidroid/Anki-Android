@@ -29,7 +29,6 @@ import java.util.*
 import java.util.regex.Pattern
 
 @KotlinCleanup("remove after all converted")
-@KotlinCleanup("IDE lint")
 @KotlinCleanup("requireNonNull")
 class PreferIsEmptyOverSizeCheck : Detector(), UastScanner {
 
@@ -55,11 +54,11 @@ class PreferIsEmptyOverSizeCheck : Detector(), UastScanner {
         private val pattern = Pattern.compile("\\.size\\(\\)([^=]*)(==|>|<|>=|<=).*\\z")
     }
 
-    override fun createUastHandler(context: JavaContext): UElementHandler? {
+    override fun createUastHandler(context: JavaContext): UElementHandler {
         return BinaryExpressionHandler(context)
     }
 
-    override fun getApplicableUastTypes(): List<Class<out UElement>>? {
+    override fun getApplicableUastTypes(): List<Class<out UElement>> {
         val allowed: MutableList<Class<out UElement>> = ArrayList(2)
         allowed.add(UBinaryExpression::class.java)
         allowed.add(UCallExpression::class.java)
@@ -120,7 +119,7 @@ class PreferIsEmptyOverSizeCheck : Detector(), UastScanner {
             val methods = Objects.requireNonNull(
                 mJavaContext.evaluator
                     .getTypeClass(node.receiverType)
-            )!!.getAllMethods()
+            )!!.allMethods
             if (Arrays.stream(methods).anyMatch { m: PsiMethod -> "isEmpty" == m.name && m.hasModifier(JvmModifier.PUBLIC) }) {
                 reportVariable(mJavaContext, parentNode!!, isAffirmative!!)
                 parentNode = null
