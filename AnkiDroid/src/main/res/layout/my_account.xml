@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/toolbar"/>
+        <include
+            android:id="@id/toolbar_layout"
+            layout="@layout/toolbar"/>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
