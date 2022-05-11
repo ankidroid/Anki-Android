@@ -29,7 +29,6 @@ import java.util.*
 import java.util.regex.Pattern
 
 @KotlinCleanup("remove after all converted")
-@KotlinCleanup("requireNonNull")
 class PreferIsEmptyOverSizeCheck : Detector(), UastScanner {
 
     companion object {
@@ -112,10 +111,7 @@ class PreferIsEmptyOverSizeCheck : Detector(), UastScanner {
                 isAffirmative = null
                 return
             }
-            val methods = Objects.requireNonNull(
-                mJavaContext.evaluator
-                    .getTypeClass(node.receiverType)
-            )!!.allMethods
+            val methods = mJavaContext.evaluator.getTypeClass(node.receiverType)!!.allMethods
             if (Arrays.stream(methods).anyMatch { m: PsiMethod -> "isEmpty" == m.name && m.hasModifier(JvmModifier.PUBLIC) }) {
                 reportVariable(mJavaContext, parentNode!!, isAffirmative!!)
                 parentNode = null
