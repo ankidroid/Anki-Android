@@ -27,40 +27,37 @@ import com.ichi2.anki.lint.rules.NonPublicNonStaticJavaFieldDetector
 import com.ichi2.anki.lint.rules.PreferIsEmptyOverSizeCheck
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage
 import com.ichi2.anki.lint.rules.VariableNamingDetector
-import com.ichi2.anki.lint.utils.KotlinCleanup
-import java.util.ArrayList
 
-@KotlinCleanup("listOf")
 class IssueRegistry : IssueRegistry() {
     // Keep this list lexicographically ordered.
     override val issues: List<Issue>
         get() {
             // Keep this list lexicographically ordered.
-            val issues: MutableList<Issue> = ArrayList()
-            issues.add(CopyrightHeaderExists.ISSUE)
-            issues.add(DirectCalendarInstanceUsage.ISSUE)
-            issues.add(DirectDateInstantiation.ISSUE)
-            issues.add(DirectGregorianInstantiation.ISSUE)
-            issues.add(DirectSnackbarMakeUsage.ISSUE)
-            issues.add(DirectSystemCurrentTimeMillisUsage.ISSUE)
-            issues.add(DirectSystemTimeInstantiation.ISSUE)
-            issues.add(DirectToastMakeTextUsage.ISSUE)
-            issues.add(DuplicateCrowdInStrings.ISSUE)
-            issues.add(DuplicateTextInPreferencesXml.ISSUE)
-            issues.add(InconsistentAnnotationUsage.ISSUE)
-            issues.add(JUnitNullAssertionDetector.ISSUE)
-            issues.add(KotlinMigrationBrokenEmails.ISSUE)
-            issues.add(KotlinMigrationFixLineBreaks.ISSUE)
-            issues.add(PreferIsEmptyOverSizeCheck.ISSUE)
-            issues.add(PrintStackTraceUsage.ISSUE)
-            issues.add(NonPositionalFormatSubstitutions.ISSUE)
-            issues.add(NonPublicNonStaticJavaFieldDetector.ISSUE)
-            issues.add(ConstantJavaFieldDetector.ISSUE)
-            issues.add(FixedPreferencesTitleLength.ISSUE_MAX_LENGTH)
-            issues.add(FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH)
-            issues.add(VariableNamingDetector.ISSUE)
-            issues.add(InvalidStringFormatDetector.ISSUE)
-            return issues
+            return listOf(
+                CopyrightHeaderExists.ISSUE,
+                DirectCalendarInstanceUsage.ISSUE,
+                DirectDateInstantiation.ISSUE,
+                DirectGregorianInstantiation.ISSUE,
+                DirectSnackbarMakeUsage.ISSUE,
+                DirectSystemCurrentTimeMillisUsage.ISSUE,
+                DirectSystemTimeInstantiation.ISSUE,
+                DirectToastMakeTextUsage.ISSUE,
+                DuplicateCrowdInStrings.ISSUE,
+                DuplicateTextInPreferencesXml.ISSUE,
+                InconsistentAnnotationUsage.ISSUE,
+                JUnitNullAssertionDetector.ISSUE,
+                KotlinMigrationBrokenEmails.ISSUE,
+                KotlinMigrationFixLineBreaks.ISSUE,
+                PreferIsEmptyOverSizeCheck.ISSUE,
+                PrintStackTraceUsage.ISSUE,
+                NonPositionalFormatSubstitutions.ISSUE,
+                NonPublicNonStaticJavaFieldDetector.ISSUE,
+                ConstantJavaFieldDetector.ISSUE,
+                FixedPreferencesTitleLength.ISSUE_MAX_LENGTH,
+                FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH,
+                VariableNamingDetector.ISSUE,
+                InvalidStringFormatDetector.ISSUE
+            )
         }
     override val api: Int
         get() = CURRENT_API

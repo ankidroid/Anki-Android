@@ -19,7 +19,6 @@ package com.ichi2.anki.lint.rules
 import com.android.tools.lint.client.api.UElementHandler
 import com.android.tools.lint.detector.api.Detector
 import com.android.tools.lint.detector.api.JavaContext
-import org.jetbrains.uast.UElement
 import org.jetbrains.uast.UField
 import org.jetbrains.uast.UVariable
 
@@ -28,9 +27,7 @@ abstract class JavaFieldNamingPatternDetector : Detector(), Detector.UastScanner
         return VariableNamingHandler(context)
     }
 
-    override fun getApplicableUastTypes(): List<Class<out UElement?>>? {
-        return listOf(UVariable::class.java)
-    }
+    override fun getApplicableUastTypes() = listOf(UVariable::class.java)
 
     private inner class VariableNamingHandler(private val mContext: JavaContext) :
         UElementHandler() {

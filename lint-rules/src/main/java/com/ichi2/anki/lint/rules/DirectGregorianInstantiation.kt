@@ -37,13 +37,9 @@ class DirectGregorianInstantiation : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableMethodNames(): List<String> {
-        return mutableListOf("from")
-    }
+    override fun getApplicableMethodNames() = mutableListOf("from")
 
-    override fun getApplicableConstructorTypes(): List<String> {
-        return mutableListOf("java.util.GregorianCalendar")
-    }
+    override fun getApplicableConstructorTypes() = mutableListOf("java.util.GregorianCalendar")
 
     override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
         super.visitMethodCall(context, node, method)

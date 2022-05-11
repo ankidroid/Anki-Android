@@ -42,11 +42,7 @@ class DirectSystemTimeInstantiation : Detector(), SourceCodeScanner {
         )
     }
 
-    override fun getApplicableConstructorTypes(): List<String> {
-        val forbiddenConstructors: MutableList<String> = ArrayList()
-        forbiddenConstructors.add("com.ichi2.libanki.utils.SystemTime")
-        return forbiddenConstructors
-    }
+    override fun getApplicableConstructorTypes() = listOf("com.ichi2.libanki.utils.SystemTime")
 
     override fun visitConstructor(
         context: JavaContext,
