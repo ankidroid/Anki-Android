@@ -31,7 +31,7 @@ import java.util.*
  * https://github.com/ankidroid/Anki-Android/wiki/Code-style#constant-final-variables-names-must-be-all-uppercase-using-underscore-to-separate-words
  * Constant (final variables) names must be all uppercase using underscore to separate words.
  */
-@KotlinCleanup("Remove after all are converted")
+@KotlinCleanup("Remove this class once there's no Java in AnkiDroid")
 class ConstantJavaFieldDetector : JavaFieldNamingPatternDetector() {
     override fun isApplicable(variable: UVariable): Boolean {
         // TODO: The code style here is ambiguous - we'll only flag public static final for now
