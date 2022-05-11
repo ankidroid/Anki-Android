@@ -28,6 +28,8 @@ import android.view.View
 import android.widget.*
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.databinding.ActivityLoadPronounciationBinding
+import com.ichi2.anki.databinding.ProgressBarLayoutBinding
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus
 import com.ichi2.anki.runtimetools.TaskOperations.stopTaskGracefully
@@ -51,16 +53,15 @@ import java.util.*
  * FIXME why isn't this extending AnkiActivity?
  */
 open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListener {
+    private lateinit var binding: ActivityLoadPronounciationBinding
+    private lateinit var progressBarLayoutBinding: ProgressBarLayoutBinding
     private var mStopped = false
     private lateinit var source: String
     private lateinit var mTranslationAddress: String
     private lateinit var mPronunciationAddress: String
     private lateinit var mMp3Address: String
     private lateinit var mActivity: LoadPronunciationActivity
-    private lateinit var mLoadingLayoutTitle: TextView
-    private lateinit var mLoadingLayoutMessage: TextView
-    private lateinit var mLoadingLayout: View
-    private lateinit var mMainLayout: LinearLayout
+
     private var mPostTranslation: BackgroundPost? = null
     private var mPostPronunciation: BackgroundPost? = null
     private var mDownloadMp3Task: DownloadFileTask? = null
@@ -80,12 +81,10 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
                 return
             }
         }
-        setContentView(R.layout.activity_load_pronounciation)
+        binding = ActivityLoadPronounciationBinding.inflate(layoutInflater)
+        progressBarLayoutBinding = ProgressBarLayoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         source = intent.extras!!.getString(EXTRA_SOURCE)!!
-        mMainLayout = findViewById(R.id.layoutInLoadPronActivity)
-        mLoadingLayout = findViewById(R.id.progress_bar_layout)
-        mLoadingLayoutTitle = findViewById(R.id.progress_bar_layout_title)
-        mLoadingLayoutMessage = findViewById(R.id.progress_bar_layout_message)
         mLanguageLister = LanguageListerBeolingus()
         mSpinnerFrom = Spinner(this)
         val adapter = ArrayAdapter(
@@ -94,10 +93,10 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         mSpinnerFrom.adapter = adapter
-        mMainLayout.addView(mSpinnerFrom)
+        binding.layoutInLoadPronActivity.addView(mSpinnerFrom)
         val buttonLoadPronunciation = Button(this)
         buttonLoadPronunciation.text = gtxt(R.string.multimedia_editor_pron_load)
-        mMainLayout.addView(buttonLoadPronunciation)
+        binding.layoutInLoadPronActivity.addView(buttonLoadPronunciation)
         buttonLoadPronunciation.setOnClickListener(this@LoadPronunciationActivity::onLoadPronunciation)
         val saveButton = Button(this)
         saveButton.text = "Save"
@@ -117,15 +116,15 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     }
 
     private fun showProgressBar(title: CharSequence, message: CharSequence) {
-        mMainLayout.visibility = View.GONE
-        mLoadingLayout.visibility = View.VISIBLE
-        mLoadingLayoutTitle.text = title
-        mLoadingLayoutMessage.text = message
+        binding.layoutInLoadPronActivity.visibility = View.GONE
+        progressBarLayoutBinding.progressBarLayout.visibility = View.VISIBLE
+        progressBarLayoutBinding.progressBarLayoutTitle.text = title
+        progressBarLayoutBinding.progressBarLayoutMessage.text = message
     }
 
     private fun hideProgressBar() {
-        mLoadingLayout.visibility = View.GONE
-        mMainLayout.visibility = View.VISIBLE
+        progressBarLayoutBinding.progressBarLayout.visibility = View.GONE
+        binding.layoutInLoadPronActivity.visibility = View.VISIBLE
     }
 
     /**
