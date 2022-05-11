@@ -143,13 +143,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             newUI.markAsPermissionRequested()
             return
         }
-        val controllerFactory = BasicControllerFactory.instance
-        val fieldController = controllerFactory.createControllerForField(newUI.field)
-        if (fieldController == null) {
-            Timber.w("Field controller creation failed")
-            UIRecreationHandler.onControllerCreationFailed(newUI, this)
-            return
-        }
+        val fieldController = createControllerForField(newUI.field)
         UIRecreationHandler.onPreFieldControllerReplacement(this.fieldController)
         this.fieldController = fieldController
         mField = newUI.field
@@ -416,20 +410,6 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             previousFieldController.onFocusLost()
         }
 
-        /**
-         * Raised when we were supplied with a field that could not generate a UI controller
-         * Currently: We used a field for which we didn't know how to generate the UI
-         */
-        fun onControllerCreationFailed(request: ChangeUIRequest, activity: MultimediaEditFieldActivity) {
-            Timber.d("onControllerCreationFailed. State: %d", request.state)
-            when (request.state) {
-                ChangeUIRequest.ACTIVITY_LOAD, ChangeUIRequest.EXTERNAL_FIELD_CHANGE -> // TODO: (Optional) change in functionality. Previously we'd be left with a menu, but no UI.
-                    activity.finishCancel()
-                ChangeUIRequest.UI_CHANGE -> {}
-                else -> Timber.e("onControllerCreationFailed: Unhandled state: %s", request.state)
-            }
-        }
-
         fun onPostUICreation(request: ChangeUIRequest, activity: MultimediaEditFieldActivity) {
             Timber.d("onPostUICreation. State: %d", request.state)
             when (request.state) {
@@ -450,6 +430,17 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                     activity.finishCancel()
                 }
             }
+        }
+    }
+
+    private fun createControllerForField(field: IField): IFieldController {
+        @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
+        // the return of field.type is non nullable
+        return when (field.type) {
+            EFieldType.TEXT -> BasicTextFieldController()
+            EFieldType.IMAGE -> BasicImageFieldController()
+            EFieldType.AUDIO_RECORDING -> BasicAudioRecordingFieldController()
+            EFieldType.MEDIA_CLIP -> BasicMediaClipFieldController()
         }
     }
 
