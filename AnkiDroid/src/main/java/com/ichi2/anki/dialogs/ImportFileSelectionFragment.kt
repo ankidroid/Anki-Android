@@ -22,9 +22,13 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.HelpDialog.FunctionItem
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
+@NeedsTest("Selecting APKG allows multiple files")
+@NeedsTest("Selecting COLPKG does not allow multiple files")
+@NeedsTest("Restore backup dialog does not allow multiple files")
 class ImportFileSelectionFragment {
     companion object {
         @JvmStatic
