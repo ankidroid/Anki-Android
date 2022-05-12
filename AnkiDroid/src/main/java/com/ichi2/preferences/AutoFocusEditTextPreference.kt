@@ -31,8 +31,8 @@ interface AutoFocusable {
 
 @Suppress("deprecation")
 open class AutoFocusEditTextPreference(context: Context?, attrs: AttributeSet?) : android.preference.EditTextPreference(context, attrs), AutoFocusable {
-    override fun onBindView(view: View?) {
-        super.onBindView(view)
+    override fun onBindDialogView(view: View?) {
+        super.onBindDialogView(view)
         autoFocusAndMoveCursorToEnd(editText)
     }
 }
