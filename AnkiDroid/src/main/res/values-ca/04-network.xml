@@ -48,7 +48,7 @@
     <string name="youre_offline">Treballeu fora de línia</string>
     <string name="sync_even_if_offline">Probar igualment</string>
     <string name="sync_error">Error de sincronització</string>
-    <string name="vague_error">Error</string>
+    <string name="vague_error" comment="Network error dialog title">Error</string>
     <string name="retry">Intenta-ho de nou</string>
     <string name="menu_get_shared_decks">Baixeu paquets compartits</string>
     <string name="connection_error_message">S\'ha produït un error de xarxa</string>

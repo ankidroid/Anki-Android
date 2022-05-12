@@ -159,8 +159,11 @@
     <string name="import_title">Pengimporan</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Menambahkan</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksi yang ada dan menggantinya dengan data file %s</string>
-    <string name="import_message_add_confirm">Tambahkan \"%s\" ke koleksi? Ini mungkin memakan waktu lama</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
     <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>
@@ -175,6 +178,9 @@
     <string name="import_error_content_provider">File yang dipilih tidak bisa diimpor secara otomatis oleh AnkiDroid. Silakan lihat manual pengguna tentang cara mengimpor file anki secara manual: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Mengganti koleksi&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Sertakan penjadwalan</string>

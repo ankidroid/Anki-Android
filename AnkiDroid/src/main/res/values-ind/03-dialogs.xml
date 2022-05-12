@@ -112,7 +112,9 @@
     <string name="import_progress">• Mengimpor catatan: %1$d%%\n• Mengimpor kartu: %2$d%%\n• Proses akhir: %3$d%%</string>
     <string name="import_update_details">Memperbarui %1$d dari %2$d catatan yang ada.</string>
     <string name="import_update_ignored">Beberapa pembaruan diabaikan karena tipe catatan telah berubah</string>
-    <string name="import_complete_count">Kartu diimpor: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">Kartu SD penuh</string>
     <string name="sd_card_almost_full_title">Kartu SD hampir penuh</string>
     <string name="no_space_to_downgrade_title">Tidak ada ruang</string>

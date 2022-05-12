@@ -49,6 +49,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.UIUtils.getSnackbar
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -74,6 +75,7 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.PreloadNextCard
 import com.ichi2.async.CollectionTask.UpdateNote
 import com.ichi2.async.TaskListener
@@ -555,7 +557,6 @@ abstract class AbstractFlashcardViewer :
     protected abstract fun setTitle()
 
     // Finish initializing the activity after the collection has been correctly loaded
-    @Suppress("deprecation") // supportInvalidateOptionsMenu
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         sched = col.sched
@@ -588,7 +589,7 @@ abstract class AbstractFlashcardViewer :
         // Initialize text-to-speech. This is an asynchronous operation.
         mTTS.initialize(this, ReadTextListener())
         updateActionBar()
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
     // Saves deck each time Reviewer activity loses focus
@@ -841,15 +842,18 @@ abstract class AbstractFlashcardViewer :
     }
 
     @JvmOverloads
+    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected open fun editCard(fromGesture: Gesture? = null) {
         if (mCurrentCard == null) {
             // This should never occurs. It means the review button was pressed while there is no more card in the reviewer.
             return
         }
         val editCard = Intent(this@AbstractFlashcardViewer, NoteEditor::class.java)
-        editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER)
+        val animation = getAnimationTransitionFromGesture(fromGesture)
+        editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
+        editCard.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         editorCard = mCurrentCard
-        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, getAnimationTransitionFromGesture(fromGesture))
+        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, animation)
     }
 
     fun generateQuestionSoundList() {
@@ -1663,10 +1667,6 @@ abstract class AbstractFlashcardViewer :
                 editCard(fromGesture)
                 true
             }
-            ViewerCommand.COMMAND_CARD_INFO -> {
-                openCardInfo(fromGesture)
-                true
-            }
             ViewerCommand.COMMAND_TAG -> {
                 showTagsDialog()
                 true
@@ -1740,17 +1740,6 @@ abstract class AbstractFlashcardViewer :
 
     private fun abortAndSync() {
         closeReviewer(RESULT_ABORT_AND_SYNC, true)
-    }
-
-    @JvmOverloads
-    protected fun openCardInfo(fromGesture: Gesture? = null) {
-        if (mCurrentCard == null) {
-            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
-            return
-        }
-        val intent = Intent(this, CardInfo::class.java)
-        intent.putExtra("cardId", mCurrentCard!!.id)
-        startActivityWithAnimation(intent, getAnimationTransitionFromGesture(fromGesture))
     }
 
     /** Displays a snackbar which does not obscure the answer buttons  */
@@ -1828,9 +1817,8 @@ abstract class AbstractFlashcardViewer :
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 
-    @Suppress("deprecation") // supportInvalidateOptionsMenu
     protected fun refreshActionBar() {
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
     /** Fixing bug 720: <input></input> focus, thanks to pablomouzo on android issue 7189  */

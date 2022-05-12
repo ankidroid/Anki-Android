@@ -48,7 +48,7 @@
     <string name="youre_offline">Offline zaude</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Sync error</string>
-    <string name="vague_error">Errorea</string>
+    <string name="vague_error" comment="Network error dialog title">Errorea</string>
     <string name="retry">Saiatu berriro</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">Sare akats bat gertatu da</string>

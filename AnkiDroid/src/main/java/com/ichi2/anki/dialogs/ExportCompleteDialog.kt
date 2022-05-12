@@ -25,11 +25,11 @@ import java.io.File
 class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
     interface ExportCompleteDialogListener {
         fun dismissAllDialogFragments()
-        fun emailFile(path: String?)
-        fun saveExportFile(exportPath: String?)
+        fun emailFile(path: String)
+        fun saveExportFile(exportPath: String)
     }
 
-    fun withArguments(exportPath: String?): ExportCompleteDialog {
+    fun withArguments(exportPath: String): ExportCompleteDialog {
         var args = this.arguments
         if (args == null) {
             args = Bundle()
@@ -41,7 +41,7 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
 
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        val exportPath = requireArguments().getString("exportPath")
+        val exportPath = requireArguments().getString("exportPath")!!
         val dialogBuilder = MaterialDialog.Builder(requireActivity())
             .title(notificationTitle)
             .content(notificationMessage)

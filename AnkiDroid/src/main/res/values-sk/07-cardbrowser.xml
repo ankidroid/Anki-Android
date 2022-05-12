@@ -96,6 +96,7 @@
     <string name="card_browser_no_cards_in_deck">Nenašli sa žiadne kartičky v baličku ‘%s’</string>
     <string name="card_browser_search_all_decks">Prehľadať všetky balíčky</string>
     <string name="card_browser_unknown_deck_name">Neznámy</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d vymazaná kartička</item>
         <item quantity="few">%d vymazané kartičky</item>

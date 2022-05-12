@@ -14,6 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+@file:Suppress("UnstableApiUsage")
 package com.ichi2.anki.lint.rules
 
 import com.android.SdkConstants
@@ -109,7 +110,7 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
 
         if (childNodes.length == 1) {
             val child = childNodes.item(0)
-            return if (child.nodeType != Node.TEXT_NODE) {
+            return if (child.nodeType != Node.TEXT_NODE && child.nodeType != Node.CDATA_SECTION_NODE) {
                 null
             } else {
                 StringFormatDetector.stripQuotes(child.nodeValue)

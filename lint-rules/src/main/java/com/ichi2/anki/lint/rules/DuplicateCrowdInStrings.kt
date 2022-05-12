@@ -57,9 +57,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
         return folderType == ResourceFolderType.VALUES
     }
 
-    override fun getApplicableElements(): Collection<String> {
-        return listOf(TAG_STRING)
-    }
+    override fun getApplicableElements() = listOf(TAG_STRING)
 
     override fun visitElement(context: XmlContext, element: Element) {
         // Only check the golden copy - not the translated sources.
@@ -79,7 +77,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
         if (childNodes.length > 0) {
             if (childNodes.length == 1) {
                 val child = childNodes.item(0)
-                if (child.nodeType == Node.TEXT_NODE) {
+                if (child.nodeType == Node.TEXT_NODE || child.nodeType == Node.CDATA_SECTION_NODE) {
                     checkTextNode(
                         context,
                         element,

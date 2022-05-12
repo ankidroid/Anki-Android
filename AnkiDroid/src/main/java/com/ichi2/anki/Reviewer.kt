@@ -30,6 +30,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.os.Parcelable
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.*
@@ -41,6 +42,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.*
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -48,6 +50,7 @@ import androidx.core.view.ActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
 import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
@@ -85,7 +88,6 @@ import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
-import com.ichi2.utils.HandlerUtils.postOnNewHandler
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
@@ -138,6 +140,8 @@ open class Reviewer : AbstractFlashcardViewer() {
     // Preferences from the collection
     private var mShowRemainingCardCount = false
     private val mActionButtons = ActionButtons(this)
+    private var mOverflowMenuIsOpen = false
+    private lateinit var mToolbar: Toolbar
 
     @JvmField
     @VisibleForTesting
@@ -175,7 +179,20 @@ open class Reviewer : AbstractFlashcardViewer() {
         mTextBarNew = findViewById(R.id.new_number)
         mTextBarLearn = findViewById(R.id.learn_number)
         mTextBarReview = findViewById(R.id.review_number)
+        mToolbar = findViewById(R.id.toolbar)
         startLoadingCollection()
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+
+        savedInstanceState.putBoolean("mOverflowMenuIsOpen", mOverflowMenuIsOpen)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        mOverflowMenuIsOpen = savedInstanceState.getBoolean("mOverflowMenuIsOpen", false)
     }
 
     override fun onPause() {
@@ -653,18 +670,34 @@ open class Reviewer : AbstractFlashcardViewer() {
         showDialogFragment(dialog)
     }
 
+    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     private fun addNote(fromGesture: Gesture? = null) {
         val intent = Intent(this, NoteEditor::class.java)
+        val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-        startActivityForResultWithAnimation(intent, ADD_NOTE, getAnimationTransitionFromGesture(fromGesture))
+        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        startActivityForResultWithAnimation(intent, ADD_NOTE, animation)
+    }
+
+    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
+    protected fun openCardInfo(fromGesture: Gesture? = null) {
+        if (mCurrentCard == null) {
+            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
+            return
+        }
+        val intent = Intent(this, CardInfo::class.java)
+        val animation = getAnimationTransitionFromGesture(fromGesture)
+        intent.putExtra("cardId", mCurrentCard!!.id)
+        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        startActivityWithAnimation(intent, animation)
     }
 
     override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
-        postOnNewHandler {
-            for (i in 0 until menu.size()) {
-                val menuItem = menu.getItem(i)
-                shouldUseDefaultColor(menuItem)
-            }
+        Timber.d("onMenuOpened()")
+        mOverflowMenuIsOpen = true
+        for (i in 0 until menu.size()) {
+            val menuItem = menu.getItem(i)
+            shouldUseDefaultColor(menuItem)
         }
         return super.onMenuOpened(featureId, menu)
     }
@@ -675,16 +708,24 @@ open class Reviewer : AbstractFlashcardViewer() {
     private fun shouldUseDefaultColor(menuItem: MenuItem) {
         val drawable = menuItem.icon
         if (drawable != null && !isFlagResource(menuItem.itemId)) {
-            drawable.mutate()
-            drawable.setTint(ResourcesCompat.getColor(resources, R.color.material_blue_600, null))
+            val itemIsOverflowing = mToolbar.findViewById<View>(menuItem.itemId) == null
+            if (itemIsOverflowing) {
+                drawable.mutate()
+                drawable.setTint(ResourcesCompat.getColor(resources, R.color.material_blue_600, null))
+            }
         }
     }
 
     override fun onPanelClosed(featureId: Int, menu: Menu) {
+        Timber.d("onPanelClosed()")
+        mOverflowMenuIsOpen = false
         postDelayedOnNewHandler({ refreshActionBar() }, 100)
     }
 
+    // Related to https://github.com/ankidroid/Anki-Android/pull/11061#issuecomment-1107868455
+    @NeedsTest("Order of operations needs Testing around Menu (Overflow) Icons and their colors.")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        Timber.d("onCreateOptionsMenu()")
         // NOTE: This is called every time a new question is shown via invalidate options menu
         menuInflater.inflate(R.menu.reviewer, menu)
         displayIconsOnTv(menu)
@@ -812,6 +853,9 @@ open class Reviewer : AbstractFlashcardViewer() {
         suspend_icon.icon.mutate().alpha = alpha
         setupSubMenu(menu, R.id.action_schedule, ScheduleProvider(this))
         mOnboarding.onCreate()
+        if (mOverflowMenuIsOpen)
+            for (i in 0 until menu.size())
+                shouldUseDefaultColor(menu.getItem(i))
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -1148,6 +1192,10 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
             ViewerCommand.COMMAND_ADD_NOTE -> {
                 addNote(fromGesture)
+                return true
+            }
+            ViewerCommand.COMMAND_CARD_INFO -> {
+                openCardInfo(fromGesture)
                 return true
             }
             else -> return super.executeCommand(which, fromGesture)

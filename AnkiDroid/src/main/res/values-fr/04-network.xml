@@ -48,7 +48,7 @@
     <string name="youre_offline">Vous n\'êtes pas connecté à Internet</string>
     <string name="sync_even_if_offline">Essayer quand même</string>
     <string name="sync_error">Erreur de synchronisation</string>
-    <string name="vague_error">Erreur</string>
+    <string name="vague_error" comment="Network error dialog title">Erreur</string>
     <string name="retry">Réessayer</string>
     <string name="menu_get_shared_decks">Télécharger des paquets partagés</string>
     <string name="connection_error_message">Une erreur réseau s\'est produite.</string>

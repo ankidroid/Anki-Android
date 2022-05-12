@@ -130,7 +130,12 @@
     <string name="import_progress">• Įkeliami užrašai: %1$d%%\n• Įkeliamos kortelės: %2$d%%\n• Apdorojama: %3$d%%</string>
     <string name="import_update_details">Atnaujinta %1$d iš %2$d esamų užrašų.</string>
     <string name="import_update_ignored">Kai kurių atnaujinimų buvo nepaisoma, nes pasikeitė užrašų tipas</string>
-    <string name="import_complete_count">Importuota kortelių: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD kortelė pilna</string>
     <string name="sd_card_almost_full_title">SD kortelė beveik pilna</string>
     <string name="no_space_to_downgrade_title">No space</string>

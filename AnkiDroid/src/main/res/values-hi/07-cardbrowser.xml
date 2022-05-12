@@ -94,6 +94,7 @@
     <string name="card_browser_no_cards_in_deck">‘%s’ डेक में कोई पत्ता नहीं मिला</string>
     <string name="card_browser_search_all_decks">सभी डेक में खोजें</string>
     <string name="card_browser_unknown_deck_name">अज्ञात</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d कार्ड हटाया गया</item>
         <item quantity="other">%d कार्ड हटाए गए</item>

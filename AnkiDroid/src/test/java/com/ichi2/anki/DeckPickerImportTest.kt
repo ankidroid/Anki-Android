@@ -32,7 +32,7 @@ class DeckPickerImportTest : RobolectricTest() {
     fun importAddShowsImportDialog() {
         val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
 
-        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, "")
+        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, arrayListOf(""))
 
         assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog::class.java))
     }
@@ -41,7 +41,7 @@ class DeckPickerImportTest : RobolectricTest() {
     fun replaceShowsImportDialog() {
         val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
 
-        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, "")
+        deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, arrayListOf(""))
 
         assertThat(deckPicker.getAsyncDialogFragmentClass(), Matchers.typeCompatibleWith(ImportDialog::class.java))
     }

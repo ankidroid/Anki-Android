@@ -48,7 +48,7 @@
     <string name="youre_offline">Võrguühenduseta</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Sünkroonimise viga</string>
-    <string name="vague_error">Viga</string>
+    <string name="vague_error" comment="Network error dialog title">Viga</string>
     <string name="retry">Proovi uuesti</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">Ilmnest võrgutõrge.</string>

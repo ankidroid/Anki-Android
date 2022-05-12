@@ -126,7 +126,10 @@
                               • Post-elaboratzione: %3$d%%</string>
     <string name="import_update_details">%1$d de %2$d notas chi esistint atualizadas.</string>
     <string name="import_update_ignored">Unas cantas atualizatziones sunt istadas ignoradas ca sa casta de nota est cambiada</string>
-    <string name="import_complete_count">Cartas importadas: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">S\'ischeda SD est prena</string>
     <string name="sd_card_almost_full_title">S\'ischeda SD est belle prena</string>
     <string name="no_space_to_downgrade_title">Non b\'at ispàtziu</string>

@@ -5,13 +5,12 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.utils.JSONException
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
-@KotlinCleanup("is -> equalTo")
+
 @RunWith(AndroidJUnit4::class)
 class ClozeTest : RobolectricTest() {
     @Test
@@ -26,7 +25,7 @@ class ClozeTest : RobolectricTest() {
         }
         // a cloze model with no clozes is not empty
         f.setItem("Text", "nothing")
-        assertThat(d.addNote(f), `is`(greaterThan(0)))
+        assertThat(d.addNote(f), greaterThan(0))
         val card = f.cards()[0]
         assertTrue(card.isEmpty)
         // try with one cloze

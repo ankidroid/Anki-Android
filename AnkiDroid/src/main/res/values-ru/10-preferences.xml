@@ -48,7 +48,7 @@
     <string name="disabled">Выкл.</string>
     <string name="enabled">Включено</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Общие настройки</string>
     <string name="pref_cat_reviewing" maxLength="41">Учёба</string>
     <string name="pref_cat_reviewing_summ">Настройки обучения, не зависящие от колоды</string>

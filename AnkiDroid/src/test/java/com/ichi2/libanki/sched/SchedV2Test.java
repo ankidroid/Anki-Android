@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -118,6 +117,8 @@ public class SchedV2Test extends RobolectricTest {
         DeckDueTreeNode s = new DeckDueTreeNode(col, "scxipjiyozczaaczoawo", 1596783600420L, 0, 0, 0);
         DeckDueTreeNode f = new DeckDueTreeNode(col, "blank::foobar", 1596783600540L, 0, 0, 0);
         DeckDueTreeNode b = new DeckDueTreeNode(col, "blank", 1596783600520L, 0, 0, 0);
+        DeckDueTreeNode aBlank = new DeckDueTreeNode(col, "A::blank", 1596783600580L, 0, 0, 0);
+        DeckDueTreeNode a = new DeckDueTreeNode(col, "A", 1596783600560L, 0, 0, 0);
 
 
         TreeNode<DeckDueTreeNode> cazNode = new TreeNode<>(caz);
@@ -126,6 +127,8 @@ public class SchedV2Test extends RobolectricTest {
         TreeNode<DeckDueTreeNode> cNode = new TreeNode<>((c));
         TreeNode<DeckDueTreeNode> fNode = new TreeNode<>(f);
         TreeNode<DeckDueTreeNode> bNode = new TreeNode<>(b);
+        TreeNode<DeckDueTreeNode> aBlankNode = new TreeNode<>(aBlank);
+        TreeNode<DeckDueTreeNode> aNode = new TreeNode<>(a);
 
         // add "caz" to "ca"
         caNode.getChildren().add(cazNode);
@@ -143,6 +146,11 @@ public class SchedV2Test extends RobolectricTest {
         bNode.getChildren().add(fNode);
         bNode.getValue().processChildren(Collections.singletonList(fNode.getValue()), addRev);
 
+        // add "A::" to "A"
+        aNode.getChildren().add(aBlankNode);
+        aNode.getValue().processChildren(Collections.singletonList(aBlankNode.getValue()), addRev);
+
+        expected.add(aNode);
         expected.add(bNode);
         expected.add(cNode);
         expected.add(new TreeNode(defaul));

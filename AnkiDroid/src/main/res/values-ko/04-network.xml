@@ -48,7 +48,7 @@
     <string name="youre_offline">현재 오프라인 상태입니다</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">동기화 오류</string>
-    <string name="vague_error">오류</string>
+    <string name="vague_error" comment="Network error dialog title">오류</string>
     <string name="retry">재시도</string>
     <string name="menu_get_shared_decks">공유된 카드 묶음 얻기</string>
     <string name="connection_error_message">네트워크 오류가 발생했습니다.</string>

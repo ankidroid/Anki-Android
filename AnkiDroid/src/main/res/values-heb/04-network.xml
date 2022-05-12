@@ -48,7 +48,7 @@
     <string name="youre_offline">במצב לא מקוון</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">שגיאת סנכרון</string>
-    <string name="vague_error">שגיאה</string>
+    <string name="vague_error" comment="Network error dialog title">שגיאה</string>
     <string name="retry">נסה שנית</string>
     <string name="menu_get_shared_decks">קבלת חפיסות משותפות</string>
     <string name="connection_error_message">אירעה שגיאת רשת</string>

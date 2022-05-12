@@ -1,16 +1,15 @@
+@file:Suppress("UnstableApiUsage")
 package com.ichi2.anki.lint.rules
 
 import com.android.resources.ResourceFolderType
 import com.android.tools.lint.detector.api.*
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
-import com.ichi2.anki.lint.utils.KotlinCleanup
 import org.w3c.dom.Element
 
 /**
  * A Lint check to prevent using the same string for the title and summary of a preference.
  */
-@KotlinCleanup("IDe lint")
 class DuplicateTextInPreferencesXml : ResourceXmlDetector() {
 
     companion object {

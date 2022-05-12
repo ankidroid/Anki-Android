@@ -168,8 +168,14 @@
     <string name="import_title">Importuje se</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Přidat</string>
     <string name="import_message_replace_confirm">To odstraní vaši stávající kolekci a nahradí ji daty ze souboru %s</string>
-    <string name="import_message_add_confirm">Přidat „%s“ do kolekce? To může trvat dlouhou dobu</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Toto není platný Anki balíček</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Nepodařilo se rozbalit apkg: %s</string>
     <string name="import_log_failed_copy_to">Nepodařilo se zkopírovat apkg do %s</string>
     <string name="import_log_failed_validate">Selhalo ověření apkg </string>
@@ -184,6 +190,9 @@
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() selhalo (asi nedostatek místa v úložišti)</string>
     <string name="import_error_unhandled_scheme">Nezpracovaný import z: „%s“</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Nahrazuje se kolekce&#8230;</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_include_schedule">Zahrnout plánování</string>

@@ -96,6 +96,7 @@
     <string name="card_browser_no_cards_in_deck">Nie znaleziono kart w talii „%s”</string>
     <string name="card_browser_search_all_decks">Szukaj w wszystkich taliach</string>
     <string name="card_browser_unknown_deck_name">Nieznany</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">Usunięto %d kartę</item>
         <item quantity="few">Usunięto %d karty</item>

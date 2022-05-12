@@ -48,7 +48,7 @@
     <string name="disabled">禁用</string>
     <string name="enabled">启用</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">常规</string>
     <string name="pref_cat_general_summ">常用设置</string>
     <string name="pref_cat_reviewing" maxLength="41">复习</string>
     <string name="pref_cat_reviewing_summ">复习通用设置</string>

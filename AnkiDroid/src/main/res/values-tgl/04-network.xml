@@ -48,7 +48,7 @@
     <string name="youre_offline">Ikaw ay offline</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">May mali sa pagsisingkronisa</string>
-    <string name="vague_error">May mali</string>
+    <string name="vague_error" comment="Network error dialog title">May mali</string>
     <string name="retry">Subukang muli</string>
     <string name="menu_get_shared_decks">Kunin ang naibahaging mga deck</string>
     <string name="connection_error_message">May maling naganap sa network</string>

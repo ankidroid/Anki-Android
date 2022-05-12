@@ -94,6 +94,7 @@
     <string name="card_browser_no_cards_in_deck">Peruna carta agatada in su matzu ‘%s’</string>
     <string name="card_browser_search_all_decks">Chirca in totu sos matzos</string>
     <string name="card_browser_unknown_deck_name">Disconnotu</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d carta iscantzellada</item>
         <item quantity="other">%d cartas iscantzelladas</item>

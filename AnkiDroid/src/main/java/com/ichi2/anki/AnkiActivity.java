@@ -71,6 +71,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     public final int SIMPLE_NOTIFICATION_ID = 0;
     public static final int REQUEST_REVIEW = 901;
     public static final String DIALOG_FRAGMENT_TAG = "dialog";
+    /** Extra key to set the finish animation of an activity */
+    public static final String FINISH_ANIMATION_EXTRA = "finishAnimation";
 
     /** The name of the parent class (Reviewer) */
     private final String mActivityName;

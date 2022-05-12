@@ -13,6 +13,7 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+@file:Suppress("UnstableApiUsage")
 package com.ichi2.anki.lint.rules
 
 import com.android.tools.lint.detector.api.Implementation
@@ -30,9 +31,7 @@ import java.util.*
  * https://github.com/ankidroid/Anki-Android/wiki/Code-style#constant-final-variables-names-must-be-all-uppercase-using-underscore-to-separate-words
  * Constant (final variables) names must be all uppercase using underscore to separate words.
  */
-@KotlinCleanup("IDE warnings")
-@KotlinCleanup("Ignore unstable API warning")
-@KotlinCleanup("Remove after all are converted")
+@KotlinCleanup("Remove this class once there's no Java in AnkiDroid")
 class ConstantJavaFieldDetector : JavaFieldNamingPatternDetector() {
     override fun isApplicable(variable: UVariable): Boolean {
         // TODO: The code style here is ambiguous - we'll only flag public static final for now
@@ -47,33 +46,23 @@ class ConstantJavaFieldDetector : JavaFieldNamingPatternDetector() {
             )
     }
 
-    @KotlinCleanup("use filter/any")
-    override fun meetsNamingStandards(variableName: String): Boolean {
-        var foundLower = false
-        for (c in variableName.toCharArray()) {
-            if (Character.isLowerCase(c)) {
-                foundLower = true
-                break
-            }
-        }
+    /**
+     * @return `true` if 0-length, or no lowercase letters
+     */
+    override fun meetsNamingStandards(variableName: String) =
+        variableName.all { it.isUpperCase() }
 
-        // if 0-length, or no lowercase letters - should be OK
-        return !foundLower
-    }
-
-    override fun reportVariable(context: JavaContext, node: UVariable, variableNameParam: String) {
-        var variableName = variableNameParam
+    override fun reportVariable(context: JavaContext, node: UVariable, variableName: String) {
+        // If the s/m prefix was accidentally applied, remove it
+        // Once we have no Hungarian prefixes, we can easily convert camelCase to CONSTANT_CASE
+        val variableWithoutPrefix = variableName.removeHungarianPrefix("m", "s")
         val replacement = StringBuilder()
-        // If the s prefix was accidentally applied, remove it.
-        if ((variableName.startsWith("s") || variableName.startsWith("m")) && variableName.length > 1 && Character.isUpperCase(variableName[1])) {
-            variableName = variableName.substring(1)
-        }
-        replacement.append(variableName.uppercase(Locale.ROOT))
+        replacement.append(variableWithoutPrefix.uppercase(Locale.ROOT))
 
         // explicitly skip 0.
         // Work from the end to the start so we can handle string length changes
-        for (i in variableName.length - 1 downTo 1) {
-            val c = variableName[i]
+        for (i in variableWithoutPrefix.length - 1 downTo 1) {
+            val c = variableWithoutPrefix[i]
             if (Character.isUpperCase(c)) {
                 replacement.insert(i, '_')
             }
@@ -84,6 +73,25 @@ class ConstantJavaFieldDetector : JavaFieldNamingPatternDetector() {
         // cast the node as it's ambiguous between two interfaces
         val uNode: UElement = node
         context.report(ISSUE, uNode, context.getNameLocation(uNode), "Field should be named: '$replacement'")
+    }
+
+    /**
+     * If [this] starts with any of the prefixes AND the next letter is uppercase, then remove it
+     *
+     * Example:
+     * if [prefixes] are `["m", "s"]`
+     *
+     * * s -> s
+     * * somethingCool -> somethingCool
+     * * sHello -> Hello
+     * * mActive -> Active
+     */
+    @Suppress("SameParameterValue")
+    private fun String.removeHungarianPrefix(vararg prefixes: String): String {
+        if ((prefixes.any { prefix -> this.startsWith(prefix) }) && length > 1 && this[1].isUpperCase()) {
+            return this.substring(1)
+        }
+        return this
     }
 
     companion object {

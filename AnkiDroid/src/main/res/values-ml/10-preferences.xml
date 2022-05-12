@@ -48,7 +48,7 @@
     <string name="disabled">പ്രവര്‍ത്തന രഹിതമാക്കിയത്‌</string>
     <string name="enabled">പ്രാപ്തമാക്കി</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">പൊതുവായ ക്രമീകരണങ്ങൾ</string>
     <string name="pref_cat_reviewing" maxLength="41">അവലോകനം ചെയ്യുന്നു</string>
     <string name="pref_cat_reviewing_summ">നോൺ-ഡെക്ക്-നിർദ്ദിഷ്ട അവലോകന ക്രമീകരണങ്ങൾ</string>

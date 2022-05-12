@@ -94,6 +94,7 @@
     <string name="card_browser_no_cards_in_deck">%s\'de hiçbir kart bulunamadı</string>
     <string name="card_browser_search_all_decks">Tüm desteleri ara</string>
     <string name="card_browser_unknown_deck_name">Bilinmeyen</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d kartı silindi</item>
         <item quantity="other">%d kartları silindi</item>

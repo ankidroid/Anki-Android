@@ -48,7 +48,7 @@
     <string name="youre_offline">Bạn đang ngoại tuyến</string>
     <string name="sync_even_if_offline">Vẫn thử</string>
     <string name="sync_error">Lỗi đồng bộ</string>
-    <string name="vague_error">Lỗi</string>
+    <string name="vague_error" comment="Network error dialog title">Lỗi</string>
     <string name="retry">Thử lại</string>
     <string name="menu_get_shared_decks">Nhận các bộ thẻ đã chia sẻ</string>
     <string name="connection_error_message">Đã xảy ra lỗi mạng</string>

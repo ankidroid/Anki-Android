@@ -48,7 +48,7 @@
     <string name="disabled">डिसेबल केले</string>
     <string name="enabled">सक्षम केले</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">सामान्य सेटिंग्ज</string>
     <string name="pref_cat_reviewing" maxLength="41">पुनरावलोकन करत आहे</string>
     <string name="pref_cat_reviewing_summ">नॉन-डेक-विशिष्ट पुनरावलोकनकर्ता सेटिंग्ज</string>

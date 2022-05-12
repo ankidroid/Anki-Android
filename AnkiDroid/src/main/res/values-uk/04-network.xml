@@ -48,7 +48,7 @@
     <string name="youre_offline">Ви поза мережею</string>
     <string name="sync_even_if_offline">Все одно спробувати</string>
     <string name="sync_error">Помилка синхронізації</string>
-    <string name="vague_error">Помилка</string>
+    <string name="vague_error" comment="Network error dialog title">Помилка</string>
     <string name="retry">Повторити спробу</string>
     <string name="menu_get_shared_decks">Завантажити колоди</string>
     <string name="connection_error_message">Виникла помилка мережі</string>

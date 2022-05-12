@@ -48,7 +48,7 @@
     <string name="youre_offline">Offline vagy</string>
     <string name="sync_even_if_offline">Megpróbálás Mindenképpen</string>
     <string name="sync_error">Szinkronizálási hiba</string>
-    <string name="vague_error">Hiba</string>
+    <string name="vague_error" comment="Network error dialog title">Hiba</string>
     <string name="retry">Újra</string>
     <string name="menu_get_shared_decks">Megosztott paklik</string>
     <string name="connection_error_message">Hálózati hiba történt.</string>

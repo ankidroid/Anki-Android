@@ -48,7 +48,7 @@
     <string name="youre_offline">మీరు ఆఫ్లైన్లో ఉన్నారు</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">సమకాలీకరణ లోపం</string>
-    <string name="vague_error">తప్పు</string>
+    <string name="vague_error" comment="Network error dialog title">తప్పు</string>
     <string name="retry">మళ్ళీ ప్రయత్నించండి</string>
     <string name="menu_get_shared_decks">భాగస్వామ్య డెక్స్ పొందండి</string>
     <string name="connection_error_message">ఒక నెట్వర్క్ లోపం సంభవించింది</string>

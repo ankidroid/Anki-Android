@@ -60,7 +60,7 @@ class CsvProcessIntegrationTest {
         assertThat(getFields(dialect, input), contains("John \"Da Man\"", "Rep", "120 Fake St.", "Falsey", " NJ", "00000"))
     }
 
-    private fun getFields(dialect: CsvDialect, input: String): List<String> {
+    private fun getFields(dialect: CsvDialect, input: String): List<String>? {
         val list = Collections.singletonList(input)
         val reader = CsvReader.fromDialect(list.iterator(), dialect)
         return reader.iterator().next()

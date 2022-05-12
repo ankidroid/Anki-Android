@@ -48,7 +48,7 @@
     <string name="youre_offline">أنت غير متصل بالإنترنت</string>
     <string name="sync_even_if_offline">حاول على أي حال</string>
     <string name="sync_error">خطأ بالمزامنة</string>
-    <string name="vague_error">خطأ</string>
+    <string name="vague_error" comment="Network error dialog title">خطأ</string>
     <string name="retry">إعادة المحاولة</string>
     <string name="menu_get_shared_decks">احصل على شَدّات مشاركة</string>
     <string name="connection_error_message">حدث خطأ في الشبكة</string>

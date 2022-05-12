@@ -48,7 +48,7 @@
     <string name="youre_offline">Ste offline</string>
     <string name="sync_even_if_offline">Napriek tomu skúsiť</string>
     <string name="sync_error">Chyba synchronizácie</string>
-    <string name="vague_error">Chyba</string>
+    <string name="vague_error" comment="Network error dialog title">Chyba</string>
     <string name="retry">Skúsiť znova</string>
     <string name="menu_get_shared_decks">Stiahnuť zdieľané balíčky</string>
     <string name="connection_error_message">Vyskytla sa chyba siete.</string>

@@ -48,7 +48,7 @@
     <string name="youre_offline">Brak dostępu do sieci</string>
     <string name="sync_even_if_offline">Spróbuj mimo to</string>
     <string name="sync_error">Błąd synchronizacji</string>
-    <string name="vague_error">Błąd</string>
+    <string name="vague_error" comment="Network error dialog title">Błąd</string>
     <string name="retry">Próbuj ponownie</string>
     <string name="menu_get_shared_decks">Pobierz udostępniane talie</string>
     <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
