@@ -21,40 +21,39 @@ import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
+import org.mockito.kotlin.whenever
 import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowNotificationManager
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("use matchers for size checks")
-@KotlinCleanup("`when` -> whenever()")
 class ReminderServiceTest : RobolectricTest() {
     @Test
     fun testReminderServiceNothingDue() {
         buildDefaultDeckReminders()
-        assertThat("No notifications exist", notificationManagerShadow.size() == 0)
+        assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(0))
     }
 
     @Test
     fun testReminderServiceReviewsDue() {
         addNoteUsingBasicModel("test front", "test back")
-        assertThat("No notifications exist", notificationManagerShadow.size() == 0)
+        assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(0))
         buildDefaultDeckReminders()
-        assertThat("No notifications exist", notificationManagerShadow.size() == 1)
+        assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(1))
     }
 
     @Test
     fun testReminderServiceNullCollection() {
         addNoteUsingBasicModel("test front", "test back")
         enableNullCollection()
-        assertThat("No notifications exist", notificationManagerShadow.size() == 0)
+        assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(0))
         buildDefaultDeckReminders()
         // The collection was null so no reminders, but we should get here without exception
-        assertThat("No notifications exist", notificationManagerShadow.size() == 0)
+        assertThat("No notifications exist", notificationManagerShadow.size(), equalTo(0))
     }
 
     /**
@@ -67,7 +66,7 @@ class ReminderServiceTest : RobolectricTest() {
         val baseCol = col
         val mockCol = spy(baseCol)
 
-        `when`(mockCol.sched).thenThrow(IllegalStateException("Unit test: simulating database exception"))
+        whenever(mockCol.sched).thenThrow(IllegalStateException("Unit test: simulating database exception"))
 
         CollectionHelper.getInstance().setColForTests(mockCol)
 
