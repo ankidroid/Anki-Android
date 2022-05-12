@@ -77,6 +77,7 @@ import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.ui.NoteTypeSpinnerUtils
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.anki.widgets.PopupMenuWithIcons
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.AddNote
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
@@ -1157,13 +1158,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     mChanged = true
                 }
             }
+            @NeedsTest("test to guard against changes in the REQUEST_MULTIMEDIA_EDIT clause preventing text fields to be updated")
             REQUEST_MULTIMEDIA_EDIT -> {
                 if (resultCode != RESULT_CANCELED) {
                     val col = col
                     val extras = data!!.extras ?: return
                     val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
                     val field = extras[MultimediaEditFieldActivity.EXTRA_RESULT_FIELD] as IField? ?: return
-                    if (field.imagePath == null && field.audioPath == null) {
+                    if (field.type != EFieldType.TEXT && (field.imagePath == null && field.audioPath == null)) {
                         Timber.i("field imagePath and audioPath are both null")
                         return
                     }
