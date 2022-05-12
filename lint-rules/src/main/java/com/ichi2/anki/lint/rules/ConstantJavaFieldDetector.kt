@@ -50,7 +50,7 @@ class ConstantJavaFieldDetector : JavaFieldNamingPatternDetector() {
      * @return `true` if 0-length, or no lowercase letters
      */
     override fun meetsNamingStandards(variableName: String) =
-        variableName.all { it.isUpperCase() }
+        variableName == variableName.uppercase(Locale.ROOT)
 
     override fun reportVariable(context: JavaContext, node: UVariable, variableName: String) {
         // If the s/m prefix was accidentally applied, remove it
