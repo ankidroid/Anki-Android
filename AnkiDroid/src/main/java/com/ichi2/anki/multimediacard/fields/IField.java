@@ -31,32 +31,19 @@ import androidx.annotation.Nullable;
 public interface IField extends Serializable {
     EFieldType getType();
 
-
-    boolean setType(EFieldType type);
-
-
     boolean isModified();
-
-
-    // For mixed type
-    @Nullable
-    String getHtml();
-
-
-    boolean setHtml(String html);
-
 
     // For image type. Resets type.
     // Makes no sense to call when type is not image.
     // the same for other groups below.
-    boolean setImagePath(String pathToImage);
+    void setImagePath(String pathToImage);
 
 
     String getImagePath();
 
 
     // For Audio type
-    boolean setAudioPath(@Nullable String pathToAudio);
+    void setAudioPath(@Nullable String pathToAudio);
 
     @Nullable
     String getAudioPath();
@@ -67,7 +54,7 @@ public interface IField extends Serializable {
     String getText();
 
 
-    boolean setText(String text);
+    void setText(String text);
 
 
     /**

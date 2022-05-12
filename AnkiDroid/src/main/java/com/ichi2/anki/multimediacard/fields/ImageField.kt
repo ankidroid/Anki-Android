@@ -33,41 +33,27 @@ import java.io.File
 @KotlinCleanup("convert properties to single-line overrides")
 class ImageField : FieldBase(), IField {
     @get:JvmName("getImagePath_unused")
-    var imagePath: String? = null
+    var extraImagePathRef: String? = null
     private var mHasTemporaryMedia = false
     private var mName: String? = null
     override fun getType(): EFieldType {
         return EFieldType.IMAGE
     }
 
-    override fun setType(type: EFieldType): Boolean {
-        return false
-    }
-
     override fun isModified(): Boolean {
         return thisModified
     }
 
-    override fun getHtml(): String? {
-        return null
-    }
-
-    override fun setHtml(html: String): Boolean {
-        return false
-    }
-
-    override fun setImagePath(pathToImage: String): Boolean {
-        imagePath = pathToImage
+    override fun setImagePath(pathToImage: String) {
+        extraImagePathRef = pathToImage
         setThisModified()
-        return true
     }
 
     override fun getImagePath(): String? {
-        return imagePath
+        return extraImagePathRef
     }
 
-    override fun setAudioPath(pathToAudio: String?): Boolean {
-        return false
+    override fun setAudioPath(pathToAudio: String?) {
     }
 
     override fun getAudioPath(): String? {
@@ -78,8 +64,7 @@ class ImageField : FieldBase(), IField {
         return null
     }
 
-    override fun setText(text: String): Boolean {
-        return false
+    override fun setText(text: String) {
     }
 
     override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
@@ -104,7 +89,7 @@ class ImageField : FieldBase(), IField {
     }
 
     override fun setFormattedString(col: Collection, value: String) {
-        imagePath = getImageFullPath(col, value)
+        extraImagePathRef = getImageFullPath(col, value)
     }
 
     companion object {

@@ -84,7 +84,7 @@ class MediaRegistration(private val context: Context) {
         }
         val field = ImageField()
         field.setHasTemporaryMedia(true)
-        field.imagePath = tempFilePath
+        field.extraImagePathRef = tempFilePath
         return field.formattedValue
     }
 
