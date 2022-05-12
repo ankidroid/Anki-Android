@@ -18,7 +18,7 @@ package com.ichi2.utils
 
 import android.annotation.SuppressLint
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.greaterThan
+import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.junit.Test
 
 class ThreadUtilTest {
@@ -28,10 +28,10 @@ class ThreadUtilTest {
     fun sleepTest() {
         val start: Long = System.currentTimeMillis()
 
-        ThreadUtil.sleep(1000) // makes the thread sleep for 1 second
+        ThreadUtil.sleep(100) // makes the thread sleep for a short while
 
         val end: Long = System.currentTimeMillis()
 
-        assertThat(end - start, greaterThan(1000)) // checking if the time difference between "end" and "start" is greater than the time thread has been put to sleep
+        assertThat(end - start, greaterThanOrEqualTo(100)) // checking if the time difference between "end" and "start" indicates we actually slept
     }
 }
