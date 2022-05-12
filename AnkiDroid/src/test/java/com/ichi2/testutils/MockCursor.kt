@@ -17,19 +17,16 @@ package com.ichi2.testutils
 
 import android.database.Cursor
 import android.database.CursorWrapper
-import com.ichi2.utils.KotlinCleanup
-import org.mockito.Mockito.*
+import org.mockito.Mockito.anyInt
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.mock
 
 object MockCursor {
-    @KotlinCleanup("when -> whenever")
-    @KotlinCleanup("mockito-kotlin")
-    @KotlinCleanup("scope function")
+    // Use CursorWrapper as we couldn't just mock Cursor
     val empty: Cursor
-        get() {
-            // Couldn't just mock cursor
-            val mockCursor: Cursor = mock(CursorWrapper::class.java)
-            `when`(mockCursor.moveToFirst()).thenReturn(false)
-            `when`(mockCursor.getString(anyInt())).thenThrow(IllegalStateException())
-            return mockCursor
+        get() = mock<CursorWrapper> {
+            on { moveToFirst() } doReturn false
+            on { getString(anyInt()) } doThrow IllegalStateException()
         }
 }
