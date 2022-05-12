@@ -50,8 +50,8 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
         updateSettings()
     }
 
-    override fun onBindView(view: View?) {
-        super.onBindView(view)
+    override fun onBindDialogView(view: View?) {
+        super.onBindDialogView(view)
         autoFocusAndMoveCursorToEnd(editText)
     }
 
