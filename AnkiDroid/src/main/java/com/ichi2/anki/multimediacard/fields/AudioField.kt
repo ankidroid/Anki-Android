@@ -33,31 +33,19 @@ abstract class AudioField : FieldBase(), IField {
     protected var currentName: String? = null
     protected var currentHasTemporaryMedia = false
     abstract override fun getType(): EFieldType
-    override fun setType(type: EFieldType): Boolean {
-        return false
-    }
 
     abstract override fun isModified(): Boolean
-    override fun getHtml(): String? {
-        return null
-    }
 
-    override fun setHtml(html: String): Boolean {
-        return false
-    }
-
-    override fun setImagePath(pathToImage: String): Boolean {
-        return false
+    override fun setImagePath(pathToImage: String) {
     }
 
     override fun getImagePath(): String? {
         return null
     }
 
-    override fun setAudioPath(pathToAudio: String?): Boolean {
+    override fun setAudioPath(pathToAudio: String?) {
         mAudioPath = pathToAudio
         setThisModified()
-        return true
     }
 
     override fun getAudioPath(): String? {
@@ -68,8 +56,7 @@ abstract class AudioField : FieldBase(), IField {
         return null
     }
 
-    override fun setText(text: String): Boolean {
-        return false
+    override fun setText(text: String) {
     }
 
     abstract override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean)
