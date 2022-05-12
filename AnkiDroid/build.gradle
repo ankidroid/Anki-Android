@@ -180,11 +180,6 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
-    sourceSets {
-        debug {
-            manifest.srcFile 'src/test/AndroidManifest.xml'
-        }
-    }
     ndkVersion "22.0.7026061"
 }
 
