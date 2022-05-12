@@ -23,6 +23,8 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.utils.KotlinCleanup
 
+@KotlinCleanup("remove hungarian notation")
+@Suppress("VariableNamingDetector")
 abstract class FieldControllerBase : IFieldController {
     @KotlinCleanup("transform mActivity into a property")
     protected lateinit var mActivity: MultimediaEditFieldActivity
