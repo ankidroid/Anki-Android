@@ -93,11 +93,16 @@ class EditTextSearchbar(
                 return targetI - query.length
             }
 
-            val targetChar = targetEditTextText[targetI]
-            val queryChar = query[queryI]
+            var targetChar = targetEditTextText[targetI]
+            var queryChar = query[queryI]
+            if (!caseSensitive) {
+                targetChar = targetChar.lowercaseChar()
+                queryChar = queryChar.lowercaseChar()
+            }
             if (targetChar == queryChar) {
                 queryI++
             }
+            Timber.i("targetI=$targetI queryI=$queryI targetChar=$targetChar queryChar=$queryChar")
         }
 
         return -1 // nothing found
@@ -116,11 +121,16 @@ class EditTextSearchbar(
                 return targetI + 1
             }
 
-            val targetChar = targetEditTextText[targetI]
-            val queryChar = query[queryI]
+            var targetChar = targetEditTextText[targetI]
+            var queryChar = query[queryI]
+            if (!caseSensitive) {
+                targetChar = targetChar.lowercaseChar()
+                queryChar = queryChar.lowercaseChar()
+            }
             if (targetChar == queryChar) {
                 queryI--
             }
+            Timber.i("targetI=$targetI queryI=$queryI targetChar=$targetChar queryChar=$queryChar")
         }
 
         return -1 // nothing found
