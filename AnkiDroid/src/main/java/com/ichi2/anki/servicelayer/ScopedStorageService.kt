@@ -191,9 +191,12 @@ object ScopedStorageService {
         val externalPaths = CollectionHelper.getAppSpecificExternalDirectories(context)
             .map { it.canonicalFile }
 
-        // A map that associate to each parents of an external directory path the first external
+        // A map that associate to each parents `p` of an external directory path an external
         // directory it is a prefix of.
-        // Storing every single parent is not efficient, however, given the expected depth of file,
+        // If there are multiple such external directories (which seems unlikely with 2022 scoped storage)
+        // we select the first app specific external directories returned by the OS, or its parent with minimal depth
+        // still contained in `p`.
+        // Storing every single parent is not efficient, however, given the expected depth of files considered in this migration,
         // the extra cost is negligible.
         val parentToSharedDirectoryPath = HashMap<File, File>()
         for (externalPath in externalPaths) {
