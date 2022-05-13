@@ -95,7 +95,6 @@ class EditTextSearchbar(
         // if none found, look for one from end to targetEditTextSelection
         // if none found, look for one start to end
         if (toTargetEditTextSelection(query) == -1) {
-            // in case currently on first found substring, prevents same substring being selected again
             targetEditTextSelection = targetEditTextText.length
 
             if (toTargetEditTextSelection(query) == -1) {
