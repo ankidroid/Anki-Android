@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Montri tirmenuon</string>
     <string name="drawer_close">Kaŝi tirmenuon</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Filtri etikedojn</string>
     <string name="no_tags">Vi ankoraŭ aldonis neniun etikedon</string>
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Konservi skribtabulon</string>
     <string name="enable_whiteboard">Aktivigi skribtabulon</string>
     <string name="disable_whiteboard">Malaktivigi skribtabulon</string>
@@ -163,8 +162,12 @@
     <string name="import_title">Enporti</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aldoni</string>
     <string name="import_message_replace_confirm">Tio ĉi forigos vian ekzistan kolekton kaj anstataŭigos ĝin per datumoj de dosiero %s</string>
-    <string name="import_message_add_confirm">Ĉu aldoni “%s” al kolekto? Tio ĉi povas okupi multan tempon</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Tio ĉi ne estas valida dosiero Anki-pakaĵo</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Fiaskis maldensigi la dosieron apkg: %s</string>
     <string name="import_log_failed_copy_to">Fiaskis kopii la dosieron apkg al %s</string>
     <string name="import_log_failed_validate">Fiaskis validigi la dosieron apkg</string>
@@ -179,6 +182,9 @@
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti anki-dosierojn:\n%s</string>
     <string name="import_error_copy_file_to_cache">Fiaskis kopii dosieron al kaŝmemoro (probable mankas spaco en konservejo)</string>
     <string name="import_error_unhandled_scheme">Nepritraktita enporto el: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Anstataŭigado de kolekto&#8230;</string>
     <string name="import_interrupted">Enportado interrompita</string>
     <string name="export_include_schedule">Inkluzivi lern-planon</string>
@@ -343,8 +349,8 @@
     <string name="before_text">HTML antaŭ elektaĵo</string>
     <string name="after_text">HTML post elektaĵo</string>
     <string name="add_toolbar_item">Krei elementon de ilarstrio</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="edit_toolbar_item">Redakti elementon de ilarstrio</string>
+    <string name="toolbar_item_explain_edit_or_remove">Enigu HTML-kodon, kiu estos aldonita antaŭ kaj post la elektita teksto\n\nFrapetadu elementon de ilarstrio por redakti aŭ forigi ĝin</string>
     <string name="remove_toolbar_item">Ĉu forigi elementon de ilarstrio?</string>
     <string name="note_editor_paste_too_large">La bildo estas tro granda por alglui, enmetu la bildon permane</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Restarigado de Android-sekurkopio. Reprovu</string>
@@ -402,9 +408,11 @@
     <string name="scoped_storage_migrate">Movi datumojn</string>
     <string name="search_card_js_api_no_results">Serĉ-rezulto estas malplena</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon">%s ne estas ĝusta JavaScript-aldonaĵ-pakaĵo</string>
+    <string name="could_not_create_dir">Ne povis krei dosierujon %s</string>
+    <string name="malicious_archive_entry_outside">Erara arĥivo: ĝi enhavas elementon ekster la alcela dosierujo: %s</string>
+    <string name="malicious_archive_exceeds_limit">Erara arĥivo: ĝia grando superas %1$s aŭ ĝi enhavas pli ol %2$d dosieroj</string>
+    <string name="file_extract_exceeds_storage_space">Elpakigota(j) dosiero(j) superas la disponeblan spacon</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

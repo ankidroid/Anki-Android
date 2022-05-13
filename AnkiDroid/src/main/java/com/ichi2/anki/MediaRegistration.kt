@@ -84,7 +84,7 @@ class MediaRegistration(private val context: Context) {
         }
         val field = ImageField()
         field.setHasTemporaryMedia(true)
-        field.imagePath = tempFilePath
+        field.extraImagePathRef = tempFilePath
         return field.formattedValue
     }
 
@@ -102,7 +102,7 @@ class MediaRegistration(private val context: Context) {
             }
         } catch (e: IOException) {
             Timber.w("MediaRegistration : Unable to convert file to png format")
-            AnkiDroidApp.sendExceptionReport(e, "Unable to convert file to png format")
+            CrashReportService.sendExceptionReport(e, "Unable to convert file to png format")
             showThemedToast(context, context.resources.getString(R.string.multimedia_editor_png_paste_error, e.message), true)
             return false
         }
@@ -147,7 +147,7 @@ class MediaRegistration(private val context: Context) {
             null
         } catch (e: Exception) {
             // NOTE: This is happy path coding which works on Android 9.
-            AnkiDroidApp.sendExceptionReport("File is invalid issue:8880", "RegisterMediaForWebView:onImagePaste URI of file:$uri")
+            CrashReportService.sendExceptionReport("File is invalid issue:8880", "RegisterMediaForWebView:onImagePaste URI of file:$uri")
             Timber.w(e, "Failed to paste image")
             showThemedToast(context, context.getString(R.string.multimedia_editor_something_wrong), false)
             null

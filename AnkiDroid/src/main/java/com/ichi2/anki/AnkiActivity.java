@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabColorSchemeParams;
@@ -54,6 +55,8 @@ import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
 
+import java.util.Objects;
+
 import timber.log.Timber;
 
 import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK;
@@ -68,6 +71,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     public final int SIMPLE_NOTIFICATION_ID = 0;
     public static final int REQUEST_REVIEW = 901;
     public static final String DIALOG_FRAGMENT_TAG = "dialog";
+    /** Extra key to set the finish animation of an activity */
+    public static final String FINISH_ANIMATION_EXTRA = "finishAnimation";
 
     /** The name of the parent class (Reviewer) */
     private final String mActivityName;
@@ -649,25 +654,38 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         this.finishWithoutAnimation();
     }
 
-    protected void enableToolbar() {
+    /**
+     * sets {@link #getSupportActionBar} and returns the action bar
+     * @return The action bar which was created
+     * @throws IllegalStateException if the bar could not be enabled
+     */
+    @NonNull
+    protected ActionBar enableToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        } else {
+        if (toolbar == null) {
             // likely missing "<include layout="@layout/toolbar" />"
-            Timber.w("Could not find toolbar");
+            throw new IllegalStateException("Unable to find toolbar");
         }
+        setSupportActionBar(toolbar);
+        return Objects.requireNonNull(getSupportActionBar());
     }
 
-    protected void enableToolbar(@Nullable View view) {
-        if (view == null) {
-            Timber.w("Unable to enable toolbar - invalid view supplied");
-            return;
-        }
+
+    /**
+     * sets {@link #getSupportActionBar} and returns the action bar
+     * @param view the view which contains a toolbar element:
+     * @return The action bar which was created
+     * @throws IllegalStateException if the bar could not be enabled
+     */
+    @NonNull
+    protected ActionBar enableToolbar(@NonNull View view) {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
+        if (toolbar == null) {
+            // likely missing "<include layout="@layout/toolbar" />"
+            throw new IllegalStateException("Unable to find toolbar: " + view);
         }
+        setSupportActionBar(toolbar);
+        return Objects.requireNonNull(getSupportActionBar());
     }
 
     protected boolean showedActivityFailedScreen(Bundle savedInstanceState) {

@@ -127,7 +127,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
                             onImagePaste(uri)
                         } catch (e: Exception) {
                             Timber.w(e)
-                            AnkiDroidApp.sendExceptionReport(e, "NoteEditor::onImage")
+                            CrashReportService.sendExceptionReport(e, "NoteEditor::onImage")
                             return remaining
                         }
                     }
@@ -269,6 +269,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         }
 
         companion object {
+            @JvmField
             val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
                 override fun createFromParcel(source: Parcel): SavedState {
                     return SavedState(source)
@@ -285,7 +286,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         fun onSelectionChanged(selStart: Int, selEnd: Int)
     }
 
-    interface ImagePasteListener {
+    @KotlinCleanup("non-null")
+    fun interface ImagePasteListener {
         fun onImagePaste(editText: EditText?, uri: Uri?): Boolean
     }
 

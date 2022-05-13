@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">การ์ดทั้งหมด:</string>
     <string name="studyoptions_eta">เวลาโดยประมาณ (นาที) :</string>
     <string name="studyoptions_start">เริ่มเรียน</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">ขยาย</string>
     <string name="collapse">ซ่อน</string>
     <string name="study_more">เรียนเพิ่ม</string>
@@ -69,11 +69,11 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">เหลืออีก %d นาที</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="other">เหลืออีก %d ชั่วโมง %d</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="other">เหลืออีก %d day %d </item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>

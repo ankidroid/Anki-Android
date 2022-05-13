@@ -22,7 +22,7 @@ package com.ichi2.anki.servicelayer
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
@@ -148,7 +148,7 @@ object NoteService {
             } catch (mediaException: EmptyMediaException) {
                 // This shouldn't happen, but we're fine to ignore it if it does.
                 Timber.w(mediaException)
-                AnkiDroidApp.sendExceptionReport(mediaException, "noteService::importMediaToDirectory")
+                CrashReportService.sendExceptionReport(mediaException, "noteService::importMediaToDirectory")
             }
         }
     }

@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Total de fitxes:</string>
     <string name="studyoptions_eta">Temps estimat (min.):</string>
     <string name="studyoptions_start">Estudiar</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Desplega</string>
     <string name="collapse">Replega</string>
     <string name="study_more">Estudia més</string>
@@ -70,13 +70,13 @@
         <item quantity="one">%d minut restant</item>
         <item quantity="other">%d minuts restants</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hores %d restants</item>
-        <item quantity="other">%s hores %d restants</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d minuts restants</item>
-        <item quantity="other">%d dies %d hores restants</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">La teva col·lecció és buida</string>
     <string name="no_cards_placeholder_description">Comença a afegir cartes\n usant la icona +.</string>

@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.jsaddons
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.ichi2.anki.AnkiDroidJsAPIConstants.sCurrentJsApiVersion
 import com.ichi2.anki.AnkiSerialization
 import com.ichi2.anki.jsaddons.AddonsConst.ANKIDROID_JS_ADDON_KEYWORDS
@@ -23,8 +24,10 @@ import com.ichi2.anki.jsaddons.AddonsConst.NOTE_EDITOR_ADDON
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.anki.jsaddons.NpmUtils.validateName
 import org.acra.collections.ImmutableMap
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
+import java.net.URL
 import kotlin.jvm.Throws
 
 /**
@@ -64,7 +67,16 @@ class AddonData(
 fun getAddonModelFromJson(packageJsonPath: String): Pair<AddonModel?, List<String>> {
     val mapper = AnkiSerialization.objectMapper
     val addonData: AddonData = mapper.readValue(File(packageJsonPath), AddonData::class.java)
+    return getAddonModelFromAddonData(addonData)
+}
 
+/**
+ * Get addonModel from addonData
+ *
+ * @param addonData
+ * @return pair of valid addon model and errors list
+ */
+fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<String>> {
     var errorStr: String
     val errorList: MutableList<String> = ArrayList()
 
@@ -134,4 +146,32 @@ fun getAddonModelFromJson(packageJsonPath: String): Pair<AddonModel?, List<Strin
     )
 
     return Pair(addonModel, immutableList)
+}
+
+/**
+ * Get list of AddonModel from json containing arrays of addons package info from network
+ *
+ * @param packageJsonUrl package json url containing arrays of addon packages info
+ * @return Pair with list of valid addonModel and error list
+ */
+@Throws(IOException::class)
+fun getAddonModelListFromJson(packageJsonUrl: URL): Pair<List<AddonModel>, List<String>> {
+    val errorList: MutableList<String> = ArrayList()
+    val mapper = AnkiSerialization.objectMapper
+    // network request to fetch json from given url
+    val addonsData = mapper.readValue(packageJsonUrl, object : TypeReference<MutableList<AddonData>>() {})
+
+    val addonsModelList = mutableListOf<AddonModel>()
+    for (addon in addonsData) {
+        val result = getAddonModelFromAddonData(addon)
+
+        if (result.first == null) {
+            Timber.i("Not a valid addon for AnkiDroid, the errors for the addon:\n %s", result.second)
+            errorList.addAll(result.second)
+            continue
+        }
+        addonsModelList.add(result.first!!)
+    }
+
+    return Pair(addonsModelList, errorList.toList())
 }

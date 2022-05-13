@@ -48,6 +48,7 @@
     <string name="disabled">Désactivé</string>
     <string name="enabled">Activé</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Général</string>
     <string name="pref_cat_general_summ">Paramètres généraux</string>
     <string name="pref_cat_reviewing" maxLength="41">Révision</string>
     <string name="pref_cat_reviewing_summ">Paramètres de révision indépendants du paquet</string>
@@ -139,7 +140,7 @@
     <string name="automatic_sync_choice_summ">Synchroniser automatiquement à la sortie de l\'application si la dernière synchronisation était il y a plus de 10 minutes.</string>
     <string name="sync_status_badge" maxLength="41">Afficher l\'état de la synchronisation</string>
     <string name="sync_status_badge_summ">Changer l\'icône de synchronisation quand des changements peuvent être téléversés</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="app_theme" maxLength="41">Thème</string>
     <string name="day_theme" maxLength="41">Thème de jour</string>
     <string name="night_theme" maxLength="41">Thème de nuit</string>
     <string name="default_font" maxLength="41">Police par défaut</string>
@@ -254,7 +255,7 @@
     <string name="deck_conf_new_cards" maxLength="41">Nouvelles cartes</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Révisions</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Oublis</string>
-    <string name="deck_conf_general" maxLength="41">Général</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Général</string>
     <string name="deck_conf_reminders" maxLength="41">Rappels</string>
     <string name="deck_conf_steps" maxLength="41">Intervalle (en minutes)</string>
     <string name="deck_conf_order" maxLength="41">Ordre</string>

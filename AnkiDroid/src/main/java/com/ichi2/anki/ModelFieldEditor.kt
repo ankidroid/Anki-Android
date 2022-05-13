@@ -63,6 +63,7 @@ import java.lang.RuntimeException
 import java.util.*
 import kotlin.Throws
 
+@KotlinCleanup("long-term: make `mod` non-null")
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
     private var currentPos = 0
@@ -87,11 +88,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         setContentView(R.layout.model_field_editor)
 
         fieldLabelView = findViewById(R.id.note_type_editor_fields)
-        enableToolbar()
-
-        supportActionBar?.let {
-            it.setTitle(R.string.model_field_editor_title)
-            it.subtitle = intent.getStringExtra("title")
+        enableToolbar().apply {
+            setTitle(R.string.model_field_editor_title)
+            subtitle = intent.getStringExtra("title")
         }
         startLoadingCollection()
     }
@@ -235,7 +234,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         } else {
             collection!!.modSchemaNoCheck()
         }
-        TaskManager.launchCollectionTask(AddField(mod, fieldName), listener)
+        TaskManager.launchCollectionTask(AddField(mod!!, fieldName), listener)
     }
 
     /*
@@ -272,7 +271,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     private fun deleteField() {
-        TaskManager.launchCollectionTask(DeleteField(mod, noteFields!!.getJSONObject(currentPos)), changeFieldHandler())
+        TaskManager.launchCollectionTask(DeleteField(mod!!, noteFields!!.getJSONObject(currentPos)), changeFieldHandler())
     }
 
     /*
@@ -349,7 +348,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         // Input is valid, now attempt to modify
                         try {
                             collection!!.modSchema()
-                            TaskManager.launchCollectionTask(RepositionField(mod, noteFields!!.getJSONObject(currentPos), pos - 1), listener)
+                            TaskManager.launchCollectionTask(RepositionField(mod!!, noteFields!!.getJSONObject(currentPos), pos - 1), listener)
                         } catch (e: ConfirmModSchemaException) {
                             e.log()
 
@@ -361,7 +360,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                                     collection!!.modSchemaNoCheck()
                                     TaskManager.launchCollectionTask(
                                         RepositionField(
-                                            mod,
+                                            mod!!,
                                             noteFields!!.getJSONObject(currentPos), pos - 1
                                         ),
                                         listener
@@ -422,7 +421,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         val listener = changeFieldHandler()
         try {
             collection!!.modSchema()
-            TaskManager.launchCollectionTask(ChangeSortField(mod, currentPos), listener)
+            TaskManager.launchCollectionTask(ChangeSortField(mod!!, currentPos), listener)
         } catch (e: ConfirmModSchemaException) {
             e.log()
             // Handler mMod schema confirmation
@@ -430,7 +429,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             c.setArgs(resources.getString(R.string.full_sync_confirmation))
             val confirm = Runnable {
                 collection!!.modSchemaNoCheck()
-                TaskManager.launchCollectionTask(ChangeSortField(mod, currentPos), listener)
+                TaskManager.launchCollectionTask(ChangeSortField(mod!!, currentPos), listener)
                 dismissContextMenu()
             }
             c.setConfirm(confirm)
@@ -480,9 +479,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         return ChangeHandler(this)
     }
 
-    private class ChangeHandler(modelFieldEditor: ModelFieldEditor?) : TaskListenerWithContext<ModelFieldEditor?, Void?, Boolean?>(modelFieldEditor) {
-        override fun actualOnPreExecute(context: ModelFieldEditor?) {
-            if (context != null && context.progressDialog == null) {
+    private class ChangeHandler(modelFieldEditor: ModelFieldEditor) : TaskListenerWithContext<ModelFieldEditor, Void?, Boolean?>(modelFieldEditor) {
+        override fun actualOnPreExecute(context: ModelFieldEditor) {
+            if (context.progressDialog == null) {
                 context.progressDialog = show(
                     context, context.intent.getStringExtra("title"),
                     context.resources.getString(R.string.model_field_editor_changing), false
@@ -491,12 +490,12 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         }
 
         @KotlinCleanup("Convert result to non-null")
-        override fun actualOnPostExecute(context: ModelFieldEditor?, result: Boolean?) {
+        override fun actualOnPostExecute(context: ModelFieldEditor, result: Boolean?) {
             if (result == false) {
-                context?.closeActivity()
+                context.closeActivity()
             }
-            context?.dismissProgressBar()
-            context?.fullRefreshList()
+            context.dismissProgressBar()
+            context.fullRefreshList()
         }
     }
 

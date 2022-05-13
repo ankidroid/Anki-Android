@@ -48,6 +48,7 @@
     <string name="disabled">禁用</string>
     <string name="enabled">启用</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">常规</string>
     <string name="pref_cat_general_summ">常用设置</string>
     <string name="pref_cat_reviewing" maxLength="41">复习</string>
     <string name="pref_cat_reviewing_summ">复习通用设置</string>
@@ -253,7 +254,7 @@
     <string name="deck_conf_new_cards" maxLength="41">新卡片</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">复习</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">失误</string>
-    <string name="deck_conf_general" maxLength="41">常规</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">常规</string>
     <string name="deck_conf_reminders" maxLength="41">提醒</string>
     <string name="deck_conf_steps" maxLength="41">学习间隔(以分钟计)</string>
     <string name="deck_conf_order" maxLength="41">顺序</string>

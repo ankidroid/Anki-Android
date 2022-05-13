@@ -85,6 +85,7 @@ import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.*
 import com.ichi2.async.Connection.CancellableTaskListener
@@ -96,7 +97,6 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
-import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
@@ -158,8 +158,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      */
     private var mFocusedDeck: Long = 0
 
-    /** If we have accepted the "We will show you permissions" dialog, don't show it again on activity rebirth  */
-    private var mClosedWelcomeMessage = false
     private var mToolbarSearchView: SearchView? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
@@ -184,7 +182,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         try {
             collectionIsOpen = colIsOpen()
             handleDeckSelection(deckId, selectionType)
-            if (mFragmented) {
+            if (fragmented) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
                 // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
                 mDeckListAdapter.notifyDataSetChanged()
@@ -193,7 +191,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             // Maybe later don't report if collectionIsOpen is false?
             Timber.w(e)
             val info = "$deckId colOpen:$collectionIsOpen"
-            AnkiDroidApp.sendExceptionReport(e, "deckPicker::onDeckClick", info)
+            CrashReportService.sendExceptionReport(e, "deckPicker::onDeckClick", info)
             displayFailedToOpenDeck(deckId)
         }
     }
@@ -217,20 +215,45 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         get() = BackupManager()
     private val mImportAddListener = ImportAddListener(this)
 
-    private class ImportAddListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Triple<AnkiPackageImporter, Boolean, String?>>(deckPicker) {
-        override fun actualOnPostExecute(context: DeckPicker, result: Triple<AnkiPackageImporter, Boolean, String?>) {
+    @KotlinCleanup("Migrate from Triple to Kotlin class")
+    private class ImportAddListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Triple<List<AnkiPackageImporter>?, Boolean, String?>>(deckPicker) {
+        override fun actualOnPostExecute(context: DeckPicker, result: Triple<List<AnkiPackageImporter>?, Boolean, String?>) {
             if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
                 context.mProgressDialog!!.dismiss()
             }
-            // If boolean and string are both set, we are signalling an error message
-            // instead of a successful result.
-            if (result.second && result.third != null) {
+            // If result.second and result are both set, we are signalling
+            // some files were imported successfully & some errors occurred.
+            // If result.first is null & result.second & result.third is set
+            // we are signalling all the files which were selected threw error
+            if (result.first == null && result.second && result.third != null) {
                 Timber.w("Import: Add Failed: %s", result.third)
                 context.showSimpleMessageDialog(result.third)
             } else {
                 Timber.i("Import: Add succeeded")
-                val imp = result.first
-                context.showSimpleMessageDialog(TextUtils.join("\n", imp.log))
+
+                var fileCount = 0
+                var totalCardCount = 0
+
+                var errorMsg = ""
+
+                for (data in result.first!!) {
+                    // Check if mLog is not null or empty
+                    // If mLog is not null or empty that indicates an error has occurred.
+                    if (data.log.isNullOrEmpty()) {
+                        fileCount += 1
+                        totalCardCount += data.cardCount
+                    } else { errorMsg += data.fileName + "\n" + data.log[0] + "\n" }
+                }
+
+                var dialogMsg = context.resources.getQuantityString(R.plurals.import_complete_message, fileCount, fileCount, totalCardCount)
+                if (result.third != null) {
+                    errorMsg += result.third
+                }
+                if (errorMsg.isNotEmpty()) {
+                    dialogMsg += "\n\n" + context.resources.getString(R.string.import_stats_error, errorMsg)
+                }
+
+                context.showSimpleMessageDialog(dialogMsg)
                 context.updateDeckList()
             }
         }
@@ -299,9 +322,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         mCustomStudyDialogFactory = CustomStudyDialogFactory({ col }, this).attachToActivity(this)
         mContextMenuFactory = DeckPickerContextMenu.Factory { col }.attachToActivity(this)
 
-        // we need to restore here, as we need it before super.onCreate() is called.
-        restoreWelcomeMessage(savedInstanceState)
-
         // Then set theme and content view
         super.onCreate(savedInstanceState)
         handleStartup()
@@ -311,10 +331,10 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         // check, if tablet layout
         mStudyoptionsFrame = findViewById(R.id.studyoptions_fragment)
         // set protected variable from NavigationDrawerActivity
-        mFragmented = mStudyoptionsFrame != null && mStudyoptionsFrame!!.visibility == View.VISIBLE
+        fragmented = mStudyoptionsFrame != null && mStudyoptionsFrame!!.visibility == View.VISIBLE
 
         // Open StudyOptionsFragment if in fragmented mode
-        if (mFragmented && !mStartupError) {
+        if (fragmented && !mStartupError) {
             loadStudyOptionsFragment(false)
         }
         registerExternalStorageListener()
@@ -341,7 +361,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         mRecyclerView.addItemDecoration(dividerDecorator)
 
         // Add background to Deckpicker activity
-        val view = if (mFragmented) findViewById(R.id.deckpicker_xl_view) else findViewById<View>(R.id.root_layout)
+        val view = if (fragmented) findViewById(R.id.deckpicker_xl_view) else findViewById<View>(R.id.root_layout)
 
         var hasDeckPickerBackground = false
         try {
@@ -373,7 +393,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         mPullToSyncWrapper.viewTreeObserver.addOnScrollChangedListener { mPullToSyncWrapper.isEnabled = mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0 }
 
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
-        mFloatingActionMenu = DeckPickerFloatingActionMenu(view, this)
+        mFloatingActionMenu = DeckPickerFloatingActionMenu(this, view, this)
 
         mReviewSummaryTextView = findViewById(R.id.today_stats_text_view)
 
@@ -475,7 +495,10 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
-        if (mClosedWelcomeMessage) {
+        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
+
+        val welcomeDialogDismissed = sharedPrefs.getBoolean("welcomeDialogDismissed", false)
+        if (welcomeDialogDismissed) {
             // DEFECT #5847: This fails if the activity is killed.
             // Even if the dialog is showing, we want to show it again.
             ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
@@ -488,7 +511,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .content(R.string.collection_load_welcome_request_permissions_details)
                 .positiveText(R.string.dialog_ok)
                 .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                    mClosedWelcomeMessage = true
+                    sharedPrefs.edit().putBoolean("welcomeDialogDismissed", true).apply()
                     ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
                 }
                 .cancelable(false)
@@ -553,7 +576,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             displaySyncBadge(menu)
 
             // Show / hide undo
-            if (mFragmented || !col.undoAvailable()) {
+            if (fragmented || !col.undoAvailable()) {
                 menu.findItem(R.id.action_undo).isVisible = false
             } else {
                 val res = resources
@@ -671,8 +694,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     @Deprecated("Deprecated in Java")
     @Suppress("deprecation") // onActivityResult
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intent)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_MEDIA_EJECTED) {
             onSdCardNotMounted()
             return
@@ -701,7 +724,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             // The collection path was inaccessible on startup so just close the activity and let user restart
             finishWithoutAnimation()
         } else if (requestCode == PICK_APKG_FILE && resultCode == RESULT_OK) {
-            val importResult = ImportUtils.handleFileImport(this, intent!!)
+            val importResult = ImportUtils.handleFileImport(this, data!!)
             if (!importResult.isSuccess) {
                 ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, false)
             }
@@ -734,7 +757,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         refreshState()
     }
 
-    @Suppress("deprecation") // supportInvalidateOptionsMenu: deprecated in Java
     fun refreshState() {
         mActivityPaused = false
         if (mSyncOnResume) {
@@ -755,12 +777,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             TaskManager.launchCollectionTask(LoadCollectionComplete())
         }
         // Update sync status (if we've come back from a screen)
-        supportInvalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
-        savedInstanceState.putBoolean("mClosedWelcomeMessage", mClosedWelcomeMessage)
         savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.isFABOpen)
     }
 
@@ -836,7 +857,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     private fun finishWithAnimation() {
-        super.finishWithAnimation(DOWN)
+        super.finishWithAnimation(DEFAULT)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
@@ -864,16 +885,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             else -> {}
         }
         return super.onKeyUp(keyCode, event)
-    }
-
-    // ----------------------------------------------------------------------------
-    // CUSTOM METHODS
-    // ----------------------------------------------------------------------------
-    private fun restoreWelcomeMessage(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            return
-        }
-        mClosedWelcomeMessage = savedInstanceState.getBoolean("mClosedWelcomeMessage")
     }
 
     /**
@@ -1219,13 +1230,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     @KotlinCleanup("?:")
-    fun showImportDialog(id: Int, message: String?) {
-        var newMessage = message
+    fun showImportDialog(id: Int, messageList: ArrayList<String>) {
         Timber.d("showImportDialog() delegating to ImportDialog")
-        if (newMessage == null) {
-            newMessage = ""
+        if (messageList.isEmpty()) {
+            messageList.add("")
         }
-        val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, newMessage)
+        val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, messageList)
         showAsyncDialogFragment(newFragment)
     }
 
@@ -1236,7 +1246,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     // Callback method to submit error report
     fun sendErrorReport() {
-        AnkiDroidApp.sendExceptionReport(RuntimeException(), "DeckPicker.sendErrorReport")
+        CrashReportService.sendExceptionReport(RuntimeException(), "DeckPicker.sendErrorReport")
     }
 
     private fun repairCollectionTask(): RepairCollectionTask {
@@ -1319,7 +1329,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     override fun mediaCheck() {
-        TaskManager.launchCollectionTask(CheckMedia(), mediaCheckListener())
+        if (hasStorageAccessPermission(this)) {
+            TaskManager.launchCollectionTask(CheckMedia(), mediaCheckListener())
+        } else {
+            requestStoragePermission()
+        }
     }
 
     private fun mediaDeleteListener(): MediaDeleteListener {
@@ -1368,7 +1382,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     fun restoreFromBackup(path: String) {
-        importReplace(path)
+        importReplace(listOf(path))
     }
 
     // Helper function to check if there are any saved stacktraces
@@ -1535,7 +1549,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 }
             } catch (e: IllegalArgumentException) {
                 Timber.e(e, "Could not dismiss mProgressDialog. The Activity must have been destroyed while the AsyncTask was running")
-                AnkiDroidApp.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog")
+                CrashReportService.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog")
             }
             val syncMessage = data.message
             Timber.i("Sync Listener: onPostExecute: Data: %s", data.toString())
@@ -1704,11 +1718,10 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 }
                 // Mark sync as completed - then refresh the sync icon
                 SyncStatus.markSyncCompleted()
-                @Suppress("deprecation")
-                supportInvalidateOptionsMenu()
+                invalidateOptionsMenu()
                 updateDeckList()
                 WidgetStatus.update(this@DeckPicker)
-                if (mFragmented) {
+                if (fragmented) {
                     try {
                         loadStudyOptionsFragment(false)
                     } catch (e: IllegalStateException) {
@@ -1746,13 +1759,15 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     // Callback to import a file -- adding it to existing collection
-    override fun importAdd(importPath: String) {
+    @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file")
+    override fun importAdd(importPath: List<String>) {
         Timber.d("importAdd() for file %s", importPath)
         TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
     }
 
     // Callback to import a file -- replacing the existing collection
-    override fun importReplace(importPath: String) {
+    @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file")
+    override fun importReplace(importPath: List<String>) {
         TaskManager.launchCollectionTask(ImportReplace(importPath), importReplaceListener())
     }
 
@@ -1804,7 +1819,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     private fun openStudyOptions(withDeckOptions: Boolean) {
-        if (mFragmented) {
+        if (fragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions)
         } else {
@@ -1818,7 +1833,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     private fun openReviewerOrStudyOptions(selectionType: DeckSelectionType) {
         when (selectionType) {
             DeckSelectionType.DEFAULT -> {
-                if (mFragmented) {
+                if (fragmented) {
                     openStudyOptions(false)
                 } else {
                     openReviewer()
@@ -1871,7 +1886,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback)
             // Check if we need to update the fragment or update the deck list. The same checks
             // are required for all snackbars below.
-            if (mFragmented) {
+            if (fragmented) {
                 // Tablets must always show the study options that corresponds to the current deck,
                 // regardless of whether the deck is currently reviewable or not.
                 openStudyOptions(false)
@@ -1889,7 +1904,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 this, R.string.empty_deck, false, R.string.empty_deck_add_note,
                 { addNote() }, findViewById(R.id.root_layout), mSnackbarShowHideCallback
             )
-            if (mFragmented) {
+            if (fragmented) {
                 openStudyOptions(false)
             } else {
                 updateDeckList()
@@ -1903,7 +1918,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 )
                 showDialogFragment(d)
             }, findViewById(R.id.root_layout), mSnackbarShowHideCallback)
-            if (mFragmented) {
+            if (fragmented) {
                 openStudyOptions(false)
             } else {
                 updateDeckList()
@@ -1937,7 +1952,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             Timber.i("Updating deck list UI")
             context.hideProgressBar()
             // Make sure the fragment is visible
-            if (context.mFragmented) {
+            if (context.fragmented) {
                 context.mStudyoptionsFrame!!.visibility = View.VISIBLE
             }
             if (result == null) {
@@ -1968,7 +1983,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         if (quick) {
             TaskManager.launchCollectionTask(LoadDeck(), updateDeckListListener())
         } else {
-            TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener<DeckDueTreeNode>())
+            TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener())
         }
     }
 
@@ -2108,7 +2123,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             dismissAllDialogFragments()
             mDeckListAdapter.notifyDataSetChanged()
             updateDeckList()
-            if (mFragmented) {
+            if (fragmented) {
                 loadStudyOptionsFragment(false)
             }
         }
@@ -2179,7 +2194,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             // In fragmented mode, if the deleted deck was the current deck, we need to reload
             // the study options fragment with a valid deck and re-center the deck list to the
             // new current deck. Otherwise we just update the list normally.
-            if (context.mFragmented && mRemovingCurrent) {
+            if (context.fragmented && mRemovingCurrent) {
                 context.updateDeckList()
                 context.openStudyOptions(false)
             } else {
@@ -2202,14 +2217,14 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         return SimpleProgressListener(this)
     }
 
-    private class SimpleProgressListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, DeckStudyData>(deckPicker) {
+    private class SimpleProgressListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, DeckStudyData?>(deckPicker) {
         override fun actualOnPreExecute(context: DeckPicker) {
             context.showProgressBar()
         }
 
-        override fun actualOnPostExecute(context: DeckPicker, result: DeckStudyData) {
+        override fun actualOnPostExecute(context: DeckPicker, result: DeckStudyData?) {
             context.updateDeckList()
-            if (context.mFragmented) {
+            if (context.fragmented) {
                 context.loadStudyOptionsFragment(false)
             }
         }
@@ -2226,7 +2241,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     override fun onAttachedToWindow() {
-        if (!mFragmented) {
+        if (!fragmented) {
             val window = window
             window.setFormat(PixelFormat.RGBA_8888)
         }
@@ -2247,7 +2262,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     override fun onExtendStudyLimits() {
-        if (mFragmented) {
+        if (fragmented) {
             fragment!!.refreshInterface(true)
         }
         updateDeckList()
@@ -2345,7 +2360,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             dismissAllDialogFragments()
             mDeckListAdapter.notifyDataSetChanged()
             updateDeckList()
-            if (mFragmented) {
+            if (fragmented) {
                 loadStudyOptionsFragment(false)
             }
         }

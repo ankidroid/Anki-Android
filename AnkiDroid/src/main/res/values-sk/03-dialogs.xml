@@ -130,7 +130,12 @@
     <string name="import_progress">• Importujú sa poznámky: %1$d%%\n• Importujú sa kartičky: %2$d%%\n• Spracované: %3$d%%</string>
     <string name="import_update_details">Aktualizovaných %1$d z %2$d existujúcich poznámok.</string>
     <string name="import_update_ignored">Niektoré zmeny sa neuskutočnili, pretože sa zmenil typ poznámky</string>
-    <string name="import_complete_count">Importovaných kartičiek: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD karta je plná</string>
     <string name="sd_card_almost_full_title">SD karta je takmer plná</string>
     <string name="no_space_to_downgrade_title">Nedostatok miesta</string>

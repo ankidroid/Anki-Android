@@ -31,32 +31,18 @@ class TextField : FieldBase(), IField {
         return EFieldType.TEXT
     }
 
-    override fun setType(type: EFieldType): Boolean {
-        return false
-    }
-
     override fun isModified(): Boolean {
         return thisModified
     }
 
-    override fun getHtml(): String? {
-        return null
-    }
-
-    override fun setHtml(html: String): Boolean {
-        return false
-    }
-
-    override fun setImagePath(pathToImage: String): Boolean {
-        return false
+    override fun setImagePath(pathToImage: String) {
     }
 
     override fun getImagePath(): String? {
         return null
     }
 
-    override fun setAudioPath(pathToAudio: String?): Boolean {
-        return false
+    override fun setAudioPath(pathToAudio: String?) {
     }
 
     override fun getAudioPath(): String? {
@@ -67,10 +53,9 @@ class TextField : FieldBase(), IField {
         return mText
     }
 
-    override fun setText(text: String): Boolean {
+    override fun setText(text: String) {
         mText = text
         setThisModified()
-        return true
     }
 
     override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {}

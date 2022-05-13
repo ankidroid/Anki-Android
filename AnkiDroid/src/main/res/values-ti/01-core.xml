@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">ጠቅላላ ካርድታት:</string>
     <string name="studyoptions_eta">ዝተገመተ ግዜ:</string>
     <string name="studyoptions_start">መጽናዕቲ</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">ዘርግሕ</string>
     <string name="collapse">ኣብ ሓደ ኣኪብ</string>
     <string name="study_more">መጽናዕቲ ወስኽ</string>
@@ -70,13 +70,13 @@
         <item quantity="one">ተሪፉካ ዘሎ ደቒቕ %d</item>
         <item quantity="other">%d ተሪፊካ ዘሎ ደቓይቕ</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hour %d left</item>
-        <item quantity="other">%d hours %d left</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d day %d left</item>
-        <item quantity="other">%d days %d left</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>

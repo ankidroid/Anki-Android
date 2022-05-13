@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Kortteja yhteensä:</string>
     <string name="studyoptions_eta">Arvioitu aika (min):</string>
     <string name="studyoptions_start">Opiskele nyt</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Laajenna</string>
     <string name="collapse">Pienennä</string>
     <string name="study_more">Opiskele lisää</string>
@@ -70,13 +70,13 @@
         <item quantity="one">%d minuutti jäljellä</item>
         <item quantity="other">%d minuuttia jäljellä</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d tunti %d jäljellä</item>
-        <item quantity="other">%d tuntia %d jäljellä</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d päivä %d jäljellä</item>
-        <item quantity="other">%d päivää %d jäljellä</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kokoelma on tyhjä</string>
     <string name="no_cards_placeholder_description">Aloita korttien lisääminen\nkäyttäen + kuvaketta</string>

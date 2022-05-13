@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation,DuplicateCrowdInStrings">
     <string name="new_spread_preference">newSpread</string>
     <string name="day_offset_preference">dayOffset</string>
     <string name="learn_cutoff_preference">learnCutoff</string>
@@ -26,4 +26,6 @@
     <string name="app_theme_key">appTheme</string>
     <string name="day_theme_key">dayTheme</string>
     <string name="night_theme_key">nightTheme</string>
+    <string name="gestures_preference">gestures</string>
+    <string name="gestures_corner_touch_preference">gestureCornerTouch</string>
 </resources>

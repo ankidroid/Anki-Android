@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir cajón</string>
     <string name="drawer_close">Cerrar cajón</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Filtrar etiquetas</string>
     <string name="no_tags">Todavía no has añadido cualquier etiqueta.</string>
     <string name="updated_version">Actualizado a la versión %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Guardar pizarra</string>
     <string name="enable_whiteboard">Activar pizarra</string>
     <string name="disable_whiteboard">Desactivar pizarra</string>
@@ -163,8 +162,12 @@
     <string name="import_title">Importando</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Añadir</string>
     <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s</string>
-    <string name="import_message_add_confirm">¿Añadir \"%s\" a la colección? Esto puede tardar</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Este no es un archivo de paquete Anki válido</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
     <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
     <string name="import_log_failed_validate">falló la validación apkg</string>
@@ -179,6 +182,9 @@
     <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lee el manual de usuario sobre como importar manualmente anki files:  \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() falló (posiblemente fuera de espacio de almacenamiento)</string>
     <string name="import_error_unhandled_scheme">Importación no controlada de: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Reemplazando colección&#8230;</string>
     <string name="import_interrupted">Importación interrumpida</string>
     <string name="export_include_schedule">Incluir programación</string>
@@ -407,4 +413,6 @@
     <string name="malicious_archive_entry_outside">Archivo malicioso. Contiene entrada fuera del dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Archivo malicioso. El tamaño excede %1$s o contiene más de %2$d archivos</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

@@ -18,12 +18,10 @@ package com.ichi2.async
 import com.ichi2.anki.RunInBackground
 import com.ichi2.async.CollectionTask.CheckDatabase
 import com.ichi2.testutils.CollectionUtils
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 
-@KotlinCleanup("`is` -> equalTo")
 class CollectionTaskCheckDatabaseTest : AbstractCollectionTaskTest() {
     @Test
     @RunInBackground
@@ -31,8 +29,8 @@ class CollectionTaskCheckDatabaseTest : AbstractCollectionTaskTest() {
         lockDatabase()
         advanceRobolectricLooper()
         val result = super.execute(CheckDatabase())!!
-        assertThat("The result should specify a failure", result.first, `is`(false))
-        val checkDbResult = result.second
+        assertThat("The result should specify a failure", result.first, equalTo(false))
+        val checkDbResult = result.second!!
         assertThat("The result should specify the database was locked", checkDbResult.databaseLocked)
     }
 

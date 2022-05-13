@@ -67,7 +67,7 @@ abstract class MultimediaEditFieldActivityTestBase : RobolectricTest() {
             .create().start().resume().visible()
         saveControllerForCleanup(multimediaController)
         val testCardTemplatePreviewer = multimediaController.get() as MultimediaEditFieldActivity
-        return testCardTemplatePreviewer.fieldController
+        return testCardTemplatePreviewer.fieldController!!
     }
 
     @KotlinCleanup("need a disabled lint check for this as it's a common issue/operation")

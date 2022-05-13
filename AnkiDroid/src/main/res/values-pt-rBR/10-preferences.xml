@@ -48,6 +48,7 @@
     <string name="disabled">Desativado</string>
     <string name="enabled">Habilitado</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Configurações gerais</string>
     <string name="pref_cat_reviewing" maxLength="41">Revisando</string>
     <string name="pref_cat_reviewing_summ">Configurações gerais do revisor</string>
@@ -254,7 +255,7 @@
     <string name="deck_conf_new_cards" maxLength="41">Novos cards</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisões</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Falhas</string>
-    <string name="deck_conf_general" maxLength="41">Geral</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Geral</string>
     <string name="deck_conf_reminders" maxLength="41">Lembretes</string>
     <string name="deck_conf_steps" maxLength="41">Passos (em minutos)</string>
     <string name="deck_conf_order" maxLength="41">Ordem</string>

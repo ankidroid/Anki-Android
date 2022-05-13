@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">引き出しメニューを開く</string>
     <string name="drawer_close">引き出しメニューを閉じる</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">フィルター (前方一致検索)</string>
     <string name="no_tags">まだタグが一つも作成されていません</string>
     <string name="updated_version">バージョン%sへアップデートしました</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">ホワイトボードの内容を保存</string>
     <string name="enable_whiteboard">ホワイトボード機能をオン</string>
     <string name="disable_whiteboard">ホワイトボード機能をオフ</string>
@@ -160,8 +159,11 @@
     <string name="import_title">インポート</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
-    <string name="import_message_add_confirm">\"%s\" をコレクションに追加しますか？　処理に時間がかかる場合があります</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">これは読み込み可能なAnkiパッケージファイル（*.apkg）ではありません</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">apkgファイルの解凍に失敗しました: %s</string>
     <string name="import_log_failed_copy_to">apkgファイルを %sにコピーできませんでした</string>
     <string name="import_log_failed_validate">apkgファイルの検証に失敗しました</string>
@@ -176,6 +178,9 @@
     <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。ankiのファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() に失敗しました (おそらくストレージスペース外です)</string>
     <string name="import_error_unhandled_scheme">未処理のインポート: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">コレクションを置き換えています...</string>
     <string name="import_interrupted">インポートが中断されました</string>
     <string name="export_include_schedule">スケジュール情報を含める</string>
@@ -394,4 +399,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Отвори фиока</string>
     <string name="drawer_close">Затфори фиока</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Филтрирај тагови</string>
     <string name="no_tags">Уште не сте додавале некој таг</string>
     <string name="updated_version">Ажуриран на верзија %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_whiteboard">Овозможи табла</string>
     <string name="disable_whiteboard">Оневозможи табла</string>
@@ -164,8 +163,12 @@
     <string name="import_title">Увоз</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додај</string>
     <string name="import_message_replace_confirm">Ова ќе избрише вашата постоечка колекција и ќе ја замени со податоците од датотеката %s</string>
-    <string name="import_message_add_confirm">Додај “%s“ на колекцијата? Ова може да трае долго</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
     <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>
@@ -180,6 +183,9 @@
     <string name="import_error_content_provider">Избраната датотека не може автоматски да биде увезен од AnkiDroid. Ве молиме погледнете го упатството за користење како да рачно внесува анки дадотеки: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
     <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Замена на колекцијата&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Вклучи распоред</string>
@@ -408,4 +414,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

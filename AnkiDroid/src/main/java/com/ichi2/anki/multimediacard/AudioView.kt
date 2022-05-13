@@ -26,7 +26,7 @@ import android.view.View.OnClickListener
 import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.AppCompatImageButton
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.utils.Permissions.canRecordAudio
@@ -350,7 +350,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                 AudioView(context, resPlay, resPause, resStop, resRecord, resRecordStop, audioPath)
             } catch (e: Exception) {
                 Timber.e(e)
-                AnkiDroidApp.sendExceptionReport(e, "Unable to create recorder tool bar")
+                CrashReportService.sendExceptionReport(e, "Unable to create recorder tool bar")
                 showThemedToast(
                     context,
                     context.getText(R.string.multimedia_editor_audio_view_create_failed).toString(), true

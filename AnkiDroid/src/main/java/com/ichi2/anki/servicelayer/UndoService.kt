@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.servicelayer
 
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.async.CollectionTask
 import com.ichi2.utils.Computation
@@ -32,7 +32,7 @@ class UndoService {
                 return Computation.ok(NextCard.withNoResult(card))
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundUndo - RuntimeException on undoing")
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundUndo")
+                CrashReportService.sendExceptionReport(e, "doInBackgroundUndo")
                 return Computation.err()
             }
         }

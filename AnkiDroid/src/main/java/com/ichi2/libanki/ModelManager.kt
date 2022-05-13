@@ -16,7 +16,7 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.utils.Assert
 import com.ichi2.utils.JSONObject
@@ -180,7 +180,7 @@ abstract class ModelManager(protected val col: Collection) {
      * @throws ConfirmModSchemaException
      */
     @Throws(ConfirmModSchemaException::class)
-    abstract fun change(m: Model, nid: Long, newModel: Model, fmap: Map<Int, Int>?, cmap: Map<Int, Int>?)
+    abstract fun change(m: Model, nid: Long, newModel: Model, fmap: Map<Int, Int?>?, cmap: Map<Int, Int?>?)
 
     /*
       Schema hash ***********************************************************************************************
@@ -290,7 +290,7 @@ abstract class ModelManager(protected val col: Collection) {
             _addField(m, field)
         } catch (e: ConfirmModSchemaException) {
             Timber.w(e, "Unexpected mod schema")
-            AnkiDroidApp.sendExceptionReport(e, "addFieldInNewModel: Unexpected mod schema")
+            CrashReportService.sendExceptionReport(e, "addFieldInNewModel: Unexpected mod schema")
             throw IllegalStateException("ConfirmModSchemaException should not be thrown", e)
         }
     }
@@ -304,7 +304,7 @@ abstract class ModelManager(protected val col: Collection) {
             _addTemplate(m, template)
         } catch (e: ConfirmModSchemaException) {
             Timber.w(e, "Unexpected mod schema")
-            AnkiDroidApp.sendExceptionReport(e, "addTemplateInNewModel: Unexpected mod schema")
+            CrashReportService.sendExceptionReport(e, "addTemplateInNewModel: Unexpected mod schema")
             throw IllegalStateException("ConfirmModSchemaException should not be thrown", e)
         }
     }

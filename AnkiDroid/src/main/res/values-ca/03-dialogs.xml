@@ -118,7 +118,10 @@
     <string name="import_progress">• Important notes: %1$d%%\n• Important targetes: %2$d%%\n• Post-processant: %3$d%%</string>
     <string name="import_update_details">S\'ha actualitzat %1$d de %2$d notes existents.</string>
     <string name="import_update_ignored">Algunes actualitzacions han estat ignorades perquè el tipus de nota ha canviat</string>
-    <string name="import_complete_count">Targetes importades: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">Targeta SD plena</string>
     <string name="sd_card_almost_full_title">Targeta SD gairebé plena</string>
     <string name="no_space_to_downgrade_title">Sense espai</string>

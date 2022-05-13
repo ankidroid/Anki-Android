@@ -49,6 +49,17 @@ public class DuplicateCrowdInStringsTest {
             "   <string name=\"hello2\" comment=\"hello\">a</string>\n" +
             "</resources>";
 
+    @Language("XML")
+    private final String mIgnoredFile = "<resources xmlns:tools=\"http://schemas.android.com/tools\" tools:ignore=\"AAA,DuplicateCrowdInStrings\">\n" +
+            "   <string name=\"hello\">a</string>\n" +
+            "   <string name=\"hello2\">a</string>\n" +
+            "</resources>";
+
+    @Language("XML")
+    private final String mNotIgnored = "<resources>\n" +
+            "   <string name=\"hello3\">a</string>\n" +
+            "</resources>";
+
     @Test
     public void duplicateStringsInSameFileDetected() {
         // This appears to be a bug in StringCasingDetector - string is self-referential.
@@ -102,6 +113,18 @@ public class DuplicateCrowdInStringsTest {
         .allowMissingSdk()
         .allowCompilationErrors()
         .files(xml("res/values/string.xml", mDuplicateBothValid))
+        .issues(DuplicateCrowdInStrings.ISSUE)
+        .run()
+        .expectErrorCount(0);
+    }
+
+    @Test
+    public void ignoredFilePasses() {
+        // TODO: this doesn't work over two files. If the tools:ignore is removed, only the single file fails
+        lint()
+        .allowMissingSdk()
+        .allowCompilationErrors()
+        .files(xml("res/values/constants.xml", mIgnoredFile), xml("res/values/strings.xml", mNotIgnored))
         .issues(DuplicateCrowdInStrings.ISSUE)
         .run()
         .expectErrorCount(0);

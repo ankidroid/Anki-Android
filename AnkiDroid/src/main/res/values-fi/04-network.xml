@@ -48,13 +48,13 @@
     <string name="youre_offline">Offline-tilassa</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Synkronointivirhe</string>
-    <string name="vague_error">Virhe</string>
+    <string name="vague_error" comment="Network error dialog title">Virhe</string>
     <string name="retry">Yritä uudelleen</string>
     <string name="menu_get_shared_decks">Hanki jaettuja pakkoja</string>
     <string name="connection_error_message">Tapahtui verkkovirhe.</string>
     <string name="not_logged_in_title">Kirjaudu AnkiWebiin</string>
     <string name="login_create_account_message">Sinun tulee kirjautua kolmannen osapuolen käyttäjätilille käyttääksesi pilvisynkronointipalvelua. Voit luoda uuden tilin seuraavassa vaiheessa.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Sähköpostiosoite</string>
     <string name="password">Salasana</string>
     <string name="log_in">Kirjaudu sisään</string>

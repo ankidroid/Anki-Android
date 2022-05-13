@@ -24,6 +24,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import org.acra.config.ACRAConfigurationException
 import org.acra.config.DialogConfiguration
@@ -45,7 +46,7 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
         super.onCreate(savedInstanceState)
         val dialogBuilder = AlertDialog.Builder(this)
         try {
-            val builder = AnkiDroidApp.getInstance().acraCoreConfigBuilder
+            val builder = CrashReportService.getAcraCoreConfigBuilder()
             val dialogConfig = builder.getPluginConfigurationBuilder(DialogConfigurationBuilder::class.java).build() as DialogConfiguration
             dialogBuilder.setIcon(dialogConfig.resIcon())
             dialogBuilder.setTitle(dialogConfig.title())
@@ -91,8 +92,8 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
             preferences.edit().putBoolean("autoreportCheckboxValue", autoReport).apply()
             // Set the autoreport value to true if ticked
             if (autoReport) {
-                preferences.edit().putString(AnkiDroidApp.FEEDBACK_REPORT_KEY, AnkiDroidApp.FEEDBACK_REPORT_ALWAYS).apply()
-                AnkiDroidApp.getInstance().setAcraReportingMode(AnkiDroidApp.FEEDBACK_REPORT_ALWAYS)
+                preferences.edit().putString(CrashReportService.FEEDBACK_REPORT_KEY, CrashReportService.FEEDBACK_REPORT_ALWAYS).apply()
+                CrashReportService.setAcraReportingMode(CrashReportService.FEEDBACK_REPORT_ALWAYS)
             }
             // Send the crash report
             mHelper!!.sendCrash(mUserComment!!.text.toString(), "")
@@ -101,7 +102,7 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
             // The limiter persists it's limit info *before* the user cancels.
             // Therefore, on cancel, purge limits to make sure the user may actually send in future.
             // Better to maybe send to many reports than definitely too few.
-            AnkiDroidApp.deleteACRALimiterData(this)
+            CrashReportService.deleteACRALimiterData(this)
             mHelper!!.cancelReports()
         }
         finish()

@@ -48,6 +48,7 @@
     <string name="disabled">Disabled</string>
     <string name="enabled">Enabled</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">General settings</string>
     <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
     <string name="pref_cat_reviewing_summ">Non-deck-specific reviewer settings</string>
@@ -258,7 +259,7 @@
     <string name="deck_conf_new_cards" maxLength="41">New cards</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Reviews</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
-    <string name="deck_conf_general" maxLength="41">General</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">Reminders</string>
     <string name="deck_conf_steps" maxLength="41">Steps (in minutes)</string>
     <string name="deck_conf_order" maxLength="41">Order</string>

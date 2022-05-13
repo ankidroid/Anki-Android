@@ -25,8 +25,8 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.editorCard
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
-import com.ichi2.compat.Compat.ACTION_PROCESS_TEXT
-import com.ichi2.compat.Compat.EXTRA_PROCESS_TEXT
+import com.ichi2.compat.Compat.Companion.ACTION_PROCESS_TEXT
+import com.ichi2.compat.Compat.Companion.EXTRA_PROCESS_TEXT
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks.CURRENT_DECK
 import com.ichi2.libanki.Model
@@ -82,7 +82,7 @@ class NoteEditorTest : RobolectricTest() {
 
         // Assert
         val intent = shadowOf(n).nextStartedActivityForResult
-        val actualField = MultimediaEditFieldActivity.getFieldFromIntent(intent.intent)
+        val actualField = MultimediaEditFieldActivity.getFieldFromIntent(intent.intent)!!
         assertThat("Provided value should be the updated value", actualField.formattedValue, equalTo("Good Afternoon"))
     }
 
@@ -366,7 +366,7 @@ class NoteEditorTest : RobolectricTest() {
         val i = Intent()
         when (from) {
             REVIEWER -> {
-                i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER)
+                i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
                 editorCard = n.firstCard()
             }
             DECK_LIST -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)

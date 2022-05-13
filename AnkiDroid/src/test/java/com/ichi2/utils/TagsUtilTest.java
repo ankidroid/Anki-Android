@@ -24,6 +24,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static com.ichi2.utils.ListUtil.assertListEquals;
@@ -89,4 +90,53 @@ public class TagsUtilTest {
             assertListEquals(updated, actual);
         }
     }
+
+
+    public static class HierarchyTagUtilsTest {
+        @Test
+        public void test_getTagParts() {
+            assertEquals(Collections.singletonList("single"), TagsUtil.getTagParts("single"));
+            assertEquals(Collections.singletonList(":single:"), TagsUtil.getTagParts(":single:"));
+
+            assertEquals(Arrays.asList("first", "second"), TagsUtil.getTagParts("first::second"));
+            assertEquals(Arrays.asList("first", "second:"), TagsUtil.getTagParts("first::second:"));
+            assertEquals(Arrays.asList("first", "second", "blank"), TagsUtil.getTagParts("first::second::"));
+            assertEquals(Arrays.asList("blank", "first", "blank", ":second", "blank"), TagsUtil.getTagParts("::first:::::second::"));
+        }
+
+        @Test
+        public void test_getUniformedTag() {
+            assertEquals("abc", TagsUtil.getUniformedTag("abc"));
+            assertEquals("Should remove trailing '::'", "abc", TagsUtil.getUniformedTag("abc::"));
+            assertEquals("Should replace empty immediate parts to 'blank'", "abc::def::blank", TagsUtil.getUniformedTag("abc::def::::"));
+        }
+
+        @Test
+        public void test_getTagRoot() {
+            assertEquals("abc", TagsUtil.getTagRoot("abc"));
+            assertEquals("abc:", TagsUtil.getTagRoot("abc:"));
+            assertEquals("abc", TagsUtil.getTagRoot("abc::def::ghi"));
+            assertEquals("blank", TagsUtil.getTagRoot("::careless"));
+        }
+
+        @Test
+        public void test_getTagAncestors() {
+            assertEquals(Arrays.asList("foo", "foo::bar", "foo::bar::aaa"), TagsUtil.getTagAncestors("foo::bar::aaa::bbb"));
+            assertEquals(Arrays.asList("foo", "foo::blank"), TagsUtil.getTagAncestors("foo::::aaa"));
+            assertEquals(Arrays.asList("blank", "blank::foo"), TagsUtil.getTagAncestors("::foo::aaa"));
+        }
+
+        @Test
+        public void test_compareTag() {
+            assertTrue(TagsUtil.compareTag("aaa::foo", "bbb::bar") < 0);
+            assertTrue(TagsUtil.compareTag("aaa::foo", "aaa::bar") > 0);
+            assertTrue(TagsUtil.compareTag("aaa::foo", "aaa::foo::trailing") < 0);
+            assertTrue(TagsUtil.compareTag("aaa::bbbb", "aaa::bbb::trailing") > 0);
+            assertTrue(TagsUtil.compareTag("aaa::bbbz::foo", "aaa::bbb::bar") > 0);
+            assertTrue(TagsUtil.compareTag("aaa::bbb9::foo", "aaa::bbb::bar") > 0);
+            assertEquals(0, TagsUtil.compareTag("aaa::bbb", "aaa::bbb"));
+            assertEquals(0, TagsUtil.compareTag("aAa::bbb", "aaa::bBb"));
+        }
+    }
 }
+

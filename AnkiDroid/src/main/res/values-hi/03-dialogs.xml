@@ -118,7 +118,10 @@
     <string name="import_progress">• आयात नोट्स: %1$d%% \ n • कार्ड आयात: %2$d%% \ n • पोस्ट-प्रोसेसिंग: %3$d%%</string>
     <string name="import_update_details">%2$d मौजूदा नोट्स का अद्यतन %1$d ।</string>
     <string name="import_update_ignored">नोट प्रकार बदल गया है, क्योंकि कुछ अद्यतनों पर ध्यान नहीं दिया गया</string>
-    <string name="import_complete_count">कार्ड आयातित: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD कार्ड भरा हुआ है</string>
     <string name="sd_card_almost_full_title">एसडी कार्ड लगभग पूर्ण</string>
     <string name="no_space_to_downgrade_title">कोई जगह नहीं</string>

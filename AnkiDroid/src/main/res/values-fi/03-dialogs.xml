@@ -118,7 +118,10 @@
     <string name="import_progress">• Tuodaan merkintöjä: %1$d%%\n• Tuodaan kortteja: %2$d%%\n• Jälkikäsittely: %3$d%%</string>
     <string name="import_update_details">Päivitettiin %1$d %2$d :sta merkinnästä.</string>
     <string name="import_update_ignored">Osa päivityksistä ohitettiin koska merkintätyyppi on muuttunut</string>
-    <string name="import_complete_count">Tuodot kortit: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD-kortti on täysi</string>
     <string name="sd_card_almost_full_title">SD-kortti on lähes täysi</string>
     <string name="no_space_to_downgrade_title">No space</string>

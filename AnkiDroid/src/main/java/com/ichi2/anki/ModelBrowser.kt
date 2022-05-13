@@ -28,12 +28,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.MaterialDialog.ListCallback
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu
+import com.ichi2.anki.dialogs.ModelBrowserContextMenuAction
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.CountModels
@@ -52,6 +52,7 @@ import java.lang.RuntimeException
 import java.util.ArrayList
 
 @KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
+@NeedsTest("add tests to ensure changes(renames & deletions) to the list of note types are visible in the UI")
 class ModelBrowser : AnkiActivity() {
     private var modelDisplayAdapter: DisplayPairAdapter? = null
     private var mModelListView: ListView? = null
@@ -72,7 +73,6 @@ class ModelBrowser : AnkiActivity() {
 
     // Dialogue used in renaming
     private var mModelNameInput: EditText? = null
-    private var mContextMenu: ModelBrowserContextMenu? = null
     private var mNewModelNames: ArrayList<String>? = null
 
     // ----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ class ModelBrowser : AnkiActivity() {
         return LoadingModelsHandler(this)
     }
 
-    private class LoadingModelsHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Pair<List<Model?>?, ArrayList<Int>?>?>(browser) {
+    private class LoadingModelsHandler(browser: ModelBrowser) : TaskListenerWithContext<ModelBrowser, Void?, Pair<List<Model>, ArrayList<Int>>?>(browser) {
         override fun actualOnCancelled(context: ModelBrowser) {
             context.hideProgressBar()
         }
@@ -96,7 +96,7 @@ class ModelBrowser : AnkiActivity() {
         }
 
         @KotlinCleanup("Rename context in the base class to activity and see if we can make it non-null")
-        override fun actualOnPostExecute(context: ModelBrowser, result: Pair<List<Model?>?, ArrayList<Int>?>?) {
+        override fun actualOnPostExecute(context: ModelBrowser, result: Pair<List<Model>, ArrayList<Int>>?) {
             if (result == null) {
                 throw RuntimeException()
             }
@@ -131,14 +131,15 @@ class ModelBrowser : AnkiActivity() {
         }
     }
 
-    /*
-     * Listens to long hold context menu for main list items
+    /**
+     * Handle the actions that can be done on  a note type from the list.
      */
-    private val mContextMenuListener = ListCallback { _: MaterialDialog?, _: View?, selection: Int, _: CharSequence? ->
-        when (selection) {
-            ModelBrowserContextMenu.MODEL_DELETE -> deleteModelDialog()
-            ModelBrowserContextMenu.MODEL_RENAME -> renameModelDialog()
-            ModelBrowserContextMenu.MODEL_TEMPLATE -> openTemplateEditor()
+    fun handleAction(contextMenuAction: ModelBrowserContextMenuAction) {
+        supportFragmentManager.popBackStackImmediate()
+        when (contextMenuAction) {
+            ModelBrowserContextMenuAction.Delete -> deleteModelDialog()
+            ModelBrowserContextMenuAction.Rename -> renameModelDialog()
+            ModelBrowserContextMenuAction.Template -> openTemplateEditor()
         }
     }
 
@@ -154,8 +155,7 @@ class ModelBrowser : AnkiActivity() {
         setTitle(R.string.model_browser_label)
         setContentView(R.layout.model_browser)
         mModelListView = findViewById(R.id.note_type_browser_list)
-        enableToolbar()
-        mActionBar = supportActionBar
+        mActionBar = enableToolbar()
         startLoadingCollection()
     }
 
@@ -235,8 +235,7 @@ class ModelBrowser : AnkiActivity() {
             val cardName = mModelDisplayList!![position].name
             mCurrentID = mModelIds!![position]
             mModelListPosition = position
-            mContextMenu = ModelBrowserContextMenu.newInstance(cardName, mContextMenuListener)
-            showDialogFragment(mContextMenu)
+            showDialogFragment(ModelBrowserContextMenu.newInstance(cardName))
             true
         }
         updateSubtitleText()
@@ -351,33 +350,28 @@ class ModelBrowser : AnkiActivity() {
         }
     }
 
-    /*
-     * Displays a confirmation box asking if you want to delete the note type and then deletes it if confirmed
+    /**
+     * Display a dialog to confirm the note type deletion, if the user accepts then proceed with the
+     * deletion process.
      */
-    @KotlinCleanup("Rename d and c variables")
     private fun deleteModelDialog() {
         if (mModelIds!!.size > 1) {
-            val confirm = Runnable {
-                mCol!!.modSchemaNoCheck()
-                deleteModel()
-                dismissContextMenu()
-            }
-            val cancel = Runnable { dismissContextMenu() }
-            try {
+            val confirmTextId = try {
                 mCol!!.modSchema()
-                val d = ConfirmationDialog()
-                d.setArgs(resources.getString(R.string.model_delete_warning))
-                d.setConfirm(confirm)
-                d.setCancel(cancel)
-                this@ModelBrowser.showDialogFragment(d)
+                R.string.model_delete_warning
             } catch (e: ConfirmModSchemaException) {
                 e.log()
-                val c = ConfirmationDialog()
-                c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                c.setConfirm(confirm)
-                c.setCancel(cancel)
-                showDialogFragment(c)
+                R.string.full_sync_confirmation
             }
+            showDialogFragment(
+                ConfirmationDialog().apply {
+                    setArgs(this@ModelBrowser.resources.getString(confirmTextId))
+                    setConfirm {
+                        mCol!!.modSchemaNoCheck()
+                        deleteModel()
+                    }
+                }
+            )
         } else {
             showToast(getString(R.string.toast_last_model))
         }
@@ -418,13 +412,6 @@ class ModelBrowser : AnkiActivity() {
                     }
                 }
                 .show()
-        }
-    }
-
-    private fun dismissContextMenu() {
-        if (mContextMenu != null) {
-            mContextMenu!!.dismiss()
-            mContextMenu = null
         }
     }
 
@@ -497,7 +484,10 @@ class ModelBrowser : AnkiActivity() {
     /*
      * For display in the main list via an ArrayAdapter
      */
-    inner class DisplayPairAdapter(context: Context?, items: ArrayList<DisplayPair>?) : ArrayAdapter<DisplayPair?>(context!!, R.layout.model_browser_list_item, R.id.model_list_item_1, items!!.toList()) {
+    inner class DisplayPairAdapter(
+        context: Context,
+        items: ArrayList<DisplayPair>?
+    ) : ArrayAdapter<DisplayPair>(context, R.layout.model_browser_list_item, R.id.model_list_item_1, items!!) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val _convertView = convertView ?: LayoutInflater.from(context).inflate(R.layout.model_browser_list_item, parent, false)
             val item = getItem(position)

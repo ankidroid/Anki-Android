@@ -16,8 +16,8 @@
 
 package com.ichi2.anki.servicelayer
 
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.exception.InvalidSearchException
 import net.ankiweb.rsdroid.RustCleanup
 
@@ -40,7 +40,7 @@ class SearchService {
             @JvmStatic fun error(e: Exception): SearchCardsResult {
                 if (e !is InvalidSearchException) {
                     // temporary check to see we haven't missed a backend exception
-                    AnkiDroidApp.sendExceptionReport(e, "unexpected error type")
+                    CrashReportService.sendExceptionReport(e, "unexpected error type")
                 }
                 val error = e.localizedMessage?.replace("net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: ", "")
                 return SearchCardsResult(null, error)

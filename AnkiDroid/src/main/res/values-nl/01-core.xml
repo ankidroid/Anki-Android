@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Totaal aantal kaarten:</string>
     <string name="studyoptions_eta">Geschatte tijd (min):</string>
     <string name="studyoptions_start">Studeer nu</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Uitklappen</string>
     <string name="collapse">Inklappen</string>
     <string name="study_more">Studeer meer</string>
@@ -70,13 +70,13 @@
         <item quantity="one">%d minuut over</item>
         <item quantity="other">%d minuten over</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d uur %d over</item>
-        <item quantity="other">%d uur %d over</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d dag %d over</item>
-        <item quantity="other">%d dagen %d over</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collectie is leeg</string>
     <string name="no_cards_placeholder_description">Begin kaarten toe te voegen\nmet het + icoon.</string>

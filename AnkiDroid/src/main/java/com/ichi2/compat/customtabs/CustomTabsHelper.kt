@@ -26,13 +26,11 @@ import timber.log.Timber
 /**
  * Helper class for Custom Tabs.
  */
-@KotlinCleanup("fix IDE lint issues")
 object CustomTabsHelper {
-    private const val TAG = "CustomTabsHelper"
-    const val STABLE_PACKAGE = "com.android.chrome"
-    const val BETA_PACKAGE = "com.chrome.beta"
-    const val DEV_PACKAGE = "com.chrome.dev"
-    const val LOCAL_PACKAGE = "com.google.android.apps.chrome"
+    private const val STABLE_PACKAGE = "com.android.chrome"
+    private const val BETA_PACKAGE = "com.chrome.beta"
+    private const val DEV_PACKAGE = "com.chrome.dev"
+    private const val LOCAL_PACKAGE = "com.google.android.apps.chrome"
     private const val EXTRA_CUSTOM_TABS_KEEP_ALIVE = "android.support.customtabs.extra.KEEP_ALIVE"
     private var sPackageNameToUse: String? = null
 

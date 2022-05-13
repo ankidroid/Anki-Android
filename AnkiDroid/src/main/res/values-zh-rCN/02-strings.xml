@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">打开侧栏</string>
     <string name="drawer_close">关闭侧栏</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">过滤标签</string>
     <string name="no_tags">你还没有添加任何标签。</string>
     <string name="updated_version">更新到%s版本</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">保存白板</string>
     <string name="enable_whiteboard">启用白板</string>
     <string name="disable_whiteboard">禁用白板</string>
@@ -160,8 +159,11 @@
     <string name="import_title">正在导入……</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">添加</string>
     <string name="import_message_replace_confirm">这将删除你当前的所有记忆库，并用文件%s中的内容加以替换。你确定吗？</string>
-    <string name="import_message_add_confirm">要添加 \"%s\" 到记忆库吗？</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">这不是一个有效的 Anki 包文件</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">无法解压 apkg：%s</string>
     <string name="import_log_failed_copy_to">无法将 apkg 复制到 %s</string>
     <string name="import_log_failed_validate">apkg 验证失败</string>
@@ -176,6 +178,9 @@
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() 失败（可能存储空间不足）</string>
     <string name="import_error_unhandled_scheme">未处理的导入来自：“%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">正在导入牌组集合&#8230;</string>
     <string name="import_interrupted">导入中断</string>
     <string name="export_include_schedule">包括学习进度</string>
@@ -394,4 +399,6 @@
     <string name="malicious_archive_entry_outside">恶意压缩文件。包含目标目录外的条目： %s</string>
     <string name="malicious_archive_exceeds_limit">恶意压缩文件。大小超过 %1$s 或包含超过 %2$d 个文件</string>
     <string name="file_extract_exceeds_storage_space">文件提取超出存储空间</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">展开标签 \'%s\'</string>
 </resources>

@@ -98,6 +98,7 @@
     <string name="card_browser_no_cards_in_deck">لا توجد بطاقات في الرزمة ‘%s’</string>
     <string name="card_browser_search_all_decks">البحث في كل الرزم</string>
     <string name="card_browser_unknown_deck_name">غير معروف</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="zero">حُذِفت %d بطاقة</item>
         <item quantity="one">حُذِفت %d بطاقة</item>

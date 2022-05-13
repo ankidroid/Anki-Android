@@ -14,6 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+@file:Suppress("UnstableApiUsage")
 package com.ichi2.anki.lint.rules
 
 import com.android.SdkConstants.*
@@ -24,7 +25,9 @@ import com.android.tools.lint.detector.api.ResourceXmlDetector
 import com.android.tools.lint.detector.api.Scope.Companion.ALL_RESOURCES_SCOPE
 import com.android.tools.lint.detector.api.XmlContext
 import com.android.utils.forEach
-import com.ichi2.anki.lint.utils.Constants.*
+import com.ichi2.anki.lint.utils.Constants.ANKI_XML_CATEGORY
+import com.ichi2.anki.lint.utils.Constants.ANKI_XML_PRIORITY
+import com.ichi2.anki.lint.utils.Constants.ANKI_XML_SEVERITY
 import com.ichi2.anki.lint.utils.StringFormatDetector
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -53,9 +56,9 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
             ANKI_XML_SEVERITY,
             IMPLEMENTATION_XML
         )
-    }
 
-    private val INVALID_FORMAT_PATTERN = Pattern.compile("[^%]+%").toRegex()
+        private val INVALID_FORMAT_PATTERN = Pattern.compile("[^%]+%").toRegex()
+    }
 
     override fun appliesTo(folderType: ResourceFolderType): Boolean =
         EnumSet.of(ResourceFolderType.VALUES).contains(folderType)
@@ -68,7 +71,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
 
         element.childNodes
             .forEach { child ->
-                val isStringResource = child.nodeType == Node.TEXT_NODE &&
+                val isStringResource = (child.nodeType == Node.TEXT_NODE || child.nodeType == Node.CDATA_SECTION_NODE) &&
                     TAG_STRING == element.localName
                 val isStringArrayOrPlurals = child.nodeType == Node.ELEMENT_NODE &&
                     (

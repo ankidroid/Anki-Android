@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX %</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Navigationsleiste öffnen</string>
     <string name="drawer_close">Navigationsleiste schließen</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Schlagwörter filtern</string>
     <string name="no_tags">Sie haben noch keine Schlagwörter hinzugefügt.</string>
     <string name="updated_version">Aktualisiert auf Version %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Whiteboard speichern</string>
     <string name="enable_whiteboard">Whiteboard aktivieren</string>
     <string name="disable_whiteboard">Whiteboard ausschalten</string>
@@ -163,8 +162,12 @@
     <string name="import_title">Importieren</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
-    <string name="import_message_add_confirm">»%s« zu Ihrer Sammlung hinzufügen? Das kann lange dauern</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Dies ist keine gültige Anki-Paketdatei</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">APKG-Datei konnte nicht entpackt werden: %s</string>
     <string name="import_log_failed_copy_to">APKG-Datei konnte nicht nach %s kopiert werden</string>
     <string name="import_log_failed_validate">Validierung der APKG-Datei nicht erfolgreich</string>
@@ -179,6 +182,9 @@
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() konnte nicht durchführt werden (evtl. mangelnder Speicherplatz)</string>
     <string name="import_error_unhandled_scheme">Unbehandelter Import von: »%s«</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Sammlung wird ersetzt &#8230;</string>
     <string name="import_interrupted">Import unterbrochen</string>
     <string name="export_include_schedule">Zeitabstände einbeziehen</string>
@@ -343,7 +349,7 @@
     <string name="before_text">HTML vor Auswahl</string>
     <string name="after_text">HTML nach Auswahl</string>
     <string name="add_toolbar_item">Werkzeugleiste-Element erstellen</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="edit_toolbar_item">Toolbar Element bearbeiten</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Element der Werkzeugleiste entfernen?</string>
     <string name="note_editor_paste_too_large">Das Bild ist zu groß zum Einfügen, bitte fügen Sie das Bild manuell ein</string>
@@ -407,4 +413,6 @@
     <string name="malicious_archive_entry_outside">Schädliches Archiv. Enthält Eintrag außerhalb des Zielverzeichnisses: %s</string>
     <string name="malicious_archive_exceeds_limit">Schädliches Archiv. Größe überschreitet %1$s oder enthält mehr als %2$d Dateien</string>
     <string name="file_extract_exceeds_storage_space">Datei-Extrahierung überschreitet Speicherplatz</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

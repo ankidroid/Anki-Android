@@ -74,7 +74,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
             for (b in bindings) {
                 val binding = MappableBinding(b, MappableBinding.Screen.Reviewer(side))
                 val command = mBindingMap[binding] ?: continue
-                ret = ret or processor.executeCommand(command)
+                ret = ret or processor.executeCommand(command, fromGesture = null)
             }
             return ret
         }

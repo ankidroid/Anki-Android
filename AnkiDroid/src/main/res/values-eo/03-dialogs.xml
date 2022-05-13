@@ -118,7 +118,10 @@
     <string name="import_progress">• Enportado de notoj: %1$d%%\n• Enportado de kartoj: %2$d%%\n• Prilaborado: %3$d%%</string>
     <string name="import_update_details">Aktualigis %1$d el %2$d ekzistajn notojn.</string>
     <string name="import_update_ignored">Ignoris kelkajn aktualigojn pro ŝanĝo de tipo de noto</string>
-    <string name="import_complete_count">Enportis kartojn: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD-karto estas plena</string>
     <string name="sd_card_almost_full_title">SD-karto estas preskaŭ plena</string>
     <string name="no_space_to_downgrade_title">Mankas spaco</string>
@@ -177,7 +180,7 @@
     <string name="multimedia_editor_audio_permission_denied">Permeso al registri sonon rifuzita</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">Bonvenon al AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid bezonas aliron al la konservejo, kiu estos uzata nur por konservi viajn kolektojn, aŭdvidaĵojn de kartaroj kaj sekurkopiojn. La fontkodo de la aplikaĵo AnkiDroid estas malferma, kreata de volontuloj kaj konfidata de milionoj.\n\nSe vi havas iujn demandojn, bonvolu legi la enaplikaĵan manlibron aŭ vizitu niajn forumojn.\n\nDankon por provi AnkiDroid!\n–AnkiDroid-teamo</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid bezonas aliron al la konservejo, kiu estos uzata nur por konservi viajn kolektojn, aŭdvidaĵojn de kartaroj kaj sekurkopiojn. La fontkodo de la aplikaĵo AnkiDroid estas malferma, kreata de volontuloj kaj konfidata de milionoj.\n\nSe vi havas iun demandon, bonvolu legi la enaplikaĵan manlibron aŭ vizitu niajn forumojn.\n\nDankon pro provi AnkiDroid!\n–AnkiDroid-teamo</string>
     <string name="mutimedia_editor_assertion_failed">Nekonata eraro okazis dum montri la altnivelan redaktilon</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualigita</string>

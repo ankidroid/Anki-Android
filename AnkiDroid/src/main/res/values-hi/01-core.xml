@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">कुल कार्ड:</string>
     <string name="studyoptions_eta">अनुमानित समय (मिनट):</string>
     <string name="studyoptions_start">पढ़ाई करें</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">विस्तार करें</string>
     <string name="collapse">संक्षिप्त करें</string>
     <string name="study_more">अधिक अध्ययन करें</string>
@@ -70,13 +70,13 @@
         <item quantity="one">%d मिनट शेष</item>
         <item quantity="other">%d मिनट बचे हैं</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d घंटे %d बचे हैं</item>
-        <item quantity="other">%d घंटे %d बचे हैं</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d दिन %d बचे हैं</item>
-        <item quantity="other">%d दिन %d बचे हैं</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">यह संग्रह खाली है</string>
     <string name="no_cards_placeholder_description">नये कार्ड जोडने के लिए + आइकन का उपयोग करें।</string>

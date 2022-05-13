@@ -48,6 +48,7 @@
     <string name="disabled">Inaktiverad</string>
     <string name="enabled">Aktiverad</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Allmäna inställningar</string>
     <string name="pref_cat_reviewing" maxLength="41">Repetition</string>
     <string name="pref_cat_reviewing_summ">Inställningar ej specifika för kortlek</string>
@@ -254,7 +255,7 @@
     <string name="deck_conf_new_cards" maxLength="41">Nya kort</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Repetitioner</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Felsvar</string>
-    <string name="deck_conf_general" maxLength="41">Allmän</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Allmän</string>
     <string name="deck_conf_reminders" maxLength="41">Påminnelser</string>
     <string name="deck_conf_steps" maxLength="41">Steg (i minuter)</string>
     <string name="deck_conf_order" maxLength="41">Ordning</string>

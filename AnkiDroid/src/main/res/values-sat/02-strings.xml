@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ </string>
     <string name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ </string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ </string>
     <string name="no_tags">ᱟᱢ ᱴᱮᱜ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱠᱟᱜᱼᱟᱢ </string>
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ  </string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ </string>
     <string name="enable_whiteboard">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ </string>
     <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ </string>
@@ -163,8 +162,12 @@
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ᱥᱮᱞᱮᱫ</string>
     <string name="import_message_replace_confirm">ᱱᱚᱶᱟ ᱫᱚ ᱴᱩᱢᱟᱞ ᱜᱮᱫ ᱜᱤᱰᱤᱟᱭ ᱟᱨ ᱚᱱᱟ ᱵᱚᱫᱚᱞ ᱛᱮ ᱚᱱᱟ ᱨᱮᱛ ᱨᱮ ᱥᱟᱹᱠᱷᱤᱭᱟᱹᱛ ᱚᱞᱟᱭ  %s</string>
-    <string name="import_message_add_confirm">“%s” ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱥᱮᱞᱮᱫ ᱟᱢ ? ᱱᱚᱶᱟ ᱡᱟᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱰᱮᱟᱜᱼᱟᱭ</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">ᱱᱚᱶᱟ ᱫᱚ ᱵᱦᱮᱞᱤᱰ Anki ᱯᱮᱠ ᱵᱟᱝ ᱠᱟᱱᱟ</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">apkg ᱠᱷᱩᱞᱟᱹ ᱦᱩᱲᱟᱜᱺ %s</string>
     <string name="import_log_failed_copy_to">apkg ᱠᱷᱚᱱ %s ᱱᱚᱠᱚᱞ ᱦᱩᱲᱟᱜ</string>
     <string name="import_log_failed_validate">apkg ᱯᱩᱥᱴᱚᱣ ᱵᱷᱩᱞ</string>
@@ -179,6 +182,9 @@
     <string name="import_error_content_provider">ᱪᱚᱭᱚᱱᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() ᱦᱩᱲᱟᱜ (ᱫᱚᱦᱚ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱯᱟᱞᱮ)</string>
     <string name="import_error_unhandled_scheme">ᱵᱟᱝ ᱡᱩᱛ ᱟᱭᱟᱛ:“%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">ᱴᱩᱢᱟᱹ ᱳᱪᱳᱜᱳᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="import_interrupted">ᱨᱮᱫ ᱟᱠᱚᱴ ᱮᱱᱟ</string>
     <string name="export_include_schedule">ᱥᱮᱰᱤᱭᱩᱞ ᱨᱮ ᱢᱮᱥᱟᱭ ᱯᱮ</string>
@@ -407,4 +413,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

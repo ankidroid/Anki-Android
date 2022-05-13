@@ -22,8 +22,8 @@ import androidx.fragment.app.FragmentManager
 import org.junit.Assert
 import org.junit.Test
 import org.mockito.Mockito.*
+import org.mockito.kotlin.whenever
 
-@KotlinCleanup("when -> whenever")
 class FragmentFactoryUtilsTest {
     private class TestFragment : Fragment()
 
@@ -36,11 +36,11 @@ class FragmentFactoryUtilsTest {
 
         val testFragment = TestFragment()
 
-        `when`(activity.supportFragmentManager).thenReturn(manager)
-        `when`(activity.classLoader).thenReturn(classLoader)
+        whenever(activity.supportFragmentManager).thenReturn(manager)
+        whenever(activity.classLoader).thenReturn(classLoader)
 
-        `when`(manager.fragmentFactory).thenReturn(factory)
-        `when`(factory.instantiate(classLoader, testFragment.javaClass.name))
+        whenever(manager.fragmentFactory).thenReturn(factory)
+        whenever(factory.instantiate(classLoader, testFragment.javaClass.name))
             .thenReturn(testFragment)
 
         val result: Fragment = FragmentFactoryUtils.instantiate(activity, TestFragment::class.java)

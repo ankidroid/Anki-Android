@@ -20,8 +20,8 @@ import com.ichi2.libanki.Collection
 
 /** @see [TaskDelegate] */
 abstract class TaskDelegateBase<Progress, Result> {
-    protected abstract fun execTask(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
-    protected abstract fun requiresOpenCollection(): Boolean
+    abstract fun execTask(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
+    abstract fun requiresOpenCollection(): Boolean
 }
 
 /**

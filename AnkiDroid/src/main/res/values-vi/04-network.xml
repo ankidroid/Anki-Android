@@ -48,13 +48,13 @@
     <string name="youre_offline">Bạn đang ngoại tuyến</string>
     <string name="sync_even_if_offline">Vẫn thử</string>
     <string name="sync_error">Lỗi đồng bộ</string>
-    <string name="vague_error">Lỗi</string>
+    <string name="vague_error" comment="Network error dialog title">Lỗi</string>
     <string name="retry">Thử lại</string>
     <string name="menu_get_shared_decks">Nhận các bộ thẻ đã chia sẻ</string>
     <string name="connection_error_message">Đã xảy ra lỗi mạng</string>
     <string name="not_logged_in_title">Đăng nhập AnkiWeb</string>
     <string name="login_create_account_message">Bạn phải đăng nhập tài khoản bên thứ ba để dùng dịch vụ đồng bộ đám mây. Bạn có thể tạo mới ở bước tiếp theo.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Địa chỉ email</string>
     <string name="password">Mật khẩu</string>
     <string name="log_in">Đăng nhập</string>
