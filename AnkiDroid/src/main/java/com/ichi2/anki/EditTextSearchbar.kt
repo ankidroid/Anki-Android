@@ -75,6 +75,13 @@ class EditTextSearchbar(
             if (selectionStart != -1) {
                 targetEditText.requestFocus()
                 targetEditText.setSelection(selectionStart, selectionStart + query.length)
+            } else {
+                // if none found, look for one start to end
+                selectionStart = findNextResult(0, query)
+                if (selectionStart != -1) {
+                    targetEditText.requestFocus()
+                    targetEditText.setSelection(selectionStart, selectionStart + query.length)
+                }
             }
         }
         return true
