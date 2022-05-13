@@ -101,6 +101,10 @@
     <string name="saving_facts">Saving note</string>
     <string name="saving_model">Saving note type</string>
     <string name="save">Save</string>
+    <string name="search_template">Search Template</string>
+    <string name="find_next">Find Next Occurrence</string>
+    <string name="find_prev">Find Previous Occurrence</string>
+    <string name="case_sensitive">Case Sensitive</string>
     <string name="close">Close</string>
     <string name="select">Select</string>
     <string name="saving_changes">Saving changes…</string>

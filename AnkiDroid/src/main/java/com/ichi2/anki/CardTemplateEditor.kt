@@ -31,6 +31,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -484,6 +485,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
             menu.clear()
             inflater.inflate(R.menu.card_template_editor, menu)
+
+            val toolbarSearchItem = menu.findItem(R.id.action_search_template)
+            val mToolbarSearchView = toolbarSearchItem.actionView as SearchView
+            mToolbarSearchView.queryHint = getString(R.string.search_template)
+
+            EditTextSearchbar(mToolbarSearchView, mEditorEditText).setupListeners()
 
             if (mTemplateEditor.tempModel!!.model.isCloze) {
                 Timber.d("Editing cloze model, disabling add/delete card template and deck override functionality")

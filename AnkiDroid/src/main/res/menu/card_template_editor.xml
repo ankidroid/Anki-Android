@@ -1,6 +1,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
     <item
+        android:id="@+id/action_search_template"
+        android:icon="@drawable/ic_search_white"
+        android:title="@string/search_template"
+        ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
+        ankidroid:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/action_find_next"
+        android:icon="@drawable/arrow_down"
+        android:title="@string/find_next"
+        ankidroid:showAsAction="always"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_find_prev"
+        android:icon="@drawable/arrow_up"
+        android:title="@string/find_prev"
+        ankidroid:showAsAction="always"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_case_sensitive"
+        android:icon="@drawable/casesensitive"
+        android:title="@string/case_sensitive"
+        ankidroid:showAsAction="ifRoom"
+        android:checkable="true"
+        android:checked="true"
+        android:visible="false"/>
+    <item
         android:id="@+id/action_confirm"
         android:icon="@drawable/ic_done_white"
         android:title="@string/save"
