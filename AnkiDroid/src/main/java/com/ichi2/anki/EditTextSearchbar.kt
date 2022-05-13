@@ -14,6 +14,9 @@ class EditTextSearchbar(
     private var findPrevButton: MenuItem,
     private var toggleCaseSensitivityButton: MenuItem
 ) : TextWatcher, SearchView.OnQueryTextListener {
+    private var targetEditTextText: String = ""
+    private var targetEditTextSelection: Int = 0
+
     val caseSensitive: Boolean
         get() = toggleCaseSensitivityButton.isChecked
 
@@ -23,9 +26,13 @@ class EditTextSearchbar(
 
         querySearchbar.setOnSearchClickListener { setIconsVisibility(true) }
         querySearchbar.setOnCloseListener { setIconsVisibility(false) }
+
+        targetEditTextText = targetEditText.text.toString()
     }
 
     private fun setIconsVisibility(visibility: Boolean): Boolean {
+        Timber.d("setIconsVisibility")
+
         findNextButton.isVisible = visibility
         findPrevButton.isVisible = visibility
         toggleCaseSensitivityButton.isVisible = visibility
@@ -33,29 +40,89 @@ class EditTextSearchbar(
         return false
     }
 
-    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        /* Do nothing */
+    override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
+        Timber.d("beforeTextChanged")
+        targetEditTextText = targetEditText.text.toString()
+        targetEditTextSelection = targetEditText.selectionStart
     }
 
     override fun afterTextChanged(editable: Editable?) {
-        /* Do nothing */
+        Timber.d("afterTextChanged")
+        targetEditTextText = targetEditText.text.toString()
+        targetEditTextSelection = targetEditText.selectionStart
     }
 
     override fun onTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
-        Timber.i("mEditorEditText:: onTextChanged -> {$text} {$start} {$count} {$after}")
-        // todo
+        Timber.d("onTextChanged")
+        targetEditTextText = targetEditText.text.toString()
+        targetEditTextSelection = targetEditText.selectionStart
     }
 
-    override fun onQueryTextChange(newText: String?): Boolean {
-        Timber.i("mToolbarSearchView:: onQueryTextChange -> {$newText}")
-        targetEditText.requestFocus()
-        targetEditText.setSelection(3, 5)
-        // todo
+    override fun onQueryTextChange(query: String?): Boolean {
+        /* Do Nothing */
         return true
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        querySearchbar.clearFocus()
+    override fun onQueryTextSubmit(query: String): Boolean {
+        // search for matches from targetEditTextSelection to end
+        var selectionStart = findNextResult(targetEditTextSelection, query)
+        if (selectionStart != -1) {
+            targetEditText.requestFocus()
+            targetEditText.setSelection(selectionStart, selectionStart + query.length)
+        } else {
+            // if none found, look for one from start to targetEditTextSelection-1
+            selectionStart = findPrevResult(targetEditTextSelection - 1, query)
+            if (selectionStart != -1) {
+                targetEditText.requestFocus()
+                targetEditText.setSelection(selectionStart, selectionStart + query.length)
+            }
+        }
         return true
+    }
+
+    private fun findNextResult(from: Int, query: String): Int {
+        Timber.i("findNextResult -> targetEditTextText=$targetEditTextText from=$from query=$query")
+
+        // nothing found
+        if (query.isEmpty())
+            return -1
+
+        var queryI = 0
+        for (targetI in from until targetEditTextText.length) {
+            if (queryI == query.length) {
+                return targetI - query.length
+            }
+
+            val targetChar = targetEditTextText[targetI]
+            val queryChar = query[queryI]
+            if (targetChar == queryChar) {
+                queryI++
+            }
+        }
+
+        return -1 // nothing found
+    }
+
+    private fun findPrevResult(to: Int, query: String): Int {
+        Timber.i("findPrevResult -> targetEditTextText=$targetEditTextText to=$to query=$query")
+
+        // nothing found
+        if (query.isEmpty())
+            return -1
+
+        var queryI = query.length - 1
+        for (targetI in to downTo 0) {
+            if (queryI == -1) {
+                return targetI + 1
+            }
+
+            val targetChar = targetEditTextText[targetI]
+            val queryChar = query[queryI]
+            if (targetChar == queryChar) {
+                queryI--
+            }
+        }
+
+        return -1 // nothing found
     }
 }
