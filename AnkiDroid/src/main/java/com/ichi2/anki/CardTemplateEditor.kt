@@ -314,6 +314,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private lateinit var mTemplateEditor: CardTemplateEditor
         private var mTabLayoutMediator: TabLayoutMediator? = null
 
+        private lateinit var editTextSearchbar: EditTextSearchbar
+
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             // Storing a reference to the templateEditor allows us to use member variables
             mTemplateEditor = activity as CardTemplateEditor
@@ -489,7 +491,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             val mToolbarSearchView = toolbarSearchItem.actionView as SearchView
             mToolbarSearchView.queryHint = getString(R.string.search_template)
 
-            val editTextSearchbar = EditTextSearchbar(
+            editTextSearchbar = EditTextSearchbar(
                 mToolbarSearchView,
                 mEditorEditText,
                 menu.findItem(R.id.action_find_next),
@@ -604,6 +606,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 Timber.i("CardTemplateEditor::Card Browser Template button pressed")
                 val currentTemplate = getCurrentTemplate()
                 currentTemplate?.let { launchCardBrowserAppearance(it) }
+                return super.onOptionsItemSelected(item)
+            } else if (itemId == R.id.action_find_next) {
+                editTextSearchbar.nextButtonOnClick()
+                return super.onOptionsItemSelected(item)
+            } else if (itemId == R.id.action_find_prev) {
+                editTextSearchbar.prevButtonOnClick()
                 return super.onOptionsItemSelected(item)
             } else if (itemId == R.id.action_case_sensitive) {
                 item.isChecked = !item.isChecked
