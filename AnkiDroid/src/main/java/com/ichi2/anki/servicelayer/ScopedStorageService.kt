@@ -187,7 +187,7 @@ object ScopedStorageService {
      */
     @VisibleForTesting
     internal fun getBestDefaultRootDirectory(context: Context, templatePath: File): File {
-        // List of external paths. Sorted by length to ensure if an external directory if a prefix of another one, it appears first.
+        // List of external paths.
         val externalPaths = CollectionHelper.getAppSpecificExternalDirectories(context)
             .map { it.canonicalFile }
 
