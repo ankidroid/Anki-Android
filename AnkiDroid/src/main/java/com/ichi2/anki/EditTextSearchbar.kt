@@ -24,20 +24,15 @@ class EditTextSearchbar(
         querySearchbar.setOnQueryTextListener(this)
         targetEditText.addTextChangedListener(this)
 
-        querySearchbar.setOnSearchClickListener { setIconsVisibility(true) }
-        querySearchbar.setOnCloseListener { setIconsVisibility(false) }
-
         targetEditTextText = targetEditText.text.toString()
     }
 
-    private fun setIconsVisibility(visibility: Boolean): Boolean {
-        Timber.d("setIconsVisibility")
-
+    fun setIconsVisibility(visibility: Boolean): Boolean {
         findNextButton.isVisible = visibility
         findPrevButton.isVisible = visibility
         toggleCaseSensitivityButton.isVisible = visibility
 
-        return false
+        return true
     }
 
     override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {

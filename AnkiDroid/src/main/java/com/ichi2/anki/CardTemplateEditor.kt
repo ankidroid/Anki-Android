@@ -489,13 +489,23 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             val mToolbarSearchView = toolbarSearchItem.actionView as SearchView
             mToolbarSearchView.queryHint = getString(R.string.search_template)
 
-            EditTextSearchbar(
+            val editTextSearchbar = EditTextSearchbar(
                 mToolbarSearchView,
                 mEditorEditText,
                 menu.findItem(R.id.action_find_next),
                 menu.findItem(R.id.action_find_prev),
                 menu.findItem(R.id.action_case_sensitive)
-            ).setupListeners()
+            )
+            editTextSearchbar.setupListeners()
+            toolbarSearchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+                override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                    return editTextSearchbar.setIconsVisibility(true)
+                }
+
+                override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                    return editTextSearchbar.setIconsVisibility(false)
+                }
+            })
 
             if (mTemplateEditor.tempModel!!.model.isCloze) {
                 Timber.d("Editing cloze model, disabling add/delete card template and deck override functionality")
