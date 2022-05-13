@@ -121,7 +121,11 @@ ext {
     // Virtualized Environment like CI may report host CPU counts vs guest, but runs 2 cores
     // everyone else gets 50% of cores to account for SMT which doesn't help this workload
     gradleTestMaxParallelForks = 1
-    if (!ciBuild) {
+    if (System.getProperty("os.name") == "Mac OS X") {
+        // macOS reports hardware cores. This is accurate for CI, Intel (halved due to SMT) and Apple Silicon
+        gradleTestMaxParallelForks = "sysctl -n hw.physicalcpu".execute().text.toInteger()
+    } else if (!ciBuild) {
+        // Use 50% of cores to account for SMT which doesn't help this workload
         gradleTestMaxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     }
 }
