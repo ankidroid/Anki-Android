@@ -79,7 +79,7 @@ class EditTextSearchbar(
     override fun onQueryTextSubmit(query: String): Boolean {
         queryText = query
         // search for matches from targetEditTextSelection to end
-        // if none found, look for one from start to targetEditTextSelection-1
+        // if none found, look for one from start to targetEditTextSelection
         // if none found, look for one start to end
         if (fromTargetEditTextSelection(query) == -1) {
             if (toTargetEditTextSelection(query) == -1) {
@@ -91,14 +91,14 @@ class EditTextSearchbar(
 
     fun reverseSearch(query: String): Boolean {
         queryText = query
-        // search for matches from start to targetEditTextSelection-1
-        // if none found, look for one from targetEditTextSelection to end
+        // search for matches from targetEditTextSelection to start
+        // if none found, look for one from end to targetEditTextSelection
         // if none found, look for one start to end
         if (toTargetEditTextSelection(query) == -1) {
             // in case currently on first found substring, prevents same substring being selected again
-            targetEditTextSelection++
+            targetEditTextSelection = targetEditTextText.length
 
-            if (fromTargetEditTextSelection(query) == -1) {
+            if (toTargetEditTextSelection(query) == -1) {
                 fromStartToEnd(query)
             }
         }
