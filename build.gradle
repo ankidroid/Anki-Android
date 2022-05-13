@@ -54,8 +54,6 @@ subprojects {
 
                 maxParallelForks = gradleTestMaxParallelForks
                 forkEvery = 40
-                maxHeapSize = "2048m"
-                minHeapSize = "1024m"
                 systemProperties['junit.jupiter.execution.parallel.enabled'] = true
                 systemProperties['junit.jupiter.execution.parallel.mode.default'] = "concurrent"
             }
