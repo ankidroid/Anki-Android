@@ -219,7 +219,6 @@ object ScopedStorageService {
 
         return templatePath.getParentsAndSelfRecursive()
             .firstNotNullOfOrNull { parent -> parentToSharedDirectoryPath.getOrDefault(parent, null) }!!
-        // ?: externalPaths.first()
     }
 
     /**
