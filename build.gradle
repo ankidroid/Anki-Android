@@ -118,15 +118,17 @@ ext {
     // allows for universal APKs to be generated
     universalApkEnabled = "true" == System.getProperty("universal-apk", "false")
 
-    // Virtualized Environment like CI may report host CPU counts vs guest, but runs 2 cores
-    // everyone else gets 50% of cores to account for SMT which doesn't help this workload
-    gradleTestMaxParallelForks = 1
     if (System.getProperty("os.name") == "Mac OS X") {
         // macOS reports hardware cores. This is accurate for CI, Intel (halved due to SMT) and Apple Silicon
         gradleTestMaxParallelForks = "sysctl -n hw.physicalcpu".execute().text.toInteger()
-    } else if (!ciBuild) {
+    } else if (ciBuild) {
+        // GitHub Actions (Standard_DS2_v2) are 1:1 on Linux/Windows with two vCPU cores
+        // Sources:
+        // Standard_DS2_v2 https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#cloud-hosts-for-github-hosted-runners
+        // Which is 1:1 https://docs.microsoft.com/en-gb/azure/virtual-machines/acu : DS1_v2 - DS15_v2 | 1:1
+        gradleTestMaxParallelForks = 2
+    } else {
         // Use 50% of cores to account for SMT which doesn't help this workload
         gradleTestMaxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     }
 }
-
