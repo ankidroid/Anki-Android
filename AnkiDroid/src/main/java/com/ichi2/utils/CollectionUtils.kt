@@ -35,4 +35,18 @@ object CollectionUtils {
             c.add(elt)
         }
     }
+
+    /**
+     * Given an array: `[A, B, C]`, returns `[[A, B], [A, C], [B, C]]`
+     * @return Each pair `[A, B]` for `A` occurring before `B` in the input list.
+     */
+    fun <T> List<T>.combinations(): Sequence<Pair<T, T>> = sequence {
+        this@combinations.let { list ->
+            for (i in 0 until list.size - 1) {
+                for (j in i + 1 until list.size) {
+                    yield(Pair(list[i], list[j]))
+                }
+            }
+        }
+    }
 }

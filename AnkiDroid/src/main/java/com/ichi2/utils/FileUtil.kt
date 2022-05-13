@@ -154,4 +154,29 @@ object FileUtil {
         return dir.listFiles()
             ?: throw IOException("Failed to list the contents of '$dir'")
     }
+
+    /**
+     * Returns a sequence containing the provided file, and its parents
+     * up to the root of the filesystem.
+     */
+    fun File.getParentsAndSelfRecursive() = sequence {
+        var currentPath: File? = this@getParentsAndSelfRecursive.canonicalFile
+        while (currentPath != null) {
+            yield(currentPath)
+            currentPath = currentPath.parentFile?.canonicalFile
+        }
+    }
+
+    fun File.isDescendantOf(ancestor: File) = this.getParentsAndSelfRecursive().drop(1).contains(ancestor)
+    fun File.isAncestorOf(descendant: File) = descendant.isDescendantOf(this)
+
+    fun getDepth(fileParam: File): Int {
+        var file: File? = fileParam
+        var depth = 0
+        while (file != null) {
+            file = file.parentFile
+            depth++
+        }
+        return depth
+    }
 }
