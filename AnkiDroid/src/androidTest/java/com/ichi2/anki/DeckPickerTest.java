@@ -155,6 +155,7 @@ public class DeckPickerTest {
     public void deckNormalCreationAndDeletionMakesSearchDecksIconVisible() {
         // Run the test only on emulator.
         assumeTrue(InstrumentedTest.isEmulator());
+        assumeFalse("Test flaky in CI - #9282, skipping", TestUtils.wasBuiltOnCI());
         deleteAllDecks();
 
         int iconId = R.id.deck_picker_action_filter;
@@ -176,6 +177,7 @@ public class DeckPickerTest {
     public void subdeckCreationAndDeletionMakesSearchDecksIconVisible() {
         // Run the test only on emulator.
         assumeTrue(InstrumentedTest.isEmulator());
+        assumeFalse("Test flaky in CI - #9282, skipping", TestUtils.wasBuiltOnCI());
         deleteAllDecks();
 
         int iconId = R.id.deck_picker_action_filter;
