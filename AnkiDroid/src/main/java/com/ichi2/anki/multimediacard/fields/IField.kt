@@ -16,77 +16,56 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.multimediacard.fields
 
-package com.ichi2.anki.multimediacard.fields;
-
-import com.ichi2.libanki.Collection;
-
-import java.io.Serializable;
-
-import androidx.annotation.Nullable;
+import com.ichi2.libanki.Collection
+import com.ichi2.utils.KotlinCleanup
+import java.io.Serializable
 
 /**
  * General interface for a field of any type.
  */
-public interface IField extends Serializable {
-    EFieldType getType();
+interface IField : Serializable {
 
-    boolean isModified();
+    val type: EFieldType
+
+    val isModified: Boolean
 
     // For image type. Resets type.
     // Makes no sense to call when type is not image.
     // the same for other groups below.
-    void setImagePath(String pathToImage);
-
-
-    String getImagePath();
-
+    var imagePath: String?
 
     // For Audio type
-    void setAudioPath(@Nullable String pathToAudio);
-
-    @Nullable
-    String getAudioPath();
-
+    var audioPath: String?
 
     // For Text type
-    @Nullable
-    String getText();
-
-
-    void setText(String text);
-
+    var text: String?
 
     /**
      * Mark if the current media path is temporary and if it should be deleted once the media has been processed.
-     * 
+     *
      * @param hasTemporaryMedia True if the media is temporary, False if it is existing media.
      * @return
      */
-    void setHasTemporaryMedia(boolean hasTemporaryMedia);
+    @KotlinCleanup("turn set/hasTemporaryMedia into a property")
+    fun setHasTemporaryMedia(hasTemporaryMedia: Boolean)
 
+    fun hasTemporaryMedia(): Boolean
 
-    boolean hasTemporaryMedia();
-
-
-    String getName();
-
-
-    void setName(String name);
-
+    var name: String?
 
     /**
      * Returns the formatted value for this field. Each implementation of IField should return in a format which will be
      * used to store in the database
-     * 
+     *
      * @return
      */
-    String getFormattedValue();
-
+    val formattedValue: String?
 
     /**
      * @param col Collection - bad abstraction, used to obtain media directory only.
      * @param value The HTML to send to the field.
      */
-    void setFormattedString(Collection col, String value);
+    fun setFormattedString(col: Collection?, value: String)
 }
