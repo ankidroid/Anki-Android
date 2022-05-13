@@ -41,7 +41,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.END
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -489,7 +489,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             val mToolbarSearchView = toolbarSearchItem.actionView as SearchView
             mToolbarSearchView.queryHint = getString(R.string.search_template)
 
-            EditTextSearchbar(mToolbarSearchView, mEditorEditText).setupListeners()
+            EditTextSearchbar(
+                mToolbarSearchView,
+                mEditorEditText,
+                menu.findItem(R.id.action_find_next),
+                menu.findItem(R.id.action_find_prev),
+                menu.findItem(R.id.action_case_sensitive)
+            ).setupListeners()
 
             if (mTemplateEditor.tempModel!!.model.isCloze) {
                 Timber.d("Editing cloze model, disabling add/delete card template and deck override functionality")
@@ -588,6 +594,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 Timber.i("CardTemplateEditor::Card Browser Template button pressed")
                 val currentTemplate = getCurrentTemplate()
                 currentTemplate?.let { launchCardBrowserAppearance(it) }
+                return super.onOptionsItemSelected(item)
+            } else if (itemId == R.id.action_case_sensitive) {
+                item.isChecked = !item.isChecked
                 return super.onOptionsItemSelected(item)
             }
             return super.onOptionsItemSelected(item)
