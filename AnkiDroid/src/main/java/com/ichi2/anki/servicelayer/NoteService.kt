@@ -123,8 +123,6 @@ object NoteService {
             EFieldType.IMAGE -> tmpMediaPath = field.imagePath
             EFieldType.TEXT -> {
             }
-            else -> {
-            }
         }
         if (tmpMediaPath != null) {
             try {

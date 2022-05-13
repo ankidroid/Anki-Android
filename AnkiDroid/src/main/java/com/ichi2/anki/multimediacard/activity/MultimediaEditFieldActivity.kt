@@ -200,7 +200,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
                 bChangeToText = true
             }
             if (!bChangeToText) {
-                val f = File(mField!!.imagePath)
+                val f = File(mField!!.imagePath!!)
                 if (!f.exists()) {
                     bChangeToText = true
                 } else {

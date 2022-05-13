@@ -36,36 +36,22 @@ class ImageField : FieldBase(), IField {
     var extraImagePathRef: String? = null
     private var mHasTemporaryMedia = false
     private var mName: String? = null
-    override fun getType(): EFieldType {
-        return EFieldType.IMAGE
-    }
 
-    override fun isModified(): Boolean {
-        return thisModified
-    }
+    override val type: EFieldType = EFieldType.IMAGE
 
-    override fun setImagePath(pathToImage: String) {
-        extraImagePathRef = pathToImage
-        setThisModified()
-    }
+    override val isModified: Boolean
+        get() = thisModified
 
-    override fun getImagePath(): String? {
-        return extraImagePathRef
-    }
+    override var imagePath: String?
+        get() = extraImagePathRef
+        set(value) {
+            extraImagePathRef = value
+            setThisModified()
+        }
 
-    override fun setAudioPath(pathToAudio: String?) {
-    }
+    override var audioPath: String? = null
 
-    override fun getAudioPath(): String? {
-        return null
-    }
-
-    override fun getText(): String? {
-        return null
-    }
-
-    override fun setText(text: String) {
-    }
+    override var text: String? = null
 
     override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
         mHasTemporaryMedia = hasTemporaryMedia
@@ -75,20 +61,19 @@ class ImageField : FieldBase(), IField {
         return mHasTemporaryMedia
     }
 
-    override fun getName(): String {
-        return mName!!
-    }
+    override var name: String?
+        get() = mName
+        set(value) {
+            mName = value
+        }
 
-    override fun setName(name: String) {
-        mName = name
-    }
+    override val formattedValue: String
+        get() {
+            val file = File(imagePath!!)
+            return formatImageFileName(file)
+        }
 
-    override fun getFormattedValue(): String {
-        val file = File(getImagePath()!!)
-        return formatImageFileName(file)
-    }
-
-    override fun setFormattedString(col: Collection, value: String) {
+    override fun setFormattedString(col: Collection?, value: String) {
         extraImagePathRef = getImageFullPath(col, value)
     }
 
@@ -105,12 +90,12 @@ class ImageField : FieldBase(), IField {
 
         @VisibleForTesting
         @KotlinCleanup("remove ? from value")
-        fun getImageFullPath(col: Collection, value: String?): String {
+        fun getImageFullPath(col: Collection?, value: String?): String {
             val path = parseImageSrcFromHtml(value)
             if ("" == path) {
                 return ""
             }
-            val mediaDir = col.media.dir() + "/"
+            val mediaDir = col!!.media.dir() + "/"
             return mediaDir + path
         }
 
