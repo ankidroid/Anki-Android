@@ -17,7 +17,6 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.tests.InstrumentedTest
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Test
@@ -25,7 +24,6 @@ import org.junit.runner.RunWith
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("is --> equalTo")
 class DBTest : InstrumentedTest() {
     /** mDatabase.disableWriteAheadLogging(); is called in DB init  */
     @Test
