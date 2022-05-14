@@ -39,6 +39,7 @@ import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.servicelayer.ComputeResult
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.*
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
@@ -321,6 +322,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     // This will allow a maximum of one recur in order to workaround database closes
     // caused by sync on startup where this might be running then have the collection close
+    @NeedsTest("test whether the navigationIcon and navigationOnClickListener are set properly")
     private fun configureToolbarInternal(recur: Boolean) {
         Timber.i("configureToolbarInternal()")
         try {
