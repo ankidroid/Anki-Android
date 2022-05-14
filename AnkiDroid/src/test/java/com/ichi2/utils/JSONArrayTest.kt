@@ -39,8 +39,6 @@ import kotlin.test.assertNull
  */
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-@KotlinCleanup("Use Kotlin's function instead of Arrays.asList")
-@KotlinCleanup("rename variables named object")
 @KotlinCleanup("have toJSONObject return non-null")
 class JSONArrayTest {
     @Test
@@ -303,7 +301,7 @@ class JSONArrayTest {
         assertEquals("null & \"\\\"\" & 5", array.join(" & "))
         array.put(true)
         assertEquals("null & \"\\\"\" & 5 & true", array.join(" & "))
-        array.put(JSONArray(Arrays.asList(true, false)))
+        array.put(JSONArray(mutableListOf(true, false)))
         assertEquals("null & \"\\\"\" & 5 & true & [true,false]", array.join(" & "))
         array.put(JSONObject(Collections.singletonMap("x", 6)))
         assertEquals("null & \"\\\"\" & 5 & true & [true,false] & {\"x\":6}", array.join(" & "))
@@ -311,13 +309,13 @@ class JSONArrayTest {
 
     @Test
     fun testJoinWithNull() {
-        val array = JSONArray(Arrays.asList(5, 6))
+        val array = JSONArray(mutableListOf(5, 6))
         assertEquals("5null6", array.join(null))
     }
 
     @Test
     fun testJoinWithSpecialCharacters() {
-        val array = JSONArray(Arrays.asList(5, 6))
+        val array = JSONArray(mutableListOf(5, 6))
         assertEquals("5\"6", array.join("\""))
     }
 
@@ -329,12 +327,12 @@ class JSONArrayTest {
         val values = JSONArray()
         values.put(5.5)
         values.put(false)
-        val `object` = values.toJSONObject(keys)
-        assertEquals(5.5, `object`!!["a"])
-        assertEquals(false, `object`["b"])
+        val value = values.toJSONObject(keys)
+        assertEquals(5.5, value!!["a"])
+        assertEquals(false, value["b"])
         keys.put(0, "a")
         values.put(0, 11.0)
-        assertEquals(5.5, `object`["a"])
+        assertEquals(5.5, value["a"])
     }
 
     @Test
@@ -346,10 +344,10 @@ class JSONArrayTest {
         values.put(5.5)
         values.put(null)
         // null values are stripped!
-        val `object` = values.toJSONObject(keys)
-        assertEquals(1, `object`!!.length())
-        assertFalse(`object`.has("b"))
-        assertEquals("{\"a\":5.5}", `object`.toString())
+        val value = values.toJSONObject(keys)
+        assertEquals(1, value!!.length())
+        assertFalse(value.has("b"))
+        assertEquals("{\"a\":5.5}", value.toString())
     }
 
     @Test
@@ -359,9 +357,9 @@ class JSONArrayTest {
         keys.put("b")
         val values = JSONArray()
         values.put(5.5)
-        val `object` = values.toJSONObject(keys)
-        assertEquals(1, `object`!!.length())
-        assertEquals(5.5, `object`["a"])
+        val value = values.toJSONObject(keys)
+        assertEquals(1, value!!.length())
+        assertEquals(5.5, value["a"])
     }
 
     @Test
@@ -371,9 +369,9 @@ class JSONArrayTest {
         val values = JSONArray()
         values.put(5.5)
         values.put(11.0)
-        val `object` = values.toJSONObject(keys)
-        assertEquals(1, `object`!!.length())
-        assertEquals(5.5, `object`["a"])
+        val value = values.toJSONObject(keys)
+        assertEquals(1, value!!.length())
+        assertEquals(5.5, value["a"])
     }
 
     @Test
@@ -382,9 +380,9 @@ class JSONArrayTest {
         keys.put(JSONObject.NULL)
         val values = JSONArray()
         values.put(5.5)
-        val `object` = values.toJSONObject(keys)
-        assertEquals(1, `object`!!.length())
-        assertEquals(5.5, `object`["null"])
+        val value = values.toJSONObject(keys)
+        assertEquals(1, value!!.length())
+        assertEquals(5.5, value["null"])
     }
 
     @Test
@@ -426,7 +424,7 @@ class JSONArrayTest {
      */
     @Test
     fun testCreateWithUnsupportedNumbers() {
-        val array = JSONArray(Arrays.asList(5.5, Double.NaN))
+        val array = JSONArray(mutableListOf(5.5, Double.NaN))
         assertEquals(2, array.length())
         assertEquals(5.5, array.getDouble(0), 0.0)
         assertEquals(Double.NaN, array.getDouble(1), 0.0)
@@ -435,13 +433,13 @@ class JSONArrayTest {
     @Test
     fun testToStringWithUnsupportedNumbers() {
         // when the array contains an unsupported number, toString returns null!
-        val array = JSONArray(Arrays.asList(5.5, Double.NaN))
+        val array = JSONArray(mutableListOf(5.5, Double.NaN))
         assertNull(array.toString())
     }
 
     @Test
     fun testListConstructorCopiesContents() {
-        val contents = Arrays.asList<Any?>(5)
+        val contents = mutableListOf<Any?>(5)
         val array = JSONArray(contents)
         contents[0] = 10
         assertEquals(5, array[0])
@@ -449,9 +447,9 @@ class JSONArrayTest {
 
     @Test
     fun testTokenerConstructor() {
-        val `object` = JSONArray(JSONTokener("[false]"))
-        assertEquals(1, `object`.length())
-        assertEquals(false, `object`[0])
+        val value = JSONArray(JSONTokener("[false]"))
+        assertEquals(1, value.length())
+        assertEquals(false, value[0])
     }
 
     @Test
@@ -485,9 +483,9 @@ class JSONArrayTest {
 
     @Test
     fun testStringConstructor() {
-        val `object` = JSONArray("[false]")
-        assertEquals(1, `object`.length())
-        assertEquals(false, `object`[0])
+        val value = JSONArray("[false]")
+        assertEquals(1, value.length())
+        assertEquals(false, value[0])
     }
 
     @Test
@@ -521,7 +519,7 @@ class JSONArrayTest {
 
     @Test
     fun testCreate() {
-        val array = JSONArray(Arrays.asList(5.5, true))
+        val array = JSONArray(mutableListOf(5.5, true))
         assertEquals(2, array.length())
         assertEquals(5.5, array.getDouble(0), 0.0)
         assertEquals(true, array[1])
