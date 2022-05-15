@@ -13,30 +13,26 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import kotlin.jvm.Throws
 
+/** TODO: Move this to standard library in API 24  */
+@KotlinCleanup("try to improve the generic code with in/out declarations for generic type parameters")
+class FunctionalInterfaces {
 
-import androidx.annotation.NonNull;
-
-/** TODO: Move this to standard library in API 24 */
-public final class FunctionalInterfaces {
-
-    @FunctionalInterface
-    public interface FunctionThrowable<TIn, TOut, TEx extends Throwable> {
-        TOut apply(TIn item) throws TEx;
+    fun interface FunctionThrowable<TIn, TOut> {
+        @Throws(JSONException::class)
+        fun apply(item: TIn): TOut
     }
 
-    @FunctionalInterface
-    public interface Filter<TIn> {
-        @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-        boolean shouldInclude(TIn item);
+    fun interface Filter<TIn> {
+        fun shouldInclude(item: TIn): Boolean
     }
 
-    public static class Filters {
-        @NonNull
-        public static <T> Filter<T> allowAll() {
-            return (a) -> true;
+    object Filters {
+        fun <T> allowAll(): Filter<T> {
+            return Filter { true }
         }
     }
 }

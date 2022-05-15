@@ -1510,7 +1510,7 @@ open class Collection @VisibleForTesting constructor(
         // a few fixes are in all-models loops, the rest are one-offs
         val totalTasks = models.all().size * 4 + 27
         val notifyProgress = Runnable { fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks) }
-        val executeIntegrityTask = Consumer { function: FunctionalInterfaces.FunctionThrowable<Runnable, List<String?>?, JSONException?> ->
+        val executeIntegrityTask = Consumer { function: FunctionalInterfaces.FunctionThrowable<Runnable, List<String?>?> ->
             // DEFECT: notifyProgress will lag if an exception is thrown.
             try {
                 db.database.beginTransaction()
