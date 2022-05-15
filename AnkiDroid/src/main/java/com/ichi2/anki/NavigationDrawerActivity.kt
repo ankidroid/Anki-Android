@@ -29,6 +29,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -228,23 +229,18 @@ abstract class NavigationDrawerActivity :
         }
     }
 
-    @Suppress("deprecation") // onActivityResult()
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    private val mPreferencesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val preferences = preferences
-        Timber.i("Handling Activity Result: %d. Result: %d", requestCode, resultCode)
+        Timber.i("Handling Activity Result: %d. Result: %d", REQUEST_PREFERENCES_UPDATE, result.resultCode)
         NotificationChannels.setup(applicationContext)
         // Restart the activity on preference change
-        if (requestCode == REQUEST_PREFERENCES_UPDATE) {
-            // collection path hasn't been changed so just restart the current activity
-            if (this is Reviewer && preferences.getBoolean("tts", false)) {
-                // Workaround to kick user back to StudyOptions after opening settings from Reviewer
-                // because onDestroy() of old Activity interferes with TTS in new Activity
-                finishWithoutAnimation()
-            } else {
-                restartActivity()
-            }
+        // collection path hasn't been changed so just restart the current activity
+        if (this is Reviewer && preferences.getBoolean("tts", false)) {
+            // Workaround to kick user back to StudyOptions after opening settings from Reviewer
+            // because onDestroy() of old Activity interferes with TTS in new Activity
+            finishWithoutAnimation()
         } else {
-            super.onActivityResult(requestCode, resultCode, data)
+            restartActivity()
         }
     }
 
@@ -299,7 +295,7 @@ abstract class NavigationDrawerActivity :
                 startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START)
             } else if (itemId == R.id.nav_settings) {
                 Timber.i("Navigating to settings")
-                startActivityForResultWithAnimation(Intent(this@NavigationDrawerActivity, Preferences::class.java), REQUEST_PREFERENCES_UPDATE, FADE)
+                launchActivityForResultWithAnimation(Intent(this@NavigationDrawerActivity, Preferences::class.java), mPreferencesLauncher, FADE)
                 // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
                 (this as? Statistics)?.finishWithAnimation(FADE)
             } else if (itemId == R.id.nav_help) {
