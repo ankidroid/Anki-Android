@@ -41,7 +41,7 @@ class CardTemplateEditorSearchTest() : RobolectricTest() {
         get() = shadowEditor.optionsMenu.findItem(R.id.action_find_next)
     private val prevIcon: MenuItem
         get() = shadowEditor.optionsMenu.findItem(R.id.action_find_prev)
-    private val caseSensitivityIcon: MenuItem
+    private val caseSensitiveIcon: MenuItem
         get() = shadowEditor.optionsMenu.findItem(R.id.action_case_sensitive)
 
     @Before
@@ -55,17 +55,17 @@ class CardTemplateEditorSearchTest() : RobolectricTest() {
 
     @Test
     fun searchIconsVisibilityTest() {
-        assertTrue(arrayOf(nextIcon, prevIcon, caseSensitivityIcon).map { it.isVisible }.all { false })
+        assertTrue(arrayOf(nextIcon, prevIcon, caseSensitiveIcon).map { it.isVisible }.all { !it })
 
         searchIcon.expandActionView()
         advanceRobolectricLooperWithSleep()
 
-        assertTrue(arrayOf(nextIcon, prevIcon, caseSensitivityIcon).map { it.isVisible }.all { true })
+        assertTrue(arrayOf(nextIcon, prevIcon, caseSensitiveIcon).map { it.isVisible }.all { it })
 
         searchIcon.collapseActionView()
         advanceRobolectricLooperWithSleep()
 
-        assertTrue(arrayOf(nextIcon, prevIcon, caseSensitivityIcon).map { it.isVisible }.all { false })
+        assertTrue(arrayOf(nextIcon, prevIcon, caseSensitiveIcon).map { it.isVisible }.all { !it })
     }
 
     /**
