@@ -228,6 +228,92 @@ class CardTemplateEditorSearchTest() : RobolectricTest() {
     }
 
     @Test
-    fun changeCaseSensitivityWhileNextAndPrevTest() {
+    fun changeCaseSensitivityBetweenNextTest() {
+        val modelText = "ff ff ff"
+        editTextSearchbar.targetEditText.setText(modelText)
+
+        // open search
+        searchIcon.expandActionView()
+
+        caseSensitiveIcon.isChecked = true
+        assertTrue(caseSensitiveIcon.isChecked)
+        assertTrue(editTextSearchbar.caseSensitive)
+
+        editTextSearchbar.querySearchbar.setQuery("ff", true)
+
+        assertEquals(0, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(2, editTextSearchbar.targetEditText.selectionEnd)
+
+        shadowEditor.clickMenuItem(R.id.action_find_next)
+
+        assertEquals(3, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(5, editTextSearchbar.targetEditText.selectionEnd)
+
+        caseSensitiveIcon.isChecked = false
+        assertFalse(caseSensitiveIcon.isChecked)
+        assertFalse(editTextSearchbar.caseSensitive)
+
+        editTextSearchbar.querySearchbar.setQuery("fF", false)
+
+        shadowEditor.clickMenuItem(R.id.action_find_next)
+
+        assertEquals(6, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(8, editTextSearchbar.targetEditText.selectionEnd)
+
+        caseSensitiveIcon.isChecked = true
+        assertTrue(caseSensitiveIcon.isChecked)
+        assertTrue(editTextSearchbar.caseSensitive)
+
+        editTextSearchbar.querySearchbar.setQuery("fF", false)
+
+        shadowEditor.clickMenuItem(R.id.action_find_next)
+
+        assertEquals(modelText.length, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(modelText.length, editTextSearchbar.targetEditText.selectionEnd)
+    }
+
+    @Test
+    fun changeCaseSensitivityBetweenPrevTest() {
+        val modelText = "ff ff ff"
+        editTextSearchbar.targetEditText.setText(modelText)
+
+        // open search
+        searchIcon.expandActionView()
+
+        caseSensitiveIcon.isChecked = true
+        assertTrue(caseSensitiveIcon.isChecked)
+        assertTrue(editTextSearchbar.caseSensitive)
+
+        editTextSearchbar.querySearchbar.setQuery("ff", true)
+
+        assertEquals(0, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(2, editTextSearchbar.targetEditText.selectionEnd)
+
+        shadowEditor.clickMenuItem(R.id.action_find_prev)
+
+        assertEquals(6, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(8, editTextSearchbar.targetEditText.selectionEnd)
+
+        caseSensitiveIcon.isChecked = false
+        assertFalse(caseSensitiveIcon.isChecked)
+        assertFalse(editTextSearchbar.caseSensitive)
+
+        editTextSearchbar.querySearchbar.setQuery("fF", false)
+
+        shadowEditor.clickMenuItem(R.id.action_find_prev)
+
+        assertEquals(3, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(5, editTextSearchbar.targetEditText.selectionEnd)
+
+        caseSensitiveIcon.isChecked = true
+        assertTrue(caseSensitiveIcon.isChecked)
+        assertTrue(editTextSearchbar.caseSensitive)
+
+        editTextSearchbar.querySearchbar.setQuery("fF", false)
+
+        shadowEditor.clickMenuItem(R.id.action_find_prev)
+
+        assertEquals(modelText.length, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(modelText.length, editTextSearchbar.targetEditText.selectionEnd)
     }
 }
