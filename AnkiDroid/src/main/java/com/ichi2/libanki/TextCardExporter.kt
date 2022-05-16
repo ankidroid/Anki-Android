@@ -10,33 +10,25 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import com.ichi2.utils.KotlinCleanup
+import java.io.BufferedWriter
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStreamWriter
+import java.nio.charset.StandardCharsets
+import java.util.*
 
-import androidx.annotation.NonNull;
-
-public class TextCardExporter extends Exporter {
-
-    public static final String EXT = ".txt";
-
-
-    public TextCardExporter(@NonNull Collection col, boolean includeHTML) {
-        super(col);
-        mIncludeHTML = includeHTML;
+@KotlinCleanup("add a default constructor for the class")
+class TextCardExporter : Exporter {
+    constructor(col: Collection, includeHTML: Boolean) : super(col) {
+        mIncludeHTML = includeHTML
     }
 
-
-    public TextCardExporter(@NonNull Collection col, @NonNull Long did, boolean includeHTML) {
-        super(col, did);
-        mIncludeHTML = includeHTML;
+    constructor(col: Collection, did: Long, includeHTML: Boolean) : super(col, did) {
+        mIncludeHTML = includeHTML
     }
-
 
     /**
      * Exports into a csv(tsv) file
@@ -44,25 +36,26 @@ public class TextCardExporter extends Exporter {
      * @param path path of the file
      * @throws IOException encountered an error while writing the csv file
      */
-    public void doExport(@NonNull String path) throws IOException {
-        final Long[] ids = cardIds();
-        Arrays.sort(ids);
-
-        final StringBuilder out = new StringBuilder();
-        for (Long cid : ids) {
-            final Card c = mCol.getCard(cid);
-            out.append(esc(c.q()));
-            out.append("\t");
-            out.append(esc(c.a()));
-            out.append("\n");
+    @Throws(IOException::class)
+    fun doExport(path: String) {
+        val ids = cardIds()
+        Arrays.sort(ids)
+        val out = StringBuilder()
+        for (cid in ids) {
+            val c = mCol.getCard(cid)
+            @KotlinCleanup("use a string template to reduce to a single append() call")
+            out.append(esc(c.q()))
+            out.append("\t")
+            out.append(esc(c.a()))
+            out.append("\n")
         }
-
-        try (BufferedWriter writer =
-                     new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8))) {
-            writer.write(out.toString());
-        }
+        BufferedWriter(
+            OutputStreamWriter(
+                FileOutputStream(path),
+                StandardCharsets.UTF_8
+            )
+        ).use { writer -> writer.write(out.toString()) }
     }
-
 
     /**
      * Strip off the repeated question in answer if exists
@@ -70,9 +63,12 @@ public class TextCardExporter extends Exporter {
      * @param s answer
      * @return stripped answer
      */
-    @NonNull
-    private String esc(@NonNull String s) {
-        s = s.replaceAll("(?si)^.*<hr id=answer>\\n*", "");
-        return processText(s);
+    private fun esc(s: String): String {
+        val str = s.replace("(?si)^.*<hr id=answer>\\n*".toRegex(), "")
+        return processText(str)
+    }
+
+    companion object {
+        const val EXT = ".txt"
     }
 }
