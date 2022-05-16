@@ -13,69 +13,68 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.utils
 
-package com.ichi2.utils;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.EmptyApplication
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.testutils.EmptyApplication;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-
-@RunWith(AndroidJUnit4.class)
-@Config(application = EmptyApplication.class)
-public class DiffEngineTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+@Config(application = EmptyApplication::class)
+class DiffEngineTest : RobolectricTest() {
     @Test
-    public void checkEscapedHtmlCharacters() {
+    fun checkEscapedHtmlCharacters() {
         // The HTML escaping that used to occur in 13c27a6a1fa8465cc6656c67bd9db25afc7a51fa (CompatV15.detagged)
         // This was the original intention of the escaping.
-        String input = "<>& \\ aa";
+        val input = "<>& \\ aa"
 
-        String output = DiffEngine.wrapMissing(input);
+        val output = DiffEngine.wrapMissing(input)
 
-        assertThat(output, containsString("&lt;&gt;&amp; &#x5c; aa"));
+        assertThat(output, containsString("&lt;&gt;&amp; &#x5c; aa"))
     }
 
     @Test
-    public void quoteEscaping() {
+    fun quoteEscaping() {
         // This is an interesting one - escaping a bare quote is not necessary but escaping a quote in an attribute is
         // A breakage here may be acceptable, but should flag the issue for investigation.
-        String input = "\"'";
+        val input = "\"'"
 
-        String output = DiffEngine.wrapMissing(input);
+        val output = DiffEngine.wrapMissing(input)
 
-        assertThat(output, containsString("&quot;&#39;"));
+        assertThat(output, containsString("&quot;&#39;"))
     }
 
     @Test
-    public void polytonicGreekIsNotEscaped() {
+    fun polytonicGreekIsNotEscaped() {
         // Implies too much escaping is being performed, which will degrade performance
         // Not required for #7896 - this behaviour could be reversed without negative impact.
-        String input = "αὐτός";
+        val input = "αὐτός"
 
-        String output = DiffEngine.wrapMissing(input);
+        val output = DiffEngine.wrapMissing(input)
 
-        assertThat("There were problems displaying 'ὐ' when output as &#8016;", output, containsString(input));
+        assertThat(
+            "There were problems displaying 'ὐ' when output as &#8016;",
+            output,
+            containsString(input)
+        )
     }
 
     @Test
-    public void combiningMarksGetSeparatedTest() {
-        DiffEngine diffEngine = new DiffEngine();
+    fun combiningMarksGetSeparatedTest() {
+        val diffEngine = DiffEngine()
 
-        String[] diffedHtmlStrings = diffEngine.diffedHtmlStrings("အခ်ျန်", "အချိန်");
+        val diffedHtmlStrings = diffEngine.diffedHtmlStrings("အခ်ျန်", "အချိန်")
 
-        String expectedTyped = "<span class=\"typeGood\">အခ</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeBad\">&nbsp;ိ</span><span class=\"typeGood\">န်</span>";
-        String expectedCorrect = "<span class=\"typeGood\">အခ</span><span class=\"typeMissed\">&nbsp;်</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeGood\">န်</span>";
+        val expectedTyped = "<span class=\"typeGood\">အခ</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeBad\">&nbsp;ိ</span><span class=\"typeGood\">န်</span>"
+        val expectedCorrect = "<span class=\"typeGood\">အခ</span><span class=\"typeMissed\">&nbsp;်</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeGood\">န်</span>"
 
-        assertEquals(expectedTyped, diffedHtmlStrings[0]);
-        assertEquals(expectedCorrect, diffedHtmlStrings[1]);
+        assertEquals(expectedTyped, diffedHtmlStrings[0])
+        assertEquals(expectedCorrect, diffedHtmlStrings[1])
     }
 }
