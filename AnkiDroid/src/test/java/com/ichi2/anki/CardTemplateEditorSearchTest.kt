@@ -100,6 +100,70 @@ class CardTemplateEditorSearchTest() : RobolectricTest() {
     }
 
     @Test
+    fun prevButtonTest() {
+        editTextSearchbar.targetEditText.setText("ff ff ff")
+
+        // open search
+        searchIcon.expandActionView()
+
+        editTextSearchbar.querySearchbar.setQuery("ff", true)
+        assertEquals(0, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(2, editTextSearchbar.targetEditText.selectionEnd)
+
+        shadowEditor.clickMenuItem(R.id.action_find_prev)
+
+        assertEquals(6, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(8, editTextSearchbar.targetEditText.selectionEnd)
+
+        shadowEditor.clickMenuItem(R.id.action_find_prev)
+
+        assertEquals(3, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(5, editTextSearchbar.targetEditText.selectionEnd)
+
+        shadowEditor.clickMenuItem(R.id.action_find_prev)
+
+        assertEquals(0, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(2, editTextSearchbar.targetEditText.selectionEnd)
+
+        // test start clicking "prev" from middle
+        editTextSearchbar.targetEditText.setText("ff ffa ff")
+
+        editTextSearchbar.querySearchbar.setQuery("ffa", true)
+        assertEquals(3, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(6, editTextSearchbar.targetEditText.selectionEnd)
+
+        editTextSearchbar.querySearchbar.setQuery("ff", false)
+        shadowEditor.clickMenuItem(R.id.action_find_prev)
+
+        assertEquals(0, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(2, editTextSearchbar.targetEditText.selectionEnd)
+
+        // test start clicking "prev" from end
+        editTextSearchbar.targetEditText.setText("ff ff ffa")
+
+        editTextSearchbar.querySearchbar.setQuery("ffa", true)
+        assertEquals(6, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(9, editTextSearchbar.targetEditText.selectionEnd)
+
+        editTextSearchbar.querySearchbar.setQuery("ff", false)
+        shadowEditor.clickMenuItem(R.id.action_find_prev)
+
+        assertEquals(3, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(5, editTextSearchbar.targetEditText.selectionEnd)
+
+        // test no prev result
+        editTextSearchbar.targetEditText.setText("ff ffa ff")
+
+        editTextSearchbar.querySearchbar.setQuery("ffa", true)
+        assertEquals(3, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(6, editTextSearchbar.targetEditText.selectionEnd)
+
+        shadowEditor.clickMenuItem(R.id.action_find_prev)
+        assertEquals(3, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(6, editTextSearchbar.targetEditText.selectionEnd)
+    }
+
+    @Test
     fun nextButtonTest() {
         editTextSearchbar.targetEditText.setText("ff ff ff")
 
@@ -161,5 +225,9 @@ class CardTemplateEditorSearchTest() : RobolectricTest() {
         shadowEditor.clickMenuItem(R.id.action_find_next)
         assertEquals(3, editTextSearchbar.targetEditText.selectionStart)
         assertEquals(6, editTextSearchbar.targetEditText.selectionEnd)
+    }
+
+    @Test
+    fun changeCaseSensitivityWhileNextAndPrevTest() {
     }
 }
