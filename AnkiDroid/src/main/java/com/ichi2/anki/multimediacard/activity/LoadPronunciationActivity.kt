@@ -30,9 +30,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus
-import com.ichi2.anki.runtimetools.TaskOperations.stopTaskGracefully
 import com.ichi2.anki.web.HttpFetcher.downloadFileToSdCard
 import com.ichi2.anki.web.HttpFetcher.fetchThroughHttp
+import com.ichi2.async.BaseCoroutinesTask
 import com.ichi2.async.Connection
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
@@ -131,7 +131,6 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     /**
      * @param v Start of the story.
      */
-    @Suppress("deprecation") // #7108: AsyncTask
     private fun onLoadPronunciation(@Suppress("UNUSED_PARAMETER") v: View?) {
         if (!Connection.isOnline()) {
             showToast(gtxt(R.string.network_no_connection))
@@ -156,8 +155,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
      * @author zaur This class is used two times. First time from Beolingus it requests a page with the word
      * translation. Second time it loads a page with the link to mp3 pronunciation file.
      */
-    @Suppress("deprecation") // #7108: AsyncTask
-    inner class BackgroundPost : android.os.AsyncTask<Void?, Void?, String?>() {
+    inner class BackgroundPost : BaseCoroutinesTask<Void?, Void?, String?>() {
         /**
          * @return Used to know, which of the posts finished, to differentiate.
          *
@@ -166,7 +164,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         var address: String? = null
 
         // private String mStopper;
-        override fun doInBackground(vararg p0: Void?): String {
+        override fun doInBackground(vararg params: Void?): String {
             // TMP CODE for quick testing
             // if (mAddress.contentEquals(mTranslationAddress))
             // {
@@ -192,11 +190,9 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     /**
      * @author zaur This is to load finally the MP3 file with pronunciation.
      */
-    @Suppress("deprecation") // #7108: AsyncTask
-
-    private inner class DownloadFileTask : android.os.AsyncTask<Void?, Void?, String?>() {
+    private inner class DownloadFileTask : BaseCoroutinesTask<Void?, Void?, String?>() {
         private lateinit var mAddress: String
-        override fun doInBackground(vararg p0: Void?): String {
+        override fun doInBackground(vararg params: Void?): String {
             return downloadFileToSdCard(mAddress, mActivity, "pronunc")
         }
 
@@ -209,7 +205,6 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         }
     }
 
-    @Suppress("deprecation") // #7108: AsyncTask
     protected fun processPostFinished(post: BackgroundPost, @Language("HTML") result: String) {
         if (mStopped) {
             return
@@ -247,7 +242,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         // Else
         // second call returned
         // This is a call when pronunciation page has been fetched.
-        // We chekc if mp3 file could be downloaded and download it.
+        // We check if mp3 file could be downloaded and download it.
         if (post.address.contentEquals(mPronunciationAddress)) {
             // else here = pronunciation post returned;
             mMp3Address = BeolingusParser.getMp3AddressFromPronunciation(result)
@@ -340,26 +335,26 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     override fun onCancel(dialog: DialogInterface) {
         mStopped = true
         hideProgressBar()
-        stopAllTasks()
+//        stopAllTasks()
         val resultData = Intent()
         setResult(RESULT_CANCELED, resultData)
         finish()
     }
 
-    @Suppress("deprecation") // #7108: AsyncTask
-    private fun stopAllTasks() {
-        var t: android.os.AsyncTask<*, *, *>? = mPostTranslation
-        stopTaskGracefully(t)
-        t = mPostPronunciation
-        stopTaskGracefully(t)
-        t = mDownloadMp3Task
-        stopTaskGracefully(t)
-    }
+//    @Suppress("deprecation") // #7108: AsyncTask
+//    private fun stopAllTasks() {
+//        var t: android.os.AsyncTask<*, *, *>? = mPostTranslation
+//        stopTaskGracefully(t)
+//        t = mPostPronunciation
+//        stopTaskGracefully(t)
+//        t = mDownloadMp3Task
+//        stopTaskGracefully(t)
+//    }
 
     override fun onPause() {
         super.onPause()
         hideProgressBar()
-        stopAllTasks()
+//        stopAllTasks()
     }
 
     private fun gtxt(id: Int): String {

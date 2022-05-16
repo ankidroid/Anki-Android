@@ -21,19 +21,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/** Complete class not yet implemented*/
 abstract class BaseCoroutinesTask<Params, Progress, Result> {
 
-//    open fun onPreExecute() {}
+    open fun onPreExecute() {}
 
     abstract fun onPostExecute(result: Result?)
 
-//    open fun onProgressUpdate(vararg values: Progress) {}
+    open fun onProgressUpdate(vararg values: Progress) {}
 
-//    open fun onCancelled(result: Boolean) {}
+    open fun onCancelled(result: Boolean) {}
 
     abstract fun doInBackground(vararg params: Params?): Result?
 
-//    open fun doProgress(value: Progress?) {}
+    open fun doProgress(value: Progress?) {}
 
 //    protected fun publishProgress(vararg values: Progress?) {}
 
@@ -47,7 +48,6 @@ abstract class BaseCoroutinesTask<Params, Progress, Result> {
         }
     }
 }
-
-// Need to implement
+//
 //    fun cancel(mayInterruptIfRunning: Boolean) {
 //    }
