@@ -13,48 +13,45 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.RunInBackground
+import com.ichi2.async.CollectionTask
+import com.ichi2.async.CollectionTask.CheckMedia
+import com.ichi2.async.TaskManager
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.util.concurrent.ExecutionException
 
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.RunInBackground;
-import com.ichi2.async.CollectionTask;
-import com.ichi2.async.TaskManager;
-import com.ichi2.utils.Computation;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-@RunWith(AndroidJUnit4.class)
-public class CheckMediaTest extends RobolectricTest {
-
-    @Override
-    protected boolean useInMemoryDatabase() {
-        return false;
+@KotlinCleanup("is -> equalTo")
+@RunWith(AndroidJUnit4::class)
+class CheckMediaTest : RobolectricTest() {
+    override fun useInMemoryDatabase(): Boolean {
+        return false
     }
 
-
-    @Test
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
+    @Test // #7108: AsyncTask
     @RunInBackground
-    public void checkMediaWorksAfterMissingMetaTable() throws ExecutionException, InterruptedException {
+    @Suppress("deprecation")
+    @Throws(ExecutionException::class, InterruptedException::class)
+    fun checkMediaWorksAfterMissingMetaTable() {
         // 7421
-        getCol().getMedia().getDb().getDatabase().execSQL("drop table meta");
-
-        assertThat(getCol().getMedia().getDb().queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"), is(0));
-
-        CollectionTask<Void, Computation<List<List<String>>>> task = (CollectionTask<Void, Computation<List<List<String>>>>) TaskManager.launchCollectionTask(new CollectionTask.CheckMedia());
-
-        task.get();
-
-        assertThat(getCol().getMedia().getDb().queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"), is(1));
+        col.media.db.database.execSQL("drop table meta")
+        assertThat(
+            col.media.db.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
+            `is`(0)
+        )
+        val task =
+            TaskManager.launchCollectionTask(CheckMedia()) as CollectionTask<*, *>
+        task.get()
+        assertThat(
+            col.media.db.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
+            `is`(1)
+        )
     }
 }
