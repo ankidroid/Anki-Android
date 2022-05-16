@@ -314,7 +314,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private lateinit var mTemplateEditor: CardTemplateEditor
         private var mTabLayoutMediator: TabLayoutMediator? = null
 
-        private lateinit var editTextSearchbar: EditTextSearchbar
+        @get:VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        lateinit var editTextSearchbar: EditTextSearchbar
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             // Storing a reference to the templateEditor allows us to use member variables
