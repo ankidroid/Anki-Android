@@ -138,11 +138,6 @@ class CardTemplateEditorSearchTest() : RobolectricTest() {
         assertEquals(7, editTextSearchbar.targetEditText.selectionStart)
         assertEquals(9, editTextSearchbar.targetEditText.selectionEnd)
 
-        shadowEditor.clickMenuItem(R.id.action_find_next)
-
-        assertEquals(0, editTextSearchbar.targetEditText.selectionStart)
-        assertEquals(2, editTextSearchbar.targetEditText.selectionEnd)
-
         // test start clicking "next" from end
         editTextSearchbar.targetEditText.setText("ff ff ffa")
 
