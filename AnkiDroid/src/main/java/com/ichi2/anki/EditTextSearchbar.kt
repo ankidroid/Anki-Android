@@ -20,14 +20,18 @@ package com.ichi2.anki
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
+import androidx.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting.PRIVATE
 import androidx.appcompat.widget.SearchView
 import com.ichi2.ui.FixedEditText
 import timber.log.Timber
 import kotlin.math.max
 
 class EditTextSearchbar(
-    private var querySearchbar: SearchView,
-    private var targetEditText: FixedEditText,
+    @get:VisibleForTesting(otherwise = PRIVATE)
+    var querySearchbar: SearchView,
+    @get:VisibleForTesting(otherwise = PRIVATE)
+    var targetEditText: FixedEditText,
     private var findNextButton: MenuItem,
     private var findPrevButton: MenuItem,
     private var toggleCaseSensitivityButton: MenuItem
@@ -100,7 +104,11 @@ class EditTextSearchbar(
         // if none found, look for one start to end
         if (fromTargetEditTextSelection(query) == -1) {
             if (toTargetEditTextSelection(query) == -1) {
-                fromStartToEnd(query)
+                // if nothing found set cursor at the end of text
+                if (fromStartToEnd(query) == -1) {
+                    targetEditText.setSelection(targetEditTextText.length)
+                    targetEditTextSelection = targetEditText.selectionStart
+                }
             }
         }
         return true
@@ -115,7 +123,11 @@ class EditTextSearchbar(
             targetEditTextSelection = targetEditTextText.length
 
             if (toTargetEditTextSelection(query) == -1) {
-                fromStartToEnd(query)
+                // if nothing found set cursor at the end of text
+                if (fromStartToEnd(query) == -1) {
+                    targetEditText.setSelection(targetEditTextText.length)
+                    targetEditTextSelection = targetEditText.selectionStart
+                }
             }
         }
         return true

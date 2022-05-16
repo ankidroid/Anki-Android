@@ -21,10 +21,10 @@ import android.view.MenuItem
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowActivity
-import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CardTemplateEditorSearchTest() : RobolectricTest() {
@@ -68,12 +68,34 @@ class CardTemplateEditorSearchTest() : RobolectricTest() {
         assertTrue(arrayOf(nextIcon, prevIcon, caseSensitiveIcon).map { it.isVisible }.all { !it })
     }
 
-    /**
-     * Tests if search finds result from start to if user hasn't interacted with template yet
-     */
     @Test
-    fun searchNoChangeTest() {
-        shadowEditor.clickMenuItem(R.id.search)
+    fun normalSearchTest() {
+        val modelText = "{{Front}}"
+        editTextSearchbar.targetEditText.setText(modelText)
         advanceRobolectricLooper()
+
+        // open search
+        searchIcon.expandActionView()
+        advanceRobolectricLooperWithSleep()
+
+        // normal result finding (should find.      case sensitive ON)
+        assertTrue(caseSensitiveIcon.isChecked)
+        assertTrue(editTextSearchbar.caseSensitive)
+        editTextSearchbar.querySearchbar.setQuery("Fr", true)
+        assertEquals(2, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(4, editTextSearchbar.targetEditText.selectionEnd)
+
+        // normal result finding (shouldn't find.   case sensitive ON)
+        editTextSearchbar.querySearchbar.setQuery("f", true)
+        assertEquals(modelText.length, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(modelText.length, editTextSearchbar.targetEditText.selectionEnd)
+
+        // normal result finding (should find.      case sensitive OFF)
+        caseSensitiveIcon.isChecked = false
+        assertFalse(caseSensitiveIcon.isChecked)
+        assertFalse(editTextSearchbar.caseSensitive)
+        editTextSearchbar.querySearchbar.setQuery("fR", true)
+        assertEquals(2, editTextSearchbar.targetEditText.selectionStart)
+        assertEquals(4, editTextSearchbar.targetEditText.selectionEnd)
     }
 }
