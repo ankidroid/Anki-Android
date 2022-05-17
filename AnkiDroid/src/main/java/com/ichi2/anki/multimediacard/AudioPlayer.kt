@@ -55,7 +55,8 @@ class AudioPlayer {
 
     fun stop() {
         try {
-            mPlayer!!.prepare()
+            if (!mPlayer!!.isPlaying)
+                mPlayer!!.prepare()
             mPlayer!!.seekTo(0)
         } catch (e: Exception) {
             Timber.e(e)
