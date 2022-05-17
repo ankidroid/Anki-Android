@@ -88,11 +88,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         setContentView(R.layout.model_field_editor)
 
         fieldLabelView = findViewById(R.id.note_type_editor_fields)
-        enableToolbar()
-
-        supportActionBar?.let {
-            it.setTitle(R.string.model_field_editor_title)
-            it.subtitle = intent.getStringExtra("title")
+        enableToolbar().apply {
+            setTitle(R.string.model_field_editor_title)
+            subtitle = intent.getStringExtra("title")
         }
         startLoadingCollection()
     }
@@ -481,9 +479,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         return ChangeHandler(this)
     }
 
-    private class ChangeHandler(modelFieldEditor: ModelFieldEditor?) : TaskListenerWithContext<ModelFieldEditor?, Void?, Boolean?>(modelFieldEditor) {
-        override fun actualOnPreExecute(context: ModelFieldEditor?) {
-            if (context != null && context.progressDialog == null) {
+    private class ChangeHandler(modelFieldEditor: ModelFieldEditor) : TaskListenerWithContext<ModelFieldEditor, Void?, Boolean?>(modelFieldEditor) {
+        override fun actualOnPreExecute(context: ModelFieldEditor) {
+            if (context.progressDialog == null) {
                 context.progressDialog = show(
                     context, context.intent.getStringExtra("title"),
                     context.resources.getString(R.string.model_field_editor_changing), false
@@ -492,12 +490,12 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         }
 
         @KotlinCleanup("Convert result to non-null")
-        override fun actualOnPostExecute(context: ModelFieldEditor?, result: Boolean?) {
+        override fun actualOnPostExecute(context: ModelFieldEditor, result: Boolean?) {
             if (result == false) {
-                context?.closeActivity()
+                context.closeActivity()
             }
-            context?.dismissProgressBar()
-            context?.fullRefreshList()
+            context.dismissProgressBar()
+            context.fullRefreshList()
         }
     }
 

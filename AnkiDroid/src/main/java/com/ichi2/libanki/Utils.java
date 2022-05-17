@@ -202,13 +202,13 @@ public class Utils {
             time_x = (int) (time_s / TIME_HOUR_LONG);
             remaining_seconds = (int) (time_s % TIME_HOUR_LONG);
             remaining = (int) Math.round((float) remaining_seconds / TIME_MINUTE);
-            return res.getQuantityString(R.plurals.reviewer_window_title_hours, time_x, time_x, remaining);
+            return res.getQuantityString(R.plurals.reviewer_window_title_hours_new, time_x, time_x, remaining);
 
         } else {
             time_x = (int) (time_s / TIME_DAY_LONG);
             remaining_seconds = (int) ((float) time_s % TIME_DAY_LONG);
             remaining = (int) Math.round(remaining_seconds / TIME_HOUR);
-            return res.getQuantityString(R.plurals.reviewer_window_title_days, time_x, time_x, remaining);
+            return res.getQuantityString(R.plurals.reviewer_window_title_days_new, time_x, time_x, remaining);
         }
     }
 

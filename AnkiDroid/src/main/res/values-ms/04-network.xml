@@ -48,13 +48,13 @@
     <string name="youre_offline">You are offline</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Sync error</string>
-    <string name="vague_error">Error</string>
+    <string name="vague_error" comment="Network error dialog title">Error</string>
     <string name="retry">Retry</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">Rangkaian kesalahan telah terjadi</string>
     <string name="not_logged_in_title">Masuk kepada AnkiWeb</string>
     <string name="login_create_account_message">Anda harus masuk ke pihak ketiga akaun untuk menggunakan awan sync perkhidmatan. Anda boleh membuat satu langkah seterusnya.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Email address</string>
     <string name="password">Password</string>
     <string name="log_in">Log in</string>

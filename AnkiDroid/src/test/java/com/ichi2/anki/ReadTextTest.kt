@@ -22,7 +22,6 @@ import com.ichi2.anki.ReadText.initializeTts
 import com.ichi2.anki.ReadText.releaseTts
 import com.ichi2.anki.ReadText.textToSpeech
 import com.ichi2.libanki.Sound.SoundSide.*
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.junit.Before
@@ -32,8 +31,6 @@ import org.mockito.Mockito.*
 import org.robolectric.Shadows.*
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("IDE Lint")
-@KotlinCleanup("`is` -> equalTo")
 class ReadTextTest : RobolectricTest() {
     @Before
     fun init() {
@@ -66,14 +63,14 @@ class ReadTextTest : RobolectricTest() {
     }
 
     @Test
-    fun SaveValue() {
-        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), `is`(""))
+    fun saveValue() {
+        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), equalTo(""))
         storeLanguage(1, "French")
-        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), `is`("French"))
+        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), equalTo("French"))
         storeLanguage(1, "German")
-        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), `is`("German"))
+        assertThat(MetaDB.getLanguage(targetContext, 1, 1, QUESTION), equalTo("German"))
         storeLanguage(2, "English")
-        assertThat(MetaDB.getLanguage(targetContext, 2, 1, QUESTION), `is`("English"))
+        assertThat(MetaDB.getLanguage(targetContext, 2, 1, QUESTION), equalTo("English"))
     }
 
     @Test
@@ -81,14 +78,14 @@ class ReadTextTest : RobolectricTest() {
         val context = targetContext
         initializeTextToSpeech(context)
         releaseTts(context)
-        assertThat(isTextToSpeechShutdown, `is`(true))
+        assertThat(isTextToSpeechShutdown, equalTo(true))
     }
 
     @Test
     fun testIsTextToSpeechReleased_differentContext() {
         initializeTextToSpeech(targetContext)
         releaseTts(mock(Context::class.java))
-        assertThat(isTextToSpeechShutdown, `is`(false))
+        assertThat(isTextToSpeechShutdown, equalTo(false))
     }
 
     private val isTextToSpeechShutdown: Boolean
@@ -98,7 +95,7 @@ class ReadTextTest : RobolectricTest() {
         initializeTts(context, mock(AbstractFlashcardViewer.ReadTextListener::class.java))
     }
 
-    protected fun storeLanguage(i: Int, french: String?) {
+    private fun storeLanguage(i: Int, french: String) {
         MetaDB.storeLanguage(targetContext, i.toLong(), 1, QUESTION, french)
         advanceRobolectricLooperWithSleep()
         advanceRobolectricLooperWithSleep()

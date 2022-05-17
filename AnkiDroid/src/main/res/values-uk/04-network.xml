@@ -48,13 +48,13 @@
     <string name="youre_offline">Ви поза мережею</string>
     <string name="sync_even_if_offline">Все одно спробувати</string>
     <string name="sync_error">Помилка синхронізації</string>
-    <string name="vague_error">Помилка</string>
+    <string name="vague_error" comment="Network error dialog title">Помилка</string>
     <string name="retry">Повторити спробу</string>
     <string name="menu_get_shared_decks">Завантажити колоди</string>
     <string name="connection_error_message">Виникла помилка мережі</string>
     <string name="not_logged_in_title">Ввійти в AnkiWeb</string>
     <string name="login_create_account_message">Ви повинні увійти до стороннього профілю, щоб використовувати хмарну синхронізацію. Ви можете створити профіль на наступному кроці.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Електронна пошта</string>
     <string name="password">Пароль</string>
     <string name="log_in">Ввійти</string>

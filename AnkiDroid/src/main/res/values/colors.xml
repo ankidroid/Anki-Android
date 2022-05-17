@@ -12,7 +12,7 @@
 		License along with ~ this program. If not, see
 		<http://www.gnu.org/licenses/>.
 -->
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,DuplicateCrowdInStrings">
 
     <color name="wb_fg_color">#B00000FF</color>
     <color name="wb_fg_color_inv">#0099FF</color>

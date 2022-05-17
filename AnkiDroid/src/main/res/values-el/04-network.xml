@@ -48,13 +48,13 @@
     <string name="youre_offline">You are offline</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Σφάλμα συγχρονισμού</string>
-    <string name="vague_error">Σφάλμα</string>
+    <string name="vague_error" comment="Network error dialog title">Σφάλμα</string>
     <string name="retry">Ξαναδοκίμασε</string>
     <string name="menu_get_shared_decks">Λήψη κοινόχρηστων τραπουλών</string>
     <string name="connection_error_message">Παρουσιάστηκε σφάλμα δικτύου.</string>
     <string name="not_logged_in_title">Σύνδεση στο AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Διεύθυνση email</string>
     <string name="password">Κωδικός</string>
     <string name="log_in">Σύνδεση</string>

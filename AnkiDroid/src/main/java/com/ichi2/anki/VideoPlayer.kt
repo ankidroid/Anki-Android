@@ -58,7 +58,7 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
         Timber.i("surfaceCreated")
         if (mPath == null) {
             // #5911 - path shouldn't be null. I couldn't determine why this happens.
-            AnkiDroidApp.sendExceptionReport("Video: mPath was unexpectedly null", "VideoPlayer surfaceCreated")
+            CrashReportService.sendExceptionReport("Video: mPath was unexpectedly null", "VideoPlayer surfaceCreated")
             Timber.e("path was unexpectedly null")
             showThemedToast(this, getString(R.string.video_creation_error), true)
             finish()

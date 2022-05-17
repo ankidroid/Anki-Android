@@ -47,18 +47,18 @@
     <string name="yes">예</string>
     <!-- Navigation drawer items-->
     <string name="decks">카드 묶음</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">카드탐색기</string>
+    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">카드 탐색기</string>
     <string name="statistics">통계</string>
     <string name="settings">설정</string>
     <string name="help">도움말</string>
-    <string name="drawing">그림</string>
+    <string name="drawing">그리기</string>
     <string name="send_feedback">의견 보내기</string>
     <string name="studyoptions_due_today">오늘 학습할 카드:</string>
     <string name="studyoptions_new_total">전체 새 카드:</string>
     <string name="studyoptions_total_cards">전체 카드:</string>
     <string name="studyoptions_eta">예상 소요 시간 (분):</string>
-    <string name="studyoptions_start">공부</string>
-    <!-- DeckPicker.java -->
+    <string name="studyoptions_start">학습</string>
+    <!-- DeckPicker.kt -->
     <string name="expand">확장</string>
     <string name="collapse">감추기</string>
     <string name="study_more">더 학습하기</string>
@@ -68,11 +68,11 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">%d분 남음</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d 시간 남음</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d일 %d시간 남음</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">이 컬렉션은 비어 있습니다</string>
     <string name="no_cards_placeholder_description">＋아이콘을 눌러 \n카드를 추가해 주십시오</string>
@@ -88,7 +88,7 @@
     <string name="ease_button_hard">어려움</string>
     <string name="ease_button_good">괜찮음</string>
     <string name="ease_button_easy">쉬움</string>
-    <string name="studyoptions_congrats_undo">%s 되돌리기</string>
+    <string name="studyoptions_congrats_undo">%s 실행 취소</string>
     <string name="menu_import">가져오기</string>
     <string name="undo">실행 취소</string>
     <string name="undo_action_review">마지막 복습</string>
@@ -97,7 +97,7 @@
     <string name="unbury">지금 보기</string>
     <string name="rename_deck">카드 묶음 이름 바꾸기</string>
     <string name="create_shortcut">바로가기 만들기</string>
-    <string name="browse_cards">카드찾아보기</string>
+    <string name="browse_cards">카드 찾아보기</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">추가</string>
     <string name="menu_add_note">노트 추가</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">계정 동기화</string>
@@ -109,16 +109,16 @@
     <string name="menu_bury">나중에 보기</string>
     <string name="menu_suspend">비활성화</string>
     <string name="menu_delete_note">노트 삭제하기</string>
-    <string name="menu_flag">깃발</string>
+    <string name="menu_flag">표시</string>
     <string name="menu_flag_card">카드에 플래그 추가</string>
     <string name="menu_flag_card_zero">플래그 없음</string>
-    <string name="menu_flag_card_one">빨강깃발</string>
-    <string name="menu_flag_card_two">주황깃발</string>
-    <string name="menu_flag_card_three">초록깃발</string>
-    <string name="menu_flag_card_four">파랑깃발</string>
-    <string name="menu_flag_card_five">분홍깃발</string>
-    <string name="menu_flag_card_six">청록깃발</string>
-    <string name="menu_flag_card_seven">보라깃발</string>
+    <string name="menu_flag_card_one">빨간색 표시</string>
+    <string name="menu_flag_card_two">주황색 표시</string>
+    <string name="menu_flag_card_three">초록색 표시</string>
+    <string name="menu_flag_card_four">파란색 표시</string>
+    <string name="menu_flag_card_five">분홍색 표시</string>
+    <string name="menu_flag_card_six">청록색 표시</string>
+    <string name="menu_flag_card_seven">보라색 표시</string>
     <string name="menu_edit_tags">태그 수정</string>
     <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>
     <string name="menu_search">%1$s에서 찾아보기</string>
@@ -126,8 +126,8 @@
     <string name="menu_unmark_note">노트 표시 해제</string>
     <string name="menu_toggle_mic_tool_bar">발음 확인</string>
     <string name="new_deck">카드 묶음 만들기</string>
-    <string name="new_dynamic_deck">거르기된 카드뭉치 만들기</string>
-    <string name="directory_inaccessible">암기드로이드서류철에 접근할수 없습니다</string>
+    <string name="new_dynamic_deck">필터링된 카드 묶음 만들기</string>
+    <string name="directory_inaccessible">AnkiDroid 폴더에 접근할 수 없습니다</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
@@ -152,20 +152,20 @@
     <string name="rebuild_filtered_deck">필터링된 뭉치를 재구성하는 중...</string>
     <string name="rebuild_cram_label">재생성</string>
     <string name="empty_cram_label">비우기</string>
-    <string name="create_subdeck">아래뭉치만들기</string>
+    <string name="create_subdeck">하위 뭉치 만들기</string>
     <string name="empty_filtered_deck">필터링된 뭉치를 비우는 중...</string>
-    <string name="custom_study_deck_name">맞춤배움주기</string>
+    <string name="custom_study_deck_name">맞춤 학습 세션</string>
     <string name="custom_study_deck_exists">기존의 맞춤 학습 덱의 이름을 먼저 변경하세요.</string>
     <string name="empty_deck">이 뭉치는 비어있습니다.</string>
     <string name="search_deck" comment="Deck search for selecting it">뭉치 검색</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="empty_deck_add_note">카드 추가</string>
     <string name="invalid_deck_name">유효하지 않은 뭉치 이름입니다</string>
-    <string name="studyoptions_empty">이 카드뭉치는 비어있습니다. +단추를 눌러 새 내용물을 추가하세요.</string>
-    <string name="studyoptions_limit_reached">하루배움량에 다다르렀습니다</string>
-    <string name="studyoptions_empty_schedule">배울 예정인 카드가 없습니다</string>
+    <string name="studyoptions_empty">이 카드 묶음은 비어있습니다. + 버튼을 눌러 새 컨텐츠를 추가하세요.</string>
+    <string name="studyoptions_limit_reached">일일 학습량에 도달했습니다</string>
+    <string name="studyoptions_empty_schedule">학습 예정인 카드가 없습니다</string>
     <string name="studyoptions_congrats_finished">축하합니다! 오늘의 학습을 모두 끝냈습니다.</string>
-    <string name="studyoptions_congrats_more_rev">오늘의 되짚기량은 채웠지만 되짚을 카드가 더 남아있습니다. 최적의 암기를 위해서, 배움선택지에서 하루되짚기량을 늘리는것을 고려해보세요.</string>
+    <string name="studyoptions_congrats_more_rev">오늘의 복습량은 채웠지만 복습할 카드가 더 남아있습니다. 최적의 암기를 위해서, 학습 옵션에서 하루 복습량을 늘리는 것을 고려해보세요.</string>
     <string name="studyoptions_congrats_more_new">오늘의 학습량을 달성했어요. 하지만 새 카드가 아직 남아 있어요. 학습할 새 카드의 수를 옵션에서 늘릴 수 있지만 그러면 단기적으로 공부할 양이 증가한다는 것을 명심하세요.</string>
     <string name="studyoptions_congrats_custom">평상시 일정을 넘어 더 공부하려면, \"맞춤 학습\" 버튼을 누르십시오.</string>
     <string name="studyoptions_no_cards_due">남은 카드가 없습니다.</string>
@@ -177,8 +177,8 @@
     <string name="sync_cancelled">동기화 취소됨</string>
     <string name="sync_cancel_message">취소하는 중...\n시간이 걸릴 수 있습니다.</string>
     <string name="export">내보내기</string>
-    <string name="export_collection">모음집내보내기</string>
-    <string name="export_deck">카드뭉치내보내기</string>
+    <string name="export_collection">컬렉션 내보내기</string>
+    <string name="export_deck">카드 묶음 내보내기</string>
     <string name="nothing">없음</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">카드 유형</string>
@@ -191,7 +191,7 @@
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">적어도 하나의 카드 형식이 필요합니다.</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="other">%1$d 카드를 만듧니다. 게속하시겠습니까?</item>
+        <item quantity="other">%1$d 카드를 만듭니다. 계속하시겠습니까?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">\'%2$s\' 카드 형식과 %1$d 카드를 삭제할까요?</item>
@@ -204,13 +204,13 @@
     <string name="card_template_browser_appearance_title">카드 모양 설정</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">카드정보</string>
+    <string name="card_info_title">카드 정보</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">암기드로이드데이터베이스에 읽고 쓰기</string>
+    <string name="read_write_permission_label">AnkiDroid 데이터베이스에 읽고 쓰기</string>
     <string name="read_write_permission_description">기존의 노트, 카드, 노트 유형, 카드 묶음을 접근 및 생성</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">카드탐색기</string>
-    <string name="context_menu_anki_card_label">암기카드</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">카드 탐색기</string>
+    <string name="context_menu_anki_card_label">Anki 카드</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s에 문제가 있습니다:<br/>%2$s</string>
     <string name="more_information">추가 정보</string>
     <string name="no_field">\'{{%1$s}}\'검색 결과 , %1$s라는 필드가 없습니다.</string>
@@ -221,14 +221,14 @@
     <string name="filter_error">필터%s에 오류가 있습니다</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">컬렉션을 합칠 수 없습니다.\n어떤 컬렉션을 유지하시겠습니까?</string>
-    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">암기드로이드</string>
-    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">암기웹</string>
-    <string name="sync_conflict_remote_confirm_new">암기드로이드의 모음집을 암기웹의 모음집으로 덮어쓰시겠습니까?</string>
-    <string name="sync_conflict_local_confirm_new">암기드로이드의 모음집을 암기웹의 모음집으로 덮어쓰시겠습니까?</string>
-    <string name="sync_conflict_title_new">유지할 모음집 골라찍기</string>
-    <string name="sync_conflict_replace_title">모음집을 덮어쓰기</string>
+    <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
+    <string name="sync_conflict_remote_confirm_new">AnkiDroid의 컬렉션을 AnkiWeb의 컬렉션으로 덮어쓰시겠습니까?</string>
+    <string name="sync_conflict_local_confirm_new">AnkiDroid의 컬렉션을 AnkiWeb의 컬렉션으로 덮어쓰시겠습니까?</string>
+    <string name="sync_conflict_title_new">유지할 컬렉션 선택</string>
+    <string name="sync_conflict_replace_title">컬렉션을 덮어쓰는 중...</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s 베끼기</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s 복사</string>
 </resources>

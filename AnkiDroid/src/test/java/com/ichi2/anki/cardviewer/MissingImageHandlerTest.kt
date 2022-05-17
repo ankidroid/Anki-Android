@@ -21,10 +21,9 @@ import android.webkit.WebResourceRequest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.EmptyApplication
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,14 +36,11 @@ import java.util.function.Consumer
 // and URLUtil.guessFileName (static - likely harder)
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-@KotlinCleanup("`is`")
-@KotlinCleanup("IDE cleanup")
 class MissingImageHandlerTest {
-    private var mSut: MissingImageHandler? = null
+    private lateinit var mSut: MissingImageHandler
     private var mTimesCalled = 0
-    private var mFileNames: MutableList<String?>? = null
+    private lateinit var mFileNames: MutableList<String?>
 
-    @KotlinCleanup("lateinit")
     @Before
     fun before() {
         mFileNames = ArrayList()
@@ -54,14 +50,14 @@ class MissingImageHandlerTest {
     private fun defaultHandler(): Consumer<String?> {
         return Consumer { f: String? ->
             mTimesCalled++
-            mFileNames!!.add(f)
+            mFileNames.add(f)
         }
     }
 
     @Test
     fun firstTimeOnNewCardSends() {
         processFailure(getValidRequest("example.jpg"))
-        assertThat(mTimesCalled, `is`(1))
+        assertThat(mTimesCalled, equalTo(1))
         assertThat(mFileNames, contains("example.jpg"))
     }
 
@@ -69,27 +65,27 @@ class MissingImageHandlerTest {
     fun twoCallsOnSameSideCallsOnce() {
         processFailure(getValidRequest("example.jpg"))
         processFailure(getValidRequest("example2.jpg"))
-        assertThat(mTimesCalled, `is`(1))
+        assertThat(mTimesCalled, equalTo(1))
         assertThat(mFileNames, contains("example.jpg"))
     }
 
     @Test
     fun callAfterFlipIsShown() {
         processFailure(getValidRequest("example.jpg"))
-        mSut!!.onCardSideChange()
+        mSut.onCardSideChange()
         processFailure(getValidRequest("example2.jpg"))
-        assertThat(mTimesCalled, `is`(2))
+        assertThat(mTimesCalled, equalTo(2))
         assertThat(mFileNames, contains("example.jpg", "example2.jpg"))
     }
 
     @Test
     fun thirdCallIsIgnored() {
         processFailure(getValidRequest("example.jpg"))
-        mSut!!.onCardSideChange()
+        mSut.onCardSideChange()
         processFailure(getValidRequest("example2.jpg"))
-        mSut!!.onCardSideChange()
+        mSut.onCardSideChange()
         processFailure(getValidRequest("example3.jpg"))
-        assertThat(mTimesCalled, `is`(2))
+        assertThat(mTimesCalled, equalTo(2))
         assertThat(mFileNames, contains("example.jpg", "example2.jpg"))
     }
 
@@ -97,31 +93,31 @@ class MissingImageHandlerTest {
     fun invalidRequestIsIgnored() {
         val invalidRequest = getInvalidRequest("example.jpg")
         processFailure(invalidRequest)
-        assertThat(mTimesCalled, `is`(0))
+        assertThat(mTimesCalled, equalTo(0))
     }
 
     private fun processFailure(invalidRequest: WebResourceRequest, consumer: Consumer<String?> = defaultHandler()) {
-        mSut!!.processFailure(invalidRequest, consumer)
+        mSut.processFailure(invalidRequest, consumer)
     }
 
     private fun processMissingSound(file: File?, onFailure: Consumer<String?>) {
-        mSut!!.processMissingSound(file, onFailure)
+        mSut.processMissingSound(file, onFailure)
     }
 
     private fun processInefficientImage(onFailure: Runnable) {
-        mSut!!.processInefficientImage(onFailure)
+        mSut.processInefficientImage(onFailure)
     }
 
     @Test
     fun uiFailureDoesNotCrash() {
         processFailure(getValidRequest("example.jpg")) { throw RuntimeException("expected") }
-        assertThat("Irrelevant assert to stop lint warnings", mTimesCalled, `is`(0))
+        assertThat("Irrelevant assert to stop lint warnings", mTimesCalled, equalTo(0))
     }
 
     @Test
     fun testMissingSound_NullFile() {
         processMissingSound(null, defaultHandler())
-        assertThat(mTimesCalled, `is`(0))
+        assertThat(mTimesCalled, equalTo(0))
     }
 
     @Test
@@ -129,11 +125,11 @@ class MissingImageHandlerTest {
         // Tests that the third call to processMissingSound is ignored
         val handler = defaultHandler()
         processMissingSound(File("example.wav"), handler)
-        mSut!!.onCardSideChange()
+        mSut.onCardSideChange()
         processMissingSound(File("example2.wav"), handler)
-        mSut!!.onCardSideChange()
+        mSut.onCardSideChange()
         processMissingSound(File("example3.wav"), handler)
-        assertThat(mTimesCalled, `is`(2))
+        assertThat(mTimesCalled, equalTo(2))
         assertThat(mFileNames, contains("example.wav", "example2.wav"))
     }
 
@@ -145,7 +141,7 @@ class MissingImageHandlerTest {
     @Test
     fun testInefficientImage() {
         // Tests that the runnable passed to processInefficientImage only runs once
-        class runTest : Runnable {
+        class RunTest : Runnable {
             var nTimesRun = 0
                 private set
 
@@ -154,10 +150,10 @@ class MissingImageHandlerTest {
             }
         }
 
-        val runnableTest = runTest()
+        val runnableTest = RunTest()
         processInefficientImage(runnableTest)
         processInefficientImage(runnableTest)
-        assertThat(runnableTest.nTimesRun, `is`(1))
+        assertThat(runnableTest.nTimesRun, equalTo(1))
     }
 
     private fun getValidRequest(fileName: String): WebResourceRequest {

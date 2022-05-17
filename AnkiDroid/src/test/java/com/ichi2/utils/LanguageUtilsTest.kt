@@ -23,7 +23,7 @@ import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.LanguageUtil.getLocale
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.oneOf
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,15 +32,12 @@ import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
-@KotlinCleanup("Use Kotlin's HashSet instead of Java's")
-@KotlinCleanup("Use Kotlin's methods instead of Arrays.asList")
-@KotlinCleanup("`is` -> equalTo")
 class LanguageUtilsTest {
     @Test
     fun testNoLanguageIsRemoved() {
-        val languages = HashSet<String?>()
+        val languages = LanguageUtil.APP_LANGUAGES.toHashSet()
         Collections.addAll(languages, *LanguageUtil.APP_LANGUAGES)
-        val previousLanguages: MutableList<String> = ArrayList(Arrays.asList(*PREVIOUS_LANGUAGES))
+        val previousLanguages = PREVIOUS_LANGUAGES.toMutableList()
         previousLanguages.removeAll(previousLanguageExclusions)
         for (language in previousLanguages) {
             assertThat(languages, Matchers.hasItem(language))
@@ -49,7 +46,7 @@ class LanguageUtilsTest {
 
     @Test
     fun testCurrentLanguagesHaveNotChanged() {
-        val actual = Arrays.asList(*LanguageUtil.APP_LANGUAGES)
+        val actual = LanguageUtil.APP_LANGUAGES.toList()
         assertThat(
             "Languages have been updated, please modify test variables: " +
                 "PREVIOUS_LANGUAGES and CURRENT_LANGUAGES",
@@ -63,7 +60,7 @@ class LanguageUtilsTest {
         assertThat(
             "A locale with a 3-letter code resolves correctly",
             getLocale("af").displayLanguage,
-            `is`("Afrikaans")
+            equalTo("Afrikaans")
         )
     }
 
@@ -73,7 +70,7 @@ class LanguageUtilsTest {
         assertThat(
             "A locale with a 3-letter code resolves correctly",
             getLocale("fil").displayLanguage,
-            `is`("Filipino")
+            equalTo("Filipino")
         )
     }
 
@@ -83,12 +80,12 @@ class LanguageUtilsTest {
         assertThat(
             "A locale with a 2-letter code and regional variant resolves correctly",
             getLocale("pt-BR").displayName,
-            `is`("Portuguese (Brazil)")
+            equalTo("Portuguese (Brazil)")
         )
         assertThat(
             "A locale with a 2-letter code and regional variant resolves correctly",
             getLocale("pt_BR").displayName,
-            `is`("Portuguese (Brazil)")
+            equalTo("Portuguese (Brazil)")
         )
     }
 

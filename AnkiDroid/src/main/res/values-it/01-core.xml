@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Totale carte:</string>
     <string name="studyoptions_eta">Tempo stimato (min):</string>
     <string name="studyoptions_start">Studia ora</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Espandi</string>
     <string name="collapse">Nascondi</string>
     <string name="study_more">Studia ancora</string>
@@ -70,13 +70,13 @@
         <item quantity="one">Resta %d minuto</item>
         <item quantity="other">Restano %d minuti</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d ora %d rimanente</item>
-        <item quantity="other">%d ore %d rimanenti</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d ora %2$d rimanente</item>
+        <item quantity="other">%1$d ore %2$d rimanenti</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d giorno %d rimanente</item>
-        <item quantity="other">%d giorni %d rimanenti</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d giorno %2$d rimanente</item>
+        <item quantity="other">%1$d giorni %2$d rimanenti</item>
     </plurals>
     <string name="no_cards_placeholder_title">La collezione è vuota</string>
     <string name="no_cards_placeholder_description">Inizia ad aggiungere carte\nusando l\'icona +.</string>
@@ -163,7 +163,7 @@
     <string name="custom_study_deck_exists">Rinomina dapprima il mazzo di Studio Personalizzato esistente.</string>
     <string name="empty_deck">Questo mazzo è vuoto</string>
     <string name="search_deck" comment="Deck search for selecting it">Ricerca mazzo</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Ricerca mazzo</string>
     <string name="empty_deck_add_note">Aggiungi carta</string>
     <string name="invalid_deck_name">Nome mazzo non valido</string>
     <string name="studyoptions_empty">Questo mazzo è vuoto. Premi il pulsante + per aggiungere nuovi contenuti.</string>

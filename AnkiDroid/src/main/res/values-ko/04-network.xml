@@ -48,13 +48,13 @@
     <string name="youre_offline">현재 오프라인 상태입니다</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">동기화 오류</string>
-    <string name="vague_error">오류</string>
+    <string name="vague_error" comment="Network error dialog title">오류</string>
     <string name="retry">재시도</string>
     <string name="menu_get_shared_decks">공유된 카드 묶음 얻기</string>
     <string name="connection_error_message">네트워크 오류가 발생했습니다.</string>
     <string name="not_logged_in_title">AnkiWeb에 로그인</string>
     <string name="login_create_account_message">클라우드 동기화 서비스를 사용하기 위해서는 제3자 계정에 로그인해야 합니다. 다음 단계에서 만들 수 있습니다.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">이메일 주소</string>
     <string name="password">암호</string>
     <string name="log_in">로그인</string>

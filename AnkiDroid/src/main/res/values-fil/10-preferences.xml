@@ -48,6 +48,7 @@
     <string name="disabled">Hindi pinapagana</string>
     <string name="enabled">Pinapagana</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Pangkalahatang setting</string>
     <string name="pref_cat_reviewing" maxLength="41">Pagrepaso</string>
     <string name="pref_cat_reviewing_summ">Mga setting ng reviewer sa hindi tiyak na deck</string>
@@ -255,7 +256,7 @@
     <string name="deck_conf_new_cards" maxLength="41">Bagong card</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Mga Review</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Lapses</string>
-    <string name="deck_conf_general" maxLength="41">Pangkalahatan</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Pangkalahatan</string>
     <string name="deck_conf_reminders" maxLength="41">Mga Paalala</string>
     <string name="deck_conf_steps" maxLength="41">Mga hakbang (sa ilang minuto)</string>
     <string name="deck_conf_order" maxLength="41">Order</string>

@@ -48,13 +48,13 @@
     <string name="youre_offline">Non ses in lìnia</string>
     <string name="sync_even_if_offline">Proa su matessi</string>
     <string name="sync_error">Faddina de sincronizatzione</string>
-    <string name="vague_error">Faddina</string>
+    <string name="vague_error" comment="Network error dialog title">Faddina</string>
     <string name="retry">Torra a proare</string>
     <string name="menu_get_shared_decks">Iscàrriga matzos cumpartzidos</string>
     <string name="connection_error_message">B\'at àpidu un\'errore de retza</string>
     <string name="not_logged_in_title">Intra in AnkiWeb</string>
     <string name="login_create_account_message">Depes atzèdere a unu contu de unu servìtziu esternu pro impreare su servìtziu de sincronizatzione in sa nue. Nd\'as a pòdere creare unu in su passu imbeniente.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Indiritzu de posta eletrònica</string>
     <string name="password">Crae</string>
     <string name="log_in">Intra</string>

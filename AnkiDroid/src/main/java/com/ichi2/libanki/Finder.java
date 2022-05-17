@@ -456,10 +456,17 @@ public class Finder {
             val = "% " + val;
         }
         if (!val.endsWith("%") || val.endsWith("\\%")) {
-            val += " %";
+            args.add(val + " %");
+        } else {
+            args.add(val);
         }
-        args.add(val);
-        return "n.tags like ? escape '\\'";
+        // match descendants
+        if (val.endsWith("::")) {
+            args.add(val + "%");
+        } else {
+            args.add(val + "::%");
+        }
+        return "((n.tags like ? escape '\\') or (n.tags like ? escape '\\'))";
     }
 
 

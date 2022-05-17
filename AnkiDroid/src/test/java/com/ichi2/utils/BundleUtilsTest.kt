@@ -18,52 +18,45 @@ package com.ichi2.utils
 import android.os.Bundle
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.mockito.Mockito.anyString
-import org.mockito.Mockito.eq
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
-import java.util.*
+import org.mockito.Mockito.*
+import org.mockito.kotlin.whenever
+import kotlin.random.Random
 import kotlin.test.assertNull
 
-@KotlinCleanup("rename `val` variables")
-@KotlinCleanup("`when` -> whenever")
 class BundleUtilsTest {
     @Test
     fun test_GetNullableLong_NullBundle_ReturnsNull() {
-        val `val` = BundleUtils.getNullableLong(null, KEY)
-        assertNull(`val`)
+        val value = BundleUtils.getNullableLong(null, KEY)
+        assertNull(value)
     }
 
     @Test
     fun test_GetNullableLong_NotFound_ReturnsNull() {
         val b = mock(Bundle::class.java)
 
-        `when`(b.containsKey(anyString())).thenReturn(false)
+        whenever(b.containsKey(anyString())).thenReturn(false)
 
-        val `val` = BundleUtils.getNullableLong(b, KEY)
+        val value = BundleUtils.getNullableLong(b, KEY)
 
         verify(b, times(0)).getLong(eq(KEY))
 
-        assertNull(`val`)
+        assertNull(value)
     }
 
     @Test
-    @KotlinCleanup("Use Kotlin's Random instead of Java's")
     fun test_GetNullableLong_Found_ReturnIt() {
-        val expected = Random().nextLong()
+        val expected = Random.Default.nextLong()
         val b = mock(Bundle::class.java)
 
-        `when`(b.containsKey(anyString())).thenReturn(true)
+        whenever(b.containsKey(anyString())).thenReturn(true)
 
-        `when`(b.getLong(anyString())).thenReturn(expected)
+        whenever(b.getLong(anyString())).thenReturn(expected)
 
-        val `val` = BundleUtils.getNullableLong(b, KEY)
+        val value = BundleUtils.getNullableLong(b, KEY)
 
         verify(b).getLong(eq(KEY))
 
-        assertEquals(expected, `val`)
+        assertEquals(expected, value)
     }
 
     companion object {

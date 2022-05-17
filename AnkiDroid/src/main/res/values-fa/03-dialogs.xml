@@ -120,7 +120,10 @@
 • پردازش انجام شده: %3$d%%\n</string>
     <string name="import_update_details">%1$d از %2$d یادداشت موجود به روزرسانی شده است.</string>
     <string name="import_update_ignored">بعضی از به روزرسانی ها نادیده گرفته شدند زیرا نوع یادداشت تغییر کرده است</string>
-    <string name="import_complete_count">کارت های وارد شده: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">کارت حافظه پر</string>
     <string name="sd_card_almost_full_title">کارت حافظه تقریبا پر</string>
     <string name="no_space_to_downgrade_title">No space</string>

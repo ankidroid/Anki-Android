@@ -17,7 +17,7 @@
 package com.ichi2.testutils
 
 import org.junit.Assert
-import kotlin.test.junit.JUnitAsserter
+import kotlin.test.junit5.JUnit5Asserter
 
 /** assertThrows, allowing for lambda shorthand
  *
@@ -64,5 +64,5 @@ fun assertFalse(message: String? = null, actual: Boolean) {
     // This exists in JUnit, but we want to avoid JUnit as their `assertNotNull` does not use contracts
     // So, we want a method in a different namespace for `assertFalse`
     // JUnitAsserter doesn't contain it, so we add it in
-    JUnitAsserter.assertTrue(message, !actual)
+    JUnit5Asserter.assertTrue(message, !actual)
 }

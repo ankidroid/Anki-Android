@@ -16,8 +16,6 @@
 
 package com.ichi2.utils
 
-import java.util.ArrayList
-import java.util.HashSet
 import java.util.stream.Collectors
 
 object TagsUtil {
@@ -35,5 +33,78 @@ object TagsUtil {
         updated.addAll(selected)
         updated.addAll(indeterminate.stream().filter { o: String -> previousSet.contains(o) }.collect(Collectors.toList()))
         return updated
+    }
+
+    private const val blankSubstituent = "blank"
+
+    /**
+     * Utility method that decomposes a hierarchy tag into several parts.
+     * Replace empty parts to "blank".
+     */
+    @JvmStatic
+    fun getTagParts(tag: String): List<String> {
+        val parts = tag.split("::").asSequence()
+        return parts.map {
+            // same as the way Anki Desktop deals with an empty tag subpart
+            it.ifEmpty { blankSubstituent }
+        }.toList()
+    }
+
+    /**
+     * Utility that uniforms a hierarchy tag.
+     * Remove trailing '::'.
+     */
+    @JvmStatic
+    fun getUniformedTag(tag: String): String {
+        val parts = getTagParts(tag)
+        return if (tag.endsWith("::") && parts.last() == blankSubstituent) {
+            parts.subList(0, parts.size - 1)
+        } else {
+            parts
+        }.joinToString("::")
+    }
+
+    /**
+     * Utility method that gets the root part of a tag.
+     */
+    @JvmStatic
+    fun getTagRoot(tag: String): String {
+        val parts = tag.split("::").asSequence()
+        return parts.map {
+            // same as the way Anki Desktop deals with an empty tag subpart
+            it.ifEmpty { "blank" }
+        }.take(1).first()
+    }
+
+    /**
+     * Utility method that gets the ancestors of a tag.
+     */
+    @JvmStatic
+    fun getTagAncestors(tag: String): List<String> {
+        val parts = getTagParts(tag)
+        return (0..parts.size - 2).asSequence().map {
+            parts.subList(0, it + 1).joinToString("::")
+        }.toList()
+    }
+
+    /**
+     * Compare two tags with hierarchy comparison
+     * Used to sort all tags firstly in DFN order, secondly in dictionary order
+     * Both lhs and rhs must be uniformed.
+     */
+    @JvmStatic
+    fun compareTag(lhs: String, rhs: String): Int {
+        val lhsIt = lhs.split("::").asSequence().iterator()
+        val rhsIt = rhs.split("::").asSequence().iterator()
+        while (lhsIt.hasNext() && rhsIt.hasNext()) {
+            val cmp = lhsIt.next().compareTo(rhsIt.next(), true)
+            if (cmp != 0) {
+                return cmp
+            }
+        }
+        if (!lhsIt.hasNext() && !rhsIt.hasNext()) {
+            return 0
+        }
+        return if (lhsIt.hasNext()) 1 else -1
     }
 }

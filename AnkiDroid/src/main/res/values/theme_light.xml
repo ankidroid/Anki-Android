@@ -11,7 +11,7 @@ See Android bug https://code.google.com/p/android/issues/detail?id=26251
 - windowBackground colors the area under the decklist (and possibly other things) on older
 APIs. It's visible when there aren't enough decks to fill the screen.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
     <color name="theme_light_primary">@color/material_light_blue_500</color>
     <color name="theme_light_primary_dark">@color/material_light_blue_700</color>
     <color name="theme_light_primary_light">@color/material_light_blue_100</color>

@@ -48,13 +48,13 @@
     <string name="youre_offline">Vi estas eksterrete</string>
     <string name="sync_even_if_offline">Provi malgraŭ tio</string>
     <string name="sync_error">Eraro dum samtempigado</string>
-    <string name="vague_error">Eraro</string>
+    <string name="vague_error" comment="Network error dialog title">Eraro</string>
     <string name="retry">Reprovi</string>
     <string name="menu_get_shared_decks">Elŝuti publikajn kartarojn</string>
     <string name="connection_error_message">Reta eraro okazis</string>
     <string name="not_logged_in_title">Ensalutu en AnkiWeb</string>
     <string name="login_create_account_message">Ensalutu uzante konton de ekstera liveranto por uzi la samtempigan servon. Via povas krei konton je la venonta etapo.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Retpoŝta adreso</string>
     <string name="password">Pasvorto</string>
     <string name="log_in">Ensaluti</string>

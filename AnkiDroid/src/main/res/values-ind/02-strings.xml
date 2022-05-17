@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Buka menu</string>
     <string name="drawer_close">Tutup menu</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Filter tag</string>
     <string name="no_tags">Kamu belum menambahkan tag apapun</string>
     <string name="updated_version">Diperbarui ke versi %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Simpan whiteboard</string>
     <string name="enable_whiteboard">Nyalakan whiteboard</string>
     <string name="disable_whiteboard">Nonaktifkan whiteboard</string>
@@ -160,8 +159,11 @@
     <string name="import_title">Mengimpor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksimu yang ada dan menggantinya dengan data dari berkas %s</string>
-    <string name="import_message_add_confirm">Tambah \"%s\" ke dalam koleksi? Ini dapat memakan waktu lama</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Ini bukan paket Anki yang valid</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Gagal mengekstrak apkg: %s</string>
     <string name="import_log_failed_copy_to">Gagal menyalin apkg ke %s</string>
     <string name="import_log_failed_validate">validasi apkg gagal</string>
@@ -176,6 +178,9 @@
     <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas anki secara manual: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() gagal (mungkin karena ruang penyimpanan)</string>
     <string name="import_error_unhandled_scheme">Impor belum terselesaikan dari: \"%s\"</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Mengganti koleksi&#8230;</string>
     <string name="import_interrupted">Impor terganggu</string>
     <string name="export_include_schedule">Sertakan penjadwalan</string>
@@ -394,4 +399,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.servicelayer
 
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.DB
 import com.ichi2.utils.Computation
@@ -45,7 +45,7 @@ fun <TTaskResult : Any, TProgress, TResult> AnkiTask<TProgress, TResult>.dismiss
         }
     } catch (e: RuntimeException) {
         Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")
-        AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSuspendCard")
+        CrashReportService.sendExceptionReport(e, "doInBackgroundSuspendCard")
         return Computation.err()
     }
 }

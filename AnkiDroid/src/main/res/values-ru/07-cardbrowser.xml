@@ -96,6 +96,7 @@
     <string name="card_browser_no_cards_in_deck">В колоде «%s» не найдено карточек</string>
     <string name="card_browser_search_all_decks">Искать во всех колодах</string>
     <string name="card_browser_unknown_deck_name">Неизвестно</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d карточка удалена</item>
         <item quantity="few">%d карточки удалены</item>

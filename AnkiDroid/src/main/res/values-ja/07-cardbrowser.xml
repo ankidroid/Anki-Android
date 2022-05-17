@@ -93,6 +93,7 @@
     <string name="card_browser_no_cards_in_deck">%s のデッキにカードが見つかりませんでした</string>
     <string name="card_browser_search_all_decks">全デッキで検索</string>
     <string name="card_browser_unknown_deck_name">不明</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d 枚のカードが削除されました</item>
     </plurals>

@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Total de fichas:</string>
     <string name="studyoptions_eta">Tempo estimado (min):</string>
     <string name="studyoptions_start">Estudar</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Expandir</string>
     <string name="collapse">Recolher</string>
     <string name="study_more">Estudar mais</string>
@@ -70,13 +70,13 @@
         <item quantity="one">%d minuto restante</item>
         <item quantity="other">%d minutos restantes</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d hora restante</item>
-        <item quantity="other">%d horas restantes</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d dia %d restante</item>
-        <item quantity="other">%d dias %d restantes</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">A coleção está vazia</string>
     <string name="no_cards_placeholder_description">Comece a adicionar cartas\ncom o ícone +.</string>

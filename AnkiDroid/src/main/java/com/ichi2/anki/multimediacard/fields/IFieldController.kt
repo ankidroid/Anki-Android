@@ -25,7 +25,6 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
-import com.ichi2.utils.KotlinCleanup
 
 /**
  * A note in anki has fields. Each of the fields can be edited.
@@ -36,21 +35,21 @@ import com.ichi2.utils.KotlinCleanup
  * MultimediaEditFieldActivity calls controller's set methods by protocol before it works on UI creation.
  */
 interface IFieldController {
-    @KotlinCleanup("make field non-null")
+
     // This is guaranteed to be called before create UI, so that the controller
     // is aware of the field, including type an content.
-    fun setField(field: IField?)
+    fun setField(field: IField)
 
     // This is guaranteed to be called before create UI, so that the controller
     // is aware of the note.
-    fun setNote(note: IMultimediaEditableNote?)
+    fun setNote(note: IMultimediaEditableNote)
 
     // This is guaranteed to be called before create UI, so that the controller
     // is aware of the field index in the note.
     fun setFieldIndex(index: Int)
 
     // Called before other
-    fun setEditingActivity(activity: MultimediaEditFieldActivity?)
+    fun setEditingActivity(activity: MultimediaEditFieldActivity)
 
     // Called after setting field/note/index/activity, allows state persistence across Activity restarts
     fun loadInstanceState(savedInstanceState: Bundle?)
@@ -58,9 +57,8 @@ interface IFieldController {
     // Called during editing Activity pause, allows state persistence across Activity restarts
     fun saveInstanceState(): Bundle?
 
-    @KotlinCleanup("make layout non-null")
     // Layout is vertical inside a scroll view already
-    fun createUI(context: Context, layout: LinearLayout?)
+    fun createUI(context: Context, layout: LinearLayout)
 
     // If the controller ever starts an activity for result, this is going to be
     // called back on result.

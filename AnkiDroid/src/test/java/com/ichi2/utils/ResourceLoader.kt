@@ -17,7 +17,6 @@
 package com.ichi2.utils
 
 import android.content.Context
-import android.text.TextUtils
 import com.ichi2.libanki.Utils
 import org.junit.Assert.assertTrue
 import java.io.File
@@ -32,14 +31,13 @@ object ResourceLoader {
      * Files located inside the application's assets collection are not stored on the file
      * system and can not return a usable path, so copying them to disk is a requirement.
      */
-    @KotlinCleanup("is --> inputStream")
-    fun getTempFilePath(context: Context, name: String, newName: String?): String {
+    private fun getTempFilePath(context: Context, name: String, newName: String?): String {
         try {
-            val `is`: InputStream = context.classLoader.getResourceAsStream(name)
+            val inputStream: InputStream = context.classLoader.getResourceAsStream(name)
                 ?: throw FileNotFoundException("Could not find test file: $name")
             val file = File(getTestDir(context, name), newName!!)
             val dst = file.absolutePath
-            Utils.writeToFile(`is`, dst)
+            Utils.writeToFile(inputStream, dst)
             file.deleteOnExit()
             return dst
         } catch (e: Exception) {
@@ -58,10 +56,9 @@ object ResourceLoader {
      * emptied on every invocation of this method so it is suitable to use at the start of each test.
      * Only add files (and not subdirectories) to this directory.
      */
-    @KotlinCleanup("name.isNotEmpty()")
     private fun getTestDir(context: Context, name: String): File {
         var suffix = ""
-        if (!TextUtils.isEmpty(name)) {
+        if (name.isNotEmpty()) {
             suffix = "-$name"
         }
         val dir = File(context.cacheDir, "testfiles$suffix")

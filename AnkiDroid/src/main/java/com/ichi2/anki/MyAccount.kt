@@ -73,8 +73,6 @@ class MyAccount : AnkiActivity() {
                 setContentView(mLoginToMyAccountView)
             }
         }
-        @Suppress("deprecation")
-        supportInvalidateOptionsMenu() // Needed?
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

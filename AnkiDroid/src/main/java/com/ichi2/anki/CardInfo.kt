@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.Spannable
 import android.text.SpannableString
 import android.view.Gravity
@@ -29,6 +30,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
+import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -101,6 +103,24 @@ class CardInfo : AnkiActivity() {
             tl.addView(row)
         }
         this.model = model
+    }
+
+    fun closeCardInfo() {
+        val animation: Parcelable? = intent.getParcelableExtra(FINISH_ANIMATION_EXTRA)
+        if (animation is ActivityTransitionAnimation.Direction) {
+            finishWithAnimation(animation)
+        } else {
+            finishWithoutAnimation()
+        }
+    }
+
+    override fun onBackPressed() {
+        closeCardInfo()
+    }
+
+    override fun onActionBarBackPressed(): Boolean {
+        closeCardInfo()
+        return true
     }
 
     private fun addWithText(row: TableRow, value: String): FixedTextView {

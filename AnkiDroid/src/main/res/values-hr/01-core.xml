@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Ukupan broj kartica:</string>
     <string name="studyoptions_eta">Približno vrijeme (minute):</string>
     <string name="studyoptions_start">Uči</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Proširi</string>
     <string name="collapse">Sažmi</string>
     <string name="study_more">Uči više</string>
@@ -72,15 +72,15 @@
         <item quantity="few">%d minute preostale</item>
         <item quantity="other">%d minuta preostalo</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d sat %d preostalo</item>
-        <item quantity="few">%d sati %d preostalo</item>
-        <item quantity="other">%d sati %d preostalo</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="few">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d dan %d preostalo</item>
-        <item quantity="few">%d dana %d preostalo</item>
-        <item quantity="other">%d dana %d preostalo</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="few">%1$d days %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>

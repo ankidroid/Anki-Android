@@ -48,13 +48,13 @@
     <string name="youre_offline">Vous n\'êtes pas connecté à Internet</string>
     <string name="sync_even_if_offline">Essayer quand même</string>
     <string name="sync_error">Erreur de synchronisation</string>
-    <string name="vague_error">Erreur</string>
+    <string name="vague_error" comment="Network error dialog title">Erreur</string>
     <string name="retry">Réessayer</string>
     <string name="menu_get_shared_decks">Télécharger des paquets partagés</string>
     <string name="connection_error_message">Une erreur réseau s\'est produite.</string>
     <string name="not_logged_in_title">Se connecter à AnkiWeb</string>
     <string name="login_create_account_message">Vous devez vous connecter à un service tiers pour utiliser le service de synchronisation. Vous pouvez créer un compte à l’étape suivante.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Adresse électronique</string>
     <string name="password">Mot de passe</string>
     <string name="log_in">Se connecter</string>

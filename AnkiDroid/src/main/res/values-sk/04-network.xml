@@ -48,13 +48,13 @@
     <string name="youre_offline">Ste offline</string>
     <string name="sync_even_if_offline">Napriek tomu skúsiť</string>
     <string name="sync_error">Chyba synchronizácie</string>
-    <string name="vague_error">Chyba</string>
+    <string name="vague_error" comment="Network error dialog title">Chyba</string>
     <string name="retry">Skúsiť znova</string>
     <string name="menu_get_shared_decks">Stiahnuť zdieľané balíčky</string>
     <string name="connection_error_message">Vyskytla sa chyba siete.</string>
     <string name="not_logged_in_title">Prihlásiť sa do AnkiWeb</string>
     <string name="login_create_account_message">Musíte sa prihlásiť na účet tretej strany, ak chcete použiť synchronizáciu. Takýto účet vytvoríte v nasledujúcom kroku.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">E-mailová adresa</string>
     <string name="password">Heslo</string>
     <string name="log_in">Prihlásiť sa</string>

@@ -48,13 +48,13 @@
     <string name="youre_offline">במצב לא מקוון</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">שגיאת סנכרון</string>
-    <string name="vague_error">שגיאה</string>
+    <string name="vague_error" comment="Network error dialog title">שגיאה</string>
     <string name="retry">נסה שנית</string>
     <string name="menu_get_shared_decks">קבלת חפיסות משותפות</string>
     <string name="connection_error_message">אירעה שגיאת רשת</string>
     <string name="not_logged_in_title">כניסה ל־AnkiWeb</string>
     <string name="login_create_account_message">יש להתחבר לחשבון צד שלישי כדי להשתמש בשירות הסנכרון בענן. ניתן ליצור חשבון כזה מיד בשלב הקרוב.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">כתובת דוא״ל</string>
     <string name="password">ססמה</string>
     <string name="log_in">כניסה</string>

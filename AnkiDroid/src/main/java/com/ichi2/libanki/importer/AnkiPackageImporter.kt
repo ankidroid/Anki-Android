@@ -18,10 +18,10 @@ package com.ichi2.libanki.importer
 
 import android.text.format.Formatter
 import com.fasterxml.jackson.core.JsonToken
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.AnkiSerialization.factory
 import com.ichi2.anki.BackupManager.Companion.removeDir
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.libanki.Collection
@@ -87,7 +87,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col, 
                 colname = CollectionHelper.COLLECTION_FILENAME
             } catch (e: IOException) {
                 Timber.e(e, "Failed to unzip apkg.")
-                AnkiDroidApp.sendExceptionReport(e, "AnkiPackageImporter::run() - unzip")
+                CrashReportService.sendExceptionReport(e, "AnkiPackageImporter::run() - unzip")
                 mLog.add(res.getString(R.string.import_log_failed_unzip, e.localizedMessage))
                 return
             }

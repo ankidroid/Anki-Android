@@ -48,13 +48,13 @@
     <string name="youre_offline">أنت غير متصل بالإنترنت</string>
     <string name="sync_even_if_offline">حاول على أي حال</string>
     <string name="sync_error">خطأ بالمزامنة</string>
-    <string name="vague_error">خطأ</string>
+    <string name="vague_error" comment="Network error dialog title">خطأ</string>
     <string name="retry">إعادة المحاولة</string>
     <string name="menu_get_shared_decks">احصل على شَدّات مشاركة</string>
     <string name="connection_error_message">حدث خطأ في الشبكة</string>
     <string name="not_logged_in_title">تسجيل الدخول إلى أنكي ويب</string>
     <string name="login_create_account_message">يجب تسجيل الدخول إلى حساب طرف ثالث لاستخدام خدمة المزامنة السحابية. تستطيع إنشاء واحد في الخطوة التالية.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">عنوان البريد الإلكتروني</string>
     <string name="password">كلمة السر</string>
     <string name="log_in">تسجيل الدخول</string>

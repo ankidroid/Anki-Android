@@ -74,8 +74,8 @@ object ReadText {
         }
     }
 
-    private fun getLanguage(did: Long, ord: Int, qa: SoundSide?): String {
-        return MetaDB.getLanguage(mReviewer!!.get(), did, ord, qa)
+    private fun getLanguage(did: Long, ord: Int, qa: SoundSide): String {
+        return MetaDB.getLanguage(mReviewer!!.get()!!, did, ord, qa)
     }
 
     /**
@@ -120,7 +120,7 @@ object ReadText {
                 .itemsCallback { _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
                     val locale = dialogIds[which]
                     Timber.d("ReadText.selectTts() user chose locale '%s'", locale)
-                    MetaDB.storeLanguage(mReviewer!!.get(), mDid, mOrd, questionAnswer, locale)
+                    MetaDB.storeLanguage(mReviewer!!.get()!!, mDid, mOrd, questionAnswer!!, locale)
                     if (locale != NO_TTS) {
                         speak(textToSpeak, locale, TextToSpeech.QUEUE_FLUSH)
                     } else {
@@ -204,7 +204,7 @@ object ReadText {
         }
         if (localeCode.isEmpty()) {
             // get the user's existing language preference
-            localeCode = getLanguage(mDid, mOrd, questionAnswer)
+            localeCode = getLanguage(mDid, mOrd, questionAnswer!!)
             Timber.d("ReadText.textToSpeech() method found language choice '%s'", localeCode)
         }
         if (localeCode == NO_TTS) {

@@ -25,11 +25,11 @@ import java.io.File
 class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
     interface ExportCompleteDialogListener {
         fun dismissAllDialogFragments()
-        fun emailFile(path: String?)
-        fun saveExportFile(exportPath: String?)
+        fun emailFile(path: String)
+        fun saveExportFile(exportPath: String)
     }
 
-    fun withArguments(exportPath: String?): ExportCompleteDialog {
+    fun withArguments(exportPath: String): ExportCompleteDialog {
         var args = this.arguments
         if (args == null) {
             args = Bundle()
@@ -41,10 +41,10 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
 
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        val exportPath = requireArguments().getString("exportPath")
+        val exportPath = requireArguments().getString("exportPath")!!
         val dialogBuilder = MaterialDialog.Builder(requireActivity())
-            .title(getNotificationTitle())
-            .content(getNotificationMessage())
+            .title(notificationTitle)
+            .content(notificationMessage)
             .iconAttr(R.attr.dialogSendIcon)
             .positiveText(R.string.export_send_button)
             .negativeText(R.string.export_save_button)
@@ -61,12 +61,14 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
         return dialogBuilder.show()
     }
 
-    override fun getNotificationTitle(): String {
-        return res().getString(R.string.export_successful_title)
-    }
+    override val notificationTitle: String
+        get() {
+            return res().getString(R.string.export_successful_title)
+        }
 
-    override fun getNotificationMessage(): String {
-        val exportPath = File(requireArguments().getString("exportPath")!!)
-        return res().getString(R.string.export_successful, exportPath.name)
-    }
+    override val notificationMessage: String
+        get() {
+            val exportPath = File(requireArguments().getString("exportPath")!!)
+            return res().getString(R.string.export_successful, exportPath.name)
+        }
 }

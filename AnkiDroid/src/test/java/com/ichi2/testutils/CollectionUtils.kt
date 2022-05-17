@@ -19,21 +19,22 @@ import android.database.sqlite.SQLiteDatabaseLockedException
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.KotlinCleanup
 import org.mockito.ArgumentMatchers.*
-import org.mockito.Mockito.*
+import org.mockito.Mockito.doThrow
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 
+@KotlinCleanup("use mockito-kotlin after DB.java is converted")
 object CollectionUtils {
-    @KotlinCleanup("when -> whenever")
-    @KotlinCleanup("use mockito-kotlin")
     fun lockDatabase(collection: Collection) {
         val db = collection.db
         val spy = spy(db)
 
-        doThrow(SQLiteDatabaseLockedException::class.java).`when`(spy).execute(any())
-        doThrow(SQLiteDatabaseLockedException::class.java).`when`(spy).execute(any(), any())
+        doThrow(SQLiteDatabaseLockedException::class.java).whenever(spy).execute(any())
+        doThrow(SQLiteDatabaseLockedException::class.java).whenever(spy).execute(any(), any())
 
         val spiedDb = spy(spy.database)
-        `when`(spy.database).thenReturn(spiedDb)
-        doThrow(SQLiteDatabaseLockedException::class.java).`when`(spiedDb).beginTransaction()
+        whenever(spy.database).thenReturn(spiedDb)
+        doThrow(SQLiteDatabaseLockedException::class.java).whenever(spiedDb).beginTransaction()
 
         collection.db = spy
     }

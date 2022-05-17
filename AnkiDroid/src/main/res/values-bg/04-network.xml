@@ -48,13 +48,13 @@
     <string name="youre_offline">Вие сте офлайн</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Грешка при синхронизацията</string>
-    <string name="vague_error">Грешка</string>
+    <string name="vague_error" comment="Network error dialog title">Грешка</string>
     <string name="retry">Повторен опит</string>
     <string name="menu_get_shared_decks">Вземете споделени тестета</string>
     <string name="connection_error_message">Възникна мрежова грешка.</string>
     <string name="not_logged_in_title">Влезте в AnkiWeb</string>
     <string name="login_create_account_message">Трябва да влезете като трето лице, за да използвате услугата за синхронизиране в облака. Можете да създадете един в следващия етап.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Адрес на имейла</string>
     <string name="password">Парола</string>
     <string name="log_in">Влизане</string>

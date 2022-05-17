@@ -86,4 +86,12 @@
     <item
         android:id="@+id/action_select_all"
         android:title="@string/card_browser_select_all"/>
+
+    <item
+        android:id="@+id/action_truncate"
+        android:checkable="true"
+        android:checked="false"
+        android:title="@string/card_browser_truncate"
+        ankidroid:showAsAction="never"/>
+
 </menu>

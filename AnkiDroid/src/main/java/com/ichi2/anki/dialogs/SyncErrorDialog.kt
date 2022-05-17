@@ -196,11 +196,12 @@ class SyncErrorDialog : AsyncDialogFragment() {
      *
      * @return tile to be shown in notification in bar
      */
-    override fun getNotificationTitle(): String {
-        return if (requireArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
-            res().getString(R.string.sync_error)
-        } else title
-    }
+    override val notificationTitle: String
+        get() {
+            return if (requireArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
+                res().getString(R.string.sync_error)
+            } else title
+        }
 
     private val message: String?
         get() = when (requireArguments().getInt("dialogType")) {
@@ -223,21 +224,23 @@ class SyncErrorDialog : AsyncDialogFragment() {
      *
      * @return message to be shown in notification in bar
      */
-    override fun getNotificationMessage(): String? {
-        return if (requireArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
-            res().getString(R.string.not_logged_in_title)
-        } else message
-    }
+    override val notificationMessage: String?
+        get() {
+            return if (requireArguments().getInt("dialogType") == DIALOG_USER_NOT_LOGGED_IN_SYNC) {
+                res().getString(R.string.not_logged_in_title)
+            } else message
+        }
 
-    override fun getDialogHandlerMessage(): Message {
-        val msg = Message.obtain()
-        msg.what = DialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG
-        val b = Bundle()
-        b.putInt("dialogType", requireArguments().getInt("dialogType"))
-        b.putString("dialogMessage", requireArguments().getString("dialogMessage"))
-        msg.data = b
-        return msg
-    }
+    override val dialogHandlerMessage: Message
+        get() {
+            val msg = Message.obtain()
+            msg.what = DialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG
+            val b = Bundle()
+            b.putInt("dialogType", requireArguments().getInt("dialogType"))
+            b.putString("dialogMessage", requireArguments().getString("dialogMessage"))
+            msg.data = b
+            return msg
+        }
 
     fun dismissAllDialogFragments() {
         (activity as SyncErrorDialogListener?)!!.dismissAllDialogFragments()

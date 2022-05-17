@@ -27,6 +27,7 @@ import com.ichi2.anki.R
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Models
 import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil.getKeyByValue
 import java.util.*
 
@@ -91,7 +92,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
         return editLines
     }
 
-    private fun getFields(type: FieldChangeType): Array<Array<String?>> {
+    private fun getFields(type: FieldChangeType): Array<Array<String>> {
         if (type.type == Type.REFRESH_WITH_MAP) {
             val items = editor.fieldsFromSelectedNote
             val fMapNew = Models.fieldMap(type.newModel!!)
@@ -174,7 +175,8 @@ class FieldState private constructor(private val editor: NoteEditor) {
             return FieldState(editor)
         }
 
-        private fun fromFieldMap(context: Context, oldFields: Array<Array<String>>, fMapNew: Map<String, Pair<Int, JSONObject>>, modelChangeFieldMap: Map<Int, Int>?): Array<Array<String?>> {
+        @KotlinCleanup("speed - no need for arrayOfNulls")
+        private fun fromFieldMap(context: Context, oldFields: Array<Array<String>>, fMapNew: Map<String, Pair<Int, JSONObject>>, modelChangeFieldMap: Map<Int, Int>?): Array<Array<String>> {
             // Build array of label/values to provide to field EditText views
             val fields = Array(fMapNew.size) { arrayOfNulls<String>(2) }
             for (fname in fMapNew.keys) {
@@ -201,7 +203,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
                     fields[i][1] = ""
                 }
             }
-            return fields
+            return fields.map { it.requireNoNulls() }.toTypedArray()
         }
     }
 }
