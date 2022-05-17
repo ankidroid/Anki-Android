@@ -27,10 +27,10 @@ class MediaCheckDialog : AsyncDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val builder = MaterialDialog.Builder(requireActivity())
-        builder.title(getNotificationTitle())
+        builder.title(notificationTitle)
         return when (requireArguments().getInt("dialogType")) {
             DIALOG_CONFIRM_MEDIA_CHECK -> {
-                builder.content(getNotificationMessage())
+                builder.content(notificationMessage)
                     .positiveText(res().getString(R.string.dialog_ok))
                     .negativeText(res().getString(R.string.dialog_cancel))
                     .cancelable(true)
@@ -114,31 +114,34 @@ class MediaCheckDialog : AsyncDialogFragment() {
         (activity as MediaCheckDialogListener?)!!.dismissAllDialogFragments()
     }
 
-    override fun getNotificationMessage(): String {
-        return when (requireArguments().getInt("dialogType")) {
-            DIALOG_CONFIRM_MEDIA_CHECK -> res().getString(R.string.check_media_warning)
-            DIALOG_MEDIA_CHECK_RESULTS -> res().getString(R.string.check_media_acknowledge)
-            else -> res().getString(R.string.app_name)
+    override val notificationMessage: String
+        get() {
+            return when (requireArguments().getInt("dialogType")) {
+                DIALOG_CONFIRM_MEDIA_CHECK -> res().getString(R.string.check_media_warning)
+                DIALOG_MEDIA_CHECK_RESULTS -> res().getString(R.string.check_media_acknowledge)
+                else -> res().getString(R.string.app_name)
+            }
         }
-    }
 
-    override fun getNotificationTitle(): String {
-        return if (requireArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
-            res().getString(R.string.check_media_title)
-        } else res().getString(R.string.app_name)
-    }
+    override val notificationTitle: String
+        get() {
+            return if (requireArguments().getInt("dialogType") == DIALOG_CONFIRM_MEDIA_CHECK) {
+                res().getString(R.string.check_media_title)
+            } else res().getString(R.string.app_name)
+        }
 
-    override fun getDialogHandlerMessage(): Message {
-        val msg = Message.obtain()
-        msg.what = DialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG
-        val b = Bundle()
-        b.putStringArrayList("nohave", requireArguments().getStringArrayList("nohave"))
-        b.putStringArrayList("unused", requireArguments().getStringArrayList("unused"))
-        b.putStringArrayList("invalid", requireArguments().getStringArrayList("invalid"))
-        b.putInt("dialogType", requireArguments().getInt("dialogType"))
-        msg.data = b
-        return msg
-    }
+    override val dialogHandlerMessage: Message
+        get() {
+            val msg = Message.obtain()
+            msg.what = DialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG
+            val b = Bundle()
+            b.putStringArrayList("nohave", requireArguments().getStringArrayList("nohave"))
+            b.putStringArrayList("unused", requireArguments().getStringArrayList("unused"))
+            b.putStringArrayList("invalid", requireArguments().getStringArrayList("invalid"))
+            b.putInt("dialogType", requireArguments().getInt("dialogType"))
+            msg.data = b
+            return msg
+        }
 
     companion object {
         const val DIALOG_CONFIRM_MEDIA_CHECK = 0

@@ -48,6 +48,7 @@
     <string name="disabled">已停用</string>
     <string name="enabled">已啟用</string>
     <!-- preferences.xml categories-->
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">一般設定</string>
     <string name="pref_cat_reviewing" maxLength="41">複習</string>
     <string name="pref_cat_reviewing_summ">非指定牌組的複習設定</string>
@@ -253,7 +254,7 @@
     <string name="deck_conf_new_cards" maxLength="41">新卡片</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">複習次數</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">忘記</string>
-    <string name="deck_conf_general" maxLength="41">一般</string>
+    <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
     <string name="deck_conf_reminders" maxLength="41">提醒</string>
     <string name="deck_conf_steps" maxLength="41">步(單位是分鐘)</string>
     <string name="deck_conf_order" maxLength="41">順序</string>

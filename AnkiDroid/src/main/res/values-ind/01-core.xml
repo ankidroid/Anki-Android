@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">Total kartu:</string>
     <string name="studyoptions_eta">Estimasi waktu (mnt):</string>
     <string name="studyoptions_start">Belajar</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">Perluas</string>
     <string name="collapse">Tutup</string>
     <string name="study_more">Belajar lagi</string>
@@ -68,11 +68,11 @@
     <plurals name="reviewer_window_title">
         <item quantity="other">%d menit lagi</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="other">%d jam %d mnt lagi</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="other">%d hari %d jam lagi</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Koleksi kosong</string>
     <string name="no_cards_placeholder_description">Mulai tambahkan kartu\nmenggunakan ikon +.</string>

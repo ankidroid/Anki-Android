@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -96,6 +95,12 @@ import static org.junit.platform.commons.util.CollectionUtils.getOnlyElement;
 @RunWith(AndroidJUnit4.class)
 public class SchedV2Test extends RobolectricTest {
 
+    /***
+     * Creating a {@code DeckDueTreeNode} tree for subsequent tests.
+     * @param col The deck's id is depend on the collection time.
+     * @param addRev Determines whether to count the identifier of {@code revCount}.
+     * @return
+     */
     @KotlinCleanup("reduce code")
     protected static List<TreeNode<DeckDueTreeNode>> expectedTree(Collection col, boolean addRev) {
         AbstractSched sched = col.getSched();
@@ -110,12 +115,20 @@ public class SchedV2Test extends RobolectricTest {
         DeckDueTreeNode c = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv", 1596783600440L, 0, 0, 0);
         DeckDueTreeNode defaul = new DeckDueTreeNode(col, "Default", 1, 0, 0, 0);
         DeckDueTreeNode s = new DeckDueTreeNode(col, "scxipjiyozczaaczoawo", 1596783600420L, 0, 0, 0);
+        DeckDueTreeNode f = new DeckDueTreeNode(col, "blank::foobar", 1596783600540L, 0, 0, 0);
+        DeckDueTreeNode b = new DeckDueTreeNode(col, "blank", 1596783600520L, 0, 0, 0);
+        DeckDueTreeNode aBlank = new DeckDueTreeNode(col, "A::blank", 1596783600580L, 0, 0, 0);
+        DeckDueTreeNode a = new DeckDueTreeNode(col, "A", 1596783600560L, 0, 0, 0);
 
 
         TreeNode<DeckDueTreeNode> cazNode = new TreeNode<>(caz);
         TreeNode<DeckDueTreeNode> caNode = new TreeNode<>(ca);
         TreeNode<DeckDueTreeNode> ciNode = new TreeNode<>(ci);
         TreeNode<DeckDueTreeNode> cNode = new TreeNode<>((c));
+        TreeNode<DeckDueTreeNode> fNode = new TreeNode<>(f);
+        TreeNode<DeckDueTreeNode> bNode = new TreeNode<>(b);
+        TreeNode<DeckDueTreeNode> aBlankNode = new TreeNode<>(aBlank);
+        TreeNode<DeckDueTreeNode> aNode = new TreeNode<>(a);
 
         // add "caz" to "ca"
         caNode.getChildren().add(cazNode);
@@ -129,6 +142,16 @@ public class SchedV2Test extends RobolectricTest {
         cChildren.add(ciNode.getValue());
         cNode.getValue().processChildren(cChildren, addRev);
 
+        // add "f" to "b"
+        bNode.getChildren().add(fNode);
+        bNode.getValue().processChildren(Collections.singletonList(fNode.getValue()), addRev);
+
+        // add "A::" to "A"
+        aNode.getChildren().add(aBlankNode);
+        aNode.getValue().processChildren(Collections.singletonList(aBlankNode.getValue()), addRev);
+
+        expected.add(aNode);
+        expected.add(bNode);
         expected.add(cNode);
         expected.add(new TreeNode(defaul));
         expected.add(new TreeNode(s));

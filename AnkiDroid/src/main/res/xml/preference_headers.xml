@@ -21,7 +21,7 @@
     <Preference
         android:fragment="com.ichi2.anki.Preferences$GeneralSettingsFragment"
         android:summary="@string/pref_cat_general_summ"
-        android:title="@string/app_name">
+        android:title="@string/pref_cat_general">
     </Preference>
 
     <!-- Reviewing Preferences -->

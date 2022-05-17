@@ -130,7 +130,12 @@
     <string name="import_progress">• Importowanie notatek: %1$d%%\n• Importowanie kart: %2$d%%\n• Post-processing: %3$d%%</string>
     <string name="import_update_details">Zaktualizowano %1$d z %2$d istniejących notatek.</string>
     <string name="import_update_ignored">Niektóre aktualizacje zostały zignorowane, ponieważ zmienił się typ notatki</string>
-    <string name="import_complete_count">Zaimportowanych kart: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">Karta SD jest pełna</string>
     <string name="sd_card_almost_full_title">Karta SD jest prawie pełna</string>
     <string name="no_space_to_downgrade_title">Brak miejsca</string>

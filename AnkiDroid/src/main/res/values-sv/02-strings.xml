@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Öppna panel</string>
     <string name="drawer_close">Stäng panel</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Filtrera etiketter</string>
     <string name="no_tags">Du har inte lagt till några etiketter än.</string>
     <string name="updated_version">Uppdaterad till version %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Spara whiteboarden</string>
     <string name="enable_whiteboard">Aktivera whiteboard</string>
     <string name="disable_whiteboard">Avaktivera whiteboard</string>
@@ -163,8 +162,12 @@
     <string name="import_title">Importera</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lägg till</string>
     <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datat i filen %s. Är du säker?</string>
-    <string name="import_message_add_confirm">Vill du lägga till \"%s\" till samling? Det här kan ta lång tid</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Detta är ingen giltig Anki-paketfil</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Misslyckades med att packa upp apkg: %s</string>
     <string name="import_log_failed_copy_to">Det gick inte att kopiera apkg till %s</string>
     <string name="import_log_failed_validate">apkg misslyckades validering</string>
@@ -179,6 +182,9 @@
     <string name="import_error_content_provider">Den valda filen kunde inte importeras automatiskt av AnkiDroid. Vänligen se användarmanualen för information om manuell import av Anki-filer: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() misslyckades (möjligen slut på lagringsutrymme)</string>
     <string name="import_error_unhandled_scheme">Ohanterad import från: ”%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Ersätter samling&#8230;</string>
     <string name="import_interrupted">Importering avbruten: AnkiDroid stängdes ned</string>
     <string name="export_include_schedule">Inkludera schemaläggning</string>
@@ -407,4 +413,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

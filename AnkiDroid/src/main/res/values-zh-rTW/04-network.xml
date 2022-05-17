@@ -48,13 +48,13 @@
     <string name="youre_offline">目前是離線狀態</string>
     <string name="sync_even_if_offline">強制嘗試</string>
     <string name="sync_error">同步錯誤</string>
-    <string name="vague_error">錯誤</string>
+    <string name="vague_error" comment="Network error dialog title">錯誤</string>
     <string name="retry">重試</string>
     <string name="menu_get_shared_decks">取得共享的牌組</string>
     <string name="connection_error_message">網路出了點問題。</string>
     <string name="not_logged_in_title">登入 AnkiWeb</string>
     <string name="login_create_account_message">您必須登入到第三方帳號以使用云端同步服務。您可以在下一步建立一個帳號。</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">電子郵件地址</string>
     <string name="password">密碼</string>
     <string name="log_in">登入</string>

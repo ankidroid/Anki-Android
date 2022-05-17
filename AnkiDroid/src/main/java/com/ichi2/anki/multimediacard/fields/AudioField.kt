@@ -32,67 +32,39 @@ abstract class AudioField : FieldBase(), IField {
     private var mAudioPath: String? = null
     protected var currentName: String? = null
     protected var currentHasTemporaryMedia = false
-    abstract override fun getType(): EFieldType
-    override fun setType(type: EFieldType): Boolean {
-        return false
-    }
 
-    abstract override fun isModified(): Boolean
-    override fun getHtml(): String? {
-        return null
-    }
+    override var imagePath: String? = null
 
-    override fun setHtml(html: String): Boolean {
-        return false
-    }
+    override var audioPath: String?
+        get() = mAudioPath
+        set(value) {
+            mAudioPath = value
+            setThisModified()
+        }
 
-    override fun setImagePath(pathToImage: String): Boolean {
-        return false
-    }
-
-    override fun getImagePath(): String? {
-        return null
-    }
-
-    override fun setAudioPath(pathToAudio: String?): Boolean {
-        mAudioPath = pathToAudio
-        setThisModified()
-        return true
-    }
-
-    override fun getAudioPath(): String? {
-        return mAudioPath
-    }
-
-    override fun getText(): String? {
-        return null
-    }
-
-    override fun setText(text: String): Boolean {
-        return false
-    }
+    override var text: String? = null
 
     abstract override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean)
     abstract override fun hasTemporaryMedia(): Boolean
-    abstract override fun getName(): String?
-    abstract override fun setName(name: String)
-    override fun getFormattedValue(): String {
-        var formattedValue = ""
-        val file = File(audioPath!!)
-        if (file.exists()) {
-            formattedValue = String.format("[sound:%s]", file.name)
-        }
-        return formattedValue
-    }
 
-    override fun setFormattedString(col: Collection, value: String) {
+    @KotlinCleanup("get() can be simplified with a scope function")
+    override val formattedValue: String
+        get() {
+            if (audioPath == null) {
+                return ""
+            }
+            val file = File(audioPath!!)
+            return if (file.exists()) String.format("[sound:%s]", file.name) else ""
+        }
+
+    override fun setFormattedString(col: Collection?, value: String) {
         val p = Pattern.compile(PATH_REGEX)
         val m = p.matcher(value)
         var res = ""
         if (m.find()) {
             res = m.group(1)!!
         }
-        val mediaDir = col.media.dir() + "/"
+        val mediaDir = col!!.media.dir() + "/"
         audioPath = mediaDir + res
     }
 

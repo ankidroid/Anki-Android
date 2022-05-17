@@ -48,13 +48,13 @@
     <string name="youre_offline">به شبکه متصل نیستيد</string>
     <string name="sync_even_if_offline">انجام بده</string>
     <string name="sync_error">خطا در همگام سازی</string>
-    <string name="vague_error">خطا</string>
+    <string name="vague_error" comment="Network error dialog title">خطا</string>
     <string name="retry">تلاش مجدد</string>
     <string name="menu_get_shared_decks">دريافت كارتهاي اشتراكي</string>
     <string name="connection_error_message">خطاي شبكه رخ داده است.</string>
     <string name="not_logged_in_title">ورود به AnkiWeb</string>
     <string name="login_create_account_message">شما برای استفاده از خدمت همگام سازی ابری باید وارد حساب شخص ثالث شوید. در قدم بعدی شما می توانید آن را ایجاد کنید.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">نشانی رایانامه</string>
     <string name="password">رمزعبور</string>
     <string name="log_in">ورود به حساب کاربری</string>

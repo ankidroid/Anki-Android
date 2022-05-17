@@ -17,10 +17,7 @@ package com.ichi2.libanki
 
 import android.content.Context
 import com.ichi2.async.CollectionTask
-import com.ichi2.libanki.backend.RustConfigBackend
-import com.ichi2.libanki.backend.RustDroidDeckBackend
-import com.ichi2.libanki.backend.RustDroidV16Backend
-import com.ichi2.libanki.backend.RustTagsBackend
+import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.utils.Time
@@ -38,9 +35,8 @@ class CollectionV16(
 ) : Collection(context, db, path, server, log, time, backend) {
 
     /** Workaround as we shouldn't be overriding members which are used in the constructor */
-    override fun getBackend(): RustDroidV16Backend {
-        return super.getBackend() as RustDroidV16Backend
-    }
+    override val backend: RustDroidV16Backend
+        get() = super.backend as RustDroidV16Backend
 
     override fun initTags(): TagManager {
         return TagsV16(this, RustTagsBackend(backend.backend))
@@ -54,7 +50,7 @@ class CollectionV16(
         return ModelsV16(this, backend.backend)
     }
 
-    override fun initConf(conf: String): ConfigManager {
+    override fun initConf(conf: String?): ConfigManager {
         return ConfigV16(RustConfigBackend(backend.backend))
     }
 

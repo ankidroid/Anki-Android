@@ -49,7 +49,6 @@ import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.OnboardingUtils.Companion.reset
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.analytics.Acra.Companion.onPreferenceChanged
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -65,6 +64,7 @@ import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.CustomSyncServer.getSyncBaseUrlOrDefault
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.anki.web.CustomSyncServer.isEnabled
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -107,11 +107,11 @@ class Preferences : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
         setThemeLegacy(this)
-        enableToolbar()
-
-        // Add a home button to the actionbar
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        enableToolbar().apply {
+            // Add a home button to the actionbar
+            setHomeButtonEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+        }
         title = resources.getText(R.string.preferences_title)
 
         val fragment = getInitialFragment(intent)
@@ -140,7 +140,14 @@ class Preferences : AnkiActivity() {
         if (actionBar == null)
             return
 
+        @NeedsTest("check all settings fragments have defined titles")
         actionBar.title = when (fragment) {
+            is GeneralSettingsFragment -> resources.getString(R.string.pref_cat_general)
+            is ReviewingSettingsFragment -> resources.getString(R.string.pref_cat_reviewing)
+            is GesturesSettingsFragment -> resources.getString(R.string.pref_cat_gestures)
+            is ControlsSettingsFragment -> resources.getString(R.string.pref_cat_controls)
+            is AdvancedSettingsFragment -> resources.getString(R.string.pref_cat_advanced)
+            is AppearanceSettingsFragment -> resources.getString(R.string.pref_cat_appearance)
             is AdvancedStatisticsSettingsFragment -> resources.getString(R.string.advanced_statistics_title)
             is CustomSyncServerSettingsFragment -> resources.getString(R.string.custom_sync_server_title)
             is CustomButtonsSettingsFragment -> resources.getString(R.string.custom_buttons)
@@ -400,7 +407,7 @@ class Preferences : AnkiActivity() {
     private fun closePreferences() {
         finish()
         slide(this, ActivityTransitionAnimation.Direction.FADE)
-        if (col != null && col.db != null) {
+        if (col != null && !col.dbClosed) {
             col.save()
         }
     }
@@ -563,9 +570,9 @@ class Preferences : AnkiActivity() {
                             }
                         }
                     }
-                    AnkiDroidApp.FEEDBACK_REPORT_KEY -> {
-                        val value = prefs!!.getString(AnkiDroidApp.FEEDBACK_REPORT_KEY, "")
-                        onPreferenceChanged(preferencesActivity, value!!)
+                    CrashReportService.FEEDBACK_REPORT_KEY -> {
+                        val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
+                        CrashReportService.onPreferenceChanged(preferencesActivity, value!!)
                     }
                     "syncAccount" -> {
                         val preferences = AnkiDroidApp.getSharedPrefs(preferencesActivity.baseContext)

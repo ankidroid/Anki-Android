@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Çekmeceyi aç</string>
     <string name="drawer_close">Çekmeceyi kapat</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Etiket filtrele</string>
     <string name="no_tags">Henüz herhangi bir etiket eklemediniz.</string>
     <string name="updated_version">%s versiyonuna güncellendi</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Yazı tahtasını kaydet</string>
     <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
     <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>
@@ -163,8 +162,12 @@
     <string name="import_title">İçeri Aktarılıyor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ekle</string>
     <string name="import_message_replace_confirm">Bu, varolan koleksiyonu silerek %s dosyasının verileriyle değiştirir. Emin misiniz?</string>
-    <string name="import_message_add_confirm">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir.</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Bu geçerli bir Anki paketi dosyası değil</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Apkg zipten çıkarılamadı: %s</string>
     <string name="import_log_failed_copy_to">apkg\'yi %s\'e kopyalama başarısız</string>
     <string name="import_log_failed_validate">apkg onaylama başarısız</string>
@@ -179,6 +182,9 @@
     <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() başarısız oldu (belki depolama alanı bitmiştir)</string>
     <string name="import_error_unhandled_scheme">Şurdan ele alınmayan içeri aktarım: \"%s\"</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Koleksiyon değiştiriliyor&#8230;</string>
     <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
     <string name="export_include_schedule">Zamanlama dâhil</string>
@@ -343,7 +349,7 @@
     <string name="before_text">Seçimden önce HTML</string>
     <string name="after_text">Seçimden sonra HTML</string>
     <string name="add_toolbar_item">Araç çubuğu öğesi yarat</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="edit_toolbar_item">Araç çubuğu öğesini düzenle</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Araç çubuğu öğesini sil?</string>
     <string name="note_editor_paste_too_large">Görsel yapıştırmak için çok büyük, lütfen görseli elle ekleyin</string>
@@ -402,9 +408,11 @@
     <string name="scoped_storage_migrate">Taşı</string>
     <string name="search_card_js_api_no_results">Arama sonuç vermedi</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="not_valid_js_addon">%s geçerli bir javascript eklenti paketi değil</string>
+    <string name="could_not_create_dir">Klasör oluşturma hatası %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">Dosya çıkartımı depolama alanını aşıyor</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

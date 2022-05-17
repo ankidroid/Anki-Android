@@ -208,7 +208,7 @@ public class CollectionHelper {
             return null;
         } catch (Exception e) {
             Timber.w(e);
-            AnkiDroidApp.sendExceptionReport(e, "CollectionHelper.getColSafe");
+            CrashReportService.sendExceptionReport(e, "CollectionHelper.getColSafe");
             return null;
         }
     }
@@ -228,7 +228,7 @@ public class CollectionHelper {
      * @return Whether or not {@link Collection} and its child database are open.
      */
     public boolean colIsOpen() {
-        return mCollection != null && mCollection.getDb() != null &&
+        return mCollection != null && !mCollection.isDbClosed() &&
                 mCollection.getDb().getDatabase() != null && mCollection.getDb().getDatabase().isOpen();
     }
 

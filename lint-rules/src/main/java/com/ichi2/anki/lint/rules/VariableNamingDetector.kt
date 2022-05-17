@@ -14,6 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+@file:Suppress("UnstableApiUsage")
 package com.ichi2.anki.lint.rules
 
 import com.android.tools.lint.client.api.UElementHandler
@@ -30,9 +31,7 @@ import org.jetbrains.uast.UVariable
 
 class VariableNamingDetector : Detector(), Detector.UastScanner {
 
-    override fun getApplicableUastTypes(): List<Class<out UElement>>? {
-        return listOf(UVariable::class.java)
-    }
+    override fun getApplicableUastTypes() = listOf(UVariable::class.java)
 
     private fun reportVariable(context: JavaContext, node: UVariable) {
         context.report(

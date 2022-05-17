@@ -19,28 +19,27 @@ import com.ichi2.utils.StringUtil.strip
 import com.ichi2.utils.StringUtil.toTitleCase
 import com.ichi2.utils.StringUtil.trimRight
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.sameInstance
-import org.junit.Assert.assertEquals
 import org.junit.Test
-import kotlin.test.junit.JUnitAsserter.assertNull
+import kotlin.test.assertEquals
+import kotlin.test.junit5.JUnit5Asserter.assertNull
 
-@KotlinCleanup("Change `is`() to equalTo()")
 class StringUtilTest {
     @Test
     fun trimRightNullIsSetToNull() {
-        assertThat(trimRight(null), `is`(nullValue()))
+        assertThat(trimRight(null), nullValue())
     }
 
     @Test
     fun trimRightWhiteSpaceIsBlankString() {
-        assertThat(trimRight(" "), `is`(""))
+        assertThat(trimRight(" "), equalTo(""))
     }
 
     @Test
     fun trimRightOnlyTrimsRight() {
-        assertThat(trimRight(" a "), `is`(" a"))
+        assertThat(trimRight(" a "), equalTo(" a"))
     }
 
     @Test
@@ -91,16 +90,16 @@ class StringUtilTest {
 
     @Test
     fun toTitleCase_single_letter() {
-        assertThat(toTitleCase("a"), `is`("A"))
+        assertThat(toTitleCase("a"), equalTo("A"))
     }
 
     @Test
     fun toTitleCase_single_upper_letter() {
-        assertThat(toTitleCase("A"), `is`("A"))
+        assertThat(toTitleCase("A"), equalTo("A"))
     }
 
     @Test
     fun toTitleCase_string() {
-        assertThat(toTitleCase("aB"), `is`("Ab"))
+        assertThat(toTitleCase("aB"), equalTo("Ab"))
     }
 }

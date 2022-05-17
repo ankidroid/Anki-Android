@@ -112,7 +112,9 @@
     <string name="import_progress">• 正在导入笔记: %1$d%%\n• 正在导入卡牌: %2$d%%\n• 正在后期处理: %3$d%%</string>
     <string name="import_update_details">现有笔记%2$d条，已更新%1$d条。</string>
     <string name="import_update_ignored">忽略了某些更新，因为这些笔记的类型已改变</string>
-    <string name="import_complete_count">卡牌已导入：%d</string>
+    <plurals name="import_complete_message">
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD 卡已满</string>
     <string name="sd_card_almost_full_title">SD 卡几乎已满</string>
     <string name="no_space_to_downgrade_title">没有空间</string>

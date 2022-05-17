@@ -130,7 +130,12 @@
     <string name="import_progress">• Uvažanje zapiskov: %1$d %%\n• Uvažanje kartic: %2$d %%\n• Poobdelava: %3$d %%</string>
     <string name="import_update_details">Posodobljenih %1$d od %2$d obstoječih zapiskov.</string>
     <string name="import_update_ignored">Nekatere posodobitve so bile prezrte, ker se je vrsta zapiska spremenila.</string>
-    <string name="import_complete_count">Uvožene kartice: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="two">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">Kartica SD polna</string>
     <string name="sd_card_almost_full_title">Kartica SD skoraj polna</string>
     <string name="no_space_to_downgrade_title">No space</string>

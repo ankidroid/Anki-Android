@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Адкрыць панэль</string>
     <string name="drawer_close">Закрыць панэль</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">Фільтраваць меткі</string>
     <string name="no_tags">Вы пакуль не дадалі ніводнай меткі</string>
     <string name="updated_version">Абноўлена да версіі %s</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">Захаваць дошку</string>
     <string name="enable_whiteboard">Уключыць дошку</string>
     <string name="disable_whiteboard">Адключыць дошку</string>
@@ -169,8 +168,14 @@
     <string name="import_title">Імпартаванне</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Дадаць</string>
     <string name="import_message_replace_confirm">Ваша бягучая калекцыя будзе выдаленая і яе заменяць даныя з файла %s</string>
-    <string name="import_message_add_confirm">Дадаць \"%s\" у калекцыю? Гэта можа заняць шмат часу</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">Пашкоджаны файл праграмы Anki</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Не атрымалася распакаваць apkg: %s</string>
     <string name="import_log_failed_copy_to">Не атрымалася скапіяваць apkg у %s</string>
     <string name="import_log_failed_validate">Не атрымалася праверыць apkg</string>
@@ -185,6 +190,9 @@
     <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файла ўручную: \n %s</string>
     <string name="import_error_copy_file_to_cache">Памылка аперацыі copyFileToCache() (верагодна не засталося месца)</string>
     <string name="import_error_unhandled_scheme">Неапрацаваны імпарт з: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Замена калекцыі&#8230;</string>
     <string name="import_interrupted">Імпарт перарваны</string>
     <string name="export_include_schedule">Разам з раскладам</string>
@@ -433,4 +441,6 @@
     <string name="malicious_archive_entry_outside">Шкодны архіў. Змяшчае запіс па-за межамі мэтавага каталога: %s</string>
     <string name="malicious_archive_exceeds_limit">Шкодны архіў. Памер перавышае %1$s або змяшчае больш %2$d файлаў</string>
     <string name="file_extract_exceeds_storage_space">Памер файла перавышае аб\'ём памяці</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

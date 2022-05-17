@@ -24,10 +24,8 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.ichi2.anki.R
 import com.ichi2.libanki.Deck
-import com.ichi2.utils.KotlinCleanup
 
-@KotlinCleanup("make decks non-null")
-class DeckDropDownAdapter(private val context: Context, private val decks: List<Deck?>?) : BaseAdapter() {
+class DeckDropDownAdapter(private val context: Context, private val decks: List<Deck>) : BaseAdapter() {
     interface SubtitleListener {
         val subtitleText: String?
     }
@@ -38,14 +36,14 @@ class DeckDropDownAdapter(private val context: Context, private val decks: List<
     }
 
     override fun getCount(): Int {
-        return decks!!.size + 1
+        return decks.size + 1
     }
 
     override fun getItem(position: Int): Any? {
         return if (position == 0) {
             null
         } else {
-            decks!![position + 1]
+            decks[position + 1]
         }
     }
 
@@ -74,8 +72,8 @@ class DeckDropDownAdapter(private val context: Context, private val decks: List<
         if (position == 0) {
             deckNameView!!.text = context.resources.getString(R.string.card_browser_all_decks)
         } else {
-            val deck = decks!![position - 1]
-            val deckName = deck!!.getString("name")
+            val deck = decks[position - 1]
+            val deckName = deck.getString("name")
             deckNameView!!.text = deckName
         }
         deckCountsView!!.text = (context as SubtitleListener).subtitleText
@@ -95,8 +93,8 @@ class DeckDropDownAdapter(private val context: Context, private val decks: List<
         if (position == 0) {
             deckNameView.text = context.resources.getString(R.string.card_browser_all_decks)
         } else {
-            val deck = decks!![position - 1]
-            val deckName = deck!!.getString("name")
+            val deck = decks[position - 1]
+            val deckName = deck.getString("name")
             deckNameView.text = deckName
         }
         return convertView

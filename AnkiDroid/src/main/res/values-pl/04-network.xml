@@ -48,13 +48,13 @@
     <string name="youre_offline">Brak dostępu do sieci</string>
     <string name="sync_even_if_offline">Spróbuj mimo to</string>
     <string name="sync_error">Błąd synchronizacji</string>
-    <string name="vague_error">Błąd</string>
+    <string name="vague_error" comment="Network error dialog title">Błąd</string>
     <string name="retry">Próbuj ponownie</string>
     <string name="menu_get_shared_decks">Pobierz udostępniane talie</string>
     <string name="connection_error_message">Wystąpił błąd sieciowy.</string>
     <string name="not_logged_in_title">Zaloguj się do AnkiWeb</string>
     <string name="login_create_account_message">Musisz zalogować się na konto zewnętrznego serwisu aby korzystać z usługi synchronizacji w chmurze. Możesz utworzyć nowe konto w następnym kroku.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Adres e-mail</string>
     <string name="password">Hasło</string>
     <string name="log_in">Zaloguj się</string>

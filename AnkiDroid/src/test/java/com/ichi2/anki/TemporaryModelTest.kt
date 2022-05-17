@@ -26,7 +26,7 @@ import org.junit.runner.RunWith
 import timber.log.Timber
 import java.io.IOException
 import java.io.Serializable
-import kotlin.test.junit.JUnitAsserter.assertNotNull
+import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class TemporaryModelTest : RobolectricTest() {

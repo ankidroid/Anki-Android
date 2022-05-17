@@ -23,6 +23,7 @@ import android.util.Pair;
 
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.anki.CrashReportService;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
@@ -288,11 +289,11 @@ public class Syncer {
         } catch (IllegalStateException e) {
             throw new RuntimeException(e);
         } catch (OutOfMemoryError e) {
-            AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
+            CrashReportService.sendExceptionReport(e, "Syncer-sync");
             Timber.w(e);
             return new Pair<>( OUT_OF_MEMORY_ERROR , null);
         } catch (IOException e) {
-            AnkiDroidApp.sendExceptionReport(e, "Syncer-sync");
+            CrashReportService.sendExceptionReport(e, "Syncer-sync");
             Timber.w(e);
             return new Pair<>( IO_EXCEPTION , null);
         }

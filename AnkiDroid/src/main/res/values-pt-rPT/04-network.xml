@@ -48,13 +48,13 @@
     <string name="youre_offline">Está offline</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Erro de sincronização</string>
-    <string name="vague_error">Erro</string>
+    <string name="vague_error" comment="Network error dialog title">Erro</string>
     <string name="retry">Repetir</string>
     <string name="menu_get_shared_decks">Obter baralhos partilhados</string>
     <string name="connection_error_message">Ocorreu um erro de rede.</string>
     <string name="not_logged_in_title">Iniciar sessão na AnkiWeb</string>
     <string name="login_create_account_message">Deve iniciar a sessão numa conta de terceiros para usar o serviço de sincronização da nuvem. Pode criar uma no passo seguinte.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Endereço de correio eletrónico</string>
     <string name="password">Palavra-passe</string>
     <string name="log_in">Iniciar sessão</string>

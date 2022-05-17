@@ -41,7 +41,7 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
     private var mTempAudioPath: String? = null
     private var mAudioView: AudioView? = null
 
-    override fun createUI(context: Context, layout: LinearLayout?) {
+    override fun createUI(context: Context, layout: LinearLayout) {
         val origAudioPath = mField.audioPath
         var bExist = false
         if (origAudioPath != null) {
@@ -73,7 +73,7 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
                 mField.setHasTemporaryMedia(true)
             }
         })
-        layout!!.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT)
+        layout.addView(mAudioView, LinearLayout.LayoutParams.MATCH_PARENT)
 
         context.apply {
             // add preview of the field data to provide context to the user

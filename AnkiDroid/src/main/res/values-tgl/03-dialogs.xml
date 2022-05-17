@@ -118,7 +118,10 @@
     <string name="import_progress">• Nag-aangkat ng mga tala: %1$d%%\n• Nag-aangkat ng mga baraha: %2$d%%\n• Pag-post ng pagkaproseso: %3$d%%</string>
     <string name="import_update_details">Nai-update na %1$d ng %2$d umiiral na mga tala.</string>
     <string name="import_update_ignored">Ang ilang mga update ay hindi pinansin dahil nagbago ang uri ng tala</string>
-    <string name="import_complete_count">Mga na-angkat na mga card: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">Puno ang SD kard</string>
     <string name="sd_card_almost_full_title">Malapit na mapuno ang SD kard</string>
     <string name="no_space_to_downgrade_title">No space</string>

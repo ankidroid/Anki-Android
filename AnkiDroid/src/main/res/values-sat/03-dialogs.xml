@@ -118,7 +118,10 @@
     <string name="import_progress">• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱱᱚᱥ: %1$d%%\n• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ: %2$d%%\n• ᱠᱩᱞ-ᱠᱟᱹᱢᱤᱠᱟᱱᱟ: %3$d%%</string>
     <string name="import_update_details">%1$d of %2$d ᱟᱜᱩᱭᱮᱛ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ ᱾</string>
     <string name="import_update_ignored">ᱠᱤᱪᱷᱤ ᱟᱹᱯᱰᱮᱴ ᱫᱚ ᱟᱰᱟᱜ ᱜᱤᱰᱤ ᱮᱱᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱷᱟᱹᱛᱤᱨ</string>
-    <string name="import_complete_count">ᱠᱟᱰ ᱟᱹᱜᱩᱜᱭᱮᱱᱟ: %d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD ᱠᱟᱰ ᱯᱮᱨᱮᱡ ᱮᱱᱟ</string>
     <string name="sd_card_almost_full_title">SD ᱠᱟᱰ ᱯᱟᱠᱷᱟᱯᱟᱹᱠᱷᱤ ᱯᱮᱨᱮᱡ ᱮᱱᱟ</string>
     <string name="no_space_to_downgrade_title">ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜ-ᱟ</string>

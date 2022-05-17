@@ -37,7 +37,7 @@ import net.ankiweb.rsdroid.RustV1Cleanup
 interface DroidBackend {
     /** Should only be called from "Storage.java"  */
     fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean, time: Time): Collection?
-    fun openCollectionDatabase(path: String): DB?
+    fun openCollectionDatabase(path: String): DB
     fun closeCollection(db: DB?, downgradeToSchema11: Boolean)
 
     /** Whether a call to [DroidBackend.openCollectionDatabase] will generate a schema and indices for the database  */

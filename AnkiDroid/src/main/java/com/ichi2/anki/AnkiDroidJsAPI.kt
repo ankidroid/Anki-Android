@@ -36,17 +36,19 @@ import com.ichi2.anki.servicelayer.SearchService
 import com.ichi2.async.CollectionTask.SearchCards
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
-@KotlinCleanup("replace activity.currentCard!! with property")
 open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
+    private val currentCard: Card
+        get() = activity.currentCard!!
+
     /**
      Javascript Interface class for calling Java function from AnkiDroid WebView
      see card.js for available functions
@@ -166,7 +168,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         }
     }
 
-    private fun getJsApiListMap(): HashMap<String, Boolean>? {
+    protected fun getJsApiListMap(): HashMap<String, Boolean>? {
         return mJsApiListMap
     }
 
@@ -217,12 +219,12 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiGetCardMark(): Boolean {
-        return activity.currentCard!!.note().hasTag("marked")
+        return currentCard.note().hasTag("marked")
     }
 
     @JavascriptInterface
     fun ankiGetCardFlag(): Int {
-        return activity.currentCard!!.userFlag()
+        return currentCard.userFlag()
     }
 
     // behavior change ankiGetNextTime1...4
@@ -248,80 +250,80 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiGetCardReps(): Int {
-        return activity.currentCard!!.reps
+        return currentCard.reps
     }
 
     @JavascriptInterface
     fun ankiGetCardInterval(): Int {
-        return activity.currentCard!!.ivl
+        return currentCard.ivl
     }
 
     /** Returns the ease as an int (percentage * 10). Default: 2500 (250%). Minimum: 1300 (130%)  */
     @JavascriptInterface
     fun ankiGetCardFactor(): Int {
-        return activity.currentCard!!.factor
+        return currentCard.factor
     }
 
     /** Returns the last modified time as a Unix timestamp in seconds. Example: 1477384099  */
     @JavascriptInterface
     fun ankiGetCardMod(): Long {
-        return activity.currentCard!!.mod
+        return currentCard.mod
     }
 
     /** Returns the ID of the card. Example: 1477380543053  */
     @JavascriptInterface
     fun ankiGetCardId(): Long {
-        return activity.currentCard!!.id
+        return currentCard.id
     }
 
     /** Returns the ID of the note which generated the card. Example: 1590418157630  */
     @JavascriptInterface
     fun ankiGetCardNid(): Long {
-        return activity.currentCard!!.nid
+        return currentCard.nid
     }
 
     @JavascriptInterface
     @CARD_TYPE
     fun ankiGetCardType(): Int {
-        return activity.currentCard!!.type
+        return currentCard.type
     }
 
     /** Returns the ID of the deck which contains the card. Example: 1595967594978  */
     @JavascriptInterface
     fun ankiGetCardDid(): Long {
-        return activity.currentCard!!.did
+        return currentCard.did
     }
 
     @JavascriptInterface
     fun ankiGetCardLeft(): Int {
-        return activity.currentCard!!.left
+        return currentCard.left
     }
 
     /** Returns the ID of the home deck for the card if it is filtered, or 0 if not filtered. Example: 1595967594978  */
     @JavascriptInterface
     fun ankiGetCardODid(): Long {
-        return activity.currentCard!!.oDid
+        return currentCard.oDid
     }
 
     @JavascriptInterface
     fun ankiGetCardODue(): Long {
-        return activity.currentCard!!.oDue
+        return currentCard.oDue
     }
 
     @JavascriptInterface
     @CARD_QUEUE
     fun ankiGetCardQueue(): Int {
-        return activity.currentCard!!.queue
+        return currentCard.queue
     }
 
     @JavascriptInterface
     fun ankiGetCardLapses(): Int {
-        return activity.currentCard!!.lapses
+        return currentCard.lapses
     }
 
     @JavascriptInterface
     fun ankiGetCardDue(): Long {
-        return activity.currentCard!!.due
+        return currentCard.due
     }
 
     @JavascriptInterface
@@ -346,7 +348,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiGetDeckName(): String {
-        return Decks.basename(activity.col.decks.get(activity.currentCard!!.did).getString("name"))
+        return Decks.basename(activity.col.decks.get(currentCard.did).getString("name"))
     }
 
     @JavascriptInterface
@@ -393,7 +395,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     @JavascriptInterface
     fun ankiSearchCard(query: String?) {
         val intent = Intent(context, CardBrowser::class.java)
-        val currentCardId: Long = activity.currentCard!!.id
+        val currentCardId: Long = currentCard.id
         intent.putExtra("currentCard", currentCardId)
         intent.putExtra("search_query", query)
         activity.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
@@ -517,5 +519,19 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             val jsonEncodedString = org.json.JSONObject.quote(searchResult.toString())
             webView.evaluateJavascript("ankiSearchCard($jsonEncodedString)", null)
         }
+    }
+
+    @JavascriptInterface
+    open fun ankiSetCardDue(days: Int): Boolean {
+        // the function is overridden in Reviewer.kt
+        // it may be called in previewer so just return true value here
+        return true
+    }
+
+    @JavascriptInterface
+    open fun ankiResetProgress(): Boolean {
+        // the function is overridden in Reviewer.kt
+        // it may be called in previewer so just return true value here
+        return true
     }
 }

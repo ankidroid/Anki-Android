@@ -27,51 +27,22 @@ import com.ichi2.libanki.Collection
 class TextField : FieldBase(), IField {
     private var mText = ""
     private var mName: String? = null
-    override fun getType(): EFieldType {
-        return EFieldType.TEXT
-    }
 
-    override fun setType(type: EFieldType): Boolean {
-        return false
-    }
+    override val type: EFieldType = EFieldType.TEXT
 
-    override fun isModified(): Boolean {
-        return thisModified
-    }
+    override val isModified: Boolean
+        get() = thisModified
 
-    override fun getHtml(): String? {
-        return null
-    }
+    override var imagePath: String? = null
 
-    override fun setHtml(html: String): Boolean {
-        return false
-    }
+    override var audioPath: String? = null
 
-    override fun setImagePath(pathToImage: String): Boolean {
-        return false
-    }
-
-    override fun getImagePath(): String? {
-        return null
-    }
-
-    override fun setAudioPath(pathToAudio: String?): Boolean {
-        return false
-    }
-
-    override fun getAudioPath(): String? {
-        return null
-    }
-
-    override fun getText(): String {
-        return mText
-    }
-
-    override fun setText(text: String): Boolean {
-        mText = text
-        setThisModified()
-        return true
-    }
+    override var text: String?
+        get() = mText
+        set(value) {
+            mText = value!!
+            setThisModified()
+        }
 
     override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {}
     override fun hasTemporaryMedia(): Boolean {
@@ -79,19 +50,16 @@ class TextField : FieldBase(), IField {
         return false
     }
 
-    override fun getName(): String {
-        return mName!!
-    }
+    override var name: String?
+        get() = mName
+        set(value) {
+            mName = value
+        }
 
-    override fun setName(name: String) {
-        mName = name
-    }
+    override val formattedValue: String?
+        get() = text
 
-    override fun getFormattedValue(): String {
-        return text
-    }
-
-    override fun setFormattedString(col: Collection, value: String) {
+    override fun setFormattedString(col: Collection?, value: String) {
         mText = value
     }
 

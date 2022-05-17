@@ -48,13 +48,13 @@
     <string name="youre_offline">మీరు ఆఫ్లైన్లో ఉన్నారు</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">సమకాలీకరణ లోపం</string>
-    <string name="vague_error">తప్పు</string>
+    <string name="vague_error" comment="Network error dialog title">తప్పు</string>
     <string name="retry">మళ్ళీ ప్రయత్నించండి</string>
     <string name="menu_get_shared_decks">భాగస్వామ్య డెక్స్ పొందండి</string>
     <string name="connection_error_message">ఒక నెట్వర్క్ లోపం సంభవించింది</string>
     <string name="not_logged_in_title">AnkiWeb కు లాగిన్ అవ్వండి</string>
     <string name="login_create_account_message">క్లౌడ్ సమకాలీకరణ సేవను ఉపయోగించడానికి మీరు మూడవ పక్ష ఖాతాకు లాగిన్ చేయాలి. మీరు తదుపరి దశను సృష్టించవచ్చు.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">ఇమెయిల్</string>
     <string name="password">పాస్వర్డ్</string>
     <string name="log_in">లాగ్ ఇన్</string>

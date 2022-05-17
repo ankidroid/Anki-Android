@@ -48,13 +48,13 @@
     <string name="youre_offline">Ikaw ay offline</string>
     <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">May mali sa pagsisingkronisa</string>
-    <string name="vague_error">May mali</string>
+    <string name="vague_error" comment="Network error dialog title">May mali</string>
     <string name="retry">Subukang muli</string>
     <string name="menu_get_shared_decks">Kunin ang naibahaging mga deck</string>
     <string name="connection_error_message">May maling naganap sa network</string>
     <string name="not_logged_in_title">Mag-login sa AnkiWeb</string>
     <string name="login_create_account_message">Kailangang mag-login sa isang hiwalay na account upang gumamit ng serbisyong mag-sisingkronisa sa cloud. Maari kang gumawa ng isa sa susunod na hakbang.</string>
-    <!-- MyAccount.java -->
+    <!-- MyAccount.kt -->
     <string name="username">Email address</string>
     <string name="password">Password</string>
     <string name="log_in">Mag-login</string>

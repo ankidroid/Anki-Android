@@ -23,7 +23,7 @@ import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
-import kotlin.test.junit.JUnitAsserter.assertTrue
+import kotlin.test.junit5.JUnit5Asserter.assertTrue
 
 class CardAppearanceTest {
 

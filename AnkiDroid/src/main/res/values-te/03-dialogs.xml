@@ -118,7 +118,10 @@
     <string name="import_progress">• దిగుమతి గమనికలు:%1$d%%\n• దిగుమతి కార్డులు:%2$d%%\n• పోస్ట్ ప్రాసెసింగ్:%3$d%%</string>
     <string name="import_update_details">%2$d ప్రస్తుత గమనికలు %1$d ను నవీకరించారు.</string>
     <string name="import_update_ignored">కొన్ని నవీకరించబడింది విస్మరించబడిన గమనిక రకం మార్చబడింది ఎందుకంటే</string>
-    <string name="import_complete_count">దిగుమతి చేసిన కార్డులు:%d</string>
+    <plurals name="import_complete_message">
+        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+    </plurals>
     <string name="sd_card_full_title">SD కార్డ్ పూర్తి అయిన్డి</string>
     <string name="sd_card_almost_full_title">SD కార్డు దాదాపు పూర్తి</string>
     <string name="no_space_to_downgrade_title">No space</string>

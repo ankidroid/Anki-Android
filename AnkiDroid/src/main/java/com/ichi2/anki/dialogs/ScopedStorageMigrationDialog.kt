@@ -44,14 +44,14 @@ typealias OpenUri = (Uri) -> Unit
  */
 object ScopedStorageMigrationDialog {
     @JvmStatic
-    fun showDialog(ctx: Context, openUri: OpenUri): Dialog {
+    fun showDialog(ctx: Context, openUri: OpenUri, initiateScopedStorage: Runnable): Dialog {
         return MaterialDialog.Builder(ctx)
             .title(R.string.scoped_storage_title)
             .content(R.string.scoped_storage_initial_message)
             .positiveText(R.string.scoped_storage_migrate)
             .onPositive { dialog, _ ->
                 run {
-                    ScopedStorageMigrationConfirmationDialog.showDialog(ctx)
+                    ScopedStorageMigrationConfirmationDialog.showDialog(ctx, initiateScopedStorage)
                     dialog.dismiss()
                 }
             }
@@ -76,7 +76,7 @@ object ScopedStorageMigrationDialog {
  * Then performs a migration to scoped storage
  */
 object ScopedStorageMigrationConfirmationDialog {
-    fun showDialog(ctx: Context): Dialog {
+    fun showDialog(ctx: Context, initiateScopedStorage: Runnable): Dialog {
         val li = LayoutInflater.from(ctx)
         val view = li.inflate(R.layout.scoped_storage_confirmation, null)
 
@@ -112,8 +112,9 @@ object ScopedStorageMigrationConfirmationDialog {
             .positiveText(R.string.scoped_storage_migrate)
             .onPositive { dialog, _ ->
                 if (checkboxesRequiredToContinue.all { x -> x.isChecked }) {
-                    Timber.d("enable scoped storage migration")
+                    Timber.i("starting scoped storage migration")
                     dialog.dismiss()
+                    initiateScopedStorage.run()
                 } else {
                     UIUtils.showThemedToast(ctx, R.string.scoped_storage_select_all_terms, true)
                 }

@@ -33,8 +33,8 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         // FIXME this should be super.onCreateDialog(Bundle), no?
         super.onCreate(savedInstanceState)
         return MaterialDialog.Builder(requireActivity())
-            .titleNullable(getNotificationTitle())
-            .contentNullable(getNotificationMessage())
+            .titleNullable(notificationTitle)
+            .contentNullable(notificationMessage)
             .positiveText(res().getString(R.string.dialog_ok))
             .onPositive { _: MaterialDialog?, _: DialogAction? ->
                 (activity as SimpleMessageDialogListener?)
@@ -47,18 +47,20 @@ class SimpleMessageDialog : AsyncDialogFragment() {
             .show()
     }
 
-    override fun getNotificationTitle(): String? {
-        val title = requireArguments().getString("title")
-        return if ("" != title) {
-            title
-        } else {
-            AnkiDroidApp.getAppResources().getString(R.string.app_name)
+    override val notificationTitle: String?
+        get() {
+            val title = requireArguments().getString("title")
+            return if ("" != title) {
+                title
+            } else {
+                AnkiDroidApp.getAppResources().getString(R.string.app_name)
+            }
         }
-    }
 
-    override fun getNotificationMessage(): String? {
-        return requireArguments().getString("message")
-    }
+    override val notificationMessage: String?
+        get() {
+            return requireArguments().getString("message")
+        }
 
     companion object {
         @JvmStatic

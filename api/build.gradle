@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.ichi2.anki"
-version = "1.1.0"
+version = "2.0.0"
 
 repositories {
     google()
@@ -25,25 +25,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    testOptions.unitTests.all {
-        testLogging {
-            events "failed", "skipped"
-            showStackTraces = true
-            exceptionFormat = "full"
-        }
-
-        maxParallelForks = gradleTestMaxParallelForks
-        systemProperties['junit.jupiter.execution.parallel.enabled'] = true
-        systemProperties['junit.jupiter.execution.parallel.mode.default'] = "concurrent"
     }
 }
 
@@ -52,8 +36,9 @@ apply from: "../lint.gradle"
 dependencies {
     implementation 'androidx.annotation:annotation:1.3.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'
-    testImplementation 'org.robolectric:robolectric:4.7.3'
+    testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
+    testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
+    testImplementation 'org.robolectric:robolectric:4.8.1'
 
     lintChecks project(":lint-rules")
 }
@@ -147,13 +132,4 @@ publish.dependsOn(assemble)
 generateRelease.dependsOn(publish)
 generateRelease.dependsOn(zipRelease)
 
-// Deprecation is an error. Use @SuppressWarnings("deprecation") and justify in the PR if you must
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:deprecation" << "-Xmaxwarns" << "1000" << "-Werror"
-
-    // https://guides.gradle.org/performance/#compiling_java
-    // 1- fork improves things over time with repeated builds, doesn't harm CI single builds
-    options.fork = true
-    // 2- incremental will be the default in the future and can help now
-    options.incremental = true
-}
+apply from: "./kotlinMigration-api.gradle"

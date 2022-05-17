@@ -58,7 +58,7 @@
     <string name="studyoptions_total_cards">एकुण कार्ड:</string>
     <string name="studyoptions_eta">अदमासें वेळ(मिनिटांमधे):</string>
     <string name="studyoptions_start">अभ्यास शुरू करा</string>
-    <!-- DeckPicker.java -->
+    <!-- DeckPicker.kt -->
     <string name="expand">विस्तृत करा</string>
     <string name="collapse">कोसळणे</string>
     <string name="study_more">अधिक अभ्यास करा</string>
@@ -70,13 +70,13 @@
         <item quantity="one">%d मिनिट शिल्लक आहे</item>
         <item quantity="other">%d मिनिटे शिल्लक आहेत</item>
     </plurals>
-    <plurals name="reviewer_window_title_hours">
-        <item quantity="one">%d तास %d शिल्लक</item>
-        <item quantity="other">%d तास %d शिल्लक</item>
+    <plurals name="reviewer_window_title_hours_new">
+        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
-    <plurals name="reviewer_window_title_days">
-        <item quantity="one">%d दिवस %d तास बाकी आहे</item>
-        <item quantity="other">%d दिवस %d तास बाकी आहेत</item>
+    <plurals name="reviewer_window_title_days_new">
+        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">संग्रह रिक्त आहे</string>
     <string name="no_cards_placeholder_description">कार्ड जोडण्यास प्रारंभ करण्यासाठी + चिन्हाचा उपयोग करा.</string>

@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ଡ୍ରର୍ ଖୋଲନ୍ତୁ</string>
     <string name="drawer_close">ଡ୍ରର୍ ବନ୍ଦ କରନ୍ତୁ</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">ଟ୍ୟାଗ୍ ଶୋଧନ</string>
     <string name="no_tags">ଆପଣ ଏ ଯାଏଁ କୌଣସି ଟ୍ୟାଗ ଯୋଡ଼ିନାହାନ୍ତି</string>
     <string name="updated_version">ସଂସ୍କରଣ %s କୁ ଅଦ୍ୟତନ କରାଗଲା</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">ଧଳାପଟା ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
     <string name="enable_whiteboard">ଧଳାପଟା ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="disable_whiteboard">ଧଳାପଟା ଅକ୍ଷମ କରନ୍ତୁ</string>
@@ -158,13 +157,17 @@
     <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ତାସଖଣ୍ଡ ତାଲିକା ସ୍କ୍ରିନରେ ଥିବା ଅଧିକ ବିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ରଗୁଡ଼ିକ” ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ।</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
     <string name="delete_deck">ତାସଖଣ୍ଡ ବିଲୋପ ହେଉଛି&#8230;</string>
-    <string name="show_hint">%s ଦେଖନ୍ତୁ</string>
+    <string name="show_hint">%s ଦେଖାଅ</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି କରୁଛି</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିବ ଏବଂ ଏହାକୁ %s ଫାଇଲ୍ ତଥ୍ୟ ସହିତ ବିସ୍ଥାପନ ହେବ</string>
-    <string name="import_message_add_confirm">ସଂଗ୍ରହରେ “%s” କୁ ଯୋଡ଼ିବେ କି? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">ଏହା ଏକ ବୈଧ Anki package ଫାଇଲ୍ ନୁହେଁ</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">apkg: %s କୁ unzip କରିବାରେ ବିଫଳ</string>
     <string name="import_log_failed_copy_to">%s କୁ apkg ନକଲ କରିବାରେ ବିଫଳ</string>
     <string name="import_log_failed_validate">ଏ.ପି.କେ.ଜି ର ବିଫଳ ବୈଧତା</string>
@@ -179,6 +182,9 @@
     <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାବରେ ଆମଦାନୀ କରିବେ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() ବିଫଳ ହେଲା (ସମ୍ଭବତଃ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
     <string name="import_error_unhandled_scheme">“%s” ରୁ ଅନିୟନ୍ତ୍ରିତ ଆମଦାନୀ</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">ସଂଗ୍ରହକୁ ବଦଳାଉଛି&#8230;</string>
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଯାଇଥିଲା</string>
     <string name="export_include_schedule">ଅନୁସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
@@ -407,4 +413,6 @@
     <string name="malicious_archive_entry_outside">ହାନୀକାରକ ଅଭିଲେଖାଗାର। ଲକ୍ଷ୍ୟସ୍ଥଳ ଡିରେକ୍ଟୋରୀ ବାହାରେ ଏଣ୍ଟ୍ରି ଧାରଣ କରେ: %s</string>
     <string name="malicious_archive_exceeds_limit">ହାନୀକାରକ ଅଭିଲେଖାଗାର। ଆକାର %1$s ଅତିକ୍ରମ କରେ କିମ୍ୱା %2$dରୁ ଅଧିକ ଫାଇଲ୍ ଧାରଣ କରେ</string>
     <string name="file_extract_exceeds_storage_space">ଫାଇଲ୍ ଏକ୍ସଟ୍ରାକ୍ଟ କରିବାରେ ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଅତିକ୍ରମ ହେଉଛି</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">\'%s\' ଟ୍ୟାଗଟିକୁ ପ୍ରସାରିବା</string>
 </resources>

@@ -17,16 +17,13 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.tests.InstrumentedTest
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("is --> equalTo")
 class DBTest : InstrumentedTest() {
     /** mDatabase.disableWriteAheadLogging(); is called in DB init  */
     @Test
@@ -39,6 +36,6 @@ class DBTest : InstrumentedTest() {
         // https://github.com/ankidroid/Anki-Android/pull/7977#issuecomment-751780273
         // https://www.sqlite.org/pragma.html#pragma_journal_mode
         val journalMode = col.db.queryString("PRAGMA journal_mode")
-        assertThat(journalMode.lowercase(Locale.ROOT), not(`is`("wal")))
+        assertThat(journalMode.lowercase(Locale.ROOT), not(equalTo("wal")))
     }
 }

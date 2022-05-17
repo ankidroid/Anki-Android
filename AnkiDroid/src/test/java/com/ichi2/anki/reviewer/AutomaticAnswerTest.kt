@@ -38,13 +38,13 @@ class AutomaticAnswerTest {
         answer.delayedShowQuestion(0)
         answer.delayedShowAnswer(0)
 
-        assertThat(answer.timeoutHandler.hasMessages(0), equalTo(true))
-        assertThat(answer.isDisabled, equalTo(false))
+        assertThat("it should have messages", answer.timeoutHandler.hasMessages(0), equalTo(true))
+        assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
 
         answer.disable()
 
-        assertThat(answer.timeoutHandler.hasMessages(0), equalTo(false))
-        assertThat(answer.isDisabled, equalTo(true))
+        assertThat("it should not have messages", answer.timeoutHandler.hasMessages(0), equalTo(false))
+        assertThat("answer should be disabled", answer.isDisabled, equalTo(true))
     }
 
     @Test
@@ -70,11 +70,11 @@ class AutomaticAnswerTest {
     @Test
     fun testEnableDisable() {
         val answer = validAnswer(automaticallyAnsweredMock())
-        assertThat(answer.isDisabled, equalTo(false))
+        assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
         answer.disable()
-        assertThat(answer.isDisabled, equalTo(true))
+        assertThat("answer should be disabled", answer.isDisabled, equalTo(true))
         answer.enable()
-        assertThat(answer.isDisabled, equalTo(false))
+        assertThat("answer should be enabled", answer.isDisabled, equalTo(false))
     }
 
     /** Ensures [disableStopsImmediateCallAnswer] can fail */
@@ -85,11 +85,11 @@ class AutomaticAnswerTest {
 
         answer.scheduleAutomaticDisplayAnswer()
         waitForTaskCompletion()
-        assertThat(answerValue.answerShown, equalTo(true))
+        assertThat("answer should be shown", answerValue.answerShown, equalTo(true))
 
         answer.scheduleAutomaticDisplayQuestion()
         waitForTaskCompletion()
-        assertThat(answerValue.questionShown, equalTo(true))
+        assertThat("question should be shown", answerValue.questionShown, equalTo(true))
     }
 
     @Test

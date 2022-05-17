@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">Lorsque aucune police n’est spécifié sur la carte</string>
     <string name="override_font_always">Toujours</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Suivre le système</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Lumineux</string>
     <string name="day_theme_plain">Clair</string>

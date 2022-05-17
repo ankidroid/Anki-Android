@@ -46,7 +46,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
-    <!-- #7570: We should use these strings again -->
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ಡ್ರಾಯರ್ ತೆರೆಯಿರಿ</string>
     <string name="drawer_close">ಡ್ರಾಯರ್ ಮುಚ್ಚಿ</string>
@@ -62,7 +61,7 @@
     <string name="filter_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಫಿಲ್ಟರ್ ಮಾಡಿ</string>
     <string name="no_tags">ನೀವು ಇನ್ನೂ ಯಾವುದೇ ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸೇರಿಸಿಲ್ಲ</string>
     <string name="updated_version">ಆವೃತ್ತಿ%s ಗೆ ನವೀಕರಿಸಲಾಗಿದೆ</string>
-    <!-- Reviewer.java -->
+    <!-- Reviewer.kt -->
     <string name="save_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ಉಳಿಸಿ</string>
     <string name="enable_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="disable_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
@@ -163,8 +162,12 @@
     <string name="import_title">ಆಮದು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ಸೇರಿಸಿ</string>
     <string name="import_message_replace_confirm">ಇದು ನಿಮ್ಮ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಸಂಗ್ರಹವನ್ನು ಅಳಿಸುತ್ತದೆ ಮತ್ತು ಅದನ್ನು%s ಫೈಲ್‌ನ ಡೇಟಾದೊಂದಿಗೆ ಬದಲಾಯಿಸುತ್ತದೆ</string>
-    <string name="import_message_add_confirm">ಸಂಗ್ರಹಕ್ಕೆ “%s” ಸೇರಿಸುವುದೇ? ಇದು ಬಹಳ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು</string>
+    <plurals name="import_files_message_add_confirm">
+        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+    </plurals>
     <string name="import_log_no_apkg">ಇದು ಮಾನ್ಯ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಫೈಲ್ ಅಲ್ಲ</string>
+    <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_log_failed_unzip">Apkg ಅನ್ನು ಅನ್ಜಿಪ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ:%s</string>
     <string name="import_log_failed_copy_to">%s ಗೆ apkg ಅನ್ನು ನಕಲಿಸಲು ವಿಫಲವಾಗಿದೆ</string>
     <string name="import_log_failed_validate">apkg ಮೌಲ್ಯಮಾಪನ ವಿಫಲವಾಗಿದೆ</string>
@@ -179,6 +182,9 @@
     <string name="import_error_content_provider">ಆಯ್ದ ಫೈಲ್ ಅನ್ನು ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡಲಾಗುವುದಿಲ್ಲ. ಆಂಕಿ ಫೈಲ್‌ಗಳನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡುವುದು ಹೇಗೆ ಎಂದು ದಯವಿಟ್ಟು ಬಳಕೆದಾರರ ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() ವಿಫಲವಾಗಿದೆ (ಬಹುಶಃ ಶೇಖರಣಾ ಸ್ಥಳವಿಲ್ಲ)</string>
     <string name="import_error_unhandled_scheme">ಇವರಿಂದ ಅನಿಯಂತ್ರಿತ ಆಮದು: “%s”</string>
+    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">ಸಂಗ್ರಹವನ್ನು ಬದಲಾಯಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="import_interrupted">ಆಮದು ಅಡ್ಡಿಪಡಿಸಲಾಗಿದೆ: ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ಮುಚ್ಚಲಾಗಿದೆ</string>
     <string name="export_include_schedule">ವೇಳಾಪಟ್ಟಿ ಸೇರಿಸಿ</string>
@@ -407,4 +413,6 @@
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <!--  Hierarchical Tags  -->
+    <string name="expand_tag">Expand tag \'%s\'</string>
 </resources>

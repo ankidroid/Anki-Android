@@ -32,6 +32,7 @@
  *
  *  https://android.googlesource.com/platform/tools/base/+/studio-master-dev/lint/libs/lint-checks/src/main/java/com/android/tools/lint/checks/StringCasingDetector.kt?autodive=0%2F
  */
+@file:Suppress("UnstableApiUsage")
 package com.ichi2.anki.lint.rules
 
 import com.android.SdkConstants.*
@@ -41,38 +42,42 @@ import com.android.tools.lint.detector.api.*
 import com.android.tools.lint.detector.api.Scope.Companion.ALL_RESOURCES_SCOPE
 import com.android.utils.Pair
 import com.ichi2.anki.lint.utils.Constants
-import com.ichi2.anki.lint.utils.KotlinCleanup
 import com.ichi2.anki.lint.utils.StringFormatDetector
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import java.util.*
 
-@KotlinCleanup("replace java streams")
-@KotlinCleanup("Fix IDE lint")
 class DuplicateCrowdInStrings : ResourceXmlDetector() {
     /*
      * Map of all locale,strings in lower case, to their raw elements to ensure that there are no
      * duplicate strings.
      */
     private val allStrings: HashMap<Pair<String, String>, MutableList<StringDeclaration>> = HashMap<Pair<String, String>, MutableList<StringDeclaration>>()
-    override fun appliesTo(directoryType: ResourceFolderType): Boolean {
-        return directoryType == ResourceFolderType.VALUES
+    override fun appliesTo(folderType: ResourceFolderType): Boolean {
+        return folderType == ResourceFolderType.VALUES
     }
 
-    override fun getApplicableElements(): Collection<String>? {
-        return listOf(TAG_STRING)
-    }
+    override fun getApplicableElements() = listOf(TAG_STRING)
 
     override fun visitElement(context: XmlContext, element: Element) {
         // Only check the golden copy - not the translated sources.
+        // We currently do not have the ability to do a 'per file'
         if ("values" != context.file.parentFile.name) {
             return
         }
+
+        // parentNode == resources, as we only apply this to <string>
+        element.parentNode.attributes.getNamedItem("tools:ignore")?.let {
+            if (it.nodeValue.contains(ID)) {
+                return
+            }
+        }
+
         val childNodes = element.childNodes
         if (childNodes.length > 0) {
             if (childNodes.length == 1) {
                 val child = childNodes.item(0)
-                if (child.nodeType == Node.TEXT_NODE) {
+                if (child.nodeType == Node.TEXT_NODE || child.nodeType == Node.CDATA_SECTION_NODE) {
                     checkTextNode(
                         context,
                         element,
@@ -82,7 +87,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
             } else {
                 val sb = StringBuilder()
                 StringFormatDetector.addText(sb, element)
-                if (sb.length != 0) {
+                if (sb.isNotEmpty()) {
                     checkTextNode(context, element, sb.toString())
                 }
             }
@@ -94,7 +99,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
             return
         }
         val locale = getLocale(context)
-        val key = if (locale != null) Pair.of(locale.full, text.toLowerCase(Locale.forLanguageTag(locale.tag))) else Pair.of("default", text.toLowerCase(Locale.US))
+        val key = if (locale != null) Pair.of(locale.full, text.lowercase(Locale.forLanguageTag(locale.tag))) else Pair.of("default", text.lowercase(Locale.US))
         val handle: Location.Handle = context.createLocationHandle(element)
         handle.clientData = element
         val handleList: MutableList<StringDeclaration> = allStrings.getOrDefault(key, ArrayList<StringDeclaration>())
@@ -112,12 +117,10 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
             var prevString = ""
             var caseVaries = false
             val names: MutableList<String> = ArrayList()
-            if (duplicates.stream().allMatch(
-                    { x: StringDeclaration ->
-                        val el = x.location.clientData as Element
-                        el.hasAttribute("comment")
-                    }
-                )
+            if (duplicates.all { x: StringDeclaration ->
+                val el = x.location.clientData as Element
+                el.hasAttribute("comment")
+            }
             ) {
                 // skipping as all instances have a comment
                 continue
@@ -146,7 +149,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
             for (name in names) {
                 nameValues.add(String.format("`%s`", name))
             }
-            val nameList = formatList(nameValues, nameValues.size, true, false)
+            val nameList = formatList(nameValues, nameValues.size, sort = true, useConjunction = false)
             // we use both quotes and code styling here so it appears in the console quoted
             var message = String.format("Duplicate string value \"`%s`\", used in %s", prevString, nameList)
             if (caseVaries) {
@@ -160,12 +163,14 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
     companion object {
         private val IMPLEMENTATION_XML = Implementation(DuplicateCrowdInStrings::class.java, ALL_RESOURCES_SCOPE)
 
+        const val ID = "DuplicateCrowdInStrings"
+
         /**
          * Whether there are any duplicate strings, including capitalization adjustments.
          */
         @JvmField
         var ISSUE: Issue = Issue.create(
-            "DuplicateCrowdInStrings",
+            ID,
             "Duplicate Strings (CrowdIn)",
             "Duplicate strings are ambiguous for translators." +
                 "This lint check looks for duplicate strings, including differences for strings" +

@@ -195,7 +195,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
         // make sure to update sflds, etc
         mCol.updateFieldCache(mIds)
         // generate cards
-        if (mCol.genCards(mIds, mModel).isNotEmpty()) {
+        if (mCol.genCards(mIds, mModel)!!.isNotEmpty()) {
             this.log.add(0, getString(R.string.note_importer_empty_cards_found))
         }
 

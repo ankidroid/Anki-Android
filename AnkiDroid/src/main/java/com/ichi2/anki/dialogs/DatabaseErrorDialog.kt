@@ -394,22 +394,18 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             else -> res().getString(R.string.answering_error_title)
         }
 
-    override fun getNotificationMessage(): String? {
-        return message
-    }
+    override val notificationMessage: String? get() = message
+    override val notificationTitle: String get() = res().getString(R.string.answering_error_title)
 
-    override fun getNotificationTitle(): String {
-        return res().getString(R.string.answering_error_title)
-    }
-
-    override fun getDialogHandlerMessage(): Message {
-        val msg = Message.obtain()
-        msg.what = DialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG
-        val b = Bundle()
-        b.putInt("dialogType", requireArguments().getInt("dialogType"))
-        msg.data = b
-        return msg
-    }
+    override val dialogHandlerMessage: Message
+        get() {
+            val msg = Message.obtain()
+            msg.what = DialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG
+            val b = Bundle()
+            b.putInt("dialogType", requireArguments().getInt("dialogType"))
+            msg.data = b
+            return msg
+        }
 
     fun dismissAllDialogFragments() {
         (activity as DeckPicker?)!!.dismissAllDialogFragments()

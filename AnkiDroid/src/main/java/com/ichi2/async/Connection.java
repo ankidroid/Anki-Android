@@ -29,6 +29,7 @@ import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CollectionHelper;
+import com.ichi2.anki.CrashReportService;
 import com.ichi2.anki.R;
 import com.ichi2.anki.exception.MediaSyncException;
 import com.ichi2.anki.exception.UnknownHttpResponseException;
@@ -248,7 +249,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             Timber.w(e2);
             // Ask user to report all bugs which aren't timeout errors
             if (!timeoutOccurred(e2)) {
-                AnkiDroidApp.sendExceptionReport(e2, "doInBackgroundLogin");
+                CrashReportService.sendExceptionReport(e2, "doInBackgroundLogin");
             }
             data.success = false;
             data.resultType = CONNECTION_ERROR;
@@ -445,7 +446,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     }
                 } catch (OutOfMemoryError e) {
                     Timber.w(e);
-                    AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
+                    CrashReportService.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                     data.success = false;
                     data.resultType = OUT_OF_MEMORY_ERROR;
                     data.result = new Object[0];
@@ -457,7 +458,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                     } else if (USER_ABORTED_SYNC.toString().equals(e.getMessage())) {
                         data.resultType = USER_ABORTED_SYNC;
                     } else {
-                        AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync-fullSync");
+                        CrashReportService.sendExceptionReport(e, "doInBackgroundSync-fullSync");
                         data.resultType = IO_EXCEPTION;
                     }
                     data.result = new Object[]{e};
@@ -531,7 +532,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
             data.success = false;
             data.resultType = MEDIA_SYNC_SERVER_ERROR;
             data.result = new Object[]{e};
-            AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
+            CrashReportService.sendExceptionReport(e, "doInBackgroundSync");
             return data;
         } catch (UnknownHttpResponseException e) {
             Timber.e(e, "doInBackgroundSync -- unknown response code error");
@@ -553,7 +554,7 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
                 data.resultType = USER_ABORTED_SYNC;
                 data.result = new Object[]{e};
             } else {
-                AnkiDroidApp.sendExceptionReport(e, "doInBackgroundSync");
+                CrashReportService.sendExceptionReport(e, "doInBackgroundSync");
                 data.resultType = ARBITRARY_STRING;
                 data.result = new Object[] {e.getLocalizedMessage(), e};
             }

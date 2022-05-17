@@ -17,15 +17,12 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("IDE lint")
-@KotlinCleanup("`is` -> equalTo")
 class LaTeXTest : RobolectricTest() {
     class MockMedia(col: Collection?) : Media(col, false) {
         /**
@@ -38,7 +35,7 @@ class LaTeXTest : RobolectricTest() {
     }
 
     @Test
-    fun _imgLinkTest() {
+    fun imgLinkTest() {
         val col = col
         val m: Media = MockMedia(col)
         val model = col.models.byName("Basic")
@@ -46,13 +43,13 @@ class LaTeXTest : RobolectricTest() {
         //  Test with media access
         assertThat(
             LaTeX._imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, m),
-            `is`("<img class=latex alt=\"\\$\\\\sqrt[3]{2} + \\\\text{&quot;var&quot;}\\$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">")
+            equalTo("<img class=latex alt=\"\\$\\\\sqrt[3]{2} + \\\\text{&quot;var&quot;}\\$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">")
         )
 
         // Test without access to media
         assertThat(
             LaTeX._imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, col.media),
-            `is`("\\$\\\\sqrt[3]{2} + \\\\text{\"var\"}\\$")
+            equalTo("\\$\\\\sqrt[3]{2} + \\\\text{\"var\"}\\$")
         )
     }
 
@@ -65,13 +62,13 @@ class LaTeXTest : RobolectricTest() {
         //  Test with media access
         assertThat(
             LaTeX.mungeQA("[$]\\sqrt[3]{2} + \\text{\"var\"}[/$]", m, model),
-            `is`("<img class=latex alt=\"$\\sqrt[3]{2} + \\text{&quot;var&quot;}$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">")
+            equalTo("<img class=latex alt=\"$\\sqrt[3]{2} + \\text{&quot;var&quot;}$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">")
         )
 
         // Test without access to media
         assertThat(
             LaTeX.mungeQA("[$]\\sqrt[3]{2} + \\text{\"var\"}[/$]", col, model),
-            `is`("$\\sqrt[3]{2} + \\text{\"var\"}$")
+            equalTo("$\\sqrt[3]{2} + \\text{\"var\"}$")
         )
     }
 }

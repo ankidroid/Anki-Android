@@ -123,6 +123,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         mAnswerEditText.setText(bundle.getString(INTENT_ANSWER_FORMAT))
 
         enableToolbar()
+        setTitle(R.string.card_template_browser_appearance_title)
     }
 
     private fun answerHasChanged(intent: Intent): Boolean {

@@ -33,54 +33,25 @@ import java.io.File
 @KotlinCleanup("convert properties to single-line overrides")
 class ImageField : FieldBase(), IField {
     @get:JvmName("getImagePath_unused")
-    var imagePath: String? = null
+    var extraImagePathRef: String? = null
     private var mHasTemporaryMedia = false
     private var mName: String? = null
-    override fun getType(): EFieldType {
-        return EFieldType.IMAGE
-    }
 
-    override fun setType(type: EFieldType): Boolean {
-        return false
-    }
+    override val type: EFieldType = EFieldType.IMAGE
 
-    override fun isModified(): Boolean {
-        return thisModified
-    }
+    override val isModified: Boolean
+        get() = thisModified
 
-    override fun getHtml(): String? {
-        return null
-    }
+    override var imagePath: String?
+        get() = extraImagePathRef
+        set(value) {
+            extraImagePathRef = value
+            setThisModified()
+        }
 
-    override fun setHtml(html: String): Boolean {
-        return false
-    }
+    override var audioPath: String? = null
 
-    override fun setImagePath(pathToImage: String): Boolean {
-        imagePath = pathToImage
-        setThisModified()
-        return true
-    }
-
-    override fun getImagePath(): String? {
-        return imagePath
-    }
-
-    override fun setAudioPath(pathToAudio: String?): Boolean {
-        return false
-    }
-
-    override fun getAudioPath(): String? {
-        return null
-    }
-
-    override fun getText(): String? {
-        return null
-    }
-
-    override fun setText(text: String): Boolean {
-        return false
-    }
+    override var text: String? = null
 
     override fun setHasTemporaryMedia(hasTemporaryMedia: Boolean) {
         mHasTemporaryMedia = hasTemporaryMedia
@@ -90,21 +61,20 @@ class ImageField : FieldBase(), IField {
         return mHasTemporaryMedia
     }
 
-    override fun getName(): String {
-        return mName!!
-    }
+    override var name: String?
+        get() = mName
+        set(value) {
+            mName = value
+        }
 
-    override fun setName(name: String) {
-        mName = name
-    }
+    override val formattedValue: String
+        get() {
+            val file = File(imagePath!!)
+            return formatImageFileName(file)
+        }
 
-    override fun getFormattedValue(): String {
-        val file = File(getImagePath()!!)
-        return formatImageFileName(file)
-    }
-
-    override fun setFormattedString(col: Collection, value: String) {
-        imagePath = getImageFullPath(col, value)
+    override fun setFormattedString(col: Collection?, value: String) {
+        extraImagePathRef = getImageFullPath(col, value)
     }
 
     companion object {
@@ -120,12 +90,12 @@ class ImageField : FieldBase(), IField {
 
         @VisibleForTesting
         @KotlinCleanup("remove ? from value")
-        fun getImageFullPath(col: Collection, value: String?): String {
+        fun getImageFullPath(col: Collection?, value: String?): String {
             val path = parseImageSrcFromHtml(value)
             if ("" == path) {
                 return ""
             }
-            val mediaDir = col.media.dir() + "/"
+            val mediaDir = col!!.media.dir() + "/"
             return mediaDir + path
         }
 
