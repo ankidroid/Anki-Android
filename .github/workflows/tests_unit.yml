@@ -90,6 +90,12 @@ jobs:
         with:
           arguments: jacocoUnitTestReport --daemon
 
+      - name: Stop Gradle
+        if: matrix.os == 'windows-latest'
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: --stop
+
       - name: Submit Coverage
         # This can fail on timeouts etc, wrap with retry
         uses: nick-invision/retry@v2
