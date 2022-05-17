@@ -35,7 +35,6 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
     private val mLinearLayout: LinearLayout = view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
     var isFABOpen = false
-    var isCreateDeckOpen = false
 
     @Suppress("unused")
     val isFragmented: Boolean
@@ -117,7 +116,6 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             Timber.i("DeckPicker:: showFloatingActionButton()")
             mFabMain.visibility = View.VISIBLE
         }
-        isCreateDeckOpen = false
     }
 
     fun hideFloatingActionButton() {
@@ -125,7 +123,6 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
             Timber.i("DeckPicker:: hideFloatingActionButton()")
             mFabMain.visibility = View.GONE
         }
-        isCreateDeckOpen = false
     }
 
     init {
@@ -135,21 +132,9 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
         val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
         val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
-<<<<<<< HEAD
-        isFABOpen = false
-        isCreateDeckOpen = false
-        mFabMain.setOnClickListener {
-            if (!isFABOpen || isCreateDeckOpen) {
-                showFloatingActionMenu()
-                isCreateDeckOpen = false
-            } else {
-                closeFloatingActionMenu()
-                isCreateDeckOpen = false
-=======
         mFabMain.setOnTouchListener(object : DoubleTapListener(context) {
             override fun onDoubleTap(e: MotionEvent?) {
                 addNote()
->>>>>>> upstream/main
             }
 
             override fun onUnconfirmedSingleTap(e: MotionEvent?) {
@@ -169,8 +154,6 @@ class DeckPickerFloatingActionMenu(private val context: Context, view: View, pri
                 val createDeckDialog = CreateDeckDialog(context, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
-                isFABOpen=true
-                isCreateDeckOpen=true
             }
         }
         addDeckButton.setOnClickListener(addDeckListener)
