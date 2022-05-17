@@ -16,13 +16,14 @@
 
 package com.ichi2.async
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 /** Complete class not yet implemented*/
 abstract class BaseCoroutinesTask<Params, Progress, Result> {
+
+    private var job: Job = Job()
+
+    private lateinit var status: Status
 
     open fun onPreExecute() {}
 
@@ -39,15 +40,32 @@ abstract class BaseCoroutinesTask<Params, Progress, Result> {
 //    protected fun publishProgress(vararg values: Progress?) {}
 
     fun execute(vararg params: Params?) {
+
+        status = Status.RUNNING
 //            onPreExecute()
-        CoroutineScope(Dispatchers.Default).launch {
+        job = CoroutineScope(Dispatchers.Default).launch {
             val result = doInBackground(*params)
             withContext(Dispatchers.Main) {
                 onPostExecute(result)
             }
         }
     }
+
+    enum class Status {
+        PENDING,
+        RUNNING,
+        FINISHED
+    }
+
+    fun getStatus(): Status {
+        return status
+    }
+
+    fun cancel() {
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.Main) {
+                job.cancel()
+            }
+        }
+    }
 }
-//
-//    fun cancel(mayInterruptIfRunning: Boolean) {
-//    }

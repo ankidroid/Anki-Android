@@ -30,6 +30,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus
+import com.ichi2.anki.runtimetools.CoroutinesTaskOperations.stopTaskGracefully
 import com.ichi2.anki.web.HttpFetcher.downloadFileToSdCard
 import com.ichi2.anki.web.HttpFetcher.fetchThroughHttp
 import com.ichi2.async.BaseCoroutinesTask
@@ -51,6 +52,7 @@ import java.util.*
  * FIXME why isn't this extending AnkiActivity?
  */
 open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListener {
+
     private var mStopped = false
     private lateinit var source: String
     private lateinit var mTranslationAddress: String
@@ -335,26 +337,26 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     override fun onCancel(dialog: DialogInterface) {
         mStopped = true
         hideProgressBar()
-//        stopAllTasks()
+        stopAllTasks()
         val resultData = Intent()
         setResult(RESULT_CANCELED, resultData)
         finish()
     }
 
-//    @Suppress("deprecation") // #7108: AsyncTask
-//    private fun stopAllTasks() {
-//        var t: android.os.AsyncTask<*, *, *>? = mPostTranslation
-//        stopTaskGracefully(t)
-//        t = mPostPronunciation
-//        stopTaskGracefully(t)
-//        t = mDownloadMp3Task
-//        stopTaskGracefully(t)
-//    }
+    @Suppress("deprecation") // #7108: AsyncTask
+    private fun stopAllTasks() {
+        var t: BaseCoroutinesTask<*, *, *>? = mPostTranslation
+        stopTaskGracefully(t)
+        t = mPostPronunciation
+        stopTaskGracefully(t)
+        t = mDownloadMp3Task
+        stopTaskGracefully(t)
+    }
 
     override fun onPause() {
         super.onPause()
         hideProgressBar()
-//        stopAllTasks()
+        stopAllTasks()
     }
 
     private fun gtxt(id: Int): String {
