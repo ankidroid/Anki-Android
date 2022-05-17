@@ -10,86 +10,83 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
-import android.database.Cursor;
-import android.text.TextUtils;
+import android.text.TextUtils
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.StringUtil.strip
+import java.io.BufferedWriter
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStreamWriter
+import java.nio.charset.StandardCharsets
 
-import com.ichi2.utils.StringUtil;
+class TextNoteExporter : Exporter {
+    private val mIncludedTags: Boolean
+    private val mIncludeID: Boolean
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-
-public class TextNoteExporter extends Exporter {
-
-    private static final String EXT = ".txt";
-    private final boolean mIncludedTags;
-    private final boolean mIncludeID;
-
-
-    public TextNoteExporter(@NonNull Collection col, boolean includeID, boolean includedTags, boolean includeHTML) {
-        super(col);
-        mIncludedTags = includedTags;
-        mIncludeHTML = includeHTML;
-        mIncludeID = includeID;
+    constructor(
+        col: Collection,
+        includeID: Boolean,
+        includedTags: Boolean,
+        includeHTML: Boolean
+    ) : super(col) {
+        mIncludedTags = includedTags
+        mIncludeHTML = includeHTML
+        mIncludeID = includeID
     }
 
-
-    public TextNoteExporter(@NonNull Collection col, @NonNull Long did, boolean includeID, boolean includedTags, boolean includeHTML) {
-        super(col, did);
-        mIncludedTags = includedTags;
-        mIncludeHTML = includeHTML;
-        mIncludeID = includeID;
+    constructor(
+        col: Collection,
+        did: Long,
+        includeID: Boolean,
+        includedTags: Boolean,
+        includeHTML: Boolean
+    ) : super(col, did) {
+        mIncludedTags = includedTags
+        mIncludeHTML = includeHTML
+        mIncludeID = includeID
     }
 
-
-    public void doExport(String path) throws IOException {
-        final Long[] ids = cardIds();
-
-        final String queryStr = String.format(
-                "SELECT guid, flds, tags from notes " +
-                        "WHERE id in " +
-                        "(SELECT nid from cards WHERE cards.id in %s)", Utils.ids2str(cardIds()));
-
-        final List<String> data = new ArrayList<>();
-
-        try (final Cursor cursor = mCol.getDb().query(queryStr)) {
+    @Throws(IOException::class)
+    fun doExport(path: String?) {
+        val queryStr = String.format(
+            "SELECT guid, flds, tags from notes " +
+                "WHERE id in " +
+                "(SELECT nid from cards WHERE cards.id in %s)",
+            Utils.ids2str(cardIds())
+        )
+        val data: MutableList<String?> = ArrayList()
+        mCol.db.query(queryStr).use { cursor ->
             while (cursor.moveToNext()) {
-                final String id = cursor.getString(0);
-                final String flds = cursor.getString(1);
-                final String tags = cursor.getString(2);
-
-                final List<String> row = new ArrayList<>();
-
+                val id = cursor.getString(0)
+                val flds = cursor.getString(1)
+                val tags = cursor.getString(2)
+                val row: MutableList<String?> = ArrayList()
                 if (mIncludeID) {
-                    row.add(id);
+                    row.add(id)
                 }
-
-                for (String field : Utils.splitFields(flds)) {
-                    row.add(processText(field));
+                for (field in Utils.splitFields(flds)) {
+                    row.add(processText(field!!))
                 }
-
                 if (mIncludedTags) {
-                    row.add(StringUtil.strip(tags));
+                    row.add(strip(tags))
                 }
-
-                data.add(TextUtils.join("\t", row));
+                @KotlinCleanup("use kotlin joinToString function")
+                data.add(TextUtils.join("\t", row))
             }
         }
+        mCount = data.size
+        val out = TextUtils.join("\n", data)
+        BufferedWriter(
+            OutputStreamWriter(
+                FileOutputStream(path),
+                StandardCharsets.UTF_8
+            )
+        ).use { writer -> writer.write(out.toString()) }
+    }
 
-        mCount = data.size();
-        final String out = TextUtils.join("\n", data);
-
-        try (BufferedWriter writer =
-                     new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8))) {
-            writer.write(out.toString());
-        }
+    companion object {
+        private const val EXT = ".txt"
     }
 }
