@@ -35,7 +35,7 @@ concurrency:
 jobs:
   unit:
     name: JUnit Tests
-    timeout-minutes: 30
+    timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:

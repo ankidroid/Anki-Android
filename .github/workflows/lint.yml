@@ -35,7 +35,7 @@ concurrency:
 jobs:
   lintDebug:
     name: Lint Debug
-    timeout-minutes: 15
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
