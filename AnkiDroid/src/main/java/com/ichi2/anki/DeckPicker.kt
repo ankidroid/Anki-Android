@@ -566,7 +566,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     private fun updateSearchDecksIconVisibility() {
-        mSearchDecksIcon!!.isVisible = deckCount >= 10
+        mSearchDecksIcon?.isVisible = deckCount >= 10
     }
 
     @VisibleForTesting
