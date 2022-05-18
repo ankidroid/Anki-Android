@@ -38,12 +38,13 @@ open class DiffEngine {
         val prettyTyped = StringBuilder()
         val prettyCorrect = StringBuilder()
         for (aDiff in mDiffMatchPatch.diffMain(typed, correct)) {
+            val text = escapeLoneMarks(aDiff.text)
             when (aDiff.operation!!) {
-                DiffMatchPatch.Operation.INSERT -> prettyTyped.append(wrapBad(aDiff.text))
-                DiffMatchPatch.Operation.DELETE -> prettyCorrect.append(wrapMissing(aDiff.text))
+                DiffMatchPatch.Operation.INSERT -> prettyTyped.append(wrapBad(text))
+                DiffMatchPatch.Operation.DELETE -> prettyCorrect.append(wrapMissing(text))
                 DiffMatchPatch.Operation.EQUAL -> {
-                    prettyTyped.append(wrapGood(aDiff.text))
-                    prettyCorrect.append(wrapGood(aDiff.text))
+                    prettyTyped.append(wrapGood(text))
+                    prettyCorrect.append(wrapGood(text))
                 }
             }
         }
@@ -70,9 +71,18 @@ open class DiffEngine {
             return "<span class=\"typeMissed\">" + escapeHtml(`in`) + "</span>"
         }
 
+        @JvmStatic
+        fun escapeLoneMarks(`in`: String): String {
+            if (`in`[0].category.code.startsWith("M"))
+                return "\\xa0$`in`"
+            return `in`
+        }
+
         /** Escapes dangerous HTML tags (for XSS-like issues/rendering problems)  */
         protected fun escapeHtml(`in`: String?): String {
-            return TextUtils.htmlEncode(`in`).replace("\\", "&#x5c;")
+            return TextUtils.htmlEncode(`in`)
+                .replace("\\xa0", "&nbsp;")
+                .replace("\\", "&#x5c;")
         }
     }
 }
