@@ -26,6 +26,11 @@ idea {
 
 def homePath = System.properties['user.home']
 android {
+
+        buildFeatures {
+            viewBinding = true
+        }
+
     compileSdkVersion 31 // change api compileSdkVersion at the same time
 
     defaultConfig {
