@@ -177,7 +177,7 @@ class Info : AnkiActivity() {
 
             val content = res.getStringArray(R.array.about_content)
             append("<html><style>body {color:").append(textColor).append(";}</style>")
-            append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">")
+            append("<body text=\"#000000\" link=\"#0277BD\" alink=\"#00CC99\" vlink=\"#E37068\">")
             append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
                 .append("<br/><br/>")
             append(
