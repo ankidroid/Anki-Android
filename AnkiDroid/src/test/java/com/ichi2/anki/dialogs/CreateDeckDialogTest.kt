@@ -31,7 +31,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import java.util.*
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
+import java.util.stream.Collectors
+import java.util.stream.IntStream
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(RobolectricTestRunner::class)
 class CreateDeckDialogTest : RobolectricTest() {
@@ -139,5 +145,95 @@ class CreateDeckDialogTest : RobolectricTest() {
             editText?.setText("NotEmpty")
             MatcherAssert.assertThat("Ok is enabled if not zero length input", actionButton.isEnabled, Is.`is`(true))
         }
+    }
+
+    @Test
+    fun searchDecksIconVisibilityDeckCreationTest() {
+        mActivityScenario!!.onActivity { deckPicker ->
+            val deckCounter = AtomicInteger(1)
+            for (i in 0 until 10) {
+                val createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+                createDeckDialog.setOnNewDeckCreated { did ->
+                    assertEquals(deckCounter.incrementAndGet(), deckPicker.col.decks.count())
+
+                    deckPicker.updateDeckList()
+                    assertEquals(deckCounter.get() - 1, deckPicker.deckCount)
+
+                    assertEquals(deckPicker.mSearchDecksIcon!!.isVisible, deckPicker.deckCount >= 10)
+
+                    // After the last deck was created, delete a deck
+                    if (deckPicker.deckCount >= 10) {
+                        deckPicker.confirmDeckDeletion(did)
+                        assertEquals(deckCounter.decrementAndGet(), deckPicker.col.decks.count())
+
+                        deckPicker.updateDeckList()
+                        assertEquals(deckCounter.get() - 1, deckPicker.deckCount)
+
+                        assertFalse(deckPicker.mSearchDecksIcon!!.isVisible)
+                    }
+                }
+                createDeckDialog.createDeck("Deck$i")
+            }
+        }
+    }
+
+    @Test
+    fun searchDecksIconVisibilitySubdeckCreationTest() {
+        mActivityScenario!!.onActivity { deckPicker ->
+            var createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+            val decks = deckPicker.col.decks
+            createDeckDialog.setOnNewDeckCreated {
+                assertEquals(11, decks.count())
+                deckPicker.updateDeckList()
+                assertEquals(10, deckPicker.deckCount)
+                assertTrue(deckPicker.mSearchDecksIcon!!.isVisible)
+
+                deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1"))
+                assertEquals(2, decks.count())
+                deckPicker.updateDeckList()
+                assertEquals(1, deckPicker.deckCount)
+                assertFalse(deckPicker.mSearchDecksIcon!!.isVisible)
+            }
+            createDeckDialog.createDeck(deckTreeName(0, 9, "Deck"))
+
+            createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+            createDeckDialog.setOnNewDeckCreated {
+                assertEquals(13, decks.count())
+                deckPicker.updateDeckList()
+                assertEquals(12, deckPicker.deckCount)
+                assertTrue(deckPicker.mSearchDecksIcon!!.isVisible)
+
+                deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1"))
+                assertEquals(2, decks.count())
+                deckPicker.updateDeckList()
+                assertEquals(1, deckPicker.deckCount)
+                assertFalse(deckPicker.mSearchDecksIcon!!.isVisible)
+            }
+            createDeckDialog.createDeck(deckTreeName(0, 11, "Deck"))
+
+            createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+            createDeckDialog.setOnNewDeckCreated {
+                assertEquals(7, decks.count())
+                deckPicker.updateDeckList()
+                assertEquals(6, deckPicker.deckCount)
+                assertFalse(deckPicker.mSearchDecksIcon!!.isVisible)
+            }
+            createDeckDialog.createDeck(deckTreeName(0, 5, "Deck"))
+
+            createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+            createDeckDialog.setOnNewDeckCreated {
+                assertEquals(13, decks.count())
+                deckPicker.updateDeckList()
+                assertEquals(12, deckPicker.deckCount)
+                assertTrue(deckPicker.mSearchDecksIcon!!.isVisible)
+            }
+            createDeckDialog.createDeck(deckTreeName(6, 11, "Deck"))
+        }
+    }
+
+    private fun deckTreeName(startInclusive: Int, endInclusive: Int, prefix: String): String {
+        return Arrays.stream(IntStream.rangeClosed(startInclusive, endInclusive).toArray())
+            .mapToObj { i: Int -> prefix + i }
+            .collect(Collectors.joining("::"))
     }
 }

@@ -143,6 +143,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     @VisibleForTesting
     var mDueTree: List<TreeNode<AbstractDeckTreeNode>>? = null
 
+    var mSearchDecksIcon: MenuItem? = null
+
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
      * Since syncing closes the database, this flag allows us to avoid doing any
@@ -495,7 +497,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        updateSearchDecksIconVisibility(menu)
         // Null check to prevent crash when col inaccessible
         // #9081: sync leaves the collection closed, thus colIsOpen() is insufficient, carefully open the collection if possible
         return if (CollectionHelper.getInstance().getColSafe(this) == null) {
@@ -514,8 +515,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         menu.findItem(R.id.action_check_media).isEnabled = sdCardAvailable
         menu.findItem(R.id.action_empty_cards).isEnabled = sdCardAvailable
 
-        val toolbarSearchItem = menu.findItem(R.id.deck_picker_action_filter)
-        toolbarSearchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+        mSearchDecksIcon = menu.findItem(R.id.deck_picker_action_filter)
+        mSearchDecksIcon!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             // When SearchItem is expanded
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 Timber.i("DeckPicker:: SearchItem opened")
@@ -533,7 +534,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             }
         })
 
-        mToolbarSearchView = toolbarSearchItem.actionView as SearchView
+        mToolbarSearchView = mSearchDecksIcon!!.actionView as SearchView
         mToolbarSearchView!!.queryHint = getString(R.string.search_decks)
         mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -559,14 +560,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 val undo = res.getString(R.string.studyoptions_congrats_undo, col.undoName(res))
                 menu.findItem(R.id.action_undo).title = undo
             }
-
-            updateSearchDecksIconVisibility(menu)
         }
+        updateSearchDecksIconVisibility()
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun updateSearchDecksIconVisibility(menu: Menu) {
-        menu.findItem(R.id.deck_picker_action_filter).isVisible = colIsOpen() && col.decks.count() >= 10
+    private fun updateSearchDecksIconVisibility() {
+        mSearchDecksIcon!!.isVisible = deckCount >= 10
     }
 
     @VisibleForTesting
@@ -2044,8 +2044,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             mFocusedDeck = current
         }
 
-        // update SearchDeck Icon visibility
-        invalidateOptionsMenu()
+        updateSearchDecksIconVisibility()
     }
 
     // Callback to show study options for currently selected deck
