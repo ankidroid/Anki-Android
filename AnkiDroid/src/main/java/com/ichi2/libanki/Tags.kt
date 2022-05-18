@@ -15,354 +15,332 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
-
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.text.TextUtils;
-
-import com.ichi2.libanki.backend.model.TagUsnTuple;
-import com.ichi2.utils.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
+import android.content.ContentValues
+import android.text.TextUtils
+import com.ichi2.libanki.backend.model.TagUsnTuple
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import java.util.*
+import java.util.regex.Pattern
+import java.util.stream.Collectors
 
 /**
-Anki maintains a cache of used tags so it can quickly present a list of tags
-for autocomplete and in the browser. For efficiency, deletions are not
-tracked, so unused tags can only be removed from the list with a DB check.
-
-This module manages the tag cache and tags for notes.
-
-This class differs from the python version by keeping the in-memory tag cache as a TreeMap
-instead of a JSONObject. It is much more convenient to work with a TreeMap in Java, but there
-may be a performance penalty in doing so (on startup and shutdown).
+ * Anki maintains a cache of used tags so it can quickly present a list of tags
+ * for autocomplete and in the browser. For efficiency, deletions are not
+ * tracked, so unused tags can only be removed from the list with a DB check.
+ *
+ * This module manages the tag cache and tags for notes.
+ *
+ * This class differs from the python version by keeping the in-memory tag cache as a TreeMap
+ * instead of a JSONObject. It is much more convenient to work with a TreeMap in Java, but there
+ * may be a performance penalty in doing so (on startup and shutdown).
  */
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
-public class Tags extends TagManager {
-
-    private static final Pattern sCanonify = Pattern.compile("[\"']");
-
-    private final Collection mCol;
-    private final TreeMap<String, Integer> mTags = new TreeMap<>();
-    private boolean mChanged;
-
-
-    /**
-     * Registry save/load
-     * ***********************************************************
-     */
-
-    public Tags(Collection col) {
-        mCol = col;
-    }
-
-
-    public void load(@NonNull String json) {
-        JSONObject tags = new JSONObject(json);
-        for (String t : tags) {
-            mTags.put(t, tags.getInt(t));
+@KotlinCleanup("fix IDE lint issues")
+class Tags
+/**
+ * Registry save/load
+ * ***********************************************************
+ */(private val col: Collection) : TagManager() {
+    private val mTags = TreeMap<String, Int?>()
+    private var mChanged = false
+    override fun load(json: String) {
+        val tags = JSONObject(json)
+        for (t in tags) {
+            mTags[t] = tags.getInt(t)
         }
-        mChanged = false;
+        mChanged = false
     }
 
-
-    public void flush() {
+    override fun flush() {
         if (mChanged) {
-            JSONObject tags = new JSONObject();
-            for (Map.Entry<String, Integer> t : mTags.entrySet()) {
-                tags.put(t.getKey(), t.getValue());
+            val tags = JSONObject()
+            for ((key, value) in mTags) {
+                tags.put(key, value)
             }
-            ContentValues val = new ContentValues();
-            val.put("tags", Utils.jsonToString(tags));
+            @KotlinCleanup("fix kotlin keyword usage in java")
+            val `val` = ContentValues()
+            `val`.put("tags", Utils.jsonToString(tags))
             // TODO: the database update call here sets mod = true. Verify if this is intended.
-            mCol.getDb().update("col", val);
-            mChanged = false;
+            col.db.update("col", `val`)
+            mChanged = false
         }
     }
-
-
     /*
      * Registering and fetching tags
      * ***********************************************************
      */
-
-    /** {@inheritDoc} */
-    public void register(@NonNull Iterable<String> tags, @Nullable Integer usn, boolean clear_first) {
-        //boolean found = false;
-        for (String t : tags) {
+    /** {@inheritDoc}  */
+    override fun register(tags: Iterable<String>, usn: Int?, clear_first: Boolean) {
+        // boolean found = false;
+        for (t in tags) {
             if (!mTags.containsKey(t)) {
-                mTags.put(t, usn == null ? mCol.usn() : usn);
-                mChanged = true;
+                mTags[t] = usn ?: col.usn()
+                mChanged = true
             }
         }
-        //if (found) {
+        // if (found) {
         //    runHook("newTag"); // TODO
-        //}
+        // }
     }
 
-
-    @NonNull
-    public List<String> all() {
-        return new ArrayList<>(mTags.keySet());
+    override fun all(): List<String> {
+        return ArrayList(mTags.keys)
     }
 
-    /** Add any missing tags from notes to the tags list. */
-    public void registerNotes(@Nullable java.util.Collection<Long> nids) {
+    /** Add any missing tags from notes to the tags list.  */
+    override fun registerNotes(nids: kotlin.collections.Collection<Long>?) {
         // when called with a null argument, the old list is cleared first.
-        String lim;
+        val lim: String
         if (nids != null) {
-            lim = " WHERE id IN " + Utils.ids2str(nids);
+            lim = " WHERE id IN " + Utils.ids2str(nids)
         } else {
-            lim = "";
-            mTags.clear();
-            mChanged = true;
+            lim = ""
+            mTags.clear()
+            mChanged = true
         }
-        List<String> tags = new ArrayList<>(mCol.noteCount());
-        try (Cursor cursor = mCol.getDb().query("SELECT DISTINCT tags FROM notes" + lim)) {
+        val tags: MutableList<String?> = ArrayList(col.noteCount())
+        col.db.query("SELECT DISTINCT tags FROM notes$lim").use { cursor ->
             while (cursor.moveToNext()) {
-                tags.add(cursor.getString(0));
+                tags.add(cursor.getString(0))
             }
         }
-        HashSet<String> tagSet = new HashSet<>(split(TextUtils.join(" ", tags)));
-        register(tagSet);
+        val tagSet = HashSet(split(TextUtils.join(" ", tags)))
+        register(tagSet)
     }
 
-
-    @NonNull
-    public Set<TagUsnTuple> allItems() {
-        return mTags.entrySet()
-                .stream()
-                .map(entry -> new TagUsnTuple(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toSet());
+    override fun allItems(): Set<TagUsnTuple> {
+        @KotlinCleanup("switch from stream to kotlin collection operators")
+        return mTags.entries
+            .stream()
+            .map { (key, value): Map.Entry<String, Int?> ->
+                TagUsnTuple(
+                    key, value!!
+                )
+            }
+            .collect(Collectors.toSet())
     }
 
-
-
-    public void save() {
-        mChanged = true;
+    override fun save() {
+        mChanged = true
     }
 
-
-    /** {@inheritDoc} */
-    @NonNull
-    public ArrayList<String> byDeck(long did, boolean children) {
-        List<String> tags;
-        if (children) {
-            java.util.Collection<Long> values = mCol.getDecks().children(did).values();
-            ArrayList<Long> dids = new ArrayList<>(values.size());
-            dids.add(did);
-            dids.addAll(values);
-            tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(dids));
+    /** {@inheritDoc}  */
+    override fun byDeck(did: Long, children: Boolean): ArrayList<String> {
+        val tags: List<String?>
+        tags = if (children) {
+            val values: kotlin.collections.Collection<Long> = col.decks.children(did).values
+            val dids = ArrayList<Long>(values.size)
+            dids.add(did)
+            dids.addAll(values)
+            col.db.queryStringList(
+                "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did IN " + Utils.ids2str(
+                    dids
+                )
+            )
         } else {
-            tags = mCol.getDb().queryStringList("SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = ?", did);
+            col.db.queryStringList(
+                "SELECT DISTINCT n.tags FROM cards c, notes n WHERE c.nid = n.id AND c.did = ?",
+                did
+            )
         }
         // Cast to set to remove duplicates
         // Use methods used to get all tags to parse tags here as well.
-        return new ArrayList<>(new HashSet<>(split(TextUtils.join(" ", tags))));
+        return ArrayList(HashSet(split(TextUtils.join(" ", tags))))
     }
-
-
     /*
      * Bulk addition/removal from notes
      * ***********************************************************
      */
-
-    /** {@inheritDoc} */
-    public void bulkAdd(@NonNull List<Long> ids, @NonNull String tags, boolean add) {
-        List<String> newTags = split(tags);
-        if (newTags == null || newTags.isEmpty()) {
-            return;
+    /** {@inheritDoc}  */
+    override fun bulkAdd(ids: List<Long>, tags: String, add: Boolean) {
+        val newTags: List<String> = split(tags)
+        if (newTags.isEmpty()) {
+            return
         }
         // cache tag names
         if (add) {
-            register(newTags);
+            register(newTags)
         }
         // find notes missing the tags
-        String l;
-        if (add) {
-            l = "tags not ";
+        val l: String
+        l = if (add) {
+            "tags not "
         } else {
-            l = "tags ";
+            "tags "
         }
-        StringBuilder lim = new StringBuilder();
-        for (String t : newTags) {
-            if (lim.length() != 0) {
-                lim.append(" or ");
+        val lim = StringBuilder()
+        for (t in newTags) {
+            if (lim.length != 0) {
+                lim.append(" or ")
             }
-            t = t.replace("*", "%");
-            lim.append(l).append("like '% ").append(t).append(" %'");
+            val replaced = t.replace("*", "%")
+            lim.append(l).append("like '% ").append(replaced).append(" %'")
         }
-        ArrayList<Object[]> res = new ArrayList<>(mCol.getDb().queryScalar("select count() from notes where id in "+ Utils.ids2str(ids) + " and (" + lim + ")"));
-        try (Cursor cur = mCol
-                .getDb()
-                .query("select id, tags from notes where id in " + Utils.ids2str(ids) +
-                        " and (" + lim + ")")) {
-            if (add) {
-                while (cur.moveToNext()) {
-                    res.add(new Object[] { addToStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(), cur.getLong(0) });
-                }
-            } else {
-                while (cur.moveToNext()) {
-                    res.add(new Object[] { remFromStr(tags, cur.getString(1)), mCol.getTime().intTime(), mCol.usn(),
-                            cur.getLong(0) });
+        val res = ArrayList<Array<Any>>(
+            col.db.queryScalar(
+                "select count() from notes where id in " + Utils.ids2str(ids) + " and (" + lim + ")"
+            )
+        )
+        col
+            .db
+            .query(
+                "select id, tags from notes where id in " + Utils.ids2str(ids) +
+                    " and (" + lim + ")"
+            ).use { cur ->
+                if (add) {
+                    while (cur.moveToNext()) {
+                        res.add(
+                            arrayOf(
+                                addToStr(tags, cur.getString(1)),
+                                col.time.intTime(),
+                                col.usn(),
+                                cur.getLong(0)
+                            )
+                        )
+                    }
+                } else {
+                    while (cur.moveToNext()) {
+                        res.add(
+                            arrayOf(
+                                remFromStr(tags, cur.getString(1)), col.time.intTime(), col.usn(),
+                                cur.getLong(0)
+                            )
+                        )
+                    }
                 }
             }
-        }
         // update tags
-        mCol.getDb().executeMany("update notes set tags=:t,mod=:n,usn=:u where id = :id", res);
+        col.db.executeMany("update notes set tags=:t,mod=:n,usn=:u where id = :id", res)
     }
-
 
     /*
      * String-based utilities
      * ***********************************************************
      */
-
-    /** {@inheritDoc} */
-    @NonNull
-    public ArrayList<String> split(@NonNull String tags) {
-        ArrayList<String> list = new ArrayList<>(tags.length());
-        for (String s : tags.replace('\u3000', ' ').split("\\s")) {
-            if (s.length() > 0) {
-                list.add(s);
+    /** {@inheritDoc}  */
+    override fun split(tags: String): ArrayList<String> {
+        val list = ArrayList<String>(tags.length)
+        for (s in tags.replace('\u3000', ' ').split("\\s".toRegex()).toTypedArray()) {
+            if (s.length > 0) {
+                list.add(s)
             }
         }
-        return list;
-    }
-
-
-    /** {@inheritDoc} */
-    @NonNull
-    public String join(@NonNull java.util.Collection<String> tags) {
-        if (tags.isEmpty()) {
-            return "";
-        } else {
-            String joined = TextUtils.join(" ", tags);
-            return String.format(Locale.US, " %s ", joined);
-        }
-    }
-
-
-    /** Add tags if they don't exist, and canonify */
-    public String addToStr(String addtags, String tags) {
-        List<String> currentTags = split(tags);
-        for (String tag : split(addtags)) {
-            if (!inList(tag, currentTags)) {
-                currentTags.add(tag);
-            }
-        }
-        return join(canonify(currentTags));
-    }
-
-    // submethod of remFromStr in anki
-    public boolean wildcard(String pat, String str) {
-        String pat_replaced = Pattern.quote(pat).replace("\\*", ".*");
-        return Pattern.compile(pat_replaced, Pattern.CASE_INSENSITIVE|Pattern.UNICODE_CASE).matcher(str).matches();
+        return list
     }
 
     /** {@inheritDoc}  */
-    @NonNull
-    public String remFromStr(@NonNull String deltags, @NonNull String tags) {
-        List<String> currentTags = split(tags);
-        for (String tag : split(deltags)) {
-            List<String> remove = new ArrayList<>(); // Usually not a lot of tags are removed simultaneously.
+    override fun join(tags: kotlin.collections.Collection<String>): String {
+        return if (tags.isEmpty()) {
+            ""
+        } else {
+            @KotlinCleanup("use kotlin joinToString function")
+            val joined = TextUtils.join(" ", tags)
+            String.format(Locale.US, " %s ", joined)
+        }
+    }
+
+    /** Add tags if they don't exist, and canonify  */
+    fun addToStr(addtags: String, tags: String): String {
+        val currentTags: MutableList<String> = split(tags)
+        for (tag in split(addtags)) {
+            if (!inList(tag, currentTags)) {
+                currentTags.add(tag)
+            }
+        }
+        return join(canonify(currentTags))
+    }
+
+    // submethod of remFromStr in anki
+    fun wildcard(pat: String, str: String): Boolean {
+        val pat_replaced = Pattern.quote(pat).replace("\\*", ".*")
+        return Pattern.compile(pat_replaced, Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CASE)
+            .matcher(str).matches()
+    }
+
+    /** {@inheritDoc}   */
+    override fun remFromStr(deltags: String, tags: String): String {
+        val currentTags: MutableList<String> = split(tags)
+        for (tag in split(deltags)) {
+            val remove: MutableList<String> =
+                ArrayList() // Usually not a lot of tags are removed simultaneously.
             // So don't put initial capacity
-            for (String tx: currentTags) {
-                if (tag.equalsIgnoreCase(tx) || wildcard(tag, tx)) {
-                    remove.add(tx);
+            for (tx in currentTags) {
+                if (tag.equals(tx, ignoreCase = true) || wildcard(tag, tx)) {
+                    remove.add(tx)
                 }
             }
             // remove them
-            for (String r : remove) {
-                currentTags.remove(r);
+            for (r in remove) {
+                currentTags.remove(r)
             }
         }
-        return join(currentTags);
+        return join(currentTags)
     }
-
-
     /*
      * List-based utilities
      * ***********************************************************
      */
-
-    /** {@inheritDoc} */
-    @NonNull
-    public TreeSet<String> canonify(List<String> tagList) {
+    /** {@inheritDoc}  */
+    override fun canonify(tagList: List<String>): TreeSet<String> {
         // NOTE: The python version creates a list of tags, puts them into a set, then sorts them. The TreeSet
         // used here already guarantees uniqueness and sort order, so we return it as-is without those steps.
-        TreeSet<String> strippedTags = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-        for (String t : tagList) {
-            String s = sCanonify.matcher(t).replaceAll("");
-            for (String existingTag : mTags.keySet()) {
-                if (s.equalsIgnoreCase(existingTag)) {
-                    s = existingTag;
+        val strippedTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
+        for (t in tagList) {
+            var s = sCanonify.matcher(t).replaceAll("")
+            for (existingTag in mTags.keys) {
+                if (s.equals(existingTag, ignoreCase = true)) {
+                    s = existingTag
                 }
             }
-            strippedTags.add(s);
+            strippedTags.add(s)
         }
-        return strippedTags;
+        return strippedTags
     }
 
-
-    /** {@inheritDoc} */
-    public boolean inList(@NonNull String tag, Iterable<String> tags) {
-        for (String t : tags) {
-            if (t.equalsIgnoreCase(tag)) {
-                return true;
+    /** {@inheritDoc}  */
+    override fun inList(tag: String, tags: Iterable<String>): Boolean {
+        for (t in tags) {
+            if (t.equals(tag, ignoreCase = true)) {
+                return true
             }
         }
-        return false;
+        return false
     }
-
 
     /**
      * Sync handling
      * ***********************************************************
      */
-
-    public void beforeUpload() {
-        boolean changed = false;
-        for (Map.Entry<String, Integer> entry : mTags.entrySet()) {
-            if (entry.getValue() != 0) {
-                mTags.put(entry.getKey(), 0);
-                changed = true;
+    override fun beforeUpload() {
+        var changed = false
+        for ((key, value) in mTags) {
+            if (value != 0) {
+                mTags[key] = 0
+                changed = true
             }
         }
         if (changed) {
-            save();
+            save()
         }
     }
-
     /*
      * ***********************************************************
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-
-
-    /** Add a tag to the collection. We use this method instead of exposing mTags publicly.*/
-    public void add(@NonNull String key, @Nullable Integer value) {
-        mTags.put(key, value);
+    /** Add a tag to the collection. We use this method instead of exposing mTags publicly. */
+    override fun add(tag: String, usn: Int?) {
+        mTags[tag] = usn
     }
 
-    /** Whether any tags have a usn of -1 */
-    @Override
-    public boolean minusOneValue() {
-        return mTags.containsValue(-1);
+    /** Whether any tags have a usn of -1  */
+    override fun minusOneValue(): Boolean {
+        return mTags.containsValue(-1)
+    }
+
+    companion object {
+        private val sCanonify = Pattern.compile("[\"']")
     }
 }
