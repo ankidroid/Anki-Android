@@ -263,6 +263,7 @@ class Preferences : AnkiActivity() {
         // Load stored values from Preferences which are stored in the Collection
         if (sCollectionPreferences.contains(pref.key)) {
             val col = col
+            @Suppress("SENSELESS_COMPARISON")
             if (col != null) {
                 try {
                     when (pref.key) {
@@ -407,6 +408,7 @@ class Preferences : AnkiActivity() {
     private fun closePreferences() {
         finish()
         slide(this, ActivityTransitionAnimation.Direction.FADE)
+        @Suppress("SENSELESS_COMPARISON")
         if (col != null && !col.dbClosed) {
             col.save()
         }

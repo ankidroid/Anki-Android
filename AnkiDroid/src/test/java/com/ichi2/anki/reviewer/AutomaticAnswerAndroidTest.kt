@@ -59,5 +59,5 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
     }
 
     private fun createInstance() =
-        AutomaticAnswer.createInstance(mock(), super.getPreferences(), super.getCol())
+        AutomaticAnswer.createInstance(mock(), super.getPreferences(), super.col)
 }

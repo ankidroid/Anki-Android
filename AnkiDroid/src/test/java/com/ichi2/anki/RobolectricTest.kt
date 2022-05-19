@@ -313,10 +313,11 @@ open class RobolectricTest : CollectionGetter {
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
-    override fun getCol(): Collection {
-        val time = MockTime(2020, 7, 7, 7, 0, 0, 0, 10)
-        return CollectionHelper.getInstance().getCol(targetContext, time)
-    }
+    override val col: Collection
+        get() {
+            val time = MockTime(2020, 7, 7, 7, 0, 0, 0, 10)
+            return CollectionHelper.getInstance().getCol(targetContext, time)
+        }
 
     protected val collectionTime: MockTime
         get() = col.time as MockTime

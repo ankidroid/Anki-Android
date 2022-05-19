@@ -216,12 +216,12 @@ class ReviewerTest : RobolectricTest() {
         waitForAsyncTasksToComplete()
 
         equalFirstField(cards[1]!!, reviewer.mCurrentCard!!)
-        reviewer.answerCard(getCol().sched.goodNewButton)
+        reviewer.answerCard(col.sched.goodNewButton)
         waitForAsyncTasksToComplete()
 
         equalFirstField(cards[2]!!, reviewer.mCurrentCard!!)
         time.addM(2)
-        reviewer.answerCard(getCol().sched.goodNewButton)
+        reviewer.answerCard(col.sched.goodNewButton)
         advanceRobolectricLooperWithSleep()
         equalFirstField(cards[0]!!, reviewer.mCurrentCard!!) // This failed in #6898 because this card was not in the queue
     }
