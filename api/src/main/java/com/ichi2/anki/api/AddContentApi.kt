@@ -15,46 +15,23 @@
  * You should have received a copy of the GNU Lesser General Public License along with  *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.api
 
-package com.ichi2.anki.api;
-
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.pm.ProviderInfo;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Process;
-import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.util.SparseArray;
-
-import com.ichi2.anki.FlashCardsContract;
-import com.ichi2.anki.FlashCardsContract.Card;
-import com.ichi2.anki.FlashCardsContract.CardTemplate;
-import com.ichi2.anki.FlashCardsContract.Deck;
-import com.ichi2.anki.FlashCardsContract.Model;
-import com.ichi2.anki.FlashCardsContract.Note;
-import com.ichi2.anki.FlashCardsContract.AnkiMedia;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.NonNull;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import android.content.ContentResolver
+import android.content.ContentValues
+import android.content.Context
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
+import android.os.Build
+import android.os.Process
+import android.text.TextUtils
+import android.util.SparseArray
+import com.ichi2.anki.FlashCardsContract
+import com.ichi2.anki.FlashCardsContract.AnkiMedia
+import com.ichi2.anki.api.NoteInfo.Companion.buildFromCursor
+import java.io.File
+import java.util.*
 
 /**
  * API which can be used to add and query notes,cards,decks, and models to AnkiDroid
@@ -63,20 +40,40 @@ import java.util.Set;
  * On earlier SDK levels, the #READ_WRITE_PERMISSION is currently only required for update/delete operations but
  * this may be extended to all operations at a later date.
  */
-@SuppressWarnings("unused")
-public final class AddContentApi {
-    private final ContentResolver mResolver;
-    private final Context mContext;
-    public static final String READ_WRITE_PERMISSION = FlashCardsContract.READ_WRITE_PERMISSION;
-    public static final long DEFAULT_DECK_ID = 1L;
-    private static final String TEST_TAG = "PREVIEW_NOTE";
-    private static final String PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec";
-    private static final int DEFAULT_PROVIDER_SPEC_VALUE = 1; // for when meta-data key does not exist
-    private static final String[] PROJECTION = {Note._ID, Note.FLDS, Note.TAGS};
+@Suppress("unused")
+class AddContentApi(context: Context) {
+    private val mResolver: ContentResolver
+    private val mContext: Context
 
-    public AddContentApi(Context context) {
-        mContext = context.getApplicationContext();
-        mResolver = mContext.getContentResolver();
+    companion object {
+        const val READ_WRITE_PERMISSION = FlashCardsContract.READ_WRITE_PERMISSION
+        const val DEFAULT_DECK_ID = 1L
+        private const val TEST_TAG = "PREVIEW_NOTE"
+        private const val PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec"
+        private const val DEFAULT_PROVIDER_SPEC_VALUE = 1 // for when meta-data key does not exist
+        private val PROJECTION = arrayOf(
+            FlashCardsContract.Note._ID,
+            FlashCardsContract.Note.FLDS,
+            FlashCardsContract.Note.TAGS
+        )
+
+        /**
+         * Get the AnkiDroid package name that the API will communicate with.
+         * This can be used to check that a supported version of AnkiDroid is installed,
+         * or to get the application label and icon, etc.
+         * @param context a Context that can be used to get the PackageManager
+         * @return packageId of AnkiDroid if a supported version is not installed, otherwise null
+         */
+        fun getAnkiDroidPackageName(context: Context): String? {
+            val manager = context.packageManager
+            val pi = manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0)
+            return pi?.packageName
+        }
+    }
+
+    init {
+        mContext = context.applicationContext
+        mResolver = mContext.contentResolver
     }
 
     /**
@@ -88,47 +85,45 @@ public final class AddContentApi {
      * @param tags tags to include in the new note
      * @return note id or null if the note could not be added
      */
-    public Long addNote(long modelId, long deckId, String[] fields, Set<String> tags) {
-        Uri noteUri = addNoteInternal(modelId, deckId, fields, tags);
-        if (noteUri == null) {
-            return null;
-        }
-        return Long.parseLong(noteUri.getLastPathSegment());
+    fun addNote(modelId: Long, deckId: Long, fields: Array<String>, tags: Set<String>?): Long? {
+        val noteUri = addNoteInternal(modelId, deckId, fields, tags) ?: return null
+        return noteUri.lastPathSegment!!.toLong()
     }
 
-    private Uri addNoteInternal(long modelId, long deckId, String[] fields, Set<String> tags) {
-        ContentValues values = new ContentValues();
-        values.put(Note.MID, modelId);
-        values.put(Note.FLDS, Utils.joinFields(fields));
+    private fun addNoteInternal(
+        modelId: Long,
+        deckId: Long,
+        fields: Array<String>,
+        tags: Set<String>?
+    ): Uri? {
+        val values = ContentValues()
+        values.put(FlashCardsContract.Note.MID, modelId)
+        values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields))
         if (tags != null) {
-            values.put(Note.TAGS, Utils.joinTags(tags));
+            values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tags))
         }
-        return addNoteForContentValues(deckId, values);
+        return addNoteForContentValues(deckId, values)
     }
 
-    private Uri addNoteForContentValues(long deckId, ContentValues values) {
-        Uri newNoteUri = mResolver.insert(Note.CONTENT_URI, values);
-        if (newNoteUri == null) {
-            return null;
-        }
+    private fun addNoteForContentValues(deckId: Long, values: ContentValues): Uri? {
+        val newNoteUri =
+            mResolver.insert(FlashCardsContract.Note.CONTENT_URI, values) ?: return null
         // Move cards to specified deck
-        Uri cardsUri = Uri.withAppendedPath(newNoteUri, "cards");
-        final Cursor cardsCursor = mResolver.query(cardsUri, null, null, null, null);
-        if (cardsCursor == null) {
-            return null;
-        }
+        val cardsUri = Uri.withAppendedPath(newNoteUri, "cards")
+        val cardsCursor = mResolver.query(cardsUri, null, null, null, null) ?: return null
         try {
             while (cardsCursor.moveToNext()) {
-                String ord = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_ORD));
-                ContentValues cardValues = new ContentValues();
-                cardValues.put(Card.DECK_ID, deckId);
-                Uri cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri, "cards"), ord);
-                mResolver.update(cardUri, cardValues, null, null);
+                val ord =
+                    cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.CARD_ORD))
+                val cardValues = ContentValues()
+                cardValues.put(FlashCardsContract.Card.DECK_ID, deckId)
+                val cardUri = Uri.withAppendedPath(Uri.withAppendedPath(newNoteUri, "cards"), ord)
+                mResolver.update(cardUri, cardValues, null, null)
             }
         } finally {
-            cardsCursor.close();
+            cardsCursor.close()
         }
-        return newNoteUri;
+        return newNoteUri
     }
 
     /**
@@ -140,25 +135,30 @@ public final class AddContentApi {
      * @param tagsList List of tags (one per note) (may be null)
      * @return The number of notes added (&lt;0 means there was a problem)
      */
-    public int addNotes(long modelId, long deckId, List<String[]> fieldsList, List<Set<String>> tagsList) {
-        if (tagsList != null && fieldsList.size() != tagsList.size()) {
-            throw new IllegalArgumentException("fieldsList and tagsList different length");
-        }
-        List<ContentValues> newNoteValuesList = new ArrayList<>(fieldsList.size());
-        for (int i = 0; i < fieldsList.size(); i++) {
-            ContentValues values = new ContentValues();
-            values.put(Note.MID, modelId);
-            values.put(Note.FLDS, Utils.joinFields(fieldsList.get(i)));
-            if (tagsList != null && tagsList.get(i) != null) {
-                values.put(Note.TAGS, Utils.joinTags(tagsList.get(i)));
+    fun addNotes(
+        modelId: Long,
+        deckId: Long,
+        fieldsList: List<Array<String?>?>,
+        tagsList: List<Set<String?>?>?
+    ): Int {
+        require(!(tagsList != null && fieldsList.size != tagsList.size)) { "fieldsList and tagsList different length" }
+        val newNoteValuesList: MutableList<ContentValues> = ArrayList(fieldsList.size)
+        for (i in fieldsList.indices) {
+            val values = ContentValues()
+            values.put(FlashCardsContract.Note.MID, modelId)
+            values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fieldsList[i]))
+            if (tagsList != null && tagsList[i] != null) {
+                values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tagsList[i]))
             }
-            newNoteValuesList.add(values);
+            newNoteValuesList.add(values)
         }
         // Add the notes to the content provider and put the new note ids into the result array
-        if (newNoteValuesList.isEmpty()) {
-            return 0;
-        }
-        return getCompat().insertNotes(deckId, newNoteValuesList.toArray(new ContentValues[newNoteValuesList.size()]));
+        return if (newNoteValuesList.isEmpty()) {
+            0
+        } else compat.insertNotes(
+            deckId,
+            newNoteValuesList.toTypedArray()
+        )
     }
 
     /**
@@ -166,27 +166,27 @@ public final class AddContentApi {
      * then set FLAG_GRANT_READ_URI_PERMISSION using something like:
      *
      * <pre>
-     *     <code>
-     *     getContext().grantUriPermission("com.ichi2.anki", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-     *     // Then when file is added, remove the permission
-     *     // add File ...
-     *     getContext().revokePermission(uri, Intent.FLAG_GRAN_READ_URI_PERMISSION)
-     *     </code>
-     * </pre>
+     * `
+     * getContext().grantUriPermission("com.ichi2.anki", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+     * // Then when file is added, remove the permission
+     * // add File ...
+     * getContext().revokePermission(uri, Intent.FLAG_GRAN_READ_URI_PERMISSION)
+     ` *
+     </pre> *
      *
      * Example usage:
-     *  <pre>
-     *      <code>
-     *      Long modelId = getModelId(); // implementation can be seen in api sample app
-     *      Long deckId = getDeckId(); // as above
-     *      Set&lt;String&gt; tags = getTags(); // as above
-     *      Uri fileUri = ... // this will be returned by a File Picker activity where we select an image file
-     *      String addedImageFileName = mApi.addMediaFromUri(fileUri, "My_Image_File", "image");
+     * <pre>
+     * `
+     * Long modelId = getModelId(); // implementation can be seen in api sample app
+     * Long deckId = getDeckId(); // as above
+     * Set<String> tags = getTags(); // as above
+     * Uri fileUri = ... // this will be returned by a File Picker activity where we select an image file
+     * String addedImageFileName = mApi.addMediaFromUri(fileUri, "My_Image_File", "image");
      *
-     *      String[] fields = new String[] {"text on front of card", "text on back of card " + addedImageFileName};
-     *      mApi.addNote(modelId, deckId, fields, tags)
-     *      </code>
-     *  </pre>
+     * String[] fields = new String[] {"text on front of card", "text on back of card " + addedImageFileName};
+     * mApi.addNote(modelId, deckId, fields, tags)
+     ` *
+     </pre> *
      *
      *
      *
@@ -195,40 +195,41 @@ public final class AddContentApi {
      * @param preferredName String to add to start of filename (do not use a file extension), required.
      * @param mimeType  String indicating the mimeType of the media. Accepts "audio" or "image", required.
      * @return the correctly formatted String for the media file to be placed in the desired field of a Card, or null
-     *          if unsuccessful.
+     * if unsuccessful.
      */
-    public @Nullable String addMediaFromUri(
-            @NonNull Uri fileUri, @NonNull String preferredName, @NonNull String mimeType
-    ) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(AnkiMedia.FILE_URI, fileUri.toString());
-        preferredName = preferredName.replace(" ", "_");
-        contentValues.put(AnkiMedia.PREFERRED_NAME, preferredName);
-
+    fun addMediaFromUri(
+        fileUri: Uri,
+        preferredName: String,
+        mimeType: String
+    ): String? {
+        val contentValues = ContentValues()
+        contentValues.put(AnkiMedia.FILE_URI, fileUri.toString())
+        val preferredNameReplaced = preferredName.replace(" ", "_")
+        contentValues.put(AnkiMedia.PREFERRED_NAME, preferredNameReplaced)
         try {
-            Uri returnUri = mResolver.insert(AnkiMedia.CONTENT_URI, contentValues);
+            val returnUri = mResolver.insert(AnkiMedia.CONTENT_URI, contentValues)
             // get the filename from Uri, return [sound:%s] % file.getName()
-            String fname = new File(returnUri.getPath()).toString();
-            return formatMediaName(fname, mimeType);
-        } catch (Exception e){
-            return null;
+            val fname = returnUri!!.path?.let { File(it).toString() }
+            if (fname != null) {
+                return formatMediaName(fname, mimeType)
+            }
+        } catch (e: Exception) {
+            return null
         }
-
+        return null
     }
 
-    private @Nullable String formatMediaName(@NonNull String fname, @NonNull String mimeType) {
-        String formatted_fname;
-        if (mimeType.equals("audio")) {
-            formatted_fname = String.format("[sound:%s]", fname.substring(1)); // first character in the path is "/"
-        } else if (mimeType.equals("image")) {
-            formatted_fname = String.format("<img src=\"%s\" />", fname.substring(1));
+    private fun formatMediaName(fname: String, mimeType: String): String? {
+        val formatted_fname: String? = if (mimeType == "audio") {
+            String.format("[sound:%s]", fname.substring(1)) // first character in the path is "/"
+        } else if (mimeType == "image") {
+            String.format("<img src=\"%s\" />", fname.substring(1))
         } else {
             // something went wrong
-            formatted_fname = null;
+            null
         }
-        return formatted_fname;
+        return formatted_fname
     }
-
 
     /**
      * Find all existing notes in the collection which have mid and a duplicate key
@@ -236,12 +237,11 @@ public final class AddContentApi {
      * @param key the first field of a note
      * @return a list of duplicate notes
      */
-    public List<NoteInfo> findDuplicateNotes(long mid, String key) {
-        SparseArray<List<NoteInfo>> notes = getCompat().findDuplicateNotes(mid, Collections.singletonList(key));
-        if (notes.size() == 0) {
-            return Collections.emptyList();
-        }
-        return notes.valueAt(0);
+    fun findDuplicateNotes(mid: Long, key: String): List<NoteInfo?> {
+        val notes = compat.findDuplicateNotes(mid, listOf(key))
+        return if (notes!!.size() == 0) {
+            emptyList<NoteInfo>()
+        } else notes.valueAt(0)
     }
 
     /**
@@ -251,8 +251,8 @@ public final class AddContentApi {
      * @param keys list of keys
      * @return a SparseArray with a list of duplicate notes for each key
      */
-    public SparseArray<List<NoteInfo>> findDuplicateNotes(long mid, List<String> keys) {
-        return getCompat().findDuplicateNotes(mid, keys);
+    fun findDuplicateNotes(mid: Long, keys: List<String?>): SparseArray<MutableList<NoteInfo?>>? {
+        return compat.findDuplicateNotes(mid, keys)
     }
 
     /**
@@ -260,15 +260,12 @@ public final class AddContentApi {
      * @param mid id of the model to be used
      * @return number of notes that exist with that model ID or -1 if there was a problem
      */
-    public int getNoteCount(long mid) {
-        Cursor cursor = getCompat().queryNotes(mid);
-        if (cursor == null) {
-            return 0;
-        }
-        try {
-            return cursor.getCount();
+    fun getNoteCount(mid: Long): Int {
+        val cursor = compat.queryNotes(mid) ?: return 0
+        return try {
+            cursor.count
         } finally {
-            cursor.close();
+            cursor.close()
         }
     }
 
@@ -279,8 +276,8 @@ public final class AddContentApi {
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public boolean updateNoteTags(long noteId, Set<String> tags) {
-        return updateNote(noteId, null, tags);
+    fun updateNoteTags(noteId: Long, tags: Set<String>?): Boolean {
+        return updateNote(noteId, null, tags)
     }
 
     /**
@@ -290,8 +287,8 @@ public final class AddContentApi {
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public boolean updateNoteFields(long noteId, String[] fields) {
-        return updateNote(noteId, fields, null);
+    fun updateNoteFields(noteId: Long, fields: Array<String>?): Boolean {
+        return updateNote(noteId, fields, null)
     }
 
     /**
@@ -299,35 +296,35 @@ public final class AddContentApi {
      * @param noteId the ID of the note to find
      * @return object containing the contents of note with noteID or null if there was a problem
      */
-    public NoteInfo getNote(long noteId) {
-        Uri noteUri = Uri.withAppendedPath(Note.CONTENT_URI, Long.toString(noteId));
-        Cursor cursor = mResolver.query(noteUri, PROJECTION, null, null, null);
-        if (cursor == null) {
-            return null;
-        }
-        try {
+    fun getNote(noteId: Long): NoteInfo? {
+        val noteUri = Uri.withAppendedPath(
+            FlashCardsContract.Note.CONTENT_URI,
+            noteId.toString()
+        )
+        val cursor = mResolver.query(noteUri, PROJECTION, null, null, null)
+            ?: return null
+        return try {
             if (!cursor.moveToNext()) {
-                return null;
-            }
-            return NoteInfo.buildFromCursor(cursor);
+                null
+            } else buildFromCursor(cursor)
         } finally {
-            cursor.close();
+            cursor.close()
         }
     }
 
-    private boolean updateNote(long noteId, String[] fields, Set<String> tags) {
-        Uri.Builder builder = Note.CONTENT_URI.buildUpon();
-        Uri contentUri = builder.appendPath(Long.toString(noteId)).build();
-        ContentValues values = new ContentValues();
+    private fun updateNote(noteId: Long, fields: Array<String>?, tags: Set<String>?): Boolean {
+        val builder = FlashCardsContract.Note.CONTENT_URI.buildUpon()
+        val contentUri = builder.appendPath(noteId.toString()).build()
+        val values = ContentValues()
         if (fields != null) {
-            values.put(Note.FLDS, Utils.joinFields(fields));
+            values.put(FlashCardsContract.Note.FLDS, Utils.joinFields(fields))
         }
         if (tags != null) {
-            values.put(Note.TAGS, Utils.joinTags(tags));
+            values.put(FlashCardsContract.Note.TAGS, Utils.joinTags(tags))
         }
-        int numRowsUpdated = mResolver.update(contentUri, values, null, null);
+        val numRowsUpdated = mResolver.update(contentUri, values, null, null)
         // provider doesn't check whether fields actually changed, so just returns number of notes with id == noteId
-        return numRowsUpdated > 0;
+        return numRowsUpdated > 0
     }
 
     /**
@@ -337,36 +334,36 @@ public final class AddContentApi {
      * @return list of front &amp; back pairs for each card which contain the card HTML, or null if there was a problem
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public Map<String, Map<String, String>> previewNewNote(long mid, String[] flds) {
+    fun previewNewNote(mid: Long, flds: Array<String>): Map<String, Map<String, String>>? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M && !hasReadWritePermission()) {
             // avoid situation where addNote will pass, but deleteNote will fail
-            throw new SecurityException("previewNewNote requires full read-write-permission");
+            throw SecurityException("previewNewNote requires full read-write-permission")
         }
-        Uri newNoteUri = addNoteInternal(mid, DEFAULT_DECK_ID, flds, Collections.singleton(TEST_TAG));
+        val newNoteUri = addNoteInternal(mid, DEFAULT_DECK_ID, flds, setOf(TEST_TAG))
         // Build map of HTML for each generated card
-        Map<String, Map<String, String>> cards = new HashMap<>();
-        Uri cardsUri = Uri.withAppendedPath(newNoteUri, "cards");
-        final Cursor cardsCursor = mResolver.query(cardsUri, null, null, null, null);
-        if (cardsCursor == null) {
-            return null;
-        }
+        val cards: MutableMap<String, Map<String, String>> = HashMap()
+        val cardsUri = Uri.withAppendedPath(newNoteUri, "cards")
+        val cardsCursor = mResolver.query(cardsUri, null, null, null, null) ?: return null
         try {
             while (cardsCursor.moveToNext()) {
                 // add question and answer for each card to map
-                final String n = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_NAME));
-                final String q = cardsCursor.getString(cardsCursor.getColumnIndex(Card.QUESTION));
-                final String a = cardsCursor.getString(cardsCursor.getColumnIndex(Card.ANSWER));
-                Map<String, String> html = new HashMap<>();
-                html.put("q", q);
-                html.put("a", a);
-                cards.put(n, html);
+                val n =
+                    cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.CARD_NAME))
+                val q =
+                    cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.QUESTION))
+                val a =
+                    cardsCursor.getString(cardsCursor.getColumnIndex(FlashCardsContract.Card.ANSWER))
+                val html: MutableMap<String, String> = HashMap()
+                html["q"] = q
+                html["a"] = a
+                cards[n] = html
             }
         } finally {
-            cardsCursor.close();
+            cardsCursor.close()
         }
         // Delete the note
-        mResolver.delete(newNoteUri, null, null);
-        return cards;
+        mResolver.delete(newNoteUri!!, null, null)
+        return cards
     }
 
     /**
@@ -374,11 +371,12 @@ public final class AddContentApi {
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public Long addNewBasicModel(String name) {
-        return addNewCustomModel(name, BasicModel.FIELDS, BasicModel.CARD_NAMES, BasicModel.QFMT,
-                BasicModel.AFMT, null, null, null);
+    fun addNewBasicModel(name: String?): Long? {
+        return addNewCustomModel(
+            name, BasicModel.FIELDS, BasicModel.CARD_NAMES, BasicModel.QFMT,
+            BasicModel.AFMT, null, null, null
+        )
     }
-
 
     /**
      * Insert a new basic front/back model with two fields and TWO cards
@@ -386,14 +384,16 @@ public final class AddContentApi {
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public Long addNewBasic2Model(String name) {
-        return addNewCustomModel(name, Basic2Model.FIELDS, Basic2Model.CARD_NAMES, Basic2Model.QFMT,
-                Basic2Model.AFMT, null, null, null);
+    fun addNewBasic2Model(name: String?): Long? {
+        return addNewCustomModel(
+            name, Basic2Model.FIELDS, Basic2Model.CARD_NAMES, Basic2Model.QFMT,
+            Basic2Model.AFMT, null, null, null
+        )
     }
 
     /**
      * Insert a new model into AnkiDroid.
-     * See the <a href="https://docs.ankiweb.net/templates/intro.html">Anki Desktop Manual</a> for more help
+     * See the [Anki Desktop Manual](https://docs.ankiweb.net/templates/intro.html) for more help
      * @param name name of model
      * @param fields array of field names
      * @param cards array of names for the card templates
@@ -404,119 +404,123 @@ public final class AddContentApi {
      * @param sortf index of field to be used for sorting. Use null for unspecified (unsupported in provider spec v1)
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public Long addNewCustomModel(String name, String[] fields, String[] cards, String[] qfmt,
-                                  String[] afmt, String css, Long did, Integer sortf) {
+    fun addNewCustomModel(
+        name: String?,
+        fields: Array<String>,
+        cards: Array<String>,
+        qfmt: Array<String>,
+        afmt: Array<String>,
+        css: String?,
+        did: Long?,
+        sortf: Int?
+    ): Long? {
         // Check that size of arrays are consistent
-        if (qfmt.length != cards.length || afmt.length != cards.length) {
-            throw new IllegalArgumentException("cards, qfmt, and afmt arrays must all be same length");
-        }
+        require(!(qfmt.size != cards.size || afmt.size != cards.size)) { "cards, qfmt, and afmt arrays must all be same length" }
         // Create the model using dummy templates
-        ContentValues values = new ContentValues();
-        values.put(Model.NAME, name);
-        values.put(Model.FIELD_NAMES, Utils.joinFields(fields));
-        values.put(Model.NUM_CARDS, cards.length);
-        values.put(Model.CSS, css);
-        values.put(Model.DECK_ID, did);
-        values.put(Model.SORT_FIELD_INDEX, sortf);
-        Uri modelUri = mResolver.insert(Model.CONTENT_URI, values);
-        if (modelUri == null) {
-            return null;
-        }
+        var values = ContentValues()
+        values.put(FlashCardsContract.Model.NAME, name)
+        values.put(FlashCardsContract.Model.FIELD_NAMES, Utils.joinFields(fields))
+        values.put(FlashCardsContract.Model.NUM_CARDS, cards.size)
+        values.put(FlashCardsContract.Model.CSS, css)
+        values.put(FlashCardsContract.Model.DECK_ID, did)
+        values.put(FlashCardsContract.Model.SORT_FIELD_INDEX, sortf)
+        val modelUri = mResolver.insert(FlashCardsContract.Model.CONTENT_URI, values) ?: return null
         // Set the remaining template parameters
-        Uri templatesUri = Uri.withAppendedPath(modelUri, "templates");
-        for (int i = 0; i < cards.length; i++) {
-            Uri uri = Uri.withAppendedPath(templatesUri, Integer.toString(i));
-            values = new ContentValues();
-            values.put(CardTemplate.NAME, cards[i]);
-            values.put(CardTemplate.QUESTION_FORMAT, qfmt[i]);
-            values.put(CardTemplate.ANSWER_FORMAT, afmt[i]);
-            values.put(CardTemplate.ANSWER_FORMAT, afmt[i]);
-            mResolver.update(uri, values, null, null);
+        val templatesUri = Uri.withAppendedPath(modelUri, "templates")
+        for (i in cards.indices) {
+            val uri = Uri.withAppendedPath(templatesUri, i.toString())
+            values = ContentValues()
+            values.put(FlashCardsContract.CardTemplate.NAME, cards[i])
+            values.put(FlashCardsContract.CardTemplate.QUESTION_FORMAT, qfmt[i])
+            values.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, afmt[i])
+            values.put(FlashCardsContract.CardTemplate.ANSWER_FORMAT, afmt[i])
+            mResolver.update(uri, values, null, null)
         }
-        return Long.parseLong(modelUri.getLastPathSegment());
-    }
+        return modelUri.lastPathSegment!!.toLong()
+    } // Get the current model
 
     /**
      * Get the ID for the note type / model which is currently in use
      * @return id for current model, or &lt;0 if there was a problem
      */
-    public long getCurrentModelId() {
-        // Get the current model
-        Uri uri = Uri.withAppendedPath(Model.CONTENT_URI, Model.CURRENT_MODEL_ID);
-        final Cursor singleModelCursor = mResolver.query(uri, null, null, null, null);
-        if (singleModelCursor == null) {
-            return -1L;
+    val currentModelId: Long
+        get() {
+            // Get the current model
+            val uri = Uri.withAppendedPath(
+                FlashCardsContract.Model.CONTENT_URI,
+                FlashCardsContract.Model.CURRENT_MODEL_ID
+            )
+            val singleModelCursor = mResolver.query(uri, null, null, null, null) ?: return -1L
+            val modelId: Long = try {
+                singleModelCursor.moveToFirst()
+                singleModelCursor.getLong(singleModelCursor.getColumnIndex(FlashCardsContract.Model._ID))
+            } finally {
+                singleModelCursor.close()
+            }
+            return modelId
         }
-        long modelId;
-        try {
-            singleModelCursor.moveToFirst();
-            modelId = singleModelCursor.getLong(singleModelCursor.getColumnIndex(Model._ID));
-        } finally {
-            singleModelCursor.close();
-        }
-        return modelId;
-    }
-
 
     /**
      * Get the field names belonging to specified model
      * @param modelId the ID of the model to use
      * @return the names of all the fields, or null if the model doesn't exist or there was some other problem
      */
-    public String[] getFieldList(long modelId) {
+    fun getFieldList(modelId: Long): Array<String>? {
         // Get the current model
-        Uri uri = Uri.withAppendedPath(Model.CONTENT_URI, Long.toString(modelId));
-        final Cursor modelCursor = mResolver.query(uri, null, null, null, null);
-        if (modelCursor == null) {
-            return null;
-        }
-        String[] splitFlds = null;
+        val uri = Uri.withAppendedPath(
+            FlashCardsContract.Model.CONTENT_URI,
+            modelId.toString()
+        )
+        val modelCursor = mResolver.query(uri, null, null, null, null) ?: return null
+        var splitFlds: Array<String>? = null
         try {
             if (modelCursor.moveToNext()) {
-                String flds = modelCursor.getString(modelCursor.getColumnIndex(Model.FIELD_NAMES));
-                splitFlds = Utils.splitFields(flds);
+                val flds =
+                    modelCursor.getString(modelCursor.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES))
+                splitFlds = Utils.splitFields(flds)
             }
         } finally {
-            modelCursor.close();
+            modelCursor.close()
         }
-        return splitFlds;
+        return splitFlds
     }
 
     /**
      * Get a map of all model ids and names
      * @return map of (id, name) pairs
      */
-    public Map<Long, String> getModelList() {
-        return getModelList(1);
-    }
+    val modelList: Map<Long, String>?
+        get() = getModelList(1)
 
     /**
      * Get a map of all model ids and names with number of fields larger than minNumFields
      * @param minNumFields minimum number of fields to consider the model for inclusion
      * @return map of (id, name) pairs or null if there was a problem
      */
-    public Map<Long, String> getModelList(int minNumFields) {
+    fun getModelList(minNumFields: Int): Map<Long, String>? {
         // Get the current model
-        final Cursor allModelsCursor = mResolver.query(Model.CONTENT_URI, null, null, null, null);
-        if (allModelsCursor == null) {
-            return null;
-        }
-        Map<Long, String> models = new HashMap<>();
+        val allModelsCursor =
+            mResolver.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null)
+                ?: return null
+        val models: MutableMap<Long, String> = HashMap()
         try {
             while (allModelsCursor.moveToNext()) {
-                long modelId = allModelsCursor.getLong(allModelsCursor.getColumnIndex(Model._ID));
-                String name = allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.NAME));
-                String flds = allModelsCursor.getString(
-                        allModelsCursor.getColumnIndex(Model.FIELD_NAMES));
-                int numFlds = Utils.splitFields(flds).length;
+                val modelId =
+                    allModelsCursor.getLong(allModelsCursor.getColumnIndex(FlashCardsContract.Model._ID))
+                val name =
+                    allModelsCursor.getString(allModelsCursor.getColumnIndex(FlashCardsContract.Model.NAME))
+                val flds = allModelsCursor.getString(
+                    allModelsCursor.getColumnIndex(FlashCardsContract.Model.FIELD_NAMES)
+                )
+                val numFlds = Utils.splitFields(flds).size
                 if (numFlds >= minNumFields) {
-                    models.put(modelId, name);
+                    models[modelId] = name
                 }
             }
         } finally {
-            allModelsCursor.close();
+            allModelsCursor.close()
         }
-        return models;
+        return models
     }
 
     /**
@@ -524,9 +528,9 @@ public final class AddContentApi {
      * @param mid id of model
      * @return the name of the model, or null if no model was found
      */
-    public String getModelName(long mid) {
-        Map<Long, String> modelList = getModelList();
-        return modelList.get(mid);
+    fun getModelName(mid: Long): String? {
+        val modelList = modelList
+        return modelList!![mid]
     }
 
     /**
@@ -534,15 +538,15 @@ public final class AddContentApi {
      * @param deckName name of the deck to add
      * @return id of the added deck, or null if the deck was not added
      */
-    public Long addNewDeck(String deckName) {
+    fun addNewDeck(deckName: String?): Long? {
         // Create a new note
-        ContentValues values = new ContentValues();
-        values.put(Deck.DECK_NAME, deckName);
-        Uri newDeckUri = mResolver.insert(Deck.CONTENT_ALL_URI, values);
-        if (newDeckUri != null) {
-            return Long.parseLong(newDeckUri.getLastPathSegment());
+        val values = ContentValues()
+        values.put(FlashCardsContract.Deck.DECK_NAME, deckName)
+        val newDeckUri = mResolver.insert(FlashCardsContract.Deck.CONTENT_ALL_URI, values)
+        return if (newDeckUri != null) {
+            newDeckUri.lastPathSegment!!.toLong()
         } else {
-            return null;
+            null
         }
     }
 
@@ -550,75 +554,64 @@ public final class AddContentApi {
      * Get the name of the selected deck
      * @return deck name or null if there was a problem
      */
-    public String getSelectedDeckName() {
-        final Cursor selectedDeckCursor = mResolver.query(Deck.CONTENT_SELECTED_URI, null, null, null, null);
-        if (selectedDeckCursor == null) {
-            return null;
-        }
-        String name = null;
-        try {
-            if (selectedDeckCursor.moveToNext()) {
-                name=selectedDeckCursor.getString(selectedDeckCursor.getColumnIndex(Deck.DECK_NAME));
+    val selectedDeckName: String?
+        get() {
+            val selectedDeckCursor = mResolver.query(
+                FlashCardsContract.Deck.CONTENT_SELECTED_URI,
+                null,
+                null,
+                null,
+                null
+            )
+                ?: return null
+            var name: String? = null
+            try {
+                if (selectedDeckCursor.moveToNext()) {
+                    name = selectedDeckCursor.getString(
+                        selectedDeckCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME)
+                    )
+                }
+            } finally {
+                selectedDeckCursor.close()
             }
-        } finally {
-            selectedDeckCursor.close();
-        }
-        return name;
-    }
+            return name
+        } // Get the current model
 
     /**
      * Get a list of all the deck id / name pairs
      * @return Map of (id, name) pairs, or null if there was a problem
      */
-    public Map<Long, String> getDeckList() {
-        // Get the current model
-        final Cursor allDecksCursor = mResolver.query(Deck.CONTENT_ALL_URI, null, null, null, null);
-        if (allDecksCursor == null) {
-            return null;
-        }
-        Map<Long, String> decks = new HashMap<>();
-        try {
-            while (allDecksCursor.moveToNext()) {
-                long deckId = allDecksCursor.getLong(allDecksCursor.getColumnIndex(Deck.DECK_ID));
-                String name =allDecksCursor.getString(allDecksCursor.getColumnIndex(Deck.DECK_NAME));
-                decks.put(deckId, name);
+    val deckList: Map<Long, String>?
+        get() {
+            // Get the current model
+            val allDecksCursor =
+                mResolver.query(FlashCardsContract.Deck.CONTENT_ALL_URI, null, null, null, null)
+                    ?: return null
+            val decks: MutableMap<Long, String> = HashMap()
+            try {
+                while (allDecksCursor.moveToNext()) {
+                    val deckId =
+                        allDecksCursor.getLong(allDecksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID))
+                    val name =
+                        allDecksCursor.getString(allDecksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME))
+                    decks[deckId] = name
+                }
+            } finally {
+                allDecksCursor.close()
             }
-        } finally {
-            allDecksCursor.close();
+            return decks
         }
-        return decks;
-    }
-
 
     /**
      * Get the name of the deck which has given ID
      * @param did ID of deck
      * @return the name of the deck, or null if no deck was found
      */
-    public String getDeckName(long did) {
-        Map<Long, String> deckList = getDeckList();
-        return deckList.get(did);
-    }
-
-
-    /**
-     * Get the AnkiDroid package name that the API will communicate with.
-     * This can be used to check that a supported version of AnkiDroid is installed,
-     * or to get the application label and icon, etc.
-     * @param context a Context that can be used to get the PackageManager
-     * @return packageId of AnkiDroid if a supported version is not installed, otherwise null
-     */
-    public static String getAnkiDroidPackageName(Context context) {
-        PackageManager manager = context.getPackageManager();
-        ProviderInfo pi = manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0);
-        if (pi != null) {
-            return pi.packageName;
-        } else {
-            return null;
-        }
-    }
-
-
+    fun getDeckName(did: Long): String? {
+        val deckList = deckList
+        return deckList!![did]
+    } // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
+    // GET_META_DATA seems to work anyway
     /**
      * The API spec version of the installed AnkiDroid app. This is not the same as the AnkiDroid app version code.
      *
@@ -632,31 +625,37 @@ public final class AddContentApi {
      *
      * @return the spec version number or -1 if AnkiDroid is not installed.
      */
-    public int getApiHostSpecVersion() {
-        // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
-        // GET_META_DATA seems to work anyway
-        ProviderInfo info = mContext.getPackageManager().resolveContentProvider(FlashCardsContract.AUTHORITY, PackageManager.GET_META_DATA);
-        if (info == null) {
-            return -1;
+    val apiHostSpecVersion: Int
+        get() {
+            // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
+            // GET_META_DATA seems to work anyway
+            val info = mContext.packageManager.resolveContentProvider(
+                FlashCardsContract.AUTHORITY,
+                PackageManager.GET_META_DATA
+            )
+                ?: return -1
+            return if (info.metaData != null && info.metaData.containsKey(
+                    PROVIDER_SPEC_META_DATA_KEY
+                )
+            ) {
+                info.metaData.getInt(PROVIDER_SPEC_META_DATA_KEY)
+            } else {
+                DEFAULT_PROVIDER_SPEC_VALUE
+            }
         }
-        if (info.metaData != null && info.metaData.containsKey(PROVIDER_SPEC_META_DATA_KEY)) {
-            return info.metaData.getInt(PROVIDER_SPEC_META_DATA_KEY);
-        } else {
-            return DEFAULT_PROVIDER_SPEC_VALUE;
-        }
-    }
 
-    private boolean hasReadWritePermission() {
-        return mContext.checkPermission(READ_WRITE_PERMISSION, Process.myPid(), Process.myUid())
-                == PackageManager.PERMISSION_GRANTED;
+    private fun hasReadWritePermission(): Boolean {
+        return (
+            mContext.checkPermission(READ_WRITE_PERMISSION, Process.myPid(), Process.myUid())
+                == PackageManager.PERMISSION_GRANTED
+            )
     }
 
     /**
      * Best not to store this in case the user updates AnkiDroid app while client app is staying alive
      */
-    private Compat getCompat() {
-        return getApiHostSpecVersion() < 2 ? new CompatV1() : new CompatV2();
-    }
+    private val compat: Compat
+        get() = if (apiHostSpecVersion < 2) CompatV1() else CompatV2()
 
     private interface Compat {
         /**
@@ -664,7 +663,7 @@ public final class AddContentApi {
          * @param modelId the model ID to limit query to
          * @return a cursor with all notes matching modelId
          */
-        Cursor queryNotes(long modelId);
+        fun queryNotes(modelId: Long): Cursor?
 
         /**
          * Add new notes to the AnkiDroid content provider in bulk.
@@ -672,7 +671,7 @@ public final class AddContentApi {
          * @param valuesArr the content values ready for bulk insertion into the content provider
          * @return the number of successful entries
          */
-        int insertNotes(long deckId, ContentValues[] valuesArr);
+        fun insertNotes(deckId: Long, valuesArr: Array<ContentValues>): Int
 
         /**
          * For each key, look for an existing note that has matching first field
@@ -680,128 +679,161 @@ public final class AddContentApi {
          * @param keys  list of keys for each note
          * @return array with a list of NoteInfo objects for each key if duplicates exist
          */
-        SparseArray<List<NoteInfo>> findDuplicateNotes(long modelId, List<String> keys);
+        fun findDuplicateNotes(
+            modelId: Long,
+            keys: List<String?>
+        ): SparseArray<MutableList<NoteInfo?>>?
     }
 
-    private class CompatV1 implements Compat {
-        @Override
-        public Cursor queryNotes(long modelId) {
-            String modelName = getModelName(modelId);
-            if (modelName == null) {
-                return null;
-            }
-            String queryFormat = String.format("note:\"%s\"", modelName);
-            return mResolver.query(Note.CONTENT_URI, PROJECTION, queryFormat, null, null);
+    private open inner class CompatV1 : Compat {
+        override fun queryNotes(modelId: Long): Cursor? {
+            val modelName = getModelName(modelId) ?: return null
+            val queryFormat = String.format("note:\"%s\"", modelName)
+            return mResolver.query(
+                FlashCardsContract.Note.CONTENT_URI,
+                PROJECTION,
+                queryFormat,
+                null,
+                null
+            )
         }
 
-        @Override
-        public int insertNotes(long deckId, ContentValues[] valuesArr) {
-            int result = 0;
-            for (ContentValues values : valuesArr) {
-                Uri noteUri = addNoteForContentValues(deckId, values);
+        override fun insertNotes(deckId: Long, valuesArr: Array<ContentValues>): Int {
+            var result = 0
+            for (values in valuesArr) {
+                val noteUri = addNoteForContentValues(deckId, values)
                 if (noteUri != null) {
-                    result++;
+                    result++
                 }
             }
-            return result;
+            return result
         }
 
-        @Override
-        public SparseArray<List<NoteInfo>> findDuplicateNotes(long modelId, List<String> keys) {
+        override fun findDuplicateNotes(
+            modelId: Long,
+            keys: List<String?>
+        ): SparseArray<MutableList<NoteInfo?>>? {
             // Content provider spec v1 does not support direct querying of the notes table, so use Anki browser syntax
-            String modelName = getModelName(modelId);
-            String[] modelFieldList = getFieldList(modelId);
+            val modelName = getModelName(modelId)
+            val modelFieldList = getFieldList(modelId)
             if (modelName == null || modelFieldList == null) {
-                return null;
+                return null
             }
-            SparseArray<List<NoteInfo>> duplicates = new SparseArray<>();
+            val duplicates = SparseArray<MutableList<NoteInfo?>>()
             // Loop through each item in fieldsArray looking for an existing note, and add it to the duplicates array
-            String queryFormat = String.format("%s:\"%%s\" note:\"%s\"", modelFieldList[0], modelName);
-            for (int outputPos = 0; outputPos < keys.size(); outputPos++) {
-                String selection = String.format(queryFormat, keys.get(outputPos));
-                Cursor cursor = mResolver.query(Note.CONTENT_URI, PROJECTION, selection, null, null);
-                if (cursor == null) {
-                    continue;
-                }
+            val queryFormat = String.format("%s:\"%%s\" note:\"%s\"", modelFieldList[0], modelName)
+            for (outputPos in keys.indices) {
+                val selection = String.format(queryFormat, keys[outputPos])
+                val cursor = mResolver.query(
+                    FlashCardsContract.Note.CONTENT_URI,
+                    PROJECTION,
+                    selection,
+                    null,
+                    null
+                )
+                    ?: continue
                 try {
                     while (cursor.moveToNext()) {
-                        addNoteToDuplicatesArray(NoteInfo.buildFromCursor(cursor), duplicates, outputPos);
+                        addNoteToDuplicatesArray(buildFromCursor(cursor), duplicates, outputPos)
                     }
                 } finally {
-                    cursor.close();
+                    cursor.close()
                 }
             }
-            return duplicates;
+            return duplicates
         }
 
-        /** Add a NoteInfo object to the given duplicates SparseArray at the specified position */
-        protected void addNoteToDuplicatesArray(NoteInfo note, SparseArray<List<NoteInfo>> duplicates, int position) {
-            int sparseArrayIndex = duplicates.indexOfKey(position);
+        /** Add a NoteInfo object to the given duplicates SparseArray at the specified position  */
+        protected fun addNoteToDuplicatesArray(
+            note: NoteInfo?,
+            duplicates: SparseArray<MutableList<NoteInfo?>>,
+            position: Int
+        ) {
+            val sparseArrayIndex = duplicates.indexOfKey(position)
             if (sparseArrayIndex < 0) {
                 // No existing NoteInfo objects mapping to same key as the current note so add a new List
-                List<NoteInfo> duplicatesForKey = new ArrayList<>();
-                duplicatesForKey.add(note);
-                duplicates.put(position, duplicatesForKey);
+                val duplicatesForKey: MutableList<NoteInfo?> = ArrayList()
+                duplicatesForKey.add(note)
+                duplicates.put(position, duplicatesForKey)
             } else { // Append note to existing list of duplicates for key
-                duplicates.valueAt(sparseArrayIndex).add(note);
+                duplicates.valueAt(sparseArrayIndex).add(note)
             }
         }
     }
 
-    private class CompatV2 extends CompatV1 {
-        @Override
-        public Cursor queryNotes(long modelId) {
-            return mResolver.query(Note.CONTENT_URI_V2, PROJECTION,
-                    String.format(Locale.US, "%s=%d", Note.MID, modelId), null, null);
+    private inner class CompatV2 : CompatV1() {
+        override fun queryNotes(modelId: Long): Cursor? {
+            return mResolver.query(
+                FlashCardsContract.Note.CONTENT_URI_V2, PROJECTION,
+                String.format(
+                    Locale.US, "%s=%d", FlashCardsContract.Note.MID, modelId
+                ),
+                null, null
+            )
         }
 
-        @Override
-        public int insertNotes(long deckId, ContentValues[] valuesArr) {
-            Uri.Builder builder = Note.CONTENT_URI.buildUpon();
-            builder.appendQueryParameter(Note.DECK_ID_QUERY_PARAM, String.valueOf(deckId));
-            return mResolver.bulkInsert(builder.build(), valuesArr);
+        override fun insertNotes(deckId: Long, valuesArr: Array<ContentValues>): Int {
+            val builder = FlashCardsContract.Note.CONTENT_URI.buildUpon()
+            builder.appendQueryParameter(
+                FlashCardsContract.Note.DECK_ID_QUERY_PARAM,
+                deckId.toString()
+            )
+            return mResolver.bulkInsert(builder.build(), valuesArr)
         }
 
-        @Override
-        public SparseArray<List<NoteInfo>> findDuplicateNotes(long modelId, List<String> keys) {
+        override fun findDuplicateNotes(
+            modelId: Long,
+            keys: List<String?>
+        ): SparseArray<MutableList<NoteInfo?>>? {
             // Build set of checksums and a HashMap from the key (first field) back to the original index in fieldsArray
-            Set<Long> csums = new HashSet<>(keys.size());
-            Map<String, List<Integer>> keyToIndexesMap = new HashMap<>(keys.size());
-            for (int i = 0; i < keys.size(); i++) {
-                String key = keys.get(i);
-                csums.add(Utils.fieldChecksum(key));
-                if (!keyToIndexesMap.containsKey(key)) {    // Use a list as some keys could potentially be duplicated
-                    keyToIndexesMap.put(key, new ArrayList<>());
+            val csums: MutableSet<Long?> = HashSet(keys.size)
+            val keyToIndexesMap: MutableMap<String?, MutableList<Int>> = HashMap(keys.size)
+            for (i in keys.indices) {
+                val key = keys[i]
+                csums.add(Utils.fieldChecksum(key))
+                if (!keyToIndexesMap.containsKey(key)) { // Use a list as some keys could potentially be duplicated
+                    keyToIndexesMap[key] = ArrayList()
                 }
-                keyToIndexesMap.get(key).add(i);
+                keyToIndexesMap[key]!!.add(i)
             }
             // Query for notes that have specified model and checksum of first field matches
-            String sel = String.format(Locale.US, "%s=%d and %s in (%s)", Note.MID, modelId, Note.CSUM,
-                    TextUtils.join(",", csums));
-            Cursor notesTableCursor = mResolver.query(Note.CONTENT_URI_V2, PROJECTION, sel, null, null);
-            if (notesTableCursor == null) {
-                return null;
-            }
+            val sel = String.format(
+                Locale.US,
+                "%s=%d and %s in (%s)",
+                FlashCardsContract.Note.MID,
+                modelId,
+                FlashCardsContract.Note.CSUM,
+                TextUtils.join(",", csums)
+            )
+            val notesTableCursor = mResolver.query(
+                FlashCardsContract.Note.CONTENT_URI_V2,
+                PROJECTION,
+                sel,
+                null,
+                null
+            )
+                ?: return null
             // Loop through each note in the cursor, building the result array of duplicates
-            SparseArray<List<NoteInfo>> duplicates = new SparseArray<>();
+            val duplicates = SparseArray<MutableList<NoteInfo?>>()
             try {
                 while (notesTableCursor.moveToNext()) {
-                    NoteInfo note = NoteInfo.buildFromCursor(notesTableCursor);
-                    if (note == null) {
-                        continue;
-                    }
+                    val note = buildFromCursor(notesTableCursor) ?: continue
                     if (keyToIndexesMap.containsKey(note.getKey())) { // skip notes that match csum but not key
                         // Add copy of note to EVERY position in duplicates array corresponding to the current key
-                        List<Integer> outputPos = keyToIndexesMap.get(note.getKey());
-                        for (int i = 0; i < outputPos.size(); i++) {
-                            addNoteToDuplicatesArray(i > 0 ? new NoteInfo(note) : note, duplicates, outputPos.get(i));
+                        val outputPos: List<Int> = keyToIndexesMap[note.getKey()]!!
+                        for (i in outputPos.indices) {
+                            addNoteToDuplicatesArray(
+                                if (i > 0) NoteInfo(note) else note,
+                                duplicates,
+                                outputPos[i]
+                            )
                         }
                     }
                 }
             } finally {
-                notesTableCursor.close();
+                notesTableCursor.close()
             }
-            return duplicates;
+            return duplicates
         }
     }
 }
