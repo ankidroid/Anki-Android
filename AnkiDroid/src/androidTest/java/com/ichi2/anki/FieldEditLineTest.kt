@@ -13,63 +13,63 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.util.concurrent.atomic.AtomicReference
 
-import android.os.Parcelable;
+@KotlinCleanup("is -> equalTo")
+@KotlinCleanup("use scope function")
+@RunWith(AndroidJUnit4::class)
+class FieldEditLineTest : NoteEditorTest() {
+    @Test
+    fun testSetters() {
+        val line = fieldEditLine
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.concurrent.atomic.AtomicReference;
-
-import androidx.annotation.NonNull;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(AndroidJUnit4.class)
-public class FieldEditLineTest extends NoteEditorTest {
+        line.setContent("Hello", true)
+        line.name = "Name"
+        line.setOrd(5)
+        val text = line.editText
+        assertThat(text!!.ord, `is`(5))
+        assertThat(text.text.toString(), `is`("Hello"))
+        assertThat(line.name, `is`("Name"))
+    }
 
     @Test
-    public void testSetters() {
-        FieldEditLine line = getFieldEditLine();
+    fun testSaveRestore() {
+        val toSave = fieldEditLine
 
-        line.setContent("Hello", true);
-        line.setName("Name");
-        line.setOrd(5);
-        FieldEditText text = line.getEditText();
-        assertThat(text.getOrd(), is(5));
-        assertThat(text.getText().toString(), is("Hello"));
-        assertThat(line.getName(), is("Name"));
+        toSave.setContent("Hello", true)
+        toSave.name = "Name"
+        toSave.setOrd(5)
+
+        val b = toSave.onSaveInstanceState()
+
+        val restored = fieldEditLine
+        restored.onRestoreInstanceState(b!!)
+
+        val text = restored.editText
+        assertThat(text!!.ord, `is`(5))
+        assertThat(text.text.toString(), `is`("Hello"))
+        assertThat(toSave.name, `is`("Name"))
     }
 
-
-    @Test
-    public void testSaveRestore() {
-        FieldEditLine toSave = getFieldEditLine();
-
-        toSave.setContent("Hello", true);
-        toSave.setName("Name");
-        toSave.setOrd(5);
-
-        Parcelable b = toSave.onSaveInstanceState();
-
-        FieldEditLine restored = getFieldEditLine();
-        restored.onRestoreInstanceState(b);
-
-        FieldEditText text = restored.getEditText();
-        assertThat(text.getOrd(), is(5));
-        assertThat(text.getText().toString(), is("Hello"));
-        assertThat(toSave.getName(), is("Name"));
-    }
-
-
-    @NonNull
-    protected FieldEditLine getFieldEditLine() {
-        AtomicReference<FieldEditLine> l = new AtomicReference<>();
-        mActivityRule.getScenario().onActivity(a -> l.set(new FieldEditLine(a)));
-        return l.get();
-    }
+    @KotlinCleanup("move this back to a method")
+    protected val fieldEditLine: FieldEditLine
+        get() {
+            val l = AtomicReference<FieldEditLine>()
+            mActivityRule.scenario.onActivity { a: NoteEditor? ->
+                l.set(
+                    FieldEditLine(
+                        a!!
+                    )
+                )
+            }
+            return l.get()
+        }
 }
