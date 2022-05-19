@@ -197,6 +197,20 @@ public class MediaTest extends InstrumentedTest {
         assertEquals(expected.size(), actual.size());
     }
 
+    @Test
+    public void testAudioTags() {
+        assertEquals("aoeu", mTestCol.getMedia().strip("a<audio src=yo>oeu"));
+        assertEquals("aoeu", mTestCol.getMedia().strip("a<audio src='yo'>oeu"));
+        assertEquals("aoeu", mTestCol.getMedia().strip("a<audio src=\"yo\">oeu"));
+    }
+
+    @Test
+    public void testObjectTags() {
+        assertEquals("aoeu", mTestCol.getMedia().strip("a<object data=yo>oeu"));
+        assertEquals("aoeu", mTestCol.getMedia().strip("a<object data='yo'>oeu"));
+        assertEquals("aoeu", mTestCol.getMedia().strip("a<object data=\"yo\">oeu"));
+    }
+
     private List<String> added(Collection d) {
         return d.getMedia().getDb().queryStringList("select fname from media where csum is not null");
     }
