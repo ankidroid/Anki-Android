@@ -27,6 +27,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 @Config(application = EmptyApplication.class)
@@ -63,5 +64,18 @@ public class DiffEngineTest extends RobolectricTest {
         String output = DiffEngine.wrapMissing(input);
 
         assertThat("There were problems displaying 'ὐ' when output as &#8016;", output, containsString(input));
+    }
+
+    @Test
+    public void combiningMarksGetSeparatedTest() {
+        DiffEngine diffEngine = new DiffEngine();
+
+        String[] diffedHtmlStrings = diffEngine.diffedHtmlStrings("အခ်ျန်", "အချိန်");
+
+        String expectedTyped = "<span class=\"typeGood\">အခ</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeBad\">&nbsp;ိ</span><span class=\"typeGood\">န်</span>";
+        String expectedCorrect = "<span class=\"typeGood\">အခ</span><span class=\"typeMissed\">&nbsp;်</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeGood\">န်</span>";
+
+        assertEquals(expectedTyped, diffedHtmlStrings[0]);
+        assertEquals(expectedCorrect, diffedHtmlStrings[1]);
     }
 }
