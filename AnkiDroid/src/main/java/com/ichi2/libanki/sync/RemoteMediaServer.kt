@@ -28,7 +28,6 @@ import com.ichi2.libanki.Utils
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import okhttp3.Response
 import timber.log.Timber
@@ -38,12 +37,11 @@ import java.io.IOException
 import java.util.*
 import java.util.zip.ZipFile
 
-@KotlinCleanup("fix IDE lint issues")
 class RemoteMediaServer(
     private val col: Collection?,
     hkey: String?,
     con: Connection?,
-    hostNum: HostNum?
+    hostNum: HostNum
 ) : HttpSyncer(hkey, con, hostNum) {
 
     override fun syncURL(): String {
@@ -67,7 +65,7 @@ class RemoteMediaServer(
             mPostVars["v"] = String.format(Locale.US, "ankidroid,%s,%s", pkgVersionName, Utils.platDesc())
             val resp = super.req("begin", getInputStream(Utils.jsonToString(JSONObject())))
             val jresp = JSONObject(resp.body!!.string())
-            val ret = _dataOnly(jresp, JSONObject::class.java)
+            val ret = dataOnly(jresp, JSONObject::class.java)
             mSKey = ret.getString("sk")
             ret
         } catch (e: IOException) {
@@ -86,7 +84,7 @@ class RemoteMediaServer(
                 getInputStream(Utils.jsonToString(JSONObject().put("lastUsn", lastUsn)))
             )
             val jresp = JSONObject(resp.body!!.string())
-            _dataOnly(jresp, JSONArray::class.java)
+            dataOnly(jresp, JSONArray::class.java)
         } catch (e: IOException) {
             throw RuntimeException(e)
         }
@@ -116,10 +114,7 @@ class RemoteMediaServer(
             Timber.e(e, "Failed to download requested media files")
             throw RuntimeException(e)
         } finally {
-            @KotlinCleanup("resp?.body?.close()")
-            if (resp != null && resp.body != null) {
-                resp.body!!.close()
-            }
+            resp?.body?.close()
         }
     }
 
@@ -129,7 +124,7 @@ class RemoteMediaServer(
             // no compression, as we compress the zip file instead
             val resp = super.req("uploadChanges", FileInputStream(zip), 0)
             val jresp = JSONObject(resp.body!!.string())
-            _dataOnly(jresp, JSONArray::class.java)
+            dataOnly(jresp, JSONArray::class.java)
         } catch (e: IOException) {
             throw RuntimeException(e)
         } catch (e: NullPointerException) {
@@ -146,7 +141,7 @@ class RemoteMediaServer(
                 getInputStream(Utils.jsonToString(JSONObject().put("local", lcnt)))
             )
             val jresp = JSONObject(resp.body!!.string())
-            _dataOnly(jresp, String::class.java)
+            dataOnly(jresp, String::class.java)
         } catch (e: IOException) {
             throw RuntimeException(e)
         } catch (e: NullPointerException) {
@@ -171,19 +166,17 @@ class RemoteMediaServer(
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(MediaSyncException::class)
-    private fun <T> _dataOnly(resp: JSONObject, returnType: Class<T>): T {
+    // NOTE: the original name of the method was _dataOnly which followed upstream naming
+    private fun <T> dataOnly(resp: JSONObject, returnType: Class<T>): T {
         if (!TextUtils.isEmpty(resp.optString("err"))) {
             val err = resp.getString("err")
             col?.log("error returned: $err")
             throw MediaSyncException("SyncError:$err")
         }
-        @KotlinCleanup("replace if with when")
-        if (returnType == String::class.java) {
-            return resp.getString("data") as T
-        } else if (returnType == JSONObject::class.java) {
-            return resp.getJSONObject("data") as T
-        } else if (returnType == JSONArray::class.java) {
-            return resp.getJSONArray("data") as T
+        when (returnType) {
+            String::class.java -> return resp.getString("data") as T
+            JSONObject::class.java -> return resp.getJSONObject("data") as T
+            JSONArray::class.java -> return resp.getJSONArray("data") as T
         }
         throw RuntimeException("Did not specify a valid type for the 'data' element in response")
     }
