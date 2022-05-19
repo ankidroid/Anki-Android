@@ -13,50 +13,47 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.reviewer
 
-package com.ichi2.anki.reviewer;
-
-import android.view.KeyEvent;
-
-import com.ichi2.anki.cardviewer.Gesture;
-import com.ichi2.anki.cardviewer.ViewerCommand;
-import com.ichi2.anki.testutil.MockReviewerUi;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(AndroidJUnit4.class)
-public class PeripheralKeymapTest {
-
+import android.view.KeyEvent
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.testutil.MockReviewerUi
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.`is`
+import org.junit.Test
+import org.junit.runner.RunWith
+@KotlinCleanup("is -> equalTo")
+@RunWith(AndroidJUnit4::class)
+class PeripheralKeymapTest {
     @Test
-    public void testNumpadAction() {
+    fun testNumpadAction() {
         // #7736 Ensures that a numpad key is passed through (mostly testing num lock)
-        List<ViewerCommand> processed = new ArrayList<>();
+        val processed: MutableList<ViewerCommand> = ArrayList()
 
-        PeripheralKeymap peripheralKeymap = new PeripheralKeymap(MockReviewerUi.displayingAnswer(), (ViewerCommand e, Gesture i) -> processed.add(e) );
-        peripheralKeymap.setup();
+        val peripheralKeymap =
+            PeripheralKeymap(MockReviewerUi.displayingAnswer()) { e: ViewerCommand, _: Gesture? -> processed.add(e) }
+        peripheralKeymap.setup()
 
-        peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_NUMPAD_1, getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1));
-        peripheralKeymap.onKeyUp(KeyEvent.KEYCODE_NUMPAD_1, getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1));
-
-
-        assertThat(processed, hasSize(1));
-        assertThat(processed.get(0), is(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1));
+        peripheralKeymap.onKeyDown(
+            KeyEvent.KEYCODE_NUMPAD_1,
+            getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1)
+        )
+        peripheralKeymap.onKeyUp(
+            KeyEvent.KEYCODE_NUMPAD_1,
+            getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1)
+        )
+        assertThat<List<ViewerCommand>>(processed, hasSize(1))
+        assertThat(
+            processed[0],
+            `is`(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1)
+        )
     }
 
-
-    @NonNull
-    protected KeyEvent getNumpadEvent(@SuppressWarnings("SameParameterValue") int keycode) {
-        return new KeyEvent(0, 0, KeyEvent.ACTION_UP, keycode, 0, KeyEvent.META_NUM_LOCK_ON);
+    protected fun getNumpadEvent(keycode: Int): KeyEvent {
+        return KeyEvent(0, 0, KeyEvent.ACTION_UP, keycode, 0, KeyEvent.META_NUM_LOCK_ON)
     }
 }
