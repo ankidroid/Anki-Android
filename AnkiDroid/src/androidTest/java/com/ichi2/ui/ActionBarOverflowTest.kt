@@ -13,75 +13,84 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.ui;
+package com.ichi2.ui
 
-import android.content.Context;
-import android.view.MenuItem;
+import android.content.Context
+import android.view.MenuItem
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.notNullValue
+import org.junit.Assert.fail
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.lang.reflect.InvocationTargetException
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.test.platform.app.InstrumentationRegistry;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.fail;
-
-@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class ActionBarOverflowTest {
-
+@KotlinCleanup("is -> equalTo")
+@RunWith(AndroidJUnit4::class)
+class ActionBarOverflowTest {
     @Test
-    public void hasValidActionBarReflectionMethod() {
-        assertThat("Ensures that there is a valid way to obtain a listener",
-                ActionBarOverflow.hasUsableMethod(), is(true));
+    fun hasValidActionBarReflectionMethod() {
+        assertThat(
+            "Ensures that there is a valid way to obtain a listener",
+            ActionBarOverflow.hasUsableMethod(), `is`(true)
+        )
     }
 
     @Test
-    public void errorsAreBeingThrownCanary() {
+    fun errorsAreBeingThrownCanary() {
         try {
-            ActionBarOverflow.setupMethods(ActionBarOverflow::getPrivateMethodOnlyHandleExceptions);
-        } catch (Error e) {
-            fail("See discussion on #5806\n" +
-                    "https://developer.android.com/distribute/best-practices/develop/restrictions-non-sdk-interfaces\n" +
-                    "Once this throws, errors are being thrown on a currently greylisted method");
+            ActionBarOverflow.setupMethods(ActionBarOverflow::getPrivateMethodOnlyHandleExceptions)
+        } catch (e: Error) {
+            fail(
+                """
+    See discussion on #5806
+    https://developer.android.com/distribute/best-practices/develop/restrictions-non-sdk-interfaces
+    Once this throws, errors are being thrown on a currently greylisted method
+                """.trimIndent()
+            )
         }
     }
 
     @Test
-    public void testAndroidXMenuItem() {
-        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        MenuBuilder b = new MenuBuilder(targetContext);
-        MenuItem i = b.add("Test");
+    fun testAndroidXMenuItem() {
+        val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val b = MenuBuilder(targetContext)
+        val i = b.add("Test")
 
-        Boolean value = ActionBarOverflow.isActionButton(i);
+        val value = ActionBarOverflow.isActionButton(i)
 
-        assertThat(value, notNullValue());
+        assertThat(value, notNullValue())
     }
 
     @Test
-    public void testAndroidMenuItem() throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        Context targetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    @Throws(
+        ClassNotFoundException::class,
+        InstantiationException::class,
+        IllegalAccessException::class,
+        NoSuchMethodException::class,
+        InvocationTargetException::class
+    )
+    fun testAndroidMenuItem() {
+        val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
 
-        String clazz = "com.android.internal.view.menu.MenuBuilder";
-        Class<?> c = Class.forName(clazz);
+        val clazz = "com.android.internal.view.menu.MenuBuilder"
+        val c = Class.forName(clazz)
 
-        Constructor<?> constructor = c.getConstructor(Context.class);
+        val constructor = c.getConstructor(Context::class.java)
 
-        Object mmb = constructor.newInstance(targetContext);
+        val mmb = constructor.newInstance(targetContext)
 
-        Method add = mmb.getClass().getMethod("add", CharSequence.class);
-        add.setAccessible(true);
+        val add = mmb.javaClass.getMethod("add", CharSequence::class.java)
+        add.isAccessible = true
 
-        MenuItem mi = (MenuItem) add.invoke(mmb, "Add");
+        val mi = add.invoke(mmb, "Add") as MenuItem
 
-        Boolean value = ActionBarOverflow.isActionButton(mi);
+        val value = ActionBarOverflow.isActionButton(mi)
 
-        assertThat(value, notNullValue());
+        assertThat(value, notNullValue())
     }
 }
