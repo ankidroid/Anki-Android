@@ -45,10 +45,11 @@ object BeolingusParser {
         while (m.find()) {
             // Perform .contains() due to #5376 (a "%20{noun}" suffix).
             // Perform .toLowerCase() due to #5810 ("hello" should match "Hello").
+            // Perform .trim() due to #11365 (" Hello " should match "Hello")
             // See #5810 for discussion on Locale complexities. Currently unhandled.
             @Suppress("DEPRECATION")
             @KotlinCleanup("improve null handling of m.group() possibly returning null")
-            if (m.group(2)!!.toLowerCase(Locale.ROOT).contains(wordToSearchFor!!.toLowerCase(Locale.ROOT))) {
+            if (m.group(2)!!.toLowerCase(Locale.ROOT).contains(wordToSearchFor!!.toLowerCase(Locale.ROOT).trim())) {
                 Timber.d("pronunciation URL is https://dict.tu-chemnitz.de%s", m.group(1))
                 return "https://dict.tu-chemnitz.de" + m.group(1)
             }

@@ -71,4 +71,18 @@ class BeolingusParserTest {
         val mp3 = BeolingusParser.getMp3AddressFromPronunciation(html)
         assertEquals("https://dict.tu-chemnitz.de/speak-de/0/7/52qA5FttGIU.mp3", mp3)
     }
+
+    @Test
+    fun `Test to check trimming of extra spaces`() {
+        // #11365 - confirm " Hello " matches "Hello"
+        @Language("HTML")
+        val html = "" +
+            "<a href=\"/dings.cgi?speak=en/2/0/zQbP7qZh_u2;text=Hello\" " +
+            "onclick=\"return s(this)\" onmouseover=\"return u('Hello')\">" +
+            "<img src=\"/pics/s1.png\" width=\"16\" height=\"16\" " +
+            "alt=\"[listen]\" title=\"Hello\" border=\"0\" align=\"top\" /></a>"
+
+        val pronunciationUrl = BeolingusParser.getPronunciationAddressFromTranslation(html, " Hello ")
+        assertEquals("https://dict.tu-chemnitz.de/dings.cgi?speak=en/2/0/zQbP7qZh_u2;text=Hello", pronunciationUrl)
+    }
 }
