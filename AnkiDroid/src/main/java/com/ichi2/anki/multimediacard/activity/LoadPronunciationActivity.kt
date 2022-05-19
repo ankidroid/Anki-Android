@@ -19,13 +19,13 @@
 
 package com.ichi2.anki.multimediacard.activity
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.*
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser
@@ -48,9 +48,8 @@ import java.util.*
  * User picks a source language and the source is passed as extra.
  * <p>
  * When activity finished, it passes the filepath as another extra to the caller.
- * FIXME why isn't this extending AnkiActivity?
  */
-open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListener {
+open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelListener {
     private var mStopped = false
     private lateinit var source: String
     private lateinit var mTranslationAddress: String
@@ -123,7 +122,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         mLoadingLayoutMessage.text = message
     }
 
-    private fun hideProgressBar() {
+    override fun hideProgressBar() {
         mLoadingLayout.visibility = View.GONE
         mMainLayout.visibility = View.VISIBLE
     }
@@ -288,13 +287,13 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         val resultData = Intent()
         resultData.putExtra(EXTRA_PRONUNCIATION_FILE_PATH, result)
         setResult(RESULT_OK, resultData)
-        finish()
+        finishWithoutAnimation()
     }
 
     private fun finishCancel() {
         val resultData = Intent()
         setResult(RESULT_CANCELED, resultData)
-        finish()
+        finishWithoutAnimation()
     }
 
     private fun failNoPronunciation() {
@@ -343,7 +342,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         stopAllTasks()
         val resultData = Intent()
         setResult(RESULT_CANCELED, resultData)
-        finish()
+        finishWithoutAnimation()
     }
 
     @Suppress("deprecation") // #7108: AsyncTask
