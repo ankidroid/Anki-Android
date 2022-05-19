@@ -13,90 +13,88 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.app.Activity
+import android.view.KeyEvent
+import android.view.inputmethod.BaseInputConnection
+import androidx.lifecycle.Lifecycle
+import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ActivityScenario.ActivityAction
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Ignore
+import org.junit.Test
+import org.junit.runner.RunWith
+import java.util.concurrent.atomic.AtomicReference
 
-import android.app.Activity;
-import android.view.KeyEvent;
-import android.view.inputmethod.BaseInputConnection;
-
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-
-import androidx.lifecycle.Lifecycle;
-import androidx.test.core.app.ActivityScenario;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class NoteEditorTabOrderTest extends NoteEditorTest {
-    @Override
-    protected List<Integer> getInvalidSdks() {
+@KotlinCleanup("is -> equalTo")
+@KotlinCleanup("Use ?.let{throw it}")
+@RunWith(AndroidJUnit4::class)
+class NoteEditorTabOrderTest : NoteEditorTest() {
+    override fun getInvalidSdks(): List<Int> {
         /*
         java.lang.AssertionError:
         Expected: is "a"
          */
-        return Collections.singletonList(30);
+        return listOf(30)
     }
-
 
     @Test
-    @Ignore("flaky on API 21 as well: " +
-            "com.ichi2.anki.NoteEditorTabOrderTest > testTabOrder[test(AVD) - 5.1.1] FAILED \n" +
-            "\n" +
-            "\tjava.lang.AssertionError:\n" +
-            "\n" +
-            "\tExpected: is \"a\"")
-    public void testTabOrder() throws Throwable {
-        ensureCollectionLoaded();
-        ActivityScenario<NoteEditor> scenario = mActivityRule.getScenario();
-        scenario.moveToState(Lifecycle.State.RESUMED);
+    @Ignore(
+        """flaky on API 21 as well: com.ichi2.anki.NoteEditorTabOrderTest > testTabOrder[test(AVD) - 5.1.1] FAILED 
 
-        onActivity(scenario, editor -> {
-            sendKeyDownUp(editor, KeyEvent.KEYCODE_A);
-            sendKeyDownUp(editor, KeyEvent.KEYCODE_TAB);
-            sendKeyDownUp(editor, KeyEvent.KEYCODE_TAB);
-            sendKeyDownUp(editor, KeyEvent.KEYCODE_B);
-        });
+	java.lang.AssertionError:
 
-        onActivity(scenario, editor -> {
-            String[] currentFieldStrings = editor.getCurrentFieldStrings();
-            assertThat(currentFieldStrings[0], is("a"));
-            assertThat(currentFieldStrings[1], is("b"));
-        });
+	Expected: is "a""""
+    )
+    @Throws(Throwable::class)
+    fun testTabOrder() {
+        ensureCollectionLoaded()
+        val scenario = mActivityRule.scenario
+        scenario.moveToState(Lifecycle.State.RESUMED)
 
-    }
+        onActivity(scenario) { editor: NoteEditor ->
+            sendKeyDownUp(editor, KeyEvent.KEYCODE_A)
+            sendKeyDownUp(editor, KeyEvent.KEYCODE_TAB)
+            sendKeyDownUp(editor, KeyEvent.KEYCODE_TAB)
+            sendKeyDownUp(editor, KeyEvent.KEYCODE_B)
+        }
 
-
-    protected void sendKeyDownUp(Activity activity, int keyCode) {
-        BaseInputConnection inputConnection = new BaseInputConnection(activity.getCurrentFocus(), true);
-        inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode));
-        inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
-    }
-
-
-    protected void onActivity(ActivityScenario<NoteEditor> scenario, ActivityScenario.ActivityAction<NoteEditor> noteEditorActivityAction) throws Throwable {
-        AtomicReference<Throwable> wrapped = new AtomicReference<>(null);
-        scenario.onActivity(a -> {
-            try {
-                noteEditorActivityAction.perform(a);
-            } catch (Throwable t) {
-                wrapped.set(t);
-            }
-        });
-        if (wrapped.get() != null) {
-            throw wrapped.get();
+        onActivity(scenario) { editor: NoteEditor ->
+            val currentFieldStrings = editor.currentFieldStrings
+            assertThat(currentFieldStrings[0], `is`("a"))
+            assertThat(currentFieldStrings[1], `is`("b"))
         }
     }
 
+    protected fun sendKeyDownUp(activity: Activity, keyCode: Int) {
+        val inputConnection = BaseInputConnection(activity.currentFocus, true)
+        inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
+        inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, keyCode))
+    }
 
-    private void ensureCollectionLoaded() {
-        CollectionHelper.getInstance().getCol(getTargetContext());
+    @Throws(Throwable::class)
+    protected fun onActivity(
+        scenario: ActivityScenario<NoteEditor>,
+        noteEditorActivityAction: ActivityAction<NoteEditor>
+    ) {
+        val wrapped = AtomicReference<Throwable?>(null)
+        scenario.onActivity { a: NoteEditor ->
+            try {
+                noteEditorActivityAction.perform(a)
+            } catch (t: Throwable) {
+                wrapped.set(t)
+            }
+        }
+        if (wrapped.get() != null) {
+            throw wrapped.get()!!
+        }
+    }
+
+    private fun ensureCollectionLoaded() {
+        CollectionHelper.getInstance().getCol(targetContext)
     }
 }
