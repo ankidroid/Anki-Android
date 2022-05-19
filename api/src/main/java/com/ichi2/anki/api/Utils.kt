@@ -14,95 +14,95 @@
  * You should have received a copy of the GNU Lesser General Public License along with  *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.api
 
-package com.ichi2.anki.api;
-
-import android.text.Html;
-import android.text.TextUtils;
-
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import android.text.Html
+import android.text.TextUtils
+import java.lang.Exception
+import java.lang.IllegalStateException
+import java.math.BigInteger
+import java.security.MessageDigest
+import java.util.regex.Pattern
 
 /**
  * Utilities class for the API
  */
-class Utils {
+internal object Utils {
     // Regex pattern used in removing tags from text before checksum
-    private static final Pattern stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>");
-    private static final Pattern scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>");
-    private static final Pattern tagPattern = Pattern.compile("<.*?>");
-    private static final Pattern imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>");
-    private static final Pattern htmlEntitiesPattern = Pattern.compile("&#?\\w+;");
-    private static final String FIELD_SEPARATOR = Character.toString('\u001f');
+    private val stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>")
+    private val scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>")
+    private val tagPattern = Pattern.compile("<.*?>")
+    private val imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>")
+    private val htmlEntitiesPattern = Pattern.compile("&#?\\w+;")
+    private val FIELD_SEPARATOR = Character.toString('\u001f')
 
-
-    static String joinFields(String[] list) {
-        return list != null ? TextUtils.join("\u001f", list): null;
+    @JvmStatic
+    fun joinFields(list: Array<String?>?): String? {
+        return if (list != null) TextUtils.join("\u001f", list) else null
     }
 
-
-    static String[] splitFields(String fields) {
-        return fields != null? fields.split(FIELD_SEPARATOR, -1): null;
+    @JvmStatic
+    fun splitFields(fields: String): Array<String> {
+        return fields.split(FIELD_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }
+            .toTypedArray()
     }
 
-    static String joinTags(Set<String> tags) {
+    @JvmStatic
+    fun joinTags(tags: Set<String?>?): String {
         if (tags == null || tags.isEmpty()) {
-            return "";
+            return ""
         }
-        for (String t : tags) {
-            t.replaceAll(" ", "_");
+        for (t in tags) {
+            t!!.replace(" ".toRegex(), "_")
         }
-        return TextUtils.join(" ", tags);
+        return TextUtils.join(" ", tags)
     }
 
-    static String[] splitTags(String tags) {
-        if (tags == null) {
-            return null;
-        }
-        return tags.trim().split("\\s+");
+    @JvmStatic
+    fun splitTags(tags: String): Array<String> {
+        return tags.trim { it <= ' ' }.split("\\s+".toRegex()).toTypedArray()
     }
 
-    @SuppressWarnings("CharsetObjectCanBeUsed")
-    static Long fieldChecksum(String data) {
-        data = stripHTMLMedia(data);
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA1");
-            byte[] digest = md.digest(data.getBytes("UTF-8"));
-            BigInteger biginteger = new BigInteger(1, digest);
-            String result = biginteger.toString(16);
-            
+    @JvmStatic
+    fun fieldChecksum(data: String): Long {
+        val strippedData = stripHTMLMedia(data)
+        return try {
+            val md = MessageDigest.getInstance("SHA1")
+            val digest = md.digest(strippedData.toByteArray(charset("UTF-8")))
+            val biginteger = BigInteger(1, digest)
+            var result = biginteger.toString(16)
+
             // pad checksum to 40 bytes, as is done in the main AnkiDroid code
-            if (result.length() < 40) {
-                String zeroes = "0000000000000000000000000000000000000000";
-                result = zeroes.substring(0, zeroes.length() - result.length()) + result;
+            if (result.length < 40) {
+                val zeroes = "0000000000000000000000000000000000000000"
+                result = zeroes.substring(0, zeroes.length - result.length) + result
             }
-            
-            return Long.valueOf(result.substring(0, 8), 16);            
-        } catch (Exception e) {
+            java.lang.Long.valueOf(result.substring(0, 8), 16)
+        } catch (e: Exception) {
             // This is guaranteed to never happen
-            throw new IllegalStateException("Error making field checksum with SHA1 algorithm and UTF-8 encoding", e);
+            throw IllegalStateException(
+                "Error making field checksum with SHA1 algorithm and UTF-8 encoding",
+                e
+            )
         }
     }
 
     /**
      * Strip HTML but keep media filenames
      */
-    private static String stripHTMLMedia(String s) {
-        Matcher imgMatcher = imgPattern.matcher(s);
-        return stripHTML(imgMatcher.replaceAll(" $1 "));
+    private fun stripHTMLMedia(s: String): String {
+        val imgMatcher = imgPattern.matcher(s)
+        return stripHTML(imgMatcher.replaceAll(" $1 "))
     }
 
-    private static String stripHTML(String s) {
-        Matcher htmlMatcher = stylePattern.matcher(s);
-        s = htmlMatcher.replaceAll("");
-        htmlMatcher = scriptPattern.matcher(s);
-        s = htmlMatcher.replaceAll("");
-        htmlMatcher = tagPattern.matcher(s);
-        s = htmlMatcher.replaceAll("");
-        return entsToTxt(s);
+    private fun stripHTML(s: String): String {
+        var htmlMatcher = stylePattern.matcher(s)
+        var strRep = htmlMatcher.replaceAll("")
+        htmlMatcher = scriptPattern.matcher(strRep)
+        strRep = htmlMatcher.replaceAll("")
+        htmlMatcher = tagPattern.matcher(strRep)
+        strRep = htmlMatcher.replaceAll("")
+        return entsToTxt(strRep)
     }
 
     /**
@@ -113,18 +113,18 @@ class Utils {
      * @param html The HTML escaped text
      * @return The text with its HTML entities unescaped.
      */
-    @SuppressWarnings("deprecation")
-    private static String entsToTxt(String html) {
+    @Suppress("DEPRECATION")
+    private fun entsToTxt(html: String): String {
         // entitydefs defines nbsp as \xa0 instead of a standard space, so we
         // replace it first
-        html = html.replace("&nbsp;", " ");
-        Matcher htmlEntities = htmlEntitiesPattern.matcher(html);
-        StringBuffer sb = new StringBuffer();
+        val htmlReplaced = html.replace("&nbsp;", " ")
+        val htmlEntities = htmlEntitiesPattern.matcher(htmlReplaced)
+        val sb = StringBuffer()
         while (htmlEntities.find()) {
             // Html.fromHtml(String) is deprecated but it's replacement isn't available till API24
-            htmlEntities.appendReplacement(sb, Html.fromHtml(htmlEntities.group()).toString());
+            htmlEntities.appendReplacement(sb, Html.fromHtml(htmlEntities.group()).toString())
         }
-        htmlEntities.appendTail(sb);
-        return sb.toString();
+        htmlEntities.appendTail(sb)
+        return sb.toString()
     }
 }
