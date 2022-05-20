@@ -348,7 +348,7 @@ open class Reviewer : AbstractFlashcardViewer() {
             setWhiteboardVisibility(whiteboardVisibility)
         }
         col.sched.deferReset() // Reset schedule in case card was previously loaded
-        getCol().startTimebox()
+        col.startTimebox()
         GetCard().runWithHandler(answerCardHandler(false))
         disableDrawerSwipeOnConflicts()
         // Add a weak reference to current activity so that scheduler can talk to to Activity
