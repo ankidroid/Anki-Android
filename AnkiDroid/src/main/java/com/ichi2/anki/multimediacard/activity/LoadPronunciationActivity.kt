@@ -103,6 +103,7 @@ open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelL
         saveButton.setOnClickListener { }
         mActivity = this
         mStopped = false
+        enableToolbar()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
