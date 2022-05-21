@@ -671,7 +671,7 @@ open class CardBrowser :
         val deckId = col.decks.selected()
         mDeckSpinnerSelection = DeckSpinnerSelection(
             this, col, findViewById(R.id.toolbar_spinner),
-            showAllDecks = true, alwaysShowDefault = false
+            showAllDecks = true, alwaysShowDefault = false, showFilteredDecks = true
         )
         mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
