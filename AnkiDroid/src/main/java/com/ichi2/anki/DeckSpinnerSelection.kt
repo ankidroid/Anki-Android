@@ -19,6 +19,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Filter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
@@ -48,13 +49,15 @@ import timber.log.Timber
  * 2. All decks from [mAllDeckIds].
  * @param showAllDecks Whether the deck selection should allow "All Decks" as an option
  * @param alwaysShowDefault If true, never hide the default deck. If false, match [DeckPicker]'s logic
+ * @param showFilteredDecks whether to show filtered decks
  */
 class DeckSpinnerSelection(
     private val context: AnkiActivity,
     private val collection: Collection,
     private val spinner: Spinner,
     private val showAllDecks: Boolean,
-    private val alwaysShowDefault: Boolean
+    private val alwaysShowDefault: Boolean,
+    private val showFilteredDecks: Boolean,
 ) {
     /**
      * All of the decks shown to the user.
@@ -225,9 +228,9 @@ class DeckSpinnerSelection(
     /**
      * Displays a [DeckSelectionDialog]
      */
-    fun displayDeckSelectionDialog(col: Collection) {
-        val nonDynamic = FunctionalInterfaces.Filter { d: Deck -> !Decks.isDynamic(d) }
-        val decks = fromCollection(col, nonDynamic).toMutableList()
+    fun displayDeckSelectionDialog(col: Collection?) {
+        val filter = FunctionalInterfaces.Filter { d: Deck -> showFilteredDecks || !Decks.isDynamic(d) }
+        val decks = fromCollection(col!!, filter).toMutableList()
         if (showAllDecks) {
             decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
         }

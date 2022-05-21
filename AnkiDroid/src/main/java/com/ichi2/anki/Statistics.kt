@@ -116,7 +116,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         }
         mDeckSpinnerSelection = DeckSpinnerSelection(
             this, col,
-            findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true
+            findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true, showFilteredDecks = true
         )
         mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
         mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false)
