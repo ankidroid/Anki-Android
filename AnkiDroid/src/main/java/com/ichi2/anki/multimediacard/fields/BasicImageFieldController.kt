@@ -45,17 +45,21 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.ActivityResultRegistry
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContentResolverCompat
 import androidx.core.content.FileProvider
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
-import com.canhub.cropper.CropImage
+import com.canhub.cropper.*
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DrawingActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
+import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.BitmapUtil
@@ -92,6 +96,9 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
             return Math.min(height * 0.4, width * 0.6).toInt()
         }
+    private lateinit var cropImageRequest: ActivityResultLauncher<CropImageContractOptions>
+    @VisibleForTesting
+    lateinit var registryToUse: ActivityResultRegistry
 
     override fun loadInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
@@ -181,6 +188,29 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             layout.addView(btnCamera, ViewGroup.LayoutParams.MATCH_PARENT)
         }
         layout.addView(mCropButton, ViewGroup.LayoutParams.MATCH_PARENT)
+    }
+
+    override fun setEditingActivity(activity: MultimediaEditFieldActivity) {
+        super.setEditingActivity(activity)
+        val registryToUse = if (this::registryToUse.isInitialized) registryToUse else mActivity.activityResultRegistry
+        @NeedsTest("check the happy/failure path for the crop action")
+        cropImageRequest = registryToUse.register(CROP_IMAGE_LAUNCHER_KEY, CropImageContract()) { cropResult ->
+            if (cropResult.isSuccessful) {
+                mImageFileSizeWarning?.visibility = View.GONE
+                if (cropResult != null) {
+                    handleCropResult(cropResult)
+                }
+                setPreviewImage(mViewModel.imagePath, maxImageSize)
+            } else {
+                if (!TextUtils.isEmpty(mPreviousImagePath)) {
+                    revertToPreviousImage()
+                }
+                // cropImage can give us more information. Not sure it is actionable so for now just log it.
+                val error: String = cropResult.error?.toString() ?: "Error info not available"
+                Timber.w(error, "cropImage threw an error")
+                CrashReportService.sendExceptionReport(error, "cropImage threw an error")
+            }
+        }
     }
 
     @SuppressLint("UnsupportedChromeOsCameraSystemFeature")
@@ -333,9 +363,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             Timber.d("Activity was not successful")
             // Restore the old version of the image if the user cancelled
             when (requestCode) {
-                ACTIVITY_TAKE_PICTURE,
-                ACTIVITY_CROP_PICTURE,
-                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE ->
+                ACTIVITY_TAKE_PICTURE ->
                     if (!TextUtils.isEmpty(mPreviousImagePath)) {
                         revertToPreviousImage()
                     }
@@ -345,17 +373,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             // Some apps send this back with app-specific data, direct the user to another app
             if (resultCode >= Activity.RESULT_FIRST_USER) {
                 UIUtils.showThemedToast(mActivity, mActivity.getString(R.string.activity_result_unexpected), true)
-            }
-
-            // cropImage can give us more information. Not sure it is actionable so for now just log it.
-            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                val result: CropImage.ActivityResult? = CropImage.getActivityResult(data)
-                if (result != null) {
-                    @KotlinCleanup("try using a kotlin method")
-                    val error: String = java.lang.String.valueOf(result.error)
-                    Timber.w(error, "cropImage threw an error")
-                    CrashReportService.sendExceptionReport(error, "cropImage threw an error")
-                }
             }
             return
         }
@@ -378,11 +395,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             // receive image from drawing activity
             val savedImagePath = data!!.extras!![DrawingActivity.EXTRA_RESULT_WHITEBOARD] as Uri?
             handleDrawingResult(savedImagePath)
-        } else if (requestCode == ACTIVITY_CROP_PICTURE || requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result: CropImage.ActivityResult? = CropImage.getActivityResult(data)
-            if (result != null) {
-                handleCropResult(result)
-            }
         } else {
             Timber.w("Unhandled request code: %d", requestCode)
             return
@@ -491,6 +503,9 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     override fun onDone() {
         deletePreviousImage()
+        if (this::cropImageRequest.isInitialized) {
+            cropImageRequest.unregister()
+        }
     }
 
     /**
@@ -623,8 +638,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         ret = viewModel.beforeCrop(imagePath, imageUri)
         setTemporaryMedia(imagePath)
         Timber.d("requestCrop()  destination image has path/uri %s/%s", ret.imagePath, ret.imageUri)
-
-        CropImage.activity(viewModel.imageUri).start(mActivity)
+        if (this::cropImageRequest.isInitialized) {
+            cropImageRequest.launch(
+                CropImageContractOptions(
+                    viewModel.imageUri,
+                    CropImageOptions()
+                )
+            )
+        }
         return ret
     }
 
@@ -653,7 +674,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         builder.build().show()
     }
 
-    private fun handleCropResult(result: CropImage.ActivityResult) {
+    private fun handleCropResult(result: CropImageView.CropResult) {
         Timber.d("handleCropResult")
         mViewModel.deleteImagePath()
         mViewModel = ImageViewModel(result.getUriFilePath(mActivity, true), result.uriContent)
@@ -813,6 +834,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         private const val ACTIVITY_CROP_PICTURE = 3
         private const val ACTIVITY_DRAWING = 4
         private const val IMAGE_SAVE_MAX_WIDTH = 1920
+        private const val CROP_IMAGE_LAUNCHER_KEY = "crop_image_launcher_key"
 
         /**
          * Get Uri based on current image path
