@@ -20,20 +20,18 @@ import android.content.res.Resources
 import androidx.annotation.IntDef
 import androidx.annotation.StringRes
 import com.ichi2.anki.R
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil.getLocaleCompat
 import timber.log.Timber
 import java.util.*
 
-@KotlinCleanup("IDE-based-lint")
 abstract class UndoAction
 /**
  * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
  * It's the caller responsibility to clone the object if necessary. */
-(@field:UNDO_NAME_ID @field:StringRes @param:StringRes @param:UNDO_NAME_ID val undoNameId: Int) {
+(@field:UndoNameId @field:StringRes @param:StringRes @param:UndoNameId val undoNameId: Int) {
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(R.string.undo_action_change_deck_multi, R.string.menu_delete_note, R.string.card_browser_delete_card, R.string.card_browser_mark_card, R.string.card_browser_unmark_card, R.string.menu_suspend_card, R.string.card_browser_unsuspend_card, R.string.undo_action_review, R.string.menu_bury_note, R.string.menu_suspend_note, R.string.card_editor_reposition_card, R.string.card_editor_reschedule_card, R.string.menu_bury_card, R.string.card_editor_reset_card)
-    annotation class UNDO_NAME_ID
+    annotation class UndoNameId
 
     private fun getLocale(resources: Resources): Locale {
         return getLocaleCompat(resources)
@@ -56,7 +54,7 @@ abstract class UndoAction
          * @param card the card currently in the reviewer
          * @return An UndoAction which, if executed, put back the `card` in the state given here
          */
-        fun revertNoteToProvidedState(@StringRes @UNDO_NAME_ID undoNameId: Int, card: Card): UndoAction {
+        fun revertNoteToProvidedState(@StringRes @UndoNameId undoNameId: Int, card: Card): UndoAction {
             return revertToProvidedState(undoNameId, card, card.note().cards())
         }
 
@@ -66,7 +64,7 @@ abstract class UndoAction
          * @param card the card currently in the reviewer
          * @return An UndoAction which, if executed, put back the `card` in the state given here
          */
-        fun revertCardToProvidedState(@StringRes @UNDO_NAME_ID undoNameId: Int, card: Card): UndoAction {
+        fun revertCardToProvidedState(@StringRes @UndoNameId undoNameId: Int, card: Card): UndoAction {
             return revertToProvidedState(undoNameId, card, Arrays.asList(card.clone()))
         }
 
@@ -77,9 +75,9 @@ abstract class UndoAction
          * @param cards The cards that must be reverted
          * @return An UndoAction which, if executed, put back the `card` in the state given here
          */
-        private fun revertToProvidedState(@StringRes @UNDO_NAME_ID undoNameId: Int, card: Card, cards: Iterable<Card>): UndoAction {
+        private fun revertToProvidedState(@StringRes @UndoNameId undoNameId: Int, card: Card, cards: Iterable<Card>): UndoAction {
             return object : UndoAction(undoNameId) {
-                override fun undo(col: Collection): Card? {
+                override fun undo(col: Collection): Card {
                     Timber.i("Undo: %d", undoNameId)
                     for (cc in cards) {
                         cc.flush(false)

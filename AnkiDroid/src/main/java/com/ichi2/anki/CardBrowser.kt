@@ -113,17 +113,13 @@ import kotlin.math.min
 
 @Suppress("LeakingThis") // The class is only 'open' due to testing
 @KotlinCleanup("scan through this class and add attributes - not started")
-@KotlinCleanup("Add TextUtils.isNotNullOrEmpty accepting nulls and use it. Remove TextUtils import")
 open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelectionListener, TagsDialogListener {
-    @KotlinCleanup("using ?. and let keyword would be good here")
     override fun onDeckSelected(deck: SelectableDeck?) {
-        if (deck == null) {
-            return
+        deck?.deckId.let {
+            mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
+            mDeckSpinnerSelection.selectDeckById(it!!, true)
+            selectDeckAndSave(it)
         }
-        val deckId = deck.deckId
-        mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-        mDeckSpinnerSelection!!.selectDeckById(deckId, true)
-        selectDeckAndSave(deckId)
     }
 
     enum class Column {
@@ -137,8 +133,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
     private val mCards = CardCollection<CardCache>()
-    @JvmField
-    var mDeckSpinnerSelection: DeckSpinnerSelection? = null
+//    var mDeckSpinnerSelection: DeckSpinnerSelection? = null
+    lateinit var mDeckSpinnerSelection: DeckSpinnerSelection
 
     @KotlinCleanup("move to onCreate and make lateinit")
     @JvmField
@@ -680,21 +676,21 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             this, col, findViewById(R.id.toolbar_spinner),
             showAllDecks = true, alwaysShowDefault = false
         )
-        mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
 
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
         if (lastDeckId != null && lastDeckId == ALL_DECKS_ID) {
             selectAllDecks()
         } else if (lastDeckId != null && getCol().decks.get(lastDeckId!!, false) != null) {
-            mDeckSpinnerSelection!!.selectDeckById(lastDeckId!!, false)
+            mDeckSpinnerSelection.selectDeckById(lastDeckId!!, false)
         } else {
-            mDeckSpinnerSelection!!.selectDeckById(getCol().decks.selected(), false)
+            mDeckSpinnerSelection.selectDeckById(getCol().decks.selected(), false)
         }
     }
 
     fun selectDeckAndSave(deckId: Long) {
-        mDeckSpinnerSelection!!.selectDeckById(deckId, true)
+        mDeckSpinnerSelection.selectDeckById(deckId, true)
         mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""
         } else {
@@ -770,7 +766,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @VisibleForTesting
     fun selectAllDecks() {
-        mDeckSpinnerSelection!!.selectAllDecks()
+        mDeckSpinnerSelection.selectAllDecks()
         mRestrictOnDeck = ""
         saveLastDeckId(ALL_DECKS_ID)
         searchCards()
@@ -887,7 +883,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                     if (mSearchView!!.shouldIgnoreValueChange()) {
                         return true
                     }
-                    mSaveSearchItem!!.isVisible = !TextUtils.isEmpty(newText)
+                    mSaveSearchItem!!.isVisible = newText.isNotEmpty()
                     mTempSearchQuery = newText
                     return true
                 }
@@ -900,9 +896,9 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             })
             // Fixes #6500 - keep the search consistent if coming back from note editor
             // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu (mTempSearchQuery)
-            if (!TextUtils.isEmpty(mTempSearchQuery) || !TextUtils.isEmpty(mSearchTerms)) {
+            if (!mTempSearchQuery.isNullOrEmpty() || !mSearchTerms.isNullOrEmpty()) {
                 mSearchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
-                val toUse = if (!TextUtils.isEmpty(mTempSearchQuery)) mTempSearchQuery else mSearchTerms
+                val toUse = if (!mTempSearchQuery.isNullOrEmpty()) mTempSearchQuery else mSearchTerms
                 mSearchView!!.setQuery(toUse!!, false)
             }
             mSearchView!!.setOnSearchClickListener {
@@ -1249,11 +1245,11 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         if (truncate.isChecked) {
             isTruncated = false
             mCardsAdapter!!.notifyDataSetChanged()
-            truncate.setChecked(false)
+            truncate.isChecked = false
         } else {
             isTruncated = true
             mCardsAdapter!!.notifyDataSetChanged()
-            truncate.setChecked(true)
+            truncate.isChecked = true
         }
     }
 
@@ -1545,7 +1541,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     private fun updateList() {
         if (colIsOpen() && mCardsAdapter != null) {
             mCardsAdapter!!.notifyDataSetChanged()
-            mDeckSpinnerSelection!!.notifyDataSetChanged()
+            mDeckSpinnerSelection.notifyDataSetChanged()
             onSelectionChanged()
             updatePreviewMenuItem()
         }
@@ -1571,8 +1567,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     @get:VisibleForTesting
     val validDecksForChangeDeck: List<Deck>
         get() {
-            val nonDynamicDecks: MutableList<Deck> = java.util.ArrayList(mDeckSpinnerSelection!!.dropDownDecks.size)
-            for (d in mDeckSpinnerSelection!!.dropDownDecks) {
+            val nonDynamicDecks: MutableList<Deck> = java.util.ArrayList(mDeckSpinnerSelection.dropDownDecks.size)
+            for (d in mDeckSpinnerSelection.dropDownDecks) {
                 if (Decks.isDynamic(d)) {
                     continue
                 }
@@ -2596,7 +2592,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         // show title and hide spinner
         mActionBarTitle!!.visibility = View.VISIBLE
         mActionBarTitle!!.text = checkedCardCount().toString()
-        mDeckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
+        mDeckSpinnerSelection.setSpinnerVisibility(View.GONE)
         // reload the actionbar using the multi-select mode actionbar
         invalidateOptionsMenu()
     }
@@ -2615,7 +2611,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         mCardsAdapter!!.notifyDataSetChanged()
         // update action bar
         invalidateOptionsMenu()
-        mDeckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
+        mDeckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
         mActionBarTitle!!.visibility = View.GONE
     }
 
