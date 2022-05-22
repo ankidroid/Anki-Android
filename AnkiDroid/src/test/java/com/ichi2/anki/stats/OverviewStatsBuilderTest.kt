@@ -20,15 +20,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOverview
 import com.ichi2.libanki.stats.Stats
-import com.ichi2.utils.KotlinCleanup
 import junit.framework.TestCase.*
+import org.intellij.lang.annotations.Language
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("IDE Lint")
-@KotlinCleanup("Add @Language to HTML")
 class OverviewStatsBuilderTest : RobolectricTest() {
     @Test
     fun testGetPercentage() {
@@ -46,6 +44,7 @@ class OverviewStatsBuilderTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "en")
+    @Language("HTML")
     fun testInfoHtmlStringMonth() {
         val statsTester = OverviewStatsBuilder(
             WebView(targetContext),
@@ -53,9 +52,9 @@ class OverviewStatsBuilderTest : RobolectricTest() {
             42L,
             Stats.AxisType.TYPE_MONTH
         )
-        val HTML = statsTester.createInfoHtmlString()
+        val html = statsTester.createInfoHtmlString()
         assertEquals(
-            HTML,
+            html,
             """
      <center><style>
      h1, h3 { margin-bottom: 0; margin-top: 1em; text-transform: capitalize; }
@@ -68,6 +67,7 @@ class OverviewStatsBuilderTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "en")
+    @Language("HTML")
     fun testInfoHtmlStringYear() {
         val statsTester = OverviewStatsBuilder(
             WebView(targetContext),
@@ -75,9 +75,9 @@ class OverviewStatsBuilderTest : RobolectricTest() {
             42L,
             Stats.AxisType.TYPE_YEAR
         )
-        val HTML = statsTester.createInfoHtmlString()
+        val html = statsTester.createInfoHtmlString()
         assertEquals(
-            HTML,
+            html,
             """
      <center><style>
      h1, h3 { margin-bottom: 0; margin-top: 1em; text-transform: capitalize; }
@@ -90,6 +90,7 @@ class OverviewStatsBuilderTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "en")
+    @Language("HTML")
     fun testInfoHtmlStringLife() {
         val statsTester = OverviewStatsBuilder(
             WebView(targetContext),
@@ -97,9 +98,9 @@ class OverviewStatsBuilderTest : RobolectricTest() {
             42L,
             Stats.AxisType.TYPE_LIFE
         )
-        val HTML = statsTester.createInfoHtmlString()
+        val html = statsTester.createInfoHtmlString()
         assertEquals(
-            HTML,
+            html,
             """
      <center><style>
      h1, h3 { margin-bottom: 0; margin-top: 1em; text-transform: capitalize; }
