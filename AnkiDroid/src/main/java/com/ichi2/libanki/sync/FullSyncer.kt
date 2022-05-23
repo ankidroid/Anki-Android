@@ -13,160 +13,164 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.libanki.sync
 
-package com.ichi2.libanki.sync;
+import android.database.sqlite.SQLiteDatabaseCorruptException
+import android.util.Pair
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.R
+import com.ichi2.anki.exception.UnknownHttpResponseException
+import com.ichi2.async.Connection
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DB
+import com.ichi2.libanki.Utils
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType
+import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.VersionUtils.pkgVersionName
+import okhttp3.Response
+import okhttp3.ResponseBody
+import timber.log.Timber
+import java.io.*
+import java.util.*
 
-import android.database.sqlite.SQLiteDatabaseCorruptException;
-import android.util.Pair;
+@KotlinCleanup("fix IDE lint issues")
+@KotlinCleanup("try to move mCol and mCon to constructor properties")
+@KotlinCleanup("try to make constructor properties non null")
+class FullSyncer(
+    col: Collection?,
+    hkey: String?,
+    con: Connection,
+    hostNum: HostNum?
+) : HttpSyncer(hkey, con, hostNum) {
+    private var mCol: Collection?
+    @KotlinCleanup(
+        "unused, hides superclass protected field, should be deleted"
+    )
+    private val mCon: Connection = con
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.R;
-import com.ichi2.anki.exception.UnknownHttpResponseException;
-import com.ichi2.async.Connection;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.DB;
-import com.ichi2.libanki.Utils;
-import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.VersionUtils;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Locale;
-
-import androidx.annotation.NonNull;
-
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import timber.log.Timber;
-import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.*;
-import static com.ichi2.libanki.sync.Syncer.ConnectionResultType;
-
-@SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes","PMD.NPathComplexity"})
-public class FullSyncer extends HttpSyncer {
-
-    private Collection mCol;
-    private final Connection mCon;
-
-
-    public FullSyncer(Collection col, String hkey, Connection con, HostNum hostNum) {
-        super(hkey, con, hostNum);
-        mPostVars = HashUtil.HashMapInit(2);
-        mPostVars.put("k", hkey);
-        mPostVars.put("v",
-                String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
-        mCol = col;
-        mCon = con;
+    init {
+        mPostVars = HashMapInit(2)
+        mPostVars["k"] = hkey
+        mPostVars["v"] = String.format(
+            Locale.US,
+            "ankidroid,%s,%s",
+            pkgVersionName,
+            Utils.platDesc()
+        )
+        mCol = col
     }
 
-    public @NonNull ConnectionResultType download() throws UnknownHttpResponseException {
-        InputStream cont;
-        ResponseBody body = null;
+    @Throws(UnknownHttpResponseException::class)
+    fun download(): ConnectionResultType? {
+        val cont: InputStream
+        var body: ResponseBody? = null
         try {
-            Response ret = super.req("download");
-            if (ret == null || ret.body() == null) {
-                return null;
+            val ret = super.req("download")
+            if (ret == null || ret.body == null) {
+                return null
             }
-            body = ret.body();
-            cont = body.byteStream();
-        } catch (IllegalArgumentException e1) {
-            if (body != null) {
-                body.close();
-            }
-            throw new RuntimeException(e1);
+            body = ret.body
+            cont = body!!.byteStream()
+        } catch (e1: IllegalArgumentException) {
+            body?.close()
+            throw RuntimeException(e1)
         }
-        String path;
+        val path: String
         if (mCol != null) {
-            Timber.i("Closing collection for full sync");
+            Timber.i("Closing collection for full sync")
             // Usual case where collection is non-null
-            path = mCol.getPath();
-            mCol.close();
-            mCol = null;
+            path = mCol!!.path
+            mCol!!.close()
+            mCol = null
         } else {
             // Allow for case where collection is completely unreadable
-            Timber.w("Collection was unexpectedly null when doing full sync download");
-            path = CollectionHelper.getCollectionPath(AnkiDroidApp.getInstance());
+            Timber.w("Collection was unexpectedly null when doing full sync download")
+            path = CollectionHelper.getCollectionPath(AnkiDroidApp.getInstance())
         }
-        String tpath = path + ".tmp";
+        val tpath = "$path.tmp"
         try {
-            super.writeToFile(cont, tpath);
-            Timber.d("Full Sync - Downloaded temp file");
-            FileInputStream fis = new FileInputStream(tpath);
-            if ("upgradeRequired".equals(super.stream2String(fis, 15))) {
-                Timber.w("Full Sync - 'Upgrade Required' message received");
-                return UPGRADE_REQUIRED;
+            super.writeToFile(cont, tpath)
+            Timber.d("Full Sync - Downloaded temp file")
+            val fis = FileInputStream(tpath)
+            if ("upgradeRequired" == super.stream2String(fis, 15)) {
+                Timber.w("Full Sync - 'Upgrade Required' message received")
+                return ConnectionResultType.UPGRADE_REQUIRED
             }
-        } catch (FileNotFoundException e) {
-            Timber.e(e, "Failed to create temp file when downloading collection.");
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            Timber.e(e, "Full sync failed to download collection.");
-            return SD_ACCESS_ERROR;
+        } catch (e: FileNotFoundException) {
+            Timber.e(e, "Failed to create temp file when downloading collection.")
+            throw RuntimeException(e)
+        } catch (e: IOException) {
+            Timber.e(e, "Full sync failed to download collection.")
+            return ConnectionResultType.SD_ACCESS_ERROR
         } finally {
-            body.close();
+            body.close()
         }
 
         // check the received file is ok
-        mCon.publishProgress(R.string.sync_check_download_file);
-        DB tempDb = null;
+        mCon.publishProgress(R.string.sync_check_download_file)
+        var tempDb: DB? = null
         try {
-            tempDb = new DB(tpath);
-            if (!"ok".equalsIgnoreCase(tempDb.queryString("PRAGMA integrity_check"))) {
-                Timber.e("Full sync - downloaded file corrupt");
-                return REMOTE_DB_ERROR;
+            tempDb = DB(tpath)
+            if (!"ok".equals(tempDb.queryString("PRAGMA integrity_check"), ignoreCase = true)) {
+                Timber.e("Full sync - downloaded file corrupt")
+                return ConnectionResultType.REMOTE_DB_ERROR
             }
-        } catch (SQLiteDatabaseCorruptException e) {
-            Timber.e("Full sync - downloaded file corrupt");
-            return REMOTE_DB_ERROR;
+        } catch (e: SQLiteDatabaseCorruptException) {
+            Timber.e("Full sync - downloaded file corrupt")
+            return ConnectionResultType.REMOTE_DB_ERROR
         } finally {
-            if (tempDb != null) {
-                tempDb.close();
-            }
+            tempDb?.close()
         }
-        Timber.d("Full Sync: Downloaded file was not corrupt");
+        Timber.d("Full Sync: Downloaded file was not corrupt")
         // overwrite existing collection
-        File newFile = new File(tpath);
-        if (newFile.renameTo(new File(path))) {
-            Timber.i("Full Sync Success: Overwritten collection with downloaded file");
-            return SUCCESS;
+        val newFile = File(tpath)
+        return if (newFile.renameTo(File(path))) {
+            Timber.i("Full Sync Success: Overwritten collection with downloaded file")
+            ConnectionResultType.SUCCESS
         } else {
-            Timber.w("Full Sync: Error overwriting collection with downloaded file");
-            return OVERWRITE_ERROR;
+            Timber.w("Full Sync: Error overwriting collection with downloaded file")
+            ConnectionResultType.OVERWRITE_ERROR
         }
     }
 
-    public Pair<ConnectionResultType, Object[]> upload() throws UnknownHttpResponseException {
+    @Throws(UnknownHttpResponseException::class)
+    fun upload(): Pair<ConnectionResultType, Array<Any>?>? {
         // make sure it's ok before we try to upload
-        mCon.publishProgress(R.string.sync_check_upload_file);
-        if (!"ok".equalsIgnoreCase(mCol.getDb().queryString("PRAGMA integrity_check"))) {
-            return new Pair<>(DB_ERROR, null);
+        mCon.publishProgress(R.string.sync_check_upload_file)
+        if (!"ok".equals(mCol!!.db.queryString("PRAGMA integrity_check"), ignoreCase = true)) {
+            return Pair(ConnectionResultType.DB_ERROR, null)
         }
-        if (!mCol.basicCheck()) {
-            return new Pair<>(DB_ERROR, null);
+        if (!mCol!!.basicCheck()) {
+            return Pair(ConnectionResultType.DB_ERROR, null)
         }
         // apply some adjustments, then upload
-        mCol.beforeUpload();
-        String filePath = mCol.getPath();
-        Response ret;
-        mCon.publishProgress(R.string.sync_uploading_message);
-        try {
-            ret = super.req("upload", new FileInputStream(filePath));
-            if (ret == null || ret.body() == null) {
-                return null;
+        mCol!!.beforeUpload()
+        val filePath = mCol!!.path
+        val ret: Response?
+        mCon.publishProgress(R.string.sync_uploading_message)
+        return try {
+            ret = super.req("upload", FileInputStream(filePath))
+            if (ret == null || ret.body == null) {
+                return null
             }
-            int status = ret.code();
+            val status = ret.code
             if (status != 200) {
                 // error occurred
-                return new Pair<>(ERROR, new Object[] {status, ret.message() });
+                Pair(ConnectionResultType.ERROR, arrayOf(status, ret.message))
             } else {
-                return new Pair<>(ARBITRARY_STRING, new Object[] { ret.body().string() });
+                Pair(
+                    ConnectionResultType.ARBITRARY_STRING,
+                    arrayOf(
+                        ret.body!!.string()
+                    )
+                )
             }
-        } catch (IllegalStateException | IOException e) {
-            throw new RuntimeException(e);
+        } catch (e: IllegalStateException) {
+            throw RuntimeException(e)
+        } catch (e: IOException) {
+            throw RuntimeException(e)
         }
     }
 }
