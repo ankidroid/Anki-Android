@@ -382,7 +382,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            closeDeckOptions()
+            closeWithResult()
             return true
         }
         return false
@@ -391,13 +391,13 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
             Timber.i("DeckOptions - onBackPressed()")
-            closeDeckOptions()
+            closeWithResult()
             return true
         }
         return super.onKeyDown(keyCode, event)
     }
 
-    private fun closeDeckOptions() {
+    override fun closeWithResult() {
         if (prefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {

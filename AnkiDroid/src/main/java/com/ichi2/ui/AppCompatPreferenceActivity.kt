@@ -168,4 +168,6 @@ abstract class AppCompatPreferenceActivity : PreferenceActivity(), SharedPrefere
         iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
         registerReceiver(unmountReceiver, iFilter)
     }
+
+    protected abstract fun closeWithResult()
 }

@@ -617,7 +617,7 @@ class DeckOptions :
         return super.onKeyDown(keyCode, event)
     }
 
-    private fun closeWithResult() {
+    override fun closeWithResult() {
         if (prefChanged) {
             setResult(RESULT_OK)
         } else {
