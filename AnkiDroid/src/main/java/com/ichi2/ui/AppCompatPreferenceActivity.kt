@@ -30,6 +30,8 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.libanki.Collection
 
 /**
  * A [android.preference.PreferenceActivity] which implements and proxies the necessary calls
@@ -40,12 +42,22 @@ import com.ichi2.anki.AnkiDroidApp
  */
 abstract class AppCompatPreferenceActivity : PreferenceActivity() {
     private var mDelegate: AppCompatDelegate? = null
+    protected lateinit var col: Collection
+        private set
+
+    fun isColInitialized() = ::col.isInitialized
 
     @Deprecated("Deprecated in Java")
     override fun onCreate(savedInstanceState: Bundle?) {
         delegate.installViewFactory()
         delegate.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
+        val col = CollectionHelper.getInstance().getCol(this)
+        if (col != null) {
+            this.col = col
+        } else {
+            finish()
+        }
     }
 
     override fun attachBaseContext(base: Context) {
