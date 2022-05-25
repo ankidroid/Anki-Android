@@ -22,6 +22,7 @@ import android.content.*
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceActivity
+import android.view.KeyEvent
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.libanki.Collection
+import timber.log.Timber
 
 /**
  * A [android.preference.PreferenceActivity] which implements and proxies the necessary calls
@@ -170,4 +172,13 @@ abstract class AppCompatPreferenceActivity : PreferenceActivity(), SharedPrefere
     }
 
     protected abstract fun closeWithResult()
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
+            Timber.i("DeckOptions - onBackPressed()")
+            closeWithResult()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 }
