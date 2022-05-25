@@ -15,15 +15,13 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
-
-import com.ichi2.utils.HtmlUtils;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import androidx.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting
+import com.ichi2.utils.HtmlUtils.escape
+import com.ichi2.utils.KotlinCleanup
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 /**
  * This class is used to detect LaTeX tags in HTML and convert them to their corresponding image
@@ -31,91 +29,100 @@ import androidx.annotation.VisibleForTesting;
  *
  * Anki provides shortcut forms for certain expressions. These three forms are considered valid
  * LaTeX tags in Anki:
+ * ```
  * 1 - [latex]...[/latex]
  * 2 - [$]...[$]
  * 3 - [$$]...[$$]
- *
+ * ```
  * Unlike the original python implementation of this class, the AnkiDroid version does not support
  * the generation of LaTeX images.
  */
-@SuppressWarnings({"PMD.MethodNamingConventions","PMD.AvoidReassigningParameters"})
-public class LaTeX {
-
+@KotlinCleanup("fix IDE lint issues")
+object LaTeX {
     /**
      * Patterns used to identify LaTeX tags
      */
-    public static final Pattern STANDARD_PATTERN = Pattern.compile("\\[latex](.+?)\\[/latex]",
-            Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-    public static final Pattern EXPRESSION_PATTERN = Pattern.compile("\\[\\$](.+?)\\[/\\$]",
-            Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-    public static final Pattern MATH_PATTERN = Pattern.compile("\\[\\$\\$](.+?)\\[/\\$\\$]",
-            Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-
+    val STANDARD_PATTERN = Pattern.compile(
+        "\\[latex](.+?)\\[/latex]",
+        Pattern.DOTALL or Pattern.CASE_INSENSITIVE
+    )
+    val EXPRESSION_PATTERN = Pattern.compile(
+        "\\[\\$](.+?)\\[/\\$]",
+        Pattern.DOTALL or Pattern.CASE_INSENSITIVE
+    )
+    val MATH_PATTERN = Pattern.compile(
+        "\\[\\$\\$](.+?)\\[/\\$\\$]",
+        Pattern.DOTALL or Pattern.CASE_INSENSITIVE
+    )
 
     /**
      * Convert HTML with embedded latex tags to image links.
      * NOTE: _imgLink produces an alphanumeric filename so there is no need to escape the replacement string.
      */
-    public static String mungeQA(String html, Collection col, Model model) {
-        return mungeQA(html, col.getMedia(), model);
+    @JvmStatic
+    fun mungeQA(html: String, col: Collection, model: Model): String {
+        return mungeQA(html, col.media, model)
     }
 
     // It's only goal is to allow testing with a different media manager.
     @VisibleForTesting
-    public static String mungeQA(String html, Media m, Model model) {
-        StringBuffer sb = new StringBuffer();
-        Matcher matcher = STANDARD_PATTERN.matcher(html);
+    @JvmStatic
+    @KotlinCleanup("refactor each matcher/sb code group into a standalone function")
+    fun mungeQA(html: String, m: Media, model: Model): String {
+        @KotlinCleanup("declare val variables for sb and matcher for each instantiation instead of using a single var variable")
+        var sb = StringBuffer()
+        @KotlinCleanup("use a scope function like run/with to have matcher in scope to simplify its usage")
+        var matcher = STANDARD_PATTERN.matcher(html)
         while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink(matcher.group(1), model, m));
+            matcher.appendReplacement(sb, _imgLink(matcher.group(1)!!, model, m))
         }
-        matcher.appendTail(sb);
-
-        matcher = EXPRESSION_PATTERN.matcher(sb.toString());
-        sb = new StringBuffer();
+        matcher.appendTail(sb)
+        matcher = EXPRESSION_PATTERN.matcher(sb.toString())
+        sb = StringBuffer()
         while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink("$" + matcher.group(1) + "$", model, m));
+            matcher.appendReplacement(sb, _imgLink("$" + matcher.group(1) + "$", model, m))
         }
-        matcher.appendTail(sb);
-
-        matcher = MATH_PATTERN.matcher(sb.toString());
-        sb = new StringBuffer();
+        matcher.appendTail(sb)
+        matcher = MATH_PATTERN.matcher(sb.toString())
+        sb = StringBuffer()
         while (matcher.find()) {
-            matcher.appendReplacement(sb,
-                    _imgLink("\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}", model, m));
+            matcher.appendReplacement(
+                sb,
+                _imgLink("\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}", model, m)
+            )
         }
-        matcher.appendTail(sb);
-
-        return sb.toString();
+        matcher.appendTail(sb)
+        return sb.toString()
     }
-
 
     /**
      * Return an img link for LATEX.
      */
     @VisibleForTesting
-    protected static String _imgLink(String latex, Model model, Media m) {
-        String txt = _latexFromHtml(latex);
-
-        String ext = "png";
+    @JvmStatic
+    internal fun _imgLink(latex: String, model: Model, m: Media): String {
+        val txt = _latexFromHtml(latex)
+        @KotlinCleanup("use an if expression to determine extension type and make ext a val")
+        var ext = "png"
         if (model.optBoolean("latexsvg", false)) {
-            ext = "svg";
+            ext = "svg"
         }
-
-        String fname = "latex-" + Utils.checksum(txt) + "." + ext;
-        if (m.have(fname)) {
-            return Matcher.quoteReplacement("<img class=latex alt=\"" + HtmlUtils.escape(latex) + "\" src=\"" + fname + "\">");
+        val fname = "latex-" + Utils.checksum(txt) + "." + ext
+        return if (m.have(fname)) {
+            Matcher.quoteReplacement("<img class=latex alt=\"" + escape(latex) + "\" src=\"" + fname + "\">")
         } else {
-            return Matcher.quoteReplacement(latex);
+            Matcher.quoteReplacement(latex)
         }
     }
-
 
     /**
      * Convert entities and fix newlines.
      */
-    private static String _latexFromHtml(String latex) {
-        latex = latex.replaceAll("<br( /)?>|<div>", "\n");
-        latex = Utils.stripHTML(latex);
-        return latex;
+    @JvmStatic
+    @KotlinCleanup("remove the intermediary var, reduce function body to single line by inlining the method calls")
+    private fun _latexFromHtml(latex: String): String {
+        var l = latex.replace("<br( /)?>|<div>".toRegex(), "\n")
+        l = Utils.stripHTML(l)
+        return l
     }
 }
