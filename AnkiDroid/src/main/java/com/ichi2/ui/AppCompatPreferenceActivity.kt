@@ -27,8 +27,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.*
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
@@ -308,5 +307,10 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
             return true
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
+        Timber.d("getSharedPreferences(name=%s)", name)
+        return pref
     }
 }
