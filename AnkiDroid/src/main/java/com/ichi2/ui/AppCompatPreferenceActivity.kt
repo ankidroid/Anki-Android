@@ -18,8 +18,7 @@
 
 package com.ichi2.ui
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.*
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceActivity
@@ -32,6 +31,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.libanki.Collection
 
 /**
@@ -49,6 +49,7 @@ abstract class AppCompatPreferenceActivity : PreferenceActivity(), SharedPrefere
     fun isColInitialized() = ::col.isInitialized
 
     protected var prefChanged = false
+    lateinit var unmountReceiver: BroadcastReceiver
 
     @Deprecated("Deprecated in Java")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -124,6 +125,7 @@ abstract class AppCompatPreferenceActivity : PreferenceActivity(), SharedPrefere
     override fun onDestroy() {
         super.onDestroy()
         delegate.onDestroy()
+        unregisterReceiver(unmountReceiver)
     }
 
     override fun invalidateOptionsMenu() {
@@ -144,4 +146,26 @@ abstract class AppCompatPreferenceActivity : PreferenceActivity(), SharedPrefere
             }
             return mDelegate!! // safe as mDelegate is only initialized here, before being returned
         }
+
+    /**
+     * Call exactly once, during creation
+     * to ensure that if the SD card is ejected
+     * this activity finish.
+     */
+
+    /**
+     * finish when sd card is ejected
+     */
+    fun registerExternalStorageListener() {
+        unmountReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action == SdCardReceiver.MEDIA_EJECT) {
+                    finish()
+                }
+            }
+        }
+        val iFilter = IntentFilter()
+        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
+        registerReceiver(unmountReceiver, iFilter)
+    }
 }

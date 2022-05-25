@@ -33,7 +33,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask
@@ -65,7 +64,6 @@ class DeckOptions :
     AppCompatPreferenceActivity() {
     private lateinit var mOptions: DeckConfig
     private lateinit var mDeck: Deck
-    private var mUnmountReceiver: BroadcastReceiver? = null
     private lateinit var mPref: DeckPreferenceHack
 
     inner class DeckPreferenceHack : SharedPreferences {
@@ -629,14 +627,6 @@ class DeckOptions :
         ActivityTransitionAnimation.slide(this, FADE)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onDestroy() {
-        super.onDestroy()
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver)
-        }
-    }
-
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     @KotlinCleanup("remove reduntant val res = resources")
     override fun updateSummaries() {
@@ -772,24 +762,6 @@ class DeckOptions :
             }
             return count
         }
-
-    /**
-     * Call exactly once, during creation
-     * to ensure that if the SD card is ejected
-     * this activity finish.
-     */
-    private fun registerExternalStorageListener() {
-        mUnmountReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (SdCardReceiver.MEDIA_EJECT == intent.action) {
-                    finish()
-                }
-            }
-        }
-        val iFilter = IntentFilter()
-        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-        registerReceiver(mUnmountReceiver, iFilter)
-    }
 
     private fun restartActivity() {
         recreate()
