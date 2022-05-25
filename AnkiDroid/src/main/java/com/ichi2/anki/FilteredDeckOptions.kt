@@ -449,22 +449,23 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
     }
 
     /**
-     * finish when sd card is ejected
+     * Call exactly once, during creation
+     * to ensure that if the SD card is ejected
+     * this activity finish.
      */
     private fun registerExternalStorageListener() {
-        if (mUnmountReceiver == null) {
-            mUnmountReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        finish()
-                    }
+        mUnmountReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action == SdCardReceiver.MEDIA_EJECT) {
+                    finish()
                 }
             }
-            val iFilter = IntentFilter()
-            iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(mUnmountReceiver, iFilter)
         }
+        val iFilter = IntentFilter()
+        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
+        registerReceiver(mUnmountReceiver, iFilter)
     }
+
     @Suppress("deprecation")
     private fun setupSecondFilterListener() {
         val secondFilterSign = findPreference("filterSecond") as CheckBoxPreference
