@@ -103,7 +103,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
                 for ((key, value) in mUpdate.valueSet()) {
                     Timber.i("Change value for key '%s': %s", key, value)
                     val ar = mDeck!!.getJSONArray("terms")
-                    if (mPref!!.secondFilter) {
+                    if (pref.secondFilter) {
                         if ("search_2" == key) {
                             ar.getJSONArray(1).put(0, value)
                         } else if ("limit_2" == key) {
@@ -275,10 +275,10 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         }
     }
 
-    private var mPref: DeckPreferenceHack? = null
+    private lateinit var pref: DeckPreferenceHack
     override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
         Timber.d("getSharedPreferences(name=%s)", name)
-        return mPref!!
+        return pref
     }
 
     @Deprecated("Deprecated in Java")
@@ -302,8 +302,8 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
             finish()
             return
         } else {
-            mPref = DeckPreferenceHack()
-            mPref!!.registerOnSharedPreferenceChangeListener(this)
+            pref = DeckPreferenceHack()
+            pref.registerOnSharedPreferenceChangeListener(this)
             addPreferences(col)
             buildLists()
             updateSummaries()
@@ -403,7 +403,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
     protected fun updateSummaries() {
         mAllowCommit = false
         // for all text preferences, set summary as current database value
-        val keys: Set<String> = mPref!!.mValues.keys
+        val keys: Set<String> = pref.mValues.keys
         for (key in keys) {
             val pref = findPreference(key)
             var value: String?
@@ -415,18 +415,18 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
                 val entry = pref.entry
                 entry?.toString() ?: ""
             } else {
-                mPref!!.getString(key, "")
+                this.pref.getString(key, "")
             }
             // update value for EditTexts
             if (pref is EditTextPreference) {
                 pref.text = value
             }
             // update summary
-            if (!mPref!!.mSummaries.containsKey(key)) {
+            if (!this.pref.mSummaries.containsKey(key)) {
                 val s = pref.summary
-                mPref!!.mSummaries[key] = if (s != null) pref.summary.toString() else null
+                this.pref.mSummaries[key] = if (s != null) pref.summary.toString() else null
             }
-            val summ = mPref!!.mSummaries[key]
+            val summ = this.pref.mSummaries[key]
             if (summ != null && summ.contains("XXX")) {
                 pref.summary = summ.replace("XXX", value!!)
             } else {
@@ -442,10 +442,10 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         val newOrderPrefSecond = findPreference("order_2") as ListPreference
         newOrderPref.setEntries(R.array.cram_deck_conf_order_labels)
         newOrderPref.setEntryValues(R.array.cram_deck_conf_order_values)
-        newOrderPref.value = mPref!!.getString("order", "0")
+        newOrderPref.value = pref.getString("order", "0")
         newOrderPrefSecond.setEntries(R.array.cram_deck_conf_order_labels)
         newOrderPrefSecond.setEntryValues(R.array.cram_deck_conf_order_values)
-        newOrderPrefSecond.value = mPref!!.getString("order_2", "5")
+        newOrderPrefSecond.value = pref.getString("order_2", "5")
     }
 
     /**
@@ -470,7 +470,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
     private fun setupSecondFilterListener() {
         val secondFilterSign = findPreference("filterSecond") as CheckBoxPreference
         val secondFilter = findPreference("secondFilter") as PreferenceCategory
-        if (mPref!!.secondFilter) {
+        if (pref.secondFilter) {
             secondFilter.isEnabled = true
             secondFilterSign.isChecked = true
         }
