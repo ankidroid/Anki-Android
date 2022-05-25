@@ -547,35 +547,30 @@ class DeckOptions :
         }
         registerExternalStorageListener()
 
-        if (mCol == null) {
-            Timber.w("DeckOptions - No Collection loaded")
-            finish()
-        } else {
-            mPref = DeckPreferenceHack()
-            // #6068 - constructor can call finish()
-            if (this.isFinishing) {
-                return
-            }
-            mPref.registerOnSharedPreferenceChangeListener(this)
-
-            addPreferencesFromResource(R.xml.deck_options)
-            if (isSchedV2) {
-                enableSchedV2Preferences()
-            }
-            buildLists()
-            updateSummaries()
-            // Set the activity title to include the name of the deck
-            var title = resources.getString(R.string.deckpreferences_title)
-            if (title.contains("XXX")) {
-                title = try {
-                    title.replace("XXX", mDeck.getString("name"))
-                } catch (e: JSONException) {
-                    Timber.w(e)
-                    title.replace("XXX", "???")
-                }
-            }
-            setTitle(title)
+        mPref = DeckPreferenceHack()
+        // #6068 - constructor can call finish()
+        if (this.isFinishing) {
+            return
         }
+        mPref.registerOnSharedPreferenceChangeListener(this)
+
+        addPreferencesFromResource(R.xml.deck_options)
+        if (isSchedV2) {
+            enableSchedV2Preferences()
+        }
+        buildLists()
+        updateSummaries()
+        // Set the activity title to include the name of the deck
+        var title = resources.getString(R.string.deckpreferences_title)
+        if (title.contains("XXX")) {
+            title = try {
+                title.replace("XXX", mDeck.getString("name"))
+            } catch (e: JSONException) {
+                Timber.w(e)
+                title.replace("XXX", "???")
+            }
+        }
+        setTitle(title)
 
         // Add a home button to the actionbar
         supportActionBar!!.setHomeButtonEnabled(true)

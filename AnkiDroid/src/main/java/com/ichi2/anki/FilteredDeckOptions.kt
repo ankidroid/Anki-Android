@@ -300,8 +300,8 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
             mCol!!.decks.current()
         }
         registerExternalStorageListener()
-        if (mCol == null || mDeck!!.isStd) {
-            Timber.w("No Collection loaded or deck is not a dyn deck")
+        if (mDeck!!.isStd) {
+            Timber.w("Deck is not a dyn deck")
             finish()
             return
         } else {
