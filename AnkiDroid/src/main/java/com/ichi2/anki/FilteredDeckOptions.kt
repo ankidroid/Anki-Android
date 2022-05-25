@@ -18,7 +18,6 @@ package com.ichi2.anki
  ****************************************************************************************/
 
 import android.content.*
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.preference.*
 import android.view.KeyEvent
@@ -42,11 +41,10 @@ import timber.log.Timber
 import java.util.*
 
 @NeedsTest("construction + onCreate - do this after converting to fragment-based preferences.")
-class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceChangeListener {
+class FilteredDeckOptions : AppCompatPreferenceActivity() {
     @KotlinCleanup("try to make mDeck non-null / use lateinit")
     private var mDeck: Deck? = null
     private var mAllowCommit = true
-    private var mPrefChanged = false
     private var mUnmountReceiver: BroadcastReceiver? = null
 
     // TODO: not anymore used in libanki?
@@ -255,12 +253,12 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
             } else mValues[key]
         }
 
-        val listeners: MutableList<OnSharedPreferenceChangeListener> = LinkedList()
-        override fun registerOnSharedPreferenceChangeListener(listener: OnSharedPreferenceChangeListener) {
+        val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
+        override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
             listeners.add(listener)
         }
 
-        override fun unregisterOnSharedPreferenceChangeListener(listener: OnSharedPreferenceChangeListener) {
+        override fun unregisterOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
             listeners.remove(listener)
         }
 
@@ -361,13 +359,6 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         return false
     }
 
-    @KotlinCleanup("Find a different method rather than providing a null key in a caller")
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
-        // update values on changed preference
-        updateSummaries()
-        mPrefChanged = true
-    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
             Timber.i("DeckOptions - onBackPressed()")
@@ -378,7 +369,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
     }
 
     private fun closeDeckOptions() {
-        if (mPrefChanged) {
+        if (prefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {
                 col.sched.rebuildDyn(mDeck!!.getLong("id"))
@@ -400,7 +391,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
     }
 
     @Suppress("deprecation") // conversion to fragments tracked in github as #5019
-    protected fun updateSummaries() {
+    override fun updateSummaries() {
         mAllowCommit = false
         // for all text preferences, set summary as current database value
         val keys: Set<String> = mPref!!.mValues.keys
