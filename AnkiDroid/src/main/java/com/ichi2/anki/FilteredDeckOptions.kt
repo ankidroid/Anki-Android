@@ -21,7 +21,6 @@ import android.content.*
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.*
-import android.view.KeyEvent
 import android.view.MenuItem
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
@@ -386,15 +385,6 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
             return true
         }
         return false
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
-            Timber.i("DeckOptions - onBackPressed()")
-            closeWithResult()
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
     }
 
     override fun closeWithResult() {

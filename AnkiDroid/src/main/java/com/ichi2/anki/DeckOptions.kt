@@ -27,7 +27,6 @@ import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceScreen
 import android.text.TextUtils
-import android.view.KeyEvent
 import android.view.MenuItem
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -606,15 +605,6 @@ class DeckOptions :
         }
 
         return false
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
-            Timber.i("DeckOptions - onBackPressed()")
-            closeWithResult()
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
     }
 
     override fun closeWithResult() {
