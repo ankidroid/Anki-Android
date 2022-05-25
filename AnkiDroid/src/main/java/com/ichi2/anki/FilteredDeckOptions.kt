@@ -26,7 +26,6 @@ import android.view.MenuItem
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
@@ -49,7 +48,6 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
     @KotlinCleanup("try to make mDeck non-null / use lateinit")
     private var mDeck: Deck? = null
     private var mAllowCommit = true
-    private var mUnmountReceiver: BroadcastReceiver? = null
 
     // TODO: not anymore used in libanki?
     private val mDynExamples = arrayOf(
@@ -412,15 +410,6 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         slide(this, ActivityTransitionAnimation.Direction.FADE)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onDestroy() {
-        @Suppress("DEPRECATION")
-        super.onDestroy()
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver)
-        }
-    }
-
     @Suppress("deprecation") // conversion to fragments tracked in github as #5019
     override fun updateSummaries() {
         mAllowCommit = false
@@ -468,24 +457,6 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         newOrderPrefSecond.setEntries(R.array.cram_deck_conf_order_labels)
         newOrderPrefSecond.setEntryValues(R.array.cram_deck_conf_order_values)
         newOrderPrefSecond.value = pref.getString("order_2", "5")
-    }
-
-    /**
-     * Call exactly once, during creation
-     * to ensure that if the SD card is ejected
-     * this activity finish.
-     */
-    private fun registerExternalStorageListener() {
-        mUnmountReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                    finish()
-                }
-            }
-        }
-        val iFilter = IntentFilter()
-        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-        registerReceiver(mUnmountReceiver, iFilter)
     }
 
     @Suppress("deprecation")
