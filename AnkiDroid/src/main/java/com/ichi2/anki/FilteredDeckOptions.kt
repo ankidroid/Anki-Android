@@ -45,7 +45,6 @@ import java.util.*
 class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceChangeListener {
     @KotlinCleanup("try to make mDeck non-null / use lateinit")
     private var mDeck: Deck? = null
-    private var mCol: Collection? = null
     private var mAllowCommit = true
     private var mPrefChanged = false
     private var mUnmountReceiver: BroadcastReceiver? = null
@@ -158,7 +157,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
 
                 // save deck
                 try {
-                    mCol!!.decks.save(mDeck!!)
+                    col.decks.save(mDeck!!)
                 } catch (e: RuntimeException) {
                     Timber.e(e, "RuntimeException on saving deck")
                     CrashReportService.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck")
@@ -288,16 +287,14 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         setThemeLegacy(this)
         super.onCreate(savedInstanceState)
         UsageAnalytics.sendAnalyticsScreenView(this)
-        mCol = CollectionHelper.getInstance().getCol(this)
-        if (mCol == null) {
-            finish()
+        if (!isColInitialized()) {
             return
         }
         val extras = intent.extras
         mDeck = if (extras != null && extras.containsKey("did")) {
-            mCol!!.decks.get(extras.getLong("did"))
+            col.decks.get(extras.getLong("did"))
         } else {
-            mCol!!.decks.current()
+            col.decks.current()
         }
         registerExternalStorageListener()
         if (mDeck!!.isStd) {
@@ -307,7 +304,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         } else {
             mPref = DeckPreferenceHack()
             mPref!!.registerOnSharedPreferenceChangeListener(this)
-            addPreferences(mCol!!)
+            addPreferences(col)
             buildLists()
             updateSummaries()
         }
@@ -384,7 +381,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         if (mPrefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {
-                mCol!!.sched.rebuildDyn(mDeck!!.getLong("id"))
+                col.sched.rebuildDyn(mDeck!!.getLong("id"))
             } catch (e: JSONException) {
                 Timber.e(e)
             }
