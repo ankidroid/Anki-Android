@@ -410,11 +410,6 @@ class DeckOptions :
         }
     }
 
-    override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
-        Timber.d("getSharedPreferences(name=%s)", name)
-        return pref
-    }
-
     @KotlinCleanup("Remove this once DeckOptions is an AnkiActivity")
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)

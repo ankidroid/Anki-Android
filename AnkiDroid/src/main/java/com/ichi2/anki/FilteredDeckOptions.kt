@@ -17,7 +17,7 @@ package com.ichi2.anki
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-import android.content.*
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.*
@@ -184,11 +184,6 @@ class FilteredDeckOptions :
         init {
             cacheValues()
         }
-    }
-
-    override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
-        Timber.d("getSharedPreferences(name=%s)", name)
-        return pref
     }
 
     @Deprecated("Deprecated in Java")
