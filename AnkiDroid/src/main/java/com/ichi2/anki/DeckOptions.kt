@@ -59,11 +59,9 @@ import java.util.*
 @KotlinCleanup("IDE lint")
 @KotlinCleanup("All java.lang. methods")
 class DeckOptions :
-    AppCompatPreferenceActivity(),
-    SharedPreferences.OnSharedPreferenceChangeListener {
+    AppCompatPreferenceActivity() {
     private lateinit var mOptions: DeckConfig
     private lateinit var mDeck: Deck
-    private var mPreferenceChanged = false
     private var mUnmountReceiver: BroadcastReceiver? = null
     private lateinit var mPref: DeckPreferenceHack
 
@@ -582,12 +580,6 @@ class DeckOptions :
         return false
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
-        // update values on changed preference
-        mPreferenceChanged = true
-        updateSummaries()
-    }
-
     // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
     @Deprecated("Deprecated in Java") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     override fun onPreferenceTreeClick(preferenceScreen: PreferenceScreen, preference: Preference): Boolean {
@@ -611,7 +603,7 @@ class DeckOptions :
     }
 
     private fun closeWithResult() {
-        if (mPreferenceChanged) {
+        if (prefChanged) {
             setResult(RESULT_OK)
         } else {
             setResult(RESULT_CANCELED)
@@ -630,7 +622,7 @@ class DeckOptions :
 
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     @KotlinCleanup("remove reduntant val res = resources")
-    protected fun updateSummaries() {
+    override fun updateSummaries() {
         val res = resources
         // for all text preferences, set summary as current database value
         for (key in mPref.mValues.keys) {
