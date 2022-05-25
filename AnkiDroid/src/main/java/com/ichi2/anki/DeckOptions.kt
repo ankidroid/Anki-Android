@@ -38,7 +38,6 @@ import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
@@ -61,7 +60,6 @@ import java.util.*
 class DeckOptions :
     AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>() {
     private lateinit var mOptions: DeckConfig
-    private lateinit var mDeck: Deck
     private lateinit var mPref: DeckPreferenceHack
 
     inner class DeckPreferenceHack : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
@@ -77,11 +75,11 @@ class DeckOptions :
         override fun cacheValues() {
             Timber.i("DeckOptions - CacheValues")
             try {
-                mOptions = col.decks.confForDid(mDeck.getLong("id"))
+                mOptions = col.decks.confForDid(deck.getLong("id"))
 
-                mValues["name"] = mDeck.getString("name")
-                mValues["desc"] = mDeck.getString("desc")
-                mValues["deckConf"] = mDeck.getString("conf")
+                mValues["name"] = deck.getString("name")
+                mValues["desc"] = deck.getString("desc")
+                mValues["deckConf"] = deck.getString("conf")
                 // general
                 mValues["maxAnswerTime"] = mOptions.getString("maxTaken")
                 mValues["showAnswerTimer"] = java.lang.Boolean.toString(parseTimerValue(mOptions))
@@ -118,7 +116,7 @@ class DeckOptions :
                 mValues["lapLeechThres"] = lapOptions.getString("leechFails")
                 mValues["lapLeechAct"] = lapOptions.getString("leechAction")
                 // options group management
-                mValues["currentConf"] = col.decks.getConf(mDeck.getLong("conf"))!!.getString("name")
+                mValues["currentConf"] = col.decks.getConf(deck.getLong("conf"))!!.getString("name")
                 // reminders
                 if (mOptions.has("reminder")) {
                     val reminder = mOptions.getJSONObject("reminder")
@@ -202,15 +200,15 @@ class DeckOptions :
                             "autoPlayAudio" -> mOptions.put("autoplay", value)
                             "replayQuestion" -> mOptions.put("replayq", value)
                             "desc" -> {
-                                mDeck.put("desc", value)
-                                col.decks.save(mDeck)
+                                deck.put("desc", value)
+                                col.decks.save(deck)
                             }
                             "newSteps" -> mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((value as String)))
                             "lapSteps" -> mOptions.getJSONObject("lapse").put("delays", StepsPreference.convertToJSON((value as String)))
                             "deckConf" -> {
                                 val newConfId: Long = (value as String).toLong()
                                 mOptions = col.decks.getConf(newConfId)!!
-                                TaskManager.launchCollectionTask(CollectionTask.ConfChange(mDeck, mOptions), confChangeHandler())
+                                TaskManager.launchCollectionTask(CollectionTask.ConfChange(deck, mOptions), confChangeHandler())
                             }
                             "confRename" -> {
                                 val newName = value as String
@@ -231,8 +229,8 @@ class DeckOptions :
                                 if (!TextUtils.isEmpty(newName)) {
                                     // New config clones current config
                                     val id = col.decks.confId(newName, mOptions.toString())
-                                    mDeck.put("conf", id)
-                                    col.decks.save(mDeck)
+                                    deck.put("conf", id)
+                                    col.decks.save(deck)
                                 }
                             }
                             "confRemove" -> if (mOptions.getLong("id") == 1L) {
@@ -265,7 +263,7 @@ class DeckOptions :
                                 }
                             }
                             "confSetSubdecks" -> if (value as Boolean) {
-                                TaskManager.launchCollectionTask(CollectionTask.ConfSetSubdecks(mDeck, mOptions), confChangeHandler())
+                                TaskManager.launchCollectionTask(CollectionTask.ConfSetSubdecks(deck, mOptions), confChangeHandler())
                             }
                             "reminderEnabled" -> {
                                 val reminder = JSONObject()
@@ -378,7 +376,7 @@ class DeckOptions :
                 col.decks.remConf(mOptions.getLong("id"))
                 // Run the CPU intensive re-sort operation in a background thread
                 TaskManager.launchCollectionTask(CollectionTask.ConfRemove(mOptions), confChangeHandler())
-                mDeck.put("conf", 1)
+                deck.put("conf", 1)
             }
 
             private fun confChangeHandler(): ConfChangeHandler {
@@ -442,7 +440,7 @@ class DeckOptions :
             return
         }
         val extras = intent.extras
-        mDeck = if (extras != null && extras.containsKey("did")) {
+        deck = if (extras != null && extras.containsKey("did")) {
             col.decks.get(extras.getLong("did"))
         } else {
             col.decks.current()
@@ -466,7 +464,7 @@ class DeckOptions :
         var title = resources.getString(R.string.deckpreferences_title)
         if (title.contains("XXX")) {
             title = try {
-                title.replace("XXX", mDeck.getString("name"))
+                title.replace("XXX", deck.getString("name"))
             } catch (e: JSONException) {
                 Timber.w(e)
                 title.replace("XXX", "???")
@@ -597,7 +595,7 @@ class DeckOptions :
     private val optionsGroupCount: Int
         get() {
             var count = 0
-            val conf = mDeck.getLong("conf")
+            val conf = deck.getLong("conf")
             @KotlinCleanup("Join both if blocks")
             for (deck in col.decks.all()) {
                 if (deck.isDyn) {
@@ -626,7 +624,7 @@ class DeckOptions :
     private val subdeckCount: Int
         get() {
             var count = 0
-            val did = mDeck.getLong("id")
+            val did = deck.getLong("id")
             val children = col.decks.children(did)
             for (childDid in children.values) {
                 val child = col.decks.get(childDid)
