@@ -21,7 +21,6 @@ import android.content.*
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.*
-import android.view.MenuItem
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -376,15 +375,6 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         if (!result) {
             Timber.w("Failed to remove preference '%s'", key)
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            closeWithResult()
-            return true
-        }
-        return false
     }
 
     override fun closeWithResult() {
