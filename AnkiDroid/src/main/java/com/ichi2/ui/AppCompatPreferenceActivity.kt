@@ -22,10 +22,7 @@ import android.content.*
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceActivity
-import android.view.KeyEvent
-import android.view.MenuInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatDelegate
@@ -172,6 +169,15 @@ abstract class AppCompatPreferenceActivity : PreferenceActivity(), SharedPrefere
     }
 
     protected abstract fun closeWithResult()
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            closeWithResult()
+            return true
+        }
+        return false
+    }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {

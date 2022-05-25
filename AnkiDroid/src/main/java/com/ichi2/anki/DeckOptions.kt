@@ -27,7 +27,6 @@ import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceScreen
 import android.text.TextUtils
-import android.view.MenuItem
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
@@ -583,15 +582,6 @@ class DeckOptions :
         // Add a home button to the actionbar
         supportActionBar!!.setHomeButtonEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-    }
-
-    @Deprecated("Deprecated in Java") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            closeWithResult()
-            return true
-        }
-        return false
     }
 
     // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611
