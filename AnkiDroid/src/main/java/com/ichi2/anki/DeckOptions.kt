@@ -60,7 +60,6 @@ import java.util.*
 class DeckOptions :
     AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>() {
     private lateinit var mOptions: DeckConfig
-    private lateinit var mPref: DeckPreferenceHack
 
     inner class DeckPreferenceHack : AppCompatPreferenceActivity<DeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
         @Suppress("Deprecation")
@@ -413,7 +412,7 @@ class DeckOptions :
 
     override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
         Timber.d("getSharedPreferences(name=%s)", name)
-        return mPref
+        return pref
     }
 
     @KotlinCleanup("Remove this once DeckOptions is an AnkiActivity")
@@ -447,12 +446,12 @@ class DeckOptions :
         }
         registerExternalStorageListener()
 
-        mPref = DeckPreferenceHack()
+        pref = DeckPreferenceHack()
         // #6068 - constructor can call finish()
         if (this.isFinishing) {
             return
         }
-        mPref.registerOnSharedPreferenceChangeListener(this)
+        pref.registerOnSharedPreferenceChangeListener(this)
 
         addPreferencesFromResource(R.xml.deck_options)
         if (isSchedV2) {
@@ -505,7 +504,7 @@ class DeckOptions :
     override fun updateSummaries() {
         val res = resources
         // for all text preferences, set summary as current database value
-        for (key in mPref.mValues.keys) {
+        for (key in pref.mValues.keys) {
             val pref = findPreference(key)
             if ("deckConf" == key) {
                 var groupName = optionsGroupName
@@ -524,15 +523,15 @@ class DeckOptions :
                 val lp = pref
                 if (lp.entry != null) lp.entry.toString() else ""
             } else {
-                mPref.getString(key, "")
+                this.pref.getString(key, "")
             }
             // update summary
             @KotlinCleanup("Remove `val s` and use pref.summary?.toString()")
-            if (!mPref.mSummaries.containsKey(key)) {
+            if (!this.pref.mSummaries.containsKey(key)) {
                 val s = pref.summary
-                mPref.mSummaries[key] = if (s != null) pref.summary.toString() else null
+                this.pref.mSummaries[key] = if (s != null) pref.summary.toString() else null
             }
-            val summ = mPref.mSummaries[key]
+            val summ = this.pref.mSummaries[key]
             @KotlinCleanup("pref.summary = if ...")
             if (summ != null && summ.contains("XXX")) {
                 pref.summary = summ.replace("XXX", value!!)
@@ -561,17 +560,17 @@ class DeckOptions :
         }
         deckConfPref.entries = confLabels
         deckConfPref.entryValues = confValues
-        deckConfPref.value = mPref.getString("deckConf", "0")
+        deckConfPref.value = pref.getString("deckConf", "0")
 
         val newOrderPref = findPreference("newOrder") as ListPreference
         newOrderPref.setEntries(R.array.new_order_labels)
         newOrderPref.setEntryValues(R.array.new_order_values)
-        newOrderPref.value = mPref.getString("newOrder", "0")
+        newOrderPref.value = pref.getString("newOrder", "0")
 
         val leechActPref = findPreference("lapLeechAct") as ListPreference
         leechActPref.setEntries(R.array.leech_action_labels)
         leechActPref.setEntryValues(R.array.leech_action_values)
-        leechActPref.value = mPref.getString(
+        leechActPref.value = pref.getString(
             "lapLeechAct",
             Integer.toString(Consts.LEECH_SUSPEND)
         )
@@ -613,7 +612,7 @@ class DeckOptions :
      */
     private val optionsGroupName: String
         get() {
-            val confId = mPref.getLong("deckConf", 0)
+            val confId = pref.getLong("deckConf", 0)
             return col.decks.getConf(confId)!!.getString("name")
         }
 
