@@ -31,7 +31,11 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.libanki.Collection
+import com.ichi2.utils.HashUtil
+import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
+import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * A [android.preference.PreferenceActivity] which implements and proxies the necessary calls
@@ -40,15 +44,131 @@ import timber.log.Timber
  * This technique can be used with an [android.app.Activity] class, not just
  * [android.preference.PreferenceActivity].
  */
-abstract class AppCompatPreferenceActivity : PreferenceActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceActivity<PreferenceHack>.AbstractPreferenceHack> :
+    PreferenceActivity(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
     private var mDelegate: AppCompatDelegate? = null
-    protected lateinit var col: Collection
-        private set
-
     fun isColInitialized() = ::col.isInitialized
-
     protected var prefChanged = false
     lateinit var unmountReceiver: BroadcastReceiver
+    protected lateinit var col: Collection
+        private set
+    protected lateinit var pref: PreferenceHack
+
+    abstract inner class AbstractPreferenceHack : SharedPreferences {
+        val mValues: MutableMap<String, String> = HashUtil.HashMapInit(30) // At most as many as in cacheValues
+        val mSummaries: MutableMap<String, String?> = HashMap()
+        protected val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
+
+        @KotlinCleanup("Use kotlin's methods instead of java's")
+        @KotlinCleanup("scope function")
+        abstract fun cacheValues()
+
+        abstract inner class Editor : SharedPreferences.Editor {
+            protected var update = ContentValues()
+
+            override fun clear(): SharedPreferences.Editor {
+                Timber.d("clear()")
+                update = ContentValues()
+                return this
+            }
+
+            override fun putBoolean(key: String, value: Boolean): SharedPreferences.Editor {
+                update.put(key, value)
+                return this
+            }
+
+            override fun putFloat(key: String, value: Float): SharedPreferences.Editor {
+                update.put(key, value)
+                return this
+            }
+
+            override fun putInt(key: String, value: Int): SharedPreferences.Editor {
+                update.put(key, value)
+                return this
+            }
+
+            override fun putLong(key: String, value: Long): SharedPreferences.Editor {
+                update.put(key, value)
+                return this
+            }
+
+            override fun putString(key: String, value: String?): SharedPreferences.Editor {
+                update.put(key, value)
+                return this
+            }
+
+            override fun remove(key: String): SharedPreferences.Editor {
+                Timber.d("Editor.remove(key=%s)", key)
+                update.remove(key)
+                return this
+            }
+
+            override fun apply() {
+                commit()
+            }
+
+            // @Override On Android 1.5 this is not Override
+            override fun putStringSet(arg0: String, arg1: Set<String>?): SharedPreferences.Editor? {
+                // TODO Auto-generated method stub
+                return null
+            }
+
+            @Suppress("unused")
+            @KotlinCleanup("maybe remove this")
+            val deckPreferenceHack: AbstractPreferenceHack
+                get() = this@AbstractPreferenceHack
+        }
+
+        override fun contains(key: String): Boolean {
+            return mValues.containsKey(key)
+        }
+
+        override fun getAll(): Map<String, *> {
+            return mValues
+        }
+
+        override fun getBoolean(key: String, defValue: Boolean): Boolean {
+            return java.lang.Boolean.parseBoolean(this.getString(key, java.lang.Boolean.toString(defValue)))
+        }
+
+        override fun getFloat(key: String, defValue: Float): Float {
+            return this.getString(key, java.lang.Float.toString(defValue))!!.toFloat()
+        }
+
+        override fun getInt(key: String, defValue: Int): Int {
+            return this.getString(key, Integer.toString(defValue))!!.toInt()
+        }
+
+        override fun getLong(key: String, defValue: Long): Long {
+            return this.getString(key, java.lang.Long.toString(defValue))!!.toLong()
+        }
+
+        override fun getString(key: String, defValue: String?): String? {
+            Timber.d("getString(key=%s, defValue=%s)", key, defValue)
+            return if (!mValues.containsKey(key)) {
+                defValue
+            } else mValues[key]
+        }
+
+        override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+            listeners.add(listener)
+        }
+
+        override fun unregisterOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+            listeners.remove(listener)
+        }
+
+        // @Override On Android 1.5 this is not Override
+        override fun getStringSet(arg0: String, arg1: Set<String>?): Set<String>? {
+            // TODO Auto-generated method stub
+            return null
+        }
+
+        init {
+            cacheValues()
+        }
+    }
 
     @Deprecated("Deprecated in Java")
     override fun onCreate(savedInstanceState: Bundle?) {
