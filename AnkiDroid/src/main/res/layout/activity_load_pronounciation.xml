@@ -16,6 +16,8 @@
 
     </LinearLayout>
 
-    <include layout="@layout/progress_bar_layout" />
+    <include
+        android:id="@+id/progress_bar"
+        layout="@layout/progress_bar_layout" />
 
 </FrameLayout>

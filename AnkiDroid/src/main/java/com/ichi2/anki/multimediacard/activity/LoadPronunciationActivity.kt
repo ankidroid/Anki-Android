@@ -29,7 +29,6 @@ import android.widget.*
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.databinding.ActivityLoadPronounciationBinding
-import com.ichi2.anki.databinding.ProgressBarLayoutBinding
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus
 import com.ichi2.anki.runtimetools.TaskOperations.stopTaskGracefully
@@ -54,14 +53,12 @@ import java.util.*
  */
 open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListener {
     private lateinit var binding: ActivityLoadPronounciationBinding
-    private lateinit var progressBarLayoutBinding: ProgressBarLayoutBinding
     private var mStopped = false
     private lateinit var source: String
     private lateinit var mTranslationAddress: String
     private lateinit var mPronunciationAddress: String
     private lateinit var mMp3Address: String
     private lateinit var mActivity: LoadPronunciationActivity
-
     private var mPostTranslation: BackgroundPost? = null
     private var mPostPronunciation: BackgroundPost? = null
     private var mDownloadMp3Task: DownloadFileTask? = null
@@ -82,7 +79,6 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
             }
         }
         binding = ActivityLoadPronounciationBinding.inflate(layoutInflater)
-        progressBarLayoutBinding = ProgressBarLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         source = intent.extras!!.getString(EXTRA_SOURCE)!!
         mLanguageLister = LanguageListerBeolingus()
@@ -117,13 +113,13 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
 
     private fun showProgressBar(title: CharSequence, message: CharSequence) {
         binding.layoutInLoadPronActivity.visibility = View.GONE
-        progressBarLayoutBinding.progressBarLayout.visibility = View.VISIBLE
-        progressBarLayoutBinding.progressBarLayoutTitle.text = title
-        progressBarLayoutBinding.progressBarLayoutMessage.text = message
+        binding.progressBar.progressBarLayout.visibility = View.VISIBLE
+        binding.progressBar.progressBarLayoutTitle.text = title
+        binding.progressBar.progressBarLayoutMessage.text = message
     }
 
     private fun hideProgressBar() {
-        progressBarLayoutBinding.progressBarLayout.visibility = View.GONE
+        binding.progressBar.progressBarLayout.visibility = View.GONE
         binding.layoutInLoadPronActivity.visibility = View.VISIBLE
     }
 
