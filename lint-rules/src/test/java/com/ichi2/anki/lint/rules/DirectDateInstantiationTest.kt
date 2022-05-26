@@ -1,99 +1,100 @@
-package com.ichi2.anki.lint.rules;
+package com.ichi2.anki.lint.rules
 
-import org.intellij.lang.annotations.Language;
-import org.junit.Test;
+import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile
+import com.android.tools.lint.checks.infrastructure.TestLintTask
+import com.google.common.annotations.Beta
+import org.intellij.lang.annotations.Language
+import org.junit.Assert
+import org.junit.Test
 
-import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
-import static com.android.tools.lint.checks.infrastructure.TestLintTask.lint;
-import static org.junit.Assert.assertTrue;
-
-public class DirectDateInstantiationTest {
+@Suppress("UnstableApiUsage")
+@Beta
+class DirectDateInstantiationTest {
     @Language("JAVA")
-    private final String stubDate = "                         \n" +
-            "package java.util;                               \n" +
-            "                                                 \n" +
-            "public class Date {                              \n" +
-            "                                                 \n" +
-            "    public Date() {                              \n" +
-            "                                                 \n" +
-            "    }                                            \n" +
-            "    public Date(long time) {                     \n" +
-            "                                                 \n" +
-            "    }                                            \n" +
-            "}                                                \n";
+    private val stubDate = """                         
+package java.util;                               
+                                                 
+public class Date {                              
+                                                 
+    public Date() {                              
+                                                 
+    }                                            
+    public Date(long time) {                     
+                                                 
+    }                                            
+}                                                
+"""
 
     @Language("JAVA")
-    private final String javaFileToBeTested = "               \n" +
-            "package com.ichi2.anki.lint.rules;               \n" +
-            "                                                 \n" +
-            "import java.util.Date;                           \n" +
-            "                                                 \n" +
-            "public class TestJavaClass {                     \n" +
-            "                                                 \n" +
-            "    public static void main(String[] args) {     \n" +
-            "        Date d = new Date();                     \n" +
-            "    }                                            \n" +
-            "}                                                \n";
-    @Language("JAVA")
-    private final String javaFileWithTime = "                 \n" +
-            "package com.ichi2.anki.lint.rules;               \n" +
-            "                                                 \n" +
-            "import java.util.Date;                           \n" +
-            "                                                 \n" +
-            "public abstract class Time {                     \n" +
-            "                                                 \n" +
-            "    public static void main(String[] args) {     \n" +
-            "        Date d = new Date();                     \n" +
-            "    }                                            \n" +
-            "}                                                \n";
-    @Language("JAVA")
-    private final String javaFileUsingDateWithLong = "        \n" +
-            "package com.ichi2.anki.lint.rules;               \n" +
-            "                                                 \n" +
-            "import java.util.Date;                           \n" +
-            "                                                 \n" +
-            "public class TestJavaClass {                     \n" +
-            "                                                 \n" +
-            "    public static void main(String[] args) {     \n" +
-            "        Date d = new Date(1L);                   \n" +
-            "    }                                            \n" +
-            "}                                                \n";
+    private val javaFileToBeTested = """               
+package com.ichi2.anki.lint.rules;               
+                                                 
+import java.util.Date;                           
+                                                 
+public class TestJavaClass {                     
+                                                 
+    public static void main(String[] args) {     
+        Date d = new Date();                     
+    }                                            
+}                                                
+"""
 
+    @Language("JAVA")
+    private val javaFileWithTime = """                 
+package com.ichi2.anki.lint.rules;               
+                                                 
+import java.util.Date;                           
+                                                 
+public abstract class Time {                     
+                                                 
+    public static void main(String[] args) {     
+        Date d = new Date();                     
+    }                                            
+}                                                
+"""
+
+    @Language("JAVA")
+    private val javaFileUsingDateWithLong = """        
+package com.ichi2.anki.lint.rules;               
+                                                 
+import java.util.Date;                           
+                                                 
+public class TestJavaClass {                     
+                                                 
+    public static void main(String[] args) {     
+        Date d = new Date(1L);                   
+    }                                            
+}                                                
+"""
 
     @Test
-    public void showsErrorsForInvalidUsage() {
-        lint().
-                allowMissingSdk().
-                allowCompilationErrors()
-                .files(create(stubDate), create(javaFileToBeTested))
-                .issues(DirectDateInstantiation.ISSUE)
-                .run()
-                .expectErrorCount(1)
-                .check(output -> {
-                    assertTrue(output.contains(DirectDateInstantiation.ID));
-                    assertTrue(output.contains(DirectDateInstantiation.DESCRIPTION));
-                });
+    fun showsErrorsForInvalidUsage() {
+        TestLintTask.lint().allowMissingSdk().allowCompilationErrors()
+            .files(JavaTestFile.create(stubDate), JavaTestFile.create(javaFileToBeTested))
+            .issues(DirectDateInstantiation.ISSUE)
+            .run()
+            .expectErrorCount(1)
+            .check({ output: String ->
+                Assert.assertTrue(output.contains(DirectDateInstantiation.ID))
+                Assert.assertTrue(output.contains(DirectDateInstantiation.DESCRIPTION))
+            })
     }
 
     @Test
-    public void allowsUsageInTimeClass() {
-        lint().
-                allowMissingSdk().
-                allowCompilationErrors()
-                .files(create(stubDate), create(javaFileWithTime))
-                .issues(DirectDateInstantiation.ISSUE)
-                .run()
-                .expectClean();
+    fun allowsUsageInTimeClass() {
+        TestLintTask.lint().allowMissingSdk().allowCompilationErrors()
+            .files(JavaTestFile.create(stubDate), JavaTestFile.create(javaFileWithTime))
+            .issues(DirectDateInstantiation.ISSUE)
+            .run()
+            .expectClean()
     }
 
     @Test
-    public void allowsUsageWithLongValue() {
-        lint().
-                allowMissingSdk().
-                allowCompilationErrors()
-                .files(create(stubDate), create(javaFileUsingDateWithLong))
-                .issues(DirectDateInstantiation.ISSUE)
-                .run()
-                .expectClean();
+    fun allowsUsageWithLongValue() {
+        TestLintTask.lint().allowMissingSdk().allowCompilationErrors()
+            .files(JavaTestFile.create(stubDate), JavaTestFile.create(javaFileUsingDateWithLong))
+            .issues(DirectDateInstantiation.ISSUE)
+            .run()
+            .expectClean()
     }
 }
