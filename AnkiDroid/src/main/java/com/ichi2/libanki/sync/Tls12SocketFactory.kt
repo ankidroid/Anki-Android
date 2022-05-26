@@ -13,143 +13,86 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.libanki.sync
 
-package com.ichi2.libanki.sync;
-
-import android.os.Build;
-
-import com.ichi2.anki.AnkiDroidApp;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.security.KeyStore;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-
-import okhttp3.ConnectionSpec;
-import okhttp3.OkHttpClient;
-import okhttp3.TlsVersion;
-import timber.log.Timber;
+import android.os.Build
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.utils.KotlinCleanup
+import okhttp3.ConnectionSpec
+import okhttp3.OkHttpClient
+import okhttp3.TlsVersion
+import timber.log.Timber
+import java.io.IOException
+import java.net.InetAddress
+import java.net.Socket
+import java.security.KeyStore
+import java.security.cert.Certificate
+import java.security.cert.CertificateException
+import java.security.cert.CertificateFactory
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocket
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.TrustManager
 
 /**
  * Enables TLS v1.2 when creating SSLSockets.
- * <p/>
+ *
+ *
  * This hack is currently only maintained with API >= 21 for some Samsung API21 phones
  *
  * @link https://developer.android.com/reference/javax/net/ssl/SSLSocket.html
  * @see SSLSocketFactory
  */
-public class Tls12SocketFactory extends SSLSocketFactory {
-    private static final String[] TLS_V12_ONLY =  {"TLSv1.2"};
+class Tls12SocketFactory private constructor(
+    private val delegate: SSLSocketFactory
+) : SSLSocketFactory() {
 
-    private final SSLSocketFactory mDelegate;
-
-
-    public static OkHttpClient.Builder enableTls12OnPreLollipop(OkHttpClient.Builder client) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 && "Samsung".equals(Build.MANUFACTURER)) {
-            try {
-                Timber.d("Creating unified TrustManager");
-                Certificate cert = getUserTrustRootCertificate();
-
-                String keyStoreType = KeyStore.getDefaultType();
-                KeyStore keyStore = KeyStore.getInstance(keyStoreType);
-                keyStore.load(null, null);
-                keyStore.setCertificateEntry("ca", cert);
-                UnifiedTrustManager trustManager = new UnifiedTrustManager(keyStore);
-                Timber.d("Finished: Creating unified TrustManager");
-
-                SSLContext sc = SSLContext.getInstance("TLSv1.2");
-                sc.init(null, new TrustManager[] {trustManager}, null);
-                Tls12SocketFactory socketFactory = new Tls12SocketFactory(sc.getSocketFactory());
-                client.sslSocketFactory(socketFactory, trustManager);
-
-                ConnectionSpec cs = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
-                        .tlsVersions(TlsVersion.TLS_1_2)
-                        .build();
-
-                List<ConnectionSpec> specs = new ArrayList<>(3);
-                specs.add(cs);
-                specs.add(ConnectionSpec.COMPATIBLE_TLS);
-                specs.add(ConnectionSpec.CLEARTEXT);
-
-                client.connectionSpecs(specs);
-            } catch (Exception exc) {
-                Timber.e(exc, "Error while setting TLS 1.2");
-            }
-        }
-
-        return client;
+    override fun getDefaultCipherSuites(): Array<String> {
+        return delegate.defaultCipherSuites
     }
 
-
-    private static Certificate getUserTrustRootCertificate() throws CertificateException, IOException {
-        CertificateFactory cf = CertificateFactory.getInstance("X.509");
-        try (InputStream crt = AnkiDroidApp.getResourceAsStream("assets/USERTrust_RSA.crt")) {
-            return cf.generateCertificate(crt);
-        }
+    override fun getSupportedCipherSuites(): Array<String> {
+        return delegate.supportedCipherSuites
     }
 
-
-    private Tls12SocketFactory(SSLSocketFactory base) {
-        this.mDelegate = base;
+    @Throws(IOException::class)
+    override fun createSocket(s: Socket, host: String, port: Int, autoClose: Boolean): Socket {
+        return patch(delegate.createSocket(s, host, port, autoClose))
     }
 
-
-    @Override
-    public String[] getDefaultCipherSuites() {
-        return mDelegate.getDefaultCipherSuites();
+    @Throws(IOException::class)
+    override fun createSocket(host: String, port: Int): Socket {
+        return patch(delegate.createSocket(host, port))
     }
 
-
-    @Override
-    public String[] getSupportedCipherSuites() {
-        return mDelegate.getSupportedCipherSuites();
+    @Throws(IOException::class)
+    override fun createSocket(
+        host: String,
+        port: Int,
+        localHost: InetAddress,
+        localPort: Int
+    ): Socket {
+        return patch(delegate.createSocket(host, port, localHost, localPort))
     }
 
-
-    @Override
-    public Socket createSocket(Socket s, String host, int port, boolean autoClose) throws IOException {
-        return patch(mDelegate.createSocket(s, host, port, autoClose));
+    @Throws(IOException::class)
+    override fun createSocket(host: InetAddress, port: Int): Socket {
+        return patch(delegate.createSocket(host, port))
     }
 
-
-    @Override
-    public Socket createSocket(String host, int port) throws IOException {
-        return patch(mDelegate.createSocket(host, port));
+    @Throws(IOException::class)
+    override fun createSocket(
+        address: InetAddress,
+        port: Int,
+        localAddress: InetAddress,
+        localPort: Int
+    ): Socket {
+        return patch(delegate.createSocket(address, port, localAddress, localPort))
     }
 
-
-    @Override
-    public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException {
-        return patch(mDelegate.createSocket(host, port, localHost, localPort));
-    }
-
-
-    @Override
-    public Socket createSocket(InetAddress host, int port) throws IOException {
-        return patch(mDelegate.createSocket(host, port));
-    }
-
-
-    @Override
-    public Socket createSocket(InetAddress address, int port, InetAddress localAddress, int localPort) throws IOException {
-        return patch(mDelegate.createSocket(address, port, localAddress, localPort));
-    }
-
-
-    private Socket patch(Socket s) {
-        if (s instanceof SSLSocket) {
-            ((SSLSocket) s).setEnabledProtocols(TLS_V12_ONLY);
+    private fun patch(s: Socket): Socket {
+        if (s is SSLSocket) {
+            s.enabledProtocols = TLS_V12_ONLY
         }
 
         // Note if progress tracking needs to be more granular than default OkHTTP buffer, do this:
@@ -162,7 +105,54 @@ public class Tls12SocketFactory extends SSLSocketFactory {
 //        } catch (SocketException se) {
 //            Timber.e(se, "Unable to set socket send buffer size");
 //        }
+        return s
+    }
 
-        return s;
+    companion object {
+        private val TLS_V12_ONLY = arrayOf("TLSv1.2")
+
+        @JvmStatic
+        fun enableTls12OnPreLollipop(client: OkHttpClient.Builder): OkHttpClient.Builder {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 && "Samsung" == Build.MANUFACTURER) {
+                try {
+                    Timber.d("Creating unified TrustManager")
+                    val cert = userTrustRootCertificate
+
+                    val keyStoreType = KeyStore.getDefaultType()
+                    val keyStore = KeyStore.getInstance(keyStoreType)
+                    keyStore.load(null, null)
+                    keyStore.setCertificateEntry("ca", cert)
+                    val trustManager = UnifiedTrustManager(keyStore)
+                    Timber.d("Finished: Creating unified TrustManager")
+
+                    val sc = SSLContext.getInstance("TLSv1.2")
+                    sc.init(null, arrayOf<TrustManager>(trustManager), null)
+                    val socketFactory = Tls12SocketFactory(sc.socketFactory)
+                    client.sslSocketFactory(socketFactory, trustManager)
+
+                    val cs: ConnectionSpec = ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
+                        .tlsVersions(TlsVersion.TLS_1_2)
+                        .build()
+
+                    val specs: MutableList<ConnectionSpec> = ArrayList(3)
+                    specs.add(cs)
+                    specs.add(ConnectionSpec.COMPATIBLE_TLS)
+                    specs.add(ConnectionSpec.CLEARTEXT)
+                    client.connectionSpecs(specs)
+                } catch (exc: Exception) {
+                    Timber.e(exc, "Error while setting TLS 1.2")
+                }
+            }
+            return client
+        }
+
+        @get:Throws(CertificateException::class, IOException::class)
+        @KotlinCleanup("has one usage inside this class, try to inline this property")
+        private val userTrustRootCertificate: Certificate
+            get() {
+                val cf = CertificateFactory.getInstance("X.509")
+                AnkiDroidApp.getResourceAsStream("assets/USERTrust_RSA.crt")
+                    .use { crt -> return cf.generateCertificate(crt) }
+            }
     }
 }
