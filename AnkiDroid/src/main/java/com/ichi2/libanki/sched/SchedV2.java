@@ -2713,7 +2713,7 @@ public class SchedV2 extends AbstractSched {
         Random rnd = new Random();
         for (long id : ids) {
             int r = rnd.nextInt(imax - imin + 1) + imin;
-            d.add(civl ? new Object[] {r,  r + t, mCol.usn(), mod, RESCHEDULE_FACTOR, id }:
+            d.add(civl ? new Object[] {Math.max(1, r),  r + t, mCol.usn(), mod, RESCHEDULE_FACTOR, id }:
                     new Object[] {r + t, mCol.usn(), mod, RESCHEDULE_FACTOR, id });
         }
         remFromDyn(ids);
