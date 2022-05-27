@@ -163,7 +163,7 @@ class SchedulerService {
         override fun execute(): RepositionResetResult {
             val inputCards = dismissNotes(cardIds) { cards ->
                 return@dismissNotes rescheduleRepositionReset(cards, R.string.card_editor_reschedule_card) {
-                    col.sched.reschedCards(cardIds, interval, interval)
+                    col.sched.reschedCards(cardIds, interval, interval, false)
                 }
             }
             return inputCards.map { x -> NextCard(x.first.orElse(null), x.second) }
