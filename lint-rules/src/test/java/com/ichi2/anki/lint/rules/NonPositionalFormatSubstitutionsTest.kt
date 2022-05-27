@@ -92,7 +92,7 @@ class NonPositionalFormatSubstitutionsTest {
     """.trimIndent()
 
     @Test
-    fun errors_if_ambiguous() {
+    fun errorsIfAmbiguous() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -103,7 +103,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun no_errors_if_valid() {
+    fun `No Errors If Valid`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -114,7 +114,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun no_errors_if_unambiguous() {
+    fun `No Errors If Unambiguous`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -125,7 +125,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun no_errors_if_encoded() {
+    fun No Errors If Encoded`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -136,7 +136,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun valid_plural_passed() {
+    fun validPluralPassed() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -147,7 +147,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun plural_partial_flags() {
+    fun pluralPartialFlags() {
         // If one plural has $1, $2 etc... the other should as well
         TestLintTask.lint()
             .allowMissingSdk()
@@ -159,7 +159,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun errors_on_plural_issue() {
+    fun `Errors On Plural Issue`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -170,7 +170,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun plural_integration_test() {
+    fun `Plural Integration Test`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -181,7 +181,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun plural_integration_test_positional_and_nothing() {
+    fun `Plural Integration Test Positional And Nothing() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
