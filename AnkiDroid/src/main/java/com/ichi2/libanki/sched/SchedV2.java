@@ -2699,24 +2699,27 @@ public class SchedV2 extends AbstractSched {
 
 
     /**
-     * Put cards in review queue with a new interval in days (min, max).
+     * Put cards in review queue in days (min, max).
      *
      * @param ids The list of card ids to be affected
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
+     * @param civl The boolean indicate if changing the interval
      */
-    public void reschedCards(@NonNull List<Long> ids, int imin, int imax) {
+    public void reschedCards(@NonNull List<Long> ids, int imin, int imax, boolean civl) {
         ArrayList<Object[]> d = new ArrayList<>(ids.size());
         int t = mToday;
         long mod = getTime().intTime();
         Random rnd = new Random();
         for (long id : ids) {
             int r = rnd.nextInt(imax - imin + 1) + imin;
-            d.add(new Object[] { Math.max(1, r), r + t, mCol.usn(), mod, RESCHEDULE_FACTOR, id });
+            d.add(civl ? new Object[] {r,  r + t, mCol.usn(), mod, RESCHEDULE_FACTOR, id }:
+                    new Object[] {r + t, mCol.usn(), mod, RESCHEDULE_FACTOR, id });
         }
         remFromDyn(ids);
+        String ivlQ = civl ? ",ivl=?" : "";
         mCol.getDb().executeMany(
-                "update cards set type=" + Consts.CARD_TYPE_REV + ",queue=" + Consts.QUEUE_TYPE_REV + ",ivl=?,due=?,odue=0, " +
+                "update cards set type=" + Consts.CARD_TYPE_REV + ",queue=" + Consts.QUEUE_TYPE_REV + ivlQ +",due=?,odue=0, " +
                         "usn=?,mod=?,factor=? where id=?", d);
         mCol.log(ids);
     }
