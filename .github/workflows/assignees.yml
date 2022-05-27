@@ -1,0 +1,27 @@
+name: Remove Assignees
+
+on:
+  pull_request_target:
+    types: [ closed ]
+
+jobs:
+  milestone:
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+
+            // remove all the assignees of the issue
+            await github.issues.removeAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+            });
+
+            console.log("Removed Assignees");
