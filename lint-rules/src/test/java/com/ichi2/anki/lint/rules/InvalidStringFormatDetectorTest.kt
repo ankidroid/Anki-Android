@@ -55,7 +55,7 @@ class InvalidStringFormatDetectorTest {
     """.trimMargin()
 
     @Test
-    fun error_if_string_format_invalid() {
+    fun `Error If String Format Invalid`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -67,7 +67,7 @@ class InvalidStringFormatDetectorTest {
     }
 
     @Test
-    fun no_error_if_string_format_valid() {
+    fun `No Error If String Format Valid`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
