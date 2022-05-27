@@ -125,7 +125,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun No Errors If Encoded`() {
+    fun `No Errors If Encoded`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -170,7 +170,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun `Plural Integration Test`() {
+    fun pluralIntegrationTest() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -181,7 +181,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun `Plural Integration Test Positional And Nothing() {
+    fun `Plural Integration Test Positional And Nothing`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
