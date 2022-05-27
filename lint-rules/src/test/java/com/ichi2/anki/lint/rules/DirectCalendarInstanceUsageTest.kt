@@ -53,7 +53,7 @@ public abstract class Time {
 """
 
     @Test
-    fun showsErrorForInvalidUsage() {
+    fun `Shows Error For Invalid Usage`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -68,7 +68,7 @@ public abstract class Time {
     }
 
     @Test
-    fun allowsUsageInTimeClass() {
+    fun `Allows Usage In Time Class`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
