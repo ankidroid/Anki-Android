@@ -331,13 +331,14 @@ abstract class AbstractSched {
     abstract fun forgetCards(ids: List<Long?>)
 
     /**
-     * Put cards in review queue with a new interval in days (min, max).
+     * Put cards in review queue in days (min, max).
      *
      * @param ids The list of card ids to be affected
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
+     * @param civl The boolean indicate if changing the interval
      */
-    abstract fun reschedCards(ids: List<Long?>, imin: Int, imax: Int)
+    abstract fun reschedCards(ids: List<Long?>, imin: Int, imax: Int, civl: Boolean)
 
     /**
      * @param ids Ids of cards to reset for export
