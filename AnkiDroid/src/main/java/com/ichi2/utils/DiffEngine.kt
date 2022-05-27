@@ -51,36 +51,36 @@ open class DiffEngine {
         return arrayOf(prettyTyped.toString(), prettyCorrect.toString())
     }
 
-    @KotlinCleanup("in")
     companion object {
-        private fun wrapBad(`in`: String): String {
+        private fun wrapBad(s: String): String {
             // We do the comparison with “<”s &c. in the strings, but should of course not just put those in the HTML
             // output. Also, it looks like the Android WebView swallows single “\”s, so replace those with the entity by
             // hand.
-            return "<span class=\"typeBad\">" + escapeHtml(`in`) + "</span>"
+            return "<span class=\"typeBad\">" + escapeHtml(s) + "</span>"
         }
 
         @CheckResult
-        fun wrapGood(`in`: String?): String {
-            return "<span class=\"typeGood\">" + escapeHtml(`in`) + "</span>"
+        fun wrapGood(s: String?): String {
+            return "<span class=\"typeGood\">" + escapeHtml(s) + "</span>"
         }
 
         @JvmStatic
         @CheckResult
-        fun wrapMissing(`in`: String?): String {
-            return "<span class=\"typeMissed\">" + escapeHtml(`in`) + "</span>"
+        fun wrapMissing(s: String?): String {
+            return "<span class=\"typeMissed\">" + escapeHtml(s) + "</span>"
         }
 
+        /** Prevents combining marks not getting highlighted properly if a span starts with them, by adding a "&nbsp;" before them (#10665) */
         @JvmStatic
-        fun escapeLoneMarks(`in`: String): String {
-            if (`in`[0].category.code.startsWith("M"))
-                return "\\xa0$`in`"
-            return `in`
+        fun escapeLoneMarks(s: String): String {
+            if (s[0].category.code.startsWith("M"))
+                return "\\xa0$s"
+            return s
         }
 
         /** Escapes dangerous HTML tags (for XSS-like issues/rendering problems)  */
-        protected fun escapeHtml(`in`: String?): String {
-            return TextUtils.htmlEncode(`in`)
+        protected fun escapeHtml(s: String?): String {
+            return TextUtils.htmlEncode(s)
                 .replace("\\xa0", "&nbsp;")
                 .replace("\\", "&#x5c;")
         }
