@@ -76,6 +76,7 @@ object RescheduleDialog : IntegerDialog() {
      $message
      
      ${resources.getQuantityString(R.plurals.reschedule_card_dialog_interval, currentCard.ivl, currentCard.ivl)}
+     ${"Interval won't change by default."}
         """.trimIndent()
     }
 }
