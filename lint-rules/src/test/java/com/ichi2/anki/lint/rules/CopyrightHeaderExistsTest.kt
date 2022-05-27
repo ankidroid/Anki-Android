@@ -57,7 +57,7 @@ class CopyrightHeaderExistsTest {
     """.trimIndent()
 
     @Test
-    fun fileWithCopyrightHeaderPasses() {
+    fun `File With Copyright Header Passes`() {
         lint()
             .allowMissingSdk()
             .files(create(mCopyrightHeader))
@@ -67,7 +67,7 @@ class CopyrightHeaderExistsTest {
     }
 
     @Test
-    fun fileWithNoCopyrightHeaderFails() {
+    fun `File With No Copyright Header Fails`() {
         lint()
             .allowMissingSdk()
             .allowCompilationErrors() // import failures
