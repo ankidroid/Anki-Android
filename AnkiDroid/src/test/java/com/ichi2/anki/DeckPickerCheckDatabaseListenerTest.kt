@@ -29,8 +29,7 @@ import org.robolectric.Robolectric
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("IDE lint")
 class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
-    @KotlinCleanup("lateinit")
-    private var mImpl: DeckPickerTestImpl? = null
+    private lateinit var mImpl: DeckPickerTestImpl
     override fun setUp() {
         super.setUp()
         // .visible() crashes: Layout state should be one of 100 but it is 10
@@ -48,7 +47,7 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
         execute(result)
 
-        assertThat("Load Failed dialog should be shown if no data is supplied", mImpl!!.didDisplayDialogLoadFailed())
+        assertThat("Load Failed dialog should be shown if no data is supplied", mImpl.didDisplayDialogLoadFailed())
     }
 
     @Test
@@ -58,7 +57,7 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
         execute(result)
 
-        assertThat("Load Failed dialog should be shown if empty data is supplied", mImpl!!.didDisplayDialogLoadFailed())
+        assertThat("Load Failed dialog should be shown if empty data is supplied", mImpl.didDisplayDialogLoadFailed())
     }
 
     @Test
@@ -68,8 +67,8 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
         execute(result)
 
-        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl!!.didDisplayDialogLoadFailed())
-        assertThat("Dialog should be displayed", mImpl!!.didDisplayMessage())
+        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl.didDisplayDialogLoadFailed())
+        assertThat("Dialog should be displayed", mImpl.didDisplayMessage())
     }
 
     @Test
@@ -79,9 +78,9 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
         execute(result)
 
-        assertThat("Load Failed dialog should be shown if failed data is supplied", mImpl!!.didDisplayDialogLoadFailed())
-        assertThat("Locked Database dialog should be shown if Db was locked", !mImpl!!.didDisplayLockedDialog())
-        assertThat("Dialog should not be displayed", !mImpl!!.didDisplayMessage())
+        assertThat("Load Failed dialog should be shown if failed data is supplied", mImpl.didDisplayDialogLoadFailed())
+        assertThat("Locked Database dialog should be shown if Db was locked", !mImpl.didDisplayLockedDialog())
+        assertThat("Dialog should not be displayed", !mImpl.didDisplayMessage())
     }
 
     @Test
@@ -91,9 +90,9 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
         execute(result)
 
-        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl!!.didDisplayDialogLoadFailed())
-        assertThat("Locked Database dialog should be shown if Db was locked", mImpl!!.didDisplayLockedDialog())
-        assertThat("Dialog should not be displayed", !mImpl!!.didDisplayMessage())
+        assertThat("Load Failed dialog should not be shown if invalid data is supplied", !mImpl.didDisplayDialogLoadFailed())
+        assertThat("Locked Database dialog should be shown if Db was locked", mImpl.didDisplayLockedDialog())
+        assertThat("Dialog should not be displayed", !mImpl.didDisplayMessage())
     }
 
     private fun lockedDatabase(): CheckDatabaseResult {
