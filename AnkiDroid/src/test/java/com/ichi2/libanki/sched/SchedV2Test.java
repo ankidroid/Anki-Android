@@ -1595,13 +1595,13 @@ public class SchedV2Test extends RobolectricTest {
         note.setItem("Front", "one");
         col.addNote(note);
         Card c = note.cards().get(0);
-        col.getSched().reschedCards(Collections.singletonList(c.getId()), 0, 0);
+        col.getSched().reschedCards(Collections.singletonList(c.getId()), 0, 0, true);
         c.load();
         assertEquals(col.getSched().getToday(), c.getDue());
         assertEquals(1, c.getIvl());
         assertEquals(QUEUE_TYPE_REV, c.getType());
         assertEquals(CARD_TYPE_REV, c.getQueue());
-        col.getSched().reschedCards(Collections.singletonList(c.getId()), 1, 1);
+        col.getSched().reschedCards(Collections.singletonList(c.getId()), 1, 1, true);
         c.load();
         assertEquals(col.getSched().getToday() + 1, c.getDue());
         assertEquals(+1, c.getIvl());
@@ -1706,7 +1706,7 @@ public class SchedV2Test extends RobolectricTest {
         // make sure relearning cards transition correctly to v1
         col.changeSchedulerVer(2);
         // card with 100 day interval, answering again
-        col.getSched().reschedCards(Collections.singletonList(c.getId()), 100, 100);
+        col.getSched().reschedCards(Collections.singletonList(c.getId()), 100, 100, true);
         c.load();
         c.setDue(0);
         c.flush();
