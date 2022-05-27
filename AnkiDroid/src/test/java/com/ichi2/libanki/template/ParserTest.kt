@@ -18,40 +18,39 @@ package com.ichi2.libanki.template
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.template.TokenizerTest.Companion.new_to_legacy_template
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
-@KotlinCleanup("is -> equalTo")
+
 @RunWith(AndroidJUnit4::class)
 class ParserTest : RobolectricTest() {
-    fun test_parsing(template: String, node: ParsedNode) {
-        assertThat(ParsedNode.parse_inner(template), `is`(node))
-        val legacy_template = new_to_legacy_template(template)
-        assertThat(ParsedNode.parse_inner(legacy_template), `is`(node))
+    private fun testParsing(template: String, node: ParsedNode) {
+        assertThat(ParsedNode.parse_inner(template), equalTo(node))
+        val legacyTemplate = new_to_legacy_template(template)
+        assertThat(ParsedNode.parse_inner(legacyTemplate), equalTo(node))
     }
 
     @Test
-    fun test_parsing() {
-        test_parsing("", EmptyNode())
-        test_parsing("Test", Text("Test"))
-        test_parsing("{{Test}}", Replacement("Test"))
-        test_parsing("{{filter:Test}}", Replacement("Test", "filter"))
-        test_parsing("{{filter:}}", Replacement("", "filter"))
-        test_parsing("{{}}", Replacement(""))
-        test_parsing("{{!Test}}", Replacement("!Test"))
-        test_parsing("{{Filter2:Filter1:Test}}", Replacement("Test", "Filter1", "Filter2"))
-        test_parsing(
+    fun testParsing() {
+        testParsing("", EmptyNode())
+        testParsing("Test", Text("Test"))
+        testParsing("{{Test}}", Replacement("Test"))
+        testParsing("{{filter:Test}}", Replacement("Test", "filter"))
+        testParsing("{{filter:}}", Replacement("", "filter"))
+        testParsing("{{}}", Replacement(""))
+        testParsing("{{!Test}}", Replacement("!Test"))
+        testParsing("{{Filter2:Filter1:Test}}", Replacement("Test", "Filter1", "Filter2"))
+        testParsing(
             "Foo{{Test}}",
             ParsedNodes(
                 Text("Foo"),
                 Replacement("Test")
             )
         )
-        test_parsing("{{#Foo}}{{Test}}{{/Foo}}", Conditional("Foo", Replacement("Test")))
-        test_parsing("{{^Foo}}{{Test}}{{/Foo}}", NegatedConditional("Foo", Replacement("Test")))
+        testParsing("{{#Foo}}{{Test}}{{/Foo}}", Conditional("Foo", Replacement("Test")))
+        testParsing("{{^Foo}}{{Test}}{{/Foo}}", NegatedConditional("Foo", Replacement("Test")))
         try {
             ParsedNode.parse_inner("{{foo")
             fail()
@@ -74,17 +73,17 @@ class ParserTest : RobolectricTest() {
         }
     }
 
-    fun test_parsing_is_empty(template: String, vararg nonempty_fields: String) {
+    private fun testParsingIsEmpty(template: String, vararg nonempty_fields: String) {
         assertThat(
             ParsedNode.parse_inner(template).template_is_empty(*nonempty_fields),
-            `is`(true)
+            equalTo(true)
         )
     }
 
-    fun test_parsing_is_non_empty(template: String, vararg nonempty_fields: String) {
+    private fun testParsingIsNonEmpty(template: String, vararg nonempty_fields: String) {
         assertThat(
             ParsedNode.parse_inner(template).template_is_empty(*nonempty_fields),
-            `is`(false)
+            equalTo(false)
         )
     }
 
@@ -93,101 +92,101 @@ class ParserTest : RobolectricTest() {
         /* In the comment below, I assume Testi is the field FOOi in position i*/
 
         // No field. Req was `("none", [], [])`
-        test_parsing_is_empty("")
+        testParsingIsEmpty("")
 
         // Single field.  Req was `("all", [0])`
-        test_parsing_is_empty("{{Field0}}")
-        test_parsing_is_empty("{{!Field0}}")
-        test_parsing_is_empty("{{Field0}}", "Field1")
-        test_parsing_is_non_empty("{{Field0}}", "Field0")
-        test_parsing_is_empty("{{type:Field0}}")
-        test_parsing_is_empty("{{Filter2:Filter1:Field0}}")
-        test_parsing_is_non_empty("{{Filter2:Filter1:Field0}}", "Field0")
-        test_parsing_is_empty("{{Filter2:Filter1:Field0}}", "Field1")
-        test_parsing_is_empty("Foo{{Field0}}")
-        test_parsing_is_non_empty("Foo{{Field0}}", "Field0")
-        test_parsing_is_empty("Foo{{Field0}}", "Field1")
+        testParsingIsEmpty("{{Field0}}")
+        testParsingIsEmpty("{{!Field0}}")
+        testParsingIsEmpty("{{Field0}}", "Field1")
+        testParsingIsNonEmpty("{{Field0}}", "Field0")
+        testParsingIsEmpty("{{type:Field0}}")
+        testParsingIsEmpty("{{Filter2:Filter1:Field0}}")
+        testParsingIsNonEmpty("{{Filter2:Filter1:Field0}}", "Field0")
+        testParsingIsEmpty("{{Filter2:Filter1:Field0}}", "Field1")
+        testParsingIsEmpty("Foo{{Field0}}")
+        testParsingIsNonEmpty("Foo{{Field0}}", "Field0")
+        testParsingIsEmpty("Foo{{Field0}}", "Field1")
 
         // Two fields. Req was `("any", [0, 1])`
         val twoFields = "{{Field0}}{{Field1}}"
-        test_parsing_is_empty(twoFields)
-        test_parsing_is_non_empty(twoFields, "Field0")
-        test_parsing_is_non_empty(twoFields, "Field1")
-        test_parsing_is_non_empty(twoFields, "Field0", "Field1")
+        testParsingIsEmpty(twoFields)
+        testParsingIsNonEmpty(twoFields, "Field0")
+        testParsingIsNonEmpty(twoFields, "Field1")
+        testParsingIsNonEmpty(twoFields, "Field0", "Field1")
 
         // Two fields required, one shown, req used to be `("all", [0, 1])`
         val mandatoryAndField = "{{#Mandatory1}}{{Field0}}{{/Mandatory1}}"
-        test_parsing_is_empty(mandatoryAndField)
-        test_parsing_is_empty(mandatoryAndField, "Field0")
-        test_parsing_is_empty(mandatoryAndField, "Mandatory1")
-        test_parsing_is_non_empty(mandatoryAndField, "Field0", "Mandatory1")
+        testParsingIsEmpty(mandatoryAndField)
+        testParsingIsEmpty(mandatoryAndField, "Field0")
+        testParsingIsEmpty(mandatoryAndField, "Mandatory1")
+        testParsingIsNonEmpty(mandatoryAndField, "Field0", "Mandatory1")
 
         // Three required fields , req used to be`("all", [0, 1, 2])`
         val twoMandatoriesOneField =
             "{{#Mandatory2}}{{#Mandatory1}}{{Field0}}{{/Mandatory1}}{{/Mandatory2}}"
-        test_parsing_is_empty(twoMandatoriesOneField)
-        test_parsing_is_empty(twoMandatoriesOneField, "Field0")
-        test_parsing_is_empty(twoMandatoriesOneField, "Mandatory1")
-        test_parsing_is_empty(twoMandatoriesOneField, "Field0", "Mandatory1")
-        test_parsing_is_empty(twoMandatoriesOneField, "Mandatory2")
-        test_parsing_is_empty(twoMandatoriesOneField, "Field0", "Mandatory2")
-        test_parsing_is_empty(twoMandatoriesOneField, "Mandatory1", "Mandatory2")
-        test_parsing_is_non_empty(twoMandatoriesOneField, "Field0", "Mandatory1", "Mandatory2")
+        testParsingIsEmpty(twoMandatoriesOneField)
+        testParsingIsEmpty(twoMandatoriesOneField, "Field0")
+        testParsingIsEmpty(twoMandatoriesOneField, "Mandatory1")
+        testParsingIsEmpty(twoMandatoriesOneField, "Field0", "Mandatory1")
+        testParsingIsEmpty(twoMandatoriesOneField, "Mandatory2")
+        testParsingIsEmpty(twoMandatoriesOneField, "Field0", "Mandatory2")
+        testParsingIsEmpty(twoMandatoriesOneField, "Mandatory1", "Mandatory2")
+        testParsingIsNonEmpty(twoMandatoriesOneField, "Field0", "Mandatory1", "Mandatory2")
 
         // A mandatory field and one of two to display , req used to be`("all", [2])`
         val mandatoryAndTwoField = "{{#Mandatory2}}{{Field1}}{{Field0}}{{/Mandatory2}}"
-        test_parsing_is_empty(mandatoryAndTwoField)
-        test_parsing_is_empty(mandatoryAndTwoField, "Field0")
-        test_parsing_is_empty(mandatoryAndTwoField, "Field1")
-        test_parsing_is_empty(mandatoryAndTwoField, "Field0", "Field1")
-        test_parsing_is_empty(
+        testParsingIsEmpty(mandatoryAndTwoField)
+        testParsingIsEmpty(mandatoryAndTwoField, "Field0")
+        testParsingIsEmpty(mandatoryAndTwoField, "Field1")
+        testParsingIsEmpty(mandatoryAndTwoField, "Field0", "Field1")
+        testParsingIsEmpty(
             mandatoryAndTwoField,
             "Mandatory2"
         ) // This one used to be false, because the only mandatory field was filled
-        test_parsing_is_non_empty(mandatoryAndTwoField, "Field0", "Mandatory2")
-        test_parsing_is_non_empty(mandatoryAndTwoField, "Field1", "Mandatory2")
-        test_parsing_is_non_empty(mandatoryAndTwoField, "Field0", "Field1", "Mandatory2")
+        testParsingIsNonEmpty(mandatoryAndTwoField, "Field0", "Mandatory2")
+        testParsingIsNonEmpty(mandatoryAndTwoField, "Field1", "Mandatory2")
+        testParsingIsNonEmpty(mandatoryAndTwoField, "Field0", "Field1", "Mandatory2")
 
         // either first field, or two next one , req used to be`("any", [0])`
         val oneOrTwo = "{{#Condition2}}{{Field1}}{{/Condition2}}{{Field0}}"
-        test_parsing_is_empty(oneOrTwo)
-        test_parsing_is_non_empty(oneOrTwo, "Field0")
-        test_parsing_is_empty(oneOrTwo, "Field1")
-        test_parsing_is_non_empty(oneOrTwo, "Field0", "Field1")
-        test_parsing_is_empty(oneOrTwo, "Condition2")
-        test_parsing_is_non_empty(oneOrTwo, "Field0", "Condition2")
-        test_parsing_is_non_empty(
+        testParsingIsEmpty(oneOrTwo)
+        testParsingIsNonEmpty(oneOrTwo, "Field0")
+        testParsingIsEmpty(oneOrTwo, "Field1")
+        testParsingIsNonEmpty(oneOrTwo, "Field0", "Field1")
+        testParsingIsEmpty(oneOrTwo, "Condition2")
+        testParsingIsNonEmpty(oneOrTwo, "Field0", "Condition2")
+        testParsingIsNonEmpty(
             oneOrTwo,
             "Field1",
             "Condition2"
         ) // This one was broken, because the field Field0 was not filled, and the two other fields are not sufficient for generating alone
-        test_parsing_is_non_empty(oneOrTwo, "Field0", "Field1", "Condition2")
+        testParsingIsNonEmpty(oneOrTwo, "Field0", "Field1", "Condition2")
 
         // One forbidden field. This means no card used to be filled. Requirement used to be  `("none", [], [])`
         val oneForbidden = "{{^Forbidden1}}{{Field0}}{{/Forbidden1}}"
-        test_parsing_is_empty(oneForbidden)
-        test_parsing_is_empty(oneForbidden, "Forbidden1")
-        test_parsing_is_non_empty(oneForbidden, "Field0")
-        test_parsing_is_empty(oneForbidden, "Forbidden1", "Field0")
+        testParsingIsEmpty(oneForbidden)
+        testParsingIsEmpty(oneForbidden, "Forbidden1")
+        testParsingIsNonEmpty(oneForbidden, "Field0")
+        testParsingIsEmpty(oneForbidden, "Forbidden1", "Field0")
 
         // One field, a useless one. Req used to be `("all", [0])`
         // Realistically, that can be used to display differently conditionally on useless1
         val oneUselessOneField =
             "{{^Useless1}}{{Field0}}{{/Useless1}}{{#Useless1}}{{Field0}}{{/Useless1}}"
-        test_parsing_is_empty(oneUselessOneField)
-        test_parsing_is_empty(oneUselessOneField, "Useless1")
-        test_parsing_is_non_empty(oneUselessOneField, "Field0")
-        test_parsing_is_non_empty(oneUselessOneField, "Useless1", "Field0")
+        testParsingIsEmpty(oneUselessOneField)
+        testParsingIsEmpty(oneUselessOneField, "Useless1")
+        testParsingIsNonEmpty(oneUselessOneField, "Field0")
+        testParsingIsNonEmpty(oneUselessOneField, "Useless1", "Field0")
 
         // Switch from shown field. Req used to be `("all", [2])`
         val switchField = "{{^Useless1}}{{Field0}}{{/Useless1}}{{#Useless1}}{{Field2}}{{/Useless1}}"
-        test_parsing_is_empty(switchField)
-        test_parsing_is_empty(switchField, "Useless1")
-        test_parsing_is_non_empty(switchField, "Field0") // < 2.1.28 would return true by error
-        test_parsing_is_empty(switchField, "Useless1", "Field0")
-        test_parsing_is_empty(switchField, "Field2") // < 2.1.28 would return false by error
-        test_parsing_is_non_empty(switchField, "Useless1", "Field2")
-        test_parsing_is_non_empty(switchField, "Field0", "Field2")
-        test_parsing_is_non_empty(switchField, "Useless1", "Field0", "Field2")
+        testParsingIsEmpty(switchField)
+        testParsingIsEmpty(switchField, "Useless1")
+        testParsingIsNonEmpty(switchField, "Field0") // < 2.1.28 would return true by error
+        testParsingIsEmpty(switchField, "Useless1", "Field0")
+        testParsingIsEmpty(switchField, "Field2") // < 2.1.28 would return false by error
+        testParsingIsNonEmpty(switchField, "Useless1", "Field2")
+        testParsingIsNonEmpty(switchField, "Field0", "Field2")
+        testParsingIsNonEmpty(switchField, "Useless1", "Field0", "Field2")
     }
 }
