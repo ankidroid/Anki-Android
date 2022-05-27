@@ -43,8 +43,56 @@ class NonPositionalFormatSubstitutionsTest {
     @Language("XML")
     private val encoded = "<resources><string name=\"hello\">%%</string></resources>"
 
+    @Language("XML")
+    private val pluralPass = """
+        <resources>
+            <plurals name="import_complete_message">
+                <item quantity="one">Cards imported: %1${'$'}d</item>
+                <item quantity="other">Files imported :%1${'$'}d" Total cards imported: %2${'$'}d</item>
+            </plurals>
+        </resources>
+    """.trimIndent()
+
+    @Language("XML")
+    private val pluralPartial = """
+        <resources>
+            <plurals name="import_complete_message">
+                <item quantity="one">Cards imported: %d</item>
+                <item quantity="other">Files imported :%1${'$'}d" Total cards imported: %2${'$'}d</item>
+            </plurals>
+        </resources>
+    """.trimIndent()
+
+    @Language("XML")
+    private val pluralFail = """
+        <resources>
+            <plurals name="import_complete_message">
+                <item quantity="one">Cards imported: %d</item>
+                <item quantity="other">Files imported: %d\nTotal cards imported: %d</item>
+            </plurals>
+        </resources>
+    """.trimIndent()
+
+    @Language("XML")
+    private val pluralMultiple = """
+            <plurals name="reschedule_card_dialog_interval">
+                <item quantity="one">Current interval: %d day</item>
+                <item quantity="few">Keisti Kortelių mokymosi dieną</item>
+                <item quantity="many">Current interval: %d days</item>
+                <item quantity="other">Current interval: %d days</item>
+            </plurals>
+    """.trimIndent()
+
+    @Language("XML")
+    private val pluralMultipleTwo = """
+            <plurals name="in_minutes">
+                <item quantity="one">%1${'$'}d मिनट</item>
+                <item quantity="other">मिनट</item>
+            </plurals>
+    """.trimIndent()
+
     @Test
-    fun errors_if_ambiguous() {
+    fun errorsIfAmbiguous() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -55,7 +103,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun no_errors_if_valid() {
+    fun `No Errors If Valid`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -66,7 +114,7 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun no_errors_if_unambiguous() {
+    fun `No Errors If Unambiguous`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
@@ -77,11 +125,67 @@ class NonPositionalFormatSubstitutionsTest {
     }
 
     @Test
-    fun no_errors_if_encoded() {
+    fun `No Errors If Encoded`() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", encoded))
+            .issues(NonPositionalFormatSubstitutions.ISSUE)
+            .run()
+            .expectClean()
+    }
+
+    @Test
+    fun validPluralPassed() {
+        TestLintTask.lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(TestFiles.xml("res/values/string.xml", pluralPass))
+            .issues(NonPositionalFormatSubstitutions.ISSUE)
+            .run()
+            .expectClean()
+    }
+
+    @Test
+    fun pluralPartialFlags() {
+        // If one plural has $1, $2 etc... the other should as well
+        TestLintTask.lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(TestFiles.xml("res/values/string.xml", pluralPartial))
+            .issues(NonPositionalFormatSubstitutions.ISSUE)
+            .run()
+            .expectErrorCount(1)
+    }
+
+    @Test
+    fun `Errors On Plural Issue`() {
+        TestLintTask.lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(TestFiles.xml("res/values/string.xml", pluralFail))
+            .issues(NonPositionalFormatSubstitutions.ISSUE)
+            .run()
+            .expectErrorCount(1)
+    }
+
+    @Test
+    fun pluralIntegrationTest() {
+        TestLintTask.lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(TestFiles.xml("res/values/string.xml", pluralMultiple))
+            .issues(NonPositionalFormatSubstitutions.ISSUE)
+            .run()
+            .expectClean()
+    }
+
+    @Test
+    fun `Plural Integration Test Positional And Nothing`() {
+        TestLintTask.lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(TestFiles.xml("res/values/string.xml", pluralMultipleTwo))
             .issues(NonPositionalFormatSubstitutions.ISSUE)
             .run()
             .expectClean()
