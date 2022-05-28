@@ -49,6 +49,9 @@ package com.ichi2.utils;
 
  */
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -455,6 +458,14 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
             ret.put(i.getKey(), i.getValue());
         }
         return ret;
+    }
+
+    public HashMap<String, String> toHashMap() {
+        HashMap<String, String> m = new HashMap<>();
+        for (String key : this) {
+            m.put(key, getString(key));
+        }
+        return m;
     }
 
     @Override
