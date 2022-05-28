@@ -542,7 +542,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         // setConf. However older version of AnkiDroid didn't call
         // upgradeJSONIfNecessary during setConf, which means the
         // conf saved may still have this bug.
-        mOrderAsc = upgradeJSONIfNecessary(getCol(), "sortBackwards", false)
+        mOrderAsc = upgradeJSONIfNecessary(col, "sortBackwards", false)
         mCards.reset()
         mCardsListView = findViewById(R.id.card_browser_list)
         // Create a spinner for column1
@@ -664,7 +664,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             true
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        val deckId = getCol().decks.selected()
+        val deckId = col.decks.selected()
         mDeckSpinnerSelection = DeckSpinnerSelection(
             this, col, findViewById(R.id.toolbar_spinner),
             showAllDecks = true, alwaysShowDefault = false
@@ -687,7 +687,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""
         } else {
-            val deckName = col.decks.name(deckId)
+            val deckName = col!!.decks.name(deckId)
             "deck:\"$deckName\" "
         }
         saveLastDeckId(deckId)

@@ -30,7 +30,12 @@ import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
-class RemoteServer(con: Connection?, hkey: String?, hostNum: HostNum?) : HttpSyncer(hkey, con, hostNum) {
+class RemoteServer(
+    con: Connection,
+    hkey: String?,
+    hostNum: HostNum
+) : HttpSyncer(hkey, con, hostNum) {
+
     /** Returns hkey or null if user/pw incorrect.  */
     @Throws(UnknownHttpResponseException::class)
     fun hostKey(user: String?, pw: String?): Response? {
@@ -59,43 +64,43 @@ class RemoteServer(con: Connection?, hkey: String?, hostNum: HostNum?) : HttpSyn
 
     @Throws(UnknownHttpResponseException::class)
     fun applyChanges(kw: JSONObject): JSONObject {
-        return parseDict(_run("applyChanges", kw))
+        return parseDict(runCommand("applyChanges", kw))
     }
 
     @Throws(UnknownHttpResponseException::class)
     fun start(kw: JSONObject): JSONObject {
-        return parseDict(_run("start", kw))
+        return parseDict(runCommand("start", kw))
     }
 
     @Throws(UnknownHttpResponseException::class)
     fun chunk(): JSONObject {
         val co = JSONObject()
-        return parseDict(_run("chunk", co))
+        return parseDict(runCommand("chunk", co))
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun applyChunk(sech: JSONObject) {
-        _run("applyChunk", sech)
+    fun applyChunk(chunk: JSONObject) {
+        runCommand("applyChunk", chunk)
     }
 
     @Throws(UnknownHttpResponseException::class)
     fun sanityCheck2(client: JSONObject): JSONObject {
-        return parseDict(_run("sanityCheck2", client))
+        return parseDict(runCommand("sanityCheck2", client))
     }
 
     @Throws(UnknownHttpResponseException::class)
     fun finish(): Long {
-        return parseLong(_run("finish", JSONObject()))
+        return parseLong(runCommand("finish", JSONObject()))
     }
 
     @Throws(UnknownHttpResponseException::class)
     fun abort() {
-        _run("abort", JSONObject())
+        runCommand("abort", JSONObject())
     }
 
     /** Python has dynamic type deduction, but we don't, so return String  */
     @Throws(UnknownHttpResponseException::class)
-    private fun _run(cmd: String, data: JSONObject): String {
+    private fun runCommand(cmd: String, data: JSONObject): String {
         val ret = super.req(cmd, getInputStream(Utils.jsonToString(data)))
         return try {
             ret.body!!.string()
@@ -108,7 +113,7 @@ class RemoteServer(con: Connection?, hkey: String?, hostNum: HostNum?) : HttpSyn
 
     /** Note: these conversion helpers aren't needed in libanki as type deduction occurs automatically there  */
     private fun parseDict(s: String): JSONObject {
-        return if (!"null".equals(s, ignoreCase = true) && s.length != 0) {
+        return if (!"null".equals(s, ignoreCase = true) && s.isNotEmpty()) {
             JSONObject(s)
         } else {
             JSONObject()

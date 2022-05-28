@@ -108,7 +108,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         invalidateOptionsMenu()
         //        StatisticFragment.updateAllFragments();
         when (val defaultDeck = AnkiDroidApp.getSharedPrefs(this).getString("stats_default_deck", "current")) {
-            "current" -> mStatsDeckId = getCol().decks.selected()
+            "current" -> mStatsDeckId = col.decks.selected()
             "all" -> mStatsDeckId = Stats.ALL_DECKS_ID
             else -> Timber.w("Unknown defaultDeck: %s", defaultDeck)
         }

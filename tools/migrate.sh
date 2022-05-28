@@ -27,61 +27,123 @@ function sedcompat() {
 # Getting file paths
 #########################
 
-# Deleted files
+# Deleted, Renamed and/or Modified file(s)
 # ------------
-# The deleted file(s). Normally a single one.
+# The deleted/renamed file(s). Normally a single one.
 DELETED=$(git status | grep "deleted:" | sed "s/[ \t]*deleted:[ \t]*//" | awk '$1=$1')
 echo "DELETED='$DELETED'"
 
-# Checking there is a single deleted file
-# Repeating the DELETED line because otherwise wc don't see new lines
-NB_DELETED=$(git status | grep "deleted:" | sed "s/[ \t]*deleted:[ \t]*//" | wc -l | awk '$1=$1')
+RENAMED=$(git status | grep "renamed:" | sed "s/[ \t]*renamed:[ \t]*//" | awk -F '->' '{print $1}' | awk '$1=$1')
+echo "RENAMED='$RENAMED'"
+
+git add . #Assume all changes are intentional and stage them, is verified by user later.
+
+MODIFIED=$(git status | grep "modified:" | sed "s/[ \t]*modified:[ \t]*//" | awk '$1=$1')
+echo "MODIFIED='$MODIFIED'"
+
+# Checking there is a single deleted, renamed and/or modified file(s)
+NB_DELETED=$(git status | grep -c "deleted:")
 echo "NB_DELETED=$NB_DELETED"
-if [[ $NB_DELETED -lt 0 ]]; then
-  echo "No file deleted"
+
+NB_RENAMED=$(git status | grep -c "renamed:")
+echo "NB_RENAMED=$NB_RENAMED"
+
+NB_MODIFIED=$(git status | grep -c "modified:")
+echo "NB_MODIFIED=$NB_MODIFIED"
+
+if [[ $NB_DELETED -lt 1 && $NB_RENAMED -lt 1 ]]; then
+  echo "******************************"
+  echo "* No file deleted or renamed *"
+  echo "******************************"
   exit 1
-elif [[ $NB_DELETED -gt 1 ]]; then
-  echo "More than one file deleted"
+elif [[ $NB_DELETED -gt 1 || $NB_RENAMED -gt 1 ]]; then
+  echo "*************************************************"
+  echo "* More than one file either deleted or renamed! *"
+  echo "*************************************************"
   exit 1
+elif [[ $NB_DELETED -ge 1 && $NB_RENAMED -ge 1 ]]; then
+  echo "*******************************************"
+  echo "* More than one file deleted AND renamed! *"
+  echo "*******************************************"
+  exit 1
+elif [[ ($NB_RENAMED == 1 && $NB_MODIFIED -ge $NB_RENAMED) || ($NB_DELETED == 1 && $NB_MODIFIED -gt $NB_DELETED) ]]; then
+  git status | grep "modified:"
+  echo "************************************************************"
+  echo "* Additional file(s) modified!                             *"
+  echo "* Please Enter y to confirm these are all required changes *"
+  echo "* Enter any other key to exit                              *"
+  echo "************************************************************"
+
+  read -r CONFIRMATION
+  if [[ $CONFIRMATION != "y" ]]; then
+    echo "Status: Exit"
+    echo "Please commit or reset/restore the unintended changes"
+    exit 1
+  fi
 fi
 
 # The file path without extension
-FILEPATH=${DELETED//.java/}
+if [[ $NB_DELETED == 1 ]]; then
+  FILEPATH=${DELETED//.java/}
+elif [[ $NB_RENAMED == 1 ]]; then
+  FILEPATH=${RENAMED//.java/}
+fi
 echo "FILEPATH='$FILEPATH'"
 
 # Checking that the file is Java
-if [[ $DELETED != "$FILEPATH.java" ]]; then
-  echo "Deleted file is not Java"
+if [[ ($NB_DELETED == 1 && $DELETED != "$FILEPATH.java") || ($NB_RENAMED == 1 && $RENAMED != "$FILEPATH.java") ]]; then
+  echo "************************************"
+  echo "* Deleted/Renamed file is not Java *"
+  echo "************************************"
   exit 1
 fi
 
 # The added file is $FILEPATH.kt
-FILEPATH_JAVA=$DELETED
+if [[ $NB_DELETED == 1 ]]; then
+  FILEPATH_JAVA=$DELETED
+elif [[ $NB_RENAMED == 1 ]]; then
+  FILEPATH_JAVA=$RENAMED
+fi
 
 # Added files
 # ------------
 
 # The added file(s). Normally a single one.
-ADDED=$(git status | grep "new file" | sed "s/[ \t]*new file:[ \t]*//" | awk '$1=$1')
+if [[ $NB_RENAMED -ge 1 ]]; then
+  ADDED=$(git status | grep "renamed:" | sed "s/[ \t]*renamed:[ \t]*//" | awk -F '->' '{print $2}' | awk '$1=$1')
+else
+  ADDED=$(git status | grep "new file" | sed "s/[ \t]*new file:[ \t]*//" | awk '$1=$1')
+fi
 echo "ADDED='$ADDED'"
 
 # Checking there is a single file added
-NB_ADDED=$(git status | grep "new file" | sed "s/[ \t]*new file:[ \t]*//" | wc -l | awk '$1=$1')
+if [[ $NB_RENAMED -ge 1 ]]; then
+  NB_ADDED="$NB_RENAMED" #renaming inherently means that a new file was added
+else
+  NB_ADDED=$(git status | grep -c "new file:")
+fi
 echo "NB_ADDED=$NB_ADDED"
+
 if [[ $NB_ADDED -lt 1 ]]; then
-  echo "No file added (you may have to add the new file manually if it was not done)"
+  echo "********************************************************************************"
+  echo "* No file added (you may have to add the new file manually if it was not done) *"
+  echo "********************************************************************************"
   exit 1
 elif [[ $NB_ADDED -gt 1 ]]; then
-  echo "More than one file added"
+  echo "****************************"
+  echo "* More than one file added *"
+  echo "****************************"
   exit 1
 fi
 
-# The added file is $FILEPATH.java
+# The added file is $FILEPATH.kt
 FILEPATH_KT=$ADDED
 
-# Checking that the file added is the same as the one removed
+# Checking that the file added is the same as the one removed/renamed
 if [[ $ADDED != "$FILEPATH.kt" ]]; then
-  echo "Added file is not the deleted file in kotlin"
+  echo "********************************************************"
+  echo "* Added file is not the deleted/renamed file in kotlin *"
+  echo "********************************************************"
   exit 1
 fi
 
@@ -101,7 +163,9 @@ elif [[ $FILEPATH == *AnkiDroid/src/test* ]]; then
 elif [[ $FILEPATH == *AnkiDroid/src/androidTest* ]]; then
   SOURCE=ANDROID_TEST
 else
-  echo "The added/deleted file is not in AnkiDroid/src/' main or test or AndroidTest"
+  echo "********************************************************************************"
+  echo "* The added/deleted file is not in AnkiDroid/src/' main or test or AndroidTest *"
+  echo "********************************************************************************"
   exit 1
 fi
 echo "SOURCE='$SOURCE'"
@@ -171,3 +235,9 @@ $PACKAGE_NAME"
 echo "second commit"
 rm AnkiDroid/kotlinMigration.gradle.bak || true
 echo "optional cleanup"
+
+echo "*************************"
+echo "* Successful Migration! *"
+echo "*************************"
+
+git log --oneline -3
