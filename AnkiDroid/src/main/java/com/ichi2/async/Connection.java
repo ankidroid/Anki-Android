@@ -617,6 +617,35 @@ public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connec
         }
     }
 
+    @SuppressWarnings("deprecation")
+    public static boolean isWifiConnected(){
+        if (!isOnline()) return false;
+        ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) {
+            return false;
+        }
+        /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Network network = cm.getActiveNetwork();
+            if (network == null) {
+                return false;
+            }
+            NetworkCapabilities networkCapabilities = cm.getNetworkCapabilities(network);
+            if (networkCapabilities == null) {
+                return false;
+            }
+            return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI);
+        } else {
+            android.net.NetworkInfo info = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo.State state = info.getState();
+            if (android.net.NetworkInfo.State.CONNECTED==state) {
+                return true;
+            }
+            return false;
+        }
+    }
+
 
     public interface TaskListener {
         void onPreExecute();
