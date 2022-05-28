@@ -21,7 +21,9 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.res.ColorStateList
 import android.content.res.Resources
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -63,6 +65,8 @@ class Info : AnkiActivity() {
         setContentView(R.layout.info)
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
+        val donate = findViewById<Button>(R.id.info_donate)
+        donate.setTextColor(Color.parseColor("#03a9f4"))
         findViewById<View>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
         title = String.format("%s v%s", appName, pkgVersionName)
         mWebView = findViewById(R.id.info)
@@ -76,6 +80,7 @@ class Info : AnkiActivity() {
         }
         val marketButton = findViewById<Button>(R.id.left_button)
         if (canOpenMarketUri()) {
+            marketButton.setTextColor(Color.parseColor("#03a9f4"))
             marketButton.setText(R.string.info_rate)
             marketButton.setOnClickListener { tryOpenIntent(this, AnkiDroidApp.getMarketIntent(this)) }
         } else {
@@ -93,6 +98,7 @@ class Info : AnkiActivity() {
                 val htmlContent = getAboutAnkiDroidHtml(res, textColor)
                 mWebView!!.loadDataWithBaseURL("", htmlContent, "text/html", "utf-8", null)
                 val debugCopy = findViewById<Button>(R.id.right_button)
+                debugCopy.setTextColor(Color.parseColor("#03a9f4"))
                 debugCopy.text = res.getString(R.string.feedback_copy_debug)
                 debugCopy.setOnClickListener { copyDebugInfo() }
             }
@@ -111,10 +117,10 @@ class Info : AnkiActivity() {
                                  */
                         mWebView!!.loadUrl(
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
-                                "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
-                                "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
-                                "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
-                                "document.body.style.setProperty(\"background\", \"" + background + "\");"
+                                    "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
+                                    "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
+                                    "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
+                                    "document.body.style.setProperty(\"background\", \"" + background + "\");"
                         )
                     }
                 }
@@ -177,24 +183,29 @@ class Info : AnkiActivity() {
 
             val content = res.getStringArray(R.array.about_content)
             append("<html><style>body {color:").append(textColor).append(";}</style>")
-            append("<body text=\"#000000\" link=\"#0277BD\" alink=\"#00CC99\" vlink=\"#E37068\">")
-            append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
-                .append("<br/><br/>")
+            append("<body text=\"#000000\" link=\"#0000cc\" alink=\"#E37068\" vlink=\"#E37068\">")
+            append(
+                String.format(
+                    content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)
+                )
+            ).append("<br/><br/>")
             append(
                 String.format(
                     content[1], res.getString(R.string.link_issue_tracker),
                     res.getString(R.string.link_wiki), res.getString(R.string.link_forum)
                 )
-            ).append(
-                "<br/><br/>"
-            )
+            ).append("<br/><br/>")
             append(
                 String.format(
                     content[2], res.getString(R.string.link_wikipedia_open_source),
                     res.getString(R.string.link_contribution)
                 )
             ).append(" ")
-            append(String.format(content[3], res.getString(R.string.link_translation))).append("<br/><br/>")
+            append(
+                String.format(
+                    content[3], res.getString(R.string.link_translation)
+                )
+            ).append("<br/><br/>")
             append(
                 String.format(
                     content[4], res.getString(R.string.licence_wiki),
