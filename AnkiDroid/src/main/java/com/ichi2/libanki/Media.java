@@ -102,25 +102,29 @@ public class Media {
      * Group 1 = Contents of [sound:] tag <br>
      * Group 2 = "fname"
      */
+    // Regexes defined on https://github.com/ankitects/anki/blob/b403f20cae8fcdd7c3ff4c8d21766998e8efaba0/pylib/anki/media.py#L34-L45
     private static final Pattern fSoundRegexps = Pattern.compile("(?i)(\\[sound:([^]]+)])");
 
     // src element quoted case
     /**
-     * Group 1 = Contents of <img> tag <br>
+     * Group 1 = Contents of <img>|<audio> tag <br>
      * Group 2 = "str" <br>
      * Group 3 = "fname" <br>
      * Group 4 = Backreference to "str" (i.e., same type of quote character)
      */
-    private static final Pattern fImgRegExpQ = Pattern.compile("(?i)(<img[^>]* src=([\"'])([^>]+?)(\\2)[^>]*>)");
+    private static final Pattern fImgAudioRegExpQ = Pattern.compile("(?i)(<(?:img|audio)\\b[^>]* src=([\"'])([^>]+?)(\\2)[^>]*>)");
+    private static final Pattern fObjectRegExpQ = Pattern.compile("(?i)(<object\\b[^>]* data=([\"'])([^>]+?)(\\2)[^>]*>)");
 
     // unquoted case
     /**
-     * Group 1 = Contents of <img> tag <br>
+     * Group 1 = Contents of <img>|<audio> tag <br>
      * Group 2 = "fname"
      */
-    private static final Pattern fImgRegExpU = Pattern.compile("(?i)(<img[^>]* src=(?!['\"])([^ >]+)[^>]*?>)");
+    private static final Pattern fImgAudioRegExpU = Pattern.compile("(?i)(<(?:img|audio)\\b[^>]* src=(?!['\"])([^ >]+)[^>]*?>)");
+    private static final Pattern fObjectRegExpU = Pattern.compile("(?i)(<object\\b[^>]* data=(?!['\"])([^ >]+)[^>]*?>)");
 
-    public static final List<Pattern> REGEXPS =  Arrays.asList(fSoundRegexps, fImgRegExpQ, fImgRegExpU);
+
+    public static final List<Pattern> REGEXPS =  Arrays.asList(fSoundRegexps, fImgAudioRegExpQ, fImgAudioRegExpU, fObjectRegExpQ, fObjectRegExpU);
 
     private final Collection mCol;
     private final String mDir;
@@ -327,7 +331,7 @@ public class Media {
             for (Pattern p : REGEXPS) {
                 // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
                 // the index based on which pattern we are using
-                int fnameIdx = p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
+                int fnameIdx = p.equals(fSoundRegexps) ? 2 : p.equals(fImgAudioRegExpU) ? 2 : 3;
                 m = p.matcher(s);
                 while (m.find()) {
                     String fname = m.group(fnameIdx);
@@ -396,11 +400,11 @@ public class Media {
      * @return The string with the filenames of any local images percent-escaped as UTF-8.
      */
     public static String escapeImages(String string, boolean unescape) {
-        for (Pattern p : Arrays.asList(fImgRegExpQ, fImgRegExpU)) {
+        for (Pattern p : Arrays.asList(fImgAudioRegExpQ, fImgAudioRegExpU)) {
             Matcher m = p.matcher(string);
             // NOTE: python uses the named group 'fname'. Java doesn't have named groups, so we have to determine
             // the index based on which pattern we are using
-            int fnameIdx = p.equals(fImgRegExpU) ? 2 : 3;
+            int fnameIdx = p.equals(fImgAudioRegExpU) ? 2 : 3;
             while (m.find()) {
                 String tag = m.group(0);
                 String fname = m.group(fnameIdx);
@@ -987,7 +991,7 @@ public class Media {
      * function and have delegated its job to the caller of this class.
      */
     public static int indexOfFname(Pattern p) {
-        return p.equals(fSoundRegexps) ? 2 : p.equals(fImgRegExpU) ? 2 : 3;
+        return p.equals(fSoundRegexps) ? 2 : p.equals(fImgAudioRegExpU) ? 2 : 3;
     }
 
 
