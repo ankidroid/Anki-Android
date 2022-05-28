@@ -22,7 +22,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
-import android.widget.LinearLayout
+import com.ichi2.anki.databinding.ActivityDrawingBinding
+import com.ichi2.anki.databinding.ReviewerWhiteboardEditorBinding
 import timber.log.Timber
 import java.io.FileNotFoundException
 
@@ -34,7 +35,8 @@ import java.io.FileNotFoundException
  * To access this screen: Add/Edit Note - Attachment - Add Image - Drawing
  */
 class DrawingActivity : AnkiActivity() {
-    private lateinit var mColorPalette: LinearLayout
+    private lateinit var binding: ActivityDrawingBinding
+    private lateinit var bindingReviewerWhiteboardEditorBinding: ReviewerWhiteboardEditorBinding
     private lateinit var mWhiteboard: Whiteboard
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,9 +44,10 @@ class DrawingActivity : AnkiActivity() {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_drawing)
+        binding = ActivityDrawingBinding.inflate(layoutInflater)
+        bindingReviewerWhiteboardEditorBinding = ReviewerWhiteboardEditorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         enableToolbar()
-        mColorPalette = findViewById(R.id.whiteboard_editor)
         mWhiteboard = Whiteboard.createInstance(this, true, null)
         mWhiteboard.setOnTouchListener { _: View?, event: MotionEvent? -> mWhiteboard.handleTouchEvent(event!!) }
     }
@@ -62,10 +65,10 @@ class DrawingActivity : AnkiActivity() {
             }
             R.id.action_whiteboard_edit -> {
                 Timber.i("Drawing:: Pen Color button pressed")
-                if (mColorPalette.visibility == View.GONE) {
-                    mColorPalette.visibility = View.VISIBLE
+                if (bindingReviewerWhiteboardEditorBinding.whiteboardEditor.visibility == View.GONE) {
+                    bindingReviewerWhiteboardEditorBinding.whiteboardEditor.visibility = View.VISIBLE
                 } else {
-                    mColorPalette.visibility = View.GONE
+                    bindingReviewerWhiteboardEditorBinding.whiteboardEditor.visibility = View.GONE
                 }
             }
         }

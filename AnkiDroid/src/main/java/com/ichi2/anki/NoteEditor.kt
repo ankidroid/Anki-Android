@@ -380,7 +380,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         )
         mToolbar!!.setIconColor(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
         enableToolbar(mainView)
-        mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout)
+        mFieldsLayoutContainer = findViewById(R.id.fieldsLayoutContainer)
         mTagsButton = findViewById(R.id.CardEditorTagButton)
         mCardsButton = findViewById(R.id.CardEditorCardsButton)
         mCardsButton!!.setOnClickListener(
@@ -1813,9 +1813,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             .positiveText(R.string.dialog_positive_create)
             .onPositive { m: MaterialDialog, _: DialogAction? ->
                 val view = m.view
-                val etIcon = view.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
-                val et = view.findViewById<EditText>(R.id.note_editor_toolbar_before)
-                val et2 = view.findViewById<EditText>(R.id.note_editor_toolbar_after)
+                val etIcon = view.findViewById<EditText>(R.id.toolbar_item_icon)
+                val et = view.findViewById<EditText>(R.id.toolbar_before)
+                val et2 = view.findViewById<EditText>(R.id.toolbar_after)
                 addToolbarButton(etIcon.text.toString(), et.text.toString(), et2.text.toString())
             }
             .show()
@@ -1823,10 +1823,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun displayEditToolbarDialog(currentButton: CustomToolbarButton) {
         val view = layoutInflater.inflate(R.layout.note_editor_toolbar_edit_custom_item, null)
-        val etIcon = view.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
-        val et = view.findViewById<EditText>(R.id.note_editor_toolbar_before)
-        val et2 = view.findViewById<EditText>(R.id.note_editor_toolbar_after)
-        val btnDelete = view.findViewById<ImageButton>(R.id.note_editor_toolbar_btn_delete)
+        val etIcon = view.findViewById<EditText>(R.id.toolbar_item_icon)
+        val et = view.findViewById<EditText>(R.id.toolbar_before)
+        val et2 = view.findViewById<EditText>(R.id.toolbar_after)
+        val btnDelete = view.findViewById<ImageButton>(R.id.toolbar_btn_delete)
         etIcon.setText(currentButton.buttonText)
         et.setText(currentButton.prefix)
         et2.setText(currentButton.suffix)

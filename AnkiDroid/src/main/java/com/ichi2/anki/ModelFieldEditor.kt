@@ -25,7 +25,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
@@ -35,6 +34,7 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.databinding.ModelFieldEditorBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleSelectionDialogHandler
@@ -65,8 +65,8 @@ import kotlin.Throws
 @KotlinCleanup("long-term: make `mod` non-null")
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
+    private lateinit var binding: ModelFieldEditorBinding
     private var currentPos = 0
-    private var fieldLabelView: ListView? = null
     private var fieldLabels: List<String>? = null
     private var progressDialog: MaterialDialog? = null
     private var collection: Collection? = null
@@ -82,9 +82,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.model_field_editor)
+        binding = ModelFieldEditorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        fieldLabelView = findViewById(R.id.note_type_editor_fields)
         enableToolbar().apply {
             setTitle(R.string.model_field_editor_title)
             subtitle = intent.getStringExtra("title")
@@ -125,7 +125,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     private fun createFieldLabels() {
         val fieldLabelAdapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldLabels!!)
-        fieldLabelView?.let {
+        binding.fieldLabelView.let {
             it.adapter = fieldLabelAdapter
             it.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
                 showDialogFragment(newInstance(fieldLabels!![position]))

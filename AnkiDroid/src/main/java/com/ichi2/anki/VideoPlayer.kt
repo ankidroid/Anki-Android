@@ -22,8 +22,8 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.SurfaceHolder
 import android.view.WindowManager
-import android.widget.VideoView
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.databinding.VideoPlayerBinding
 import com.ichi2.libanki.Sound
 import com.ichi2.themes.Themes
 import com.ichi2.utils.KotlinCleanup
@@ -31,7 +31,7 @@ import timber.log.Timber
 
 @KotlinCleanup("for better possibly-null handling")
 class VideoPlayer : Activity(), SurfaceHolder.Callback {
-    private var mVideoView: VideoView? = null
+    private lateinit var binding: VideoPlayerBinding
     private var mPath: String? = null
     private var mSoundPlayer: Sound? = null
 
@@ -41,7 +41,8 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
         Timber.i("onCreate")
         super.onCreate(savedInstanceState)
         Themes.disableXiaomiForceDarkMode(this)
-        setContentView(R.layout.video_player)
+        binding = VideoPlayerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         mPath = intent.getStringExtra("path")
         Timber.i("Video Player intent had path: %s", mPath)
         window.setFlags(
@@ -49,8 +50,7 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        mVideoView = findViewById(R.id.video_surface)
-        mVideoView!!.holder.addCallback(this)
+        binding.videoSurface.holder.addCallback(this)
         mSoundPlayer = Sound()
     }
 
@@ -68,7 +68,7 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
             finish()
             val originalListener = mSoundPlayer!!.mediaCompletionListener
             originalListener?.onCompletion(mp)
-        }, mVideoView, null)
+        }, binding.videoSurface, null)
     }
 
     override fun surfaceChanged(
@@ -87,7 +87,7 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        mSoundPlayer!!.notifyConfigurationChanged(mVideoView)
+        mSoundPlayer!!.notifyConfigurationChanged(binding.videoSurface)
     }
 
     public override fun onStop() {

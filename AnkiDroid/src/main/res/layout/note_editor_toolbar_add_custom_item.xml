@@ -33,7 +33,7 @@
         android:hint="@string/note_editor_toolbar_icon">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/note_editor_toolbar_item_icon"
+            android:id="@+id/toolbar_item_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/content_vertical_padding"/>
@@ -47,7 +47,7 @@
         android:hint="@string/before_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/note_editor_toolbar_before"
+            android:id="@+id/toolbar_before"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/content_vertical_padding"/>
@@ -59,7 +59,7 @@
         android:hint="@string/after_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/note_editor_toolbar_after"
+            android:id="@+id/toolbar_after"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/content_vertical_padding"/>

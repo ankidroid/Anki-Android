@@ -9,7 +9,8 @@
 		android:layout_height="match_parent"
 		android:orientation="vertical">
 
-		<include layout="@layout/toolbar" />
+		<include
+			layout="@layout/toolbar" />
 
 	<com.google.android.material.tabs.TabLayout
 			  android:id="@+id/sliding_tabs"
@@ -24,5 +25,6 @@
 			  android:layout_height="match_parent"
 			  tools:context=".Statistics"/>
 	</LinearLayout>
-	<include layout="@layout/anki_progress"/>
+	<include
+		layout="@layout/anki_progress"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

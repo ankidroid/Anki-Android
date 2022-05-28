@@ -31,6 +31,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.databinding.ModelBrowserBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.ModelBrowserContextMenu
 import com.ichi2.anki.dialogs.ModelBrowserContextMenuAction
@@ -54,8 +55,8 @@ import java.util.ArrayList
 @KotlinCleanup("Try converting variables to be non-null wherever possible + Standard in-IDE cleanup")
 @NeedsTest("add tests to ensure changes(renames & deletions) to the list of note types are visible in the UI")
 class ModelBrowser : AnkiActivity() {
+    private lateinit var binding: ModelBrowserBinding
     private var modelDisplayAdapter: DisplayPairAdapter? = null
-    private var mModelListView: ListView? = null
 
     // Of the currently selected model
     private var mCurrentID: Long = 0
@@ -153,8 +154,8 @@ class ModelBrowser : AnkiActivity() {
         }
         super.onCreate(savedInstanceState)
         setTitle(R.string.model_browser_label)
-        setContentView(R.layout.model_browser)
-        mModelListView = findViewById(R.id.note_type_browser_list)
+        binding = ModelBrowserBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         mActionBar = enableToolbar()
         startLoadingCollection()
     }
@@ -219,11 +220,11 @@ class ModelBrowser : AnkiActivity() {
         mModelIds = ArrayList(mModels!!.size)
         for (i in mModels!!.indices) {
             mModelIds!!.add(mModels!![i].getLong("id"))
-            mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i].toInt()))
+            mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i]))
         }
         modelDisplayAdapter = DisplayPairAdapter(this, mModelDisplayList)
-        mModelListView!!.adapter = modelDisplayAdapter
-        mModelListView!!.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+        binding.noteTypeBrowserList.adapter = modelDisplayAdapter
+        binding.noteTypeBrowserList.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
             val noteTypeID = mModelIds!![position]
             mModelListPosition = position
             val noteOpenIntent = Intent(this@ModelBrowser, ModelFieldEditor::class.java)
@@ -231,7 +232,7 @@ class ModelBrowser : AnkiActivity() {
             noteOpenIntent.putExtra("noteTypeID", noteTypeID)
             startActivityForResultWithAnimation(noteOpenIntent, 0, ActivityTransitionAnimation.Direction.START)
         }
-        mModelListView!!.onItemLongClickListener = OnItemLongClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+        binding.noteTypeBrowserList.onItemLongClickListener = OnItemLongClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
             val cardName = mModelDisplayList!![position].name
             mCurrentID = mModelIds!![position]
             mModelListPosition = position
@@ -404,7 +405,7 @@ class ModelBrowser : AnkiActivity() {
                         mModels!![mModelListPosition].put("name", deckName)
                         mModelDisplayList!![mModelListPosition] = DisplayPair(
                             mModels!![mModelListPosition].getString("name"),
-                            mCardCounts!![mModelListPosition].toInt()
+                            mCardCounts!![mModelListPosition]
                         )
                         refreshList()
                     } else {

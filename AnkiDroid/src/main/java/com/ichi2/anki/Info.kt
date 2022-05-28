@@ -28,10 +28,11 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Button
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.databinding.InfoBinding
+import com.ichi2.anki.databinding.ProgressBarBinding
 import com.ichi2.anki.servicelayer.DebugInfoService.getDebugInfo
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
@@ -45,7 +46,9 @@ import timber.log.Timber
  * Shows an about box, which is a small HTML page.
  */
 class Info : AnkiActivity() {
-    private var mWebView: WebView? = null
+    private lateinit var binding: InfoBinding
+    private lateinit var progressBarBinding: ProgressBarBinding
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -60,56 +63,65 @@ class Info : AnkiActivity() {
             val prefs = AnkiDroidApp.getSharedPrefs(this.baseContext)
             InitialActivity.setUpgradedToLatestVersion(prefs)
         }
-        setContentView(R.layout.info)
+        binding = InfoBinding.inflate(layoutInflater)
+        progressBarBinding = ProgressBarBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
-        findViewById<View>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
+        binding.infoDonate.setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
         title = String.format("%s v%s", appName, pkgVersionName)
-        mWebView = findViewById(R.id.info)
-        mWebView!!.webChromeClient = object : WebChromeClient() {
+        binding.info.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
                 // Hide the progress indicator when the page has finished loaded
                 if (progress == 100) {
-                    mainView.findViewById<View>(R.id.progress_bar).visibility = View.GONE
+                    progressBarBinding.progressBar.visibility = View.GONE
                 }
             }
         }
-        val marketButton = findViewById<Button>(R.id.left_button)
         if (canOpenMarketUri()) {
-            marketButton.setText(R.string.info_rate)
-            marketButton.setOnClickListener { tryOpenIntent(this, AnkiDroidApp.getMarketIntent(this)) }
+            binding.leftButton.setText(R.string.info_rate)
+            binding.leftButton.setOnClickListener {
+                tryOpenIntent(
+                    this,
+                    AnkiDroidApp.getMarketIntent(this)
+                )
+            }
         } else {
-            marketButton.visibility = View.GONE
+            binding.leftButton.visibility = View.GONE
         }
 
         // Apply Theme colors
-        val typedArray = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorBackground, android.R.attr.textColor))
+        val typedArray = theme.obtainStyledAttributes(
+            intArrayOf(
+                android.R.attr.colorBackground,
+                android.R.attr.textColor
+            )
+        )
         val backgroundColor = typedArray.getColor(0, -1)
-        val textColor = String.format("#%06X", 0xFFFFFF and typedArray.getColor(1, -1)) // Color to hex string
-        mWebView!!.setBackgroundColor(backgroundColor)
+        val textColor =
+            String.format("#%06X", 0xFFFFFF and typedArray.getColor(1, -1)) // Color to hex string
+        binding.info.setBackgroundColor(backgroundColor)
         setRenderWorkaround(this)
         when (type) {
             TYPE_ABOUT -> {
                 val htmlContent = getAboutAnkiDroidHtml(res, textColor)
-                mWebView!!.loadDataWithBaseURL("", htmlContent, "text/html", "utf-8", null)
-                val debugCopy = findViewById<Button>(R.id.right_button)
-                debugCopy.text = res.getString(R.string.feedback_copy_debug)
-                debugCopy.setOnClickListener { copyDebugInfo() }
+                binding.info.loadDataWithBaseURL("", htmlContent, "text/html", "utf-8", null)
+                binding.rightButton.text = res.getString(R.string.feedback_copy_debug)
+                binding.rightButton.setOnClickListener { copyDebugInfo() }
             }
             TYPE_NEW_VERSION -> {
-                val continueButton = findViewById<Button>(R.id.right_button)
-                continueButton.text = res.getString(R.string.dialog_continue)
-                continueButton.setOnClickListener { close() }
+                binding.rightButton.text = res.getString(R.string.dialog_continue)
+                binding.rightButton.setOnClickListener { close() }
                 val background = String.format("#%06X", 0xFFFFFF and backgroundColor)
-                mWebView!!.loadUrl("file:///android_asset/changelog.html")
-                mWebView!!.settings.javaScriptEnabled = true
-                mWebView!!.webViewClient = object : WebViewClient() {
+                binding.info.loadUrl("file:///android_asset/changelog.html")
+                binding.info.settings.javaScriptEnabled = true
+                binding.info.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView, url: String) {
 
                         /* The order of below javascript code must not change (this order works both in debug and release mode)
                                  *  or else it will break in any one mode.
                                  */
-                        mWebView!!.loadUrl(
+                        binding.info.loadUrl(
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
                                 "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
                                 "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
@@ -150,7 +162,11 @@ class Info : AnkiActivity() {
         val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         if (clipboardManager != null) {
             clipboardManager.setPrimaryClip(ClipData.newPlainText(this.title, debugInfo))
-            showThemedToast(this, getString(R.string.about_ankidroid_successfully_copied_debug), true)
+            showThemedToast(
+                this,
+                getString(R.string.about_ankidroid_successfully_copied_debug),
+                true
+            )
         } else {
             showThemedToast(this, getString(R.string.about_ankidroid_error_copy_debug_info), false)
         }
@@ -158,8 +174,8 @@ class Info : AnkiActivity() {
     }
 
     override fun onBackPressed() {
-        if (mWebView!!.canGoBack()) {
-            mWebView!!.goBack()
+        if (binding.info.canGoBack()) {
+            binding.info.goBack()
         } else {
             super.onBackPressed()
         }
@@ -169,6 +185,7 @@ class Info : AnkiActivity() {
         const val TYPE_EXTRA = "infoType"
         const val TYPE_ABOUT = 0
         const val TYPE_NEW_VERSION = 2
+
         @JvmStatic
         @VisibleForTesting
         fun getAboutAnkiDroidHtml(res: Resources, textColor: String?): String {
@@ -178,7 +195,13 @@ class Info : AnkiActivity() {
             val content = res.getStringArray(R.array.about_content)
             append("<html><style>body {color:").append(textColor).append(";}</style>")
             append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">")
-            append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
+            append(
+                String.format(
+                    content[0],
+                    res.getString(R.string.app_name),
+                    res.getString(R.string.link_anki)
+                )
+            )
                 .append("<br/><br/>")
             append(
                 String.format(
@@ -194,7 +217,12 @@ class Info : AnkiActivity() {
                     res.getString(R.string.link_contribution)
                 )
             ).append(" ")
-            append(String.format(content[3], res.getString(R.string.link_translation))).append("<br/><br/>")
+            append(
+                String.format(
+                    content[3],
+                    res.getString(R.string.link_translation)
+                )
+            ).append("<br/><br/>")
             append(
                 String.format(
                     content[4], res.getString(R.string.licence_wiki),

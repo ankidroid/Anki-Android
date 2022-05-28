@@ -267,7 +267,7 @@ abstract class Onboarding<Feature>(
             CustomMaterialTapTargetPromptBuilder(activityContext, NoteEditorOnboardingEnum.FRONT_BACK)
                 .createRectangleWithDimmedBackground()
                 .setDismissedListener { onCreate() }
-                .setTarget(R.id.CardEditorEditFieldsLayout)
+                .setTarget(R.id.fieldsLayoutContainer)
                 .setPrimaryText(R.string.card_contents)
                 .setSecondaryText(R.string.card_contents_desc)
                 .show()

@@ -14,7 +14,9 @@
             android:orientation="vertical"
             android:layout_marginBottom="@dimen/note_editor_toolbar_height">
 
-        <include layout="@layout/toolbar" />
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar" />
 
         <ScrollView
             android:id="@+id/CardEditorScroll"
@@ -77,7 +79,7 @@
 
                 <!-- Front/Back/Attach views added in NoteEditor.populateEditFields(..) -->
                 <LinearLayout
-                    android:id="@+id/CardEditorEditFieldsLayout"
+                    android:id="@+id/fieldsLayoutContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
