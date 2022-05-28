@@ -20,7 +20,9 @@
             android:theme="@style/ActionBarStyle"
             android:layout_alignParentTop="true"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/ActionBar.Popup"/>
+            app:popupTheme="@style/ActionBar.Popup"
+            app:navigationContentDescription="@string/abc_action_bar_up_description"
+            app:navigationIcon="?attr/homeAsUpIndicator"/>
         <LinearLayout
             android:layout_below="@id/studyOptionsToolbar"
             android:layout_width="match_parent"

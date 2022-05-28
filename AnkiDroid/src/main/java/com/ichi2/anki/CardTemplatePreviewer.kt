@@ -235,7 +235,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                mTemplateCount = getCol().findTemplates(toPreview.note()).size
+                mTemplateCount = col.findTemplates(toPreview.note()).size
                 if (mTemplateCount >= 2) {
                     mPreviewLayout!!.showNavigationButtons()
                 }
