@@ -1327,11 +1327,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     private val reviewerCardId: Long
-        get() = if (intent.hasExtra("currentCard")) {
-            intent.extras!!.getLong("currentCard")
-        } else {
-            -1
-        }
+        get() = intent.getLongExtra("currentCard", -1)
 
     private fun showEditTagsDialog() {
         if (selectedCardIds.isEmpty()) {
