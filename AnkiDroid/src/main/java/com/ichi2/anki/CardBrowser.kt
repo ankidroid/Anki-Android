@@ -1228,15 +1228,9 @@ open class CardBrowser :
     private fun onTruncate() {
         val truncate = mActionBarMenu!!.findItem(R.id.action_truncate)
 
-        if (truncate.isChecked) {
-            isTruncated = false
-            mCardsAdapter!!.notifyDataSetChanged()
-            truncate.setChecked(false)
-        } else {
-            isTruncated = true
-            mCardsAdapter!!.notifyDataSetChanged()
-            truncate.setChecked(true)
-        }
+        isTruncated = !truncate.isChecked
+        mCardsAdapter!!.notifyDataSetChanged()
+        truncate.isChecked = isTruncated
     }
 
     protected fun deleteSelectedNote() {
