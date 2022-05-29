@@ -2003,9 +2003,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
 
         override fun actualOnPostExecute(context: CardBrowser, result: Pair<CardCollection<CardCache>, List<Long>>?) {
-            if (result == null) {
-                return
-            }
+            result ?: return
             val cardsIdsToHide = result.second
             if (cardsIdsToHide != null) {
                 try {
