@@ -47,6 +47,7 @@ import timber.log.Timber
  */
 class Info : AnkiActivity() {
     private var mWebView: WebView? = null
+    private val linkColor = Color.parseColor("#0288d1")
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -64,9 +65,12 @@ class Info : AnkiActivity() {
         setContentView(R.layout.info)
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
-        val donate = findViewById<Button>(R.id.info_donate)
-        donate.setTextColor(Color.parseColor("#03a9f4"))
-        findViewById<View>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
+        findViewById<Button>(R.id.info_donate).run{
+            setTextColor(linkColor)
+            setOnClickListener {
+                openUrl(Uri.parse(getString(R.string.link_opencollective_donate)))
+            }
+        }
         title = String.format("%s v%s", appName, pkgVersionName)
         mWebView = findViewById(R.id.info)
         mWebView!!.webChromeClient = object : WebChromeClient() {
@@ -79,7 +83,7 @@ class Info : AnkiActivity() {
         }
         val marketButton = findViewById<Button>(R.id.left_button)
         if (canOpenMarketUri()) {
-            marketButton.setTextColor(Color.parseColor("#03a9f4"))
+            marketButton.setTextColor(linkColor)
             marketButton.setText(R.string.info_rate)
             marketButton.setOnClickListener { tryOpenIntent(this, AnkiDroidApp.getMarketIntent(this)) }
         } else {
@@ -97,7 +101,7 @@ class Info : AnkiActivity() {
                 val htmlContent = getAboutAnkiDroidHtml(res, textColor)
                 mWebView!!.loadDataWithBaseURL("", htmlContent, "text/html", "utf-8", null)
                 val debugCopy = findViewById<Button>(R.id.right_button)
-                debugCopy.setTextColor(Color.parseColor("#03a9f4"))
+                debugCopy.setTextColor(linkColor)
                 debugCopy.text = res.getString(R.string.feedback_copy_debug)
                 debugCopy.setOnClickListener { copyDebugInfo() }
             }
@@ -116,10 +120,10 @@ class Info : AnkiActivity() {
                                  */
                         mWebView!!.loadUrl(
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
-                                "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
-                                "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
-                                "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
-                                "document.body.style.setProperty(\"background\", \"" + background + "\");"
+                                    "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
+                                    "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
+                                    "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
+                                    "document.body.style.setProperty(\"background\", \"" + background + "\");"
                         )
                     }
                 }
