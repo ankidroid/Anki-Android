@@ -120,10 +120,10 @@ class Info : AnkiActivity() {
                                  */
                         mWebView!!.loadUrl(
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
-                                    "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
-                                    "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
-                                    "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
-                                    "document.body.style.setProperty(\"background\", \"" + background + "\");"
+                                "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
+                                "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
+                                "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
+                                "document.body.style.setProperty(\"background\", \"" + background + "\");"
                         )
                     }
                 }
