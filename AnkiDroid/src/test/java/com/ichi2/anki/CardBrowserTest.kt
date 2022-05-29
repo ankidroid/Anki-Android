@@ -785,7 +785,7 @@ class CardBrowserTest : RobolectricTest() {
         val task = SearchCards("", NoOrdering(), cardsToRender, 0, 0)
 
         TaskManager.launchCollectionTask(task, cardBrowser.SearchCardsHandler(cardBrowser))
-        val cards = cardBrowser.cards
+        val cards = cardBrowser.mCards
         assertThat(2, equalTo(cards.size()))
         assertTrue(cards[0].isLoaded)
         assertFalse(cards[1].isLoaded)
