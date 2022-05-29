@@ -838,9 +838,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         // If the user entered something into the search, but didn't press "search", clear this.
         // It's confusing if the bar is shown with a query that does not relate to the data on the screen
         mTempSearchQuery = null
-        if (mPostAutoScroll) {
-            mPostAutoScroll = false
-        }
+        mPostAutoScroll = false
     }
 
     override fun onResume() {
@@ -2127,9 +2125,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         override fun onScrollStateChanged(listView: AbsListView, scrollState: Int) {
             // TODO: Try change to RecyclerView as currently gets stuck a lot when using scrollbar on right of ListView
             // Start rendering the question & answer every time the user stops scrolling
-            if (mPostAutoScroll) {
-                mPostAutoScroll = false
-            }
+            mPostAutoScroll = false
             if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 val startIdx = listView.firstVisiblePosition
                 val numVisible = listView.lastVisiblePosition - startIdx
