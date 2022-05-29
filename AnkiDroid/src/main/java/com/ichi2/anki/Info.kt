@@ -176,16 +176,19 @@ class Info : AnkiActivity() {
             fun append(@Language("HTML") html: String) = sb.append(html)
 
             val content = res.getStringArray(R.array.about_content)
-            append("<html><style>body {color:").append(textColor).append(";}</style>")
+            append("<html><style>body {color:")
+            append(textColor)
+            append(";}</style>")
             append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">")
             append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
-                .append("<br/><br/>")
+            append("<br/><br/>")
             append(
                 String.format(
                     content[1], res.getString(R.string.link_issue_tracker),
                     res.getString(R.string.link_wiki), res.getString(R.string.link_forum)
                 )
-            ).append(
+            )
+            append(
                 "<br/><br/>"
             )
             append(
@@ -193,14 +196,17 @@ class Info : AnkiActivity() {
                     content[2], res.getString(R.string.link_wikipedia_open_source),
                     res.getString(R.string.link_contribution)
                 )
-            ).append(" ")
-            append(String.format(content[3], res.getString(R.string.link_translation))).append("<br/><br/>")
+            )
+            append(" ")
+            append(String.format(content[3], res.getString(R.string.link_translation)))
+            append("<br/><br/>")
             append(
                 String.format(
                     content[4], res.getString(R.string.licence_wiki),
                     res.getString(R.string.link_source)
                 )
-            ).append("<br/><br/>")
+            )
+            append("<br/><br/>")
             append("</body></html>")
             return sb.toString()
         }
