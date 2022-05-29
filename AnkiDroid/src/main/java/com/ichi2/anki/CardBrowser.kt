@@ -2163,9 +2163,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
 
         init {
-            @KotlinCleanup("isNotEmpty")
-            if ("" != customFont) {
-                mCustomTypeface = getTypeface(context!!, customFont!!)
+            if (!customFont.isNullOrEmpty()) {
+                mCustomTypeface = getTypeface(context!!, customFont)
             }
             mInflater = LayoutInflater.from(context)
         }
