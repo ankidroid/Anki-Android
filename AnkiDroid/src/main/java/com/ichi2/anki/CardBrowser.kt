@@ -530,14 +530,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
         // Load reference to action bar title
         mActionBarTitle = findViewById(R.id.toolbar_title)
-        mOrder = CARD_ORDER_NONE
         val colOrder = col.get_config_string("sortType")
-        for (c in fSortTypes.indices) {
-            if (fSortTypes[c] == colOrder) {
-                mOrder = c
-                break
-            }
-        }
+        mOrder = fSortTypes.indexOf(colOrder).let { i -> if (i == -1) CARD_ORDER_NONE else i }
         if (mOrder == 1 && preferences.getBoolean("cardBrowserNoSorting", false)) {
             mOrder = 0
         }
