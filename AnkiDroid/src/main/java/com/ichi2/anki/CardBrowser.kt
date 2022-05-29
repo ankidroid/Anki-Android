@@ -2392,15 +2392,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             // render question and answer
             val qa = card.render_output(reload = true, browser = true)
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
-            if ("" == qa.question_text || "" == qa.answer_text) {
+            if (qa.question_text.isEmpty() || qa.answer_text.isEmpty()) {
                 val (question_text, answer_text) = card.render_output(
                     reload = true,
                     browser = false
                 )
-                if ("" == qa.question_text) {
+                if (qa.question_text.isEmpty()) {
                     qa.question_text = question_text
                 }
-                if ("" == qa.answer_text) {
+                if (qa.answer_text.isEmpty()) {
                     qa.answer_text = answer_text
                 }
             }
