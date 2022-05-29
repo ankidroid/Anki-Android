@@ -2442,15 +2442,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun checkCardsAtPositions(vararg positions: Int) {
-        for (position in positions) {
-            check(position < mCards.size()) {
-                String.format(
-                    Locale.US, "Attempted to check card at index %d. %d cards available",
-                    position, mCards.size()
-                )
-            }
-            mCheckedCards.add(mCards[position])
-        }
+        positions
+            .filter { pos -> pos < mCards.size() }
+            .map { pos -> mCards[pos] }
+            .forEach { c -> mCheckedCards.add(c) }
         onSelectionChanged()
     }
 
