@@ -2380,9 +2380,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
 
         fun ensureValidValue() {
-            if (mWrapped == null) {
-                reset()
-            }
+            mWrapped ?: reset()
         }
 
         fun clear() {
