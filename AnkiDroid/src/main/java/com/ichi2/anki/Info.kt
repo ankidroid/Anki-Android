@@ -176,35 +176,40 @@ class Info : AnkiActivity() {
             fun append(@Language("HTML") html: String) = sb.append(html)
 
             val content = res.getStringArray(R.array.about_content)
+            val appName = String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki))
+            val linksIssueWikiAndforum = String.format(
+                content[1], res.getString(R.string.link_issue_tracker),
+                res.getString(R.string.link_wiki), res.getString(R.string.link_forum)
+            )
+            val openSource = String.format(
+                content[2], res.getString(R.string.link_wikipedia_open_source),
+                res.getString(R.string.link_contribution)
+            )
+            val translation = String.format(content[3], res.getString(R.string.link_translation))
+            val wikiAndSource = String.format(
+                content[4], res.getString(R.string.licence_wiki),
+                res.getString(R.string.link_source)
+            )
             append("<html><style>body {color:")
             append(textColor)
             append(";}</style>")
             append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">")
-            append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
+            append(appName)
             append("<br/><br/>")
             append(
-                String.format(
-                    content[1], res.getString(R.string.link_issue_tracker),
-                    res.getString(R.string.link_wiki), res.getString(R.string.link_forum)
-                )
+                linksIssueWikiAndforum
             )
             append(
                 "<br/><br/>"
             )
             append(
-                String.format(
-                    content[2], res.getString(R.string.link_wikipedia_open_source),
-                    res.getString(R.string.link_contribution)
-                )
+                openSource
             )
             append(" ")
-            append(String.format(content[3], res.getString(R.string.link_translation)))
+            append(translation)
             append("<br/><br/>")
             append(
-                String.format(
-                    content[4], res.getString(R.string.licence_wiki),
-                    res.getString(R.string.link_source)
-                )
+                wikiAndSource
             )
             append("<br/><br/>")
             append("</body></html>")
