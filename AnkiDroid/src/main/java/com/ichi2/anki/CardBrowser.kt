@@ -1184,27 +1184,24 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             R.id.action_reposition_cards -> {
                 Timber.i("CardBrowser:: Reposition button pressed")
 
-                // Only new cards may be repositioned
-                val cardIds = selectedCardIds
-                for (cardId in cardIds) {
-                    if (col.getCard(cardId).queue != Consts.QUEUE_TYPE_NEW) {
-                        val dialog = newInstance(
-                            getString(R.string.vague_error),
-                            getString(R.string.reposition_card_not_new_error),
-                            false
+                selectedCardIds.let { cardIds ->
+                    // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+                    if (cardIds.any { col.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
+                        showDialogFragment(
+                            newInstance(getString(R.string.vague_error), getString(R.string.reposition_card_not_new_error), false)
                         )
-                        showDialogFragment(dialog)
                         return false
                     }
+                    val repositionDialog = IntegerDialog().apply {
+                        setArgs(
+                            this@CardBrowser.getString(R.string.reposition_card_dialog_title),
+                            this@CardBrowser.getString(R.string.reposition_card_dialog_message),
+                            5
+                        )
+                        setCallbackRunnable { pos -> repositionCardsNoValidation(cardIds, pos) }
+                    }
+                    showDialogFragment(repositionDialog)
                 }
-                val repositionDialog = IntegerDialog()
-                repositionDialog.setArgs(
-                    getString(R.string.reposition_card_dialog_title),
-                    getString(R.string.reposition_card_dialog_message),
-                    5
-                )
-                repositionDialog.setCallbackRunnable { position: Int? -> repositionCardsNoValidation(cardIds, position) }
-                showDialogFragment(repositionDialog)
                 return true
             }
             R.id.action_edit_note -> {
