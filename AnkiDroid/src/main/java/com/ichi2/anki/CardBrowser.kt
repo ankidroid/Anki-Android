@@ -1292,8 +1292,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     protected fun onPreview() {
-        val previewer = previewIntent
-        launchActivityForResultWithoutAnimation(previewer, onPreviewCardsActivityResult)
+        launchActivityForResultWithoutAnimation(previewIntent, onPreviewCardsActivityResult)
     } // Preview all cards, starting from the one that is currently selected
 
     // Multiple cards have been explicitly selected, so preview only those cards
@@ -1301,8 +1300,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     val previewIntent: Intent
         get() = if (isInMultiSelectMode && checkedCardCount() > 1) {
             // Multiple cards have been explicitly selected, so preview only those cards
-            val index = 0
-            getPreviewIntent(index, Utils.toPrimitive(selectedCardIds))
+            getPreviewIntent(0, Utils.toPrimitive(selectedCardIds))
         } else {
             // Preview all cards, starting from the one that is currently selected
             val startIndex = if (mCheckedCards.isEmpty()) 0 else mCheckedCards.iterator().next().position
