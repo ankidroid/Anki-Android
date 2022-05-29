@@ -469,12 +469,9 @@ open class CardBrowser :
 
     @get:VisibleForTesting
     val lastDeckId: Long?
-        get() {
-            val state = getSharedPreferences(PERSISTENT_STATE_FILE, 0)
-            return if (!state.contains(LAST_DECK_ID_KEY)) {
-                null
-            } else state.getLong(LAST_DECK_ID_KEY, -1)
-        }
+        get() = getSharedPreferences(PERSISTENT_STATE_FILE, 0)
+            .getLong(LAST_DECK_ID_KEY, Decks.NOT_FOUND_DECK_ID)
+            .takeUnless { it == Decks.NOT_FOUND_DECK_ID }
 
     private fun saveLastDeckId(id: Long?) {
         if (id == null) {
