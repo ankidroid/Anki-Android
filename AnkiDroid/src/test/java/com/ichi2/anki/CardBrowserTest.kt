@@ -306,7 +306,8 @@ class CardBrowserTest : RobolectricTest() {
         // check if all card flags turned to flag = 3
         assertThat(
             "All cards should be flagged",
-            stream(cardBrowser.cardIds)
+            cardBrowser.cardIds
+                .stream()
                 .map { cardId: Long -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId).toLong() }
                 .noneMatch { flag1: Long -> flag1 != flagForAll.toLong() }
         )
