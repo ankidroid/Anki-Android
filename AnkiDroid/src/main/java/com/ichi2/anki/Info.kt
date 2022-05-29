@@ -65,7 +65,7 @@ class Info : AnkiActivity() {
         setContentView(R.layout.info)
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
-        findViewById<Button>(R.id.info_donate).run{
+        findViewById<Button>(R.id.info_donate).run {
             setTextColor(linkColor)
             setOnClickListener {
                 openUrl(Uri.parse(getString(R.string.link_opencollective_donate)))
