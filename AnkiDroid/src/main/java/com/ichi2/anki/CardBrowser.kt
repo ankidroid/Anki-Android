@@ -105,7 +105,6 @@ import java.lang.IllegalStateException
 import java.lang.StringBuilder
 import java.util.*
 import java.util.function.Consumer
-import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max
@@ -1576,25 +1575,17 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             R.string.CardEditorTags,
             tags.substring(1, tags.length - 1)
         )
-        val sb = StringBuilder()
-        when (option) {
-            1 -> sb.append("is:new ")
-            2 -> sb.append("is:due ")
-            else -> {}
-        }
-        var i = 0
-        for (tag in selectedTags) {
-            if (i != 0) {
-                sb.append("or ")
-            } else {
-                sb.append("(") // Only if we really have selected tags
+        val sb = StringBuilder(
+            when (option) {
+                1 -> "is:new "
+                2 -> "is:due "
+                else -> ""
             }
-            // 7070: quote tags so brackets are properly escaped
-            sb.append("\"tag:").append(tag).append("\"").append(" ")
-            i++
-        }
-        if (i > 0) {
-            sb.append(")") // Only if we added anything to the tag list
+        )
+        // join selectedTags as "tag:$tag" with " or " between them
+        val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
+        if (selectedTags.isNotEmpty()) {
+            sb.append("($tagsConcat)") // Only if we added anything to the tag list
         }
         mSearchTerms = sb.toString()
         searchCards()
