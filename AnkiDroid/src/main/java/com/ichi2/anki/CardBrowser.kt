@@ -1329,18 +1329,13 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             Timber.i("Attempted reschedule - no cards selected")
             return
         }
-        val selectedCardIds = selectedCardIds
-        val consumer = Consumer { newDays: Int -> rescheduleWithoutValidation(selectedCardIds, newDays) }
-        val rescheduleDialog: RescheduleDialog = if (selectedCardIds.size == 1) {
-            val cardId = selectedCardIds[0]
-            val selected = col.getCard(cardId)
-            rescheduleSingleCard(resources, selected, consumer)
-        } else {
-            rescheduleMultipleCards(
-                resources,
-                consumer,
-                selectedCardIds.size
-            )
+        val rescheduleDialog: RescheduleDialog = selectedCardIds.run {
+            val consumer = Consumer { newDays: Int -> rescheduleWithoutValidation(this, newDays) }
+            if (size == 1) {
+                rescheduleSingleCard(resources, col.getCard(this[0]), consumer)
+            } else {
+                rescheduleMultipleCards(resources, consumer, size)
+            }
         }
         showDialogFragment(rescheduleDialog)
     }
