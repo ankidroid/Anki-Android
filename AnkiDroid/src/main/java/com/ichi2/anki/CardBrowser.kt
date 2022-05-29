@@ -33,6 +33,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.edit
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.MaterialDialog.ListCallbackSingleChoice
 import com.google.android.material.snackbar.Snackbar
@@ -264,14 +265,12 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             if (mOrder == 0) {
                 // if the sort value in the card browser was changed, then perform a new search
                 col.set_config("sortType", fSortTypes[1])
-                AnkiDroidApp.getSharedPrefs(baseContext).edit()
-                    .putBoolean("cardBrowserNoSorting", true)
-                    .apply()
+                AnkiDroidApp.getSharedPrefs(baseContext)
+                    .edit { putBoolean("cardBrowserNoSorting", true) }
             } else {
                 col.set_config("sortType", fSortTypes[mOrder])
-                AnkiDroidApp.getSharedPrefs(baseContext).edit()
-                    .putBoolean("cardBrowserNoSorting", false)
-                    .apply()
+                AnkiDroidApp.getSharedPrefs(baseContext)
+                    .edit { putBoolean("cardBrowserNoSorting", false) }
             }
             col.set_config("sortBackwards", mOrderAsc)
             searchCards()
@@ -488,7 +487,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             clearLastDeckId()
             return
         }
-        getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().putLong(LAST_DECK_ID_KEY, id).apply()
+        getSharedPreferences(PERSISTENT_STATE_FILE, 0)
+            .edit { putLong(LAST_DECK_ID_KEY, id) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -567,8 +567,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn1Index) {
                     mColumn1Index = pos
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext).edit()
-                        .putInt("cardBrowserColumn1", mColumn1Index).apply()
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)
+                        .edit { putInt("cardBrowserColumn1", mColumn1Index) }
                     val fromMap = mCardsAdapter!!.fromMapping
                     fromMap[0] = COLUMN1_KEYS[mColumn1Index]
                     mCardsAdapter!!.fromMapping = fromMap
@@ -595,8 +595,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn2Index) {
                     mColumn2Index = pos
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext).edit()
-                        .putInt("cardBrowserColumn2", mColumn2Index).apply()
+                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)
+                        .edit { putInt("cardBrowserColumn2", mColumn2Index) }
                     val fromMap = mCardsAdapter!!.fromMapping
                     fromMap[1] = COLUMN2_KEYS[mColumn2Index]
                     mCardsAdapter!!.fromMapping = fromMap
@@ -2781,8 +2781,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         const val CARD_NOT_AVAILABLE = -1
         @JvmStatic
         fun clearLastDeckId() {
-            val context: Context = AnkiDroidApp.getInstance()
-            context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().remove(LAST_DECK_ID_KEY).apply()
+            AnkiDroidApp.getInstance().getSharedPreferences(PERSISTENT_STATE_FILE, 0)
+                .edit { remove(LAST_DECK_ID_KEY) }
         }
 
         private fun getPositionMap(list: CardCollection<CardCache>): Map<Long, Int> {
