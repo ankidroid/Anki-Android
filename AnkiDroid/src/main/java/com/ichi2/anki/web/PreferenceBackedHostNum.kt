@@ -24,7 +24,7 @@ import timber.log.Timber
 class PreferenceBackedHostNum(hostNum: Int?, private val preferences: SharedPreferences) : HostNum(hostNum) {
     /** Clearing hostNum whenever on log out/changes the server URL should avoid any problems with malicious servers */
     override fun reset() {
-        hostNum = getDefaultHostNum()
+        setHostNum(getDefaultHostNum())
     }
 
     override fun getHostNum(): Int? {
