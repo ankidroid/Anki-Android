@@ -2127,15 +2127,12 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
-            val columns = v.tag as Array<View>
             val card = mCards[position]
-            for (i in toIds.indices) {
-                val col = columns[i] as TextView
-                // set font for column
-                setFont(col)
-                // set text for column
-                col.text = card.getColumnHeaderText(fromKeys[i])
-            }
+            (v.tag as Array<*>)
+                .forEachIndexed { i, col ->
+                    setFont(col as TextView) // set font for column
+                    col.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
+                }
             // set card's background color
             val backgroundColor: Int = getColorFromAttr(this@CardBrowser, card.color)
             v.setBackgroundColor(backgroundColor)
