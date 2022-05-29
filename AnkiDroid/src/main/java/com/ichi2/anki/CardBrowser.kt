@@ -796,10 +796,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             else -> {
                 Timber.i("Back key pressed")
                 val data = Intent()
-                if (mReloadRequired) {
-                    // Add reload flag to result intent so that schedule reset when returning to note editor
-                    data.putExtra("reloadRequired", true)
-                }
+                // Add reload flag to result intent so that schedule reset when returning to note editor
+                data.putExtra("reloadRequired", mReloadRequired)
                 closeCardBrowser(RESULT_OK, data)
             }
         }
