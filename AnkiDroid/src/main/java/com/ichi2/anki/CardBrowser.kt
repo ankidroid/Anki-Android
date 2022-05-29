@@ -355,19 +355,18 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             Timber.d("OnSelection using search named: %s", searchName)
             val savedFiltersObj = col.get_config("savedFilters", null as JSONObject?)
             Timber.d("SavedFilters are %s", savedFiltersObj?.toString())
-            if (savedFiltersObj != null) {
-                mSearchTerms = savedFiltersObj.optString(searchName)
-                Timber.d("OnSelection using search terms: %s", mSearchTerms)
-                mSearchView!!.setQuery(mSearchTerms!!, false)
-                mSearchItem!!.expandActionView()
-                searchCards()
-            }
+            savedFiltersObj ?: return
+            mSearchTerms = savedFiltersObj.optString(searchName)
+            Timber.d("OnSelection using search terms: %s", mSearchTerms)
+            mSearchView!!.setQuery(mSearchTerms!!, false)
+            mSearchItem!!.expandActionView()
+            searchCards()
         }
 
         override fun onRemoveSearch(searchName: String?) {
             Timber.d("OnRemoveSelection using search named: %s", searchName)
             val savedFiltersObj = col.get_config("savedFilters", null as JSONObject?)
-            if (savedFiltersObj != null && savedFiltersObj.has(searchName)) {
+            if (savedFiltersObj?.has(searchName) == true) {
                 savedFiltersObj.remove(searchName)
                 col.set_config("savedFilters", savedFiltersObj)
                 col.flush()
