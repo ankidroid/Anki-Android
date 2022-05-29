@@ -1130,17 +1130,16 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             R.id.action_reposition_cards -> {
                 Timber.i("CardBrowser:: Reposition button pressed")
 
-                // Only new cards may be repositioned
-                for (cardId in selectedCardIds) {
-                    if (col.getCard(cardId).queue != Consts.QUEUE_TYPE_NEW) {
-                        val dialog = newInstance(
-                            getString(R.string.vague_error),
-                            getString(R.string.reposition_card_not_new_error),
-                            false
-                        )
-                        showDialogFragment(dialog)
-                        return false
-                    }
+                // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+                if (selectedCardIds
+                    .find { cId -> col.getCard(cId).queue != Consts.QUEUE_TYPE_NEW }
+                    ?.apply {
+                        showDialogFragment(
+                                newInstance(getString(R.string.vague_error), getString(R.string.reposition_card_not_new_error), false)
+                            )
+                    } != null
+                ) {
+                    return false
                 }
                 val repositionDialog = IntegerDialog()
                 repositionDialog.setArgs(
