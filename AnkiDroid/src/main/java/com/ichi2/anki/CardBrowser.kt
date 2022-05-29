@@ -1698,25 +1698,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
     private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
-        val reviewerCardId = reviewerCardId
-        val oldMCards = mCards
-        val idToPos = getPositionMap(oldMCards)
-        val idToRemove: MutableSet<Long> = HashSet()
-        for (cardId in cardsIds) {
-            if (cardId == reviewerCardId) {
-                mReloadRequired = true
-            }
-            if (idToPos.containsKey(cardId)) {
-                idToRemove.add(cardId)
-            }
+        val idToPos = getPositionMap(mCards)
+        val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
+        if (cardsIds.contains(reviewerCardId)) {
+            mReloadRequired = true
         }
-        val newMCards: MutableList<CardCache> = ArrayList(oldMCards.size())
-        var pos = 0
-        for (card in oldMCards) {
-            if (!idToRemove.contains(card.id)) {
-                newMCards.add(CardCache(card, pos++))
-            }
-        }
+        val newMCards: MutableList<CardCache> = mCards
+            .filter { c -> !idToRemove.contains(c.id) }
+            .mapIndexed { i, c -> CardCache(c, i) }
+            .toMutableList()
         mCards.replaceWith(newMCards)
         if (reorderCards) {
             // Suboptimal from a UX perspective, we should reorder
