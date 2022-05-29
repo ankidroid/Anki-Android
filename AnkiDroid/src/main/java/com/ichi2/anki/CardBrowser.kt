@@ -1834,10 +1834,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      */
     val selectedDeckNameForUi: String
         get() = try {
-            when (val lastDeckId = lastDeckId) {
+            when (lastDeckId) {
                 null -> getString(R.string.card_browser_unknown_deck_name)
                 ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
-                else -> col.decks.name(lastDeckId)
+                else -> col.decks.name(lastDeckId!!)
             }
         } catch (e: Exception) {
             Timber.w(e, "Unable to get selected deck name")
