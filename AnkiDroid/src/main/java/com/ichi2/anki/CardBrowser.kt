@@ -2124,18 +2124,16 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             }
 
             // If we're not in mutliselect, we can select cards if there are cards to select
-            if (!isInMultiSelectMode && mActionBarMenu != null) {
-                val selectAll = mActionBarMenu!!.findItem(R.id.action_select_all)
-                selectAll.isVisible = true && cardCount() != 0L
-            }
             if (!isInMultiSelectMode) {
+                val selectAll = mActionBarMenu?.findItem(R.id.action_select_all)
+                selectAll?.isVisible = true && cardCount() != 0L
                 return
             }
             updateMultiselectMenu()
             mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
         } finally {
-            if (colIsOpen() && mCardsAdapter != null) {
-                mCardsAdapter!!.notifyDataSetChanged()
+            if (colIsOpen()) {
+                mCardsAdapter?.notifyDataSetChanged()
             }
         }
     }
