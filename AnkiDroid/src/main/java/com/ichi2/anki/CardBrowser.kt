@@ -2563,13 +2563,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun getPropertiesForCardId(cardId: Long): CardCache {
-        for (props in mCards) {
-            val id = props.id
-            if (id == cardId) {
-                return props
-            }
-        }
-        throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
+        return mCards.find { c -> c.id == cardId } ?: throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
