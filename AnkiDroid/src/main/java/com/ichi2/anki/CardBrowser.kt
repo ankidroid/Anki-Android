@@ -2425,12 +2425,11 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val isShowingSelectAll: Boolean
-        get() = mActionBarMenu != null && mActionBarMenu!!.findItem(R.id.action_select_all).isVisible
+        get() = mActionBarMenu?.findItem(R.id.action_select_all)?.isVisible == true
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val isShowingSelectNone: Boolean
-        get() = mActionBarMenu != null && mActionBarMenu!!.findItem(R.id.action_select_none) != null && //
-            mActionBarMenu!!.findItem(R.id.action_select_none).isVisible
+        get() = mActionBarMenu?.findItem(R.id.action_select_none)?.isVisible == true
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun clearCardData(position: Int) {
