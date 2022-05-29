@@ -76,7 +76,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     private var mNoteId: Long = 0
 
     // the position of the cursor in the editor view
-    private var mEditorPosition: HashMap<Int, Int?>? = null
+    private var tabToCursorPosition: HashMap<Int, Int?>? = null
 
     // the current editor view among front/style/back
     private var mEditorViewId: HashMap<Int, Int?>? = null
@@ -98,7 +98,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.card_template_editor_activity)
         // Load the args either from the intent or savedInstanceState bundle
-        mEditorPosition = HashMap()
+        tabToCursorPosition = HashMap()
         mEditorViewId = HashMap()
         if (savedInstanceState == null) {
             // get model id
@@ -112,13 +112,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             mNoteId = intent.getLongExtra(EDITOR_NOTE_ID, -1L)
             // get id for currently edited template (optional)
             mStartingOrdId = intent.getIntExtra("ordId", -1)
-            mEditorPosition!![0] = 0
+            tabToCursorPosition!![0] = 0
             mEditorViewId!![0] = R.id.front_edit
         } else {
             mModelId = savedInstanceState.getLong(EDITOR_MODEL_ID)
             mNoteId = savedInstanceState.getLong(EDITOR_NOTE_ID)
             mStartingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
-            mEditorPosition = savedInstanceState.getSerializable(EDITOR_POSITION_KEY) as HashMap<Int, Int?>?
+            tabToCursorPosition = savedInstanceState.getSerializable(TAB_TO_CURSOR_POSITION_KEY) as HashMap<Int, Int?>?
             mEditorViewId = savedInstanceState.getSerializable(EDITOR_VIEW_ID_KEY) as HashMap<Int, Int?>?
             tempModel = TemporaryModel.fromBundle(savedInstanceState)
         }
@@ -135,7 +135,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         outState.putLong(EDITOR_NOTE_ID, mNoteId)
         outState.putInt(EDITOR_START_ORD_ID, mStartingOrdId)
         outState.putSerializable(EDITOR_VIEW_ID_KEY, mEditorViewId)
-        outState.putSerializable(EDITOR_POSITION_KEY, mEditorPosition)
+        outState.putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPosition)
         super.onSaveInstanceState(outState)
     }
 
@@ -275,8 +275,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         override fun createFragment(position: Int): Fragment {
             var editorPosition = 0
             var editorViewId = R.id.front_edit
-            if (mEditorPosition!![position] != null && mEditorViewId!![position] != null) {
-                editorPosition = mEditorPosition!![position]!!
+            if (tabToCursorPosition!![position] != null && mEditorViewId!![position] != null) {
+                editorPosition = tabToCursorPosition!![position]!!
                 editorViewId = mEditorViewId!![position]!!
             }
             return CardTemplateFragment.newInstance(position, mNoteId, editorPosition, editorViewId)
@@ -308,7 +308,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private lateinit var mEditorEditText: FixedEditText
 
         var currentEditorViewId = 0
-        private var mEditorPosition = 0
+        private var cursorPosition = 0
 
         private lateinit var mTemplateEditor: CardTemplateEditor
         private var mTabLayoutMediator: TabLayoutMediator? = null
@@ -329,7 +329,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             mCurrentEditorTitle = mainView.findViewById(R.id.title_edit)
             mEditorEditText = mainView.findViewById(R.id.editor_editText)
-            mEditorPosition = requireArguments().getInt(EDITOR_POSITION_KEY)
+            cursorPosition = requireArguments().getInt(CURSOR_POSITION_KEY)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 mEditorEditText.customInsertionActionModeCallback = ActionModeCallback()
@@ -358,7 +358,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // Set text change listeners
             val templateEditorWatcher: TextWatcher = object : TextWatcher {
                 override fun afterTextChanged(arg0: Editable) {
-                    mTemplateEditor.mEditorPosition!![position] = mEditorEditText.getSelectionStart()
+                    mTemplateEditor.tabToCursorPosition!![position] = mEditorEditText.getSelectionStart()
                     @KotlinCleanup("when")
                     if (currentEditorViewId == R.id.styling_edit) {
                         tempModel.updateCss(mEditorEditText.getText().toString())
@@ -457,7 +457,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             currentEditorViewId = id
             mEditorEditText.setText(editorContent)
             mCurrentEditorTitle!!.text = resources.getString(editorTitleId)
-            mEditorEditText.setSelection(mEditorPosition)
+            mEditorEditText.setSelection(cursorPosition)
             mEditorEditText.requestFocus()
         }
 
@@ -957,14 +957,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             fun newInstance(
                 position: Int,
                 noteId: Long,
-                editorPosition: Int,
+                cursorPosition: Int,
                 viewId: Int
             ): CardTemplateFragment {
                 val f = CardTemplateFragment()
                 val args = Bundle()
                 args.putInt("position", position)
                 args.putLong(EDITOR_NOTE_ID, noteId)
-                args.putInt(EDITOR_POSITION_KEY, editorPosition)
+                args.putInt(CURSOR_POSITION_KEY, cursorPosition)
                 args.putInt(EDITOR_VIEW_ID_KEY, viewId)
                 f.arguments = args
                 return f
@@ -973,7 +973,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     companion object {
-        private const val EDITOR_POSITION_KEY = "editorPosition"
+        private const val CURSOR_POSITION_KEY = "cursorPosition"
+        private const val TAB_TO_CURSOR_POSITION_KEY = "tabToCursorPosition"
         private const val EDITOR_VIEW_ID_KEY = "editorViewId"
         private const val EDITOR_MODEL_ID = "modelId"
         private const val EDITOR_NOTE_ID = "noteId"
