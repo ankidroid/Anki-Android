@@ -975,7 +975,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         filterByFlag()
     }
 
-    @KotlinCleanup("cleanup the when")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true
@@ -1040,68 +1039,48 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 showFilterByTagsDialog()
                 return true
             }
-            R.id.action_flag_zero -> {
-                flagTask(0)
-                return true
-            }
-            R.id.action_flag_one -> {
-                flagTask(1)
-                return true
-            }
-            R.id.action_flag_two -> {
-                flagTask(2)
-                return true
-            }
-            R.id.action_flag_three -> {
-                flagTask(3)
-                return true
-            }
-            R.id.action_flag_four -> {
-                flagTask(4)
-                return true
-            }
-            R.id.action_flag_five -> {
-                flagTask(5)
-                return true
-            }
-            R.id.action_flag_six -> {
-                flagTask(6)
-                return true
-            }
+            R.id.action_flag_zero,
+            R.id.action_flag_one,
+            R.id.action_flag_two,
+            R.id.action_flag_three,
+            R.id.action_flag_four,
+            R.id.action_flag_five,
+            R.id.action_flag_six,
             R.id.action_flag_seven -> {
-                flagTask(7)
+                flagTask(
+                    arrayOf(
+                        R.id.action_flag_zero,
+                        R.id.action_flag_one,
+                        R.id.action_flag_two,
+                        R.id.action_flag_three,
+                        R.id.action_flag_four,
+                        R.id.action_flag_five,
+                        R.id.action_flag_six,
+                        R.id.action_flag_seven
+                    ).indexOf(item.itemId)
+                )
                 return true
             }
-            R.id.action_select_flag_zero -> {
-                selectionWithFlagTask(0)
-                return true
-            }
-            R.id.action_select_flag_one -> {
-                selectionWithFlagTask(1)
-                return true
-            }
-            R.id.action_select_flag_two -> {
-                selectionWithFlagTask(2)
-                return true
-            }
-            R.id.action_select_flag_three -> {
-                selectionWithFlagTask(3)
-                return true
-            }
-            R.id.action_select_flag_four -> {
-                selectionWithFlagTask(4)
-                return true
-            }
-            R.id.action_select_flag_five -> {
-                selectionWithFlagTask(5)
-                return true
-            }
-            R.id.action_select_flag_six -> {
-                selectionWithFlagTask(6)
-                return true
-            }
+            R.id.action_select_flag_zero,
+            R.id.action_select_flag_one,
+            R.id.action_select_flag_two,
+            R.id.action_select_flag_three,
+            R.id.action_select_flag_four,
+            R.id.action_select_flag_five,
+            R.id.action_select_flag_six,
             R.id.action_select_flag_seven -> {
-                selectionWithFlagTask(7)
+                selectionWithFlagTask(
+                    arrayOf(
+                        R.id.action_select_flag_zero,
+                        R.id.action_select_flag_one,
+                        R.id.action_select_flag_two,
+                        R.id.action_select_flag_three,
+                        R.id.action_select_flag_four,
+                        R.id.action_select_flag_five,
+                        R.id.action_select_flag_six,
+                        R.id.action_select_flag_seven
+                    ).indexOf(item.itemId)
+                )
                 return true
             }
             R.id.action_delete_card -> {
@@ -1154,8 +1133,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 Timber.i("CardBrowser:: Reposition button pressed")
 
                 // Only new cards may be repositioned
-                val cardIds = selectedCardIds
-                for (cardId in cardIds) {
+                for (cardId in selectedCardIds) {
                     if (col.getCard(cardId).queue != Consts.QUEUE_TYPE_NEW) {
                         val dialog = newInstance(
                             getString(R.string.vague_error),
@@ -1172,7 +1150,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                     getString(R.string.reposition_card_dialog_message),
                     5
                 )
-                repositionDialog.setCallbackRunnable { position: Int? -> repositionCardsNoValidation(cardIds, position) }
+                repositionDialog.setCallbackRunnable { position: Int? -> repositionCardsNoValidation(selectedCardIds, position) }
                 showDialogFragment(repositionDialog)
                 return true
             }
@@ -1181,7 +1159,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 return super.onOptionsItemSelected(item)
             }
             R.id.action_view_card_info -> {
-                val selectedCardIds = selectedCardIds
                 if (selectedCardIds.isNotEmpty()) {
                     val intent = Intent(this, CardInfo::class.java)
                     intent.putExtra("cardId", selectedCardIds[0])
