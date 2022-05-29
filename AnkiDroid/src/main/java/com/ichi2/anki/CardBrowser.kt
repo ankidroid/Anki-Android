@@ -1886,10 +1886,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         get() = mCards.find { c -> c.id == mOldCardId }?.position
             ?: CARD_NOT_AVAILABLE
 
-    @KotlinCleanup("why do we create a separate variable just to check the below conditions?")
     fun hasSelectedAllDecks(): Boolean {
-        val lastDeckId = lastDeckId
-        return lastDeckId != null && lastDeckId == ALL_DECKS_ID
+        return lastDeckId == ALL_DECKS_ID
     }
 
     fun searchAllDecks() {
