@@ -2291,9 +2291,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 reload()
             }
             card.note()
-            if (COLUMN1_KEYS[column1Index] == Column.QUESTION || COLUMN2_KEYS[column2Index] == Column.QUESTION || COLUMN2_KEYS[column2Index] == Column.ANSWER // First column can not be the answer. If it were to
-                // change, this code should also be changed.
-            ) {
+            // First column can not be the answer. If it were to change, this code should also be changed.
+            if (COLUMN1_KEYS[column1Index] == Column.QUESTION || arrayOf(Column.QUESTION, Column.ANSWER).contains(COLUMN2_KEYS[column2Index])) {
                 updateSearchItemQA()
             }
             isLoaded = true
