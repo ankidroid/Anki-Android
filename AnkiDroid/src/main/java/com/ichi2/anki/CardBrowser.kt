@@ -1895,25 +1895,14 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
 
         private fun setMenuIcons(browser: Context, hasUnsuspended: Boolean, hasUnmarked: Boolean, actionBarMenu: Menu) {
-            var title: Int
-            var icon: Int
-            if (hasUnsuspended) {
-                title = R.string.card_browser_suspend_card
-                icon = R.drawable.ic_pause_circle_outline
-            } else {
-                title = R.string.card_browser_unsuspend_card
-                icon = R.drawable.ic_pause_circle_filled
-            }
+            var title = if (hasUnsuspended) R.string.card_browser_suspend_card else R.string.card_browser_unsuspend_card
+            var icon = if (hasUnsuspended) R.drawable.ic_pause_circle_outline else R.drawable.ic_pause_circle_filled
             val suspendItem = actionBarMenu.findItem(R.id.action_suspend_card)
             suspendItem.title = browser.getString(title)
             suspendItem.setIcon(icon)
-            if (hasUnmarked) {
-                title = R.string.card_browser_mark_card
-                icon = R.drawable.ic_star_border_white
-            } else {
-                title = R.string.card_browser_unmark_card
-                icon = R.drawable.ic_star_white
-            }
+
+            title = if (hasUnmarked) R.string.card_browser_mark_card else R.string.card_browser_unmark_card
+            icon = if (hasUnmarked) R.drawable.ic_star_border_white else R.drawable.ic_star_white
             val markItem = actionBarMenu.findItem(R.id.action_mark_card)
             markItem.title = browser.getString(title)
             markItem.setIcon(icon)
