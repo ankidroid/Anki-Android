@@ -420,13 +420,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     private val selectedCardIds: List<Long>
-        get() {
-            val ids: MutableList<Long> = ArrayList(mCheckedCards.size)
-            for (cardPosition in mCheckedCards) {
-                ids.add(cardPosition.id)
-            }
-            return ids
-        }
+        get() = mCheckedCards.map { c -> c.id }
 
     private fun canPerformCardInfo(): Boolean {
         return checkedCardCount() == 1
