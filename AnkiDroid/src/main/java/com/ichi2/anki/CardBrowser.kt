@@ -1754,10 +1754,9 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             }
             if (mShouldRestoreScroll) {
                 mShouldRestoreScroll = false
-                val newPosition = newPositionOfSelectedCard
-                val isRestorePossible = newPosition != CARD_NOT_AVAILABLE
+                val isRestorePossible = newPositionOfSelectedCard != CARD_NOT_AVAILABLE
                 if (isRestorePossible) {
-                    autoScrollTo(newPosition)
+                    autoScrollTo(newPositionOfSelectedCard)
                 }
             }
             updatePreviewMenuItem()
