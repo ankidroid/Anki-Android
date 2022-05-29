@@ -470,12 +470,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @get:VisibleForTesting
     val lastDeckId: Long?
-        get() {
-            val state = getSharedPreferences(PERSISTENT_STATE_FILE, 0)
-            return if (!state.contains(LAST_DECK_ID_KEY)) {
-                null
-            } else state.getLong(LAST_DECK_ID_KEY, -1)
-        }
+        get() = getSharedPreferences(PERSISTENT_STATE_FILE, 0).all[LAST_DECK_ID_KEY]?.let { id -> id as Long }
 
     private fun saveLastDeckId(id: Long?) {
         if (id == null) {
