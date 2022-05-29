@@ -1407,21 +1407,18 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         searchCards()
     }
 
-    @KotlinCleanup("isNotEmpty()")
     private fun searchCards() {
         // cancel the previous search & render tasks if still running
         invalidate()
-        if (mSearchTerms == null) {
-            mSearchTerms = ""
-        }
-        if ("" != mSearchTerms && mSearchView != null) {
+        mSearchTerms = mSearchTerms ?: ""
+        if (mSearchTerms!!.isNotEmpty() && mSearchView != null) {
             mSearchView!!.setQuery(mSearchTerms!!, false)
             mSearchItem!!.expandActionView()
         }
         val searchText: String? = if (mSearchTerms!!.contains("deck:")) {
             "($mSearchTerms)"
         } else {
-            if ("" != mSearchTerms) "$mRestrictOnDeck($mSearchTerms)" else mRestrictOnDeck
+            if (mSearchTerms!!.isNotEmpty()) "$mRestrictOnDeck($mSearchTerms)" else mRestrictOnDeck
         }
         if (colIsOpen() && mCardsAdapter != null) {
             // clear the existing card list
