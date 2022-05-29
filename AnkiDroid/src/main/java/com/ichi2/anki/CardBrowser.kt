@@ -1034,16 +1034,12 @@ open class CardBrowser :
                 return true
             }
             R.id.action_list_my_searches -> {
-                val savedFiltersObj = col.get_config("savedFilters", null as JSONObject?)
-                val savedFilters: HashMap<String?, String?>
-                if (savedFiltersObj != null) {
-                    savedFilters = HashMapInit(savedFiltersObj.length())
-                    for (searchName in savedFiltersObj) {
-                        savedFilters[searchName] = savedFiltersObj.optString(searchName)
-                    }
-                } else {
-                    savedFilters = HashMapInit(0)
-                }
+                val savedFiltersObj = col.get_config("savedFilters", JSONObject())!!
+                val savedFilters: HashMap<String, String> = HashMap(
+                    savedFiltersObj
+                        .keys().asSequence().toList()
+                        .associateWith { k -> savedFiltersObj[k] as String }
+                )
                 showDialogFragment(
                     newInstance(
                         savedFilters, mMySearchesDialogListener,
