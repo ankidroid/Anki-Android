@@ -2545,12 +2545,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 .edit { remove(LAST_DECK_ID_KEY) }
         }
 
-        private fun getPositionMap(list: CardCollection<CardCache>): Map<Long, Int> {
-            val positions: MutableMap<Long, Int> = HashMapInit(list.size())
-            for (i in 0 until list.size()) {
-                positions[list[i].id] = i
-            }
-            return positions
+        private fun getPositionMap(cards: CardCollection<CardCache>): Map<Long, Int> {
+            return cards.mapIndexed { i, c -> c.id to i }.toMap()
         }
 
         @CheckResult
