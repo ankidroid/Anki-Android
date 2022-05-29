@@ -317,7 +317,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // Storing a reference to the templateEditor allows us to use member variables
             mTemplateEditor = activity as CardTemplateEditor
             val mainView = inflater.inflate(R.layout.card_template_editor_item, container, false)
-            val position = requireArguments().getInt("position")
+            val position = requireArguments().getInt(POSITION)
             val tempModel = mTemplateEditor.tempModel
             // Load template
             val template: JSONObject = try {
@@ -670,7 +670,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          */
         fun getCurrentCardTemplateIndex(): Int {
             // COULD_BE_BETTER: Lots of duplicate code could call this. Hold off on the refactor until #5151 goes in.
-            return requireArguments().getInt("position")
+            return requireArguments().getInt(POSITION)
         }
 
         private fun deletionWouldOrphanNote(col: Collection, tempModel: TemporaryModel?, position: Int): Boolean {
@@ -887,7 +887,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          */
         private fun addNewTemplate(model: JSONObject) {
             // Build new template
-            val oldPosition = requireArguments().getInt("position")
+            val oldPosition = requireArguments().getInt(POSITION)
             val templates = model.getJSONArray("tmpls")
             val oldTemplate = templates.getJSONObject(oldPosition)
             val newTemplate = Models.newTemplate(newCardName(templates))
@@ -962,7 +962,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             ): CardTemplateFragment {
                 val f = CardTemplateFragment()
                 val args = Bundle()
-                args.putInt("position", position)
+                args.putInt(POSITION, position)
                 args.putLong(EDITOR_NOTE_ID, noteId)
                 args.putInt(CURSOR_POSITION_KEY, cursorPosition)
                 args.putInt(EDITOR_VIEW_ID_KEY, viewId)
@@ -979,6 +979,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private const val EDITOR_MODEL_ID = "modelId"
         private const val EDITOR_NOTE_ID = "noteId"
         private const val EDITOR_START_ORD_ID = "ordId"
+        private const val POSITION = "position"
         @Suppress("unused")
         private const val REQUEST_PREVIEWER = 0
         @Suppress("unused")
