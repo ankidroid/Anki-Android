@@ -1350,10 +1350,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             Timber.i("Not showing Change Deck - No Cards")
             return
         }
-        val selectableDecks = ArrayList<SelectableDeck>()
-        for (deck in validDecksForChangeDeck) {
-            selectableDecks.add(SelectableDeck(deck))
-        }
+        val selectableDecks = ArrayList(
+            validDecksForChangeDeck
+                .map { d -> SelectableDeck(d) }
+        )
         val dialog = getChangeDeckDialog(selectableDecks)
         showDialogFragment(dialog)
     }
