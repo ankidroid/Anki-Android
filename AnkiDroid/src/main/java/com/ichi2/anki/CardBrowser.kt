@@ -938,9 +938,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     private fun updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()")
-        if (mActionBarMenu == null || mActionBarMenu!!.findItem(R.id.action_suspend_card) == null) {
-            return
-        }
+        mActionBarMenu?.findItem(R.id.action_suspend_card) ?: return
         if (mCheckedCards.isNotEmpty()) {
             TaskManager.cancelAllTasks(CheckCardSelection::class.java)
             TaskManager.launchCollectionTask(
