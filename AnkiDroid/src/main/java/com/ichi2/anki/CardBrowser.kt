@@ -114,15 +114,12 @@ import kotlin.math.min
 @KotlinCleanup("scan through this class and add attributes - not started")
 @KotlinCleanup("Add TextUtils.isNotNullOrEmpty accepting nulls and use it. Remove TextUtils import")
 open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelectionListener, TagsDialogListener {
-    @KotlinCleanup("using ?. and let keyword would be good here")
     override fun onDeckSelected(deck: SelectableDeck?) {
-        if (deck == null) {
-            return
+        deck?.deckId?.let { deckId ->
+            mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
+            mDeckSpinnerSelection!!.selectDeckById(deckId, true)
+            selectDeckAndSave(deckId)
         }
-        val deckId = deck.deckId
-        mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-        mDeckSpinnerSelection!!.selectDeckById(deckId, true)
-        selectDeckAndSave(deckId)
     }
 
     enum class Column {
