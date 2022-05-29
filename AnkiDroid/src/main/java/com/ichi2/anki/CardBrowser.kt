@@ -1631,17 +1631,11 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      * @param cards Cards that were changed
      */
     private fun updateCardsInList(cards: List<Card>) {
-        val cardList: CardCollection<CardCache> = this.mCards
-        val idToPos = getPositionMap(cardList)
-        for (c in cards) {
-            // get position in the mCards search results HashMap
-            val pos = idToPos[c.id]
-            if (pos == null || pos >= cardCount) {
-                continue
-            }
-            // update Q & A etc
-            cardList[pos].load(true, mColumn1Index, mColumn2Index)
-        }
+        val idToPos = getPositionMap(mCards)
+        cards
+            .mapNotNull { c -> idToPos[c.id] }
+            .filterNot { pos -> pos >= cardCount }
+            .forEach { pos -> mCards[pos].load(true, mColumn1Index, mColumn2Index) }
         updateList()
     }
 
