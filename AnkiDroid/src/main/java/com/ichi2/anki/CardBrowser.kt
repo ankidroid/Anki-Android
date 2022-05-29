@@ -1490,10 +1490,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         val selectedNotes = selectedCardIds
             .map { cardId: Long? -> col.getCard(cardId!!).note() }
             .distinct()
-        for (note in selectedNotes) {
-            val previousTags: List<String> = note.tags
-            val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
-            note.setTagsFromStr(col.tags.join(updatedTags))
+        selectedNotes.forEach { note ->
+            note.setTagsFromStr(col.tags.join(getUpdatedTags(note.tags, selectedTags, indeterminateTags)))
         }
         Timber.i("CardBrowser:: editSelectedCardsTags: Saving note/s tags...")
         TaskManager.launchCollectionTask(
