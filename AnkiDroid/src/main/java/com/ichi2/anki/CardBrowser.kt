@@ -2337,13 +2337,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             return mCards
         }
     private val allCardIds: LongArray
-        get() {
-            val l = LongArray(mCards.size())
-            for (i in 0 until mCards.size()) {
-                l[i] = mCards[i].id
-            }
-            return l
-        }
+        get() = mCards.map { c -> c.id }.toLongArray()
     // This could be better: use a wrapper class PositionAware<T> to store the position so it's
     // no longer a responsibility of CardCache and we can guarantee it's consistent just by using this collection
     /** A position-aware collection to ensure consistency between the position of items and the collection  */
