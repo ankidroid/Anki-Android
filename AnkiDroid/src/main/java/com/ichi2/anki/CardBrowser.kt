@@ -2315,19 +2315,14 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     /**
      * Reloads the data of the cards, taking on their current values from the database.
      */
-    @KotlinCleanup("cards.isNullOrEmpty()")
     protected fun reloadCards(cards: Array<Card>?) {
         if (cards.isNullOrEmpty()) return
 
-        val cardIds: MutableSet<Long> = HashSet()
-        for (c in cards) {
-            cardIds.add(c.id)
-        }
-        for (props in mCards) {
-            if (cardIds.contains(props.id)) {
-                props.reload()
-            }
-        }
+        val cardIds = cards.map { c -> c.id }
+        mCards
+            .filter { c -> cardIds.contains(c.id) }
+            .forEach { c -> c.reload() }
+
         mCardsAdapter!!.notifyDataSetChanged()
     }
 
