@@ -882,18 +882,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
             showBackIcon()
         }
-        if (mActionBarMenu != null && mActionBarMenu!!.findItem(R.id.action_undo) != null) {
-            val undo = mActionBarMenu!!.findItem(R.id.action_undo)
-            undo.isVisible = col.undoAvailable()
-            undo.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
-        }
+        val undo = mActionBarMenu?.findItem(R.id.action_undo)
+        undo?.isVisible = col.undoAvailable()
+        undo?.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
 
         // Maybe we were called from ACTION_PROCESS_TEXT.
         // In that case we already fill in the search.
-        val intent = intent
         if (Compat.ACTION_PROCESS_TEXT == intent.action) {
             val search = intent.getCharSequenceExtra(Compat.EXTRA_PROCESS_TEXT)
-            if (search != null && search.isNotEmpty()) {
+            if (!search.isNullOrEmpty()) {
                 Timber.i("CardBrowser :: Called with search intent: %s", search.toString())
                 mSearchView!!.setQuery(search, true)
                 intent.action = Intent.ACTION_DEFAULT
