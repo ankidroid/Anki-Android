@@ -59,7 +59,6 @@ import timber.log.Timber
 import java.util.Arrays.stream
 import java.util.Locale
 import java.util.Random
-import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -570,7 +569,7 @@ class CardBrowserTest : RobolectricTest() {
     fun change_deck_dialog_is_dismissed_on_activity_recreation() {
         val cardBrowser = browserWithNoNewCards
 
-        val dialog = cardBrowser.getChangeDeckDialog(ArrayList())
+        val dialog = cardBrowser.getChangeDeckDialog(listOf())
         cardBrowser.showDialogFragment(dialog)
 
         val shownDialog: Fragment? = getDialogFragment(cardBrowser)

@@ -1356,7 +1356,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
-    fun getChangeDeckDialog(selectableDecks: java.util.ArrayList<SelectableDeck>?): DeckSelectionDialog {
+    fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
         val dialog = newInstance(
             getString(R.string.move_all_to_deck),
             null,
@@ -1375,10 +1375,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             Timber.i("Not showing Change Deck - No Cards")
             return
         }
-        val selectableDecks = java.util.ArrayList<SelectableDeck>()
-        for (deck in validDecksForChangeDeck) {
-            selectableDecks.add(SelectableDeck(deck))
-        }
+        val selectableDecks = validDecksForChangeDeck
+            .map { d -> SelectableDeck(d) }
         val dialog = getChangeDeckDialog(selectableDecks)
         showDialogFragment(dialog)
     }
