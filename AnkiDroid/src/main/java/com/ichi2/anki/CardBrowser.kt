@@ -420,7 +420,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     private val selectedCardIds: List<Long>
         get() {
-            val ids: MutableList<Long> = java.util.ArrayList(mCheckedCards.size)
+            val ids: MutableList<Long> = ArrayList(mCheckedCards.size)
             for (cardPosition in mCheckedCards) {
                 ids.add(cardPosition.id)
             }
@@ -1353,7 +1353,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
-    fun getChangeDeckDialog(selectableDecks: java.util.ArrayList<SelectableDeck>?): DeckSelectionDialog {
+    fun getChangeDeckDialog(selectableDecks: ArrayList<SelectableDeck>?): DeckSelectionDialog {
         val dialog = newInstance(
             getString(R.string.move_all_to_deck),
             null,
@@ -1372,7 +1372,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             Timber.i("Not showing Change Deck - No Cards")
             return
         }
-        val selectableDecks = java.util.ArrayList<SelectableDeck>()
+        val selectableDecks = ArrayList<SelectableDeck>()
         for (deck in validDecksForChangeDeck) {
             selectableDecks.add(SelectableDeck(deck))
         }
@@ -1414,7 +1414,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         if (selectedCardIds.isEmpty()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
-        val allTags = java.util.ArrayList(col.tags.all())
+        val allTags = ArrayList(col.tags.all())
         val selectedNotes = selectedCardIds
             .stream()
             .map { cardId: Long? -> col.getCard(cardId!!).note() }
@@ -1450,7 +1450,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     private fun showFilterByTagsDialog() {
         mTagsDialogListenerAction = TagsDialogListenerAction.FILTER
         val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(
-            TagsDialog.DialogType.FILTER_BY_TAG, java.util.ArrayList(0), java.util.ArrayList(col.tags.all())
+            TagsDialog.DialogType.FILTER_BY_TAG, ArrayList(0), ArrayList(col.tags.all())
         )
         showDialogFragment(dialog)
     }
@@ -1559,7 +1559,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     // convenience method for updateCardsInList(...)
     private fun updateCardInList(card: Card) {
-        val cards: MutableList<Card> = java.util.ArrayList(1)
+        val cards: MutableList<Card> = ArrayList(1)
         cards.add(card)
         updateCardsInList(cards)
     }
@@ -1568,7 +1568,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     @get:VisibleForTesting
     val validDecksForChangeDeck: List<Deck>
         get() {
-            val nonDynamicDecks: MutableList<Deck> = java.util.ArrayList(mDeckSpinnerSelection!!.dropDownDecks.size)
+            val nonDynamicDecks: MutableList<Deck> = ArrayList(mDeckSpinnerSelection!!.dropDownDecks.size)
             for (d in mDeckSpinnerSelection!!.dropDownDecks) {
                 if (Decks.isDynamic(d)) {
                     continue
@@ -1764,7 +1764,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 idToRemove.add(cardId)
             }
         }
-        val newMCards: MutableList<CardCache> = java.util.ArrayList(oldMCards.size())
+        val newMCards: MutableList<CardCache> = ArrayList(oldMCards.size())
         var pos = 0
         for (card in oldMCards) {
             if (!idToRemove.contains(card.id)) {
@@ -1870,7 +1870,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         override fun actualOnProgressUpdate(context: CardBrowser, value: List<CardCache>) {
             // Need to copy the list into a new list, because the original list is modified, and
             // ListAdapter crash
-            mCards.replaceWith(java.util.ArrayList(value))
+            mCards.replaceWith(ArrayList(value))
             updateList()
         }
 
@@ -2349,7 +2349,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     /** A position-aware collection to ensure consistency between the position of items and the collection  */
     @KotlinCleanup("wrapped - nonNull")
     class CardCollection<T : PositionAware?> : Iterable<T> {
-        private var mWrapped: MutableList<T>? = java.util.ArrayList(0)
+        private var mWrapped: MutableList<T>? = ArrayList(0)
         fun size(): Int {
             return mWrapped!!.size
         }
@@ -2359,7 +2359,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
 
         fun reset() {
-            mWrapped = java.util.ArrayList(0)
+            mWrapped = ArrayList(0)
         }
 
         fun replaceWith(value: MutableList<T>?) {
@@ -2684,7 +2684,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val checkedCardIds: List<Long>
         get() {
-            val cardIds: MutableList<Long> = java.util.ArrayList(mCheckedCards.size)
+            val cardIds: MutableList<Long> = ArrayList(mCheckedCards.size)
             for (card in mCheckedCards) {
                 val id = card.id
                 cardIds.add(id)
