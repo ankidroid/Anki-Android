@@ -1462,16 +1462,11 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      * @return text to be used in the subtitle of the drop-down deck selector
      */
     override val subtitleText: String
-        get() {
-            val count = cardCount
-            return resources.getQuantityString(R.plurals.card_browser_subtitle, count, count)
-        }
+        get() = resources.getQuantityString(R.plurals.card_browser_subtitle, cardCount, cardCount)
 
     // convenience method for updateCardsInList(...)
     private fun updateCardInList(card: Card) {
-        val cards: MutableList<Card> = ArrayList(1)
-        cards.add(card)
-        updateCardsInList(cards)
+        updateCardsInList(arrayListOf(card))
     }
 
     /** Returns the decks which are valid targets for "Change Deck"  */
