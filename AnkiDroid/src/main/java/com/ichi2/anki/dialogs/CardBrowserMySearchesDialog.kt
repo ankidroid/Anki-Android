@@ -107,7 +107,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
         private var mySearchesDialogListener: MySearchesDialogListener? = null
         @JvmStatic
         fun newInstance(
-            savedFilters: HashMap<String?, String?>?,
+            savedFilters: HashMap<String, String>?,
             mySearchesDialogListener: MySearchesDialogListener?,
             currentSearchTerms: String?,
             type: Int
