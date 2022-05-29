@@ -2538,19 +2538,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-            if (other == null) {
-                return false
-            }
-            return if (javaClass != other.javaClass) {
-                false
-            } else id == (other as CardCache).id
+            // if this === other -> true
+            // it other == null  -> false
+            // else              -> javaClass == other.javaClass && id == other.id
+            return this === other ||
+                (other != null && javaClass == other.javaClass && id == (other as CardCache).id)
         }
 
         override fun hashCode(): Int {
-            return java.lang.Long.valueOf(id).hashCode()
+            return id.hashCode()
         }
     }
 
