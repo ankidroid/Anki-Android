@@ -2738,17 +2738,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         @CheckResult
         fun formatQAInternal(txt: String, showFileNames: Boolean): String {
             /* Strips all formatting from the string txt for use in displaying question/answer in browser */
-            var s = txt
-            s = s.replace("<!--.*?-->".toRegex(), "")
-            s = s.replace("<br>", " ")
-            s = s.replace("<br />", " ")
-            s = s.replace("<div>", " ")
-            s = s.replace("\n", " ")
-            s = if (showFileNames) Utils.stripSoundMedia(s) else Utils.stripSoundMedia(s, " ")
-            s = s.replace("\\[\\[type:[^]]+]]".toRegex(), "")
-            s = if (showFileNames) Utils.stripHTMLMedia(s) else Utils.stripHTMLMedia(s, " ")
-            s = s.trim { it <= ' ' }
-            return s
+            return txt
+                .replace("<!--.*?-->".toRegex(), "")
+                .replace("<br ?/?>".toRegex(), " ")
+                .replace("<div>", " ")
+                .replace("\n", " ")
+                .run { if (showFileNames) Utils.stripSoundMedia(this) else Utils.stripSoundMedia(this, " ") }
+                .replace("\\[\\[type:[^]]+]]".toRegex(), "")
+                .run { if (showFileNames) Utils.stripHTMLMedia(this) else Utils.stripHTMLMedia(this, " ") }
+                .trim { it <= ' ' }
         }
     }
 }
