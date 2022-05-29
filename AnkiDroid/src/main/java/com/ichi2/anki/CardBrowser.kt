@@ -427,7 +427,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      */
     @VisibleForTesting
     fun moveSelectedCardsToDeck(did: Long) {
-        val ids = selectedCardIds
         val selectedDeck = col.decks.get(did)
         try {
             // #5932 - can't be dynamic
@@ -443,15 +442,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
         mNewDid = selectedDeck.getLong("id")
         Timber.i("Changing selected cards to deck: %d", mNewDid)
-        if (ids.isEmpty()) {
+        if (selectedCardIds.isEmpty()) {
             endMultiSelectMode()
             mCardsAdapter!!.notifyDataSetChanged()
             return
         }
-        if (ids.contains(reviewerCardId)) {
+        if (selectedCardIds.contains(reviewerCardId)) {
             mReloadRequired = true
         }
-        executeChangeCollectionTask(ids, mNewDid)
+        executeChangeCollectionTask(selectedCardIds, mNewDid)
     }
 
     private fun displayCouldNotChangeDeck() {
