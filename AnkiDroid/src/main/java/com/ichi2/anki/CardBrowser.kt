@@ -2174,11 +2174,9 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             return v
         }
 
-        @Suppress("UNCHECKED_CAST")
-        @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
-            val columns = v.tag as Array<View>
+            val columns = v.tag as Array<*>
             val card = cards[position]
             for (i in toIds.indices) {
                 val col = columns[i] as TextView
