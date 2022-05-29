@@ -171,7 +171,7 @@ class Info : AnkiActivity() {
         const val TYPE_NEW_VERSION = 2
         @JvmStatic
         @VisibleForTesting
-        fun getAboutAnkiDroidHtml(res: Resources, textColor: String?): String {
+        fun getAboutAnkiDroidHtml(res: Resources, textColor: String): String {
             val sb = StringBuilder()
             fun append(@Language("HTML") html: String) = sb.append(html)
 
