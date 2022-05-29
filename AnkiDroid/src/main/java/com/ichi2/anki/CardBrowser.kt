@@ -104,7 +104,6 @@ import java.lang.IllegalStateException
 import java.lang.StringBuilder
 import java.util.*
 import java.util.function.Consumer
-import java.util.stream.Collectors
 import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -1410,14 +1409,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
         val allTags = java.util.ArrayList(col.tags.all())
         val selectedNotes = selectedCardIds
-            .stream()
             .map { cardId: Long? -> col.getCard(cardId!!).note() }
             .distinct()
-            .collect(Collectors.toList())
         val checkedTags = selectedNotes
-            .stream()
-            .flatMap { note: Note -> note.tags.stream() }
-            .collect(Collectors.toCollection { ArrayList() })
+            .flatMap { note: Note -> note.tags }
         if (selectedNotes.size == 1) {
             Timber.d("showEditTagsDialog: edit tags for one note")
             mTagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
@@ -1426,12 +1421,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             return
         }
         val uncheckedTags = selectedNotes
-            .stream()
             .flatMap { note: Note ->
                 val noteTags: List<String?> = note.tags
-                allTags.stream().filter { t: String? -> !noteTags.contains(t) }
+                allTags.filter { t: String? -> !noteTags.contains(t) }
             }
-            .collect(Collectors.toCollection { ArrayList() })
         Timber.d("showEditTagsDialog: edit tags for multiple note")
         mTagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
         val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(
@@ -1577,10 +1570,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     private fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) {
         val selectedNotes = selectedCardIds
-            .stream()
             .map { cardId: Long? -> col.getCard(cardId!!).note() }
             .distinct()
-            .collect(Collectors.toList())
         for (note in selectedNotes) {
             val previousTags: List<String> = note.tags
             val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
@@ -1686,9 +1677,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     private class UpdateMultipleNotesHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<List<Note>, Computation<*>>("Card Browser - UpdateMultipleNotesHandler.actualOnPostExecute(CardBrowser browser)", browser) {
         override fun actualOnProgressUpdate(context: CardBrowser, value: List<Note>) {
             val cardsToUpdate = value
-                .stream()
-                .flatMap { n: Note -> n.cards().stream() }
-                .collect(Collectors.toList())
+                .flatMap { n: Note -> n.cards() }
             context.updateCardsInList(cardsToUpdate)
         }
 
