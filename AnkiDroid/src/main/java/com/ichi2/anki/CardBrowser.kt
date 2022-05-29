@@ -2009,9 +2009,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         override fun onScroll(view: AbsListView, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             val lastVisibleItem = firstVisibleItem + visibleItemCount - 1
-            val cards = mCards
             // List is never cleared, only reset to a new list. So it's safe here.
-            val size = cards.size()
+            val size = mCards.size()
             if (size > 0 && visibleItemCount <= 0) {
                 // According to Mike, there used to be 5 to 10 report by hour on the beta version. All with
                 // > com.ichi2.anki.exception.ManuallyReportedException: Useless onScroll call, with size 0 firstVisibleItem 0,
@@ -2031,9 +2030,9 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             if (size <= 0 || firstVisibleItem >= size || lastVisibleItem >= size || visibleItemCount <= 0) {
                 return
             }
-            val firstLoaded = cards[firstVisibleItem].isLoaded
+            val firstLoaded = mCards[firstVisibleItem].isLoaded
             // Note: max value of lastVisibleItem is totalItemCount, so need to subtract 1
-            val lastLoaded = cards[lastVisibleItem].isLoaded
+            val lastLoaded = mCards[lastVisibleItem].isLoaded
             if (!firstLoaded || !lastLoaded) {
                 if (!mPostAutoScroll) {
                     showProgressBar()
@@ -2043,7 +2042,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 if (currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount) {
                     mLastRenderStart = currentTime
                     TaskManager.cancelAllTasks(RenderBrowserQA::class.java)
-                    TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards), mRenderQAHandler)
+                    TaskManager.launchCollectionTask(renderBrowserQAParams(firstVisibleItem, visibleItemCount, mCards), mRenderQAHandler)
                 }
             }
         }
