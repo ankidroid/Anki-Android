@@ -2549,14 +2549,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val checkedCardIds: List<Long>
-        get() {
-            val cardIds: MutableList<Long> = ArrayList(mCheckedCards.size)
-            for (card in mCheckedCards) {
-                val id = card.id
-                cardIds.add(id)
-            }
-            return cardIds
-        }
+        get() = mCheckedCards.map { c -> c.id }
 
     // should only be called from changeDeck()
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
