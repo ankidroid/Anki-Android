@@ -74,12 +74,18 @@ class Info : AnkiActivity() {
                 }
             }
         }
-        val marketButton = findViewById<Button>(R.id.left_button)
-        if (canOpenMarketUri()) {
-            marketButton.setText(R.string.info_rate)
-            marketButton.setOnClickListener { tryOpenIntent(this, AnkiDroidApp.getMarketIntent(this)) }
-        } else {
-            marketButton.visibility = View.GONE
+        findViewById<Button>(R.id.left_button).run {
+            if (canOpenMarketUri()) {
+                setText(R.string.info_rate)
+                setOnClickListener {
+                    tryOpenIntent(
+                        this@Info,
+                        AnkiDroidApp.getMarketIntent(this@Info)
+                    )
+                }
+            } else {
+                visibility = View.GONE
+            }
         }
 
         // Apply Theme colors
@@ -92,14 +98,16 @@ class Info : AnkiActivity() {
             TYPE_ABOUT -> {
                 val htmlContent = getAboutAnkiDroidHtml(res, textColor)
                 mWebView!!.loadDataWithBaseURL("", htmlContent, "text/html", "utf-8", null)
-                val debugCopy = findViewById<Button>(R.id.right_button)
-                debugCopy.text = res.getString(R.string.feedback_copy_debug)
-                debugCopy.setOnClickListener { copyDebugInfo() }
+                findViewById<Button>(R.id.right_button).run {
+                    text = res.getString(R.string.feedback_copy_debug)
+                    setOnClickListener { copyDebugInfo() }
+                }
             }
             TYPE_NEW_VERSION -> {
-                val continueButton = findViewById<Button>(R.id.right_button)
-                continueButton.text = res.getString(R.string.dialog_continue)
-                continueButton.setOnClickListener { close() }
+                findViewById<Button>(R.id.right_button).run {
+                    text = res.getString(R.string.dialog_continue)
+                    setOnClickListener { close() }
+                }
                 val background = String.format("#%06X", 0xFFFFFF and backgroundColor)
                 mWebView!!.loadUrl("file:///android_asset/changelog.html")
                 mWebView!!.settings.javaScriptEnabled = true
