@@ -134,7 +134,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
-    private val mCards = CardCollection<CardCache>()
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val mCards = CardCollection<CardCache>()
     @JvmField
     var mDeckSpinnerSelection: DeckSpinnerSelection? = null
 
@@ -634,7 +635,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 onCheck(position, view)
             } else {
                 // load up the card selected on the list
-                val clickedCardId = cards[position].id
+                val clickedCardId = mCards[position].id
                 saveScrollingState(position)
                 openNoteEditorForCard(clickedCardId)
             }
@@ -969,7 +970,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     /** Returns the number of cards that are visible on the screen  */
     val cardCount: Int
-        get() = cards.size()
+        get() = mCards.size()
 
     private fun updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()")
@@ -1677,7 +1678,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      * @param cards Cards that were changed
      */
     private fun updateCardsInList(cards: List<Card>) {
-        val cardList: CardCollection<CardCache> = this.cards
+        val cardList: CardCollection<CardCache> = this.mCards
         val idToPos = getPositionMap(cardList)
         for (c in cards) {
             // get position in the mCards search results HashMap
@@ -1753,7 +1754,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      */
     private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
         val reviewerCardId = reviewerCardId
-        val oldMCards = cards
+        val oldMCards = mCards
         val idToPos = getPositionMap(oldMCards)
         val idToRemove: MutableSet<Long> = HashSet()
         for (cardId in cardsIds) {
@@ -1931,7 +1932,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     private fun saveScrollingState(position: Int) {
-        mOldCardId = cards[position].id
+        mOldCardId = mCards[position].id
         mOldCardTopOffset = calculateTopOffset(position)
     }
 
@@ -2084,7 +2085,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         override fun onScroll(view: AbsListView, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             val lastVisibleItem = firstVisibleItem + visibleItemCount - 1
-            val cards = cards
+            val cards = mCards
             // List is never cleared, only reset to a new list. So it's safe here.
             val size = cards.size()
             if (size > 0 && visibleItemCount <= 0) {
@@ -2132,7 +2133,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 val startIdx = listView.firstVisiblePosition
                 val numVisible = listView.lastVisiblePosition - startIdx
-                TaskManager.launchCollectionTask(renderBrowserQAParams(startIdx - 5, 2 * numVisible + 5, cards), mRenderQAHandler)
+                TaskManager.launchCollectionTask(renderBrowserQAParams(startIdx - 5, 2 * numVisible + 5, mCards), mRenderQAHandler)
             }
         }
     }
@@ -2176,7 +2177,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
             val columns = v.tag as Array<View>
-            val card = cards[position]
+            val card = mCards[position]
             for (i in toIds.indices) {
                 val col = columns[i] as TextView
                 // set font for column
@@ -2244,7 +2245,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
 
         override fun getItem(position: Int): CardCache {
-            return cards[position]
+            return mCards[position]
         }
 
         override fun getItemId(position: Int): Long {
@@ -2262,7 +2263,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     private fun onCheck(position: Int, cell: View) {
         val checkBox = cell.findViewById<CheckBox>(R.id.card_checkbox)
-        val card = cards[position]
+        val card = mCards[position]
         if (checkBox.isChecked) {
             mCheckedCards.add(card)
         } else {
@@ -2273,7 +2274,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @VisibleForTesting
     fun onSelectAll() {
-        mCheckedCards.addAll(mCards.unsafeGetWrapped()!!)
+        mCheckedCards.addAll(mCards.wrapped)
         onSelectionChanged()
     }
 
@@ -2330,55 +2331,41 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         mCardsAdapter!!.notifyDataSetChanged()
     }
 
-    @get:VisibleForTesting
-    val cards: CardCollection<CardCache>
-        get() {
-            mCards.ensureValidValue()
-            return mCards
-        }
     private val allCardIds: LongArray
         get() = mCards.map { c -> c.id }.toLongArray()
     // This could be better: use a wrapper class PositionAware<T> to store the position so it's
     // no longer a responsibility of CardCache and we can guarantee it's consistent just by using this collection
     /** A position-aware collection to ensure consistency between the position of items and the collection  */
-    @KotlinCleanup("wrapped - nonNull")
     class CardCollection<T : PositionAware?> : Iterable<T> {
-        private var mWrapped: MutableList<T>? = ArrayList(0)
+        var wrapped: MutableList<T> = ArrayList(0)
+            private set
         fun size(): Int {
-            return mWrapped!!.size
+            return wrapped.size
         }
 
         operator fun get(index: Int): T {
-            return mWrapped!![index]
+            return wrapped[index]
         }
 
         fun reset() {
-            mWrapped = ArrayList(0)
+            wrapped = ArrayList(0)
         }
 
-        fun replaceWith(value: MutableList<T>?) {
-            mWrapped = value
+        fun replaceWith(value: MutableList<T>) {
+            wrapped = value
         }
 
         fun reverse() {
-            mWrapped!!.reverse()
-            mWrapped!!.forEachIndexed { pos, card -> card!!.position = pos }
+            wrapped.reverse()
+            wrapped.forEachIndexed { pos, card -> card!!.position = pos }
         }
 
         override fun iterator(): MutableIterator<T> {
-            return mWrapped!!.iterator()
-        }
-
-        fun unsafeGetWrapped(): Collection<T>? {
-            return mWrapped
-        }
-
-        fun ensureValidValue() {
-            mWrapped ?: reset()
+            return wrapped.iterator()
         }
 
         fun clear() {
-            mWrapped!!.clear()
+            wrapped.clear()
         }
     }
 
@@ -2637,13 +2624,13 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun rerenderAllCards() {
-        TaskManager.launchCollectionTask(renderBrowserQAParams(0, mCards.size() - 1, cards), mRenderQAHandler)
+        TaskManager.launchCollectionTask(renderBrowserQAParams(0, mCards.size() - 1, mCards), mRenderQAHandler)
     }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val cardIds: LongArray
         get() {
-            val cardsCopy = mCards.unsafeGetWrapped()!!.toTypedArray()
+            val cardsCopy = mCards.wrapped.toTypedArray()
             val ret = LongArray(cardsCopy.size)
             for (i in cardsCopy.indices) {
                 ret[i] = cardsCopy[i].id
@@ -2660,14 +2647,14 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                     position, mCards.size()
                 )
             }
-            mCheckedCards.add(cards[position])
+            mCheckedCards.add(mCards[position])
         }
         onSelectionChanged()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun hasCheckedCardAtPosition(i: Int): Boolean {
-        return mCheckedCards.contains(cards[i])
+        return mCheckedCards.contains(mCards[i])
     }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
