@@ -2526,14 +2526,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val cardIds: LongArray
-        get() {
-            val cardsCopy = mCards.wrapped.toTypedArray()
-            val ret = LongArray(cardsCopy.size)
-            for (i in cardsCopy.indices) {
-                ret[i] = cardsCopy[i].id
-            }
-            return ret
-        }
+        get() = mCards.wrapped.map { c -> c.id }.toLongArray()
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun checkCardsAtPositions(vararg positions: Int) {
