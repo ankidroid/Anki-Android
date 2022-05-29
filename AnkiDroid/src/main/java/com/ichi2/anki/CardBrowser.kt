@@ -2368,10 +2368,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
         fun reverse() {
             mWrapped!!.reverse()
-            var position = 0
-            for (i in mWrapped!!.indices) {
-                mWrapped!![i]!!.position = position++
-            }
+            mWrapped!!.forEachIndexed { pos, card -> card!!.position = pos }
         }
 
         override fun iterator(): MutableIterator<T> {
