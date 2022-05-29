@@ -929,10 +929,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     private fun updatePreviewMenuItem() {
-        if (mPreviewItem == null) {
-            return
-        }
-        mPreviewItem!!.isVisible = cardCount > 0
+        mPreviewItem?.isVisible = cardCount > 0
     }
 
     /** Returns the number of cards that are visible on the screen  */
