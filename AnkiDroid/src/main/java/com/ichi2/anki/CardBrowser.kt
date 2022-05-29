@@ -1660,7 +1660,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             browser.updateCardsInList(result.value.toList())
             browser.hideProgressBar()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
-            if (result.value.map { it.id }.contains(browser.reviewerCardId)) {
+            if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
                 browser.mReloadRequired = true
             }
         }
@@ -1681,7 +1681,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             browser.updateCardsInList(getAllCards(getNotes(result.value.toList())))
             browser.hideProgressBar()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
-            if (result.value.map { it.id }.contains(browser.reviewerCardId)) {
+            if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
                 browser.mReloadRequired = true
             }
         }
