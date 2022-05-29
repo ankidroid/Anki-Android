@@ -412,7 +412,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     private val selectedCardIds: List<Long>
         get() {
-            val ids: MutableList<Long> = java.util.ArrayList(mCheckedCards.size)
+            val ids: MutableList<Long> = ArrayList(mCheckedCards.size)
             for (cardPosition in mCheckedCards) {
                 ids.add(cardPosition.id)
             }
@@ -1404,7 +1404,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         if (selectedCardIds.isEmpty()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
-        val allTags = java.util.ArrayList(col.tags.all())
+        val allTags = ArrayList(col.tags.all())
         val selectedNotes = selectedCardIds
             .map { cardId: Long? -> col.getCard(cardId!!).note() }
             .distinct()
@@ -1434,7 +1434,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     private fun showFilterByTagsDialog() {
         mTagsDialogListenerAction = TagsDialogListenerAction.FILTER
         val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(
-            TagsDialog.DialogType.FILTER_BY_TAG, java.util.ArrayList(0), java.util.ArrayList(col.tags.all())
+            TagsDialog.DialogType.FILTER_BY_TAG, ArrayList(0), ArrayList(col.tags.all())
         )
         showDialogFragment(dialog)
     }
@@ -1543,7 +1543,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     // convenience method for updateCardsInList(...)
     private fun updateCardInList(card: Card) {
-        val cards: MutableList<Card> = java.util.ArrayList(1)
+        val cards: MutableList<Card> = ArrayList(1)
         cards.add(card)
         updateCardsInList(cards)
     }
@@ -1551,10 +1551,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     /** Returns the decks which are valid targets for "Change Deck"  */
     @get:VisibleForTesting
     val validDecksForChangeDeck: List<Deck>
-        get() = ArrayList(
-            mDeckSpinnerSelection!!.dropDownDecks
-                .filterNot { d -> Decks.isDynamic(d) }
-        )
+        get() = mDeckSpinnerSelection!!.dropDownDecks
+            .filterNot { d -> Decks.isDynamic(d) }
 
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(selectedTags: List<String>?, indeterminateTags: List<String>?, option: Int) {
@@ -1732,7 +1730,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 idToRemove.add(cardId)
             }
         }
-        val newMCards: MutableList<CardCache> = java.util.ArrayList(oldMCards.size())
+        val newMCards: MutableList<CardCache> = ArrayList(oldMCards.size())
         var pos = 0
         for (card in oldMCards) {
             if (!idToRemove.contains(card.id)) {
@@ -1838,7 +1836,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         override fun actualOnProgressUpdate(context: CardBrowser, value: List<CardCache>) {
             // Need to copy the list into a new list, because the original list is modified, and
             // ListAdapter crash
-            mCards.replaceWith(java.util.ArrayList(value))
+            mCards.replaceWith(ArrayList(value))
             updateList()
         }
 
