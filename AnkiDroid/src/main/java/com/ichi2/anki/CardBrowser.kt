@@ -1545,16 +1545,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     /** Returns the decks which are valid targets for "Change Deck"  */
     @get:VisibleForTesting
     val validDecksForChangeDeck: List<Deck>
-        get() {
-            val nonDynamicDecks: MutableList<Deck> = ArrayList(mDeckSpinnerSelection!!.dropDownDecks.size)
-            for (d in mDeckSpinnerSelection!!.dropDownDecks) {
-                if (Decks.isDynamic(d)) {
-                    continue
-                }
-                nonDynamicDecks.add(d)
-            }
-            return nonDynamicDecks
-        }
+        get() = ArrayList(
+            mDeckSpinnerSelection!!.dropDownDecks
+                .filterNot { d -> Decks.isDynamic(d) }
+        )
 
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(selectedTags: List<String>?, indeterminateTags: List<String>?, option: Int) {
