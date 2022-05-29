@@ -1883,17 +1883,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     private val newPositionOfSelectedCard: Int
-        get() {
-            if (mCards.size() == 0) {
-                return CARD_NOT_AVAILABLE
-            }
-            for (card in mCards) {
-                if (card.id == mOldCardId) {
-                    return card.position
-                }
-            }
-            return CARD_NOT_AVAILABLE
-        }
+        get() = mCards.find { c -> c.id == mOldCardId }?.position
+            ?: CARD_NOT_AVAILABLE
 
     @KotlinCleanup("why do we create a separate variable just to check the below conditions?")
     fun hasSelectedAllDecks(): Boolean {
