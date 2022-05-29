@@ -2158,17 +2158,9 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         private val mInflater: LayoutInflater
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             // Get the main container view if it doesn't already exist, and call bindView
-            val v: View
-            if (convertView == null) {
-                v = mInflater.inflate(resource, parent, false)
-                val count = toIds.size
-                val columns = arrayOfNulls<View>(count)
-                for (i in 0 until count) {
-                    columns[i] = v.findViewById(toIds[i])
-                }
-                v.tag = columns
-            } else {
-                v = convertView
+            val v = convertView ?: mInflater.inflate(resource, parent, false).apply {
+                // converts list of two views to a pair
+                tag = toIds.map { viewId -> findViewById<View>(viewId) }.zipWithNext()[0]
             }
             bindView(position, v)
             return v
@@ -2176,7 +2168,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
-            val columns = v.tag as Array<*>
+            val columns = (v.tag as kotlin.Pair<*, *>).let { p -> listOf(p.first, p.second) }
             val card = cards[position]
             for (i in toIds.indices) {
                 val col = columns[i] as TextView
