@@ -2232,10 +2232,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                     5 -> R.attr.flagPink
                     6 -> R.attr.flagTurquoise
                     7 -> R.attr.flagPurple
-                    else -> if (isMarked(card.note())) {
-                        R.attr.markedColor
-                    } else {
-                        if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
+                    else -> {
+                        if (isMarked(card.note())) {
+                            R.attr.markedColor
+                        } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
                             R.attr.suspendedColor
                         } else {
                             android.R.attr.colorBackground
@@ -2254,10 +2254,12 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 Column.TAGS -> card.note().stringTags()
                 Column.CARD -> card.template().optString("name")
                 Column.DUE -> card.dueString
-                Column.EASE -> if (card.type == Consts.CARD_TYPE_NEW) {
-                    AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_new_card)
-                } else {
-                    (card.factor / 10).toString() + "%"
+                Column.EASE -> {
+                    if (card.type == Consts.CARD_TYPE_NEW) {
+                        AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_new_card)
+                    } else {
+                        (card.factor / 10).toString() + "%"
+                    }
                 }
                 Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(card.mod)
                 Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
