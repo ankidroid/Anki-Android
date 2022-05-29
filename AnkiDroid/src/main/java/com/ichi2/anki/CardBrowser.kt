@@ -1309,9 +1309,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         get() {
             val intent = Intent(this@CardBrowser, NoteEditor::class.java)
             intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD)
-            val did = lastDeckId
-            if (did != null && did > 0) {
-                intent.putExtra(NoteEditor.EXTRA_DID, did)
+            if (lastDeckId?.let { id -> id > 0 } == true) {
+                intent.putExtra(NoteEditor.EXTRA_DID, lastDeckId)
             }
             intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, mSearchTerms)
             return intent
