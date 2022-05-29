@@ -171,10 +171,8 @@ class Info : AnkiActivity() {
         const val TYPE_NEW_VERSION = 2
         @JvmStatic
         @VisibleForTesting
+        @Language("HTML")
         fun getAboutAnkiDroidHtml(res: Resources, textColor: String): String {
-            val sb = StringBuilder()
-            fun append(@Language("HTML") html: String) = sb.append(html)
-
             val content = res.getStringArray(R.array.about_content)
             val appName = String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki))
             val linksIssueWikiAndforum = String.format(
@@ -190,30 +188,18 @@ class Info : AnkiActivity() {
                 content[4], res.getString(R.string.licence_wiki),
                 res.getString(R.string.link_source)
             )
-            append("<html><style>body {color:")
-            append(textColor)
-            append(";}</style>")
-            append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">")
-            append(appName)
-            append("<br/><br/>")
-            append(
-                linksIssueWikiAndforum
-            )
-            append(
-                "<br/><br/>"
-            )
-            append(
-                openSource
-            )
-            append(" ")
-            append(translation)
-            append("<br/><br/>")
-            append(
-                wikiAndSource
-            )
-            append("<br/><br/>")
-            append("</body></html>")
-            return sb.toString()
+            return """<html><style>body {color:$textColor;}</style>
+            <body text="#000000" link="#E37068" alink="#E37068" vlink="#E37068">
+            $appName
+            <br/><br/>
+            $linksIssueWikiAndforum
+            <br/><br/>
+            $openSource
+            $translation
+            <br/><br/>
+            $wikiAndSource
+            <br/><br/>
+            </body></html>"""
         }
     }
 }
