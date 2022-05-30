@@ -1387,7 +1387,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         if (selectedCardIds.isEmpty()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
-        val allTags = java.util.ArrayList(col.tags.all())
+        val allTags = col.tags.all()
         val selectedNotes = selectedCardIds
             .map { cardId: Long? -> col.getCard(cardId!!).note() }
             .distinct()
@@ -1417,7 +1417,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     private fun showFilterByTagsDialog() {
         mTagsDialogListenerAction = TagsDialogListenerAction.FILTER
         val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(
-            TagsDialog.DialogType.FILTER_BY_TAG, java.util.ArrayList(0), java.util.ArrayList(col.tags.all())
+            TagsDialog.DialogType.FILTER_BY_TAG, ArrayList(0), col.tags.all()
         )
         showDialogFragment(dialog)
     }
@@ -1534,10 +1534,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     /** Returns the decks which are valid targets for "Change Deck"  */
     @get:VisibleForTesting
     val validDecksForChangeDeck: List<Deck>
-        get() = ArrayList(
-            mDeckSpinnerSelection!!.dropDownDecks
-                .filterNot { d -> Decks.isDynamic(d) }
-        )
+        get() = mDeckSpinnerSelection!!.dropDownDecks
+            .filterNot { d -> Decks.isDynamic(d) }
 
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(selectedTags: List<String>?, indeterminateTags: List<String>?, option: Int) {
