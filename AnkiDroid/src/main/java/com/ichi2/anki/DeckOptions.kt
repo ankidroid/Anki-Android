@@ -40,7 +40,6 @@ import com.ichi2.async.CollectionTask
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfig
@@ -64,7 +63,6 @@ class DeckOptions :
     SharedPreferences.OnSharedPreferenceChangeListener {
     private lateinit var mOptions: DeckConfig
     private lateinit var mDeck: Deck
-    private var mCol: Collection? = null
     private var mPreferenceChanged = false
     private var mUnmountReceiver: BroadcastReceiver? = null
     private lateinit var mPref: DeckPreferenceHack
@@ -83,7 +81,7 @@ class DeckOptions :
         fun cacheValues() {
             Timber.i("DeckOptions - CacheValues")
             try {
-                mOptions = mCol!!.decks.confForDid(mDeck.getLong("id"))
+                mOptions = col.decks.confForDid(mDeck.getLong("id"))
 
                 mValues["name"] = mDeck.getString("name")
                 mValues["desc"] = mDeck.getString("desc")
@@ -124,7 +122,7 @@ class DeckOptions :
                 mValues["lapLeechThres"] = lapOptions.getString("leechFails")
                 mValues["lapLeechAct"] = lapOptions.getString("leechAction")
                 // options group management
-                mValues["currentConf"] = mCol!!.decks.getConf(mDeck.getLong("conf"))!!.getString("name")
+                mValues["currentConf"] = col.decks.getConf(mDeck.getLong("conf"))!!.getString("name")
                 // reminders
                 if (mOptions.has("reminder")) {
                     val reminder = mOptions.getJSONObject("reminder")
@@ -217,13 +215,13 @@ class DeckOptions :
                             "replayQuestion" -> mOptions.put("replayq", value)
                             "desc" -> {
                                 mDeck.put("desc", value)
-                                mCol!!.decks.save(mDeck)
+                                col.decks.save(mDeck)
                             }
                             "newSteps" -> mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((value as String)))
                             "lapSteps" -> mOptions.getJSONObject("lapse").put("delays", StepsPreference.convertToJSON((value as String)))
                             "deckConf" -> {
                                 val newConfId: Long = (value as String).toLong()
-                                mOptions = mCol!!.decks.getConf(newConfId)!!
+                                mOptions = col.decks.getConf(newConfId)!!
                                 TaskManager.launchCollectionTask(CollectionTask.ConfChange(mDeck, mOptions), confChangeHandler())
                             }
                             "confRename" -> {
@@ -244,9 +242,9 @@ class DeckOptions :
                                 val newName = value as String
                                 if (!TextUtils.isEmpty(newName)) {
                                     // New config clones current config
-                                    val id = mCol!!.decks.confId(newName, mOptions.toString())
+                                    val id = col.decks.confId(newName, mOptions.toString())
                                     mDeck.put("conf", id)
-                                    mCol!!.decks.save(mDeck)
+                                    col.decks.save(mDeck)
                                 }
                             }
                             "confRemove" -> if (mOptions.getLong("id") == 1L) {
@@ -268,7 +266,7 @@ class DeckOptions :
                                         .positiveText(R.string.dialog_ok)
                                         .negativeText(R.string.dialog_cancel)
                                         .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                                            mCol!!.modSchemaNoCheck()
+                                            col.modSchemaNoCheck()
                                             try {
                                                 remConf()
                                             } catch (cmse: ConfirmModSchemaException) {
@@ -310,7 +308,7 @@ class DeckOptions :
 
                                 alarmManager.cancel(reminderIntent)
                                 if (value as Boolean) {
-                                    val calendar = reminderToCalendar(mCol!!.time, reminder)
+                                    val calendar = reminderToCalendar(col.time, reminder)
 
                                     alarmManager.setRepeating(
                                         AlarmManager.RTC_WAKEUP,
@@ -346,7 +344,7 @@ class DeckOptions :
                                 )
                                 alarmManager.cancel(reminderIntent)
 
-                                val calendar = reminderToCalendar(mCol!!.time, reminder)
+                                val calendar = reminderToCalendar(col.time, reminder)
 
                                 alarmManager.setRepeating(
                                     AlarmManager.RTC_WAKEUP,
@@ -364,7 +362,7 @@ class DeckOptions :
 
                 // save conf
                 try {
-                    mCol!!.decks.save(mOptions)
+                    col.decks.save(mOptions)
                 } catch (e: RuntimeException) {
                     Timber.e(e, "DeckOptions - RuntimeException on saving conf")
                     CrashReportService.sendExceptionReport(e, "DeckOptionsSaveConf")
@@ -440,7 +438,7 @@ class DeckOptions :
             @Throws(ConfirmModSchemaException::class)
             private fun remConf() {
                 // Remove options group, asking user to confirm full sync if necessary
-                mCol!!.decks.remConf(mOptions.getLong("id"))
+                col.decks.remConf(mOptions.getLong("id"))
                 // Run the CPU intensive re-sort operation in a background thread
                 TaskManager.launchCollectionTask(CollectionTask.ConfRemove(mOptions), confChangeHandler())
                 mDeck.put("conf", 1)
@@ -534,48 +532,41 @@ class DeckOptions :
         Themes.setThemeLegacy(this)
         super.onCreate(savedInstanceState)
 
-        mCol = CollectionHelper.getInstance().getCol(this)
-        if (mCol == null) {
-            finish()
+        if (!isColInitialized()) {
             return
         }
         val extras = intent.extras
         mDeck = if (extras != null && extras.containsKey("did")) {
-            mCol!!.decks.get(extras.getLong("did"))
+            col.decks.get(extras.getLong("did"))
         } else {
-            mCol!!.decks.current()
+            col.decks.current()
         }
         registerExternalStorageListener()
 
-        if (mCol == null) {
-            Timber.w("DeckOptions - No Collection loaded")
-            finish()
-        } else {
-            mPref = DeckPreferenceHack()
-            // #6068 - constructor can call finish()
-            if (this.isFinishing) {
-                return
-            }
-            mPref.registerOnSharedPreferenceChangeListener(this)
-
-            addPreferencesFromResource(R.xml.deck_options)
-            if (isSchedV2) {
-                enableSchedV2Preferences()
-            }
-            buildLists()
-            updateSummaries()
-            // Set the activity title to include the name of the deck
-            var title = resources.getString(R.string.deckpreferences_title)
-            if (title.contains("XXX")) {
-                title = try {
-                    title.replace("XXX", mDeck.getString("name"))
-                } catch (e: JSONException) {
-                    Timber.w(e)
-                    title.replace("XXX", "???")
-                }
-            }
-            setTitle(title)
+        mPref = DeckPreferenceHack()
+        // #6068 - constructor can call finish()
+        if (this.isFinishing) {
+            return
         }
+        mPref.registerOnSharedPreferenceChangeListener(this)
+
+        addPreferencesFromResource(R.xml.deck_options)
+        if (isSchedV2) {
+            enableSchedV2Preferences()
+        }
+        buildLists()
+        updateSummaries()
+        // Set the activity title to include the name of the deck
+        var title = resources.getString(R.string.deckpreferences_title)
+        if (title.contains("XXX")) {
+            title = try {
+                title.replace("XXX", mDeck.getString("name"))
+            } catch (e: JSONException) {
+                Timber.w(e)
+                title.replace("XXX", "???")
+            }
+        }
+        setTitle(title)
 
         // Add a home button to the actionbar
         supportActionBar!!.setHomeButtonEnabled(true)
@@ -686,7 +677,7 @@ class DeckOptions :
     @KotlinCleanup("scope functions")
     protected fun buildLists() {
         val deckConfPref = findPreference("deckConf") as ListPreference
-        val confs = mCol!!.decks.allConf()
+        val confs = col.decks.allConf()
         Collections.sort(confs, NamedJSONComparator.INSTANCE)
         val confValues = arrayOfNulls<String>(confs.size)
         val confLabels = arrayOfNulls<String>(confs.size)
@@ -715,7 +706,7 @@ class DeckOptions :
     }
 
     private val isSchedV2: Boolean
-        get() = mCol!!.schedVer() == 2
+        get() = col.schedVer() == 2
 
     /**
      * Enable deck preferences that are only available with Scheduler V2.
@@ -734,7 +725,7 @@ class DeckOptions :
             var count = 0
             val conf = mDeck.getLong("conf")
             @KotlinCleanup("Join both if blocks")
-            for (deck in mCol!!.decks.all()) {
+            for (deck in col.decks.all()) {
                 if (deck.isDyn) {
                     continue
                 }
@@ -751,7 +742,7 @@ class DeckOptions :
     private val optionsGroupName: String
         get() {
             val confId = mPref.getLong("deckConf", 0)
-            return mCol!!.decks.getConf(confId)!!.getString("name")
+            return col.decks.getConf(confId)!!.getString("name")
         }
 
     /**
@@ -762,9 +753,9 @@ class DeckOptions :
         get() {
             var count = 0
             val did = mDeck.getLong("id")
-            val children = mCol!!.decks.children(did)
+            val children = col.decks.children(did)
             for (childDid in children.values) {
-                val child = mCol!!.decks.get(childDid)
+                val child = col.decks.get(childDid)
                 if (child.isDyn) {
                     continue
                 }
@@ -774,21 +765,21 @@ class DeckOptions :
         }
 
     /**
-     * finish when sd card is ejected
+     * Call exactly once, during creation
+     * to ensure that if the SD card is ejected
+     * this activity finish.
      */
     private fun registerExternalStorageListener() {
-        if (mUnmountReceiver == null) {
-            mUnmountReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (SdCardReceiver.MEDIA_EJECT == intent.action) {
-                        finish()
-                    }
+        mUnmountReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (SdCardReceiver.MEDIA_EJECT == intent.action) {
+                    finish()
                 }
             }
-            val iFilter = IntentFilter()
-            iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(mUnmountReceiver, iFilter)
         }
+        val iFilter = IntentFilter()
+        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
+        registerReceiver(mUnmountReceiver, iFilter)
     }
 
     private fun restartActivity() {

@@ -53,7 +53,6 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
-import com.ichi2.anki.debug.DatabaseLock.engage
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
@@ -407,7 +406,7 @@ class Preferences : AnkiActivity() {
     private fun closePreferences() {
         finish()
         slide(this, ActivityTransitionAnimation.Direction.FADE)
-        if (col != null && col.db != null) {
+        if (col != null && !col.dbClosed) {
             col.save()
         }
     }
@@ -1102,7 +1101,9 @@ class Preferences : AnkiActivity() {
                 lockDbPreference.title = "Lock Database"
                 lockDbPreference.summary = "Touch here to lock the database (all threads block in-process, exception if using second process)"
                 lockDbPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    engage(requireContext())
+                    val c = CollectionHelper.getInstance().getCol(requireContext())!!
+                    Timber.w("Toggling database lock")
+                    c.db.database.beginTransaction()
                     true
                 }
                 screen.addPreference(lockDbPreference)

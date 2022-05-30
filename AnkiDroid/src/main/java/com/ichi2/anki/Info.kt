@@ -74,12 +74,18 @@ class Info : AnkiActivity() {
                 }
             }
         }
-        val marketButton = findViewById<Button>(R.id.left_button)
-        if (canOpenMarketUri()) {
-            marketButton.setText(R.string.info_rate)
-            marketButton.setOnClickListener { tryOpenIntent(this, AnkiDroidApp.getMarketIntent(this)) }
-        } else {
-            marketButton.visibility = View.GONE
+        findViewById<Button>(R.id.left_button).run {
+            if (canOpenMarketUri()) {
+                setText(R.string.info_rate)
+                setOnClickListener {
+                    tryOpenIntent(
+                        this@Info,
+                        AnkiDroidApp.getMarketIntent(this@Info)
+                    )
+                }
+            } else {
+                visibility = View.GONE
+            }
         }
 
         // Apply Theme colors
@@ -92,14 +98,16 @@ class Info : AnkiActivity() {
             TYPE_ABOUT -> {
                 val htmlContent = getAboutAnkiDroidHtml(res, textColor)
                 mWebView!!.loadDataWithBaseURL("", htmlContent, "text/html", "utf-8", null)
-                val debugCopy = findViewById<Button>(R.id.right_button)
-                debugCopy.text = res.getString(R.string.feedback_copy_debug)
-                debugCopy.setOnClickListener { copyDebugInfo() }
+                findViewById<Button>(R.id.right_button).run {
+                    text = res.getString(R.string.feedback_copy_debug)
+                    setOnClickListener { copyDebugInfo() }
+                }
             }
             TYPE_NEW_VERSION -> {
-                val continueButton = findViewById<Button>(R.id.right_button)
-                continueButton.text = res.getString(R.string.dialog_continue)
-                continueButton.setOnClickListener { close() }
+                findViewById<Button>(R.id.right_button).run {
+                    text = res.getString(R.string.dialog_continue)
+                    setOnClickListener { close() }
+                }
                 val background = String.format("#%06X", 0xFFFFFF and backgroundColor)
                 mWebView!!.loadUrl("file:///android_asset/changelog.html")
                 mWebView!!.settings.javaScriptEnabled = true
@@ -171,38 +179,35 @@ class Info : AnkiActivity() {
         const val TYPE_NEW_VERSION = 2
         @JvmStatic
         @VisibleForTesting
-        fun getAboutAnkiDroidHtml(res: Resources, textColor: String?): String {
-            val sb = StringBuilder()
-            fun append(@Language("HTML") html: String) = sb.append(html)
-
+        @Language("HTML")
+        fun getAboutAnkiDroidHtml(res: Resources, textColor: String): String {
             val content = res.getStringArray(R.array.about_content)
-            append("<html><style>body {color:").append(textColor).append(";}</style>")
-            append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">")
-            append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
-                .append("<br/><br/>")
-            append(
-                String.format(
-                    content[1], res.getString(R.string.link_issue_tracker),
-                    res.getString(R.string.link_wiki), res.getString(R.string.link_forum)
-                )
-            ).append(
-                "<br/><br/>"
+            val appName = String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki))
+            val linksIssueWikiAndforum = String.format(
+                content[1], res.getString(R.string.link_issue_tracker),
+                res.getString(R.string.link_wiki), res.getString(R.string.link_forum)
             )
-            append(
-                String.format(
-                    content[2], res.getString(R.string.link_wikipedia_open_source),
-                    res.getString(R.string.link_contribution)
-                )
-            ).append(" ")
-            append(String.format(content[3], res.getString(R.string.link_translation))).append("<br/><br/>")
-            append(
-                String.format(
-                    content[4], res.getString(R.string.licence_wiki),
-                    res.getString(R.string.link_source)
-                )
-            ).append("<br/><br/>")
-            append("</body></html>")
-            return sb.toString()
+            val openSource = String.format(
+                content[2], res.getString(R.string.link_wikipedia_open_source),
+                res.getString(R.string.link_contribution)
+            )
+            val translation = String.format(content[3], res.getString(R.string.link_translation))
+            val wikiAndSource = String.format(
+                content[4], res.getString(R.string.licence_wiki),
+                res.getString(R.string.link_source)
+            )
+            return """<html><style>body {color:$textColor;}</style>
+            <body text="#000000" link="#E37068" alink="#E37068" vlink="#E37068">
+            $appName
+            <br/><br/>
+            $linksIssueWikiAndforum
+            <br/><br/>
+            $openSource
+            $translation
+            <br/><br/>
+            $wikiAndSource
+            <br/><br/>
+            </body></html>"""
         }
     }
 }

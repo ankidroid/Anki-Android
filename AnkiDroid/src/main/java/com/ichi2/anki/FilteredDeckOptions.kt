@@ -45,7 +45,6 @@ import java.util.*
 class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceChangeListener {
     @KotlinCleanup("try to make mDeck non-null / use lateinit")
     private var mDeck: Deck? = null
-    private var mCol: Collection? = null
     private var mAllowCommit = true
     private var mPrefChanged = false
     private var mUnmountReceiver: BroadcastReceiver? = null
@@ -158,7 +157,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
 
                 // save deck
                 try {
-                    mCol!!.decks.save(mDeck!!)
+                    col.decks.save(mDeck!!)
                 } catch (e: RuntimeException) {
                     Timber.e(e, "RuntimeException on saving deck")
                     CrashReportService.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck")
@@ -288,26 +287,24 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         setThemeLegacy(this)
         super.onCreate(savedInstanceState)
         UsageAnalytics.sendAnalyticsScreenView(this)
-        mCol = CollectionHelper.getInstance().getCol(this)
-        if (mCol == null) {
-            finish()
+        if (!isColInitialized()) {
             return
         }
         val extras = intent.extras
         mDeck = if (extras != null && extras.containsKey("did")) {
-            mCol!!.decks.get(extras.getLong("did"))
+            col.decks.get(extras.getLong("did"))
         } else {
-            mCol!!.decks.current()
+            col.decks.current()
         }
         registerExternalStorageListener()
-        if (mCol == null || mDeck!!.isStd) {
-            Timber.w("No Collection loaded or deck is not a dyn deck")
+        if (mDeck!!.isStd) {
+            Timber.w("Deck is not a dyn deck")
             finish()
             return
         } else {
             mPref = DeckPreferenceHack()
             mPref!!.registerOnSharedPreferenceChangeListener(this)
-            addPreferences(mCol!!)
+            addPreferences(col)
             buildLists()
             updateSummaries()
         }
@@ -384,7 +381,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         if (mPrefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {
-                mCol!!.sched.rebuildDyn(mDeck!!.getLong("id"))
+                col.sched.rebuildDyn(mDeck!!.getLong("id"))
             } catch (e: JSONException) {
                 Timber.e(e)
             }
@@ -452,22 +449,23 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
     }
 
     /**
-     * finish when sd card is ejected
+     * Call exactly once, during creation
+     * to ensure that if the SD card is ejected
+     * this activity finish.
      */
     private fun registerExternalStorageListener() {
-        if (mUnmountReceiver == null) {
-            mUnmountReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        finish()
-                    }
+        mUnmountReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action == SdCardReceiver.MEDIA_EJECT) {
+                    finish()
                 }
             }
-            val iFilter = IntentFilter()
-            iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(mUnmountReceiver, iFilter)
         }
+        val iFilter = IntentFilter()
+        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
+        registerReceiver(mUnmountReceiver, iFilter)
     }
+
     @Suppress("deprecation")
     private fun setupSecondFilterListener() {
         val secondFilterSign = findPreference("filterSecond") as CheckBoxPreference

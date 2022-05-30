@@ -17,7 +17,6 @@ package com.ichi2.libanki.sched
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Test
@@ -25,7 +24,6 @@ import org.junit.runner.RunWith
 
 /** Issue 8926  */
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("is -> equalTo")
 class SchedUpgradeTest : RobolectricTest() {
     override fun useInMemoryDatabase(): Boolean {
         // We want to be able to close the collection.
@@ -42,7 +40,7 @@ class SchedUpgradeTest : RobolectricTest() {
                 )
             )
         )
-        assertThat(col.schedVer(), `is`(2))
+        assertThat(col.schedVer(), equalTo(2))
     }
 
     @Test
@@ -57,6 +55,6 @@ class SchedUpgradeTest : RobolectricTest() {
                 Sched::class.java
             )
         )
-        assertThat(col.schedVer(), `is`(1))
+        assertThat(col.schedVer(), equalTo(1))
     }
 }

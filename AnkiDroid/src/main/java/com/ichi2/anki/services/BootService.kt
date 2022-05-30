@@ -27,7 +27,7 @@ class BootService : BroadcastReceiver() {
         }
         // There are cases where the app is installed, and we have access, but nothing exist yet
         val col = getColSafe(context)
-        if (col == null || col.decks == null) {
+        if (col == null) {
             Timber.w("Boot Service did not execute - error loading collection")
             return
         }
