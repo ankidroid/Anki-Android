@@ -38,7 +38,6 @@ import java.util.stream.Collectors
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @Config(application = EmptyApplication::class) // no point in Application init if we don't use it
-@KotlinCleanup("IDE lint")
 @KotlinCleanup("See if we can combine Parameter and JvmField")
 class ActivityStartupUnderBackupTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
@@ -75,8 +74,7 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
     @Test
     fun activityHandlesRestoreBackup() {
         AnkiDroidApp.simulateRestoreFromBackup()
-        val controller: ActivityController<out Activity?>
-        controller = try {
+        val controller: ActivityController<out Activity?> = try {
             mLauncher!!.build(targetContext).create()
         } catch (npe: Exception) {
             val stackTrace = getFullStackTrace(npe)
@@ -100,7 +98,7 @@ $stackTrace"""
         assertThat("If a backup was taking place, the activity should be destroyed successfully", controller.get()!!.isDestroyed, equalTo(true))
     }
 
-    protected fun notYetHandled(activityName: String, reason: String) {
+    private fun notYetHandled(activityName: String, reason: String) {
         if (mLauncher!!.simpleName == activityName) {
             assumeThat("$activityName $reason", true, equalTo(false))
         }
