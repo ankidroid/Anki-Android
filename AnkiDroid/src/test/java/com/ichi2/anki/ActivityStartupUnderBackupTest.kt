@@ -25,7 +25,7 @@ import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.ExceptionUtil.getFullStackTrace
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -40,7 +40,6 @@ import java.util.stream.Collectors
 @Config(application = EmptyApplication::class) // no point in Application init if we don't use it
 @KotlinCleanup("IDE lint")
 @KotlinCleanup("See if we can combine Parameter and JvmField")
-@KotlinCleanup("`is` -> equalTo")
 class ActivityStartupUnderBackupTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
     @JvmField
@@ -96,14 +95,14 @@ $stackTrace"""
         // Note: Robolectric differs from actual Android (process is not killed).
         // But we get the main idea: onCreate() doesn't throw an exception and is handled.
         // and onDestroy() is also called in the real implementation on my phone.
-        assertThat("If a backup was taking place, the activity should be finishing", controller.get()!!.isFinishing, `is`(true))
+        assertThat("If a backup was taking place, the activity should be finishing", controller.get()!!.isFinishing, equalTo(true))
         controller.destroy()
-        assertThat("If a backup was taking place, the activity should be destroyed successfully", controller.get()!!.isDestroyed, `is`(true))
+        assertThat("If a backup was taking place, the activity should be destroyed successfully", controller.get()!!.isDestroyed, equalTo(true))
     }
 
     protected fun notYetHandled(activityName: String, reason: String) {
         if (mLauncher!!.simpleName == activityName) {
-            assumeThat("$activityName $reason", true, `is`(false))
+            assumeThat("$activityName $reason", true, equalTo(false))
         }
     }
 
