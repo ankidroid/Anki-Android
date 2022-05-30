@@ -18,7 +18,6 @@ package com.ichi2.libanki.template
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
 import org.junit.Test
@@ -66,7 +65,7 @@ class TemplateTest : RobolectricTest() {
 
         val context = HashMap<String, String>()
 
-        assertThat(render(maybeBad, context), Matchers.emptyString())
+        assertThat(render(maybeBad, context), emptyString())
     }
 
     @Test
@@ -106,14 +105,14 @@ class TemplateTest : RobolectricTest() {
 
     private fun test_render(template: String, m: Map<String, String>, expected: String) {
         assertThat(render(template, m), equalTo(expected))
-        val legacy_template = TokenizerTest.new_to_legacy_template(template)
-        assertThat(render(legacy_template, m), equalTo(expected))
+        val legacyTemplate = TokenizerTest.new_to_legacy_template(template)
+        assertThat(render(legacyTemplate, m), equalTo(expected))
     }
 
     private fun test_render_contains(template: String, m: Map<String, String>, contained: String) {
         assertThat(render(template, m), containsString(contained))
-        val legacy_template = TokenizerTest.new_to_legacy_template(template)
-        assertThat(render(legacy_template, m), containsString(contained))
+        val legacyTemplate = TokenizerTest.new_to_legacy_template(template)
+        assertThat(render(legacyTemplate, m), containsString(contained))
     }
 
     @Test
