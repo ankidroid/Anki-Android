@@ -2251,7 +2251,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                     if (card.type == Consts.CARD_TYPE_NEW) {
                         AnkiDroidApp.getInstance().getString(R.string.card_browser_interval_new_card)
                     } else {
-                        (card.factor / 10).toString() + "%"
+                        "${card.factor / 10}%"
                     }
                 }
                 Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(card.mod)
