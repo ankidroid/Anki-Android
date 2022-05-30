@@ -32,7 +32,7 @@ The typical solutions are:
 
 ### Commiting the change
 
-There are two ways to commit the change. The easiest one consists, from AnkiDroid root folder, to run the command `.tools/migrate.sh`. If it works, you can then skip to the section "Pull request". Otherwise, you can follow the following section.
+There are two ways to commit the change. The easiest one consists, from AnkiDroid root folder, to run the command `./tools/migrate.sh`. If it works, you can then skip to the section "Pull request". Otherwise, you can follow the following section.
 
 * Select `Git > Commit` (`ctrl + k`).
   * **First time only**: If "Commit Changes" opens in a window, no change is required. If the commit open in a side pane, click on the gear icon and select "Switch to commit dialog",
