@@ -20,12 +20,10 @@ import android.content.res.Resources
 import androidx.annotation.IntDef
 import androidx.annotation.StringRes
 import com.ichi2.anki.R
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil.getLocaleCompat
 import timber.log.Timber
 import java.util.*
 
-@KotlinCleanup("IDE-based-lint")
 abstract class UndoAction
 /**
  * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
@@ -67,7 +65,7 @@ abstract class UndoAction
          * @return An UndoAction which, if executed, put back the `card` in the state given here
          */
         fun revertCardToProvidedState(@StringRes @UNDO_NAME_ID undoNameId: Int, card: Card): UndoAction {
-            return revertToProvidedState(undoNameId, card, Arrays.asList(card.clone()))
+            return revertToProvidedState(undoNameId, card, mutableListOf(card.clone()))
         }
 
         /**
@@ -79,7 +77,7 @@ abstract class UndoAction
          */
         private fun revertToProvidedState(@StringRes @UNDO_NAME_ID undoNameId: Int, card: Card, cards: Iterable<Card>): UndoAction {
             return object : UndoAction(undoNameId) {
-                override fun undo(col: Collection): Card? {
+                override fun undo(col: Collection): Card {
                     Timber.i("Undo: %d", undoNameId)
                     for (cc in cards) {
                         cc.flush(false)
