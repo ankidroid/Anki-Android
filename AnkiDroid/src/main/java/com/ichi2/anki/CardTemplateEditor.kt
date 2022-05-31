@@ -57,11 +57,12 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
 import timber.log.Timber
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Allows the user to view the template for the current note type
  */
-@KotlinCleanup("IDE-lint")
 @KotlinCleanup("lateinit wherever possible")
 open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     @VisibleForTesting
@@ -169,12 +170,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         mFieldNames = tempModel!!.model.fieldsNames
         // Set up the ViewPager with the sections adapter.
         viewPager = findViewById(R.id.pager)
-        viewPager.setAdapter(TemplatePagerAdapter(this))
+        viewPager.adapter = TemplatePagerAdapter(this)
         mSlidingTabLayout = findViewById(R.id.sliding_tabs)
         // Set activity title
         supportActionBar?.apply {
             setTitle(R.string.title_activity_template_editor)
-            setSubtitle(tempModel!!.model.optString("name"))
+            subtitle = tempModel!!.model.optString("name")
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId)
@@ -290,7 +291,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         override fun containsItem(id: Long): Boolean {
-            return id - mBaseId < itemCount && id - mBaseId >= 0
+            return (id - mBaseId) in 0 until itemCount
         }
 
         /** Force fragments to reinitialize contents by invalidating previous set of ordinal-based ids  */
@@ -355,9 +356,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     mTemplateEditor.tabToCursorPosition!![cardIndex] = mEditorEditText.getSelectionStart()
                     @KotlinCleanup("when")
                     when (currentEditorViewId) {
-                        R.id.styling_edit -> tempModel.updateCss(mEditorEditText.getText().toString())
-                        R.id.back_edit -> template.put("afmt", mEditorEditText.getText())
-                        else -> template.put("qfmt", mEditorEditText.getText())
+                        R.id.styling_edit -> tempModel.updateCss(mEditorEditText.text.toString())
+                        R.id.back_edit -> template.put("afmt", mEditorEditText.text)
+                        else -> template.put("qfmt", mEditorEditText.text)
                     }
                     mTemplateEditor.tempModel!!.updateTemplate(cardIndex, template)
                 }
@@ -438,11 +439,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         @Suppress("unused")
         private fun insertField(fieldName: String) {
-            val start = Math.max(mEditorEditText.selectionStart, 0)
-            val end = Math.max(mEditorEditText.selectionEnd, 0)
+            val start = max(mEditorEditText.selectionStart, 0)
+            val end = max(mEditorEditText.selectionEnd, 0)
             // add string to editText
             val updatedString = "{{$fieldName}}"
-            mEditorEditText.text!!.replace(Math.min(start, end), Math.max(start, end), updatedString, 0, updatedString.length)
+            mEditorEditText.text!!.replace(min(start, end), max(start, end), updatedString, 0, updatedString.length)
         }
 
         fun setCurrentEditorView(id: Int, editorContent: String, editorTitleId: Int) {
@@ -465,11 +466,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 tab.text = mTemplateEditor.tempModel!!.getTemplate(position).getString("name")
             }
             mTabLayoutMediator!!.attach()
-        }
-
-        override fun onResume() {
-            // initTabLayoutMediator();
-            super.onResume()
         }
 
         override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -662,7 +658,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         /**
          * @return The index of the card template which is currently referred to by the fragment
          */
-        fun getCurrentCardTemplateIndex(): Int {
+        private fun getCurrentCardTemplateIndex(): Int {
             // COULD_BE_BETTER: Lots of duplicate code could call this. Hold off on the refactor until #5151 goes in.
             return requireArguments().getInt(CARD_INDEX)
         }
@@ -689,15 +685,15 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return false
         }
 
-        var onCardBrowserAppearanceActivityResult =
-            registerForActivityResult<Intent, ActivityResult>(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        private var onCardBrowserAppearanceActivityResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                 if (result.resultCode != RESULT_OK) {
                     return@registerForActivityResult
                 }
                 onCardBrowserAppearanceResult(result.data)
             }
-        var onRequestPreviewResult =
-            registerForActivityResult<Intent, ActivityResult>(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        private var onRequestPreviewResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                 if (result.resultCode != RESULT_OK) {
                     return@registerForActivityResult
                 }
