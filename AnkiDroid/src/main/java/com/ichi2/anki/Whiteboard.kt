@@ -38,6 +38,7 @@ import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeUtils
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions
 import com.ichi2.utils.KotlinCleanup
+import com.mrudultora.colorpicker.ColorPickerPopUp
 import timber.log.Timber
 import java.io.FileNotFoundException
 import kotlin.math.abs
@@ -330,6 +331,23 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
                 penColor = yellowPenColor
             }
+            R.id.pen_color_custom -> {
+                ColorPickerPopUp(context).run {
+                    setShowAlpha(true)
+                    setDefaultColor(penColor)
+                    setOnPickColorListener(object : ColorPickerPopUp.OnPickColorListener {
+
+                        override fun onColorPicked(color: Int) {
+                            penColor = color
+                        }
+
+                        override fun onCancel() {
+                            // unused
+                        }
+                    })
+                    show()
+                }
+            }
             R.id.stroke_width -> {
                 handleWidthChangeDialog()
             }
@@ -537,6 +555,10 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         activity.findViewById<View>(R.id.pen_color_green).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_blue).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_yellow).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.pen_color_custom).apply {
+            setOnClickListener { view: View -> onClick(view) }
+            (background as? VectorDrawable)?.setTint(foregroundColor)
+        }
         activity.findViewById<View>(R.id.stroke_width).apply {
             setOnClickListener { view: View -> onClick(view) }
             (background as? VectorDrawable)?.setTint(foregroundColor)
