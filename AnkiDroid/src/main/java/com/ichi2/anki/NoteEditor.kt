@@ -2106,7 +2106,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         nextClozeIndex = Math.max(1, nextClozeIndex)
 
         // Update text field with updated text and selection
-        return String.format("{{c%s::%s}}", nextClozeIndex, selectedText)
+        return "{{c$nextClozeIndex::$selectedText}}"
     }
 
     private fun hasClozeDeletions(): Boolean {
