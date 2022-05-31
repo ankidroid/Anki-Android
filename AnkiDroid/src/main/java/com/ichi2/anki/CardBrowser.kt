@@ -150,7 +150,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var mCardsAdapter: MultiColumnListAdapter? = null
 
-    private var mSearchTerms: String? = null
+    private var mSearchTerms: String = ""
     private var mRestrictOnDeck: String? = null
     private var mCurrentFlag = 0
     private var mTagsDialogFactory: TagsDialogFactory? = null
@@ -361,9 +361,9 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             val savedFiltersObj = col.get_config("savedFilters", null as JSONObject?)
             Timber.d("SavedFilters are %s", savedFiltersObj?.toString())
             if (savedFiltersObj != null) {
-                mSearchTerms = savedFiltersObj.optString(searchName)
+                mSearchTerms = savedFiltersObj.optString(searchName, "")
                 Timber.d("OnSelection using search terms: %s", mSearchTerms)
-                mSearchView!!.setQuery(mSearchTerms!!, false)
+                mSearchView!!.setQuery(mSearchTerms, false)
                 mSearchItem!!.expandActionView()
                 searchCards()
             }
@@ -408,7 +408,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     private fun onSearch() {
         mSearchTerms = mSearchView!!.query.toString()
-        if (mSearchTerms!!.isEmpty()) {
+        if (mSearchTerms.isEmpty()) {
             mSearchView!!.queryHint = resources.getString(R.string.deck_conf_cram_search)
         }
         searchCards()
@@ -504,8 +504,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         startLoadingCollection()
 
         // for intent coming from search query js api
-        if (intent.getStringExtra("search_query") != null) {
-            mSearchTerms = intent.getStringExtra("search_query")
+        intent.getStringExtra("search_query")?.let {
+            mSearchTerms = it
             searchCards()
         }
 
@@ -865,7 +865,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                     // SearchView doesn't support empty queries so we always reset the search when collapsing
                     mSearchTerms = ""
-                    mSearchView!!.setQuery(mSearchTerms!!, false)
+                    mSearchView!!.setQuery(mSearchTerms, false)
                     searchCards()
                     // invalidate options menu so that disappeared icons would appear again
                     invalidateOptionsMenu()
@@ -899,7 +899,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             }
             mSearchView!!.setOnSearchClickListener {
                 // Provide SearchView with the previous search terms
-                mSearchView!!.setQuery(mSearchTerms!!, false)
+                mSearchView!!.setQuery(mSearchTerms, false)
             }
         } else {
             // multi-select mode
@@ -1241,7 +1241,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         if (truncate.isChecked) {
             isTruncated = false
             mCardsAdapter!!.notifyDataSetChanged()
-            truncate.setChecked(false)
+            truncate.isChecked = false
         } else {
             isTruncated = true
             mCardsAdapter!!.notifyDataSetChanged()
@@ -1457,7 +1457,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        mSearchTerms = savedInstanceState.getString("mSearchTerms")
+        mSearchTerms = savedInstanceState.getString("mSearchTerms", "")
         mOldCardId = savedInstanceState.getLong("mOldCardId")
         mOldCardTopOffset = savedInstanceState.getInt("mOldCardTopOffset")
         mShouldRestoreScroll = savedInstanceState.getBoolean("mShouldRestoreScroll")
@@ -1485,14 +1485,11 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     private fun searchCards() {
         // cancel the previous search & render tasks if still running
         invalidate()
-        if (mSearchTerms == null) {
-            mSearchTerms = ""
-        }
         if ("" != mSearchTerms && mSearchView != null) {
-            mSearchView!!.setQuery(mSearchTerms!!, false)
+            mSearchView!!.setQuery(mSearchTerms, false)
             mSearchItem!!.expandActionView()
         }
-        val searchText: String? = if (mSearchTerms!!.contains("deck:")) {
+        val searchText: String? = if (mSearchTerms.contains("deck:")) {
             "($mSearchTerms)"
         } else {
             if ("" != mSearchTerms) "$mRestrictOnDeck($mSearchTerms)" else mRestrictOnDeck
@@ -1615,8 +1612,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         mSearchView!!.setQuery("", false)
         val flagSearchTerm = "flag:$mCurrentFlag"
         mSearchTerms = when {
-            mSearchTerms!!.contains("flag:") -> mSearchTerms!!.replaceFirst("flag:.".toRegex(), flagSearchTerm)
-            mSearchTerms!!.isNotEmpty() -> "$flagSearchTerm $mSearchTerms"
+            mSearchTerms.contains("flag:") -> mSearchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
+            mSearchTerms.isNotEmpty() -> "$flagSearchTerm $mSearchTerms"
             else -> flagSearchTerm
         }
         searchCards()
@@ -1855,12 +1852,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 showThemedToast(this@CardBrowser, result.error, true)
             }
             if (mShouldRestoreScroll) {
-                mShouldRestoreScroll = false
-                val newPosition = newPositionOfSelectedCard
-                val isRestorePossible = newPosition != CARD_NOT_AVAILABLE
-                if (isRestorePossible) {
-                    autoScrollTo(newPosition)
-                }
+                newPositionOfSelectedCard.takeUnless { it == CARD_NOT_AVAILABLE }?.let { autoScrollTo(it) }
             }
             updatePreviewMenuItem()
             hideProgressBar()
@@ -2665,7 +2657,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     @VisibleForTesting
-    fun searchCards(searchQuery: String?) {
+    fun searchCards(searchQuery: String) {
         mSearchTerms = searchQuery
         searchCards()
     }
