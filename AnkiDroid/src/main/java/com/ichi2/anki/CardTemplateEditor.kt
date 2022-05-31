@@ -355,12 +355,10 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 override fun afterTextChanged(arg0: Editable) {
                     mTemplateEditor.tabToCursorPosition!![cardIndex] = mEditorEditText.getSelectionStart()
                     @KotlinCleanup("when")
-                    if (currentEditorViewId == R.id.styling_edit) {
-                        tempModel.updateCss(mEditorEditText.getText().toString())
-                    } else if (currentEditorViewId == R.id.back_edit) {
-                        template.put("afmt", mEditorEditText.getText())
-                    } else {
-                        template.put("qfmt", mEditorEditText.getText())
+                    when (currentEditorViewId) {
+                        R.id.styling_edit -> tempModel.updateCss(mEditorEditText.getText().toString())
+                        R.id.back_edit -> template.put("afmt", mEditorEditText.getText())
+                        else -> template.put("qfmt", mEditorEditText.getText())
                     }
                     mTemplateEditor.tempModel!!.updateTemplate(cardIndex, template)
                 }
