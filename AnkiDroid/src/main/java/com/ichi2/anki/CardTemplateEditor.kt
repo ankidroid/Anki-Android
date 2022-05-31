@@ -338,12 +338,10 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 val currentSelectedId = item.itemId
                 mTemplateEditor.tabToViewId!![cardIndex] = currentSelectedId
                 @KotlinCleanup("when")
-                if (currentSelectedId == R.id.styling_edit) {
-                    setCurrentEditorView(currentSelectedId, tempModel.css, R.string.card_template_editor_styling)
-                } else if (currentSelectedId == R.id.back_edit) {
-                    setCurrentEditorView(currentSelectedId, template.getString("afmt"), R.string.card_template_editor_back)
-                } else {
-                    setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front)
+                when (currentSelectedId) {
+                    R.id.styling_edit -> setCurrentEditorView(currentSelectedId, tempModel.css, R.string.card_template_editor_styling)
+                    R.id.back_edit -> setCurrentEditorView(currentSelectedId, template.getString("afmt"), R.string.card_template_editor_back)
+                    else -> setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front)
                 }
                 // contents of menu have changed and menu should be redrawn
                 mTemplateEditor.invalidateOptionsMenu()
