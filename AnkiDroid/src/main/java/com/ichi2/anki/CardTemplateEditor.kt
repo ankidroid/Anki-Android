@@ -160,7 +160,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
      * Callback used to finish initializing the activity after the collection has been correctly loaded
      * @param col Collection which has been loaded
      */
-    @KotlinCleanup("Scope function")
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         // The first time the activity loads it has a model id but no edits yet, so no edited model
@@ -175,9 +174,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         viewPager.setAdapter(TemplatePagerAdapter(this))
         mSlidingTabLayout = findViewById(R.id.sliding_tabs)
         // Set activity title
-        if (supportActionBar != null) {
-            supportActionBar!!.setTitle(R.string.title_activity_template_editor)
-            supportActionBar!!.setSubtitle(tempModel!!.model.optString("name"))
+        supportActionBar?.apply {
+            setTitle(R.string.title_activity_template_editor)
+            setSubtitle(tempModel!!.model.optString("name"))
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId)
