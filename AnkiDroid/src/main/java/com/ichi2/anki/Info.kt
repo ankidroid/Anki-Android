@@ -64,7 +64,7 @@ class Info : AnkiActivity() {
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
         findViewById<View>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
-        title = String.format("%s v%s", appName, pkgVersionName)
+        title = "$appName v$pkgVersionName"
         mWebView = findViewById(R.id.info)
         mWebView!!.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
