@@ -644,12 +644,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         private fun launchCardBrowserAppearance(currentTemplate: JSONObject) {
             val context = AnkiDroidApp.getInstance().baseContext
-            @KotlinCleanup("remove if block (bug has been fixed already)")
-            if (context == null) {
-                // Catch-22, we can't notify failure as there's no context. Shouldn't happen anyway
-                Timber.w("Context was null - couldn't launch Card Browser Appearance window")
-                return
-            }
             val browserAppearanceIntent = CardTemplateBrowserAppearanceEditor.getIntentFromTemplate(context, currentTemplate)
             onCardBrowserAppearanceActivityResult.launch(browserAppearanceIntent)
         }
