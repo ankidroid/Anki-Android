@@ -97,8 +97,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.card_template_editor_activity)
         // Load the args either from the intent or savedInstanceState bundle
-        tabToCursorPosition = HashMap()
-        tabToViewId = HashMap()
+        mEditorPosition = HashMap()
+        mEditorViewId = HashMap()
         if (savedInstanceState == null) {
             // get model id
             mModelId = intent.getLongExtra(EDITOR_MODEL_ID, NOT_FOUND_NOTE_TYPE)
@@ -269,13 +269,15 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         private var mBaseId: Long = 0
 
-        @KotlinCleanup("Turn `editorPosition` and `editorViewId` into val")
         override fun createFragment(position: Int): Fragment {
-            var editorPosition = 0
-            var editorViewId = R.id.front_edit
+            val editorPosition: Int
+            val editorViewId: Int
             if (tabToCursorPosition!![position] != null && tabToViewId!![position] != null) {
                 editorPosition = tabToCursorPosition!![position]!!
                 editorViewId = tabToViewId!![position]!!
+            } else {
+                editorPosition = 0
+                editorViewId = R.id.front_edit
             }
             return CardTemplateFragment.newInstance(position, mNoteId, editorPosition, editorViewId)
         }
