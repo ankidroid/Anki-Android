@@ -772,9 +772,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         @KotlinCleanup("redundant `val res = resources`")
         private fun confirmDeleteCards(tmpl: JSONObject, model: Model, numAffectedCards: Int) {
             val d = ConfirmationDialog()
-            val res = resources
             val msg = String.format(
-                res.getQuantityString(R.plurals.card_template_editor_confirm_delete, numAffectedCards),
+                resources.getQuantityString(R.plurals.card_template_editor_confirm_delete, numAffectedCards),
                 numAffectedCards, tmpl.optString("name")
             )
             d.setArgs(msg)
@@ -791,9 +790,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         @KotlinCleanup("redundant `val res = resources`")
         private fun confirmAddCards(model: Model, numAffectedCards: Int) {
             val d = ConfirmationDialog()
-            val res = resources
             val msg = String.format(
-                res.getQuantityString(R.plurals.card_template_editor_confirm_add, numAffectedCards),
+                resources.getQuantityString(R.plurals.card_template_editor_confirm_add, numAffectedCards),
                 numAffectedCards
             )
             d.setArgs(msg)
