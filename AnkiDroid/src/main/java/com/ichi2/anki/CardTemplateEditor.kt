@@ -282,11 +282,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return CardTemplateFragment.newInstance(position, mNoteId, editorPosition, editorViewId)
         }
 
-        @KotlinCleanup("Use ?:")
         override fun getItemCount(): Int {
-            return if (tempModel != null) {
-                tempModel!!.templateCount
-            } else 0
+            return tempModel?.templateCount ?: 0
         }
 
         override fun getItemId(position: Int): Long {
