@@ -225,7 +225,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         // #7108: AsyncTask
         protected lateinit var statisticsOverviewTask: AsyncTask<*, *, *>
         private lateinit var mActivityPager: ViewPager2
-        private lateinit var mSlidingTabLayout: TabLayout
         private lateinit var mTabLayoutMediator: TabLayoutMediator
         private val mDataObserver: AdapterDataObserver = object : AdapterDataObserver() {
             override fun onChanged() {
@@ -279,16 +278,15 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             if (mActivityPager.adapter != null) {
                 mActivityPager.adapter!!.registerAdapterDataObserver(mDataObserver)
             }
-            mSlidingTabLayout = (requireActivity() as Statistics).slidingTabLayout
-            initTabLayoutMediator()
+            initTabLayoutMediator((requireActivity() as Statistics).slidingTabLayout)
         }
 
-        private fun initTabLayoutMediator() {
+        private fun initTabLayoutMediator(slidingTabLayout: TabLayout) {
             if (this::mTabLayoutMediator.isInitialized) {
                 mTabLayoutMediator.detach()
             }
             mTabLayoutMediator = TabLayoutMediator(
-                mSlidingTabLayout, mActivityPager
+                slidingTabLayout, mActivityPager
             ) { tab: TabLayout.Tab, position: Int -> tab.text = getTabTitle(position) }
             mTabLayoutMediator.attach()
         }
