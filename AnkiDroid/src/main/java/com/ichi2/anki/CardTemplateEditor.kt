@@ -57,7 +57,6 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
 import timber.log.Timber
-import java.util.regex.Pattern
 
 /**
  * Allows the user to view the template for the current note type
@@ -908,11 +907,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private fun flipQA(template: JSONObject) {
             val qfmt = template.getString("qfmt")
             val afmt = template.getString("afmt")
-            val m = Pattern.compile("(?s)(.+)<hr id=answer>(.+)").matcher(afmt)
-            if (!m.find()) {
+            val m = Regex("(?s)(.+)<hr id=answer>(.+)").find(afmt)
+            if (m == null) {
                 template.put("qfmt", afmt.replace("{{FrontSide}}", ""))
             } else {
-                template.put("qfmt", m.group(2)!!.trim { it <= ' ' })
+                template.put("qfmt", m.groups[2]?.value!!.trim { it <= ' ' })
             }
             template.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n$qfmt")
         }
