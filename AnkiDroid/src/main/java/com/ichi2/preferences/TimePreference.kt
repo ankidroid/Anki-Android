@@ -43,7 +43,7 @@ class TimePreference(context: Context?, attrs: AttributeSet?) : android.preferen
         if (positiveResult) {
             mHours = CompatHelper.compat.getHour(mTimepicker)
             mMinutes = CompatHelper.compat.getMinute(mTimepicker)
-            val time = String.format("%1$02d:%2$02d", mHours, mMinutes)
+            val time = "$mHours:$mMinutes"
             if (callChangeListener(time)) {
                 persistString(time)
             }
