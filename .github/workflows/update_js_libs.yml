@@ -12,12 +12,6 @@ jobs:
         id: vars
         run: |
 
-          # check if branch exists on remote
-          branch_in_remote=$(git ls-remote --heads origin update-js-libs)
-          if [[ -n ${branch_in_remote} ]]; then
-            git push origin --delete update-js-libs
-          fi
-
           # create a new branch and checkout on local
           git branch update-js-libs
           git checkout update-js-libs
@@ -31,7 +25,7 @@ jobs:
           git config --global user.email github-actions@github.com
           git add .
           git commit -am "updated mathjax and jquery"
-          git push --set-upstream origin update-js-libs
+          git push --set-upstream origin update-js-libs -f
 
           # get installed jquery and mathjax version
           cd ~/tmp/anki
@@ -46,11 +40,19 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              head: 'update-js-libs',
-              base: 'main',
-              title: 'Update jquery and mathjax',
-              body: "### Updated\n ${{ steps.vars.outputs.jquery_ver }} \n ${{ steps.vars.outputs.mathjax_ver }}"
-            });
+            try {
+              await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: 'update-js-libs',
+                base: 'main',
+                title: 'Update jquery and mathjax',
+                body: "### Updated\n ${{ steps.vars.outputs.jquery_ver }} \n ${{ steps.vars.outputs.mathjax_ver }}"
+              });
+            } catch(err) {
+              if (err.status === 422) {
+                console.log("PR already exists.")
+              } else {
+                throw err;
+              }
+            }
