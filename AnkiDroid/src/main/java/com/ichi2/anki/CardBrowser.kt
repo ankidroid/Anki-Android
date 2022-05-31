@@ -570,9 +570,7 @@ open class CardBrowser :
                     mColumn1Index = pos
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext).edit()
                         .putInt("cardBrowserColumn1", mColumn1Index).apply()
-                    val fromMap = mCardsAdapter!!.fromMapping
-                    fromMap[0] = COLUMN1_KEYS[mColumn1Index]
-                    mCardsAdapter!!.fromMapping = fromMap
+                    mCardsAdapter!!.setColumnOne(COLUMN1_KEYS[mColumn1Index])
                 }
             }
 
@@ -599,9 +597,7 @@ open class CardBrowser :
                     mColumn2Index = pos
                     AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext).edit()
                         .putInt("cardBrowserColumn2", mColumn2Index).apply()
-                    val fromMap = mCardsAdapter!!.fromMapping
-                    fromMap[1] = COLUMN2_KEYS[mColumn2Index]
-                    mCardsAdapter!!.fromMapping = fromMap
+                    mCardsAdapter!!.setColumnTwo(COLUMN2_KEYS[mColumn2Index])
                 }
             }
 
@@ -612,12 +608,14 @@ open class CardBrowser :
         // get the font and font size from the preferences
         val sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
         val sflCustomFont = preferences.getString("browserEditorFont", "")
-        val columnsContent = arrayOf(COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index])
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         mCardsAdapter = MultiColumnListAdapter(
             this,
             R.layout.card_item_browser,
-            columnsContent, intArrayOf(R.id.card_sfld, R.id.card_column2),
+            COLUMN1_KEYS[mColumn1Index],
+            COLUMN1_KEYS[mColumn2Index],
+            R.id.card_sfld,
+            R.id.card_column2,
             sflRelativeFontSize,
             sflCustomFont
         )
@@ -2056,11 +2054,22 @@ open class CardBrowser :
     inner class MultiColumnListAdapter(
         context: Context?,
         private val resource: Int,
-        private var fromKeys: Array<Column>,
-        private val toIds: IntArray,
+        private var columnOne: Column,
+        private var columnTwo: Column,
+        private val idColumnOne: Int,
+        private val idColumnTwo: Int,
         private val fontSizeScalePcent: Int,
         customFont: String?
     ) : BaseAdapter() {
+
+        fun setColumnOne(from: Column) {
+            columnOne = from
+            notifyDataSetChanged()
+        }
+        fun setColumnTwo(from: Column) {
+            columnTwo = from
+            notifyDataSetChanged()
+        }
         private var mOriginalTextSize = -1.0f
         private var mCustomTypeface: Typeface? = null
         private val mInflater: LayoutInflater
@@ -2069,12 +2078,7 @@ open class CardBrowser :
             val v: View
             if (convertView == null) {
                 v = mInflater.inflate(resource, parent, false)
-                val count = toIds.size
-                val columns = arrayOfNulls<View>(count)
-                for (i in 0 until count) {
-                    columns[i] = v.findViewById(toIds[i])
-                }
-                v.tag = columns
+                v.tag = kotlin.Pair<TextView, TextView>(v.findViewById(idColumnOne), v.findViewById(idColumnTwo))
             } else {
                 v = convertView
             }
@@ -2086,12 +2090,14 @@ open class CardBrowser :
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
+            val columns = v.tag as kotlin.Pair<TextView, TextView>
+            val columnOneView = columns.first
+            val columnTwoView = columns.second
             val card = mCards[position]
-            (v.tag as Array<*>)
-                .forEachIndexed { i, col ->
-                    setFont(col as TextView) // set font for column
-                    col.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
-                }
+            setFont(columnOneView)
+            columnOneView.text = card.getColumnHeaderText(columnOne)
+            setFont(columnTwoView)
+            columnTwoView.text = card.getColumnHeaderText(columnTwo)
             // set card's background color
             val backgroundColor: Int = getColorFromAttr(this@CardBrowser, card.color)
             v.setBackgroundColor(backgroundColor)
@@ -2139,13 +2145,6 @@ open class CardBrowser :
                 v.typeface = mCustomTypeface
             }
         }
-
-        var fromMapping: Array<Column>
-            get() = fromKeys
-            set(from) {
-                fromKeys = from
-                notifyDataSetChanged()
-            }
 
         override fun getCount(): Int {
             return cardCount
