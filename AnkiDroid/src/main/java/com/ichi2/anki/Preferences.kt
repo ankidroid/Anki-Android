@@ -46,7 +46,6 @@ import androidx.preference.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
-import com.ichi2.anki.OnboardingUtils.Companion.reset
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -75,7 +74,6 @@ import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.themes.Themes.systemIsInNightMode
 import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
-import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -150,6 +148,7 @@ class Preferences : AnkiActivity() {
             is AdvancedStatisticsSettingsFragment -> resources.getString(R.string.advanced_statistics_title)
             is CustomSyncServerSettingsFragment -> resources.getString(R.string.custom_sync_server_title)
             is CustomButtonsSettingsFragment -> resources.getString(R.string.custom_buttons)
+            is DevOptionsFragment -> getString(R.string.pref_cat_dev_options)
             else -> resources.getString(R.string.preferences_title)
         }
     }
@@ -426,6 +425,19 @@ class Preferences : AnkiActivity() {
 
             if (isRestrictedLearningDevice) {
                 findPreference<Preference>("pref_screen_advanced")!!.isVisible = false
+            }
+            if (BuildConfig.DEBUG) {
+                val devOptions = Preference(requireContext()).apply {
+                    title = getString(R.string.pref_cat_dev_options)
+                    setOnPreferenceClickListener {
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.settings_container, DevOptionsFragment())
+                            .addToBackStack(null)
+                            .commit()
+                        true
+                    }
+                }
+                preferenceScreen.addPreference(devOptions)
             }
         }
     }
@@ -1062,101 +1074,6 @@ class Preferences : AnkiActivity() {
                 schedVerPreference.order = 5
                 screen.addPreference(schedVerPreference)
             }
-
-            // Make it possible to test crash reporting, but only for DEBUG builds
-            if (BuildConfig.DEBUG && !isUserATestClient) {
-                Timber.i("Debug mode, allowing for test crashes")
-                val triggerTestCrashPreference = Preference(requireContext())
-                triggerTestCrashPreference.key = "trigger_crash_preference"
-                triggerTestCrashPreference.title = "Trigger test crash"
-                triggerTestCrashPreference.summary = "Touch here for an immediate test crash"
-                triggerTestCrashPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
-                    throw RuntimeException("This is a test crash")
-                }
-                screen.addPreference(triggerTestCrashPreference)
-            }
-            // Make it possible to test analytics, but only for DEBUG builds
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, allowing for dynamic analytics config")
-                val analyticsDebugMode = Preference(requireContext())
-                analyticsDebugMode.key = "analytics_debug_preference"
-                analyticsDebugMode.title = "Switch Analytics to dev mode"
-                analyticsDebugMode.summary = "Touch here to use Analytics dev tag and 100% sample rate"
-                analyticsDebugMode.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    if (UsageAnalytics.isEnabled) {
-                        showThemedToast(requireContext(), "Analytics set to dev mode", true)
-                    } else {
-                        showThemedToast(requireContext(), "Done! Enable Analytics in 'General' settings to use.", true)
-                    }
-                    UsageAnalytics.setDevMode()
-                    true
-                }
-                screen.addPreference(analyticsDebugMode)
-            }
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, allowing database lock preference")
-                val lockDbPreference = Preference(requireContext())
-                lockDbPreference.key = "debug_lock_database"
-                lockDbPreference.title = "Lock Database"
-                lockDbPreference.summary = "Touch here to lock the database (all threads block in-process, exception if using second process)"
-                lockDbPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    val c = CollectionHelper.getInstance().getCol(requireContext())!!
-                    Timber.w("Toggling database lock")
-                    c.db.database.beginTransaction()
-                    true
-                }
-                screen.addPreference(lockDbPreference)
-            }
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, option for showing onboarding walkthrough")
-                val onboardingPreference = SwitchPreference(requireContext())
-                onboardingPreference.key = "showOnboarding"
-                onboardingPreference.setTitle(R.string.show_onboarding)
-                onboardingPreference.setSummary(R.string.show_onboarding_desc)
-                screen.addPreference(onboardingPreference)
-            }
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, option for resetting onboarding walkthrough")
-                val onboardingPreference = Preference(requireContext())
-                onboardingPreference.key = "resetOnboarding"
-                onboardingPreference.setTitle(R.string.reset_onboarding)
-                onboardingPreference.setSummary(R.string.reset_onboarding_desc)
-                onboardingPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    reset(requireContext())
-                    true
-                }
-                screen.addPreference(onboardingPreference)
-            }
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, add option for using V16 backend")
-                val onboardingPreference = Preference(requireContext())
-                onboardingPreference.key = "useRustBackend"
-                onboardingPreference.setDefaultValue(AnkiDroidApp.TESTING_USE_V16_BACKEND)
-                onboardingPreference.title = "Use V16 Backend"
-                onboardingPreference.summary = "UNSTABLE. DO NOT USE ON A COLLECTION YOU CARE ABOUT. REVERTED ON APP CLOSE"
-                onboardingPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    AnkiDroidApp.TESTING_USE_V16_BACKEND = true
-                    Consts.SCHEMA_VERSION = 16
-                    (requireActivity() as Preferences).restartWithNewDeckPicker()
-                    true
-                }
-                screen.addPreference(onboardingPreference)
-            }
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, add option for scoped storage")
-                val onboardingPreference = Preference(requireContext())
-                onboardingPreference.key = "useScopedStorage"
-                onboardingPreference.setDefaultValue(AnkiDroidApp.TESTING_SCOPED_STORAGE)
-                onboardingPreference.title = "Enable Scoped Storage"
-                onboardingPreference.summary = "UNSTABLE. DO NOT USE ON A COLLECTION YOU CARE ABOUT. REVERTED ON APP CLOSE"
-                onboardingPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    AnkiDroidApp.TESTING_SCOPED_STORAGE = true
-                    (requireActivity() as Preferences).restartWithNewDeckPicker()
-                    true
-                }
-                screen.addPreference(onboardingPreference)
-            }
             // Adding change logs in both debug and release builds
             Timber.i("Adding open changelog")
             val changelogPreference = Preference(requireContext())
@@ -1351,6 +1268,68 @@ class Preferences : AnkiActivity() {
             addPreferencesFromResource(R.xml.preferences_controls)
             val cat = requirePreference<PreferenceCategory>("key_map_category")
             setup(cat)
+        }
+    }
+
+    /**
+     * Fragment exclusive to DEBUG builds which can be used
+     * to add options useful for developers or WIP features.
+     */
+    class DevOptionsFragment : SpecificSettingsFragment() {
+        override val preferenceResource: Int
+            get() = R.xml.preferences_dev_options
+        override val analyticsScreenNameConstant: String
+            get() = "prefs.dev_options"
+
+        override fun initSubscreen() {
+            addPreferencesFromResource(preferenceResource)
+
+            // Make it possible to test crash reporting
+            requirePreference<Preference>(getString(R.string.pref_trigger_crash_key)).setOnPreferenceClickListener {
+                Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
+                throw RuntimeException("This is a test crash")
+            }
+            // Make it possible to test analytics
+            requirePreference<Preference>(getString(R.string.pref_analytics_debug_key)).setOnPreferenceClickListener {
+                if (UsageAnalytics.isEnabled) {
+                    showThemedToast(requireContext(), "Analytics set to dev mode", true)
+                } else {
+                    showThemedToast(requireContext(), "Done! Enable Analytics in 'General' settings to use.", true)
+                }
+                UsageAnalytics.setDevMode()
+                true
+            }
+            // Lock database
+            requirePreference<Preference>(getString(R.string.pref_lock_database_key)).setOnPreferenceClickListener {
+                val c = CollectionHelper.getInstance().getCol(requireContext())!!
+                Timber.w("Toggling database lock")
+                c.db.database.beginTransaction()
+                true
+            }
+            // Reset onboarding
+            requirePreference<Preference>(getString(R.string.pref_reset_onboarding_key)).setOnPreferenceClickListener {
+                OnboardingUtils.reset(requireContext())
+                true
+            }
+            // Use V16 Backend
+            requirePreference<Preference>(getString(R.string.pref_rust_backend_key)).apply {
+                setDefaultValue(AnkiDroidApp.TESTING_USE_V16_BACKEND)
+                setOnPreferenceClickListener {
+                    AnkiDroidApp.TESTING_USE_V16_BACKEND = true
+                    Consts.SCHEMA_VERSION = 16
+                    (requireActivity() as Preferences).restartWithNewDeckPicker()
+                    true
+                }
+            }
+            // Use scoped storage
+            requirePreference<Preference>(getString(R.string.pref_scoped_storage_key)).apply {
+                setDefaultValue(AnkiDroidApp.TESTING_SCOPED_STORAGE)
+                setOnPreferenceClickListener {
+                    AnkiDroidApp.TESTING_SCOPED_STORAGE = true
+                    (requireActivity() as Preferences).restartWithNewDeckPicker()
+                    true
+                }
+            }
         }
     }
 
