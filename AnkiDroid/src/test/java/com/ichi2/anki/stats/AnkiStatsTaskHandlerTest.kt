@@ -21,29 +21,28 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.createReviewSummaryStatistics
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.KotlinCleanup
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.whenever
 import java.util.concurrent.ExecutionException
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("make mocks lateinit")
-@KotlinCleanup("`when` -> whenever")
 class AnkiStatsTaskHandlerTest : RobolectricTest() {
     @Mock
-    private val mCol: Collection? = null
+    private lateinit var mCol: Collection
 
     @Mock
-    private val mView: TextView? = null
+    private lateinit var mView: TextView
+
     @Before
     override fun setUp() {
         MockitoAnnotations.openMocks(this)
-        `when`(mCol!!.db).thenReturn(null)
-        `when`(mCol.dbClosed).thenReturn(true)
+        whenever(mCol.db).thenReturn(null)
+        whenever(mCol.dbClosed).thenReturn(true)
     }
 
     @Test
@@ -52,7 +51,7 @@ class AnkiStatsTaskHandlerTest : RobolectricTest() {
     @Suppress("deprecation") // #7108: AsyncTask
     fun testCreateReviewSummaryStatistics() {
         verify(mCol, atMost(0))!!.db
-        val result = createReviewSummaryStatistics(mCol!!, mView!!)
+        val result = createReviewSummaryStatistics(mCol, mView)
         result.get()
         advanceRobolectricLooper()
         verify(mCol, atLeast(0))!!.db
