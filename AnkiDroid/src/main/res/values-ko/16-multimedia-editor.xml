@@ -47,22 +47,8 @@
     <string name="multimedia_editor_popup_text">고급 편집기</string>
     <string name="multimedia_editor_popup_cloze">빈칸 만들기</string>
     <string name="multimedia_editor_popup_clear_field">필드 지우기</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">Glosbe.com 주관</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">보낸 사람</string>
-    <string name="multimedia_editor_trans_to">받는 사람</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">번역하기</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">온라인 번역</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">번역 선택</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">사전 선택</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">ColorDict를 먼저 설치</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">불러오기</string>
     <string name="multimedia_editor_pron_looking_up">발음 찾는 중</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">완료</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">검색:</string>
     <string name="multimedia_editor_text_field_editing_say">발음</string>
     <string name="multimedia_editor_text_field_editing_clear">지우기</string>
     <string name="multimedia_editor_text_field_editing_clone">다음에서 복제</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">번역</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">먼저 일부 텍스트를 입력하세요</string>
-    <string name="multimedia_editor_text_field_editing_many_words">사전은 보통 하나의 단어를 예상합니다</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">다음으로부터 받기</string>
     <!-- Multimedia card editor activity -->
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">단어를 찾을 수 없습니다</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">번역 얻기 실패</string>
     <string name="multimedia_editor_searching_word">단어 검색 중</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">대기</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">레코더 툴바를 생성할 수 없습니다</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">편집 필드</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">번역</string>
     <!-- Network failure -->
     <string name="network_no_connection">연결이 되어있지 않습니다</string>
     <!-- Crop function-->

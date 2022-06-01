@@ -119,8 +119,8 @@
     <string name="import_update_details">ବିଦ୍ୟମାନ %2$d ନୋଟଗୁଡିକର %1$dକୁ ଅଦ୍ୟତନ କରାଯାଇଛି </string>
     <string name="import_update_ignored">କିଛି ଅଦ୍ୟତନକୁ ଅଣଦେଖା କରାଯାଇଥିଲା କାରଣ ନୋଟ୍ ପ୍ରକାର ବଦଳିଛି</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">%2$dଟି ପତ୍ର ଆମଦାନୀ ହୋଇଛି</item>
+        <item quantity="other">%1$dଟି ଫାଇଲ୍ ଆମଦାନୀ ହୋଇଛି\nସର୍ବମୋଟ %2$dଟି ପତ୍ର ଆମଦାନୀ କରାଗଲା</item>
     </plurals>
     <string name="sd_card_full_title">SD କାର୍ଡ ପୂର୍ଣ୍ଣ</string>
     <string name="sd_card_almost_full_title">SD କାର୍ଡ ପ୍ରାୟ ପୂର୍ଣ୍ଣ</string>

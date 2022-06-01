@@ -126,7 +126,7 @@
     <string name="reordering_cards">Újrarendelési kártyák...</string>
     <string name="field_remapping">%1$s (az “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Az összes üres kártyát töröljük. Ha a jegyzet összes kártyája törlődik, akkor ez is eltávolításra kerül. Folytatod?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">A rendelkezésre álló időt elhasználtuk</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d kártyát tanultál %2$s alatt</item>
         <item quantity="other">%1$d kártyát tanultál %2$s alatt</item>
@@ -142,7 +142,7 @@
     <string name="card_editor_reset_card">Reset folyamat</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Átütemezés</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Előnézet</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ennyiből %2$d</string>
     <string name="error_insufficient_memory">A művelet nem végrhajtható:  a készülék nem rendelkezik elég memóriával</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Átnevezés</string>
     <string name="default_conf_delete_error">Az alapértelmezett beállítások csoport nem távolítható el</string>
@@ -163,15 +163,15 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hozzáadás</string>
     <string name="import_message_replace_confirm">Ez a művelet törölni fogja a már meglévő gyűjteményed és lecseréli a %s fájl tartalmával. Biztos vagy benne?</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">\"%s\"-t felvenni a gyűjteménybe hosszú ideig tarthat</item>
+        <item quantity="other">A következő fájlokat tényleg importálni akarod:\n%s ?\n Hosszú ideig tarthat</item>
     </plurals>
     <string name="import_log_no_apkg">Ez nem egy érvényes Anki csomag fájl</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Hiba</string>
     <string name="import_log_failed_unzip">Nem sikerült kicsomagolni az apkg-t: %s</string>
     <string name="import_log_failed_copy_to">Nem sikerült átmásolni az apkg-t a(z) %s-hoz</string>
     <string name="import_log_failed_validate">Az apkg nem ment át az érvényesítésen</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">Nincs elég hely a csomag importálásához.\nSzükséges - %1$s\nRendelkezésre áll - %2$s\n\nProblémád van? Próbálj meg helyet felszabadítani a telefonjodon. Másik lehetőségként használd a szinkronizálást, ez kevesebb helyet használ mint az import. Megpróbálhatod importálni a csomagot egy olyan eszközön aminek több tárterülete van (pl Anki Desktop) és aztán szinkronizálni erre az eszközre. </string>
     <string name="import_log_file_cache_cleared">Hiba történt a fájl importálása során valószínű a cache törlés során.\n.Kérjük próbálja újra</string>
     <string name="import_succeeded_but_check_database">Adat importálás sikeres, de az import utáni takarítás sikertelen. Futass egy adatbázis ellenőrzést később. Hiba eredete: %s</string>
     <string name="import_error_unhandled_request">Nem sikerült feldolgozni az import folyamat kérést</string>
@@ -181,10 +181,10 @@
     <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
     <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan anki fájlokat:\n%s</string>
     <string name="import_error_copy_file_to_cache">A copyFileToCache() sikertelen (feltehetőleg nem elég a tárhely)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_unhandled_scheme">Nem kezelt import a “%s”-ból</string>
+    <string name="import_error_multiple_colpkg">Több colpkg fájl lett kiválasztva.</string>
+    <string name="import_error_colpkg_apkg">Az apkg &amp; colpkg fájlok egyszerre lettek kiválasztva.</string>
+    <string name="import_stats_error">Hibák történtek a következő fájlok importálásánál:\n%s</string>
     <string name="import_replacing">A gyűjtemény cseréje&#8230;</string>
     <string name="import_interrupted">Importálás megszakítva</string>
     <string name="export_include_schedule">Ütemezéssel együtt</string>
@@ -202,8 +202,8 @@
     <string name="export_email_subject">AnkiDroid exportált index kártyák: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Ez egy Anki pakli amit az AnkiDroid[1] küldött.
+        Próbáld megnyitni valamelyik Anki disztribúcióval[2] és élvezd a könnyű és hatékony tanulást!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -281,9 +281,9 @@
     <string name="choose_an_image">Válasszon egy képet</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Alaphelyzetbe állítás</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="cloze_sample_text">Ez egy {{%1$s::minta}} kihagyásos szöveg.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">centíroz</string>
+    <string name="basic_answer_sample_text">egy példa</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Üres</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Kérjük kapcsolja be a teljes képernyős módot, hogy a Navigáció Rajzolót be tudja kapcsolni JavaScript használatával.</string>
@@ -292,7 +292,7 @@
     <string name="white_board_image_save_failed">A rajztábla kép mentése sikertelen. %s</string>
     <string name="white_board_image_saved">A rajztábla kép elmentve %s-ba</string>
     <string name="title_whiteboard_pen_color">Rajtábla tollszín </string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_editor">Rajztábla szerkesztő</string>
     <!-- CSV/Note Import -->
     <string name="note_importer_empty_cards_found"><![CDATA[Üres kártyákat találtam. Kérlek, futtasd az Eszközök/Üres kártyák menüt.]]></string>
     <string name="note_importer_error_empty_first_field">Üres első mező: %s</string>
@@ -328,7 +328,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Hibás kártya tartalom: \"%s\" betöltése sikertelen</string>
     <string name="card_viewer_media_relative_protocol">Hiba a kártya tartalmában: a média frissítése szükséges</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="cannot_load_http_resource">Http források betöltése már nem támogatott</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">A(z) \'%s\' pakli betöltése nem sikerült</string>
     <string name="search_decks">Keresés a paklikban</string>
@@ -344,75 +344,76 @@
     <string name="insert_heading">Címsor beszúrása</string>
     <string name="format_font_size">Betűméret módosítása</string>
     <string name="insert_mathjax">MathJax egyenlet beszúrása</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
+    <string name="insert_cloze">Kihagyásos szöveg létrehozás</string>
+    <string name="note_editor_toolbar_icon">Gombfelirat</string>
+    <string name="before_text">Kiválasztás előtti HTML</string>
+    <string name="after_text">Kiválasztás utáni HTML</string>
     <string name="add_toolbar_item">Eszköztár Elem létrehozása</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="edit_toolbar_item">Eszköztár Elem szerkesztés</string>
+    <string name="toolbar_item_explain_edit_or_remove">Add meg a HTML-t, amit a kiválasztott szöveg elé és mögé beszúr. \n\nHosszan nyomd az eszköztár elemét szerkesztéshez vagy törléshez</string>
     <string name="remove_toolbar_item">Törlöd ezt az Eszköztár Elemet?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
+    <string name="note_editor_paste_too_large">A kép túl nagy a bemásoláshoz, kérjük illeszd be kézzel!</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android biztonsági mentés folyamatban. Próbálkozzon később</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Az AnkiDroidban rövidítések használatához szükséges lehet az iManager használata</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">A Kezdőképernyőd nem engedi AnkiDroid közvetlen elérések elhelyezését</string>
+    <string name="create_shortcut_error">Hiba történt a közvetlen elérés hozzáadásakor: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Mondatok nagybetűsre</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">görgethető eszközsor</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="email_id_empty">Email cím megadása kötelező</string>
+    <string name="password_empty">Jelszó kötelező</string>
+    <string name="back_pressed_once">Kilépéshez érintsd meg újra a vissza gombot</string>
+    <string name="back_pressed_once_reviewer">Visszatéréshez nyomd meg újra a Vissza gombot</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="download_deck">Pakli letöltése</string>
+    <string name="try_again">Próbáld újra</string>
+    <string name="cancel_download">Letöltés megszakítása</string>
+    <string name="cancel_download_question_title">Letöltés megszakítása?</string>
+    <string name="downloading_file">Letöltés: %s</string>
+    <string name="import_deck">Pakli importálása</string>
+    <string name="something_wrong">Valami hiba történt, kérjük, próbáld újra.</string>
+    <string name="download_failed">Letöltés sikertelen</string>
+    <string name="deck_download_progress_message">Más alkalmazásokat használhatsz, amíg a letöltés folyik.</string>
+    <string name="check_network">Ellenőrizd a hálózati kapcsolatodat!</string>
+    <string name="search_using_deck_name">Keresés a paklik nevében</string>
+    <string name="home">Kezdőlap</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
+    <string name="import_mapped_to_field">Hozzárendelve %s</string>
+    <string name="import_mapped_to_tags">Címkékhez hozzárendelve</string>
+    <string name="import_mapped_to_nothing">Elutasítva</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_card">Kártya halasztása</string>
+    <string name="buried_note">Jegyzet halasztása</string>
+    <string name="deleted_note">Megjegyzés törlése</string>
+    <string name="suspended_card">Kártya felfüggesztve</string>
+    <string name="suspended_note">Jegyzet felfüggesztve</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">A %s mező kitűzőcédulára</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="scoped_storage_title">Tárhely mozgatás</string>
+    <string name="scoped_storage_initial_message">AnkiDroidnak is úgy kell kezelni az adatokat, ahogy az új Android privacy szabályok előírják
+\n\nHa letörli az AnkiDroidot a mozgatás előtt, akkor az adatok el fognak veszni
+\n\nKérjük mihamarabb végezd el a mozgatást (migrációt)</string>
+    <string name="scoped_storage_terms_message">Adatmigráció fog indulni a háttérben. Ön nem fog tudni szinkronozni, amíg zajlik. \n\nVárható időtartam: %s</string>
+    <string name="scoped_storage_term_1">Mentettem az adatokat</string>
+    <string name="scoped_storage_term_1_ankiweb">Nemrég szinkronizáltam az AnkiWeb-bel</string>
+    <string name="scoped_storage_term_2">Nem távolítjuk el az app-ot, amíg adatmozgatás történik</string>
+    <string name="scoped_storage_select_all_terms">Kérjük fogadj el minden tételt a folytatáshoz</string>
+    <string name="scoped_storage_learn_more">Tudj meg többet</string>
+    <string name="scoped_storage_postpone">Elhalasztás</string>
+    <string name="scoped_storage_migrate">Áttelepítés</string>
+    <string name="search_card_js_api_no_results">A keresés nem adott vissza találatokat.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon">%s nem érvényes javascript csomag</string>
+    <string name="could_not_create_dir">Nem sikerült létrehozni a könyvtárat: 
+%s</string>
+    <string name="malicious_archive_entry_outside">Rosszindulatú archív. A cél könyvtáron kívüli bejegyzést tartalmaz  %s</string>
+    <string name="malicious_archive_exceeds_limit">Rosszindulatú archív. Nagyobb a mérete mint %1$s vagy több fájlt tartalmaz mint %2$d files</string>
+    <string name="file_extract_exceeds_storage_space">Fájl kibontás túllépi a meglévő tárhelyet</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Címke kibontás \'%s\'</string>
 </resources>

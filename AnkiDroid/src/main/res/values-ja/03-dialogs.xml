@@ -117,7 +117,7 @@
     </plurals>
     <string name="sd_card_full_title">SDカード空き容量なし</string>
     <string name="sd_card_almost_full_title">SDカード空き容量わずか</string>
-    <string name="no_space_to_downgrade_title">No space</string>
+    <string name="no_space_to_downgrade_title">空き容量が不足</string>
     <string name="no_space_to_downgrade_content">AnkiDroidを続行するには%sの空き容量が必要です。容量を空けてください</string>
     <string name="restore_backup_title">バックアップから復元しますか？</string>
     <string name="restore_backup">現在のコレクション（全デッキ）が、以前バックアップしたものに置き換えられます。また、バックアップ後に変更した内容は全て失われます。</string>
@@ -243,13 +243,13 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d 秒後に自動同期がスタートします。</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
+    <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
+    <string name="deck_picker_lrn">このデッキ内の、学習中カードの数。</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">今日出題する予定のカード数などが記載されたデッキ概要ページを開きます。</string>
     <string name="import_deck_package">デッキパッケージ (.apkg)</string>
     <string name="import_collection_package">コレクションパッケージ (.colpkg)</string>
 </resources>

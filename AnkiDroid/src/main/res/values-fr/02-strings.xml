@@ -167,7 +167,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Erreur</string>
     <string name="import_log_failed_unzip">Échec de la décompression de l\'APKG : %s</string>
     <string name="import_log_failed_copy_to">Échec de la copie de l\'APKG vers %s</string>
     <string name="import_log_failed_validate">La validation de l\'APKG a échoué</string>
@@ -184,7 +184,7 @@
     <string name="import_error_unhandled_scheme">Importation non gérée depuis : \"%s\"</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_stats_error">Des erreurs se sont produites lors de l\'importation des fichiers suivants :\n%s</string>
     <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
     <string name="import_interrupted">Importation interrompue : AnkiDroid a fermé</string>
     <string name="export_include_schedule">Inclure la planification</string>

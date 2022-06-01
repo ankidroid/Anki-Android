@@ -113,7 +113,7 @@
     <string name="import_update_details">现有笔记%2$d条，已更新%1$d条。</string>
     <string name="import_update_ignored">忽略了某些更新，因为这些笔记的类型已改变</string>
     <plurals name="import_complete_message">
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">导入的文件数: %1$d\n总共导入的卡片数: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">SD 卡已满</string>
     <string name="sd_card_almost_full_title">SD 卡几乎已满</string>

@@ -47,22 +47,8 @@
     <string name="multimedia_editor_popup_text">Biên tập mở rộng</string>
     <string name="multimedia_editor_popup_cloze">Đánh dấu Cloze</string>
     <string name="multimedia_editor_popup_clear_field">Xóa trường</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">Được tài trợ bởi glosbe.com</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">Từ</string>
-    <string name="multimedia_editor_trans_to">sang</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">Dịch</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">Dịch trực tuyến</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">Chọn bản dịch</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">Chọn tự điển</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">Cài đặt ColorDict đầu tiên</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Tải</string>
     <string name="multimedia_editor_pron_looking_up">Dò tìm cách phát âm</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Hoàn thành</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">Tìm kiếm:</string>
     <string name="multimedia_editor_text_field_editing_say">Cách phát âm</string>
     <string name="multimedia_editor_text_field_editing_clear">Xóa</string>
     <string name="multimedia_editor_text_field_editing_clone">Sao chép từ</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Dịch</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Nhập một số văn bản trước</string>
-    <string name="multimedia_editor_text_field_editing_many_words">Từ điển thường mong đợi một từ</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Lấy từ</string>
     <!-- Multimedia card editor activity -->
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">Từ không được tìm thấy</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">Không tải được bản dịch</string>
     <string name="multimedia_editor_searching_word">Tìm kiếm từ</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">Chờ đợi</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Không thể tạo thanh công cụ ghi</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Chỉnh sửa trường</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Dịch</string>
     <!-- Network failure -->
     <string name="network_no_connection">Không có kết nối</string>
     <!-- Crop function-->

@@ -29,7 +29,7 @@
     <string name="front_field_name">Elülső</string>
     <string name="back_field_name">Hátsó</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Szöveg</string>
-    <string name="extra_field_name_new">Back Extra</string>
+    <string name="extra_field_name_new">Hátlap extra mező</string>
     <string name="field_to_ask_front_name">Fordított hozzáadása</string>
     <!--Card type-->
     <string name="card_n_name">Kártya %d</string>

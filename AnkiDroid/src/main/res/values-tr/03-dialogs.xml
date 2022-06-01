@@ -83,8 +83,8 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">%d kartın zamanını değiştir</item>
+        <item quantity="other">%d kartın zamanını değiştir</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Şu anki aralık: %d gün</item>
@@ -119,8 +119,8 @@
     <string name="import_update_details">Mevcut %2$d notun %1$d tanesi güncellendi.</string>
     <string name="import_update_ignored">Bazı güncellemeler not türü değiştiği için yoksayıldı</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Aktarılan kart: %2$d</item>
+        <item quantity="other">Aktarılan dosya: %1$d\nAktarılan toplam kart: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">SD kart dolu</string>
     <string name="sd_card_almost_full_title">SD kart neredeyse dolu</string>

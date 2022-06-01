@@ -61,7 +61,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">ପ୍ରସାରଣ</string>
     <string name="collapse">ସଙ୍କୋଚନ</string>
-    <string name="study_more">ଅଧିକ ଅଧ୍ୟୟନ କରନ୍ତୁ</string>
+    <string name="study_more">ଆହୁରି ଅଧ୍ୟୟନ କରିବେ</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$dଟିଏ ପତ୍ର ବାକି (%2$s)</item>
         <item quantity="other">%1$dଟି ପତ୍ର ବାକି (%2$s)</item>

@@ -79,7 +79,7 @@
         <item quantity="many">%d карток переміщено</item>
         <item quantity="other">%d карток переміщено</item>
     </plurals>
-    <string name="reset_card_dialog_title">Скинути поступ картки</string>
+    <string name="reset_card_dialog_title">Скинути прогрес картки</string>
     <string name="reset_card_dialog_message">Ця картка буде переміщена у кінець черги нових карток</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d картку скинуто</item>
@@ -131,10 +131,10 @@
     <string name="import_update_details">Оновлено %1$d з %2$d існуючих записів.</string>
     <string name="import_update_ignored">Деякі оновлення пропущено, оскільки тип записів змінений</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
+        <item quantity="one">Карток імпортовано: %2$d</item>
         <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
         <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">Файлів імпортовано: %1$d\nЗагалом карток імпортовано: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">SD карта заповнена</string>
     <string name="sd_card_almost_full_title">SD-карта майже заповнена</string>
