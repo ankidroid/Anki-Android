@@ -47,22 +47,8 @@
     <string name="multimedia_editor_popup_text">Editor lanjutan</string>
     <string name="multimedia_editor_popup_cloze">Deletasi kloza (titik-titik)</string>
     <string name="multimedia_editor_popup_clear_field">Bersihkan bidang</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">Ditenagai oleh glosbe.com</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">Dari</string>
-    <string name="multimedia_editor_trans_to">Ke</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">Terjemahkan</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">Terjemahkan secara online</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">Pilih penerjemah</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">Pilih kamus</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">Pasang ColorDict dahulu</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Muat</string>
     <string name="multimedia_editor_pron_looking_up">Mencari pelafalan</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Selesai</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">Cari:</string>
     <string name="multimedia_editor_text_field_editing_say">Pelafalan</string>
     <string name="multimedia_editor_text_field_editing_clear">Bersihkan</string>
     <string name="multimedia_editor_text_field_editing_clone">Salin dari</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Terjemahan</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Masukkan beberapa teks dahulu</string>
-    <string name="multimedia_editor_text_field_editing_many_words">Kamus biasanya perlu satu kata</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Ambil dari</string>
     <!-- Multimedia card editor activity -->
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">Kata tidak ditemukan</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">Penerjemahan gagal</string>
     <string name="multimedia_editor_searching_word">Cari kata</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">Tunggu</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Tidak dapat membuat tool bar perekam</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Mengedit kolom</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Terjemahan</string>
     <!-- Network failure -->
     <string name="network_no_connection">Tidak ada koneksi</string>
     <!-- Crop function-->

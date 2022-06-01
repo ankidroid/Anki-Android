@@ -47,22 +47,8 @@
     <string name="multimedia_editor_popup_text">Editor avançado</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
     <string name="multimedia_editor_popup_clear_field">Clear field</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">Desenvolvido por glosbe.com</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">De</string>
-    <string name="multimedia_editor_trans_to">Para</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">Traduzir</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">Tradução online</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">Escolher tradução</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">Escolher dicionário</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">Instale primeiro o ColorDict</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Carregar</string>
     <string name="multimedia_editor_pron_looking_up">A procurar a pronúncia</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Concluída</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">Procurar por:</string>
     <string name="multimedia_editor_text_field_editing_say">Pronúncia</string>
     <string name="multimedia_editor_text_field_editing_clear">Limpar</string>
     <string name="multimedia_editor_text_field_editing_clone">Clonar de</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Tradução</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Escreva primeiro algum texto</string>
-    <string name="multimedia_editor_text_field_editing_many_words">Normalmente, o dicionário espera somente uma palavra</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Copiar desde</string>
     <!-- Multimedia card editor activity -->
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">A palavra não foi encontrada</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">Falha ao obter a tradução</string>
     <string name="multimedia_editor_searching_word">A procurar a palavra</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">Aguarde</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Campo de edição</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Tradução</string>
     <!-- Network failure -->
     <string name="network_no_connection">Sem ligação.</string>
     <!-- Crop function-->

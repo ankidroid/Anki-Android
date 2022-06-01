@@ -47,22 +47,8 @@
     <string name="multimedia_editor_popup_text">Napredni uređivač</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
     <string name="multimedia_editor_popup_clear_field">Clear field</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">Powered by glosbe.com</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">Od</string>
-    <string name="multimedia_editor_trans_to">Za</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">Prevedi</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">Online prevođenje</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">Odaberite prijevod</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">Odaberite rječnik</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">Najprije instalirajte ColorDict</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Učitaj</string>
     <string name="multimedia_editor_pron_looking_up">Traženje izgovora</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Gotovo</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">Pretraživanje:</string>
     <string name="multimedia_editor_text_field_editing_say">Izgovor</string>
     <string name="multimedia_editor_text_field_editing_clear">Očisti</string>
     <string name="multimedia_editor_text_field_editing_clone">Kloniraj iz</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Prijevod</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Prvo unesite neki tekst</string>
-    <string name="multimedia_editor_text_field_editing_many_words">Rječnik obično očekuje jednu riječ</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Uzeti iz</string>
     <!-- Multimedia card editor activity -->
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">Riječ nije pronađena</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">Dohvaćanje prijevoda nije uspjelo</string>
     <string name="multimedia_editor_searching_word">Pretraživanje riječi</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">Čekajte</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Uređivanje polja</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Prijevod</string>
     <!-- Network failure -->
     <string name="network_no_connection">Nema veze</string>
     <!-- Crop function-->

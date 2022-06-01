@@ -13,21 +13,21 @@ Přidání učebního materiálu prostřednictvím aplikace Anki nebo přímo p�
 • rozložené opakování (spaced repetition - algoritmus z programu Supermemo 2)
 • integrované předčítání textu
 • více než 6000 již vytvořených znalostních balíčků
-• widget úspěšnosti
+• widget postupu
 • podrobné statistiky
 • synchronizace s AnkiWeb
 • open source
 
 ★ Další funkce:
-• psání odpovědí (volitelné)
+• psaní odpovědí (volitelné)
 • tabule
-přidání/ editace karet
+přidání/editace karet
 • prohlížeč karet
 • rozvržení zobrazení pro tablety
 • import stávající kolekce souborů (přes Anki Desktop)
 • přidání kartiček pomocí intent z jiných aplikací, např. slovníků
 • podpora vlastního fontu písma
-• kompletní záložní systém
+• úplný zálohovací systém
 • ovládání pomocí dotyků a gest
 • přizpůsobitelné
 • dynamicky přizpůsobitelné balíčky

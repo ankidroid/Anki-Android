@@ -75,16 +75,16 @@
         <item quantity="other">Залишилося %d хвилини</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Залишилася %1$d година %2$d</item>
+        <item quantity="few">Залишилося %1$d годин %2$d</item>
+        <item quantity="many">Залишилося %1$d годин %2$d </item>
+        <item quantity="other">Залишилося %1$d годин %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Залишився %1$d день %2$d</item>
+        <item quantity="few">Залишилося %1$d дні %2$d</item>
+        <item quantity="many">Залишилося %1$d днів %2$d</item>
+        <item quantity="other">Залишилось %1$d днів %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Колекція порожня</string>
     <string name="no_cards_placeholder_description">Почніть додавати картки\nвикористовуючи значок +.</string>
@@ -166,7 +166,7 @@
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Перебудова фільтрованої колоди&#8230;</string>
     <string name="rebuild_cram_label">Перебудувати</string>
-    <string name="empty_cram_label">Порожньо</string>
+    <string name="empty_cram_label">Спорожнити</string>
     <string name="create_subdeck">Створити підколоду</string>
     <string name="empty_filtered_deck">Очищення фільтрованої колоди&#8230;</string>
     <string name="custom_study_deck_name">Додаткове навчання</string>

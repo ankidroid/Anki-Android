@@ -160,10 +160,10 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Thêm</string>
     <string name="import_message_replace_confirm">Thao tác này sẽ xoá tất cả bộ sưu tập hiện hữu và thay nó bằng dữ liệu của tệp %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Thêm \"%s\" vào bộ sưu tập? Quá trình này có thể mất 1 chút thời gian</item>
     </plurals>
     <string name="import_log_no_apkg">Đây không phải là gói tệp tin Anki hợp lệ</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Lỗi</string>
     <string name="import_log_failed_unzip">Không giải nén được apkg: %s</string>
     <string name="import_log_failed_copy_to">Không sao chép được apkg sang %s</string>
     <string name="import_log_failed_validate">không xác thực được apkg</string>
@@ -180,7 +180,7 @@
     <string name="import_error_unhandled_scheme">Việc nhập chưa xử lý từ: “%s”</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_stats_error">1 số lỗi đã xảy ra khi nhập những file sau: \n%s</string>
     <string name="import_replacing">Đang thay thế bộ sưu tập&#8230;</string>
     <string name="import_interrupted">Nhập dữ liệu bị gián đoạn: AnkiDroid đã bị đóng</string>
     <string name="export_include_schedule">Gồm cả việc lên lịch</string>
@@ -392,7 +392,7 @@
     <string name="scoped_storage_learn_more">Tìm hiểu thêm</string>
     <string name="scoped_storage_postpone">Trì hoãn</string>
     <string name="scoped_storage_migrate">Di chuyển</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">Không có kết quả tìm kiếm</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
     <string name="could_not_create_dir">Could not create directory %s</string>

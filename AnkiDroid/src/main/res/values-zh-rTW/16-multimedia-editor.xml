@@ -47,22 +47,8 @@
     <string name="multimedia_editor_popup_text">進階編輯器</string>
     <string name="multimedia_editor_popup_cloze">克漏字測驗</string>
     <string name="multimedia_editor_popup_clear_field">清除欄位</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">由 glosbe.com 提供</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">從</string>
-    <string name="multimedia_editor_trans_to">到</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">翻譯</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">線上翻譯</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">選擇翻譯</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">選擇字典</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">第一次安裝 ColorDict</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">下載</string>
     <string name="multimedia_editor_pron_looking_up">查尋發音</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">完成</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">搜尋：</string>
     <string name="multimedia_editor_text_field_editing_say">發音</string>
     <string name="multimedia_editor_text_field_editing_clear">清除 </string>
     <string name="multimedia_editor_text_field_editing_clone">複製自</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">翻譯</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">首先輸入文字</string>
-    <string name="multimedia_editor_text_field_editing_many_words">字典搜尋最少一個字</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">拿取自</string>
     <!-- Multimedia card editor activity -->
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">找不到該單字</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">取得翻譯失敗</string>
     <string name="multimedia_editor_searching_word">搜尋單字</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">等待</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">無法建立錄製器工具列</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">編輯欄位</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">翻譯</string>
     <!-- Network failure -->
     <string name="network_no_connection">沒有連線。</string>
     <!-- Crop function-->

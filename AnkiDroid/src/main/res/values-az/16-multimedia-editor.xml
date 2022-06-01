@@ -47,22 +47,8 @@
     <string name="multimedia_editor_popup_text">Qabaqcıl düzəlişçi</string>
     <string name="multimedia_editor_popup_cloze">Boşluq doldurma</string>
     <string name="multimedia_editor_popup_clear_field">Clear field</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">glosbe.com tərəfindən təmin edilir</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">Mənbə</string>
-    <string name="multimedia_editor_trans_to">Çıxdı</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">Tərcümə et</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">Onlayn tərcümə edilir</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">Tərcümə seç</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">Lüğət seç</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">Əvvəlcə ColorDict yükləyin</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Yüklə</string>
     <string name="multimedia_editor_pron_looking_up">Tələffüzə baxılır</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Hazırdı</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">Axtarılan:</string>
     <string name="multimedia_editor_text_field_editing_say">Tələffüz</string>
     <string name="multimedia_editor_text_field_editing_clear">Təmizlə</string>
     <string name="multimedia_editor_text_field_editing_clone">Kopyala</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Tərcümə</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Əvvəlcə bəzi mətn daxil edin</string>
-    <string name="multimedia_editor_text_field_editing_many_words">Lüğət adətən bir söz gözləyər</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Mənbə</string>
     <!-- Multimedia card editor activity -->
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">Söz tapılmadı</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">Tərcümə alma uğursuz oldu</string>
     <string name="multimedia_editor_searching_word">Söz axtarılır</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">Gözləyin</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Sahənin düzəlişi</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Tərcümə</string>
     <!-- Network failure -->
     <string name="network_no_connection">Bağlantı yoxdur</string>
     <!-- Crop function-->

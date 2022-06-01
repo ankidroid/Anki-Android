@@ -48,7 +48,7 @@
     <string name="disabled">無効</string>
     <string name="enabled">有効</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">全般</string>
     <string name="pref_cat_general_summ">一般設定</string>
     <string name="pref_cat_reviewing" maxLength="41">カードの学習</string>
     <string name="pref_cat_reviewing_summ">特定のデッキに限定されない設定</string>
@@ -124,8 +124,8 @@
     <string name="gestures_corner_tap_bottom_right" maxLength="41">下部右側をタップ</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ メニュー</string>
-    <string name="card_browser_enable_external_context_menu_summary">Androidアプリ全般で、文字列を選択した際に表示されるコンテキストメニューに ‘%s’ を追加します</string>
+    <string name="card_browser_enable_external_context_menu">「%s」メニュー</string>
+    <string name="card_browser_enable_external_context_menu_summary">AnkiDroidおよび他のアプリ（ウェブブラウザなど）で、文字列を選択した際に表示されるコンテキストメニューに「%s」という項目を追加します</string>
     <string name="double_scrolling_gap" maxLength="41">ダブルスクロール</string>
     <string name="double_scrolling_gap_summ">eReader とのスクロールのギャップを 2 倍にする場合、これを有効にします</string>
     <string name="swipe_sensitivity" maxLength="41">スワイプ感度</string>
@@ -194,7 +194,7 @@
     <string name="xlabel_dayoffset_seekbar" maxLength="41">午前 0 時</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">午後11時</string>
     <string name="sched_v2" maxLength="41">V2スケジューラー</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_v2_summ">新型のスケジューラーを有効にします。次に同期する際は、一方向の変更を強制実行します</string>
     <string name="sched_ver_toggle_title">確認</string>
     <string name="sched_ver_1to2">実験的なスケジューラは間違ったスケジューリングを引き起こす可能性があります。最初に関係するドキュメントを読んで確認してください。続行しますか？</string>
     <string name="pref_keep_screen_on" maxLength="41">スクリーンをオンのままにする</string>
@@ -318,7 +318,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">改行をHTMLに置き換え</string>
     <string name="note_editor_replace_newlines_summ">ノートエディターでは、カードを編集するときに &lt;br&gt; を改行に変換します。</string>
     <string name="no_code_formatting" maxLength="41">文字入力回答でシンプルなフォントを使用</string>
-    <string name="no_code_formatting_summ">文字入力して回答する種類のカードの解答画面で、自分の回答に文字化け（‘􏿾’の表示）が起こる不具合を回避します</string>
+    <string name="no_code_formatting_summ">文字入力して解答する種類のカードで、解答結果に文字化け（‘􏿾’の表示）が起こる不具合を回避します</string>
     <string name="type_in_answer_focus" maxLength="41">文字入力欄にフォーカス</string>
     <string name="type_in_answer_focus_summ">答えをキーボード入力する欄がカード内にある場合、自動的にカーソルを入れて、すぐに文字を入力できる状態にします</string>
     <!-- Open Changelog-->

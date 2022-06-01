@@ -94,7 +94,7 @@
     <string name="card_browser_no_cards_in_deck">Nem található kártya a \'%s\' pakliban</string>
     <string name="card_browser_search_all_decks">Összes pakli keresése</string>
     <string name="card_browser_unknown_deck_name">Ismeretlen</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Tartalom csonkolása</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d kártya törölve</item>
         <item quantity="other">%d kártya törölve</item>
@@ -106,7 +106,7 @@
     <string name="card_info_interval">Intervallum</string>
     <string name="card_info_ease">Nehézség</string>
     <string name="card_info_reviews" comment="Number of times a card was reviewed">Ismétlések</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
+    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Elfelejtések száma</string>
     <string name="card_info_average_time">Átlagos idő</string>
     <string name="card_info_total_time">Összes idő</string>
     <string name="card_info_card_type">Kártya típus</string>

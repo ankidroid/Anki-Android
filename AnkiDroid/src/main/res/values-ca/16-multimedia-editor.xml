@@ -47,22 +47,8 @@
     <string name="multimedia_editor_popup_text">Editor avançat</string>
     <string name="multimedia_editor_popup_cloze">Blancs per omplir</string>
     <string name="multimedia_editor_popup_clear_field">Esborrar camp</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">Desenvolupat per glosbe.com</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">Des de</string>
-    <string name="multimedia_editor_trans_to">A</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">Traduir</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">Traduir en línia</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">Triar traducció</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">Triar diccionari</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">Instal·li ColorDict primer</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Carrega</string>
     <string name="multimedia_editor_pron_looking_up">Comprovar la pronunciació</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Fet</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">Cerca per:</string>
     <string name="multimedia_editor_text_field_editing_say">Pronunciació</string>
     <string name="multimedia_editor_text_field_editing_clear">Buida</string>
     <string name="multimedia_editor_text_field_editing_clone">Clonar de</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Traducció</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Introduïu un text primer</string>
-    <string name="multimedia_editor_text_field_editing_many_words">Diccionari sol esperar una paraula</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Prendre de</string>
     <!-- Multimedia card editor activity -->
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">La paraula no s\'ha trobat</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">Aconseguir la traducció ha fallat</string>
     <string name="multimedia_editor_searching_word">Cercant la paraula</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">Esperi</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">No es pot crear la barra d\'eines de gravació</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Camp d\'edició</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Traducció</string>
     <!-- Network failure -->
     <string name="network_no_connection">Sense connexió.</string>
     <!-- Crop function-->
