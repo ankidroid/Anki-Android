@@ -39,7 +39,6 @@
     <Button
         android:id="@+id/stroke_width"
         android:background="@drawable/ic_mode_edit_white"
-        android:backgroundTint="@color/black"
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
 </LinearLayout>
