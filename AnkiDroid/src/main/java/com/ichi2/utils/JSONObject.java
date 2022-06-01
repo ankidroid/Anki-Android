@@ -130,10 +130,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
                         throw x.syntaxError("Duplicate key \"" + key + "\"");
                     }
                     // Only add value if non-null
-                    Object value = x.nextValue();
-                    if (value != null) {
-                        this.put(key, value);
-                    }
+                    this.put(key, x.nextValue());
                 }
 
                 // Pairs are separated by ','.
