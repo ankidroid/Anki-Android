@@ -35,8 +35,16 @@ cp $ANKI_SRC/.bazel/bin/ts/mathjax/index.js $ANKIDROID_SRC/AnkiDroid/src/main/as
 # replace paths in conf.js for AnkiDroid
 ANKI_MATHJAX_DIR="_anki/js/vendor/mathjax"
 ANKIDROID_MATHJAX_DIR="android_asset/mathjax"
+MATHJAX_CONF_JS=$ANKIDROID_SRC/AnkiDroid/src/main/assets/mathjax/conf.js
 
-sed -i "s|$ANKI_MATHJAX_DIR|$ANKIDROID_MATHJAX_DIR|" $ANKIDROID_SRC/AnkiDroid/src/main/assets/mathjax/conf.js
+# check if the path exists in conf.js file or not, otherwise exit
+if grep "$ANKI_MATHJAX_DIR" $MATHJAX_CONF_JS
+then
+    sed -i "s|$ANKI_MATHJAX_DIR|$ANKIDROID_MATHJAX_DIR|" $MATHJAX_CONF_JS
+else
+    echo "MathJax path does not exist in conf.js file, it is changed"
+    exit 1
+fi
 
 # cleanup
 rm $ANKIDROID_SRC/AnkiDroid/src/main/assets/mathjax/mathjax-cp.sh
