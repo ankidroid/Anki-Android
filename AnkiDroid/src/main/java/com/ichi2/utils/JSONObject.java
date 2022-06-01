@@ -97,7 +97,7 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
         this();
         try {
             char c;
-            String key;
+            @NonNull String key;
 
             if (x.nextClean() != '{') {
                 throw x.syntaxError("A JSONObject text must begin with '{'");
@@ -123,17 +123,15 @@ public class JSONObject extends org.json.JSONObject implements Iterable<String> 
 
                 // Use syntaxError(..) to include error location
 
-                if (key != null) {
-                    // Check if key exists
-                    if (this.opt(key) != null) {
-                        // key already exists
-                        throw x.syntaxError("Duplicate key \"" + key + "\"");
-                    }
-                    // Only add value if non-null
-                    Object value = x.nextValue();
-                    if (value != null) {
-                        this.put(key, value);
-                    }
+                // Check if key exists
+                if (this.opt(key) != null) {
+                    // key already exists
+                    throw x.syntaxError("Duplicate key \"" + key + "\"");
+                }
+                // Only add value if non-null
+                Object value = x.nextValue();
+                if (value != null) {
+                    this.put(key, value);
                 }
 
                 // Pairs are separated by ','.
