@@ -38,8 +38,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
             savedFilters?.let {
                 savedFilterKeys = ArrayList(it.keys)
             }
-            buttonItemAdapter = ButtonItemAdapter(savedFilterKeys!!)
-            buttonItemAdapter!!.apply {
+            buttonItemAdapter = ButtonItemAdapter(savedFilterKeys!!).apply {
                 notifyAdapterDataSetChanged() // so the values are sorted.
                 setCallbacks(
                     object : ButtonItemAdapter.ItemCallback {
