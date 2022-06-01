@@ -1,5 +1,9 @@
 # update mathjax and jquery js library with Anki Desktop
 
+# path variable
+ANKI_SRC=~/tmp/anki
+ANKIDROID_SRC=/home/runner/work/Anki-Android/Anki-Android
+
 # ensure some basic tools are installed
 sudo apt install bash grep findutils curl gcc g++ git
 
@@ -8,37 +12,38 @@ curl -L https://github.com/bazelbuild/bazelisk/releases/download/v1.10.1/bazelis
 chmod +x bazel && sudo mv bazel /usr/local/bin/
 
 # clone Anki
-git clone https://github.com/ankitects/anki ~/tmp/anki
+git clone https://github.com/ankitects/anki $ANKI_SRC
 
 # build for mathjax and jquery
-cd ~/tmp/anki/qt/aqt/data/web/js/vendor
+cd $ANKI_SRC/qt/aqt/data/web/js/vendor
 bazel build vendor
 
-cd ~/tmp/anki/ts 
+cd $ANKI_SRC/ts 
 bazel build mathjax
 
-# change dir to AnkiDroid
-cd /home/runner/work/Anki-Android/Anki-Android
-
 # copy latest jquery to assets dir
-cp ~/tmp/anki/.bazel/bin/qt/aqt/data/web/js/vendor/jquery.min.js AnkiDroid/src/main/assets/jquery.min.js
+cp $ANKI_SRC/.bazel/bin/qt/aqt/data/web/js/vendor/jquery.min.js $ANKIDROID_SRC/AnkiDroid/src/main/assets/jquery.min.js
 
 # remove old mathjax file
-rm -rf AnkiDroid/src/main/assets/mathjax/*
+rm -rf $ANKIDROID_SRC/AnkiDroid/src/main/assets/mathjax/*
 
 # copy latest mathjax to assets dir
-cp -r ~/tmp/anki/.bazel/bin/qt/aqt/data/web/js/vendor/mathjax AnkiDroid/src/main/assets/
+cp -r $ANKI_SRC/.bazel/bin/qt/aqt/data/web/js/vendor/mathjax $ANKIDROID_SRC/AnkiDroid/src/main/assets/
 
-cp ~/tmp/anki/.bazel/bin/ts/mathjax/index.js AnkiDroid/src/main/assets/mathjax/conf.js
+cp $ANKI_SRC/.bazel/bin/ts/mathjax/index.js $ANKIDROID_SRC/AnkiDroid/src/main/assets/mathjax/conf.js
 
 # replace paths in conf.js for AnkiDroid
-sed -i 's/_anki\/js\/vendor\/mathjax/android_asset\/mathjax/' AnkiDroid/src/main/assets/mathjax/conf.js
+ANKI_MATHJAX_DIR="_anki/js/vendor/mathjax"
+ANKIDROID_MATHJAX_DIR="android_asset/mathjax"
+
+sed -i "s|$ANKI_MATHJAX_DIR|$ANKIDROID_MATHJAX_DIR|" $ANKIDROID_SRC/AnkiDroid/src/main/assets/mathjax/conf.js
 
 # cleanup
-rm AnkiDroid/src/main/assets/mathjax/mathjax-cp.sh
+rm $ANKIDROID_SRC/AnkiDroid/src/main/assets/mathjax/mathjax-cp.sh
 
 # restore mathjax.css file
+cd $ANKIDROID_SRC
 git restore AnkiDroid/src/main/assets/mathjax/mathjax.css
 
 # change mode of files in assets dir
-find AnkiDroid/src/main/assets/mathjax/ -type f -print0 | xargs -0 chmod 644
+find $ANKIDROID_SRC/AnkiDroid/src/main/assets/mathjax/ -type f -print0 | xargs -0 chmod 644
