@@ -23,7 +23,6 @@ import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.async.Connection
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import kotlin.math.max
@@ -34,7 +33,6 @@ import kotlin.math.min
  * and it's unsafe to commit them from an AsyncTask onComplete event, so we work
  * around this by using a message handler.
  */
-@KotlinCleanup("for better null handling")
 class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
     // Use weak reference to main activity to prevent leaking the activity when it's closed
     val mActivity: WeakReference<AnkiActivity> = WeakReference(activity)
@@ -43,19 +41,21 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
         val messageName = MESSAGE_NAME_LIST[msg.what]
         UsageAnalytics.sendAnalyticsScreenView(messageName)
         Timber.i("Handling Message: %s", messageName)
+
+        val deckPicker = mActivity.get() as DeckPicker
         if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {
             // Collection could not be opened
-            (mActivity.get() as DeckPicker?)!!.showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
+            deckPicker.showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
         } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG) {
             // Handle import of collection package APKG
-            (mActivity.get() as DeckPicker?)!!.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, msgData.getStringArrayList("importPath")!!)
+            deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, msgData.getStringArrayList("importPath")!!)
         } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG) {
             // Handle import of deck package APKG
-            (mActivity.get() as DeckPicker?)!!.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, msgData.getStringArrayList("importPath")!!)
+            deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, msgData.getStringArrayList("importPath")!!)
         } else if (msg.what == MSG_SHOW_SYNC_ERROR_DIALOG) {
             val id = msgData.getInt("dialogType")
             val message = msgData.getString("dialogMessage")
-            (mActivity.get() as DeckPicker?)!!.showSyncErrorDialog(id, message)
+            deckPicker.showSyncErrorDialog(id, message)
         } else if (msg.what == MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG) {
             // Media check results
             val id = msgData.getInt("dialogType")
@@ -64,11 +64,11 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
                 checkList.add(msgData.getStringArrayList("nohave")!!)
                 checkList.add(msgData.getStringArrayList("unused")!!)
                 checkList.add(msgData.getStringArrayList("invalid")!!)
-                (mActivity.get() as DeckPicker?)!!.showMediaCheckDialog(id, checkList)
+                deckPicker.showMediaCheckDialog(id, checkList)
             }
         } else if (msg.what == MSG_SHOW_DATABASE_ERROR_DIALOG) {
             // Database error dialog
-            (mActivity.get() as DeckPicker?)!!.showDatabaseErrorDialog(msgData.getInt("dialogType"))
+            deckPicker.showDatabaseErrorDialog(msgData.getInt("dialogType"))
         } else if (msg.what == MSG_SHOW_FORCE_FULL_SYNC_DIALOG) {
             // Confirmation dialog for forcing full sync
             val dialog = ConfirmationDialog()
@@ -87,7 +87,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
             val millisecondsSinceLastSync = col.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
             val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
             if (!limited && hkey!!.isNotEmpty() && Connection.isOnline()) {
-                (mActivity.get() as DeckPicker?)!!.sync()
+                deckPicker.sync()
             } else {
                 val err = res.getString(R.string.sync_error)
                 if (limited) {

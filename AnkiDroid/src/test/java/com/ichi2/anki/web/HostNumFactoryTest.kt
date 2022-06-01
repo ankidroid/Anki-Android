@@ -27,7 +27,7 @@ import org.junit.runner.RunWith
 class HostNumFactoryTest : RobolectricTest() {
     @Test
     fun ensureDefaultNoCrash() {
-        val hostNum = HostNumFactory.getInstance(targetContext).hostNum
+        val hostNum = HostNumFactory.getInstance(targetContext).getHostNum()
         assertThat(hostNum, nullValue())
     }
 }

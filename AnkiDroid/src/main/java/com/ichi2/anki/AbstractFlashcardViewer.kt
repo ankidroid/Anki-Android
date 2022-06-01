@@ -1030,6 +1030,10 @@ abstract class AbstractFlashcardViewer :
         // Javascript interface for calling AnkiDroid functions in webview, see card.js
         mAnkiDroidJsAPI = javaScriptFunction()
         webView.addJavascriptInterface(mAnkiDroidJsAPI!!, "AnkiDroidJS")
+
+        // enable dom storage so that sessionStorage & localStorage can be used in webview
+        webView.settings.domStorageEnabled = true
+
         return webView
     }
 

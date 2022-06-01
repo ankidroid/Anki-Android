@@ -19,18 +19,16 @@ import android.content.SharedPreferences
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.PreferenceUtils
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 import org.mockito.invocation.InvocationOnMock
+import org.mockito.kotlin.whenever
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("Objects.requireNonNull")
-@KotlinCleanup("`when` -> whenever`")
 class ActionButtonStatusTest : RobolectricTest() {
     @Test
     fun allCustomButtonsCanBeDisabled() {
@@ -39,7 +37,7 @@ class ActionButtonStatusTest : RobolectricTest() {
         assertThat(
             "Each button in the Action Bar must be modifiable in Preferences - Reviewer - App Bar Buttons",
             reviewerExpectedKeys,
-            containsInAnyOrder(*Objects.requireNonNull<Array<Any>>(actualPreferenceKeys.toTypedArray()))
+            containsInAnyOrder(*actualPreferenceKeys.toTypedArray())
         )
     }
 
@@ -47,7 +45,7 @@ class ActionButtonStatusTest : RobolectricTest() {
         get() {
             val preferences = mock(SharedPreferences::class.java)
             val ret: MutableSet<String> = HashSet()
-            `when`(preferences.getString(any(), any())).then { a: InvocationOnMock ->
+            whenever(preferences.getString(any(), any())).then { a: InvocationOnMock ->
                 val key = a.getArgument<String>(0)
                 ret.add(key)
                 "0"

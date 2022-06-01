@@ -5,7 +5,7 @@ import org.gradle.internal.jvm.Jvm
 buildscript {
     // The version for the Kotlin plugin and dependencies
     ext.kotlin_version = '1.6.21'
-    ext.lint_version = '30.2.0'
+    ext.lint_version = '30.2.1'
     ext.acra_version = '5.7.0'
     ext.ankidroid_backend_version = '0.1.10'
     ext.hamcrest_version = '2.2'
@@ -18,7 +18,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath 'com.android.tools.build:gradle:7.2.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "app.brant:amazonappstorepublisher:0.1.0"

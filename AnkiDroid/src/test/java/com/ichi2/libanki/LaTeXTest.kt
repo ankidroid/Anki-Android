@@ -38,7 +38,7 @@ class LaTeXTest : RobolectricTest() {
     fun imgLinkTest() {
         val col = col
         val m: Media = MockMedia(col)
-        val model = col.models.byName("Basic")
+        val model = col.models.byName("Basic")!!
         // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
         //  Test with media access
         assertThat(
@@ -57,7 +57,7 @@ class LaTeXTest : RobolectricTest() {
     fun mungeQATest() {
         val col = col
         val m: Media = MockMedia(col)
-        val model = col.models.byName("Basic")
+        val model = col.models.byName("Basic")!!
 
         //  Test with media access
         assertThat(

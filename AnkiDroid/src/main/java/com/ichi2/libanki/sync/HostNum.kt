@@ -13,12 +13,10 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki.sync
 
-package com.ichi2.libanki.sync;
-
-import com.ichi2.libanki.Consts;
-
-import androidx.annotation.Nullable;
+import com.ichi2.libanki.Consts
+import com.ichi2.utils.KotlinCleanup
 
 /**
  * The server provides hostNum in the /sync/meta call. All requests after that (including future meta requests)
@@ -35,28 +33,27 @@ import androidx.annotation.Nullable;
  * * On Change of Sync Server
  *
  * As new user data will likely not be under the same hostNum
- * */
-public class HostNum {
-    private Integer mHostNum;
+ */
+@KotlinCleanup("turn hostNum into a property and remove getHostNum/setHostNum")
+open class HostNum(private var hostNum: Int?) {
 
-    public HostNum(Integer hostNum) {
-        mHostNum = hostNum;
+    open fun getHostNum(): Int? {
+        return hostNum
     }
 
-    public Integer getHostNum() {
-        return mHostNum;
+    open fun setHostNum(newHostNum: Int?) {
+        hostNum = newHostNum
     }
 
-    public void setHostNum(Integer newHostNum) {
-        mHostNum = newHostNum;
+    open fun reset() {
+        hostNum = getDefaultHostNum()
     }
 
-    public void reset() {
-        mHostNum = getDefaultHostNum();
-    }
-
-    @Nullable
-    protected static Integer getDefaultHostNum() {
-        return Consts.DEFAULT_HOST_NUM;
+    companion object {
+        @KotlinCleanup("try to inline in reset()")
+        @JvmStatic
+        fun getDefaultHostNum(): Int? {
+            return Consts.DEFAULT_HOST_NUM
+        }
     }
 }

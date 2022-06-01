@@ -21,10 +21,8 @@ import android.content.ContentValues
 import android.text.TextUtils
 import com.ichi2.libanki.backend.model.TagUsnTuple
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
 import java.util.*
 import java.util.regex.Pattern
-import java.util.stream.Collectors
 
 /**
  * Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -37,7 +35,6 @@ import java.util.stream.Collectors
  * instead of a JSONObject. It is much more convenient to work with a TreeMap in Java, but there
  * may be a performance penalty in doing so (on startup and shutdown).
  */
-@KotlinCleanup("fix IDE lint issues")
 class Tags
 /**
  * Registry save/load
@@ -59,11 +56,10 @@ class Tags
             for ((key, value) in mTags) {
                 tags.put(key, value)
             }
-            @KotlinCleanup("fix kotlin keyword usage in java")
-            val `val` = ContentValues()
-            `val`.put("tags", Utils.jsonToString(tags))
+            val contentValues = ContentValues()
+            contentValues.put("tags", Utils.jsonToString(tags))
             // TODO: the database update call here sets mod = true. Verify if this is intended.
-            col.db.update("col", `val`)
+            col.db.update("col", contentValues)
             mChanged = false
         }
     }
@@ -111,15 +107,11 @@ class Tags
     }
 
     override fun allItems(): Set<TagUsnTuple> {
-        @KotlinCleanup("switch from stream to kotlin collection operators")
-        return mTags.entries
-            .stream()
-            .map { (key, value): Map.Entry<String, Int?> ->
-                TagUsnTuple(
-                    key, value!!
-                )
-            }
-            .collect(Collectors.toSet())
+        return mTags.entries.map { (key, value): Map.Entry<String, Int?> ->
+            TagUsnTuple(
+                key, value!!
+            )
+        }.toSet()
     }
 
     override fun save() {
@@ -128,8 +120,7 @@ class Tags
 
     /** {@inheritDoc}  */
     override fun byDeck(did: Long, children: Boolean): ArrayList<String> {
-        val tags: List<String?>
-        tags = if (children) {
+        val tags: List<String?> = if (children) {
             val values: kotlin.collections.Collection<Long> = col.decks.children(did).values
             val dids = ArrayList<Long>(values.size)
             dids.add(did)
@@ -164,15 +155,14 @@ class Tags
             register(newTags)
         }
         // find notes missing the tags
-        val l: String
-        l = if (add) {
+        val l: String = if (add) {
             "tags not "
         } else {
             "tags "
         }
         val lim = StringBuilder()
         for (t in newTags) {
-            if (lim.length != 0) {
+            if (lim.isNotEmpty()) {
                 lim.append(" or ")
             }
             val replaced = t.replace("*", "%")
@@ -223,7 +213,7 @@ class Tags
     override fun split(tags: String): ArrayList<String> {
         val list = ArrayList<String>(tags.length)
         for (s in tags.replace('\u3000', ' ').split("\\s".toRegex()).toTypedArray()) {
-            if (s.length > 0) {
+            if (s.isNotEmpty()) {
                 list.add(s)
             }
         }
@@ -235,8 +225,7 @@ class Tags
         return if (tags.isEmpty()) {
             ""
         } else {
-            @KotlinCleanup("use kotlin joinToString function")
-            val joined = TextUtils.join(" ", tags)
+            val joined = tags.joinToString(" ")
             String.format(Locale.US, " %s ", joined)
         }
     }
@@ -253,9 +242,9 @@ class Tags
     }
 
     // submethod of remFromStr in anki
-    fun wildcard(pat: String, str: String): Boolean {
-        val pat_replaced = Pattern.quote(pat).replace("\\*", ".*")
-        return Pattern.compile(pat_replaced, Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CASE)
+    private fun wildcard(pat: String, str: String): Boolean {
+        val patReplaced = Pattern.quote(pat).replace("\\*", ".*")
+        return Pattern.compile(patReplaced, Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CASE)
             .matcher(str).matches()
     }
 
