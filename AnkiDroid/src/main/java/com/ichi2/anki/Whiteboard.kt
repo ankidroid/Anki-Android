@@ -20,6 +20,7 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import android.graphics.*
+import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.view.MotionEvent
 import android.view.View
@@ -536,6 +537,9 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         activity.findViewById<View>(R.id.pen_color_green).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_blue).setOnClickListener { view: View -> onClick(view) }
         activity.findViewById<View>(R.id.pen_color_yellow).setOnClickListener { view: View -> onClick(view) }
-        activity.findViewById<View>(R.id.stroke_width).setOnClickListener { view: View -> onClick(view) }
+        activity.findViewById<View>(R.id.stroke_width).apply {
+            setOnClickListener { view: View -> onClick(view) }
+            (background as? VectorDrawable)?.setTint(foregroundColor)
+        }
     }
 }
