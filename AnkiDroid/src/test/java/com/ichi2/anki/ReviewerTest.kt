@@ -161,7 +161,7 @@ class ReviewerTest : RobolectricTest() {
         val col = col
         val nw = col.decks.confForDid(1).getJSONObject("new")
         val time = collectionTime
-        nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
+        nw.put("delays", JSONArray(listOf(1, 10, 60, 120)))
 
         waitForAsyncTasksToComplete()
 
@@ -191,7 +191,7 @@ class ReviewerTest : RobolectricTest() {
         val col = col
         val nw = col.decks.confForDid(1).getJSONObject("new")
         val time = col.time as MockTime
-        nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
+        nw.put("delays", JSONArray(listOf(1, 10, 60, 120)))
 
         val cards = arrayOfNulls<Card>(4)
         cards[0] = addRevNoteUsingBasicModelDueToday("1", "bar").firstCard()

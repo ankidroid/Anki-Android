@@ -133,16 +133,11 @@ public class JSONArray extends org.json.JSONArray {
         this(new JSONTokener(source));
     }
 
-    public JSONArray(Object array) {
+    // @KotlinCleanup("Remove when `new double[]` can be replaced by listOf")
+    public JSONArray(double[] array) {
         this();
-        if (array.getClass().isArray()) {
-            int length = Array.getLength(array);
-            for (int i = 0; i < length; i += 1) {
-                this.put(Array.get(array, i));
-            }
-        } else {
-            throw new JSONException(
-                    "JSONArray initial value should be a string or collection or array.");
+        for (double d : array) {
+            this.put(d);
         }
     }
 
