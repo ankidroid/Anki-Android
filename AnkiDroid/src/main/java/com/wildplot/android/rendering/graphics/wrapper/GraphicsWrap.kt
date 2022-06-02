@@ -22,11 +22,17 @@ import android.graphics.RectF
 import android.graphics.Typeface
 
 /**
- * Wrapper of swing/awt graphics class for android use
+ * Wrapper of swing/awt graphics class for android use.
+ *
+ * NOTE: for performance reasons(usage in onDraw) this class has declared dependencies on Paint and
+ * Canvas which must be manually supplied before using any of its properties/methods.
  *
  * @author Michael Goldbach
  */
-class GraphicsWrap(private val canvas: Canvas, val paint: Paint) {
+class GraphicsWrap {
+    lateinit var canvas: Canvas
+    lateinit var paint: Paint
+
     var stroke: StrokeWrap
         get() = StrokeWrap(paint.strokeWidth)
         set(stroke) {

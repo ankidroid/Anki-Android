@@ -23,6 +23,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import com.ichi2.anki.Statistics.ChartFragment
+import com.ichi2.utils.KotlinCleanup
 import com.wildplot.android.rendering.PlotSheet
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
 import timber.log.Timber
@@ -31,6 +32,10 @@ class ChartView : View {
     private var mFragment: ChartFragment? = null
     private var mPlotSheet: PlotSheet? = null
     private var mDataIsSet = false
+    @KotlinCleanup("is this really needed?")
+    private val drawingBoundsRect = Rect()
+    private val paint = Paint(Paint.LINEAR_TEXT_FLAG)
+    private val graphicsWrap = GraphicsWrap()
 
     // The following constructors are needed for the layout inflater
     constructor(context: Context?) : super(context) {
@@ -49,17 +54,16 @@ class ChartView : View {
         // Timber.d("drawing chart");
         if (mDataIsSet) {
             // Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-            val paint = Paint(Paint.LINEAR_TEXT_FLAG)
-            paint.isAntiAlias = true
-            paint.style = Paint.Style.STROKE
-            val g = GraphicsWrap(canvas, paint)
-            val field = Rect()
-            getDrawingRect(field)
-            if (mPlotSheet != null) {
-                mPlotSheet!!.paint(g)
-            } else {
-                super.onDraw(canvas)
+            paint.apply {
+                reset()
+                isAntiAlias = true
+                style = Paint.Style.STROKE
             }
+            graphicsWrap.paint = paint
+            graphicsWrap.canvas = canvas
+            drawingBoundsRect.setEmpty()
+            getDrawingRect(drawingBoundsRect)
+            mPlotSheet?.paint(graphicsWrap) ?: super.onDraw(canvas)
         } else {
             super.onDraw(canvas)
         }
