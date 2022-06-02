@@ -1,0 +1,58 @@
+name: Update JS Library
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update_js_libs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: 'Update js libs'
+        id: vars
+        run: |
+
+          # create a new branch and checkout on local
+          git branch update-js-libs
+          git checkout update-js-libs
+
+          # make executable
+          chmod +x ./tools/update-js-libs.sh
+          ./tools/update-js-libs.sh
+
+          # commit changes
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git add .
+          git commit -am "updated mathjax and jquery"
+          git push --set-upstream origin update-js-libs -f
+
+          # get installed jquery and mathjax version
+          cd ~/tmp/anki
+          jquery_ver=$(npm list jquery | grep -Po "jquery@(\d+\.)+\d+" | sort -u)
+          mathjax_ver=$(npm list mathjax | grep -Po "mathjax@(\d+\.)+\d+")
+
+          # setting an output parameter
+          echo ::set-output name=jquery_ver::"$jquery_ver"
+          echo ::set-output name=mathjax_ver::"$mathjax_ver"
+
+      - name: 'Create pull request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            try {
+              await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: 'update-js-libs',
+                base: 'main',
+                title: 'Update jquery and mathjax',
+                body: "### Updated\n ${{ steps.vars.outputs.jquery_ver }} \n ${{ steps.vars.outputs.mathjax_ver }}"
+              });
+            } catch(err) {
+              if (err.status === 422) {
+                console.log("PR already exists.")
+              } else {
+                throw err;
+              }
+            }
