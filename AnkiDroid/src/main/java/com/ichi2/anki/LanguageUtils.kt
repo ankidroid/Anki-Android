@@ -40,6 +40,14 @@ object LanguageUtils {
         }
     }
 
+    /**
+     * @return if app is using a RTL language
+     */
+    fun appLanguageIsRTL(): Boolean {
+        val directionality = Character.getDirectionality(Locale.getDefault().displayName[0])
+        return directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT || directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC
+    }
+
     private fun stripScriptAndExtensions(localeCodeStr: String): String {
         val hashPos = localeCodeStr.indexOf('#')
         return if (hashPos >= 0) localeCodeStr.substring(0, hashPos) else localeCodeStr
