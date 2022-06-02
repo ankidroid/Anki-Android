@@ -38,7 +38,17 @@ class NotificationService : BroadcastReceiver() {
         val preferences = AnkiDroidApp.getSharedPrefs(context)
         val minCardsDue = preferences.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))!!.toInt()
         val dueCardsCount = WidgetStatus.fetchDue(context)
+        val currentNotificationValues = Pair(dueCardsCount, minCardsDue)
         if (dueCardsCount >= minCardsDue) {
+            previousNotificationValues = if (previousNotificationValues != null) {
+                if (previousNotificationValues == currentNotificationValues) {
+                    return
+                } else {
+                    currentNotificationValues
+                }
+            } else {
+                currentNotificationValues
+            }
             // Build basic notification
             val cardsDueText = context.resources
                 .getQuantityString(R.plurals.widget_minimum_cards_due_notification_ticker_text, dueCardsCount, dueCardsCount)
@@ -81,5 +91,11 @@ class NotificationService : BroadcastReceiver() {
         /** The id of the notification for due cards.  */
         private const val WIDGET_NOTIFY_ID = 1
         const val INTENT_ACTION = "com.ichi2.anki.intent.action.SHOW_NOTIFICATION"
+
+        /**
+         * Cache for the last values used for notifications. There's no need to show a notification
+         * if the current values we are using were already used to show a notification.
+         */
+        private var previousNotificationValues: Pair<Int, Int>? = null
     }
 }
