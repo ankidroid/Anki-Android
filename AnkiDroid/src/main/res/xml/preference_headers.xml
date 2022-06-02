@@ -31,6 +31,13 @@
         android:title="@string/pref_cat_reviewing">
     </Preference>
 
+    <!-- Sync Preferences -->
+    <Preference
+        android:fragment="com.ichi2.anki.Preferences$SyncSettingsFragment"
+        android:key="@string/pref_sync_screen_key"
+        android:title="@string/pref_cat_sync">
+    </Preference>
+
     <!-- Appearance Preferences  -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$AppearanceSettingsFragment"

@@ -155,7 +155,7 @@
 
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-    <string name="button_sync">Sync</string>
+    <string name="button_sync" comment="Text of the sync button">Sync</string>
     <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
     <string name="continue_sync">Continue sync</string>
     <string name="sync_cancelled">Sync cancelled</string>
