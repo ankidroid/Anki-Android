@@ -454,6 +454,18 @@ class Preferences : AnkiActivity() {
             return preference as T
         }
 
+        @Suppress("UNCHECKED_CAST")
+        /**
+         * Obtains a non-null reference to the preference whose
+         * key is defined with given [resId] or throws
+         * e.g. `requirePreference(R.string.day_theme_key)` returns
+         * the preference whose key is `@string/day_theme_key`
+         * The resource IDs with preferences keys can be found on `res/values/preferences.xml`
+         */
+        protected fun <T : Preference?> requirePreference(@StringRes resId: Int): T {
+            return requirePreference(getString(resId)) as T
+        }
+
         protected abstract val analyticsScreenNameConstant: String
 
         /**
