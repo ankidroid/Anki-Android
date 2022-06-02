@@ -22,6 +22,8 @@ open class MockMigrationContext : MigrateUserData.MigrationContext() {
     val exceptions get() = errors.map { it.exception }
     var logExceptions: Boolean = false
     val progress = mutableListOf<NumberOfBytes>()
+    /** A list of tasks which were passed into [execSafe] */
+    val executed = mutableListOf<MigrateUserData.Operation>()
 
     override fun reportError(throwingOperation: MigrateUserData.Operation, ex: Exception) {
         if (!logExceptions) {
@@ -35,6 +37,14 @@ open class MockMigrationContext : MigrateUserData.MigrationContext() {
     }
 
     data class ReportedError(val operation: MigrateUserData.Operation, val exception: Exception)
+
+    override fun execSafe(
+        operation: MigrateUserData.Operation,
+        op: (MigrateUserData.Operation) -> Unit
+    ) {
+        this.executed.add(operation)
+        super.execSafe(operation, op)
+    }
 }
 
 /**
