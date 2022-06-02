@@ -33,12 +33,12 @@ abstract class UndoAction
     @IntDef(R.string.undo_action_change_deck_multi, R.string.menu_delete_note, R.string.card_browser_delete_card, R.string.card_browser_mark_card, R.string.card_browser_unmark_card, R.string.menu_suspend_card, R.string.card_browser_unsuspend_card, R.string.undo_action_review, R.string.menu_bury_note, R.string.menu_suspend_note, R.string.card_editor_reposition_card, R.string.card_editor_reschedule_card, R.string.menu_bury_card, R.string.card_editor_reset_card)
     annotation class UndoNameId
 
-    private fun getLocale(resources: Resources): Locale {
+    private fun getLocale(resources: Resources): Locale? {
         return getLocaleCompat(resources)
     }
 
-    fun name(res: Resources): String {
-        return res.getString(undoNameId).lowercase(getLocale(res))
+    fun name(res: Resources): String? {
+        return getLocale(res)?.let { res.getString(undoNameId).lowercase(it) }
     }
 
     /**

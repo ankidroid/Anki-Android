@@ -20,7 +20,7 @@ import android.view.View
 import android.widget.ImageButton
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.TooltipCompat
-import androidx.core.view.ActionProvider
+import com.ichi2.anki.ActionProviderCompat
 import com.ichi2.anki.R
 import com.ichi2.utils.KotlinCleanup
 
@@ -28,19 +28,10 @@ import com.ichi2.utils.KotlinCleanup
  * An Rtl version of a normal action view, where the drawable is mirrored
  */
 @KotlinCleanup("auto-lint class")
-class RtlCompliantActionProvider(context: Context) : ActionProvider(context) {
+class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(context) {
     @JvmField
     @VisibleForTesting
     val mActivity: Activity
-
-    /**
-     * Deprecated method, no need to set it up.
-     * https://developer.android.com/reference/kotlin/androidx/core/view/ActionProvider#oncreateactionview
-     */
-    @Deprecated("")
-    override fun onCreateActionView(): View? {
-        return null
-    }
 
     override fun onCreateActionView(forItem: MenuItem): View {
         val actionView = ImageButton(context, null, R.attr.actionButtonStyle)
