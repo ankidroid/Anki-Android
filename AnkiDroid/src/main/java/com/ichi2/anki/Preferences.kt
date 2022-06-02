@@ -141,6 +141,7 @@ class Preferences : AnkiActivity() {
         actionBar.title = when (fragment) {
             is GeneralSettingsFragment -> resources.getString(R.string.pref_cat_general)
             is ReviewingSettingsFragment -> resources.getString(R.string.pref_cat_reviewing)
+            is SyncSettingsFragment -> getString(R.string.pref_cat_sync)
             is GesturesSettingsFragment -> resources.getString(R.string.pref_cat_gestures)
             is ControlsSettingsFragment -> resources.getString(R.string.pref_cat_controls)
             is AdvancedSettingsFragment -> resources.getString(R.string.pref_cat_advanced)
@@ -422,6 +423,9 @@ class Preferences : AnkiActivity() {
     class HeaderFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.preference_headers, rootKey)
+
+            findPreference<Preference>(getString(R.string.pref_sync_screen_key))!!
+                .summary = buildCategorySummary(getString(R.string.sync_account), getString(R.string.automatic_sync_choice))
 
             if (isRestrictedLearningDevice) {
                 findPreference<Preference>("pref_screen_advanced")!!.isVisible = false
@@ -813,6 +817,35 @@ class Preferences : AnkiActivity() {
         }
     }
 
+    /**
+     * Fragment with preferences related to syncing
+     */
+    class SyncSettingsFragment : SpecificSettingsFragment() {
+        override val preferenceResource: Int
+            get() = R.xml.preferences_sync
+        override val analyticsScreenNameConstant: String
+            get() = "prefs.sync"
+
+        override fun initSubscreen() {
+            addPreferencesFromResource(preferenceResource)
+
+            // Configure force full sync option
+            requirePreference<ConfirmationPreferenceCompat>(R.string.force_full_sync_key).apply {
+                setDialogMessage(R.string.force_full_sync_summary)
+                setDialogTitle(R.string.force_full_sync_title)
+                setOkHandler {
+                    if (col == null) {
+                        showThemedToast(requireContext(), R.string.directory_inaccessible, false)
+                        return@setOkHandler
+                    }
+                    col!!.modSchemaNoCheck()
+                    col!!.setMod()
+                    showThemedToast(requireContext(), android.R.string.ok, true)
+                }
+            }
+        }
+    }
+
     class AppearanceSettingsFragment : SpecificSettingsFragment() {
         private var mBackgroundImage: SwitchPreference? = null
         override val preferenceResource: Int
@@ -1094,19 +1127,6 @@ class Preferences : AnkiActivity() {
             infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
             changelogPreference.intent = infoIntent
             screen.addPreference(changelogPreference)
-            // Force full sync option
-            val fullSyncPreference = requirePreference<ConfirmationPreferenceCompat>("force_full_sync")
-            fullSyncPreference.setDialogMessage(R.string.force_full_sync_summary)
-            fullSyncPreference.setDialogTitle(R.string.force_full_sync_title)
-            fullSyncPreference.setOkHandler {
-                if (col == null) {
-                    showThemedToast(requireContext(), R.string.directory_inaccessible, false)
-                    return@setOkHandler
-                }
-                col!!.modSchemaNoCheck()
-                col!!.setMod()
-                showThemedToast(requireContext(), android.R.string.ok, true)
-            }
             // Workaround preferences
             removeUnnecessaryAdvancedPrefs()
             addThirdPartyAppsListener()
