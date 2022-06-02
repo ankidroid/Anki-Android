@@ -105,7 +105,7 @@ object LanguageUtil {
     }
 
     @JvmStatic
-    fun getLocaleCompat(resources: Resources): Locale {
+    fun getLocaleCompat(resources: Resources): Locale? {
         return ConfigurationCompat.getLocales(resources.configuration)[0]
     }
 }

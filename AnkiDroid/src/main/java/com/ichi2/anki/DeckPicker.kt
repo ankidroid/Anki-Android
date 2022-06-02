@@ -2087,7 +2087,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         mExportingDelegate.showExportDialog(msg, did)
     }
 
-    fun createIcon(context: Context?, did: Long) {
+    fun createIcon(context: Context, did: Long) {
         // This code should not be reachable with lower versions
         val shortcut = ShortcutInfoCompat.Builder(this, did.toString())
             .setIntent(
