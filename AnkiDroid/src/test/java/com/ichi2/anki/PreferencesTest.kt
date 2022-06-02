@@ -23,6 +23,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 class PreferencesTest : RobolectricTest() {
@@ -51,6 +52,12 @@ class PreferencesTest : RobolectricTest() {
             preferences.setDayOffset(i)
             assertThat(getDayOffset(col), equalTo(i))
         }
+    }
+
+    @Test
+    @Config(qualifiers = "ar")
+    fun buildCategorySummary_RTL_Test() {
+        assertThat(Preferences.buildCategorySummary("حساب أنكي ويب", "مزامنة تلقائية"), equalTo("مزامنة تلقائية • حساب أنكي ويب"))
     }
 
     @Test
