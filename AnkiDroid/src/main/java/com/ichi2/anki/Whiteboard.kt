@@ -118,10 +118,8 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             }
             MotionEvent.ACTION_MOVE -> {
                 if (isCurrentlyDrawing) {
-                    var i = 0
-                    while (i < event.historySize) {
+                    for (i in 0 until event.historySize) {
                         drawAlong(event.getHistoricalX(i), event.getHistoricalY(i))
-                        i++
                     }
                     drawAlong(x, y)
                     invalidate()
