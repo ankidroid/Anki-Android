@@ -45,7 +45,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.preference.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -401,10 +400,8 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    @Suppress("deprecation") // finish
     private fun closePreferences() {
-        finish()
-        slide(this, ActivityTransitionAnimation.Direction.FADE)
+        finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
         if (col != null && !col.dbClosed) {
             col.save()
         }
