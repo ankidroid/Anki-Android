@@ -302,7 +302,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
     class CardTemplateFragment : Fragment() {
         private var currentEditorTitle: FixedTextView? = null
-        private lateinit var mEditorEditText: FixedEditText
+        private lateinit var editorEditText: FixedEditText
 
         var currentEditorViewId = 0
         private var cursorPosition = 0
@@ -325,11 +325,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
 
             currentEditorTitle = mainView.findViewById(R.id.title_edit)
-            mEditorEditText = mainView.findViewById(R.id.editor_editText)
+            editorEditText = mainView.findViewById(R.id.editor_editText)
             cursorPosition = requireArguments().getInt(CURSOR_POSITION_KEY)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mEditorEditText.customInsertionActionModeCallback = ActionModeCallback()
+                editorEditText.customInsertionActionModeCallback = ActionModeCallback()
             }
 
             val bottomNavigation: BottomNavigationView = mainView.findViewById(R.id.card_template_editor_bottom_navigation)
@@ -353,12 +353,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // Set text change listeners
             val templateEditorWatcher: TextWatcher = object : TextWatcher {
                 override fun afterTextChanged(arg0: Editable) {
-                    mTemplateEditor.tabToCursorPosition!![cardIndex] = mEditorEditText.selectionStart
+                    mTemplateEditor.tabToCursorPosition!![cardIndex] = editorEditText.selectionStart
                     @KotlinCleanup("when")
                     when (currentEditorViewId) {
-                        R.id.styling_edit -> tempModel.updateCss(mEditorEditText.text.toString())
-                        R.id.back_edit -> template.put("afmt", mEditorEditText.text)
-                        else -> template.put("qfmt", mEditorEditText.text)
+                        R.id.styling_edit -> tempModel.updateCss(editorEditText.text.toString())
+                        R.id.back_edit -> template.put("afmt", editorEditText.text)
+                        else -> template.put("qfmt", editorEditText.text)
                     }
                     mTemplateEditor.tempModel!!.updateTemplate(cardIndex, template)
                 }
@@ -371,7 +371,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     /* do nothing */
                 }
             }
-            mEditorEditText.addTextChangedListener(templateEditorWatcher)
+            editorEditText.addTextChangedListener(templateEditorWatcher)
 
             // Enable menu
             setHasOptionsMenu(true)
@@ -439,19 +439,19 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         @Suppress("unused")
         private fun insertField(fieldName: String) {
-            val start = max(mEditorEditText.selectionStart, 0)
-            val end = max(mEditorEditText.selectionEnd, 0)
+            val start = max(editorEditText.selectionStart, 0)
+            val end = max(editorEditText.selectionEnd, 0)
             // add string to editText
             val updatedString = "{{$fieldName}}"
-            mEditorEditText.text!!.replace(min(start, end), max(start, end), updatedString, 0, updatedString.length)
+            editorEditText.text!!.replace(min(start, end), max(start, end), updatedString, 0, updatedString.length)
         }
 
         fun setCurrentEditorView(id: Int, editorContent: String, editorTitleId: Int) {
             currentEditorViewId = id
-            mEditorEditText.setText(editorContent)
+            editorEditText.setText(editorContent)
             currentEditorTitle!!.text = resources.getString(editorTitleId)
-            mEditorEditText.setSelection(cursorPosition)
-            mEditorEditText.requestFocus()
+            editorEditText.setSelection(cursorPosition)
+            editorEditText.requestFocus()
         }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
