@@ -725,10 +725,10 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             TaskListenerWithContext<CardTemplateFragment, Void?, Pair<Boolean, String?>>(
                 templateFragment
             ) {
-            private var mProgressDialog: MaterialDialog? = null
+            private var progressDialog: MaterialDialog? = null
             override fun actualOnPreExecute(context: CardTemplateFragment) {
                 Timber.d("saveModelAndExitHandler::preExecute called")
-                mProgressDialog = StyledProgressDialog.show(context.templateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model), context.resources.getString(R.string.saving_changes), false)
+                progressDialog = StyledProgressDialog.show(context.templateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model), context.resources.getString(R.string.saving_changes), false)
             }
 
             override fun actualOnPostExecute(context: CardTemplateFragment, result: Pair<Boolean, String?>) {
@@ -737,8 +737,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 if (button != null) {
                     button.isEnabled = true
                 }
-                if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                    mProgressDialog!!.dismiss()
+                if (progressDialog != null && progressDialog!!.isShowing) {
+                    progressDialog!!.dismiss()
                 }
                 context.templateEditor.tempModel = null
                 if (result.first) {
