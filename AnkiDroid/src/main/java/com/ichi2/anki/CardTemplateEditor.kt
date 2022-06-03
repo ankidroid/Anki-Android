@@ -308,7 +308,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private var cursorPosition = 0
 
         private lateinit var templateEditor: CardTemplateEditor
-        private var mTabLayoutMediator: TabLayoutMediator? = null
+        private var tabLayoutMediator: TabLayoutMediator? = null
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             // Storing a reference to the templateEditor allows us to use member variables
@@ -459,13 +459,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         private fun initTabLayoutMediator() {
-            if (mTabLayoutMediator != null) {
-                mTabLayoutMediator!!.detach()
+            if (tabLayoutMediator != null) {
+                tabLayoutMediator!!.detach()
             }
-            mTabLayoutMediator = TabLayoutMediator(templateEditor.slidingTabLayout, templateEditor.viewPager) { tab: TabLayout.Tab, position: Int ->
+            tabLayoutMediator = TabLayoutMediator(templateEditor.slidingTabLayout, templateEditor.viewPager) { tab: TabLayout.Tab, position: Int ->
                 tab.text = templateEditor.tempModel!!.getTemplate(position).getString("name")
             }
-            mTabLayoutMediator!!.attach()
+            tabLayoutMediator!!.attach()
         }
 
         override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
