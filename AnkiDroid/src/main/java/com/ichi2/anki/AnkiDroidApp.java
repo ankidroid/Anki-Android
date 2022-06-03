@@ -33,7 +33,7 @@ import android.os.LocaleList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.lifecycle.MutableLiveData;
 
 import android.util.Log;
 import android.webkit.CookieManager;
@@ -113,6 +113,7 @@ public class AnkiDroidApp extends Application {
     /** HACK: Whether an exception report has been thrown - TODO: Rewrite an ACRA Listener to do this */
     @VisibleForTesting
     public static boolean sSentExceptionReportHack;
+    private final MutableLiveData<Void> mNotifications = new MutableLiveData<>();
 
     @NonNull
     public static InputStream getResourceAsStream(@NonNull String name) {
@@ -226,10 +227,12 @@ public class AnkiDroidApp extends Application {
         Timber.i("AnkiDroidApp: Starting Services");
         new BootService().onReceive(this, new Intent(this, BootService.class));
 
-        // Register BroadcastReceiver NotificationService
-        NotificationService ns = new NotificationService();
-        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
-        lbm.registerReceiver(ns, new IntentFilter(NotificationService.INTENT_ACTION));
+        // Register for notifications
+        mNotifications.observeForever(unused -> NotificationService.triggerNotificationFor(this));
+    }
+
+    public void scheduleNotification() {
+        mNotifications.postValue(null);
     }
 
     @SuppressWarnings("deprecation") // 7109: setAcceptFileSchemeCookies
