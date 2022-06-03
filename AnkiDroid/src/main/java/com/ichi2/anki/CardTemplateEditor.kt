@@ -70,7 +70,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     private lateinit var slidingTabLayout: TabLayout
     var tempModel: TemporaryModel? = null
         private set
-    private var mFieldNames: List<String>? = null
+    private var fieldNames: List<String>? = null
     private var mModelId: Long = 0
     private var mNoteId: Long = 0
 
@@ -167,7 +167,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             tempModel = TemporaryModel(Model(col.models.get(mModelId).toString()))
             // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
-        mFieldNames = tempModel!!.model.fieldsNames
+        fieldNames = tempModel!!.model.fieldsNames
         // Set up the ViewPager with the sections adapter.
         viewPager = findViewById(R.id.pager)
         viewPager.adapter = TemplatePagerAdapter(this)
@@ -422,7 +422,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         private fun showInsertFieldDialog() {
-            if (mTemplateEditor.mFieldNames == null) {
+            if (mTemplateEditor.fieldNames == null) {
                 return
             }
             val insertFieldDialogFactory = InsertFieldDialogFactory(
@@ -433,7 +433,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }).attachToActivity<InsertFieldDialogFactory>(mTemplateEditor)
             val insertFieldDialog = insertFieldDialogFactory
                 .newInsertFieldDialog()
-                .withArguments(mTemplateEditor.mFieldNames!!)
+                .withArguments(mTemplateEditor.fieldNames!!)
             mTemplateEditor.showDialogFragment(insertFieldDialog)
         }
 
