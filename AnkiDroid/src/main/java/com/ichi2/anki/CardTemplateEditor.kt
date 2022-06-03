@@ -67,7 +67,7 @@ import kotlin.math.min
 open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     @VisibleForTesting
     lateinit var viewPager: ViewPager2
-    private lateinit var mSlidingTabLayout: TabLayout
+    private lateinit var slidingTabLayout: TabLayout
     var tempModel: TemporaryModel? = null
         private set
     private var mFieldNames: List<String>? = null
@@ -171,7 +171,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         // Set up the ViewPager with the sections adapter.
         viewPager = findViewById(R.id.pager)
         viewPager.adapter = TemplatePagerAdapter(this)
-        mSlidingTabLayout = findViewById(R.id.sliding_tabs)
+        slidingTabLayout = findViewById(R.id.sliding_tabs)
         // Set activity title
         supportActionBar?.apply {
             setTitle(R.string.title_activity_template_editor)
@@ -462,7 +462,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             if (mTabLayoutMediator != null) {
                 mTabLayoutMediator!!.detach()
             }
-            mTabLayoutMediator = TabLayoutMediator(mTemplateEditor.mSlidingTabLayout, mTemplateEditor.viewPager) { tab: TabLayout.Tab, position: Int ->
+            mTabLayoutMediator = TabLayoutMediator(mTemplateEditor.slidingTabLayout, mTemplateEditor.viewPager) { tab: TabLayout.Tab, position: Int ->
                 tab.text = mTemplateEditor.tempModel!!.getTemplate(position).getString("name")
             }
             mTabLayoutMediator!!.attach()
