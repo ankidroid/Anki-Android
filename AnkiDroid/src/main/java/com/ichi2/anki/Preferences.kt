@@ -210,13 +210,12 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    @Suppress("deprecation") // startActivity
     fun restartWithNewDeckPicker() {
         // PERF: DB access on foreground thread
         CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed")
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(deckPicker)
+        startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.DEFAULT)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -805,7 +804,6 @@ class Preferences : AnkiActivity() {
         override val analyticsScreenNameConstant: String
             get() = "prefs.appearance"
 
-        @Suppress("deprecation") // startActivityForResult
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_appearance)
             mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
