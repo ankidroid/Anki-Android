@@ -1,27 +1,28 @@
+"use strict";
+// Copyright: Ankitects Pty Ltd and contributors
+// License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+/// <reference types="./mathjax-types" />
+const packages = ["noerrors", "mathtools", "mhchem"];
+function packagesForLoading(packages) {
+    return packages.map((value) => `[tex]/${value}`);
+}
 window.MathJax = {
-  tex: {
-    displayMath: [["\\[", "\\]"]],
-    processRefs: false,
-    processEnvironments: false,
-    packages: {
-      "[+]": ["noerrors", "mhchem"],
+    tex: {
+        displayMath: [["\\[", "\\]"]],
+        processEscapes: false,
+        processEnvironments: false,
+        processRefs: false,
+        packages: {
+            "[+]": packages,
+        },
     },
-  },
-  startup: {
-    typeset: false,
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady();
+    loader: {
+        load: packagesForLoading(packages),
+        paths: {
+            mathjax: "/android_asset/mathjax",
+        },
     },
-  },
-  options: {
-    renderActions: {
-      addMenu: [],
-      checkLoading: [],
+    startup: {
+        typeset: false,
     },
-    ignoreHtmlClass: "tex2jax_ignore",
-    processHtmlClass: "tex2jax_process",
-  },
-  loader: {
-    load: ["[tex]/noerrors", "[tex]/mhchem"],
-  },
 };
