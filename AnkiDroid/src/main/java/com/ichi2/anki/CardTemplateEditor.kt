@@ -78,7 +78,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     private var tabToCursorPosition: HashMap<Int, Int?>? = null
 
     // the current editor view among front/style/back
-    private var tabToViewId: HashMap<Int, Int?>? = null
+    private var mTabToViewId: HashMap<Int, Int?>? = null
     private var mStartingOrdId = 0
 
     // ----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         setContentView(R.layout.card_template_editor_activity)
         // Load the args either from the intent or savedInstanceState bundle
         tabToCursorPosition = HashMap()
-        tabToViewId = HashMap()
+        mTabToViewId = HashMap()
         if (savedInstanceState == null) {
             // get model id
             modelId = intent.getLongExtra(EDITOR_MODEL_ID, NOT_FOUND_NOTE_TYPE)
@@ -112,13 +112,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // get id for currently edited template (optional)
             mStartingOrdId = intent.getIntExtra("ordId", -1)
             tabToCursorPosition!![0] = 0
-            tabToViewId!![0] = R.id.front_edit
+            mTabToViewId!![0] = R.id.front_edit
         } else {
             modelId = savedInstanceState.getLong(EDITOR_MODEL_ID)
             noteId = savedInstanceState.getLong(EDITOR_NOTE_ID)
             mStartingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
             tabToCursorPosition = savedInstanceState.getSerializable(TAB_TO_CURSOR_POSITION_KEY) as HashMap<Int, Int?>?
-            tabToViewId = savedInstanceState.getSerializable(TAB_TO_VIEW_ID) as HashMap<Int, Int?>?
+            mTabToViewId = savedInstanceState.getSerializable(TAB_TO_VIEW_ID) as HashMap<Int, Int?>?
             tempModel = TemporaryModel.fromBundle(savedInstanceState)
         }
 
@@ -133,7 +133,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             putLong(EDITOR_MODEL_ID, modelId)
             putLong(EDITOR_NOTE_ID, noteId)
             putInt(EDITOR_START_ORD_ID, mStartingOrdId)
-            putSerializable(TAB_TO_VIEW_ID, tabToViewId)
+            putSerializable(TAB_TO_VIEW_ID, mTabToViewId)
             putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPosition)
         }
         super.onSaveInstanceState(outState)
@@ -272,9 +272,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         override fun createFragment(position: Int): Fragment {
             val editorPosition: Int
             val editorViewId: Int
-            if (tabToCursorPosition!![position] != null && tabToViewId!![position] != null) {
+            if (tabToCursorPosition!![position] != null && mTabToViewId!![position] != null) {
                 editorPosition = tabToCursorPosition!![position]!!
-                editorViewId = tabToViewId!![position]!!
+                editorViewId = mTabToViewId!![position]!!
             } else {
                 editorPosition = 0
                 editorViewId = R.id.front_edit
@@ -353,7 +353,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // Set text change listeners
             val templateEditorWatcher: TextWatcher = object : TextWatcher {
                 override fun afterTextChanged(arg0: Editable) {
-                    mTemplateEditor.tabToCursorPosition!![cardIndex] = mEditorEditText.getSelectionStart()
+                    mTemplateEditor.mTabToCursorPosition!![cardIndex] = mEditorEditText.selectionStart
                     @KotlinCleanup("when")
                     when (currentEditorViewId) {
                         R.id.styling_edit -> tempModel.updateCss(mEditorEditText.text.toString())
