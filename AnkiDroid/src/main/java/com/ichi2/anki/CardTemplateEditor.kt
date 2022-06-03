@@ -267,7 +267,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
      */
     inner class TemplatePagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
-        private var mBaseId: Long = 0
+        private var baseId: Long = 0
 
         override fun createFragment(position: Int): Fragment {
             val editorPosition: Int
@@ -287,16 +287,16 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         override fun getItemId(position: Int): Long {
-            return mBaseId + position
+            return baseId + position
         }
 
         override fun containsItem(id: Long): Boolean {
-            return (id - mBaseId) in 0 until itemCount
+            return (id - baseId) in 0 until itemCount
         }
 
         /** Force fragments to reinitialize contents by invalidating previous set of ordinal-based ids  */
         fun ordinalShift() {
-            mBaseId += (itemCount + 1).toLong()
+            baseId += (itemCount + 1).toLong()
         }
     }
 
