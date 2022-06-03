@@ -97,8 +97,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.card_template_editor_activity)
         // Load the args either from the intent or savedInstanceState bundle
-        mEditorPosition = HashMap()
-        mEditorViewId = HashMap()
+        tabToCursorPosition = HashMap()
+        tabToViewId = HashMap()
         if (savedInstanceState == null) {
             // get model id
             mModelId = intent.getLongExtra(EDITOR_MODEL_ID, NOT_FOUND_NOTE_TYPE)
@@ -336,7 +336,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             @Suppress("deprecation")
             bottomNavigation.setOnNavigationItemSelectedListener { item: MenuItem ->
                 val currentSelectedId = item.itemId
-                mTemplateEditor.tabToViewId!![cardIndex] = currentSelectedId
+                mTemplateEditor.mEditorViewId!![position] = currentSelectedId
                 @KotlinCleanup("when")
                 when (currentSelectedId) {
                     R.id.styling_edit -> setCurrentEditorView(currentSelectedId, tempModel.css, R.string.card_template_editor_styling)
