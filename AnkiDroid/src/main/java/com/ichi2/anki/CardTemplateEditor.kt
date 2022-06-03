@@ -385,21 +385,21 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         @TargetApi(23)
         private inner class ActionModeCallback : ActionMode.Callback {
             @RequiresApi(Build.VERSION_CODES.N)
-            private val mInsertFieldId = 1
+            private val insertFieldId = 1
 
             override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
                 return true
             }
 
             override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(mInsertFieldId) != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(insertFieldId) != null) {
                     return false
                 }
                 val initialSize = menu.size()
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && currentEditorViewId != R.id.styling_edit) {
                     // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
-                    menu.add(Menu.FIRST, mInsertFieldId, 0, getString(R.string.card_template_editor_insert_field))
+                    menu.add(Menu.FIRST, insertFieldId, 0, getString(R.string.card_template_editor_insert_field))
                 }
 
                 return initialSize != menu.size()
@@ -407,7 +407,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
                 val itemId = item.itemId
-                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == mInsertFieldId) {
+                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == insertFieldId) {
                     showInsertFieldDialog()
                     mode.finish()
                     true
