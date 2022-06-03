@@ -301,7 +301,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     class CardTemplateFragment : Fragment() {
-        private var mCurrentEditorTitle: FixedTextView? = null
+        private var currentEditorTitle: FixedTextView? = null
         private lateinit var mEditorEditText: FixedEditText
 
         var currentEditorViewId = 0
@@ -324,7 +324,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 return mainView
             }
 
-            mCurrentEditorTitle = mainView.findViewById(R.id.title_edit)
+            currentEditorTitle = mainView.findViewById(R.id.title_edit)
             mEditorEditText = mainView.findViewById(R.id.editor_editText)
             cursorPosition = requireArguments().getInt(CURSOR_POSITION_KEY)
 
@@ -449,7 +449,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         fun setCurrentEditorView(id: Int, editorContent: String, editorTitleId: Int) {
             currentEditorViewId = id
             mEditorEditText.setText(editorContent)
-            mCurrentEditorTitle!!.text = resources.getString(editorTitleId)
+            currentEditorTitle!!.text = resources.getString(editorTitleId)
             mEditorEditText.setSelection(cursorPosition)
             mEditorEditText.requestFocus()
         }
