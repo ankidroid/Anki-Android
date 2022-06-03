@@ -71,7 +71,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     var tempModel: TemporaryModel? = null
         private set
     private var fieldNames: List<String>? = null
-    private var mModelId: Long = 0
+    private var modelId: Long = 0
     private var mNoteId: Long = 0
 
     // the position of the cursor in the editor view
@@ -101,8 +101,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         tabToViewId = HashMap()
         if (savedInstanceState == null) {
             // get model id
-            mModelId = intent.getLongExtra(EDITOR_MODEL_ID, NOT_FOUND_NOTE_TYPE)
-            if (mModelId == NOT_FOUND_NOTE_TYPE) {
+            modelId = intent.getLongExtra(EDITOR_MODEL_ID, NOT_FOUND_NOTE_TYPE)
+            if (modelId == NOT_FOUND_NOTE_TYPE) {
                 Timber.e("CardTemplateEditor :: no model ID was provided")
                 finishWithoutAnimation()
                 return
@@ -114,7 +114,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             tabToCursorPosition!![0] = 0
             tabToViewId!![0] = R.id.front_edit
         } else {
-            mModelId = savedInstanceState.getLong(EDITOR_MODEL_ID)
+            modelId = savedInstanceState.getLong(EDITOR_MODEL_ID)
             mNoteId = savedInstanceState.getLong(EDITOR_NOTE_ID)
             mStartingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
             tabToCursorPosition = savedInstanceState.getSerializable(TAB_TO_CURSOR_POSITION_KEY) as HashMap<Int, Int?>?
@@ -130,7 +130,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     public override fun onSaveInstanceState(outState: Bundle) {
         outState.apply {
             putAll(tempModel!!.toBundle())
-            putLong(EDITOR_MODEL_ID, mModelId)
+            putLong(EDITOR_MODEL_ID, modelId)
             putLong(EDITOR_NOTE_ID, mNoteId)
             putInt(EDITOR_START_ORD_ID, mStartingOrdId)
             putSerializable(TAB_TO_VIEW_ID, tabToViewId)
@@ -164,7 +164,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
         if (tempModel == null) {
-            tempModel = TemporaryModel(Model(col.models.get(mModelId).toString()))
+            tempModel = TemporaryModel(Model(col.models.get(modelId).toString()))
             // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
         fieldNames = tempModel!!.model.fieldsNames
@@ -178,7 +178,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             subtitle = tempModel!!.model.optString("name")
         }
         // Close collection opening dialog if needed
-        Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId)
+        Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", modelId)
 
         // Set the tab to the current template if an ord id was provided
         Timber.d("Setting starting tab to %d", mStartingOrdId)
@@ -188,7 +188,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     fun modelHasChanged(): Boolean {
-        val oldModel: JSONObject? = col.models.get(mModelId)
+        val oldModel: JSONObject? = col.models.get(modelId)
         return tempModel != null && tempModel!!.model.toString() != oldModel.toString()
     }
 
