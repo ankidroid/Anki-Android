@@ -72,7 +72,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private set
     private var fieldNames: List<String>? = null
     private var modelId: Long = 0
-    private var mNoteId: Long = 0
+    private var noteId: Long = 0
 
     // the position of the cursor in the editor view
     private var tabToCursorPosition: HashMap<Int, Int?>? = null
@@ -108,14 +108,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 return
             }
             // get id for currently edited note (optional)
-            mNoteId = intent.getLongExtra(EDITOR_NOTE_ID, -1L)
+            noteId = intent.getLongExtra(EDITOR_NOTE_ID, -1L)
             // get id for currently edited template (optional)
             mStartingOrdId = intent.getIntExtra("ordId", -1)
             tabToCursorPosition!![0] = 0
             tabToViewId!![0] = R.id.front_edit
         } else {
             modelId = savedInstanceState.getLong(EDITOR_MODEL_ID)
-            mNoteId = savedInstanceState.getLong(EDITOR_NOTE_ID)
+            noteId = savedInstanceState.getLong(EDITOR_NOTE_ID)
             mStartingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
             tabToCursorPosition = savedInstanceState.getSerializable(TAB_TO_CURSOR_POSITION_KEY) as HashMap<Int, Int?>?
             tabToViewId = savedInstanceState.getSerializable(TAB_TO_VIEW_ID) as HashMap<Int, Int?>?
@@ -131,7 +131,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         outState.apply {
             putAll(tempModel!!.toBundle())
             putLong(EDITOR_MODEL_ID, modelId)
-            putLong(EDITOR_NOTE_ID, mNoteId)
+            putLong(EDITOR_NOTE_ID, noteId)
             putInt(EDITOR_START_ORD_ID, mStartingOrdId)
             putSerializable(TAB_TO_VIEW_ID, tabToViewId)
             putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPosition)
@@ -279,7 +279,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 editorPosition = 0
                 editorViewId = R.id.front_edit
             }
-            return CardTemplateFragment.newInstance(position, mNoteId, editorPosition, editorViewId)
+            return CardTemplateFragment.newInstance(position, noteId, editorPosition, editorViewId)
         }
 
         override fun getItemCount(): Int {
