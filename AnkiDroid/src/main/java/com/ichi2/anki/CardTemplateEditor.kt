@@ -79,7 +79,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
     // the current editor view among front/style/back
     private var tabToViewId: HashMap<Int, Int?>? = null
-    private var mStartingOrdId = 0
+    private var startingOrdId = 0
 
     // ----------------------------------------------------------------------------
     // Listeners
@@ -110,13 +110,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // get id for currently edited note (optional)
             noteId = intent.getLongExtra(EDITOR_NOTE_ID, -1L)
             // get id for currently edited template (optional)
-            mStartingOrdId = intent.getIntExtra("ordId", -1)
+            startingOrdId = intent.getIntExtra("ordId", -1)
             tabToCursorPosition!![0] = 0
             tabToViewId!![0] = R.id.front_edit
         } else {
             modelId = savedInstanceState.getLong(EDITOR_MODEL_ID)
             noteId = savedInstanceState.getLong(EDITOR_NOTE_ID)
-            mStartingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
+            startingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
             tabToCursorPosition = savedInstanceState.getSerializable(TAB_TO_CURSOR_POSITION_KEY) as HashMap<Int, Int?>?
             tabToViewId = savedInstanceState.getSerializable(TAB_TO_VIEW_ID) as HashMap<Int, Int?>?
             tempModel = TemporaryModel.fromBundle(savedInstanceState)
@@ -132,7 +132,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             putAll(tempModel!!.toBundle())
             putLong(EDITOR_MODEL_ID, modelId)
             putLong(EDITOR_NOTE_ID, noteId)
-            putInt(EDITOR_START_ORD_ID, mStartingOrdId)
+            putInt(EDITOR_START_ORD_ID, startingOrdId)
             putSerializable(TAB_TO_VIEW_ID, tabToViewId)
             putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPosition)
         }
@@ -181,9 +181,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", modelId)
 
         // Set the tab to the current template if an ord id was provided
-        Timber.d("Setting starting tab to %d", mStartingOrdId)
-        if (mStartingOrdId != -1) {
-            viewPager.setCurrentItem(mStartingOrdId, animationDisabled())
+        Timber.d("Setting starting tab to %d", startingOrdId)
+        if (startingOrdId != -1) {
+            viewPager.setCurrentItem(startingOrdId, animationDisabled())
         }
     }
 
