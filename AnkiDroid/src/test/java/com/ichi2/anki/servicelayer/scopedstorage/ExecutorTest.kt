@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import android.annotation.SuppressLint
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Executor
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import org.hamcrest.MatcherAssert.assertThat
@@ -24,6 +23,8 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
 import org.junit.Test
 import org.mockito.kotlin.mock
+import java.util.concurrent.Semaphore
+import java.util.concurrent.TimeUnit
 
 // TODO: Remove [MockExecutor] and now use a 'real' executor in tests
 
@@ -97,9 +98,9 @@ class ExecutorTest {
 
         // start executing (blocked on op 1)
         executeInDifferentThreadThenWaitForCompletion {
-            spinUntil { opOne.isExecuting }
+            opOne.isExecuting.acquireInTwoSeconds()
             underTest.preempt(preemptedOp)
-            opOne.isBlocked = false
+            opOne.isBlocked.release()
         }
 
         assertThat("Initial operation should be executed first", executionContext.executed[0], equalTo(opOne))
@@ -117,9 +118,9 @@ class ExecutorTest {
         underTest.preempt(opTwo)
 
         executeInDifferentThreadThenWaitForCompletion {
-            spinUntil { blockingOp.isExecuting }
+            blockingOp.isExecuting.acquireInTwoSeconds()
             underTest.terminate()
-            blockingOp.isBlocked = false
+            blockingOp.isBlocked.release()
         }
 
         assertThat(executionContext.executed[0], equalTo(blockingOp))
@@ -138,9 +139,9 @@ class ExecutorTest {
         underTest.appendAll(listOf(blockingOp, opTwo))
 
         executeInDifferentThreadThenWaitForCompletion {
-            spinUntil { blockingOp.isExecuting }
+            blockingOp.isExecuting.acquireInTwoSeconds()
             underTest.terminate()
-            blockingOp.isBlocked = false
+            blockingOp.isBlocked.release()
         }
 
         assertThat(executionContext.executed[0], equalTo(blockingOp))
@@ -167,11 +168,13 @@ class ExecutorTest {
      * An operation which spins until [isBlocked] is set to false
      */
     class BlockedOperation : Operation() {
-        var isBlocked = true
-        var isExecuting = false
+        // Semaphore that can be acquired once the operation is not blocked anymore
+        val isBlocked = Semaphore(1).apply { acquire() }
+        // Semaphore that can be acquired after operation start executing
+        var isExecuting = Semaphore(1).apply { acquire() }
         override fun execute(context: MigrateUserData.MigrationContext): List<Operation> {
-            this.isExecuting = true
-            spinUntil { !isBlocked }
+            isExecuting.release()
+            isBlocked.acquireInTwoSeconds()
             return emptyList()
         }
     }
@@ -181,15 +184,4 @@ class ExecutorTest {
     }
 }
 
-/** Spins until the provided function is true */
-@SuppressLint("DirectSystemCurrentTimeMillisUsage")
-private fun spinUntil(f: (() -> Boolean)) {
-    val timeoutMillis = 2000
-    val startTime = System.currentTimeMillis()
-    while (!f()) {
-        // spin eternally: SPIN SPIN SPIN SPIN SPIN SPIN
-        if (System.currentTimeMillis() - startTime > timeoutMillis) {
-            throw IllegalStateException("spun until $timeoutMillis")
-        }
-    }
-}
+private fun Semaphore.acquireInTwoSeconds() { this.tryAcquire(2, TimeUnit.SECONDS) }
