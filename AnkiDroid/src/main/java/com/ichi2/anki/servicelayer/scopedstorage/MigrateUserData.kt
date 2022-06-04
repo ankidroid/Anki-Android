@@ -24,6 +24,8 @@ import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.SingleRetryDecorator
 import timber.log.Timber
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayDeque
 
 typealias NumberOfBytes = Long
 
@@ -265,73 +267,85 @@ class MigrateUserData private constructor(val source: Directory, val destination
      * should take priority over a background migration
      * of a random file)
      */
-    class Executor(private val operations: ArrayDeque<Operation>) {
+    class Executor(operations: ArrayDeque<Operation>) {
+        private interface OperationQueue {
+            val queueName: String
+            /**
+             * The first operation to execute, if any.
+             */
+            fun removeFirstOrNull(): Operation?
+
+            /**
+             * Add operations that are remaining from the last executed operation.
+             * @return whether adding was successful.
+             */
+            fun addReplacements(replacements: List<Operation>): Boolean
+
+            /** whether something was executed */
+            fun executeFirstOperation(context: MigrationContext): Boolean {
+                val nextItem = removeFirstOrNull() ?: return false
+                Timber.d("executing operation from queue %s: %s", queueName, nextItem)
+                context.execSafe(nextItem) {
+                    val replacements = it.execute(context)
+                    addReplacements(replacements)
+                }
+                return true
+            }
+        }
         /** Whether [terminate] was called. Once this is called, a new instance should be used */
         private var terminated: Boolean = false
         /**
          * A list of operations to be executed before [operations]
          * [operations] should only be executed if this list is clear
          */
-        private val preempted: ArrayDeque<Operation> = ArrayDeque()
+        private val preemptedQueue = object : OperationQueue {
+            private val preempted: ArrayDeque<Operation> = ArrayDeque()
+            override val queueName = "preempted"
 
+            override fun removeFirstOrNull() = synchronized(preempted) {
+                return@synchronized preempted.removeFirstOrNull()
+            }
+
+            override fun addReplacements(replacements: List<Operation>) =
+                synchronized(preempted) { preempted.addAll(replacements) }
+            fun add(op: Operation) = synchronized(preempted) { preempted.add(op) }
+        }
+        private val normalPriorityQueue = object : OperationQueue {
+            override val queueName = "operations"
+            override fun removeFirstOrNull() = operations.removeFirstOrNull()
+            override fun addReplacements(replacements: List<Operation>) =
+                operations.addAll(0, replacements)
+
+            fun add(op: Operation) = operations.add(op)
+            fun addFirst(op: Operation) = operations.addFirst(op)
+            fun addAll(op: List<Operation>) = operations.addAll(op)
+        }
+        private val queues = listOf(preemptedQueue, normalPriorityQueue)
         /**
-         * Executes operations from both [operations] and [preempted]
-         * Any operation is [preempted] takes priority
+         * Executes operations from both [operations] and [preemptedQueue]
+         * Any operation is [preemptedQueue] takes priority
          * Completes when:
          * * [MigrationContext] determines too many failures have occurred or a critical failure has occurred (via `reportError`)
-         * * [operations] and [preempted] are empty
+         * * [operations] and [preemptedQueue] are empty
          * * [terminated] is set via [terminate]
          */
         fun execute(context: MigrationContext) {
-            while (operations.any() || preempted.any()) {
-                clearPreemptedQueue(context)
-                if (terminated || !operations.any()) {
-                    return
+            external@ while (!terminated) {
+                for (queue in queues) {
+                    if (queue.executeFirstOperation(context)) {
+                        continue@external
+                    }
                 }
-
-                context.execSafe(operations.removeFirst()) {
-                    val replacements = it.execute(context)
-                    operations.addAll(0, replacements)
-                }
+                // No queue executed an operation. So there is nothing to do anymore.
+                break
             }
         }
 
-        /**
-         * Executes all items in the preempted queue
-         *
-         * After this has completed either: [preempted] is empty, OR [terminated] is true
-         */
-        private fun clearPreemptedQueue(context: MigrationContext) {
-            while (true) {
-                if (terminated) return
+        fun prepend(operation: Operation) = normalPriorityQueue.addFirst(operation)
+        fun append(operation: Operation) = normalPriorityQueue.add(operation)
+        fun appendAll(operations: List<Operation>) = normalPriorityQueue.addAll(operations)
 
-                // exit if we've got no more items
-                val nextItem = getNextPreemptedItem() ?: return
-                Timber.d("executing preempted operation: %s", nextItem)
-                context.execSafe(nextItem) {
-                    val replacements = it.execute(context)
-                    addPreempted(replacements)
-                }
-            }
-        }
-
-        fun prepend(operation: Operation) = operations.addFirst(operation)
-        fun append(operation: Operation) = operations.add(operation)
-        fun appendAll(operations: List<Operation>) = this.operations.addAll(operations)
-
-        // region preemption (synchronized)
-
-        private fun addPreempted(replacements: List<Operation>) {
-            // insert all at the end of the queue
-            synchronized(preempted) { preempted.addAll(replacements) }
-        }
-        private fun getNextPreemptedItem() = synchronized(preempted) {
-            if (!preempted.any()) {
-                return@synchronized null
-            }
-            return@synchronized preempted.removeFirst()
-        }
-        fun preempt(operation: Operation) = synchronized(preempted) { preempted.add(operation) }
+        fun preempt(operation: Operation) = preemptedQueue.add(operation)
 
         // endregion
 
