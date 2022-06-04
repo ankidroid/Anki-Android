@@ -31,6 +31,9 @@ import android.net.Uri
 import android.os.Environment
 import android.os.Vibrator
 import android.provider.MediaStore
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.TimePicker
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -174,6 +177,25 @@ open class CompatV21 : Compat {
     @SuppressLint("WrongConstant")
     override fun getImmutableActivityIntent(context: Context, requestCode: Int, intent: Intent, flags: Int): PendingIntent {
         return PendingIntent.getActivity(context, requestCode, intent, flags or FLAG_IMMUTABLE)
+    }
+
+    override fun setFullscreen(window: Window?) {
+        window?.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    }
+
+    override fun hideSystemBars(window: Window?) {
+        window?.decorView?.systemUiVisibility = (
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE // | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_LOW_PROFILE
+                or View.SYSTEM_UI_FLAG_IMMERSIVE
+            )
+    }
+
+    override fun isImmersiveSystemUiVisible(window: Window?): Boolean {
+        return window?.decorView?.systemUiVisibility?.and(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0
     }
 
     @SuppressLint("WrongConstant")
