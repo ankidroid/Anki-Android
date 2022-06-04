@@ -40,8 +40,8 @@ class ExecutorTest {
      */
     @Test
     fun `Regular operations are executed in order of addition`() {
-        val opOne = mock<Operation>()
-        val opTwo = mock<Operation>()
+        val opOne = mock<Operation>(name = "opOne")
+        val opTwo = mock<Operation>(name = "opTwo")
 
         underTest.appendAll(listOf(opOne, opTwo))
 
@@ -53,8 +53,8 @@ class ExecutorTest {
 
     @Test
     fun `Execution succeeds with only preempted tasks`() {
-        val opOne = mock<Operation>()
-        val opTwo = mock<Operation>()
+        val opOne = mock<Operation>(name = "opOne")
+        val opTwo = mock<Operation>(name = "opTwo")
 
         underTest.preempt(opOne)
         underTest.preempt(opTwo)
@@ -70,8 +70,8 @@ class ExecutorTest {
      */
     @Test
     fun `Prepend adds an operation to the start of the list`() {
-        val opOne = mock<Operation>()
-        val opTwo = mock<Operation>()
+        val opOne = mock<Operation>(name = "opOne")
+        val opTwo = mock<Operation>(name = "opTwo")
 
         underTest.append(opOne)
         underTest.prepend(opTwo)
@@ -89,9 +89,9 @@ class ExecutorTest {
     @Test
     fun `A preempted element is executed before a regular element`() {
         val opOne = BlockedOperation()
-        val opTwo = mock<Operation>()
+        val opTwo = mock<Operation>(name = "opTwo")
 
-        val preemptedOp = mock<Operation>()
+        val preemptedOp = mock<Operation>(name = "preemptedOp")
 
         underTest.appendAll(listOf(opOne, opTwo))
 
@@ -111,7 +111,7 @@ class ExecutorTest {
     @Test
     fun `Termination does not continue executing preempted tasks`() {
         val blockingOp = BlockedOperation()
-        val opTwo = mock<Operation>()
+        val opTwo = mock<Operation>(name = "opTwo")
 
         underTest.preempt(blockingOp)
         underTest.preempt(opTwo)
@@ -133,7 +133,7 @@ class ExecutorTest {
     @Test
     fun `Termination does not continue executing regular tasks`() {
         val blockingOp = BlockedOperation()
-        val opTwo = mock<Operation>()
+        val opTwo = mock<Operation>(name = "opTwo")
 
         underTest.appendAll(listOf(blockingOp, opTwo))
 
