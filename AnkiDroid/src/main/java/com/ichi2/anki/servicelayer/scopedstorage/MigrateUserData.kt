@@ -323,7 +323,7 @@ class MigrateUserData private constructor(val source: Directory, val destination
 
         private fun addPreempted(replacements: List<Operation>) {
             // insert all at the end of the queue
-            synchronized(preempted) { preempted.addAll(replacements) }
+            synchronized(preempted) { preempted.addAll(0, replacements) }
         }
         private fun getNextPreemptedItem() = synchronized(preempted) {
             if (!preempted.any()) {
