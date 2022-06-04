@@ -34,7 +34,7 @@ import java.io.FileNotFoundException
  * To access this screen: Add/Edit Note - Attachment - Add Image - Drawing
  */
 class DrawingActivity : AnkiActivity() {
-    private lateinit var mColorPalette: LinearLayout
+    private lateinit var colorPalette: LinearLayout
     private lateinit var mWhiteboard: Whiteboard
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class DrawingActivity : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drawing)
         enableToolbar()
-        mColorPalette = findViewById(R.id.whiteboard_editor)
+        colorPalette = findViewById(R.id.whiteboard_editor)
         mWhiteboard = Whiteboard.createInstance(this, true, null)
         mWhiteboard.setOnTouchListener { _: View?, event: MotionEvent? -> mWhiteboard.handleTouchEvent(event!!) }
     }
@@ -62,10 +62,10 @@ class DrawingActivity : AnkiActivity() {
             }
             R.id.action_whiteboard_edit -> {
                 Timber.i("Drawing:: Pen Color button pressed")
-                if (mColorPalette.visibility == View.GONE) {
-                    mColorPalette.visibility = View.VISIBLE
+                if (colorPalette.visibility == View.GONE) {
+                    colorPalette.visibility = View.VISIBLE
                 } else {
-                    mColorPalette.visibility = View.GONE
+                    colorPalette.visibility = View.GONE
                 }
             }
         }
