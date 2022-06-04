@@ -35,7 +35,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.ProgressBar;
 
@@ -104,7 +103,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         super.onCreate(savedInstanceState);
         // Disable the notifications bar if running under the test monkey.
         if (AdaptionUtil.isUserATestClient()) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            CompatHelper.getCompat().setFullscreen(getWindow());
         }
         mCustomTabActivityHelper = new CustomTabActivityHelper();
     }
