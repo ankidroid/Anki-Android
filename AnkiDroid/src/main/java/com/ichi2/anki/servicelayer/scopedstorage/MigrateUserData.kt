@@ -285,11 +285,12 @@ class MigrateUserData private constructor(val source: Directory, val destination
         fun execute(context: MigrationContext) {
             while (operations.any() || preempted.any()) {
                 clearPreemptedQueue(context)
-                if (terminated || !operations.any()) {
+                if (terminated) {
                     return
                 }
+                val operation = operations.removeFirstOrNull() ?: return
 
-                context.execSafe(operations.removeFirst()) {
+                context.execSafe(operation) {
                     val replacements = it.execute(context)
                     operations.addAll(0, replacements)
                 }
@@ -326,10 +327,7 @@ class MigrateUserData private constructor(val source: Directory, val destination
             synchronized(preempted) { preempted.addAll(replacements) }
         }
         private fun getNextPreemptedItem() = synchronized(preempted) {
-            if (!preempted.any()) {
-                return@synchronized null
-            }
-            return@synchronized preempted.removeFirst()
+            return@synchronized preempted.removeFirstOrNull()
         }
         fun preempt(operation: Operation) = synchronized(preempted) { preempted.add(operation) }
 
