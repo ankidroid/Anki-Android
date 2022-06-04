@@ -35,7 +35,7 @@ import java.io.FileNotFoundException
  */
 class DrawingActivity : AnkiActivity() {
     private lateinit var colorPalette: LinearLayout
-    private lateinit var mWhiteboard: Whiteboard
+    private lateinit var whiteboard: Whiteboard
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -45,8 +45,8 @@ class DrawingActivity : AnkiActivity() {
         setContentView(R.layout.activity_drawing)
         enableToolbar()
         colorPalette = findViewById(R.id.whiteboard_editor)
-        mWhiteboard = Whiteboard.createInstance(this, true, null)
-        mWhiteboard.setOnTouchListener { _: View?, event: MotionEvent? -> mWhiteboard.handleTouchEvent(event!!) }
+        whiteboard = Whiteboard.createInstance(this, true, null)
+        whiteboard.setOnTouchListener { _: View?, event: MotionEvent? -> whiteboard.handleTouchEvent(event!!) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -74,7 +74,7 @@ class DrawingActivity : AnkiActivity() {
 
     private fun finishWithSuccess() {
         try {
-            val savedWhiteboardFileName = mWhiteboard.saveWhiteboard(col.time)
+            val savedWhiteboardFileName = whiteboard.saveWhiteboard(col.time)
             val resultData = Intent()
             resultData.putExtra(EXTRA_RESULT_WHITEBOARD, savedWhiteboardFileName)
             setResult(RESULT_OK, resultData)
