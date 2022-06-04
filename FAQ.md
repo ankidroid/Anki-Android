@@ -51,15 +51,15 @@ From the Anki website:
 
 > People who are only looking for the “flashcards” part and not the “spaced repetition” part are likely to be frustrated by Anki. Spaced repetition is fairly simple on its face, but studying with Anki is different from what most people are used to, and the additional complexity will probably be unwelcome at first.
 
-[Read more here](https://anki.tenderapp.com/kb/problems/ankis-not-showing-me-all-my-cards)
+[Read more here](https://faqs.ankiweb.net/anki-is-not-showing-me-all-my-cards.html)
 
 ### Is there an auto-sync feature?
 Yes, it's disabled by default though so please see the [section in the manual](https://ankidroid.org/docs/manual.html#_ankidroid) about the automatic synchronization preference.
 
 ### Why do my cards display incorrectly?
-The most common reason for this is an incorrect card [template](https://apps.ankiweb.net/docs/manual.html#cards-and-templates). This might happen if a user inadvertently edits an existing template, the wrong template is used at the time of card creation, or in rare cases a user's database might get corrupted.
+The most common reason for this is an incorrect card [template](https://docs.ankiweb.net/templates/intro.html). This might happen if a user inadvertently edits an existing template, the wrong template is used at the time of card creation, or in rare cases a user's database might get corrupted.
 
-A basic understanding of how Anki works is required to fix this problem, as editing card templates is not particularly beginner friendly. The actual editing is most easily done using Anki Desktop, so please carefully check through [the basics](https://apps.ankiweb.net/docs/manual.html#the-basics) section and the [intro videos](https://apps.ankiweb.net/docs/manual.html#intro-videos) in the Anki Desktop manual. If you don't have a computer handy where you can install Anki Desktop, it is also possible to [edit your templates from AnkiDroid](https://docs.ankidroid.org/manual.html#customizingCardLayout), but it might be difficult on a small handheld device.
+A basic understanding of how Anki works is required to fix this problem, as editing card templates is not particularly beginner friendly. The actual editing is most easily done using Anki Desktop, so please carefully check through [the basics](https://docs.ankiweb.net/getting-started.html) section and the [intro videos](https://docs.ankiweb.net/getting-started.html#videos) in the Anki Desktop manual. If you don't have a computer handy where you can install Anki Desktop, it is also possible to [edit your templates from AnkiDroid](https://docs.ankidroid.org/manual.html#customizingCardLayout), but it might be difficult on a small handheld device.
 
 Note: If you are simply having issues showing foreign characters or images, see the [custom fonts](https://github.com/ankidroid/Anki-Android/wiki/FAQ#instead-of-the-correct-character-to-display-a-square-is-shown-why-is-that) and [media](https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid) section instead.
 
@@ -88,11 +88,11 @@ See the [Media section](FAQ#media) below.
 ### How can I use selective study, e.g. to review certain chapters of a textbook?
 The easiest way is to organize your material into subdecks using the browser in [Anki Desktop](FAQ#do-i-need-anki-desktop-too). You can create a new subdeck in AnkiDroid by clicking "create deck" then using the syntax "PARENTDECKNAME::NEWSUBDECKNAME", or alternatively create the deck on Anki Desktop and drag and drop it onto an existing deck.
 
-Alternatively, in AnkiDroid you can study cards of only a particular tag by opening a deck, tapping the "custom study" button, and choosing "Limit to particular tags". This will automatically create a new [filtered deck](http://ankisrs.net/docs/manual.html#filtered) with the cards of the tag you specified.
+Alternatively, in AnkiDroid you can study cards of only a particular tag by opening a deck, tapping the "custom study" button, and choosing "Limit to particular tags". This will automatically create a new [filtered deck](https://docs.ankiweb.net/filtered-decks.html) with the cards of the tag you specified.
 
 ### Changing the study options of a deck changes the options of my other decks?!
 
-Anki has an "[option grouping feature](http://ankisrs.net/docs/manual.html#deck-options)" which allows you to share options between multiple decks, and by default all decks share the same option group. If you want different decks to have different study options, you need to change the option group assigned to each deck by going to the "Group management" section in the deck options.
+Anki has an "[option grouping feature](https://docs.ankiweb.net/deck-options.html#presets)" which allows you to share options between multiple decks, and by default all decks share the same option group. If you want different decks to have different study options, you need to change the option group assigned to each deck by going to the "Group management" section in the deck options.
 
 We realize that this is quite unintuitive for new users, but unfortunately this is currently the way that Anki Desktop works, and consistency with Anki Desktop is a very high priority for AnkiDroid.
 
@@ -127,7 +127,7 @@ Does it appear like your cards have disappeared? Don't burn your phone yet: Anki
 
 1) Misunderstanding of how spaced repetition works
 
-Some users that are unfamiliar with how Anki's spaced repetition algorithm works may mistake the fact that the cards stop appearing in the study screen to mean that their cards have been 'deleted' by the app. Before assuming that your cards have disappeared, please open the [card browser](https://ankidroid.org/docs/manual.html#browser), make sure that 'all decks' is selected and confirm there that your cards are really not there. If the cards *are* in fact there, you may like to read about the spaced repetition scheduling algorithm in the [Anki manual](http://ankisrs.net/docs/manual.html#introduction) and [this FAQ](https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-can-i-study-my-cards-exactly-when-i-want-to).
+Some users that are unfamiliar with how Anki's spaced repetition algorithm works may mistake the fact that the cards stop appearing in the study screen to mean that their cards have been 'deleted' by the app. Before assuming that your cards have disappeared, please open the [card browser](https://ankidroid.org/docs/manual.html#browser), make sure that 'all decks' is selected and confirm there that your cards are really not there. If the cards *are* in fact there, you may like to read about the spaced repetition scheduling algorithm in the [Anki manual](https://docs.ankiweb.net/background.html#spaced-repetition) and [this FAQ](https://github.com/ankidroid/Anki-Android/wiki/FAQ#how-can-i-study-my-cards-exactly-when-i-want-to).
 
 2) User error when using the cloud sync service
 
@@ -155,7 +155,7 @@ Database corruption can occasionally happen for a small minority of users for re
 1. If the restore completed successfully, run "check database" and see if that also completes successfully. If so, you are done. If not, try restoring from an even older backup.
 
 If restoring from a backup is not possible, you can try to manually "fix" the database by copying the collection.anki2 file in the AnkiDroid folder to your computer, and following the [instructions in the 
-main Anki documentation](http://ankisrs.net/docs/manual.html#_corrupt_collections).
+main Anki documentation](https://docs.ankiweb.net/files.html#corrupt-collections).
 
 ### How can I copy my decks from an old device to a new device?
 **Method 1: Use AnkiWeb cloud sync (recommended)**
@@ -193,7 +193,7 @@ The recommended way is to use Anki Desktop, which has a comprehensive media edit
 
 Starting from AnkiDroid v2.2, it is also possible to add pictures and sounds to your deck directly from AnkiDroid, by editing a card and tapping the media button on the right of a field. Although the video is a bit outdated, some of the main features of this new media editor are shown in [this youtube video](http://youtu.be/bVh2xEYKvRI).
 
-Note that when you attach media to a card on Anki Desktop, the program puts the media files into the collection.media folder (see [Anki Desktop manual for more info](http://ankisrs.net/docs/manual.html#media)). It is therefore necessary to ensure the option "Synchronize audio and images too" is enabled in both Anki and AnkiDroid if using Anki Web.
+Note that when you attach media to a card on Anki Desktop, the program puts the media files into the collection.media folder (see [Anki Desktop manual for more info](https://docs.ankiweb.net/media.html#media)). It is therefore necessary to ensure the option "Synchronize audio and images too" is enabled in both Anki and AnkiDroid if using Anki Web.
 
 ### How can I add pictures from Google Images?
 Since November 2015, Google have disabled their [free image search API](https://developers.google.com/web-search/?csw=1) that we were using. **There is no free replacement API** from Google that we could use, and the paid "custom search" API which they offer is not feasible for us to use in AnkiDroid. Unfortunately there's nothing that we can do about this.
@@ -251,7 +251,7 @@ If this issue appeared from a shared deck which was loaded into AnkiDroid, then 
 If you're syncing a deck via AnkiWeb Sync:
 
 Please check if the media works correctly on AnkiWeb. 
-* If the media does not work on AnkiWeb, then there was a problem with uploading the media. If the upload was from Anki Desktop, please read the Anki Desktop manual, or ask on the [Anki Desktop support site](http://ankisrs.net/docs/help.html) for help resolving this problem.
+* If the media does not work on AnkiWeb, then there was a problem with uploading the media. If the upload was from Anki Desktop, please read the Anki Desktop manual, or ask on the [Anki Desktop support site](https://faqs.ankiweb.net/) for help resolving this problem.
 * If the media works on AnkiWeb, then
    * Use a file manager (see below) to ensure that the file exists in `AnkiDroid/collection.media`
        * Ensure that `Settings - AnkiDroid - Fetch media on sync` is selected and the media sync fully completed (this will take some time on the first sync)
@@ -289,9 +289,9 @@ and the following video formats (example video deck can be found [here](https://
 
 The format of your media file has to be one of these, or be in the list of [Android Core Media Formats](http://developer.android.com/guide/appendix/media-formats.html#core) for your device.
 
-If you have verified that the media files are physically on your device, that they are in one of the supported formats, and that they are playing properly on Anki Desktop, one possibility is that you are using an [unsupported feature](http://ankisrs.net/docs/manual.html#importing-media) of Anki Desktop, where you code a pattern for the path of the file into the template -- i.e. if you have something like `[sound:{{Word}}]` in your template, this will probably not work on AnkiDroid, where it's necessary to explicitly have `[sound:pathtosoundfile]` in the field itself.
+If you have verified that the media files are physically on your device, that they are in one of the supported formats, and that they are playing properly on Anki Desktop, one possibility is that you are using an [unsupported feature](https://docs.ankiweb.net/importing.html#importing-media) of Anki Desktop, where you code a pattern for the path of the file into the template -- i.e. if you have something like `[sound:{{Word}}]` in your template, this will probably not work on AnkiDroid, where it's necessary to explicitly have `[sound:pathtosoundfile]` in the field itself.
 
-If you must use media references to fields, for example if you have a large number of notes and use a specific naming convention based on the content of certain fields, you should use the [search and replace feature](http://ankisrs.net/docs/manual.html#importing-media), or alternatively there is an [add-on available for Anki Desktop](https://github.com/timrae/anki-replaceall) which allows you to batch render an expression such as `[sound:{{Word}}.mp3]` into a new field. Be sure to backup before attempting to use this add-on.
+If you must use media references to fields, for example if you have a large number of notes and use a specific naming convention based on the content of certain fields, you should use the [find and replace feature](https://docs.ankiweb.net/browsing.html#find-and-replace), or alternatively there is an [add-on available for Anki Desktop](https://github.com/timrae/anki-replaceall) which allows you to batch render an expression such as `[sound:{{Word}}.mp3]` into a new field. Be sure to backup before attempting to use this add-on.
 
 ### Instead of the correct character to display, a square is shown. Why is that?
 
