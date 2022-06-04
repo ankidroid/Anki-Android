@@ -71,7 +71,6 @@ import com.ichi2.anki.reviewer.*
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getTextColors
 import com.ichi2.anki.reviewer.CardMarker.FlagDef
-import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.isFullScreenReview
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
@@ -79,6 +78,7 @@ import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
@@ -1222,7 +1222,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun onSingleTap(): Boolean {
-        if (mPrefFullscreenReview && isImmersiveSystemUiVisible(this)) {
+        if (mPrefFullscreenReview && isImmersiveSystemUiVisible()) {
             delayedHide(INITIAL_HIDE_DELAY)
             return true
         }
@@ -1230,7 +1230,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun onFling() {
-        if (mPrefFullscreenReview && isImmersiveSystemUiVisible(this)) {
+        if (mPrefFullscreenReview && isImmersiveSystemUiVisible()) {
             delayedHide(INITIAL_HIDE_DELAY)
         }
     }
@@ -1270,54 +1270,19 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    @Suppress("deprecation") // #9332: UI Visibility -> Insets
     private fun setFullScreen(a: AbstractFlashcardViewer) {
-        // Set appropriate flags to enable Sticky Immersive mode.
-        a.window.decorView.systemUiVisibility = (
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE // | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_LOW_PROFILE
-                or View.SYSTEM_UI_FLAG_IMMERSIVE
-            )
         // Show / hide the Action bar together with the status bar
-        val prefs = AnkiDroidApp.getSharedPrefs(a)
-        val fullscreenMode = fromPreference(prefs)
+        CompatHelper.compat.hideSystemBars(window)
         a.window.statusBarColor = getColorFromAttr(a, R.attr.colorPrimaryDark)
-        val decorView = a.window.decorView
-        decorView.setOnSystemUiVisibilityChangeListener { flags: Int ->
-            val toolbar = a.findViewById<View>(R.id.toolbar)
-            val answerButtons = a.findViewById<View>(R.id.answer_options_layout)
-            val topbar = a.findViewById<View>(R.id.top_bar)
-            if (toolbar == null || topbar == null || answerButtons == null) {
-                return@setOnSystemUiVisibilityChangeListener
-            }
-            // Note that system bars will only be "visible" if none of the
-            // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-            val visible = flags and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
-            Timber.d("System UI visibility change. Visible: %b", visible)
-            if (visible) {
-                showViewWithAnimation(toolbar)
-                if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
-                    showViewWithAnimation(topbar)
-                    showViewWithAnimation(answerButtons)
-                }
-            } else {
-                hideViewWithAnimation(toolbar)
-                if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
-                    hideViewWithAnimation(topbar)
-                    hideViewWithAnimation(answerButtons)
-                }
-            }
-        }
     }
 
+    /*
     private fun showViewWithAnimation(view: View) {
         view.alpha = 0.0f
         view.visibility = View.VISIBLE
         view.animate().alpha(TRANSPARENCY).setDuration(ANIMATION_DURATION.toLong()).setListener(null)
     }
+     */
 
     private fun hideViewWithAnimation(view: View) {
         view.animate()
@@ -1330,9 +1295,8 @@ open class Reviewer : AbstractFlashcardViewer() {
             })
     }
 
-    @Suppress("deprecation") // #9332: UI Visibility -> Insets
-    private fun isImmersiveSystemUiVisible(activity: AnkiActivity): Boolean {
-        return activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
+    private fun isImmersiveSystemUiVisible(): Boolean {
+        return CompatHelper.compat.isImmersiveSystemUiVisible(window)
     }
 
     private fun createWhiteboard() {
@@ -1355,7 +1319,7 @@ open class Reviewer : AbstractFlashcardViewer() {
             if (!whiteboard!!.isCurrentlyDrawing && (
                 !mShowWhiteboard || (
                     mPrefFullscreenReview &&
-                        isImmersiveSystemUiVisible(this@Reviewer)
+                        isImmersiveSystemUiVisible()
                     )
                 )
             ) {
