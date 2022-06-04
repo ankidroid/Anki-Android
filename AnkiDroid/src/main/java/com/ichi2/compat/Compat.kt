@@ -27,7 +27,6 @@ import android.media.AudioManager
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.net.Uri
-import android.view.Window
 import android.widget.TimePicker
 import androidx.annotation.IntDef
 import java.io.*
@@ -119,10 +118,6 @@ interface Compat {
     fun hasVideoThumbnail(path: String): Boolean
     fun requestAudioFocus(audioManager: AudioManager, audioFocusChangeListener: OnAudioFocusChangeListener, audioFocusRequest: AudioFocusRequest?)
     fun abandonAudioFocus(audioManager: AudioManager, audioFocusChangeListener: OnAudioFocusChangeListener, audioFocusRequest: AudioFocusRequest?)
-
-    fun setFullscreen(window: Window?)
-    fun hideSystemBars(window: Window?)
-    fun isImmersiveSystemUiVisible(window: Window?): Boolean
 
     @IntDef(
         flag = true,
