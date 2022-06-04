@@ -84,9 +84,11 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawColor(0)
-        canvas.drawBitmap(mBitmap, 0f, 0f, mBitmapPaint)
-        canvas.drawPath(mPath, mPaint)
+        canvas.apply {
+            drawColor(0)
+            drawBitmap(mBitmap, 0f, 0f, mBitmapPaint)
+            drawPath(mPath, mPaint)
+        }
     }
 
     /** Handle motion events to draw using the touch screen or to interact with the flashcard behind
