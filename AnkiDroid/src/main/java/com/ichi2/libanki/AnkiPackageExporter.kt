@@ -127,7 +127,7 @@ open class Exporter {
 
 open class AnkiExporter : Exporter {
     protected val includeSched: Boolean
-    protected val mIncludeMedia: Boolean
+    protected val includeMedia: Boolean
     private var mSrc: Collection? = null
     var mediaDir: String? = null
 
@@ -146,7 +146,7 @@ open class AnkiExporter : Exporter {
      */
     constructor(col: Collection, includeSched: Boolean, includeMedia: Boolean) : super(col) {
         this.includeSched = includeSched
-        mIncludeMedia = includeMedia
+        this.includeMedia = includeMedia
     }
 
     /**
@@ -159,7 +159,7 @@ open class AnkiExporter : Exporter {
      */
     constructor(col: Collection, did: Long, includeSched: Boolean, includeMedia: Boolean) : super(col, did) {
         this.includeSched = includeSched
-        mIncludeMedia = includeMedia
+        this.includeMedia = includeMedia
     }
 
     /**
@@ -277,7 +277,7 @@ open class AnkiExporter : Exporter {
         Timber.d("Find used media")
         val media = JSONObject()
         mediaDir = mSrc!!.media.dir()
-        if (mIncludeMedia) {
+        if (includeMedia) {
             val mid = mSrc!!.db.queryLongList("select mid from notes where id in $strnids")
             val flds = mSrc!!.db.queryStringList(
                 "select flds from notes where id in $strnids"
@@ -422,7 +422,7 @@ class AnkiPackageExporter : AnkiExporter {
         }
         mCol.reopen()
         // copy all media
-        if (!mIncludeMedia) {
+        if (!includeMedia) {
             return JSONObject()
         }
         val mdir = File(mCol.media.dir())
