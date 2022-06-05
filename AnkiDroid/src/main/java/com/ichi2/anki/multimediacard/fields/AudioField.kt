@@ -57,14 +57,14 @@ abstract class AudioField : FieldBase(), IField {
             return if (file.exists()) String.format("[sound:%s]", file.name) else ""
         }
 
-    override fun setFormattedString(col: Collection?, value: String) {
+    override fun setFormattedString(col: Collection, value: String) {
         val p = Pattern.compile(PATH_REGEX)
         val m = p.matcher(value)
         var res = ""
         if (m.find()) {
             res = m.group(1)!!
         }
-        val mediaDir = col!!.media.dir() + "/"
+        val mediaDir = col.media.dir() + "/"
         audioPath = mediaDir + res
     }
 
