@@ -111,7 +111,6 @@ open class Exporter(@JvmField protected val col: Collection, protected val did: 
 open class AnkiExporter : Exporter {
     protected val includeSched: Boolean
     protected val includeMedia: Boolean
-    private var mSrc: Collection? = null
     var mediaDir: String? = null
 
     // Actual capacity will be set when known, if media are imported.
@@ -159,29 +158,28 @@ open class AnkiExporter : Exporter {
         // create a new collection at the target
         File(path).delete()
         val dst = Storage.Collection(context, path)
-        mSrc = col
         // find cards
         val cids: Array<Long> = cardIds()
         // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
         // flexible
         dst.close()
         Timber.d("Attach DB")
-        mSrc!!.db.database.execSQL("ATTACH '$path' AS DST_DB")
+        col.db.database.execSQL("ATTACH '$path' AS DST_DB")
         // copy cards, noting used nids (as unique set)
         Timber.d("Copy cards")
-        mSrc!!.db.database
+        col.db.database
             .execSQL("INSERT INTO DST_DB.cards select * from cards where id in " + Utils.ids2str(cids))
-        val uniqueNids: List<Long> = mSrc!!.db.queryLongList(
+        val uniqueNids: List<Long> = col.db.queryLongList(
             "select distinct nid from cards where id in " + Utils.ids2str(cids)
         )
         // notes
         Timber.d("Copy notes")
         val strnids = Utils.ids2str(uniqueNids)
-        mSrc!!.db.database.execSQL("INSERT INTO DST_DB.notes select * from notes where id in $strnids")
+        col.db.database.execSQL("INSERT INTO DST_DB.notes select * from notes where id in $strnids")
         // remove system tags if not exporting scheduling info
         if (!includeSched) {
             Timber.d("Stripping system tags from list")
-            val srcTags = mSrc!!.db.queryStringList(
+            val srcTags = col.db.queryStringList(
                 "select tags from notes where id in $strnids"
             )
             val args = ArrayList<Array<Any?>>(srcTags.size)
@@ -191,25 +189,25 @@ open class AnkiExporter : Exporter {
                 arg[1] = uniqueNids[row]
                 args.add(row, arg)
             }
-            mSrc!!.db.executeMany("UPDATE DST_DB.notes set tags=? where id=?", args)
+            col.db.executeMany("UPDATE DST_DB.notes set tags=? where id=?", args)
         }
         // models used by the notes
         Timber.d("Finding models used by notes")
-        val mids = mSrc!!.db.queryLongList(
+        val mids = col.db.queryLongList(
             "select distinct mid from DST_DB.notes where id in $strnids"
         )
         // card history and revlog
         if (includeSched) {
             Timber.d("Copy history and revlog")
-            mSrc!!.db.database
+            col.db.database
                 .execSQL("insert into DST_DB.revlog select * from revlog where cid in " + Utils.ids2str(cids))
             // reopen collection to destination database (different from original python code)
-            mSrc!!.db.database.execSQL("DETACH DST_DB")
+            col.db.database.execSQL("DETACH DST_DB")
             dst.reopen()
         } else {
             Timber.d("Detaching destination db and reopening")
             // first reopen collection to destination database (different from original python code)
-            mSrc!!.db.database.execSQL("DETACH DST_DB")
+            col.db.database.execSQL("DETACH DST_DB")
             dst.reopen()
             // then need to reset card state
             Timber.d("Resetting cards")
@@ -217,7 +215,7 @@ open class AnkiExporter : Exporter {
         }
         // models - start with zero
         Timber.d("Copy models")
-        for (m in mSrc!!.models.all()) {
+        for (m in col.models.all()) {
             if (mids.contains(m.getLong("id"))) {
                 dst.models.update(m)
             }
@@ -226,11 +224,11 @@ open class AnkiExporter : Exporter {
         Timber.d("Copy decks")
         var dids: MutableCollection<Long?>? = null
         if (did != null) {
-            dids = HashSet(mSrc!!.decks.children(did).values)
+            dids = HashSet(col.decks.children(did).values)
             dids.add(did)
         }
         val dconfs = JSONObject()
-        for (d in mSrc!!.decks.all()) {
+        for (d in col.decks.all()) {
             if ("1" == d.getString("id")) {
                 continue
             }
@@ -251,7 +249,7 @@ open class AnkiExporter : Exporter {
         }
         // copy used deck confs
         Timber.d("Copy deck options")
-        for (dc in mSrc!!.decks.allConf()) {
+        for (dc in col.decks.allConf()) {
             if (dconfs.has(dc.getString("id"))) {
                 dst.decks.updateConf(dc)
             }
@@ -259,14 +257,14 @@ open class AnkiExporter : Exporter {
         // find used media
         Timber.d("Find used media")
         val media = JSONObject()
-        mediaDir = mSrc!!.media.dir()
+        mediaDir = col.media.dir()
         if (includeMedia) {
-            val mid = mSrc!!.db.queryLongList("select mid from notes where id in $strnids")
-            val flds = mSrc!!.db.queryStringList(
+            val mid = col.db.queryLongList("select mid from notes where id in $strnids")
+            val flds = col.db.queryStringList(
                 "select flds from notes where id in $strnids"
             )
             for (idx in mid.indices) {
-                for (file in mSrc!!.media.filesInStr(mid[idx], flds[idx])) {
+                for (file in col.media.filesInStr(mid[idx], flds[idx])) {
                     // skip files in subdirs
                     if (file.contains(File.separator)) {
                         continue
@@ -283,7 +281,7 @@ open class AnkiExporter : Exporter {
                     val fname = f.name
                     if (fname.startsWith("_")) {
                         // Loop through every model that will be exported, and check if it contains a reference to f
-                        for (model in mSrc!!.models.all()) {
+                        for (model in col.models.all()) {
                             if (_modelHasMedia(model, fname)) {
                                 media.put(fname, true)
                                 break
@@ -299,7 +297,7 @@ open class AnkiExporter : Exporter {
             addAll(mMediaFiles, keys.stringIterable())
         }
         Timber.d("Cleanup")
-        dst.crt = mSrc!!.crt
+        dst.crt = col.crt
         // todo: tags?
         mCount = dst.cardCount()
         dst.setMod()
@@ -345,7 +343,7 @@ open class AnkiExporter : Exporter {
     }
 
     private fun removeSystemTags(tags: String): String {
-        return mSrc!!.tags.remFromStr("marked leech", tags)
+        return col.tags.remFromStr("marked leech", tags)
     }
 }
 
