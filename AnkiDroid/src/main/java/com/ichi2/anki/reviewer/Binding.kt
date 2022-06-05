@@ -43,7 +43,7 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
 
         return keyPrefix
     }
-    fun toDisplayString(context: Context?): String {
+    fun toDisplayString(context: Context): String {
         val string = StringBuilder()
         when {
             keycode != null -> {
@@ -61,7 +61,7 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
                 string.append(unicodeCharacter)
             }
             gesture != null -> {
-                string.append(gesture.toDisplayString(context!!))
+                string.append(gesture.toDisplayString(context))
             }
         }
         return string.toString()
