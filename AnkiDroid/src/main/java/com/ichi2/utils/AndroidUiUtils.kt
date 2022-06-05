@@ -26,8 +26,8 @@ import androidx.core.content.ContextCompat
 
 object AndroidUiUtils {
     @JvmStatic
-    fun isRunningOnTv(context: Context?): Boolean {
-        val uiModeManager = ContextCompat.getSystemService(context!!, UiModeManager::class.java)
+    fun isRunningOnTv(context: Context): Boolean {
+        val uiModeManager = ContextCompat.getSystemService(context, UiModeManager::class.java)
             ?: return false
         return uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
     }
