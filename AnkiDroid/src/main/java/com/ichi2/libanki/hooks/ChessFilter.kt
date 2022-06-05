@@ -57,7 +57,7 @@ object ChessFilter {
 
     @JvmStatic
     fun fenToChessboard(text: String, context: Context?): String {
-        if (!AnkiDroidApp.getSharedPrefs(context).getBoolean("convertFenText", false)) {
+        if (!AnkiDroidApp.getSharedPrefs(context!!).getBoolean("convertFenText", false)) {
             return text
         }
         var showBlack = false

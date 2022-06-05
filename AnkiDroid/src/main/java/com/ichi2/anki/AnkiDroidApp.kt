@@ -368,7 +368,7 @@ open class AnkiDroidApp : Application() {
          */
         @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
         @JvmStatic
-        fun getSharedPrefs(context: Context?): SharedPreferences {
+        fun getSharedPrefs(context: Context): SharedPreferences {
             return android.preference.PreferenceManager.getDefaultSharedPreferences(context)
         }
 

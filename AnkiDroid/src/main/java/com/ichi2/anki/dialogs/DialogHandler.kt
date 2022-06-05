@@ -81,7 +81,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
             dialog.setArgs(msgData.getString("message"))
             mActivity.get()!!.showDialogFragment(dialog)
         } else if (msg.what == MSG_DO_SYNC) {
-            val preferences = AnkiDroidApp.getSharedPrefs(mActivity.get())
+            val preferences = AnkiDroidApp.getSharedPrefs(mActivity.get()!!)
             val res = mActivity.get()!!.resources
             val hkey = preferences.getString("hkey", "")
             val millisecondsSinceLastSync = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)

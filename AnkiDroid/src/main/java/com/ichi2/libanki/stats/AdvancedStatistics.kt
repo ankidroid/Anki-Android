@@ -114,7 +114,7 @@ class AdvancedStatistics {
     fun calculateDueAsMetaInfo(
         metaInfo: StatsMetaInfo,
         type: AxisType,
-        context: Context?,
+        context: Context,
         dids: String
     ): StatsMetaInfo {
         if (!getSharedPrefs(context).getBoolean("advanced_statistics_enabled", false)) {

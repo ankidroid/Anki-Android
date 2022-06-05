@@ -134,12 +134,12 @@ class BootService : BroadcastReceiver() {
                 val col = CollectionHelper.getInstance().getCol(context)
                 when (col.schedVer()) {
                     1 -> {
-                        val sp = AnkiDroidApp.getSharedPrefs(context)
+                        val sp = AnkiDroidApp.getSharedPrefs(context!!)
                         sp.getInt("dayOffset", defValue)
                     }
                     2 -> col.get_config("rollover", defValue)!!
                     else -> {
-                        val sp = AnkiDroidApp.getSharedPrefs(context)
+                        val sp = AnkiDroidApp.getSharedPrefs(context!!)
                         sp.getInt("dayOffset", defValue)
                     }
                 }
