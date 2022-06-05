@@ -2023,7 +2023,7 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     inner class MultiColumnListAdapter(
-        context: Context?,
+        context: Context,
         private val resource: Int,
         private var fromKeys: Array<Column>,
         private val toIds: IntArray,
@@ -2130,7 +2130,7 @@ open class CardBrowser :
 
         init {
             if (customFont!!.isNotEmpty()) {
-                mCustomTypeface = getTypeface(context!!, customFont)
+                mCustomTypeface = getTypeface(context, customFont)
             }
             mInflater = LayoutInflater.from(context)
         }
