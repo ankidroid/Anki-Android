@@ -99,9 +99,9 @@ object MetaDB {
     }
 
     private fun updateWhiteboardState(metaDb: SQLiteDatabase?) {
-        val columnCount = DatabaseUtil.getTableColumnCount(metaDb, "whiteboardState")
+        val columnCount = DatabaseUtil.getTableColumnCount(metaDb!!, "whiteboardState")
         if (columnCount <= 0) {
-            metaDb!!.execSQL(
+            metaDb.execSQL(
                 "CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "did INTEGER NOT NULL, state INTEGER, visible INTEGER, lightpencolor INTEGER, darkpencolor INTEGER)"
             )
@@ -109,11 +109,11 @@ object MetaDB {
         }
         if (columnCount < 4) {
             // Default to 1
-            metaDb!!.execSQL("ALTER TABLE whiteboardState ADD COLUMN visible INTEGER NOT NULL DEFAULT '1'")
+            metaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN visible INTEGER NOT NULL DEFAULT '1'")
             Timber.i("Added 'visible' column to whiteboardState")
         }
         if (columnCount < 5) {
-            metaDb!!.execSQL("ALTER TABLE whiteboardState ADD COLUMN lightpencolor INTEGER DEFAULT NULL")
+            metaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN lightpencolor INTEGER DEFAULT NULL")
             Timber.i("Added 'lightpencolor' column to whiteboardState")
             metaDb.execSQL("ALTER TABLE whiteboardState ADD COLUMN darkpencolor INTEGER DEFAULT NULL")
             Timber.i("Added 'darkpencolor' column to whiteboardState")
@@ -121,14 +121,14 @@ object MetaDB {
     }
 
     private fun updateWidgetStatus(metaDb: SQLiteDatabase?) {
-        val columnCount = DatabaseUtil.getTableColumnCount(metaDb, "widgetStatus")
+        val columnCount = DatabaseUtil.getTableColumnCount(metaDb!!, "widgetStatus")
         if (columnCount > 0) {
             if (columnCount < 7) {
-                metaDb!!.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'")
+                metaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'")
                 metaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN time INTEGER NOT NULL DEFAULT '0'")
             }
         } else {
-            metaDb!!.execSQL(
+            metaDb.execSQL(
                 "CREATE TABLE IF NOT EXISTS widgetStatus (" + "deckId INTEGER NOT NULL PRIMARY KEY, " +
                     "deckName TEXT NOT NULL, " + "newCards INTEGER NOT NULL, " + "lrnCards INTEGER NOT NULL, " +
                     "dueCards INTEGER NOT NULL, " + "progress INTEGER NOT NULL, " + "eta INTEGER NOT NULL)"
@@ -533,10 +533,10 @@ object MetaDB {
         }
 
         // API LEVEL
-        fun getTableColumnCount(metaDb: SQLiteDatabase?, tableName: String): Int {
+        fun getTableColumnCount(metaDb: SQLiteDatabase, tableName: String): Int {
             var c: Cursor? = null
             return try {
-                c = metaDb!!.rawQuery("PRAGMA table_info($tableName)", null)
+                c = metaDb.rawQuery("PRAGMA table_info($tableName)", null)
                 c.count
             } finally {
                 c?.close()
