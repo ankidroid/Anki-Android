@@ -21,7 +21,7 @@ public class MutableTime extends MockTime {
 
 
     public MutableTime(long time) {
-        super(time);
+        super(time, 0); //TODO: remove the 0 once this class is ported to Kotlin
     }
 
 
