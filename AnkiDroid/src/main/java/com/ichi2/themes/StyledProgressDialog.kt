@@ -24,7 +24,7 @@ import android.view.WindowManager.BadTokenException
 import com.ichi2.anki.AnkiActivity
 import timber.log.Timber
 
-class StyledProgressDialog(context: Context?) : Dialog(context!!) {
+class StyledProgressDialog(context: Context) : Dialog(context) {
     override fun show() {
         try {
             setCanceledOnTouchOutside(false)
