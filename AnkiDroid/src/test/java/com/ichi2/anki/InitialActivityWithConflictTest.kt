@@ -69,7 +69,7 @@ class InitialActivityWithConflictTest : RobolectricTest() {
         fun setupForValid(context: Context) {
             grantWritePermissions()
             ShadowEnvironment.setExternalStorageState("mounted")
-            BackupManagerTestUtilities.setupSpaceForBackup(context!!)
+            BackupManagerTestUtilities.setupSpaceForBackup(context)
         }
 
         @JvmStatic
