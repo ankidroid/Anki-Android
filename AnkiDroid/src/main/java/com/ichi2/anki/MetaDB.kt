@@ -62,9 +62,11 @@ object MetaDB {
     @KotlinCleanup("scope function or lateinit db")
     private fun openDB(context: Context) {
         try {
-            mMetaDb = context.openOrCreateDatabase(DATABASE_NAME, 0, null)
-            if (mMetaDb!!.needUpgrade(DATABASE_VERSION)) {
-                mMetaDb = upgradeDB(mMetaDb!!, DATABASE_VERSION)
+            mMetaDb = context.openOrCreateDatabase(DATABASE_NAME, 0, null).let {
+                if (it.needUpgrade(DATABASE_VERSION))
+                    upgradeDB(it, DATABASE_VERSION)
+                else
+                    it
             }
             Timber.v("Opening MetaDB")
         } catch (e: Exception) {
@@ -156,17 +158,19 @@ object MetaDB {
     fun resetDB(context: Context): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.execSQL("DROP TABLE IF EXISTS languages;")
-            Timber.i("MetaDB:: Resetting all language assignment")
-            mMetaDb!!.execSQL("DROP TABLE IF EXISTS whiteboardState;")
-            Timber.i("MetaDB:: Resetting whiteboard state")
-            mMetaDb!!.execSQL("DROP TABLE IF EXISTS widgetStatus;")
-            Timber.i("MetaDB:: Resetting widget status")
-            mMetaDb!!.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;")
-            Timber.i("MetaDB:: Resetting small widget status")
-            mMetaDb!!.execSQL("DROP TABLE IF EXISTS intentInformation;")
-            Timber.i("MetaDB:: Resetting intentInformation")
-            upgradeDB(mMetaDb!!, DATABASE_VERSION)
+            mMetaDb!!.run {
+                execSQL("DROP TABLE IF EXISTS languages;")
+                Timber.i("MetaDB:: Resetting all language assignment")
+                execSQL("DROP TABLE IF EXISTS whiteboardState;")
+                Timber.i("MetaDB:: Resetting whiteboard state")
+                execSQL("DROP TABLE IF EXISTS widgetStatus;")
+                Timber.i("MetaDB:: Resetting widget status")
+                execSQL("DROP TABLE IF EXISTS smallWidgetStatus;")
+                Timber.i("MetaDB:: Resetting small widget status")
+                execSQL("DROP TABLE IF EXISTS intentInformation;")
+                Timber.i("MetaDB:: Resetting intentInformation")
+                upgradeDB(this, DATABASE_VERSION)
+            }
             return true
         } catch (e: Exception) {
             Timber.e(e, "Error resetting MetaDB ")
@@ -179,8 +183,10 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             Timber.i("MetaDB:: Resetting all language assignments")
-            mMetaDb!!.execSQL("DROP TABLE IF EXISTS languages;")
-            upgradeDB(mMetaDb!!, DATABASE_VERSION)
+            mMetaDb!!.run {
+                execSQL("DROP TABLE IF EXISTS languages;")
+                upgradeDB(this, DATABASE_VERSION)
+            }
             return true
         } catch (e: Exception) {
             Timber.e(e, "Error resetting MetaDB ")
@@ -193,9 +199,11 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             Timber.i("MetaDB:: Resetting widget status")
-            mMetaDb!!.execSQL("DROP TABLE IF EXISTS widgetStatus;")
-            mMetaDb!!.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;")
-            upgradeDB(mMetaDb!!, DATABASE_VERSION)
+            mMetaDb!!.run {
+                execSQL("DROP TABLE IF EXISTS widgetStatus;")
+                execSQL("DROP TABLE IF EXISTS smallWidgetStatus;")
+                upgradeDB(this, DATABASE_VERSION)
+            }
             return true
         } catch (e: Exception) {
             Timber.e(e, "Error resetting widgetStatus and smallWidgetStatus")
@@ -311,18 +319,19 @@ object MetaDB {
         val state = if (whiteboardState) 1 else 0
         openDBIfClosed(context)
         try {
-            mMetaDb!!.rawQuery(
+            val metaDb = mMetaDb!!
+            metaDb.rawQuery(
                 "SELECT _id FROM whiteboardState WHERE did = ?",
                 arrayOf(java.lang.Long.toString(did))
             ).use { cur ->
                 if (cur.moveToNext()) {
-                    mMetaDb!!.execSQL(
+                    metaDb.execSQL(
                         "UPDATE whiteboardState SET did = ?, state=? WHERE _id=?;",
                         arrayOf<Any>(did, state, cur.getString(0))
                     )
                     Timber.d("Store whiteboard state (%d) for deck %d", state, did)
                 } else {
-                    mMetaDb!!.execSQL(
+                    metaDb.execSQL(
                         "INSERT INTO whiteboardState (did, state) VALUES (?, ?)",
                         arrayOf<Any>(did, state)
                     )
@@ -362,18 +371,19 @@ object MetaDB {
         val isVisibleState = if (isVisible) 1 else 0
         openDBIfClosed(context)
         try {
-            mMetaDb!!.rawQuery(
+            val metaDb = mMetaDb!!
+            metaDb.rawQuery(
                 "SELECT _id FROM whiteboardState WHERE did  = ?",
                 arrayOf(java.lang.Long.toString(did))
             ).use { cur ->
                 if (cur.moveToNext()) {
-                    mMetaDb!!.execSQL(
+                    metaDb.execSQL(
                         "UPDATE whiteboardState SET did = ?, visible= ?  WHERE _id=?;",
                         arrayOf<Any>(did, isVisibleState, cur.getString(0))
                     )
                     Timber.d("Store whiteboard visibility (%d) for deck %d", isVisibleState, did)
                 } else {
-                    mMetaDb!!.execSQL(
+                    metaDb.execSQL(
                         "INSERT INTO whiteboardState (did, visible) VALUES (?, ?)",
                         arrayOf<Any>(did, isVisibleState)
                     )
@@ -417,12 +427,13 @@ object MetaDB {
         openDBIfClosed(context)
         val columnName = if (isLight) "lightpencolor" else "darkpencolor"
         try {
-            mMetaDb!!.rawQuery(
+            val metaDb = mMetaDb!!
+            metaDb.rawQuery(
                 "SELECT _id FROM whiteboardState WHERE did  = ?",
                 arrayOf(java.lang.Long.toString(did))
             ).use { cur ->
                 if (cur.moveToNext()) {
-                    mMetaDb!!.execSQL(
+                    metaDb.execSQL(
                         "UPDATE whiteboardState SET did = ?, " +
                             columnName + "= ? " +
                             " WHERE _id=?;",
@@ -430,7 +441,7 @@ object MetaDB {
                     )
                 } else {
                     val sql = "INSERT INTO whiteboardState (did, $columnName) VALUES (?, ?)"
-                    mMetaDb!!.execSQL(sql, arrayOf<Any?>(did, value))
+                    metaDb.execSQL(sql, arrayOf<Any?>(did, value))
                 }
                 Timber.d("Store whiteboard %s (%d) for deck %d", columnName, value, did)
             }
@@ -488,17 +499,18 @@ object MetaDB {
     fun storeSmallWidgetStatus(context: Context, status: Pair<Int, Int>) {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.beginTransaction()
+            val metaDb = mMetaDb!!
+            metaDb.beginTransaction()
             try {
                 // First clear all the existing content.
-                mMetaDb!!.execSQL("DELETE FROM smallWidgetStatus")
-                mMetaDb!!.execSQL(
+                metaDb.execSQL("DELETE FROM smallWidgetStatus")
+                metaDb.execSQL(
                     "INSERT INTO smallWidgetStatus(due, eta) VALUES (?, ?)",
                     arrayOf<Any>(status.first, status.second)
                 )
-                mMetaDb!!.setTransactionSuccessful()
+                metaDb.setTransactionSuccessful()
             } finally {
-                mMetaDb!!.endTransaction()
+                metaDb.endTransaction()
             }
         } catch (e: IllegalStateException) {
             Timber.e(e, "MetaDB.storeSmallWidgetStatus: failed")
@@ -510,9 +522,9 @@ object MetaDB {
     }
 
     fun close() {
-        if (mMetaDb != null) {
+        mMetaDb?.run {
             try {
-                mMetaDb!!.close()
+                close()
             } catch (e: Exception) {
                 Timber.w(e, "Failed to close MetaDB")
             }
