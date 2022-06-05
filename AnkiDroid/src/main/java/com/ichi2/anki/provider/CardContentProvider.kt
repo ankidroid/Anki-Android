@@ -75,9 +75,6 @@ import java.util.*
  */
 @KotlinCleanup("Fix IDE lint issues")
 class CardContentProvider : ContentProvider() {
-    @KotlinCleanup("a ContentProvider already provides its Context so this property is not needed")
-    private var mContext: Context? = null
-
     companion object {
         /* URI types */
         private const val NOTES = 1000
@@ -170,7 +167,6 @@ class CardContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         // Initialize content provider on startup.
         Timber.d("CardContentProvider: onCreate")
-        mContext = context
         return true
     }
 
@@ -209,7 +205,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("query", uri)
         }
-        val col = CollectionHelper.getInstance().getCol(mContext)
+        val col = CollectionHelper.getInstance().getCol(context)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         Timber.d(getLogMessage("query", uri))
 
@@ -351,7 +347,7 @@ class CardContentProvider : ContentProvider() {
                     val buttonTexts = JSONArray()
                     var i = 0
                     while (i < buttonCount) {
-                        buttonTexts.put(col.sched.nextIvlStr(mContext!!, currentCard, i + 1))
+                        buttonTexts.put(col.sched.nextIvlStr(requireContextAllApi(), currentCard, i + 1))
                         i++
                     }
                     addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns)
@@ -421,7 +417,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceUpdateSecurity(uri)) {
             throwSecurityException("update", uri)
         }
-        val col = CollectionHelper.getInstance().getCol(mContext)
+        val col = CollectionHelper.getInstance().getCol(context)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         col.log(getLogMessage("update", uri))
 
@@ -666,7 +662,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission()) {
             throwSecurityException("delete", uri)
         }
-        val col = CollectionHelper.getInstance().getCol(mContext)
+        val col = CollectionHelper.getInstance().getCol(context)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         col.log(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
@@ -723,7 +719,7 @@ class CardContentProvider : ContentProvider() {
         if (valuesArr == null || valuesArr.size == 0) {
             return 0
         }
-        val col = CollectionHelper.getInstance().getCol(mContext)
+        val col = CollectionHelper.getInstance().getCol(context)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         if (col.decks.isDyn(deckId)) {
             throw IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes")
@@ -789,7 +785,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("insert", uri)
         }
-        val col = CollectionHelper.getInstance().getCol(mContext)
+        val col = CollectionHelper.getInstance().getCol(context)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         col.log(getLogMessage("insert", uri))
 
@@ -858,7 +854,7 @@ class CardContentProvider : ContentProvider() {
                     // Add some empty card templates
                     var idx = 0
                     while (idx < numCards) {
-                        val card_name = mContext!!.resources.getString(R.string.card_n_name, idx + 1)
+                        val card_name = requireContextAllApi().resources.getString(R.string.card_n_name, idx + 1)
                         val t = Models.newTemplate(card_name)
                         t.put("qfmt", String.format("{{%s}}", allFields[0]))
                         var answerField: String? = allFields[0]
@@ -1005,14 +1001,14 @@ class CardContentProvider : ContentProvider() {
         val fileUri = Uri.parse(values!!.getAsString(FlashCardsContract.AnkiMedia.FILE_URI))
         val preferredName = values.getAsString(FlashCardsContract.AnkiMedia.PREFERRED_NAME)
         return try {
-            val cR = mContext!!.contentResolver
+            val cR = requireContextAllApi().contentResolver
             val media = col.media
             // idea, open input stream and save to cache directory, then
             // pass this (hopefully temporary) file to the media.addFile function.
             val fileMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(cR.getType(fileUri)) // return eg "jpeg"
             // should we be enforcing strict mimetypes? which types?
             val tempFile: File
-            val externalCacheDir = mContext!!.externalCacheDir
+            val externalCacheDir = requireContextAllApi().externalCacheDir
             if (externalCacheDir == null) {
                 Timber.e("createUI() unable to get external cache directory")
                 return null
@@ -1288,14 +1284,14 @@ class CardContentProvider : ContentProvider() {
 
     private fun hasReadWritePermission(): Boolean {
         return if (BuildConfig.DEBUG) { // Allow self-calling of the provider only in debug builds (e.g. for unit tests)
-            mContext!!.checkCallingOrSelfPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
-        } else mContext!!.checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
+            requireContextAllApi().checkCallingOrSelfPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
+        } else requireContextAllApi().checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
     }
 
     /** Returns true if the calling package is known to be "rogue" and should be blocked.
      * Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest, or if blacklisted  */
     private fun knownRogueClient(): Boolean {
-        val pm = mContext!!.packageManager
+        val pm = requireContextAllApi().packageManager
         return try {
             val callingPi = pm.getPackageInfo(callingPackage!!, PackageManager.GET_PERMISSIONS)
             if (callingPi == null || callingPi.requestedPermissions == null) {
@@ -1306,4 +1302,11 @@ class CardContentProvider : ContentProvider() {
             false
         }
     }
+
+    /**
+     * Same as [ContentProvider.requireContext] but accessible in all APIs.
+     */
+    // Can't be called `requireContext` because override is mandatory/forbidden
+    // depending on the API level.
+    private fun requireContextAllApi() = context!!
 }
