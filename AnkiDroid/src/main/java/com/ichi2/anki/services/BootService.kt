@@ -127,19 +127,19 @@ class BootService : BroadcastReceiver() {
         }
 
         /** Returns the hour of day when rollover to the next day occurs  */
-        protected fun getRolloverHourOfDay(context: Context?): Int {
+        protected fun getRolloverHourOfDay(context: Context): Int {
             // TODO; We might want to use the BootService retry code here when called from preferences.
             val defValue = 4
             return try {
                 val col = CollectionHelper.getInstance().getCol(context)
                 when (col.schedVer()) {
                     1 -> {
-                        val sp = AnkiDroidApp.getSharedPrefs(context!!)
+                        val sp = AnkiDroidApp.getSharedPrefs(context)
                         sp.getInt("dayOffset", defValue)
                     }
                     2 -> col.get_config("rollover", defValue)!!
                     else -> {
-                        val sp = AnkiDroidApp.getSharedPrefs(context!!)
+                        val sp = AnkiDroidApp.getSharedPrefs(context)
                         sp.getInt("dayOffset", defValue)
                     }
                 }
