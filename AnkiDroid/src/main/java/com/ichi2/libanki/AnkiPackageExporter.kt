@@ -126,7 +126,7 @@ open class Exporter {
 }
 
 open class AnkiExporter : Exporter {
-    protected val mIncludeSched: Boolean
+    protected val includeSched: Boolean
     protected val mIncludeMedia: Boolean
     private var mSrc: Collection? = null
     var mediaDir: String? = null
@@ -145,7 +145,7 @@ open class AnkiExporter : Exporter {
      * @param includeMedia should include media
      */
     constructor(col: Collection, includeSched: Boolean, includeMedia: Boolean) : super(col) {
-        mIncludeSched = includeSched
+        this.includeSched = includeSched
         mIncludeMedia = includeMedia
     }
 
@@ -158,7 +158,7 @@ open class AnkiExporter : Exporter {
      * @param includeMedia should include media
      */
     constructor(col: Collection, did: Long, includeSched: Boolean, includeMedia: Boolean) : super(col, did) {
-        mIncludeSched = includeSched
+        this.includeSched = includeSched
         mIncludeMedia = includeMedia
     }
 
@@ -196,7 +196,7 @@ open class AnkiExporter : Exporter {
         val strnids = Utils.ids2str(uniqueNids)
         mSrc!!.db.database.execSQL("INSERT INTO DST_DB.notes select * from notes where id in $strnids")
         // remove system tags if not exporting scheduling info
-        if (!mIncludeSched) {
+        if (!includeSched) {
             Timber.d("Stripping system tags from list")
             val srcTags = mSrc!!.db.queryStringList(
                 "select tags from notes where id in $strnids"
@@ -216,7 +216,7 @@ open class AnkiExporter : Exporter {
             "select distinct mid from DST_DB.notes where id in $strnids"
         )
         // card history and revlog
-        if (mIncludeSched) {
+        if (includeSched) {
             Timber.d("Copy history and revlog")
             mSrc!!.db.database
                 .execSQL("insert into DST_DB.revlog select * from revlog where cid in " + Utils.ids2str(cids))
@@ -255,12 +255,12 @@ open class AnkiExporter : Exporter {
                 continue
             }
             if (d.isStd && d.getLong("conf") != 1L) {
-                if (mIncludeSched) {
+                if (includeSched) {
                     dconfs.put(java.lang.Long.toString(d.getLong("conf")), true)
                 }
             }
             val destinationDeck = d.deepClone()
-            if (!mIncludeSched) {
+            if (!includeSched) {
                 // scheduling not included, so reset deck settings to default
                 destinationDeck.put("conf", 1)
             }
@@ -391,13 +391,13 @@ class AnkiPackageExporter : AnkiExporter {
     override fun exportInto(path: String, context: Context) {
         // sched info+v2 scheduler not compatible w/ older clients
         Timber.i("Starting export into %s", path)
-        _v2sched = mCol.schedVer() != 1 && mIncludeSched
+        _v2sched = mCol.schedVer() != 1 && includeSched
 
         // open a zip file
         val z = ZipFile(path)
         // if all decks and scheduling included, full export
         val media: JSONObject
-        media = if (mIncludeSched && mDid == null) {
+        media = if (includeSched && mDid == null) {
             exportVerbatim(z, context)
         } else {
             // otherwise, filter
