@@ -24,7 +24,7 @@ import kotlin.jvm.JvmOverloads
 @KotlinCleanup("IDE lint")
 open class MockTime : Time {
     /** Number of milliseconds between each call.  */
-    private val mStep: Int
+    private val step: Int
 
     /** Time since epoch in MS.  */
     protected var time: Long
@@ -34,7 +34,7 @@ open class MockTime : Time {
     @JvmOverloads
     constructor(time: Long, step: Int = 0) {
         this.time = time
-        mStep = step
+        this.step = step
     }
 
     /** create a mock time whose initial value is this date. Month is 0-based, in order to stay close to calendar. MS are 0. */
@@ -49,13 +49,13 @@ open class MockTime : Time {
         step: Int
     ) {
         time = timeStamp(year, month, date, hourOfDay, minute, second, milliseconds)
-        mStep = step
+        this.step = step
     }
 
     /** Time in millisecond since epoch.  */
     override fun intTimeMS(): Long {
         val time = time
-        this.time += mStep.toLong()
+        this.time += step.toLong()
         return time
     }
 
