@@ -13,40 +13,35 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+class MutableTime : MockTime {
+    private var mFrozen = false
 
-public class MutableTime extends MockTime {
-    private boolean mFrozen;
+    constructor(time: Long) : super(time)
+    constructor(time: Long, step: Int) : super(time, step)
+    constructor(
+        year: Int,
+        month: Int,
+        date: Int,
+        hourOfDay: Int,
+        minute: Int,
+        second: Int,
+        milliseconds: Int,
+        step: Int
+    ) : super(year, month, date, hourOfDay, minute, second, milliseconds, step)
 
+    fun getInternalTimeMs() = time
 
-    public MutableTime(long time) {
-        super(time, 0); //TODO: remove the 0 once this class is ported to Kotlin
+    fun setFrozen(value: Boolean) {
+        mFrozen = value
     }
 
-
-    public MutableTime(long time, int step) {
-        super(time, step);
-    }
-    public MutableTime(int year, int month, int date, int hourOfDay, int minute,
-                       int second, int milliseconds, int step)  {
-        super(year, month, date, hourOfDay, minute, second, milliseconds, step);
-    }
-
-    public void setFrozen(boolean value) {
-        mFrozen = value;
-    }
-
-    public long getInternalTimeMs() {
-        return getTime();
-    }
-
-    @Override
-    public long intTimeMS() {
-        if (mFrozen) {
-            return super.getTime();
+    override fun intTimeMS(): Long {
+        return if (mFrozen) {
+            super.time
         } else {
-            return super.intTimeMS();
+            super.intTimeMS()
         }
     }
 }
