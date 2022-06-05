@@ -58,9 +58,9 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var clipboard: ClipboardManager? = null
 
-    constructor(context: Context?) : super(context!!)
-    constructor(context: Context?, attr: AttributeSet?) : super(context!!, attr)
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle)
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attr: AttributeSet?) : super(context, attr)
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
