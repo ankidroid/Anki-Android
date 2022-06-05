@@ -22,7 +22,7 @@ import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
 
 class TextNoteExporter : Exporter {
-    private val mIncludedTags: Boolean
+    private val includedTags: Boolean
     private val mIncludeID: Boolean
 
     constructor(
@@ -31,7 +31,7 @@ class TextNoteExporter : Exporter {
         includedTags: Boolean,
         includeHTML: Boolean
     ) : super(col) {
-        mIncludedTags = includedTags
+        this.includedTags = includedTags
         mIncludeHTML = includeHTML
         mIncludeID = includeID
     }
@@ -43,7 +43,7 @@ class TextNoteExporter : Exporter {
         includedTags: Boolean,
         includeHTML: Boolean
     ) : super(col, did) {
-        mIncludedTags = includedTags
+        this.includedTags = includedTags
         mIncludeHTML = includeHTML
         mIncludeID = includeID
     }
@@ -69,7 +69,7 @@ class TextNoteExporter : Exporter {
                 for (field in Utils.splitFields(flds)) {
                     row.add(processText(field!!))
                 }
-                if (mIncludedTags) {
+                if (includedTags) {
                     row.add(strip(tags))
                 }
                 @KotlinCleanup("use kotlin joinToString function")
