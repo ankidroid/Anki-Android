@@ -64,7 +64,7 @@ object MetaDB {
         try {
             mMetaDb = context.openOrCreateDatabase(DATABASE_NAME, 0, null)
             if (mMetaDb!!.needUpgrade(DATABASE_VERSION)) {
-                mMetaDb = upgradeDB(mMetaDb, DATABASE_VERSION)
+                mMetaDb = upgradeDB(mMetaDb!!, DATABASE_VERSION)
             }
             Timber.v("Opening MetaDB")
         } catch (e: Exception) {
@@ -73,11 +73,11 @@ object MetaDB {
     }
 
     /** Creating any table that missing and upgrading necessary tables.  */
-    private fun upgradeDB(metaDb: SQLiteDatabase?, databaseVersion: Int): SQLiteDatabase? {
+    private fun upgradeDB(metaDb: SQLiteDatabase, databaseVersion: Int): SQLiteDatabase {
         Timber.i("MetaDB:: Upgrading Internal Database..")
         // if (mMetaDb.getVersion() == 0) {
         Timber.i("MetaDB:: Applying changes for version: 0")
-        if (metaDb!!.version < 4) {
+        if (metaDb.version < 4) {
             metaDb.execSQL("DROP TABLE IF EXISTS languages;")
             metaDb.execSQL("DROP TABLE IF EXISTS whiteboardState;")
         }
@@ -166,7 +166,7 @@ object MetaDB {
             Timber.i("MetaDB:: Resetting small widget status")
             mMetaDb!!.execSQL("DROP TABLE IF EXISTS intentInformation;")
             Timber.i("MetaDB:: Resetting intentInformation")
-            upgradeDB(mMetaDb, DATABASE_VERSION)
+            upgradeDB(mMetaDb!!, DATABASE_VERSION)
             return true
         } catch (e: Exception) {
             Timber.e(e, "Error resetting MetaDB ")
@@ -182,7 +182,7 @@ object MetaDB {
         try {
             Timber.i("MetaDB:: Resetting all language assignments")
             mMetaDb!!.execSQL("DROP TABLE IF EXISTS languages;")
-            upgradeDB(mMetaDb, DATABASE_VERSION)
+            upgradeDB(mMetaDb!!, DATABASE_VERSION)
             return true
         } catch (e: Exception) {
             Timber.e(e, "Error resetting MetaDB ")
@@ -199,7 +199,7 @@ object MetaDB {
             Timber.i("MetaDB:: Resetting widget status")
             mMetaDb!!.execSQL("DROP TABLE IF EXISTS widgetStatus;")
             mMetaDb!!.execSQL("DROP TABLE IF EXISTS smallWidgetStatus;")
-            upgradeDB(mMetaDb, DATABASE_VERSION)
+            upgradeDB(mMetaDb!!, DATABASE_VERSION)
             return true
         } catch (e: Exception) {
             Timber.e(e, "Error resetting widgetStatus and smallWidgetStatus")
