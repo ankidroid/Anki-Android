@@ -105,9 +105,9 @@ class AboutFragment : Fragment() {
         val clipboardManager = requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         if (clipboardManager != null) {
             clipboardManager.setPrimaryClip(ClipData.newPlainText("$appName v$pkgVersionName", debugInfo))
-            UIUtils.showThemedToast(context, getString(R.string.about_ankidroid_successfully_copied_debug), true)
+            UIUtils.showThemedToast(requireContext(), getString(R.string.about_ankidroid_successfully_copied_debug), true)
         } else {
-            UIUtils.showThemedToast(context, getString(R.string.about_ankidroid_error_copy_debug_info), false)
+            UIUtils.showThemedToast(requireContext(), getString(R.string.about_ankidroid_error_copy_debug_info), false)
         }
     }
 

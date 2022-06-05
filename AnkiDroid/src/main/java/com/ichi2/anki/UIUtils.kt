@@ -15,17 +15,17 @@ import java.util.*
 
 object UIUtils {
     @JvmStatic
-    fun showThemedToast(context: Context?, text: String?, shortLength: Boolean) {
+    fun showThemedToast(context: Context, text: String?, shortLength: Boolean) {
         Toast.makeText(context, text, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
     }
 
     @JvmStatic
-    fun showThemedToast(context: Context?, text: CharSequence?, shortLength: Boolean) {
+    fun showThemedToast(context: Context, text: CharSequence?, shortLength: Boolean) {
         showThemedToast(context, text.toString(), shortLength)
     }
 
     @JvmStatic
-    fun showThemedToast(context: Context?, @StringRes textResource: Int, shortLength: Boolean) {
+    fun showThemedToast(context: Context, @StringRes textResource: Int, shortLength: Boolean) {
         Toast.makeText(context, textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
     }
 

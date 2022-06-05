@@ -403,12 +403,12 @@ class SharedDecksDownloadFragment : Fragment() {
         if (isVisible && !isSuccessful) {
             if (isInvalidDeckFile) {
                 Timber.i("File is not a valid deck, hence return from the download screen")
-                UIUtils.showThemedToast(activity, R.string.import_log_no_apkg, false)
+                UIUtils.showThemedToast(requireActivity(), R.string.import_log_no_apkg, false)
                 // Go back if file is not a deck and cannot be imported
                 activity?.onBackPressed()
             } else {
                 Timber.i("Download failed, update UI and provide option to retry")
-                UIUtils.showThemedToast(activity, R.string.something_wrong, false)
+                UIUtils.showThemedToast(requireActivity(), R.string.something_wrong, false)
                 // Update UI if download could not be successful
                 mTryAgainButton.visibility = View.VISIBLE
                 mCancelButton.visibility = View.GONE
