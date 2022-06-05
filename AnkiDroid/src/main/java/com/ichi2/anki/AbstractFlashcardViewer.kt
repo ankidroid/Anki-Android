@@ -1889,7 +1889,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** Fixing bug 720: <input></input> focus, thanks to pablomouzo on android issue 7189  */
-    internal inner class MyWebView(context: Context?) : WebView(context!!) {
+    internal inner class MyWebView(context: Context) : WebView(context) {
         override fun loadDataWithBaseURL(baseUrl: String?, data: String, mimeType: String?, encoding: String?, historyUrl: String?) {
             if (!this@AbstractFlashcardViewer.isDestroyed) {
                 super.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl)
