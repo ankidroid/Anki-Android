@@ -22,62 +22,59 @@ object ViewAnimation {
     private fun translateAnimation(fromXValue: Float, toXValue: Float, fromYValue: Float, toYValue: Float) =
         TranslateAnimation(Animation.RELATIVE_TO_SELF, fromXValue, Animation.RELATIVE_TO_SELF, toXValue, Animation.RELATIVE_TO_SELF, fromYValue, Animation.RELATIVE_TO_SELF, toYValue)
 
-    fun slide(type: Slide, duration: Int, offset: Int): Animation {
-        val animation: Animation
+    fun slide(type: Slide, duration: Int, offset: Int) =
         when (type) {
             SLIDE_IN_FROM_RIGHT -> {
-                animation = TranslateAnimation(
+                TranslateAnimation(
                     +1.0f, 0.0f,
                     0.0f, 0.0f
                 )
             }
             SLIDE_OUT_TO_RIGHT -> {
-                animation = TranslateAnimation(
+                TranslateAnimation(
                     0.0f, +1.0f,
                     0.0f, 0.0f
                 )
             }
             SLIDE_IN_FROM_LEFT -> {
-                animation = TranslateAnimation(
+                TranslateAnimation(
                     -1.0f, 0.0f,
                     0.0f, 0.0f
                 )
             }
             SLIDE_OUT_TO_LEFT -> {
-                animation = TranslateAnimation(
+                TranslateAnimation(
                     0.0f, -1.0f,
                     0.0f, 0.0f
                 )
             }
             SLIDE_IN_FROM_BOTTOM -> {
-                animation = TranslateAnimation(
+                TranslateAnimation(
                     0.0f, 0.0f,
                     +1.0f, 0.0f
                 )
             }
             SLIDE_IN_FROM_TOP -> {
-                animation = TranslateAnimation(
+                TranslateAnimation(
                     0.0f, 0.0f,
                     -1.0f, 0.0f
                 )
             }
-        }
-        // can't factorize setInterpolator out due to some typing issue in API 21.
-        when (type) {
-            SLIDE_IN_FROM_BOTTOM,
-            SLIDE_IN_FROM_LEFT,
-            SLIDE_IN_FROM_RIGHT,
-            SLIDE_IN_FROM_TOP -> {
-                animation.setInterpolator(DecelerateInterpolator())
+        }.apply {
+            interpolator = when (type) {
+                SLIDE_IN_FROM_BOTTOM,
+                SLIDE_IN_FROM_LEFT,
+                SLIDE_IN_FROM_RIGHT,
+                SLIDE_IN_FROM_TOP -> {
+                    DecelerateInterpolator()
+                }
+                SLIDE_OUT_TO_LEFT, SLIDE_OUT_TO_RIGHT -> {
+                    AccelerateInterpolator()
+                }
             }
-            SLIDE_OUT_TO_LEFT, SLIDE_OUT_TO_RIGHT -> {
-                animation.setInterpolator(AccelerateInterpolator())
-            }
+            this.duration = duration.toLong()
+            startOffset = offset.toLong()
         }
-        animation.duration = duration.toLong()
-        animation.startOffset = offset.toLong()
-        return animation
-    }
 
     enum class Fade(val originalAlpha: Float) {
         FADE_IN(0f),
