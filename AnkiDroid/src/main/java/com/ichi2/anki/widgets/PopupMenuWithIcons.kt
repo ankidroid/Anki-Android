@@ -25,7 +25,7 @@ import java.lang.Exception
 /**
  * A simple little hack to force the icons to display in the PopupMenu
  */
-class PopupMenuWithIcons(context: Context?, anchor: View?, showIcons: Boolean) : PopupMenu(context!!, anchor!!) {
+class PopupMenuWithIcons(context: Context, anchor: View?, showIcons: Boolean) : PopupMenu(context, anchor!!) {
     init {
         if (showIcons) {
             try {
