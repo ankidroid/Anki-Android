@@ -8,6 +8,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -51,6 +52,7 @@ import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.CollectionGetter;
+import com.ichi2.libanki.Config;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
@@ -126,6 +128,17 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Timber.i("AnkiActivity::onStop - %s", mActivityName);
         super.onStop();
         mCustomTabActivityHelper.unbindCustomTabsService(this);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        boolean newNightModeStatus = (newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        // Check if system night mode has changed
+        if (Themes.systemIsInNightMode != newNightModeStatus) {
+            Themes.systemIsInNightMode = newNightModeStatus;
+            restartActivity();
+        }
     }
 
 
