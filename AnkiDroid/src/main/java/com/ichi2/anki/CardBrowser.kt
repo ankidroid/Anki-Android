@@ -2332,7 +2332,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         private var mQa: Pair<String, String>? = null
         override var position: Int
 
-        constructor(id: Long, col: com.ichi2.libanki.Collection?, position: Int) : super(col!!, id) {
+        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int) : super(col, id) {
             this.position = position
         }
 
