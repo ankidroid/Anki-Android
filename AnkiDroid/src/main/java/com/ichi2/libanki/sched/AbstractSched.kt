@@ -37,10 +37,7 @@ import java.lang.ref.WeakReference
  * reset`). Some promise only apply in normal use.
  *
  */
-abstract class AbstractSched {
-    @JvmField
-    protected var mCol: Collection? = null
-
+abstract class AbstractSched(val col: Collection) {
     /**
      * Pop the next card from the queue. null if finished.
      *
@@ -497,11 +494,6 @@ abstract class AbstractSched {
     /** Notifies the scheduler that there is no more current card. This is the case when a card is answered, when the
      * scheduler is reset...  */
     abstract fun discardCurrentCard()
-
-    /**
-     * @return The collection to which the scheduler is linked
-     */
-    abstract val col: Collection?
 
     /** @return The button to press to enter "good" on a new card.
      */
