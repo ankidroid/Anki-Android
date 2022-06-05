@@ -22,8 +22,8 @@ import com.ichi2.anki.R
 class DiscardChangesDialog {
     companion object {
         @JvmStatic
-        fun showDialog(context: Context?, positiveMethod: () -> Unit): MaterialDialog {
-            return MaterialDialog(context!!).show {
+        fun showDialog(context: Context, positiveMethod: () -> Unit): MaterialDialog {
+            return MaterialDialog(context).show {
                 message(R.string.discard_unsaved_changes)
                 positiveButton(R.string.dialog_ok) {
                     positiveMethod()
