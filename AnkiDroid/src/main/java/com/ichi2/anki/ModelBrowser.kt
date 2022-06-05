@@ -461,7 +461,7 @@ class ModelBrowser : AnkiActivity() {
      * User from reusing names (which are technically not unique however
      */
     private fun randomizeName(s: String): String {
-        return s + "-" + Utils.checksum(col.time.intTimeMS().toString()).substring(0, 5)
+        return s + "-" + Utils.checksum(col.clock.intTimeMS().toString()).substring(0, 5)
     }
 
     private fun showToast(text: CharSequence) {

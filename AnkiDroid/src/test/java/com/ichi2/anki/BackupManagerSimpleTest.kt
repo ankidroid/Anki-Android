@@ -17,7 +17,7 @@
 package com.ichi2.anki
 
 import com.ichi2.anki.BackupManager.Companion.getLatestBackup
-import com.ichi2.testutils.MockTime
+import com.ichi2.testutils.MockClock
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.ArrayMatching.arrayContainingInAnyOrder
@@ -29,9 +29,6 @@ import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
-import kotlin.test.junit5.JUnit5Asserter.assertEquals
-import kotlin.test.junit5.JUnit5Asserter.assertNotNull
-import kotlin.test.junit5.JUnit5Asserter.assertNull
 
 /**
  * Test for [BackupManager] without [RobolectricTest]. For performance
@@ -65,14 +62,14 @@ class BackupManagerSimpleTest {
         val date = BackupManager.parseBackupTimeString("1970-01-02-00-46")
         assertNotNull(date)
         val timestamp = date.time
-        val backupName = BackupManager.getNameForNewBackup(MockTime(timestamp))
+        val backupName = BackupManager.getNameForNewBackup(MockClock(timestamp))
 
         assertEquals("Backup name doesn't match naming pattern", "collection-1970-01-02-00-46.colpkg", backupName)
     }
 
     @Test
     fun nameOfNewBackupsCanBeParsed() {
-        val backupName = BackupManager.getNameForNewBackup(MockTime(100000000))
+        val backupName = BackupManager.getNameForNewBackup(MockClock(100000000))
         assertNotNull(backupName)
 
         val ts = BackupManager.getBackupDate(backupName)

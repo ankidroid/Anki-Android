@@ -9,7 +9,7 @@ import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.Clock
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import timber.log.Timber
 import java.util.Calendar
@@ -33,7 +33,7 @@ class BootService : BroadcastReceiver() {
         }
         Timber.i("Executing Boot Service")
         catchAlarmManagerErrors(context) { scheduleDeckReminder(context) }
-        catchAlarmManagerErrors(context) { scheduleNotification(col.time, context) }
+        catchAlarmManagerErrors(context) { scheduleNotification(col.clock, context) }
         mFailedToShowNotifications = false
         sWasRun = true
     }
@@ -86,7 +86,7 @@ class BootService : BroadcastReceiver() {
                         ),
                         0
                     )
-                    val calendar = DeckOptions.reminderToCalendar(col.time, reminder)
+                    val calendar = DeckOptions.reminderToCalendar(col.clock, reminder)
                     alarmManager.setRepeating(
                         AlarmManager.RTC_WAKEUP,
                         calendar.timeInMillis,
@@ -106,14 +106,14 @@ class BootService : BroadcastReceiver() {
         private var sWasRun = false
 
         @JvmStatic
-        fun scheduleNotification(time: Time, context: Context) {
+        fun scheduleNotification(clock: Clock, context: Context) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val sp = AnkiDroidApp.getSharedPrefs(context)
             // Don't schedule a notification if the due reminders setting is not enabled
             if (sp.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))!!.toInt() >= Preferences.PENDING_NOTIFICATIONS_ONLY) {
                 return
             }
-            val calendar = time.calendar()
+            val calendar = clock.calendar()
             calendar[Calendar.HOUR_OF_DAY] = getRolloverHourOfDay(context)
             calendar[Calendar.MINUTE] = 0
             calendar[Calendar.SECOND] = 0

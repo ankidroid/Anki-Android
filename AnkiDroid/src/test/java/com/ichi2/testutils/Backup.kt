@@ -36,7 +36,7 @@ object Backup {
     fun create(col: com.ichi2.libanki.Collection) {
         BackupManagerTestUtilities.setupSpaceForBackup(col.context)
         val path = col.path
-        val time = col.time
+        val time = col.clock
         col.close()
 
         val originalBackupCount = getBackupCount(path)

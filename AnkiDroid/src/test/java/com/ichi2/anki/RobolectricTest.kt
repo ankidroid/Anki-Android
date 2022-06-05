@@ -39,7 +39,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
-import com.ichi2.testutils.MockTime
+import com.ichi2.testutils.MockClock
 import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
@@ -314,12 +314,12 @@ open class RobolectricTest : CollectionGetter {
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
     override fun getCol(): Collection {
-        val time = MockTime(2020, 7, 7, 7, 0, 0, 0, 10)
+        val time = MockClock(2020, 7, 7, 7, 0, 0, 0, 10)
         return CollectionHelper.getInstance().getCol(targetContext, time)
     }
 
-    protected val collectionTime: MockTime
-        get() = col.time as MockTime
+    protected val collectionTime: MockClock
+        get() = col.clock as MockClock
 
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {

@@ -22,8 +22,8 @@ import com.ichi2.anki.exception.OutOfSpaceException
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.utils.Time
-import com.ichi2.libanki.utils.Time.Companion.utcOffset
+import com.ichi2.libanki.utils.Clock
+import com.ichi2.libanki.utils.Clock.Companion.utcOffset
 import com.ichi2.utils.FileUtil.getFreeDiskSpace
 import timber.log.Timber
 import java.io.BufferedOutputStream
@@ -71,7 +71,7 @@ open class BackupManager {
      * @return Whether a thread was started to create a backup
      */
     @Suppress("PMD.NPathComplexity")
-    fun performBackupInBackground(colPath: String, interval: Int, time: Time): Boolean {
+    fun performBackupInBackground(colPath: String, interval: Int, time: Clock): Boolean {
         val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)
         if (hasDisabledBackups(prefs)) {
             Timber.w("backups are disabled")
@@ -229,7 +229,7 @@ open class BackupManager {
         }
 
         @JvmStatic
-        fun performBackupInBackground(path: String, time: Time): Boolean {
+        fun performBackupInBackground(path: String, time: Clock): Boolean {
             return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, time)
         }
 
@@ -269,7 +269,7 @@ open class BackupManager {
         fun repairCollection(col: Collection): Boolean {
             val deckPath = col.path
             val deckFile = File(deckPath)
-            val time = col.time
+            val time = col.clock
             Timber.i("BackupManager - RepairCollection - Closing Collection")
             col.close()
 
@@ -299,11 +299,11 @@ open class BackupManager {
             return false
         }
 
-        fun moveDatabaseToBrokenDirectory(colPath: String, moveConnectedFilesToo: Boolean, time: Time): Boolean {
+        fun moveDatabaseToBrokenDirectory(colPath: String, moveConnectedFilesToo: Boolean, clock: Clock): Boolean {
             val colFile = File(colPath)
 
             // move file
-            val value: Date = time.genToday(utcOffset())
+            val value: Date = clock.genToday(utcOffset())
             var movedFilename = String.format(
                 Utils.ENGLISH_LOCALE,
                 colFile.name.replace(".anki2", "") +
@@ -375,10 +375,10 @@ open class BackupManager {
          * @return filename with pattern collection-yyyy-MM-dd-HH-mm based on given time parameter
          */
         @JvmStatic
-        fun getNameForNewBackup(time: Time): String? {
+        fun getNameForNewBackup(clock: Clock): String? {
             /** Changes in the file name pattern should be updated as well in
              * [getBackupTimeString] and [com.ichi2.anki.dialogs.DatabaseErrorDialog.onCreateDialog] */
-            val cal: Calendar = time.gregorianCalendar()
+            val cal: Calendar = clock.gregorianCalendar()
             val backupFilename: String = try {
                 String.format(Utils.ENGLISH_LOCALE, "collection-%s.colpkg", df.format(cal.time))
             } catch (e: UnknownFormatConversionException) {

@@ -30,8 +30,8 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
-import com.ichi2.testutils.MockTime;
-import com.ichi2.testutils.MutableTime;
+import com.ichi2.testutils.MockClock;
+import com.ichi2.testutils.MutableClock;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
 
@@ -186,7 +186,7 @@ public class SchedTest extends RobolectricTest {
 
     @Test
     public void testRevLogValues() {
-        MutableTime time = new MutableTime(MockTime.timeStamp(2020, 8, 4, 11, 22, 19, 123), 10);
+        MutableClock time = new MutableClock(MockClock.timeStamp(2020, 8, 4, 11, 22, 19, 123), 10);
         Collection col =  CollectionHelper.getInstance().getCol(getTargetContext(), time);
         addNoteUsingBasicModel("Hello", "World");
 
@@ -233,7 +233,7 @@ public class SchedTest extends RobolectricTest {
         assertEquals(QUEUE_TYPE_NEW, c.getQueue());
         assertEquals(CARD_TYPE_NEW, c.getType());
         // if we answer it, it should become a learn card
-        long t = col.getTime().intTime();
+        long t = col.getClock().intTime();
         col.getSched().answerCard(c, BUTTON_ONE);
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         assertEquals(CARD_TYPE_LRN, c.getType());
@@ -344,13 +344,13 @@ public class SchedTest extends RobolectricTest {
         assertEquals(3, c.getLeft() % 1000);
         assertEquals(3, c.getLeft() / 1000);
         // it should be due in 30 seconds
-        long t = Math.round(c.getDue() - col.getTime().intTime());
+        long t = Math.round(c.getDue() - col.getClock().intTime());
         assertThat(t, is(greaterThanOrEqualTo(25L)));
         assertThat(t, is(lessThanOrEqualTo(40L)));
         // pass it once
         col.getSched().answerCard(c, BUTTON_TWO);
         // it should be due in 3 minutes
-        assertEquals(Math.round(c.getDue() - col.getTime().intTime()), 179, 1);
+        assertEquals(Math.round(c.getDue() - col.getClock().intTime()), 179, 1);
         assertEquals(2, c.getLeft() % 1000);
         assertEquals(2, c.getLeft() / 1000);
         // check log is accurate
@@ -362,7 +362,7 @@ public class SchedTest extends RobolectricTest {
         // pass again
         col.getSched().answerCard(c, BUTTON_TWO);
         // it should be due in 10 minutes
-        assertEquals(c.getDue() - col.getTime().intTime(), 599, 1);
+        assertEquals(c.getDue() - col.getClock().intTime(), 599, 1);
         assertEquals(1, c.getLeft() % 1000);
         assertEquals(1, c.getLeft() / 1000);
         // the next pass should graduate the card
@@ -533,8 +533,8 @@ public class SchedTest extends RobolectricTest {
         assertEquals(1, c.getIvl());
         // but because it's in the learn queue, its current due time should be in
         // the future
-        assertThat(c.getDue(), is(greaterThanOrEqualTo(col.getTime().intTime())));
-        assertThat(c.getDue() - col.getTime().intTime(), is(greaterThan(118L)));
+        assertThat(c.getDue(), is(greaterThanOrEqualTo(col.getClock().intTime())));
+        assertThat(c.getDue() - col.getClock().intTime(), is(greaterThan(118L)));
         // factor should have been decremented
         assertEquals(2300, c.getFactor());
         // check counters
@@ -774,7 +774,7 @@ public class SchedTest extends RobolectricTest {
         col.reset();
         c = getCard();
         col.getSched().answerCard(c, BUTTON_ONE);
-        assertThat(c.getDue(), is(greaterThanOrEqualTo(col.getTime().intTime())));
+        assertThat(c.getDue(), is(greaterThanOrEqualTo(col.getClock().intTime())));
         assertEquals(QUEUE_TYPE_LRN, c.getQueue());
         assertEquals(CARD_TYPE_REV, c.getType());
         col.getSched().suspendCards(new long[] {c.getId()});

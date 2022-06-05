@@ -16,13 +16,13 @@
 package com.ichi2.testutils
 
 import android.annotation.SuppressLint
-import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.Clock
 import com.ichi2.utils.KotlinCleanup
 import java.util.*
 import kotlin.jvm.JvmOverloads
 
 @KotlinCleanup("IDE lint")
-open class MockTime : Time {
+open class MockClock : Clock {
     /** Number of milliseconds between each call.  */
     private val mStep: Int
 

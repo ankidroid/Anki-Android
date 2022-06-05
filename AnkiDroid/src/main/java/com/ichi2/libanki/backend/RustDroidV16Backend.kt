@@ -23,7 +23,7 @@ import com.ichi2.libanki.DB
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.backend.model.to_backend_note
-import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.Clock
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.BackendV1
@@ -41,8 +41,8 @@ class RustDroidV16Backend(private val backendFactory: BackendFactory) : RustDroi
 
     override fun databaseCreationInitializesData(): Boolean = true
 
-    override fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean, time: Time): Collection =
-        CollectionV16(context, db, path, server, log, time, this)
+    override fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean, clock: Clock): Collection =
+        CollectionV16(context, db, path, server, log, clock, this)
 
     override fun openCollectionDatabase(path: String): DB {
         // This Helper factory updates the database schema on open

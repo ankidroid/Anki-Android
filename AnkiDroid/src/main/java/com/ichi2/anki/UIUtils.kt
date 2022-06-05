@@ -15,7 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.async.CollectionTask.SaveCollection
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
-import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.Clock
 import timber.log.Timber
 import java.util.*
 
@@ -138,8 +138,8 @@ object UIUtils {
     }
 
     @JvmStatic
-    fun getDayStart(time: Time): Long {
-        val cal = time.calendar()
+    fun getDayStart(clock: Clock): Long {
+        val cal = clock.calendar()
         if (cal[Calendar.HOUR_OF_DAY] < 4) {
             cal.roll(Calendar.DAY_OF_YEAR, -1)
         }

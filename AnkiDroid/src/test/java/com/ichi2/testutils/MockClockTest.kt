@@ -18,11 +18,11 @@ package com.ichi2.testutils
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class MockTimeTest {
+class MockClockTest {
     @Test
     fun dateTest() {
-        val time = MockTime(2020, 7, 7, 7, 0, 0, 0, 0)
+        val time = MockClock(2020, 7, 7, 7, 0, 0, 0, 0)
         assertEquals(1596783600000L, time.intTimeMS())
-        assertEquals(1596783600000L, MockTime.timeStamp(2020, 7, 7, 7, 0, 0))
+        assertEquals(1596783600000L, MockClock.timeStamp(2020, 7, 7, 7, 0, 0))
     }
 }

@@ -317,7 +317,7 @@ object CrashReportService {
     }
 
     private fun sendReportFor(activity: AnkiActivity): Boolean {
-        val currentTimestamp = activity.col.time.intTimeMS()
+        val currentTimestamp = activity.col.clock.intTimeMS()
         val lastReportTimestamp = getTimestampOfLastReport(activity)
         return if (currentTimestamp - lastReportTimestamp > MIN_INTERVAL_MS) {
             deleteACRALimiterData(activity)

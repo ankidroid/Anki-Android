@@ -23,7 +23,7 @@ import com.ichi2.libanki.DB;
 import com.ichi2.libanki.TemplateManager;
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
-import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.utils.Clock;
 
 import net.ankiweb.rsdroid.RustCleanup;
 
@@ -39,8 +39,8 @@ import androidx.annotation.NonNull;
 @RustCleanup("After the rust conversion is complete - this will be removed")
 public class JavaDroidBackend implements DroidBackend {
     @Override
-    public Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Time time) {
-        return new Collection(context, db, path, server, log, time, this);
+    public Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Clock clock) {
+        return new Collection(context, db, path, server, log, clock, this);
     }
 
 

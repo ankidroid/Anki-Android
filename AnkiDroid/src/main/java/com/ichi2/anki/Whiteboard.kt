@@ -34,7 +34,7 @@ import androidx.core.content.ContextCompat
 import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.compat.CompatHelper
-import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.Clock
 import com.ichi2.libanki.utils.TimeUtils
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions
 import com.ichi2.utils.KotlinCleanup
@@ -482,7 +482,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     }
 
     @Throws(FileNotFoundException::class)
-    fun saveWhiteboard(time: Time?): Uri {
+    fun saveWhiteboard(clock: Clock?): Uri {
         val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         if (foregroundColor != Color.BLACK) {
@@ -491,7 +491,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             canvas.drawColor(Color.WHITE)
         }
         draw(canvas)
-        val baseFileName = "Whiteboard" + TimeUtils.getTimestamp(time!!)
+        val baseFileName = "Whiteboard" + TimeUtils.getTimestamp(clock!!)
         // TODO: Fix inconsistent CompressFormat 'JPEG' and file extension 'png'
         return CompatHelper.compat.saveImage(context, bitmap, baseFileName, "png", Bitmap.CompressFormat.JPEG, 95)
     }

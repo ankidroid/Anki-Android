@@ -943,7 +943,7 @@ public class Finder {
                         midToNid.put(mid, new ArrayList<>());
                     }
                     midToNid.get(mid).add(nid);
-                    d.add(new Object[] { flds, col.getTime().intTime(), col.usn(), nid }); // order based on query below
+                    d.add(new Object[] { flds, col.getClock().intTime(), col.usn(), nid }); // order based on query below
                 }
             }
         }

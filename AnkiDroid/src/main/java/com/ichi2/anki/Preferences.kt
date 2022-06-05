@@ -313,7 +313,7 @@ class Preferences : AnkiActivity() {
                 col.setMod()
             }
         }
-        scheduleNotification(col.time, this)
+        scheduleNotification(col.clock, this)
     }
 
     fun updateNotificationPreference(listPreference: ListPreference) {
@@ -582,7 +582,7 @@ class Preferences : AnkiActivity() {
                         if (listPreference != null) {
                             preferencesActivity.updateNotificationPreference(listPreference)
                             if (listPreference.value.toInt() < PENDING_NOTIFICATIONS_ONLY) {
-                                scheduleNotification(preferencesActivity.col.time, preferencesActivity)
+                                scheduleNotification(preferencesActivity.col.clock, preferencesActivity)
                             } else {
                                 val intent = CompatHelper.compat.getImmutableBroadcastIntent(
                                     preferencesActivity, 0,

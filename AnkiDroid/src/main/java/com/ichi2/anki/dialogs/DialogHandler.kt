@@ -84,7 +84,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
             val res = mActivity.get()!!.resources
             val col = mActivity.get()!!.col
             val hkey = preferences.getString("hkey", "")
-            val millisecondsSinceLastSync = col.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
+            val millisecondsSinceLastSync = col.clock.intTimeMS() - preferences.getLong("lastSyncTime", 0)
             val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
             if (!limited && hkey!!.isNotEmpty() && Connection.isOnline()) {
                 deckPicker.sync()

@@ -440,7 +440,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
                 if (whiteboard != null) {
                     try {
-                        val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(col.time).path
+                        val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(col.clock).path
                         showThemedToast(this@Reviewer, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true)
                     } catch (e: Exception) {
                         Timber.w(e)

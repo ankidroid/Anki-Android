@@ -121,7 +121,7 @@ open class Card : Cloneable {
         render_output = null
         note = null
         // to flush, set nid, ord, and due
-        this.id = this.col.time.timestampID(this.col.db, "cards")
+        this.id = this.col.clock.timestampID(this.col.db, "cards")
         did = 1
         this.type = Consts.CARD_TYPE_NEW
         queue = Consts.QUEUE_TYPE_NEW
@@ -176,7 +176,7 @@ open class Card : Cloneable {
     @JvmOverloads
     fun flush(changeModUsn: Boolean = true) {
         if (changeModUsn) {
-            mod = col.time.intTime()
+            mod = col.clock.intTime()
             usn = col.usn()
         }
         assert(due < "4294967296".toLong())
@@ -206,7 +206,7 @@ open class Card : Cloneable {
     }
 
     fun flushSched() {
-        mod = col.time.intTime()
+        mod = col.clock.intTime()
         usn = col.usn()
         assert(due < "4294967296".toLong())
         val values = ContentValues()
@@ -280,7 +280,7 @@ open class Card : Cloneable {
     }
 
     fun startTimer() {
-        timerStarted = col.time.intTimeMS()
+        timerStarted = col.clock.intTimeMS()
     }
 
     /**
@@ -296,7 +296,7 @@ open class Card : Cloneable {
      */
     fun timeTaken(): Int {
         // Indeed an int. Difference between two big numbers is still small.
-        val total = (col.time.intTimeMS() - timerStarted).toInt()
+        val total = (col.clock.intTimeMS() - timerStarted).toInt()
         return Math.min(total, timeLimit())
     }
 
@@ -337,7 +337,7 @@ open class Card : Cloneable {
      * method when the session resumes to start counting review time again.
      */
     fun stopTimer() {
-        elapsedTime = col.time.intTimeMS() - timerStarted
+        elapsedTime = col.clock.intTimeMS() - timerStarted
     }
 
     /**
@@ -349,7 +349,7 @@ open class Card : Cloneable {
      * or the result of timeTaken() will be wrong.
      */
     fun resumeTimer() {
-        timerStarted = col.time.intTimeMS() - elapsedTime
+        timerStarted = col.clock.intTimeMS() - elapsedTime
     }
 
     @VisibleForTesting
@@ -442,7 +442,7 @@ open class Card : Cloneable {
         } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {
             return java.lang.Long.valueOf(due).toString()
         } else if (queue == Consts.QUEUE_TYPE_REV || queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || type == Consts.CARD_TYPE_REV && queue < 0) {
-            val time = col.time.intTime()
+            val time = col.clock.intTime()
             val nbDaySinceCreation = due - col.sched.today
             time + nbDaySinceCreation * Stats.SECONDS_PER_DAY
         } else {

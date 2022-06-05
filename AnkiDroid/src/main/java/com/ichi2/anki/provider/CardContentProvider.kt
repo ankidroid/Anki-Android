@@ -1137,7 +1137,7 @@ class CardContentProvider : ContentProvider() {
             try {
                 if (cardToAnswer != null) {
                     if (timeTaken != -1L) {
-                        cardToAnswer.timerStarted = col.time.intTimeMS() - timeTaken
+                        cardToAnswer.timerStarted = col.clock.intTimeMS() - timeTaken
                     }
                     sched.answerCard(cardToAnswer, ease)
                 }

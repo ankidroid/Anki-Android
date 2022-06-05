@@ -184,7 +184,7 @@ class Tags
                         res.add(
                             arrayOf(
                                 addToStr(tags, cur.getString(1)),
-                                col.time.intTime(),
+                                col.clock.intTime(),
                                 col.usn(),
                                 cur.getLong(0)
                             )
@@ -194,7 +194,7 @@ class Tags
                     while (cur.moveToNext()) {
                         res.add(
                             arrayOf(
-                                remFromStr(tags, cur.getString(1)), col.time.intTime(), col.usn(),
+                                remFromStr(tags, cur.getString(1)), col.clock.intTime(), col.usn(),
                                 cur.getLong(0)
                             )
                         )

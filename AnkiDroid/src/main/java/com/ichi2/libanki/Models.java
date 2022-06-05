@@ -179,7 +179,7 @@ public class Models extends ModelManager {
     @Override
     public void save(@Nullable Model m, boolean templates) {
         if (m != null && m.has("id")) {
-            m.put("mod", mCol.getTime().intTime());
+            m.put("mod", mCol.getClock().intTime());
             m.put("usn", mCol.usn());
             // TODO: fix empty id problem on _updaterequired (needed for model adding)
             if (!isModelNew(m)) {
@@ -292,7 +292,7 @@ public class Models extends ModelManager {
         // caller should call save() after modifying
         Model m = new Model(DEFAULT_MODEL);
         m.put("name", name);
-        m.put("mod", mCol.getTime().intTime());
+        m.put("mod", mCol.getClock().intTime());
         m.put("flds", new JSONArray());
         m.put("tmpls", new JSONArray());
         m.put("id", 0);
@@ -345,9 +345,9 @@ public class Models extends ModelManager {
 
 
     private void _setID(Model m) {
-        long id = mCol.getTime().intTimeMS();
+        long id = mCol.getClock().intTimeMS();
         while (mModels.containsKey(id)) {
-            id = mCol.getTime().intTimeMS();
+            id = mCol.getClock().intTimeMS();
         }
         m.put("id", id);
     }
@@ -629,7 +629,7 @@ public class Models extends ModelManager {
             while (cur.moveToNext()) {
                 r.add(new Object[] {
                         Utils.joinFields(fn.transform(Utils.splitFields(cur.getString(1)))),
-                        mCol.getTime().intTime(), mCol.usn(), cur.getLong(0)});
+                        mCol.getClock().intTime(), mCol.usn(), cur.getLong(0)});
             }
         }
         mCol.getDb().executeMany("update notes set flds=?,mod=?,usn=? where id = ?", r);
@@ -701,7 +701,7 @@ public class Models extends ModelManager {
         mCol.getDb()
             .execute(
                      "update cards set ord = ord - 1, usn = ?, mod = ? where nid in (select id from notes where mid = ?) and ord > ?",
-                     mCol.usn(), mCol.getTime().intTime(), m.getLong("id"), ord);
+                     mCol.usn(), mCol.getClock().intTime(), m.getLong("id"), ord);
         tmpls = m.getJSONArray("tmpls");
         JSONArray tmpls2 = new JSONArray();
         for (int i = 0; i < tmpls.length(); ++i) {
@@ -761,7 +761,7 @@ public class Models extends ModelManager {
         save(m);
         mCol.getDb().execute("update cards set ord = (case " + sb +
                              " end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
-                             mCol.usn(), mCol.getTime().intTime(), m.getLong("id"));
+                             mCol.usn(), mCol.getClock().intTime(), m.getLong("id"));
     }
 
     @SuppressWarnings("PMD.UnusedLocalVariable") // unused upstream as well
@@ -807,7 +807,7 @@ public class Models extends ModelManager {
             }
         }
         String joinedFlds = Utils.joinFields(flds2.toArray(new String[flds2.size()]));
-        mCol.getDb().execute("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", joinedFlds, mid, mCol.getTime().intTime(), mCol.usn(), nid);
+        mCol.getDb().execute("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", joinedFlds, mid, mCol.getClock().intTime(), mCol.usn(), nid);
         mCol.updateFieldCache(new long[] {nid});
     }
 
@@ -839,7 +839,7 @@ public class Models extends ModelManager {
                     newOrd = map.get(ord);
                 }
                 if (newOrd != null) {
-                    d.add(new Object[] { newOrd, mCol.usn(), mCol.getTime().intTime(), cid });
+                    d.add(new Object[] { newOrd, mCol.usn(), mCol.getClock().intTime(), cid });
                 } else {
                     deleted.add(cid);
                 }

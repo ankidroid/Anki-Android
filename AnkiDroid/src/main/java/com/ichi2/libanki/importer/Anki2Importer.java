@@ -414,7 +414,7 @@ public class Anki2Importer extends Importer {
                 // copy it over
                 Model model = srcModel.deepClone();
                 model.put("id", mid);
-                model.put("mod", mCol.getTime().intTime());
+                model.put("mod", mCol.getClock().intTime());
                 model.put("usn", mCol.usn());
                 mDst.getModels().update(model);
                 break;
@@ -426,7 +426,7 @@ public class Anki2Importer extends Importer {
                 // they do; we can reuse this mid
                 Model model = srcModel.deepClone();
                 model.put("id", mid);
-                model.put("mod", mCol.getTime().intTime());
+                model.put("mod", mCol.getClock().intTime());
                 model.put("usn", mCol.usn());
                 mDst.getModels().update(model);
                 break;
@@ -595,7 +595,7 @@ public class Anki2Importer extends Importer {
                 // update cid, nid, etc
                 long nid = mNotes.get(guid).mNid;
                 did = _did(did);
-                long mod = mCol.getTime().intTime();
+                long mod = mCol.getClock().intTime();
                 // review cards have a due date relative to collection
                 if (queue == QUEUE_TYPE_REV || queue == QUEUE_TYPE_DAY_LEARN_RELEARN || type == CARD_TYPE_REV) {
                     due -= aheadBy;

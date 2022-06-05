@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object TimeUtils {
-    fun getTimestamp(time: Time): String {
-        return SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
+    fun getTimestamp(clock: Clock): String {
+        return SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(clock.currentDate)
     }
 }

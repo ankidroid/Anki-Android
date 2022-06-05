@@ -27,12 +27,12 @@ import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public class TimePreferenceTest {
+public class ClockPreferenceTest {
     private final String mParsableHour;
     private final int mExpectedHour;
 
 
-    public TimePreferenceTest(String parsableHour, int expectedHour) {
+    public ClockPreferenceTest(String parsableHour, int expectedHour) {
         this.mParsableHour = parsableHour;
         this.mExpectedHour = expectedHour;
     }

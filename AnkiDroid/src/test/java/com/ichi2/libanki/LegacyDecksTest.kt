@@ -110,7 +110,7 @@ class LegacyDecksTest : RobolectricTest() {
             defaultDeck.put("id", 1)
             defaultDeck.put("name", "Default")
             defaultDeck.put("conf", 1)
-            defaultDeck.put("mod", col.time.intTime())
+            defaultDeck.put("mod", col.clock.intTime())
 
             val allDecks = JSONObject()
             allDecks.put("1", defaultDeck)

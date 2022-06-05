@@ -47,7 +47,7 @@ import com.ichi2.libanki.DeckConfig;
 
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
-import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.utils.Clock;
 import com.ichi2.utils.Assert;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
@@ -3174,8 +3174,8 @@ public class SchedV2 extends AbstractSched {
 
 
     @NonNull
-    public Time getTime() {
-        return mCol.getTime();
+    public Clock getTime() {
+        return mCol.getClock();
     }
 
 

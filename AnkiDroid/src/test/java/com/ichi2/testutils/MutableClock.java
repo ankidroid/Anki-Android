@@ -16,20 +16,20 @@
 
 package com.ichi2.testutils;
 
-public class MutableTime extends MockTime {
+public class MutableClock extends MockClock {
     private boolean mFrozen;
 
 
-    public MutableTime(long time) {
+    public MutableClock(long time) {
         super(time);
     }
 
 
-    public MutableTime(long time, int step) {
+    public MutableClock(long time, int step) {
         super(time, step);
     }
-    public MutableTime(int year, int month, int date, int hourOfDay, int minute,
-                       int second, int milliseconds, int step)  {
+    public MutableClock(int year, int month, int date, int hourOfDay, int minute,
+                        int second, int milliseconds, int step)  {
         super(year, month, date, hourOfDay, minute, second, milliseconds, step);
     }
 

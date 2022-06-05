@@ -30,7 +30,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.utils.SystemTime;
-import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.utils.Clock;
 import com.ichi2.preferences.PreferenceExtensions;
 import com.ichi2.utils.FileUtil;
 
@@ -133,15 +133,15 @@ public class CollectionHelper {
      *
      * path should be tested with File.exists() and File.canWrite() before this is called
      */
-    private Collection openCollection(Context context, @NonNull Time time, String path) {
+    private Collection openCollection(Context context, @NonNull Clock clock, String path) {
         Timber.i("Begin openCollection: %s", path);
-        Collection collection = Storage.Collection(context, path, false, true, time);
+        Collection collection = Storage.Collection(context, path, false, true, clock);
         Timber.i("End openCollection: %s", path);
         return collection;
     }
 
     @VisibleForTesting
-    public synchronized Collection getCol(Context context, @NonNull Time time) {
+    public synchronized Collection getCol(Context context, @NonNull Clock clock) {
         // Open collection
         if (!colIsOpen()) {
             String path = getCollectionPath(context);
@@ -154,7 +154,7 @@ public class CollectionHelper {
                 return null;
             }
             // Open the database
-            mCollection = openCollection(context, time, path);
+            mCollection = openCollection(context, clock, path);
         }
         return mCollection;
     }
@@ -185,9 +185,9 @@ public class CollectionHelper {
     }
 
     /** Collection time if possible, otherwise real time.*/
-    public synchronized Time getTimeSafe(Context context) {
+    public synchronized Clock getTimeSafe(Context context) {
         try {
-            return getCol(context).getTime();
+            return getCol(context).getClock();
         } catch (Exception e) {
             Timber.w(e);
             return new SystemTime();

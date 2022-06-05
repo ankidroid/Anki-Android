@@ -43,7 +43,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfig
-import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.Clock
 import com.ichi2.preferences.NumberRangePreference
 import com.ichi2.preferences.StepsPreference
 import com.ichi2.preferences.TimePreference
@@ -306,7 +306,7 @@ class DeckOptions :
 
                                 alarmManager.cancel(reminderIntent)
                                 if (value as Boolean) {
-                                    val calendar = reminderToCalendar(col.time, reminder)
+                                    val calendar = reminderToCalendar(col.clock, reminder)
 
                                     alarmManager.setRepeating(
                                         AlarmManager.RTC_WAKEUP,
@@ -342,7 +342,7 @@ class DeckOptions :
                                 )
                                 alarmManager.cancel(reminderIntent)
 
-                                val calendar = reminderToCalendar(col.time, reminder)
+                                val calendar = reminderToCalendar(col.clock, reminder)
 
                                 alarmManager.setRepeating(
                                     AlarmManager.RTC_WAKEUP,
@@ -779,9 +779,9 @@ class DeckOptions :
     }
 
     companion object {
-        fun reminderToCalendar(time: Time, reminder: JSONObject): Calendar {
+        fun reminderToCalendar(clock: Clock, reminder: JSONObject): Calendar {
 
-            val calendar = time.calendar()
+            val calendar = clock.calendar()
 
             calendar[Calendar.HOUR_OF_DAY] = reminder.getJSONArray("time").getInt(0)
             calendar[Calendar.MINUTE] = reminder.getJSONArray("time").getInt(1)

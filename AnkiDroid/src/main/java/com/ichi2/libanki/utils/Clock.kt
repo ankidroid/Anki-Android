@@ -26,7 +26,7 @@ import java.sql.Date as SqlDate
 import java.util.Date as UtilDate
 
 /** Allows injection of time dependencies  */
-abstract class Time {
+abstract class Clock {
     /** Date of this time  */
     val currentDate: UtilDate
         get() = UtilDate(intTimeMS())
