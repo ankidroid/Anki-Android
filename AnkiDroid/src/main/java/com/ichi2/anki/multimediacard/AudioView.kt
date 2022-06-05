@@ -242,7 +242,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
         }
     }
 
-    protected inner class StopButton(context: Context?) : AppCompatImageButton(context!!) {
+    protected inner class StopButton(context: Context) : AppCompatImageButton(context) {
         private val mOnClickListener = OnClickListener {
             when (status) {
                 Status.PAUSED, Status.PLAYING -> {
