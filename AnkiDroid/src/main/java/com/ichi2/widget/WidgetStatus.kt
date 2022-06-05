@@ -60,8 +60,8 @@ object WidgetStatus {
     /** Returns the status of each of the decks.  */
     @JvmStatic
     @KotlinCleanup("make context non-null")
-    fun fetchSmall(context: Context?): IntArray {
-        return MetaDB.getWidgetSmallStatus(context!!)
+    fun fetchSmall(context: Context): IntArray {
+        return MetaDB.getWidgetSmallStatus(context)
     }
 
     @KotlinCleanup("make context non-null")
