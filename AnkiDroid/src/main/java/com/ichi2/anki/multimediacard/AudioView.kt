@@ -266,7 +266,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
         }
     }
 
-    protected inner class RecordButton(context: Context?) : AppCompatImageButton(context!!) {
+    protected inner class RecordButton(context: Context) : AppCompatImageButton(context) {
         private val mOnClickListener: OnClickListener = object : OnClickListener {
             override fun onClick(v: View) {
                 // Since mAudioPath is not compulsory, we check if it exists
