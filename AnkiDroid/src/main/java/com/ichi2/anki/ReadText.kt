@@ -253,9 +253,9 @@ object ReadText {
                 if (!availableTtsLocales.isEmpty()) {
                     // notify the reviewer that TTS has been initialized
                     Timber.d("TTS initialized and available languages found")
-                    (mReviewer!!.get() as AbstractFlashcardViewer?)!!.ttsInitialized()
+                    (context as AbstractFlashcardViewer?)!!.ttsInitialized()
                 } else {
-                    showThemedToast(mReviewer!!.get(), mReviewer!!.get()!!.getString(R.string.no_tts_available_message), false)
+                    showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
                     Timber.w("TTS initialized but no available languages found")
                 }
                 textToSpeech!!.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
@@ -266,8 +266,8 @@ object ReadText {
                     @Deprecated("")
                     override fun onError(utteranceId: String) {
                         Timber.v("Android TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.")
-                        val helpUrl = Uri.parse(mReviewer!!.get()!!.getString(R.string.link_faq_tts))
-                        val ankiActivity = mReviewer!!.get() as AnkiActivity?
+                        val helpUrl = Uri.parse(context.getString(R.string.link_faq_tts))
+                        val ankiActivity = context as AnkiActivity?
                         ankiActivity!!.mayOpenUrl(helpUrl)
                         showSnackbar(
                             ankiActivity, R.string.no_tts_available_message, false, R.string.help,
@@ -281,7 +281,7 @@ object ReadText {
                     }
                 })
             } else {
-                showThemedToast(mReviewer!!.get(), mReviewer!!.get()!!.getString(R.string.no_tts_available_message), false)
+                showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
                 Timber.w("TTS not successfully initialized")
             }
         }
