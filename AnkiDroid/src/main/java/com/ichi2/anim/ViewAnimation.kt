@@ -80,13 +80,13 @@ object ViewAnimation {
         FADE_OUT(1f);
     }
     @JvmStatic
-    fun fade(type: Fade, duration: Int, offset: Int): Animation {
-        val animation: Animation = AlphaAnimation(type.originalAlpha, 1.0f - type.originalAlpha)
-        animation.duration = duration.toLong()
-        if (type == Fade.FADE_IN) {
-            animation.zAdjustment = Animation.ZORDER_TOP
+    fun fade(type: Fade, duration: Int, offset: Int) =
+        AlphaAnimation(type.originalAlpha, 1.0f - type.originalAlpha).apply {
+            this.duration = duration.toLong()
+
+            if (type == Fade.FADE_IN) {
+                zAdjustment = Animation.ZORDER_TOP
+            }
+            startOffset = offset.toLong()
         }
-        animation.startOffset = offset.toLong()
-        return animation
-    }
 }
