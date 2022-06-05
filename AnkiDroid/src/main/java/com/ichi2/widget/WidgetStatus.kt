@@ -65,8 +65,8 @@ object WidgetStatus {
     }
 
     @KotlinCleanup("make context non-null")
-    fun fetchDue(context: Context?): Int {
-        return MetaDB.getNotificationStatus(context!!)
+    fun fetchDue(context: Context): Int {
+        return MetaDB.getNotificationStatus(context)
     }
 
     private class UpdateDeckStatusAsyncTask : BaseAsyncTask<Context?, Void?, Context?>() {
