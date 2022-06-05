@@ -105,9 +105,9 @@ object Themes {
 
     @JvmStatic
     @ColorInt
-    fun getColorFromAttr(context: Context?, colorAttr: Int): Int {
+    fun getColorFromAttr(context: Context, colorAttr: Int): Int {
         val attrs = intArrayOf(colorAttr)
-        return getColorFromAttr(context!!, attrs)[0]
+        return getColorFromAttr(context, attrs)[0]
     }
 
     @JvmStatic
