@@ -282,7 +282,7 @@ class Previewer : AbstractFlashcardViewer() {
 
     companion object {
         @CheckResult
-        fun getPreviewIntent(context: Context?, index: Int, cardList: LongArray?): Intent {
+        fun getPreviewIntent(context: Context, index: Int, cardList: LongArray?): Intent {
             val intent = Intent(context, Previewer::class.java)
             intent.putExtra("index", index)
             intent.putExtra("cardList", cardList)
