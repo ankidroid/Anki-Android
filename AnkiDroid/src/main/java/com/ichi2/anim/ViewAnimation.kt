@@ -7,18 +7,21 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.TranslateAnimation
+import com.ichi2.anim.ViewAnimation.Slide.*
 
 object ViewAnimation {
-    const val SLIDE_IN_FROM_RIGHT = 0
-    const val SLIDE_OUT_TO_RIGHT = 1
-    const val SLIDE_IN_FROM_LEFT = 2
-    const val SLIDE_OUT_TO_LEFT = 3
-    const val SLIDE_IN_FROM_BOTTOM = 4
-    const val SLIDE_IN_FROM_TOP = 5
+    enum class Slide {
+        SLIDE_IN_FROM_RIGHT,
+        SLIDE_OUT_TO_RIGHT,
+        SLIDE_IN_FROM_LEFT,
+        SLIDE_OUT_TO_LEFT,
+        SLIDE_IN_FROM_BOTTOM,
+        SLIDE_IN_FROM_TOP;
+    }
     const val FADE_IN = 0
     const val FADE_OUT = 1
-    fun slide(type: Int, duration: Int, offset: Int): Animation? {
-        val animation: Animation?
+    fun slide(type: Slide, duration: Int, offset: Int): Animation {
+        val animation: Animation
         when (type) {
             SLIDE_IN_FROM_RIGHT -> {
                 animation = TranslateAnimation(
@@ -62,9 +65,8 @@ object ViewAnimation {
                 )
                 animation.setInterpolator(DecelerateInterpolator())
             }
-            else -> animation = null
         }
-        animation!!.duration = duration.toLong()
+        animation.duration = duration.toLong()
         animation.startOffset = offset.toLong()
         return animation
     }
