@@ -226,7 +226,7 @@ class DeckSpinnerSelection(
      * Displays a [DeckSelectionDialog]
      */
     fun displayDeckSelectionDialog(col: Collection?) {
-        val nonDynamic = FunctionalInterfaces.Filter { d: Deck? -> !Decks.isDynamic(d) }
+        val nonDynamic = FunctionalInterfaces.Filter { d: Deck -> !Decks.isDynamic(d) }
         val decks = fromCollection(col!!, nonDynamic).toMutableList()
         if (showAllDecks) {
             decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
