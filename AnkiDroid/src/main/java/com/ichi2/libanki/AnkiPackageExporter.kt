@@ -35,7 +35,7 @@ import java.io.*
 @KotlinCleanup("lots in this file")
 open class Exporter {
     @JvmField
-    protected val mCol: Collection
+    protected val col: Collection
 
     /**
      * If set exporter will export only this deck, otherwise will export all cards
@@ -52,7 +52,7 @@ open class Exporter {
      * @param col deck collection
      */
     constructor(col: Collection) {
-        mCol = col
+        this.col = col
         mDid = null
     }
 
@@ -63,7 +63,7 @@ open class Exporter {
      * @param did deck id
      */
     constructor(col: Collection, did: Long) {
-        mCol = col
+        this.col = col
         mDid = did
     }
 
@@ -75,9 +75,9 @@ open class Exporter {
     fun cardIds(): Array<Long> {
         val cids: Array<Long>
         cids = if (mDid == null) {
-            Utils.list2ObjectArray(mCol.db.queryLongList("select id from cards"))
+            Utils.list2ObjectArray(col.db.queryLongList("select id from cards"))
         } else {
-            Utils.list2ObjectArray(mCol.decks.cids(mDid, true))
+            Utils.list2ObjectArray(col.decks.cids(mDid, true))
         }
         mCount = cids.size
         return cids
@@ -176,7 +176,7 @@ open class AnkiExporter : Exporter {
         // create a new collection at the target
         File(path).delete()
         val dst = Storage.Collection(context, path)
-        mSrc = mCol
+        mSrc = col
         // find cards
         val cids: Array<Long> = cardIds()
         // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
@@ -391,7 +391,7 @@ class AnkiPackageExporter : AnkiExporter {
     override fun exportInto(path: String, context: Context) {
         // sched info+v2 scheduler not compatible w/ older clients
         Timber.i("Starting export into %s", path)
-        _v2sched = mCol.schedVer() != 1 && includeSched
+        _v2sched = col.schedVer() != 1 && includeSched
 
         // open a zip file
         val z = ZipFile(path)
@@ -412,20 +412,20 @@ class AnkiPackageExporter : AnkiExporter {
     @Throws(IOException::class)
     private fun exportVerbatim(z: ZipFile, context: Context): JSONObject {
         // close our deck & write it into the zip file, and reopen
-        mCount = mCol.cardCount()
-        mCol.close()
+        mCount = col.cardCount()
+        col.close()
         if (!_v2sched) {
-            z.write(mCol.path, CollectionHelper.COLLECTION_FILENAME)
+            z.write(col.path, CollectionHelper.COLLECTION_FILENAME)
         } else {
             _addDummyCollection(z, context)
-            z.write(mCol.path, "collection.anki21")
+            z.write(col.path, "collection.anki21")
         }
-        mCol.reopen()
+        col.reopen()
         // copy all media
         if (!includeMedia) {
             return JSONObject()
         }
-        val mdir = File(mCol.media.dir())
+        val mdir = File(col.media.dir())
         return if (mdir.exists() && mdir.isDirectory) {
             val mediaFiles = mdir.listFiles()!!
             _exportMedia(z, mediaFiles, ValidateFiles.SKIP_VALIDATION)
@@ -475,7 +475,7 @@ class AnkiPackageExporter : AnkiExporter {
         z.write(colfile, CollectionHelper.COLLECTION_FILENAME)
         // and media
         prepareMedia()
-        val media = _exportMedia(z, mMediaFiles, mCol.media.dir())
+        val media = _exportMedia(z, mMediaFiles, col.media.dir())
         // tidy up intermediate files
         SQLiteDatabase.deleteDatabase(File(colfile))
         SQLiteDatabase.deleteDatabase(File(path.replace(".apkg", ".media.ad.db2")))

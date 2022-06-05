@@ -42,7 +42,7 @@ class TextCardExporter : Exporter {
         Arrays.sort(ids)
         val out = StringBuilder()
         for (cid in ids) {
-            val c = mCol.getCard(cid)
+            val c = col.getCard(cid)
             @KotlinCleanup("use a string template to reduce to a single append() call")
             out.append(esc(c.q()))
             out.append("\t")
