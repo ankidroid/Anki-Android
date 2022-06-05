@@ -108,9 +108,7 @@ open class Exporter(@JvmField protected val col: Collection, protected val did: 
     }
 }
 
-open class AnkiExporter : Exporter {
-    protected val includeSched: Boolean
-    protected val includeMedia: Boolean
+open class AnkiExporter(col: Collection, did: Long?, val includeSched: Boolean, val includeMedia: Boolean) : Exporter(col, did) {
     var mediaDir: String? = null
 
     // Actual capacity will be set when known, if media are imported.
@@ -126,23 +124,7 @@ open class AnkiExporter : Exporter {
      * @param includeSched should include scheduling
      * @param includeMedia should include media
      */
-    constructor(col: Collection, includeSched: Boolean, includeMedia: Boolean) : super(col) {
-        this.includeSched = includeSched
-        this.includeMedia = includeMedia
-    }
-
-    /**
-     * An exporter for the selected deck
-     *
-     * @param col deck collection
-     * @param did selected deck id
-     * @param includeSched should include scheduling
-     * @param includeMedia should include media
-     */
-    constructor(col: Collection, did: Long, includeSched: Boolean, includeMedia: Boolean) : super(col, did) {
-        this.includeSched = includeSched
-        this.includeMedia = includeMedia
-    }
+    constructor(col: Collection, includeSched: Boolean, includeMedia: Boolean) : this(col, null, includeSched, includeMedia)
 
     /**
      * Export source database into new destination database Note: The following python syntax isn't supported in
