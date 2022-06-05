@@ -33,14 +33,11 @@ import timber.log.Timber
 import java.io.*
 
 @KotlinCleanup("lots in this file")
-open class Exporter {
-    @JvmField
-    protected val col: Collection
+open class Exporter(@JvmField protected val col: Collection, protected val did: Long?) {
 
     /**
      * If set exporter will export only this deck, otherwise will export all cards
      */
-    protected val did: Long?
     @JvmField
     protected var mCount = 0
     @JvmField
@@ -51,21 +48,7 @@ open class Exporter {
      *
      * @param col deck collection
      */
-    constructor(col: Collection) {
-        this.col = col
-        did = null
-    }
-
-    /**
-     * An exporter for the content of a deck
-     *
-     * @param col deck collection
-     * @param did deck id
-     */
-    constructor(col: Collection, did: Long) {
-        this.col = col
-        this.did = did
-    }
+    constructor(col: Collection) : this(col, null)
 
     /**
      * Fetches the ids of cards to be exported
