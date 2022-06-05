@@ -115,7 +115,7 @@ class SharedDecksDownloadFragment : Fragment() {
 
         mImportDeckButton.setOnClickListener {
             Timber.i("Import deck button clicked")
-            openDownloadedDeck(context)
+            openDownloadedDeck(requireContext())
         }
 
         mTryAgainButton.setOnClickListener {
@@ -257,7 +257,7 @@ class SharedDecksDownloadFragment : Fragment() {
             }
 
             Timber.i("Opening downloaded deck for import")
-            openDownloadedDeck(context)
+            openDownloadedDeck(context!!)
 
             Timber.d("Checking download status and unregistering receiver")
             checkDownloadStatusAndUnregisterReceiver(isSuccessful = true)
@@ -371,23 +371,22 @@ class SharedDecksDownloadFragment : Fragment() {
     /**
      * Open the downloaded deck using 'mFileName'.
      */
-    private fun openDownloadedDeck(context: Context?) {
+    private fun openDownloadedDeck(context: Context) {
         val mimeType = URLConnection.guessContentTypeFromName(mFileName)
         val fileIntent = Intent(context, IntentHandler::class.java)
         fileIntent.action = Intent.ACTION_VIEW
 
-        val fileUri = context?.let {
+        val fileUri =
             FileProvider.getUriForFile(
-                it,
-                it.applicationContext?.packageName + ".apkgfileprovider",
-                File(it.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), mFileName.toString())
+                context,
+                context.applicationContext?.packageName + ".apkgfileprovider",
+                File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), mFileName.toString())
             )
-        }
         Timber.d("File URI -> $fileUri")
         fileIntent.setDataAndType(fileUri, mimeType)
         fileIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         try {
-            context?.startActivity(fileIntent)
+            context.startActivity(fileIntent)
         } catch (e: ActivityNotFoundException) {
             UIUtils.showThemedToast(context, R.string.something_wrong, false)
             Timber.w(e)
