@@ -21,32 +21,23 @@ import java.io.IOException
 import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
 
-class TextNoteExporter : Exporter {
-    private val includedTags: Boolean
-    private val includeID: Boolean
+class TextNoteExporter(
+    col: Collection,
+    did: Long?,
+    val includeID: Boolean,
+    val includedTags: Boolean,
+    includeHTML: Boolean
+) : Exporter(col, did) {
+    init {
+        mIncludeHTML = includeHTML
+    }
 
     constructor(
         col: Collection,
         includeID: Boolean,
         includedTags: Boolean,
         includeHTML: Boolean
-    ) : super(col) {
-        this.includedTags = includedTags
-        mIncludeHTML = includeHTML
-        this.includeID = includeID
-    }
-
-    constructor(
-        col: Collection,
-        did: Long,
-        includeID: Boolean,
-        includedTags: Boolean,
-        includeHTML: Boolean
-    ) : super(col, did) {
-        this.includedTags = includedTags
-        mIncludeHTML = includeHTML
-        this.includeID = includeID
-    }
+    ) : this(col, null, includeID, includedTags, includeHTML)
 
     @Throws(IOException::class)
     fun doExport(path: String?) {
