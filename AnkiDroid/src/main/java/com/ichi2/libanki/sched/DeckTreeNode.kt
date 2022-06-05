@@ -19,7 +19,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.utils.KotlinCleanup
 
 @KotlinCleanup("confusing nullability for col, verify real nullability after code related to scheduling is fully migrated to kotlin")
-class DeckTreeNode(col: Collection?, name: String, did: Long) : AbstractDeckTreeNode(col!!, name, did) {
+class DeckTreeNode(col: Collection, name: String, did: Long) : AbstractDeckTreeNode(col, name, did) {
     override fun processChildren(children: List<AbstractDeckTreeNode>, addRev: Boolean) {
         // intentionally blank
     }
