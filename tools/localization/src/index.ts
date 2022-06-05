@@ -1,1 +1,3 @@
-console.log("AnkiDroid Localization");
+import { uploadI18nFiles } from "./upload";
+
+uploadI18nFiles();
