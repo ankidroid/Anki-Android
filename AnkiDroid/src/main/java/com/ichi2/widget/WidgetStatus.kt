@@ -33,7 +33,7 @@ object WidgetStatus {
     private var sSmallWidgetEnabled = false
 
     @Suppress("deprecation") // #7108: AsyncTask
-    private var sUpdateDeckStatusAsyncTask: android.os.AsyncTask<Context?, Void?, Context?>? = null
+    private var sUpdateDeckStatusAsyncTask: android.os.AsyncTask<Context, Void?, Context>? = null
 
     /**
      * Request the widget to update its status.
@@ -69,9 +69,9 @@ object WidgetStatus {
         return MetaDB.getNotificationStatus(context)
     }
 
-    private class UpdateDeckStatusAsyncTask : BaseAsyncTask<Context?, Void?, Context?>() {
+    private class UpdateDeckStatusAsyncTask : BaseAsyncTask<Context, Void?, Context>() {
         @Suppress("deprecation") // #7108: AsyncTask
-        override fun doInBackground(vararg arg0: Context?): Context? {
+        override fun doInBackground(vararg arg0: Context): Context {
             super.doInBackground(*arg0)
             Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()")
             val context = arg0[0]
@@ -79,7 +79,7 @@ object WidgetStatus {
                 return context
             }
             try {
-                updateCounts(context!!)
+                updateCounts(context)
             } catch (e: Exception) {
                 Timber.e(e, "Could not update widget")
             }
@@ -88,10 +88,10 @@ object WidgetStatus {
 
         @Suppress("deprecation") // #7108: AsyncTask
         @KotlinCleanup("make result non-null")
-        override fun onPostExecute(result: Context?) {
+        override fun onPostExecute(result: Context) {
             super.onPostExecute(result)
             Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.onPostExecute()")
-            MetaDB.storeSmallWidgetStatus(result!!, sSmallWidgetStatus)
+            MetaDB.storeSmallWidgetStatus(result, sSmallWidgetStatus)
             if (sSmallWidgetEnabled) {
                 UpdateService().doUpdate(result)
             }
