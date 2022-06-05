@@ -57,7 +57,7 @@ class TextNoteExporter : Exporter {
             Utils.ids2str(cardIds())
         )
         val data: MutableList<String?> = ArrayList()
-        mCol.db.query(queryStr).use { cursor ->
+        col.db.query(queryStr).use { cursor ->
             while (cursor.moveToNext()) {
                 val id = cursor.getString(0)
                 val flds = cursor.getString(1)
