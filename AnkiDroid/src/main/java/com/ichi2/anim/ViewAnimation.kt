@@ -28,42 +28,48 @@ object ViewAnimation {
                     Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
                 )
-                animation.setInterpolator(DecelerateInterpolator())
             }
             SLIDE_OUT_TO_RIGHT -> {
                 animation = TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, +1.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
                 )
-                animation.setInterpolator(AccelerateInterpolator())
             }
             SLIDE_IN_FROM_LEFT -> {
                 animation = TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
                 )
-                animation.setInterpolator(DecelerateInterpolator())
             }
             SLIDE_OUT_TO_LEFT -> {
                 animation = TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
                 )
-                animation.setInterpolator(AccelerateInterpolator())
             }
             SLIDE_IN_FROM_BOTTOM -> {
                 animation = TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f
                 )
-                animation.setInterpolator(DecelerateInterpolator())
             }
             SLIDE_IN_FROM_TOP -> {
                 animation = TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f
                 )
+            }
+        }
+        // can't factorize setInterpolator out due to some typing issue in API 21.
+        when (type) {
+            SLIDE_IN_FROM_BOTTOM,
+            SLIDE_IN_FROM_LEFT,
+            SLIDE_IN_FROM_RIGHT,
+            SLIDE_IN_FROM_TOP -> {
                 animation.setInterpolator(DecelerateInterpolator())
+            }
+            SLIDE_OUT_TO_LEFT, SLIDE_OUT_TO_RIGHT -> {
+                animation.setInterpolator(AccelerateInterpolator())
             }
         }
         animation.duration = duration.toLong()
