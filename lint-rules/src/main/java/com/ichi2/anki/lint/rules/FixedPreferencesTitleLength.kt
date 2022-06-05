@@ -35,10 +35,10 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
         private const val PREFERENCE_TITLE_MAX_LENGTH = 41
 
         @VisibleForTesting
-        val DESCRIPTION_TITLE_LENGTH = String.format("Preference titles should be less than %d characters", PREFERENCE_TITLE_MAX_LENGTH)
+        val DESCRIPTION_TITLE_LENGTH = "Preference titles should be less than $PREFERENCE_TITLE_MAX_LENGTH characters"
 
         @VisibleForTesting
-        val DESCRIPTION_MAX_LENGTH = String.format("Preference titles should contain maxLength=\"%d\" attribute", PREFERENCE_TITLE_MAX_LENGTH)
+        val DESCRIPTION_MAX_LENGTH = """Preference titles should contain maxLength="$PREFERENCE_TITLE_MAX_LENGTH" attribute"""
 
         // Around 42 is a hard max on emulators, likely smaller in reality, so use a buffer
         private const val EXPLANATION_TITLE_LENGTH =
