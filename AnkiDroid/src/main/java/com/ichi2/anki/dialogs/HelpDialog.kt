@@ -98,7 +98,7 @@ object HelpDialog {
     }
 
     @JvmStatic
-    fun createInstanceForSupportAnkiDroid(context: Context?): DialogFragment {
+    fun createInstanceForSupportAnkiDroid(context: Context): DialogFragment {
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_SUPPORT_ANKIDROID)
         val rateAppItem = RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE)
         val allItems = arrayOf(
@@ -117,7 +117,7 @@ object HelpDialog {
             )
         )
         val itemList = ArrayList(listOf(*allItems))
-        if (!canOpenIntent(context!!, AnkiDroidApp.getMarketIntent(context))) {
+        if (!canOpenIntent(context, AnkiDroidApp.getMarketIntent(context))) {
             itemList.remove(rateAppItem)
         }
         return createInstance(itemList, R.string.help_title_support_ankidroid)
