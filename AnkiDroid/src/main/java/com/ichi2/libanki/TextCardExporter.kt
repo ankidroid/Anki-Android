@@ -20,15 +20,11 @@ import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
 import java.util.*
 
-@KotlinCleanup("add a default constructor for the class")
-class TextCardExporter : Exporter {
-    constructor(col: Collection, includeHTML: Boolean) : super(col) {
+class TextCardExporter(col: Collection, did: Long?, includeHTML: Boolean) : Exporter(col, did) {
+    init {
         mIncludeHTML = includeHTML
     }
-
-    constructor(col: Collection, did: Long, includeHTML: Boolean) : super(col, did) {
-        mIncludeHTML = includeHTML
-    }
+    constructor(col: Collection, includeHTML: Boolean) : this(col, null, includeHTML)
 
     /**
      * Exports into a csv(tsv) file
