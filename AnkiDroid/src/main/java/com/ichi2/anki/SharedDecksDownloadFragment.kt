@@ -177,7 +177,7 @@ class SharedDecksDownloadFragment : Fragment() {
      * When onReceive() is called, open the deck file in AnkiDroid to import it.
      */
     private var mOnComplete: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
+        override fun onReceive(context: Context, intent: Intent?) {
             Timber.i("Download might be complete now, verify and continue with import")
 
             fun verifyDeckIsImportable() {
@@ -257,7 +257,7 @@ class SharedDecksDownloadFragment : Fragment() {
             }
 
             Timber.i("Opening downloaded deck for import")
-            openDownloadedDeck(context!!)
+            openDownloadedDeck(context)
 
             Timber.d("Checking download status and unregistering receiver")
             checkDownloadStatusAndUnregisterReceiver(isSuccessful = true)
