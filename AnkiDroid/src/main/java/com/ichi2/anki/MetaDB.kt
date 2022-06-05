@@ -120,8 +120,8 @@ object MetaDB {
         }
     }
 
-    private fun updateWidgetStatus(metaDb: SQLiteDatabase?) {
-        val columnCount = DatabaseUtil.getTableColumnCount(metaDb!!, "widgetStatus")
+    private fun updateWidgetStatus(metaDb: SQLiteDatabase) {
+        val columnCount = DatabaseUtil.getTableColumnCount(metaDb, "widgetStatus")
         if (columnCount > 0) {
             if (columnCount < 7) {
                 metaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'")
