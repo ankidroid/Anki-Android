@@ -801,7 +801,7 @@ class AdvancedStatistics {
     /**
      * Stores global settings.
      */
-    private class Settings(context: Context?) {
+    private class Settings(context: Context) {
         val computeNDays: Int
         val computeMaxError: Double
         val simulateNIterations: Int

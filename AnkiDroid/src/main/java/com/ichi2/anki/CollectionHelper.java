@@ -260,7 +260,7 @@ public class CollectionHelper {
      * @return whether or not dir is accessible
      * @param context to get directory with
      */
-    public static boolean isCurrentAnkiDroidDirAccessible(Context context) {
+    public static boolean isCurrentAnkiDroidDirAccessible(@NonNull Context context) {
         try {
             initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory(context));
             return true;
@@ -404,7 +404,7 @@ public class CollectionHelper {
     /**
      * @return the absolute path to the AnkiDroid directory.
      */
-    public static String getCurrentAnkiDroidDirectory(Context context) {
+    public static String getCurrentAnkiDroidDirectory(@NonNull Context context) {
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(context);
         if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
             // create an "androidTest" directory inside the current collection directory which contains the test data
