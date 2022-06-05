@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets
 
 class TextNoteExporter : Exporter {
     private val includedTags: Boolean
-    private val mIncludeID: Boolean
+    private val includeID: Boolean
 
     constructor(
         col: Collection,
@@ -33,7 +33,7 @@ class TextNoteExporter : Exporter {
     ) : super(col) {
         this.includedTags = includedTags
         mIncludeHTML = includeHTML
-        mIncludeID = includeID
+        this.includeID = includeID
     }
 
     constructor(
@@ -45,7 +45,7 @@ class TextNoteExporter : Exporter {
     ) : super(col, did) {
         this.includedTags = includedTags
         mIncludeHTML = includeHTML
-        mIncludeID = includeID
+        this.includeID = includeID
     }
 
     @Throws(IOException::class)
@@ -63,7 +63,7 @@ class TextNoteExporter : Exporter {
                 val flds = cursor.getString(1)
                 val tags = cursor.getString(2)
                 val row: MutableList<String?> = ArrayList()
-                if (mIncludeID) {
+                if (includeID) {
                     row.add(id)
                 }
                 for (field in Utils.splitFields(flds)) {
