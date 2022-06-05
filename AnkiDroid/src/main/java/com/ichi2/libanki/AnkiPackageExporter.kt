@@ -40,7 +40,7 @@ open class Exporter {
     /**
      * If set exporter will export only this deck, otherwise will export all cards
      */
-    protected val mDid: Long?
+    protected val did: Long?
     @JvmField
     protected var mCount = 0
     @JvmField
@@ -53,7 +53,7 @@ open class Exporter {
      */
     constructor(col: Collection) {
         this.col = col
-        mDid = null
+        did = null
     }
 
     /**
@@ -64,7 +64,7 @@ open class Exporter {
      */
     constructor(col: Collection, did: Long) {
         this.col = col
-        mDid = did
+        this.did = did
     }
 
     /**
@@ -74,10 +74,10 @@ open class Exporter {
      */
     fun cardIds(): Array<Long> {
         val cids: Array<Long>
-        cids = if (mDid == null) {
+        cids = if (did == null) {
             Utils.list2ObjectArray(col.db.queryLongList("select id from cards"))
         } else {
-            Utils.list2ObjectArray(col.decks.cids(mDid, true))
+            Utils.list2ObjectArray(col.decks.cids(did, true))
         }
         mCount = cids.size
         return cids
@@ -242,9 +242,9 @@ open class AnkiExporter : Exporter {
         // decks
         Timber.d("Copy decks")
         var dids: MutableCollection<Long?>? = null
-        if (mDid != null) {
-            dids = HashSet(mSrc!!.decks.children(mDid).values)
-            dids.add(mDid)
+        if (did != null) {
+            dids = HashSet(mSrc!!.decks.children(did).values)
+            dids.add(did)
         }
         val dconfs = JSONObject()
         for (d in mSrc!!.decks.all()) {
@@ -397,7 +397,7 @@ class AnkiPackageExporter : AnkiExporter {
         val z = ZipFile(path)
         // if all decks and scheduling included, full export
         val media: JSONObject
-        media = if (includeSched && mDid == null) {
+        media = if (includeSched && did == null) {
             exportVerbatim(z, context)
         } else {
             // otherwise, filter
