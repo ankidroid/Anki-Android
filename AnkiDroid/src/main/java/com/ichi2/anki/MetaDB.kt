@@ -176,9 +176,7 @@ object MetaDB {
 
     /** Reset the language associations for all the decks and card models.  */
     fun resetLanguages(context: Context): Boolean {
-        if (!isDBOpen()) {
-            openDB(context)
-        }
+        openDBIfClosed(context)
         try {
             Timber.i("MetaDB:: Resetting all language assignments")
             mMetaDb!!.execSQL("DROP TABLE IF EXISTS languages;")
@@ -192,9 +190,7 @@ object MetaDB {
 
     /** Reset the widget status.  */
     fun resetWidget(context: Context): Boolean {
-        if (!isDBOpen()) {
-            openDB(context)
-        }
+        openDBIfClosed(context)
         try {
             Timber.i("MetaDB:: Resetting widget status")
             mMetaDb!!.execSQL("DROP TABLE IF EXISTS widgetStatus;")
