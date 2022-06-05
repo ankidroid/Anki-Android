@@ -18,8 +18,6 @@ object ViewAnimation {
         SLIDE_IN_FROM_BOTTOM,
         SLIDE_IN_FROM_TOP;
     }
-    const val FADE_IN = 0
-    const val FADE_OUT = 1
     fun slide(type: Slide, duration: Int, offset: Int): Animation {
         val animation: Animation
         when (type) {
@@ -77,11 +75,15 @@ object ViewAnimation {
         return animation
     }
 
+    enum class Fade(val originalAlpha: Float) {
+        FADE_IN(0f),
+        FADE_OUT(1f);
+    }
     @JvmStatic
-    fun fade(type: Int, duration: Int, offset: Int): Animation {
-        val animation: Animation = AlphaAnimation(type.toFloat(), 1.0f - type.toFloat())
+    fun fade(type: Fade, duration: Int, offset: Int): Animation {
+        val animation: Animation = AlphaAnimation(type.originalAlpha, 1.0f - type.originalAlpha)
         animation.duration = duration.toLong()
-        if (type == FADE_IN) {
+        if (type == Fade.FADE_IN) {
             animation.zAdjustment = Animation.ZORDER_TOP
         }
         animation.startOffset = offset.toLong()
