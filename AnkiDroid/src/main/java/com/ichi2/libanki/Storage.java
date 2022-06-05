@@ -26,7 +26,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.backend.DroidBackend;
 import com.ichi2.libanki.backend.DroidBackendFactory;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
-import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
@@ -83,9 +82,6 @@ public class Storage {
     }
 
     public static Collection Collection(Context context, @NonNull String path, boolean server, boolean log) {
-        return Collection(context, path, server, log, new SystemTime());
-    }
-    public static Collection Collection(Context context, @NonNull String path, boolean server, boolean log, @NonNull Time time) {
         assert (path.endsWith(".anki2") || path.endsWith(".anki21"));
         if (sIsLocked) {
             throw new SQLiteDatabaseLockedException("AnkiDroid has locked the database");
@@ -100,13 +96,13 @@ public class Storage {
             // initialize
             int ver;
             if (create) {
-                ver = _createDB(db, time, backend);
+                ver = _createDB(db, backend);
             } else {
-                ver = _upgradeSchema(db, time);
+                ver = _upgradeSchema(db);
             }
             db.execute("PRAGMA temp_store = memory");
             // add db to col and do any remaining upgrades
-            Collection col = backend.createCollection(context, db, path, server, log, time);
+            Collection col = backend.createCollection(context, db, path, server, log);
             if (ver < Consts.SCHEMA_VERSION) {
                 _upgrade(col, ver);
             } else if (ver > Consts.SCHEMA_VERSION) {
@@ -146,7 +142,7 @@ public class Storage {
     }
 
 
-    private static int _upgradeSchema(DB db, @NonNull Time time) {
+    private static int _upgradeSchema(DB db) {
         int ver = db.queryScalar("SELECT ver FROM col");
         if (ver == Consts.SCHEMA_VERSION) {
             return ver;
@@ -154,7 +150,7 @@ public class Storage {
         // add odid to cards, edue->odue
         if (db.queryScalar("SELECT ver FROM col") == 1) {
             db.execute("ALTER TABLE cards RENAME TO cards2");
-            _addSchema(db, false, time);
+            _addSchema(db, false);
             db.execute("insert into cards select id, nid, did, ord, mod, usn, type, queue, due, ivl, factor, reps, lapses, left, edue, 0, flags, data from cards2");
             db.execute("DROP TABLE cards2");
             db.execute("UPDATE col SET ver = 2");
@@ -163,7 +159,7 @@ public class Storage {
         // remove did from notes
         if (db.queryScalar("SELECT ver FROM col") == 2) {
             db.execute("ALTER TABLE notes RENAME TO notes2");
-            _addSchema(db, true, time);
+            _addSchema(db, true);
             db.execute("insert into notes select id, guid, mid, mod, usn, tags, flds, sfld, csum, flags, data from notes2");
             db.execute("DROP TABLE notes2");
             db.execute("UPDATE col SET ver = 3");
@@ -323,18 +319,18 @@ public class Storage {
     }
 
 
-    private static int _createDB(DB db, @NonNull Time time, DroidBackend backend) {
+    private static int _createDB(DB db, DroidBackend backend) {
         if (backend.databaseCreationCreatesSchema()) {
             if (!backend.databaseCreationInitializesData()) {
-                _setColVars(db, time);
+                _setColVars(db);
             }
             // This line is required for testing - otherwise Rust will override a mocked time.
-            db.execute("update col set crt = ?", UIUtils.getDayStart(time) / 1000);
+            db.execute("update col set crt = ?", UIUtils.getDayStart() / 1000);
         } else {
             db.execute("PRAGMA page_size = 4096");
             db.execute("PRAGMA legacy_file_format = 0");
             db.execute("VACUUM");
-            _addSchema(db, true, time);
+            _addSchema(db, true);
             _updateIndices(db);
         }
 
@@ -343,7 +339,7 @@ public class Storage {
     }
 
 
-    private static void _addSchema(DB db, boolean setColConf, @NonNull Time time) {
+    private static void _addSchema(DB db, boolean setColConf) {
         db.execute("create table if not exists col ( " + "id              integer primary key, "
                 + "crt             integer not null," + "mod             integer not null,"
                 + "scm             integer not null," + "ver             integer not null,"
@@ -375,20 +371,20 @@ public class Storage {
         db.execute("create table if not exists graves (" + "    usn             integer not null,"
                 + "    oid             integer not null," + "    type            integer not null" + ")");
         db.execute("INSERT OR IGNORE INTO col VALUES(1,0,0," +
-                time.intTimeMS() + "," + Consts.SCHEMA_VERSION +
+                Time.Companion.intTimeMS() + "," + Consts.SCHEMA_VERSION +
                 ",0,0,0,'','{}','','','{}')");
         if (setColConf) {
-            _setColVars(db, time);
+            _setColVars(db);
         }
     }
 
 
-    private static void _setColVars(DB db, @NonNull Time time) {
+    private static void _setColVars(DB db) {
         JSONObject g = new JSONObject(Decks.DEFAULT_DECK);
         g.put("id", 1);
         g.put("name", "Default");
         g.put("conf", 1);
-        g.put("mod", time.intTime());
+        g.put("mod", Time.Companion.intTime());
         JSONObject gc = new JSONObject(Decks.DEFAULT_CONF);
         gc.put("id", 1);
         JSONObject ag = new JSONObject();

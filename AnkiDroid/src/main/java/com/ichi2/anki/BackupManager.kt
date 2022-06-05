@@ -71,7 +71,7 @@ open class BackupManager {
      * @return Whether a thread was started to create a backup
      */
     @Suppress("PMD.NPathComplexity")
-    fun performBackupInBackground(colPath: String, interval: Int, time: Time): Boolean {
+    fun performBackupInBackground(colPath: String, interval: Int): Boolean {
         val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)
         if (hasDisabledBackups(prefs)) {
             Timber.w("backups are disabled")
@@ -86,11 +86,11 @@ open class BackupManager {
 
         // Abort backup if one was already made less than [interval] hours ago (default: 5 hours - BACKUP_INTERVAL)
         val lastBackupDate = getLastBackupDate(deckBackups)
-        if (lastBackupDate != null && lastBackupDate.time + interval * 3600000L > time.intTimeMS()) {
+        if (lastBackupDate != null && lastBackupDate.time + interval * 3600000L > Time.intTimeMS()) {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours")
             return false
         }
-        val backupFilename = getNameForNewBackup(time) ?: return false
+        val backupFilename = getNameForNewBackup() ?: return false
 
         // Abort backup if destination already exists (extremely unlikely)
         val backupFile = getBackupFile(colFile, backupFilename)
@@ -229,8 +229,8 @@ open class BackupManager {
         }
 
         @JvmStatic
-        fun performBackupInBackground(path: String, time: Time): Boolean {
-            return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, time)
+        fun performBackupInBackground(path: String): Boolean {
+            return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL)
         }
 
         /**
@@ -269,7 +269,6 @@ open class BackupManager {
         fun repairCollection(col: Collection): Boolean {
             val deckPath = col.path
             val deckFile = File(deckPath)
-            val time = col.time
             Timber.i("BackupManager - RepairCollection - Closing Collection")
             col.close()
 
@@ -284,7 +283,7 @@ open class BackupManager {
                     Timber.e("repairCollection - dump to %s.tmp failed", deckPath)
                     return false
                 }
-                if (!moveDatabaseToBrokenDirectory(deckPath, false, time)) {
+                if (!moveDatabaseToBrokenDirectory(deckPath, false)) {
                     Timber.e("repairCollection - could not move corrupt file to broken directory")
                     return false
                 }
@@ -299,11 +298,11 @@ open class BackupManager {
             return false
         }
 
-        fun moveDatabaseToBrokenDirectory(colPath: String, moveConnectedFilesToo: Boolean, time: Time): Boolean {
+        fun moveDatabaseToBrokenDirectory(colPath: String, moveConnectedFilesToo: Boolean): Boolean {
             val colFile = File(colPath)
 
             // move file
-            val value: Date = time.genToday(utcOffset())
+            val value: Date = Time.genToday(utcOffset())
             var movedFilename = String.format(
                 Utils.ENGLISH_LOCALE,
                 colFile.name.replace(".anki2", "") +
@@ -375,10 +374,10 @@ open class BackupManager {
          * @return filename with pattern collection-yyyy-MM-dd-HH-mm based on given time parameter
          */
         @JvmStatic
-        fun getNameForNewBackup(time: Time): String? {
+        fun getNameForNewBackup(): String? {
             /** Changes in the file name pattern should be updated as well in
              * [getBackupTimeString] and [com.ichi2.anki.dialogs.DatabaseErrorDialog.onCreateDialog] */
-            val cal: Calendar = time.gregorianCalendar()
+            val cal: Calendar = Time.gregorianCalendar()
             val backupFilename: String = try {
                 String.format(Utils.ENGLISH_LOCALE, "collection-%s.colpkg", df.format(cal.time))
             } catch (e: UnknownFormatConversionException) {

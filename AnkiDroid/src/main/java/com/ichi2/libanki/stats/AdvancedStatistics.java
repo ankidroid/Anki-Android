@@ -308,13 +308,13 @@ public class AdvancedStatistics {
         }
 
 
-        EaseClassifier classifier = new EaseClassifier(col.getTime(), col.getDb());
+        EaseClassifier classifier = new EaseClassifier(col.getDb());
         ReviewSimulator reviewSimulator = new ReviewSimulator(col.getDb(), classifier, end, chunk);
         TodayStats todayStats = new TodayStats(col, mSettings.getDayStartCutoff(col.getCrt()));
 
-        long t0 = col.getTime().intTimeMS();
+        long t0 = Time.Companion.intTimeMS();
         SimulationResult simulationResult = reviewSimulator.simNreviews(mSettings.getToday((int)col.getCrt()), col.getDecks(), dids, todayStats);
-        long t1 = col.getTime().intTimeMS();
+        long t1 = Time.Companion.intTimeMS();
 
         Timber.d("Simulation of all decks took: %d ms", t1 - t0);
 
@@ -652,14 +652,14 @@ public class AdvancedStatistics {
                 queryBaseYoungMature
                         + "where type=" + Consts.CARD_TYPE_LRN + " and lastIvl >= 21;";
 
-        public EaseClassifier(Time time, DB db) {
+        public EaseClassifier(DB db) {
             this.mDb = db;
 
             mSingleReviewOutcome = new ReviewOutcome(null, 0);
 
-            long t0 = time.intTimeMS();
+            long t0 = Time.Companion.intTimeMS();
             calculateCumProbabilitiesForNewEasePerCurrentEase();
-            long t1 = time.intTimeMS();
+            long t1 = Time.Companion.intTimeMS();
 
             Timber.d("Calculating probability distributions took: %d ms", t1 - t0);
 
@@ -1067,7 +1067,7 @@ public class AdvancedStatistics {
         public int getToday(long collectionCreatedTime) {
             Timber.d("Collection creation timestamp: %d", collectionCreatedTime);
 
-            long currentTime = mCol.getTime().intTime();
+            long currentTime = Time.Companion.intTime();
             Timber.d("Now: %d", currentTime);
             return (int) ((currentTime - collectionCreatedTime) / SECONDS_PER_DAY);
         }

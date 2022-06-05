@@ -15,6 +15,7 @@
  */
 package com.ichi2.libanki.utils
 
+import android.annotation.SuppressLint
 import com.ichi2.libanki.DB
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -25,8 +26,14 @@ import kotlin.math.max
 import java.sql.Date as SqlDate
 import java.util.Date as UtilDate
 
-/** Allows injection of time dependencies  */
+/** Allows injection of time dependencies.
+ * Current time can be accessed with object methods.
+ * Creating a Time lead it to be current time.*/
+@Suppress("LeakingThis")
 abstract class Time {
+    init {
+        clock = this
+    }
     /** Date of this time  */
     val currentDate: UtilDate
         get() = UtilDate(intTimeMS())
@@ -89,7 +96,26 @@ abstract class Time {
         return SqlDate.valueOf(df.format(cal.time))
     }
 
+    fun getTimestamp(): String {
+        return SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(currentDate)
+    }
+
+    @SuppressLint("DirectSystemTimeInstantiation")
     companion object {
+        private lateinit var clock: Time
+        fun intTimeMS() = clock.intTimeMS()
+        fun intTime() = clock.intTime()
+        fun calendar() = clock.calendar()
+        fun gregorianCalendar() = clock.gregorianCalendar()
+        fun timestampID(db: DB, table: String) = clock.timestampID(db, table)
+        fun maxID(db: DB) = clock.maxID(db)
+        fun genToday(utcOffset: Double) = clock.genToday(utcOffset)
+        fun getTimestamp() = clock.getTimestamp()
+
+        init {
+            SystemTime()
+        }
+
         @JvmStatic
         fun calendar(timeInMS: Long): Calendar {
             val calendar = Calendar.getInstance()

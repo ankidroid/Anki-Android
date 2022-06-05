@@ -74,7 +74,7 @@ class DrawingActivity : AnkiActivity() {
 
     private fun finishWithSuccess() {
         try {
-            val savedWhiteboardFileName = mWhiteboard.saveWhiteboard(col.time)
+            val savedWhiteboardFileName = mWhiteboard.saveWhiteboard()
             val resultData = Intent()
             resultData.putExtra(EXTRA_RESULT_WHITEBOARD, savedWhiteboardFileName)
             setResult(RESULT_OK, resultData)

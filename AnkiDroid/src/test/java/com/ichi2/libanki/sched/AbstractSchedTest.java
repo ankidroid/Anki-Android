@@ -421,13 +421,12 @@ mw.col.sched.extendLimits(1, 0)
     public void regression_7984() {
         Collection col = getCol();
         SchedV2 sched = (SchedV2) col.getSched();
-        Time time = getCol().getTime();
         Card[] cards = new Card[2];
         for (int i = 0; i < 2; i++) {
             cards[i] = addNoteUsingBasicModel(Integer.toString(i), "").cards().get(0);
             cards[i].setQueue(Consts.QUEUE_TYPE_LRN);
             cards[i].setType(Consts.CARD_TYPE_LRN);
-            cards[i].setDue(time.intTime() - 20 * 60 + i);
+            cards[i].setDue(Time.Companion.intTime() - 20 * 60 + i);
             cards[i].flush();
         }
         col.reset();

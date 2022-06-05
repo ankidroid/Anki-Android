@@ -60,6 +60,8 @@ import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
 open class RobolectricTest : CollectionGetter {
+    var time = MockTime(2020, 7, 7, 7, 0, 0, 0, 10)
+        private set
 
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
@@ -314,12 +316,8 @@ open class RobolectricTest : CollectionGetter {
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
     override fun getCol(): Collection {
-        val time = MockTime(2020, 7, 7, 7, 0, 0, 0, 10)
-        return CollectionHelper.getInstance().getCol(targetContext, time)
+        return CollectionHelper.getInstance().getCol(targetContext)
     }
-
-    protected val collectionTime: MockTime
-        get() = col.time as MockTime
 
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {

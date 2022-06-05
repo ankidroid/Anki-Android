@@ -49,7 +49,7 @@ class BackupManagerIntegrationTest : RobolectricTest() {
     private fun createBackup(): String {
         return try {
             BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
-            assertThat("Backup should work", BackupManager.performBackupInBackground(col.path, col.time), equalTo(true))
+            assertThat("Backup should work", BackupManager.performBackupInBackground(col.path), equalTo(true))
             spinUntilBackupExists(1000)
         } finally {
             BackupManagerTestUtilities.reset()

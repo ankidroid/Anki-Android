@@ -29,6 +29,7 @@ import com.ichi2.anki.CrashReportService;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.libanki.backend.exception.DeckRenameException;
 
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.DeckComparator;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
@@ -304,7 +305,7 @@ public class Decks extends DeckManager {
 
     private void save(JSONObject g) {
         if (g != null) {
-            g.put("mod", mCol.getTime().intTime());
+            g.put("mod", Time.Companion.intTime());
             g.put("usn", mCol.usn());
         }
         mChanged = true;
@@ -386,7 +387,7 @@ public class Decks extends DeckManager {
         Deck g = new Deck(type);
         g.put("name", name);
         do {
-            id = mCol.getTime().intTimeMS();
+            id = Time.Companion.intTimeMS();
         } while (mDecks.containsKey(id));
         g.put("id", id);
         mDecks.put(id, g);
@@ -808,7 +809,7 @@ public class Decks extends DeckManager {
         long id;
         DeckConfig c = new DeckConfig(cloneFrom, DeckConfig.Source.DECK_CONFIG);
         do {
-            id = mCol.getTime().intTimeMS();
+            id = Time.Companion.intTimeMS();
         } while (mDconf.containsKey(id));
         c.put("id", id);
         c.put("name", name);
@@ -898,7 +899,7 @@ public class Decks extends DeckManager {
 
     public void setDeck(long[] cids, long did) {
         mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-                did, mCol.usn(), mCol.getTime().intTime());
+                did, mCol.usn(), Time.Companion.intTime());
     }
 
 

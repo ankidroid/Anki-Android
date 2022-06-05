@@ -26,7 +26,6 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.ModelManager
-import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.PreferenceUtils
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.KotlinCleanup
@@ -160,7 +159,6 @@ class ReviewerTest : RobolectricTest() {
         addNoteWithThreeCards()
         val col = col
         val nw = col.decks.confForDid(1).getJSONObject("new")
-        val time = collectionTime
         nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
 
         waitForAsyncTasksToComplete()
@@ -190,7 +188,6 @@ class ReviewerTest : RobolectricTest() {
     fun testLrnQueueAfterUndo() {
         val col = col
         val nw = col.decks.confForDid(1).getJSONObject("new")
-        val time = col.time as MockTime
         nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
 
         val cards = arrayOfNulls<Card>(4)

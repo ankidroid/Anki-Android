@@ -81,7 +81,6 @@ open class Collection @VisibleForTesting constructor(
     val path: String,
     var server: Boolean,
     private var debugLog: Boolean, // Not in libAnki.
-    val time: Time,
     protected val droidBackend: DroidBackend
 ) : CollectionGetter {
 
@@ -157,7 +156,7 @@ open class Collection @VisibleForTesting constructor(
         tags = initTags()
         load()
         if (crt == 0L) {
-            crt = UIUtils.getDayStart(time) / 1000
+            crt = UIUtils.getDayStart() / 1000
         }
         mStartReps = 0
         mStartTime = 0
@@ -340,7 +339,7 @@ open class Collection @VisibleForTesting constructor(
     @JvmOverloads
     fun flush(mod: Long = 0) {
         Timber.i("flush - Saving information to DB...")
-        this.mod = if (mod == 0L) time.intTimeMS() else mod
+        this.mod = if (mod == 0L) Time.intTimeMS() else mod
         val values = ContentValues()
         values.put("crt", this.crt)
         values.put("mod", this.mod)
@@ -451,7 +450,7 @@ open class Collection @VisibleForTesting constructor(
      * thrown when in fact it is never thrown.
      */
     fun modSchemaNoCheck() {
-        scm = time.intTimeMS()
+        scm = Time.intTimeMS()
         setMod()
     }
 
@@ -816,8 +815,8 @@ open class Collection @VisibleForTesting constructor(
         // build cards for each note
         val data = ArrayList<Array<Any>>()
         @Suppress("UNUSED_VARIABLE")
-        var ts = time.maxID(db)
-        val now = time.intTime()
+        var ts = Time.maxID(db)
+        val now = Time.intTime()
         val rem =
             ArrayList<Long>(db.queryScalar("SELECT count() FROM notes where id in $snids"))
         val usn = usn()
@@ -1330,7 +1329,7 @@ open class Collection @VisibleForTesting constructor(
         }
 
     fun startTimebox() {
-        mStartTime = time.intTime()
+        mStartTime = Time.intTime()
         mStartReps = sched.reps
     }
 
@@ -1340,7 +1339,7 @@ open class Collection @VisibleForTesting constructor(
             // timeboxing disabled
             return null
         }
-        val elapsed = time.intTime() - mStartTime
+        val elapsed = Time.intTime() - mStartTime
         return if (elapsed > get_config_long("timeLim")) {
             Pair(
                 get_config_int("timeLim"),
@@ -1787,7 +1786,7 @@ open class Collection @VisibleForTesting constructor(
                 Utils.ids2str(dynDeckIds) +
                 "and odid in " +
                 Utils.ids2str(dynIdsAndZero),
-            nextDeckId, time.intTime(), usn()
+            nextDeckId, Time.intTime(), usn()
         )
         result.cardsWithFixedHomeDeckCount = cardIds.size
         val message = String.format(Locale.US, "Fixed %d cards with no home deck", cardIds.size)
@@ -1859,7 +1858,7 @@ open class Collection @VisibleForTesting constructor(
                 "UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(
                     ids
                 ),
-                sched.today, time.intTime(), usn()
+                sched.today, Time.intTime(), usn()
             )
         }
         return problems
@@ -1883,7 +1882,7 @@ open class Collection @VisibleForTesting constructor(
         notifyProgress.run()
         db.execute(
             "UPDATE cards SET due = 1000000, mod = ?, usn = ? WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW,
-            time.intTime(),
+            Time.intTime(),
             usn()
         )
         return emptyList<String>()
@@ -2180,7 +2179,7 @@ open class Collection @VisibleForTesting constructor(
             }
         }
         val s = String.format(
-            "[%s] %s:%s(): %s", time.intTime(), trace.fileName, trace.methodName,
+            "[%s] %s:%s(): %s", Time.intTime(), trace.fileName, trace.methodName,
             TextUtils.join(",  ", args)
         )
         writeLog(s)
@@ -2238,7 +2237,7 @@ open class Collection @VisibleForTesting constructor(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
                 cids
             ),
-            7, flag, usn(), time.intTime()
+            7, flag, usn(), Time.intTime()
         )
     }
 

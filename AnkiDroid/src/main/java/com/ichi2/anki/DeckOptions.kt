@@ -306,7 +306,7 @@ class DeckOptions :
 
                                 alarmManager.cancel(reminderIntent)
                                 if (value as Boolean) {
-                                    val calendar = reminderToCalendar(col.time, reminder)
+                                    val calendar = reminderToCalendar(reminder)
 
                                     alarmManager.setRepeating(
                                         AlarmManager.RTC_WAKEUP,
@@ -342,7 +342,7 @@ class DeckOptions :
                                 )
                                 alarmManager.cancel(reminderIntent)
 
-                                val calendar = reminderToCalendar(col.time, reminder)
+                                val calendar = reminderToCalendar(reminder)
 
                                 alarmManager.setRepeating(
                                     AlarmManager.RTC_WAKEUP,
@@ -779,9 +779,9 @@ class DeckOptions :
     }
 
     companion object {
-        fun reminderToCalendar(time: Time, reminder: JSONObject): Calendar {
+        fun reminderToCalendar(reminder: JSONObject): Calendar {
 
-            val calendar = time.calendar()
+            val calendar = Time.calendar()
 
             calendar[Calendar.HOUR_OF_DAY] = reminder.getJSONArray("time").getInt(0)
             calendar[Calendar.MINUTE] = reminder.getJSONArray("time").getInt(1)

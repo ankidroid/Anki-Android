@@ -138,8 +138,8 @@ object UIUtils {
     }
 
     @JvmStatic
-    fun getDayStart(time: Time): Long {
-        val cal = time.calendar()
+    fun getDayStart(): Long {
+        val cal = Time.calendar()
         if (cal[Calendar.HOUR_OF_DAY] < 4) {
             cal.roll(Calendar.DAY_OF_YEAR, -1)
         }

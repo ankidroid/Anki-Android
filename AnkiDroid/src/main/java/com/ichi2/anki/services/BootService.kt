@@ -33,7 +33,7 @@ class BootService : BroadcastReceiver() {
         }
         Timber.i("Executing Boot Service")
         catchAlarmManagerErrors(context) { scheduleDeckReminder(context) }
-        catchAlarmManagerErrors(context) { scheduleNotification(col.time, context) }
+        catchAlarmManagerErrors(context) { scheduleNotification(context) }
         mFailedToShowNotifications = false
         sWasRun = true
     }
@@ -73,7 +73,6 @@ class BootService : BroadcastReceiver() {
     private fun scheduleDeckReminder(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         for (deckConfiguration in CollectionHelper.getInstance().getCol(context).decks.allConf()) {
-            val col = CollectionHelper.getInstance().getCol(context)
             if (deckConfiguration.has("reminder")) {
                 val reminder = deckConfiguration.getJSONObject("reminder")
                 if (reminder.getBoolean("enabled")) {
@@ -86,7 +85,7 @@ class BootService : BroadcastReceiver() {
                         ),
                         0
                     )
-                    val calendar = DeckOptions.reminderToCalendar(col.time, reminder)
+                    val calendar = DeckOptions.reminderToCalendar(reminder)
                     alarmManager.setRepeating(
                         AlarmManager.RTC_WAKEUP,
                         calendar.timeInMillis,
@@ -106,14 +105,14 @@ class BootService : BroadcastReceiver() {
         private var sWasRun = false
 
         @JvmStatic
-        fun scheduleNotification(time: Time, context: Context) {
+        fun scheduleNotification(context: Context) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val sp = AnkiDroidApp.getSharedPrefs(context)
             // Don't schedule a notification if the due reminders setting is not enabled
             if (sp.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))!!.toInt() >= Preferences.PENDING_NOTIFICATIONS_ONLY) {
                 return
             }
-            val calendar = time.calendar()
+            val calendar = Time.calendar()
             calendar[Calendar.HOUR_OF_DAY] = getRolloverHourOfDay(context)
             calendar[Calendar.MINUTE] = 0
             calendar[Calendar.SECOND] = 0

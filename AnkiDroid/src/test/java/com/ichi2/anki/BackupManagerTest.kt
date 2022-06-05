@@ -16,7 +16,6 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.libanki.utils.Time
 import com.ichi2.testutils.MockTime
 import com.ichi2.utils.StrictMock.Companion.strictMock
 import org.hamcrest.CoreMatchers.equalTo
@@ -41,7 +40,7 @@ open class BackupManagerTest {
 
         // assert
         assertThat("should fail if backups are disabled", performBackupResult, equalTo(false))
-        verify(bm, times(1)).performBackupInBackground(anyString(), anyInt(), any())
+        verify(bm, times(1)).performBackupInBackground(anyString(), anyInt())
         verify(bm, times(1)).hasDisabledBackups(any())
         verifyNoMoreInteractions(bm)
     }
@@ -93,8 +92,9 @@ open class BackupManagerTest {
         assertThat("should fail if collection too small", result, equalTo(false))
     }
 
-    private fun performBackup(bm: BackupManager, time: Time = MockTime(100000000)): Boolean {
-        return bm.performBackupInBackground("/AnkiDroid/", 100, time)
+    private fun performBackup(bm: BackupManager, setExplicitTime: Boolean = true): Boolean {
+        if (setExplicitTime) { MockTime(100000000) }
+        return bm.performBackupInBackground("/AnkiDroid/", 100)
     }
 
     /** Returns a spy of BackupManager which would pass  */

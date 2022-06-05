@@ -10,6 +10,7 @@ import com.ichi2.anki.R
 import com.ichi2.libanki.*
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.utils.StringUtils
+import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.Assert
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.HtmlUtils
@@ -113,7 +114,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
         val firsts = HashUtil.HashSetInit<String>(notes.size)
         val fld0index = mMapping!!.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"))
         mFMap = Models.fieldMap(mModel)
-        mNextId = mCol.time.timestampID(mCol.db, "notes")
+        mNextId = Time.timestampID(mCol.db, "notes")
         // loop through the notes
         val updates: MutableList<Array<Any>> = ArrayList(notes.size)
         val updateLog: MutableList<String> = ArrayList(notes.size)
@@ -233,7 +234,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
             id,
             Utils.guid64(),
             mModel!!.getLong("id"),
-            mCol.time.intTime(),
+            Time.intTime(),
             mCol.usn(),
             mCol.tags.join(n.mTags),
             n.fieldsStr,
@@ -257,18 +258,18 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
         return when {
             mTagsMapped -> {
                 tags = mCol.tags.join(n.mTags)
-                arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags)
+                arrayOf(Time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags)
             }
             mTagModified != null -> {
                 tags = mCol.db.queryString("select tags from notes where id = ?", id)
                 val tagList = mCol.tags.split(tags)
                 tagList.addAll(StringUtils.splitOnWhitespace(mTagModified))
                 tags = mCol.tags.join(tagList)
-                arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr)
+                arrayOf(Time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr)
             }
             else -> {
                 // This looks inconsistent but is fine, see: addUpdates
-                arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr)
+                arrayOf(Time.intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr)
             }
         }
     }

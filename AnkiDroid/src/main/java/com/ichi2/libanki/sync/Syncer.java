@@ -39,6 +39,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.sched.Counts;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
@@ -339,7 +340,7 @@ public class Syncer {
         j.put("mod", mCol.getMod());
         j.put("scm", mCol.getScm());
         j.put("usn", mCol.getUsnForSync());
-        j.put("ts", mCol.getTime().intTime());
+        j.put("ts", Time.Companion.intTime());
         j.put("musn", 0);
         j.put("msg", "");
         j.put("cont", true);
@@ -510,7 +511,7 @@ public class Syncer {
     private long finish(long mod) {
         if (mod == 0) {
             // server side; we decide new mod time
-            mod = mCol.getTime().intTimeMS();
+            mod = Time.Companion.intTimeMS();
         }
         mCol.setLs(mod);
         mCol.setUsnAfterSync(mMaxUsn + 1);

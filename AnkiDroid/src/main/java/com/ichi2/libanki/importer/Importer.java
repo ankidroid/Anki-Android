@@ -24,6 +24,7 @@ import com.ichi2.anki.exception.ImportExportException;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.utils.Time;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public abstract class Importer {
      */
 
     protected void _prepareTS() {
-        mTs = mCol.getTime().maxID(mDst.getDb());
+        mTs = Time.Companion.maxID(mDst.getDb());
     }
 
 

@@ -20,6 +20,7 @@ package com.ichi2.libanki
 import android.content.ContentValues
 import android.text.TextUtils
 import com.ichi2.libanki.backend.model.TagUsnTuple
+import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.JSONObject
 import java.util.*
 import java.util.regex.Pattern
@@ -184,7 +185,7 @@ class Tags
                         res.add(
                             arrayOf(
                                 addToStr(tags, cur.getString(1)),
-                                col.time.intTime(),
+                                Time.intTime(),
                                 col.usn(),
                                 cur.getLong(0)
                             )
@@ -194,7 +195,7 @@ class Tags
                     while (cur.moveToNext()) {
                         res.add(
                             arrayOf(
-                                remFromStr(tags, cur.getString(1)), col.time.intTime(), col.usn(),
+                                remFromStr(tags, cur.getString(1)), Time.intTime(), col.usn(),
                                 cur.getLong(0)
                             )
                         )
