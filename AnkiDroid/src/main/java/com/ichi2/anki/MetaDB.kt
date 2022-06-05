@@ -138,14 +138,14 @@ object MetaDB {
 
     /** Open the meta-db but only if it currently closed.  */
     private fun openDBIfClosed(context: Context) {
-        if (mMetaDb == null || !mMetaDb!!.isOpen) {
+        if (!isDBOpen()) {
             openDB(context)
         }
     }
 
     /** Close the meta-db.  */
     fun closeDB() {
-        if (mMetaDb != null && mMetaDb!!.isOpen) {
+        if (isDBOpen()) {
             mMetaDb!!.close()
             mMetaDb = null
             Timber.d("Closing MetaDB")
@@ -176,7 +176,7 @@ object MetaDB {
 
     /** Reset the language associations for all the decks and card models.  */
     fun resetLanguages(context: Context): Boolean {
-        if (mMetaDb == null || !mMetaDb!!.isOpen) {
+        if (!isDBOpen()) {
             openDB(context)
         }
         try {
@@ -192,7 +192,7 @@ object MetaDB {
 
     /** Reset the widget status.  */
     fun resetWidget(context: Context): Boolean {
-        if (mMetaDb == null || !mMetaDb!!.isOpen) {
+        if (!isDBOpen()) {
             openDB(context)
         }
         try {
@@ -547,4 +547,6 @@ object MetaDB {
             return if (cur.isNull(columnIndex)) null else cur.getInt(columnIndex)
         }
     }
+
+    private fun isDBOpen() = mMetaDb?.isOpen == true
 }
