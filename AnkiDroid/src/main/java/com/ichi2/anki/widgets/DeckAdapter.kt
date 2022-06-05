@@ -58,7 +58,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     private var mDeckExpanderClickListener: View.OnClickListener? = null
     private var mDeckLongClickListener: OnLongClickListener? = null
     private var mCountsClickListener: View.OnClickListener? = null
-    private var mCol: Collection? = null
+    private lateinit var mCol: Collection
 
     // Totals accumulated as each deck is processed
     private var mNew = 0
@@ -120,7 +120,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
      * Consume a list of [AbstractDeckTreeNode]s to render a new deck list.
      * @param filter The string to filter the deck by
      */
-    fun buildDeckList(nodes: List<TreeNode<AbstractDeckTreeNode>>, col: Collection?, filter: CharSequence?) {
+    fun buildDeckList(nodes: List<TreeNode<AbstractDeckTreeNode>>, col: Collection, filter: CharSequence?) {
         mCol = col
         mDeckList.clear()
         mCurrentDeckList.clear()
@@ -185,7 +185,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
         // Set deck name and colour. Filtered decks have their own colour
         holder.deckName.text = node.lastDeckNameComponent
-        if (mCol!!.decks.isDyn(node.did)) {
+        if (mCol.decks.isDyn(node.did)) {
             holder.deckName.setTextColor(mDeckNameDynColor)
         } else {
             holder.deckName.setTextColor(mDeckNameDefaultColor)
@@ -218,7 +218,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     private fun isCurrentlySelectedDeck(node: AbstractDeckTreeNode): Boolean {
-        return node.did == mCol!!.decks.current().optLong("id")
+        return node.did == mCol.decks.current().optLong("id")
     }
 
     override fun getItemCount(): Int {
@@ -227,7 +227,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<AbstractDeckTreeNode>) {
         val nodeValue = node.value
-        val collapsed = mCol!!.decks.get(nodeValue.did).optBoolean("collapsed", false)
+        val collapsed = mCol.decks.get(nodeValue.did).optBoolean("collapsed", false)
         // Apply the correct expand/collapse drawable
         if (node.hasChildren()) {
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
@@ -252,12 +252,12 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             // If the default deck is empty, hide it by not adding it to the deck list.
             // We don't hide it if it's the only deck or if it has sub-decks.
             if (node.value.did == 1L && nodes.size > 1 && !node.hasChildren()) {
-                if (!defaultDeckHasCards(mCol!!)) {
+                if (!defaultDeckHasCards(mCol)) {
                     continue
                 }
             }
             // If any of this node's parents are collapsed, don't add it to the deck list
-            for (parent in mCol!!.decks.parents(node.value.did)) {
+            for (parent in mCol.decks.parents(node.value.did)) {
                 mHasSubdecks = true // If a deck has a parent it means it's a subdeck so set a flag
                 if (parent.optBoolean("collapsed")) {
                     return
@@ -292,7 +292,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             }
         }
         // If the deck is not in our list, we search again using the immediate parent
-        val parents = mCol!!.decks.parents(did)
+        val parents = mCol.decks.parents(did)
         return if (parents.isEmpty()) {
             0
         } else {
@@ -302,7 +302,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     val eta: Int?
         get() = if (mNumbersComputed) {
-            mCol!!.sched.eta(Counts(mNew, mLrn, mRev))
+            mCol.sched.eta(Counts(mNew, mLrn, mRev))
         } else {
             null
         }
