@@ -62,6 +62,6 @@ abstract class TaskDelegate<Progress, Result> : TaskDelegateBase<Progress, Resul
 abstract class UnsafeTaskDelegate<Progress, Result> : TaskDelegateBase<Progress, Result>() {
     final override fun execTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Result =
         task(col, collectionTask)
-    protected abstract fun task(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
+    protected abstract fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
     final override fun requiresOpenCollection(): Boolean = false
 }
