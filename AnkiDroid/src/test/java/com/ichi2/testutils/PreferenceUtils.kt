@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReference
 
 object PreferenceUtils {
     @JvmStatic
-    fun getAllCustomButtonKeys(context: Context?): Set<String> {
+    fun getAllCustomButtonKeys(context: Context): Set<String> {
         val ret = AtomicReference<Set<String>>()
         val i = CustomButtonsSettingsFragment.getSubscreenIntent(context)
         ActivityScenario.launch<Preferences>(i).use { scenario ->
