@@ -18,43 +18,44 @@ object ViewAnimation {
         SLIDE_IN_FROM_BOTTOM,
         SLIDE_IN_FROM_TOP;
     }
+
+    /**
+     * A TranslateAnimation, relative to self, with the given from/to x/y values.
+     */
+    fun translateAnimation(fromXValue: Float, toXValue: Float, fromYValue: Float, toYValue: Float) =
+        TranslateAnimation(Animation.RELATIVE_TO_SELF, fromXValue, Animation.RELATIVE_TO_SELF, toXValue, Animation.RELATIVE_TO_SELF, fromYValue, Animation.RELATIVE_TO_SELF, toYValue)
+
     fun slide(type: Slide, duration: Int, offset: Int): Animation {
         val animation: Animation
         when (type) {
             SLIDE_IN_FROM_RIGHT -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    +1.0f, 0.0f, 0.0f, 0.0f
                 )
             }
             SLIDE_OUT_TO_RIGHT -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, +1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    0.0f, +1.0f, 0.0f, 0.0f
                 )
             }
             SLIDE_IN_FROM_LEFT -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    -1.0f, 0.0f, 0.0f, 0.0f
                 )
             }
             SLIDE_OUT_TO_LEFT -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    0.0f, -1.0f, 0.0f, 0.0f
                 )
             }
             SLIDE_IN_FROM_BOTTOM -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, +1.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    0.0f, 0.0f, +1.0f, 0.0f
                 )
             }
             SLIDE_IN_FROM_TOP -> {
-                animation = TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f
+                animation = translateAnimation(
+                    0.0f, 0.0f, -1.0f, 0.0f
                 )
             }
         }
