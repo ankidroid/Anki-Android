@@ -179,7 +179,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
         }
     }
 
-    protected inner class PlayPauseButton(context: Context?) : AppCompatImageButton(context!!) {
+    protected inner class PlayPauseButton(context: Context) : AppCompatImageButton(context) {
         private val mOnClickListener: OnClickListener = object : OnClickListener {
             override fun onClick(v: View) {
                 if (audioPath == null) {
