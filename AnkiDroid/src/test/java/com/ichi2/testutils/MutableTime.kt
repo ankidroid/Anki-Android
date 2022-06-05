@@ -15,30 +15,13 @@
  */
 package com.ichi2.testutils
 
-class MutableTime : MockTime {
-    private var mFrozen = false
-
-    constructor(time: Long) : super(time)
-    constructor(time: Long, step: Int) : super(time, step)
-    constructor(
-        year: Int,
-        month: Int,
-        date: Int,
-        hourOfDay: Int,
-        minute: Int,
-        second: Int,
-        milliseconds: Int,
-        step: Int
-    ) : super(year, month, date, hourOfDay, minute, second, milliseconds, step)
+class MutableTime(time: Long, step: Int) : MockTime(time, step) {
+    var frozen = false
 
     fun getInternalTimeMs() = time
 
-    fun setFrozen(value: Boolean) {
-        mFrozen = value
-    }
-
     override fun intTimeMS(): Long {
-        return if (mFrozen) {
+        return if (frozen) {
             super.time
         } else {
             super.intTimeMS()
