@@ -98,8 +98,8 @@ object MetaDB {
         return metaDb
     }
 
-    private fun updateWhiteboardState(metaDb: SQLiteDatabase?) {
-        val columnCount = DatabaseUtil.getTableColumnCount(metaDb!!, "whiteboardState")
+    private fun updateWhiteboardState(metaDb: SQLiteDatabase) {
+        val columnCount = DatabaseUtil.getTableColumnCount(metaDb, "whiteboardState")
         if (columnCount <= 0) {
             metaDb.execSQL(
                 "CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
