@@ -43,8 +43,8 @@ object WidgetStatus {
      */
     @Suppress("deprecation") // #7108: AsyncTask
     @JvmStatic
-    fun update(context: Context?) {
-        val preferences = AnkiDroidApp.getSharedPrefs(context!!)
+    fun update(context: Context) {
+        val preferences = AnkiDroidApp.getSharedPrefs(context)
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false)
         val notificationEnabled = preferences.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "1000001")!!.toInt() < 1000000
         val canExecuteTask = sUpdateDeckStatusAsyncTask == null || sUpdateDeckStatusAsyncTask!!.status == android.os.AsyncTask.Status.FINISHED
