@@ -312,7 +312,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     // ----------------------------------------------------------------------------
     /** Called when the activity is first created.  */
     @Throws(SQLException::class)
-    @KotlinCleanup("scope functions")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -375,23 +374,26 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
 
         // create and set an adapter for the RecyclerView
-        mDeckListAdapter = DeckAdapter(layoutInflater, this)
-        mDeckListAdapter.setDeckClickListener(mDeckClickListener)
-        mDeckListAdapter.setCountsClickListener(mCountsClickListener)
-        mDeckListAdapter.setDeckExpanderClickListener(mDeckExpanderClickListener)
-        mDeckListAdapter.setDeckLongClickListener(mDeckLongClickListener)
-        mDeckListAdapter.enablePartialTransparencyForBackground(hasDeckPickerBackground)
+        mDeckListAdapter = DeckAdapter(layoutInflater, this).apply {
+            setDeckClickListener(mDeckClickListener)
+            setCountsClickListener(mCountsClickListener)
+            setDeckExpanderClickListener(mDeckExpanderClickListener)
+            setDeckLongClickListener(mDeckLongClickListener)
+            enablePartialTransparencyForBackground(hasDeckPickerBackground)
+        }
         mRecyclerView.adapter = mDeckListAdapter
 
-        mPullToSyncWrapper = findViewById(R.id.pull_to_sync_wrapper)
-        mPullToSyncWrapper.setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
-        mPullToSyncWrapper.setOnRefreshListener {
-            Timber.i("Pull to Sync: Syncing")
-            mPullToSyncWrapper.isRefreshing = false
-            sync()
+        mPullToSyncWrapper = findViewById<SwipeRefreshLayout?>(R.id.pull_to_sync_wrapper).apply {
+            setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
+            setOnRefreshListener {
+                Timber.i("Pull to Sync: Syncing")
+                mPullToSyncWrapper.isRefreshing = false
+                sync()
+            }
+            viewTreeObserver.addOnScrollChangedListener {
+                mPullToSyncWrapper.isEnabled = mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
+            }
         }
-        mPullToSyncWrapper.viewTreeObserver.addOnScrollChangedListener { mPullToSyncWrapper.isEnabled = mRecyclerViewLayoutManager.findFirstCompletelyVisibleItemPosition() == 0 }
-
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
         mFloatingActionMenu = DeckPickerFloatingActionMenu(this, view, this)
 
