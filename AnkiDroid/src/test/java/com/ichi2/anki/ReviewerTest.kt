@@ -33,7 +33,7 @@ import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.emptyString
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Test
@@ -44,7 +44,6 @@ import java.util.*
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 import kotlin.test.junit5.JUnit5Asserter.assertNull
 
-@KotlinCleanup("`is` -> equalTo()")
 @KotlinCleanup("redundant `val col = col`")
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ReviewerTest : RobolectricTest() {
@@ -83,7 +82,7 @@ class ReviewerTest : RobolectricTest() {
                 reviewer.blockControls(true)
                 reviewer.executeCommand(ViewerCommand.COMMAND_EXIT)
             }
-            assertThat(scenario.result.resultCode, `is`(RESULT_DEFAULT))
+            assertThat(scenario.result.resultCode, equalTo(RESULT_DEFAULT))
         }
     }
 
@@ -112,7 +111,7 @@ class ReviewerTest : RobolectricTest() {
 
         // The answer needs to be displayed to be able to get the time.
         displayAnswer(reviewer)
-        assertThat("4 buttons should be displayed", reviewer.answerButtonCount, `is`(4))
+        assertThat("4 buttons should be displayed", reviewer.answerButtonCount, equalTo(4))
 
         val nextTime = javaScriptFunction.ankiGetNextTime4()
         assertThat(nextTime, not(emptyString()))
@@ -123,7 +122,7 @@ class ReviewerTest : RobolectricTest() {
         displayAnswer(reviewer)
 
         if (schedVersion == 1) {
-            assertThat("The 4th button should not be visible", reviewer.answerButtonCount, `is`(3))
+            assertThat("The 4th button should not be visible", reviewer.answerButtonCount, equalTo(3))
             val learnTime = javaScriptFunction.ankiGetNextTime4()
             assertThat("If the 4th button is not visible, there should be no time4 in JS", learnTime, emptyString())
         }
@@ -240,7 +239,7 @@ class ReviewerTest : RobolectricTest() {
         decks.select(didA)
         val reviewer = startReviewer()
         waitForAsyncTasksToComplete()
-        assertThat(reviewer.supportActionBar!!.title, `is`("B"))
+        assertThat(reviewer.supportActionBar!!.title, equalTo("B"))
     }
 
     @Test
@@ -261,7 +260,7 @@ class ReviewerTest : RobolectricTest() {
         val javaScriptFunction = reviewer.javaScriptFunction()
 
         waitForAsyncTasksToComplete()
-        assertThat(javaScriptFunction.ankiGetDeckName(), `is`("B"))
+        assertThat(javaScriptFunction.ankiGetDeckName(), equalTo("B"))
     }
 
     private fun toggleWhiteboard(reviewer: ReviewerForMenuItems) {
@@ -290,7 +289,7 @@ class ReviewerTest : RobolectricTest() {
         waitForAsyncTasksToComplete()
         val ord = r.mCurrentCard!!.ord
 
-        assertThat("Unexpected card ord", ord + 1, not(`is`(i)))
+        assertThat("Unexpected card ord", ord + 1, not(equalTo(i)))
     }
 
     private fun undo(reviewer: Reviewer) {
@@ -312,7 +311,7 @@ class ReviewerTest : RobolectricTest() {
         expected.add(stepCount)
         expected.add(revCount)
 
-        assertThat(countList.toString(), `is`(expected.toString())) // We use toString as hamcrest does not print the whole array and stops at [0].
+        assertThat(countList.toString(), equalTo(expected.toString())) // We use toString as hamcrest does not print the whole array and stops at [0].
     }
 
     private fun answerCardOrdinalAsGood(r: Reviewer, i: Int) {
@@ -327,7 +326,7 @@ class ReviewerTest : RobolectricTest() {
         waitForAsyncTasksToComplete()
         val ord = r.mCurrentCard!!.ord
 
-        assertThat("Unexpected card ord", ord + 1, `is`(i))
+        assertThat("Unexpected card ord", ord + 1, equalTo(i))
     }
 
     @Throws(ConfirmModSchemaException::class)
@@ -343,9 +342,9 @@ class ReviewerTest : RobolectricTest() {
 
         val newNote = col.newNote()
         newNote.setField(0, "Hello")
-        assertThat(newNote.model()["name"], `is`("Three"))
+        assertThat(newNote.model()["name"], equalTo("Three"))
 
-        assertThat(col.addNote(newNote), `is`(3))
+        assertThat(col.addNote(newNote), equalTo(3))
     }
 
     @Throws(ConfirmModSchemaException::class)
