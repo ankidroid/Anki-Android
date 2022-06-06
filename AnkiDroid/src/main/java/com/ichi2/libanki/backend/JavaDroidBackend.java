@@ -18,6 +18,7 @@ package com.ichi2.libanki.backend;
 
 import android.content.Context;
 
+import com.google.protobuf.ByteString;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.TemplateManager;
@@ -106,6 +107,20 @@ public class JavaDroidBackend implements DroidBackend {
 
     @Override
     public @NonNull Backend.RenderCardOut renderCardForTemplateManager(@NonNull TemplateManager.TemplateRenderContext templateRenderContext) throws BackendNotSupportedException {
+        throw new BackendNotSupportedException();
+    }
+
+
+    @NonNull
+    @Override
+    public ByteString i18nResources() throws BackendNotSupportedException {
+        throw new BackendNotSupportedException();
+    }
+
+
+    @NonNull
+    @Override
+    public ByteString graphData(@NonNull String search, int days) throws BackendNotSupportedException {
         throw new BackendNotSupportedException();
     }
 }

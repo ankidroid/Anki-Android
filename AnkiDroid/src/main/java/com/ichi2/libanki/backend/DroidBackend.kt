@@ -19,6 +19,7 @@ import BackendProto.Backend.ExtractAVTagsOut
 import BackendProto.Backend.RenderCardOut
 import android.content.Context
 import androidx.annotation.VisibleForTesting
+import com.google.protobuf.ByteString
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DB
 import com.ichi2.libanki.DeckConfig
@@ -85,4 +86,10 @@ interface DroidBackend {
 
     @Throws(BackendNotSupportedException::class)
     fun renderCardForTemplateManager(templateRenderContext: TemplateRenderContext): RenderCardOut
+
+    @Throws(BackendNotSupportedException::class)
+    fun i18nResources(): ByteString
+
+    @Throws(BackendNotSupportedException::class)
+    fun graphData(search: String, days: Int): ByteString
 }

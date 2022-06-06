@@ -19,6 +19,7 @@ package com.ichi2.libanki.backend
 import BackendProto.Backend.ExtractAVTagsOut
 import BackendProto.Backend.RenderCardOut
 import android.content.Context
+import com.google.protobuf.ByteString
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DB
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext
@@ -94,6 +95,10 @@ open class RustDroidBackend(
     override fun renderCardForTemplateManager(templateRenderContext: TemplateRenderContext): RenderCardOut {
         throw BackendNotSupportedException()
     }
+
+    override fun i18nResources(): ByteString = backend.backend.i18nResources().json
+
+    override fun graphData(search: String, days: Int): ByteString = backend.backend.graphs(search, days).toByteString()
 
     companion object {
         const val UNUSED_VALUE = 0
