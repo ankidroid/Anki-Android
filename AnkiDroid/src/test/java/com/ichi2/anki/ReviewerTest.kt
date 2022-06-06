@@ -183,43 +183,42 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
-    @KotlinCleanup("make cards array non-null")
     fun testLrnQueueAfterUndo() {
         val nw = col.decks.confForDid(1).getJSONObject("new")
         val time = col.time as MockTime
         nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
 
-        val cards = arrayOfNulls<Card>(4)
-        cards[0] = addRevNoteUsingBasicModelDueToday("1", "bar").firstCard()
-        cards[1] = addNoteUsingBasicModel("2", "bar").firstCard()
-        cards[2] = addNoteUsingBasicModel("3", "bar").firstCard()
-
+        val cards = arrayOf(
+            addRevNoteUsingBasicModelDueToday("1", "bar").firstCard(),
+            addNoteUsingBasicModel("2", "bar").firstCard(),
+            addNoteUsingBasicModel("3", "bar").firstCard()
+        )
         waitForAsyncTasksToComplete()
 
         val reviewer = startReviewer()
 
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[0]!!, reviewer.mCurrentCard!!)
+        equalFirstField(cards[0], reviewer.mCurrentCard!!)
         reviewer.answerCard(Consts.BUTTON_ONE)
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[1]!!, reviewer.mCurrentCard!!)
+        equalFirstField(cards[1], reviewer.mCurrentCard!!)
         reviewer.answerCard(Consts.BUTTON_ONE)
         waitForAsyncTasksToComplete()
 
         undo(reviewer)
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[1]!!, reviewer.mCurrentCard!!)
+        equalFirstField(cards[1], reviewer.mCurrentCard!!)
         reviewer.answerCard(getCol().sched.goodNewButton)
         waitForAsyncTasksToComplete()
 
-        equalFirstField(cards[2]!!, reviewer.mCurrentCard!!)
+        equalFirstField(cards[2], reviewer.mCurrentCard!!)
         time.addM(2)
         reviewer.answerCard(getCol().sched.goodNewButton)
         advanceRobolectricLooperWithSleep()
-        equalFirstField(cards[0]!!, reviewer.mCurrentCard!!) // This failed in #6898 because this card was not in the queue
+        equalFirstField(cards[0], reviewer.mCurrentCard!!) // This failed in #6898 because this card was not in the queue
     }
 
     @Test
