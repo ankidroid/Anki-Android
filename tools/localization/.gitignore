@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# ignore downloaded zip file
+ankidroid.zip
+
+# translation extract dir
+temp_dir
