@@ -132,8 +132,10 @@ function createIfNotExisting(directory: string) {
     }
 }
 
-async function update(valuesDirectory: string, f: string, source: any, fileExt: string, isCrowdin: boolean, language = '') {
+async function update(valuesDirectory: string, f: string, fileExt: string, isCrowdin: boolean, language = '') {
     if (f == '14-marketdescription') {
+        let source = fs.readFileSync(temp_dir + "/" + language + "/" + f + fileExt, "utf-8");
+
         let olfFile = path.join(__dirname, '../../../docs/marketing/localized_description/oldVersionJustToCompareWith.txt');
         let newfile = path.join(__dirname, '../../../docs/marketing/localized_description/marketdescription' + '-' + language + fileExt);
 
@@ -154,10 +156,9 @@ async function update(valuesDirectory: string, f: string, source: any, fileExt: 
         return true;
 
     } else if (f == '15-markettitle') {
-        // let newfile = path.join(__dirname, '../../../docs/marketing/localized_description/marketdescription' + '-' + language + fileExt);
-        // fs.writeFileSync(newfile, source);
+        let source = fs.readFileSync(temp_dir + "/" + language + "/14-marketdescription" + fileExt, "utf-8");
 
-        const translatedTitle = source.replace("\n", "");
+        const translatedTitle = source.split("\n")[0];
 
         if (titleString != translatedTitle) {
             fs.appendFileSync(titleFile, "\n" + language + ': ' + translatedTitle);
@@ -168,6 +169,8 @@ async function update(valuesDirectory: string, f: string, source: any, fileExt: 
         return true;
 
     } else {
+        let source = fs.readFileSync(temp_dir + "/" + language + "/" + f + fileExt, "utf-8");
+
         const newfile = valuesDirectory + f + '.xml';
         fs.writeFileSync(newfile, source);
         return replacechars(newfile, fileExt, isCrowdin);
@@ -204,17 +207,11 @@ export async function updateI18nFiles() {
         console.log("\nCopying language files from " + language + " to " + androidLanguage);
         let valuesDirectory = path.join(__dirname, "../../../AnkiDroid/src/main/res/values-" + androidLanguage + "/");
         createIfNotExisting(valuesDirectory);
-
-        
-        // remove '15-markettitle' from fileNames
-        let fileNamesTmp = fileNames;
-        fileNamesTmp.splice(fileNames.indexOf('15-markettitle'), 1);
         
         // Copy localization files, mask chars and append gnu/gpl licence
-        for (let f of fileNamesTmp) {
+        for (let f of fileNames) {
             let fileExt = fileExtFor(f);
-            let content = fs.readFileSync(temp_dir + "/" + language + "/" + f + fileExt, "utf-8");
-            await update(valuesDirectory, f, content, fileExt, true, language).then(res => {
+            await update(valuesDirectory, f, fileExt, true, language).then(res => {
                 anyError = res;
             });
         }
