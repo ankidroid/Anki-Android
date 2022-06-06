@@ -18,7 +18,6 @@
 
 package com.ichi2.async
 
-import android.content.Context
 import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.fasterxml.jackson.core.JsonToken
@@ -63,11 +62,6 @@ import java.util.concurrent.ExecutionException
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("Lots to do")
 open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress, Result>, private val listener: TaskListener<in Progress, in Result>?, private var previousTask: CollectionTask<*, *>?) : BaseAsyncTask<Void, Progress, Result>(), Cancellable {
-    /**
-     * A reference to the application context to use to fetch the current Collection object.
-     */
-    protected var context: Context? = null
-        private set
 
     /** Cancel the current task.
      * @return whether cancelling did occur.
@@ -88,9 +82,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
         return false
     }
-
-    private val col: Collection
-        get() = CollectionHelper.getInstance().getCol(context)
 
     protected override fun doInBackground(vararg arg0: Void): Result? {
         return try {
@@ -124,7 +115,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             }
         }
         TaskManager.setLatestInstance(this)
-        context = AnkiDroidApp.instance.applicationContext
+        val context = AnkiDroidApp.instance.applicationContext
 
         // Skip the task if the collection cannot be opened
         if (task.requiresOpenCollection() && CollectionHelper.getInstance().getColSafe(context) == null) {
@@ -132,7 +123,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             return null
         }
         // Actually execute the task now that we are at the front of the queue.
-        return task.execTask(col, this)
+        return task.execTask(CollectionHelper.getInstance().getCol(context), this)
     }
 
     /** Delegates to the [TaskListener] for this task.  */
