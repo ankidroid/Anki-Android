@@ -36,11 +36,11 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
             message(text = requireArguments().getString("dialogMessage")!!)
             icon(Themes.getResFromAttr(context, R.attr.dialogErrorIcon))
             positiveButton(R.string.dialog_positive_delete) {
-                (activity as DeckPicker?)!!.deleteDeck(deckId)
-                (activity as DeckPicker?)!!.dismissAllDialogFragments()
+                (activity as DeckPicker).deleteDeck(deckId)
+                (activity as DeckPicker).dismissAllDialogFragments()
             }
             negativeButton(R.string.dialog_cancel) {
-                (activity as DeckPicker?)!!.dismissAllDialogFragments()
+                (activity as DeckPicker).dismissAllDialogFragments()
             }
             cancelable(true)
         }

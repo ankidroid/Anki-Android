@@ -312,15 +312,15 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 return true
             }
             R.id.action_rename -> {
-                (activity as DeckPicker?)!!.renameDeckDialog(col!!.decks.selected())
+                (activity as DeckPicker).renameDeckDialog(col!!.decks.selected())
                 return true
             }
             R.id.action_delete -> {
-                (activity as DeckPicker?)!!.confirmDeckDeletion(col!!.decks.selected())
+                (activity as DeckPicker).confirmDeckDeletion(col!!.decks.selected())
                 return true
             }
             R.id.action_export -> {
-                (activity as DeckPicker?)!!.exportDeck(col!!.decks.selected())
+                (activity as DeckPicker).exportDeck(col!!.decks.selected())
                 return true
             }
             else -> return false
@@ -380,7 +380,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)
                 icon!!.isAutoMirrored = true
                 mToolbar!!.navigationIcon = icon
-                mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity?)!!.finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
+                mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity).finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
             }
         } catch (e: IllegalStateException) {
             if (!CollectionHelper.getInstance().colIsOpen()) {

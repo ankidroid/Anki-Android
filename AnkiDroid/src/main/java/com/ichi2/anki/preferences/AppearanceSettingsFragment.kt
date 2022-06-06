@@ -222,7 +222,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
                     val destFile = File(currentAnkiDroidDirectory, imageName)
                     // Image size less than 10 MB copied to AnkiDroid directory
                     if (fileLength < 10) {
-                        (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream?)!!.channel.use { sourceChannel ->
+                        (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use { sourceChannel ->
                             FileOutputStream(destFile).channel.use { destChannel ->
                                 destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
                                 UIUtils.showThemedToast(requireContext(), getString(R.string.background_image_applied), false)
