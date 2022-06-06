@@ -41,14 +41,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.dialogs.ConfirmationDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.dialogs.DiscardChangesDialog
-import com.ichi2.anki.dialogs.InsertFieldDialog.InsertFieldListener
-import com.ichi2.anki.dialogs.InsertFieldDialogFactory
+import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -428,20 +426,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
         }
 
+        @NeedsTest(
+            "the kotlin migration made this method crash due to a recursive call when the dialog would return its data"
+        )
         private fun showInsertFieldDialog() {
-            if (mTemplateEditor.mFieldNames == null) {
-                return
+            mTemplateEditor.mFieldNames?.let { fieldNames ->
+                mTemplateEditor.showDialogFragment(InsertFieldDialog.newInstance(fieldNames))
             }
-            val insertFieldDialogFactory = InsertFieldDialogFactory(
-                object : InsertFieldListener {
-                    override fun insertField(field: String?) {
-                        insertField(field)
-                    }
-                }).attachToActivity<InsertFieldDialogFactory>(mTemplateEditor)
-            val insertFieldDialog = insertFieldDialogFactory
-                .newInsertFieldDialog()
-                .withArguments(mTemplateEditor.mFieldNames!!)
-            mTemplateEditor.showDialogFragment(insertFieldDialog)
         }
 
         @Suppress("unused")
@@ -463,6 +454,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             initTabLayoutMediator()
+            parentFragmentManager.setFragmentResultListener(REQUEST_FIELD_INSERT, viewLifecycleOwner) { key, bundle ->
+                if (key == REQUEST_FIELD_INSERT) {
+                    // this is guaranteed to be non null, as we put a non null value on the other side
+                    insertField(bundle.getString(InsertFieldDialog.KEY_INSERTED_FIELD)!!)
+                }
+            }
         }
 
         private fun initTabLayoutMediator() {
