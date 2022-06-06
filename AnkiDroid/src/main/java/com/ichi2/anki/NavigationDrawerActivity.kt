@@ -58,7 +58,6 @@ abstract class NavigationDrawerActivity :
      */
     protected var fragmented = false
     private var mNavButtonGoesBack = false
-    private var mOldTheme: String? = null
     // Navigation drawer list item entries
     private var mDrawerLayout: DrawerLayout? = null
     private var mNavigationView: NavigationView? = null
@@ -241,9 +240,6 @@ abstract class NavigationDrawerActivity :
                 // Workaround to kick user back to StudyOptions after opening settings from Reviewer
                 // because onDestroy() of old Activity interferes with TTS in new Activity
                 finishWithoutAnimation()
-            } else if (mOldTheme !== Themes.getCurrentTheme(applicationContext)) {
-                // The current theme was changed, so need to reload the stack with the new theme
-                restartActivityInvalidateBackstack(this)
             } else {
                 restartActivity()
             }
@@ -303,8 +299,6 @@ abstract class NavigationDrawerActivity :
                 startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START)
             } else if (itemId == R.id.nav_settings) {
                 Timber.i("Navigating to settings")
-                // Remember the theme we started with so we can restart the Activity if it changes
-                mOldTheme = Themes.getCurrentTheme(applicationContext)
                 startActivityForResultWithAnimation(Intent(this@NavigationDrawerActivity, Preferences::class.java), REQUEST_PREFERENCES_UPDATE, FADE)
                 // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
                 (this as? Statistics)?.finishWithAnimation(FADE)
