@@ -415,14 +415,13 @@ class ReviewerTest : RobolectricTest() {
             return Arrays.asList(arrayOf(1), arrayOf(2))
         }
 
-        fun startReviewer(testClass: RobolectricTest?): Reviewer {
+        fun startReviewer(testClass: RobolectricTest): Reviewer {
             return startReviewer(testClass, Reviewer::class.java)
         }
 
         @JvmStatic
-        @KotlinCleanup("make params non-null")
-        fun <T : Reviewer?> startReviewer(testClass: RobolectricTest?, clazz: Class<T>?): T {
-            val reviewer = startActivityNormallyOpenCollectionWithIntent(testClass!!, clazz, Intent())
+        fun <T : Reviewer?> startReviewer(testClass: RobolectricTest, clazz: Class<T>): T {
+            val reviewer = startActivityNormallyOpenCollectionWithIntent(testClass, clazz, Intent())
             waitForAsyncTasksToComplete()
             return reviewer
         }
