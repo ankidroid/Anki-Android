@@ -3,15 +3,31 @@ import { uploadI18nFiles } from "./upload";
 import { buildAndDownload, extractZip } from "./download";
 import { updateI18nFiles } from "./update";
 
-// upload latest (english) source i18n files
-uploadI18nFiles();
+process.argv.forEach(function (value, index, array) {
+    switch (value) {
+        case "upload":
+            // upload latest (english) source i18n files
+            console.log("uploadin...");
+            uploadI18nFiles();
+            break;
 
-// download build target i18n files
-buildAndDownload();
+        case "download":
+            // download build target i18n files
+            console.log("downloading...");
+            buildAndDownload();
+            break;
 
-// extract to a temp dir
-console.log("extracting...");
-const temp_dir = path.join(__dirname, "../temp_dir");
-extractZip("ankidroid.zip", temp_dir);
+        case "extract":
+            // extract to a temp dir
+            console.log("extracting...");
+            const temp_dir = path.join(__dirname, "../temp_dir");
+            extractZip("ankidroid.zip", temp_dir);
+            break;
 
-updateI18nFiles();
+        case "update":
+            // upload to target i18n files
+            console.log("updating...");
+            updateI18nFiles();
+            break;
+    }
+});
