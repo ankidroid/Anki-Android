@@ -291,19 +291,20 @@ class ReviewerTest : RobolectricTest() {
         waitForAsyncTasksToComplete()
     }
 
-    @KotlinCleanup("Use mutableListOf")
     private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) {
 
-        val countList: MutableList<String?> = ArrayList()
         val jsApi = r.javaScriptFunction()
-        countList.add(jsApi.ankiGetNewCardCount())
-        countList.add(jsApi.ankiGetLrnCardCount())
-        countList.add(jsApi.ankiGetRevCardCount())
+        val countList = listOf(
+            jsApi.ankiGetNewCardCount(),
+            jsApi.ankiGetLrnCardCount(),
+            jsApi.ankiGetRevCardCount()
+        )
 
-        val expected: MutableList<Int> = ArrayList()
-        expected.add(newCount)
-        expected.add(stepCount)
-        expected.add(revCount)
+        val expected = listOf(
+            newCount,
+            stepCount,
+            revCount
+        )
 
         assertThat(countList.toString(), equalTo(expected.toString())) // We use toString as hamcrest does not print the whole array and stops at [0].
     }
