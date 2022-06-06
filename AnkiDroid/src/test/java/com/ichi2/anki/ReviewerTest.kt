@@ -30,7 +30,6 @@ import com.ichi2.libanki.ModelManager
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.PreferenceUtils
 import com.ichi2.utils.JSONArray
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.emptyString
@@ -409,10 +408,9 @@ class ReviewerTest : RobolectricTest() {
     companion object {
         @JvmStatic
         @ParameterizedRobolectricTestRunner.Parameters(name = "SchedV{0}")
-        @KotlinCleanup("Arrays.asList -> listOf")
         fun initParameters(): Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2
-            return Arrays.asList(arrayOf(1), arrayOf(2))
+            return listOf(arrayOf(1), arrayOf(2))
         }
 
         fun startReviewer(testClass: RobolectricTest): Reviewer {
