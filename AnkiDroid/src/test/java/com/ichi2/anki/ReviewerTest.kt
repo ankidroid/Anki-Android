@@ -44,7 +44,6 @@ import java.util.*
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 import kotlin.test.junit5.JUnit5Asserter.assertNull
 
-@KotlinCleanup("redundant `val col = col`")
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ReviewerTest : RobolectricTest() {
     @JvmField
@@ -157,7 +156,6 @@ class ReviewerTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     fun testMultipleCards() {
         addNoteWithThreeCards()
-        val col = col
         val nw = col.decks.confForDid(1).getJSONObject("new")
         val time = collectionTime
         nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
@@ -187,7 +185,6 @@ class ReviewerTest : RobolectricTest() {
     @Test
     @KotlinCleanup("make cards array non-null")
     fun testLrnQueueAfterUndo() {
-        val col = col
         val nw = col.decks.confForDid(1).getJSONObject("new")
         val time = col.time as MockTime
         nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
@@ -227,7 +224,6 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     fun baseDeckName() {
-        val col = col
         val models = col.models
 
         val decks = col.decks
@@ -244,7 +240,6 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     fun jsAnkiGetDeckName() {
-        val col = col
         val models = col.models
         val decks = col.decks
 
