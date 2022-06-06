@@ -26,7 +26,10 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
 import com.ichi2.themes.Themes.getColorFromAttr
-import com.wildplot.android.rendering.PlotSheet
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
 import java.lang.ref.WeakReference
@@ -35,7 +38,11 @@ import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.math.roundToInt
 
-class AnkiStatsTaskHandler private constructor(private val collectionData: Collection) {
+class AnkiStatsTaskHandler private constructor(
+    private val collectionData: Collection,
+    private val mainDispatcher: CoroutineDispatcher,
+    private val defaultDispatcher: CoroutineDispatcher
+) {
     var standardTextSize = 10f
     var statType = AxisType.TYPE_MONTH
     private var mDeckId: Long = 0
@@ -43,11 +50,30 @@ class AnkiStatsTaskHandler private constructor(private val collectionData: Colle
         mDeckId = deckId
     }
 
-    @Suppress("deprecation") // #7108: AsyncTask
-    fun createChart(chartType: ChartType, vararg views: View?): CreateChartTask {
-        val createChartTask = CreateChartTask(chartType, collectionData, statType, mDeckId)
-        createChartTask.execute(*views)
-        return createChartTask
+    suspend fun createChart(
+        chartType: ChartType,
+        progressBar: ProgressBar,
+        chartView: ChartView,
+    ) = withContext(defaultDispatcher) {
+        val plotSheet = if (!this.isActive) {
+            Timber.d("Quitting CreateChartTask (%s) before execution", chartType.name)
+            null
+        } else {
+            Timber.d("Starting CreateChartTask, type: %s", chartType.name)
+            val chartBuilder = ChartBuilder(
+                chartView, collectionData,
+                mDeckId, chartType
+            )
+            chartBuilder.renderChart(statType)
+        }
+        plotSheet?.let {
+            withContext(mainDispatcher) {
+                chartView.setData(plotSheet)
+                progressBar.visibility = View.GONE
+                chartView.visibility = View.VISIBLE
+                chartView.invalidate()
+            }
+        }
     }
 
     @Suppress("deprecation") // #7108: AsyncTask
@@ -55,63 +81,6 @@ class AnkiStatsTaskHandler private constructor(private val collectionData: Colle
         val createChartTask = CreateStatisticsOverview(collectionData, statType, mDeckId)
         createChartTask.execute(*views)
         return createChartTask
-    }
-
-    class CreateChartTask(chartType: ChartType, collection: Collection, statType: AxisType, deckId: Long) : StatsAsyncTask<PlotSheet?>() {
-        private var mImageView: WeakReference<ChartView>? = null
-        private var mProgressBar: WeakReference<ProgressBar>? = null
-        private val mCollectionData: WeakReference<Collection>
-        private val mStatType: AxisType
-        private val mDeckId: Long
-        private var mIsRunning = false
-        private val mChartType: ChartType
-        override fun doInBackgroundSafe(vararg views: View?): PlotSheet? {
-            // make sure only one task of CreateChartTask is running, first to run should get sLock
-            // only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
-            sLock.lock()
-            val collectionData = mCollectionData.get()
-            return try {
-                if (!mIsRunning || collectionData == null) {
-                    Timber.d("Quitting CreateChartTask (%s) before execution", mChartType.name)
-                    return null
-                } else {
-                    Timber.d("Starting CreateChartTask, type: %s", mChartType.name)
-                }
-                val imageView = views[0] as ChartView
-                mImageView = WeakReference(imageView)
-                mProgressBar = WeakReference(views[1] as ProgressBar)
-                val chartBuilder = ChartBuilder(
-                    imageView, collectionData,
-                    mDeckId, mChartType
-                )
-                chartBuilder.renderChart(mStatType)
-            } finally {
-                sLock.unlock()
-            }
-        }
-
-        override fun onCancelled() {
-            mIsRunning = false
-        }
-
-        override fun onPostExecute(plotSheet: PlotSheet?) {
-            val imageView = mImageView!!.get()
-            val progressBar = mProgressBar!!.get()
-            if (plotSheet != null && mIsRunning && imageView != null && progressBar != null) {
-                imageView.setData(plotSheet)
-                progressBar.visibility = View.GONE
-                imageView.visibility = View.VISIBLE
-                imageView.invalidate()
-            }
-        }
-
-        init {
-            mIsRunning = true
-            mChartType = chartType
-            mCollectionData = WeakReference(collection)
-            mStatType = statType
-            mDeckId = deckId
-        }
     }
 
     class CreateStatisticsOverview(collection: Collection, statType: AxisType, deckId: Long) : StatsAsyncTask<String?>() {
@@ -232,9 +201,13 @@ class AnkiStatsTaskHandler private constructor(private val collectionData: Colle
         private val sLock: Lock = ReentrantLock()
         @JvmStatic
         @Synchronized
-        fun getInstance(collection: Collection): AnkiStatsTaskHandler? {
+        fun getInstance(
+            collection: Collection,
+            mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+            defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+        ): AnkiStatsTaskHandler? {
             if (instance == null || instance!!.collectionData !== collection) {
-                instance = AnkiStatsTaskHandler(collection)
+                instance = AnkiStatsTaskHandler(collection, mainDispatcher, defaultDispatcher)
             }
             return instance
         }
