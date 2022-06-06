@@ -260,7 +260,7 @@ object ReadText {
                 if (!availableTtsLocales.isEmpty()) {
                     // notify the reviewer that TTS has been initialized
                     Timber.d("TTS initialized and available languages found")
-                    (context as AbstractFlashcardViewer?)!!.ttsInitialized()
+                    (context as AbstractFlashcardViewer).ttsInitialized()
                 } else {
                     showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
                     Timber.w("TTS initialized but no available languages found")

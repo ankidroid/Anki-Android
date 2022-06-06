@@ -33,7 +33,7 @@ class DeckPickerNoSpaceToDowngradeDialog(private val formatter: FileSizeFormatte
             message(R.string.no_space_to_downgrade_content, requiredSpaceString)
             cancelable(false)
             positiveButton(R.string.close) {
-                (activity as DeckPicker?)!!.exit()
+                (activity as DeckPicker).exit()
             }
         }
     }

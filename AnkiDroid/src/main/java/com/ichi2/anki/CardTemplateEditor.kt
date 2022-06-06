@@ -713,7 +713,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }
                 TemporaryModel.clearTempModelFiles()
                 // Make sure the fragments reinitialize, otherwise there is staleness on return
-                (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter?)!!.ordinalShift()
+                (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
                 mTemplateEditor.viewPager.adapter!!.notifyDataSetChanged()
             }
 
@@ -855,11 +855,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             model.put("tmpls", newTemplates)
             Models._updateTemplOrds(model)
             // Make sure the fragments reinitialize, otherwise the reused ordinal causes staleness
-            (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter?)!!.ordinalShift()
+            (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
             mTemplateEditor.viewPager.adapter!!.notifyDataSetChanged()
             mTemplateEditor.viewPager.setCurrentItem(newTemplates.length() - 1, mTemplateEditor.animationDisabled())
             if (activity != null) {
-                (activity as CardTemplateEditor?)!!.dismissAllDialogFragments()
+                (activity as CardTemplateEditor).dismissAllDialogFragments()
             }
         }
 
