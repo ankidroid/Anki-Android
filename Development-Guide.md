@@ -178,9 +178,7 @@ echo 'export ANKIDROID_BACKEND_PATH={Path to the dylib file}' >> ~/.zshenv
 echo 'export ANKIDROID_BACKEND_VERSION={Latest release version}' >> ~/.zshenv
 ```
 - By default mac uses `zsh` shell. But if you have changed your default shell to fish, bash, etc, you need to change it back to zsh and then add the env variables.
-- You might get a permission denied error when running tests for first time, click on the right top `?` icon and follow the steps in order to run .dylib file
-![image](https://user-images.githubusercontent.com/69595691/172110983-fb345535-86b9-4ebd-a14e-3f29b3156bd4.jpg)
-
+- You might get a permission denied error when running tests for first time, click on the right top `?` icon ([ref](https://user-images.githubusercontent.com/69595691/172110983-fb345535-86b9-4ebd-a14e-3f29b3156bd4.jpg)) and follow the steps in order to run .dylib file 
 
 ### Unit tests
 There are unit tests defined in the `AnkiDroid/src/test` directory, with [an extendable test superclass available using the Robolectric framework](https://github.com/ankidroid/Anki-Android/blob/main/AnkiDroid/src/test/java/com/ichi2/anki/RobolectricTest.java) to make standard Android services available, including sqlite so you can operate on Anki Collections in your tests - each Collection created on the fly prior to each test method and deleted afterwards for isolation. You can run these tests by selecting them directly from AndroidStudio for individual tests or all tests from one file, or you can run them from the command line and generate a coverage report to verify the effect of your testing from the command line using:
