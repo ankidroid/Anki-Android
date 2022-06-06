@@ -22,7 +22,7 @@ jobs:
 
       - name: Credential Prep
         run: |
-          echo "CROWDIN_KEY=${{ secrets.CROWDIN_API_KEY }}" >> $GITHUB_ENV
+          echo "CROWDIN_API_KEY=${{ secrets.CROWDIN_API_KEY }}" >> $GITHUB_ENV
         shell: bash
 
       - name: GIT Setup
@@ -50,16 +50,24 @@ jobs:
           yarn build
 
       - name: Push translation sources to crowdin
-        run: yarn start upload
+        run: |
+          cd ./tools/localization
+          yarn start upload
 
       - name: Pull translation updates from crowdin
-        run: yarn start download
+        run: |
+          cd ./tools/localization
+          yarn start download
       
       - name: Extract downloaded ankidroid.zip file
-        run: yarn start extract
+        run: |
+          cd ./tools/localization
+          yarn start extract
       
       - name: Update translation to AnkiDroid res
-        run: yarn start update
+        run: |
+          cd ./tools/localization
+          yarn start update
         
       - name: Commit changes
         run: |

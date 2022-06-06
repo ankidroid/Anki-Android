@@ -6,9 +6,6 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/index.js",
-    "upload": "node ./dist/upload.js",
-    "dowload": "node ./dist/dowload.js",
-    "update": "node ./dist/update.js",
     "dev": "ts-node ./src/index.ts"
   },
   "repository": "https://github.com/ankidroid/Anki-Android",

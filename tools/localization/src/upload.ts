@@ -1,7 +1,7 @@
 import fs from "fs";
 import crowdin, { Credentials } from '@crowdin/crowdin-api-client';
 
-require('dotenv').config();
+require('dotenv').config({path:__dirname + "../.env" });
 
 const CROWDIN_API_KEY = process.env.CROWDIN_API_KEY ?? "";
 const projectId = 520224;
