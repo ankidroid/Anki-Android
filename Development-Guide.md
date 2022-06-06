@@ -164,10 +164,23 @@ git push origin HEAD -f
 ```
 
 ## Running automated tests
-There are two kinds of test in AnkiDroid. Unit test and on-device integration test. The second one need a connected device or an emulated device. You can run both test set simultaneously from the command line with
+There are two kinds of test in AnkiDroid. Unit test and on-device integration test. The second one needs a connected device or an emulated device. You can run both test set simultaneously from the command line with
 ```
 ./gradlew jacocoTestReport
 ```
+#### Note for Apple Silicon Users
+You need to do one more additional step to run tests on your machine
+- Download the latest release of arm64 dylib file [Anki-Android-Backend](https://github.com/ankidroid/Anki-Android-Backend/releases/)
+- Place it on your system somewhere accessible [I made a .anki folder in $HOME and placed it there]
+- Add these two environment variables, run the command
+```
+echo 'export ANKIDROID_BACKEND_PATH={Path to the dylib file}' >> ~/.zshenv
+echo 'export ANKIDROID_BACKEND_VERSION={Latest release version}' >> ~/.zshenv
+```
+- By default mac uses `zsh` shell. But if you have changed your default shell to fish, bash, etc, you need to change it back to zsh and then add the env variables.
+- You might get a permission denied error when running tests for first time, click on the right top `?` icon and follow the steps in order to run .dylib file
+![image](https://user-images.githubusercontent.com/69595691/172110983-fb345535-86b9-4ebd-a14e-3f29b3156bd4.jpg)
+
 
 ### Unit tests
 There are unit tests defined in the `AnkiDroid/src/test` directory, with [an extendable test superclass available using the Robolectric framework](https://github.com/ankidroid/Anki-Android/blob/main/AnkiDroid/src/test/java/com/ichi2/anki/RobolectricTest.java) to make standard Android services available, including sqlite so you can operate on Anki Collections in your tests - each Collection created on the fly prior to each test method and deleted afterwards for isolation. You can run these tests by selecting them directly from AndroidStudio for individual tests or all tests from one file, or you can run them from the command line and generate a coverage report to verify the effect of your testing from the command line using:
