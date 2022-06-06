@@ -17,6 +17,7 @@ package com.ichi2.anki
 
 import android.content.Intent
 import android.view.Menu
+import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_DEFAULT
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -265,18 +266,17 @@ class ReviewerTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
     }
 
-    @KotlinCleanup(".edit {}")
     @KotlinCleanup(".toString()")
     private fun disableAllReviewerAppBarButtons() {
         val keys = PreferenceUtils.getAllCustomButtonKeys(targetContext)
 
         val preferences = AnkiDroidApp.getSharedPrefs(targetContext)
 
-        val e = preferences.edit()
-        for (k in keys) {
-            e.putString(k, Integer.toString(ActionButtonStatus.MENU_DISABLED))
+        preferences.edit {
+            for (k in keys) {
+                putString(k, Integer.toString(ActionButtonStatus.MENU_DISABLED))
+            }
         }
-        e.apply()
     }
 
     private fun assertCurrentOrdIsNot(r: Reviewer, i: Int) {
