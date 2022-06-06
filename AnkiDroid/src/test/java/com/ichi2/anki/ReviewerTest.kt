@@ -211,12 +211,12 @@ class ReviewerTest : RobolectricTest() {
         waitForAsyncTasksToComplete()
 
         equalFirstField(cards[1], reviewer.mCurrentCard!!)
-        reviewer.answerCard(getCol().sched.goodNewButton)
+        reviewer.answerCard(col.sched.goodNewButton)
         waitForAsyncTasksToComplete()
 
         equalFirstField(cards[2], reviewer.mCurrentCard!!)
         time.addM(2)
-        reviewer.answerCard(getCol().sched.goodNewButton)
+        reviewer.answerCard(col.sched.goodNewButton)
         advanceRobolectricLooperWithSleep()
         equalFirstField(cards[0], reviewer.mCurrentCard!!) // This failed in #6898 because this card was not in the queue
     }
@@ -277,7 +277,7 @@ class ReviewerTest : RobolectricTest() {
         }
     }
 
-    private fun assertCurrentOrdIsNot(r: Reviewer, i: Int) {
+    private fun assertCurrentOrdIsNot(r: Reviewer, @Suppress("SameParameterValue") i: Int) {
         waitForAsyncTasksToComplete()
         val ord = r.mCurrentCard!!.ord
 
@@ -289,6 +289,7 @@ class ReviewerTest : RobolectricTest() {
         waitForAsyncTasksToComplete()
     }
 
+    @Suppress("SameParameterValue")
     private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) {
 
         val jsApi = r.javaScriptFunction()
@@ -348,8 +349,8 @@ class ReviewerTest : RobolectricTest() {
         val newTemplate = defaultTemplate.deepClone()
         newTemplate.put("ord", tmpls.length())
 
-        val card_name = targetContext.getString(R.string.card_n_name, tmpls.length() + 1)
-        newTemplate.put("name", card_name)
+        val cardName = targetContext.getString(R.string.card_n_name, tmpls.length() + 1)
+        newTemplate.put("name", cardName)
 
         models.addTemplate(m, newTemplate)
     }
