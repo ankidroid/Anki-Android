@@ -13,7 +13,7 @@ jobs:
       pull-requests: write # to create the PR with changes
     name: 'Sync Translations with Crowdin'
     timeout-minutes: 20
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,31 +25,46 @@ jobs:
           echo "CROWDIN_KEY=${{ secrets.CROWDIN_API_KEY }}" >> $GITHUB_ENV
         shell: bash
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
       - name: GIT Setup
         run: |
-          git config --global user.name 'AnkiDroid Translations'
-          git config --global user.email 'ankidroid@ankidroid.org'
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
           git checkout -b i18n_sync
           git reset --hard origin/main
         shell: bash
 
       - name: Credential Prep
         run: |
-          mkdir ~/src
-          echo "${{ secrets.CROWDIN_API_KEY }}" > ~/src/crowdin_key.txt
+          echo "${{ secrets.CROWDIN_API_KEY }}" > ./tools/localization/.env
         shell: bash
 
+      - name: Setup nodejs and yarn
+        run: |
+          sudo apt install npm -y
+          sudo npm install yarn -g
+      
+      - name: Install dependencies and build
+        run: |
+          cd ./tools/localization
+          yarn install
+          yarn build
+
       - name: Push translation sources to crowdin
-        run: ./tools/manage-crowdin.sh
+        run: yarn start upload
 
       - name: Pull translation updates from crowdin
+        run: yarn start download
+      
+      - name: Extract downloaded ankidroid.zip file
+        run: yarn start extract
+      
+      - name: Update translation to AnkiDroid res
+        run: yarn start update
+        
+      - name: Commit changes
         run: |
-          python ./tools/update-localizations.py
+          git add docs/marketing/localized_description AnkiDroid/src/main/res/values*
+          git commit -am 'Updated strings from Crowdin'
           git push --set-upstream origin +i18n_sync
           echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
           echo "https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1"

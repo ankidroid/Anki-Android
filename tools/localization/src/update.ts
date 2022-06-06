@@ -109,7 +109,7 @@ async function replacechars(fileName: string, fileExt: string, isCrowdin: boolea
 
     fs.rename(newfilename, fileName, function (err) {
         if (err) throw err
-        console.log('Successfully renamed!')
+        console.log(`File ${fileName} successfully copied`)
     })
 
     if (errorOccured) {
