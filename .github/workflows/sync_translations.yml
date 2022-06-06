@@ -27,8 +27,8 @@ jobs:
 
       - name: GIT Setup
         run: |
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
+          git config --global user.name 'AnkiDroid Translations'
+          git config --global user.email 'ankidroid@ankidroid.org'
           git checkout -b i18n_sync
           git reset --hard origin/main
         shell: bash
