@@ -96,13 +96,13 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
     /*
      * Runs on GUI thread
      */
-    override fun onPostExecute(result: Payload?) {
+    override fun onPostExecute(result: Payload) {
         super.onPostExecute(result)
         // Sync has ended so release the wake lock
         if (mWakeLock.isHeld) {
             mWakeLock.release()
         }
-        if (mListener != null && result != null) {
+        if (mListener != null) {
             mListener!!.onPostExecute(result)
         }
     }

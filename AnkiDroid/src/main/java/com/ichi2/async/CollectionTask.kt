@@ -62,7 +62,7 @@ import java.util.concurrent.ExecutionException
  */
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("Lots to do")
-open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress, Result>, private val listener: TaskListener<in Progress, in Result?>?, private var previousTask: CollectionTask<*, *>?) : BaseAsyncTask<Void, Progress, Result>(), Cancellable {
+open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress, Result>, private val listener: TaskListener<in Progress, in Result>?, private var previousTask: CollectionTask<*, *>?) : BaseAsyncTask<Void, Progress, Result>(), Cancellable {
     /**
      * A reference to the application context to use to fetch the current Collection object.
      */
@@ -148,7 +148,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     /** Delegates to the [TaskListener] for this task.  */
-    override fun onPostExecute(result: Result?) {
+    override fun onPostExecute(result: Result) {
         super.onPostExecute(result)
         listener?.onPostExecute(result)
         Timber.d("enabling garbage collection of mPreviousTask...")
