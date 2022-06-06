@@ -9,7 +9,7 @@ import android.widget.TimePicker
 import com.ichi2.compat.CompatHelper
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-class TimePreference(context: Context?, attrs: AttributeSet?) : android.preference.DialogPreference(context, attrs) {
+class TimePreference(context: Context, attrs: AttributeSet?) : android.preference.DialogPreference(context, attrs) {
     private lateinit var mTimepicker: TimePicker
     private var mHours = 0
     private var mMinutes = 0
