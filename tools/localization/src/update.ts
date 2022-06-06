@@ -211,12 +211,10 @@ export async function updateI18nFiles() {
         // Copy localization files, mask chars and append gnu/gpl licence
         for (let f of fileNames) {
             let fileExt = fileExtFor(f);
-            await update(valuesDirectory, f, fileExt, true, language).then(res => {
-                anyError = res;
-            });
+            anyError = !await update(valuesDirectory, f, fileExt, true, language);
         }
 
-        if (!anyError) {
+        if (anyError) {
             console.log("At least one file of the last handled language contains an error.");
             anyError = true;
         }
