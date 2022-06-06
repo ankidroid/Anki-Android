@@ -33,19 +33,19 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
     private val mAllowEmpty: Boolean
 
     @Suppress("unused")
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
         mAllowEmpty = getAllowEmptyFromAttributes(attrs)
         updateSettings()
     }
 
     @Suppress("unused")
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         mAllowEmpty = getAllowEmptyFromAttributes(attrs)
         updateSettings()
     }
 
     @Suppress("unused")
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context) : super(context) {
         mAllowEmpty = getAllowEmptyFromAttributes(null)
         updateSettings()
     }

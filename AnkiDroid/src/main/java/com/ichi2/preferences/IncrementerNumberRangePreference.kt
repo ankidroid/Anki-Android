@@ -35,15 +35,15 @@ class IncrementerNumberRangePreference : NumberRangePreference {
     private val mDecrementButton = Button(context)
     private var mLastValidEntry = 0
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle) {
         initialize()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {
         initialize()
     }
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context?) : super(context!!) {
         initialize()
     }
 

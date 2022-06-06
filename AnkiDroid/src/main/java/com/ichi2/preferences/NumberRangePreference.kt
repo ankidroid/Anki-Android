@@ -30,19 +30,19 @@ open class NumberRangePreference : android.preference.EditTextPreference, AutoFo
     protected val mMin: Int
     private val mMax: Int
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
         mMin = getMinFromAttributes(attrs)
         mMax = getMaxFromAttributes(attrs)
         updateSettings()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         mMin = getMinFromAttributes(attrs)
         mMax = getMaxFromAttributes(attrs)
         updateSettings()
     }
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context) : super(context) {
         mMin = getMinFromAttributes(null)
         mMax = getMaxFromAttributes(null)
         updateSettings()
