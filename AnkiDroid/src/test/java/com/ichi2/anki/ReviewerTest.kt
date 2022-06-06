@@ -266,7 +266,6 @@ class ReviewerTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
     }
 
-    @KotlinCleanup(".toString()")
     private fun disableAllReviewerAppBarButtons() {
         val keys = PreferenceUtils.getAllCustomButtonKeys(targetContext)
 
@@ -274,7 +273,7 @@ class ReviewerTest : RobolectricTest() {
 
         preferences.edit {
             for (k in keys) {
-                putString(k, Integer.toString(ActionButtonStatus.MENU_DISABLED))
+                putString(k, ActionButtonStatus.MENU_DISABLED.toString())
             }
         }
     }
