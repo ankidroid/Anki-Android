@@ -44,7 +44,7 @@ object ReadText {
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var textToSpeak: String? = null
         private set
-    private var mReviewer: WeakReference<Context>? = null
+    private lateinit var mReviewer: WeakReference<Context>
     private var mDid: Long = 0
     private var mOrd = 0
     var questionAnswer: SoundSide? = null
@@ -57,8 +57,8 @@ object ReadText {
         val result = textToSpeech!!.setLanguage(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(loc))
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             showThemedToast(
-                mReviewer!!.get(),
-                mReviewer!!.get()!!.getString(R.string.no_tts_available_message) +
+                mReviewer.get(),
+                mReviewer.get()!!.getString(R.string.no_tts_available_message) +
                     " (" + loc + ")",
                 false
             )
@@ -75,7 +75,7 @@ object ReadText {
     }
 
     private fun getLanguage(did: Long, ord: Int, qa: SoundSide): String {
-        return MetaDB.getLanguage(mReviewer!!.get()!!, did, ord, qa)
+        return MetaDB.getLanguage(mReviewer.get()!!, did, ord, qa)
     }
 
     /**
@@ -92,8 +92,8 @@ object ReadText {
         questionAnswer = qa
         mDid = did
         mOrd = ord
-        val res = mReviewer!!.get()!!.resources
-        val builder = MaterialDialog.Builder(mReviewer!!.get()!!)
+        val res = mReviewer.get()!!.resources
+        val builder = MaterialDialog.Builder(mReviewer.get()!!)
         // Build the language list if it's empty
         if (availableTtsLocales.isEmpty()) {
             buildAvailableLanguages()
@@ -120,7 +120,7 @@ object ReadText {
                 .itemsCallback { _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
                     val locale = dialogIds[which]
                     Timber.d("ReadText.selectTts() user chose locale '%s'", locale)
-                    MetaDB.storeLanguage(mReviewer!!.get()!!, mDid, mOrd, questionAnswer!!, locale)
+                    MetaDB.storeLanguage(mReviewer.get()!!, mDid, mOrd, questionAnswer!!, locale)
                     if (locale != NO_TTS) {
                         speak(textToSpeak, locale, TextToSpeech.QUEUE_FLUSH)
                     } else {
@@ -221,8 +221,8 @@ object ReadText {
             // (after notifying them first that no TTS voice was found for the locale
             // they originally requested)
             showThemedToast(
-                mReviewer!!.get(),
-                mReviewer!!.get()!!.getString(R.string.no_tts_available_message) +
+                mReviewer.get(),
+                mReviewer.get()!!.getString(R.string.no_tts_available_message) +
                     " (" + originalLocaleCode + ")",
                 false
             )
@@ -290,7 +290,7 @@ object ReadText {
     }
 
     private fun openTtsHelpUrl(helpUrl: Uri) {
-        val activity = mReviewer!!.get() as AnkiActivity?
+        val activity = mReviewer.get() as AnkiActivity?
         activity!!.openUrl(helpUrl)
     }
 
@@ -320,7 +320,7 @@ object ReadText {
      */
     @JvmStatic
     fun releaseTts(context: Context) {
-        if (textToSpeech != null && mReviewer!!.get() === context) {
+        if (textToSpeech != null && mReviewer.get() === context) {
             textToSpeech!!.stop()
             textToSpeech!!.shutdown()
         }
