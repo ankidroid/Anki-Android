@@ -519,7 +519,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         private var mWhiteboardMultiTouchMethods: WhiteboardMultiTouchMethods? = null
         @JvmStatic
         fun createInstance(context: AnkiActivity, handleMultiTouch: Boolean, whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?): Whiteboard {
-            val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isDark)
+            val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isNightMode)
             mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods
             val lp2 = FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT

@@ -21,7 +21,7 @@ import com.ichi2.themes.Themes.currentTheme
 
 class WhiteboardPenColor(val lightPenColor: Int?, val darkPenColor: Int?) {
     fun fromPreferences(): Int? {
-        return if (currentTheme.isDark) {
+        return if (currentTheme.isNightMode) {
             darkPenColor
         } else {
             lightPenColor

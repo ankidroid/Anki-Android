@@ -131,7 +131,7 @@ class CardHtml(
         fun createInstance(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): CardHtml {
             val content = displayString(card, reload, side, context)
 
-            val nightModeInversion = currentTheme.isDark && !hasUserDefinedNightMode(card)
+            val nightModeInversion = currentTheme.isNightMode && !hasUserDefinedNightMode(card)
 
             val renderOutput = card.render_output()
             val questionAv = renderOutput.question_av_tags

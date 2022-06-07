@@ -18,7 +18,7 @@ package com.ichi2.themes
 import androidx.annotation.StyleRes
 import com.ichi2.anki.R
 
-enum class Theme(val id: String, @StyleRes val resId: Int, @StyleRes val legacyResId: Int, val isDark: Boolean) {
+enum class Theme(val id: String, @StyleRes val resId: Int, @StyleRes val legacyResId: Int, val isNightMode: Boolean) {
     // IDs must correspond to the ones at @array/app_theme_values on res/values/constants.xml
     // Follow system is "0", so it starts at "1"
     LIGHT("1", R.style.Theme_Light_Compat, R.style.LegacyActionBarLight, false),
