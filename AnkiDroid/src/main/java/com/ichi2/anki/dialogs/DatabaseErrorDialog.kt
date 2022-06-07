@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.contentNullable
@@ -256,7 +257,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     .negativeText(R.string.dialog_cancel)
                     .onPositive { _: MaterialDialog?, _: DialogAction? ->
                         val ch = CollectionHelper.getInstance()
-                        val time = ch.getTimeSafe(context)
+                        val time = TimeManager.time
                         ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
                         val path1 = CollectionHelper.getCollectionPath(activity)
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {

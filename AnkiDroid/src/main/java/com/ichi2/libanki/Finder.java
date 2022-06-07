@@ -27,6 +27,7 @@ import android.util.Pair;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.ProgressSender;
+import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
@@ -943,7 +944,7 @@ public class Finder {
                         midToNid.put(mid, new ArrayList<>());
                     }
                     midToNid.get(mid).add(nid);
-                    d.add(new Object[] { flds, col.getTime().intTime(), col.usn(), nid }); // order based on query below
+                    d.add(new Object[] { flds, TimeManager.INSTANCE.getTime().intTime(), col.usn(), nid }); // order based on query below
                 }
             }
         }

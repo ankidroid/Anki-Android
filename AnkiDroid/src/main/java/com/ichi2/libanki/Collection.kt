@@ -85,8 +85,6 @@ open class Collection @VisibleForTesting constructor(
     protected val droidBackend: DroidBackend
 ) : CollectionGetter {
 
-    val time: Time get() = TimeManager.time
-
     @get:JvmName("isDbClosed")
     var dbClosed = false
         private set
@@ -159,7 +157,7 @@ open class Collection @VisibleForTesting constructor(
         tags = initTags()
         load()
         if (crt == 0L) {
-            crt = UIUtils.getDayStart(time) / 1000
+            crt = UIUtils.getDayStart(TimeManager.time) / 1000
         }
         mStartReps = 0
         mStartTime = 0
@@ -342,7 +340,7 @@ open class Collection @VisibleForTesting constructor(
     @JvmOverloads
     fun flush(mod: Long = 0) {
         Timber.i("flush - Saving information to DB...")
-        this.mod = if (mod == 0L) time.intTimeMS() else mod
+        this.mod = if (mod == 0L) TimeManager.time.intTimeMS() else mod
         val values = ContentValues()
         values.put("crt", this.crt)
         values.put("mod", this.mod)
@@ -453,7 +451,7 @@ open class Collection @VisibleForTesting constructor(
      * thrown when in fact it is never thrown.
      */
     fun modSchemaNoCheck() {
-        scm = time.intTimeMS()
+        scm = TimeManager.time.intTimeMS()
         setMod()
     }
 
@@ -817,9 +815,10 @@ open class Collection @VisibleForTesting constructor(
             }
         // build cards for each note
         val data = ArrayList<Array<Any>>()
+
         @Suppress("UNUSED_VARIABLE")
-        var ts = time.maxID(db)
-        val now = time.intTime()
+        var ts = TimeManager.time.maxID(db)
+        val now = TimeManager.time.intTime()
         val rem =
             ArrayList<Long>(db.queryScalar("SELECT count() FROM notes where id in $snids"))
         val usn = usn()
@@ -831,7 +830,8 @@ open class Collection @VisibleForTesting constructor(
                 }
                 val nid = cur.getLong(0)
                 val flds = cur.getString(1)
-                val avail = Models.availOrds(model, Utils.splitFields(flds), nodes, Models.AllowEmpty.TRUE)
+                val avail =
+                    Models.availOrds(model, Utils.splitFields(flds), nodes, Models.AllowEmpty.TRUE)
                 task?.doProgress(avail.size)
                 var did = dids[nid]
                 // use sibling due if there is one, else use a new id
@@ -1332,7 +1332,7 @@ open class Collection @VisibleForTesting constructor(
         }
 
     fun startTimebox() {
-        mStartTime = time.intTime()
+        mStartTime = TimeManager.time.intTime()
         mStartReps = sched.reps
     }
 
@@ -1342,7 +1342,7 @@ open class Collection @VisibleForTesting constructor(
             // timeboxing disabled
             return null
         }
-        val elapsed = time.intTime() - mStartTime
+        val elapsed = TimeManager.time.intTime() - mStartTime
         return if (elapsed > get_config_long("timeLim")) {
             Pair(
                 get_config_int("timeLim"),
@@ -1789,7 +1789,7 @@ open class Collection @VisibleForTesting constructor(
                 Utils.ids2str(dynDeckIds) +
                 "and odid in " +
                 Utils.ids2str(dynIdsAndZero),
-            nextDeckId, time.intTime(), usn()
+            nextDeckId, TimeManager.time.intTime(), usn()
         )
         result.cardsWithFixedHomeDeckCount = cardIds.size
         val message = String.format(Locale.US, "Fixed %d cards with no home deck", cardIds.size)
@@ -1861,7 +1861,7 @@ open class Collection @VisibleForTesting constructor(
                 "UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(
                     ids
                 ),
-                sched.today, time.intTime(), usn()
+                sched.today, TimeManager.time.intTime(), usn()
             )
         }
         return problems
@@ -1885,7 +1885,7 @@ open class Collection @VisibleForTesting constructor(
         notifyProgress.run()
         db.execute(
             "UPDATE cards SET due = 1000000, mod = ?, usn = ? WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW,
-            time.intTime(),
+            TimeManager.time.intTime(),
             usn()
         )
         return emptyList<String>()
@@ -2182,7 +2182,7 @@ open class Collection @VisibleForTesting constructor(
             }
         }
         val s = String.format(
-            "[%s] %s:%s(): %s", time.intTime(), trace.fileName, trace.methodName,
+            "[%s] %s:%s(): %s", TimeManager.time.intTime(), trace.fileName, trace.methodName,
             TextUtils.join(",  ", args)
         )
         writeLog(s)
@@ -2240,7 +2240,7 @@ open class Collection @VisibleForTesting constructor(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
                 cids
             ),
-            7, flag, usn(), time.intTime()
+            7, flag, usn(), TimeManager.time.intTime()
         )
     }
 

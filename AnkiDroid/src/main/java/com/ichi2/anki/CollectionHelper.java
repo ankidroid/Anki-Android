@@ -179,7 +179,7 @@ public class CollectionHelper {
     /** Collection time if possible, otherwise real time.*/
     public synchronized Time getTimeSafe(Context context) {
         try {
-            return getCol(context).getTime();
+            return TimeManager.INSTANCE.getTime();
         } catch (Exception e) {
             Timber.w(e);
             return new SystemTime();

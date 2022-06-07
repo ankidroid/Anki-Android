@@ -100,6 +100,7 @@ import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
@@ -829,7 +830,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         val hkey = preferences.getString("hkey", "")
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
         if (hkey!!.isNotEmpty() && preferences.getBoolean("automaticSyncMode", false) &&
-            Connection.isOnline() && col.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
+            Connection.isOnline() && TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
         ) {
             Timber.i("Triggering Automatic Sync")
             sync()
@@ -897,7 +898,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      */
     private fun onFinishedStartup() {
         // create backup in background if needed
-        BackupManager.performBackupInBackground(col.path, col.time)
+        BackupManager.performBackupInBackground(col.path, TimeManager.time)
 
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
@@ -1452,7 +1453,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         override fun onPreExecute() {
             mCountUp = 0
             mCountDown = 0
-            val syncStartTime = col.time.intTimeMS()
+            val syncStartTime = TimeManager.time.intTimeMS()
             if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
                 try {
                     mProgressDialog = StyledProgressDialog.show(
@@ -1481,7 +1482,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                         !Connection.getIsCancelled()
                     ) {
                         // If less than 2s has elapsed since sync started then don't ask for confirmation
-                        if (col.time.intTimeMS() - syncStartTime < 2000) {
+                        if (TimeManager.time.intTimeMS() - syncStartTime < 2000) {
                             Connection.cancel()
                             mProgressDialog!!.setContent(R.string.sync_cancel_message)
                             return@setOnKeyListener true

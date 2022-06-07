@@ -29,6 +29,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONArray;
 
@@ -421,7 +422,7 @@ mw.col.sched.extendLimits(1, 0)
     public void regression_7984() {
         Collection col = getCol();
         SchedV2 sched = (SchedV2) col.getSched();
-        Time time = getCol().getTime();
+        Time time = TimeManager.INSTANCE.getTime();
         Card[] cards = new Card[2];
         for (int i = 0; i < 2; i++) {
             cards[i] = addNoteUsingBasicModel(Integer.toString(i), "").cards().get(0);

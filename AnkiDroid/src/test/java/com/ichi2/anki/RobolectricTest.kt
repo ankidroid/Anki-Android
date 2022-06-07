@@ -321,7 +321,7 @@ open class RobolectricTest : CollectionGetter {
     override fun getCol(): Collection = CollectionHelper.getInstance().getCol(targetContext)
 
     protected val collectionTime: MockTime
-        get() = col.time as MockTime
+        get() = TimeManager.time as MockTime
 
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {

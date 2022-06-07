@@ -67,6 +67,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.*
 import com.ichi2.preferences.ControlPreference.Companion.setup
 import com.ichi2.themes.Themes
@@ -313,7 +314,7 @@ class Preferences : AnkiActivity() {
                 col.setMod()
             }
         }
-        scheduleNotification(col.time, this)
+        scheduleNotification(TimeManager.time, this)
     }
 
     fun updateNotificationPreference(listPreference: ListPreference) {
@@ -582,7 +583,7 @@ class Preferences : AnkiActivity() {
                         if (listPreference != null) {
                             preferencesActivity.updateNotificationPreference(listPreference)
                             if (listPreference.value.toInt() < PENDING_NOTIFICATIONS_ONLY) {
-                                scheduleNotification(preferencesActivity.col.time, preferencesActivity)
+                                scheduleNotification(TimeManager.time, preferencesActivity)
                             } else {
                                 val intent = CompatHelper.compat.getImmutableBroadcastIntent(
                                     preferencesActivity, 0,
