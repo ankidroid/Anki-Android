@@ -9,7 +9,6 @@ import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import timber.log.Timber
 import java.util.Calendar
@@ -33,7 +32,7 @@ class BootService : BroadcastReceiver() {
         }
         Timber.i("Executing Boot Service")
         catchAlarmManagerErrors(context) { scheduleDeckReminder(context) }
-        catchAlarmManagerErrors(context) { scheduleNotification(col.time, context) }
+        catchAlarmManagerErrors(context) { scheduleNotification(col.time.calendar(), context) }
         mFailedToShowNotifications = false
         sWasRun = true
     }
@@ -106,14 +105,13 @@ class BootService : BroadcastReceiver() {
         private var sWasRun = false
 
         @JvmStatic
-        fun scheduleNotification(time: Time, context: Context) {
+        fun scheduleNotification(calendar: Calendar, context: Context) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val sp = AnkiDroidApp.getSharedPrefs(context)
             // Don't schedule a notification if the due reminders setting is not enabled
             if (sp.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))!!.toInt() >= Preferences.PENDING_NOTIFICATIONS_ONLY) {
                 return
             }
-            val calendar = time.calendar()
             calendar[Calendar.HOUR_OF_DAY] = getRolloverHourOfDay(context)
             calendar[Calendar.MINUTE] = 0
             calendar[Calendar.SECOND] = 0
