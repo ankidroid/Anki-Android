@@ -65,14 +65,14 @@ class BackupManagerSimpleTest {
         val date = BackupManager.parseBackupTimeString("1970-01-02-00-46")
         assertNotNull(date)
         val timestamp = date.time
-        val backupName = BackupManager.getNameForNewBackup(MockTime(timestamp))
+        val backupName = BackupManager.getNameForNewBackup(MockTime(timestamp).gregorianCalendar())
 
         assertEquals("Backup name doesn't match naming pattern", "collection-1970-01-02-00-46.colpkg", backupName)
     }
 
     @Test
     fun nameOfNewBackupsCanBeParsed() {
-        val backupName = BackupManager.getNameForNewBackup(MockTime(100000000))
+        val backupName = BackupManager.getNameForNewBackup(MockTime(100000000).gregorianCalendar())
         assertNotNull(backupName)
 
         val ts = BackupManager.getBackupDate(backupName)

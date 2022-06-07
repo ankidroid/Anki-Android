@@ -90,7 +90,7 @@ open class BackupManager {
             Timber.d("performBackup: No backup created. Last backup younger than 5 hours")
             return false
         }
-        val backupFilename = getNameForNewBackup(time) ?: return false
+        val backupFilename = getNameForNewBackup(time.gregorianCalendar()) ?: return false
 
         // Abort backup if destination already exists (extremely unlikely)
         val backupFile = getBackupFile(colFile, backupFilename)
@@ -372,13 +372,13 @@ open class BackupManager {
         }
 
         /**
+         * @param [cal] the current time with a Gregorian Calendar
          * @return filename with pattern collection-yyyy-MM-dd-HH-mm based on given time parameter
          */
         @JvmStatic
-        fun getNameForNewBackup(time: Time): String? {
+        fun getNameForNewBackup(cal: Calendar): String? {
             /** Changes in the file name pattern should be updated as well in
              * [getBackupTimeString] and [com.ichi2.anki.dialogs.DatabaseErrorDialog.onCreateDialog] */
-            val cal: Calendar = time.gregorianCalendar()
             val backupFilename: String = try {
                 String.format(Utils.ENGLISH_LOCALE, "collection-%s.colpkg", df.format(cal.time))
             } catch (e: UnknownFormatConversionException) {
