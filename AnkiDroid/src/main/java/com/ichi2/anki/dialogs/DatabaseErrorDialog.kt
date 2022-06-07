@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.contentNullable
@@ -259,7 +260,13 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         val time = ch.getTimeSafe(context)
                         ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
                         val path1 = CollectionHelper.getCollectionPath(activity)
-                        if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
+                        if (BackupManager.moveDatabaseToBrokenDirectory(
+                                path1, false,
+                                time.genToday(
+                                        Time.utcOffset()
+                                    )
+                            )
+                        ) {
                             (activity as DeckPicker?)!!.restartActivity()
                         } else {
                             (activity as DeckPicker?)!!.showDatabaseErrorDialog(DIALOG_LOAD_FAILED)

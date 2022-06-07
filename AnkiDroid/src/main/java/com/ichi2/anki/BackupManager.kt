@@ -284,7 +284,7 @@ open class BackupManager {
                     Timber.e("repairCollection - dump to %s.tmp failed", deckPath)
                     return false
                 }
-                if (!moveDatabaseToBrokenDirectory(deckPath, false, time)) {
+                if (!moveDatabaseToBrokenDirectory(deckPath, false, time.genToday(utcOffset()))) {
                     Timber.e("repairCollection - could not move corrupt file to broken directory")
                     return false
                 }
@@ -299,11 +299,10 @@ open class BackupManager {
             return false
         }
 
-        fun moveDatabaseToBrokenDirectory(colPath: String, moveConnectedFilesToo: Boolean, time: Time): Boolean {
+        fun moveDatabaseToBrokenDirectory(colPath: String, moveConnectedFilesToo: Boolean, value: Date): Boolean {
             val colFile = File(colPath)
 
             // move file
-            val value: Date = time.genToday(utcOffset())
             var movedFilename = String.format(
                 Utils.ENGLISH_LOCALE,
                 colFile.name.replace(".anki2", "") +
