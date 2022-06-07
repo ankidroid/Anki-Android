@@ -71,6 +71,15 @@ fun File.addTempFile(fileName: String, content: String = "default content"): Fil
     }
 }
 
+/** Adds a directory to the directory with the provided name and content. Return the new directory. */
+fun File.addTempDirectory(directoryName: String): Directory {
+    val dir = File(this, directoryName).also {
+        it.mkdir()
+        it.deleteOnExit()
+    }
+    return Directory.createInstance(dir)!!
+}
+
 /** Adds a file to the directory with the provided name and content */
 fun Directory.withTempFile(fileName: String, content: String = "default content"): Directory {
     this.directory.withTempFile(fileName, content)
