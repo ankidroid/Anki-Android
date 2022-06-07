@@ -387,6 +387,9 @@ internal constructor(
         fun spaceRequired(sourceDirectory: String): NumberOfBytes {
             return getEssentialFiles(sourceDirectory).sumOf { it.length() }
         }
+
+        /** The list of filenames we would move (if they exist) */
+        abstract val potentialFileNames: List<String>
     }
 
     /**
@@ -405,6 +408,8 @@ internal constructor(
 
         // guaranteed to be + "-journal": https://www.sqlite.org/tempfiles.html
         private val journalName = "$fileName-journal"
+
+        override val potentialFileNames get() = listOf(fileName, journalName)
     }
 
     /**
@@ -422,6 +427,8 @@ internal constructor(
                 listOf(file)
             }
         }
+
+        override val potentialFileNames get() = listOf(fileName)
     }
 
     /**

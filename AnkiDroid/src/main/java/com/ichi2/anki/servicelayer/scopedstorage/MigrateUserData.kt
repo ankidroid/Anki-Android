@@ -17,11 +17,18 @@
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import android.content.SharedPreferences
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
+import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.ScopedStorageService.UserDataMigrationPreferences
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.SingleRetryDecorator
+import com.ichi2.async.ProgressSenderAndCancelListener
+import com.ichi2.async.TaskDelegate
+import com.ichi2.compat.CompatHelper
+import com.ichi2.exceptions.AggregateException
+import com.ichi2.libanki.Collection
 import timber.log.Timber
 import java.io.File
 
@@ -29,7 +36,10 @@ typealias NumberOfBytes = Long
 
 /**
  * Migrating user data (images, backups etc..) to scoped storage
- * This needs to be performed in the background to allow users to use AnkiDroid
+ * This needs to be performed in the background to allow users to use AnkiDroid.
+ *
+ * A file is not user data if it is moved by [MigrateEssentialFiles]:
+ * * (collection and media SQL-related files, and .nomedia/collection logs)
  *
  * If this were performed in the foreground, users would be encouraged to uninstall the app
  * which means the app permanently loses access to the AnkiDroid directory.
@@ -37,7 +47,7 @@ typealias NumberOfBytes = Long
  * This also handles preemption, allowing media files to skip the queue
  * (if they're required for review)
  */
-class MigrateUserData private constructor(val source: Directory, val destination: Directory) {
+open class MigrateUserData protected constructor(val source: Directory, val destination: Directory) : TaskDelegate<NumberOfBytes, Boolean>() {
     companion object {
         /**
          * Creates an instance of [MigrateUserData] if valid, returns null if a migration is not in progress, or throws if data is invalid
@@ -257,7 +267,7 @@ class MigrateUserData private constructor(val source: Directory, val destination
      * Ignores [retryOperations] defined in [standardOperation]
      */
     class SingleRetryDecorator(
-        private val standardOperation: Operation,
+        internal val standardOperation: Operation,
         private val retryOperation: Operation
     ) : Operation() {
         override fun execute(context: MigrationContext) = standardOperation.execute(context)
@@ -270,7 +280,7 @@ class MigrateUserData private constructor(val source: Directory, val destination
      * should take priority over a background migration
      * of a random file)
      */
-    class Executor(private val operations: ArrayDeque<Operation>) {
+    open class Executor(private val operations: ArrayDeque<Operation>) {
         /** Whether [terminate] was called. Once this is called, a new instance should be used */
         private var terminated: Boolean = false
         /**
@@ -296,11 +306,17 @@ class MigrateUserData private constructor(val source: Directory, val destination
                 val operation = operations.removeFirstOrNull() ?: return
 
                 context.execSafe(operation) {
-                    val replacements = it.execute(context)
+                    val replacements = executeOperationInternal(it, context)
                     operations.addAll(0, replacements)
                 }
             }
         }
+
+        @VisibleForTesting
+        internal open fun executeOperationInternal(
+            it: Operation,
+            context: MigrationContext
+        ) = it.execute(context)
 
         /**
          * Executes all items in the preempted queue
@@ -342,6 +358,205 @@ class MigrateUserData private constructor(val source: Directory, val destination
         fun terminate() {
             this.terminated = true
         }
+    }
+
+    /**
+     * Abstracts the decision of what to do when an exception occurs when migrating a file.
+     * Provides progress notifications
+     */
+    open class UserDataMigrationContext(private val executor: Executor, val source: Directory, val progressReportParam: ((NumberOfBytes) -> Unit)) : MigrationContext() {
+        val successfullyCompleted: Boolean get() = loggedExceptions.isEmpty()
+
+        /**
+         * The reason that the the execution of the whole migration was terminated early
+         *
+         * @see failOperationWith
+         */
+        var terminatedWith: Exception? = null
+            private set
+
+        val retriedDirectories = hashSetOf<File>()
+
+        val loggedExceptions = mutableListOf<Exception>()
+        var consecutiveExceptionsWithoutProgress = 0
+        override fun reportError(throwingOperation: Operation, ex: Exception) {
+            when (ex) {
+                is FileConflictException -> { moveToConflictedFolder(ex.source) }
+                is FileDirectoryConflictException -> { moveToConflictedFolder(ex.source) }
+                is DirectoryNotEmptyException -> {
+                    // If a directory isn't empty, some more files may have been added. Retry (after all others are completed)
+                    if (throwingOperation.retryOperations.any() && retriedDirectories.add(ex.directory.directory)) {
+                        executor.appendAll(throwingOperation.retryOperations)
+                    } else {
+                        logExceptionAndContinue(ex)
+                    }
+                }
+                is MissingDirectoryException -> failOperationWith(ex)
+                // logical error: we tried to migrate to the same path
+                is EquivalentFileException -> failOperationWith(ex)
+                // if we couldn't move a file to /conflict/, log and continue.
+                // we do not expect this exception to occur
+                is FileConflictResolutionFailedException -> logExceptionAndContinue(ex)
+                else -> logExceptionAndContinue(ex)
+            }
+        }
+
+        /**
+         * Keeps a circular buffer of the last 10 exceptions.
+         * the oldest exception is evicted if more than 10 are added
+         */
+        private fun logExceptionAndContinue(ex: Exception) {
+            if (loggedExceptions.size >= 10) {
+                loggedExceptions.removeFirst()
+            }
+            loggedExceptions.add(ex)
+            consecutiveExceptionsWithoutProgress++
+            if (consecutiveExceptionsWithoutProgress >= 10) {
+                val exception = AggregateException.raise("10 consecutive exceptions without progress", loggedExceptions)
+                failOperationWith(exception)
+            }
+        }
+
+        /**
+         * On a conflicted file, move it from `<path>` to `/conflict/<path>`.
+         * Files in this folder will not be moved again
+         *
+         * We perform this action immediately
+         *
+         * @see MoveConflictedFile
+         */
+        private fun moveToConflictedFolder(conflictedFile: DiskFile) {
+            val relativePath = RelativeFilePath.fromPaths(source, conflictedFile)!!
+            val operation: MoveConflictedFile = MoveConflictedFile.createInstance(conflictedFile, source, relativePath)
+            executor.prepend(operation)
+        }
+
+        override fun reportProgress(transferred: NumberOfBytes) {
+            consecutiveExceptionsWithoutProgress = 0
+            this.progressReportParam(transferred)
+        }
+
+        /** A fatal exception has occurred which should stop all file processing */
+        private fun failOperationWith(ex: Exception) {
+            executor.terminate()
+            terminatedWith = ex
+        }
+
+        fun reset() {
+            loggedExceptions.clear()
+            consecutiveExceptionsWithoutProgress = 0
+        }
+    }
+
+    @VisibleForTesting
+    var executor = Executor(ArrayDeque())
+
+    @VisibleForTesting
+    var externalRetries = 0
+        private set
+
+    /**
+     * Migrates all files and folders to [destination], aside from [getEssentialFiles]
+     *
+     * @throws MissingDirectoryException
+     * @throws EquivalentFileException
+     * @throws AggregateException If multiple exceptions were thrown when executing
+     * @throws RuntimeException Various other failings if only a single exception was thrown
+     */
+    override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>): Boolean {
+
+        val context = initializeContext(collectionTask)
+
+        // define the function here, so we can execute it on retry
+        fun moveRemainingFiles() {
+            executor.appendAll(getMigrateUserDataOperations())
+            executor.execute(context)
+        }
+
+        moveRemainingFiles()
+
+        // try 2 times, then stop temporarily
+        while (!context.successfullyCompleted && externalRetries < 2) {
+            context.reset()
+            externalRetries++
+            moveRemainingFiles()
+        }
+
+        // if the operation was terminated (typically due to too many consecutive exceptions), throw that
+        // otherwise, there were a few exceptions which didn't stop execution, throw these.
+        if (!context.successfullyCompleted) {
+            context.terminatedWith?.let { throw it }
+            throw AggregateException.raise("", context.loggedExceptions) // TODO
+        }
+
+        // we are successfully migrated here
+        // TODO: fix "conflicts" - check to see if conflicts are due to partially copied files in the destination
+
+        return true
+    }
+
+    @VisibleForTesting
+    internal open fun initializeContext(collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>) =
+        UserDataMigrationContext(executor, source, collectionTask::doProgress)
+
+    /**
+     * Returns migration operations for the top level items in /AnkiDroid/
+     */
+    @VisibleForTesting
+    internal open fun getMigrateUserDataOperations(): List<Operation> =
+        getUserDataFiles()
+            .map { fileOrDir ->
+                MoveFileOrDirectory(
+                    sourceFile = File(source.directory, fileOrDir.name),
+                    destination = File(destination.directory, fileOrDir.name)
+                )
+            }.sortedWith(
+                compareBy {
+                    // Have user-generated files take priority over the media.
+                    // the 'fonts' folder will impact UX
+                    // 'card.html' is often regenerated and is likely to cause a conflict
+                    // We want all the backups to be restorable ASAP)
+                    when (it.sourceFile.name) {
+                        "card.html" -> -3
+                        "fonts" -> -2
+                        "backups" -> -1
+                        else -> 0
+                    }
+                }
+            )
+            .toList()
+
+    /** Gets a sequence of content in [source] */
+    private fun getDirectoryContent() = sequence {
+        CompatHelper.compat.contentOfDirectory(source.directory).use {
+            while (it.hasNext()) {
+                yield(it.next())
+            }
+        }
+    }
+
+    /** Returns a sequence of the Files or Directories in [source] which are to be migrated */
+    private fun getUserDataFiles() = getDirectoryContent().filter { isUserData(it) }
+
+    /** Returns a sequence of the Files or Directories in [source] which were already migrated */
+    private fun getEssentialFiles() = getDirectoryContent().filter { !isUserData(it) }
+
+    fun isEssentialFileName(name: String): Boolean {
+        return MigrateEssentialFiles.PRIORITY_FILES.flatMap { it.potentialFileNames }.contains(name)
+    }
+
+    /** Returns whether a file is "user data" and should be moved */
+    private fun isUserData(file: File): Boolean {
+        if (file.isFile && isEssentialFileName(file.name)) {
+            return false
+        }
+
+        // don't move the "conflict" directory
+        if (file.name == MoveConflictedFile.CONFLICT_DIRECTORY) {
+            return false
+        }
+
+        return true
     }
 }
 
