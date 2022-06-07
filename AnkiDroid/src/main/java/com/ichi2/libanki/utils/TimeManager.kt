@@ -17,6 +17,8 @@
 package com.ichi2.libanki.utils
 
 import android.annotation.SuppressLint
+import androidx.annotation.VisibleForTesting
+import java.util.*
 
 /** Singleton providing an instance of [Time].
  * Used for tests to mock the time provider
@@ -26,10 +28,33 @@ import android.annotation.SuppressLint
  */
 @SuppressLint("DirectSystemTimeInstantiation")
 object TimeManager {
+    /**
+     * Executes the provided functionality, returning [timeOverride] while in the code block
+     */
     @JvmStatic
-    fun setInstance(time: Time) {
-        this.time = time
+    @VisibleForTesting
+    fun <T : Time> withMockInstance(timeOverride: T, f: ((T) -> Unit)) {
+        try {
+            mockInstances.push(timeOverride)
+            f(timeOverride)
+        } finally {
+            mockInstances.remove(timeOverride)
+        }
     }
 
+    @VisibleForTesting
+    fun reset() {
+        mockInstances.clear()
+    }
+
+    @VisibleForTesting
+    fun resetWith(mockTime: Time) {
+        reset()
+        mockInstances.push(mockTime)
+    }
+    private var mockInstances: Stack<Time> = Stack()
+
     var time: Time = SystemTime()
+        get() = if (mockInstances.any()) mockInstances.peek() else field
+        private set
 }

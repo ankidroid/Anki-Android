@@ -116,19 +116,6 @@ public class CollectionHelper {
         return LazyHolder.INSTANCE;
     }
 
-
-    /**
-     * Get the single instance of the {@link Collection}, creating it if necessary  (lazy initialization).
-     * @param context context which can be used to get the setting for the path to the Collection
-     * @return instance of the Collection
-     */
-    public synchronized Collection getCol(Context context) {
-        if (colIsOpen()) {
-            return mCollection;
-        }
-        return getCol(context, new SystemTime());
-    }
-
     /**
      * Opens the collection without checking to see if the directory exists.
      *
@@ -141,8 +128,12 @@ public class CollectionHelper {
         return collection;
     }
 
-    @VisibleForTesting
-    public synchronized Collection getCol(Context context, @NonNull Time time) {
+    /**
+     * Get the single instance of the {@link Collection}, creating it if necessary  (lazy initialization).
+     * @param context context which can be used to get the setting for the path to the Collection
+     * @return instance of the Collection
+     */
+    public synchronized Collection getCol(Context context) {
         // Open collection
         if (!colIsOpen()) {
             String path = getCollectionPath(context);
@@ -154,7 +145,6 @@ public class CollectionHelper {
                 Timber.e(e, "Could not initialize AnkiDroid directory");
                 return null;
             }
-            TimeManager.setInstance(time);
             // Open the database
             mCollection = openCollection(context, path);
         }

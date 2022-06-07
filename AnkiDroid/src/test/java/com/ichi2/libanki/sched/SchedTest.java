@@ -30,6 +30,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
+import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.testutils.MockTime;
 import com.ichi2.testutils.MutableTime;
 import com.ichi2.utils.JSONArray;
@@ -45,6 +46,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import kotlin.Unit;
 
 import static com.ichi2.libanki.Consts.BUTTON_FOUR;
 import static com.ichi2.libanki.Consts.BUTTON_ONE;
@@ -186,18 +188,20 @@ public class SchedTest extends RobolectricTest {
 
     @Test
     public void testRevLogValues() {
-        MutableTime time = new MutableTime(MockTime.timeStamp(2020, 8, 4, 11, 22, 19, 123), 10);
-        Collection col =  CollectionHelper.getInstance().getCol(getTargetContext(), time);
-        addNoteUsingBasicModel("Hello", "World");
+        TimeManager.withMockInstance(new MutableTime(MockTime.timeStamp(2020, 8, 4, 11, 22, 19, 123), 10), time -> {
+            Collection col =  CollectionHelper.getInstance().getCol(getTargetContext());
+            addNoteUsingBasicModel("Hello", "World");
 
-        AbstractSched sched = col.getSched();
-        Card c = sched.getCard();
-        time.setFrozen(true);
-        long currentTime = time.getInternalTimeMs();
-        sched.answerCard(c, BUTTON_ONE);
+            AbstractSched sched = col.getSched();
+            Card c = sched.getCard();
+            time.setFrozen(true);
+            long currentTime = time.getInternalTimeMs();
+            sched.answerCard(c, BUTTON_ONE);
 
-        long timeAnswered = col.getDb().queryLongScalar("select id from revlog");
-        assertThat(timeAnswered, is(currentTime));
+            long timeAnswered = col.getDb().queryLongScalar("select id from revlog");
+            assertThat(timeAnswered, is(currentTime));
+            return Unit.INSTANCE;
+        });
     }
 
 
