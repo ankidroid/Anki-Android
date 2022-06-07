@@ -157,7 +157,7 @@ open class Collection @VisibleForTesting constructor(
         tags = initTags()
         load()
         if (crt == 0L) {
-            crt = UIUtils.getDayStart(time) / 1000
+            crt = UIUtils.getDayStart(time.calendar()) / 1000
         }
         mStartReps = 0
         mStartTime = 0

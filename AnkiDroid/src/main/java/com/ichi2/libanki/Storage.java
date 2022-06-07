@@ -329,7 +329,7 @@ public class Storage {
                 _setColVars(db, time);
             }
             // This line is required for testing - otherwise Rust will override a mocked time.
-            db.execute("update col set crt = ?", UIUtils.getDayStart(time) / 1000);
+            db.execute("update col set crt = ?", UIUtils.getDayStart(time.calendar()) / 1000);
         } else {
             db.execute("PRAGMA page_size = 4096");
             db.execute("PRAGMA legacy_file_format = 0");
