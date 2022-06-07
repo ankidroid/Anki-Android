@@ -517,10 +517,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // #6762 values are reversed if using a keyboard and pressing Ctrl+Shift+LeftArrow
         val start = Math.min(selectionStart, selectionEnd)
         val end = Math.max(selectionStart, selectionEnd)
-        var text = ""
-        if (textBox.text != null) {
-            text = textBox.text.toString()
-        }
+        val text = textBox.text?.toString() ?: ""
 
         // Split the text in the places where the formatting will take place
         val beforeText = text.substring(0, start)
