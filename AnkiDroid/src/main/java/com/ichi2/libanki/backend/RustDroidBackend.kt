@@ -25,7 +25,6 @@ import com.ichi2.libanki.TemplateManager.TemplateRenderContext
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.backend.model.SchedTimingToday
 import com.ichi2.libanki.backend.model.SchedTimingTodayProto
-import com.ichi2.libanki.utils.Time
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.database.RustV11SQLiteOpenHelperFactory
 
@@ -34,8 +33,8 @@ open class RustDroidBackend(
     // I think we can change this to BackendV1 once new DB() accepts it.
     private val backend: BackendFactory
 ) : DroidBackend {
-    override fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean, time: Time): Collection {
-        return Collection(context, db, path, server, log, time, this)
+    override fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean): Collection {
+        return Collection(context, db, path, server, log, this)
     }
 
     override fun openCollectionDatabase(path: String): DB {

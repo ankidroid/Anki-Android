@@ -31,6 +31,7 @@ import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.preferences.PreferenceExtensions;
 import com.ichi2.utils.FileUtil;
 
@@ -133,9 +134,9 @@ public class CollectionHelper {
      *
      * path should be tested with File.exists() and File.canWrite() before this is called
      */
-    private Collection openCollection(Context context, @NonNull Time time, String path) {
+    private Collection openCollection(Context context, String path) {
         Timber.i("Begin openCollection: %s", path);
-        Collection collection = Storage.Collection(context, path, false, true, time);
+        Collection collection = Storage.Collection(context, path, false, true);
         Timber.i("End openCollection: %s", path);
         return collection;
     }
@@ -153,8 +154,9 @@ public class CollectionHelper {
                 Timber.e(e, "Could not initialize AnkiDroid directory");
                 return null;
             }
+            TimeManager.setInstance(time);
             // Open the database
-            mCollection = openCollection(context, time, path);
+            mCollection = openCollection(context, path);
         }
         return mCollection;
     }
@@ -181,7 +183,7 @@ public class CollectionHelper {
             throw new StorageAccessException(path + " is not writable");
         }
 
-        return openCollection(context, new SystemTime(), path);
+        return openCollection(context, path);
     }
 
     /** Collection time if possible, otherwise real time.*/

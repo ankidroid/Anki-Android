@@ -39,8 +39,8 @@ import androidx.annotation.NonNull;
 @RustCleanup("After the rust conversion is complete - this will be removed")
 public class JavaDroidBackend implements DroidBackend {
     @Override
-    public Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log, @NonNull Time time) {
-        return new Collection(context, db, path, server, log, time, this);
+    public Collection createCollection(@NonNull Context context, @NonNull DB db, String path, boolean server, boolean log) {
+        return new Collection(context, db, path, server, log, this);
     }
 
 

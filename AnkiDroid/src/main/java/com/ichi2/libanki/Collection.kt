@@ -50,6 +50,7 @@ import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.RustCleanup
@@ -81,9 +82,10 @@ open class Collection @VisibleForTesting constructor(
     val path: String,
     var server: Boolean,
     private var debugLog: Boolean, // Not in libAnki.
-    val time: Time,
     protected val droidBackend: DroidBackend
 ) : CollectionGetter {
+
+    val time: Time get() = TimeManager.time
 
     @get:JvmName("isDbClosed")
     var dbClosed = false
