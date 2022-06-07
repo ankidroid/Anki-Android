@@ -519,11 +519,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 Timber.i("CardTemplateEditor:: Add template button pressed")
                 // Show confirmation dialog
                 val ordinal = mTemplateEditor.viewPager.currentItem
-                var numAffectedCards = 0
                 // isOrdinalPendingAdd method will check if there are any new card types added or not,
                 // if TempModel has new card type then numAffectedCards will be 0 by default.
-                if (!TemporaryModel.isOrdinalPendingAdd(tempModel!!, ordinal)) {
-                    numAffectedCards = col.models.tmplUseCount(tempModel.model, ordinal)
+                val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(tempModel!!, ordinal)) {
+                    col.models.tmplUseCount(tempModel.model, ordinal)
+                } else {
+                    0
                 }
                 confirmAddCards(tempModel.model, numAffectedCards)
                 return true
@@ -545,10 +546,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }
 
                 // Show confirmation dialog
-                var numAffectedCards = 0
-                if (!TemporaryModel.isOrdinalPendingAdd(tempModel, ordinal)) {
+                val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(tempModel, ordinal)) {
                     Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
-                    numAffectedCards = col.models.tmplUseCount(tempModel.model, ordinal)
+                    col.models.tmplUseCount(tempModel.model, ordinal)
+                } else {
+                    0
                 }
                 confirmDeleteCards(template, tempModel.model, numAffectedCards)
                 return true
