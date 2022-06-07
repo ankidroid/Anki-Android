@@ -332,16 +332,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private var mSectionNumber = 0
         private var mType = AxisType.TYPE_MONTH
         private var mIsCreated = false
-        private val statisticsScope = lifecycleScope + CoroutineExceptionHandler { _, throwable ->
-            when (throwable) {
-                is CancellationException -> {
-                    Timber.e("Statistics : Statistics job cancelled", throwable)
-                }
-                else -> {
-                    Timber.e("Statistics : Unknown Exception occurred ", throwable)
-                }
-            }
-        }
 
         override fun onCreateView(
             inflater: LayoutInflater,
@@ -396,7 +386,10 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private fun createChart() {
             val statisticsActivity = requireActivity() as Statistics
             val taskHandler = statisticsActivity.taskHandler
-            statisticsJob = statisticsScope.launch {
+            val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+                Timber.e(throwable, "createChart failed with error")
+            }
+            statisticsJob = viewLifecycleOwner.lifecycleScope.launch(exceptionHandler) {
                 taskHandler!!.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
             }
         }
