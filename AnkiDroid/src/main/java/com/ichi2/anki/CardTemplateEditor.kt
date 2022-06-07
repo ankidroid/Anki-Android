@@ -491,12 +491,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             } else {
                 val template = getCurrentTemplate()
 
-                @StringRes var overrideStringRes = R.string.card_template_editor_deck_override_off
-
-                if (template != null && template.has("did") && !template.isNull("did")) {
-                    overrideStringRes = R.string.card_template_editor_deck_override_on
+                @StringRes val overrideStringRes = if (template != null && template.has("did") && !template.isNull("did")) {
+                    R.string.card_template_editor_deck_override_on
+                } else {
+                    R.string.card_template_editor_deck_override_off
                 }
-
                 menu.findItem(R.id.action_add_deck_override).setTitle(overrideStringRes)
             }
 
