@@ -493,7 +493,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             canvas.drawColor(Color.WHITE)
         }
         draw(canvas)
-        val baseFileName = "Whiteboard" + TimeUtils.getTimestamp(time!!)
+        val baseFileName = "Whiteboard" + TimeUtils.getTimestamp(time!!.currentDate)
         // TODO: Fix inconsistent CompressFormat 'JPEG' and file extension 'png'
         return CompatHelper.compat.saveImage(context, bitmap, baseFileName, "png", Bitmap.CompressFormat.JPEG, 95)
     }

@@ -67,7 +67,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         val exportDir = File(activity.externalCacheDir, "export")
         exportDir.mkdirs()
         val exportPath: File
-        val timeStampSuffix = "-" + TimeUtils.getTimestamp(collectionSupplier.get().time)
+        val timeStampSuffix = "-" + TimeUtils.getTimestamp(collectionSupplier.get().time.currentDate)
         exportPath = if (path != null) {
             // filename has been explicitly specified
             File(exportDir, path)
