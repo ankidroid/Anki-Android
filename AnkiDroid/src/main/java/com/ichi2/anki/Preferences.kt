@@ -911,14 +911,14 @@ class Preferences : AnkiActivity() {
             }
 
             dayThemePref.setOnPreferenceChangeListener { _, newValue ->
-                if (newValue != dayThemePref.value && !systemIsInNightMode) {
+                if (newValue != dayThemePref.value && !systemIsInNightMode(requireContext())) {
                     restartActivityOnBackStackTop()
                 }
                 true
             }
 
             nightThemePref.setOnPreferenceChangeListener { _, newValue ->
-                if (newValue != nightThemePref.value && systemIsInNightMode) {
+                if (newValue != nightThemePref.value && systemIsInNightMode(requireContext())) {
                     restartActivityOnBackStackTop()
                 }
                 true
