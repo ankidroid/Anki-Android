@@ -18,12 +18,13 @@
 
 package com.ichi2.themes
 
+import android.app.UiModeManager
 import android.content.Context
-import android.content.res.Configuration
 import androidx.annotation.StringDef
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import timber.log.Timber
 
 /**
  * Handles the user selectable themes
@@ -36,10 +37,6 @@ object Themes {
     const val ALPHA_ICON_ENABLED_LIGHT = 255 // 100%
     const val ALPHA_ICON_DISABLED_LIGHT = 76 // 31%
     const val ALPHA_ICON_ENABLED_DARK = 138 // 54%
-
-    @JvmField
-    var systemIsInNightMode: Boolean = AnkiDroidApp.getInstance().resources.configuration.uiMode
-        .and(Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
 
     // Themes preferences keys
     private const val APP_THEME_KEY = "appTheme"
@@ -82,7 +79,7 @@ object Themes {
     fun setTheme(context: Context) {
         val prefs = AnkiDroidApp.getSharedPrefs(context.applicationContext)
         if (themeFollowsSystem(context)) {
-            if (systemIsInNightMode) {
+            if (systemIsInNightMode(context)) {
                 when (prefs.getString(NIGHT_THEME_KEY, NIGHT_BLACK_THEME)) {
                     NIGHT_BLACK_THEME -> context.setTheme(R.style.Theme_Black_Compat)
                     NIGHT_DARK_THEME -> context.setTheme(R.style.Theme_Dark_Compat)
@@ -113,7 +110,7 @@ object Themes {
         val applicationContext = context.applicationContext
         val prefs = AnkiDroidApp.getSharedPrefs(applicationContext)
         if (themeFollowsSystem(applicationContext)) {
-            if (systemIsInNightMode) {
+            if (systemIsInNightMode(applicationContext)) {
                 when (prefs.getString(NIGHT_THEME_KEY, NIGHT_BLACK_THEME)) {
                     NIGHT_BLACK_THEME -> context.setTheme(R.style.LegacyActionBarBlack)
                     NIGHT_DARK_THEME -> context.setTheme(R.style.LegacyActionBarDark)
@@ -186,7 +183,7 @@ object Themes {
     fun getCurrentTheme(context: Context): String {
         val prefs = AnkiDroidApp.getSharedPrefs(context)
         if (themeFollowsSystem(context)) {
-            if (systemIsInNightMode) {
+            if (systemIsInNightMode(context)) {
                 when (prefs.getString(NIGHT_THEME_KEY, NIGHT_BLACK_THEME)) {
                     NIGHT_BLACK_THEME -> return APP_BLACK_THEME
                     NIGHT_DARK_THEME -> return APP_DARK_THEME
@@ -199,6 +196,19 @@ object Themes {
             }
         }
         return prefs.getString(APP_THEME_KEY, APP_LIGHT_THEME)!!
+    }
+
+    /**
+     * @return if user system is in night mode
+     */
+    @JvmStatic
+    fun systemIsInNightMode(context: Context): Boolean {
+        val uiModeManager = ContextCompat.getSystemService(context, UiModeManager::class.java)
+        if (uiModeManager != null) {
+            return uiModeManager.nightMode == UiModeManager.MODE_NIGHT_YES
+        }
+        Timber.w("Unable to getSystemService() - UIModeManager")
+        return false
     }
 
     /**
