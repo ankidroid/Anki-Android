@@ -930,27 +930,18 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          * @return name for new template
          */
         private fun newCardName(templates: JSONArray): String {
-            var name: String
             // Start by trying to set the name to "Card n" where n is the new num of templates
             var n = templates.length() + 1
             // If the starting point for name already exists, iteratively increase n until we find a unique name
             while (true) {
                 // Get new name
-                name = resources.getString(R.string.card_n_name, n)
+                val name = resources.getString(R.string.card_n_name, n)
                 // Cycle through all templates checking if new name exists
-                var exists = false
-                for (template in templates.jsonObjectIterable()) {
-                    if (name == template.getString("name")) {
-                        exists = true
-                        break
-                    }
-                }
-                if (!exists) {
-                    break
+                if (templates.jsonObjectIterable().all { name != it.getString("name") }) {
+                    return name
                 }
                 n += 1
             }
-            return name
         }
 
         companion object {
