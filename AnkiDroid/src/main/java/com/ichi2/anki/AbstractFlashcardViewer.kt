@@ -2211,6 +2211,13 @@ abstract class AbstractFlashcardViewer :
                 // shouldInterceptRequest is not running on the UI thread.
                 runOnUiThread { mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard!!) }
             }
+
+            val ankiLoadLocalFile = AnkiLoadLocalFile(baseContext)
+            val decoded = decodeUrl(url.toString())
+            if (ankiLoadLocalFile.isLoadingLocalFile(decoded)) {
+                return ankiLoadLocalFile.getLocalFileFromCollectionDir(decoded)
+            }
+
             return null
         }
 
