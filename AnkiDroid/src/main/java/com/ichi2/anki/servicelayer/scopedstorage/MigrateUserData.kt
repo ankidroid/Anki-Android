@@ -111,7 +111,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      */
     class MissingDirectoryException(val directories: List<MissingFile>) : MigrationException("Directories $directories are missing.") {
         init {
-            if (directories.isNullOrEmpty()) {
+            if (directories.isEmpty()) {
                 throw IllegalArgumentException("directories should not be empty")
             }
         }
@@ -378,7 +378,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         val retriedDirectories = hashSetOf<File>()
 
         val loggedExceptions = mutableListOf<Exception>()
-        var consecutiveExceptionsWithoutProgress = 0
+        private var consecutiveExceptionsWithoutProgress = 0
         override fun reportError(throwingOperation: Operation, ex: Exception) {
             when (ex) {
                 is FileConflictException -> { moveToConflictedFolder(ex.source) }
@@ -537,9 +537,6 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
 
     /** Returns a sequence of the Files or Directories in [source] which are to be migrated */
     private fun getUserDataFiles() = getDirectoryContent().filter { isUserData(it) }
-
-    /** Returns a sequence of the Files or Directories in [source] which were already migrated */
-    private fun getEssentialFiles() = getDirectoryContent().filter { !isUserData(it) }
 
     fun isEssentialFileName(name: String): Boolean {
         return MigrateEssentialFiles.PRIORITY_FILES.flatMap { it.potentialFileNames }.contains(name)

@@ -67,13 +67,13 @@ internal constructor(
     /**
      * Copies (not moves) the [essential files][PRIORITY_FILES] to [destinationDirectory]
      *
-     * Then opens a collection at the new location, and updates [CollectionHelper.PREF_DECK_PATH] there.
+     * Then opens a collection at the new location, and updates [CollectionHelper.PREF_COLLECTION_PATH] there.
      *
      * After:
      *
      * [PREF_MIGRATION_SOURCE] contains the [AnkiDroidDirectory] with the remaining items to move ([sourceDirectory])
      * [PREF_MIGRATION_DESTINATION] contains an [AnkiDroidDirectory] with the copied collection.anki2/media ([destinationDirectory])
-     * [CollectionHelper.PREF_DECK_PATH] now points to the new location of the collection in private storage
+     * [CollectionHelper.PREF_COLLECTION_PATH] now points to the new location of the collection in private storage
      * [ScopedStorageService.UserDataMigrationPreferences.migrationInProgress] returns `true`
      *
      * @throws IllegalStateException Migration in progress
