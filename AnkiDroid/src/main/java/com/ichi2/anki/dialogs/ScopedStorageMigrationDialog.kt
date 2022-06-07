@@ -128,7 +128,7 @@ object ScopedStorageMigrationConfirmationDialog {
 
     private fun getContentColor(ctx: Context): Int? {
         return try {
-            val theme = if (Themes.currentTheme.isDark) com.afollestad.materialdialogs.R.style.MD_Dark else com.afollestad.materialdialogs.R.style.MD_Light
+            val theme = if (Themes.currentTheme.isNightMode) com.afollestad.materialdialogs.R.style.MD_Dark else com.afollestad.materialdialogs.R.style.MD_Light
 
             val contextThemeWrapper = ContextThemeWrapper(ctx, theme)
             val contentColorFallback = DialogUtils.resolveColor(contextThemeWrapper, android.R.attr.textColorSecondary)

@@ -77,7 +77,7 @@ class CustomMaterialTapTargetPromptBuilder<T>(val activity: Activity, val featur
     override fun show(): MaterialTapTargetPrompt? {
         /* Keep the focal colour as transparent for night mode
            so that the contents being highlighted are visible properly */
-        if (Themes.currentTheme.isDark) {
+        if (Themes.currentTheme.isNightMode) {
             setFocalColourResource(R.color.transparent)
         }
 

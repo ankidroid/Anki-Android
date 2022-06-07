@@ -1345,7 +1345,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
         whiteboard!!.setOnPaintColorChangeListener(object : OnPaintColorChangeListener {
             override fun onPaintColorChange(color: Int?) {
-                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isDark, color)
+                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
             }
         })
         whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->

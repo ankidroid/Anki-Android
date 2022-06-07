@@ -43,7 +43,7 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
         if (centerVertically) {
             cardClass.append(" vertically_centered")
         }
-        if (currentTheme.isDark) {
+        if (currentTheme.isNightMode) {
             // Enable the night-mode class
             cardClass.append(" night_mode nightMode")
 

@@ -1425,7 +1425,7 @@ abstract class AbstractFlashcardViewer :
 
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal val isInNightMode: Boolean
-        get() = Themes.currentTheme.isDark
+        get() = Themes.currentTheme.isNightMode
 
     private fun updateCard(content: CardHtml) {
         Timber.d("updateCard()")

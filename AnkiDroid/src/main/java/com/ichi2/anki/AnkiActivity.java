@@ -487,7 +487,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     private int getColorScheme() {
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
             return COLOR_SCHEME_SYSTEM;
-        } else if (currentTheme.isDark()) {
+        } else if (currentTheme.isNightMode()) {
             return COLOR_SCHEME_DARK;
         } else {
             return COLOR_SCHEME_LIGHT;
