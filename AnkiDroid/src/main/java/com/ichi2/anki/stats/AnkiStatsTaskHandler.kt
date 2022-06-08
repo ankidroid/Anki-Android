@@ -29,6 +29,8 @@ import com.ichi2.themes.Themes.getColorFromAttr
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
@@ -55,23 +57,25 @@ class AnkiStatsTaskHandler private constructor(
         progressBar: ProgressBar,
         chartView: ChartView,
     ) = withContext(defaultDispatcher) {
-        val plotSheet = if (!this.isActive) {
-            Timber.d("Quitting CreateChartTask (%s) before execution", chartType.name)
-            null
-        } else {
-            Timber.d("Starting CreateChartTask, type: %s", chartType.name)
-            val chartBuilder = ChartBuilder(
-                chartView, collectionData,
-                mDeckId, chartType
-            )
-            chartBuilder.renderChart(statType)
-        }
-        plotSheet?.let {
-            withContext(mainDispatcher) {
-                chartView.setData(plotSheet)
-                progressBar.visibility = View.GONE
-                chartView.visibility = View.VISIBLE
-                chartView.invalidate()
+        mutex.withLock {
+            val plotSheet = if (!this.isActive) {
+                Timber.d("Quitting CreateChartTask (%s) before execution", chartType.name)
+                null
+            } else {
+                Timber.d("Starting CreateChartTask, type: %s", chartType.name)
+                val chartBuilder = ChartBuilder(
+                    chartView, collectionData,
+                    mDeckId, chartType
+                )
+                chartBuilder.renderChart(statType)
+            }
+            plotSheet?.let {
+                withContext(mainDispatcher) {
+                    chartView.setData(plotSheet)
+                    progressBar.visibility = View.GONE
+                    chartView.visibility = View.VISIBLE
+                    chartView.invalidate()
+                }
             }
         }
     }
@@ -199,6 +203,7 @@ class AnkiStatsTaskHandler private constructor(
         var instance: AnkiStatsTaskHandler? = null
             private set
         private val sLock: Lock = ReentrantLock()
+        private val mutex = Mutex()
         @JvmStatic
         @Synchronized
         fun getInstance(
