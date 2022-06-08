@@ -22,7 +22,7 @@
 
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/app_name"
+    android:title="@string/pref_cat_general"
     android:summary="@string/pref_cat_general_summ">
     <PreferenceCategory android:title="@string/app_name">
         <ListPreference

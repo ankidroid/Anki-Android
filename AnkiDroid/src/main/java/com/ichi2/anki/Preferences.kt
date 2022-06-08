@@ -19,7 +19,6 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.app.Activity
 import android.app.AlarmManager
 import android.app.AlertDialog
 import android.content.*
@@ -38,7 +37,6 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -61,7 +59,6 @@ import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.CustomSyncServer.getSyncBaseUrlOrDefault
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.anki.web.CustomSyncServer.isEnabled
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -134,23 +131,10 @@ class Preferences : AnkiActivity() {
     private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
         val fragment = fragmentManager.findFragmentById(R.id.settings_container)
 
-        if (actionBar == null)
-            return
-
-        @NeedsTest("check all settings fragments have defined titles")
-        actionBar.title = when (fragment) {
-            is GeneralSettingsFragment -> resources.getString(R.string.pref_cat_general)
-            is ReviewingSettingsFragment -> resources.getString(R.string.pref_cat_reviewing)
-            is SyncSettingsFragment -> getString(R.string.pref_cat_sync)
-            is GesturesSettingsFragment -> resources.getString(R.string.pref_cat_gestures)
-            is ControlsSettingsFragment -> resources.getString(R.string.pref_cat_controls)
-            is AdvancedSettingsFragment -> resources.getString(R.string.pref_cat_advanced)
-            is AppearanceSettingsFragment -> resources.getString(R.string.pref_cat_appearance)
-            is AdvancedStatisticsSettingsFragment -> resources.getString(R.string.advanced_statistics_title)
-            is CustomSyncServerSettingsFragment -> resources.getString(R.string.custom_sync_server_title)
-            is CustomButtonsSettingsFragment -> resources.getString(R.string.custom_buttons)
-            is DevOptionsFragment -> getString(R.string.pref_cat_dev_options)
-            else -> resources.getString(R.string.preferences_title)
+        actionBar?.title = if (fragment is SpecificSettingsFragment) {
+            fragment.preferenceScreen.title
+        } else {
+            getString(R.string.preferences_title)
         }
     }
 
@@ -696,26 +680,6 @@ class Preferences : AnkiActivity() {
         protected val col: Collection?
             get() = CollectionHelper.getInstance().getCol(requireContext())
 
-        /** Sets the title of the window to the provided string  */
-        protected fun setTitle(@StringRes stringRes: Int) {
-            val activity: Activity? = activity
-
-            val supportActionBar: ActionBar?
-            if (activity is AppCompatActivity) {
-                supportActionBar = activity.supportActionBar
-            } else {
-                Timber.w("Activity was of the wrong type")
-                return
-            }
-
-            if (supportActionBar == null) {
-                Timber.w("No action bar detected")
-                return
-            }
-
-            supportActionBar.setTitle(stringRes)
-        }
-
         /**
          * Loads preferences (via addPreferencesFromResource) and sets up appropriate listeners for the preferences
          * Called by base class, do not call directly.
@@ -1190,7 +1154,6 @@ class Preferences : AnkiActivity() {
             get() = "prefs.custom_buttons"
 
         override fun initSubscreen() {
-            setTitle(R.string.custom_buttons)
             addPreferencesFromResource(R.xml.preferences_custom_buttons)
             // Reset toolbar button customizations
             val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
@@ -1238,7 +1201,6 @@ class Preferences : AnkiActivity() {
             get() = "prefs.advanced_statistics"
 
         override fun initSubscreen() {
-            setTitle(R.string.advanced_statistics_title)
             addPreferencesFromResource(R.xml.preferences_advanced_statistics)
         }
     }
@@ -1250,7 +1212,6 @@ class Preferences : AnkiActivity() {
             get() = "prefs.custom_sync_server"
 
         override fun initSubscreen() {
-            setTitle(R.string.custom_sync_server_title)
             addPreferencesFromResource(R.xml.preferences_custom_sync_server)
             val syncUrlPreference = requirePreference<Preference>("syncBaseUrl")
             val syncMediaUrlPreference = requirePreference<Preference>("syncMediaUrl")
