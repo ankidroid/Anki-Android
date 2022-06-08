@@ -44,6 +44,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.NumberRangePreference
 import com.ichi2.preferences.StepsPreference
 import com.ichi2.preferences.TimePreference
@@ -306,7 +307,7 @@ class DeckOptions :
 
                                 alarmManager.cancel(reminderIntent)
                                 if (value as Boolean) {
-                                    val calendar = reminderToCalendar(col.time, reminder)
+                                    val calendar = reminderToCalendar(TimeManager.time, reminder)
 
                                     alarmManager.setRepeating(
                                         AlarmManager.RTC_WAKEUP,
@@ -342,7 +343,7 @@ class DeckOptions :
                                 )
                                 alarmManager.cancel(reminderIntent)
 
-                                val calendar = reminderToCalendar(col.time, reminder)
+                                val calendar = reminderToCalendar(TimeManager.time, reminder)
 
                                 alarmManager.setRepeating(
                                     AlarmManager.RTC_WAKEUP,

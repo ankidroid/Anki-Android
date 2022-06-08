@@ -34,6 +34,7 @@ import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.HashUtil;
 
 import java.io.BufferedInputStream;
@@ -414,7 +415,7 @@ public class Anki2Importer extends Importer {
                 // copy it over
                 Model model = srcModel.deepClone();
                 model.put("id", mid);
-                model.put("mod", mCol.getTime().intTime());
+                model.put("mod", TimeManager.INSTANCE.getTime().intTime());
                 model.put("usn", mCol.usn());
                 mDst.getModels().update(model);
                 break;
@@ -426,7 +427,7 @@ public class Anki2Importer extends Importer {
                 // they do; we can reuse this mid
                 Model model = srcModel.deepClone();
                 model.put("id", mid);
-                model.put("mod", mCol.getTime().intTime());
+                model.put("mod", TimeManager.INSTANCE.getTime().intTime());
                 model.put("usn", mCol.usn());
                 mDst.getModels().update(model);
                 break;
@@ -595,7 +596,7 @@ public class Anki2Importer extends Importer {
                 // update cid, nid, etc
                 long nid = mNotes.get(guid).mNid;
                 did = _did(did);
-                long mod = mCol.getTime().intTime();
+                long mod = TimeManager.INSTANCE.getTime().intTime();
                 // review cards have a due date relative to collection
                 if (queue == QUEUE_TYPE_REV || queue == QUEUE_TYPE_DAY_LEARN_RELEARN || type == CARD_TYPE_REV) {
                     due -= aheadBy;

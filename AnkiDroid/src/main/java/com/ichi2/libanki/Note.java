@@ -21,6 +21,7 @@ import android.database.Cursor;
 
 import android.util.Pair;
 
+import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.JSONObject;
 
 import java.util.AbstractSet;
@@ -65,7 +66,7 @@ public class Note implements Cloneable {
 
     public Note(@NonNull Collection col, @NonNull Model model) {
         mCol = col;
-        mId = mCol.getTime().timestampID(mCol.getDb(), "notes");
+        mId = TimeManager.INSTANCE.getTime().timestampID(mCol.getDb(), "notes");
         mGuId = Utils.guid64();
         mModel = model;
         mMid = model.getLong("id");
@@ -132,7 +133,7 @@ public class Note implements Cloneable {
             return;
         }
         long csum = csumAndStrippedFieldField.second;
-        mMod = mod != null ? mod : mCol.getTime().intTime();
+        mMod = mod != null ? mod : TimeManager.INSTANCE.getTime().intTime();
         mCol.getDb().execute("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
                 mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData);
         mCol.getTags().register(mTags);

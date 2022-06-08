@@ -37,6 +37,7 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONException
@@ -1137,7 +1138,7 @@ class CardContentProvider : ContentProvider() {
             try {
                 if (cardToAnswer != null) {
                     if (timeTaken != -1L) {
-                        cardToAnswer.timerStarted = col.time.intTimeMS() - timeTaken
+                        cardToAnswer.timerStarted = TimeManager.time.intTimeMS() - timeTaken
                     }
                     sched.answerCard(cardToAnswer, ease)
                 }

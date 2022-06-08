@@ -20,7 +20,6 @@ import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
-import com.ichi2.libanki.utils.Time
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 
@@ -30,9 +29,8 @@ class CollectionV16(
     path: String,
     server: Boolean,
     log: Boolean,
-    time: Time,
     backend: RustDroidV16Backend
-) : Collection(context, db, path, server, log, time, backend) {
+) : Collection(context, db, path, server, log, backend) {
 
     /** Workaround as we shouldn't be overriding members which are used in the constructor */
     override val backend: RustDroidV16Backend

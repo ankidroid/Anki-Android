@@ -22,7 +22,6 @@ import android.database.SQLException;
 import android.util.Pair;
 
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CrashReportService;
 import com.ichi2.anki.R;
 import com.ichi2.anki.analytics.UsageAnalytics;
@@ -39,6 +38,7 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.sched.Counts;
+import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONException;
@@ -47,7 +47,6 @@ import com.ichi2.utils.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -339,7 +338,7 @@ public class Syncer {
         j.put("mod", mCol.getMod());
         j.put("scm", mCol.getScm());
         j.put("usn", mCol.getUsnForSync());
-        j.put("ts", mCol.getTime().intTime());
+        j.put("ts", TimeManager.INSTANCE.getTime().intTime());
         j.put("musn", 0);
         j.put("msg", "");
         j.put("cont", true);
@@ -510,7 +509,7 @@ public class Syncer {
     private long finish(long mod) {
         if (mod == 0) {
             // server side; we decide new mod time
-            mod = mCol.getTime().intTimeMS();
+            mod = TimeManager.INSTANCE.getTime().intTimeMS();
         }
         mCol.setLs(mod);
         mCol.setUsnAfterSync(mMaxUsn + 1);

@@ -82,6 +82,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
@@ -440,7 +441,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
                 if (whiteboard != null) {
                     try {
-                        val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(col.time).path
+                        val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(TimeManager.time).path
                         showThemedToast(this@Reviewer, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true)
                     } catch (e: Exception) {
                         Timber.w(e)

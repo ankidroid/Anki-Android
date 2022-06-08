@@ -44,6 +44,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.StdModels
 import com.ichi2.libanki.Utils
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.widget.WidgetStatus.update
@@ -461,7 +462,7 @@ class ModelBrowser : AnkiActivity() {
      * User from reusing names (which are technically not unique however
      */
     private fun randomizeName(s: String): String {
-        return s + "-" + Utils.checksum(col.time.intTimeMS().toString()).substring(0, 5)
+        return s + "-" + Utils.checksum(TimeManager.time.intTimeMS().toString()).substring(0, 5)
     }
 
     private fun showToast(text: CharSequence) {

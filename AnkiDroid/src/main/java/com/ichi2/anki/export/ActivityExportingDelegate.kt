@@ -35,6 +35,7 @@ import com.ichi2.async.CollectionTask.ExportApkg
 import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeUtils
 import timber.log.Timber
 import java.io.File
@@ -67,7 +68,10 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         val exportDir = File(activity.externalCacheDir, "export")
         exportDir.mkdirs()
         val exportPath: File
-        val timeStampSuffix = "-" + TimeUtils.getTimestamp(collectionSupplier.get().time)
+        val timeStampSuffix = "-" + run {
+            collectionSupplier.get()
+            TimeUtils.getTimestamp(TimeManager.time)
+        }
         exportPath = if (path != null) {
             // filename has been explicitly specified
             File(exportDir, path)

@@ -26,7 +26,6 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.backend.model.SchedTimingToday
-import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustV1Cleanup
 
@@ -36,7 +35,7 @@ import net.ankiweb.rsdroid.RustV1Cleanup
 @KotlinCleanup("priority to convert to kotlin for named arguments" + "needs better nullable definitions")
 interface DroidBackend {
     /** Should only be called from "Storage.java"  */
-    fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean, time: Time): Collection?
+    fun createCollection(context: Context, db: DB, path: String, server: Boolean, log: Boolean): Collection?
     fun openCollectionDatabase(path: String): DB
     fun closeCollection(db: DB?, downgradeToSchema11: Boolean)
 
