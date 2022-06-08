@@ -1,84 +1,68 @@
+/**
+ * @author
+ * AnkiDroid Open Source Team
+ * 
+ * @license
+ * Copyright (c) AnkiDroid. All rights reserved.
+ * Licensed under the GPL-3.0 license. See LICENSE file in the project root for details.
+ * 
+ * @description
+ * uploadI18nFiles() to upload current version of English strings from AnkiDroid/src/main/res/values/ dir to crowdin. 
+ * It's expected to be called through yarn start upload
+ */
+
 import fs from "fs";
+import crowdin, { ResponseList, SourceFilesModel } from '@crowdin/crowdin-api-client';
+import { PROJECT_ID, credentialsConst, I18N_FILES, I18N_FILES_DIR, TEMP_DIR, TITLE_STR, MARKET_DESC_FILE } from "./constants";
 import path from "path";
-import crowdin, { Credentials } from '@crowdin/crowdin-api-client';
-
-require('dotenv').config({path: path.join(__dirname, "../.env")});
-
-const CROWDIN_API_KEY = process.env.CROWDIN_API_KEY ?? "";
-const projectId = 720;
-
-// credentials
-const credentials: Credentials = {
-    token: CROWDIN_API_KEY
-};
 
 // initialization of crowdin client
 const {
     uploadStorageApi,
     sourceFilesApi
-} = new crowdin(credentials);
+} = new crowdin(credentialsConst);
 
-const I18N_FILE_BASE = "../../AnkiDroid/src/main/res/values/"
-const I18N_FILES = [
-    '01-core',
-    '02-strings',
-    '03-dialogs',
-    '04-network',
-    '05-feedback',
-    '06-statistics',
-    '07-cardbrowser',
-    '08-widget',
-    '09-backup',
-    '10-preferences',
-    '11-arrays',
-    '12-dont-translate',
-    '14-marketdescription',
-    '16-multimedia-editor',
-    '17-model-manager',
-    '18-standard-models'
-];
-
+/**
+ * Upload English source files to Crowdin
+ */
 export async function uploadI18nFiles() {
-    const files = await sourceFilesApi.listProjectFiles(projectId);
+    const files = await sourceFilesApi.listProjectFiles(PROJECT_ID);
 
     try {
         for (let file of I18N_FILES) {
             let I18N_FILE_TARGET_NAME = `${file}.xml`;
-            let I18N_FILE_SOURCE_NAME = `${I18N_FILE_BASE}${I18N_FILE_TARGET_NAME}`;
+            let I18N_FILE_SOURCE_NAME = `${I18N_FILES_DIR}${I18N_FILE_TARGET_NAME}`;
 
-            // console.log(I18N_FILE_TARGET_NAME);
-            // console.log(I18N_FILE_SOURCE_NAME);
+            if (file == '15-markettitle') {
+                I18N_FILE_TARGET_NAME = "15-markettitle.txt";
+                I18N_FILE_SOURCE_NAME = path.join(TEMP_DIR, "15-markettitle.txt");
+                fs.writeFileSync(I18N_FILE_SOURCE_NAME, TITLE_STR);
+            }
 
             if (file == '14-marketdescription') {
                 I18N_FILE_TARGET_NAME = "14-marketdescription.txt";
-                I18N_FILE_SOURCE_NAME = "../../docs/marketing/localized_description/marketdescription.txt";
+                I18N_FILE_SOURCE_NAME = MARKET_DESC_FILE;
             }
 
-            if (`${I18N_FILE_TARGET_NAME}` != "") {
-                console.log(`Update of Main File ${I18N_FILE_TARGET_NAME} from ${I18N_FILE_SOURCE_NAME}`);
+            if (fs.existsSync(I18N_FILE_SOURCE_NAME)) {
 
-                if (fs.existsSync(I18N_FILE_SOURCE_NAME)) {
-                
-                    fs.readFile(I18N_FILE_SOURCE_NAME, {encoding: 'utf-8'}, function(err, data){
-                        if (!err) {   
-                            
-                            // if exists then update, else create new file
-                            let id = checkIfExistInCrowdin(I18N_FILE_TARGET_NAME, files);
-                            if (id) {
-                                updateFile(id, I18N_FILE_TARGET_NAME, data);
-                            } else {
-                                createFile(I18N_FILE_TARGET_NAME, data);
-                            }
-
-                        } else {
-                            console.log(err);
-                        }
-                    });
-                    
-                } else {
-                    throw `File not exist ${I18N_FILE_SOURCE_NAME}`
+                let data = fs.readFileSync(I18N_FILE_SOURCE_NAME, { encoding: 'utf-8' });
+                if (data) {
+                    // if exists then update, else create new file
+                    let id = idOfFileOrNull(I18N_FILE_TARGET_NAME, files);
+                    if (id != null) {
+                        console.log(`Update of Main File ${I18N_FILE_TARGET_NAME} from ${I18N_FILE_SOURCE_NAME}`);
+                        updateFile(id, I18N_FILE_TARGET_NAME, data);
+                    } else {
+                        console.log(`Create of Main File ${I18N_FILE_TARGET_NAME} from ${I18N_FILE_SOURCE_NAME}`);
+                        createFile(I18N_FILE_TARGET_NAME, data);
+                    }
                 }
+
+            } else {
+                throw `File not exist ${I18N_FILE_SOURCE_NAME}`
             }
+
         }
     } catch (error) {
         console.error(error);
@@ -86,10 +70,15 @@ export async function uploadI18nFiles() {
 }
 
 
-// Create file with xml content to translate
-async function createFile(fileName: string, fileData: any) {
-    const storage = await uploadStorageApi.addStorage(fileName, fileData);
-    const file = await sourceFilesApi.createFile(projectId, {
+/**
+ * Allow to upload a new file for the first time on crowdin
+ * 
+ * @param fileName name of the file
+ * @param fileContent file conten
+ */
+async function createFile(fileName: string, fileContent: any) {
+    const storage = await uploadStorageApi.addStorage(fileName, fileContent);
+    const file = await sourceFilesApi.createFile(PROJECT_ID, {
         name: fileName,
         title: fileName,
         storageId: storage.data.id,
@@ -98,19 +87,30 @@ async function createFile(fileName: string, fileData: any) {
     console.log(file, storage.data.id);
 }
 
-
-// Update file with txt, xml content to translate
-async function updateFile(id: number, fileName: string, fileData: any) {
-    const storage = await uploadStorageApi.addStorage(fileName, fileData);
-    const file = await sourceFilesApi.updateOrRestoreFile(projectId, id, {
+/**
+ * Update file with txt, xml content to translate
+ * 
+ * @param id storage id (on Crowdin) for the file
+ * @param fileName name of the file
+ * @param fileContent file contents
+ */
+async function updateFile(id: number, fileName: string, fileContent: string) {
+    const storage = await uploadStorageApi.addStorage(fileName, fileContent);
+    const file = await sourceFilesApi.updateOrRestoreFile(PROJECT_ID, id, {
         storageId: storage.data.id
     });
     console.log(file, storage.data.id);
 }
 
 
-// check if file exists on crowdin, if exist then return id
-function checkIfExistInCrowdin(fileName: string, files: any) {
+/**
+ * check if file exists on crowdin, if exist then return id
+ * 
+ * @param fileName name of the file
+ * @param files list of files for current project on Crowdin with ids, names ...
+ * @returns id if filename stored on Crowdin else null
+ */
+function idOfFileOrNull(fileName: string, files: ResponseList<SourceFilesModel.File>) {
     for (let file of files.data) {
         if (file.data.name === fileName) {
             return file.data.id;
