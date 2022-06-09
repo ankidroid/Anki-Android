@@ -1896,11 +1896,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun updateField(field: FieldEditText?): Boolean {
-        var fieldContent = ""
-        val fieldText = field!!.text
-        if (fieldText != null) {
-            fieldContent = fieldText.toString()
-        }
+        val fieldContent = field!!.text?.toString() ?: ""
         val correctedFieldContent = NoteService.convertToHtmlNewline(fieldContent, shouldReplaceNewlines())
         if (mEditorNote!!.values()[field.ord] != correctedFieldContent) {
             mEditorNote!!.values()[field.ord] = correctedFieldContent
