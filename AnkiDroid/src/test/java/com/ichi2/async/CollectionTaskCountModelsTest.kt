@@ -34,7 +34,7 @@ class CollectionTaskCountModelsTest : AbstractCollectionTaskTest() {
         val task = CountModels()
         val initialCount = execute(task)!!.first.size
 
-        addNonClozeModel("testModel", arrayOf<String>(), qfmt = "{{ front }}", afmt = "{{FrontSide}}\n\n<hr id=answer>\n\n{{ back }}")
+        addNonClozeModel("testModel", arrayOf<String>("front"), qfmt = "{{ front }}", afmt = "{{FrontSide}}\n\n<hr id=answer>\n\n{{ back }}")
 
         val finalCount = execute(task)!!.first.size
         assertEquals(initialCount + 1, finalCount)

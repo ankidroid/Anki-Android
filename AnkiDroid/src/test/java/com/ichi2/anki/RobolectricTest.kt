@@ -392,7 +392,7 @@ open class RobolectricTest : CollectionGetter {
     protected fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
         val model = col.models.newModel(name)
         for (field in fields) {
-            addField(model, field)
+            col.models.addFieldInNewModel(model, col.models.newField(field))
         }
         val t = Models.newTemplate("Card 1")
         t.put("qfmt", qfmt)
