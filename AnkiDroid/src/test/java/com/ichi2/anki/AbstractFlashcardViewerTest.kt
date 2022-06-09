@@ -36,6 +36,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.shadows.ShadowToast
 import java.util.*
 import java.util.stream.Stream
 
@@ -196,7 +197,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @Test
     fun automaticAnswerDisabledProperty() {
-        val controller = getViewerController(true)
+        val controller = getViewerController(true, false)
         val viewer = controller.get()
         assertThat("not disabled initially", viewer.mAutomaticAnswer.isDisabled, equalTo(false))
         controller.pause()
@@ -207,7 +208,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @Test
     fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() {
-        val controller = getViewerController(true)
+        val controller = getViewerController(true, false)
         val viewer = controller.get()
         viewer.mAutomaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5))
         viewer.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
@@ -217,6 +218,14 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         assertThat("no auto answer after pause", viewer.hasAutomaticAnswerQueued(), equalTo(false))
         viewer.mOnRenderProcessGoneDelegate.onRenderProcessGone(viewer.webView!!, mock(RenderProcessGoneDetail::class.java))
         assertThat("no auto answer after onRenderProcessGone when paused", viewer.hasAutomaticAnswerQueued(), equalTo(false))
+    }
+
+    @Test
+    fun shortcutShowsToastOnFinish() {
+        val viewer: NonAbstractFlashcardViewer = getViewer(true, true)
+        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
+        viewer.executeCommand(ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
+        assertEquals(getResourceString(R.string.studyoptions_congrats_finished), ShadowToast.getTextOfLatestToast())
     }
 
     private fun showNextCard(viewer: NonAbstractFlashcardViewer) {
@@ -230,17 +239,26 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @CheckResult
     private fun getViewer(addCard: Boolean): NonAbstractFlashcardViewer {
-        return getViewerController(addCard).get()
+        return getViewer(addCard, false)
     }
 
     @CheckResult
-    private fun getViewerController(addCard: Boolean): ActivityController<NonAbstractFlashcardViewer> {
+    private fun getViewer(addCard: Boolean, startedWithShortcut: Boolean): NonAbstractFlashcardViewer {
+        return getViewerController(addCard, startedWithShortcut).get()
+    }
+
+    @CheckResult
+    private fun getViewerController(addCard: Boolean, startedWithShortcut: Boolean): ActivityController<NonAbstractFlashcardViewer> {
         if (addCard) {
             val n = col.newNote()
             n.setField(0, "a")
             col.addNote(n)
         }
-        val multimediaController = Robolectric.buildActivity(NonAbstractFlashcardViewer::class.java, Intent())
+        val intent = Intent()
+        if (startedWithShortcut) {
+            intent.putExtra(NavigationDrawerActivity.EXTRA_STARTED_WITH_SHORTCUT, true)
+        }
+        val multimediaController = Robolectric.buildActivity(NonAbstractFlashcardViewer::class.java, intent)
             .create().start().resume().visible()
         saveControllerForCleanup(multimediaController)
         val viewer = multimediaController.get()

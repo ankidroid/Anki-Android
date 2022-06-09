@@ -489,6 +489,11 @@ abstract class AbstractFlashcardViewer :
             val nextCardAndResult = result.value
             if (nextCardAndResult.hasNoMoreCards()) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true)
+
+                // When launched with a shortcut, we want to display a message when finishing
+                if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
+                    showThemedToast(baseContext, R.string.studyoptions_congrats_finished, false)
+                }
                 return
             }
             currentCard = nextCardAndResult.nextScheduledCard()
