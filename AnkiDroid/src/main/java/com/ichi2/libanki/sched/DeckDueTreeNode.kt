@@ -34,7 +34,7 @@ import kotlin.math.min
  */
 @KotlinCleanup("maybe possible to remove gettres for revCount/lrnCount")
 @KotlinCleanup("rename name -> fullDeckName")
-class DeckDueTreeNode(col: Collection, name: String, did: Long, override var revCount: Int, override var lrnCount: Int, override var newCount: Int) : AbstractDeckTreeNode(col, name, did) {
+class DeckDueTreeNode(name: String, did: Long, override var revCount: Int, override var lrnCount: Int, override var newCount: Int) : AbstractDeckTreeNode(name, did) {
     override fun toString(): String {
         return String.format(
             Locale.US, "%s, %d, %d, %d, %d",
@@ -50,7 +50,7 @@ class DeckDueTreeNode(col: Collection, name: String, did: Long, override var rev
         newCount = max(0, min(newCount, limit))
     }
 
-    override fun processChildren(children: List<AbstractDeckTreeNode>, addRev: Boolean) {
+    override fun processChildren(col: Collection, children: List<AbstractDeckTreeNode>, addRev: Boolean) {
         // tally up children counts
         for (ch in children) {
             lrnCount += ch.lrnCount

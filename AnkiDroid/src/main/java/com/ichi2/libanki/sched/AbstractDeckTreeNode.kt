@@ -32,7 +32,6 @@ import java.util.*
  * [processChildren] should be called if the children of this node are modified.
  */
 abstract class AbstractDeckTreeNode(
-    val col: Collection,
     /**
      * @return The full deck name, e.g. "A::B::C"
      */
@@ -68,7 +67,7 @@ abstract class AbstractDeckTreeNode(
         )
     }
 
-    abstract fun processChildren(children: List<AbstractDeckTreeNode>, addRev: Boolean)
+    abstract fun processChildren(col: Collection, children: List<AbstractDeckTreeNode>, addRev: Boolean)
 
     override fun toString(): String {
         val buf = StringBuffer()

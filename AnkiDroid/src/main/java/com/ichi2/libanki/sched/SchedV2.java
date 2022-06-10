@@ -560,7 +560,7 @@ public class SchedV2 extends AbstractSched {
             int rlim = _deckRevLimitSingle(deck, plim, false);
             int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
-            deckNodes.add(new DeckDueTreeNode(mCol, deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            deckNodes.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
             // add deck as a parent
             lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
         }
@@ -579,7 +579,7 @@ public class SchedV2 extends AbstractSched {
         // Similar to deckDueList
         ArrayList<DeckTreeNode> allDecksSorted = new ArrayList<>();
         for (JSONObject deck : mCol.getDecks().allSorted()) {
-            DeckTreeNode g = new DeckTreeNode(mCol, deck.getString("name"), deck.getLong("id"));
+            DeckTreeNode g = new DeckTreeNode(deck.getString("name"), deck.getLong("id"));
             allDecksSorted.add(g);
         }
         // End of the similar part.
@@ -665,7 +665,7 @@ public class SchedV2 extends AbstractSched {
             TreeNode<T> toAdd = new TreeNode<>(child);
             toAdd.getChildren().addAll(childrenNode);
             List<T> childValues = childrenNode.stream().map(TreeNode::getValue).collect(Collectors.toList());
-            child.processChildren(childValues, "std".equals(getName()));
+            child.processChildren(mCol, childValues, "std".equals(getName()));
 
             sortedChildren.add(toAdd);
         }
