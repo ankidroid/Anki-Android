@@ -16,6 +16,7 @@
 package com.ichi2.async
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser.CardCache
 import com.ichi2.anki.RunInBackground
 import com.ichi2.anki.servicelayer.SearchService.SearchCardsResult
@@ -36,6 +37,12 @@ class CollectionTaskSearchCardsTest : AbstractCollectionTaskTest() {
     @Test
     @RunInBackground
     fun searchCardsNumberOfResultCount() {
+        if (AnkiDroidApp.TESTING_USE_V16_BACKEND) {
+            // PartialCards works via an onProgress call inside _findCards. This doesn't
+            // work with the new backend findCards(), which fetches all the ids in one go.
+            return
+        }
+
         addNoteUsingBasicModel("Hello", "World")
         addNoteUsingBasicModel("One", "Two")
 

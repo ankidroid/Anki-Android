@@ -40,6 +40,7 @@ import com.ichi2.libanki.sched.DeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.*
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
+import net.ankiweb.rsdroid.RustCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber
 import java.io.File
@@ -553,6 +554,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
      * A class allowing to send partial search result to the browser to display while the search ends
      */
     @KotlinCleanup("move variables to constructor")
+    @RustCleanup("This provides little value since moving to the backend for DB access. Strip out?")
     class PartialSearch(cards: List<CardCache>, columnIndex1: Int, columnIndex2: Int, numCardsToRender: Int, collectionTask: ProgressSenderAndCancelListener<List<CardCache>>, col: Collection) : ProgressSenderAndCancelListener<List<Long>> {
         private val mCards: MutableList<CardCache>
         private val mColumn1Index: Int
