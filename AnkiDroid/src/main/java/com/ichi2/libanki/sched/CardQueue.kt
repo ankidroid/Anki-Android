@@ -14,75 +14,59 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sched;
+package com.ichi2.libanki.sched
 
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
+import com.ichi2.utils.KotlinCleanup
+import java.util.*
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.ListIterator;
-import java.util.NoSuchElementException;
-import java.util.Random;
-
-abstract class CardQueue<T extends Card.Cache> {
-    // We need to store mSched and not queue, because during initialization of sched, when CardQueues are initialized
+internal abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not queue, because during initialization of sched, when CardQueues are initialized
     // sched.getCol is null.
-    private final AbstractSched mSched;
-    private final LinkedList<T> mQueue = new LinkedList<>();
-
-
-    public CardQueue(AbstractSched sched) {
-        mSched = sched;
-    }
-
-
-    public void loadFirstCard() {
-        if (!mQueue.isEmpty()) {
+    private val sched: AbstractSched?
+) {
+    protected val queue = LinkedList<T>()
+    fun loadFirstCard() {
+        if (!queue.isEmpty()) {
             // No need to reload. If the card was changed, reset would have been called and emptied the queue
-            mQueue.get(0).loadQA(false, false);
+            queue[0]!!.loadQA(false, false)
         }
     }
 
-    public Card removeFirstCard() throws NoSuchElementException {
-        return mQueue.remove().getCard();
+    @Throws(NoSuchElementException::class)
+    fun removeFirstCard(): Card {
+        return queue.remove()!!.card
     }
 
-    public boolean remove(long cid) {
+    fun remove(cid: Long): Boolean {
         // CardCache and LrnCache with the same id will be considered as equal so it's a valid implementation.
-        return mQueue.remove(new Card.Cache(getCol(), cid));
+        return queue.remove(col?.let { Card.Cache(it, cid) })
     }
 
-    public void add(T elt) {
-        mQueue.add(elt);
+    fun add(elt: T) {
+        queue.add(elt)
     }
 
-    public void clear() {
-        mQueue.clear();
+    open fun clear() {
+        queue.clear()
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean isEmpty() {
-        return mQueue.isEmpty();
+    val isEmpty: Boolean
+        get() = queue.isEmpty()
+
+    fun size(): Int {
+        return queue.size
     }
 
-    public int size() {
-        return mQueue.size();
+    fun shuffle(r: Random) {
+        Collections.shuffle(queue, r)
     }
 
-    protected LinkedList<T> getQueue() {
-        return mQueue;
+    fun listIterator(): ListIterator<T?> {
+        return queue.listIterator()
     }
 
-    public void shuffle(Random r) {
-        Collections.shuffle(mQueue, r);
-    }
-
-    public ListIterator<T> listIterator() {
-        return mQueue.listIterator();
-    }
-
-    protected Collection getCol() {
-        return mSched.getCol();
-    }
+    @KotlinCleanup("make non-null")
+    protected val col: Collection?
+        get() = sched!!.col
 }
