@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.util.Pair;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
@@ -57,6 +58,7 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
 
+import net.ankiweb.rsdroid.BackendFactory;
 import net.ankiweb.rsdroid.RustCleanup;
 import net.ankiweb.rsdroid.RustV1Cleanup;
 
@@ -523,14 +525,14 @@ public class SchedV2 extends AbstractSched {
      *
      * Return nulls when deck task is cancelled.
      */
-    public @NonNull List<DeckDueTreeNode> deckDueList() {
+    private @NonNull List<DeckDueTreeNode> deckDueList() {
         return deckDueList(null);
     }
 
     // Overridden
     /**
      * Return sorted list of all decks.*/
-    public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
+    protected @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
         _checkDay();
         getCol().getDecks().checkIntegrity();
         List<Deck> allDecksSorted = getCol().getDecks().allSorted();
@@ -561,7 +563,7 @@ public class SchedV2 extends AbstractSched {
             int rlim = _deckRevLimitSingle(deck, plim, false);
             int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
-            deckNodes.add(new DeckDueTreeNode(getCol(), deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            deckNodes.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
             // add deck as a parent
             lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
         }
@@ -574,13 +576,15 @@ public class SchedV2 extends AbstractSched {
      requires multiple database access by deck.  Ignoring this number
      lead to the creation of a tree more quickly.*/
     @Override
-    public @NonNull List<TreeNode<DeckTreeNode>> quickDeckDueTree() {
-        // Similar to deckDueTree, ignoring the numbers
-
+    public @NonNull
+    List<? extends TreeNode<? extends AbstractDeckTreeNode>> quickDeckDueTree() {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            return BackendSchedKt.deckTreeLegacy(getCol().getNewBackend(), false);
+        }
         // Similar to deckDueList
         ArrayList<DeckTreeNode> allDecksSorted = new ArrayList<>();
         for (JSONObject deck : getCol().getDecks().allSorted()) {
-            DeckTreeNode g = new DeckTreeNode(getCol(), deck.getString("name"), deck.getLong("id"));
+            DeckTreeNode g = new DeckTreeNode(deck.getString("name"), deck.getLong("id"));
             allDecksSorted.add(g);
         }
         // End of the similar part.
@@ -588,18 +592,19 @@ public class SchedV2 extends AbstractSched {
         return _groupChildren(allDecksSorted, false);
     }
 
-
-    public @NonNull List<TreeNode<DeckDueTreeNode>> deckDueTree() {
-        return deckDueTree(null);
-    }
-
     @Nullable
+    @RustCleanup("enable for v2 once backend is updated to 2.1.41+")
+    @RustCleanup("once both v1 and v2 are using backend, cancelListener can be removed")
     public List<TreeNode<DeckDueTreeNode>> deckDueTree(@Nullable CancelListener cancelListener) {
-        List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
-        if (allDecksSorted == null) {
-            return null;
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            return BackendSchedKt.deckTreeLegacy(getCol().getNewBackend(), true);
+        } else {
+            List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
+            if (allDecksSorted == null) {
+                return null;
+            }
+            return _groupChildren(allDecksSorted, true);
         }
-        return _groupChildren(allDecksSorted, true);
     }
 
     /**
@@ -666,7 +671,7 @@ public class SchedV2 extends AbstractSched {
             TreeNode<T> toAdd = new TreeNode<>(child);
             toAdd.getChildren().addAll(childrenNode);
             List<T> childValues = childrenNode.stream().map(TreeNode::getValue).collect(Collectors.toList());
-            child.processChildren(childValues, "std".equals(getName()));
+            child.processChildren(getCol(), childValues, "std".equals(getName()));
 
             sortedChildren.add(toAdd);
         }

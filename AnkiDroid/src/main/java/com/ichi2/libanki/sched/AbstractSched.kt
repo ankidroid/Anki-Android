@@ -176,25 +176,22 @@ abstract class AbstractSched(val col: Collection) {
     abstract fun extendLimits(newc: Int, rev: Int)
 
     /**
-     * @return [deckname, did, rev, lrn, new]
-     */
-    abstract fun deckDueList(): List<DeckDueTreeNode>
-
-    /**
      * @param cancelListener A task that is potentially cancelled
-     * @return the due tree. null if task is cancelled
+     * @return the due tree. null only if task is cancelled
      */
     abstract fun deckDueTree(cancelListener: CancelListener?): List<TreeNode<DeckDueTreeNode>>?
 
     /**
-     * @return the due tree. null if task is cancelled.
+     * @return the due tree. Never null.
      */
-    abstract fun deckDueTree(): List<TreeNode<DeckDueTreeNode>>
+    fun deckDueTree(): List<TreeNode<DeckDueTreeNode>> {
+        return deckDueTree(null)!!
+    }
 
     /**
      * @return The tree of decks, without numbers
      */
-    abstract fun quickDeckDueTree(): List<TreeNode<DeckTreeNode>>
+    abstract fun<T : AbstractDeckTreeNode> quickDeckDueTree(): List<TreeNode<T>>
 
     /** New count for a single deck.
      * @param did The deck to consider (descendants and ancestors are ignored)

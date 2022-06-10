@@ -112,16 +112,16 @@ public class SchedV2Test extends RobolectricTest {
         // These matched the previous Java data
         // These may want to be changed back
         List<TreeNode<DeckDueTreeNode>> expected = new ArrayList<>();
-        DeckDueTreeNode caz = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW", 1596783600480L, 0, 0, 0);
-        DeckDueTreeNode ca = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::abcdefgh", 1596783600460L, 0, 0, 0);
-        DeckDueTreeNode ci = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv::INSBGDS", 1596783600500L, 0, 0, 0);
-        DeckDueTreeNode c = new DeckDueTreeNode(col, "cmxieunwoogyxsctnjmv", 1596783600440L, 0, 0, 0);
-        DeckDueTreeNode defaul = new DeckDueTreeNode(col, "Default", 1, 0, 0, 0);
-        DeckDueTreeNode s = new DeckDueTreeNode(col, "scxipjiyozczaaczoawo", 1596783600420L, 0, 0, 0);
-        DeckDueTreeNode f = new DeckDueTreeNode(col, "blank::foobar", 1596783600540L, 0, 0, 0);
-        DeckDueTreeNode b = new DeckDueTreeNode(col, "blank", 1596783600520L, 0, 0, 0);
-        DeckDueTreeNode aBlank = new DeckDueTreeNode(col, "A::blank", 1596783600580L, 0, 0, 0);
-        DeckDueTreeNode a = new DeckDueTreeNode(col, "A", 1596783600560L, 0, 0, 0);
+        DeckDueTreeNode caz = new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh::ZYXW", 1596783600480L, 0, 0, 0);
+        DeckDueTreeNode ca = new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh", 1596783600460L, 0, 0, 0);
+        DeckDueTreeNode ci = new DeckDueTreeNode("cmxieunwoogyxsctnjmv::INSBGDS", 1596783600500L, 0, 0, 0);
+        DeckDueTreeNode c = new DeckDueTreeNode("cmxieunwoogyxsctnjmv", 1596783600440L, 0, 0, 0);
+        DeckDueTreeNode defaul = new DeckDueTreeNode("Default", 1, 0, 0, 0);
+        DeckDueTreeNode s = new DeckDueTreeNode("scxipjiyozczaaczoawo", 1596783600420L, 0, 0, 0);
+        DeckDueTreeNode f = new DeckDueTreeNode("blank::foobar", 1596783600540L, 0, 0, 0);
+        DeckDueTreeNode b = new DeckDueTreeNode("blank", 1596783600520L, 0, 0, 0);
+        DeckDueTreeNode aBlank = new DeckDueTreeNode("A::blank", 1596783600580L, 0, 0, 0);
+        DeckDueTreeNode a = new DeckDueTreeNode("A", 1596783600560L, 0, 0, 0);
 
 
         TreeNode<DeckDueTreeNode> cazNode = new TreeNode<>(caz);
@@ -135,7 +135,7 @@ public class SchedV2Test extends RobolectricTest {
 
         // add "caz" to "ca"
         caNode.getChildren().add(cazNode);
-        caNode.getValue().processChildren(Collections.singletonList(cazNode.getValue()), addRev);
+        caNode.getValue().processChildren(col, Collections.singletonList(cazNode.getValue()), addRev);
 
         // add "ca" and "ci" to "c"
         cNode.getChildren().add(caNode);
@@ -143,15 +143,15 @@ public class SchedV2Test extends RobolectricTest {
         ArrayList<DeckDueTreeNode> cChildren = new ArrayList<>();
         cChildren.add(caNode.getValue());
         cChildren.add(ciNode.getValue());
-        cNode.getValue().processChildren(cChildren, addRev);
+        cNode.getValue().processChildren(col, cChildren, addRev);
 
         // add "f" to "b"
         bNode.getChildren().add(fNode);
-        bNode.getValue().processChildren(Collections.singletonList(fNode.getValue()), addRev);
+        bNode.getValue().processChildren(col, Collections.singletonList(fNode.getValue()), addRev);
 
         // add "A::" to "A"
         aNode.getChildren().add(aBlankNode);
-        aNode.getValue().processChildren(Collections.singletonList(aBlankNode.getValue()), addRev);
+        aNode.getValue().processChildren(col, Collections.singletonList(aBlankNode.getValue()), addRev);
 
         expected.add(aNode);
         expected.add(bNode);
@@ -822,8 +822,12 @@ public class SchedV2Test extends RobolectricTest {
             c.flush();
         }
 
-        // position 0 is default deck. Different from upstream
-        TreeNode<DeckDueTreeNode> tree = col.getSched().deckDueTree().get(1);
+        int parentIndex = 0;
+        if (BackendFactory.getDefaultLegacySchema()) {
+            // position 0 is default deck. Different from upstream
+            parentIndex = 1;
+        }
+        TreeNode<DeckDueTreeNode> tree = col.getSched().deckDueTree().get(parentIndex);
         // (('parent', 1514457677462, 5, 0, 0, (('child', 1514457677463, 5, 0, 0, ()),)))
         assertEquals("parent", tree.getValue().getFullDeckName());
         assertEquals(5, tree.getValue().getRevCount());  // paren, tree.review_count)t
@@ -839,7 +843,7 @@ public class SchedV2Test extends RobolectricTest {
         col.getSched().answerCard(c, BUTTON_THREE);
         assertEquals(new Counts(0, 0, 9), col.getSched().counts());
 
-        tree = col.getSched().deckDueTree().get(1);
+        tree = col.getSched().deckDueTree().get(parentIndex);
         assertEquals(4, tree.getValue().getRevCount());
         assertEquals(9, tree.getChildren().get(0).getValue().getRevCount());
     }
