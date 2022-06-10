@@ -247,7 +247,7 @@ class TemplateManager {
                     backend.renderUncommittedCardLegacy(
                         _note.to_backend_note(),
                         _card.ord,
-                        BackendUtils.to_json_bytes(JSONObject(_template)),
+                        BackendUtils.to_json_bytes(JSONObject(_template!!.toMap())),
                         _fill_empty,
                     )
                 } else {
@@ -291,7 +291,7 @@ class TemplateManager {
             q = q ?: template.getString("qfmt")
             a = a ?: template.getString("afmt")
 
-            return Pair(q!!, a!!)
+            return Pair(q, a)
         }
 
         /** Complete rendering by applying any pending custom filters. */

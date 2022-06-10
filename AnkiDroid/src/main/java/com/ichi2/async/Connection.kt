@@ -178,7 +178,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                 try {
                     val response = JSONObject(ret.body!!.string())
                     hostkey = response.getString("key")
-                    valid = hostkey != null && hostkey.length > 0
+                    valid = hostkey.isNotEmpty()
                 } catch (e: JSONException) {
                     Timber.w(e)
                     valid = false
