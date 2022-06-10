@@ -126,6 +126,13 @@ internal constructor(
         // set the preferences to the new deck path + checks CollectionHelper
         // sets migration variables (migrationIsInProgress will be true)
         updatePreferences(destinationPath)
+
+        // updatePreferences() opened the collection in the new location, which will have created
+        // a -wal file if the new backend code is active. Close it again, so that tests don't
+        // fail due to the presence of a -wal file in the destination folder.
+        if (AnkiDroidApp.TESTING_USE_V16_BACKEND) {
+            closeCollection()
+        }
     }
 
     /**
