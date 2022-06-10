@@ -78,8 +78,12 @@ public class DB {
         SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory(openHelperFactory).create(configuration);
         // Note: This line creates the database and schema when executed using a Rust backend
         mDatabase = new DatabaseChangeDecorator(helper.getWritableDatabase());
+        // No-op except when using the old Java backend
         mDatabase.disableWriteAheadLogging();
-        mDatabase.query("PRAGMA synchronous = 2", null);
+        if (!AnkiDroidApp.TESTING_USE_V16_BACKEND) {
+            // full sync is not required when using a WAL
+            mDatabase.query("PRAGMA synchronous = 2", null);
+        }
         mMod = false;
     }
 
