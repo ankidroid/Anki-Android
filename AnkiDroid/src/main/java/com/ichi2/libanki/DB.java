@@ -32,6 +32,8 @@ import com.ichi2.anki.CrashReportService;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
 
+import net.ankiweb.rsdroid.BackendException;
+
 import org.intellij.lang.annotations.Language;
 
 import java.util.ArrayList;
@@ -77,7 +79,11 @@ public class DB {
                 .build();
         SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory(openHelperFactory).create(configuration);
         // Note: This line creates the database and schema when executed using a Rust backend
-        mDatabase = new DatabaseChangeDecorator(helper.getWritableDatabase());
+        try {
+            mDatabase = new DatabaseChangeDecorator(helper.getWritableDatabase());
+        } catch (BackendException.BackendDbException exc) {
+            throw exc.toSQLiteException("db open");
+        }
         // No-op except when using the old Java backend
         mDatabase.disableWriteAheadLogging();
         if (!AnkiDroidApp.TESTING_USE_V16_BACKEND) {
