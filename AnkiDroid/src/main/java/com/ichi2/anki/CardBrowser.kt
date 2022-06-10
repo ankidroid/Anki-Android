@@ -901,9 +901,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
             showBackIcon()
         }
-        val undo = mActionBarMenu?.findItem(R.id.action_undo)
-        undo?.isVisible = col.undoAvailable()
-        undo?.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+        mActionBarMenu?.findItem(R.id.action_undo)?.run {
+            isVisible = col.undoAvailable()
+            title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+        }
 
         // Maybe we were called from ACTION_PROCESS_TEXT.
         // In that case we already fill in the search.
