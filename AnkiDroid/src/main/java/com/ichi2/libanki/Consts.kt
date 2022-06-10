@@ -16,7 +16,6 @@
 package com.ichi2.libanki
 
 import androidx.annotation.IntDef
-import net.ankiweb.rsdroid.RustCleanup
 import kotlin.annotation.Retention
 
 object Consts {
@@ -116,10 +115,7 @@ object Consts {
     @JvmField
     val DEFAULT_HOST_NUM: Int? = null
 
-    /* Note: 10 if using Rust backend, 9 if using Java. Set in BackendFactory.getInstance */
-    @JvmField
-    @RustCleanup("Use 10")
-    var SYNC_VER = 9
+    const val SYNC_VER = 10
 
     // Leech actions
     const val LEECH_SUSPEND = 0

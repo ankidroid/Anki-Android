@@ -48,7 +48,6 @@ import static com.ichi2.libanki.Consts.DECK_STD;
         "PMD.SwitchStmtsShouldHaveDefault","PMD.EmptyIfStmt","PMD.SimplifyBooleanReturns","PMD.CollapsibleIfStatements"})
 public class Storage {
 
-    private static boolean sUseBackend = true;
     private static boolean sUseInMemory = false;
     /**
      * The collection is locked from being opened via the {@link Storage} class. All collection accesses in the app
@@ -93,7 +92,7 @@ public class Storage {
 
         File dbFile = new File(path);
         boolean create = !dbFile.exists();
-        DroidBackend backend = DroidBackendFactory.getInstance(useBackend());
+        DroidBackend backend = DroidBackendFactory.getInstance();
         DB db = backend.openCollectionDatabase(sUseInMemory ? ":memory:" : path);
 
         try {
@@ -135,16 +134,6 @@ public class Storage {
             StdModels.STD_MODELS[i].add(col);
         }
     }
-
-
-    /**
-     * Whether the collection should try to be opened with a Rust-based DB Backend
-     * Falls back to Java if init fails.
-     * */
-    protected static boolean useBackend() {
-        return sUseBackend;
-    }
-
 
     private static int _upgradeSchema(DB db, @NonNull Time time) {
         int ver = db.queryScalar("SELECT ver FROM col");
@@ -416,11 +405,6 @@ public class Storage {
 
     public static void addIndices(DB db) {
         _updateIndices(db);
-    }
-
-
-    public static void setUseBackend(boolean useBackend) {
-        sUseBackend = useBackend;
     }
 
 

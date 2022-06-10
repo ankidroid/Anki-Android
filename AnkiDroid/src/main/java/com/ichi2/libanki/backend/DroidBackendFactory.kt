@@ -18,52 +18,20 @@ package com.ichi2.libanki.backend
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CrashReportService
-import com.ichi2.libanki.Consts
-import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.RustBackendFailedException
-import net.ankiweb.rsdroid.RustCleanup
-import timber.log.Timber
+import net.ankiweb.rsdroid.NativeMethods
 
-/** Responsible for selection of either the Rust or Java-based backend  */
+/** Responsible for selection of legacy or new Rust backend  */
 object DroidBackendFactory {
     @JvmStatic
     private var sBackendForTesting: DroidBackend? = null
 
-    /**
-     * Obtains an instance of a [DroidBackend].
-     * Each call to this method will generate a separate instance which can handle a new Anki collection
-     */
     @JvmStatic
-    @RustCleanup("Change back to a constant SYNC_VER")
-    fun getInstance(useBackend: Boolean): DroidBackend {
-        if (sBackendForTesting != null) {
-            return sBackendForTesting!!
-        }
-        var backendFactory: BackendFactory? = null
-        if (useBackend) {
-            try {
-                backendFactory = BackendFactory.createInstance()
-            } catch (e: RustBackendFailedException) {
-                Timber.w(e, "Rust backend failed to load - falling back to Java")
-                CrashReportService.sendExceptionReport(e, "DroidBackendFactory::getInstance")
-            }
-        }
-        val instance = getInstance(backendFactory)
-        // Update the Sync version if we can load the Rust
-        Consts.SYNC_VER = if (backendFactory == null) 9 else 10
-        return instance
-    }
-
-    @JvmStatic
-    private fun getInstance(backendFactory: BackendFactory?): DroidBackend {
-        if (backendFactory == null) {
-            return JavaDroidBackend()
-        }
-        return if (AnkiDroidApp.TESTING_USE_V16_BACKEND) {
-            RustDroidV16Backend(backendFactory)
+    fun getInstance(): DroidBackend {
+        NativeMethods.ensureSetup()
+        return sBackendForTesting ?: if (AnkiDroidApp.TESTING_USE_V16_BACKEND) {
+            RustDroidV16Backend(AnkiDroidApp.currentBackendFactory())
         } else {
-            RustDroidBackend(backendFactory)
+            RustDroidBackend(AnkiDroidApp.currentBackendFactory())
         }
     }
 

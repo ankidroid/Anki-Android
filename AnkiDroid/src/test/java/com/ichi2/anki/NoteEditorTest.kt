@@ -300,7 +300,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
     fun addToCurrentWithNoDeckSelectsDefault_issue_9616() {
-        assumeThat(getInstance(true), not(instanceOf(RustDroidV16Backend::class.java)))
+        assumeThat(getInstance(), not(instanceOf(RustDroidV16Backend::class.java)))
         col.conf.put("addToCur", false)
         val cloze = assertNotNull(col.models.byName("Cloze"))
         cloze.remove("did")

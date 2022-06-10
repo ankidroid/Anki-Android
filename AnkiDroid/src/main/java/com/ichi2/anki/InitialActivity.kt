@@ -26,7 +26,6 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
-import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustBackendFailedException
 import timber.log.Timber
 import java.lang.ref.WeakReference
@@ -94,7 +93,7 @@ object InitialActivity {
         val collectionPath = CollectionHelper.getCollectionPath(deckPicker)
         require(backupManager.performDowngradeBackupInForeground(collectionPath)) { "backup failed" }
         Timber.d("Downgrading database to V11: '%s'", collectionPath)
-        BackendFactory.createInstance().backend.downgradeBackend(collectionPath)
+        AnkiDroidApp.currentBackendFactory().backend.downgradeBackend(collectionPath)
     }
 
     /** @return Whether any preferences were upgraded

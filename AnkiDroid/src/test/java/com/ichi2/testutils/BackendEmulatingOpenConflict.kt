@@ -16,6 +16,7 @@
 package com.ichi2.testutils
 
 import BackendProto.Backend.BackendError
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.libanki.DB
 import com.ichi2.libanki.backend.DroidBackendFactory.setOverride
 import com.ichi2.libanki.backend.RustDroidBackend
@@ -38,7 +39,7 @@ class BackendEmulatingOpenConflict(backend: BackendFactory?) : RustDroidBackend(
         @JvmStatic
         fun enable() {
             try {
-                setOverride(BackendEmulatingOpenConflict(BackendFactory.createInstance()))
+                setOverride(BackendEmulatingOpenConflict(AnkiDroidApp.currentBackendFactory()))
             } catch (e: RustBackendFailedException) {
                 throw RuntimeException(e)
             }

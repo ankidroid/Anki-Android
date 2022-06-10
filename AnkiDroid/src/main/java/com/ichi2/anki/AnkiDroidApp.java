@@ -44,11 +44,19 @@ import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.libanki.backend.DroidBackend;
+import com.ichi2.libanki.backend.RustDroidBackend;
+import com.ichi2.libanki.backend.RustDroidV16Backend;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
+
+import net.ankiweb.rsdroid.BackendFactory;
+import net.ankiweb.rsdroid.BackendV11Factory;
+import net.ankiweb.rsdroid.BackendVNextFactory;
+import net.ankiweb.rsdroid.RustCleanup;
 
 import java.io.InputStream;
 import java.util.Locale;
@@ -490,6 +498,20 @@ public class AnkiDroidApp extends Application {
                     Log.e(AnkiDroidApp.TAG, getTag() + "/ " + message, t);
                     break;
             }
+        }
+    }
+
+
+    /**
+     * Creates a backend instance using the currently configured backend implementation.
+     * @return
+     */
+    @RustCleanup("Can remove after migrating to VNext")
+    public static BackendFactory currentBackendFactory() {
+        if (AnkiDroidApp.TESTING_USE_V16_BACKEND) {
+            return new BackendVNextFactory();
+        } else {
+            return new BackendV11Factory();
         }
     }
 }
