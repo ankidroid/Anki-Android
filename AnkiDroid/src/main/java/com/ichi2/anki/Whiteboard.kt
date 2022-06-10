@@ -548,14 +548,15 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             whitePenColorButton.setOnClickListener { view: View -> onClick(view) }
             foregroundColor = Color.WHITE
         }
-        mPaint = Paint()
-        mPaint.isAntiAlias = true
-        mPaint.isDither = true
-        mPaint.color = foregroundColor
-        mPaint.style = Paint.Style.STROKE
-        mPaint.strokeJoin = Paint.Join.ROUND
-        mPaint.strokeCap = Paint.Cap.ROUND
-        mPaint.strokeWidth = currentStrokeWidth.toFloat()
+        mPaint = Paint().apply {
+            isAntiAlias = true
+            isDither = true
+            color = foregroundColor
+            style = Paint.Style.STROKE
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            strokeWidth = currentStrokeWidth.toFloat()
+        }
         createBitmap()
         mPath = Path()
         mBitmapPaint = Paint(Paint.DITHER_FLAG)
