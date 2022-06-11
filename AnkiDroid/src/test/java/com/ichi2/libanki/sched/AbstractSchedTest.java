@@ -204,7 +204,7 @@ public class AbstractSchedTest extends RobolectricTest {
         addDeckWithExactName(child);
 
         getCol().getDecks().checkIntegrity();
-        assertDoesNotThrow(() -> getCol().getSched().deckDueList());
+        assertDoesNotThrow(() -> getCol().getSched().deckDueTree());
     }
 
 

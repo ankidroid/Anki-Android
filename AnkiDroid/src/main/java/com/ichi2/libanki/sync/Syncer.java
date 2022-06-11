@@ -449,7 +449,7 @@ public class Syncer {
                 mCol.getModels().save();
             }
             // check for missing parent decks
-            mCol.getSched().deckDueList();
+            mCol.getSched().quickDeckDueTree();
             // return summary of deck
             JSONArray check = new JSONArray();
             JSONArray counts = new JSONArray();

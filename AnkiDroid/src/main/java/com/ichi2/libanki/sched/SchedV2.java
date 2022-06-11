@@ -523,14 +523,14 @@ public class SchedV2 extends AbstractSched {
      *
      * Return nulls when deck task is cancelled.
      */
-    public @NonNull List<DeckDueTreeNode> deckDueList() {
+    private @NonNull List<DeckDueTreeNode> deckDueList() {
         return deckDueList(null);
     }
 
     // Overridden
     /**
      * Return sorted list of all decks.*/
-    public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
+    protected @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
         _checkDay();
         mCol.getDecks().checkIntegrity();
         List<Deck> allDecksSorted = mCol.getDecks().allSorted();

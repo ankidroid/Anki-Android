@@ -179,11 +179,6 @@ abstract class AbstractSched {
     abstract fun extendLimits(newc: Int, rev: Int)
 
     /**
-     * @return [deckname, did, rev, lrn, new]
-     */
-    abstract fun deckDueList(): List<DeckDueTreeNode>
-
-    /**
      * @param cancelListener A task that is potentially cancelled
      * @return the due tree. null if task is cancelled
      */
