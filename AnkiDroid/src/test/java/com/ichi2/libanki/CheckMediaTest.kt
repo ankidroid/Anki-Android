@@ -21,14 +21,12 @@ import com.ichi2.anki.RunInBackground
 import com.ichi2.async.CollectionTask
 import com.ichi2.async.CollectionTask.CheckMedia
 import com.ichi2.async.TaskManager
-import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.ExecutionException
 
-@KotlinCleanup("is -> equalTo")
 @RunWith(AndroidJUnit4::class)
 class CheckMediaTest : RobolectricTest() {
     override fun useInMemoryDatabase(): Boolean {
@@ -44,14 +42,14 @@ class CheckMediaTest : RobolectricTest() {
         col.media.db.database.execSQL("drop table meta")
         assertThat(
             col.media.db.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
-            `is`(0)
+            equalTo(0)
         )
         val task =
             TaskManager.launchCollectionTask(CheckMedia()) as CollectionTask<*, *>
         task.get()
         assertThat(
             col.media.db.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
-            `is`(1)
+            equalTo(1)
         )
     }
 }
