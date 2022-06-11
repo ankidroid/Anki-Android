@@ -812,8 +812,12 @@ public class SchedV2Test extends RobolectricTest {
             c.flush();
         }
 
-        // position 0 is default deck. Different from upstream
-        TreeNode<DeckDueTreeNode> tree = col.getSched().deckDueTree().get(1);
+        int parentIndex = 0;
+        if (!AnkiDroidApp.TESTING_USE_V16_BACKEND) {
+            // position 0 is default deck. Different from upstream
+            parentIndex = 1;
+        }
+        TreeNode<DeckDueTreeNode> tree = col.getSched().deckDueTree().get(parentIndex);
         // (('parent', 1514457677462, 5, 0, 0, (('child', 1514457677463, 5, 0, 0, ()),)))
         assertEquals("parent", tree.getValue().getFullDeckName());
         assertEquals(5, tree.getValue().getRevCount());  // paren, tree.review_count)t
@@ -829,7 +833,7 @@ public class SchedV2Test extends RobolectricTest {
         col.getSched().answerCard(c, BUTTON_THREE);
         assertEquals(new Counts(0, 0, 9), col.getSched().counts());
 
-        tree = col.getSched().deckDueTree().get(1);
+        tree = col.getSched().deckDueTree().get(parentIndex);
         assertEquals(4, tree.getValue().getRevCount());
         assertEquals(9, tree.getChildren().get(0).getValue().getRevCount());
     }

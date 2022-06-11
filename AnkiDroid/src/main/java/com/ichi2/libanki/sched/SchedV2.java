@@ -597,19 +597,15 @@ public class SchedV2 extends AbstractSched {
     @RustCleanup("enable for v2 once backend is updated to 2.1.41+")
     @RustCleanup("once both v1 and v2 are using backend, cancelListener can be removed")
     public List<TreeNode<DeckDueTreeNode>> deckDueTree(@Nullable CancelListener cancelListener) {
-        if (AnkiDroidApp.TESTING_USE_V16_BACKEND && this instanceof Sched) {
-            // The 2.1.34 backend code can't be used for V2 at the moment, because
-            // the deck list count handling changed in 2.1.41, and test_review_limits
-            // expects the newer behaviour (which was already ported to AnkiDroid).
-            // So we only use the backend to calculate V1 at the moment.
+        if (AnkiDroidApp.TESTING_USE_V16_BACKEND) {
             return mCol.getBackend().legacyDeckDueTree(true);
+        } else {
+            List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
+            if (allDecksSorted == null) {
+                return null;
+            }
+            return _groupChildren(allDecksSorted, true);
         }
-
-        List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
-        if (allDecksSorted == null) {
-            return null;
-        }
-        return _groupChildren(allDecksSorted, true);
     }
 
     /**
