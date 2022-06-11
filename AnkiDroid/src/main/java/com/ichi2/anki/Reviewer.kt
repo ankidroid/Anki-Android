@@ -36,13 +36,11 @@ import android.text.style.UnderlineSpan
 import android.view.*
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.*
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -1438,6 +1436,12 @@ open class Reviewer : AbstractFlashcardViewer() {
      */
     internal inner class SuspendProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
 
+        override fun onCreateActionView(forItem: MenuItem): View {
+            return createActionViewWith(context, forItem, R.menu.reviewer_suspend, ::onMenuItemClick) {
+                hasSubMenu()
+            }
+        }
+
         override val subMenu: Int
             get() = R.menu.reviewer_suspend
 
@@ -1469,6 +1473,12 @@ open class Reviewer : AbstractFlashcardViewer() {
      */
     internal inner class BuryProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
 
+        override fun onCreateActionView(forItem: MenuItem): View {
+            return createActionViewWith(context, forItem, R.menu.reviewer_bury, ::onMenuItemClick) {
+                hasSubMenu()
+            }
+        }
+
         override val subMenu: Int
             get() = R.menu.reviewer_bury
 
@@ -1495,8 +1505,40 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
+    private fun createActionViewWith(
+        context: Context,
+        menuItem: MenuItem,
+        @MenuRes subMenuRes: Int,
+        onMenuItemSelection: (MenuItem) -> Boolean,
+        showsSubMenu: () -> Boolean
+    ): View = ImageButton(context, null, R.attr.actionButtonStyle).apply {
+        TooltipCompat.setTooltipText(this, menuItem.title)
+        menuItem.icon.isAutoMirrored = true
+        setImageDrawable(menuItem.icon)
+        id = menuItem.itemId
+        setOnClickListener {
+            if (!menuItem.isEnabled) {
+                return@setOnClickListener
+            }
+            if (showsSubMenu()) {
+                PopupMenu(context, this).apply {
+                    inflate(subMenuRes)
+                    setOnMenuItemClickListener(onMenuItemSelection)
+                    show()
+                }
+            } else {
+                onOptionsItemSelected(menuItem)
+            }
+        }
+    }
+
     /**
      * Inner class which implements the submenu for the Schedule button
+     *
+     * NOTE: this action provider doesn't handle the menu item being shown directly in the toolbar,
+     * if the menu item is set to appear in the toolbar, the onCreateActionView(MenuItem) needs to be
+     * overridden. See one of its siblings([BuryProvider] or [SuspendProvider]) for an example of an
+     * implementation.
      */
     internal inner class ScheduleProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
 
