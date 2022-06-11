@@ -574,8 +574,11 @@ public class SchedV2 extends AbstractSched {
      requires multiple database access by deck.  Ignoring this number
      lead to the creation of a tree more quickly.*/
     @Override
-    public @NonNull List<TreeNode<DeckTreeNode>> quickDeckDueTree() {
-        // Similar to deckDueTree, ignoring the numbers
+    public @NonNull
+    List<? extends TreeNode<? extends AbstractDeckTreeNode>> quickDeckDueTree() {
+        if (AnkiDroidApp.TESTING_USE_V16_BACKEND) {
+            return mCol.getBackend().legacyDeckDueTree(false);
+        }
 
         // Similar to deckDueList
         ArrayList<DeckTreeNode> allDecksSorted = new ArrayList<>();

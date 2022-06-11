@@ -192,7 +192,7 @@ abstract class AbstractSched {
     /**
      * @return The tree of decks, without numbers
      */
-    abstract fun quickDeckDueTree(): List<TreeNode<DeckTreeNode>>
+    abstract fun<T : AbstractDeckTreeNode> quickDeckDueTree(): List<TreeNode<T>>
 
     /** New count for a single deck.
      * @param did The deck to consider (descendants and ancestors are ignored)
