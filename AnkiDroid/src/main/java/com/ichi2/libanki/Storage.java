@@ -104,7 +104,6 @@ public class Storage {
             } else {
                 ver = _upgradeSchema(db, time);
             }
-            db.execute("PRAGMA temp_store = memory");
             // add db to col and do any remaining upgrades
             Collection col = backend.createCollection(context, db, path, server, log);
             if (ver < Consts.SCHEMA_VERSION) {

@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.backend
 
+import android.system.Os
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
@@ -37,6 +38,9 @@ object DroidBackendFactory {
     @JvmStatic
     @RustCleanup("Change back to a constant SYNC_VER")
     fun getInstance(useBackend: Boolean): DroidBackend {
+        // Prevent sqlite throwing error 6410 due to the lack of /tmp
+        val dir = AnkiDroidApp.getInstance().applicationContext.cacheDir
+        Os.setenv("TMPDIR", dir.path, false)
         if (sBackendForTesting != null) {
             return sBackendForTesting!!
         }
