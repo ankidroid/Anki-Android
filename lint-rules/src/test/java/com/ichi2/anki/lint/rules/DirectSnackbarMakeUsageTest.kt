@@ -13,82 +13,84 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.lint.rules
 
-package com.ichi2.anki.lint.rules;
+import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile
+import com.android.tools.lint.checks.infrastructure.TestLintTask
+import com.google.common.annotations.Beta
+import org.intellij.lang.annotations.Language
+import org.junit.Assert
+import org.junit.Test
 
-import org.intellij.lang.annotations.Language;
-import org.junit.Test;
-
-import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
-import static com.android.tools.lint.checks.infrastructure.TestLintTask.lint;
-import static org.junit.Assert.assertTrue;
-
-public class DirectSnackbarMakeUsageTest {
+@Suppress("UnstableApiUsage")
+@Beta
+class DirectSnackbarMakeUsageTest {
     @Language("JAVA")
-    private final String stubSnackbar = "                                      \n" +
-            "package com.google.android.material.snackbar;                     \n" +
-            "public class Snackbar {                                           \n" +
-            "                                                                  \n" +
-            "    public static Snackbar make(View view,                        \n" +
-            "                                CharSequence text,                \n" +
-            "                                int duration) {                   \n" +
-            "         // Stub                                                  \n" +
-            "    }                                                             \n" +
-            "}                                                                 \n";
-
-    @Language("JAVA")
-    private final String javaFileToBeTested = "                             \n" +
-            "package com.ichi2.anki.lint.rules;                             \n" +
-            "                                                               \n" +
-            "import com.google.android.material.snackbar.Snackbar;          \n" +
-            "                                                               \n" +
-            "public class TestJavaClass {                                   \n" +
-            "                                                               \n" +
-            "    public static void main(String[] args) {                   \n" +
-            "        Snackbar snackbar = Snackbar.make();                   \n" +
-            "        snackbar.show();                                       \n" +
-            "    }                                                          \n" +
-            "}                                                              \n";
+    private val stubSnackbar = """                                      
+package com.google.android.material.snackbar;                     
+public class Snackbar {                                           
+                                                                  
+    public static Snackbar make(View view,                        
+                                CharSequence text,                
+                                int duration) {                   
+         // Stub                                                  
+    }                                                             
+}                                                                 
+"""
 
     @Language("JAVA")
-    private final String javaFileWithUIUtils = "                            \n" +
-            "package com.ichi2.anki.lint.rules;                             \n" +
-            "                                                               \n" +
-            "import com.google.android.material.snackbar.Snackbar;          \n" +
-            "                                                               \n" +
-            "public class UIUtils {                                         \n" +
-            "                                                               \n" +
-            "    public static void main(String[] args) {                   \n" +
-            "        Snackbar snackbar = Snackbar.make();                   \n" +
-            "        snackbar.show();                                       \n" +
-            "    }                                                          \n" +
-            "}                                                              \n";
+    private val javaFileToBeTested = """                             
+package com.ichi2.anki.lint.rules;                             
+                                                               
+import com.google.android.material.snackbar.Snackbar;          
+                                                               
+public class TestJavaClass {                                   
+                                                               
+    public static void main(String[] args) {                   
+        Snackbar snackbar = Snackbar.make();                   
+        snackbar.show();                                       
+    }                                                          
+}                                                              
+"""
 
+    @Language("JAVA")
+    private val javaFileWithUIUtils = """                            
+package com.ichi2.anki.lint.rules;                             
+                                                               
+import com.google.android.material.snackbar.Snackbar;          
+                                                               
+public class UIUtils {                                         
+                                                               
+    public static void main(String[] args) {                   
+        Snackbar snackbar = Snackbar.make();                   
+        snackbar.show();                                       
+    }                                                          
+}                                                              
+"""
 
     @Test
-    public void showsErrorsForInvalidUsage() {
-        lint()
-                .allowMissingSdk()
-                .allowCompilationErrors()
-                .files(create(stubSnackbar), create(javaFileToBeTested))
-                .issues(DirectSnackbarMakeUsage.ISSUE)
-                .run()
-                .expectErrorCount(1)
-                .check(output -> {
-                    assertTrue(output.contains(DirectSnackbarMakeUsage.ID));
-                    assertTrue(output.contains(DirectSnackbarMakeUsage.DESCRIPTION));
-                });
+    fun showsErrorsForInvalidUsage() {
+        TestLintTask.lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(JavaTestFile.create(stubSnackbar), JavaTestFile.create(javaFileToBeTested))
+            .issues(DirectSnackbarMakeUsage.ISSUE)
+            .run()
+            .expectErrorCount(1)
+            .check({ output: String ->
+                Assert.assertTrue(output.contains(DirectSnackbarMakeUsage.ID))
+                Assert.assertTrue(output.contains(DirectSnackbarMakeUsage.DESCRIPTION))
+            })
     }
 
-
     @Test
-    public void allowsUsageForUIUtils() {
-        lint()
-                .allowMissingSdk()
-                .allowCompilationErrors()
-                .files(create(stubSnackbar), create(javaFileWithUIUtils))
-                .issues(DirectSnackbarMakeUsage.ISSUE)
-                .run()
-                .expectClean();
+    fun allowsUsageForUIUtils() {
+        TestLintTask.lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(JavaTestFile.create(stubSnackbar), JavaTestFile.create(javaFileWithUIUtils))
+            .issues(DirectSnackbarMakeUsage.ISSUE)
+            .run()
+            .expectClean()
     }
 }
