@@ -889,6 +889,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             !shouldHideToolbar()
         menu.findItem(R.id.action_capitalize).isChecked =
             AnkiDroidApp.getSharedPrefs(this).getBoolean("note_editor_capitalize", true)
+        menu.findItem(R.id.action_scroll_toolbar).isChecked =
+            AnkiDroidApp.getSharedPrefs(this).getBoolean("noteEditorScrollToolbar", true)
         return super.onCreateOptionsMenu(menu)
     }
 
