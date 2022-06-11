@@ -23,6 +23,9 @@ import com.ichi2.libanki.DB
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.backend.model.to_backend_note
+import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.sched.TreeNode
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.BackendV1
@@ -70,5 +73,37 @@ class RustDroidV16Backend(private val backendFactory: BackendFactory) : RustDroi
             // existing card (eg study mode)
             backend.renderExistingCard(templateRenderContext._card.id, templateRenderContext._browser)
         }
+    }
+
+    override fun deckDueTree(includeCounts: Boolean): Backend.DeckTreeNode {
+        val now = if (includeCounts) {
+            TimeManager.time.intTime()
+        } else {
+            0 // counts are skipped
+        }
+        return backend.deckTree(now, 0)
+    }
+
+    override fun legacyDeckDueTree(includeCounts: Boolean): List<TreeNode<DeckDueTreeNode>> {
+        fun toLegacyNode(node: Backend.DeckTreeNode, parentName: String): TreeNode<DeckDueTreeNode> {
+            val thisName = if (parentName.isEmpty()) {
+                node.name
+            } else {
+                "$parentName::${node.name}"
+            }
+            val treeNode = TreeNode(
+                DeckDueTreeNode(
+                    thisName,
+                    node.deckId,
+                    node.reviewCount,
+                    node.learnCount,
+                    node.newCount,
+                )
+            )
+            treeNode.children.addAll(node.childrenList.asSequence().map { toLegacyNode(it, thisName) })
+            return treeNode
+        }
+        val top = deckDueTree(includeCounts)
+        return toLegacyNode(top, "").children
     }
 }

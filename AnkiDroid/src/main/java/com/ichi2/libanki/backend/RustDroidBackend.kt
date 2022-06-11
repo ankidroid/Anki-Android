@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.backend
 
+import BackendProto.Backend
 import BackendProto.Backend.ExtractAVTagsOut
 import BackendProto.Backend.RenderCardOut
 import android.content.Context
@@ -25,6 +26,8 @@ import com.ichi2.libanki.TemplateManager.TemplateRenderContext
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.backend.model.SchedTimingToday
 import com.ichi2.libanki.backend.model.SchedTimingTodayProto
+import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.sched.TreeNode
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.database.RustV11SQLiteOpenHelperFactory
 
@@ -92,6 +95,14 @@ open class RustDroidBackend(
     @Throws(BackendNotSupportedException::class)
     override fun renderCardForTemplateManager(templateRenderContext: TemplateRenderContext): RenderCardOut {
         throw BackendNotSupportedException()
+    }
+
+    override fun deckDueTree(includeCounts: Boolean): Backend.DeckTreeNode {
+        TODO("Not yet implemented")
+    }
+
+    override fun legacyDeckDueTree(includeCounts: Boolean): List<TreeNode<DeckDueTreeNode>> {
+        TODO("Not yet implemented")
     }
 
     companion object {

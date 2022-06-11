@@ -15,6 +15,7 @@
  */
 package com.ichi2.libanki.backend
 
+import BackendProto.Backend
 import BackendProto.Backend.ExtractAVTagsOut
 import BackendProto.Backend.RenderCardOut
 import android.content.Context
@@ -26,6 +27,8 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.backend.model.SchedTimingToday
+import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustV1Cleanup
 
@@ -84,4 +87,9 @@ interface DroidBackend {
 
     @Throws(BackendNotSupportedException::class)
     fun renderCardForTemplateManager(templateRenderContext: TemplateRenderContext): RenderCardOut
+
+    fun deckDueTree(includeCounts: Boolean): Backend.DeckTreeNode
+
+    @KotlinCleanup("move to SchedV2 once it's converted to Kotlin")
+    fun legacyDeckDueTree(includeCounts: Boolean): List<TreeNode<DeckDueTreeNode>>
 }

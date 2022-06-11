@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.util.Pair;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
@@ -593,7 +594,17 @@ public class SchedV2 extends AbstractSched {
     }
 
     @Nullable
+    @RustCleanup("enable for v2 once backend is updated to 2.1.41+")
+    @RustCleanup("once both v1 and v2 are using backend, cancelListener can be removed")
     public List<TreeNode<DeckDueTreeNode>> deckDueTree(@Nullable CancelListener cancelListener) {
+        if (AnkiDroidApp.TESTING_USE_V16_BACKEND && this instanceof Sched) {
+            // The 2.1.34 backend code can't be used for V2 at the moment, because
+            // the deck list count handling changed in 2.1.41, and test_review_limits
+            // expects the newer behaviour (which was already ported to AnkiDroid).
+            // So we only use the backend to calculate V1 at the moment.
+            return mCol.getBackend().legacyDeckDueTree(true);
+        }
+
         List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
         if (allDecksSorted == null) {
             return null;
