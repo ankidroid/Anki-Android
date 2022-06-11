@@ -13,20 +13,13 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.async
 
-package com.ichi2.async;
-
-import com.ichi2.utils.ThreadUtil;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.ThreadUtil.sleep
+import timber.log.Timber
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * This class consists essentially in executing each received TaskDelegate in the order in which they are received.
@@ -34,79 +27,76 @@ import timber.log.Timber;
  * TODO: It uses the deprecated AsyncTask and should eventually be replaced by a non deprecated class.
  * Even better would be to ensure that the TaskDelegate that reads (the majority of them) can be executed in parallels.
  */
-public class SingleTaskManager extends TaskManager {
-
+class SingleTaskManager : TaskManager() {
     /**
      * Tasks which are running or waiting to run.
-     * */
-    private final List<CollectionTask> mTasks = Collections.synchronizedList(new LinkedList<>());
-
-    private void addTasks(CollectionTask task) {
-        mTasks.add(task);
-    }
-
-    @Override
-    protected boolean removeTaskConcrete(CollectionTask task) {
-        return mTasks.remove(task);
-    }
-
-    /**
-     * The most recently started {@link CollectionTask} instance.
      */
-    private CollectionTask mLatestInstance;
-
-    protected void setLatestInstanceConcrete(CollectionTask task) {
-        mLatestInstance = task;
+    private val mTasks = Collections.synchronizedList(LinkedList<CollectionTask<*, *>>())
+    private fun addTasks(task: CollectionTask<*, *>) {
+        mTasks.add(task)
     }
 
-
-
+    @KotlinCleanup("See if removeTaskConcrete could be renamed to removeTask (and similar for other method) once all TaskManagers are in Kotlin")
+    override fun removeTaskConcrete(task: CollectionTask<*, *>): Boolean {
+        return mTasks.remove(task)
+    }
 
     /**
-     * Starts a new {@link CollectionTask}, with no listener
-     * <p>
+     * The most recently started [CollectionTask] instance.
+     */
+    private var mLatestInstance: CollectionTask<*, *>? = null
+    override fun setLatestInstanceConcrete(task: CollectionTask<*, *>?) {
+        mLatestInstance = task
+    }
+
+    /**
+     * Starts a new [CollectionTask], with no listener
+     *
+     *
      * Tasks will be executed serially, in the order in which they are started.
-     * <p>
+     *
+     *
      * This method must be called on the main thread.
      *
      * @param task the task to execute
      * @return the newly created task
      */
-    @Override
-    public <Progress, Result> Cancellable launchCollectionTaskConcrete(TaskDelegateBase<Progress, Result> task) {
-        return launchCollectionTask(task, null);
+    override fun <Progress, Result> launchCollectionTaskConcrete(task: TaskDelegateBase<Progress, Result>): Cancellable {
+        return launchCollectionTask(task, null)
     }
 
-
-
     /**
-     * Starts a new {@link CollectionTask}, with a listener provided for callbacks during execution
-     * <p>
+     * Starts a new [CollectionTask], with a listener provided for callbacks during execution
+     *
+     *
      * Tasks will be executed serially, in the order in which they are started.
-     * <p>
+     *
+     *
      * This method must be called on the main thread.
      *
      * @param task the task to execute
      * @param listener to the status and result of the task, may be null
      * @return the newly created task
      */
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public <Progress, Result> Cancellable
-    launchCollectionTaskConcrete(@NonNull TaskDelegateBase<Progress, Result> task,
-                         @Nullable TaskListener<? super Progress, ? super Result> listener) {
+    // #7108: AsyncTask
+    @Suppress("DEPRECATION")
+    @KotlinCleanup("use scoped function")
+    override fun <Progress, Result> launchCollectionTaskConcrete(
+        task: TaskDelegateBase<Progress, Result>,
+        listener: TaskListener<in Progress, in Result?>?
+    ): Cancellable {
         // Start new task
-        CollectionTask<Progress, Result> newTask = new CollectionTask<>(task, listener, mLatestInstance);
-        addTasks(newTask);
-        newTask.execute();
-        return newTask;
+        val newTask = CollectionTask(task, listener, mLatestInstance)
+        addTasks(newTask)
+        newTask.execute()
+        return newTask
     }
-
 
     /**
      * Block the current thread until the currently running CollectionTask instance (if any) has finished.
      */
-    public void waitToFinishConcrete() {
-        waitToFinish(null);
+    override fun waitToFinishConcrete() {
+        waitToFinish(null)
     }
 
     /**
@@ -114,52 +104,53 @@ public class SingleTaskManager extends TaskManager {
      * @param timeoutSeconds timeout in seconds
      * @return whether or not the previous task was successful or not
      */
-    @Override
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public boolean waitToFinishConcrete(@Nullable Integer timeoutSeconds) {
-        try {
-            if ((mLatestInstance != null) && (mLatestInstance.getStatus() != android.os.AsyncTask.Status.FINISHED)) {
-                Timber.d("CollectionTask: waiting for task %s to finish...", mLatestInstance.getTask().getClass());
+    // #7108: AsyncTask
+    @Suppress("DEPRECATION")
+    @KotlinCleanup("Simplify null checks with ?.")
+    override fun waitToFinishConcrete(timeoutSeconds: Int?): Boolean {
+        return try {
+            if (mLatestInstance != null && mLatestInstance!!.status != android.os.AsyncTask.Status.FINISHED) {
+                Timber.d(
+                    "CollectionTask: waiting for task %s to finish...",
+                    mLatestInstance!!.task.javaClass
+                )
                 if (timeoutSeconds != null) {
-                    mLatestInstance.get(timeoutSeconds, TimeUnit.SECONDS);
+                    mLatestInstance!![timeoutSeconds.toLong(), TimeUnit.SECONDS]
                 } else {
-                    mLatestInstance.get();
+                    mLatestInstance!!.get()
                 }
-
             }
-            return true;
-        } catch (Exception e) {
-            Timber.e(e, "Exception waiting for task to finish");
-            return false;
+            true
+        } catch (e: Exception) {
+            Timber.e(e, "Exception waiting for task to finish")
+            false
         }
     }
 
-
-    /** Cancel the current task only if it's of type taskType */
-    @Override
-    public void cancelCurrentlyExecutingTaskConcrete() {
-        CollectionTask latestInstance = mLatestInstance;
+    /** Cancel the current task only if it's of type taskType  */
+    override fun cancelCurrentlyExecutingTaskConcrete() {
+        val latestInstance = mLatestInstance
         if (latestInstance != null) {
             if (latestInstance.safeCancel()) {
-                Timber.i("Cancelled task %s", latestInstance.getTask().getClass());
+                Timber.i("Cancelled task %s", latestInstance.task.javaClass)
             }
         }
     }
 
-    /** Cancel all tasks of type taskType*/
-    public void cancelAllTasksConcrete(Class taskType) {
-        int count = 0;
+    /** Cancel all tasks of type taskType */
+    override fun cancelAllTasksConcrete(taskType: Class<*>) {
+        var count = 0
         // safeCancel modifies mTasks, so iterate over a concrete copy
-        for (CollectionTask task: new ArrayList<>(mTasks)) {
-            if (task.getTask().getClass() != taskType) {
-                continue;
+        for (task in ArrayList(mTasks)) {
+            if (task.task.javaClass != taskType) {
+                continue
             }
             if (task.safeCancel()) {
-                count++;
+                count++
             }
         }
         if (count > 0) {
-            Timber.i("Cancelled %d instances of task %s", count, taskType);
+            Timber.i("Cancelled %d instances of task %s", count, taskType)
         }
     }
 
@@ -168,21 +159,20 @@ public class SingleTaskManager extends TaskManager {
      * @param timeoutSeconds timeout in seconds
      * @return whether all tasks exited successfully
      */
-    @SuppressWarnings("UnusedReturnValue")
-    @Override
-    public boolean waitForAllToFinishConcrete(Integer timeoutSeconds) {
+    @KotlinCleanup("remove unused function")
+    override fun waitForAllToFinishConcrete(timeoutSeconds: Int): Boolean {
         // HACK: This should be better - there is currently a race condition in sLatestInstance, and no means to obtain this information.
         // This should work in all reasonable cases given how few tasks we have concurrently blocking.
-        boolean result;
-        result = waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        result &= waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        result &= waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        result &= waitToFinish(timeoutSeconds / 4);
-        ThreadUtil.sleep(10);
-        Timber.i("Waited for all tasks to finish");
-        return result;
+        var result: Boolean
+        result = waitToFinish(timeoutSeconds / 4)
+        sleep(10)
+        result = result and waitToFinish(timeoutSeconds / 4)
+        sleep(10)
+        result = result and waitToFinish(timeoutSeconds / 4)
+        sleep(10)
+        result = result and waitToFinish(timeoutSeconds / 4)
+        sleep(10)
+        Timber.i("Waited for all tasks to finish")
+        return result
     }
 }
