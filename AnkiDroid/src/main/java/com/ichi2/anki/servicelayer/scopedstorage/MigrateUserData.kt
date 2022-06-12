@@ -80,21 +80,26 @@ class MigrateUserData private constructor(val source: Directory, val destination
     }
 
     /**
+     * Exceptions that are expected to occur during migration, and that we can deal with.
+     */
+    open class MigrationException(message: String) : RuntimeException(message)
+
+    /**
      * If a file exists in [destination] with different content than [source]
      *
      * If a file named `filename` exists in [destination] and in [source] with different content, move `source/filename` to `source/conflict/filename`.
      */
-    class FileConflictException(val source: DiskFile, val destination: DiskFile) : RuntimeException("File $source can not be copied to $destination, destination exists and differs.")
+    class FileConflictException(val source: DiskFile, val destination: DiskFile) : MigrationException("File $source can not be copied to $destination, destination exists and differs.")
 
     /**
      * If [destination] is a directory. In this case, move `source/filename` to `source/conflict/filename`.
      */
-    class FileDirectoryConflictException(val source: DiskFile, val destination: Directory) : RuntimeException("File $source can not be copied to $destination, as destination is a directory.")
+    class FileDirectoryConflictException(val source: DiskFile, val destination: Directory) : MigrationException("File $source can not be copied to $destination, as destination is a directory.")
 
     /**
      * If one or more required directories were missing
      */
-    class MissingDirectoryException(val directories: List<MissingFile>) : RuntimeException() {
+    class MissingDirectoryException(val directories: List<MissingFile>) : MigrationException("Directories $directories are missing.") {
         init {
             if (directories.isNullOrEmpty()) {
                 throw IllegalArgumentException("directories should not be empty")
@@ -113,18 +118,18 @@ class MigrateUserData private constructor(val source: Directory, val destination
      * If during a file move, two files refer to the same path
      * This implies that the file move should be cancelled
      */
-    class EquivalentFileException(val source: File, val destination: File) : RuntimeException("Source and destination path are the same")
+    class EquivalentFileException(val source: File, val destination: File) : MigrationException("Source and destination path are the same")
 
     /**
      * If a directory could not be deleted as it still contained files.
      */
-    class DirectoryNotEmptyException(val directory: Directory) : RuntimeException("directory was not empty: $directory")
+    class DirectoryNotEmptyException(val directory: Directory) : MigrationException("directory was not empty: $directory")
 
     /**
      * If the number of retries was exceeded when resolving a file conflict via moving it to the
      * /conflict/ folder.
      */
-    class FileConflictResolutionFailedException(val sourceFile: DiskFile, val attemptedDestination: File) : RuntimeException("Failed to move $sourceFile to $attemptedDestination")
+    class FileConflictResolutionFailedException(val sourceFile: DiskFile, val attemptedDestination: File) : MigrationException("Failed to move $sourceFile to $attemptedDestination")
 
     /**
      * Context for an [Operation], allowing a change of execution behavior and
