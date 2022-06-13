@@ -367,7 +367,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     init {
-        mDeckList = ArrayList(if (mCol == null) 10 else mCol!!.decks.count())
+        mDeckList = ArrayList(mCol!!.decks.count())
         // Get the colors from the theme attributes
         val attrs = intArrayOf(
             R.attr.zeroCountColor,
