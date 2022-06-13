@@ -35,6 +35,11 @@
     <string name="automatic_sync_choice_key">automaticSyncMode</string>
     <string name="force_full_sync_key">force_full_sync</string>
     <string name="custom_sync_server_key">custom_sync_server_link</string>
+    <!-- Notification preferences -->
+    <string name="pref_notifications_screen_key">notificationsScreen</string>
+    <string name="pref_notifications_minimum_cards_due_key">minimumCardsDueForNotification</string>
+    <string name="pref_notifications_vibrate_key">widgetVibrate</string>
+    <string name="pref_notifications_blink_key">widgetBlink</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="pref_trigger_crash_key">trigger_crash_preference</string>

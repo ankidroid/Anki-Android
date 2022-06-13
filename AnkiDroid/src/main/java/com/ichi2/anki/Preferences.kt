@@ -405,8 +405,17 @@ class Preferences : AnkiActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
+            // Sync preferences summary
             findPreference<Preference>(getString(R.string.pref_sync_screen_key))!!
                 .summary = buildCategorySummary(getString(R.string.sync_account), getString(R.string.automatic_sync_choice))
+
+            // Notifications preferences summary
+            findPreference<Preference>(getString(R.string.pref_notifications_screen_key))!!
+                .summary = buildCategorySummary(
+                getString(R.string.notification_pref_title),
+                getString(R.string.notification_minimum_cards_due_vibrate),
+                getString(R.string.notification_minimum_cards_due_blink),
+            )
 
             if (isRestrictedLearningDevice) {
                 findPreference<Preference>("pref_screen_advanced")!!.isVisible = false
