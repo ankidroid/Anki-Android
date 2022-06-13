@@ -72,10 +72,6 @@ enum class ViewerCommand(val resourceId: Int, private val preferenceValue: Int) 
     COMMAND_ADD_NOTE(R.string.menu_add_note, 43);
 
     companion object {
-        fun fromString(value: String): ViewerCommand? {
-            return fromInt(value.toInt())
-        }
-
         fun fromInt(valueAsInt: Int): ViewerCommand? =
             // PERF: this is slow, but won't be used for long
             values().firstOrNull { it.preferenceValue == valueAsInt }
