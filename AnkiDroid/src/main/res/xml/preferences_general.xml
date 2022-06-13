@@ -24,7 +24,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/pref_cat_general"
     android:summary="@string/pref_cat_general_summ">
-    <PreferenceCategory android:title="@string/app_name">
         <ListPreference
             android:entries="@array/add_to_cur_labels"
             android:entryValues="@array/add_to_cur_values"
@@ -52,22 +51,4 @@
             android:entryValues="@array/error_reporting_choice_values"
             android:key="reportErrorMode"
             android:title="@string/error_reporting_choice" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/notification_pref"
-        android:key="category_general_notification_pref">
-        <ListPreference
-            android:defaultValue="1000000"
-            android:entries="@array/notification_minimum_cards_due_labels"
-            android:entryValues="@array/notification_minimum_cards_due_values"
-            android:key="minimumCardsDueForNotification"
-            android:title="@string/notification_pref_title" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="widgetVibrate"
-            android:title="@string/notification_minimum_cards_due_vibrate" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="widgetBlink"
-            android:title="@string/notification_minimum_cards_due_blink" />
-    </PreferenceCategory>
 </PreferenceScreen>
