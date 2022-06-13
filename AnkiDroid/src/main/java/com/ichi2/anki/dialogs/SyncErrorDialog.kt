@@ -19,7 +19,6 @@ package com.ichi2.anki.dialogs
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
@@ -53,7 +52,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 builder.iconAttr(R.attr.dialogSyncErrorIcon)
                     .positiveText(res().getString(R.string.log_in))
                     .negativeText(res().getString(R.string.dialog_cancel))
-                    .onPositive { _: MaterialDialog?, _: DialogAction? -> (activity as SyncErrorDialogListener?)!!.loginToSyncServer() }
+                    .onPositive { _, _ -> (activity as SyncErrorDialogListener?)!!.loginToSyncServer() }
                     .show()
             }
             DIALOG_CONNECTION_ERROR -> {
@@ -62,11 +61,11 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 builder.iconAttr(R.attr.dialogSyncErrorIcon)
                     .positiveText(res().getString(R.string.retry))
                     .negativeText(res().getString(R.string.dialog_cancel))
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    .onPositive { _, _ ->
                         (activity as SyncErrorDialogListener?)!!.sync()
                         dismissAllDialogFragments()
                     }
-                    .onNegative { _: MaterialDialog?, _: DialogAction? -> dismissAllDialogFragments() }
+                    .onNegative { _, _ -> dismissAllDialogFragments() }
                     .show()
             }
             DIALOG_SYNC_CONFLICT_RESOLUTION -> {
@@ -76,15 +75,15 @@ class SyncErrorDialog : AsyncDialogFragment() {
                     .positiveText(res().getString(R.string.sync_conflict_keep_local_new))
                     .negativeText(res().getString(R.string.sync_conflict_keep_remote_new))
                     .neutralText(res().getString(R.string.dialog_cancel))
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    .onPositive { _, _ ->
                         (activity as SyncErrorDialogListener?)
                             ?.showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL)
                     }
-                    .onNegative { _: MaterialDialog?, _: DialogAction? ->
+                    .onNegative { _, _ ->
                         (activity as SyncErrorDialogListener?)
                             ?.showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE)
                     }
-                    .onNeutral { _: MaterialDialog?, _: DialogAction? -> dismissAllDialogFragments() }
+                    .onNeutral { _, _ -> dismissAllDialogFragments() }
                     .show()
             }
             DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL -> {
@@ -93,7 +92,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 builder.iconAttr(R.attr.dialogSyncErrorIcon)
                     .positiveText(res().getString(R.string.dialog_positive_replace))
                     .negativeText(res().getString(R.string.dialog_cancel))
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    .onPositive { _, _ ->
                         val activity = activity as SyncErrorDialogListener?
                         activity!!.sync(ConflictResolution.FULL_UPLOAD)
                         dismissAllDialogFragments()
@@ -106,7 +105,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 builder.iconAttr(R.attr.dialogSyncErrorIcon)
                     .positiveText(res().getString(R.string.dialog_positive_replace))
                     .negativeText(res().getString(R.string.dialog_cancel))
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    .onPositive { _, _ ->
                         val activity = activity as SyncErrorDialogListener?
                         activity!!.sync(ConflictResolution.FULL_DOWNLOAD)
                         dismissAllDialogFragments()
@@ -119,11 +118,11 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 builder.positiveText(res().getString(R.string.sync_sanity_local))
                     .neutralText(res().getString(R.string.sync_sanity_remote))
                     .negativeText(res().getString(R.string.dialog_cancel))
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    .onPositive { _, _ ->
                         (activity as SyncErrorDialogListener?)
                             ?.showSyncErrorDialog(DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL)
                     }
-                    .onNeutral { _: MaterialDialog?, _: DialogAction? ->
+                    .onNeutral { _, _ ->
                         (activity as SyncErrorDialogListener?)
                             ?.showSyncErrorDialog(DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE)
                     }
@@ -134,7 +133,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 // Confirmation before pushing local collection to server after sanity check error
                 builder.positiveText(res().getString(R.string.dialog_positive_replace))
                     .negativeText(res().getString(R.string.dialog_cancel))
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    .onPositive { _, _ ->
                         (activity as SyncErrorDialogListener?)!!.sync(ConflictResolution.FULL_UPLOAD)
                         dismissAllDialogFragments()
                     }
@@ -145,7 +144,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 // Confirmation before overwriting local collection with server collection after sanity check error
                 builder.positiveText(res().getString(R.string.dialog_positive_replace))
                     .negativeText(res().getString(R.string.dialog_cancel))
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    .onPositive { _, _ ->
                         (activity as SyncErrorDialogListener?)!!.sync(ConflictResolution.FULL_DOWNLOAD)
                         dismissAllDialogFragments()
                     }
@@ -154,7 +153,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
             DIALOG_MEDIA_SYNC_ERROR -> {
                 builder.positiveText(R.string.check_media)
                     .negativeText(R.string.dialog_cancel)
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    .onPositive { _, _ ->
                         (activity as SyncErrorDialogListener?)!!.mediaCheck()
                         dismissAllDialogFragments()
                     }
@@ -163,8 +162,8 @@ class SyncErrorDialog : AsyncDialogFragment() {
             DIALOG_SYNC_CORRUPT_COLLECTION -> {
                 builder.positiveText(R.string.dialog_ok)
                     .neutralText(R.string.help)
-                    .onNeutral { _: MaterialDialog?,
-                        _: DialogAction? ->
+                    .onNeutral { _,
+                        _ ->
                         (requireActivity() as AnkiActivity).openUrl(Uri.parse(getString(R.string.repair_deck)))
                     }
                     .cancelable(false)
@@ -173,7 +172,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
             DIALOG_SYNC_BASIC_CHECK_ERROR -> {
                 builder.positiveText(R.string.check_db)
                     .negativeText(R.string.dialog_cancel)
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                    .onPositive { _, _ ->
                         (activity as SyncErrorDialogListener?)!!.integrityCheck()
                         dismissAllDialogFragments()
                     }
