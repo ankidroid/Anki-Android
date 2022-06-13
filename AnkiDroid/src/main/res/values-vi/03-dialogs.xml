@@ -80,7 +80,7 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="other">Lên lịch lại thẻ %d</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="other">Khoảng thời gian hiện tại: %d ngày</item>
@@ -113,7 +113,7 @@
     <string name="import_update_details">Đã cập nhật %1$d trên %2$d ghi chú hiện hữu.</string>
     <string name="import_update_ignored">Đã bỏ qua một số cập nhật vì loại ghi chú đã thay đổi</string>
     <plurals name="import_complete_message">
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">Thẻ đã được nhập: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">Thẻ SD đã đầy</string>
     <string name="sd_card_almost_full_title">Thẻ SD gần đầy</string>
@@ -121,7 +121,7 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Khôi phục sao lưu?</string>
     <string name="restore_backup">Bộ sưu tập sẽ được thay bằng bản sao cũ hơn. Bất kỳ tiến trình nào chưa lưu sẽ bị mất.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Chọn cái khác </string>
     <string name="dialog_cancel">Huỷ</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Không</string>
@@ -186,7 +186,7 @@
     <string name="card_browser_deck_change_error">Không thể thay đổi bộ thẻ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Lỗi giải mã dữ liệu từ thẻ</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">Hoàn tác \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Không xử lý được các tùy chọn bộ thẻ: %s</string>
     <!-- Database Errors-->

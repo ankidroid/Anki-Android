@@ -49,7 +49,7 @@
     <string name="statistics_young_and_learn">Legfrissebb+Tanulás</string>
     <string name="statistics_unlearned">Eddig még nem látott</string>
     <string name="statistics_suspended">Felfüggesztve</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_buried">Eltemetett</string>
     <string name="statistics_relearn" comment="Labbel of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Újra tanul</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Tanulás</string>
     <string name="statistics_cram">Magolás</string>

@@ -47,25 +47,11 @@
     <string name="multimedia_editor_popup_text">Pokročilý editor</string>
     <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
     <string name="multimedia_editor_popup_clear_field">Vymazat pole</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">Běží na glosbe.com</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">Z</string>
-    <string name="multimedia_editor_trans_to">Do</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">Přeložit</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">Online překlad</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">Vybrat překlad</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">Vybrat slovník</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">Nejprve nainstalujte ColorDict</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Nahrát</string>
-    <string name="multimedia_editor_pron_looking_up">Vyhledávání výslovnosti</string>
+    <string name="multimedia_editor_pron_looking_up">Vyhledává se výslovnost</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Výslovnost selhala</string>
     <string name="multimedia_editor_word_search_try_lower_case">Zkuste použít pouze malá písmena</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Hotovo</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">Hledat:</string>
     <string name="multimedia_editor_text_field_editing_say">Výslovnost</string>
     <string name="multimedia_editor_text_field_editing_clear">Vymazat</string>
     <string name="multimedia_editor_text_field_editing_clone">Klonovat z</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">Překlad</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">Nejprve zadejte nějaký text</string>
-    <string name="multimedia_editor_text_field_editing_many_words">Slovník obvykle očekává jedno slovo</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Vzít z</string>
     <!-- Multimedia card editor activity -->
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">Slovo nebylo nalezeno</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">Získání překladu selhalo</string>
     <string name="multimedia_editor_searching_word">Hledání slova</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">Počkejte</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Nelze vytvořit nástrojovou lištu pro nahrávání</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editační pole</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">Překlad</string>
     <!-- Network failure -->
     <string name="network_no_connection">Žádné připojení</string>
     <!-- Crop function-->

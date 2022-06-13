@@ -82,6 +82,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
@@ -408,17 +409,21 @@ open class Reviewer : AbstractFlashcardViewer() {
             }
             R.id.action_bury -> {
                 Timber.i("Reviewer:: Bury button pressed")
-                if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
-                    Timber.d("Bury card due to no submenu")
-                    buryCard()
-                }
+                MenuItemCompat.getActionProvider(item)?.hasSubMenu()?.let { isAvailable ->
+                    if (!isAvailable) {
+                        Timber.d("Bury card due to no submenu")
+                        buryCard()
+                    }
+                } ?: Timber.w("Null ActionProvider for bury menu item in Reviewer!")
             }
             R.id.action_suspend -> {
                 Timber.i("Reviewer:: Suspend button pressed")
-                if (!MenuItemCompat.getActionProvider(item).hasSubMenu()) {
-                    Timber.d("Suspend card due to no submenu")
-                    suspendCard()
-                }
+                MenuItemCompat.getActionProvider(item)?.hasSubMenu()?.let { isAvailable ->
+                    if (!isAvailable) {
+                        Timber.d("Suspend card due to no submenu")
+                        suspendCard()
+                    }
+                } ?: Timber.w("Null ActionProvider for suspend menu item in Reviewer!")
             }
             R.id.action_delete -> {
                 Timber.i("Reviewer:: Delete note button pressed")
@@ -436,7 +441,7 @@ open class Reviewer : AbstractFlashcardViewer() {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
                 if (whiteboard != null) {
                     try {
-                        val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(col.time).path
+                        val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(TimeManager.time).path
                         showThemedToast(this@Reviewer, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true)
                     } catch (e: Exception) {
                         Timber.w(e)
@@ -1431,10 +1436,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     /**
      * Inner class which implements the submenu for the Suspend button
      */
-    internal inner class SuspendProvider(context: Context?) : ActionProvider(context), SubMenuProvider {
-        override fun onCreateActionView(): View? {
-            return null // Just return null for a simple dropdown menu
-        }
+    internal inner class SuspendProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
 
         override val subMenu: Int
             get() = R.menu.reviewer_suspend
@@ -1465,10 +1467,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     /**
      * Inner class which implements the submenu for the Bury button
      */
-    internal inner class BuryProvider(context: Context?) : ActionProvider(context), SubMenuProvider {
-        override fun onCreateActionView(): View? {
-            return null // Just return null for a simple dropdown menu
-        }
+    internal inner class BuryProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
 
         override val subMenu: Int
             get() = R.menu.reviewer_bury
@@ -1499,10 +1498,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     /**
      * Inner class which implements the submenu for the Schedule button
      */
-    internal inner class ScheduleProvider(context: Context?) : ActionProvider(context), SubMenuProvider {
-        override fun onCreateActionView(): View? {
-            return null // Just return null for a simple dropdown menu
-        }
+    internal inner class ScheduleProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
 
         override fun hasSubMenu(): Boolean {
             return true

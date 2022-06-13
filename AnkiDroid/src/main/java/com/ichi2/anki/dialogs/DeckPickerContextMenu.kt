@@ -112,7 +112,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             }
             DeckPickerContextMenuOption.CREATE_SHORTCUT -> {
                 Timber.i("Create icon for a deck")
-                (activity as DeckPicker?)!!.createIcon(context, deckId)
+                (activity as DeckPicker?)!!.createIcon(requireContext(), deckId)
             }
             DeckPickerContextMenuOption.RENAME_DECK -> {
                 Timber.i("Rename deck selected")

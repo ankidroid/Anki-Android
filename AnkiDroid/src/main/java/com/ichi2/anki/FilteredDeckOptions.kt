@@ -18,7 +18,6 @@ package com.ichi2.anki
  ****************************************************************************************/
 
 import android.content.*
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.preference.*
 import android.view.KeyEvent
@@ -42,12 +41,10 @@ import timber.log.Timber
 import java.util.*
 
 @NeedsTest("construction + onCreate - do this after converting to fragment-based preferences.")
-class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceChangeListener {
+class FilteredDeckOptions : AppCompatPreferenceActivity() {
     @KotlinCleanup("try to make mDeck non-null / use lateinit")
     private var mDeck: Deck? = null
-    private var mCol: Collection? = null
     private var mAllowCommit = true
-    private var mPrefChanged = false
     private var mUnmountReceiver: BroadcastReceiver? = null
 
     // TODO: not anymore used in libanki?
@@ -104,7 +101,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
                 for ((key, value) in mUpdate.valueSet()) {
                     Timber.i("Change value for key '%s': %s", key, value)
                     val ar = mDeck!!.getJSONArray("terms")
-                    if (mPref!!.secondFilter) {
+                    if (pref.secondFilter) {
                         if ("search_2" == key) {
                             ar.getJSONArray(1).put(0, value)
                         } else if ("limit_2" == key) {
@@ -158,7 +155,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
 
                 // save deck
                 try {
-                    mCol!!.decks.save(mDeck!!)
+                    col.decks.save(mDeck!!)
                 } catch (e: RuntimeException) {
                     Timber.e(e, "RuntimeException on saving deck")
                     CrashReportService.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck")
@@ -256,12 +253,12 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
             } else mValues[key]
         }
 
-        val listeners: MutableList<OnSharedPreferenceChangeListener> = LinkedList()
-        override fun registerOnSharedPreferenceChangeListener(listener: OnSharedPreferenceChangeListener) {
+        val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
+        override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
             listeners.add(listener)
         }
 
-        override fun unregisterOnSharedPreferenceChangeListener(listener: OnSharedPreferenceChangeListener) {
+        override fun unregisterOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
             listeners.remove(listener)
         }
 
@@ -276,10 +273,10 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         }
     }
 
-    private var mPref: DeckPreferenceHack? = null
+    private lateinit var pref: DeckPreferenceHack
     override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
         Timber.d("getSharedPreferences(name=%s)", name)
-        return mPref!!
+        return pref
     }
 
     @Deprecated("Deprecated in Java")
@@ -288,26 +285,24 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         setThemeLegacy(this)
         super.onCreate(savedInstanceState)
         UsageAnalytics.sendAnalyticsScreenView(this)
-        mCol = CollectionHelper.getInstance().getCol(this)
-        if (mCol == null) {
-            finish()
+        if (!isColInitialized()) {
             return
         }
         val extras = intent.extras
         mDeck = if (extras != null && extras.containsKey("did")) {
-            mCol!!.decks.get(extras.getLong("did"))
+            col.decks.get(extras.getLong("did"))
         } else {
-            mCol!!.decks.current()
+            col.decks.current()
         }
         registerExternalStorageListener()
-        if (mCol == null || mDeck!!.isStd) {
-            Timber.w("No Collection loaded or deck is not a dyn deck")
+        if (mDeck!!.isStd) {
+            Timber.w("Deck is not a dyn deck")
             finish()
             return
         } else {
-            mPref = DeckPreferenceHack()
-            mPref!!.registerOnSharedPreferenceChangeListener(this)
-            addPreferences(mCol!!)
+            pref = DeckPreferenceHack()
+            pref.registerOnSharedPreferenceChangeListener(this)
+            addPreferences(col)
             buildLists()
             updateSummaries()
         }
@@ -364,13 +359,6 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         return false
     }
 
-    @KotlinCleanup("Find a different method rather than providing a null key in a caller")
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
-        // update values on changed preference
-        updateSummaries()
-        mPrefChanged = true
-    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
             Timber.i("DeckOptions - onBackPressed()")
@@ -381,10 +369,10 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
     }
 
     private fun closeDeckOptions() {
-        if (mPrefChanged) {
+        if (prefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {
-                mCol!!.sched.rebuildDyn(mDeck!!.getLong("id"))
+                col.sched.rebuildDyn(mDeck!!.getLong("id"))
             } catch (e: JSONException) {
                 Timber.e(e)
             }
@@ -403,10 +391,10 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
     }
 
     @Suppress("deprecation") // conversion to fragments tracked in github as #5019
-    protected fun updateSummaries() {
+    override fun updateSummaries() {
         mAllowCommit = false
         // for all text preferences, set summary as current database value
-        val keys: Set<String> = mPref!!.mValues.keys
+        val keys: Set<String> = pref.mValues.keys
         for (key in keys) {
             val pref = findPreference(key)
             var value: String?
@@ -418,18 +406,18 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
                 val entry = pref.entry
                 entry?.toString() ?: ""
             } else {
-                mPref!!.getString(key, "")
+                this.pref.getString(key, "")
             }
             // update value for EditTexts
             if (pref is EditTextPreference) {
                 pref.text = value
             }
             // update summary
-            if (!mPref!!.mSummaries.containsKey(key)) {
+            if (!this.pref.mSummaries.containsKey(key)) {
                 val s = pref.summary
-                mPref!!.mSummaries[key] = if (s != null) pref.summary.toString() else null
+                this.pref.mSummaries[key] = if (s != null) pref.summary.toString() else null
             }
-            val summ = mPref!!.mSummaries[key]
+            val summ = this.pref.mSummaries[key]
             if (summ != null && summ.contains("XXX")) {
                 pref.summary = summ.replace("XXX", value!!)
             } else {
@@ -445,34 +433,35 @@ class FilteredDeckOptions : AppCompatPreferenceActivity(), OnSharedPreferenceCha
         val newOrderPrefSecond = findPreference("order_2") as ListPreference
         newOrderPref.setEntries(R.array.cram_deck_conf_order_labels)
         newOrderPref.setEntryValues(R.array.cram_deck_conf_order_values)
-        newOrderPref.value = mPref!!.getString("order", "0")
+        newOrderPref.value = pref.getString("order", "0")
         newOrderPrefSecond.setEntries(R.array.cram_deck_conf_order_labels)
         newOrderPrefSecond.setEntryValues(R.array.cram_deck_conf_order_values)
-        newOrderPrefSecond.value = mPref!!.getString("order_2", "5")
+        newOrderPrefSecond.value = pref.getString("order_2", "5")
     }
 
     /**
-     * finish when sd card is ejected
+     * Call exactly once, during creation
+     * to ensure that if the SD card is ejected
+     * this activity finish.
      */
     private fun registerExternalStorageListener() {
-        if (mUnmountReceiver == null) {
-            mUnmountReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        finish()
-                    }
+        mUnmountReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action == SdCardReceiver.MEDIA_EJECT) {
+                    finish()
                 }
             }
-            val iFilter = IntentFilter()
-            iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(mUnmountReceiver, iFilter)
         }
+        val iFilter = IntentFilter()
+        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
+        registerReceiver(mUnmountReceiver, iFilter)
     }
+
     @Suppress("deprecation")
     private fun setupSecondFilterListener() {
         val secondFilterSign = findPreference("filterSecond") as CheckBoxPreference
         val secondFilter = findPreference("secondFilter") as PreferenceCategory
-        if (mPref!!.secondFilter) {
+        if (pref.secondFilter) {
             secondFilter.isEnabled = true
             secondFilterSign.isChecked = true
         }

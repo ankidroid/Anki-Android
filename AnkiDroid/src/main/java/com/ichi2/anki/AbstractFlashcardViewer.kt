@@ -489,6 +489,11 @@ abstract class AbstractFlashcardViewer :
             val nextCardAndResult = result.value
             if (nextCardAndResult.hasNoMoreCards()) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true)
+
+                // When launched with a shortcut, we want to display a message when finishing
+                if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
+                    showThemedToast(baseContext, R.string.studyoptions_congrats_finished, false)
+                }
                 return
             }
             currentCard = nextCardAndResult.nextScheduledCard()
@@ -923,7 +928,6 @@ abstract class AbstractFlashcardViewer :
     // Set the content view to the one provided and initialize accessors.
     @KotlinCleanup("Move a lot of these to onCreate()")
     protected open fun initLayout() {
-        val cardContainer = findViewById<FrameLayout>(R.id.flashcard_frame)
         mTopBarLayout = findViewById(R.id.top_bar)
         mCardFrame = findViewById(R.id.flashcard)
         mCardFrameParent = mCardFrame!!.parent as ViewGroup
@@ -979,18 +983,27 @@ abstract class AbstractFlashcardViewer :
         )
         val answerArea = findViewById<LinearLayout>(R.id.bottom_area_layout)
         val answerAreaParams = answerArea.layoutParams as RelativeLayout.LayoutParams
-        val cardContainerParams = cardContainer.layoutParams as RelativeLayout.LayoutParams
+        val whiteboardContainer = findViewById<FrameLayout>(R.id.whiteboard)
+        val whiteboardContainerParams = whiteboardContainer.layoutParams as RelativeLayout.LayoutParams
+        val flashcardContainerParams = mCardFrame!!.layoutParams as RelativeLayout.LayoutParams
+        val touchLayerContainerParams = mTouchLayer!!.layoutParams as RelativeLayout.LayoutParams
         when (answerButtonsPosition) {
             "top" -> {
-                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
+                whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
+                flashcardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
+                touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
                 answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 answerArea.removeView(mAnswerField)
                 answerArea.addView(mAnswerField, 1)
                 answerArea.visibility = View.VISIBLE
             }
             "bottom" -> {
-                cardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
-                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
+                whiteboardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
+                flashcardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                flashcardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
+                touchLayerContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
                 answerArea.visibility = View.VISIBLE
             }
@@ -998,7 +1011,9 @@ abstract class AbstractFlashcardViewer :
             else -> Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition)
         }
         answerArea.layoutParams = answerAreaParams
-        cardContainer.layoutParams = cardContainerParams
+        whiteboardContainer.layoutParams = whiteboardContainerParams
+        mCardFrame!!.layoutParams = flashcardContainerParams
+        mTouchLayer!!.layoutParams = touchLayerContainerParams
     }
 
     @SuppressLint("SetJavaScriptEnabled") // they request we review carefully because of XSS security, we have
@@ -1030,6 +1045,10 @@ abstract class AbstractFlashcardViewer :
         // Javascript interface for calling AnkiDroid functions in webview, see card.js
         mAnkiDroidJsAPI = javaScriptFunction()
         webView.addJavascriptInterface(mAnkiDroidJsAPI!!, "AnkiDroidJS")
+
+        // enable dom storage so that sessionStorage & localStorage can be used in webview
+        webView.settings.domStorageEnabled = true
+
         return webView
     }
 

@@ -305,7 +305,7 @@
         </activity>
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
-            android:exported="false"
+            android:exported="true"
             android:configChanges="keyboardHidden|orientation|locale|screenSize"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity

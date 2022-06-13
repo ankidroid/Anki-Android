@@ -17,15 +17,13 @@ package com.ichi2.libanki.template
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-@KotlinCleanup(" 'is'->equalTo")
+
 @RunWith(AndroidJUnit4::class)
 class TemplateTest : RobolectricTest() {
     private fun render(template: String, fields: Map<String, String>): String {
@@ -37,7 +35,7 @@ class TemplateTest : RobolectricTest() {
         // Ankidroid used not to display fields whose name start with !
         val context = HashMap<String, String>()
         context["!Front"] = "Test"
-        assertThat(render("{{!Front}}", context), `is`("Test"))
+        assertThat(render("{{!Front}}", context), equalTo("Test"))
     }
 
     @Test
@@ -47,7 +45,7 @@ class TemplateTest : RobolectricTest() {
         val context = HashMap<String, String>()
         val rendered = render("{{!Front}}", context)
 
-        assertThat(rendered, `is`(notNullValue()))
+        assertThat(rendered, notNullValue())
         assertThat(
             rendered, containsString("there is no field called '!Front'")
         )
@@ -58,7 +56,7 @@ class TemplateTest : RobolectricTest() {
         val context = HashMap<String, String>()
         context["Front"] = "AA{{type:Back}}"
 
-        assertThat(render("{{Front}}", context), `is`("AA{{type:Back}}"))
+        assertThat(render("{{Front}}", context), equalTo("AA{{type:Back}}"))
     }
 
     @Test
@@ -67,7 +65,7 @@ class TemplateTest : RobolectricTest() {
 
         val context = HashMap<String, String>()
 
-        assertThat(render(maybeBad, context), Matchers.emptyString())
+        assertThat(render(maybeBad, context), emptyString())
     }
 
     @Test
@@ -90,7 +88,7 @@ class TemplateTest : RobolectricTest() {
         // most important - that it does render
         assertThat(result, not("{{Invalid template}}"))
         // Actual value (may be subject to change).
-        assertThat(result, `is`("\n    \n        Card1 - One<br>\n    \n    \n        Card1 - Two\n    \n"))
+        assertThat(result, equalTo("\n    \n        Card1 - One<br>\n    \n    \n        Card1 - Two\n    \n"))
     }
 
     @Test
@@ -106,15 +104,15 @@ class TemplateTest : RobolectricTest() {
     }
 
     private fun test_render(template: String, m: Map<String, String>, expected: String) {
-        assertThat(render(template, m), `is`(expected))
-        val legacy_template = TokenizerTest.new_to_legacy_template(template)
-        assertThat(render(legacy_template, m), `is`(expected))
+        assertThat(render(template, m), equalTo(expected))
+        val legacyTemplate = TokenizerTest.new_to_legacy_template(template)
+        assertThat(render(legacyTemplate, m), equalTo(expected))
     }
 
     private fun test_render_contains(template: String, m: Map<String, String>, contained: String) {
         assertThat(render(template, m), containsString(contained))
-        val legacy_template = TokenizerTest.new_to_legacy_template(template)
-        assertThat(render(legacy_template, m), containsString(contained))
+        val legacyTemplate = TokenizerTest.new_to_legacy_template(template)
+        assertThat(render(legacyTemplate, m), containsString(contained))
     }
 
     @Test

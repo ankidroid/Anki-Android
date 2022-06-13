@@ -57,7 +57,9 @@ object NoteFieldDecorator {
         "qzvgel-gvzbsrri",
         "inabfgra",
         "unacvatpuvarfr",
-        "jro5atnl"
+        "jro5atnl",
+        "FuevquneTbry",
+        "Nxfunl0701",
     )
 
     @JvmStatic

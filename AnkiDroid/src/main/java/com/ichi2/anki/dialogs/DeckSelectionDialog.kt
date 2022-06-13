@@ -339,7 +339,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              */
             @JvmStatic
             @JvmOverloads
-            fun fromCollection(c: Collection, filter: FunctionalInterfaces.Filter<Deck?> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
+            fun fromCollection(c: Collection, filter: FunctionalInterfaces.Filter<Deck> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
                 val all = c.decks.all()
                 val ret: MutableList<SelectableDeck> = ArrayList(all.size)
                 for (d in all) {

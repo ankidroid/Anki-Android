@@ -175,7 +175,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Помилка</string>
     <string name="import_log_failed_unzip">Не вдалося розпакувати apkg: %s</string>
     <string name="import_log_failed_copy_to">Помилка копіювання apkg до %s</string>
     <string name="import_log_failed_validate">apkg не пройшло перевірку</string>
@@ -190,9 +190,9 @@
     <string name="import_error_content_provider">Вибраний файл не вдалося імпортувати автоматично до AnkiDroid. Будь ласка, перегляньте посібник користувача для того аби вручну імпортувати anki файли: \n%s</string>
     <string name="import_error_copy_file_to_cache">Не вдалося copyFileToCache() (копіюванння файлу до кешу, можливо, бракує пам\'яті) </string>
     <string name="import_error_unhandled_scheme">Необроблений імпорт з: «%s»</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_multiple_colpkg">Було вибрано декілька файлів colpkl.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_stats_error">Виникли помилки під час імпорту наступних файлів:\n%s</string>
     <string name="import_replacing">Заміна колекції&#8230;</string>
     <string name="import_interrupted">Імпортування перервано</string>
     <string name="export_include_schedule">Додати планування</string>
@@ -377,8 +377,8 @@
     <string name="before_text">HTML перед виділенням</string>
     <string name="after_text">HTML після виділення</string>
     <string name="add_toolbar_item">Створити елемент панелі інструментів</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="edit_toolbar_item">Редагувати елемент панелі інструментів</string>
+    <string name="toolbar_item_explain_edit_or_remove">Введіть HTML, який буде вставлений до і після виділеного тексту\n\nДовго натискайте на елемент панелі інструментів, щоб його редагувати або видалити</string>
     <string name="remove_toolbar_item">Видалити елемент панелі інструментів?</string>
     <string name="note_editor_paste_too_large">Зображення завелике для вставки, будь ласка, вставте зображення вручну</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Виконується резервне копіювання. Будь ласка, спробуйте ще раз</string>
@@ -437,10 +437,10 @@
     <string name="search_card_js_api_no_results">Нічого не знайдено</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="could_not_create_dir">Не вдалося створити каталог %s</string>
+    <string name="malicious_archive_entry_outside">Шкідливий архів. Містить запис за межами цільового каталогу: %s</string>
+    <string name="malicious_archive_exceeds_limit">Шкідливий архів. Розмір перевищує %1$s або містить більше ніж %2$d файлів</string>
+    <string name="file_extract_exceeds_storage_space">Розмір файлу перевищує обсяг пам\'яті</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Розгорнути тег \'%s\'</string>
 </resources>

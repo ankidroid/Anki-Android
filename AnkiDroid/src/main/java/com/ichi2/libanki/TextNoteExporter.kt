@@ -21,32 +21,23 @@ import java.io.IOException
 import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
 
-class TextNoteExporter : Exporter {
-    private val mIncludedTags: Boolean
-    private val mIncludeID: Boolean
+class TextNoteExporter(
+    col: Collection,
+    did: Long?,
+    val includeID: Boolean,
+    val includedTags: Boolean,
+    includeHTML: Boolean
+) : Exporter(col, did) {
+    init {
+        mIncludeHTML = includeHTML
+    }
 
     constructor(
         col: Collection,
         includeID: Boolean,
         includedTags: Boolean,
         includeHTML: Boolean
-    ) : super(col) {
-        mIncludedTags = includedTags
-        mIncludeHTML = includeHTML
-        mIncludeID = includeID
-    }
-
-    constructor(
-        col: Collection,
-        did: Long,
-        includeID: Boolean,
-        includedTags: Boolean,
-        includeHTML: Boolean
-    ) : super(col, did) {
-        mIncludedTags = includedTags
-        mIncludeHTML = includeHTML
-        mIncludeID = includeID
-    }
+    ) : this(col, null, includeID, includedTags, includeHTML)
 
     @Throws(IOException::class)
     fun doExport(path: String?) {
@@ -57,19 +48,19 @@ class TextNoteExporter : Exporter {
             Utils.ids2str(cardIds())
         )
         val data: MutableList<String?> = ArrayList()
-        mCol.db.query(queryStr).use { cursor ->
+        col.db.query(queryStr).use { cursor ->
             while (cursor.moveToNext()) {
                 val id = cursor.getString(0)
                 val flds = cursor.getString(1)
                 val tags = cursor.getString(2)
                 val row: MutableList<String?> = ArrayList()
-                if (mIncludeID) {
+                if (includeID) {
                     row.add(id)
                 }
                 for (field in Utils.splitFields(flds)) {
                     row.add(processText(field!!))
                 }
-                if (mIncludedTags) {
+                if (includedTags) {
                     row.add(strip(tags))
                 }
                 @KotlinCleanup("use kotlin joinToString function")

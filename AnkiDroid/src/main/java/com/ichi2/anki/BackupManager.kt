@@ -24,6 +24,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.Time.Companion.utcOffset
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.getFreeDiskSpace
 import timber.log.Timber
 import java.io.BufferedOutputStream
@@ -269,7 +270,7 @@ open class BackupManager {
         fun repairCollection(col: Collection): Boolean {
             val deckPath = col.path
             val deckFile = File(deckPath)
-            val time = col.time
+            val time = TimeManager.time
             Timber.i("BackupManager - RepairCollection - Closing Collection")
             col.close()
 

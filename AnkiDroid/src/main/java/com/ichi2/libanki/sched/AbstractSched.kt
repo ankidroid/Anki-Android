@@ -181,7 +181,7 @@ abstract class AbstractSched {
     /**
      * @return [deckname, did, rev, lrn, new]
      */
-    abstract fun deckDueList(): List<DeckDueTreeNode?>
+    abstract fun deckDueList(): List<DeckDueTreeNode>
 
     /**
      * @param cancelListener A task that is potentially cancelled

@@ -42,27 +42,13 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">ପ୍ରତିଛବି ଯୋଡ଼ନ୍ତୁ</string>
     <string name="multimedia_editor_popup_audio_clip">ଅଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="multimedia_editor_popup_video_clip">ଭିଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="multimedia_editor_popup_video_clip">ଵିଡ଼ିଓ କ୍ଲିପ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="multimedia_editor_popup_audio">ଅଡ଼ିଓ ରେକର୍ଡ କର</string>
     <string name="multimedia_editor_popup_text">ଉନ୍ନତ ସମ୍ପାଦକ</string>
     <string name="multimedia_editor_popup_cloze">କ୍ଲୋଜ୍ ବିଲୋପ</string>
     <string name="multimedia_editor_popup_clear_field">କ୍ଷେତ୍ର ସଫା କରନ୍ତୁ</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">glosbe.com ଦ୍ୱାରା ଚାଳିତ</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">ଏଥିରୁ</string>
-    <string name="multimedia_editor_trans_to">ଏହାକୁ</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">ଅନୁବାଦ କରନ୍ତୁ</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">ଅନଲାଇନ୍ ଅନୁବାଦ କରୁଅଛି</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">ଅନୁବାଦ ବାଛନ୍ତୁ</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">ଶବ୍ଦକୋଷ ବାଛନ୍ତୁ</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">ପ୍ରଥମେ ColorDict ସଂସ୍ଥାପନ କରନ୍ତୁ</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">ଲୋଡ୍</string>
     <string name="multimedia_editor_pron_looking_up">ଉଚ୍ଚାରଣକୁ ଦେଖୁଛି</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ହୋଇଗଲା</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">ଖୋଜିବା:</string>
     <string name="multimedia_editor_text_field_editing_say">ଉଚ୍ଚାରଣ</string>
     <string name="multimedia_editor_text_field_editing_clear">ସଫା</string>
     <string name="multimedia_editor_text_field_editing_clone">ଏଥିରୁ ପ୍ରତିଲିପି ତିଆରି କରନ୍ତୁ</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">ଅନୁବାଦ</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">ପ୍ରଥମେ କିଛି ଲେଖା ପ୍ରବେଶ କରନ୍ତୁ</string>
-    <string name="multimedia_editor_text_field_editing_many_words">ଶବ୍ଦକୋଷ ସାଧାରଣତ ଗୋଟିଏ ଶବ୍ଦ ଆଶା କରେ</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">ଏଥିରୁ ନିଅ</string>
     <!-- Multimedia card editor activity -->
@@ -97,7 +80,7 @@
     <string name="multimedia_editor_image_field_editing_galery">ଗ୍ୟାଲେରୀ</string>
     <string name="multimedia_editor_image_field_editing_photo">କ୍ୟାମେରା</string>
     <string name="multimedia_editor_import_audio">ଅଡ଼ିଓ</string>
-    <string name="multimedia_editor_import_video">ଭିଡ଼ିଓ</string>
+    <string name="multimedia_editor_import_video">ଵିଡ଼ିଓ</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">ଡାଉନଲୋଡ୍ ହେଉଛି</string>
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">ଶବ୍ଦଟି ମିଳିଲା ନାହିଁ</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">ଅନୁବାଦ ପାଇବା ବିଫଳ ହେଲା</string>
     <string name="multimedia_editor_searching_word">ଶବ୍ଦ ଖୋଜୁଛି</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">ଅପେକ୍ଷା କର</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">ରେକର୍ଡର୍ ଟୁଲ୍ ବାର୍ ସୃଷ୍ଟି କରିବାରେ ଅସମର୍ଥ</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">କ୍ଷେତ୍ରଟିକୁ ସମ୍ପାଦନ କରୁଛି</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">ଅନୁବାଦ</string>
     <!-- Network failure -->
     <string name="network_no_connection">କୌଣସି ସଂଯୋଗ ନାହିଁ</string>
     <!-- Crop function-->

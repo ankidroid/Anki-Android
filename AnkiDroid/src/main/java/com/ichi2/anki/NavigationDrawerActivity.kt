@@ -404,6 +404,8 @@ abstract class NavigationDrawerActivity :
         const val REQUEST_STATISTICS = 102
         const val FULL_SCREEN_NAVIGATION_DRAWER = "gestureFullScreenNavigationDrawer"
 
+        const val EXTRA_STARTED_WITH_SHORTCUT = "com.ichi2.anki.StartedWithShortcut"
+
         @TargetApi(Build.VERSION_CODES.N_MR1)
         fun enablePostShortcut(context: Context) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
@@ -415,6 +417,7 @@ abstract class NavigationDrawerActivity :
             val intentReviewCards = Intent(context, Reviewer::class.java)
             intentReviewCards.action = Intent.ACTION_VIEW
             intentReviewCards.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intentReviewCards.putExtra(EXTRA_STARTED_WITH_SHORTCUT, true)
             val reviewCardsShortcut = ShortcutInfo.Builder(context, "reviewCardsShortcutId")
                 .setShortLabel(context.getString(R.string.studyoptions_start))
                 .setLongLabel(context.getString(R.string.studyoptions_start))

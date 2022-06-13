@@ -19,7 +19,6 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.app.Activity
 import android.app.AlarmManager
 import android.app.AlertDialog
 import android.content.*
@@ -38,15 +37,12 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.preference.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anim.ActivityTransitionAnimation.slide
-import com.ichi2.anki.OnboardingUtils.Companion.reset
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -63,19 +59,18 @@ import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.CustomSyncServer.getSyncBaseUrlOrDefault
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.anki.web.CustomSyncServer.isEnabled
-import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.*
 import com.ichi2.preferences.ControlPreference.Companion.setup
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.themes.Themes.systemIsInNightMode
 import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
-import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -136,21 +131,10 @@ class Preferences : AnkiActivity() {
     private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
         val fragment = fragmentManager.findFragmentById(R.id.settings_container)
 
-        if (actionBar == null)
-            return
-
-        @NeedsTest("check all settings fragments have defined titles")
-        actionBar.title = when (fragment) {
-            is GeneralSettingsFragment -> resources.getString(R.string.pref_cat_general)
-            is ReviewingSettingsFragment -> resources.getString(R.string.pref_cat_reviewing)
-            is GesturesSettingsFragment -> resources.getString(R.string.pref_cat_gestures)
-            is ControlsSettingsFragment -> resources.getString(R.string.pref_cat_controls)
-            is AdvancedSettingsFragment -> resources.getString(R.string.pref_cat_advanced)
-            is AppearanceSettingsFragment -> resources.getString(R.string.pref_cat_appearance)
-            is AdvancedStatisticsSettingsFragment -> resources.getString(R.string.advanced_statistics_title)
-            is CustomSyncServerSettingsFragment -> resources.getString(R.string.custom_sync_server_title)
-            is CustomButtonsSettingsFragment -> resources.getString(R.string.custom_buttons)
-            else -> resources.getString(R.string.preferences_title)
+        actionBar?.title = if (fragment is SpecificSettingsFragment) {
+            fragment.preferenceScreen.title
+        } else {
+            getString(R.string.preferences_title)
         }
     }
 
@@ -212,13 +196,12 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    @Suppress("deprecation") // startActivity
     fun restartWithNewDeckPicker() {
         // PERF: DB access on foreground thread
         CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed")
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(deckPicker)
+        startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.DEFAULT)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -315,7 +298,7 @@ class Preferences : AnkiActivity() {
                 col.setMod()
             }
         }
-        scheduleNotification(col.time, this)
+        scheduleNotification(TimeManager.time, this)
     }
 
     fun updateNotificationPreference(listPreference: ListPreference) {
@@ -402,10 +385,8 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    @Suppress("deprecation") // finish
     private fun closePreferences() {
-        finish()
-        slide(this, ActivityTransitionAnimation.Direction.FADE)
+        finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
         if (col != null && !col.dbClosed) {
             col.save()
         }
@@ -424,8 +405,24 @@ class Preferences : AnkiActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
+            findPreference<Preference>(getString(R.string.pref_sync_screen_key))!!
+                .summary = buildCategorySummary(getString(R.string.sync_account), getString(R.string.automatic_sync_choice))
+
             if (isRestrictedLearningDevice) {
                 findPreference<Preference>("pref_screen_advanced")!!.isVisible = false
+            }
+            if (BuildConfig.DEBUG) {
+                val devOptions = Preference(requireContext()).apply {
+                    title = getString(R.string.pref_cat_dev_options)
+                    setOnPreferenceClickListener {
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.settings_container, DevOptionsFragment())
+                            .addToBackStack(null)
+                            .commit()
+                        true
+                    }
+                }
+                preferenceScreen.addPreference(devOptions)
             }
         }
     }
@@ -444,6 +441,18 @@ class Preferences : AnkiActivity() {
             val preference = findPreference<Preference>(key)
                 ?: throw IllegalStateException("missing preference: '$key'")
             return preference as T
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        /**
+         * Obtains a non-null reference to the preference whose
+         * key is defined with given [resId] or throws
+         * e.g. `requirePreference(R.string.day_theme_key)` returns
+         * the preference whose key is `@string/day_theme_key`
+         * The resource IDs with preferences keys can be found on `res/values/preferences.xml`
+         */
+        protected fun <T : Preference?> requirePreference(@StringRes resId: Int): T {
+            return requirePreference(getString(resId)) as T
         }
 
         protected abstract val analyticsScreenNameConstant: String
@@ -558,7 +567,7 @@ class Preferences : AnkiActivity() {
                         if (listPreference != null) {
                             preferencesActivity.updateNotificationPreference(listPreference)
                             if (listPreference.value.toInt() < PENDING_NOTIFICATIONS_ONLY) {
-                                scheduleNotification(preferencesActivity.col.time, preferencesActivity)
+                                scheduleNotification(TimeManager.time, preferencesActivity)
                             } else {
                                 val intent = CompatHelper.compat.getImmutableBroadcastIntent(
                                     preferencesActivity, 0,
@@ -671,26 +680,6 @@ class Preferences : AnkiActivity() {
         protected val col: Collection?
             get() = CollectionHelper.getInstance().getCol(requireContext())
 
-        /** Sets the title of the window to the provided string  */
-        protected fun setTitle(@StringRes stringRes: Int) {
-            val activity: Activity? = activity
-
-            val supportActionBar: ActionBar?
-            if (activity is AppCompatActivity) {
-                supportActionBar = activity.supportActionBar
-            } else {
-                Timber.w("Activity was of the wrong type")
-                return
-            }
-
-            if (supportActionBar == null) {
-                Timber.w("No action bar detected")
-                return
-            }
-
-            supportActionBar.setTitle(stringRes)
-        }
-
         /**
          * Loads preferences (via addPreferencesFromResource) and sets up appropriate listeners for the preferences
          * Called by base class, do not call directly.
@@ -789,6 +778,35 @@ class Preferences : AnkiActivity() {
         }
     }
 
+    /**
+     * Fragment with preferences related to syncing
+     */
+    class SyncSettingsFragment : SpecificSettingsFragment() {
+        override val preferenceResource: Int
+            get() = R.xml.preferences_sync
+        override val analyticsScreenNameConstant: String
+            get() = "prefs.sync"
+
+        override fun initSubscreen() {
+            addPreferencesFromResource(preferenceResource)
+
+            // Configure force full sync option
+            requirePreference<ConfirmationPreferenceCompat>(R.string.force_full_sync_key).apply {
+                setDialogMessage(R.string.force_full_sync_summary)
+                setDialogTitle(R.string.force_full_sync_title)
+                setOkHandler {
+                    if (col == null) {
+                        showThemedToast(requireContext(), R.string.directory_inaccessible, false)
+                        return@setOkHandler
+                    }
+                    col!!.modSchemaNoCheck()
+                    col!!.setMod()
+                    showThemedToast(requireContext(), android.R.string.ok, true)
+                }
+            }
+        }
+    }
+
     class AppearanceSettingsFragment : SpecificSettingsFragment() {
         private var mBackgroundImage: SwitchPreference? = null
         override val preferenceResource: Int
@@ -796,7 +814,6 @@ class Preferences : AnkiActivity() {
         override val analyticsScreenNameConstant: String
             get() = "prefs.appearance"
 
-        @Suppress("deprecation") // startActivityForResult
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_appearance)
             mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
@@ -1062,101 +1079,6 @@ class Preferences : AnkiActivity() {
                 schedVerPreference.order = 5
                 screen.addPreference(schedVerPreference)
             }
-
-            // Make it possible to test crash reporting, but only for DEBUG builds
-            if (BuildConfig.DEBUG && !isUserATestClient) {
-                Timber.i("Debug mode, allowing for test crashes")
-                val triggerTestCrashPreference = Preference(requireContext())
-                triggerTestCrashPreference.key = "trigger_crash_preference"
-                triggerTestCrashPreference.title = "Trigger test crash"
-                triggerTestCrashPreference.summary = "Touch here for an immediate test crash"
-                triggerTestCrashPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
-                    throw RuntimeException("This is a test crash")
-                }
-                screen.addPreference(triggerTestCrashPreference)
-            }
-            // Make it possible to test analytics, but only for DEBUG builds
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, allowing for dynamic analytics config")
-                val analyticsDebugMode = Preference(requireContext())
-                analyticsDebugMode.key = "analytics_debug_preference"
-                analyticsDebugMode.title = "Switch Analytics to dev mode"
-                analyticsDebugMode.summary = "Touch here to use Analytics dev tag and 100% sample rate"
-                analyticsDebugMode.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    if (UsageAnalytics.isEnabled) {
-                        showThemedToast(requireContext(), "Analytics set to dev mode", true)
-                    } else {
-                        showThemedToast(requireContext(), "Done! Enable Analytics in 'General' settings to use.", true)
-                    }
-                    UsageAnalytics.setDevMode()
-                    true
-                }
-                screen.addPreference(analyticsDebugMode)
-            }
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, allowing database lock preference")
-                val lockDbPreference = Preference(requireContext())
-                lockDbPreference.key = "debug_lock_database"
-                lockDbPreference.title = "Lock Database"
-                lockDbPreference.summary = "Touch here to lock the database (all threads block in-process, exception if using second process)"
-                lockDbPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    val c = CollectionHelper.getInstance().getCol(requireContext())!!
-                    Timber.w("Toggling database lock")
-                    c.db.database.beginTransaction()
-                    true
-                }
-                screen.addPreference(lockDbPreference)
-            }
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, option for showing onboarding walkthrough")
-                val onboardingPreference = SwitchPreference(requireContext())
-                onboardingPreference.key = "showOnboarding"
-                onboardingPreference.setTitle(R.string.show_onboarding)
-                onboardingPreference.setSummary(R.string.show_onboarding_desc)
-                screen.addPreference(onboardingPreference)
-            }
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, option for resetting onboarding walkthrough")
-                val onboardingPreference = Preference(requireContext())
-                onboardingPreference.key = "resetOnboarding"
-                onboardingPreference.setTitle(R.string.reset_onboarding)
-                onboardingPreference.setSummary(R.string.reset_onboarding_desc)
-                onboardingPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    reset(requireContext())
-                    true
-                }
-                screen.addPreference(onboardingPreference)
-            }
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, add option for using V16 backend")
-                val onboardingPreference = Preference(requireContext())
-                onboardingPreference.key = "useRustBackend"
-                onboardingPreference.setDefaultValue(AnkiDroidApp.TESTING_USE_V16_BACKEND)
-                onboardingPreference.title = "Use V16 Backend"
-                onboardingPreference.summary = "UNSTABLE. DO NOT USE ON A COLLECTION YOU CARE ABOUT. REVERTED ON APP CLOSE"
-                onboardingPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    AnkiDroidApp.TESTING_USE_V16_BACKEND = true
-                    Consts.SCHEMA_VERSION = 16
-                    (requireActivity() as Preferences).restartWithNewDeckPicker()
-                    true
-                }
-                screen.addPreference(onboardingPreference)
-            }
-            if (BuildConfig.DEBUG) {
-                Timber.i("Debug mode, add option for scoped storage")
-                val onboardingPreference = Preference(requireContext())
-                onboardingPreference.key = "useScopedStorage"
-                onboardingPreference.setDefaultValue(AnkiDroidApp.TESTING_SCOPED_STORAGE)
-                onboardingPreference.title = "Enable Scoped Storage"
-                onboardingPreference.summary = "UNSTABLE. DO NOT USE ON A COLLECTION YOU CARE ABOUT. REVERTED ON APP CLOSE"
-                onboardingPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                    AnkiDroidApp.TESTING_SCOPED_STORAGE = true
-                    (requireActivity() as Preferences).restartWithNewDeckPicker()
-                    true
-                }
-                screen.addPreference(onboardingPreference)
-            }
             // Adding change logs in both debug and release builds
             Timber.i("Adding open changelog")
             val changelogPreference = Preference(requireContext())
@@ -1165,19 +1087,6 @@ class Preferences : AnkiActivity() {
             infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
             changelogPreference.intent = infoIntent
             screen.addPreference(changelogPreference)
-            // Force full sync option
-            val fullSyncPreference = requirePreference<ConfirmationPreferenceCompat>("force_full_sync")
-            fullSyncPreference.setDialogMessage(R.string.force_full_sync_summary)
-            fullSyncPreference.setDialogTitle(R.string.force_full_sync_title)
-            fullSyncPreference.setOkHandler {
-                if (col == null) {
-                    showThemedToast(requireContext(), R.string.directory_inaccessible, false)
-                    return@setOkHandler
-                }
-                col!!.modSchemaNoCheck()
-                col!!.setMod()
-                showThemedToast(requireContext(), android.R.string.ok, true)
-            }
             // Workaround preferences
             removeUnnecessaryAdvancedPrefs()
             addThirdPartyAppsListener()
@@ -1245,7 +1154,6 @@ class Preferences : AnkiActivity() {
             get() = "prefs.custom_buttons"
 
         override fun initSubscreen() {
-            setTitle(R.string.custom_buttons)
             addPreferencesFromResource(R.xml.preferences_custom_buttons)
             // Reset toolbar button customizations
             val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
@@ -1293,7 +1201,6 @@ class Preferences : AnkiActivity() {
             get() = "prefs.advanced_statistics"
 
         override fun initSubscreen() {
-            setTitle(R.string.advanced_statistics_title)
             addPreferencesFromResource(R.xml.preferences_advanced_statistics)
         }
     }
@@ -1305,7 +1212,6 @@ class Preferences : AnkiActivity() {
             get() = "prefs.custom_sync_server"
 
         override fun initSubscreen() {
-            setTitle(R.string.custom_sync_server_title)
             addPreferencesFromResource(R.xml.preferences_custom_sync_server)
             val syncUrlPreference = requirePreference<Preference>("syncBaseUrl")
             val syncMediaUrlPreference = requirePreference<Preference>("syncMediaUrl")
@@ -1351,6 +1257,68 @@ class Preferences : AnkiActivity() {
             addPreferencesFromResource(R.xml.preferences_controls)
             val cat = requirePreference<PreferenceCategory>("key_map_category")
             setup(cat)
+        }
+    }
+
+    /**
+     * Fragment exclusive to DEBUG builds which can be used
+     * to add options useful for developers or WIP features.
+     */
+    class DevOptionsFragment : SpecificSettingsFragment() {
+        override val preferenceResource: Int
+            get() = R.xml.preferences_dev_options
+        override val analyticsScreenNameConstant: String
+            get() = "prefs.dev_options"
+
+        override fun initSubscreen() {
+            addPreferencesFromResource(preferenceResource)
+
+            // Make it possible to test crash reporting
+            requirePreference<Preference>(getString(R.string.pref_trigger_crash_key)).setOnPreferenceClickListener {
+                Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
+                throw RuntimeException("This is a test crash")
+            }
+            // Make it possible to test analytics
+            requirePreference<Preference>(getString(R.string.pref_analytics_debug_key)).setOnPreferenceClickListener {
+                if (UsageAnalytics.isEnabled) {
+                    showThemedToast(requireContext(), "Analytics set to dev mode", true)
+                } else {
+                    showThemedToast(requireContext(), "Done! Enable Analytics in 'General' settings to use.", true)
+                }
+                UsageAnalytics.setDevMode()
+                true
+            }
+            // Lock database
+            requirePreference<Preference>(getString(R.string.pref_lock_database_key)).setOnPreferenceClickListener {
+                val c = CollectionHelper.getInstance().getCol(requireContext())!!
+                Timber.w("Toggling database lock")
+                c.db.database.beginTransaction()
+                true
+            }
+            // Reset onboarding
+            requirePreference<Preference>(getString(R.string.pref_reset_onboarding_key)).setOnPreferenceClickListener {
+                OnboardingUtils.reset(requireContext())
+                true
+            }
+            // Use V16 Backend
+            requirePreference<Preference>(getString(R.string.pref_rust_backend_key)).apply {
+                setDefaultValue(AnkiDroidApp.TESTING_USE_V16_BACKEND)
+                setOnPreferenceClickListener {
+                    AnkiDroidApp.TESTING_USE_V16_BACKEND = true
+                    Consts.SCHEMA_VERSION = 16
+                    (requireActivity() as Preferences).restartWithNewDeckPicker()
+                    true
+                }
+            }
+            // Use scoped storage
+            requirePreference<Preference>(getString(R.string.pref_scoped_storage_key)).apply {
+                setDefaultValue(AnkiDroidApp.TESTING_SCOPED_STORAGE)
+                setOnPreferenceClickListener {
+                    AnkiDroidApp.TESTING_SCOPED_STORAGE = true
+                    (requireActivity() as Preferences).restartWithNewDeckPicker()
+                    true
+                }
+            }
         }
     }
 
@@ -1467,6 +1435,19 @@ class Preferences : AnkiActivity() {
                 Timber.w("Unknown scheduler version: %d", ver)
             }
             return ver
+        }
+
+        /**
+         * Join [strings] with ` • ` as separator
+         * to build a summary string for some preferences categories
+         * e.g. `foo`, `bar`, `hi` ->  `foo • bar • hi`
+         */
+        fun buildCategorySummary(vararg strings: String): String {
+            return if (!LanguageUtils.appLanguageIsRTL()) {
+                strings.joinToString(separator = " • ")
+            } else {
+                strings.reversed().joinToString(separator = " • ")
+            }
         }
 
         /** Whether the user is logged on to AnkiWeb  */

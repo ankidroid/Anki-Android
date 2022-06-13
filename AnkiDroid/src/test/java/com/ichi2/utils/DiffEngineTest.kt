@@ -23,6 +23,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
@@ -62,5 +63,18 @@ class DiffEngineTest : RobolectricTest() {
             output,
             containsString(input)
         )
+    }
+
+    @Test
+    fun combiningMarksGetSeparatedTest() {
+        val diffEngine = DiffEngine()
+
+        val diffedHtmlStrings = diffEngine.diffedHtmlStrings("အခ်ျန်", "အချိန်")
+
+        val expectedTyped = "<span class=\"typeGood\">အခ</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeBad\">&nbsp;ိ</span><span class=\"typeGood\">န်</span>"
+        val expectedCorrect = "<span class=\"typeGood\">အခ</span><span class=\"typeMissed\">&nbsp;်</span><span class=\"typeGood\">&nbsp;ျ</span><span class=\"typeGood\">န်</span>"
+
+        assertEquals(expectedTyped, diffedHtmlStrings[0])
+        assertEquals(expectedCorrect, diffedHtmlStrings[1])
     }
 }

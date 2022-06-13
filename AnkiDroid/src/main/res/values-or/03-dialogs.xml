@@ -119,8 +119,8 @@
     <string name="import_update_details">ବିଦ୍ୟମାନ %2$d ନୋଟଗୁଡିକର %1$dକୁ ଅଦ୍ୟତନ କରାଯାଇଛି </string>
     <string name="import_update_ignored">କିଛି ଅଦ୍ୟତନକୁ ଅଣଦେଖା କରାଯାଇଥିଲା କାରଣ ନୋଟ୍ ପ୍ରକାର ବଦଳିଛି</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">%2$dଟି ପତ୍ର ଆମଦାନୀ ହୋଇଛି</item>
+        <item quantity="other">%1$dଟି ଫାଇଲ୍ ଆମଦାନୀ ହୋଇଛି\nସର୍ବମୋଟ %2$dଟି ପତ୍ର ଆମଦାନୀ କରାଗଲା</item>
     </plurals>
     <string name="sd_card_full_title">SD କାର୍ଡ ପୂର୍ଣ୍ଣ</string>
     <string name="sd_card_almost_full_title">SD କାର୍ଡ ପ୍ରାୟ ପୂର୍ଣ୍ଣ</string>
@@ -189,7 +189,7 @@
     <string name="integrity_check_insufficient_space">ଡାଟାବେସ୍ ଯାଞ୍ଚ ବହୁ ପରିମାଣର ଅସ୍ଥାୟୀ ଷ୍ଟୋରେଜ୍ ବ୍ୟବହାର କରେ।\n\nଏହା ଜାରି ରଖିବା ପୂର୍ବରୁ ଆପଣଙ୍କ ଡିଭାଇସରେ ଅତି କମରେ %s ଖାଲି ସ୍ଥାନ ଥିବା ଦୃଢ଼ ଭାବରେ ପରାମର୍ଶ ଦିଆଯାଇଛି।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nଆପଣଙ୍କ ପାଖରେ ବର୍ତ୍ତମାନ %s ଖାଲି ଅଛି।</string>
     <string name="integrity_check_fixed_no_home_deck">ଭୁଲ ଘରୋଇ ତାସଖଣ୍ଡ ସହିତ %dଟି ପତ୍ର ଉଦ୍ଧାର କରାଯାଇଛି। ଅଧିକ ସୂଚନା ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
-    <string name="video_creation_error">ଭିଡ଼ିଓ ଚାଳନ କରାଯାଇପାରିଲା ନାହିଁ</string>
+    <string name="video_creation_error">ଵିଡ଼ିଓ ଚାଳନ କରାଯାଇପାରିଲା ନାହିଁ</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">ତାସଖଣ୍ଡ ପରିବର୍ତ୍ତନ କରିହେଲା ନାହିଁ</string>
     <!-- AbstractFlashCardViewer -->

@@ -28,4 +28,20 @@
     <string name="night_theme_key">nightTheme</string>
     <string name="gestures_preference">gestures</string>
     <string name="gestures_corner_touch_preference">gestureCornerTouch</string>
+    <!-- Sync preferences -->
+    <string name="pref_sync_screen_key">syncScreen</string>
+    <string name="sync_account_key">syncAccount</string>
+    <string name="sync_fetch_missing_media_key">syncFetchesMedia</string>
+    <string name="automatic_sync_choice_key">automaticSyncMode</string>
+    <string name="force_full_sync_key">force_full_sync</string>
+    <string name="custom_sync_server_key">custom_sync_server_link</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="pref_trigger_crash_key">trigger_crash_preference</string>
+    <string name="pref_analytics_debug_key">analytics_debug_preference</string>
+    <string name="pref_lock_database_key">debug_lock_database</string>
+    <string name="pref_show_onboarding_key">showOnboarding</string>
+    <string name="pref_reset_onboarding_key">resetOnboarding</string>
+    <string name="pref_rust_backend_key">useRustBackend</string>
+    <string name="pref_scoped_storage_key">useScopedStorage</string>
 </resources>

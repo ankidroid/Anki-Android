@@ -162,8 +162,8 @@
     <string name="custom_study_deck_name">Допълнително време за учене</string>
     <string name="custom_study_deck_exists">Първо преименувайте съществуващото тесте за учене</string>
     <string name="empty_deck">Това тесте е празно</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Потърси тесте</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Потърси тесте</string>
     <string name="empty_deck_add_note">Добавяне на карта</string>
     <string name="invalid_deck_name">Невалидно име на тесте</string>
     <string name="studyoptions_empty">Това тесте е празно. Натиснете бутона + за добавяне на ново съдържание.</string>
@@ -175,7 +175,7 @@
     <string name="studyoptions_congrats_custom">За да учите извън нормалният график, докоснете бутона \"Допълнително учене\"</string>
     <string name="studyoptions_no_cards_due">Няма оставащи карти</string>
     <string name="sd_card_not_mounted">Не е поставена SD-карта памет</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="empty_cloze_warning">Редактирай тази бележка и добави празни полета. (%1$s)</string>
     <string name="button_sync">Синхрон</string>
     <string name="cancel_sync_confirm">Искате ли да прекратите синхронизирането?</string>
     <string name="continue_sync">Продължи синхронизацията</string>
@@ -192,12 +192,12 @@
     <string name="card_template_editor_styling">Оформление</string>
     <string name="card_template_editor_menu_card_browser_appearance">Външен вид на браузъра на карти</string>
     <string name="card_template_editor_deck_override">Deck override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">Добави поле</string>
+    <string name="card_template_editor_select_field">Избери поле</string>
     <string name="card_template_editor_cant_delete">Трябва да има поне една карта</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">Това ще създаде %1$d карти. Продължавате ли?</item>
+        <item quantity="other">Това ще създаде %1$d карти. Продължавате ли?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Изтриване на тип карта \"%2$s\" и неговата %1$d карта?</item>
@@ -227,16 +227,16 @@
     <string name="wrong_tag_closed">Намерено „{{/%1$s}}“, но очаквано „{{/%2$s}}“</string>
     <string name="filter_error">Грешка във филтъра %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">Колекциите не могат да бъдат обединени.\nКоя от тях искате да запазите?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
+    <string name="sync_conflict_remote_confirm_new">Да се замести ли колекцията Ви от AnkiDroid с тази от AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Да се замести ли колекцията Ви от AnkiWeb с тази от AnkDroid?</string>
+    <string name="sync_conflict_title_new">Изберете коя колекция да запазите</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s копирай</string>
 </resources>

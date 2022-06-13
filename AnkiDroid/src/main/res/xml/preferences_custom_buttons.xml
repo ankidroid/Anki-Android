@@ -25,7 +25,8 @@ MENU_DISABLED = 3
 Ensure to add the custom icons to Preferences.java's reset functionality
 TODO: Add a unit test
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/custom_buttons">
     <Preference
         android:key="reset_custom_buttons"
         android:title="@string/reset_custom_buttons" />

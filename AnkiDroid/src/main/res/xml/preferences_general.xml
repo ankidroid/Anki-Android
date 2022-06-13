@@ -22,34 +22,8 @@
 
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/app_name"
+    android:title="@string/pref_cat_general"
     android:summary="@string/pref_cat_general_summ">
-    <PreferenceCategory android:title="@string/button_sync" >
-        <Preference
-            android:dialogTitle="@string/sync_account"
-            android:key="syncAccount"
-            android:summary="@string/sync_account_summ_logged_out"
-            android:title="@string/sync_account" >
-            <intent
-                android:targetClass="com.ichi2.anki.MyAccount"
-                android:targetPackage="com.ichi2.anki" />
-        </Preference>
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="syncFetchesMedia"
-            android:summary="@string/sync_fetch_missing_media_summ"
-            android:title="@string/sync_fetch_missing_media" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="automaticSyncMode"
-            android:summary="@string/automatic_sync_choice_summ"
-            android:title="@string/automatic_sync_choice" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="showSyncStatusBadge"
-            android:summary="@string/sync_status_badge_summ"
-            android:title="@string/sync_status_badge" />
-    </PreferenceCategory>
     <PreferenceCategory android:title="@string/app_name">
         <ListPreference
             android:entries="@array/add_to_cur_labels"

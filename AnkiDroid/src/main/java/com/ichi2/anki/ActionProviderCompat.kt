@@ -1,5 +1,5 @@
 /****************************************************************************************
- * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>                        *
+ * Copyright (c) 2022 lukstbit <52494258+lukstbit@users.noreply.github.com>             *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -13,23 +13,25 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki
 
-package com.ichi2.anki.dialogs
+import android.content.Context
+import android.view.View
+import androidx.core.view.ActionProvider
 
-import androidx.fragment.app.Fragment
-import com.ichi2.anki.dialogs.InsertFieldDialog.InsertFieldListener
-import com.ichi2.utils.ExtendedFragmentFactory
-import java.io.Serializable
+/**
+ * Fix for [ActionProvider.onCreateActionView] deprecation on API 16+. This class should be used
+ * instead of the library [ActionProvider].
+ *
+ * @see ActionProvider
+ */
+abstract class ActionProviderCompat(context: Context) : ActionProvider(context) {
 
-class InsertFieldDialogFactory(private val insertFieldListener: InsertFieldListener) : ExtendedFragmentFactory(), Serializable {
-    override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
-        val cls = loadFragmentClass(classLoader, className)
-        return if (cls == InsertFieldDialog::class.java) {
-            newInsertFieldDialog()
-        } else super.instantiate(classLoader, className)
-    }
-
-    fun newInsertFieldDialog(): InsertFieldDialog {
-        return InsertFieldDialog(insertFieldListener)
+    @Deprecated("Override onCreateActionView(MenuItem)")
+    override fun onCreateActionView(): View {
+        // The previous code returned null from this method but updates to the core-ktx library
+        // forced with an annotation the return of a non null View. Throwing an exception is safe
+        // because the system doesn't use this method anymore.
+        throw UnsupportedOperationException("This should no longer be called. onCreateActionView(MenuItem) should be used")
     }
 }

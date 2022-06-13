@@ -14,7 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <include layout="@layout/reviewer_flashcard_fullscreen_noanswers" />
+        <include
+            layout="@layout/reviewer_flashcard_fullscreen_noanswers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
         <RelativeLayout
             android:id="@+id/front_frame"

@@ -24,7 +24,7 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Size
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.libanki.utils.TimeManager
 import java.io.File
 
 /** Implementation of [Compat] for SDK level 29  */
@@ -46,7 +46,7 @@ open class CompatV29 : CompatV26(), Compat {
     override fun saveImage(context: Context, bitmap: Bitmap, baseFileName: String, extension: String, format: Bitmap.CompressFormat, quality: Int): Uri {
         val imagesCollection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
         val destDir = File(Environment.DIRECTORY_PICTURES, "AnkiDroid")
-        val date = CollectionHelper.getInstance().getTimeSafe(context).intTimeMS()
+        val date = TimeManager.time.intTimeMS()
 
         val newImage = ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, "$date.$extension")

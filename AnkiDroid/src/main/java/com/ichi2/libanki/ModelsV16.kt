@@ -306,7 +306,7 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
             >>> pp(anki.utils.checksum(str(time.time()))[:5])   = '07a29'
             >>> pp(anki.utils.checksum(str(time.time())))       = '07a2939b5546263476ba9c7eca7489fa95af4a18'
              */
-            m.name += "-" + checksum(col.time.intTimeMS().toString()).substring(0, 5)
+            m.name += "-" + checksum(TimeManager.time.intTimeMS().toString()).substring(0, 5)
         }
     }
 
@@ -598,7 +598,15 @@ and notes.mid = ? and cards.ord = ?""",
                     flds[i] = fld
                 }
                 val fldsAsString = joinFields(flds)
-                d.append(arrayOf(fldsAsString, newModel.id, col.time.intTime(), col.usn(), nid,))
+                d.append(
+                    arrayOf(
+                        fldsAsString,
+                        newModel.id,
+                        TimeManager.time.intTime(),
+                        col.usn(),
+                        nid,
+                    )
+                )
             }
         }
         col.db.executeMany("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", d)
@@ -636,7 +644,7 @@ and notes.mid = ? and cards.ord = ?""",
                     new = map[ord]
                 }
                 if (new != null) {
-                    d.append(arrayOf(new, col.usn(), col.time.intTime(), cid))
+                    d.append(arrayOf(new, col.usn(), TimeManager.time.intTime(), cid))
                 } else {
                     deleted.append(cid)
                 }

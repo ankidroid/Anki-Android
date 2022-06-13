@@ -175,7 +175,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="zero">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="zero">إضافة \"%s\" إلى المجموعة؟ قد يستغرق ذلك وقتاً طويلاً</item>
         <item quantity="one">Add “%s” to collection? This may take a long time</item>
         <item quantity="two">Do you want to import the following files:\n%s\nThis may take a long time</item>
         <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
@@ -183,7 +183,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">ليس هذا ملف حزمة أنكي صالحًا</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">خطأ</string>
     <string name="import_log_failed_unzip">فشل فك ضغط ملف apkg: %s</string>
     <string name="import_log_failed_copy_to">فشل نسخ ملف apkg إلى %s</string>
     <string name="import_log_failed_validate">فشل التحقق من صحة ملف apkg</string>
@@ -198,9 +198,9 @@
     <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
     <string name="import_error_copy_file_to_cache">فشلت copyFileToCache() (ربما بسبب نفاذ مساحة التخزين)</string>
     <string name="import_error_unhandled_scheme">استيراد غير معالج من: “%s”</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_multiple_colpkg">تم تحديد العديد من ملفات colpkg.</string>
+    <string name="import_error_colpkg_apkg">تم تحديد كل من ملفات apkg &amp; colpkg في وقت واحد.</string>
+    <string name="import_stats_error">حدثت بعض الأخطاء أثناء استيراد الملفات التالية:\n%s</string>
     <string name="import_replacing">يجري استبدال المجموعة&#8230;</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
     <string name="export_include_schedule">تضمين معلومات الجدولة</string>

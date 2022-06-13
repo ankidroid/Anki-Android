@@ -39,6 +39,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
@@ -80,6 +81,8 @@ open class RobolectricTest : CollectionGetter {
 
     @Before
     open fun setUp() {
+        TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
+
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionHelper.getInstance().setColForTests(null)
 
@@ -189,6 +192,8 @@ open class RobolectricTest : CollectionGetter {
             // called on each AnkiDroidApp.onCreate(), and spams the build
             // there is no onDestroy(), so call it here.
             Timber.uprootAll()
+
+            TimeManager.reset()
         }
     }
 
@@ -313,13 +318,10 @@ open class RobolectricTest : CollectionGetter {
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
-    override fun getCol(): Collection {
-        val time = MockTime(2020, 7, 7, 7, 0, 0, 0, 10)
-        return CollectionHelper.getInstance().getCol(targetContext, time)
-    }
+    override fun getCol(): Collection = CollectionHelper.getInstance().getCol(targetContext)
 
     protected val collectionTime: MockTime
-        get() = col.time as MockTime
+        get() = TimeManager.time as MockTime
 
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {

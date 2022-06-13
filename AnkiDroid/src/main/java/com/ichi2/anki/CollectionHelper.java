@@ -31,6 +31,7 @@ import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.preferences.PreferenceExtensions;
 import com.ichi2.utils.FileUtil;
 
@@ -115,6 +116,17 @@ public class CollectionHelper {
         return LazyHolder.INSTANCE;
     }
 
+    /**
+     * Opens the collection without checking to see if the directory exists.
+     *
+     * path should be tested with File.exists() and File.canWrite() before this is called
+     */
+    private Collection openCollection(Context context, String path) {
+        Timber.i("Begin openCollection: %s", path);
+        Collection collection = Storage.Collection(context, path, false, true);
+        Timber.i("End openCollection: %s", path);
+        return collection;
+    }
 
     /**
      * Get the single instance of the {@link Collection}, creating it if necessary  (lazy initialization).
@@ -122,26 +134,6 @@ public class CollectionHelper {
      * @return instance of the Collection
      */
     public synchronized Collection getCol(Context context) {
-        if (colIsOpen()) {
-            return mCollection;
-        }
-        return getCol(context, new SystemTime());
-    }
-
-    /**
-     * Opens the collection without checking to see if the directory exists.
-     *
-     * path should be tested with File.exists() and File.canWrite() before this is called
-     */
-    private Collection openCollection(Context context, @NonNull Time time, String path) {
-        Timber.i("Begin openCollection: %s", path);
-        Collection collection = Storage.Collection(context, path, false, true, time);
-        Timber.i("End openCollection: %s", path);
-        return collection;
-    }
-
-    @VisibleForTesting
-    public synchronized Collection getCol(Context context, @NonNull Time time) {
         // Open collection
         if (!colIsOpen()) {
             String path = getCollectionPath(context);
@@ -154,7 +146,7 @@ public class CollectionHelper {
                 return null;
             }
             // Open the database
-            mCollection = openCollection(context, time, path);
+            mCollection = openCollection(context, path);
         }
         return mCollection;
     }
@@ -181,13 +173,13 @@ public class CollectionHelper {
             throw new StorageAccessException(path + " is not writable");
         }
 
-        return openCollection(context, new SystemTime(), path);
+        return openCollection(context, path);
     }
 
     /** Collection time if possible, otherwise real time.*/
     public synchronized Time getTimeSafe(Context context) {
         try {
-            return getCol(context).getTime();
+            return TimeManager.INSTANCE.getTime();
         } catch (Exception e) {
             Timber.w(e);
             return new SystemTime();

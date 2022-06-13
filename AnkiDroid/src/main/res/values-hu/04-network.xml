@@ -66,7 +66,7 @@
     <string name="alert_logging_message">Bejelentkezés, kérem várjon...</string>
     <string name="invalid_username_password">Érvénytelen e-mail cím vagy jelszót.</string>
     <string name="reset_password">Jelszó visszaállítása</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">Elfelejtette az emailt?</string>
     <!-- AndroidManifest.xml -->
     <string name="preferences_title">Beállítások</string>
     <string name="deckpreferences_title">XXX lehetőségei</string>
@@ -88,7 +88,7 @@
     <string name="sync_overwrite_error">A jelenlegi gyűjteményt nem lehetett felülírni a letöltött fájllal.</string>
     <string name="sync_connection_error">A kapcsolat túllépte az időkeretet. Vagy az internet-kapcsolattal van probléma, vagy nagy fájl van a média mappában.</string>
     <string name="sync_write_access_error">A letöltött fájlt nem sikerült menteni a sd kártya. Az sd kártya vagy írásvédett, vagy nincs rajta elég hely.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">A Haladó beállításokban megadott egyéni szinkronizáló szerver elérhetetlen (%s). Kérem adj meg egy érvényes szervert, vagy tiltsd a beállítást.</string>
     <string name="sync_deletions_message">Törlések szinkronizálása...</string>
     <string name="sync_small_objects_message">Kis méretű objektumok szinkronizálása...</string>
     <string name="sync_finish_message">Szinkronizálás befejezése...</string>
@@ -103,7 +103,7 @@
     <string name="sync_media_find">Médiaváltozás keresése&#8230;</string>
     <string name="sync_media_no_changes">Nincs változás a média fájlokban.</string>
     <string name="sync_media_success">Média szinkronizál sikeresen.</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Média szinkronozás részben elkészült:\n%1$d média fájl letöltve.\n%2$d média fájl feltöltve.</string>
     <string name="sync_media_changes_count">%d médiaváltozás feltöltése</string>
     <string name="sync_media_downloaded_count">%d médiafájl letöltve</string>
     <string name="sync_sanity_failed">Szinkronizálás után a gyűjtemény hibába ütközött. A probléma megoldásához az AnkiDroid teljes szinkronizálást hajt végre. Kérjük, válaszd ki azt a lapot, amelyet meg szeretnél tartani.</string>
@@ -129,5 +129,5 @@
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Szinkronizálás (teljes)</string>
     <string name="sync_menu_title_no_account">Szinkronizálás (bejelentkezés)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+    <string name="sync_error_unknown_host_readable">Nem tudok csatlakozni az AnkiWebhez. Működik az internetje?\n\n%s</string>
 </resources>

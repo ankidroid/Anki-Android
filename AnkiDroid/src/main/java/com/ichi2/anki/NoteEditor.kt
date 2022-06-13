@@ -517,10 +517,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // #6762 values are reversed if using a keyboard and pressing Ctrl+Shift+LeftArrow
         val start = Math.min(selectionStart, selectionEnd)
         val end = Math.max(selectionStart, selectionEnd)
-        var text = ""
-        if (textBox.text != null) {
-            text = textBox.text.toString()
-        }
+        val text = textBox.text?.toString() ?: ""
 
         // Split the text in the places where the formatting will take place
         val beforeText = text.substring(0, start)
@@ -1899,11 +1896,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun updateField(field: FieldEditText?): Boolean {
-        var fieldContent = ""
-        val fieldText = field!!.text
-        if (fieldText != null) {
-            fieldContent = fieldText.toString()
-        }
+        val fieldContent = field!!.text?.toString() ?: ""
         val correctedFieldContent = NoteService.convertToHtmlNewline(fieldContent, shouldReplaceNewlines())
         if (mEditorNote!!.values()[field.ord] != correctedFieldContent) {
             mEditorNote!!.values()[field.ord] = correctedFieldContent
@@ -2106,7 +2099,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         nextClozeIndex = Math.max(1, nextClozeIndex)
 
         // Update text field with updated text and selection
-        return String.format("{{c%s::%s}}", nextClozeIndex, selectedText)
+        return "{{c$nextClozeIndex::$selectedText}}"
     }
 
     private fun hasClozeDeletions(): Boolean {

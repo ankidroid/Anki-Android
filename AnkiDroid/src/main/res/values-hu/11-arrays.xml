@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">Ha a kártyára nincs megadva betűtípus</string>
     <string name="override_font_always">Mindig</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Rendszertéma követése</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Világos</string>
     <string name="day_theme_plain">Egyszerű</string>
@@ -81,13 +81,13 @@
     <string name="night_theme_black">Fekete</string>
     <string name="night_theme_dark">Sötét</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
+    <string name="html_size_code_xx_small">XXS kicsi</string>
+    <string name="html_size_code_x_small">XS kicsi</string>
     <string name="html_size_code_small">kicsi</string>
     <string name="html_size_code_medium">közepes</string>
     <string name="html_size_code_large">nagy</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_x_large">XL nagy</string>
+    <string name="html_size_code_xx_large">XXL nagy</string>
     <!-- gestures_labels -->
     <string name="gesture_no_action">Nincs művelet</string>
     <string name="gesture_answer_1">Válasz gomb 1</string>
@@ -103,18 +103,18 @@
     <string name="gesture_flag_orange">Narancs Jelölő Bekapcsolása</string>
     <string name="gesture_flag_green">Zöld Jelölő Bekapcsolása</string>
     <string name="gesture_flag_blue">Kék Jelölő Bekapcsolása</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_pink">Rózsaszín jelölő bekapcsolás</string>
+    <string name="gesture_flag_turquoise">Türkiz jelölő bekapcsolás</string>
+    <string name="gesture_flag_purple">Lila jelölő bekapcsolása</string>
     <string name="gesture_flag_remove">Jelölő Törlése</string>
     <string name="gesture_page_up">Felfele</string>
     <string name="gesture_page_down">Lefele</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_abort_sync">Tanulás vége és szinkronozás</string>
+    <string name="gesture_toggle_whiteboard">Tábla engedélyezése</string>
+    <string name="gesture_show_hint">Tipp mutatása</string>
+    <string name="gesture_show_all_hints">Tippek megjelenítése</string>
     <string name="record_voice">Felvétel</string>
     <string name="replay_voice">Visszajátszás</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="automatic_answer_option_2">Nehéz (Jó ha nincs ilyen)</string>
+    <string name="automatic_answer_option_4">Könnyű (Jó ha nincs ilyen)</string>
 </resources>

@@ -15,14 +15,11 @@
 package com.ichi2.widget
 
 import android.content.Context
-import android.content.Intent
 import android.util.Pair
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.MetaDB
 import com.ichi2.anki.Preferences
-import com.ichi2.anki.services.NotificationService
 import com.ichi2.async.BaseAsyncTask
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.KotlinCleanup
@@ -98,9 +95,7 @@ object WidgetStatus {
             if (sSmallWidgetEnabled) {
                 UpdateService().doUpdate(result)
             }
-            val intent = Intent(NotificationService.INTENT_ACTION)
-            val appContext = result.applicationContext
-            LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent)
+            (result.applicationContext as? AnkiDroidApp)?.scheduleNotification()
         }
 
         private fun updateCounts(context: Context) {

@@ -47,22 +47,8 @@
     <string name="multimedia_editor_popup_text">उन्नत संपादक</string>
     <string name="multimedia_editor_popup_cloze">क्लोज़ विलोपन</string>
     <string name="multimedia_editor_popup_clear_field">क्षेत्र साफ़ करें</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">Glosbe.com द्वारा संचालित</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">से</string>
-    <string name="multimedia_editor_trans_to">को</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">अनुवाद करें</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">ऑनलाइन अनुवाद की जा रही है</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">अनुवाद चुनें</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">शब्दकोष चुनें</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">पहले ColorDict स्थापित करें</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">लोड करें</string>
     <string name="multimedia_editor_pron_looking_up">उच्चारण खोजा जा रहा है</string>
@@ -79,14 +65,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">समाप्त</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">इसे खोजें:</string>
     <string name="multimedia_editor_text_field_editing_say">उच्चारण</string>
     <string name="multimedia_editor_text_field_editing_clear">खाली करें</string>
     <string name="multimedia_editor_text_field_editing_clone">से जुड़वाँ बनाएँ</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">अनुवाद</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">इनपुट कुछ पाठ पहले</string>
-    <string name="multimedia_editor_text_field_editing_many_words">शब्दकोश सामांयत: एक शब्द की अपेक्षा करता है</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">से ले</string>
     <!-- Multimedia card editor activity -->
@@ -106,7 +89,6 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">शब्द नहीं मिला</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">अनुवाद प्राप्त करना विफल रहा</string>
     <string name="multimedia_editor_searching_word">शब्द खोज</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">प्रतीक्षा करें</string>
@@ -123,7 +105,6 @@
     <string name="multimedia_editor_audio_view_create_failed">रिकॉर्डर टूलबार बनने में असमर्थता |</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">संपादन फ़ील्ड</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">अनुवाद</string>
     <!-- Network failure -->
     <string name="network_no_connection">कोई कनेक्शन नहीं है</string>
     <!-- Crop function-->

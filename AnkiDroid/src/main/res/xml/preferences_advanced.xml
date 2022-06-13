@@ -31,14 +31,6 @@
             android:key="deckPath"
             android:summary="@string/preference_summary_literal"
             android:title="@string/col_path" />
-        <com.ichi2.preferences.ConfirmationPreferenceCompat
-            android:key="force_full_sync"
-            android:title="@string/force_full_sync_title"
-            android:summary="@string/force_full_sync_summary" />
-        <Preference
-            android:key="custom_sync_server_link"
-            android:title="@string/custom_sync_server_title"
-            android:fragment="com.ichi2.anki.Preferences$CustomSyncServerSettingsFragment" />
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
                 android:defaultValue="8"

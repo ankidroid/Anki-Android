@@ -160,10 +160,10 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">%s\nをインポートしますか？\n時間がかかる場合があります</item>
     </plurals>
     <string name="import_log_no_apkg">これは読み込み可能なAnkiパッケージファイル（*.apkg）ではありません</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">エラー</string>
     <string name="import_log_failed_unzip">apkgファイルの解凍に失敗しました: %s</string>
     <string name="import_log_failed_copy_to">apkgファイルを %sにコピーできませんでした</string>
     <string name="import_log_failed_validate">apkgファイルの検証に失敗しました</string>
@@ -314,7 +314,7 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">カードのエラー: 読み込み失敗 ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">カードコンテンツエラー: メディアの更新が必要です</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="cannot_load_http_resource">HTTPリソースの読み込みはサポートされなくなりました</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\'デッキの読み込みに失敗しました</string>
     <string name="search_decks">デッキ名を検索</string>
@@ -380,25 +380,23 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
+    <string name="scoped_storage_title">ストレージ移行</string>
+    <string name="scoped_storage_initial_message">Androidがプライバシーに関する新しい方針を導入したことに伴い、AnkiDroidのデータの保存場所を変更する必要があります。\n\nこのデータ移行を済ませる前にAnkiDroidをアンインストールした場合、AnkiDroidであなたが使用していたデッキやメディアファイルなどのデータも削除されます。\n\nこのデータ移行を、できるだけ早く行うことを強くお勧めします</string>
+    <string name="scoped_storage_terms_message">移行をバックグラウンドで行います。移行中は、同期は行えません\n\n移行終了までの時間（推定）: %s</string>
+    <string name="scoped_storage_term_1">データのバックアップを取りました</string>
+    <string name="scoped_storage_term_1_ankiweb">最近AnkiWebとの同期を行いました</string>
+    <string name="scoped_storage_term_2">データの移動中はアプリをアンインストールしません</string>
     <string name="scoped_storage_select_all_terms">続行するにはすべての項目を承認してください</string>
     <string name="scoped_storage_learn_more">詳細</string>
     <string name="scoped_storage_postpone">後で</string>
-    <string name="scoped_storage_migrate">Migrate</string>
+    <string name="scoped_storage_migrate">移行</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="not_valid_js_addon">%s は有効なJavaScriptアドオンパッケージではありません</string>
+    <string name="could_not_create_dir">%s というディレクトリを作成できませんでした</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
+    <string name="malicious_archive_exceeds_limit">不正なアーカイブです。サイズが%1$sを超えるか、 ファイル数が%2$d個を超えています</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">タグ \'%s \' を展開</string>
 </resources>

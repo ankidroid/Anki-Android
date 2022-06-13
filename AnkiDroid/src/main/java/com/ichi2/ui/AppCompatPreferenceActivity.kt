@@ -19,6 +19,7 @@
 package com.ichi2.ui
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceActivity
@@ -30,6 +31,8 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.libanki.Collection
 
 /**
  * A [android.preference.PreferenceActivity] which implements and proxies the necessary calls
@@ -38,14 +41,26 @@ import com.ichi2.anki.AnkiDroidApp
  * This technique can be used with an [android.app.Activity] class, not just
  * [android.preference.PreferenceActivity].
  */
-abstract class AppCompatPreferenceActivity : PreferenceActivity() {
+abstract class AppCompatPreferenceActivity : PreferenceActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private var mDelegate: AppCompatDelegate? = null
+    protected lateinit var col: Collection
+        private set
+
+    fun isColInitialized() = ::col.isInitialized
+
+    protected var prefChanged = false
 
     @Deprecated("Deprecated in Java")
     override fun onCreate(savedInstanceState: Bundle?) {
         delegate.installViewFactory()
         delegate.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
+        val col = CollectionHelper.getInstance().getCol(this)
+        if (col != null) {
+            this.col = col
+        } else {
+            finish()
+        }
     }
 
     override fun attachBaseContext(base: Context) {
@@ -113,6 +128,13 @@ abstract class AppCompatPreferenceActivity : PreferenceActivity() {
 
     override fun invalidateOptionsMenu() {
         delegate.invalidateOptionsMenu()
+    }
+
+    protected abstract fun updateSummaries()
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
+        // update values on changed preference
+        prefChanged = true
+        updateSummaries()
     }
 
     private val delegate: AppCompatDelegate

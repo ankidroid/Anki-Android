@@ -58,7 +58,7 @@
     <string name="card_browser_unsuspend_card">Zrušit vyřazení karet</string>
     <string name="card_browser_mark_card">Označit poznámky</string>
     <string name="card_browser_unmark_card">Odznačit poznámky</string>
-    <string name="delete_card_title">Odstranit poznámku</string>
+    <string name="delete_card_title">Odstranit poznámku?</string>
     <string name="changed_deck_message">Přesunuto do %s</string>
     <string name="card_browser_show_marked">Filtrovat označené</string>
     <string name="card_browser_show_suspended">Filtrovat vyřazené</string>
@@ -96,7 +96,7 @@
     <string name="card_browser_no_cards_in_deck">V balíčku „%s “ nebyly nalezeny žádné karty</string>
     <string name="card_browser_search_all_decks">Prohledat všechny balíčky</string>
     <string name="card_browser_unknown_deck_name">Neznámý</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Zkrácený obsah</string>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d karta odstraněna</item>
         <item quantity="few">%d karty odstraněny</item>

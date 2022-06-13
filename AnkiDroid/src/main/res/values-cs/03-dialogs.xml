@@ -113,9 +113,9 @@
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
-    <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři \'%s\'.</string>
-    <string name="intent_aedict_empty">Kategorie \'výchozí\' je prázdná</string>
-    <string name="intent_aedict_category">Chcete-li přidat AnkiDroid karty, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem \'default\'</string>
+    <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři „%s“.</string>
+    <string name="intent_aedict_empty">Kategorie „výchozí“ je prázdná</string>
+    <string name="intent_aedict_category">Chcete-li přidat karty do AnkiDroid, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem „default“</string>
     <string name="custom_study_new_total_new">Nové karty v balíčku: %d</string>
     <string name="custom_study_rev_total_rev">K opakování v balíčku: %d</string>
     <string name="custom_study_new_extend">Zvýšit/snížit („-3“) dnešní limit nových karet o</string>
@@ -131,10 +131,10 @@
     <string name="import_update_details">Aktualizováno %1$d z %2$d existujících poznámek.</string>
     <string name="import_update_ignored">Některé aktualizace byly ignorovány, protože se změnil typ poznámky</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Importováno karet: %2$d</item>
+        <item quantity="few">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
+        <item quantity="many">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
+        <item quantity="other">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">SD karta je plná</string>
     <string name="sd_card_almost_full_title">SD karta téměř plná</string>

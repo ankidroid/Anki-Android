@@ -59,7 +59,7 @@
     <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
     <string name="initializing_tts">TTS indítása&#8230;</string>
     <string name="tts_no_tts">Ne beszélj</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\bNem használt fájlok:\n</string>
     <string-array name="about_content">
         <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>Az AnkiDroid egy tanulókártya alkalmazás, amely teljesen kompatibilis a Pc-s asztali kiadással <a href=\"%2$s\">Anki</a>. Létrehozhatsz, letölthetsz és tanulhatsz anyagokat az AnkiDroid és Pc-s verzió segítségével is. Ezeket az AnkiWeb segítségével egyszerűen szinkronizálhatod.]]></item>
         <item><![CDATA[AnkiDroid fejlesztése érdekében, kérjük jelentsd a hibákat <a href=\"%1$s\">the issue tracker</a>; az újabb funkciókkal kapcsolatos ötleteidnek is nagyon örülünk <a href=\"%2$s\">a wiki</a> vagy beszélgess másokkal <a href=\"%3$s\">a fórum</a>.]]></item>
@@ -83,8 +83,8 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">%d kártya átütemezése</item>
+        <item quantity="other">%d kártya átütemezése</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Jelenlegi intervallum: %d nap</item>
@@ -119,16 +119,16 @@
     <string name="import_update_details">Frissített %1$d %2$d meglévő jegyzetek.</string>
     <string name="import_update_ignored">Néhány frissítést figyelmen kívül hagytak, mert a jegyzet típusa megváltozott</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Importált kártyák: %2$d</item>
+        <item quantity="other">Importált kártyák: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">SD kártya tele</string>
     <string name="sd_card_almost_full_title">Az SD kártya már majdnem tele van</string>
-    <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title">Nincs hely</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid-nak szüksége van %s szabad tárterületre a folytatáshoz. Szabadíts fel helyet, légyszíves!</string>
     <string name="restore_backup_title">Biztonsági mentés visszaállítása?</string>
     <string name="restore_backup">A gyűjteményed egy régi másolattal felül lesz írva. A nem mentett változások elvesznek.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Válasszon másikat</string>
     <string name="dialog_cancel">Mégsem</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nem</string>
@@ -194,7 +194,7 @@
     <string name="card_browser_deck_change_error">Nem sikerült paklit változtatni</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Hiba a kártya adatainak dekódolása közben</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">%s visszavonva</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Sikertelen a pakli beállításainak feldolgozása: %s</string>
     <!-- Database Errors-->
@@ -220,8 +220,8 @@
     <string name="boot_service_failed_to_schedule_notifications">Az emlékeztetők ütemezése sikertelen</string>
     <string name="boot_service_too_many_notifications">Túl sok emlékeztető van beütemezve. Néhány nem fog megjelenni</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">Billentyűzet nyelvének kiválasztása</string>
+    <string name="locale_selection_dialog_summary">Néhány többnyelvű billentyűzet, mint a GBoard, támogatja a nyelv váltás szöveg bevitel közben\n\nKérd meg  a billentyűzet gyártóját, hogy engedélyezze a “setImeHintLocales” tulajdonságot, ha a billentyűzete nem vált nyelvet.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid használata</string>
     <string name="help_item_ankidroid_manual">AnkiDroid útmutató</string>
@@ -241,24 +241,24 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
+    <string name="help_title_privacy">Adatvédelem</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Adatvédelmi Irányelvek</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Adatvédelmi Irányelvek</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Általános Szerződési Feltételek</string>
+    <string name="help_title_send_exception">Hibajelentés küldése</string>
+    <string name="help_dialog_exception_report_debounce">A jelentést már elküldte</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Egy auto szinkronizálás elindulhat %d másodperc elteltével.</item>
         <item quantity="other">Egy automatikus szinkronizálás elindulhat %d másodperc múlva</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_new">A ma megnézendő új kártyák száma ebben a pakliban.</string>
+    <string name="deck_picker_rev">A ma elvégzendő kártyák száma ebben a pakliban.</string>
+    <string name="deck_picker_lrn">A tanulandó kártyák száma ebben a pakliban.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="deck_picker_counts">Nyisd meg a pakli áttekintő oldalát, az tartalamzza a ma megnézendő kártyák számát.</string>
+    <string name="import_deck_package">Pakli telepítőcsomag (.apkg)</string>
+    <string name="import_collection_package">Gyűjtemény telepítő csomag (.colpkg)</string>
 </resources>

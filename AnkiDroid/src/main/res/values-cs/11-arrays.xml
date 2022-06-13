@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">Když není určeno žádné písmo pro kartičky</string>
     <string name="override_font_always">Vždy</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Systémové</string>
+    <string name="theme_follow_system">Systémový</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Světlý</string>
     <string name="day_theme_plain">Klasický</string>
