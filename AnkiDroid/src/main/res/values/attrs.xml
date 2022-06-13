@@ -125,6 +125,7 @@
     <attr name="customTabNavBarColor" format="color"/>
     <!-- Popup menus' background color -->
     <attr name="popupBackgroundColor" format="reference"/>
+    <attr name="prefIconColor" format="color"/>
 
     <attr name="editTextDisabled" format="color"/>
 
