@@ -106,7 +106,7 @@ class Preferences : AnkiActivity() {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
         }
-        title = resources.getText(R.string.preferences_title)
+        title = resources.getText(R.string.settings)
 
         val fragment = getInitialFragment(intent)
 
@@ -134,7 +134,7 @@ class Preferences : AnkiActivity() {
         actionBar?.title = if (fragment is SpecificSettingsFragment) {
             fragment.preferenceScreen.title
         } else {
-            getString(R.string.preferences_title)
+            getString(R.string.settings)
         }
     }
 
