@@ -45,10 +45,10 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
         val otherMappableBinding = other as MappableBinding
 
         val otherBinding = otherMappableBinding.binding
-        val bindingEquals = binding.getKeycode() == otherBinding.getKeycode() &&
-            binding.getUnicodeCharacter() == otherBinding.getUnicodeCharacter() &&
-            binding.getGesture() == otherBinding.getGesture() &&
-            modifierEquals(otherBinding.getModifierKeys())
+        val bindingEquals = binding.keycode == otherBinding.keycode &&
+            binding.unicodeCharacter == otherBinding.unicodeCharacter &&
+            binding.gesture == otherBinding.gesture &&
+            modifierEquals(otherBinding.modifierKeys)
 
         if (!bindingEquals) {
             return false
@@ -59,12 +59,12 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
 
     override fun hashCode(): Int {
         // don't include the modifierKeys or mSide
-        return Objects.hash(binding.getKeycode(), binding.getUnicodeCharacter(), binding.getGesture(), screen.prefix)
+        return Objects.hash(binding.keycode, binding.unicodeCharacter, binding.gesture, screen.prefix)
     }
 
     private fun modifierEquals(keys: Binding.ModifierKeys?): Boolean {
         // equals allowing subclasses
-        val thisKeys = binding.getModifierKeys()
+        val thisKeys = binding.modifierKeys
         if (thisKeys === keys) {
             return true
         }

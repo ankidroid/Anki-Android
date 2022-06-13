@@ -27,7 +27,7 @@ import com.ichi2.utils.StringUtil
 import timber.log.Timber
 import java.util.*
 
-class Binding private constructor(private val modifierKeys: ModifierKeys?, private val keycode: Int?, private val unicodeCharacter: Char?, private val gesture: Gesture?) {
+class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: Int?, val unicodeCharacter: Char?, val gesture: Gesture?) {
 
     private fun getKeyCodePrefix(): String {
         // KEY_PREFIX is not usable before API 23
@@ -67,11 +67,6 @@ class Binding private constructor(private val modifierKeys: ModifierKeys?, priva
         return string.toString()
     }
 
-    fun getKeycode() = keycode
-    fun getModifierKeys() = modifierKeys
-    fun getUnicodeCharacter() = unicodeCharacter
-    fun getGesture() = gesture
-
     override fun toString(): String {
         val string = StringBuilder()
         when {
@@ -99,7 +94,7 @@ class Binding private constructor(private val modifierKeys: ModifierKeys?, priva
     val isKey: Boolean
         get() = isKeyCode || unicodeCharacter != null
 
-    fun isGesture(): Boolean = gesture != null
+    val isGesture: Boolean = gesture != null
 
     fun matchesModifier(event: KeyEvent): Boolean {
         return modifierKeys == null || modifierKeys.matches(event)
