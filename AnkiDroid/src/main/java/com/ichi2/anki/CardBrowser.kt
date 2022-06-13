@@ -520,6 +520,9 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             }
         }
         mOnboarding.onCreate()
+
+        val modalBottomSheet = BottomSheetFragment()
+        modalBottomSheet.show(supportFragmentManager, BottomSheetFragment.TAG)
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
