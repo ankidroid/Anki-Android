@@ -166,4 +166,9 @@
         <!--<item name="android:textColor">?attr/md_content_color</item>-->
         <item name="android:textSize">@dimen/md_content_textsize</item>
     </style>
+
+    <!-- Filter Bottom sheet -->
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_bottom_sheet</item>
+    </style>
 </resources>
