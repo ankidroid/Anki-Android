@@ -68,7 +68,6 @@
     <string name="reset_password">Nollaa salasanasi</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Asetukset</string>
     <string name="deckpreferences_title">Asetukset XXX:lle</string>
     <string name="sync_prepare_syncing">Valmistellaan synkronointia&#8230;</string>
     <string name="sync_preparing_full_sync_message">Valmistellaan koko synkronointiin...</string>

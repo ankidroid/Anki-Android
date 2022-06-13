@@ -68,7 +68,6 @@
     <string name="reset_password">Parolayı Sıfırla</string>
     <string name="lost_mail_instructions">E-postanızı mı unuttunuz?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Tercihler</string>
     <string name="deckpreferences_title">XXX Seçenekleri</string>
     <string name="sync_prepare_syncing">Senkronizasyon hazırlanıyor&#8230;</string>
     <string name="sync_preparing_full_sync_message">Tam senkronizasyon hazırlanıyor&#8230;</string>

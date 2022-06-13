@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">کارتی برای مطالعه وجود ندارد</string>
     <string name="sd_card_not_mounted">حافظۀ دستگاه یافت نشد</string>
     <string name="empty_cloze_warning">این یادداشت را ویرایش و چند کلوز اضافه کنید. (%1$s)</string>
-    <string name="button_sync">همگام سازی</string>
+    <string name="button_sync" comment="Text of the sync button">همگام سازی</string>
     <string name="cancel_sync_confirm">آیا می‌خواهید همگام‌سازی را لغو کنید؟</string>
     <string name="continue_sync">ادامه همگام‌سازی</string>
     <string name="sync_cancelled">همگام‌سازی لغو شد</string>

@@ -163,7 +163,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">這不是有效的 Anki 套件檔案</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">錯誤</string>
     <string name="import_log_failed_unzip">解壓縮 Apkg 失敗：%s</string>
     <string name="import_log_failed_copy_to">複製 Apkg 至 %s 失敗</string>
     <string name="import_log_failed_validate">Apkg 驗證失敗</string>
@@ -395,7 +395,7 @@
     <string name="search_card_js_api_no_results">Search returned no results</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="could_not_create_dir">無法建立目錄 %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>

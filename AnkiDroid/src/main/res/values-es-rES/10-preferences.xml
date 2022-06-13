@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Ajustes generales</string>
     <string name="pref_cat_reviewing" maxLength="41">Repasando</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">No hay configuración de revisor específica de mazo</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportamiento</string>
     <string name="pref_cat_flashcard" maxLength="41">Pantalla</string>

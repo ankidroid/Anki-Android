@@ -417,8 +417,8 @@
     <string name="buried_card">Картку відкладено</string>
     <string name="buried_note">Відкладений запис</string>
     <string name="deleted_note">Видалено запис</string>
-    <string name="suspended_card">Виключено картку</string>
-    <string name="suspended_note">Виключено запис</string>
+    <string name="suspended_card">Картку призупинено</string>
+    <string name="suspended_note">Запис призупинено</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Зробити поле %s липким</string>
     <!-- Scoped Storage Migration -->

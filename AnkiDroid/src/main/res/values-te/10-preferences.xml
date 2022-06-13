@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">సాధారణ సెట్టింగులు</string>
     <string name="pref_cat_reviewing" maxLength="41">సమీక్షిస్తోంది</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">నాన్-డెక్-నిర్దిష్ట సమీక్షకుడు సెట్టింగులు</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">ప్రవర్తన</string>
     <string name="pref_cat_flashcard" maxLength="41">ప్రదర్శన</string>

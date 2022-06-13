@@ -68,7 +68,6 @@
     <string name="reset_password">Нулиране на паролата</string>
     <string name="lost_mail_instructions">Забравен имейл?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Предпочитания</string>
     <string name="deckpreferences_title">Опции за ХХХ</string>
     <string name="sync_prepare_syncing">Подготовка за синхронизиране...</string>
     <string name="sync_preparing_full_sync_message">Подготовка на пълно синхронизиране...</string>

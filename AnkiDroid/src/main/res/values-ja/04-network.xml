@@ -68,7 +68,6 @@
     <string name="reset_password">パスワードを再設定</string>
     <string name="lost_mail_instructions">メールアドレスを忘れましたか？</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">設定</string>
     <string name="deckpreferences_title">XXX のオプション</string>
     <string name="sync_prepare_syncing">同期の準備中...</string>
     <string name="sync_preparing_full_sync_message">完全同期の準備をしています&#8230;</string>

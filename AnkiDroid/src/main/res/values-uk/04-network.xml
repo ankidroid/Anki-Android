@@ -68,7 +68,6 @@
     <string name="reset_password">Відновити пароль</string>
     <string name="lost_mail_instructions">Забули електронну пошту?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Налаштування</string>
     <string name="deckpreferences_title">Параметри для XXX</string>
     <string name="sync_prepare_syncing">Підготовка синхронізації...</string>
     <string name="sync_preparing_full_sync_message">Підготовка до повної синхронізації...</string>
