@@ -68,7 +68,6 @@
     <string name="reset_password">संकेतशब्द रीसेट करा</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">प्राधान्ये</string>
     <string name="deckpreferences_title">XXX साठी पर्याय</string>
     <string name="sync_prepare_syncing">संकालनाची तयारी करत आहे&#8230;</string>
     <string name="sync_preparing_full_sync_message">पूर्ण संकालन तयार करीत आहे ...</string>

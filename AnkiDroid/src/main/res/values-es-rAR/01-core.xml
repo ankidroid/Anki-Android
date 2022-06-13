@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">Aún no hay tarjetas programadas.</string>
     <string name="sd_card_not_mounted">El almacenamiento del dispositivo no se encuentra montado</string>
     <string name="empty_cloze_warning">Editar esta nota y añadir algunos huecos (%1$s)</string>
-    <string name="button_sync">Sincronizar</string>
+    <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
     <string name="cancel_sync_confirm">¿Desea cancelar la sincronización?</string>
     <string name="continue_sync">Continuar la sincronización</string>
     <string name="sync_cancelled">Sincronización cancelada</string>

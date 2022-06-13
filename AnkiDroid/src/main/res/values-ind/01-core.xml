@@ -171,7 +171,7 @@
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
     <string name="sd_card_not_mounted">Penyimpanan perangkat tidak terpasang</string>
     <string name="empty_cloze_warning">Edit catatan ini dan menambahkan beberapa kloza deletasi (titik-titik). (%1$s)</string>
-    <string name="button_sync">Sinkronisasi</string>
+    <string name="button_sync" comment="Text of the sync button">Sinkronisasi</string>
     <string name="cancel_sync_confirm">Batalkan sinkronisasi?</string>
     <string name="continue_sync">Lanjutkan sinkronisasi</string>
     <string name="sync_cancelled">Sinkronisasi dibatalkan</string>

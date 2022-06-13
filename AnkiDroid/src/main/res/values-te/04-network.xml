@@ -68,7 +68,6 @@
     <string name="reset_password">పాస్వర్డ్ మార్చండి</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">ప్రాధాన్యతలు</string>
     <string name="deckpreferences_title">XXX కోసం ఎంపికలు</string>
     <string name="sync_prepare_syncing">సమకాలీకరించడానికి సిద్ధం చేస్తోంది&#8230;</string>
     <string name="sync_preparing_full_sync_message">పూర్తి సమకాలీకరణను సిద్ధం చేస్తోంది&#8230;</string>

@@ -68,7 +68,6 @@
     <string name="reset_password">Đặt lại mật khẩu</string>
     <string name="lost_mail_instructions">Quên Email?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Tuỳ chỉnh</string>
     <string name="deckpreferences_title">Tùy chọn cho XXX</string>
     <string name="sync_prepare_syncing">Đang chuẩn bị đồng bộ...</string>
     <string name="sync_preparing_full_sync_message">Đang chuẩn bị đồng bộ hoàn toàn&#8230;</string>

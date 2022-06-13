@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">全般</string>
     <string name="pref_cat_general_summ">一般設定</string>
     <string name="pref_cat_reviewing" maxLength="41">カードの学習</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">特定のデッキに限定されない設定</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">動作</string>
     <string name="pref_cat_flashcard" maxLength="41">画面表示</string>

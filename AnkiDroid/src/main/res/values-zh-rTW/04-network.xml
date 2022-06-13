@@ -68,7 +68,6 @@
     <string name="reset_password">忘記密碼</string>
     <string name="lost_mail_instructions">忘記了電郵地址？</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">偏好設定</string>
     <string name="deckpreferences_title">XXX 的選項</string>
     <string name="sync_prepare_syncing">正在準備同步...</string>
     <string name="sync_preparing_full_sync_message">正在準備完整同步...</string>

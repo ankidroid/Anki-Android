@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Obecné</string>
     <string name="pref_cat_general_summ">Obecné nastavení</string>
     <string name="pref_cat_reviewing" maxLength="41">Opakování</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronizace</string>
     <string name="pref_cat_reviewing_summ">Obecné nastavení pro opakování</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Chování</string>
     <string name="pref_cat_flashcard" maxLength="41">Zobrazení</string>

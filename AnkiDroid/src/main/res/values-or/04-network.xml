@@ -68,7 +68,6 @@
     <string name="reset_password">ପାସ୍‍ୱାର୍ଡ଼ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="lost_mail_instructions">ଇମେଲ୍ ଭୁଲିଗଲେ କି?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">ଅଗ୍ରାଧିକାରସମୂହ</string>
     <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="sync_prepare_syncing">ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
     <string name="sync_preparing_full_sync_message">ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>

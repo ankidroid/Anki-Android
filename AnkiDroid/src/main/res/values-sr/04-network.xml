@@ -68,7 +68,6 @@
     <string name="reset_password">Ресетујте лозинку</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Поставке</string>
     <string name="deckpreferences_title">Опције за XXX</string>
     <string name="sync_prepare_syncing">Припрема синхронизације...</string>
     <string name="sync_preparing_full_sync_message">Pripremanje pune sinhronizacije...</string>

@@ -178,7 +178,7 @@
     <string name="studyoptions_no_cards_due">Peruna carta de revisionare como</string>
     <string name="sd_card_not_mounted">Sa memòria de su dispositivu no est montada</string>
     <string name="empty_cloze_warning">Modìfica custa nota e annanghe unos cantos iscantzellamentos de cloze. (%1$s)</string>
-    <string name="button_sync">Sincroniza</string>
+    <string name="button_sync" comment="Text of the sync button">Sincroniza</string>
     <string name="cancel_sync_confirm">Chetes annullare sa sincronizatzione?</string>
     <string name="continue_sync">Sighi a sincronizare</string>
     <string name="sync_cancelled">Sincronizatzione annullada</string>

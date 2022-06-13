@@ -171,7 +171,7 @@
     <string name="studyoptions_no_cards_due">Tiada kad kerana lagi</string>
     <string name="sd_card_not_mounted">Alat penyimpanan tidak dipasang</string>
     <string name="empty_cloze_warning">Sunting nota ini dan tambah penghapusan kloz. (%1$s)</string>
-    <string name="button_sync">Sync</string>
+    <string name="button_sync" comment="Text of the sync button">Sync</string>
     <string name="cancel_sync_confirm">Adakah anda mahu untuk membatalkan sync?</string>
     <string name="continue_sync">Lanjut sync</string>
     <string name="sync_cancelled">Sync censel</string>

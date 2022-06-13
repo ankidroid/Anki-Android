@@ -68,7 +68,6 @@
     <string name="reset_password">تنظیم مجدد گذرواژه</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">تنظيمات</string>
     <string name="deckpreferences_title">گزینه هایي برای XXX</string>
     <string name="sync_prepare_syncing">آماده سازى همگام سازي&#8230;</string>
     <string name="sync_preparing_full_sync_message">درحال آماده سازی همگام سازی کامل&#8230;</string>

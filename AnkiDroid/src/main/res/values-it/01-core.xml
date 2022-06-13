@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
     <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
     <string name="empty_cloze_warning">Modifica questa nota e aggiungi alcuni eliminamenti di cloze. (%1$s)</string>
-    <string name="button_sync">Sincronizza</string>
+    <string name="button_sync" comment="Text of the sync button">Sincronizza</string>
     <string name="cancel_sync_confirm">Vuoi annullare la sincronizzazione?</string>
     <string name="continue_sync">Continua la sincronizzazione</string>
     <string name="sync_cancelled">Sincronizzazione annullata</string>
