@@ -55,14 +55,6 @@ class ControlPreference : ListPreference {
     @Suppress("unused") constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     @Suppress("unused") constructor(context: Context) : super(context)
 
-    /**
-     * Could be better: ListPreference.`value` was broken in converting to the preference support library
-     * It no longer uses the preference value if not passed into the constructor
-     */
-    override fun getValue(): String {
-        return AnkiDroidApp.getSharedPrefs(context).getString(key, "")!!
-    }
-
     fun refreshEntries() {
         val entryTitles: MutableList<CharSequence> = ArrayList()
         val entryIndices: MutableList<Int> = ArrayList()
