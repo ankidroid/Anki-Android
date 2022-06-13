@@ -70,7 +70,7 @@ class Info : AnkiActivity() {
         enableToolbar(mainView)
         binding.infoDonate.setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
         title = String.format("%s v%s", appName, pkgVersionName)
-        binding.info.webChromeClient = object : WebChromeClient() {
+        binding.webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
                 // Hide the progress indicator when the page has finished loaded
                 if (progress == 100) {
@@ -79,15 +79,15 @@ class Info : AnkiActivity() {
             }
         }
         if (canOpenMarketUri()) {
-            binding.leftButton.setText(R.string.info_rate)
-            binding.leftButton.setOnClickListener {
+            binding.marketButton.setText(R.string.info_rate)
+            binding.marketButton.setOnClickListener {
                 tryOpenIntent(
                     this,
                     AnkiDroidApp.getMarketIntent(this)
                 )
             }
         } else {
-            binding.leftButton.visibility = View.GONE
+            binding.marketButton.visibility = View.GONE
         }
 
         // Apply Theme colors
@@ -100,12 +100,12 @@ class Info : AnkiActivity() {
         val backgroundColor = typedArray.getColor(0, -1)
         val textColor =
             String.format("#%06X", 0xFFFFFF and typedArray.getColor(1, -1)) // Color to hex string
-        binding.info.setBackgroundColor(backgroundColor)
+        binding.webView.setBackgroundColor(backgroundColor)
         setRenderWorkaround(this)
         when (type) {
             TYPE_ABOUT -> {
                 val htmlContent = getAboutAnkiDroidHtml(res, textColor)
-                binding.info.loadDataWithBaseURL("", htmlContent, "text/html", "utf-8", null)
+                binding.webView.loadDataWithBaseURL("", htmlContent, "text/html", "utf-8", null)
                 binding.rightButton.text = res.getString(R.string.feedback_copy_debug)
                 binding.rightButton.setOnClickListener { copyDebugInfo() }
             }
@@ -113,15 +113,15 @@ class Info : AnkiActivity() {
                 binding.rightButton.text = res.getString(R.string.dialog_continue)
                 binding.rightButton.setOnClickListener { close() }
                 val background = String.format("#%06X", 0xFFFFFF and backgroundColor)
-                binding.info.loadUrl("file:///android_asset/changelog.html")
-                binding.info.settings.javaScriptEnabled = true
-                binding.info.webViewClient = object : WebViewClient() {
+                binding.webView.loadUrl("file:///android_asset/changelog.html")
+                binding.webView.settings.javaScriptEnabled = true
+                binding.webView.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView, url: String) {
 
                         /* The order of below javascript code must not change (this order works both in debug and release mode)
                                  *  or else it will break in any one mode.
                                  */
-                        binding.info.loadUrl(
+                        binding.webView.loadUrl(
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
                                 "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
                                 "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
@@ -174,8 +174,8 @@ class Info : AnkiActivity() {
     }
 
     override fun onBackPressed() {
-        if (binding.info.canGoBack()) {
-            binding.info.goBack()
+        if (binding.webView.canGoBack()) {
+            binding.webView.goBack()
         } else {
             super.onBackPressed()
         }
@@ -195,13 +195,7 @@ class Info : AnkiActivity() {
             val content = res.getStringArray(R.array.about_content)
             append("<html><style>body {color:").append(textColor).append(";}</style>")
             append("<body text=\"#000000\" link=\"#E37068\" alink=\"#E37068\" vlink=\"#E37068\">")
-            append(
-                String.format(
-                    content[0],
-                    res.getString(R.string.app_name),
-                    res.getString(R.string.link_anki)
-                )
-            )
+            append(String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki)))
                 .append("<br/><br/>")
             append(
                 String.format(
@@ -217,12 +211,7 @@ class Info : AnkiActivity() {
                     res.getString(R.string.link_contribution)
                 )
             ).append(" ")
-            append(
-                String.format(
-                    content[3],
-                    res.getString(R.string.link_translation)
-                )
-            ).append("<br/><br/>")
+            append(String.format(content[3], res.getString(R.string.link_translation))).append("<br/><br/>")
             append(
                 String.format(
                     content[4], res.getString(R.string.licence_wiki),

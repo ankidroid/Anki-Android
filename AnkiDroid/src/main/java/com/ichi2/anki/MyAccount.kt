@@ -216,7 +216,7 @@ class MyAccount : AnkiActivity() {
     /**
      * Listeners
      */
-    private val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
+    val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
         override fun onProgressUpdate(vararg values: Any) {
             // Pass
         }
@@ -268,7 +268,7 @@ class MyAccount : AnkiActivity() {
         }
     }
 
-    private fun getHumanReadableLoginErrorMessage(exception: Exception?): String? {
+    protected fun getHumanReadableLoginErrorMessage(exception: Exception?): String? {
         if (exception == null) {
             return ""
         }

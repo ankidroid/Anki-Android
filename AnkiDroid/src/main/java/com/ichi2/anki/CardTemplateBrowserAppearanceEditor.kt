@@ -40,6 +40,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
+        binding = CardBrowserAppearanceBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         super.onCreate(savedInstanceState)
         val bundle = savedInstanceState ?: intent.extras
         if (bundle == null) {
@@ -114,9 +116,6 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private fun initializeUiFromBundle(bundle: Bundle) {
-        binding = CardBrowserAppearanceBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         binding.questionFormat.setText(bundle.getString(INTENT_QUESTION_FORMAT))
         binding.answerFormat.setText(bundle.getString(INTENT_ANSWER_FORMAT))
 

@@ -36,7 +36,7 @@ import java.io.FileNotFoundException
  */
 class DrawingActivity : AnkiActivity() {
     private lateinit var binding: ActivityDrawingBinding
-    private lateinit var bindingReviewerWhiteboardEditorBinding: ReviewerWhiteboardEditorBinding
+    private lateinit var whiteboardBinding: ReviewerWhiteboardEditorBinding
     private lateinit var mWhiteboard: Whiteboard
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class DrawingActivity : AnkiActivity() {
         }
         super.onCreate(savedInstanceState)
         binding = ActivityDrawingBinding.inflate(layoutInflater)
-        bindingReviewerWhiteboardEditorBinding = ReviewerWhiteboardEditorBinding.inflate(layoutInflater)
+        whiteboardBinding = ReviewerWhiteboardEditorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         enableToolbar()
         mWhiteboard = Whiteboard.createInstance(this, true, null)
@@ -65,10 +65,10 @@ class DrawingActivity : AnkiActivity() {
             }
             R.id.action_whiteboard_edit -> {
                 Timber.i("Drawing:: Pen Color button pressed")
-                if (bindingReviewerWhiteboardEditorBinding.whiteboardEditor.visibility == View.GONE) {
-                    bindingReviewerWhiteboardEditorBinding.whiteboardEditor.visibility = View.VISIBLE
+                if (whiteboardBinding.whiteboardEditor.visibility == View.GONE) {
+                    whiteboardBinding.whiteboardEditor.visibility = View.VISIBLE
                 } else {
-                    bindingReviewerWhiteboardEditorBinding.whiteboardEditor.visibility = View.GONE
+                    whiteboardBinding.whiteboardEditor.visibility = View.GONE
                 }
             }
         }

@@ -38,7 +38,7 @@
             android:fadingEdge="vertical"
             android:gravity="center">
             <WebView
-                android:id="@+id/info"
+                android:id="@+id/web_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical" />
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/left_button"
+                android:id="@+id/marketButton"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
