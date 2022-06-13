@@ -21,28 +21,32 @@
     <Preference
         android:fragment="com.ichi2.anki.Preferences$GeneralSettingsFragment"
         android:summary="@string/pref_cat_general_summ"
-        android:title="@string/pref_cat_general">
+        android:title="@string/pref_cat_general"
+        android:icon="@drawable/ic_settings_black">
     </Preference>
 
     <!-- Reviewing Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$ReviewingSettingsFragment"
         android:summary="@string/pref_cat_reviewing_summ"
-        android:title="@string/pref_cat_reviewing">
+        android:title="@string/pref_cat_reviewing"
+        android:icon="@drawable/ic_flashcard_black">
     </Preference>
 
     <!-- Sync Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$SyncSettingsFragment"
         android:key="@string/pref_sync_screen_key"
-        android:title="@string/pref_cat_sync">
+        android:title="@string/pref_cat_sync"
+        android:icon="@drawable/ic_sync_white">
     </Preference>
 
     <!-- Notifications -->
     <Preference
         android:fragment="com.ichi2.anki.preferences.NotificationsSettingsFragment"
         android:key="@string/pref_notifications_screen_key"
-        android:title="@string/notification_pref">
+        android:title="@string/notification_pref"
+        android:icon="@drawable/ic_notifications">
     </Preference>
 
     <!-- Appearance Preferences  -->
@@ -50,7 +54,8 @@
         android:fragment="com.ichi2.anki.Preferences$AppearanceSettingsFragment"
         android:key="appearance_preference_group"
         android:summary="@string/pref_cat_appearance_summ"
-        android:title="@string/pref_cat_appearance">
+        android:title="@string/pref_cat_appearance"
+        android:icon="@drawable/ic_color_lens_white_24dp">
     </Preference>
 
     <!-- Navigation Preferences -->
@@ -64,7 +69,8 @@
     <Preference
         android:fragment="com.ichi2.anki.Preferences$ControlsSettingsFragment"
         android:summary="@string/pref_cat_controls_summ"
-        android:title="@string/pref_cat_controls">
+        android:title="@string/pref_cat_controls"
+        android:icon="@drawable/ic_touch">
     </Preference>
 
     <!-- Advanced Preferences -->
@@ -72,6 +78,7 @@
         android:fragment="com.ichi2.anki.Preferences$AdvancedSettingsFragment"
         android:key="pref_screen_advanced"
         android:summary="@string/pref_cat_advanced_summ"
-        android:title="@string/pref_cat_advanced">
+        android:title="@string/pref_cat_advanced"
+        android:icon="@drawable/ic_tune_white">
     </Preference>
 </PreferenceScreen>

@@ -37,6 +37,7 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -423,6 +424,7 @@ class Preferences : AnkiActivity() {
             if (BuildConfig.DEBUG) {
                 val devOptions = Preference(requireContext()).apply {
                     title = getString(R.string.pref_cat_dev_options)
+                    icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_code)
                     setOnPreferenceClickListener {
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.settings_container, DevOptionsFragment())
@@ -432,6 +434,11 @@ class Preferences : AnkiActivity() {
                     }
                 }
                 preferenceScreen.addPreference(devOptions)
+            }
+            // Set icons colors
+            for (index in 0 until preferenceScreen.preferenceCount) {
+                val preference = preferenceScreen.getPreference(index)
+                preference.icon?.setTint(Themes.getColorFromAttr(requireContext(), R.attr.prefIconColor))
             }
         }
     }
