@@ -133,7 +133,7 @@ class ControlPreference : ListPreference {
     /** Volume keys shouldn't be mapped until we remove the 'Volume' gestures */
     fun isVolumeKey(binding: Binding): Boolean {
         if (!binding.isKeyCode) return false
-        val keycode = binding.getKeycode()
+        val keycode = binding.keycode
         return keycode == KEYCODE_VOLUME_DOWN || keycode == KEYCODE_VOLUME_UP
     }
 

@@ -55,7 +55,7 @@ class KeyPicker(val rootLayout: View) {
 
         // When accepting a keypress, we only want to find the keycode, not the unicode character.
         val isValidKeyCode = isValidKeyCode
-        val maybeBinding = Binding.key(event).stream().filter { x -> x.isKeyCode && (isValidKeyCode == null || isValidKeyCode(x.getKeycode()!!)) }.findFirst()
+        val maybeBinding = Binding.key(event).stream().filter { x -> x.isKeyCode && (isValidKeyCode == null || isValidKeyCode(x.keycode!!)) }.findFirst()
         if (!maybeBinding.isPresent) {
             return true
         }
