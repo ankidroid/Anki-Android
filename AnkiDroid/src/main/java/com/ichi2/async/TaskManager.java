@@ -135,7 +135,7 @@ public abstract class TaskManager {
      */
     @SuppressWarnings("UnusedReturnValue")
     public static boolean waitForAllToFinish(Integer timeoutSeconds) {
-        return sTaskManager.waitToFinishConcrete(timeoutSeconds);
+        return sTaskManager.waitForAllToFinishConcrete(timeoutSeconds);
     }
     public abstract boolean waitForAllToFinishConcrete(Integer timeoutSeconds);
 
