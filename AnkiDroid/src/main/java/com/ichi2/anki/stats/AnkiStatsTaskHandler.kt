@@ -33,7 +33,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.io.UnsupportedEncodingException
 import java.lang.ref.WeakReference
 import java.net.URLEncoder
 import java.util.concurrent.locks.Lock
@@ -80,70 +79,38 @@ class AnkiStatsTaskHandler private constructor(
         }
     }
 
-    @Suppress("deprecation") // #7108: AsyncTask
-    fun createStatisticsOverview(vararg views: View?): CreateStatisticsOverview {
-        val createChartTask = CreateStatisticsOverview(collectionData, statType, mDeckId)
-        createChartTask.execute(*views)
-        return createChartTask
-    }
-
-    class CreateStatisticsOverview(collection: Collection, statType: AxisType, deckId: Long) : StatsAsyncTask<String?>() {
-        private var mWebView: WeakReference<WebView>? = null
-        private var mProgressBar: WeakReference<ProgressBar>? = null
-        private val mCollectionData: WeakReference<Collection>
-        private val mStatType: AxisType
-        private val mDeckId: Long
-        private var mIsRunning = false
-        override fun doInBackgroundSafe(vararg views: View?): String? {
-            // make sure only one task of CreateChartTask is running, first to run should get sLock
-            // only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
-            sLock.lock()
-            val collectionData = mCollectionData.get()
-            return try {
-                if (!mIsRunning || collectionData == null) {
+    suspend fun createStatisticsOverview(webView: WebView, progressBar: ProgressBar) =
+        withContext(defaultDispatcher) {
+            mutex.withLock {
+                val html = if (!isActive) {
                     Timber.d("Quitting CreateStatisticsOverview before execution")
-                    return null
+                    null
                 } else {
                     Timber.d("Starting CreateStatisticsOverview")
+                    val overviewStatsBuilder =
+                        OverviewStatsBuilder(webView, collectionData, mDeckId, statType)
+                    overviewStatsBuilder.createInfoHtmlString()
                 }
-                val webView = views[0] as WebView
-                mWebView = WeakReference(webView)
-                mProgressBar = WeakReference(views[1] as ProgressBar)
-                val overviewStatsBuilder = OverviewStatsBuilder(webView, collectionData, mDeckId, mStatType)
-                overviewStatsBuilder.createInfoHtmlString()
-            } finally {
-                sLock.unlock()
+                html?.let {
+                    withContext(mainDispatcher) {
+                        runCatching {
+                            webView.loadData(
+                                URLEncoder.encode(html, "UTF-8").replace("\\+".toRegex(), " "),
+                                "text/html; charset=utf-8",
+                                "utf-8"
+                            )
+                        }.getOrElse {
+                            Timber.w(it)
+                        }
+                        progressBar.visibility = View.GONE
+                        val backgroundColor = getColorFromAttr(webView.context, R.attr.colorBackground)
+                        webView.setBackgroundColor(backgroundColor)
+                        webView.visibility = View.VISIBLE
+                        webView.invalidate()
+                    }
+                }
             }
         }
-
-        override fun onCancelled() {
-            mIsRunning = false
-        }
-
-        override fun onPostExecute(html: String?) {
-            val webView = mWebView!!.get()
-            val progressBar = mProgressBar!!.get()
-            if (html != null && mIsRunning && webView != null && progressBar != null) {
-                try {
-                    webView.loadData(URLEncoder.encode(html, "UTF-8").replace("\\+".toRegex(), " "), "text/html; charset=utf-8", "utf-8")
-                } catch (e: UnsupportedEncodingException) {
-                    Timber.w(e)
-                }
-                progressBar.visibility = View.GONE
-                val backgroundColor = getColorFromAttr(webView.context, R.attr.colorBackground)
-                webView.setBackgroundColor(backgroundColor)
-                webView.visibility = View.VISIBLE
-                webView.invalidate()
-            }
-        }
-
-        init {
-            mIsRunning = true
-            mCollectionData = WeakReference(collection)
-            mStatType = statType
-            mDeckId = deckId
-        }
-    }
 
     @Suppress("deprecation") // #7108: AsyncTask
     class DeckPreviewStatistics : android.os.AsyncTask<Pair<Collection?, TextView?>?, Void?, String?>() {
