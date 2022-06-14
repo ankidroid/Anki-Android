@@ -53,7 +53,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.GravityEnum
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.Snackbar
@@ -455,7 +454,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .title(R.string.ankidroid_init_failed_webview_title)
                 .content(getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.getWebViewErrorMessage()))
                 .positiveText(R.string.close)
-                .onPositive { _: MaterialDialog?, _: DialogAction? -> exit() }
+                .onPositive { _, _ -> exit() }
                 .cancelable(false)
                 .show()
             DB_ERROR -> displayDatabaseFailure()
@@ -513,7 +512,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .titleGravity(GravityEnum.CENTER)
                 .content(R.string.collection_load_welcome_request_permissions_details)
                 .positiveText(R.string.dialog_ok)
-                .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                .onPositive { _, _ ->
                     sharedPrefs.edit().putBoolean("welcomeDialogDismissed", true).apply()
                     ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
                 }
@@ -939,7 +938,6 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         startActivityForResultWithAnimation(intent, ADD_NOTE, START)
     }
 
-    @KotlinCleanup(".remove { _: MaterialDialog?, _: DialogAction? -> } ")
     private fun showStartupScreensAndDialogs(preferences: SharedPreferences, skip: Int) {
 
         // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
@@ -1046,9 +1044,9 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                     .content(R.string.integrity_check_startup_content)
                     .positiveText(R.string.check_db)
                     .negativeText(R.string.close)
-                    .onPositive { _: MaterialDialog?, _: DialogAction? -> integrityCheck() }
-                    .onNeutral { _: MaterialDialog?, _: DialogAction? -> restartActivity() }
-                    .onNegative { _: MaterialDialog?, _: DialogAction? -> restartActivity() }
+                    .onPositive { _, _ -> integrityCheck() }
+                    .onNeutral { _, _ -> restartActivity() }
+                    .onNegative { _, _ -> restartActivity() }
                     .canceledOnTouchOutside(false)
                     .cancelable(false)
                     .build()
@@ -1293,7 +1291,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .title(R.string.check_db_title)
                 .content(status.getWarningDetails(this))
                 .positiveText(R.string.integrity_check_continue_anyway)
-                .onPositive { _: MaterialDialog?, _: DialogAction? -> performIntegrityCheck() }
+                .onPositive { _, _ -> performIntegrityCheck() }
                 .negativeText(R.string.dialog_cancel)
                 .show()
         } else {
@@ -1493,7 +1491,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                             .cancelable(false)
                             .positiveText(R.string.dialog_ok)
                             .negativeText(R.string.continue_sync)
-                            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                            .onPositive { _, _ ->
                                 mProgressDialog!!.setContent(R.string.sync_cancel_message)
                                 Connection.cancel()
                             }
@@ -2289,8 +2287,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .content(R.string.confirm_cancel)
                 .positiveText(deckPicker.resources.getString(R.string.yes))
                 .negativeText(deckPicker.resources.getString(R.string.dialog_no))
-                .onNegative { _: MaterialDialog?, _: DialogAction? -> actualOnPreExecute(deckPicker) }
-                .onPositive { _: MaterialDialog?, _: DialogAction? -> task.safeCancel() }.show()
+                .onNegative { _, _ -> actualOnPreExecute(deckPicker) }
+                .onPositive { _, _ -> task.safeCancel() }.show()
         }
 
         @KotlinCleanup("scope function")
