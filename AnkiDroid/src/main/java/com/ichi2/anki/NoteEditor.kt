@@ -724,15 +724,15 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         saveToggleStickyMap()
 
+        // Different from libAnki, block if there are no cloze deletions.
+        // DEFECT: This does not block addition if cloze transpositions are in non-cloze fields.
+        if (isClozeType && !hasClozeDeletions()) {
+            displayErrorSavingNote()
+            return
+        }
+
         // treat add new note and edit existing note independently
         if (mAddNote) {
-            // Different from libAnki, block if there are no cloze deletions.
-            // DEFECT: This does not block addition if cloze transpositions are in non-cloze fields.
-            if (isClozeType && !hasClozeDeletions()) {
-                displayErrorSavingNote()
-                return
-            }
-
             // load all of the fields into the note
             for (f in mEditFields!!) {
                 updateField(f)
