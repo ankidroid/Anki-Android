@@ -66,9 +66,9 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
     @Test
     fun test_preferences_opened_happy_path() {
         // the default is that the user has not mapped the gesture, but has opened the screen
-        // so they are set to COMMAND_NOTHING
-        prefs.edit { putString(PREF_KEY_VOLUME_UP, ViewerCommand.COMMAND_NOTHING.toPreferenceString()) }
-        prefs.edit { putString(PREF_KEY_VOLUME_DOWN, ViewerCommand.COMMAND_NOTHING.toPreferenceString()) }
+        // so they are set to NOTHING
+        prefs.edit { putString(PREF_KEY_VOLUME_UP, ViewerCommand.NOTHING.toPreferenceString()) }
+        prefs.edit { putString(PREF_KEY_VOLUME_DOWN, ViewerCommand.NOTHING.toPreferenceString()) }
 
         assertThat(prefs.contains(PREF_KEY_VOLUME_DOWN), equalTo(true))
         assertThat(prefs.contains(PREF_KEY_VOLUME_UP), equalTo(true))
@@ -85,7 +85,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
     @Test
     fun gesture_set_no_conflicts() {
         // assume that we have a preference set, and that it has no defaults
-        val command = ViewerCommand.COMMAND_SHOW_ANSWER
+        val command = ViewerCommand.SHOW_ANSWER
         prefs.edit { putString(testData.affectedPreferenceKey, command.toPreferenceString()) }
 
         assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
@@ -112,7 +112,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
         // common path
         // if the gesture was mapped to a command which already had bindings,
         // check it is added to the list at the end
-        val command = ViewerCommand.COMMAND_EDIT
+        val command = ViewerCommand.EDIT
         prefs.edit { putString(testData.affectedPreferenceKey, command.toPreferenceString()) }
 
         assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
@@ -147,7 +147,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
         // the gestures shouldn't already be a keybind (as we've just introduced the feature)
         // but if it is, then we want to ignore it in the upgrade.
 
-        val command = ViewerCommand.COMMAND_EDIT
+        val command = ViewerCommand.EDIT
         command.addBinding(prefs, testData.binding)
 
         prefs.edit { putString(testData.affectedPreferenceKey, command.toPreferenceString()) }

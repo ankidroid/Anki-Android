@@ -16,7 +16,7 @@
 package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
-import com.ichi2.anki.cardviewer.ViewerCommand.COMMAND_NOTHING
+import com.ichi2.anki.cardviewer.ViewerCommand.NOTHING
 import com.ichi2.anki.reviewer.GestureMapper
 
 class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
@@ -115,7 +115,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
             Gesture.TAP_BOTTOM_RIGHT -> gestureTapBottomRight
             Gesture.DOUBLE_TAP -> gestureDoubleTap
             Gesture.LONG_TAP -> gestureLongclick
-            else -> COMMAND_NOTHING
+            else -> NOTHING
         }
     }
 
@@ -129,7 +129,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
             return false
         }
         for (gesture in gestures) {
-            if (mapGestureToCommand(gesture) != COMMAND_NOTHING) {
+            if (mapGestureToCommand(gesture) != NOTHING) {
                 return true
             }
         }

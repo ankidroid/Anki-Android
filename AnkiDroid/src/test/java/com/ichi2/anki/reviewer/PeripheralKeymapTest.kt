@@ -44,7 +44,7 @@ class PeripheralKeymapTest {
         peripheralKeymap.onKeyDown(KeyEvent.KEYCODE_1, event)
 
         assertThat<List<ViewerCommand>>(processed, hasSize(1))
-        assertThat(processed[0], equalTo(ViewerCommand.COMMAND_TOGGLE_FLAG_RED))
+        assertThat(processed[0], equalTo(ViewerCommand.TOGGLE_FLAG_RED))
     }
 
     private class MockReviewerUi : ReviewerUi {

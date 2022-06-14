@@ -1636,101 +1636,101 @@ abstract class AbstractFlashcardViewer :
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        return if (isControlBlocked() && which !== ViewerCommand.COMMAND_EXIT) {
+        return if (isControlBlocked() && which !== ViewerCommand.EXIT) {
             false
         } else when (which) {
-            ViewerCommand.COMMAND_NOTHING -> true
-            ViewerCommand.COMMAND_SHOW_ANSWER -> {
+            ViewerCommand.NOTHING -> true
+            ViewerCommand.SHOW_ANSWER -> {
                 if (sDisplayAnswer) {
                     return false
                 }
                 displayCardAnswer()
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1 -> {
+            ViewerCommand.FLIP_OR_ANSWER_EASE1 -> {
                 flipOrAnswerCard(EASE_1)
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2 -> {
+            ViewerCommand.FLIP_OR_ANSWER_EASE2 -> {
                 flipOrAnswerCard(EASE_2)
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3 -> {
+            ViewerCommand.FLIP_OR_ANSWER_EASE3 -> {
                 flipOrAnswerCard(EASE_3)
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE4 -> {
+            ViewerCommand.FLIP_OR_ANSWER_EASE4 -> {
                 flipOrAnswerCard(EASE_4)
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_RECOMMENDED -> {
+            ViewerCommand.FLIP_OR_ANSWER_RECOMMENDED -> {
                 flipOrAnswerCard(getRecommendedEase(false))
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED -> {
+            ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED -> {
                 flipOrAnswerCard(getRecommendedEase(true))
                 true
             }
-            ViewerCommand.COMMAND_EXIT -> {
+            ViewerCommand.EXIT -> {
                 closeReviewer(RESULT_DEFAULT, false)
                 true
             }
-            ViewerCommand.COMMAND_UNDO -> {
+            ViewerCommand.UNDO -> {
                 if (!isUndoAvailable) {
                     return false
                 }
                 undo()
                 true
             }
-            ViewerCommand.COMMAND_EDIT -> {
+            ViewerCommand.EDIT -> {
                 editCard(fromGesture)
                 true
             }
-            ViewerCommand.COMMAND_TAG -> {
+            ViewerCommand.TAG -> {
                 showTagsDialog()
                 true
             }
-            ViewerCommand.COMMAND_BURY_CARD -> buryCard()
-            ViewerCommand.COMMAND_BURY_NOTE -> buryNote()
-            ViewerCommand.COMMAND_SUSPEND_CARD -> suspendCard()
-            ViewerCommand.COMMAND_SUSPEND_NOTE -> suspendNote()
-            ViewerCommand.COMMAND_DELETE -> {
+            ViewerCommand.BURY_CARD -> buryCard()
+            ViewerCommand.BURY_NOTE -> buryNote()
+            ViewerCommand.SUSPEND_CARD -> suspendCard()
+            ViewerCommand.SUSPEND_NOTE -> suspendNote()
+            ViewerCommand.DELETE -> {
                 showDeleteNoteDialog()
                 true
             }
-            ViewerCommand.COMMAND_PLAY_MEDIA -> {
+            ViewerCommand.PLAY_MEDIA -> {
                 playSounds(true)
                 true
             }
-            ViewerCommand.COMMAND_PAGE_UP -> {
+            ViewerCommand.PAGE_UP -> {
                 onPageUp()
                 true
             }
-            ViewerCommand.COMMAND_PAGE_DOWN -> {
+            ViewerCommand.PAGE_DOWN -> {
                 onPageDown()
                 true
             }
-            ViewerCommand.COMMAND_ABORT_AND_SYNC -> {
+            ViewerCommand.ABORT_AND_SYNC -> {
                 abortAndSync()
                 true
             }
-            ViewerCommand.COMMAND_RECORD_VOICE -> {
+            ViewerCommand.RECORD_VOICE -> {
                 recordVoice()
                 true
             }
-            ViewerCommand.COMMAND_REPLAY_VOICE -> {
+            ViewerCommand.REPLAY_VOICE -> {
                 replayVoice()
                 true
             }
-            ViewerCommand.COMMAND_TOGGLE_WHITEBOARD -> {
+            ViewerCommand.TOGGLE_WHITEBOARD -> {
                 toggleWhiteboard()
                 true
             }
-            ViewerCommand.COMMAND_SHOW_HINT -> {
+            ViewerCommand.SHOW_HINT -> {
                 loadUrlInViewer("javascript: showHint();")
                 true
             }
-            ViewerCommand.COMMAND_SHOW_ALL_HINTS -> {
+            ViewerCommand.SHOW_ALL_HINTS -> {
                 loadUrlInViewer("javascript: showAllHints();")
                 true
             }
@@ -2301,7 +2301,7 @@ abstract class AbstractFlashcardViewer :
                 if (!mAnkiDroidJsAPI!!.isInit(AnkiDroidJsAPIConstants.MARK_CARD, AnkiDroidJsAPIConstants.ankiJsErrorCodeMarkCard)) {
                     return true
                 }
-                executeCommand(ViewerCommand.COMMAND_MARK)
+                executeCommand(ViewerCommand.MARK)
                 return true
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
@@ -2311,23 +2311,23 @@ abstract class AbstractFlashcardViewer :
                 }
                 return when (url.replaceFirst("signal:flag_".toRegex(), "")) {
                     "none" -> {
-                        executeCommand(ViewerCommand.COMMAND_UNSET_FLAG)
+                        executeCommand(ViewerCommand.UNSET_FLAG)
                         true
                     }
                     "red" -> {
-                        executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED)
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_RED)
                         true
                     }
                     "orange" -> {
-                        executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE)
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_ORANGE)
                         true
                     }
                     "green" -> {
-                        executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN)
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_GREEN)
                         true
                     }
                     "blue" -> {
-                        executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE)
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_BLUE)
                         true
                     }
                     else -> {

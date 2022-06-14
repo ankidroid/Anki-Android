@@ -201,7 +201,7 @@ object PreferenceUpgradeService {
                 val asInt = gesture.toIntOrNull() ?: return
                 val command = ViewerCommand.fromInt(asInt) ?: return
 
-                if (command == ViewerCommand.COMMAND_NOTHING) {
+                if (command == ViewerCommand.NOTHING) {
                     return
                 }
 
