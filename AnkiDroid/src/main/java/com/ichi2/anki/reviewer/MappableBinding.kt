@@ -18,7 +18,6 @@ package com.ichi2.anki.reviewer
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.text.TextUtils
 import androidx.annotation.CheckResult
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -159,7 +158,8 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
         fun fromGesture(b: Binding): MappableBinding = MappableBinding(b, Screen.Reviewer(CardSide.BOTH))
 
         @CheckResult
-        fun List<MappableBinding>.toPreferenceString(): String = "1/" + TextUtils.join(PREF_SEPARATOR.toString(), this.mapNotNull { it.toPreferenceString() })
+        fun List<MappableBinding>.toPreferenceString(): String = this.mapNotNull { it.toPreferenceString() }
+            .joinToString(prefix = "1/", separator = PREF_SEPARATOR.toString())
 
         @Suppress("UNUSED_PARAMETER")
         @CheckResult
@@ -181,9 +181,9 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
 
         @CheckResult
         fun fromPreferenceString(string: String?): MutableList<MappableBinding> {
-            if (TextUtils.isEmpty(string)) return ArrayList()
+            if (string.isNullOrEmpty()) return ArrayList()
             try {
-                val version = string!!.takeWhile { x -> x != '/' }
+                val version = string.takeWhile { x -> x != '/' }
                 val remainder = string.substring(version.length + 1) // skip the /
                 if (version != "1") {
                     Timber.w("cannot handle version '$version'")
