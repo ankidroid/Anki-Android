@@ -29,9 +29,9 @@ class AnswerButtonsTest {
     @Test
     fun checkTwoButtons() {
         val numberOfButtons = 2
-        assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1))
+        assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1))
         assertThat("hard", canAnswerHard(numberOfButtons), equalTo(false))
-        assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2))
+        assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE2))
         assertThat("easy", canAnswerEasy(numberOfButtons), equalTo(false))
     }
 
@@ -39,10 +39,10 @@ class AnswerButtonsTest {
     fun checkThreeButtons() {
         val numberOfButtons = 3
 
-        assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1))
+        assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1))
         assertThat("hard", canAnswerHard(numberOfButtons), equalTo(false))
-        assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2))
-        assertThat(EASY.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3))
+        assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE2))
+        assertThat(EASY.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE3))
 
         assertThat("easy", canAnswerEasy(numberOfButtons), equalTo(true))
     }
@@ -51,10 +51,10 @@ class AnswerButtonsTest {
     fun checkFourButtons() {
         val numberOfButtons = 4
 
-        assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1))
-        assertThat(HARD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2))
-        assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3))
-        assertThat(EASY.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE4))
+        assertThat(AGAIN.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1))
+        assertThat(HARD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE2))
+        assertThat(GOOD.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE3))
+        assertThat(EASY.toViewerCommand(numberOfButtons), equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE4))
 
         assertThat("easy", canAnswerEasy(numberOfButtons), equalTo(true))
         assertThat("hard", canAnswerHard(numberOfButtons), equalTo(true))

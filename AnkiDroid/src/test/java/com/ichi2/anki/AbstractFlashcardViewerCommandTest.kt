@@ -47,8 +47,8 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     @Test
     fun doubleTapSetsNone() {
         val viewer = viewer
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_RED)
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_RED)
+        viewer.executeCommand(TOGGLE_FLAG_RED)
+        viewer.executeCommand(TOGGLE_FLAG_RED)
 
         assertThat(viewer.lastFlag, `is`(FLAG_NONE))
     }
@@ -57,7 +57,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun noneDoesNothing() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_UNSET_FLAG)
+        viewer.executeCommand(UNSET_FLAG)
 
         assertThat(viewer.lastFlag, `is`(FLAG_NONE))
     }
@@ -66,8 +66,8 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun doubleNoneDoesNothing() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_UNSET_FLAG)
-        viewer.executeCommand(COMMAND_UNSET_FLAG)
+        viewer.executeCommand(UNSET_FLAG)
+        viewer.executeCommand(UNSET_FLAG)
 
         assertThat(viewer.lastFlag, `is`(FLAG_NONE))
     }
@@ -76,8 +76,8 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun flagCanBeChanged() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_RED)
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_BLUE)
+        viewer.executeCommand(TOGGLE_FLAG_RED)
+        viewer.executeCommand(TOGGLE_FLAG_BLUE)
 
         assertThat(viewer.lastFlag, `is`(FLAG_BLUE))
     }
@@ -86,8 +86,8 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun unsetUnsets() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_RED)
-        viewer.executeCommand(COMMAND_UNSET_FLAG)
+        viewer.executeCommand(TOGGLE_FLAG_RED)
+        viewer.executeCommand(UNSET_FLAG)
 
         assertThat(viewer.lastFlag, `is`(FLAG_NONE))
     }
@@ -96,7 +96,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun tapRedFlagSetsRed() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_RED)
+        viewer.executeCommand(TOGGLE_FLAG_RED)
 
         assertThat(viewer.lastFlag, `is`(FLAG_RED))
     }
@@ -105,7 +105,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun tapOrangeFlagSetsOrange() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_ORANGE)
+        viewer.executeCommand(TOGGLE_FLAG_ORANGE)
 
         assertThat(viewer.lastFlag, `is`(FLAG_ORANGE))
     }
@@ -114,7 +114,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun tapGreenFlagSesGreen() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_GREEN)
+        viewer.executeCommand(TOGGLE_FLAG_GREEN)
 
         assertThat(viewer.lastFlag, `is`(FLAG_GREEN))
     }
@@ -123,7 +123,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun tapBlueFlagSetsBlue() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_BLUE)
+        viewer.executeCommand(TOGGLE_FLAG_BLUE)
 
         assertThat(viewer.lastFlag, `is`(FLAG_BLUE))
     }
@@ -132,7 +132,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun tapPinkFlagSetsPink() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_PINK)
+        viewer.executeCommand(TOGGLE_FLAG_PINK)
 
         assertThat(viewer.lastFlag, `is`(FLAG_PINK))
     }
@@ -141,7 +141,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun tapTurquoiseFlagSetsTurquoise() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_TURQUOISE)
+        viewer.executeCommand(TOGGLE_FLAG_TURQUOISE)
 
         assertThat(viewer.lastFlag, `is`(FLAG_TURQUOISE))
     }
@@ -150,20 +150,20 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     fun tapPurpleFlagSetsPurple() {
         val viewer = viewer
 
-        viewer.executeCommand(COMMAND_TOGGLE_FLAG_PURPLE)
+        viewer.executeCommand(TOGGLE_FLAG_PURPLE)
 
         assertThat(viewer.lastFlag, `is`(FLAG_PURPLE))
     }
 
     @Test
     fun doubleTapUnsets() {
-        testDoubleTapUnsets(COMMAND_TOGGLE_FLAG_RED)
-        testDoubleTapUnsets(COMMAND_TOGGLE_FLAG_ORANGE)
-        testDoubleTapUnsets(COMMAND_TOGGLE_FLAG_GREEN)
-        testDoubleTapUnsets(COMMAND_TOGGLE_FLAG_BLUE)
-        testDoubleTapUnsets(COMMAND_TOGGLE_FLAG_PINK)
-        testDoubleTapUnsets(COMMAND_TOGGLE_FLAG_TURQUOISE)
-        testDoubleTapUnsets(COMMAND_TOGGLE_FLAG_PURPLE)
+        testDoubleTapUnsets(TOGGLE_FLAG_RED)
+        testDoubleTapUnsets(TOGGLE_FLAG_ORANGE)
+        testDoubleTapUnsets(TOGGLE_FLAG_GREEN)
+        testDoubleTapUnsets(TOGGLE_FLAG_BLUE)
+        testDoubleTapUnsets(TOGGLE_FLAG_PINK)
+        testDoubleTapUnsets(TOGGLE_FLAG_TURQUOISE)
+        testDoubleTapUnsets(TOGGLE_FLAG_PURPLE)
     }
 
     private fun testDoubleTapUnsets(command: ViewerCommand) {

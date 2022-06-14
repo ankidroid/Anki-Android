@@ -174,7 +174,7 @@ class ControlPreference : ListPreference {
         fun setup(cat: PreferenceCategory) {
             val commands = Arrays.stream(ViewerCommand.values()).collect(Collectors.toList())
             val context = cat.context
-            commands.remove(ViewerCommand.COMMAND_NOTHING)
+            commands.remove(ViewerCommand.NOTHING)
             for (c in commands) {
                 val p = ControlPreference(context)
                 p.setTitle(c.resourceId)

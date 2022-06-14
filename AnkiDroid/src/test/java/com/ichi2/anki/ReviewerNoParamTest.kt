@@ -153,7 +153,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val hideCount = reviewer.delayedHideCount
 
-        reviewer.executeCommand(ViewerCommand.COMMAND_UNDO)
+        reviewer.executeCommand(ViewerCommand.UNDO)
         advanceRobolectricLooperWithSleep()
 
         assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
@@ -275,7 +275,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         AnkiDroidApp.getSharedPrefs(targetContext).edit {
             for (g in gestures) {
                 val k = getKey(g)
-                putString(k, ViewerCommand.COMMAND_NOTHING.toPreferenceString())
+                putString(k, ViewerCommand.NOTHING.toPreferenceString())
             }
         }
     }
@@ -284,7 +284,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     private fun enableGesture(gesture: Gesture) {
         AnkiDroidApp.getSharedPrefs(targetContext).edit {
             val k = getKey(gesture)
-            putString(k, ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1.toPreferenceString())
+            putString(k, ViewerCommand.FLIP_OR_ANSWER_EASE1.toPreferenceString())
         }
     }
 

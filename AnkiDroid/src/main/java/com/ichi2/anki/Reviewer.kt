@@ -1155,51 +1155,51 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        if (isControlBlocked() && which !== ViewerCommand.COMMAND_EXIT) {
+        if (isControlBlocked() && which !== ViewerCommand.EXIT) {
             return false
         }
         when (which) {
-            ViewerCommand.COMMAND_TOGGLE_FLAG_RED -> {
+            ViewerCommand.TOGGLE_FLAG_RED -> {
                 toggleFlag(CardMarker.FLAG_RED)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE -> {
+            ViewerCommand.TOGGLE_FLAG_ORANGE -> {
                 toggleFlag(CardMarker.FLAG_ORANGE)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN -> {
+            ViewerCommand.TOGGLE_FLAG_GREEN -> {
                 toggleFlag(CardMarker.FLAG_GREEN)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE -> {
+            ViewerCommand.TOGGLE_FLAG_BLUE -> {
                 toggleFlag(CardMarker.FLAG_BLUE)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_PINK -> {
+            ViewerCommand.TOGGLE_FLAG_PINK -> {
                 toggleFlag(CardMarker.FLAG_PINK)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_TURQUOISE -> {
+            ViewerCommand.TOGGLE_FLAG_TURQUOISE -> {
                 toggleFlag(CardMarker.FLAG_TURQUOISE)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_PURPLE -> {
+            ViewerCommand.TOGGLE_FLAG_PURPLE -> {
                 toggleFlag(CardMarker.FLAG_PURPLE)
                 return true
             }
-            ViewerCommand.COMMAND_UNSET_FLAG -> {
+            ViewerCommand.UNSET_FLAG -> {
                 onFlag(mCurrentCard, CardMarker.FLAG_NONE)
                 return true
             }
-            ViewerCommand.COMMAND_MARK -> {
+            ViewerCommand.MARK -> {
                 onMark(mCurrentCard)
                 return true
             }
-            ViewerCommand.COMMAND_ADD_NOTE -> {
+            ViewerCommand.ADD_NOTE -> {
                 addNote(fromGesture)
                 return true
             }
-            ViewerCommand.COMMAND_CARD_INFO -> {
+            ViewerCommand.CARD_INFO -> {
                 openCardInfo(fromGesture)
                 return true
             }

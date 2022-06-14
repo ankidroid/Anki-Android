@@ -49,7 +49,7 @@ class GestureProcessorTest : ViewerCommand.CommandProcessor {
         every { prefs.getBoolean("gestureCornerTouch", any()) } returns true
         mSut.init(prefs)
         mSut.onTap(100, 100, 50f, 50f)
-        assertThat(singleResult(), equalTo(ViewerCommand.COMMAND_SHOW_ANSWER))
+        assertThat(singleResult(), equalTo(ViewerCommand.SHOW_ANSWER))
     }
 
     companion object {

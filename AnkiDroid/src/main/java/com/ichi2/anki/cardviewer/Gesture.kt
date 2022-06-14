@@ -41,21 +41,21 @@ enum class Gesture(
     private val preferenceKey: String,
     private val preferenceDefault: ViewerCommand
 ) {
-    SWIPE_UP(R.string.gestures_swipe_up, "gestureSwipeUp", ViewerCommand.COMMAND_EDIT),
-    SWIPE_DOWN(R.string.gestures_swipe_down, "gestureSwipeDown", ViewerCommand.COMMAND_NOTHING),
-    SWIPE_LEFT(R.string.gestures_swipe_left, "gestureSwipeLeft", ViewerCommand.COMMAND_UNDO),
-    SWIPE_RIGHT(R.string.gestures_swipe_right, "gestureSwipeRight", ViewerCommand.COMMAND_EXIT),
-    LONG_TAP(R.string.gestures_long_tap, "gestureLongclick", ViewerCommand.COMMAND_NOTHING),
-    DOUBLE_TAP(R.string.gestures_double_tap, "gestureDoubleTap", ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED),
-    TAP_TOP_LEFT(R.string.gestures_corner_tap_top_left, "gestureTapTopLeft", ViewerCommand.COMMAND_NOTHING),
-    TAP_TOP(R.string.gestures_tap_top, "gestureTapTop", ViewerCommand.COMMAND_BURY_CARD),
-    TAP_TOP_RIGHT(R.string.gestures_corner_tap_top_right, "gestureTapTopRight", ViewerCommand.COMMAND_NOTHING),
-    TAP_LEFT(R.string.gestures_tap_left, "gestureTapLeft", ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2),
-    TAP_CENTER(R.string.gestures_corner_tap_middle_center, "gestureTapCenter", ViewerCommand.COMMAND_NOTHING),
-    TAP_RIGHT(R.string.gestures_tap_right, "gestureTapRight", ViewerCommand.COMMAND_FLIP_OR_ANSWER_RECOMMENDED),
-    TAP_BOTTOM_LEFT(R.string.gestures_corner_tap_bottom_left, "gestureTapBottomLeft", ViewerCommand.COMMAND_NOTHING),
-    TAP_BOTTOM(R.string.gestures_tap_bottom, "gestureTapBottom", ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1),
-    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right, "gestureTapBottomRight", ViewerCommand.COMMAND_NOTHING);
+    SWIPE_UP(R.string.gestures_swipe_up, "gestureSwipeUp", ViewerCommand.EDIT),
+    SWIPE_DOWN(R.string.gestures_swipe_down, "gestureSwipeDown", ViewerCommand.NOTHING),
+    SWIPE_LEFT(R.string.gestures_swipe_left, "gestureSwipeLeft", ViewerCommand.UNDO),
+    SWIPE_RIGHT(R.string.gestures_swipe_right, "gestureSwipeRight", ViewerCommand.EXIT),
+    LONG_TAP(R.string.gestures_long_tap, "gestureLongclick", ViewerCommand.NOTHING),
+    DOUBLE_TAP(R.string.gestures_double_tap, "gestureDoubleTap", ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED),
+    TAP_TOP_LEFT(R.string.gestures_corner_tap_top_left, "gestureTapTopLeft", ViewerCommand.NOTHING),
+    TAP_TOP(R.string.gestures_tap_top, "gestureTapTop", ViewerCommand.BURY_CARD),
+    TAP_TOP_RIGHT(R.string.gestures_corner_tap_top_right, "gestureTapTopRight", ViewerCommand.NOTHING),
+    TAP_LEFT(R.string.gestures_tap_left, "gestureTapLeft", ViewerCommand.FLIP_OR_ANSWER_EASE2),
+    TAP_CENTER(R.string.gestures_corner_tap_middle_center, "gestureTapCenter", ViewerCommand.NOTHING),
+    TAP_RIGHT(R.string.gestures_tap_right, "gestureTapRight", ViewerCommand.FLIP_OR_ANSWER_RECOMMENDED),
+    TAP_BOTTOM_LEFT(R.string.gestures_corner_tap_bottom_left, "gestureTapBottomLeft", ViewerCommand.NOTHING),
+    TAP_BOTTOM(R.string.gestures_tap_bottom, "gestureTapBottom", ViewerCommand.FLIP_OR_ANSWER_EASE1),
+    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right, "gestureTapBottomRight", ViewerCommand.NOTHING);
 
     fun fromPreference(prefs: SharedPreferences): ViewerCommand {
         val value = prefs.getString(preferenceKey, null) ?: return preferenceDefault
