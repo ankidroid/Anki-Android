@@ -44,7 +44,6 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.webkit.WebViewAssetLoader
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
@@ -467,8 +466,8 @@ abstract class AbstractFlashcardViewer :
                     .positiveText(R.string.dialog_continue)
                     .negativeText(R.string.close)
                     .cancelable(true)
-                    .onNegative { _: MaterialDialog?, _: DialogAction? -> finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
-                    .onPositive { _: MaterialDialog?, _: DialogAction? -> col.startTimebox() }
+                    .onNegative { _, _ -> finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
+                    .onPositive { _, _ -> col.startTimebox() }
                     .cancelListener { col.startTimebox() }
                     .show()
             }
@@ -880,7 +879,7 @@ abstract class AbstractFlashcardViewer :
             )
             .positiveText(R.string.dialog_positive_delete)
             .negativeText(R.string.dialog_cancel)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+            .onPositive { _, _ ->
                 Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard!!.nid)
                 mSoundPlayer.stopSounds()
                 deleteNoteWithoutConfirmation()
