@@ -1485,7 +1485,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     mModelChangeFieldMap!![idx] = newFieldIndex
                 }
                 // Reload the fields
-                updateFieldsFromMap(currentlySelectedModel)
+                updateFieldsFromMap(currentlySelectedModel, true)
                 true
             }
             popup.show()
@@ -1915,9 +1915,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /**
      * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
      */
-    private fun updateFieldsFromMap(newModel: Model?) {
+    private fun updateFieldsFromMap(newModel: Model?, editModelMode: Boolean) {
         val type = FieldChangeType.refreshWithMap(newModel, mModelChangeFieldMap, shouldReplaceNewlines())
-        populateEditFields(type, true)
+        populateEditFields(type, editModelMode)
         updateCards(newModel)
     }
 
@@ -2005,7 +2005,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     }
                 }
                 // Update the field text edits based on the default mapping just assigned
-                updateFieldsFromMap(newModel)
+                updateFieldsFromMap(newModel, false)
                 // Don't let the user change any other values at the same time as changing note type
                 mSelectedTags = mEditorNote!!.tags
                 updateTags()
