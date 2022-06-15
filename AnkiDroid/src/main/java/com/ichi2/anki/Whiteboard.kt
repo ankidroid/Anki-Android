@@ -216,6 +216,17 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         createBitmap(bitmapSize, bitmapSize)
     }
 
+    /**
+     * On rotating the device onSizeChanged() helps to stretch the previously created Bitmap rather
+     * than creating a new Bitmap which makes sure bitmap doesn't go out of screen.
+     */
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        val scaledBitmap: Bitmap = Bitmap.createScaledBitmap(mBitmap, w, h, true)
+        mBitmap = scaledBitmap
+        mCanvas = Canvas(mBitmap)
+    }
+
     private fun drawStart(x: Float, y: Float) {
         isCurrentlyDrawing = true
         mPath.reset()
