@@ -349,13 +349,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
                 return root
             }
             val children = root.children
-            val ret: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList(children.size)
-            for (child in children) {
-                val returned = filterDeckInternal(filterPattern, child)
-                if (returned != null) {
-                    ret.add(returned)
-                }
-            }
+            val ret = children
+                .mapNotNull { child -> filterDeckInternal(filterPattern, child) }
 
             // If any of a deck's children contains the search string, then the deck is valid
             if (ret.isEmpty()) return null
