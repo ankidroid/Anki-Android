@@ -138,8 +138,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     fun getNodeByDid(did: Long): TreeNode<AbstractDeckTreeNode> {
-        val pos = findDeckPosition(did)
-        return deckList[pos]
+        return deckList[findDeckPosition(did)]
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
