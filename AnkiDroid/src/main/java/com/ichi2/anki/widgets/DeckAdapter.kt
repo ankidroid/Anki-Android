@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.DeckService.defaultDeckHasCards
+import com.ichi2.anki.servicelayer.DeckService.getParentDid
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.Counts
@@ -309,18 +310,11 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
      * An invalid deck ID will return position 0.
      */
     fun findDeckPosition(did: Long): Int {
-        for (i in mCurrentDeckList.indices) {
-            if (mCurrentDeckList[i].value.did == did) {
-                return i
-            }
-        }
-        // If the deck is not in our list, we search again using the immediate parent
-        val parents = mCol.decks.parents(did)
-        return if (parents.isEmpty()) {
-            0
-        } else {
-            findDeckPosition(parents[parents.size - 1].optLong("id", 0))
-        }
+        return deckList
+            .indexOfOrNull { it.value.did == did }
+            // If the deck is not in our list, we search again using the immediate parent
+            ?: getParentDid(mCol, did)?.run { findDeckPosition(this) }
+            ?: 0
     }
 
     val eta: Int?
@@ -387,6 +381,14 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     companion object {
         /* Make the selected deck roughly half transparent if there is a background */
         const val SELECTED_DECK_ALPHA_AGAINST_BACKGROUND = 0.45
+
+        /**
+         * @param predicate the predicate to find index of
+         * @return the index of [predicate]. returns null if none found
+         */
+        fun <T> Iterable<T>.indexOfOrNull(predicate: (T) -> Boolean): Int? {
+            return indexOfFirst(predicate).takeIf { it >= 0 }
+        }
     }
 
     init {
