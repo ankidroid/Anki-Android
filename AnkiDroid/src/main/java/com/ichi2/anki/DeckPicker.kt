@@ -143,7 +143,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     @VisibleForTesting
     var mDueTree: List<TreeNode<AbstractDeckTreeNode>>? = null
 
-    var mSearchDecksIcon: MenuItem? = null
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var searchDecksIcon: MenuItem? = null
 
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
@@ -515,8 +516,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         menu.findItem(R.id.action_check_media).isEnabled = sdCardAvailable
         menu.findItem(R.id.action_empty_cards).isEnabled = sdCardAvailable
 
-        mSearchDecksIcon = menu.findItem(R.id.deck_picker_action_filter)
-        mSearchDecksIcon!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+        searchDecksIcon = menu.findItem(R.id.deck_picker_action_filter)
+        searchDecksIcon!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             // When SearchItem is expanded
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 Timber.i("DeckPicker:: SearchItem opened")
@@ -534,7 +535,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             }
         })
 
-        mToolbarSearchView = mSearchDecksIcon!!.actionView as SearchView
+        mToolbarSearchView = searchDecksIcon!!.actionView as SearchView
         mToolbarSearchView!!.queryHint = getString(R.string.search_decks)
         mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -566,7 +567,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     private fun updateSearchDecksIconVisibility() {
-        mSearchDecksIcon?.isVisible = deckCount >= 10
+        searchDecksIcon?.isVisible = deckCount >= 10
     }
 
     @VisibleForTesting

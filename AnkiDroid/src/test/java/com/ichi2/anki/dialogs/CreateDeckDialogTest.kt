@@ -159,7 +159,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                     deckPicker.updateDeckList()
                     assertEquals(deckCounter.get() - 1, deckPicker.deckCount)
 
-                    assertEquals(deckPicker.mSearchDecksIcon!!.isVisible, deckPicker.deckCount >= 10)
+                    assertEquals(deckPicker.searchDecksIcon!!.isVisible, deckPicker.deckCount >= 10)
 
                     // After the last deck was created, delete a deck
                     if (deckPicker.deckCount >= 10) {
@@ -169,7 +169,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                         deckPicker.updateDeckList()
                         assertEquals(deckCounter.get() - 1, deckPicker.deckCount)
 
-                        assertFalse(deckPicker.mSearchDecksIcon!!.isVisible)
+                        assertFalse(deckPicker.searchDecksIcon!!.isVisible)
                     }
                 }
                 createDeckDialog.createDeck("Deck$i")
@@ -186,13 +186,13 @@ class CreateDeckDialogTest : RobolectricTest() {
                 assertEquals(11, decks.count())
                 deckPicker.updateDeckList()
                 assertEquals(10, deckPicker.deckCount)
-                assertTrue(deckPicker.mSearchDecksIcon!!.isVisible)
+                assertTrue(deckPicker.searchDecksIcon!!.isVisible)
 
                 deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1"))
                 assertEquals(2, decks.count())
                 deckPicker.updateDeckList()
                 assertEquals(1, deckPicker.deckCount)
-                assertFalse(deckPicker.mSearchDecksIcon!!.isVisible)
+                assertFalse(deckPicker.searchDecksIcon!!.isVisible)
             }
             createDeckDialog.createDeck(deckTreeName(0, 9, "Deck"))
 
@@ -201,13 +201,13 @@ class CreateDeckDialogTest : RobolectricTest() {
                 assertEquals(13, decks.count())
                 deckPicker.updateDeckList()
                 assertEquals(12, deckPicker.deckCount)
-                assertTrue(deckPicker.mSearchDecksIcon!!.isVisible)
+                assertTrue(deckPicker.searchDecksIcon!!.isVisible)
 
                 deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1"))
                 assertEquals(2, decks.count())
                 deckPicker.updateDeckList()
                 assertEquals(1, deckPicker.deckCount)
-                assertFalse(deckPicker.mSearchDecksIcon!!.isVisible)
+                assertFalse(deckPicker.searchDecksIcon!!.isVisible)
             }
             createDeckDialog.createDeck(deckTreeName(0, 11, "Deck"))
 
@@ -216,7 +216,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                 assertEquals(7, decks.count())
                 deckPicker.updateDeckList()
                 assertEquals(6, deckPicker.deckCount)
-                assertFalse(deckPicker.mSearchDecksIcon!!.isVisible)
+                assertFalse(deckPicker.searchDecksIcon!!.isVisible)
             }
             createDeckDialog.createDeck(deckTreeName(0, 5, "Deck"))
 
@@ -225,7 +225,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                 assertEquals(13, decks.count())
                 deckPicker.updateDeckList()
                 assertEquals(12, deckPicker.deckCount)
-                assertTrue(deckPicker.mSearchDecksIcon!!.isVisible)
+                assertTrue(deckPicker.searchDecksIcon!!.isVisible)
             }
             createDeckDialog.createDeck(deckTreeName(6, 11, "Deck"))
         }
