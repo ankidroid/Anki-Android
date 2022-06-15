@@ -139,7 +139,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     fun getNodeByDid(did: Long): TreeNode<AbstractDeckTreeNode> {
-        return deckList[findDeckPosition(did)]
+        return mCurrentDeckList[findDeckPosition(did)]
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -325,9 +325,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
     val due: Int?
         get() = (mNew + mLrn + mRev).takeIf { mNumbersComputed }
-
-    private val deckList: List<TreeNode<AbstractDeckTreeNode>>
-        get() = mCurrentDeckList
 
     override fun getFilter(): Filter {
         return DeckFilter()
