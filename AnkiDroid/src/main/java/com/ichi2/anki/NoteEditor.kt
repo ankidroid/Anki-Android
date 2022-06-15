@@ -95,6 +95,10 @@ import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 import java.util.*
 import java.util.function.Consumer
+import kotlin.collections.ArrayList
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -103,7 +107,6 @@ import java.util.function.Consumer
  *
  * @see [the Anki Desktop manual](https://docs.ankiweb.net/getting-started.html.cards)
  */
-@KotlinCleanup("IDE Lint")
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
 class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, TagsDialogListener {
@@ -209,10 +212,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             } else {
                 context.displayErrorSavingNote()
             }
-            if (!context.mAddNote || context.mCaller == CALLER_CARDEDITOR || context.mAedictIntent) {
+            if (!context.mAddNote || context.mCaller == CALLER_NOTEEDITOR || context.mAedictIntent) {
                 context.mChanged = true
                 mCloseAfter = true
-            } else if (context.mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
+            } else if (context.mCaller == CALLER_NOTEEDITOR_INTENT_ADD) {
                 if (value > 0) {
                     context.mChanged = true
                 }
@@ -324,7 +327,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (mCaller == CALLER_NO_CALLER) {
                 val action = intent.action
                 if (ACTION_CREATE_FLASHCARD == action || ACTION_CREATE_FLASHCARD_SEND == action || Compat.ACTION_PROCESS_TEXT == action) {
-                    mCaller = CALLER_CARDEDITOR_INTENT_ADD
+                    mCaller = CALLER_NOTEEDITOR_INTENT_ADD
                 }
             }
         }
@@ -403,7 +406,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 mEditorNote = mCurrentEditedCard!!.note()
                 mAddNote = false
             }
-            CALLER_STUDYOPTIONS, CALLER_DECKPICKER, CALLER_REVIEWER_ADD, CALLER_CARDBROWSER_ADD, CALLER_CARDEDITOR ->
+            CALLER_STUDYOPTIONS, CALLER_DECKPICKER, CALLER_REVIEWER_ADD, CALLER_CARDBROWSER_ADD, CALLER_NOTEEDITOR ->
                 mAddNote =
                     true
             CALLER_CARDBROWSER_EDIT -> {
@@ -415,7 +418,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 mEditorNote = mCurrentEditedCard!!.note()
                 mAddNote = false
             }
-            CALLER_CARDEDITOR_INTENT_ADD -> {
+            CALLER_NOTEEDITOR_INTENT_ADD -> {
                 fetchIntentInformation(intent)
                 if (mSourceText == null) {
                     finishWithoutAnimation()
@@ -452,7 +455,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         setDid(mEditorNote)
         setNote(mEditorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (mAddNote) {
-            mNoteTypeSpinner!!.setOnItemSelectedListener(SetNoteTypeListener())
+            mNoteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
             setTitle(R.string.menu_add_note)
             // set information transferred by intent
             var contents: String? = null
@@ -474,7 +477,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             contents?.let { setEditFieldTexts(it) }
             tags?.let { setTags(it) }
         } else {
-            mNoteTypeSpinner!!.setOnItemSelectedListener(EditNoteTypeListener())
+            mNoteTypeSpinner!!.onItemSelectedListener = EditNoteTypeListener()
             setTitle(R.string.cardeditor_title_edit_card)
         }
         findViewById<View>(R.id.CardEditorTagButton).setOnClickListener {
@@ -502,7 +505,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // set focus to FieldEditText 'first' on startup like Anki desktop
         if (mEditFields != null && !mEditFields!!.isEmpty()) {
             // EXTRA_TEXT_FROM_SEARCH_VIEW takes priority over other intent inputs
-            if (getTextFromSearchView != null && !getTextFromSearchView.isEmpty()) {
+            if (getTextFromSearchView != null && getTextFromSearchView.isNotEmpty()) {
                 mEditFields!!.first!!.setText(getTextFromSearchView)
             }
             mEditFields!!.first!!.requestFocus()
@@ -516,8 +519,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val selectionEnd = textBox.selectionEnd
 
         // #6762 values are reversed if using a keyboard and pressing Ctrl+Shift+LeftArrow
-        val start = Math.min(selectionStart, selectionEnd)
-        val end = Math.max(selectionStart, selectionEnd)
+        val start = min(selectionStart, selectionEnd)
+        val end = max(selectionStart, selectionEnd)
         val text = textBox.text?.toString() ?: ""
 
         // Split the text in the places where the formatting will take place
@@ -602,8 +605,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             Timber.i("Index out of range: %d", index)
             return
         }
-        val field: FieldEditText?
-        field = try {
+        val field: FieldEditText? = try {
             mEditFields!![index]
         } catch (e: IndexOutOfBoundsException) {
             Timber.w(e, "Error selecting index %d", index)
@@ -658,16 +660,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun addFromAedict(extra_text: String?): Boolean {
         var category: String
-        val notepad_lines = extra_text!!.split("\n".toRegex()).toTypedArray()
-        for (i in notepad_lines.indices) {
-            if (notepad_lines[i].startsWith("[") && notepad_lines[i].endsWith("]")) {
-                category = notepad_lines[i].substring(1, notepad_lines[i].length - 1)
+        val notepadLines = extra_text!!.split("\n".toRegex()).toTypedArray()
+        for (i in notepadLines.indices) {
+            if (notepadLines[i].startsWith("[") && notepadLines[i].endsWith("]")) {
+                category = notepadLines[i].substring(1, notepadLines[i].length - 1)
                 if ("default" == category) {
-                    if (notepad_lines.size > i + 1) {
-                        val entry_lines = notepad_lines[i + 1].split(":".toRegex()).toTypedArray()
-                        if (entry_lines.size > 1) {
-                            mSourceText!![0] = entry_lines[1]
-                            mSourceText!![1] = entry_lines[0]
+                    if (notepadLines.size > i + 1) {
+                        val entryLines = notepadLines[i + 1].split(":".toRegex()).toTypedArray()
+                        if (entryLines.size > 1) {
+                            mSourceText!![0] = entryLines[1]
+                            mSourceText!![1] = entryLines[0]
                             mAedictIntent = true
                             return false
                         }
@@ -878,7 +880,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         if (mEditFields != null) {
             for (i in mEditFields!!.indices) {
                 val fieldText = mEditFields!![i]!!.text
-                if (fieldText != null && fieldText.length > 0) {
+                if (fieldText != null && fieldText.isNotEmpty()) {
                     menu.findItem(R.id.action_copy_note).isEnabled = true
                     break
                 } else if (i == mEditFields!!.size - 1) {
@@ -979,7 +981,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // So a value of 18sp in the XML won't be 18sp on the TextView, but it's close enough.
             // Values are setFontSize are whole when returned.
             val sp = TextViewUtil.getTextSizeSp(mEditFields!!.first!!)
-            return Integer.toString(Math.round(sp))
+            return sp.roundToInt().toString()
         }
 
     fun addNewNote() {
@@ -997,7 +999,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun openNewNoteEditor(intentEnricher: Consumer<Intent>) {
         val intent = Intent(this@NoteEditor, NoteEditor::class.java)
-        intent.putExtra(EXTRA_CALLER, CALLER_CARDEDITOR)
+        intent.putExtra(EXTRA_CALLER, CALLER_NOTEEDITOR)
         intent.putExtra(EXTRA_DID, deckId)
         // mutate event with additional properties
         intentEnricher.accept(intent)
@@ -1049,7 +1051,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun setTags(tags: Array<String>) {
-        mSelectedTags = ArrayList(Arrays.asList(*tags))
+        mSelectedTags = tags.toCollection(ArrayList())
         updateTags()
     }
 
@@ -1071,8 +1073,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun closeNoteEditor(intent: Intent = Intent()) {
-        val result: Int
-        result = if (mChanged) {
+        val result: Int = if (mChanged) {
             RESULT_OK
         } else {
             RESULT_CANCELED
@@ -1102,7 +1103,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return
         }
 
-        if (mCaller == CALLER_CARDEDITOR_INTENT_ADD) {
+        if (mCaller == CALLER_NOTEEDITOR_INTENT_ADD) {
             finishWithAnimation(NONE)
         } else {
             finishWithAnimation(END)
@@ -1236,7 +1237,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Crashes if start > end, although this is fine for a selection via keyboard.
             val start = fieldEditText.selectionStart
             val end = fieldEditText.selectionEnd
-            fieldEditText.text.replace(Math.min(start, end), Math.max(start, end), formattedValue)
+            fieldEditText.text.replace(min(start, end), max(start, end), formattedValue)
         } else {
             fieldEditText.text.append(formattedValue)
         }
@@ -1284,9 +1285,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         var previous: FieldEditLine? = null
         mCustomViewIds.ensureCapacity(editLines.size)
         for (i in editLines.indices) {
-            val edit_line_view = editLines[i]
-            mCustomViewIds.add(edit_line_view.id)
-            val newEditText = edit_line_view.editText
+            val editLineView = editLines[i]
+            mCustomViewIds.add(editLineView.id)
+            val newEditText = editLineView.editText
             newEditText!!.setImagePasteListener { editText: EditText?, uri: Uri? ->
                 onImagePaste(
                     editText!!,
@@ -1301,16 +1302,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     previous.lastViewInTabOrder!!.nextFocusForwardId = newEditText.id
                 }
             }
-            previous = edit_line_view
-            edit_line_view.setEnableAnimation(animationEnabled())
+            previous = editLineView
+            editLineView.setEnableAnimation(animationEnabled())
 
             // TODO: Remove the >= M check - one callback works on API 11.
             if (CompatHelper.sdkVersion >= Build.VERSION_CODES.M) {
                 // Use custom implementation of ActionMode.Callback customize selection and insert menus
-                edit_line_view.setActionModeCallbacks(ActionModeCallback(newEditText))
+                editLineView.setActionModeCallbacks(ActionModeCallback(newEditText))
             }
-            edit_line_view.setTypeface(customTypeface)
-            edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.name))
+            editLineView.setTypeface(customTypeface)
+            editLineView.setHintLocale(getHintLocaleForField(editLineView.name))
             initFieldEditText(newEditText, i, !editModelMode)
             mEditFields!!.add(newEditText)
             val prefs = AnkiDroidApp.getSharedPrefs(this)
@@ -1318,8 +1319,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 newEditText.textSize = prefs.getInt(PREF_NOTE_EDITOR_FONT_SIZE, -1).toFloat()
             }
             newEditText.setCapitalize(prefs.getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true))
-            val mediaButton = edit_line_view.mediaButton
-            val toggleStickyButton = edit_line_view.toggleSticky
+            val mediaButton = editLineView.mediaButton
+            val toggleStickyButton = editLineView.toggleSticky
             // Load icons from attributes
             val icons = Themes.getResFromAttr(
                 this,
@@ -1346,10 +1347,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 previous.lastViewInTabOrder!!.nextFocusForwardId = R.id.CardEditorTagButton
             }
             mediaButton.contentDescription =
-                getString(R.string.multimedia_editor_attach_mm_content, edit_line_view.name)
+                getString(R.string.multimedia_editor_attach_mm_content, editLineView.name)
             toggleStickyButton.contentDescription =
-                getString(R.string.note_editor_toggle_sticky, edit_line_view.name)
-            mFieldsLayoutContainer!!.addView(edit_line_view)
+                getString(R.string.note_editor_toggle_sticky, editLineView.name)
+            mFieldsLayoutContainer!!.addView(editLineView)
         }
     }
 
@@ -1362,7 +1363,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun setMMButtonListener(mediaButton: ImageButton?, index: Int) {
         mediaButton!!.setOnClickListener { v: View? ->
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
-            if (mEditorNote!!.items()[index][1].length > 0) {
+            if (mEditorNote!!.items()[index][1].isNotEmpty()) {
                 val col = CollectionHelper.getInstance().getCol(this@NoteEditor)
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
@@ -1527,7 +1528,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                         return@OnFocusChangeListener
                     }
                     val currentFieldStrings = currentFieldStrings
-                    if (currentFieldStrings.size != 2 || currentFieldStrings[1]!!.length > 0) {
+                    if (currentFieldStrings.size != 2 || currentFieldStrings[1]!!.isNotEmpty()) {
                         // we only decorate on 2-field cards while second field is still empty
                         return@OnFocusChangeListener
                     }
@@ -1562,8 +1563,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun getFieldByName(name: String?): JSONObject? {
-        val pair: Pair<Int, JSONObject>?
-        pair = try {
+        val pair: Pair<Int, JSONObject>? = try {
             Models.fieldMap(currentlySelectedModel!!)[name]
         } catch (e: Exception) {
             Timber.w("Failed to obtain field '%s'", name)
@@ -1702,7 +1702,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 val stringFormat = Toolbar.StringFormat()
                 val prefix = "{{c$nextClozeIndex::"
                 stringFormat.result = "$prefix$s}}"
-                if (s.length == 0) {
+                if (s.isEmpty()) {
                     stringFormat.selectionStart = prefix.length
                     stringFormat.selectionEnd = prefix.length
                 } else {
@@ -1721,15 +1721,15 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
             // 0th button shows as '1' and is Ctrl + 1
             val visualIndex = b.index + 1
-            var text = Integer.toString(visualIndex)
-            if (!b.buttonText.isEmpty()) {
+            var text = visualIndex.toString()
+            if (b.buttonText.isNotEmpty()) {
                 text = b.buttonText
             }
             val bmp = mToolbar!!.createDrawableForString(text)
             val v = mToolbar!!.insertItem(0, bmp, b.toFormatter())
 
             // Allow Ctrl + 1...Ctrl + 0 for item 10.
-            v.tag = Integer.toString(visualIndex % 10)
+            v.tag = (visualIndex % 10).toString()
             v.setOnLongClickListener {
                 displayEditToolbarDialog(b)
                 true
@@ -2096,9 +2096,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun convertSelectedTextToCloze(textBox: FieldEditText, addClozeType: AddClozeType) {
         var nextClozeIndex = nextClozeIndex
         if (addClozeType == AddClozeType.SAME_NUMBER) {
-            nextClozeIndex = nextClozeIndex - 1
+            nextClozeIndex -= 1
         }
-        val prefix = "{{c" + Math.max(1, nextClozeIndex) + "::"
+        val prefix = "{{c" + max(1, nextClozeIndex) + "::"
         val suffix = "}}"
         modifyCurrentSelection(TextWrapper(prefix, suffix), textBox)
     }
@@ -2199,8 +2199,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val CALLER_REVIEWER_ADD = 11
         const val CALLER_CARDBROWSER_EDIT = 6
         const val CALLER_CARDBROWSER_ADD = 7
-        const val CALLER_CARDEDITOR = 8
-        const val CALLER_CARDEDITOR_INTENT_ADD = 10
+        const val CALLER_NOTEEDITOR = 8
+        const val CALLER_NOTEEDITOR_INTENT_ADD = 10
         const val REQUEST_ADD = 0
         const val REQUEST_MULTIMEDIA_EDIT = 2
         const val REQUEST_TEMPLATE_EDIT = 3
