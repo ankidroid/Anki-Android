@@ -929,7 +929,7 @@ public class Syncer {
      * @param con
      */
     private void throwExceptionIfCancelled(Connection con) {
-        if (Connection.getIsCancelled()) {
+        if (Connection.Companion.isCancelled()) {
             Timber.i("Sync was cancelled");
             publishProgress(con, R.string.sync_cancelled);
             try {
