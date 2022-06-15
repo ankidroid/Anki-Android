@@ -324,11 +324,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             null
         }
     val due: Int?
-        get() = if (mNumbersComputed) {
-            mNew + mLrn + mRev
-        } else {
-            null
-        }
+        get() = (mNew + mLrn + mRev).takeIf { mNumbersComputed }
+
     private val deckList: List<TreeNode<AbstractDeckTreeNode>>
         get() = mCurrentDeckList
 
