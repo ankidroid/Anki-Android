@@ -154,24 +154,27 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         // Set the expander icon and padding according to whether or not there are any subdecks
         val deckLayout = holder.deckLayout
         val rightPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_right_padding).toInt()
+
         if (mHasSubdecks) {
-            val smallPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_left_padding_small).toInt()
-            deckLayout.setPadding(smallPadding, 0, rightPadding, 0)
-            holder.deckExpander.visibility = View.VISIBLE
             // Create the correct expander for this deck
             setDeckExpander(holder.deckExpander, holder.indentView, treeNode)
-        } else {
-            holder.deckExpander.visibility = View.GONE
-            val normalPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_left_padding).toInt()
-            deckLayout.setPadding(normalPadding, 0, rightPadding, 0)
         }
+        val leftPadding = deckLayout.resources.getDimension(
+            if (mHasSubdecks) {
+                R.dimen.deck_picker_left_padding_small
+            } else {
+                R.dimen.deck_picker_left_padding
+            }
+        ).toInt()
+        deckLayout.setPadding(leftPadding, 0, rightPadding, 0)
+        holder.deckExpander.visibility = if (mHasSubdecks) View.VISIBLE else View.GONE
+
         if (treeNode.hasChildren()) {
             holder.deckExpander.tag = node.did
-            holder.deckExpander.setOnClickListener(mDeckExpanderClickListener)
         } else {
             holder.deckExpander.isClickable = false
-            holder.deckExpander.setOnClickListener(null)
         }
+        holder.deckExpander.setOnClickListener(mDeckExpanderClickListener.takeIf { treeNode.hasChildren() })
         holder.deckLayout.setBackgroundResource(mRowCurrentDrawable)
         // Set background colour. The current deck has its own color
         if (isCurrentlySelectedDeck(node)) {
@@ -193,11 +196,10 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         } else {
             mCol.decks.isDyn(node.did)
         }
-        if (filtered) {
-            holder.deckName.setTextColor(mDeckNameDynColor)
-        } else {
-            holder.deckName.setTextColor(mDeckNameDefaultColor)
-        }
+        holder.deckName.setTextColor(
+            if (filtered) mDeckNameDynColor
+            else mDeckNameDefaultColor
+        )
 
         // Set the card counts and their colors
         if (node.shouldDisplayCounts()) {
