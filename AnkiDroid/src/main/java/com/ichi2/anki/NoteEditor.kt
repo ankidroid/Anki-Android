@@ -51,7 +51,6 @@ import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.FieldEditText.ImagePasteListener
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -383,12 +382,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mFieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout)
         mTagsButton = findViewById(R.id.CardEditorTagButton)
         mCardsButton = findViewById(R.id.CardEditorCardsButton)
-        mCardsButton!!.setOnClickListener(
-            View.OnClickListener {
-                Timber.i("NoteEditor:: Cards button pressed. Opening template editor")
-                showCardTemplateEditor()
-            }
-        )
+        mCardsButton!!.setOnClickListener {
+            Timber.i("NoteEditor:: Cards button pressed. Opening template editor")
+            showCardTemplateEditor()
+        }
         mAedictIntent = false
         mCurrentEditedCard = null
         when (mCaller) {
@@ -1145,6 +1142,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     @Suppress("deprecation") // onActivityResult
+    @Deprecated("Use Activity Result API")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Timber.d("onActivityResult() with request/result: %s/%s", requestCode, resultCode)
         super.onActivityResult(requestCode, resultCode, data)
@@ -1169,7 +1167,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                         return
                     }
                     val note = getCurrentMultimediaEditableNote(col)
-                    note!!.setField(index, field)
+                    note.setField(index, field)
                     val fieldEditText = mEditFields!![index]
                     // Import field media
                     // This goes before setting formattedValue to update
@@ -1234,7 +1232,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /** @param col Readonly variable to get cache dir
      */
     @KotlinCleanup("fix the requireNoNulls")
-    private fun getCurrentMultimediaEditableNote(col: Collection): MultimediaEditableNote? {
+    private fun getCurrentMultimediaEditableNote(col: Collection): MultimediaEditableNote {
         val note = NoteService.createEmptyNote(mEditorNote!!.model())
         val fields = currentFieldStrings.requireNoNulls()
         NoteService.updateMultimediaNoteFromFields(col, fields, mEditorNote!!.mid, note!!)
@@ -1276,14 +1274,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val edit_line_view = editLines[i]
             mCustomViewIds.add(edit_line_view.id)
             val newEditText = edit_line_view.editText
-            newEditText!!.setImagePasteListener(
-                ImagePasteListener { editText: EditText?, uri: Uri? ->
-                    onImagePaste(
-                        editText!!,
-                        uri!!
-                    )
-                }
-            )
+            newEditText!!.setImagePasteListener { editText: EditText?, uri: Uri? ->
+                onImagePaste(
+                    editText!!,
+                    uri!!
+                )
+            }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {
                     findViewById<View>(R.id.note_deck_spinner).nextFocusForwardId = newEditText.id
@@ -1298,8 +1294,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // TODO: Remove the >= M check - one callback works on API 11.
             if (CompatHelper.sdkVersion >= Build.VERSION_CODES.M) {
                 // Use custom implementation of ActionMode.Callback customize selection and insert menus
-                val actionModeCallback: ActionModeCallback = ActionModeCallback(newEditText)
-                edit_line_view.setActionModeCallbacks(actionModeCallback)
+                edit_line_view.setActionModeCallbacks(ActionModeCallback(newEditText))
             }
             edit_line_view.setTypeface(customTypeface)
             edit_line_view.setHintLocale(getHintLocaleForField(edit_line_view.name))
@@ -1358,7 +1353,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 val col = CollectionHelper.getInstance().getCol(this@NoteEditor)
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
-                val note: IMultimediaEditableNote? = getCurrentMultimediaEditableNote(col)
+                val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col)
                 startMultimediaFieldEditor(index, note)
             } else {
                 // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
@@ -1447,8 +1442,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun startMultimediaFieldEditorForField(index: Int, field: IField) {
         val col = CollectionHelper.getInstance().getCol(this@NoteEditor)
-        val note: IMultimediaEditableNote? = getCurrentMultimediaEditableNote(col)
-        note!!.setField(index, field)
+        val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col)
+        note.setField(index, field)
         startMultimediaFieldEditor(index, note)
     }
 
@@ -1546,10 +1541,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun getHintLocaleForField(name: String?): Locale? {
         val field = getFieldByName(name) ?: return null
         return LanguageHintService.getLanguageHintForField(field)
-    }
-
-    private fun getFieldByIndex(index: Int): JSONObject {
-        return currentlySelectedModel!!.getJSONArray("flds").getJSONObject(index)
     }
 
     private fun getFieldByName(name: String?): JSONObject? {
@@ -2094,16 +2085,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         modifyCurrentSelection(TextWrapper(prefix, suffix), textBox)
     }
 
-    private fun previewNextClozeDeletion(start: Int, end: Int, text: CharSequence): String {
-        // TODO: Code Duplication with the above
-        val selectedText = text.subSequence(start, end)
-        var nextClozeIndex = nextClozeIndex
-        nextClozeIndex = Math.max(1, nextClozeIndex)
-
-        // Update text field with updated text and selection
-        return "{{c$nextClozeIndex::$selectedText}}"
-    }
-
     private fun hasClozeDeletions(): Boolean {
         return nextClozeIndex > 1
     }
@@ -2168,7 +2149,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     }
 
-    private class Field(private val field: JSONObject, private val col: Collection)
     companion object {
         // DA 2020-04-13 - Refactoring Plans once tested:
         // * There is a difference in functionality depending on whether we are editing
