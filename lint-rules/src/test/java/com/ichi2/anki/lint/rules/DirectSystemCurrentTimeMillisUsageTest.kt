@@ -1,74 +1,75 @@
-package com.ichi2.anki.lint.rules;
+package com.ichi2.anki.lint.rules
 
-import org.intellij.lang.annotations.Language;
-import org.junit.Test;
+import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.*
+import com.android.tools.lint.checks.infrastructure.TestLintTask.*
+import org.intellij.lang.annotations.Language
+import org.junit.Assert.*
+import org.junit.Test
 
-import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
-import static com.android.tools.lint.checks.infrastructure.TestLintTask.lint;
-import static org.junit.Assert.assertTrue;
-
-public class DirectSystemCurrentTimeMillisUsageTest {
+class DirectSystemCurrentTimeMillisUsageTest {
+    @Language("JAVA")
+    private val stubSystem = """                                     
+package java.lang;                                             
+                                                               
+public class System {                                          
+                                                               
+    public static long currentTimeMillis() {                   
+         return 1L;                                            
+    }                                                          
+}                                                              
+"""
 
     @Language("JAVA")
-    private final String stubSystem = "                                     \n" +
-            "package java.lang;                                             \n" +
-            "                                                               \n" +
-            "public class System {                                          \n" +
-            "                                                               \n" +
-            "    public static long currentTimeMillis() {                   \n" +
-            "         return 1L;                                            \n" +
-            "    }                                                          \n" +
-            "}                                                              \n";
+    private val javaFileToBeTested = """                             
+package com.ichi2.anki.lint.rules;                             
+                                                               
+import java.lang.System;                                       
+                                                               
+public class TestJavaClass {                                   
+                                                               
+    public static void main(String[] args) {                   
+        long time = System.currentTimeMillis();                
+    }                                                          
+}                                                              
+"""
 
     @Language("JAVA")
-    private final String javaFileToBeTested = "                             \n" +
-            "package com.ichi2.anki.lint.rules;                             \n" +
-            "                                                               \n" +
-            "import java.lang.System;                                       \n" +
-            "                                                               \n" +
-            "public class TestJavaClass {                                   \n" +
-            "                                                               \n" +
-            "    public static void main(String[] args) {                   \n" +
-            "        long time = System.currentTimeMillis();                \n" +
-            "    }                                                          \n" +
-            "}                                                              \n";
-    @Language("JAVA")
-    private final String javaFileWithSystemTime = "                         \n" +
-            "package com.ichi2.anki.lint.rules;                             \n" +
-            "                                                               \n" +
-            "import java.lang.System;                                       \n" +
-            "                                                               \n" +
-            "public class SystemTime {                                      \n" +
-            "                                                               \n" +
-            "    public static void main(String[] args) {                   \n" +
-            "        long time = System.currentTimeMillis();                \n" +
-            "    }                                                          \n" +
-            "}                                                              \n";
-
+    private val javaFileWithSystemTime = """                         
+package com.ichi2.anki.lint.rules;                             
+                                                               
+import java.lang.System;                                       
+                                                               
+public class SystemTime {                                      
+                                                               
+    public static void main(String[] args) {                   
+        long time = System.currentTimeMillis();                
+    }                                                          
+}                                                              
+"""
 
     @Test
-    public void showsErrorsForInvalidUsage() {
-        lint().
-                allowMissingSdk().
-                allowCompilationErrors()
-                .files(create(stubSystem), create(javaFileToBeTested))
-                .issues(DirectSystemCurrentTimeMillisUsage.ISSUE)
-                .run()
-                .expectErrorCount(1)
-                .check(output -> {
-                    assertTrue(output.contains(DirectSystemCurrentTimeMillisUsage.ID));
-                    assertTrue(output.contains(DirectSystemCurrentTimeMillisUsage.DESCRIPTION));
-                });
+    fun showsErrorsForInvalidUsage() {
+        lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(create(stubSystem), create(javaFileToBeTested))
+            .issues(DirectSystemCurrentTimeMillisUsage.ISSUE)
+            .run()
+            .expectErrorCount(1)
+            .check({ output: String ->
+                assertTrue(output.contains(DirectSystemCurrentTimeMillisUsage.ID))
+                assertTrue(output.contains(DirectSystemCurrentTimeMillisUsage.DESCRIPTION))
+            })
     }
 
     @Test
-    public void allowsUsageForSystemTime() {
-        lint().
-                allowMissingSdk().
-                allowCompilationErrors()
-                .files(create(stubSystem), create(javaFileWithSystemTime))
-                .issues(DirectSystemCurrentTimeMillisUsage.ISSUE)
-                .run()
-                .expectClean();
+    fun allowsUsageForSystemTime() {
+        lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(create(stubSystem), create(javaFileWithSystemTime))
+            .issues(DirectSystemCurrentTimeMillisUsage.ISSUE)
+            .run()
+            .expectClean()
     }
 }
