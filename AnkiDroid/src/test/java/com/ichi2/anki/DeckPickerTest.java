@@ -419,7 +419,7 @@ public class DeckPickerTest extends RobolectricTest {
 
             assertThat(CollectionType.SCHEMA_V_16.isCollection(getCol()), is(true));
 
-            assertThat("Decks should be visible", deckPicker.getDeckCount(), is(1));
+            assertThat("Decks should be visible", deckPicker.getVisibleDeckCount(), is(1));
         } finally {
             InitialActivityWithConflictTest.setupForDefault();
         }

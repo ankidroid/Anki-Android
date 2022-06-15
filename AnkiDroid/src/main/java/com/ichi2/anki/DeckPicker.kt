@@ -111,6 +111,31 @@ import java.io.File
 import kotlin.math.abs
 import kotlin.math.roundToLong
 
+/**
+ * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
+ *
+ * On a tablet, this is a fragmented view, with [StudyOptionsFragment] to the right: [loadStudyOptionsFragment]
+ *
+ * Often used as navigation to: [Reviewer], [NoteEditor] (adding notes), [StudyOptionsFragment] [SharedDecksDownloadFragment]
+ *
+ * Responsibilities:
+ * * Setup/upgrades of the application: [handleStartup]
+ * * Error handling [handleDbError] [handleDbLocked]
+ * * Displaying a tree of decks, some of which may be collapsible: [mDeckListAdapter]
+ *   * Allows users to study the decks
+ *   * Displays deck progress
+ *   * A long press opens a menu allowing modification of the deck
+ *   * Filtering decks (if more than 10) [mToolbarSearchView]
+ * * Controlling syncs
+ *   * A user may [pull down][mPullToSyncWrapper] on the 'tree view' to sync
+ *   * A [button][displaySyncBadge] which relies on [SyncStatus] to display whether a sync is needed
+ *   * Blocks the UI and displays sync progress when syncing
+ * * Displaying 'General' AnkiDroid options: backups, import, 'check media' etc...
+ *   * General handler for error/global dialogs (search for 'as DeckPicker')
+ *   * Such as import: [ImportDialogListener]
+ * * A Floating Action Button [mFloatingActionMenu] allowing the user to quickly add notes/cards.
+ * * A custom image as a background can be added: [applyDeckPickerBackground]
+ */
 @KotlinCleanup("lots to do")
 open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncErrorDialogListener, ImportDialogListener, MediaCheckDialogListener, OnRequestPermissionsResultCallback, CustomStudyListener {
     // Short animation duration from system
@@ -2374,8 +2399,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         createDeckDialog.showDialog()
     }
 
-    @get:VisibleForTesting
-    val deckCount: Int
+    /**
+     * The number of decks which are visible to the user (excluding decks if the parent is collapsed).
+     * Not the total number of decks
+     */
+    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    val visibleDeckCount: Int
         get() = mDeckListAdapter.itemCount
 
     @VisibleForTesting
