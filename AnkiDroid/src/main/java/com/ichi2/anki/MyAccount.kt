@@ -222,11 +222,11 @@ class MyAccount : AnkiActivity() {
     private fun showLoginLogMessage(@StringRes messageResource: Int, loginMessage: String?) {
         run {
             if (loginMessage.isNullOrEmpty()) {
-                if (messageResource == R.string.youre_offline && !Connection.getAllowLoginSyncOnNoConnection()) {
+                if (messageResource == R.string.youre_offline && !Connection.allowLoginSyncOnNoConnection) {
                     // #6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
                     // val root = this.findViewById<View>(R.id.root_layout)
                     showSnackbar(this, messageResource, false, R.string.sync_even_if_offline, {
-                        Connection.setAllowLoginSyncOnNoConnection(true)
+                        Connection.allowLoginSyncOnNoConnection = true
                         login()
                     }, null)
                 } else {
@@ -243,7 +243,7 @@ class MyAccount : AnkiActivity() {
      * Listeners
      */
     val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
-        override fun onProgressUpdate(vararg values: Any) {
+        override fun onProgressUpdate(vararg values: Any?) {
             // Pass
         }
 

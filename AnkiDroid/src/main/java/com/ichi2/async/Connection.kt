@@ -16,666 +16,603 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.async;
+package com.ichi2.async
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.os.Build;
-import android.os.PowerManager;
-import android.util.Pair;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
+import android.os.PowerManager
+import android.os.PowerManager.WakeLock
+import android.util.Pair
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.R
+import com.ichi2.anki.exception.MediaSyncException
+import com.ichi2.anki.exception.UnknownHttpResponseException
+import com.ichi2.async.Connection.ConflictResolution.*
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.sync.CustomSyncServerUrlException
+import com.ichi2.libanki.sync.FullSyncer
+import com.ichi2.libanki.sync.HostNum
+import com.ichi2.libanki.sync.HttpSyncer
+import com.ichi2.libanki.sync.MediaSyncer
+import com.ichi2.libanki.sync.RemoteMediaServer
+import com.ichi2.libanki.sync.RemoteServer
+import com.ichi2.libanki.sync.Syncer
+import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
+import com.ichi2.utils.JSONException
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.Permissions
+import okhttp3.Response
+import timber.log.Timber
+import java.io.IOException
+import java.util.Arrays
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.CrashReportService;
-import com.ichi2.anki.R;
-import com.ichi2.anki.exception.MediaSyncException;
-import com.ichi2.anki.exception.UnknownHttpResponseException;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.sync.CustomSyncServerUrlException;
-import com.ichi2.libanki.sync.FullSyncer;
-import com.ichi2.libanki.sync.HostNum;
-import com.ichi2.libanki.sync.HttpSyncer;
-import com.ichi2.libanki.sync.MediaSyncer;
-import com.ichi2.libanki.sync.RemoteMediaServer;
-import com.ichi2.libanki.sync.RemoteServer;
-import com.ichi2.libanki.sync.Syncer;
-import com.ichi2.utils.Permissions;
+@Suppress("DEPRECATION") // #7108: AsyncTask
+@KotlinCleanup("Simplify null comparison, !! -> ?.")
+@KotlinCleanup("IDE-lint")
+class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() {
 
-import com.ichi2.utils.JSONException;
-import com.ichi2.utils.JSONObject;
-
-import java.io.IOException;
-import java.util.Arrays;
-
-import androidx.annotation.NonNull;
-import okhttp3.Response;
-import timber.log.Timber;
-
-import static com.ichi2.libanki.sync.Syncer.ConnectionResultType;
-import static com.ichi2.libanki.sync.Syncer.ConnectionResultType.*;
-import static com.ichi2.async.Connection.ConflictResolution.*;
-
-public class Connection extends BaseAsyncTask<Connection.Payload, Object, Connection.Payload> {
-
-    private static final int LOGIN = 0;
-    private static final int SYNC = 1;
-    public static final int CONN_TIMEOUT = 30000;
-
-
-    private static Connection sInstance;
-    private TaskListener mListener;
-    private static boolean sIsCancelled;
-    private static boolean sIsCancellable;
-
-    private static boolean sAllowLoginSyncOnNoConnection;
+    @KotlinCleanup("lateinit")
+    private var mListener: TaskListener? = null
 
     /**
      * Before syncing, we acquire a wake lock and then release it once the sync is complete.
      * This ensures that the device remains awake until the sync is complete. Without it,
      * the process will be paused and the sync can fail due to timing conflicts with AnkiWeb.
      */
-    private final PowerManager.WakeLock mWakeLock;
-
-    public static synchronized boolean getIsCancelled() {
-        return sIsCancelled;
-    }
-
-    public Connection() {
-        sIsCancelled = false;
-        sIsCancellable = false;
-        Context context = AnkiDroidApp.getInstance().getApplicationContext();
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                AnkiDroidApp.getAppResources().getString(R.string.app_name) + ":Connection");
-    }
-
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    private static Connection launchConnectionTask(TaskListener listener, Payload data) {
-
-        if (!isOnline()) {
-            data.success = false;
-            listener.onDisconnected();
-            return null;
-        }
-
-        try {
-            if ((sInstance != null) && (sInstance.getStatus() != android.os.AsyncTask.Status.FINISHED)) {
-                sInstance.get();
-            }
-        } catch (Exception e) {
-            Timber.w(e);
-        }
-
-        sInstance = new Connection();
-        sInstance.mListener = listener;
-
-        sInstance.execute(data);
-        return sInstance;
-    }
-
-
-    public static boolean getAllowLoginSyncOnNoConnection() {
-        return sAllowLoginSyncOnNoConnection;
-    }
-
-
-    public static void setAllowLoginSyncOnNoConnection(boolean value) {
-        sAllowLoginSyncOnNoConnection = value;
-    }
-
+    private val mWakeLock: WakeLock
 
     /*
      * Runs on GUI thread
      */
-    @Override
-    protected void onCancelled() {
-        super.onCancelled();
-        Timber.i("Connection onCancelled() method called");
+    override fun onCancelled() {
+        super.onCancelled()
+        Timber.i("Connection onCancelled() method called")
         // Sync has ended so release the wake lock
-        mWakeLock.release();
-        if (mListener instanceof CancellableTaskListener) {
-            ((CancellableTaskListener) mListener).onCancelled();
+        mWakeLock.release()
+        if (mListener is CancellableTaskListener) {
+            (mListener as CancellableTaskListener).onCancelled()
         }
     }
-
 
     /*
      * Runs on GUI thread
      */
     @SuppressLint("WakelockTimeout")
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
+    override fun onPreExecute() {
+        super.onPreExecute()
         // Acquire the wake lock before syncing to ensure CPU remains on until the sync completes.
-        if (Permissions.canUseWakeLock(AnkiDroidApp.getInstance().getApplicationContext())) {
-            mWakeLock.acquire();
+        if (Permissions.canUseWakeLock(AnkiDroidApp.getInstance().applicationContext)) {
+            mWakeLock.acquire()
         }
         if (mListener != null) {
-            mListener.onPreExecute();
+            mListener!!.onPreExecute()
         }
     }
-
 
     /*
      * Runs on GUI thread
      */
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    @Override
-    protected void onPostExecute(Payload data) {
-        super.onPostExecute(data);
+    override fun onPostExecute(result: Payload?) {
+        super.onPostExecute(result)
         // Sync has ended so release the wake lock
-        if (mWakeLock.isHeld()) {
-            mWakeLock.release();
+        if (mWakeLock.isHeld) {
+            mWakeLock.release()
         }
-        if (mListener != null) {
-            mListener.onPostExecute(data);
+        if (mListener != null && result != null) {
+            mListener!!.onPostExecute(result)
         }
     }
-
 
     /*
      * Runs on GUI thread
      */
-    @Override
-    protected void onProgressUpdate(Object... values) {
-        super.onProgressUpdate(values);
+    override fun onProgressUpdate(vararg values: Any) {
+        super.onProgressUpdate(*values)
         if (mListener != null) {
-            mListener.onProgressUpdate(values);
+            mListener!!.onProgressUpdate(*values)
         }
     }
 
-
-    public static Connection login(TaskListener listener, Payload data) {
-        data.mTaskType = LOGIN;
-        return launchConnectionTask(listener, data);
+    override fun doInBackground(vararg arg0: Payload): Payload? {
+        super.doInBackground(*arg0)
+        require(arg0.size == 1)
+        return doOneInBackground(arg0[0])
     }
 
-
-    public static Connection sync(TaskListener listener, Payload data) {
-        data.mTaskType = SYNC;
-        return launchConnectionTask(listener, data);
-    }
-
-
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    @Override
-    protected Payload doInBackground(Payload... params) {
-        super.doInBackground(params);
-        if (params.length != 1) {
-            throw new IllegalArgumentException();
-        }
-        return doOneInBackground(params[0]);
-    }
-
-
-    private Payload doOneInBackground(Payload data) {
-        switch (data.mTaskType) {
-            case LOGIN:
-                return doInBackgroundLogin(data);
-
-            case SYNC:
-                return doInBackgroundSync(data);
-
-            default:
-                return null;
+    private fun doOneInBackground(data: Payload): Payload? {
+        return when (data.taskType) {
+            LOGIN -> doInBackgroundLogin(data)
+            SYNC -> doInBackgroundSync(data)
+            else -> null
         }
     }
 
-
-    private Payload doInBackgroundLogin(Payload data) {
-        String username = (String) data.data[0];
-        String password = (String) data.data[1];
-        HostNum hostNum = (HostNum) data.data[2];
-        RemoteServer server = new RemoteServer(this, null, hostNum);
-        Response ret;
+    @KotlinCleanup("use scoped function")
+    private fun doInBackgroundLogin(data: Payload): Payload {
+        val username = data.data[0] as String
+        val password = data.data[1] as String
+        val hostNum = data.data[2] as HostNum
+        val server = RemoteServer(this, null, hostNum)
+        val ret: Response?
         try {
-            ret = server.hostKey(username, password);
-        } catch (UnknownHttpResponseException e) {
-            Timber.w(e);
-            data.success = false;
-            data.resultType = ERROR;
-            data.result = new Object[] {e.getResponseCode(), e.getMessage()};
-            return data;
-        } catch (CustomSyncServerUrlException e2) {
-            Timber.w(e2);
-            data.success = false;
-            data.resultType = CUSTOM_SYNC_SERVER_URL;
-            data.result = new Object[] {e2};
-            return data;
-        } catch (Exception e2) {
-            Timber.w(e2);
+            ret = server.hostKey(username, password)
+        } catch (e: UnknownHttpResponseException) {
+            Timber.w(e)
+            data.success = false
+            data.resultType = ERROR
+            data.result = arrayOf(e.responseCode, e.message)
+            return data
+        } catch (e2: CustomSyncServerUrlException) {
+            Timber.w(e2)
+            data.success = false
+            data.resultType = CUSTOM_SYNC_SERVER_URL
+            data.result = arrayOf(e2)
+            return data
+        } catch (e2: Exception) {
+            Timber.w(e2)
             // Ask user to report all bugs which aren't timeout errors
             if (!timeoutOccurred(e2)) {
-                CrashReportService.sendExceptionReport(e2, "doInBackgroundLogin");
+                CrashReportService.sendExceptionReport(e2, "doInBackgroundLogin")
             }
-            data.success = false;
-            data.resultType = CONNECTION_ERROR;
-            data.result = new Object[] {e2};
-            return data;
+            data.success = false
+            data.resultType = CONNECTION_ERROR
+            data.result = arrayOf(e2)
+            return data
         }
-        String hostkey = null;
-        boolean valid = false;
+        var hostkey: String? = null
+        var valid = false
         if (ret != null) {
-            data.returnType = ret.code();
-            Timber.d("doInBackgroundLogin - response from server: %d, (%s)", data.returnType, ret.message());
+            data.returnType = ret.code
+            Timber.d(
+                "doInBackgroundLogin - response from server: %d, (%s)",
+                data.returnType,
+                ret.message
+            )
             if (data.returnType == 200) {
                 try {
-                    JSONObject response = new JSONObject(ret.body().string());
-                    hostkey = response.getString("key");
-                    valid = (hostkey != null) && (hostkey.length() > 0);
-                } catch (JSONException e) {
-                    Timber.w(e);
-                    valid = false;
-                } catch (IllegalStateException | IOException | NullPointerException e) {
-                    throw new RuntimeException(e);
+                    val response = JSONObject(ret.body!!.string())
+                    hostkey = response.getString("key")
+                    valid = hostkey != null && hostkey.length > 0
+                } catch (e: JSONException) {
+                    Timber.w(e)
+                    valid = false
+                } catch (e: IllegalStateException) {
+                    throw RuntimeException(e)
+                } catch (e: IOException) {
+                    throw RuntimeException(e)
+                } catch (e: NullPointerException) {
+                    throw RuntimeException(e)
                 }
             }
         } else {
-            Timber.e("doInBackgroundLogin - empty response from server");
+            Timber.e("doInBackgroundLogin - empty response from server")
         }
         if (valid) {
-            data.success = true;
-            data.data = new String[] { username, hostkey };
+            data.success = true
+            data.data = arrayOf(username, hostkey)
         } else {
-            data.success = false;
+            data.success = false
         }
-        return data;
+        return data
     }
 
-
-    private boolean timeoutOccurred(Exception e) {
-        String msg = e.getMessage();
-        if (msg == null) {
-            return false;
-        }
+    @KotlinCleanup("Extract strings to a array and use .any { msg.contains }")
+    private fun timeoutOccurred(e: Exception): Boolean {
+        val msg = e.message ?: return false
         return msg.contains("UnknownHostException") ||
-                msg.contains("HttpHostConnectException") ||
-                msg.contains("SSLException while building HttpClient") ||
-                msg.contains("SocketTimeoutException") ||
-                msg.contains("ClientProtocolException") ||
-                msg.contains("deadline reached") ||
-                msg.contains("interrupted") ||
-                msg.contains("Failed to connect") ||
-                msg.contains("InterruptedIOException") ||
-                msg.contains("stream was reset") ||
-                msg.contains("Connection reset") ||
-                msg.contains("connection abort") ||
-                msg.contains("Broken pipe") ||
-                msg.contains("ConnectionShutdownException") ||
-                msg.contains("CLEARTEXT communication") ||
-                msg.contains("TimeoutException");
+            msg.contains("HttpHostConnectException") ||
+            msg.contains("SSLException while building HttpClient") ||
+            msg.contains("SocketTimeoutException") ||
+            msg.contains("ClientProtocolException") ||
+            msg.contains("deadline reached") ||
+            msg.contains("interrupted") ||
+            msg.contains("Failed to connect") ||
+            msg.contains("InterruptedIOException") ||
+            msg.contains("stream was reset") ||
+            msg.contains("Connection reset") ||
+            msg.contains("connection abort") ||
+            msg.contains("Broken pipe") ||
+            msg.contains("ConnectionShutdownException") ||
+            msg.contains("CLEARTEXT communication") ||
+            msg.contains("TimeoutException")
     }
 
-    public enum ConflictResolution {
-        FULL_DOWNLOAD("download"),
-        FULL_UPLOAD("upload");
+    enum class ConflictResolution( // Useful for path /download and /upload
+        private val str: String
+    ) {
+        FULL_DOWNLOAD("download"), FULL_UPLOAD("upload");
 
-        // Useful for path /download and /upload
-        @NonNull private final String mString;
-        ConflictResolution(@NonNull String string) {
-            mString = string;
+        override fun toString(): String {
+            return str
         }
-
-        public @NonNull String toString() {
-            return mString;
-        }
-    }
-
-
-    /**
-     * Add generic error value to the payload
-     * @param data Some payload that should be transformed
-     * @return the original payload
-     */
-    private static Payload returnGenericError(Payload data) {
-        data.success = false;
-        data.resultType = GENERIC_ERROR;
-        data.result = new Object[0];
-        return data;
     }
 
     /**
      * In the payload, success means that the sync did occur correctly and that a change did occur.
-     * So success can be false without error, if no change occurred at all.*/
-    private Payload doInBackgroundSync(Payload data) {
-        sIsCancellable = true;
-        Timber.d("doInBackgroundSync()");
+     * So success can be false without error, if no change occurred at all. */
+    @KotlinCleanup("Make colCorruptFullSync a val")
+    @KotlinCleanup("Scoped function")
+    private fun doInBackgroundSync(data: Payload): Payload {
+        isCancellable = true
+        Timber.d("doInBackgroundSync()")
         // Block execution until any previous background task finishes, or timeout after 5s
-        boolean ok = TaskManager.waitToFinish(5);
+        val ok = TaskManager.waitToFinish(5)
 
         // Unique key allowing to identify the user to AnkiWeb without password
-        String hkey = (String) data.data[0];
+        val hkey = data.data[0] as String
         // Whether media should be synced too
-        boolean media = (Boolean) data.data[1];
+        val media = data.data[1] as Boolean
         // If normal sync can't occur, what to do
-        ConflictResolution conflictResolution = (ConflictResolution) data.data[2];
+        val conflictResolution = data.data[2] as ConflictResolution?
         // A number AnkiWeb told us to send back. Probably to choose the best server for the user
-        HostNum hostNum = (HostNum) data.data[3];
+        val hostNum = data.data[3] as HostNum
         // Use safe version that catches exceptions so that full sync is still possible
-        Collection col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance());
-
-        boolean colCorruptFullSync = false;
+        val col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.getInstance())
+        var colCorruptFullSync = false
         if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
-            if (FULL_DOWNLOAD == conflictResolution) {
-                colCorruptFullSync = true;
+            colCorruptFullSync = if (FULL_DOWNLOAD == conflictResolution) {
+                true
             } else {
-                return returnGenericError(data);
+                return returnGenericError(data)
             }
         }
-        try {
-            CollectionHelper.getInstance().lockCollection();
-            RemoteServer remoteServer = new RemoteServer(this, hkey, hostNum);
-            Syncer client = new Syncer(col, remoteServer, hostNum);
+        return try {
+            CollectionHelper.getInstance().lockCollection()
+            val remoteServer = RemoteServer(this, hkey, hostNum)
+            val client = Syncer(col, remoteServer, hostNum)
 
             // run sync and check state
-            boolean noChanges = false;
+            var noChanges = false
             if (conflictResolution == null) {
-                Timber.i("Sync - starting sync");
-                publishProgress(R.string.sync_prepare_syncing);
-                Pair<ConnectionResultType, Object> ret = client.sync(this);
-                data.message = client.getSyncMsg();
+                Timber.i("Sync - starting sync")
+                publishProgress(R.string.sync_prepare_syncing)
+                val ret = client.sync(this)
+                data.message = client.syncMsg
                 if (ret == null) {
-                    return returnGenericError(data);
+                    return returnGenericError(data)
                 }
                 if (NO_CHANGES != ret.first && SUCCESS != ret.first) {
-                    data.success = false;
-                    data.resultType = ret.first;
-                    data.result = new Object[]{ret.second};
+                    data.success = false
+                    data.resultType = ret.first
+                    data.result = arrayOf(ret.second)
                     // Check if there was a sanity check error
                     if (SANITY_CHECK_ERROR == ret.first) {
                         // Force full sync next time
-                        col.modSchemaNoCheck();
-                        col.save();
+                        col.modSchemaNoCheck()
+                        col.save()
                     }
-                    return data;
+                    return data
                 }
                 // save and note success state
                 if (NO_CHANGES == ret.first) {
                     // publishProgress(R.string.sync_no_changes_message);
-                    noChanges = true;
+                    noChanges = true
                 }
             } else {
                 try {
                     // Disable sync cancellation for full-sync
-                    sIsCancellable = false;
-                    FullSyncer fullSyncServer = new FullSyncer(col, hkey, this, hostNum);
-                    switch (conflictResolution) {
-                    case FULL_UPLOAD: {
-                        Timber.i("Sync - fullsync - upload collection");
-                        publishProgress(R.string.sync_preparing_full_sync_message);
-                        Pair<ConnectionResultType, Object[]> ret = fullSyncServer.upload();
-                        col.reopen();
-                        if (ret == null) {
-                            return returnGenericError(data);
-                        }
-                        if (ret.first == ARBITRARY_STRING && !ret.second[0].equals(HttpSyncer.ANKIWEB_STATUS_OK)) {
-                            data.success = false;
-                            data.resultType = ret.first;
-                            data.result = ret.second;
-                            return data;
-                        }
-                        break;
-                    }
-                    case FULL_DOWNLOAD: {
-                        Timber.i("Sync - fullsync - download collection");
-                        publishProgress(R.string.sync_downloading_message);
-                        ConnectionResultType ret = fullSyncServer.download();
-                        if (ret == null) {
-                            Timber.w("Sync - fullsync - unknown error");
-                            return returnGenericError(data);
-                        }
-                        if (SUCCESS == ret) {
-                            data.success = true;
-                            col.reopen();
-                        }
-                        if (SUCCESS != ret) {
-                            Timber.w("Sync - fullsync - download failed");
-                            data.success = false;
-                            data.resultType = ret;
-                            if (!colCorruptFullSync) {
-                                col.reopen();
+                    isCancellable = false
+                    val fullSyncServer = FullSyncer(col, hkey, this, hostNum)
+                    when (conflictResolution) {
+                        FULL_UPLOAD -> {
+                            Timber.i("Sync - fullsync - upload collection")
+                            publishProgress(R.string.sync_preparing_full_sync_message)
+                            val ret = fullSyncServer.upload()
+                            col.reopen()
+                            if (ret == null) {
+                                return returnGenericError(data)
                             }
-                            return data;
+                            if (ret.first == ARBITRARY_STRING && ret.second[0] != HttpSyncer.ANKIWEB_STATUS_OK) {
+                                data.success = false
+                                data.resultType = ret.first
+                                data.result = ret.second
+                                return data
+                            }
                         }
-                        break;
+                        FULL_DOWNLOAD -> {
+                            Timber.i("Sync - fullsync - download collection")
+                            publishProgress(R.string.sync_downloading_message)
+                            val ret = fullSyncServer.download()
+                            if (SUCCESS == ret) {
+                                data.success = true
+                                col.reopen()
+                            }
+                            if (SUCCESS != ret) {
+                                Timber.w("Sync - fullsync - download failed")
+                                data.success = false
+                                data.resultType = ret
+                                if (!colCorruptFullSync) {
+                                    col.reopen()
+                                }
+                                return data
+                            }
+                        }
                     }
-                    default:
-                    }
-                } catch (OutOfMemoryError e) {
-                    Timber.w(e);
-                    CrashReportService.sendExceptionReport(e, "doInBackgroundSync-fullSync");
-                    data.success = false;
-                    data.resultType = OUT_OF_MEMORY_ERROR;
-                    data.result = new Object[0];
-                    return data;
-                } catch (RuntimeException e) {
-                    Timber.w(e);
+                } catch (e: OutOfMemoryError) {
+                    Timber.w(e)
+                    CrashReportService.sendExceptionReport(e, "doInBackgroundSync-fullSync")
+                    data.success = false
+                    data.resultType = OUT_OF_MEMORY_ERROR
+                    data.result = arrayOfNulls(0)
+                    return data
+                } catch (e: RuntimeException) {
+                    Timber.w(e)
                     if (timeoutOccurred(e)) {
-                        data.resultType = CONNECTION_ERROR;
-                    } else if (USER_ABORTED_SYNC.toString().equals(e.getMessage())) {
-                        data.resultType = USER_ABORTED_SYNC;
+                        data.resultType = CONNECTION_ERROR
+                    } else if (USER_ABORTED_SYNC.toString() == e.message) {
+                        data.resultType = USER_ABORTED_SYNC
                     } else {
-                        CrashReportService.sendExceptionReport(e, "doInBackgroundSync-fullSync");
-                        data.resultType = IO_EXCEPTION;
+                        CrashReportService.sendExceptionReport(e, "doInBackgroundSync-fullSync")
+                        data.resultType = IO_EXCEPTION
                     }
-                    data.result = new Object[]{e};
-                    data.success = false;
-                    return data;
+                    data.result = arrayOf(e)
+                    data.success = false
+                    return data
                 }
             }
 
             // clear undo to avoid non syncing orphans (because undo resets usn too
             if (!noChanges) {
-                col.clearUndo();
+                col.clearUndo()
             }
             // then move on to media sync
-            sIsCancellable = true;
-            boolean noMediaChanges = false;
-            String mediaError = null;
+            isCancellable = true
+            var noMediaChanges = false
+            var mediaError: String? = null
             if (media) {
-                RemoteMediaServer mediaServer = new RemoteMediaServer(col, hkey, this, hostNum);
-                MediaSyncer mediaClient = new MediaSyncer(col, mediaServer, this);
-                Pair<ConnectionResultType, String> ret;
+                val mediaServer = RemoteMediaServer(col, hkey, this, hostNum)
+                val mediaClient = MediaSyncer(col, mediaServer, this)
+                val ret: Pair<Syncer.ConnectionResultType, String?>
                 try {
-                    Timber.i("Sync - Performing media sync");
-                    ret = mediaClient.sync();
-                    if (ret == null || ret.first == null) {
-                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error);
+                    Timber.i("Sync - Performing media sync")
+                    ret = mediaClient.sync()
+                    if (ret.first == null) {
+                        mediaError =
+                            AnkiDroidApp.getAppResources().getString(R.string.sync_media_error)
                     } else {
                         if (CORRUPT == ret.first) {
-                            mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_db_error);
-                            noMediaChanges = true;
+                            mediaError = AnkiDroidApp.getAppResources()
+                                .getString(R.string.sync_media_db_error)
+                            noMediaChanges = true
                         }
                         if (NO_CHANGES == ret.first) {
-                            publishProgress(R.string.sync_media_no_changes);
-                            noMediaChanges = true;
+                            publishProgress(R.string.sync_media_no_changes)
+                            noMediaChanges = true
                         }
                         if (MEDIA_SANITY_FAILED == ret.first) {
-                            mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_sanity_failed);
+                            mediaError = AnkiDroidApp.getAppResources()
+                                .getString(R.string.sync_media_sanity_failed)
                         } else {
-                            publishProgress(R.string.sync_media_success);
+                            publishProgress(R.string.sync_media_success)
                         }
                     }
-                } catch (RuntimeException e) {
-                    Timber.w(e);
+                } catch (e: RuntimeException) {
+                    Timber.w(e)
                     if (timeoutOccurred(e)) {
-                        data.resultType = CONNECTION_ERROR;
-                        data.result = new Object[]{e};
-                    } else if (USER_ABORTED_SYNC.toString().equals(e.getMessage())) {
-                        data.resultType = USER_ABORTED_SYNC;
-                        data.result = new Object[]{e};
+                        data.resultType = CONNECTION_ERROR
+                        data.result = arrayOf(e)
+                    } else if (USER_ABORTED_SYNC.toString() == e.message) {
+                        data.resultType = USER_ABORTED_SYNC
+                        data.result = arrayOf(e)
                     }
-                    int downloadedCount = mediaClient.getDownloadCount();
-                    int uploadedCount = mediaClient.getUploadCount();
-                    if (downloadedCount == 0 && uploadedCount == 0) {
-                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_error) + "\n\n" + e.getLocalizedMessage();
+                    val downloadedCount = mediaClient.getDownloadCount()
+                    val uploadedCount = mediaClient.getUploadCount()
+                    mediaError = if (downloadedCount == 0 && uploadedCount == 0) {
+                        "${AnkiDroidApp.getAppResources().getString(R.string.sync_media_error)}\n\n${e.localizedMessage}"
                     } else {
-                        mediaError = AnkiDroidApp.getAppResources().getString(R.string.sync_media_partial_updated, downloadedCount, uploadedCount) + "\n\n" + e.getLocalizedMessage();
+                        "${AnkiDroidApp.getAppResources().getString(R.string.sync_media_partial_updated,downloadedCount,uploadedCount)}\n\n${e.localizedMessage}"
                     }
                 }
             }
             if (noChanges && (!media || noMediaChanges)) {
                 // This means that there is no change at all, neither media nor collection. Not that there was an error.
-                data.success = false;
-                data.resultType = NO_CHANGES;
-                data.result = new Object[0];
+                data.success = false
+                data.resultType = NO_CHANGES
+                data.result = arrayOfNulls(0)
             } else {
-                data.success = true;
-                data.data = new Object[] { conflictResolution, col, mediaError };
+                data.success = true
+                data.data = arrayOf(conflictResolution, col, mediaError)
             }
-            return data;
-        } catch (MediaSyncException e) {
-            Timber.e("Media sync rejected by server");
-            data.success = false;
-            data.resultType = MEDIA_SYNC_SERVER_ERROR;
-            data.result = new Object[]{e};
-            CrashReportService.sendExceptionReport(e, "doInBackgroundSync");
-            return data;
-        } catch (UnknownHttpResponseException e) {
-            Timber.e(e, "doInBackgroundSync -- unknown response code error");
-            data.success = false;
-            int code = e.getResponseCode();
-            String msg = e.getLocalizedMessage();
-            data.resultType = ERROR;
-            data.result = new Object[] {code , msg};
-            return data;
-        } catch (Exception e) {
+            data
+        } catch (e: MediaSyncException) {
+            Timber.e("Media sync rejected by server")
+            data.success = false
+            data.resultType = MEDIA_SYNC_SERVER_ERROR
+            data.result = arrayOf(e)
+            CrashReportService.sendExceptionReport(e, "doInBackgroundSync")
+            data
+        } catch (e: UnknownHttpResponseException) {
+            Timber.e(e, "doInBackgroundSync -- unknown response code error")
+            data.success = false
+            val code = e.responseCode
+            val msg = e.localizedMessage
+            data.resultType = ERROR
+            data.result = arrayOf(code, msg)
+            data
+        } catch (e: Exception) {
             // Global error catcher.
             // Try to give a human readable error, otherwise print the raw error message
-            Timber.e(e, "doInBackgroundSync error");
-            data.success = false;
+            Timber.e(e, "doInBackgroundSync error")
+            data.success = false
             if (timeoutOccurred(e)) {
-                data.resultType = CONNECTION_ERROR;
-                data.result = new Object[]{e};
-            } else if (USER_ABORTED_SYNC.toString().equals(e.getMessage())) {
-                data.resultType = USER_ABORTED_SYNC;
-                data.result = new Object[]{e};
+                data.resultType = CONNECTION_ERROR
+                data.result = arrayOf(e)
+            } else if (USER_ABORTED_SYNC.toString() == e.message) {
+                data.resultType = USER_ABORTED_SYNC
+                data.result = arrayOf(e)
             } else {
-                CrashReportService.sendExceptionReport(e, "doInBackgroundSync");
-                data.resultType = ARBITRARY_STRING;
-                data.result = new Object[] {e.getLocalizedMessage(), e};
+                CrashReportService.sendExceptionReport(e, "doInBackgroundSync")
+                data.resultType = ARBITRARY_STRING
+                data.result = arrayOf(e.localizedMessage, e)
             }
-            return data;
+            data
         } finally {
-            Timber.i("Sync Finished - Closing Collection");
+            Timber.i("Sync Finished - Closing Collection")
             // don't bump mod time unless we explicitly save
-            if (col != null) {
-                col.close(false);
-            }
-            CollectionHelper.getInstance().unlockCollection();
+            col?.close(false)
+            CollectionHelper.getInstance().unlockCollection()
         }
     }
 
-
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public void publishProgress(int id) {
-        super.publishProgress(id);
+    // #7108: AsyncTask
+    fun publishProgress(id: Int) {
+        super.publishProgress(id)
     }
 
-
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public void publishProgress(String message) {
-        super.publishProgress(message);
+    // #7108: AsyncTask
+    fun publishProgress(message: String?) {
+        super.publishProgress(message)
     }
 
-
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public void publishProgress(int id, long up, long down) {
-        super.publishProgress(id, up, down);
+    // #7108: AsyncTask
+    fun publishProgress(id: Int, up: Long, down: Long) {
+        super.publishProgress(id, up, down)
     }
 
-    @SuppressWarnings("deprecation")
-    public static boolean isOnline() {
-        if (sAllowLoginSyncOnNoConnection) {
-            return true;
-        }
-        ConnectivityManager cm = (ConnectivityManager) AnkiDroidApp.getInstance().getApplicationContext()
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm == null) {
-            return false;
-        }
-        /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            Network network = cm.getActiveNetwork();
-            if (network == null) {
-                return false;
-            }
-            NetworkCapabilities networkCapabilities = cm.getNetworkCapabilities(network);
-            if (networkCapabilities == null) {
-                return false;
-            }
-            boolean isInternetSuspended = !networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED);
-            return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                    && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
-                    && !isInternetSuspended;
-        } else {
-            android.net.NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-            return networkInfo != null && networkInfo.isConnected();
-        }
+    interface TaskListener {
+        fun onPreExecute()
+        fun onProgressUpdate(vararg values: Any?)
+        fun onPostExecute(data: Payload)
+        fun onDisconnected()
     }
 
-
-    public interface TaskListener {
-        void onPreExecute();
-
-
-        void onProgressUpdate(Object... values);
-
-
-        void onPostExecute(Payload data);
-
-
-        void onDisconnected();
+    interface CancellableTaskListener : TaskListener {
+        fun onCancelled()
     }
 
-    public interface CancellableTaskListener extends TaskListener {
-        void onCancelled();
-    }
+    class Payload(var data: Array<Any?>) {
+        var taskType = 0
+        var resultType: Syncer.ConnectionResultType? = null
+        var result: Array<Any?> = arrayOf()
+        @JvmField
+        var success = true
+        var returnType = 0
+        var exception: Exception? = null
+        var message: String? = null
+        var col: Collection? = null
 
-    public static class Payload {
-        private int mTaskType;
-        @NonNull public Object[] data;
-        public ConnectionResultType resultType;
-        public Object[] result;
-        public boolean success;
-        public int returnType;
-        public Exception exception;
-        public String message;
-        public Collection col;
-
-
-        public Payload(@NonNull Object[] data) {
-            this.data = data;
-            success = true;
-        }
-
-
-        @Override
-        public String toString() {
+        @KotlinCleanup("replace Arrays.toString() -> contentToString")
+        @KotlinCleanup("use formatted string")
+        override fun toString(): String {
             return "Payload{" +
-                    "mTaskType=" + mTaskType +
-                    ", data=" + Arrays.toString(data) +
-                    ", resultType=" + resultType +
-                    ", result=" + Arrays.toString(result) +
-                    ", success=" + success +
-                    ", returnType=" + returnType +
-                    ", exception=" + exception +
-                    ", message='" + message + '\'' +
-                    '}';
+                "mTaskType=" + taskType +
+                ", data=" + Arrays.toString(data) +
+                ", resultType=" + resultType +
+                ", result=" + Arrays.toString(result) +
+                ", success=" + success +
+                ", returnType=" + returnType +
+                ", exception=" + exception +
+                ", message='" + message + '\'' +
+                '}'
         }
     }
 
-    @SuppressWarnings("deprecation") // #7108: AsyncTask
-    public synchronized static void cancel() {
-        Timber.d("Cancelled Connection task");
-        sInstance.cancel(true);
-        sIsCancelled = true;
+    companion object {
+        private const val LOGIN = 0
+        private const val SYNC = 1
+        const val CONN_TIMEOUT = 30000
+        private var sInstance: Connection? = null
+
+        @get:Synchronized
+        var isCancelled = false
+            private set
+
+        @get:Synchronized
+        var isCancellable = false
+            private set
+        var allowLoginSyncOnNoConnection = false
+
+        // #7108: AsyncTask
+        @KotlinCleanup("Scoped function")
+        private fun launchConnectionTask(listener: TaskListener, data: Payload): Connection? {
+            if (!isOnline) {
+                data.success = false
+                listener.onDisconnected()
+                return null
+            }
+            try {
+                if (sInstance != null && sInstance!!.status != Status.FINISHED) {
+                    sInstance!!.get()
+                }
+            } catch (e: Exception) {
+                Timber.w(e)
+            }
+            sInstance = Connection()
+            sInstance!!.mListener = listener
+            sInstance!!.execute(data)
+            return sInstance
+        }
+
+        @JvmStatic
+        fun login(listener: TaskListener, data: Payload): Connection? {
+            data.taskType = LOGIN
+            return launchConnectionTask(listener, data)
+        }
+
+        fun sync(listener: TaskListener, data: Payload): Connection? {
+            data.taskType = SYNC
+            return launchConnectionTask(listener, data)
+        }
+
+        /**
+         * Add generic error value to the payload
+         * @param data Some payload that should be transformed
+         * @return the original payload
+         */
+        @KotlinCleanup("remove return from method name")
+        @KotlinCleanup("scpoed function")
+        private fun returnGenericError(data: Payload): Payload {
+            data.success = false
+            data.resultType = GENERIC_ERROR
+            data.result = arrayOfNulls(0)
+            return data
+        }
+
+        /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
+        val isOnline: Boolean
+            get() {
+                if (allowLoginSyncOnNoConnection) {
+                    return true
+                }
+                val cm = AnkiDroidApp.getInstance().applicationContext
+                    .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
+                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    val network = cm.activeNetwork ?: return false
+                    val networkCapabilities = cm.getNetworkCapabilities(network) ?: return false
+                    val isInternetSuspended =
+                        !networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
+                    (
+                        networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                            networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) &&
+                            !isInternetSuspended
+                        )
+                } else {
+                    val networkInfo = cm.activeNetworkInfo
+                    networkInfo != null && networkInfo.isConnected
+                }
+            }
+
+        @Synchronized // #7108: AsyncTask
+        fun cancel() {
+            Timber.d("Cancelled Connection task")
+            sInstance!!.cancel(true)
+            isCancelled = true
+        }
     }
 
-    public synchronized static boolean isCancellable() {
-        return sIsCancellable;
+    init {
+        val context = AnkiDroidApp.getInstance().applicationContext
+        val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+        mWakeLock = pm.newWakeLock(
+            PowerManager.PARTIAL_WAKE_LOCK,
+            AnkiDroidApp.getAppResources().getString(R.string.app_name) + ":Connection"
+        )
     }
 }

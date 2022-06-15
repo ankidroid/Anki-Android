@@ -133,7 +133,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
      */
     @Suppress("deprecation") // #7108: AsyncTask
     private fun onLoadPronunciation(@Suppress("UNUSED_PARAMETER") v: View?) {
-        if (!Connection.isOnline()) {
+        if (!Connection.isOnline) {
             showToast(gtxt(R.string.network_no_connection))
             return
         }

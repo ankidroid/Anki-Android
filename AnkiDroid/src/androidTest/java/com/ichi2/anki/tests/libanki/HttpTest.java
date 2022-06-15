@@ -65,7 +65,7 @@ public class HttpTest {
 
         // If we are not online this test is not nearly as interesting
         // TODO simulate offline programmatically - currently exercised by manually toggling an emulator offline pre-test
-        if (!Connection.isOnline()) {
+        if (!Connection.Companion.isOnline()) {
             Connection.login(testListener, invalidPayload);
             Assert.assertFalse("Successful login despite being offline", testListener.getPayload().success);
             Assert.assertTrue("onDisconnected not called despite being offline", testListener.mDisconnectedCalled);
