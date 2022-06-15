@@ -173,7 +173,9 @@ class Toolbar : FrameLayout {
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
         button.setPadding(twoDp, twoDp, twoDp, twoDp)
         // end apply style
-        if (shouldScrollToolbar()) {
+        val shouldScroll = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+            .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+        if (shouldScroll) {
             mToolbar.addView(button, mToolbar.childCount)
         } else {
             addViewToToolbar(button)
@@ -367,12 +369,4 @@ class Toolbar : FrameLayout {
         @JvmField var selectionStart: Int = 0,
         @JvmField var selectionEnd: Int = 0
     )
-
-    companion object {
-        /** @return true: toolbar should scroll horizontally. false: toolbar should be stacked vertically */
-        fun shouldScrollToolbar(): Boolean {
-            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
-                .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
-        }
-    }
 }
