@@ -33,8 +33,6 @@ import org.robolectric.RobolectricTestRunner
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
-import java.util.stream.Collectors
-import java.util.stream.IntStream
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -231,9 +229,33 @@ class CreateDeckDialogTest : RobolectricTest() {
         }
     }
 
-    private fun deckTreeName(startInclusive: Int, endInclusive: Int, prefix: String): String {
-        return Arrays.stream(IntStream.rangeClosed(startInclusive, endInclusive).toArray())
-            .mapToObj { i: Int -> prefix + i }
-            .collect(Collectors.joining("::"))
+    @Test
+    fun searchDecksIconVisibilityExpandCollapseTest() {
+        mActivityScenario?.onActivity { deckPicker ->
+            val decks = deckPicker.col.decks
+            val createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+            createDeckDialog.setOnNewDeckCreated {
+                assertEquals(11, decks.count())
+                deckPicker.updateDeckList()
+                assertEquals(10, deckPicker.deckCount)
+                assertTrue(deckPicker.searchDecksIcon!!.isVisible)
+
+                val did = decks.id(deckTreeName(0, 6, "Deck"))
+                deckPicker.toggleDeckExpand(did)
+                deckPicker.updateDeckList()
+                assertEquals(7, deckPicker.deckCount)
+                assertFalse(deckPicker.searchDecksIcon!!.isVisible)
+                deckPicker.toggleDeckExpand(did)
+                deckPicker.updateDeckList()
+                assertEquals(10, deckPicker.deckCount)
+                assertTrue(deckPicker.searchDecksIcon!!.isVisible)
+            }
+            createDeckDialog.createDeck(deckTreeName(0, 9, "Deck"))
+        }
+    }
+
+    private fun deckTreeName(start: Int, end: Int, prefix: String): String {
+        return List(end - start + 1) { "${prefix}${it + start}" }
+            .joinToString("::")
     }
 }

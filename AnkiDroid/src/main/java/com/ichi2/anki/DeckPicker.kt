@@ -168,12 +168,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     // LISTENERS
     // ----------------------------------------------------------------------------
     private val mDeckExpanderClickListener = View.OnClickListener { view: View ->
-        val did = view.tag as Long
-        if (!col.decks.children(did).isEmpty()) {
-            col.decks.collapse(did)
-            renderPage()
-            dismissAllDialogFragments()
-        }
+        toggleDeckExpand(view.tag as Long)
     }
     private val mDeckClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.DEFAULT) }
     private val mCountsClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) }
@@ -908,6 +903,15 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     private fun showCollectionErrorDialog() {
         dialogHandler.sendEmptyMessage(DialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun toggleDeckExpand(did: Long) {
+        if (!col.decks.children(did).isEmpty()) {
+            col.decks.collapse(did)
+            renderPage()
+            dismissAllDialogFragments()
+        }
     }
 
     fun addNote() {
