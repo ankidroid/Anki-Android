@@ -43,7 +43,7 @@ import java.util.*
 class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
     private val mDeckList: MutableList<TreeNode<AbstractDeckTreeNode>>
     /** A subset of mDeckList (currently displayed)  */
-    private val mCurrentDeckList: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList()
+    private val deckList: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList()
     private val mZeroCountColor: Int
     private val mNewCountColor: Int
     private val mLearnCountColor: Int
@@ -126,7 +126,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     fun buildDeckList(nodes: List<TreeNode<AbstractDeckTreeNode>>, col: Collection, filter: CharSequence?) {
         mCol = col
         mDeckList.clear()
-        mCurrentDeckList.clear()
+        deckList.clear()
         mRev = 0
         mLrn = mRev
         mNew = mLrn
@@ -139,7 +139,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     fun getNodeByDid(did: Long): TreeNode<AbstractDeckTreeNode> {
-        return mCurrentDeckList[findDeckPosition(did)]
+        return deckList[findDeckPosition(did)]
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -149,7 +149,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Update views for this node
-        val treeNode = mCurrentDeckList[position]
+        val treeNode = deckList[position]
         val node = treeNode.value
         // Set the expander icon and padding according to whether or not there are any subdecks
         val deckLayout = holder.deckLayout
@@ -232,7 +232,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     override fun getItemCount(): Int {
-        return mCurrentDeckList.size
+        return deckList.size
     }
 
     private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<AbstractDeckTreeNode>) {
@@ -288,7 +288,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             }
 
             mDeckList.add(node)
-            mCurrentDeckList.add(node)
+            deckList.add(node)
 
             // Add this node's counts to the totals if it's a parent deck
             if (node.value.depth == 0) {
@@ -339,8 +339,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
 
         override fun publishResults(constraint: CharSequence?, results: List<TreeNode<AbstractDeckTreeNode>>) {
-            mCurrentDeckList.clear()
-            mCurrentDeckList.addAll(results)
+            deckList.clear()
+            deckList.addAll(results)
             notifyDataSetChanged()
         }
 
