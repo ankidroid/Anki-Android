@@ -394,18 +394,19 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             R.attr.expandRef,
             R.attr.collapseRef
         )
-        val ta = context.obtainStyledAttributes(attrs)
-        mZeroCountColor = ta.getColor(0, ContextCompat.getColor(context, R.color.black))
-        mNewCountColor = ta.getColor(1, ContextCompat.getColor(context, R.color.black))
-        mLearnCountColor = ta.getColor(2, ContextCompat.getColor(context, R.color.black))
-        mReviewCountColor = ta.getColor(3, ContextCompat.getColor(context, R.color.black))
-        mRowCurrentDrawable = ta.getResourceId(4, 0)
-        mDeckNameDefaultColor = ta.getColor(5, ContextCompat.getColor(context, R.color.black))
-        mDeckNameDynColor = ta.getColor(6, ContextCompat.getColor(context, R.color.material_blue_A700))
-        mExpandImage = ta.getDrawable(7)
-        mExpandImage!!.isAutoMirrored = true
-        mCollapseImage = ta.getDrawable(8)
-        mCollapseImage!!.isAutoMirrored = true
-        ta.recycle()
+        context.obtainStyledAttributes(attrs).run {
+            mZeroCountColor = getColor(0, ContextCompat.getColor(context, R.color.black))
+            mNewCountColor = getColor(1, ContextCompat.getColor(context, R.color.black))
+            mLearnCountColor = getColor(2, ContextCompat.getColor(context, R.color.black))
+            mReviewCountColor = getColor(3, ContextCompat.getColor(context, R.color.black))
+            mRowCurrentDrawable = getResourceId(4, 0)
+            mDeckNameDefaultColor = getColor(5, ContextCompat.getColor(context, R.color.black))
+            mDeckNameDynColor = getColor(6, ContextCompat.getColor(context, R.color.material_blue_A700))
+            mExpandImage = getDrawable(7)
+            mExpandImage!!.isAutoMirrored = true
+            mCollapseImage = getDrawable(8)
+            mCollapseImage!!.isAutoMirrored = true
+            recycle()
+        }
     }
 }
