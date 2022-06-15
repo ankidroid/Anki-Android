@@ -441,7 +441,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             deckTextView.setText(R.string.CardEditorCardDeck)
         }
         mDeckSpinnerSelection =
-            DeckSpinnerSelection(this, col, findViewById(R.id.note_deck_spinner), false, true)
+            DeckSpinnerSelection(
+                this, col, findViewById(R.id.note_deck_spinner),
+                showAllDecks = false,
+                alwaysShowDefault = true
+            )
         mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner(mCurrentEditedCard, mAddNote)
         deckId = intent.getLongExtra(EXTRA_DID, deckId)
         val getTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW)
@@ -892,49 +896,58 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == android.R.id.home) {
-            Timber.i("NoteEditor:: Home button pressed")
-            closeCardEditorWithCheck()
-            return true
-        } else if (itemId == R.id.action_preview) {
-            Timber.i("NoteEditor:: Preview button pressed")
-            performPreview()
-            return true
-        } else if (itemId == R.id.action_save) {
-            Timber.i("NoteEditor:: Save note button pressed")
-            saveNote()
-            return true
-        } else if (itemId == R.id.action_add_note_from_note_editor) {
-            Timber.i("NoteEditor:: Add Note button pressed")
-            addNewNote()
-            return true
-        } else if (itemId == R.id.action_copy_note) {
-            Timber.i("NoteEditor:: Copy Note button pressed")
-            copyNote()
-            return true
-        } else if (itemId == R.id.action_font_size) {
-            Timber.i("NoteEditor:: Font Size button pressed")
-            val repositionDialog = IntegerDialog()
-            repositionDialog.setArgs(getString(R.string.menu_font_size), editTextFontSize, 2)
-            repositionDialog.setCallbackRunnable { fontSizeSp: Int? -> setFontSize(fontSizeSp) }
-            showDialogFragment(repositionDialog)
-            return true
-        } else if (itemId == R.id.action_show_toolbar) {
-            item.isChecked = !item.isChecked
-            AnkiDroidApp.getSharedPrefs(this).edit()
-                .putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, item.isChecked).apply()
-            updateToolbar()
-        } else if (itemId == R.id.action_capitalize) {
-            Timber.i("NoteEditor:: Capitalize button pressed. New State: %b", !item.isChecked)
-            item.isChecked = !item.isChecked // Needed for Android 9
-            toggleCapitalize(item.isChecked)
-            return true
-        } else if (itemId == R.id.action_scroll_toolbar) {
-            item.isChecked = !item.isChecked
-            AnkiDroidApp.getSharedPrefs(this).edit()
-                .putBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, item.isChecked).apply()
-            updateToolbar()
+        when (item.itemId) {
+            android.R.id.home -> {
+                Timber.i("NoteEditor:: Home button pressed")
+                closeCardEditorWithCheck()
+                return true
+            }
+            R.id.action_preview -> {
+                Timber.i("NoteEditor:: Preview button pressed")
+                performPreview()
+                return true
+            }
+            R.id.action_save -> {
+                Timber.i("NoteEditor:: Save note button pressed")
+                saveNote()
+                return true
+            }
+            R.id.action_add_note_from_note_editor -> {
+                Timber.i("NoteEditor:: Add Note button pressed")
+                addNewNote()
+                return true
+            }
+            R.id.action_copy_note -> {
+                Timber.i("NoteEditor:: Copy Note button pressed")
+                copyNote()
+                return true
+            }
+            R.id.action_font_size -> {
+                Timber.i("NoteEditor:: Font Size button pressed")
+                val repositionDialog = IntegerDialog()
+                repositionDialog.setArgs(getString(R.string.menu_font_size), editTextFontSize, 2)
+                repositionDialog.setCallbackRunnable { fontSizeSp: Int? -> setFontSize(fontSizeSp) }
+                showDialogFragment(repositionDialog)
+                return true
+            }
+            R.id.action_show_toolbar -> {
+                item.isChecked = !item.isChecked
+                AnkiDroidApp.getSharedPrefs(this).edit()
+                    .putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, item.isChecked).apply()
+                updateToolbar()
+            }
+            R.id.action_capitalize -> {
+                Timber.i("NoteEditor:: Capitalize button pressed. New State: %b", !item.isChecked)
+                item.isChecked = !item.isChecked // Needed for Android 9
+                toggleCapitalize(item.isChecked)
+                return true
+            }
+            R.id.action_scroll_toolbar -> {
+                item.isChecked = !item.isChecked
+                AnkiDroidApp.getSharedPrefs(this).edit()
+                    .putBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, item.isChecked).apply()
+                updateToolbar()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -1362,26 +1375,31 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 val inflater = popup.menuInflater
                 inflater.inflate(R.menu.popupmenu_multimedia_options, popup.menu)
                 popup.setOnMenuItemClickListener { item: MenuItem ->
-                    val itemId = item.itemId
-                    if (itemId == R.id.menu_multimedia_audio) {
-                        Timber.i("NoteEditor:: Record audio button pressed")
-                        startMultimediaFieldEditorForField(index, AudioRecordingField())
-                        return@setOnMenuItemClickListener true
-                    } else if (itemId == R.id.menu_multimedia_audio_clip || itemId == R.id.menu_multimedia_video_clip) {
-                        Timber.i("NoteEditor:: Add audio clip button pressed")
-                        startMultimediaFieldEditorForField(index, MediaClipField())
-                        return@setOnMenuItemClickListener true
-                    } else if (itemId == R.id.menu_multimedia_photo) {
-                        Timber.i("NoteEditor:: Add image button pressed")
-                        startMultimediaFieldEditorForField(index, ImageField())
-                        return@setOnMenuItemClickListener true
-                    } else if (itemId == R.id.menu_multimedia_text) {
-                        Timber.i("NoteEditor:: Advanced editor button pressed")
-                        startAdvancedTextEditor(index)
-                        return@setOnMenuItemClickListener true
-                    } else if (itemId == R.id.menu_multimedia_clear_field) {
-                        Timber.i("NoteEditor:: Clear field button pressed")
-                        clearField(index)
+                    when (item.itemId) {
+                        R.id.menu_multimedia_audio -> {
+                            Timber.i("NoteEditor:: Record audio button pressed")
+                            startMultimediaFieldEditorForField(index, AudioRecordingField())
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.menu_multimedia_audio_clip, R.id.menu_multimedia_video_clip -> {
+                            Timber.i("NoteEditor:: Add audio clip button pressed")
+                            startMultimediaFieldEditorForField(index, MediaClipField())
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.menu_multimedia_photo -> {
+                            Timber.i("NoteEditor:: Add image button pressed")
+                            startMultimediaFieldEditorForField(index, ImageField())
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.menu_multimedia_text -> {
+                            Timber.i("NoteEditor:: Advanced editor button pressed")
+                            startAdvancedTextEditor(index)
+                            return@setOnMenuItemClickListener true
+                        }
+                        R.id.menu_multimedia_clear_field -> {
+                            Timber.i("NoteEditor:: Clear field button pressed")
+                            clearField(index)
+                        }
                     }
                     false
                 }
