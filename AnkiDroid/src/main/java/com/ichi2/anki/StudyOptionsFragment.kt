@@ -125,13 +125,13 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private fun openFilteredDeckOptions(defaultConfig: Boolean = false) {
         val i = Intent(activity, FilteredDeckOptions::class.java)
         i.putExtra("defaultConfig", defaultConfig)
-        Timber.i("openFilteredDeckOptions()")
+        Timber.d("openFilteredDeckOptions()")
         onDeckOptionsActivityResult.launch(i)
         slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.i("onCreate()")
+        Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
         // If we're being restored, don't launch deck options again.
         if (savedInstanceState == null && arguments != null) {
@@ -140,7 +140,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Timber.i("onCreateView()")
+        Timber.d("onCreateView()")
         // If container is null, Currently in a layout without a container, so no reason to create our view.
         return container
             ?.let {
@@ -161,12 +161,12 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     override fun onDestroy() {
         super.onDestroy()
         mFullNewCountThread?.interrupt()
-        Timber.i("onDestroy()")
+        Timber.d("onDestroy()")
     }
 
     override fun onResume() {
         super.onResume()
-        Timber.i("onResume()")
+        Timber.d("onResume()")
         refreshInterface(true)
     }
 
@@ -184,7 +184,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun openReviewer() {
-        Timber.i("openReviewer()")
+        Timber.d("openReviewer()")
         val reviewer = Intent(activity, Reviewer::class.java)
         if (mFragmented) {
             mToReviewer = true
@@ -322,7 +322,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     // caused by sync on startup where this might be running then have the collection close
     @NeedsTest("test whether the navigationIcon and navigationOnClickListener are set properly")
     private fun configureToolbarInternal(recur: Boolean) {
-        Timber.i("configureToolbarInternal()")
+        Timber.d("configureToolbarInternal()")
         try {
             mToolbar!!.setOnMenuItemClickListener(this)
             val menu = mToolbar!!.menu
@@ -361,11 +361,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         } catch (e: IllegalStateException) {
             if (!CollectionHelper.getInstance().colIsOpen()) {
                 if (recur) {
-                    Timber.i(e, "Database closed while working. Probably auto-sync. Will re-try after sleep.")
+                    Timber.w(e, "Database closed while working. Probably auto-sync. Will re-try after sleep.")
                     try {
                         Thread.sleep(1000)
                     } catch (ex: InterruptedException) {
-                        Timber.i(ex, "Thread interrupted while waiting to retry. Likely unimportant.")
+                        Timber.w(ex, "Thread interrupted while waiting to retry. Likely unimportant.")
                         Thread.currentThread().interrupt()
                     }
                     configureToolbarInternal(false)
