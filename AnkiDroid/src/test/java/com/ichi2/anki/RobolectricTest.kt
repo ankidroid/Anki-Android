@@ -527,7 +527,7 @@ open class RobolectricTest : CollectionGetter {
 
     @NonNull
     @CheckResult
-    protected fun openDialogFragmentUsingActivity(menu: DialogFragment?): FragmentTestActivity {
+    protected fun openDialogFragmentUsingActivity(menu: DialogFragment): FragmentTestActivity {
         val startActivityIntent = Intent(targetContext, FragmentTestActivity::class.java)
         val activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity::class.java, startActivityIntent)
         activity.showDialogFragment(menu)

@@ -245,34 +245,34 @@ class Preferences : AnkiActivity() {
         // Load stored values from Preferences which are stored in the Collection
         if (sCollectionPreferences.contains(pref.key)) {
             val col = col
-            if (col != null) {
-                try {
-                    when (pref.key) {
-                        SHOW_ESTIMATE -> (pref as SwitchPreference).isChecked = col.get_config_boolean("estTimes")
-                        SHOW_PROGRESS -> (pref as SwitchPreference).isChecked = col.get_config_boolean("dueCounts")
-                        LEARN_CUTOFF -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("collapseTime") / 60)
-                        TIME_LIMIT -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("timeLim") / 60)
-                        USE_CURRENT -> (pref as ListPreference).setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
-                        AUTOMATIC_ANSWER_ACTION -> (pref as ListPreference).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
-                        NEW_SPREAD -> (pref as ListPreference).setValueIndex(col.get_config_int("newSpread"))
-                        DAY_OFFSET -> (pref as SeekBarPreferenceCompat).value = getDayOffset(col)
-                        PASTE_PNG -> (pref as SwitchPreference).isChecked = col.get_config("pastePNG", false)!!
-                        NEW_TIMEZONE_HANDLING -> {
-                            val switch = pref as SwitchPreference
-                            switch.isChecked = col.sched._new_timezone_enabled()
-                            if (col.schedVer() <= 1 || !col.isUsingRustBackend) {
-                                Timber.d("Disabled 'newTimezoneHandling' box")
-                                switch.isEnabled = false
-                            }
+//            if (col != null) {
+            try {
+                when (pref.key) {
+                    SHOW_ESTIMATE -> (pref as SwitchPreference).isChecked = col.get_config_boolean("estTimes")
+                    SHOW_PROGRESS -> (pref as SwitchPreference).isChecked = col.get_config_boolean("dueCounts")
+                    LEARN_CUTOFF -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("collapseTime") / 60)
+                    TIME_LIMIT -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("timeLim") / 60)
+                    USE_CURRENT -> (pref as ListPreference).setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
+                    AUTOMATIC_ANSWER_ACTION -> (pref as ListPreference).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
+                    NEW_SPREAD -> (pref as ListPreference).setValueIndex(col.get_config_int("newSpread"))
+                    DAY_OFFSET -> (pref as SeekBarPreferenceCompat).value = getDayOffset(col)
+                    PASTE_PNG -> (pref as SwitchPreference).isChecked = col.get_config("pastePNG", false)!!
+                    NEW_TIMEZONE_HANDLING -> {
+                        val switch = pref as SwitchPreference
+                        switch.isChecked = col.sched._new_timezone_enabled()
+                        if (col.schedVer() <= 1 || !col.isUsingRustBackend) {
+                            Timber.d("Disabled 'newTimezoneHandling' box")
+                            switch.isEnabled = false
                         }
                     }
-                } catch (e: NumberFormatException) {
-                    throw RuntimeException(e)
                 }
-            } else {
-                // Disable Col preferences if Collection closed
-                pref.isEnabled = false
+            } catch (e: NumberFormatException) {
+                throw RuntimeException(e)
             }
+//        } else {
+//            // Disable Col preferences if Collection closed
+//            pref.isEnabled = false
+//        }
         } else if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key) {
             updateNotificationPreference(pref as ListPreference)
         }
@@ -387,7 +387,10 @@ class Preferences : AnkiActivity() {
 
     private fun closePreferences() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
-        if (col != null && !col.dbClosed) {
+        if (
+//            col != null &&
+            !col.dbClosed
+        ) {
             col.save()
         }
     }
@@ -1332,8 +1335,8 @@ class Preferences : AnkiActivity() {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public override fun attachBaseContext(context: Context) {
-        super.attachBaseContext(context)
+    public override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
     }
 
     companion object {

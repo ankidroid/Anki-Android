@@ -155,7 +155,7 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
             mDidDisplayDbLocked = false
         }
 
-        override fun showSimpleMessageDialog(message: String, reload: Boolean) {
+        override fun showSimpleMessageDialog(message: String?, reload: Boolean) {
             mDidDisplayMessage = true
             super.showSimpleMessageDialog(message, reload)
         }

@@ -55,7 +55,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                 // a deck was created
                 try {
                     isCreated.set(true)
-                    val decks: DeckManager = activity.col!!.decks
+                    val decks: DeckManager = activity.col.decks
                     MatcherAssert.assertThat(id, Is.`is`(decks.id(deckName)))
                 } catch (filteredAncestor: DeckRenameException) {
                     throw RuntimeException(filteredAncestor)
@@ -78,7 +78,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 try {
                     isCreated.set(true)
-                    val decks: DeckManager = activity.col!!.decks
+                    val decks: DeckManager = activity.col.decks
                     val deckNameWithParentName = decks.getSubdeckName(deckParentId, deckName)
                     MatcherAssert.assertThat(id, Is.`is`(decks.id(deckNameWithParentName!!)))
                 } catch (filteredAncestor: DeckRenameException) {
@@ -100,8 +100,8 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 // a deck was created
                 isCreated.set(true)
-                val decks: DeckManager? = activity.col?.decks
-                MatcherAssert.assertThat(id, Is.`is`(decks?.byName(deckName)!!.getLong("id")))
+                val decks: DeckManager = activity.col.decks
+                MatcherAssert.assertThat(id, Is.`is`(decks.byName(deckName)!!.getLong("id")))
             }
             createDeckDialog.createDeck(deckName)
             MatcherAssert.assertThat(isCreated.get(), Is.`is`(true))
@@ -120,7 +120,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a deck name was renamed
                 isCreated.set(true)
-                val decks: DeckManager = activity.col!!.decks
+                val decks: DeckManager = activity.col.decks
                 MatcherAssert.assertThat(deckNewName, Is.`is`(decks.name(id!!)))
             }
             createDeckDialog.renameDeck(deckNewName)

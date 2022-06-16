@@ -31,7 +31,7 @@ class FragmentTestActivity : AnkiActivity() {
         super.openUrl(url)
     }
 
-    override fun showDialogFragment(newFragment: DialogFragment?) {
+    override fun showDialogFragment(newFragment: DialogFragment) {
         super.showDialogFragment(newFragment)
         lastShownDialogFragment = newFragment
         // Note: I saw a potential solution for this sleeping on StackOverflow - can't find the code again.

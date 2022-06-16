@@ -1,188 +1,161 @@
 //noinspection MissingCopyrightHeader #8659
-package com.ichi2.anki;
+package com.ichi2.anki
 
-import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.AudioManager;
-import android.net.Uri;
-import android.os.Bundle;
+import android.app.Activity
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.media.AudioManager
+import android.net.Uri
+import android.os.Bundle
+import android.os.Process
+import android.view.*
+import android.view.animation.Animation
+import android.widget.ProgressBar
+import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anim.ActivityTransitionAnimation.getAnimationOptions
+import com.ichi2.anim.ActivityTransitionAnimation.slide
+import com.ichi2.anki.NotificationChannels.getId
+import com.ichi2.anki.UIUtils.showSimpleSnackbar
+import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsScreenView
+import com.ichi2.anki.dialogs.AsyncDialogFragment
+import com.ichi2.anki.dialogs.DialogHandler
+import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
+import com.ichi2.anki.dialogs.SimpleMessageDialog.Companion.newInstance
+import com.ichi2.anki.dialogs.SimpleMessageDialog.SimpleMessageDialogListener
+import com.ichi2.async.CollectionLoader
+import com.ichi2.async.CollectionLoader.Companion.load
+import com.ichi2.compat.CompatHelper.Companion.compat
+import com.ichi2.compat.customtabs.CustomTabActivityHelper
+import com.ichi2.compat.customtabs.CustomTabActivityHelper.Companion.openCustomTab
+import com.ichi2.compat.customtabs.CustomTabsFallback
+import com.ichi2.compat.customtabs.CustomTabsHelper.addKeepAliveExtra
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.CollectionGetter
+import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
+import com.ichi2.themes.Themes.getColorFromAttr
+import com.ichi2.themes.Themes.setTheme
+import com.ichi2.utils.AdaptionUtil.hasWebBrowser
+import com.ichi2.utils.AdaptionUtil.isUserATestClient
+import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
+import timber.log.Timber
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.browser.customtabs.CustomTabColorSchemeParams;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
+@Suppress("DEPRECATION")
+open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
+    val SIMPLE_NOTIFICATION_ID = 0
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.widget.ProgressBar;
-
-import com.ichi2.anim.ActivityTransitionAnimation;
-import com.ichi2.anki.analytics.UsageAnalytics;
-import com.ichi2.anki.dialogs.AsyncDialogFragment;
-import com.ichi2.anki.dialogs.DialogHandler;
-import com.ichi2.anki.dialogs.SimpleMessageDialog;
-import com.ichi2.async.CollectionLoader;
-import com.ichi2.compat.CompatHelper;
-import com.ichi2.compat.customtabs.CustomTabActivityHelper;
-import com.ichi2.compat.customtabs.CustomTabsFallback;
-import com.ichi2.compat.customtabs.CustomTabsHelper;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.CollectionGetter;
-import com.ichi2.themes.Themes;
-import com.ichi2.utils.AdaptionUtil;
-import com.ichi2.utils.AndroidUiUtils;
-
-import java.util.Objects;
-
-import timber.log.Timber;
-
-import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK;
-import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
-import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
-import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
-import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
-
-public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener, CollectionGetter {
-
-    public final int SIMPLE_NOTIFICATION_ID = 0;
-    public static final int REQUEST_REVIEW = 901;
-    public static final String DIALOG_FRAGMENT_TAG = "dialog";
-    /** Extra key to set the finish animation of an activity */
-    public static final String FINISH_ANIMATION_EXTRA = "finishAnimation";
-
-    /** The name of the parent class (Reviewer) */
-    private final String mActivityName;
-
-    private final DialogHandler mHandler = new DialogHandler(this);
+    /** The name of the parent class (Reviewer)  */
+    private val mActivityName: String
+    val dialogHandler = DialogHandler(this)
 
     // custom tabs
-    private CustomTabActivityHelper mCustomTabActivityHelper;
+    var customTabActivityHelper: CustomTabActivityHelper? = null
+        private set
 
-    public AnkiActivity() {
-        super();
-        this.mActivityName = getClass().getSimpleName();
+    constructor() : super() {
+        mActivityName = javaClass.simpleName
     }
 
-    public AnkiActivity(@LayoutRes int contentLayoutId) {
-        super(contentLayoutId);
-        this.mActivityName = getClass().getSimpleName();
+    constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId) {
+        mActivityName = javaClass.simpleName
     }
 
-    @SuppressWarnings("deprecation") // #9332: UI Visibility -> Insets
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Timber.i("AnkiActivity::onCreate - %s", mActivityName);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.i("AnkiActivity::onCreate - %s", mActivityName)
         // The hardware buttons should control the music volume
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        volumeControlStream = AudioManager.STREAM_MUSIC
         // Set the theme
-        Themes.setTheme(this);
-        Themes.disableXiaomiForceDarkMode(this);
-        super.onCreate(savedInstanceState);
+        setTheme(this)
+        disableXiaomiForceDarkMode(this)
+        super.onCreate(savedInstanceState)
         // Disable the notifications bar if running under the test monkey.
-        if (AdaptionUtil.isUserATestClient()) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if (isUserATestClient) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
         }
-        mCustomTabActivityHelper = new CustomTabActivityHelper();
+        customTabActivityHelper = CustomTabActivityHelper()
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base));
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(AnkiDroidApp.updateContextWithLanguage(base))
     }
 
-    @Override
-    protected void onStart() {
-        Timber.i("AnkiActivity::onStart - %s", mActivityName);
-        super.onStart();
-        mCustomTabActivityHelper.bindCustomTabsService(this);
+    override fun onStart() {
+        Timber.i("AnkiActivity::onStart - %s", mActivityName)
+        super.onStart()
+        customTabActivityHelper!!.bindCustomTabsService(this)
     }
 
-    @Override
-    protected void onStop() {
-        Timber.i("AnkiActivity::onStop - %s", mActivityName);
-        super.onStop();
-        mCustomTabActivityHelper.unbindCustomTabsService(this);
+    override fun onStop() {
+        Timber.i("AnkiActivity::onStop - %s", mActivityName)
+        super.onStop()
+        customTabActivityHelper!!.unbindCustomTabsService(this)
     }
 
-
-    @Override
-    protected void onPause() {
-        Timber.i("AnkiActivity::onPause - %s", mActivityName);
-        super.onPause();
+    override fun onPause() {
+        Timber.i("AnkiActivity::onPause - %s", mActivityName)
+        super.onPause()
     }
 
-
-
-    @Override
-    protected void onResume() {
-        Timber.i("AnkiActivity::onResume - %s", mActivityName);
-        super.onResume();
-        UsageAnalytics.sendAnalyticsScreenView(this);
-        ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(SIMPLE_NOTIFICATION_ID);
+    override fun onResume() {
+        Timber.i("AnkiActivity::onResume - %s", mActivityName)
+        super.onResume()
+        sendAnalyticsScreenView(this)
+        (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).cancel(
+            SIMPLE_NOTIFICATION_ID
+        )
         // Show any pending dialogs which were stored persistently
-        mHandler.readMessage();
+        dialogHandler.readMessage()
     }
 
-    @Override
-    protected void onDestroy() {
-        Timber.i("AnkiActivity::onDestroy - %s", mActivityName);
-        super.onDestroy();
+    override fun onDestroy() {
+        Timber.i("AnkiActivity::onDestroy - %s", mActivityName)
+        super.onDestroy()
     }
 
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Timber.i("Home button pressed");
-            return onActionBarBackPressed();
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            Timber.i("Home button pressed")
+            return onActionBarBackPressed()
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-    protected boolean onActionBarBackPressed() {
-        finishWithoutAnimation();
-        return true;
+    protected open fun onActionBarBackPressed(): Boolean {
+        finishWithoutAnimation()
+        return true
     }
-
-
 
     // called when the CollectionLoader finishes... usually will be over-ridden
-    protected void onCollectionLoaded(Collection col) {
-        hideProgressBar();
+    protected open fun onCollectionLoaded(col: Collection) {
+        hideProgressBar()
     }
 
-
-    public Collection getCol() {
-        return CollectionHelper.getInstance().getCol(this);
+    override fun getCol(): Collection {
+        return CollectionHelper.getInstance().getCol(this)
     }
 
-    public boolean colIsOpen() {
-        return CollectionHelper.getInstance().colIsOpen();
+    fun colIsOpen(): Boolean {
+        return CollectionHelper.getInstance().colIsOpen()
     }
 
     /**
@@ -190,11 +163,11 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      * This is used to improve the UX for e-ink devices
      * Can be tested via Settings - Advanced - Safe display mode
      *
-     * @see #animationEnabled()
+     * @see .animationEnabled
      */
-    public boolean animationDisabled() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(this);
-        return preferences.getBoolean("safeDisplay", false);
+    fun animationDisabled(): Boolean {
+        val preferences = AnkiDroidApp.getSharedPrefs(this)
+        return preferences.getBoolean("safeDisplay", false)
     }
 
     /**
@@ -202,287 +175,270 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      * This is used to improve the UX for e-ink devices
      * Can be tested via Settings - Advanced - Safe display mode
      *
-     * @see #animationDisabled()
+     * @see .animationDisabled
      */
-    public boolean animationEnabled() {
-        return !animationDisabled();
+    fun animationEnabled(): Boolean {
+        return !animationDisabled()
     }
 
-
-    @Override
-    public void setContentView(View view) {
+    override fun setContentView(view: View) {
         if (animationDisabled()) {
-            view.clearAnimation();
+            view.clearAnimation()
         }
-        super.setContentView(view);
+        super.setContentView(view)
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // We can't access the icons yet on a TV, so show them all in the menu
-        if (AndroidUiUtils.isRunningOnTv(this)) {
-            for (int i = 0; i < menu.size(); i++) {
-                menu.getItem(i).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        if (isRunningOnTv(this)) {
+            for (i in 0 until menu.size()) {
+                menu.getItem(i).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             }
         }
-        return super.onCreateOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu)
     }
 
-
-
-    @Override
-    public void setContentView(View view, LayoutParams params) {
+    override fun setContentView(view: View, params: ViewGroup.LayoutParams) {
         if (animationDisabled()) {
-            view.clearAnimation();
+            view.clearAnimation()
         }
-        super.setContentView(view, params);
+        super.setContentView(view, params)
     }
 
-
-    @Override
-    public void addContentView(View view, LayoutParams params) {
+    override fun addContentView(view: View, params: ViewGroup.LayoutParams) {
         if (animationDisabled()) {
-            view.clearAnimation();
+            view.clearAnimation()
         }
-        super.addContentView(view, params);
+        super.addContentView(view, params)
     }
 
-
-    @Deprecated
-    @Override
-    public void startActivity(Intent intent) {
-        super.startActivity(intent);
+    @Deprecated("")
+    override fun startActivity(intent: Intent) {
+        super.startActivity(intent)
     }
 
-
-    public void startActivityWithoutAnimation(Intent intent) {
-        disableIntentAnimation(intent);
-        super.startActivity(intent);
-        disableActivityAnimation();
+    fun startActivityWithoutAnimation(intent: Intent) {
+        disableIntentAnimation(intent)
+        super.startActivity(intent)
+        disableActivityAnimation()
     }
 
-
-    public void startActivityWithAnimation(Intent intent, Direction animation) {
-        enableIntentAnimation(intent);
-        super.startActivity(intent);
-        enableActivityAnimation(animation);
+    fun startActivityWithAnimation(
+        intent: Intent,
+        animation: ActivityTransitionAnimation.Direction
+    ) {
+        enableIntentAnimation(intent)
+        super.startActivity(intent)
+        enableActivityAnimation(animation)
     }
 
-
-    @Deprecated
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
+    @Deprecated("")
+    override fun startActivityForResult(intent: Intent, requestCode: Int) {
         try {
-            super.startActivityForResult(intent, requestCode);
-        } catch (ActivityNotFoundException e) {
-            Timber.w(e);
-            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed,true);
+            super.startActivityForResult(intent, requestCode)
+        } catch (e: ActivityNotFoundException) {
+            Timber.w(e)
+            showSimpleSnackbar(this, R.string.activity_start_failed, true)
         }
     }
 
-
-    public void startActivityForResultWithoutAnimation(Intent intent, int requestCode) {
-        disableIntentAnimation(intent);
-        startActivityForResult(intent, requestCode);
-        disableActivityAnimation();
+    fun startActivityForResultWithoutAnimation(intent: Intent, requestCode: Int) {
+        disableIntentAnimation(intent)
+        startActivityForResult(intent, requestCode)
+        disableActivityAnimation()
     }
 
-
-    public void startActivityForResultWithAnimation(Intent intent, int requestCode, Direction animation) {
-        enableIntentAnimation(intent);
-        startActivityForResult(intent, requestCode);
-        enableActivityAnimation(animation);
+    fun startActivityForResultWithAnimation(
+        intent: Intent,
+        requestCode: Int,
+        animation: ActivityTransitionAnimation.Direction
+    ) {
+        enableIntentAnimation(intent)
+        startActivityForResult(intent, requestCode)
+        enableActivityAnimation(animation)
     }
 
-
-    public void launchActivityForResult(Intent intent, ActivityResultLauncher<Intent> launcher, Direction animation) {
+    fun launchActivityForResult(
+        intent: Intent?,
+        launcher: ActivityResultLauncher<Intent?>,
+        animation: ActivityTransitionAnimation.Direction?
+    ) {
         try {
-            launcher.launch(intent, ActivityTransitionAnimation.getAnimationOptions(this, animation));
-        } catch (ActivityNotFoundException e) {
-            Timber.w(e);
-            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed, true);
+            launcher.launch(intent, getAnimationOptions(this, animation))
+        } catch (e: ActivityNotFoundException) {
+            Timber.w(e)
+            showSimpleSnackbar(this, R.string.activity_start_failed, true)
         }
     }
 
-
-    public void launchActivityForResultWithoutAnimation(Intent intent, ActivityResultLauncher<Intent> launcher) {
-        disableIntentAnimation(intent);
-        launchActivityForResult(intent, launcher, NONE);
+    fun launchActivityForResultWithoutAnimation(
+        intent: Intent,
+        launcher: ActivityResultLauncher<Intent?>
+    ) {
+        disableIntentAnimation(intent)
+        launchActivityForResult(intent, launcher, ActivityTransitionAnimation.Direction.NONE)
     }
 
-
-    public void launchActivityForResultWithAnimation(Intent intent, ActivityResultLauncher<Intent> launcher, Direction animation) {
-        enableIntentAnimation(intent);
-        launchActivityForResult(intent, launcher, animation);
+    fun launchActivityForResultWithAnimation(
+        intent: Intent,
+        launcher: ActivityResultLauncher<Intent?>,
+        animation: ActivityTransitionAnimation.Direction?
+    ) {
+        enableIntentAnimation(intent)
+        launchActivityForResult(intent, launcher, animation)
     }
 
-
-    @Deprecated
-    @Override
-    public void finish() {
-        super.finish();
+    @Deprecated("")
+    override fun finish() {
+        super.finish()
     }
 
-
-    public void finishWithoutAnimation() {
-        Timber.i("finishWithoutAnimation");
-        super.finish();
-        disableActivityAnimation();
+    fun finishWithoutAnimation() {
+        Timber.i("finishWithoutAnimation")
+        super.finish()
+        disableActivityAnimation()
     }
 
-
-    public void finishWithAnimation(Direction animation) {
-        Timber.i("finishWithAnimation %s", animation);
-        super.finish();
-        enableActivityAnimation(animation);
+    fun finishWithAnimation(animation: ActivityTransitionAnimation.Direction) {
+        Timber.i("finishWithAnimation %s", animation)
+        super.finish()
+        enableActivityAnimation(animation)
     }
 
-
-    protected void disableViewAnimation(View view) {
-        view.clearAnimation();
+    protected fun disableViewAnimation(view: View) {
+        view.clearAnimation()
     }
 
-    protected void enableViewAnimation(View view, Animation animation) {
+    protected fun enableViewAnimation(view: View, animation: Animation?) {
         if (animationDisabled()) {
-            disableViewAnimation(view);
+            disableViewAnimation(view)
         } else {
-            view.setAnimation(animation);
+            view.animation = animation
         }
     }
 
-    /** Finish Activity using FADE animation **/
-    public static void finishActivityWithFade(Activity activity) {
-        activity.finish();
-        ActivityTransitionAnimation.slide(activity, UP);
+    private fun disableIntentAnimation(intent: Intent) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
     }
 
-
-    private void disableIntentAnimation(Intent intent) {
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+    private fun disableActivityAnimation() {
+        slide(this, ActivityTransitionAnimation.Direction.NONE)
     }
 
-
-    private void disableActivityAnimation() {
-        ActivityTransitionAnimation.slide(this, NONE);
-    }
-
-
-    private void enableIntentAnimation(Intent intent) {
+    private fun enableIntentAnimation(intent: Intent) {
         if (animationDisabled()) {
-            disableIntentAnimation(intent);
+            disableIntentAnimation(intent)
         }
     }
 
-
-    private void enableActivityAnimation(Direction animation) {
+    private fun enableActivityAnimation(animation: ActivityTransitionAnimation.Direction) {
         if (animationDisabled()) {
-            disableActivityAnimation();
+            disableActivityAnimation()
         } else {
-            ActivityTransitionAnimation.slide(this, animation);
+            slide(this, animation)
         }
     }
 
-
-    /** Method for loading the collection which is inherited by every {@link AnkiActivity} */
-    public void startLoadingCollection() {
-        Timber.d("AnkiActivity.startLoadingCollection()");
+    /** Method for loading the collection which is inherited by every [AnkiActivity]  */
+    fun startLoadingCollection() {
+        Timber.d("AnkiActivity.startLoadingCollection()")
         if (colIsOpen()) {
-            Timber.d("Synchronously calling onCollectionLoaded");
-            onCollectionLoaded(getCol());
-            return;
+            Timber.d("Synchronously calling onCollectionLoaded")
+            onCollectionLoaded(col)
+            return
         }
         // Open collection asynchronously if it hasn't already been opened
-        showProgressBar();
-        CollectionLoader.load(this, col -> {
-            if (col != null) {
-                Timber.d("Asynchronously calling onCollectionLoaded");
-                onCollectionLoaded(col);
-            } else {
-                onCollectionLoadError();
+        showProgressBar()
+        load(
+            this,
+            object : CollectionLoader.Callback {
+                override fun execute(col: Collection?) {
+                    if (col != null) {
+                        Timber.d("Asynchronously calling onCollectionLoaded")
+                        onCollectionLoaded(col)
+                    } else {
+                        onCollectionLoadError()
+                    }
+                }
             }
-        });
+        )
     }
 
-    /** The action to take when there was an error loading the collection */
-    protected void onCollectionLoadError() {
-        Intent deckPicker = new Intent(this, DeckPicker.class);
-        deckPicker.putExtra("collectionLoadError", true); // don't currently do anything with this
-        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivityWithAnimation(deckPicker, START);
+    /** The action to take when there was an error loading the collection  */
+    protected fun onCollectionLoadError() {
+        val deckPicker = Intent(this, DeckPicker::class.java)
+        deckPicker.putExtra("collectionLoadError", true) // don't currently do anything with this
+        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.START)
     }
 
-
-    public void showProgressBar() {
-        ProgressBar progressBar = findViewById(R.id.progress_bar);
+    fun showProgressBar() {
+        val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
         if (progressBar != null) {
-            progressBar.setVisibility(View.VISIBLE);
+            progressBar.visibility = View.VISIBLE
         }
     }
 
-
-    public void hideProgressBar() {
-        ProgressBar progressBar = findViewById(R.id.progress_bar);
+    fun hideProgressBar() {
+        val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
         if (progressBar != null) {
-            progressBar.setVisibility(View.GONE);
+            progressBar.visibility = View.GONE
         }
     }
 
-
-    protected void mayOpenUrl(Uri url) {
-        boolean success = mCustomTabActivityHelper.mayLaunchUrl(url, null, null);
+    fun mayOpenUrl(url: Uri) {
+        val success = customTabActivityHelper!!.mayLaunchUrl(url, null, null)
         if (!success) {
-            Timber.w("Couldn't preload url: %s", url.toString());
+            Timber.w("Couldn't preload url: %s", url.toString())
         }
     }
 
-    public void openUrl(@NonNull Uri url) {
-        //DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
-        //display the toast
-        if (!AdaptionUtil.hasWebBrowser(this)) {
-            UIUtils.showThemedToast(this, getResources().getString(R.string.no_browser_notification) + url, false);
-            return;
+    open fun openUrl(url: Uri) {
+        // DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
+        // display the toast
+        if (!hasWebBrowser(this)) {
+            showThemedToast(
+                this,
+                resources.getString(R.string.no_browser_notification) + url,
+                false
+            )
+            return
         }
-
-        int toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary);
-        int navBarColor = Themes.getColorFromAttr(this, R.attr.customTabNavBarColor);
-
-        CustomTabColorSchemeParams colorSchemeParams =
-                new CustomTabColorSchemeParams.Builder()
-                        .setToolbarColor(toolbarColor)
-                        .setNavigationBarColor(navBarColor)
-                        .build();
-
-        CustomTabActivityHelper helper = getCustomTabActivityHelper();
-        CustomTabsIntent.Builder builder =
-                new CustomTabsIntent.Builder(helper.getSession())
-                        .setShowTitle(true)
-                        .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
-                        .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
-                        .setCloseButtonIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_back_arrow_custom_tab))
-                        .setColorScheme(getColorScheme())
-                        .setDefaultColorSchemeParams(colorSchemeParams);
-
-        CustomTabsIntent customTabsIntent = builder.build();
-        CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
-        CustomTabActivityHelper.openCustomTab(this, customTabsIntent, url, new CustomTabsFallback());
+        val toolbarColor = getColorFromAttr(this, R.attr.colorPrimary)
+        val navBarColor = getColorFromAttr(this, R.attr.customTabNavBarColor)
+        val colorSchemeParams = CustomTabColorSchemeParams.Builder()
+            .setToolbarColor(toolbarColor)
+            .setNavigationBarColor(navBarColor)
+            .build()
+        val helper = customTabActivityHelper
+        val builder = CustomTabsIntent.Builder(helper!!.session)
+            .setShowTitle(true)
+            .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
+            .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
+            .setCloseButtonIcon(
+                BitmapFactory.decodeResource(
+                    this.resources,
+                    R.drawable.ic_back_arrow_custom_tab
+                )
+            )
+            .setColorScheme(colorScheme)
+            .setDefaultColorSchemeParams(colorSchemeParams)
+        val customTabsIntent = builder.build()
+        addKeepAliveExtra(this, customTabsIntent.intent)
+        openCustomTab(this, customTabsIntent, url, CustomTabsFallback())
     }
 
-
-    private int getColorScheme() {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-            return COLOR_SCHEME_SYSTEM;
-        } else if (prefs.getBoolean("invertedColors", false)) {
-            return COLOR_SCHEME_DARK;
-        } else {
-            return COLOR_SCHEME_LIGHT;
+    private val colorScheme: Int
+        get() {
+            val prefs = AnkiDroidApp.getSharedPrefs(this)
+            return if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+                CustomTabsIntent.COLOR_SCHEME_SYSTEM
+            } else if (prefs.getBoolean("invertedColors", false)) {
+                CustomTabsIntent.COLOR_SCHEME_DARK
+            } else {
+                CustomTabsIntent.COLOR_SCHEME_LIGHT
+            }
         }
-    }
-
-    public CustomTabActivityHelper getCustomTabActivityHelper() {
-        return mCustomTabActivityHelper;
-    }
-
 
     /**
      * Global method to show dialog fragment including adding it to back stack Note: DO NOT call this from an async
@@ -490,40 +446,19 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      *
      * @param newFragment  the DialogFragment you want to show
      */
-    public void showDialogFragment(DialogFragment newFragment) {
-        showDialogFragment(this, newFragment);
+    open fun showDialogFragment(newFragment: DialogFragment) {
+        showDialogFragment(this, newFragment)
     }
-
-    public static void showDialogFragment(AnkiActivity activity, DialogFragment newFragment) {
-        showDialogFragment(activity.getSupportFragmentManager(), newFragment);
-    }
-
-    public static void showDialogFragment(FragmentManager manager, DialogFragment newFragment) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction. We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-        FragmentTransaction ft = manager.beginTransaction();
-        Fragment prev = manager.findFragmentByTag(DIALOG_FRAGMENT_TAG);
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        // save transaction to the back stack
-        ft.addToBackStack(DIALOG_FRAGMENT_TAG);
-        newFragment.show(ft, DIALOG_FRAGMENT_TAG);
-        manager.executePendingTransactions();
-    }
-
 
     /**
-     * Calls {@link #showAsyncDialogFragment(AsyncDialogFragment, NotificationChannels.Channel)} internally, using the channel
-     * {@link NotificationChannels.Channel#GENERAL}
+     * Calls [.showAsyncDialogFragment] internally, using the channel
+     * [NotificationChannels.Channel.GENERAL]
      *
      * @param newFragment  the AsyncDialogFragment you want to show
      */
-    public void showAsyncDialogFragment(AsyncDialogFragment newFragment) {
-        showAsyncDialogFragment(newFragment, NotificationChannels.Channel.GENERAL);
+    open fun showAsyncDialogFragment(newFragment: AsyncDialogFragment) {
+        showAsyncDialogFragment(newFragment, NotificationChannels.Channel.GENERAL)
     }
-
 
     /**
      * Global method to show a dialog fragment including adding it to back stack and handling the case where the dialog
@@ -533,20 +468,22 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      * @param newFragment  the AsyncDialogFragment you want to show
      * @param channel the NotificationChannels.Channel to use for the notification
      */
-    public void showAsyncDialogFragment(AsyncDialogFragment newFragment, NotificationChannels.Channel channel) {
+    fun showAsyncDialogFragment(
+        newFragment: AsyncDialogFragment,
+        channel: NotificationChannels.Channel?
+    ) {
         try {
-            showDialogFragment(newFragment);
-        } catch (IllegalStateException e) {
-            Timber.w(e);
+            showDialogFragment(newFragment)
+        } catch (e: IllegalStateException) {
+            Timber.w(e)
             // Store a persistent message to SharedPreferences instructing AnkiDroid to show dialog
-            DialogHandler.storeMessage(newFragment.getDialogHandlerMessage());
+            storeMessage(newFragment.dialogHandlerMessage)
             // Show a basic notification to the user in the notification bar in the meantime
-            String title = newFragment.getNotificationTitle();
-            String message = newFragment.getNotificationMessage();
-            showSimpleNotification(title, message, channel);
+            val title = newFragment.notificationTitle
+            val message = newFragment.notificationMessage
+            showSimpleNotification(title, message, channel)
         }
     }
-
 
     /**
      * Show a simple message dialog, dismissing the message without taking any further action when OK button is pressed.
@@ -555,15 +492,13 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      *
      * @param message
      */
-    public void showSimpleMessageDialog(String message) {
-        showSimpleMessageDialog(message, false);
+    fun showSimpleMessageDialog(message: String?) {
+        showSimpleMessageDialog(message, false)
     }
 
-    public void showSimpleMessageDialog(String title, String message){
-        showSimpleMessageDialog(title, message, false);
+    fun showSimpleMessageDialog(title: String?, message: String?) {
+        showSimpleMessageDialog(title, message, false)
     }
-
-
 
     /**
      * Show a simple message dialog, dismissing the message without taking any further action when OK button is pressed.
@@ -573,124 +508,124 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
      * @param message
      * @param reload flag which forces app to be restarted when true
      */
-    public void showSimpleMessageDialog(String message, boolean reload) {
-        AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(message, reload);
-        showAsyncDialogFragment(newFragment);
+    open fun showSimpleMessageDialog(message: String?, reload: Boolean) {
+        val newFragment: AsyncDialogFragment = newInstance(message, reload)
+        showAsyncDialogFragment(newFragment)
     }
 
-    public void showSimpleMessageDialog(String title, @Nullable String message, boolean reload) {
-        AsyncDialogFragment newFragment = SimpleMessageDialog.newInstance(title, message, reload);
-        showAsyncDialogFragment(newFragment);
+    fun showSimpleMessageDialog(title: String?, message: String?, reload: Boolean) {
+        val newFragment: AsyncDialogFragment = newInstance(title, message, reload)
+        showAsyncDialogFragment(newFragment)
     }
 
-
-    public void showSimpleNotification(String title, String message, NotificationChannels.Channel channel) {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
+    fun showSimpleNotification(
+        title: String?,
+        message: String?,
+        channel: NotificationChannels.Channel?
+    ) {
+        val prefs = AnkiDroidApp.getSharedPrefs(this)
         // Show a notification unless all notifications have been totally disabled
-        if (Integer.parseInt(prefs.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "0")) <= Preferences.PENDING_NOTIFICATIONS_ONLY) {
+        if (prefs.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "0")!!
+            .toInt() <= Preferences.PENDING_NOTIFICATIONS_ONLY
+        ) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
-            String ticker = title;
-            if (title.equals(getResources().getString(R.string.app_name))) {
-                ticker = message;
+            var ticker = title
+            if (title == resources.getString(R.string.app_name)) {
+                ticker = message
             }
             // Build basic notification
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
-                    NotificationChannels.getId(channel))
-                    .setSmallIcon(R.drawable.ic_stat_notify)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
-                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                    .setTicker(ticker);
+            val builder = NotificationCompat.Builder(
+                this,
+                getId(channel)
+            )
+                .setSmallIcon(R.drawable.ic_stat_notify)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
+                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setTicker(ticker)
             // Enable vibrate and blink if set in preferences
             if (prefs.getBoolean("widgetVibrate", false)) {
-                builder.setVibrate(new long[] { 1000, 1000, 1000});
+                builder.setVibrate(longArrayOf(1000, 1000, 1000))
             }
             if (prefs.getBoolean("widgetBlink", false)) {
-                builder.setLights(Color.BLUE, 1000, 1000);
+                builder.setLights(Color.BLUE, 1000, 1000)
             }
             // Creates an explicit intent for an Activity in your app
-            Intent resultIntent = new Intent(this, DeckPicker.class);
-            resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            PendingIntent resultPendingIntent = CompatHelper.getCompat().getImmutableActivityIntent(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.setContentIntent(resultPendingIntent);
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            val resultIntent = Intent(this, DeckPicker::class.java)
+            resultIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            val resultPendingIntent = compat.getImmutableActivityIntent(
+                this,
+                0,
+                resultIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            builder.setContentIntent(resultPendingIntent)
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             // mId allows you to update the notification later on.
-            notificationManager.notify(SIMPLE_NOTIFICATION_ID, builder.build());
+            notificationManager.notify(SIMPLE_NOTIFICATION_ID, builder.build())
         }
-
-    }
-
-    public DialogHandler getDialogHandler() {
-        return mHandler;
     }
 
     // Handle closing simple message dialog
-    @Override
-    public void dismissSimpleMessageDialog(boolean reload) {
-        dismissAllDialogFragments();
+    override fun dismissSimpleMessageDialog(reload: Boolean) {
+        dismissAllDialogFragments()
         if (reload) {
-            Intent deckPicker = new Intent(this, DeckPicker.class);
-            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityWithoutAnimation(deckPicker);
+            val deckPicker = Intent(this, DeckPicker::class.java)
+            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivityWithoutAnimation(deckPicker)
         }
     }
 
-
     // Dismiss whatever dialog is showing
-    public void dismissAllDialogFragments() {
-        getSupportFragmentManager().popBackStack(DIALOG_FRAGMENT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    fun dismissAllDialogFragments() {
+        supportFragmentManager.popBackStack(
+            DIALOG_FRAGMENT_TAG,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
     }
 
-
     // Restart the activity
-    public void restartActivity() {
-        Timber.i("AnkiActivity -- restartActivity()");
-        Intent intent = new Intent();
-        intent.setClass(this, this.getClass());
-        intent.putExtras(new Bundle());
-        this.startActivityWithoutAnimation(intent);
-        this.finishWithoutAnimation();
+    fun restartActivity() {
+        Timber.i("AnkiActivity -- restartActivity()")
+        val intent = Intent()
+        intent.setClass(this, this.javaClass)
+        intent.putExtras(Bundle())
+        startActivityWithoutAnimation(intent)
+        finishWithoutAnimation()
     }
 
     /**
-     * sets {@link #getSupportActionBar} and returns the action bar
+     * sets [.getSupportActionBar] and returns the action bar
      * @return The action bar which was created
      * @throws IllegalStateException if the bar could not be enabled
      */
-    @NonNull
-    protected ActionBar enableToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        if (toolbar == null) {
-            // likely missing "<include layout="@layout/toolbar" />"
-            throw new IllegalStateException("Unable to find toolbar");
-        }
-        setSupportActionBar(toolbar);
-        return Objects.requireNonNull(getSupportActionBar());
+    protected fun enableToolbar(): ActionBar {
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+            ?: // likely missing "<include layout="@layout/toolbar" />"
+            throw IllegalStateException("Unable to find toolbar")
+        setSupportActionBar(toolbar)
+        return supportActionBar!!
     }
 
-
     /**
-     * sets {@link #getSupportActionBar} and returns the action bar
+     * sets [.getSupportActionBar] and returns the action bar
      * @param view the view which contains a toolbar element:
      * @return The action bar which was created
      * @throws IllegalStateException if the bar could not be enabled
      */
-    @NonNull
-    protected ActionBar enableToolbar(@NonNull View view) {
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        if (toolbar == null) {
-            // likely missing "<include layout="@layout/toolbar" />"
-            throw new IllegalStateException("Unable to find toolbar: " + view);
-        }
-        setSupportActionBar(toolbar);
-        return Objects.requireNonNull(getSupportActionBar());
+    protected fun enableToolbar(view: View): ActionBar {
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+            ?: // likely missing "<include layout="@layout/toolbar" />"
+            throw IllegalStateException("Unable to find toolbar: $view")
+        setSupportActionBar(toolbar)
+        return supportActionBar!!
     }
 
-    protected boolean showedActivityFailedScreen(Bundle savedInstanceState) {
+    protected fun showedActivityFailedScreen(savedInstanceState: Bundle?): Boolean {
         if (AnkiDroidApp.isInitialized()) {
-            return false;
+            return false
         }
 
         // #7630: Can be triggered with `adb shell bmgr restore com.ichi2.anki` after AnkiDroid settings are changed.
@@ -698,29 +633,65 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         // * The App was open
         // * A restore took place
         // * The app is reopened (until it exits: finish() does not do this - and removes it from the app list)
-
-        Timber.w("Activity started with no application instance");
-        UIUtils.showThemedToast(this, getString(R.string.ankidroid_cannot_open_after_backup_try_again), false);
+        Timber.w("Activity started with no application instance")
+        showThemedToast(
+            this,
+            getString(R.string.ankidroid_cannot_open_after_backup_try_again),
+            false
+        )
 
         // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
         // on Importer
-        Themes.setTheme(this);
+        setTheme(this)
         // Avoids a SuperNotCalledException
-        super.onCreate(savedInstanceState);
-        finishActivityWithFade(this);
+        super.onCreate(savedInstanceState)
+        finishActivityWithFade(this)
 
         // If we don't kill the process, the backup is not "done" and reopening the app show the same message.
-        new Thread(() -> {
+        Thread {
+
             // 3.5 seconds sleep, as the toast is killed on process death.
             // Same as the default value of LENGTH_LONG
             try {
-                Thread.sleep(3500);
-            } catch (InterruptedException e) {
-                Timber.w(e);
+                Thread.sleep(3500)
+            } catch (e: InterruptedException) {
+                Timber.w(e)
             }
-            android.os.Process.killProcess(android.os.Process.myPid());
-        }).start();
+            Process.killProcess(Process.myPid())
+        }.start()
+        return true
+    }
 
-        return true;
+    companion object {
+        const val REQUEST_REVIEW = 901
+        const val DIALOG_FRAGMENT_TAG = "dialog"
+
+        /** Extra key to set the finish animation of an activity  */
+        const val FINISH_ANIMATION_EXTRA = "finishAnimation"
+
+        /** Finish Activity using FADE animation  */
+        fun finishActivityWithFade(activity: Activity) {
+            activity.finish()
+            slide(activity, ActivityTransitionAnimation.Direction.UP)
+        }
+
+        fun showDialogFragment(activity: AnkiActivity, newFragment: DialogFragment) {
+            showDialogFragment(activity.supportFragmentManager, newFragment)
+        }
+
+        fun showDialogFragment(manager: FragmentManager, newFragment: DialogFragment) {
+            // DialogFragment.show() will take care of adding the fragment
+            // in a transaction. We also want to remove any currently showing
+            // dialog, so make our own transaction and take care of that here.
+            val ft = manager.beginTransaction()
+            val prev = manager.findFragmentByTag(DIALOG_FRAGMENT_TAG)
+            if (prev != null) {
+                ft.remove(prev)
+            }
+            // save transaction to the back stack
+            ft.addToBackStack(DIALOG_FRAGMENT_TAG)
+            newFragment.show(ft, DIALOG_FRAGMENT_TAG)
+            manager.executePendingTransactions()
+        }
     }
 }

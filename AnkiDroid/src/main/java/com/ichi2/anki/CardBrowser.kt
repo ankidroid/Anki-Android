@@ -691,7 +691,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""
         } else {
-            val deckName = col!!.decks.name(deckId)
+            val deckName = col.decks.name(deckId)
             "deck:\"$deckName\" "
         }
         saveLastDeckId(deckId)
