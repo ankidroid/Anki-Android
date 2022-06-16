@@ -309,6 +309,7 @@
     <string name="open_changelog">Open Changelog</string>
     <string name="binding_add_gesture">Add gesture</string>
     <string name="binding_add_key">Add key</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Press a key</string>
 
     <!-- Select card side -->
@@ -326,5 +327,5 @@ this formatter is used if the bind only applies to both the question and the ans
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.
     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="bindings_already_bound">Already bound to ‘%s’</string>
 </resources>

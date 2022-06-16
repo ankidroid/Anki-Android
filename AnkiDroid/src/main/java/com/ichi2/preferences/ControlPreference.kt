@@ -25,6 +25,7 @@ import android.view.KeyEvent.KEYCODE_VOLUME_UP
 import androidx.preference.ListPreference
 import androidx.preference.ListPreferenceDialogFragmentCompat
 import androidx.preference.PreferenceCategory
+import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
@@ -103,14 +104,24 @@ class ControlPreference : ListPreference {
     override fun callChangeListener(newValue: Any?): Boolean {
         when (val index: Int = (newValue as String).toInt()) {
             ADD_KEY_INDEX -> {
-                KeySelectionDialogBuilder(context)
-                    .onBindingChanged { binding -> checkExistingBinding(MappableBinding(binding, MappableBinding.Screen.Reviewer(CardSide.BOTH))) }
-                    // select a side, then add
-                    .onBindingSubmitted { binding ->
-                        CardSideSelectionDialog.displayInstance(context) { side -> addBinding(MappableBinding(binding, MappableBinding.Screen.Reviewer(side))) }
+                KeySelectionDialogBuilder(context).apply {
+                    onBindingChanged { binding -> showToastIfBindingIsUsed(MappableBinding(binding, MappableBinding.Screen.Reviewer(CardSide.BOTH))) }
+                    onPositive { dialog, _ ->
+                        val binding = mKeyPicker.getBinding() ?: return@onPositive
+                        // Use CardSide.BOTH as placeholder just to check if binding exists
+                        CardSideSelectionDialog.displayInstance(context) { side ->
+                            val mappableBinding = MappableBinding(binding, MappableBinding.Screen.Reviewer(side))
+                            if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
+                                showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), dialog)
+                            } else {
+                                addBinding(mappableBinding)
+                                dialog.dismiss()
+                            }
+                        }
                     }
-                    .disallowModifierKeys()
-                    .show()
+                    autoDismiss(false)
+                    disallowModifierKeys()
+                }.show()
             }
             else -> {
                 val bindings: MutableList<MappableBinding> = MappableBinding.fromPreferenceString(value)
@@ -129,25 +140,28 @@ class ControlPreference : ListPreference {
         return keycode == KEYCODE_VOLUME_DOWN || keycode == KEYCODE_VOLUME_UP
     }
 
+    /**
+     * Return if another command uses
+     */
+    private fun bindingIsUsedOnAnotherCommand(binding: MappableBinding): Boolean {
+        return getCommandWithBindingExceptThis(binding) != null
+    }
+
     /** Displays a warning to the user if the provided binding couldn't be used */
-    private fun checkExistingBinding(binding: MappableBinding) {
-        val existingCommands = getExistingCommands(binding).toList()
-        if (existingCommands.isEmpty()) return // no conflicts
-        val commandNames = existingCommands.map { context.getString(it.resourceId) }
-        val text = context.getString(R.string.bindings_already_bound, TextUtils.join(", ", commandNames))
+    private fun showToastIfBindingIsUsed(binding: MappableBinding) {
+        val bindingCommand = getCommandWithBindingExceptThis(binding)
+            ?: return
+
+        val commandName = context.getString(bindingCommand.resourceId)
+        val text = context.getString(R.string.bindings_already_bound, commandName)
         UIUtils.showThemedToast(context, text, true)
     }
 
-    /** return all commands where the binding is already mapped excluding the current command */
-    fun getExistingCommands(binding: MappableBinding): List<ViewerCommand> {
-        // get a list of all bindings - tuple: (Command, List<MappableBinding>)
+    /** @return command where the binding is mapped excluding the current command */
+    private fun getCommandWithBindingExceptThis(binding: MappableBinding): ViewerCommand? {
         return MappableBinding.allMappings(AnkiDroidApp.getSharedPrefs(context))
-            // filter to the commands which have a binding matching this one
-            .filter { x -> x.second.any { cmdBinding -> cmdBinding == binding } }
-            // return the associated commands
-            .map { x -> x.first }
-            // except for the command that this preference refers to
-            .filter { x -> x.preferenceKey != key }
+            // filter to the commands which have a binding matching this one except this
+            .firstOrNull { x -> x.second.any { cmdBinding -> cmdBinding == binding } && x.first.preferenceKey != key }?.first
     }
 
     private fun addBinding(binding: MappableBinding) {
@@ -156,6 +170,41 @@ class ControlPreference : ListPreference {
         bindings.remove(binding)
         bindings.add(0, binding)
         value = bindings.toPreferenceString()
+    }
+
+    /**
+     * Remove binding from all control preferences
+     * in the parent PreferenceGroup of this [ControlPreference]
+     */
+    private fun clearBinding(binding: MappableBinding) {
+        val preferenceGroup = parent
+            ?: return
+
+        for (command in ViewerCommand.values()) {
+            val commandPreference = preferenceGroup.findPreference<ControlPreference>(command.preferenceKey)!!
+            val bindings = MappableBinding.fromPreferenceString(commandPreference.value)
+            if (binding in bindings) {
+                bindings.remove(binding)
+                commandPreference.value = bindings.toPreferenceString()
+            }
+        }
+    }
+
+    private fun showDialogToReplaceBinding(binding: MappableBinding, title: String, parentDialog: MaterialDialog) {
+        val commandName = context.getString(getCommandWithBindingExceptThis(binding)!!.resourceId)
+
+        MaterialDialog.Builder(context)
+            .title(title)
+            .content(context.getString(R.string.bindings_already_bound, commandName))
+            .onPositive { _, _ ->
+                clearBinding(binding)
+                addBinding(binding)
+                parentDialog.dismiss()
+            }
+            .positiveText(context.getString(R.string.dialog_positive_replace))
+            .negativeText(R.string.dialog_cancel)
+            .build()
+            .show()
     }
 
     companion object {
