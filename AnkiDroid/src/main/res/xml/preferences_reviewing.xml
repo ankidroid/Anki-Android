@@ -52,18 +52,6 @@
             android:title="@string/time_limit"
             app:max="9999"
             app:min="0" />
-        <SwitchPreference
-            android:key="@string/new_timezone_handling_preference"
-            android:title="@string/new_timezone"
-            android:defaultValue="false" />
-        <com.ichi2.preferences.NumberRangePreferenceCompat
-            android:defaultValue="200"
-            android:key="@string/double_tap_time_interval_preference"
-            android:summary="@string/pref_double_tap_time_interval_summary"
-            android:title="@string/pref_double_tap_time_interval"
-            app:min="0"
-            app:max="2000" />
-
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_flashcard" >
         <Preference
@@ -181,5 +169,18 @@
             android:max="60"
             android:summary="@string/timeout_answer_seconds_summ"
             android:title="@string/timeout_question_seconds" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_advanced">
+        <SwitchPreference
+            android:key="@string/new_timezone_handling_preference"
+            android:title="@string/new_timezone"
+            android:defaultValue="false" />
+        <com.ichi2.preferences.NumberRangePreferenceCompat
+            android:defaultValue="200"
+            android:key="@string/double_tap_time_interval_preference"
+            android:summary="@string/pref_double_tap_time_interval_summary"
+            android:title="@string/pref_double_tap_time_interval"
+            app:min="0"
+            app:max="2000" />
     </PreferenceCategory>
 </PreferenceScreen>
