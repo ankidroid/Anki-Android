@@ -236,9 +236,10 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     fun setFragmentContentView(newView: View?) {
-        val parent = this.view as ViewGroup?
-        parent!!.removeAllViews()
-        parent.addView(newView)
+        (view as ViewGroup?)!!.run {
+            removeAllViews()
+            addView(newView)
+        }
     }
 
     private val mUndoListener: TaskListener<Unit, ComputeResult> = object : TaskListener<Unit, ComputeResult>() {
