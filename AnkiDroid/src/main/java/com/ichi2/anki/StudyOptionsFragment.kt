@@ -328,15 +328,14 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             mToolbar!!.setOnMenuItemClickListener(this)
             val menu = mToolbar!!.menu
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
-            col != null && col!!.decks.isDyn(col!!.decks.selected()).also { filtered ->
-                menu.findItem(R.id.action_rebuild).isVisible = filtered
-                menu.findItem(R.id.action_empty).isVisible = filtered
-                menu.findItem(R.id.action_custom_study).isVisible = filtered
-                menu.findItem(R.id.action_deck_or_study_options).setTitle(
-                    if (filtered) R.string.menu__study_options
-                    else R.string.menu__deck_options
-                )
-            }
+            val filtered = col != null && col!!.decks.isDyn(col!!.decks.selected())
+            menu.findItem(R.id.action_rebuild).isVisible = filtered
+            menu.findItem(R.id.action_empty).isVisible = filtered
+            menu.findItem(R.id.action_custom_study).isVisible = filtered
+            menu.findItem(R.id.action_deck_or_study_options).setTitle(
+                if (filtered) R.string.menu__study_options
+                else R.string.menu__deck_options
+            )
             // Don't show custom study icon if congrats shown
             menu.findItem(R.id.action_custom_study).isVisible = mCurrentContentView != CONTENT_CONGRATS
             // Switch on rename / delete / export if tablet layout
