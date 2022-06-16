@@ -353,10 +353,14 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             // Set the back button listener
             if (!mFragmented) {
-                mToolbar!!.navigationIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)!!.apply {
-                    isAutoMirrored = true
+                mToolbar!!.run {
+                    navigationIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)!!.apply {
+                        isAutoMirrored = true
+                    }
+                    setNavigationOnClickListener {
+                        (activity as AnkiActivity?)!!.finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+                    }
                 }
-                mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity?)!!.finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
             }
         } catch (e: IllegalStateException) {
             if (!CollectionHelper.getInstance().colIsOpen()) {
