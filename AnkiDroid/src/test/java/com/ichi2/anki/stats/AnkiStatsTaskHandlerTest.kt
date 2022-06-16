@@ -40,6 +40,7 @@ class AnkiStatsTaskHandlerTest : RobolectricTest() {
 
     @Before
     override fun setUp() {
+        super.setUp()
         MockitoAnnotations.openMocks(this)
         whenever(mCol.db).thenReturn(null)
         whenever(mCol.dbClosed).thenReturn(true)

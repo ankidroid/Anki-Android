@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Looper
+import androidx.annotation.CallSuper
 import androidx.annotation.CheckResult
 import androidx.annotation.NonNull
 import androidx.core.content.edit
@@ -80,6 +81,7 @@ open class RobolectricTest : CollectionGetter {
     val mTaskScheduler = TaskSchedulerRule()
 
     @Before
+    @CallSuper
     open fun setUp() {
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
 
@@ -156,6 +158,7 @@ open class RobolectricTest : CollectionGetter {
     }
 
     @After
+    @CallSuper
     open fun tearDown() {
 
         // If you don't clean up your ActivityControllers you will get OOM errors
@@ -318,7 +321,13 @@ open class RobolectricTest : CollectionGetter {
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
-    override fun getCol(): Collection = CollectionHelper.getInstance().getCol(targetContext)
+    override fun getCol(): Collection {
+        try {
+            return CollectionHelper.getInstance().getCol(targetContext)
+        } catch (e: UnsatisfiedLinkError) {
+            throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
+        }
+    }
 
     protected val collectionTime: MockTime
         get() = TimeManager.time as MockTime
