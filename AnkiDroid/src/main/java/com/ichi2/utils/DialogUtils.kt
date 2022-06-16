@@ -27,4 +27,10 @@ object DialogUtils {
         target.showsDialog = false
         return MaterialDialog.Builder(target.requireContext()).build()
     }
+
+    fun MaterialDialog?.ifShowing(r: Runnable) {
+        if (this?.isShowing == true) {
+            r.run()
+        }
+    }
 }
