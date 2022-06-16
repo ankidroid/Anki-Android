@@ -18,6 +18,7 @@ package com.ichi2.utils
 import android.app.Dialog
 import androidx.fragment.app.DialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
+import timber.log.Timber
 
 object DialogUtils {
     /**
@@ -31,6 +32,20 @@ object DialogUtils {
     fun MaterialDialog?.ifShowing(r: Runnable) {
         if (this?.isShowing == true) {
             r.run()
+        }
+    }
+
+    fun MaterialDialog?.dismissIfShowing() {
+        ifShowing { this!!.dismiss() }
+    }
+
+    fun MaterialDialog?.dismissIfShowingWithException() {
+        ifShowing {
+            try {
+                this!!.dismiss()
+            } catch (e: Exception) {
+                Timber.e(e, "Exception dismissing dialog")
+            }
         }
     }
 }
