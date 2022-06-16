@@ -50,6 +50,9 @@
 
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="iconColor">?attr/colorPrimary</item>
+
+        <!--Dialog-->
+        <item name="md_color_button_text">@color/black</item>
     </style>
 
     <!-- Preferences screens -->

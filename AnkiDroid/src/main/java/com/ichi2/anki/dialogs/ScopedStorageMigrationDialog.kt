@@ -24,7 +24,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.util.DialogUtils
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.utils.MDUtil
 import com.ichi2.anki.*
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedTextView
@@ -43,25 +44,29 @@ typealias OpenUri = (Uri) -> Unit
  * For design decisions, see: docs\scoped_storage\consent.md
  */
 object ScopedStorageMigrationDialog {
+    @Suppress("Deprecation") // Material dialog neutral button deprecation
     @JvmStatic
     fun showDialog(ctx: Context, openUri: OpenUri, initiateScopedStorage: Runnable): Dialog {
-        return MaterialDialog.Builder(ctx)
-            .title(R.string.scoped_storage_title)
-            .content(R.string.scoped_storage_initial_message)
-            .positiveText(R.string.scoped_storage_migrate)
-            .onPositive { dialog, _ ->
+        return MaterialDialog(ctx).show {
+            title(R.string.scoped_storage_title)
+            message(R.string.scoped_storage_initial_message)
+            positiveButton(R.string.scoped_storage_migrate) {
                 run {
                     ScopedStorageMigrationConfirmationDialog.showDialog(ctx, initiateScopedStorage)
-                    dialog.dismiss()
+                    dismiss()
                 }
             }
-            .neutralText(R.string.scoped_storage_learn_more)
-            .onNeutral { _, _ -> openMoreInfo(ctx, openUri) }
-            .negativeText(R.string.scoped_storage_postpone)
-            .onNegative { dialog, _ -> dialog.dismiss() }
-            .cancelable(false)
-            .autoDismiss(false)
-            .show()
+            neutralButton(R.string.scoped_storage_learn_more) {
+                // TODO: Discuss regarding alternatives to using a neutral button here
+                //  since it is deprecated and not recommended in material guidelines
+                openMoreInfo(ctx, openUri)
+            }
+            negativeButton(R.string.scoped_storage_postpone) {
+                dismiss()
+            }
+            cancelable(false)
+            noAutoDismiss()
+        }
     }
 }
 
@@ -106,24 +111,24 @@ object ScopedStorageMigrationConfirmationDialog {
 
         val checkboxesRequiredToContinue = listOf(userWillNotUninstall, backupMethodToUse)
 
-        return MaterialDialog.Builder(ctx)
-            .title(R.string.scoped_storage_title)
-            .customView(view, true)
-            .positiveText(R.string.scoped_storage_migrate)
-            .onPositive { dialog, _ ->
+        return MaterialDialog(ctx).show {
+            customView(view = view, scrollable = true)
+            title(R.string.scoped_storage_title)
+            positiveButton(R.string.scoped_storage_migrate) {
                 if (checkboxesRequiredToContinue.all { x -> x.isChecked }) {
                     Timber.i("starting scoped storage migration")
-                    dialog.dismiss()
+                    dismiss()
                     initiateScopedStorage.run()
                 } else {
                     UIUtils.showThemedToast(ctx, R.string.scoped_storage_select_all_terms, true)
                 }
             }
-            .negativeText(R.string.scoped_storage_postpone)
-            .onNegative { dialog, _ -> dialog.dismiss() }
-            .cancelable(false)
-            .autoDismiss(false)
-            .show()
+            negativeButton(R.string.scoped_storage_postpone) {
+                dismiss()
+            }
+            cancelable(false)
+            noAutoDismiss()
+        }
     }
 
     private fun getContentColor(ctx: Context): Int? {
@@ -131,8 +136,8 @@ object ScopedStorageMigrationConfirmationDialog {
             val theme = if (Themes.currentTheme.isNightMode) com.afollestad.materialdialogs.R.style.MD_Dark else com.afollestad.materialdialogs.R.style.MD_Light
 
             val contextThemeWrapper = ContextThemeWrapper(ctx, theme)
-            val contentColorFallback = DialogUtils.resolveColor(contextThemeWrapper, android.R.attr.textColorSecondary)
-            DialogUtils.resolveColor(contextThemeWrapper, com.afollestad.materialdialogs.R.attr.md_content_color, contentColorFallback)
+            val contentColorFallback = MDUtil.resolveColor(contextThemeWrapper, android.R.attr.textColorSecondary)
+            MDUtil.resolveColor(contextThemeWrapper, com.afollestad.materialdialogs.R.attr.md_color_content, contentColorFallback)
         } catch (e: Exception) {
             null
         }

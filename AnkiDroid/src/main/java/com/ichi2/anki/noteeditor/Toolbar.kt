@@ -34,6 +34,7 @@ import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
@@ -220,31 +221,29 @@ class Toolbar : FrameLayout {
         val results = resources.getStringArray(R.array.html_size_codes)
 
         // Might be better to add this as a fragment - let's see.
-        MaterialDialog.Builder(context)
-            .items(R.array.html_size_code_labels)
-            .itemsCallback { _: MaterialDialog?, _: View?, pos: Int, _: CharSequence? ->
+        MaterialDialog(context).show {
+            listItems(R.array.html_size_code_labels) { _: MaterialDialog, index: Int, _: CharSequence ->
                 val formatter = TextWrapper(
-                    prefix = "<span style=\"font-size:${results[pos]}\">",
+                    prefix = "<span style=\"font-size:${results[index]}\">",
                     suffix = "</span>"
                 )
                 onFormat(formatter)
             }
-            .title(R.string.menu_font_size)
-            .show()
+            title(R.string.menu_font_size)
+        }
     }
 
     /**
      * Displays a dialog which allows `<h1>` to `<h6>` to be inserted
      */
     private fun displayInsertHeadingDialog() {
-        MaterialDialog.Builder(context)
-            .items("h1", "h2", "h3", "h4", "h5")
-            .itemsCallback { _: MaterialDialog?, _: View?, _: Int, string: CharSequence ->
-                val formatter = TextWrapper(prefix = "<$string>", suffix = "</$string>")
+        MaterialDialog(context).show {
+            listItems(items = listOf("h1", "h2", "h3", "h4", "h5")) { _: MaterialDialog, _: Int, charSequence: CharSequence ->
+                val formatter = TextWrapper(prefix = "<$charSequence>", suffix = "</$charSequence>")
                 onFormat(formatter)
             }
-            .title(R.string.insert_heading)
-            .show()
+            title(R.string.insert_heading)
+        }
     }
 
     /** Given a string [text], generates a [Drawable] which can be used as a button icon */

@@ -16,7 +16,6 @@
 package com.ichi2.anki.export
 
 import android.util.Pair
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -25,7 +24,8 @@ import com.ichi2.themes.StyledProgressDialog
 import timber.log.Timber
 
 internal class ExportListener(activity: AnkiActivity?, private val dialogsFactory: ExportDialogsFactory) : TaskListenerWithContext<AnkiActivity, Void, Pair<Boolean, String?>>(activity) {
-    private var mProgressDialog: MaterialDialog? = null
+    @Suppress("Deprecation")
+    private var mProgressDialog: android.app.ProgressDialog? = null
     override fun actualOnPreExecute(context: AnkiActivity) {
         mProgressDialog = StyledProgressDialog.show(
             context, "",

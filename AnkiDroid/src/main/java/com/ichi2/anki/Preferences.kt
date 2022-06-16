@@ -701,21 +701,28 @@ class Preferences : AnkiActivity() {
 
             // Configure force full sync option
             requirePreference<Preference>(R.string.force_full_sync_key).setOnPreferenceClickListener {
-                MaterialDialog.Builder(requireContext())
-                    .title(R.string.force_full_sync_title)
-                    .content(R.string.force_full_sync_summary)
-                    .positiveText(R.string.dialog_ok)
-                    .negativeText(R.string.dialog_cancel)
-                    .onPositive { _, _ ->
+                MaterialDialog(requireContext()).show {
+                    title(R.string.force_full_sync_title)
+                    message(R.string.force_full_sync_summary)
+                    positiveButton(R.string.dialog_ok) {
                         if (col == null) {
-                            showThemedToast(requireContext(), R.string.directory_inaccessible, false)
-                            return@onPositive
+                            showThemedToast(
+                                requireContext(),
+                                R.string.directory_inaccessible,
+                                false
+                            )
+                            return@positiveButton
                         }
                         col!!.modSchemaNoCheck()
                         col!!.setMod()
-                        showThemedToast(requireContext(), R.string.force_full_sync_confirmation, true)
+                        showThemedToast(
+                            requireContext(),
+                            R.string.force_full_sync_confirmation,
+                            true
+                        )
                     }
-                    .show()
+                    negativeButton(R.string.dialog_cancel)
+                }
                 true
             }
             // Custom sync server
@@ -928,6 +935,7 @@ class Preferences : AnkiActivity() {
         override val analyticsScreenNameConstant: String
             get() = "prefs.advanced"
 
+        @Suppress("Deprecation") // Material dialog neutral button deprecation
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_advanced)
             val screen = preferenceScreen
@@ -940,13 +948,15 @@ class Preferences : AnkiActivity() {
                         true
                     } catch (e: StorageAccessException) {
                         Timber.e(e, "Could not initialize directory: %s", newPath)
-                        MaterialDialog.Builder(requireContext())
-                            .title(R.string.dialog_collection_path_not_dir)
-                            .positiveText(R.string.dialog_ok)
-                            .negativeText(R.string.reset_custom_buttons)
-                            .onPositive { dialog: MaterialDialog, _ -> dialog.dismiss() }
-                            .onNegative { _, _ -> this.text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext()) }
-                            .show()
+                        MaterialDialog(requireContext()).show {
+                            title(R.string.dialog_collection_path_not_dir)
+                            positiveButton(R.string.dialog_ok) {
+                                dismiss()
+                            }
+                            negativeButton(R.string.reset_custom_buttons) {
+                                text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext())
+                            }
+                        }
                         false
                     }
                 }
@@ -959,31 +969,30 @@ class Preferences : AnkiActivity() {
                 schedVerPreference.setTitle(R.string.sched_v2)
                 schedVerPreference.setSummary(R.string.sched_v2_summ)
                 schedVerPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
-                    val builder = MaterialDialog.Builder(requireContext())
-                    // Going to V2
-                    builder.title(R.string.sched_ver_toggle_title)
-                    builder.content(R.string.sched_ver_1to2)
-                    builder.onPositive { _, _ ->
-                        col!!.modSchemaNoCheck()
-                        try {
-                            col!!.changeSchedulerVer(2)
-                            screen.removePreference(schedVerPreference)
-                        } catch (e2: ConfirmModSchemaException) {
-                            // This should never be reached as we explicitly called modSchemaNoCheck()
-                            throw RuntimeException(e2)
-                        }
+                    MaterialDialog(requireContext()).show {
+                        // Going to V2
+                        title(R.string.sched_ver_toggle_title)
+                            .message(R.string.sched_ver_1to2)
+                            .positiveButton(R.string.dialog_ok) {
+                                col!!.modSchemaNoCheck()
+                                try {
+                                    col!!.changeSchedulerVer(2)
+                                    screen.removePreference(schedVerPreference)
+                                } catch (e2: ConfirmModSchemaException) {
+                                    // This should never be reached as we explicitly called modSchemaNoCheck()
+                                    throw RuntimeException(e2)
+                                }
+                            }
+                            .neutralButton(R.string.help) {
+                                // call v2 scheduler documentation website
+                                val uri = Uri.parse(getString(R.string.link_anki_2_scheduler))
+                                val intent = Intent(Intent.ACTION_VIEW, uri)
+                                startActivity(intent)
+                            }
+                            .negativeButton(R.string.dialog_cancel) {
+                                schedVerPreference.isChecked = false
+                            }
                     }
-                    builder.onNegative { _, _ -> schedVerPreference.isChecked = false }
-                    builder.onNeutral { _, _ ->
-                        // call v2 scheduler documentation website
-                        val uri = Uri.parse(getString(R.string.link_anki_2_scheduler))
-                        val intent = Intent(Intent.ACTION_VIEW, uri)
-                        startActivity(intent)
-                    }
-                    builder.positiveText(R.string.dialog_ok)
-                    builder.neutralText(R.string.help)
-                    builder.negativeText(R.string.dialog_cancel)
-                    builder.show()
                     false
                 }
                 // meaning of order here is the position of Preference in xml layout.

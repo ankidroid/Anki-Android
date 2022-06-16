@@ -58,8 +58,8 @@ class TTS {
      * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
-    fun readCardText(ttsTags: List<TTSTag>, card: Card, cardSide: SoundSide) {
-        ReadText.readCardSide(ttsTags, cardSide, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card))
+    fun readCardText(ttsTags: List<TTSTag>, card: Card, cardSide: SoundSide, context: Context) {
+        ReadText.readCardSide(ttsTags, cardSide, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), context)
     }
 
     /**
@@ -71,7 +71,7 @@ class TTS {
     fun selectTts(context: Context, card: Card, qa: SoundSide) {
         val textToRead = if (qa == SoundSide.QUESTION) card.q(true) else card.pureAnswer
         // get the text from the card
-        ReadText.selectTts(getTextForTts(context, textToRead), CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), qa)
+        ReadText.selectTts(getTextForTts(context, textToRead), CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), qa, context)
     }
 
     fun getTextForTts(context: Context, text: String): String {

@@ -27,7 +27,6 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.edit
-import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
@@ -49,7 +48,8 @@ class MyAccount : AnkiActivity() {
     private lateinit var mUsername: EditText
     private lateinit var mPassword: TextInputEditField
     private lateinit var mUsernameLoggedIn: TextView
-    private var mProgressDialog: MaterialDialog? = null
+    @Suppress("Deprecation")
+    private var mProgressDialog: android.app.ProgressDialog? = null
     var toolbar: Toolbar? = null
     private lateinit var mPasswordLayout: TextInputLayout
     private lateinit var mAnkidroidLogo: ImageView

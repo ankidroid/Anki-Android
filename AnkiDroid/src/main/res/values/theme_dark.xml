@@ -116,7 +116,7 @@
         <item name="dialogSendIcon">@drawable/ic_send_white</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
-        <item name="md_dark_theme">true</item>
+        <item name="md_color_button_text">@color/white</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_800</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>

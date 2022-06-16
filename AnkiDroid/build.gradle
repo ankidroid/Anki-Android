@@ -293,7 +293,8 @@ dependencies {
     implementation "ch.acra:acra-toast:$acra_version"
     implementation "ch.acra:acra-limiter:$acra_version"
 
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.afollestad.material-dialogs:core:3.3.0'
+    implementation 'com.afollestad.material-dialogs:input:3.3.0'
     // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
     implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
     // noinspection GradleDependency - commons-compress 1.12 - later versions use `File.toPath`; API26 can remove?
@@ -309,6 +310,12 @@ dependencies {
     implementation 'com.drakeet.drawer:drawer:1.0.3'
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.2'
     implementation 'com.github.mrudultora:Colorpicker:1.2.0'
+
+    // Kotlin reflection
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.0"
+
+    // Kotlin test
+    implementation "org.jetbrains.kotlin:kotlin-test:1.7.0"
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release

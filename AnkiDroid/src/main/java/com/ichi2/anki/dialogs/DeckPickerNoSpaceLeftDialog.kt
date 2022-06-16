@@ -17,7 +17,6 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
@@ -26,15 +25,15 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment
 class DeckPickerNoSpaceLeftDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        val res = resources
-        return MaterialDialog.Builder(requireActivity())
-            .title(res.getString(R.string.sd_card_full_title))
-            .content(res.getString(R.string.backup_deck_no_space_left))
-            .cancelable(true)
-            .positiveText(R.string.dialog_ok)
-            .onPositive { _: MaterialDialog?, _: DialogAction? -> (activity as DeckPicker?)!!.startLoadingCollection() }
-            .cancelListener { (activity as DeckPicker?)!!.startLoadingCollection() }
-            .show()
+        return MaterialDialog(requireActivity()).show {
+            title(R.string.sd_card_full_title)
+            message(R.string.backup_deck_no_space_left)
+            cancelable(true)
+            positiveButton(R.string.dialog_ok) {
+                (activity as DeckPicker?)!!.startLoadingCollection()
+            }
+            setOnCancelListener { (activity as DeckPicker?)!!.startLoadingCollection() }
+        }
     }
 
     companion object {

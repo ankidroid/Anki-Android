@@ -54,8 +54,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
-import com.afollestad.materialdialogs.DialogAction
-import com.afollestad.materialdialogs.GravityEnum
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
@@ -154,7 +152,8 @@ open class DeckPicker :
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
     private lateinit var mDeckPickerContent: RelativeLayout
-    private var mProgressDialog: MaterialDialog? = null
+    @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
+    private var mProgressDialog: android.app.ProgressDialog? = null
     private var mStudyoptionsFrame: View? = null // not lateInit - can be null
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mRecyclerViewLayoutManager: LinearLayoutManager
@@ -308,7 +307,8 @@ open class DeckPicker :
         }
 
         override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-            context.mProgressDialog!!.setContent(value)
+            @Suppress("Deprecation")
+            context.mProgressDialog!!.setMessage(value)
         }
     }
 
@@ -344,7 +344,8 @@ open class DeckPicker :
          * @param value A message
          */
         override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-            context.mProgressDialog!!.setContent(value)
+            @Suppress("Deprecation")
+            context.mProgressDialog!!.setMessage(value)
         }
     }
     // ----------------------------------------------------------------------------
@@ -488,13 +489,19 @@ open class DeckPicker :
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
             }
-            WEBVIEW_FAILED -> MaterialDialog.Builder(this)
-                .title(R.string.ankidroid_init_failed_webview_title)
-                .content(getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.getWebViewErrorMessage()))
-                .positiveText(R.string.close)
-                .onPositive { _: MaterialDialog?, _: DialogAction? -> exit() }
-                .cancelable(false)
-                .show()
+            WEBVIEW_FAILED -> MaterialDialog(this).show {
+                title(R.string.ankidroid_init_failed_webview_title)
+                message(
+                    text = getString(
+                        R.string.ankidroid_init_failed_webview,
+                        AnkiDroidApp.getWebViewErrorMessage()
+                    )
+                )
+                positiveButton(R.string.close) {
+                    exit()
+                }
+                cancelable(false)
+            }
             DB_ERROR -> displayDatabaseFailure()
             else -> displayDatabaseFailure()
         }
@@ -545,18 +552,20 @@ open class DeckPicker :
         } else {
             Timber.i("Displaying initial permission request dialog")
             // Request storage permission if we don't have it (e.g. on Android 6.0+)
-            MaterialDialog.Builder(this)
-                .title(R.string.collection_load_welcome_request_permissions_title)
-                .titleGravity(GravityEnum.CENTER)
-                .content(R.string.collection_load_welcome_request_permissions_details)
-                .positiveText(R.string.dialog_ok)
-                .onPositive { _: MaterialDialog?, _: DialogAction? ->
+            MaterialDialog(this).show {
+                title(R.string.collection_load_welcome_request_permissions_title)
+                message(R.string.collection_load_welcome_request_permissions_details)
+                positiveButton(R.string.dialog_ok) {
                     sharedPrefs.edit().putBoolean("welcomeDialogDismissed", true).apply()
-                    ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
+                    ActivityCompat.requestPermissions(
+                        this@DeckPicker,
+                        storagePermissions,
+                        REQUEST_STORAGE_PERMISSION
+                    )
                 }
-                .cancelable(false)
-                .canceledOnTouchOutside(false)
-                .show()
+                cancelable(false)
+                cancelOnTouchOutside(false)
+            }
         }
     }
 
@@ -1093,18 +1102,23 @@ open class DeckPicker :
                 Timber.i("showStartupScreensAndDialogs() running integrityCheck()")
                 // #5852 - since we may have a warning about disk space, we don't want to force a check database
                 // and show a warning before the user knows what is happening.
-                MaterialDialog.Builder(this)
-                    .title(R.string.integrity_check_startup_title)
-                    .content(R.string.integrity_check_startup_content)
-                    .positiveText(R.string.check_db)
-                    .negativeText(R.string.close)
-                    .onPositive { _: MaterialDialog?, _: DialogAction? -> integrityCheck() }
-                    .onNeutral { _: MaterialDialog?, _: DialogAction? -> restartActivity() }
-                    .onNegative { _: MaterialDialog?, _: DialogAction? -> restartActivity() }
-                    .canceledOnTouchOutside(false)
-                    .cancelable(false)
-                    .build()
-                    .show()
+                MaterialDialog(this).show {
+                    title(R.string.integrity_check_startup_title)
+                    message(R.string.integrity_check_startup_content)
+                    positiveButton(R.string.check_db) {
+                        integrityCheck()
+                    }
+                    negativeButton(R.string.close) {
+                        restartActivity()
+                    }
+                    @Suppress("Deprecation")
+                    // TODO: Cleanup - Remove neutral button from here
+                    neutralButton {
+                        restartActivity()
+                    }
+                    cancelOnTouchOutside(false)
+                    cancelable(false)
+                }
                 return
             }
             if (upgradedPreferences) {
@@ -1341,13 +1355,14 @@ open class DeckPicker :
         val status = CollectionIntegrityStorageCheck.createInstance(this)
         if (status.shouldWarnOnIntegrityCheck()) {
             Timber.d("Displaying File Size confirmation")
-            MaterialDialog.Builder(this)
-                .title(R.string.check_db_title)
-                .content(status.getWarningDetails(this))
-                .positiveText(R.string.integrity_check_continue_anyway)
-                .onPositive { _: MaterialDialog?, _: DialogAction? -> performIntegrityCheck() }
-                .negativeText(R.string.dialog_cancel)
-                .show()
+            MaterialDialog(this).show {
+                title(R.string.check_db_title)
+                message(text = status.getWarningDetails(this@DeckPicker))
+                positiveButton(R.string.integrity_check_continue_anyway) {
+                    performIntegrityCheck()
+                }
+                negativeButton(R.string.dialog_cancel)
+            }
         } else {
             performIntegrityCheck()
         }
@@ -1545,20 +1560,21 @@ open class DeckPicker :
                         // If less than 2s has elapsed since sync started then don't ask for confirmation
                         if (TimeManager.time.intTimeMS() - syncStartTime < 2000) {
                             Connection.cancel()
-                            mProgressDialog!!.setContent(R.string.sync_cancel_message)
+                            @Suppress("Deprecation")
+                            mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
                             return@setOnKeyListener true
                         }
                         // Show confirmation dialog to check if the user wants to cancel the sync
-                        val builder = MaterialDialog.Builder(mProgressDialog!!.context)
-                        builder.content(R.string.cancel_sync_confirm)
-                            .cancelable(false)
-                            .positiveText(R.string.dialog_ok)
-                            .negativeText(R.string.continue_sync)
-                            .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                                mProgressDialog!!.setContent(R.string.sync_cancel_message)
+                        MaterialDialog(mProgressDialog!!.context).show {
+                            message(R.string.cancel_sync_confirm)
+                            cancelable(false)
+                            positiveButton(R.string.dialog_ok) {
+                                @Suppress("Deprecation")
+                                mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
                                 Connection.cancel()
                             }
-                        builder.show()
+                            negativeButton(R.string.continue_sync)
+                        }
                         return@setOnKeyListener true
                     } else {
                         return@setOnKeyListener false
@@ -1591,7 +1607,8 @@ open class DeckPicker :
                 }
             }
             if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                mProgressDialog!!.setContent(
+                @Suppress("Deprecation")
+                mProgressDialog!!.setMessage(
                     """
     $mCurrentMessage
     
@@ -2358,12 +2375,15 @@ open class DeckPicker :
         private var mIncreaseSinceLastUpdate = 0
         @KotlinCleanup("remove _ parameters")
         private fun confirmCancel(deckPicker: DeckPicker, task: Cancellable) {
-            MaterialDialog.Builder(deckPicker)
-                .content(R.string.confirm_cancel)
-                .positiveText(deckPicker.resources.getString(R.string.yes))
-                .negativeText(deckPicker.resources.getString(R.string.dialog_no))
-                .onNegative { _: MaterialDialog?, _: DialogAction? -> actualOnPreExecute(deckPicker) }
-                .onPositive { _: MaterialDialog?, _: DialogAction? -> task.safeCancel() }.show()
+            MaterialDialog(deckPicker).show {
+                message(R.string.confirm_cancel)
+                positiveButton(R.string.yes) {
+                    actualOnPreExecute(deckPicker)
+                }
+                negativeButton(R.string.dialog_no) {
+                    task.safeCancel()
+                }
+            }
         }
 
         @KotlinCleanup("scope function")
@@ -2373,11 +2393,13 @@ open class DeckPicker :
                 val emptyCardTask = context.mEmptyCardTask
                 emptyCardTask?.let { confirmCancel(context, it) }
             }
-            context.mProgressDialog = MaterialDialog.Builder(context)
-                .progress(false, mNumberOfCards)
-                .title(R.string.emtpy_cards_finding)
-                .cancelable(true)
-                .show()
+            @Suppress("Deprecation")
+            context.mProgressDialog = android.app.ProgressDialog(context).apply {
+                progress = mNumberOfCards
+                setTitle(R.string.emtpy_cards_finding)
+                setCancelable(true)
+                show()
+            }
             context.mProgressDialog!!.setOnCancelListener(onCancel)
             context.mProgressDialog!!.setCanceledOnTouchOutside(false)
         }
@@ -2390,7 +2412,8 @@ open class DeckPicker :
             mIncreaseSinceLastUpdate += value
             // Increase each time at least a percent of card has been processed since last update
             if (mIncreaseSinceLastUpdate > mOnePercent) {
-                context.mProgressDialog!!.incrementProgress(mIncreaseSinceLastUpdate)
+                @Suppress("Deprecation")
+                context.mProgressDialog!!.incrementProgressBy(mIncreaseSinceLastUpdate)
                 mIncreaseSinceLastUpdate = 0
             }
         }
@@ -2505,7 +2528,8 @@ open class DeckPicker :
          * @param value message
          */
         override fun onProgressUpdate(value: String) {
-            mProgressDialog!!.setContent(value)
+            @Suppress("Deprecation")
+            mProgressDialog!!.setMessage(value)
         }
     }
 

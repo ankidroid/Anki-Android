@@ -33,8 +33,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.MaterialDialog.ListCallbackSingleChoice
+import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiFont.Companion.getTypeface
@@ -254,10 +253,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private var mUnmountReceiver: BroadcastReceiver? = null
-    private val mOrderDialogListener = ListCallbackSingleChoice { _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
-        changeCardOrder(which)
-        true
-    }
+    private val orderSingleChoiceDialogListener: SingleChoiceListener = { _, index: Int, _ -> changeCardOrder(index) }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     fun changeCardOrder(which: Int) {
@@ -1048,7 +1044,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 return true
             }
             R.id.action_sort_by_size -> {
-                showDialogFragment(newInstance(mOrder, mOrderAsc, mOrderDialogListener))
+                showDialogFragment(newInstance(mOrder, mOrderAsc, orderSingleChoiceDialogListener))
                 return true
             }
             R.id.action_show_marked -> {
