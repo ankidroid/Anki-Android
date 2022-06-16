@@ -50,7 +50,6 @@ import com.ichi2.libanki.Utils
 import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
@@ -439,8 +438,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         refreshInterface(resetSched = false, resetDecklist = false)
     }
 
-    @KotlinCleanup("default value + JvmOverloads")
-    private fun refreshInterfaceAndDecklist(resetSched: Boolean) {
+    private fun refreshInterfaceAndDecklist(resetSched: Boolean = true) {
         refreshInterface(resetSched, true)
     }
 
