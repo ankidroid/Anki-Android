@@ -132,15 +132,6 @@
             android:summary="@string/show_large_answer_buttons_summ"
             android:title="@string/show_large_answer_buttons"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
-        <com.ichi2.preferences.SeekBarPreferenceCompat
-            android:defaultValue="6"
-            android:key="@string/white_board_stroke_width_preference"
-            android:max="30"
-            android:summary="@string/preference_summary_literal"
-            android:text=""
-            android:title="@string/whiteboard_stroke_width" />
-    </PreferenceCategory>
     <PreferenceCategory android:title="@string/timeout_answer_text" >
         <SwitchPreference
             android:defaultValue="false"

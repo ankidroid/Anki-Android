@@ -18,7 +18,6 @@
     <string name="show_progress_preference">showProgress</string>
     <string name="show_eta_preference">showETA</string>
     <string name="show_large_answer_buttons_preference">showLargeAnswerButtons</string>
-    <string name="white_board_stroke_width_preference">whiteBoardStrokeWidth</string>
     <string name="timeout_answer_preference">timeoutAnswer</string>
     <string name="automatic_answer_action_preference">automaticAnswerAction</string>
     <string name="timeout_answer_seconds_preference">timeoutAnswerSeconds</string>
