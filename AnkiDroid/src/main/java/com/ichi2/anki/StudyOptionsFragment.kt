@@ -377,22 +377,25 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    var onRequestReviewActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+    private var onRequestReviewActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         Timber.i("StudyOptionsFragment::mOnRequestReviewActivityResult")
         if (mToolbar != null) {
             configureToolbar() // FIXME we were crashing here because mToolbar is null #8913
         } else {
             CrashReportService.sendExceptionReport("mToolbar null after return from tablet review session? Issue 8913", "StudyOptionsFragment")
         }
-        if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-            closeStudyOptions(result.resultCode)
-            return@registerForActivityResult
-        }
-        if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-            // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-            if (col!!.sched.count() > 0 && mStudyOptionsView != null) {
-                val rootLayout = mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
-                showSnackbar(requireActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout)
+        when (result.resultCode) {
+            DeckPicker.RESULT_DB_ERROR,
+            DeckPicker.RESULT_MEDIA_EJECTED -> {
+                closeStudyOptions(result.resultCode)
+                return@registerForActivityResult
+            }
+            AbstractFlashcardViewer.RESULT_NO_MORE_CARDS -> {
+                // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
+                if (mStudyOptionsView != null && col!!.sched.count() > 0) {
+                    val rootLayout = mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
+                    showSnackbar(requireActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout)
+                }
             }
         }
     }
