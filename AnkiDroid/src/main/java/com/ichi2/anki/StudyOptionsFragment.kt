@@ -424,11 +424,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun dismissProgressDialog() {
-        if (mStudyOptionsView != null && mStudyOptionsView!!.findViewById<View?>(R.id.progress_bar) != null) {
-            mStudyOptionsView!!.findViewById<View>(R.id.progress_bar).visibility = View.GONE
-        }
+        mStudyOptionsView?.findViewById<View>(R.id.progress_bar)?.visibility = View.GONE
         // for rebuilding cram decks
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+        if (mProgressDialog?.isShowing == true) {
             try {
                 mProgressDialog!!.dismiss()
             } catch (e: Exception) {
