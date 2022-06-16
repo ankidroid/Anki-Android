@@ -13,7 +13,6 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -172,16 +171,16 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun closeStudyOptions(result: Int) {
-        val a: Activity? = activity
-        if (!mFragmented && a != null) {
-            a.setResult(result)
-            a.finish()
-            slide(a, ActivityTransitionAnimation.Direction.END)
-        } else if (a == null) {
-            // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
-            // which is particularly relevant when using AsyncTasks.
-            Timber.e("closeStudyOptions() failed due to getActivity() returning null")
+        if (!mFragmented) {
+            activity?.run {
+                setResult(result)
+                finish()
+                slide(this, ActivityTransitionAnimation.Direction.END)
+            }
         }
+        // getActivity() can return null if reference to fragment lingers after parent activity has been closed,
+        // which is particularly relevant when using AsyncTasks.
+        activity ?: Timber.e("closeStudyOptions() failed due to getActivity() returning null")
     }
 
     private fun openReviewer() {
