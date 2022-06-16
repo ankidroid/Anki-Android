@@ -34,6 +34,7 @@ import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
+import com.ichi2.anki.AnkiDroidApp.getAppResources
 import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.servicelayer.ComputeResult
@@ -327,46 +328,35 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             mToolbar!!.setOnMenuItemClickListener(this)
             val menu = mToolbar!!.menu
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
-            if (col != null && col!!.decks.isDyn(col!!.decks.selected())) {
-                menu.findItem(R.id.action_rebuild).isVisible = true
-                menu.findItem(R.id.action_empty).isVisible = true
-                menu.findItem(R.id.action_custom_study).isVisible = false
-                menu.findItem(R.id.action_deck_or_study_options).setTitle(R.string.menu__study_options)
-            } else {
-                menu.findItem(R.id.action_rebuild).isVisible = false
-                menu.findItem(R.id.action_empty).isVisible = false
-                menu.findItem(R.id.action_custom_study).isVisible = true
-                menu.findItem(R.id.action_deck_or_study_options).setTitle(R.string.menu__deck_options)
+            col != null && col!!.decks.isDyn(col!!.decks.selected()).also { filtered ->
+                menu.findItem(R.id.action_rebuild).isVisible = filtered
+                menu.findItem(R.id.action_empty).isVisible = filtered
+                menu.findItem(R.id.action_custom_study).isVisible = filtered
+                menu.findItem(R.id.action_deck_or_study_options).setTitle(
+                    if (filtered) R.string.menu__study_options
+                    else R.string.menu__deck_options
+                )
             }
             // Don't show custom study icon if congrats shown
-            if (mCurrentContentView == CONTENT_CONGRATS) {
-                menu.findItem(R.id.action_custom_study).isVisible = false
-            }
+            menu.findItem(R.id.action_custom_study).isVisible = mCurrentContentView != CONTENT_CONGRATS
             // Switch on rename / delete / export if tablet layout
-            if (mFragmented) {
-                menu.findItem(R.id.action_rename).isVisible = true
-                menu.findItem(R.id.action_delete).isVisible = true
-                menu.findItem(R.id.action_export).isVisible = true
-            } else {
-                menu.findItem(R.id.action_rename).isVisible = false
-                menu.findItem(R.id.action_delete).isVisible = false
-                menu.findItem(R.id.action_export).isVisible = false
-            }
+            menu.findItem(R.id.action_rename).isVisible = mFragmented
+            menu.findItem(R.id.action_delete).isVisible = mFragmented
+            menu.findItem(R.id.action_export).isVisible = mFragmented
             // Switch on or off unbury depending on if there are cards to unbury
-            menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
+            menu.findItem(R.id.action_unbury).isVisible = col?.sched?.haveBuried() == true
             // Switch on or off undo depending on whether undo is available
-            if (col == null || !col!!.undoAvailable()) {
-                menu.findItem(R.id.action_undo).isVisible = false
-            } else {
-                menu.findItem(R.id.action_undo).isVisible = true
-                val res = AnkiDroidApp.getAppResources()
-                menu.findItem(R.id.action_undo).title = res.getString(R.string.studyoptions_congrats_undo, col!!.undoName(res))
+            menu.findItem(R.id.action_undo).run {
+                isVisible = col?.undoAvailable() == false
+                if (isVisible) {
+                    title = getAppResources().getString(R.string.studyoptions_congrats_undo, col!!.undoName(getAppResources()))
+                }
             }
             // Set the back button listener
             if (!mFragmented) {
-                val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)
-                icon!!.isAutoMirrored = true
-                mToolbar!!.navigationIcon = icon
+                mToolbar!!.navigationIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)!!.apply {
+                    isAutoMirrored = true
+                }
                 mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity?)!!.finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
             }
         } catch (e: IllegalStateException) {
