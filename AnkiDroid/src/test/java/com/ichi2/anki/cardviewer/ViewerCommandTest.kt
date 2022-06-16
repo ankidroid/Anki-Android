@@ -31,7 +31,7 @@ class ViewerCommandTest {
         // Adds are acceptable
         // Deletes are acceptable if the binding should no longer exist
         assertEquals(
-            "binding_NOTHING, binding_SHOW_ANSWER, binding_FLIP_OR_ANSWER_EASE1, " +
+            "binding_SHOW_ANSWER, binding_FLIP_OR_ANSWER_EASE1, " +
                 "binding_FLIP_OR_ANSWER_EASE2, binding_FLIP_OR_ANSWER_EASE3, binding_FLIP_OR_ANSWER_EASE4, " +
                 "binding_FLIP_OR_ANSWER_RECOMMENDED, binding_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED, " +
                 "binding_UNDO, binding_EDIT, binding_MARK, binding_BURY_CARD, " +

@@ -115,7 +115,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
             Gesture.TAP_BOTTOM_RIGHT -> gestureTapBottomRight
             Gesture.DOUBLE_TAP -> gestureDoubleTap
             Gesture.LONG_TAP -> gestureLongclick
-            else -> NOTHING
+            else -> null
         }
     }
 
@@ -129,7 +129,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
             return false
         }
         for (gesture in gestures) {
-            if (mapGestureToCommand(gesture) != NOTHING) {
+            if (mapGestureToCommand(gesture) != null) {
                 return true
             }
         }

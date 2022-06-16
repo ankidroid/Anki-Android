@@ -32,58 +32,49 @@ import java.util.function.BiFunction
 import java.util.stream.Collectors
 
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
-enum class ViewerCommand(val resourceId: Int, private val preferenceValue: Int) {
-    NOTHING(R.string.nothing, 0),
-    SHOW_ANSWER(R.string.show_answer, 1),
-    FLIP_OR_ANSWER_EASE1(R.string.gesture_answer_1, 2),
-    FLIP_OR_ANSWER_EASE2(R.string.gesture_answer_2, 3),
-    FLIP_OR_ANSWER_EASE3(R.string.gesture_answer_3, 4),
-    FLIP_OR_ANSWER_EASE4(R.string.gesture_answer_4, 5),
-    FLIP_OR_ANSWER_RECOMMENDED(R.string.gesture_answer_green, 6),
-    FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED(R.string.gesture_answer_better_recommended, 7),
-    UNDO(R.string.undo, 8),
-    EDIT(R.string.cardeditor_title_edit_card, 9),
-    MARK(R.string.menu_mark_note, 10),
-    BURY_CARD(R.string.menu_bury, 12),
-    SUSPEND_CARD(R.string.menu_suspend_card, 13),
-    DELETE(R.string.menu_delete_note, 14), // 15 is unused.
-    PLAY_MEDIA(R.string.gesture_play, 16),
-    EXIT(R.string.gesture_abort_learning, 17),
-    BURY_NOTE(R.string.menu_bury_note, 18),
-    SUSPEND_NOTE(R.string.menu_suspend_note, 19),
-    TOGGLE_FLAG_RED(R.string.gesture_flag_red, 20),
-    TOGGLE_FLAG_ORANGE(R.string.gesture_flag_orange, 21),
-    TOGGLE_FLAG_GREEN(R.string.gesture_flag_green, 22),
-    TOGGLE_FLAG_BLUE(R.string.gesture_flag_blue, 23),
-    TOGGLE_FLAG_PINK(R.string.gesture_flag_pink, 38),
-    TOGGLE_FLAG_TURQUOISE(R.string.gesture_flag_turquoise, 39),
-    TOGGLE_FLAG_PURPLE(R.string.gesture_flag_purple, 40),
-    UNSET_FLAG(R.string.gesture_flag_remove, 24),
-    PAGE_UP(R.string.gesture_page_up, 30),
-    PAGE_DOWN(R.string.gesture_page_down, 31),
-    TAG(R.string.add_tag, 32),
-    CARD_INFO(R.string.card_info_title, 33),
-    ABORT_AND_SYNC(R.string.gesture_abort_sync, 34),
-    RECORD_VOICE(R.string.record_voice, 35),
-    REPLAY_VOICE(R.string.replay_voice, 36),
-    TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard, 37),
-    SHOW_HINT(R.string.gesture_show_hint, 41),
-    SHOW_ALL_HINTS(R.string.gesture_show_all_hints, 42),
-    ADD_NOTE(R.string.menu_add_note, 43);
+enum class ViewerCommand(val resourceId: Int) {
+    SHOW_ANSWER(R.string.show_answer),
+    FLIP_OR_ANSWER_EASE1(R.string.gesture_answer_1),
+    FLIP_OR_ANSWER_EASE2(R.string.gesture_answer_2),
+    FLIP_OR_ANSWER_EASE3(R.string.gesture_answer_3),
+    FLIP_OR_ANSWER_EASE4(R.string.gesture_answer_4),
+    FLIP_OR_ANSWER_RECOMMENDED(R.string.gesture_answer_green),
+    FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED(R.string.gesture_answer_better_recommended),
+    UNDO(R.string.undo),
+    EDIT(R.string.cardeditor_title_edit_card),
+    MARK(R.string.menu_mark_note),
+    BURY_CARD(R.string.menu_bury),
+    SUSPEND_CARD(R.string.menu_suspend_card),
+    DELETE(R.string.menu_delete_note),
+    PLAY_MEDIA(R.string.gesture_play),
+    EXIT(R.string.gesture_abort_learning),
+    BURY_NOTE(R.string.menu_bury_note),
+    SUSPEND_NOTE(R.string.menu_suspend_note),
+    TOGGLE_FLAG_RED(R.string.gesture_flag_red),
+    TOGGLE_FLAG_ORANGE(R.string.gesture_flag_orange),
+    TOGGLE_FLAG_GREEN(R.string.gesture_flag_green),
+    TOGGLE_FLAG_BLUE(R.string.gesture_flag_blue),
+    TOGGLE_FLAG_PINK(R.string.gesture_flag_pink),
+    TOGGLE_FLAG_TURQUOISE(R.string.gesture_flag_turquoise),
+    TOGGLE_FLAG_PURPLE(R.string.gesture_flag_purple),
+    UNSET_FLAG(R.string.gesture_flag_remove),
+    PAGE_UP(R.string.gesture_page_up),
+    PAGE_DOWN(R.string.gesture_page_down),
+    TAG(R.string.add_tag),
+    CARD_INFO(R.string.card_info_title),
+    ABORT_AND_SYNC(R.string.gesture_abort_sync),
+    RECORD_VOICE(R.string.record_voice),
+    REPLAY_VOICE(R.string.replay_voice),
+    TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard),
+    SHOW_HINT(R.string.gesture_show_hint),
+    SHOW_ALL_HINTS(R.string.gesture_show_all_hints),
+    ADD_NOTE(R.string.menu_add_note);
 
     companion object {
-        fun fromInt(valueAsInt: Int): ViewerCommand? =
-            // PERF: this is slow, but won't be used for long
-            values().firstOrNull { it.preferenceValue == valueAsInt }
-
         val allDefaultBindings: List<MappableBinding>
             get() = Arrays.stream(values())
                 .flatMap { x: ViewerCommand -> x.defaultValue.stream() }
                 .collect(Collectors.toList())
-    }
-
-    fun toPreferenceString(): String {
-        return preferenceValue.toString()
     }
 
     val preferenceKey: String
@@ -112,9 +103,6 @@ enum class ViewerCommand(val resourceId: Int, private val preferenceValue: Int) 
     }
 
     private fun addBindingInternal(preferences: SharedPreferences, binding: MappableBinding, performAdd: BiFunction<MutableList<MappableBinding>, MappableBinding, Boolean>) {
-        if (this == NOTHING) {
-            return
-        }
         val bindings: MutableList<MappableBinding> = fromPreference(preferences, this)
         performAdd.apply(bindings, binding)
         val newValue: String = bindings.toPreferenceString()

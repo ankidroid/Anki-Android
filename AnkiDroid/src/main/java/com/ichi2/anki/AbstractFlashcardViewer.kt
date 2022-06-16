@@ -1638,7 +1638,6 @@ abstract class AbstractFlashcardViewer :
         return if (isControlBlocked() && which !== ViewerCommand.EXIT) {
             false
         } else when (which) {
-            ViewerCommand.NOTHING -> true
             ViewerCommand.SHOW_ANSWER -> {
                 if (sDisplayAnswer) {
                     return false
