@@ -643,13 +643,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private val col: Collection?
-        get() {
-            try {
-                return CollectionHelper.getInstance().getCol(context)
-            } catch (e: Exception) {
-                // This may happen if the backend is locked or similar.
-            }
-            return null
+        get() = try {
+            CollectionHelper.getInstance().getCol(context)
+        } catch (e: Exception) {
+            // This may happen if the backend is locked or similar.
+            null
         }
 
     override fun onPause() {
