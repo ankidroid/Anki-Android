@@ -18,11 +18,10 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.MaterialDialog.ListCallback
+import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.*
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
@@ -50,15 +49,14 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val title = collection.decks.name(deckId)
-        val itemIds = contextMenuOptions.map { it.itemId }.toIntArray()
-        return MaterialDialog.Builder(requireActivity())
-            .title(title)
+        return MaterialDialog(requireActivity())
+            .title(text = title)
             .cancelable(true)
-            .autoDismiss(false)
-            .itemsIds(itemIds)
-            .items(contextMenuOptions.map { resources.getString(it.optionName) })
-            .itemsCallback(mContextMenuListener)
-            .build()
+            .noAutoDismiss()
+            .listItems(items = contextMenuOptions.map { resources.getString(it.optionName) }) {
+                    _: MaterialDialog, index: Int, _: CharSequence ->
+                handleActionOnLongClick(index)
+            }
     }
 
     /**
@@ -92,8 +90,8 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         }
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
-    private val mContextMenuListener = ListCallback { _: MaterialDialog?, view: View, _: Int, _: CharSequence? ->
-        when (DeckPickerContextMenuOption.fromId(view.id)) {
+    private fun handleActionOnLongClick(index: Int) {
+        when (DeckPickerContextMenuOption.fromId(index)) {
             DeckPickerContextMenuOption.DELETE_DECK -> {
                 Timber.i("Delete deck selected")
                 (activity as DeckPicker?)!!.confirmDeckDeletion(deckId)

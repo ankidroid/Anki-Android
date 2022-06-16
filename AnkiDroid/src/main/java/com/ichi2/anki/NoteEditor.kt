@@ -48,8 +48,8 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -156,7 +156,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /* indicates which activity called Note Editor */
     private var mCaller = 0
     private var mEditFields: LinkedList<FieldEditText?>? = null
-    private var mProgressDialog: MaterialDialog? = null
+    @Suppress("Deprecation")
+    private var mProgressDialog: android.app.ProgressDialog? = null
     private var mSourceText: Array<String?>? = null
     private val mFieldState = FieldState.fromEditor(this)
     private var mToolbar: Toolbar? = null
@@ -1066,12 +1067,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun showDiscardChangesDialog() {
-        DiscardChangesDialog.getDefault(this)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                Timber.i("NoteEditor:: OK button pressed to confirm discard changes")
-                closeNoteEditor()
-            }
-            .build().show()
+        DiscardChangesDialog.showDialog(this) {
+            Timber.i("NoteEditor:: OK button pressed to confirm discard changes")
+            closeNoteEditor()
+        }
+            .show()
     }
 
     private fun closeNoteEditor(intent: Intent = Intent()) {
@@ -1797,15 +1797,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         button: CustomToolbarButton,
         editToolbarItemDialog: MaterialDialog
     ) {
-        MaterialDialog.Builder(this)
-            .title(R.string.remove_toolbar_item)
-            .positiveText(R.string.dialog_positive_delete)
-            .negativeText(R.string.dialog_cancel)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+        MaterialDialog(this).show {
+            title(R.string.remove_toolbar_item)
+            positiveButton(R.string.dialog_positive_delete) {
                 editToolbarItemDialog.dismiss()
                 removeButton(button)
             }
-            .show()
+            negativeButton(R.string.dialog_cancel)
+        }
     }
 
     private fun removeButton(button: CustomToolbarButton) {
@@ -1815,25 +1814,26 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         updateToolbar()
     }
 
-    private val toolbarDialogBuilder: MaterialDialog.Builder
-        get() = MaterialDialog.Builder(this)
-            .neutralText(R.string.help)
-            .negativeText(R.string.dialog_cancel)
-            .onNeutral { _: MaterialDialog?, _: DialogAction? -> openUrl(Uri.parse(getString(R.string.link_manual_note_format_toolbar))) }
+    @Suppress("Deprecation") // Material dialog neutral button deprecation
+    private val toolbarDialog: MaterialDialog
+        get() = MaterialDialog(this)
+            .neutralButton(R.string.help) {
+                openUrl(Uri.parse(getString(R.string.link_manual_note_format_toolbar)))
+            }
+            .negativeButton(R.string.dialog_cancel)
 
     private fun displayAddToolbarDialog() {
-        toolbarDialogBuilder
-            .title(R.string.add_toolbar_item)
-            .customView(R.layout.note_editor_toolbar_add_custom_item, true)
-            .positiveText(R.string.dialog_positive_create)
-            .onPositive { m: MaterialDialog, _: DialogAction? ->
-                val view = m.view
+        toolbarDialog.show {
+            title(R.string.add_toolbar_item)
+            customView(R.layout.note_editor_toolbar_add_custom_item, scrollable = true)
+            positiveButton(R.string.dialog_positive_create) {
+                val view = it.view
                 val etIcon = view.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
                 val et = view.findViewById<EditText>(R.id.note_editor_toolbar_before)
                 val et2 = view.findViewById<EditText>(R.id.note_editor_toolbar_after)
                 addToolbarButton(etIcon.text.toString(), et.text.toString(), et2.text.toString())
             }
-            .show()
+        }
     }
 
     private fun displayEditToolbarDialog(currentButton: CustomToolbarButton) {
@@ -1845,10 +1845,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         etIcon.setText(currentButton.buttonText)
         et.setText(currentButton.prefix)
         et2.setText(currentButton.suffix)
-        val toolbarDialog = toolbarDialogBuilder
-            .customView(view, true)
-            .positiveText(R.string.save)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+        toolbarDialog
+            .customView(view = view, scrollable = true)
+            .positiveButton(R.string.save) {
                 editToolbarButton(
                     etIcon.text.toString(),
                     et.text.toString(),
@@ -1856,7 +1855,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     currentButton
                 )
             }
-            .build()
         btnDelete.setOnClickListener {
             suggestRemoveButton(
                 currentButton,

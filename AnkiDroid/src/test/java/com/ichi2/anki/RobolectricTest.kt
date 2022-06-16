@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Looper
+import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.annotation.CheckResult
 import androidx.annotation.NonNull
@@ -28,8 +29,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.exception.ConfirmModSchemaException
@@ -182,7 +184,7 @@ open class RobolectricTest : CollectionGetter {
         mBackground = true
     }
 
-    protected fun clickDialogButton(button: DialogAction?, checkDismissed: Boolean) {
+    protected fun clickDialogButton(button: WhichButton?, checkDismissed: Boolean) {
         val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
         dialog.getActionButton(button!!).performClick()
         if (checkDismissed) {
@@ -196,15 +198,12 @@ open class RobolectricTest : CollectionGetter {
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      */
     protected fun getDialogText(checkDismissed: Boolean): String? {
-        val dialog: MaterialDialog? = ShadowDialog.getLatestDialog() as MaterialDialog
-        if (dialog == null || dialog.contentView == null) {
-            return null
-        }
+        val dialog: MaterialDialog = ShadowDialog.getLatestDialog() as MaterialDialog
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
             return null
         }
-        return dialog.contentView!!.text.toString()
+        return dialog.view.contentLayout.findViewById<TextView>(R.id.md_text_message).text.toString()
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode

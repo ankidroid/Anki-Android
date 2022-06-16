@@ -19,7 +19,9 @@ package com.ichi2.anki.dialogs
 import android.widget.EditText
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
-import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
+import com.afollestad.materialdialogs.input.getInputField
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -137,9 +139,9 @@ class CreateDeckDialogTest : RobolectricTest() {
         mActivityScenario!!.onActivity { activity: DeckPicker? ->
             val createDeckDialog = CreateDeckDialog(activity!!, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
             val materialDialog = createDeckDialog.showDialog()
-            val actionButton = materialDialog.getActionButton(DialogAction.POSITIVE)
+            val actionButton = materialDialog.getActionButton(WhichButton.POSITIVE)
             MatcherAssert.assertThat("Ok is disabled if zero length input", actionButton.isEnabled, Is.`is`(false))
-            val editText: EditText? = Objects.requireNonNull(materialDialog.inputEditText)
+            val editText: EditText? = Objects.requireNonNull(materialDialog.getInputField())
             editText?.setText("NotEmpty")
             MatcherAssert.assertThat("Ok is enabled if not zero length input", actionButton.isEnabled, Is.`is`(true))
         }

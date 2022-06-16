@@ -17,8 +17,8 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.utils.BundleUtils.getNullableLong
@@ -63,37 +63,36 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
             mIncludeSched = true
             checked = arrayOf(INCLUDE_SCHED)
         }
-        val items = arrayOf(
+        val items = listOf(
             res.getString(R.string.export_include_schedule),
             res.getString(R.string.export_include_media)
         )
-        val builder = MaterialDialog.Builder(requireActivity())
-            .title(R.string.export)
-            .contentNullable(requireArguments().getString("dialogMessage"))
-            .positiveText(android.R.string.ok)
-            .negativeText(android.R.string.cancel)
-            .cancelable(true)
-            .items(*items)
-            .alwaysCallMultiChoiceCallback()
-            .itemsCallbackMultiChoice(
-                checked
-            ) { _: MaterialDialog?, integers: Array<Int?>, _: Array<CharSequence?>? ->
+        return MaterialDialog(requireActivity()).show {
+            title(R.string.export)
+            contentNullable(requireArguments().getString("dialogMessage"))
+            positiveButton(android.R.string.ok) {
+                listener.exportApkg(null, did, mIncludeSched, mIncludeMedia)
+                dismissAllDialogFragments()
+            }
+            negativeButton(android.R.string.cancel) {
+                dismissAllDialogFragments()
+            }
+            cancelable(true)
+            listItemsMultiChoice(
+                items = items,
+                initialSelection = checked.toIntArray(),
+                waitForPositiveButton = false
+            ) { _: MaterialDialog, ints: IntArray, _: List<CharSequence> ->
                 mIncludeMedia = false
                 mIncludeSched = false
-                for (integer in integers) {
+                for (integer in ints) {
                     when (integer) {
                         INCLUDE_SCHED -> mIncludeSched = true
                         INCLUDE_MEDIA -> mIncludeMedia = true
                     }
                 }
-                true
             }
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                listener.exportApkg(null, did, mIncludeSched, mIncludeMedia)
-                dismissAllDialogFragments()
-            }
-            .onNegative { _: MaterialDialog?, _: DialogAction? -> dismissAllDialogFragments() }
-        return builder.show()
+        }
     }
 
     fun dismissAllDialogFragments() {

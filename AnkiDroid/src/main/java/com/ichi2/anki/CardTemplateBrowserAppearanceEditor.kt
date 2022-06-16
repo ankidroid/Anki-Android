@@ -92,19 +92,17 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private fun showDiscardChangesDialog() {
-        DiscardChangesDialog
-            .getDefault(this)
-            .onPositive { _, _ -> discardChangesAndClose() }
-            .show()
+        DiscardChangesDialog.showDialog(this, ::discardChangesAndClose)
     }
 
     private fun showRestoreDefaultDialog() {
-        MaterialDialog.Builder(this)
-            .positiveText(R.string.dialog_ok)
-            .negativeText(R.string.dialog_cancel)
-            .content(R.string.card_template_browser_appearance_restore_default_dialog)
-            .onPositive { _, _ -> restoreDefaultAndClose() }
-            .show()
+        MaterialDialog(this).show {
+            positiveButton(R.string.dialog_ok) {
+                restoreDefaultAndClose()
+            }
+            negativeButton(R.string.dialog_cancel)
+            message(R.string.card_template_browser_appearance_restore_default_dialog)
+        }
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {

@@ -460,16 +460,18 @@ abstract class AbstractFlashcardViewer :
                 val nMins = elapsed.first / 60
                 val mins = res.getQuantityString(R.plurals.in_minutes, nMins, nMins)
                 val timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
-                MaterialDialog.Builder(this@AbstractFlashcardViewer)
-                    .title(res.getString(R.string.timebox_reached_title))
-                    .content(timeboxMessage)
-                    .positiveText(R.string.dialog_continue)
-                    .negativeText(R.string.close)
-                    .cancelable(true)
-                    .onNegative { _, _ -> finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
-                    .onPositive { _, _ -> col.startTimebox() }
-                    .cancelListener { col.startTimebox() }
-                    .show()
+                MaterialDialog(this@AbstractFlashcardViewer).show {
+                    title(R.string.timebox_reached_title)
+                    message(text = timeboxMessage)
+                    positiveButton(R.string.dialog_continue) {
+                        col.startTimebox()
+                    }
+                    negativeButton(R.string.close) {
+                        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+                    }
+                    cancelable(true)
+                    setOnCancelListener { col.startTimebox() }
+                }
             }
         }
 
@@ -868,23 +870,25 @@ abstract class AbstractFlashcardViewer :
     @KotlinCleanup("remove _ variables")
     protected fun showDeleteNoteDialog() {
         val res = resources
-        MaterialDialog.Builder(this)
-            .title(res.getString(R.string.delete_card_title))
-            .iconAttr(R.attr.dialogErrorIcon)
-            .content(
-                res.getString(
+        MaterialDialog(this).show {
+            title(R.string.delete_card_title)
+            icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+            message(
+                text = res.getString(
                     R.string.delete_note_message,
                     Utils.stripHTML(mCurrentCard!!.q(true))
                 )
             )
-            .positiveText(R.string.dialog_positive_delete)
-            .negativeText(R.string.dialog_cancel)
-            .onPositive { _, _ ->
-                Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard!!.nid)
+            positiveButton(R.string.dialog_positive_delete) {
+                Timber.i(
+                    "AbstractFlashcardViewer:: OK button pressed to delete note %d",
+                    mCurrentCard!!.nid
+                )
                 mSoundPlayer.stopSounds()
                 deleteNoteWithoutConfirmation()
             }
-            .build().show()
+            negativeButton(R.string.dialog_cancel)
+        }
     }
 
     /** Consumers should use [.showDeleteNoteDialog]   */
@@ -1508,7 +1512,7 @@ abstract class AbstractFlashcardViewer :
     private fun readCardTts(soundSide: SoundSide) {
         val tags = legacyGetTtsTags(mCurrentCard!!, soundSide, this)
         if (tags != null) {
-            mTTS.readCardText(tags, mCurrentCard!!, soundSide)
+            mTTS.readCardText(tags, mCurrentCard!!, soundSide, baseContext)
         }
     }
 

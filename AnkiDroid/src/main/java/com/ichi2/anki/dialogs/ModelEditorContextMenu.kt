@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.ModelFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -29,14 +30,14 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
             ModelEditorContextMenuAction.values().filterNot { it == AddLanguageHint }
         }
         availableItems = availableItems.sortedBy { it.order }
-        return MaterialDialog.Builder(requireActivity())
-            .title(requireArguments().getString(KEY_LABEL)!!)
-            .items(availableItems.map { resources.getString(it.actionTextId) })
-            .itemsCallback { _, _, position, _ ->
-                (activity as? ModelFieldEditor)?.run { handleAction(availableItems[position]) }
+
+        return MaterialDialog(requireActivity()).show {
+            title(text = requireArguments().getString(KEY_LABEL))
+            listItems(items = availableItems.map { resources.getString(it.actionTextId) }) { _, index, _ ->
+                (activity as? ModelFieldEditor)?.run { handleAction(availableItems[index]) }
                     ?: Timber.e("ContextMenu used from outside of its target activity!")
             }
-            .build()
+        }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

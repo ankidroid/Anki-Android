@@ -38,7 +38,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
@@ -197,14 +196,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     @VisibleForTesting
     @KotlinCleanup("Remove type declarations after _")
     fun showDiscardChangesDialog(): MaterialDialog {
-        val discardDialog = DiscardChangesDialog.getDefault(this)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
-                // Clear the edited model from any cache files, and clear it from this objects memory to discard changes
-                TemporaryModel.clearTempModelFiles()
-                tempModel = null
-                finishWithAnimation(END)
-            }.build()
+        val discardDialog = DiscardChangesDialog.showDialog(this) {
+            Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
+            // Clear the edited model from any cache files, and clear it from this objects memory to discard changes
+            TemporaryModel.clearTempModelFiles()
+            tempModel = null
+            finishWithAnimation(END)
+        }
         discardDialog.show()
         return discardDialog
     }
@@ -741,7 +739,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             TaskListenerWithContext<CardTemplateFragment, Void?, Pair<Boolean, String?>>(
                 templateFragment
             ) {
-            private var mProgressDialog: MaterialDialog? = null
+            @Suppress("Deprecation")
+            private var mProgressDialog: android.app.ProgressDialog? = null
             override fun actualOnPreExecute(context: CardTemplateFragment) {
                 Timber.d("saveModelAndExitHandler::preExecute called")
                 mProgressDialog = StyledProgressDialog.show(context.mTemplateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model), context.resources.getString(R.string.saving_changes), false)

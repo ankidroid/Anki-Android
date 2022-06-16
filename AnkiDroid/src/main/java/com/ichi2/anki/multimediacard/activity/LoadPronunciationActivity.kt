@@ -203,7 +203,7 @@ open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelL
                 failNoPronunciation()
                 return
             }
-            mPronunciationAddress = BeolingusParser.getPronunciationAddressFromTranslation(result, source)
+            mPronunciationAddress = BeolingusParser.getPronunciationAddressFromTranslation(result, source.trim())
             if (mPronunciationAddress.contentEquals("no")) {
                 failNoPronunciation()
                 if (source.contains(" ")) {
