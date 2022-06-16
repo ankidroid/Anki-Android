@@ -47,6 +47,7 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.showWithKeyboard
 import com.ichi2.widget.WidgetStatus.update
 import timber.log.Timber
 import java.lang.RuntimeException
@@ -280,15 +281,16 @@ class ModelBrowser : AnkiActivity() {
                     it.setSelection(it.text.length)
 
                     // Create textbox to name new model
-                    MaterialEditTextDialog.Builder(this@ModelBrowser, mModelNameInput)
+                    MaterialDialog.Builder(this@ModelBrowser)
                         .title(R.string.model_browser_add)
+                        .customView(it, true)
                         .positiveText(R.string.dialog_ok)
                         .onPositive { _: MaterialDialog?, _: DialogAction? ->
                             val modelName = it.text.toString()
                             addNewNoteType(modelName, addSelectionSpinner.selectedItemPosition)
                         }
                         .negativeText(R.string.dialog_cancel)
-                        .show()
+                        .showWithKeyboard()
                 }
             }
             .negativeText(R.string.dialog_cancel)
@@ -388,8 +390,9 @@ class ModelBrowser : AnkiActivity() {
             it.isSingleLine = true
             it.setText(mModels!![mModelListPosition].getString("name"))
             it.setSelection(it.text.length)
-            MaterialEditTextDialog.Builder(this, mModelNameInput)
+            MaterialDialog.Builder(this)
                 .title(R.string.rename_model)
+                .customView(it, true)
                 .positiveText(R.string.rename)
                 .negativeText(R.string.dialog_cancel)
                 .onPositive { _: MaterialDialog?, _: DialogAction? ->
@@ -412,7 +415,7 @@ class ModelBrowser : AnkiActivity() {
                         showToast(resources.getString(R.string.toast_empty_name))
                     }
                 }
-                .show()
+                .showWithKeyboard()
         }
     }
 

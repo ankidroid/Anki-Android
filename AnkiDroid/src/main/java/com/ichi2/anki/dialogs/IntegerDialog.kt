@@ -19,10 +19,10 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
-import com.ichi2.anki.MaterialEditTextDialog.Companion.displayKeyboard
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.utils.contentNullable
+import com.ichi2.utils.displayKeyboard
 import java.util.function.Consumer
 
 open class IntegerDialog : AnalyticsDialogFragment() {
