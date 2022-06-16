@@ -161,9 +161,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mFullNewCountThread != null) {
-            mFullNewCountThread!!.interrupt()
-        }
+        mFullNewCountThread?.interrupt()
         Timber.i("onDestroy()")
     }
 
