@@ -518,22 +518,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     // Set the deck name
                     val deck = col!!.decks.current()
                     // Main deck name
-                    val fullName = deck.getString("name")
-                    val name = Decks.path(fullName)
-                    val nameBuilder = StringBuilder()
-                    if (name.isNotEmpty()) {
-                        nameBuilder.append(name[0])
-                    }
-                    if (name.size > 1) {
-                        nameBuilder.append("\n").append(name[1])
-                    }
+                    var name = Decks.path(deck.getString("name"))
                     if (name.size > 3) {
-                        nameBuilder.append("...")
+                        name = arrayOf(name[0], name[1], "...", name.last())
                     }
-                    if (name.size > 2) {
-                        nameBuilder.append("\n").append(name[name.size - 1])
-                    }
-                    mTextDeckName!!.text = nameBuilder.toString()
+                    mTextDeckName!!.text = name.joinToString("\n")
                     if (tryOpenCramDeckOptions()) {
                         return
                     }
@@ -543,26 +532,34 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     if (result.numberOfCardsInDeck == 0 && !isDynamic) {
                         mCurrentContentView = CONTENT_EMPTY
                         mDeckInfoLayout!!.visibility = View.VISIBLE
-                        mTextCongratsMessage!!.visibility = View.VISIBLE
-                        mTextCongratsMessage!!.setText(R.string.studyoptions_empty)
+                        mTextCongratsMessage!!.run {
+                            visibility = View.VISIBLE
+                            setText(R.string.studyoptions_empty)
+                        }
                         mButtonStart!!.visibility = View.GONE
                     } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
                         mCurrentContentView = CONTENT_CONGRATS
                         if (!isDynamic) {
                             mDeckInfoLayout!!.visibility = View.GONE
-                            mButtonStart!!.visibility = View.VISIBLE
-                            mButtonStart!!.setText(R.string.custom_study)
+                            mButtonStart!!.run {
+                                visibility = View.VISIBLE
+                                setText(R.string.custom_study)
+                            }
                         } else {
                             mButtonStart!!.visibility = View.GONE
                         }
-                        mTextCongratsMessage!!.visibility = View.VISIBLE
-                        mTextCongratsMessage!!.text = col!!.sched.finishedMsg(activity!!)
+                        mTextCongratsMessage!!.run {
+                            visibility = View.VISIBLE
+                            text = col!!.sched.finishedMsg(activity!!)
+                        }
                     } else {
                         mCurrentContentView = CONTENT_STUDY_OPTIONS
                         mDeckInfoLayout!!.visibility = View.VISIBLE
                         mTextCongratsMessage!!.visibility = View.GONE
-                        mButtonStart!!.visibility = View.VISIBLE
-                        mButtonStart!!.setText(R.string.studyoptions_start)
+                        mButtonStart!!.run {
+                            visibility = View.VISIBLE
+                            setText(R.string.studyoptions_start)
+                        }
                     }
 
                     // Set deck description
@@ -571,11 +568,13 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     } else {
                         col!!.decks.getActualDescription()
                     }
-                    if (desc.isNotEmpty()) {
-                        mTextDeckDescription!!.text = formatDescription(desc)
-                        mTextDeckDescription!!.visibility = View.VISIBLE
-                    } else {
-                        mTextDeckDescription!!.visibility = View.GONE
+                    mTextDeckDescription!!.run {
+                        if (desc.isNotEmpty()) {
+                            text = formatDescription(desc)
+                            visibility = View.VISIBLE
+                        } else {
+                            visibility = View.GONE
+                        }
                     }
 
                     // Set new/learn/review card counts
@@ -590,10 +589,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     } else {
                         // if truncated then make a thread to allow full count to load
                         mTextNewTotal!!.text = ">1000"
-                        if (mFullNewCountThread != null) {
-                            // a thread was previously made -- interrupt it
-                            mFullNewCountThread!!.interrupt()
-                        }
+                        // a thread was previously made -- interrupt it
+                        mFullNewCountThread?.interrupt()
                         mFullNewCountThread = Thread {
                             val collection = col
                             // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
@@ -602,23 +599,21 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                                 " AND queue = " + Consts.QUEUE_TYPE_NEW
                             val fullNewCount = collection.db.queryScalar(query)
                             if (fullNewCount > 0) {
-                                val setNewTotalText = Runnable { mTextNewTotal!!.text = fullNewCount.toString() }
                                 if (!Thread.currentThread().isInterrupted) {
-                                    mTextNewTotal!!.post(setNewTotalText)
+                                    mTextNewTotal!!.apply {
+                                        post { text = fullNewCount.toString() }
+                                    }
                                 }
                             }
+                        }.apply {
+                            start()
                         }
-                        mFullNewCountThread!!.start()
                     }
 
                     // Set total number of cards
                     mTextTotal!!.text = result.numberOfCardsInDeck.toString()
                     // Set estimated time remaining
-                    if (result.eta != -1) {
-                        mTextETA!!.text = result.eta.toString()
-                    } else {
-                        mTextETA!!.text = "-"
-                    }
+                    mTextETA!!.text = result.eta.toString().takeUnless { it == "-1" } ?: "-"
                     // Rebuild the options menu
                     configureToolbar()
                 }
