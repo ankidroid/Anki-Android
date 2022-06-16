@@ -16,6 +16,7 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.StudyOptionsFragment.Companion.deckNameText
 import com.ichi2.anki.StudyOptionsFragment.Companion.formatDescription
 import com.ichi2.utils.KotlinCleanup
 import org.junit.Assert.assertEquals
@@ -87,4 +88,13 @@ class StudyOptionsFragmentTest {
         assertEquals("a\na", result.toString())
     }
     /* end #5188 */
+
+    @Test
+    fun deckNameTextTest() {
+        assertEquals("1", deckNameText("1"))
+        assertEquals("1\n2", deckNameText("1::2"))
+        assertEquals("1\n2\n3", deckNameText("1::2::3"))
+        assertEquals("1\n2\n...\n4", deckNameText("1::2::3::4"))
+        assertEquals("1\n2\n...\n5", deckNameText("1::2::3::4::5"))
+    }
 }

@@ -519,14 +519,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
                     // Reinitialize controls in case changed to filtered deck
                     initAllContentViews(mStudyOptionsView!!)
-                    // Set the deck name
                     val deck = col!!.decks.current()
-                    // Main deck name
-                    var name = Decks.path(deck.getString("name"))
-                    if (name.size > 3) {
-                        name = arrayOf(name[0], name[1], "...", name.last())
-                    }
-                    mTextDeckName!!.text = name.joinToString("\n")
+                    mTextDeckName!!.text = deckNameText(deck.getString("name"))
+
                     if (tryOpenCramDeckOptions()) {
                         return
                     }
@@ -701,6 +696,17 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             // #5188 - fromHtml displays newlines as " "
             val withFixedNewlines = convertNewlinesToHtml(withStrippedTags)
             return HtmlCompat.fromHtml(withFixedNewlines!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        }
+
+        fun <T> Array<T>.second(): T {
+            return this[1]
+        }
+
+        @JvmStatic
+        fun deckNameText(deckName: String): String {
+            return Decks.path(deckName)
+                .run { takeUnless { size > 3 } ?: arrayOf(first(), second(), "...", last()) }
+                .joinToString("\n")
         }
     }
 }
