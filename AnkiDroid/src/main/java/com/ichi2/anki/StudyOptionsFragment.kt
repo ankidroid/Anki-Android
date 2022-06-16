@@ -688,11 +688,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
          */
         @JvmStatic
         fun newInstance(withDeckOptions: Boolean): StudyOptionsFragment {
-            val f = StudyOptionsFragment()
-            val args = Bundle()
-            args.putBoolean("withDeckOptions", withDeckOptions)
-            f.arguments = args
-            return f
+            return StudyOptionsFragment().apply {
+                arguments = Bundle().apply { putBoolean("withDeckOptions", withDeckOptions) }
+            }
         }
 
         @JvmStatic
