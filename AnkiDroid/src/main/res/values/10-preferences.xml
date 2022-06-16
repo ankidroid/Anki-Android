@@ -35,8 +35,6 @@
     <string name="pref_cat_themes" maxLength="41">Themes</string>
     <string name="pref_cat_fonts" maxLength="41">Fonts</string>
     <string name="pref_cat_gestures" maxLength="41">Gestures</string>
-    <string name="pref_cat_gestures_summ">Use taps and swipes instead of buttons</string>
-    <string name="pref_cat_actions" maxLength="41">Actions</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Advanced</string>
@@ -90,13 +88,9 @@
     <string name="gestures_tap_right" maxLength="41">Touch right</string>
     <string name="gestures_tap_bottom" maxLength="41">Touch bottom</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>

@@ -17,9 +17,40 @@
 
 <!-- Key com.ichi2.ui.BindingPreferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     android:title="@string/pref_cat_controls"
     android:summary="@string/pref_cat_controls_summ">
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:disableDependentsState="false"
+        android:key="@string/gestures_preference"
+        android:summary="@string/gestures_summ"
+        android:title="@string/gestures" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:dependency="@string/gestures_preference"
+        android:key="@string/gestures_corner_touch_preference"
+        android:summary="@string/gestures_corner_touch_summary"
+        android:title="@string/gestures_corner_touch" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:dependency="@string/gestures_preference"
+        android:disableDependentsState="false"
+        android:key="gestureFullScreenNavigationDrawer"
+        android:summary="@string/gestures_fullscreen_nav_drawer_summary"
+        android:title="@string/gestures_full_screen_nav_drawer" />
+    <com.ichi2.preferences.SeekBarPreferenceCompat
+        android:defaultValue="100"
+        android:dependency="@string/gestures_preference"
+        android:dialogMessage="@string/preference_summary_literal"
+        android:key="swipeSensitivity"
+        android:max="180"
+        android:summary="@string/preference_summary_literal"
+        android:text=""
+        android:title="@string/swipe_sensitivity"
+        app:interval="1"
+        app:min="20" />
     <!-- This category is expanded in BindingPreference.setup -->
     <PreferenceCategory android:title="@string/controls_main_category" android:key="key_map_category" />
 </PreferenceScreen>

@@ -643,9 +643,6 @@ class Preferences : AnkiActivity() {
                     }
                     CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                     AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
-                    "gestureCornerTouch" -> {
-                        GesturesSettingsFragment.updateGestureCornerTouch(preferencesActivity, screen)
-                    }
                 }
                 // Update the summary text to reflect new value
                 preferencesActivity.updateSummary(pref)
@@ -990,40 +987,6 @@ class Preferences : AnkiActivity() {
             } else {
                 mBackgroundImage!!.isChecked = false
                 showThemedToast(requireContext(), getString(R.string.no_image_selected), false)
-            }
-        }
-    }
-
-    class GesturesSettingsFragment : SpecificSettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_gestures
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.gestures"
-
-        override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_gestures)
-            val screen = preferenceScreen
-            updateGestureCornerTouch(screen)
-        }
-
-        private fun updateGestureCornerTouch(screen: PreferenceScreen) {
-            updateGestureCornerTouch(requireContext(), screen)
-        }
-
-        companion object {
-            fun updateGestureCornerTouch(context: Context?, screen: PreferenceScreen) {
-                val gestureCornerTouch = AnkiDroidApp.getSharedPrefs(context).getBoolean("gestureCornerTouch", false)
-                if (gestureCornerTouch) {
-                    requirePreference<Preference>(screen, "gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center)
-                    requirePreference<Preference>(screen, "gestureTapLeft").setTitle(R.string.gestures_corner_tap_middle_left)
-                    requirePreference<Preference>(screen, "gestureTapRight").setTitle(R.string.gestures_corner_tap_middle_right)
-                    requirePreference<Preference>(screen, "gestureTapBottom").setTitle(R.string.gestures_corner_tap_bottom_center)
-                } else {
-                    requirePreference<Preference>(screen, "gestureTapTop").setTitle(R.string.gestures_tap_top)
-                    requirePreference<Preference>(screen, "gestureTapLeft").setTitle(R.string.gestures_tap_left)
-                    requirePreference<Preference>(screen, "gestureTapRight").setTitle(R.string.gestures_tap_right)
-                    requirePreference<Preference>(screen, "gestureTapBottom").setTitle(R.string.gestures_tap_bottom)
-                }
             }
         }
     }

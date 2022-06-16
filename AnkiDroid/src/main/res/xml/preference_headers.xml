@@ -58,13 +58,6 @@
         android:icon="@drawable/ic_color_lens_white_24dp">
     </Preference>
 
-    <!-- Navigation Preferences -->
-    <Preference
-        android:fragment="com.ichi2.anki.Preferences$GesturesSettingsFragment"
-        android:summary="@string/pref_cat_gestures_summ"
-        android:title="@string/pref_cat_gestures">
-    </Preference>
-
     <!-- Keybinding preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$ControlsSettingsFragment"
