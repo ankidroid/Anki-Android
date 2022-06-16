@@ -17,6 +17,7 @@ package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
 import android.view.KeyEvent
+import androidx.core.content.edit
 import com.ichi2.anki.R
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.Binding.Companion.unicode
@@ -107,6 +108,14 @@ enum class ViewerCommand(val resourceId: Int) {
         performAdd.apply(bindings, binding)
         val newValue: String = bindings.toPreferenceString()
         preferences.edit().putString(preferenceKey, newValue).apply()
+    }
+
+    fun removeBinding(prefs: SharedPreferences, binding: MappableBinding) {
+        val bindings: MutableList<MappableBinding> = MappableBinding.fromPreferenceString(preferenceKey)
+        bindings.remove(binding)
+        prefs.edit {
+            putString(preferenceKey, bindings.toPreferenceString())
+        }
     }
 
     // If we use the serialised format, then this adds additional coupling to the properties.

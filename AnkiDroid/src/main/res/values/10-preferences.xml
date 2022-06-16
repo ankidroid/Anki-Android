@@ -308,6 +308,7 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
     <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Add key</string>
     <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Press a key</string>

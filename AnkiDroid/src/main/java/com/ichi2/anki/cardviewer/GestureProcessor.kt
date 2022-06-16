@@ -16,8 +16,8 @@
 package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
-import com.ichi2.anki.cardviewer.ViewerCommand.NOTHING
 import com.ichi2.anki.reviewer.GestureMapper
+import com.ichi2.anki.reviewer.MappableBinding
 
 class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
     companion object {
@@ -50,24 +50,33 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
 
     fun init(preferences: SharedPreferences) {
         isEnabled = preferences.getBoolean(PREF_KEY, false)
-        gestureDoubleTap = Gesture.DOUBLE_TAP.fromPreference(preferences)
-        gestureLongclick = Gesture.LONG_TAP.fromPreference(preferences)
-        gestureSwipeUp = Gesture.SWIPE_UP.fromPreference(preferences)
-        gestureSwipeDown = Gesture.SWIPE_DOWN.fromPreference(preferences)
-        gestureSwipeLeft = Gesture.SWIPE_LEFT.fromPreference(preferences)
-        gestureSwipeRight = Gesture.SWIPE_RIGHT.fromPreference(preferences)
+
+        val associatedCommands = HashMap<Gesture, ViewerCommand>()
+        for (command in ViewerCommand.values()) {
+            for (mappableBinding in MappableBinding.fromPreference(preferences, command)) {
+                if (mappableBinding.binding.isGesture)
+                    associatedCommands[mappableBinding.binding.gesture!!] = command
+            }
+        }
+        gestureDoubleTap = associatedCommands[Gesture.DOUBLE_TAP]
+        gestureLongclick = associatedCommands[Gesture.LONG_TAP]
+        gestureSwipeUp = associatedCommands[Gesture.SWIPE_UP]
+        gestureSwipeDown = associatedCommands[Gesture.SWIPE_DOWN]
+        gestureSwipeLeft = associatedCommands[Gesture.SWIPE_LEFT]
+        gestureSwipeRight = associatedCommands[Gesture.SWIPE_RIGHT]
         gestureMapper.init(preferences)
-        gestureTapLeft = Gesture.TAP_LEFT.fromPreference(preferences)
-        gestureTapRight = Gesture.TAP_RIGHT.fromPreference(preferences)
-        gestureTapTop = Gesture.TAP_TOP.fromPreference(preferences)
-        gestureTapBottom = Gesture.TAP_BOTTOM.fromPreference(preferences)
+        gestureTapLeft = associatedCommands[Gesture.TAP_LEFT]
+        gestureTapRight = associatedCommands[Gesture.TAP_RIGHT]
+        gestureTapTop = associatedCommands[Gesture.TAP_TOP]
+        gestureTapBottom = associatedCommands[Gesture.TAP_BOTTOM]
+
         val useCornerTouch = preferences.getBoolean("gestureCornerTouch", false)
         if (useCornerTouch) {
-            gestureTapTopLeft = Gesture.TAP_TOP_LEFT.fromPreference(preferences)
-            gestureTapTopRight = Gesture.TAP_TOP_RIGHT.fromPreference(preferences)
-            gestureTapCenter = Gesture.TAP_CENTER.fromPreference(preferences)
-            gestureTapBottomLeft = Gesture.TAP_BOTTOM_LEFT.fromPreference(preferences)
-            gestureTapBottomRight = Gesture.TAP_BOTTOM_RIGHT.fromPreference(preferences)
+            gestureTapTopLeft = associatedCommands[Gesture.TAP_TOP_LEFT]
+            gestureTapTopRight = associatedCommands[Gesture.TAP_TOP_RIGHT]
+            gestureTapCenter = associatedCommands[Gesture.TAP_CENTER]
+            gestureTapBottomLeft = associatedCommands[Gesture.TAP_BOTTOM_LEFT]
+            gestureTapBottomRight = associatedCommands[Gesture.TAP_BOTTOM_RIGHT]
         }
     }
 

@@ -23,22 +23,13 @@ import com.ichi2.ui.GesturePicker
 
 /** Helper functions for a Dialog which wraps a [com.ichi2.ui.GesturePicker]  */
 class GestureSelectionDialogBuilder(context: Context) : MaterialDialog.Builder(context) {
-    private val mGesturePicker: GesturePicker = GesturePicker(context)
+    val mGesturePicker: GesturePicker = GesturePicker(context)
 
     /** Supplies a callback which is called each time the user gesture selection changes
      *
      * This is **not** when the gesture is submitted */
     fun onGestureChanged(listener: GestureListener): GestureSelectionDialogBuilder {
         mGesturePicker.setGestureChangedListener(listener)
-        return this
-    }
-
-    /** Supplies a callback which is called when the user presses "OK" with a valid gesture */
-    fun onGestureSubmitted(listener: GestureListener): GestureSelectionDialogBuilder {
-        onPositive { _, _ ->
-            val gesture = mGesturePicker.getGesture() ?: return@onPositive
-            listener.onGesture(gesture)
-        }
         return this
     }
 

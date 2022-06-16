@@ -17,6 +17,8 @@ package com.ichi2.anki.cardviewer
 
 import android.content.SharedPreferences
 import android.view.ViewConfiguration
+import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -44,8 +46,7 @@ class GestureProcessorTest : ViewerCommand.CommandProcessor {
     @Test
     fun integrationTest() {
         val prefs = mockk<SharedPreferences>(relaxed = true)
-        every { prefs.getString(any(), any()) } returns "0"
-        every { prefs.getString("gestureTapCenter", any()) } returns "1"
+        every { prefs.getString(ViewerCommand.SHOW_ANSWER.preferenceKey, null) } returns listOf(MappableBinding.fromGesture(Gesture.TAP_CENTER)).toPreferenceString()
         every { prefs.getBoolean("gestureCornerTouch", any()) } returns true
         mSut.init(prefs)
         mSut.onTap(100, 100, 50f, 50f)
