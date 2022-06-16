@@ -92,6 +92,7 @@ import com.ichi2.libanki.Note.DupeOrEmpty
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
+import com.ichi2.utils.DialogUtils.dismissIfShowingWithException
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 import java.util.*
@@ -223,12 +224,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             } else if (!context.mEditFields!!.isEmpty()) {
                 context.mEditFields!!.first!!.focusWithKeyboard()
             }
-            if (!mCloseAfter && context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                try {
-                    context.mProgressDialog!!.dismiss()
-                } catch (e: IllegalArgumentException) {
-                    Timber.e(e, "Note Editor: Error on dismissing progress dialog")
-                }
+            if (!mCloseAfter) {
+                context.mProgressDialog.dismissIfShowingWithException()
             }
         }
 
@@ -238,13 +235,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         @KotlinCleanup("invert if")
         override fun actualOnPostExecute(context: NoteEditor, result: Boolean?) {
             if (result!!) {
-                if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                    try {
-                        context.mProgressDialog!!.dismiss()
-                    } catch (e: IllegalArgumentException) {
-                        Timber.e(e, "Note Editor: Error on dismissing progress dialog")
-                    }
-                }
+                context.mProgressDialog.dismissIfShowingWithException()
                 if (mCloseAfter) {
                     context.closeNoteEditor(mIntent ?: Intent())
                 } else {
@@ -451,7 +442,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         setDid(mEditorNote)
         setNote(mEditorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (mAddNote) {
-            mNoteTypeSpinner!!.setOnItemSelectedListener(SetNoteTypeListener())
+            mNoteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
             setTitle(R.string.menu_add_note)
             // set information transferred by intent
             var contents: String? = null
@@ -473,7 +464,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             contents?.let { setEditFieldTexts(it) }
             tags?.let { setTags(it) }
         } else {
-            mNoteTypeSpinner!!.setOnItemSelectedListener(EditNoteTypeListener())
+            mNoteTypeSpinner!!.onItemSelectedListener = EditNoteTypeListener()
             setTitle(R.string.cardeditor_title_edit_card)
         }
         findViewById<View>(R.id.CardEditorTagButton).setOnClickListener {

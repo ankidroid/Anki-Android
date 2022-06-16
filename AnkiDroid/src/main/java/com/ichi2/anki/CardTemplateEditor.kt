@@ -55,6 +55,7 @@ import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
+import com.ichi2.utils.DialogUtils.dismissIfShowing
 import timber.log.Timber
 import java.util.regex.Pattern
 
@@ -169,12 +170,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         mFieldNames = tempModel!!.model.fieldsNames
         // Set up the ViewPager with the sections adapter.
         viewPager = findViewById(R.id.pager)
-        viewPager.setAdapter(TemplatePagerAdapter(this))
+        viewPager.adapter = TemplatePagerAdapter(this)
         mSlidingTabLayout = findViewById(R.id.sliding_tabs)
         // Set activity title
         if (supportActionBar != null) {
             supportActionBar!!.setTitle(R.string.title_activity_template_editor)
-            supportActionBar!!.setSubtitle(tempModel!!.model.optString("name"))
+            supportActionBar!!.subtitle = tempModel!!.model.optString("name")
         }
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId)
@@ -356,14 +357,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // Set text change listeners
             val templateEditorWatcher: TextWatcher = object : TextWatcher {
                 override fun afterTextChanged(arg0: Editable) {
-                    mTemplateEditor.tabToCursorPosition!![cardIndex] = mEditorEditText.getSelectionStart()
+                    mTemplateEditor.tabToCursorPosition!![cardIndex] = mEditorEditText.selectionStart
                     @KotlinCleanup("when")
                     if (currentEditorViewId == R.id.styling_edit) {
-                        tempModel.updateCss(mEditorEditText.getText().toString())
+                        tempModel.updateCss(mEditorEditText.text.toString())
                     } else if (currentEditorViewId == R.id.back_edit) {
-                        template.put("afmt", mEditorEditText.getText())
+                        template.put("afmt", mEditorEditText.text)
                     } else {
-                        template.put("qfmt", mEditorEditText.getText())
+                        template.put("qfmt", mEditorEditText.text)
                     }
                     mTemplateEditor.tempModel!!.updateTemplate(cardIndex, template)
                 }
@@ -470,11 +471,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 tab.text = mTemplateEditor.tempModel!!.getTemplate(position).getString("name")
             }
             mTabLayoutMediator!!.attach()
-        }
-
-        override fun onResume() {
-            // initTabLayoutMediator();
-            super.onResume()
         }
 
         override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -745,9 +741,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 if (button != null) {
                     button.isEnabled = true
                 }
-                if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                    mProgressDialog!!.dismiss()
-                }
+                mProgressDialog.dismissIfShowing()
                 context.mTemplateEditor.tempModel = null
                 if (result.first) {
                     context.mTemplateEditor.finishWithAnimation(

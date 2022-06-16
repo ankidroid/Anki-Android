@@ -49,6 +49,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
 import com.ichi2.themes.StyledProgressDialog.Companion.show
+import com.ichi2.utils.DialogUtils.dismissIfShowingWithException
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import timber.log.Timber
@@ -429,13 +430,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private fun dismissProgressDialog() {
         mStudyOptionsView?.findViewById<View>(R.id.progress_bar)?.visibility = View.GONE
         // for rebuilding cram decks
-        if (mProgressDialog?.isShowing == true) {
-            try {
-                mProgressDialog!!.dismiss()
-            } catch (e: Exception) {
-                Timber.e("onPostExecute - Dialog dismiss Exception = %s", e.message)
-            }
-        }
+        mProgressDialog.dismissIfShowingWithException()
     }
 
     fun refreshInterface() {

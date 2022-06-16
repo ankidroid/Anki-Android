@@ -22,6 +22,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.themes.StyledProgressDialog
+import com.ichi2.utils.DialogUtils.dismissIfShowing
 import timber.log.Timber
 
 internal class ExportListener(activity: AnkiActivity?, private val dialogsFactory: ExportDialogsFactory) : TaskListenerWithContext<AnkiActivity, Void, Pair<Boolean, String?>>(activity) {
@@ -34,9 +35,7 @@ internal class ExportListener(activity: AnkiActivity?, private val dialogsFactor
     }
 
     override fun actualOnPostExecute(context: AnkiActivity, result: Pair<Boolean, String?>) {
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-            mProgressDialog!!.dismiss()
-        }
+        mProgressDialog.dismissIfShowing()
 
         // If boolean and string are both set, we are signalling an error message
         // instead of a successful result.
