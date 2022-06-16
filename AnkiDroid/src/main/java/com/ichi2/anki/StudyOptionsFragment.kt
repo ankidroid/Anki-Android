@@ -29,6 +29,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
@@ -684,7 +685,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         @JvmStatic
         fun newInstance(withDeckOptions: Boolean): StudyOptionsFragment {
             return StudyOptionsFragment().apply {
-                arguments = Bundle().apply { putBoolean("withDeckOptions", withDeckOptions) }
+                arguments = bundleOf("withDeckOptions" to withDeckOptions)
             }
         }
 
