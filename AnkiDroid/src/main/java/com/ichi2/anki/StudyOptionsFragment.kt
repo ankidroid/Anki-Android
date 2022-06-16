@@ -142,21 +142,21 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Timber.i("onCreateView()")
-        if (container == null) {
-            // Currently in a layout without a container, so no reason to create our view.
-            return null
-        }
-        val studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)
-        mStudyOptionsView = studyOptionsView
-        mFragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
-        initAllContentViews(studyOptionsView)
-        mToolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar)
-        if (mToolbar != null) {
-            mToolbar!!.inflateMenu(R.menu.study_options_fragment)
-            configureToolbar()
-        }
-        refreshInterface(true)
-        return studyOptionsView
+        // If container is null, Currently in a layout without a container, so no reason to create our view.
+        return container
+            ?.let {
+                mStudyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)?.apply {
+                    mFragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
+                    initAllContentViews(this)
+                    mToolbar = findViewById(R.id.studyOptionsToolbar)
+                    mToolbar?.run {
+                        inflateMenu(R.menu.study_options_fragment)
+                        configureToolbar()
+                    }
+                    refreshInterface(true)
+                }
+                mStudyOptionsView
+            }
     }
 
     override fun onDestroy() {
