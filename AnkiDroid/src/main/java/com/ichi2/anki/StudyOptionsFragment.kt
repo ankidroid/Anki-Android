@@ -331,7 +331,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             val filtered = col != null && col!!.decks.isDyn(col!!.decks.selected())
             menu.findItem(R.id.action_rebuild).isVisible = filtered
             menu.findItem(R.id.action_empty).isVisible = filtered
-            menu.findItem(R.id.action_custom_study).isVisible = filtered
+            menu.findItem(R.id.action_custom_study).isVisible = !filtered
             menu.findItem(R.id.action_deck_or_study_options).setTitle(
                 if (filtered) R.string.menu__study_options
                 else R.string.menu__deck_options
