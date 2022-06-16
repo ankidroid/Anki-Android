@@ -23,7 +23,8 @@ import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Screen.Reviewer
-import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeVolumeButtonsToBindings
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Companion.upgradeVersionPrefKey
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeGesturesToControls
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
@@ -37,56 +38,24 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
-class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : RobolectricTest() {
+class UpgradeGesturesToControlsTest(private val testData: TestData) : RobolectricTest() {
     private val changedKeys = HashSet<String>()
 
     private lateinit var prefs: SharedPreferences
-    private lateinit var instance: UpgradeVolumeButtonsToBindings
+    private lateinit var instance: UpgradeGesturesToControls
 
     @Before
     fun setup() {
-        super.setUp()
         prefs = super.getPreferences()
-        instance = UpgradeVolumeButtonsToBindings()
+        instance = UpgradeGesturesToControls()
         prefs.registerOnSharedPreferenceChangeListener { _, key -> run { Timber.i("added key $key"); changedKeys.add(key) } }
-    }
-
-    @Test
-    fun test_preferences_not_opened_happy_path() {
-        // if the user has not opened the gestures, then nothing should be mapped
-        assertThat(prefs.contains(PREF_KEY_VOLUME_DOWN), equalTo(false))
-        assertThat(prefs.contains(PREF_KEY_VOLUME_UP), equalTo(false))
-
-        upgradeAllGestures()
-
-        // ensure that no settings were added to the preferences
-        assertThat(changedKeys, Matchers.contains("preferenceUpgradeVersion"))
-    }
-
-    @Test
-    fun test_preferences_opened_happy_path() {
-        // the default is that the user has not mapped the gesture, but has opened the screen
-        // so they are set to NOTHING
-        prefs.edit { putString(PREF_KEY_VOLUME_UP, ViewerCommand.NOTHING.toPreferenceString()) }
-        prefs.edit { putString(PREF_KEY_VOLUME_DOWN, ViewerCommand.NOTHING.toPreferenceString()) }
-
-        assertThat(prefs.contains(PREF_KEY_VOLUME_DOWN), equalTo(true))
-        assertThat(prefs.contains(PREF_KEY_VOLUME_UP), equalTo(true))
-
-        upgradeAllGestures()
-
-        // ensure that no settings were added to the preferences
-        assertThat(changedKeys, Matchers.contains("preferenceUpgradeVersion", PREF_KEY_VOLUME_DOWN, PREF_KEY_VOLUME_UP))
-
-        assertThat("Volume gestures are removed", prefs.contains(PREF_KEY_VOLUME_DOWN), equalTo(false))
-        assertThat("Volume gestures are removed", prefs.contains(PREF_KEY_VOLUME_UP), equalTo(false))
     }
 
     @Test
     fun gesture_set_no_conflicts() {
         // assume that we have a preference set, and that it has no defaults
         val command = ViewerCommand.SHOW_ANSWER
-        prefs.edit { putString(testData.affectedPreferenceKey, command.toPreferenceString()) }
+        prefs.edit { putString(testData.affectedPreferenceKey, oldCommandPreferenceStrings[command]) }
 
         assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
         assertThat(prefs.contains(testData.unaffectedPreferenceKey), equalTo(false))
@@ -94,7 +63,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
 
         upgradeAllGestures()
 
-        assertThat(changedKeys, Matchers.containsInAnyOrder("preferenceUpgradeVersion", testData.affectedPreferenceKey, command.preferenceKey))
+        assertThat(changedKeys, Matchers.containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey, command.preferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
         assertThat("new preference added", prefs.contains(command.preferenceKey), equalTo(true))
@@ -113,7 +82,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
         // if the gesture was mapped to a command which already had bindings,
         // check it is added to the list at the end
         val command = ViewerCommand.EDIT
-        prefs.edit { putString(testData.affectedPreferenceKey, command.toPreferenceString()) }
+        prefs.edit { putString(testData.affectedPreferenceKey, oldCommandPreferenceStrings[command]) }
 
         assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
         assertThat(prefs.contains(testData.unaffectedPreferenceKey), equalTo(false))
@@ -123,7 +92,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
 
         upgradeAllGestures()
 
-        assertThat(changedKeys, Matchers.containsInAnyOrder("preferenceUpgradeVersion", testData.affectedPreferenceKey, command.preferenceKey))
+        assertThat(changedKeys, Matchers.containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey, command.preferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
         assertThat("new preference exists", prefs.contains(command.preferenceKey), equalTo(true))
@@ -150,7 +119,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
         val command = ViewerCommand.EDIT
         command.addBinding(prefs, testData.binding)
 
-        prefs.edit { putString(testData.affectedPreferenceKey, command.toPreferenceString()) }
+        prefs.edit { putString(testData.affectedPreferenceKey, oldCommandPreferenceStrings[command]) }
 
         assertThat(prefs.contains(testData.affectedPreferenceKey), equalTo(true))
         assertThat(prefs.contains(testData.unaffectedPreferenceKey), equalTo(false))
@@ -161,7 +130,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
 
         upgradeAllGestures()
 
-        assertThat("Binding gestures should not be changed", changedKeys, Matchers.contains("preferenceUpgradeVersion", testData.affectedPreferenceKey))
+        assertThat("Binding gestures should not be changed", changedKeys, Matchers.contains(upgradeVersionPrefKey, testData.affectedPreferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
         assertThat("new preference still exists", prefs.contains(command.preferenceKey), equalTo(true))
@@ -173,7 +142,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
 
         upgradeAllGestures()
 
-        assertThat("Binding gestures should not be changed", changedKeys, Matchers.contains("preferenceUpgradeVersion", testData.affectedPreferenceKey))
+        assertThat("Binding gestures should not be changed", changedKeys, Matchers.contains(upgradeVersionPrefKey, testData.affectedPreferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
     }
@@ -185,7 +154,7 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
 
         upgradeAllGestures()
 
-        assertThat("Binding gestures should not be changed", changedKeys, Matchers.containsInAnyOrder("preferenceUpgradeVersion", testData.affectedPreferenceKey))
+        assertThat("Binding gestures should not be changed", changedKeys, Matchers.containsInAnyOrder(upgradeVersionPrefKey, testData.affectedPreferenceKey))
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
     }
@@ -198,8 +167,10 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
     companion object {
         private const val KEYCODE_VOLUME_UP = 24
         private const val KEYCODE_VOLUME_DOWN = 25
-        const val PREF_KEY_VOLUME_UP = "gestureVolumeUp"
-        const val PREF_KEY_VOLUME_DOWN = "gestureVolumeDown"
+        private const val PREF_KEY_VOLUME_UP = "gestureVolumeUp"
+        private const val PREF_KEY_VOLUME_DOWN = "gestureVolumeDown"
+
+        val oldCommandPreferenceStrings: HashMap<ViewerCommand, String> = hashMapOf(*UpgradeGesturesToControls().oldCommandValues.map { Pair(it.value, it.key.toString()) }.toTypedArray())
 
         private val volume_up_binding = MappableBinding(keyCode(KEYCODE_VOLUME_UP), Reviewer(CardSide.BOTH))
         private val volume_down_binding = MappableBinding(keyCode(KEYCODE_VOLUME_DOWN), Reviewer(CardSide.BOTH))
@@ -213,7 +184,6 @@ class UpgradeVolumeButtonsToBindingsTest(private val testData: TestData) : Robol
                 arrayOf(TestData(PREF_KEY_VOLUME_DOWN, KEYCODE_VOLUME_DOWN, PREF_KEY_VOLUME_UP, volume_down_binding)),
             ).toList()
         }
-
         data class TestData(val affectedPreferenceKey: String, val keyCode: Int, val unaffectedPreferenceKey: String, val binding: MappableBinding)
     }
 }
