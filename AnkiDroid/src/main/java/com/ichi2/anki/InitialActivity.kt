@@ -18,18 +18,20 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.*
 import androidx.annotation.CheckResult
 import com.ichi2.anki.CollectionHelper.DatabaseVersion
 import com.ichi2.anki.exception.OutOfSpaceException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.utils.VersionUtils.pkgVersionName
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustBackendFailedException
 import timber.log.Timber
-import java.lang.ref.WeakReference
 
 /** Utilities for launching the first activity (currently the DeckPicker)  */
 object InitialActivity {
@@ -79,13 +81,44 @@ object InitialActivity {
     /**
      * Downgrades the database at the currently selected collection path from V16 to V11 in a background task
      */
-    // #7108: AsyncTask
-    @Suppress("deprecation")
-    @JvmStatic
-    fun downgradeBackend(deckPicker: DeckPicker) {
+    @Suppress("BlockingMethodInNonBlockingContext")
+    suspend fun downgradeBackend(
+        deckPicker: DeckPicker,
+        mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+        ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    ) {
         // Note: This method does not require a backend pointer or an open collection
         Timber.i("Downgrading backend")
-        PerformDowngradeTask(WeakReference(deckPicker)).execute()
+        var exception: Exception? = null
+        deckPicker.showProgressBar()
+        withContext(ioDispatcher) {
+            try {
+                downgradeCollection(deckPicker, deckPicker.backupManager!!)
+            } catch (e: Exception) {
+                if (e is CancellationException) {
+                    throw e
+                }
+                Timber.w(e)
+                exception = e
+            }
+            withContext(mainDispatcher) {
+                deckPicker.hideProgressBar()
+                if (exception != null) {
+                    if (exception is OutOfSpaceException) {
+                        deckPicker.displayDowngradeFailedNoSpace()
+                    } else {
+                        deckPicker.displayDatabaseFailure()
+                    }
+                } else {
+                    Timber.i("Database downgrade successful - starting up")
+                    // no exception - continue
+                    deckPicker.handleStartup()
+                    // This call should probably be in handleStartup - but it's also called there onRefresh
+                    // TODO: PERF: to fix the above, add test to ensure that this is only called once on each startup path
+                    deckPicker.refreshState()
+                }
+            }
+        }
     }
 
     @Throws(OutOfSpaceException::class, RustBackendFailedException::class)
@@ -145,50 +178,6 @@ object InitialActivity {
     @JvmStatic
     fun isLatestVersion(preferences: SharedPreferences): Boolean {
         return preferences.getString("lastVersion", "") == pkgVersionName
-    }
-
-    // I disapprove, but it's best to keep consistency with the rest of the app
-    // #7108: AsyncTask
-    @Suppress("deprecation")
-    private class PerformDowngradeTask(private val deckPicker: WeakReference<DeckPicker>) : AsyncTask<Void?, Void?, Void?>() {
-        private var mException: Exception? = null
-        override fun doInBackground(vararg p0: Void?): Void? {
-            // It would be great if we could catch the OutOfSpaceException here
-            try {
-                val deckPicker = deckPicker.get()
-                downgradeCollection(deckPicker, deckPicker!!.backupManager!!)
-            } catch (e: Exception) {
-                Timber.w(e)
-                mException = e
-            }
-            return null
-        }
-
-        override fun onPreExecute() {
-            super.onPreExecute()
-            val d = deckPicker.get()
-            d?.showProgressBar()
-        }
-
-        override fun onPostExecute(result: Void?) {
-            super.onPostExecute(result)
-            val d = deckPicker.get() ?: return
-            d.hideProgressBar()
-            if (mException != null) {
-                if (mException is OutOfSpaceException) {
-                    d.displayDowngradeFailedNoSpace()
-                } else {
-                    d.displayDatabaseFailure()
-                }
-                return
-            }
-            Timber.i("Database downgrade successful - starting up")
-            // no exception - continue
-            d.handleStartup()
-            // This call should probably be in handleStartup - but it's also called there onRefresh
-            // TODO: PERF: to fix the above, add test to ensure that this is only called once on each startup path
-            d.refreshState()
-        }
     }
 
     enum class StartupFailure {
