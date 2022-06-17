@@ -62,17 +62,16 @@ import java.lang.RuntimeException
 import java.util.*
 import kotlin.Throws
 
-@KotlinCleanup("long-term: make `mod` non-null")
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
     private var currentPos = 0
     private lateinit var mFieldsListView: ListView
-    private var fieldLabels: List<String>? = null
     private var progressDialog: MaterialDialog? = null
-    private lateinit var collection: Collection
-    private var noteFields: JSONArray? = null
-    private var mod: Model? = null
     private var fieldNameInput: EditText? = null
+    private lateinit var collection: Collection
+    private lateinit var mModel: Model
+    private lateinit var mNoteFields: JSONArray
+    private lateinit var mFieldsLabels: List<String>
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -111,33 +110,33 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         collection = col
-        setupLabels()
-        createFieldLabels()
+        initialize()
     }
 
     // ----------------------------------------------------------------------------
     // UI SETUP
     // ----------------------------------------------------------------------------
     /**
-     * Sets up the main ListView which contains the clickable labels for the fields.
+     * Initialize the data holding properties and the UI from the model. This method expects that it
+     * isn't followed by other type of work that access the data properties as it has the capability
+     * to finish the activity.
      */
-    private fun createFieldLabels() {
-        mFieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldLabels!!)
+    private fun initialize() {
+        val noteTypeID = intent.getLongExtra("noteTypeID", 0)
+        val collectionModel = collection.models.get(noteTypeID)
+        if (collectionModel == null) {
+            showThemedToast(this, R.string.field_editor_model_not_available, true)
+            finishWithoutAnimation()
+            return
+        }
+        mModel = collectionModel
+        mNoteFields = mModel.getJSONArray("flds")
+        mFieldsLabels = mNoteFields.toStringList("name")
+        mFieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, mFieldsLabels)
         mFieldsListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position: Int, _ ->
-            showDialogFragment(newInstance(fieldLabels!![position]))
+            showDialogFragment(newInstance(mFieldsLabels[position]))
             currentPos = position
         }
-    }
-
-    /*
-      * Sets up the ArrayList containing the text for the main ListView
-      */
-    private fun setupLabels() {
-        val noteTypeID = intent.getLongExtra("noteTypeID", 0)
-        mod = collection.models.get(noteTypeID)
-
-        noteFields = mod!!.getJSONArray("flds")
-        fieldLabels = noteFields!!.toStringList("name")
     }
     // ----------------------------------------------------------------------------
     // CONTEXT MENU DIALOGUES
@@ -163,7 +162,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             showThemedToast(this, resources.getString(R.string.toast_empty_name), true)
             return null
         }
-        if (fieldLabels!!.any { input == it }) {
+        if (mFieldsLabels.any { input == it }) {
             showThemedToast(this, resources.getString(R.string.toast_duplicate_field), true)
             return null
         }
@@ -204,8 +203,8 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         c.setConfirm(confirm)
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
-                    collection.models.update(mod!!)
-                    fullRefreshList()
+                    collection.models.update(mModel)
+                    initialize()
                 }
                 .negativeText(R.string.dialog_cancel)
                 .showWithKeyboard()
@@ -221,7 +220,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         } else {
             collection.modSchemaNoCheck()
         }
-        TaskManager.launchCollectionTask(AddField(mod!!, fieldName), listener)
+        TaskManager.launchCollectionTask(AddField(mModel, fieldName), listener)
     }
 
     /*
@@ -233,7 +232,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             deleteField()
         }
 
-        if (fieldLabels!!.size < 2) {
+        if (mFieldsLabels.size < 2) {
             showThemedToast(this, resources.getString(R.string.toast_last_field), true)
         } else {
             try {
@@ -255,7 +254,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     private fun deleteField() {
-        TaskManager.launchCollectionTask(DeleteField(mod!!, noteFields!!.getJSONObject(currentPos)), changeFieldHandler())
+        TaskManager.launchCollectionTask(DeleteField(mModel, mNoteFields.getJSONObject(currentPos)), changeFieldHandler())
     }
 
     /*
@@ -266,7 +265,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldNameInput = FixedEditText(this)
         fieldNameInput?.let {
             it.isSingleLine = true
-            it.setText(fieldLabels!![currentPos])
+            it.setText(mFieldsLabels[currentPos])
             it.setSelection(it.text!!.length)
             MaterialDialog.Builder(this)
                 .title(R.string.model_field_editor_rename)
@@ -313,7 +312,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldNameInput?.let {
             it.setRawInputType(InputType.TYPE_CLASS_NUMBER)
             MaterialDialog.Builder(this)
-                .title(String.format(resources.getString(R.string.model_field_editor_reposition), 1, fieldLabels!!.size))
+                .title(String.format(resources.getString(R.string.model_field_editor_reposition), 1, mFieldsLabels.size))
                 .customView(it, true)
                 .positiveText(R.string.dialog_ok)
                 .onPositive { _: MaterialDialog?, _: DialogAction? ->
@@ -325,14 +324,14 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         showThemedToast(this, resources.getString(R.string.toast_out_of_range), true)
                         return@onPositive
                     }
-                    if (pos < 1 || pos > fieldLabels!!.size) {
+                    if (pos < 1 || pos > mFieldsLabels.size) {
                         showThemedToast(this, resources.getString(R.string.toast_out_of_range), true)
                     } else {
                         val listener = changeFieldHandler()
                         // Input is valid, now attempt to modify
                         try {
                             collection.modSchema()
-                            TaskManager.launchCollectionTask(RepositionField(mod!!, noteFields!!.getJSONObject(currentPos), pos - 1), listener)
+                            TaskManager.launchCollectionTask(RepositionField(mModel, mNoteFields.getJSONObject(currentPos), pos - 1), listener)
                         } catch (e: ConfirmModSchemaException) {
                             e.log()
 
@@ -344,8 +343,8 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                                     collection.modSchemaNoCheck()
                                     TaskManager.launchCollectionTask(
                                         RepositionField(
-                                            mod!!,
-                                            noteFields!!.getJSONObject(currentPos), pos - 1
+                                            mModel,
+                                            mNoteFields.getJSONObject(currentPos), pos - 1
                                         ),
                                         listener
                                     )
@@ -380,10 +379,10 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private fun renameField() {
         val fieldLabel = fieldNameInput!!.text.toString()
             .replace("[\\n\\r]".toRegex(), "")
-        val field = noteFields!!.getJSONObject(currentPos)
-        collection.models.renameField(mod!!, field, fieldLabel)
+        val field = mNoteFields.getJSONObject(currentPos)
+        collection.models.renameField(mModel, field, fieldLabel)
         collection.models.save()
-        fullRefreshList()
+        initialize()
     }
 
     /*
@@ -393,7 +392,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         val listener = changeFieldHandler()
         try {
             collection.modSchema()
-            TaskManager.launchCollectionTask(ChangeSortField(mod!!, currentPos), listener)
+            TaskManager.launchCollectionTask(ChangeSortField(mModel, currentPos), listener)
         } catch (e: ConfirmModSchemaException) {
             e.log()
             // Handler mMod schema confirmation
@@ -401,7 +400,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             c.setArgs(resources.getString(R.string.full_sync_confirmation))
             val confirm = Runnable {
                 collection.modSchemaNoCheck()
-                TaskManager.launchCollectionTask(ChangeSortField(mod!!, currentPos), listener)
+                TaskManager.launchCollectionTask(ChangeSortField(mModel, currentPos), listener)
             }
             c.setConfirm(confirm)
             this@ModelFieldEditor.showDialogFragment(c)
@@ -413,17 +412,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     private fun toggleStickyField() {
         // Get the current field
-        val field = noteFields!!.getJSONObject(currentPos)
+        val field = mNoteFields.getJSONObject(currentPos)
         // If the sticky setting is enabled then disable it, otherwise enable it
         field.put("sticky", !field.getBoolean("sticky"))
-    }
-
-    /*
-     * Reloads everything
-     */
-    private fun fullRefreshList() {
-        setupLabels()
-        createFieldLabels()
     }
 
     // ----------------------------------------------------------------------------
@@ -452,7 +443,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                 context.closeActivity()
             }
             context.dismissProgressBar()
-            context.fullRefreshList()
+            context.initialize()
         }
     }
 
@@ -509,7 +500,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private fun addFieldLocaleHint(selectedLocale: Locale) {
-        setLanguageHintForField(col.models, mod!!, currentPos, selectedLocale)
+        setLanguageHintForField(col.models, mModel, currentPos, selectedLocale)
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
         showSimpleSnackbar(this, format, true)
     }
