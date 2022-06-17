@@ -61,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">थीम</string>
     <string name="pref_cat_fonts" maxLength="41">फ़ॉन्ट</string>
     <string name="pref_cat_gestures" maxLength="41">इशारे</string>
-    <string name="pref_cat_gestures_summ">स्पर्श और स्वाइप के बजाय बटनों का उपयोग करें</string>
-    <string name="pref_cat_actions" maxLength="41">क्रियाएँ</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">उन्नत</string>
     <string name="pref_cat_advanced_summ">अनुकूलन और प्रायोगिक सुविधाएँ</string>
     <string name="pref_cat_performance" maxLength="41">निष्पादन</string>
@@ -115,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">दाएं स्पर्श करें</string>
     <string name="gestures_tap_bottom" maxLength="41">नीचे स्पर्श करें</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
     <string name="more_scrolling_buttons" maxLength="41">ई-रीडर</string>
     <string name="more_scrolling_buttons_summ">साथ ही स्क्रॉलिंग के लिए कांजी/कतकान, इमोजी/काओ-मोजी बटन का उपयोग करें</string>
@@ -242,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">मीडिया सिंक्रनाइज़ेशन url</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
@@ -327,7 +322,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">परिवर्तन लॉग खोलें</string>
     <string name="binding_add_gesture">इशारा जोड़ें</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Add key</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Press a key</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">कार्ड साइड चुनें</string>
@@ -339,5 +336,5 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="bindings_already_bound">Already bound to ‘%s’</string>
 </resources>

@@ -89,14 +89,12 @@
     <string name="html_size_code_x_large">x-groot</string>
     <string name="html_size_code_xx_large">xx-groot</string>
     <!-- gestures_labels -->
-    <string name="gesture_no_action">Geen actie</string>
     <string name="gesture_answer_1">Antwoordknop 1</string>
     <string name="gesture_answer_2">Antwoordknop 2</string>
     <string name="gesture_answer_3">Antwoordknop 3</string>
     <string name="gesture_answer_4">Antwoordknop 4</string>
     <string name="gesture_answer_green">Aanbevolen antwoord (groen)</string>
     <string name="gesture_answer_better_recommended">Antwoord beter dan aangeraden</string>
-    <string name="gesture_tag_note">Tagnaam</string>
     <string name="gesture_play">Media afspelen</string>
     <string name="gesture_abort_learning">Leren afbreken</string>
     <string name="gesture_flag_red">Rode vlag in-/uitschakelen</string>

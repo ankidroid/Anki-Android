@@ -61,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Témák</string>
     <string name="pref_cat_fonts" maxLength="41">Betűtípusok</string>
     <string name="pref_cat_gestures" maxLength="41">Gesztusok</string>
-    <string name="pref_cat_gestures_summ">A gombok helyett érintsd meg, és csúsztasd ujjad</string>
-    <string name="pref_cat_actions" maxLength="41">Műveletek</string>
     <string name="pref_cat_controls" maxLength="41">Kezelőszervek</string>
-    <string name="pref_cat_controls_summ">Billentyűzetek és más eszközök beállítása</string>
     <string name="pref_cat_advanced" maxLength="41">Haladó</string>
     <string name="pref_cat_advanced_summ">Optimalizálás és kísérleti funkciók</string>
     <string name="pref_cat_performance" maxLength="41">Teljesítmény</string>
@@ -115,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Jobboldali rész érintése</string>
     <string name="gestures_tap_bottom" maxLength="41">Alsó rész érintése</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Érintés bal felül</string>
-    <string name="gestures_corner_tap_top_center">Érintés középen</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Érintés jobb felül</string>
-    <string name="gestures_corner_tap_middle_left">Érintés bal középen</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Érintés a közepén</string>
-    <string name="gestures_corner_tap_middle_right">Érintés jobb középen</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Érintés bal alul</string>
-    <string name="gestures_corner_tap_bottom_center">Érintés alul középen</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Érintés jobb alul</string>
     <string name="more_scrolling_buttons" maxLength="41">e-Olvasó</string>
     <string name="more_scrolling_buttons_summ">Kanji/Katakana használata is, az Emoji/Kao-moji gombok görgetéséhez</string>
@@ -243,6 +236,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Média szinkronizáló url</string>
     <string name="custom_sync_server_media_url_invalid">Média url szinkronizálás érvénytelen</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Parancs összerendelés</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">A pakli csoport változtatása több más csoportot is érint. Ha csak a jelenlegi paklit kívánja megváltoztatni, akkor kérjük adjon hozzá egy új csoportot.</string>
@@ -328,7 +323,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Változás napló megnyitása</string>
     <string name="binding_add_gesture">Gesztus hozzáadása</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Kulcs hozzáadása</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Nyomj meg egy billentyűt</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kártya oldalának kiválasztása</string>
