@@ -51,9 +51,9 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     private var mImageListener: ImagePasteListener? = null
     private var mClipboard: ClipboardManager? = null
 
-    constructor(context: Context?) : super(context!!) {}
-    constructor(context: Context?, attr: AttributeSet?) : super(context!!, attr) {}
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle) {}
+    constructor(context: Context?) : super(context!!)
+    constructor(context: Context?, attr: AttributeSet?) : super(context!!, attr)
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle)
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -193,35 +193,22 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return savedState
     }
 
-    @KotlinCleanup("Return instead of using _id")
     override fun onTextContextMenuItem(id: Int): Boolean {
         // This handles both CTRL+V and "Paste"
-        var _id = id
-        if (id == android.R.id.paste && hasImage(mClipboard)) {
-            return onImagePaste(getImageUri(mClipboard))
-        }
-
-        /*
-        * The following code replaces the instruction "paste with formatting" with "paste as plan text"
-        * Since AnkiDroid does not know how to use formatted text and strips the formatting when saving the note,
-        * it ensures that the user sees the exact plain text which is actually being saved, not the formatted text.
-        */
-
-        // https://stackoverflow.com/a/45319485
         if (id == android.R.id.paste) {
-            /**
-             * Modified StackOverflow answer:
-             * Pasting as plain text for VERSION_CODES < M required modifying
-             * the user's clipboard, and hence has not been used.
-             *
-             * During testing, older devices pasted text as plain text by default,
-             * so there was no need for a TO-DO
-             */
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                _id = android.R.id.pasteAsPlainText
+            if (hasImage(mClipboard)) {
+                return onImagePaste(getImageUri(mClipboard))
+            } else if (mClipboard?.hasPrimaryClip() == true) {
+                mClipboard?.primaryClip?.run {
+                    this@FieldEditText.run {
+                        setText("${text}${getItemAt(0).coerceToText(context)}")
+                        setSelection(text!!.length)
+                    }
+                    return true
+                }
             }
         }
-        return super.onTextContextMenuItem(_id)
+        return false
     }
 
     @KotlinCleanup("Make param non-null")
@@ -257,7 +244,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     internal class SavedState : BaseSavedState {
         var ord = 0
 
-        constructor(superState: Parcelable?) : super(superState) {}
+        constructor(superState: Parcelable?) : super(superState)
 
         override fun writeToParcel(out: Parcel, flags: Int) {
             super.writeToParcel(out, flags)
