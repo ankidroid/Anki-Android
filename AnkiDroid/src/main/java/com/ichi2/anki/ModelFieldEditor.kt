@@ -169,7 +169,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             showThemedToast(this, resources.getString(R.string.toast_empty_name), true)
             return null
         }
-        if (containsField(input)) {
+        if (fieldLabels!!.any { input == it }) {
             showThemedToast(this, resources.getString(R.string.toast_duplicate_field), true)
             return null
         }
@@ -219,11 +219,8 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     @Throws(ConfirmModSchemaException::class)
-    @KotlinCleanup("Check if we can make fieldName non-null")
     private fun addField(fieldName: String?, listener: ChangeHandler, modSchemaCheck: Boolean) {
-        if (fieldName == null) {
-            return
-        }
+        fieldName ?: return
         // Name is valid, now field is added
         if (modSchemaCheck) {
             collection!!.modSchema()
@@ -435,19 +432,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         createFieldLabels()
     }
 
-    /*
-     * Checks if there exists a field with this name in the current model
-     */
-    @KotlinCleanup("Stream/extension function")
-    private fun containsField(field: String): Boolean {
-        for (s in fieldLabels!!) {
-            if (field.compareTo(s) == 0) {
-                return true
-            }
-        }
-        return false
-    }
-
     // ----------------------------------------------------------------------------
     // HANDLERS
     // ----------------------------------------------------------------------------
@@ -478,16 +462,16 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == android.R.id.home) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        android.R.id.home -> {
             onBackPressed()
-            return true
-        } else if (itemId == R.id.action_add_new_model) {
-            addFieldDialog()
-            return true
+            true
         }
-        return super.onOptionsItemSelected(item)
+        R.id.action_add_new_model -> {
+            addFieldDialog()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun closeActivity() {
@@ -559,9 +543,5 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     fun renameField(fieldNameInput: EditText?) {
         this.fieldNameInput = fieldNameInput
         renameField()
-    }
-
-    companion object {
-        private const val NORMAL_EXIT = 100001
     }
 }
