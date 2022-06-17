@@ -19,7 +19,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     android:title="@string/pref_cat_controls"
-    android:summary="@string/pref_cat_controls_summ">
+    android:key="@string/pref_controls_screen_key">
 
     <SwitchPreference
         android:defaultValue="false"

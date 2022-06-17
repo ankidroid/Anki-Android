@@ -418,6 +418,14 @@ class Preferences : AnkiActivity() {
                 getString(R.string.notification_minimum_cards_due_blink),
             )
 
+            // Controls preferences summary
+            findPreference<Preference>(getString(R.string.pref_controls_screen_key))!!
+                .summary = buildCategorySummary(
+                getString(R.string.pref_cat_gestures),
+                getString(R.string.keyboard),
+                getString(R.string.bluetooth)
+            )
+
             if (isRestrictedLearningDevice) {
                 findPreference<Preference>("pref_screen_advanced")!!.isVisible = false
             }

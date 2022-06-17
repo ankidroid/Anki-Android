@@ -61,7 +61,7 @@
     <!-- Keybinding preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$ControlsSettingsFragment"
-        android:summary="@string/pref_cat_controls_summ"
+        android:key="@string/pref_controls_screen_key"
         android:title="@string/pref_cat_controls"
         android:icon="@drawable/ic_touch">
     </Preference>
