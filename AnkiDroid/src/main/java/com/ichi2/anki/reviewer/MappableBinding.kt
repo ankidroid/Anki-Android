@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.ichi2.anki.R
+import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import timber.log.Timber
 import java.util.*
@@ -155,7 +156,10 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
         const val PREF_SEPARATOR = '|'
 
         @CheckResult
-        fun fromGesture(b: Binding): MappableBinding = MappableBinding(b, Screen.Reviewer(CardSide.BOTH))
+        fun fromGesture(gesture: Gesture): MappableBinding = MappableBinding(Binding(gesture), Screen.Reviewer(CardSide.BOTH))
+
+        @CheckResult
+        fun fromGestureBinding(b: Binding): MappableBinding = MappableBinding(b, Screen.Reviewer(CardSide.BOTH))
 
         @CheckResult
         fun List<MappableBinding>.toPreferenceString(): String = this.mapNotNull { it.toPreferenceString() }

@@ -17,7 +17,6 @@ package com.ichi2.anki.reviewer
 
 import android.content.Context
 import android.os.Build
-import android.text.TextUtils
 import android.util.Pair
 import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
@@ -28,6 +27,7 @@ import timber.log.Timber
 import java.util.*
 
 class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: Int?, val unicodeCharacter: Char?, val gesture: Gesture?) {
+    constructor(gesture: Gesture?) : this(null, null, null, gesture)
 
     private fun getKeyCodePrefix(): String {
         // KEY_PREFIX is not usable before API 23
@@ -253,7 +253,7 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
         fun unknown(): Binding = Binding(ModifierKeys.none(), null, null, null)
 
         fun fromString(from: String): Binding {
-            if (TextUtils.isEmpty(from)) return unknown()
+            if (from.isEmpty()) return unknown()
             try {
                 return when (from[0]) {
                     GESTURE_PREFIX -> {

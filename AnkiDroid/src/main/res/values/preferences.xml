@@ -28,6 +28,7 @@
     <string name="night_theme_key">nightTheme</string>
     <string name="gestures_preference">gestures</string>
     <string name="gestures_corner_touch_preference">gestureCornerTouch</string>
+    <string name="pref_controls_screen_key">controlsScreen</string>
     <!-- Sync preferences -->
     <string name="pref_sync_screen_key">syncScreen</string>
     <string name="sync_account_key">syncAccount</string>
