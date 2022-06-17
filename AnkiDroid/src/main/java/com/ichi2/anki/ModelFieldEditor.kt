@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -67,7 +66,7 @@ import kotlin.Throws
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
     private var currentPos = 0
-    private var fieldLabelView: ListView? = null
+    private lateinit var mFieldsListView: ListView
     private var fieldLabels: List<String>? = null
     private var progressDialog: MaterialDialog? = null
     private var collection: Collection? = null
@@ -84,8 +83,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.model_field_editor)
-
-        fieldLabelView = findViewById(R.id.note_type_editor_fields)
+        mFieldsListView = findViewById(R.id.note_type_editor_fields)
         enableToolbar().apply {
             setTitle(R.string.model_field_editor_title)
             subtitle = intent.getStringExtra("title")
@@ -120,18 +118,14 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // ----------------------------------------------------------------------------
     // UI SETUP
     // ----------------------------------------------------------------------------
-    /*
-     * Sets up the main ListView and ArrayAdapters
-     * Containing clickable labels for the fields
+    /**
+     * Sets up the main ListView which contains the clickable labels for the fields.
      */
     private fun createFieldLabels() {
-        val fieldLabelAdapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldLabels!!)
-        fieldLabelView?.let {
-            it.adapter = fieldLabelAdapter
-            it.onItemClickListener = AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
-                showDialogFragment(newInstance(fieldLabels!![position]))
-                currentPos = position
-            }
+        mFieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldLabels!!)
+        mFieldsListView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position: Int, _ ->
+            showDialogFragment(newInstance(fieldLabels!![position]))
+            currentPos = position
         }
     }
 
