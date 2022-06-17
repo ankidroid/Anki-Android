@@ -61,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Thema\'s</string>
     <string name="pref_cat_fonts" maxLength="41">Lettertypes</string>
     <string name="pref_cat_gestures" maxLength="41">Gebaren</string>
-    <string name="pref_cat_gestures_summ">Gebruik tikken en vegen in plaats van knoppen</string>
-    <string name="pref_cat_actions" maxLength="41">Acties</string>
     <string name="pref_cat_controls" maxLength="41">Besturing</string>
-    <string name="pref_cat_controls_summ">Stel toetsenborden en andere apparaten in</string>
     <string name="pref_cat_advanced" maxLength="41">Geavanceerd</string>
     <string name="pref_cat_advanced_summ">Optimalisatie en experimentele functies</string>
     <string name="pref_cat_performance" maxLength="41">Prestaties</string>
@@ -115,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Druk rechts</string>
     <string name="gestures_tap_bottom" maxLength="41">Druk onderaan</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Druk linksboven</string>
-    <string name="gestures_corner_tap_top_center">Druk midden bovenaan</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Druk rechtsboven</string>
-    <string name="gestures_corner_tap_middle_left">Druk midden links</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Druk midden rechts</string>
-    <string name="gestures_corner_tap_middle_right">Druk midden rechts</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Druk linksonder</string>
-    <string name="gestures_corner_tap_bottom_center">Druk midden onderaan</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Druk rechtsonder</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Gebruik ook kanji/katakana, emoji/kao-moji knoppen voor scrollen</string>
@@ -242,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
     <string name="custom_sync_server_media_url_invalid">Mediasynchronisatie-URL ongeldig</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Veranderingen in de setgroepopties zullen een invloed hebben op meerdere sets. Als u alleen de huidige set wilt wijzigen, voeg dan eerst een nieuwe optiegroep toe</string>
@@ -327,7 +322,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Wijzigingslogboek openen</string>
     <string name="binding_add_gesture">Gebaar toevoegen</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Add key</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Druk op een toets</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecteer kaart zijde</string>

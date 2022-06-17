@@ -61,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Teman</string>
     <string name="pref_cat_fonts" maxLength="41">Teckensnitt</string>
     <string name="pref_cat_gestures" maxLength="41">Gester</string>
-    <string name="pref_cat_gestures_summ">Använd klickningar och svepningar istället för knappar</string>
-    <string name="pref_cat_actions" maxLength="41">Handlingar</string>
     <string name="pref_cat_controls" maxLength="41">Kontroller</string>
-    <string name="pref_cat_controls_summ">Konfigurera tangentbord och andra enheter</string>
     <string name="pref_cat_advanced" maxLength="41">Avancerat</string>
     <string name="pref_cat_advanced_summ">Optimeringar och experimentella funktioner</string>
     <string name="pref_cat_performance" maxLength="41">Prestanda</string>
@@ -115,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Klicka till höger</string>
     <string name="gestures_tap_bottom" maxLength="41">Klicka nertill</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Tryck högst upp till vänster</string>
-    <string name="gestures_corner_tap_top_center">Tryck överst i mitten</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Tryck längst upp till höger</string>
-    <string name="gestures_corner_tap_middle_left">Tryck mitt till vänster</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tryck vid mitten</string>
-    <string name="gestures_corner_tap_middle_right">Tryck på mitten till höger</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tryck längst ner till vänster</string>
-    <string name="gestures_corner_tap_bottom_center">Tryck längst ned i mitten</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tryck längst ner till höger</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Använd även Kanji/Katakana, Emoji/Kao-moji-knapparna för att scrolla</string>
@@ -242,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Mediasynkroniseringsurl</string>
     <string name="custom_sync_server_media_url_invalid">Media sync URL är ogiltig</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Kommandomappning</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Ändringar till kortleksgruppsinställningar kommer att påverka flera kortlekar. Om du bara vill ändra nuvarande kortlek, var då vänlig och lägg först till en ny konfigurationsgrupp</string>
@@ -327,7 +322,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Öppna ändringslogg</string>
     <string name="binding_add_gesture">Lägg till gest</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Lägg till knapp</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Tryck på en knapp</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Välj kortsida</string>

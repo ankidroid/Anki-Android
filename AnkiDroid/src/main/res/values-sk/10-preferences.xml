@@ -61,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Motívy</string>
     <string name="pref_cat_fonts" maxLength="41">Písma</string>
     <string name="pref_cat_gestures" maxLength="41">Gestá</string>
-    <string name="pref_cat_gestures_summ">Ovládanie gestami namiesto tlačidiel</string>
-    <string name="pref_cat_actions" maxLength="41">Akcie</string>
     <string name="pref_cat_controls" maxLength="41">Ovládacie prvky</string>
-    <string name="pref_cat_controls_summ">Nastaviť klávesnice a iné zariadenia</string>
     <string name="pref_cat_advanced" maxLength="41">Pokročilé</string>
     <string name="pref_cat_advanced_summ">Optimalizácia a experimentálne funkcie</string>
     <string name="pref_cat_performance" maxLength="41">Výkon</string>
@@ -115,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Kliknutie vpravo</string>
     <string name="gestures_tap_bottom" maxLength="41">Kliknutie v dolnej časti</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Dotyk hore vľavo</string>
-    <string name="gestures_corner_tap_top_center">Dotyk hore v strede</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Dotyk hore vpravo</string>
-    <string name="gestures_corner_tap_middle_left">Dotyk v strede vľavo</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Dotyk v strede uprostred</string>
-    <string name="gestures_corner_tap_middle_right">Dotyk v strede vpravo</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Dotyk dole vľavo</string>
-    <string name="gestures_corner_tap_bottom_center">Dotyk dole uprostred</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Dotyk dole vpravo</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Použiť tiež tlačidlá kanji/katakana, emoji/kao-moji pre posúvanie</string>
@@ -243,6 +236,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
     <string name="custom_sync_server_media_url_invalid">Neplatné url synchronizácie médií</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Mapovanie príkazov</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Zmeny v nastaveniach balíčkových skupín majú vplyv na viaceré balíčky. Ak si želáte zmeniť len aktuálny balíček, prosím, pridajte najprv novú skupinu v možnostiach</string>
@@ -332,7 +327,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Otvoriť prehľad zmien</string>
     <string name="binding_add_gesture">Pridať gesto</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Pridať kláves</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Stlačte kláves</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Zvoľte stranu kartičky</string>

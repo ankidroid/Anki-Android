@@ -61,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Designs</string>
     <string name="pref_cat_fonts" maxLength="41">Schriftarten</string>
     <string name="pref_cat_gestures" maxLength="41">Gesten</string>
-    <string name="pref_cat_gestures_summ">Berühren und Wischen statt Schaltflächen verwenden</string>
-    <string name="pref_cat_actions" maxLength="41">Aktionen</string>
     <string name="pref_cat_controls" maxLength="41">Steuerung</string>
-    <string name="pref_cat_controls_summ">Tastaturen und andere Geräte konfigurieren</string>
     <string name="pref_cat_advanced" maxLength="41">Erweitert</string>
     <string name="pref_cat_advanced_summ">Optimierung und experimentelle Funktionen</string>
     <string name="pref_cat_performance" maxLength="41">Leistung</string>
@@ -115,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Rechts antippen</string>
     <string name="gestures_tap_bottom" maxLength="41">Unten antippen</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Oben links antippen</string>
-    <string name="gestures_corner_tap_top_center">Oben mittig antippen</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Oben rechts antippen</string>
-    <string name="gestures_corner_tap_middle_left">Mitte links antippen</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Mitte mittig antippen</string>
-    <string name="gestures_corner_tap_middle_right">Mitte rechts antippen</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Unten links antippen</string>
-    <string name="gestures_corner_tap_bottom_center">Berührung unten mittig</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Unten rechts antippen</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Auch mit Kanji/Katakana-, Emoji/Kao-moji-Tasten scrollen</string>
@@ -242,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Mediensynchronisations-URL</string>
     <string name="custom_sync_server_media_url_invalid">Mediensynchronisations-URL ungültig</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Befehlszuordnung</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Änderungen an Stapelgruppen-Optionen beeinflussen mehrere Stapel. Wenn Sie nur den aktuellen Stapel ändern möchten, fügen Sie bitte zuerst eine neue Optionsgruppe hinzu</string>
@@ -327,7 +322,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Änderungsprotokoll öffnen</string>
     <string name="binding_add_gesture">Geste hinzufügen</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Schlüssel hinzufügen</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Eine Taste drücken</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartenseite auswählen</string>

@@ -61,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">佈景</string>
     <string name="pref_cat_fonts" maxLength="41">字型</string>
     <string name="pref_cat_gestures" maxLength="41">手勢</string>
-    <string name="pref_cat_gestures_summ">使用點擊和滑動來取代按鈕</string>
-    <string name="pref_cat_actions" maxLength="41">動作</string>
     <string name="pref_cat_controls" maxLength="41">控制</string>
-    <string name="pref_cat_controls_summ">設置鍵盤和其他設備</string>
     <string name="pref_cat_advanced" maxLength="41">進階設定</string>
     <string name="pref_cat_advanced_summ">細部設定和實驗性功能</string>
     <string name="pref_cat_performance" maxLength="41">效能</string>
@@ -115,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">輕觸右邊</string>
     <string name="gestures_tap_bottom" maxLength="41">輕觸底部</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">輕觸左上方</string>
-    <string name="gestures_corner_tap_top_center">輕觸中上方</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">輕觸右上方</string>
-    <string name="gestures_corner_tap_middle_left">輕觸左邊中間</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">輕觸正中間</string>
-    <string name="gestures_corner_tap_middle_right">輕觸右邊中間</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">輕觸左下方</string>
-    <string name="gestures_corner_tap_bottom_center">輕觸中下方</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">輕觸右下方</string>
     <string name="more_scrolling_buttons" maxLength="41">電子書閱讀器</string>
     <string name="more_scrolling_buttons_summ">也使用漢字/片假名，emoji/kao-moji 按鈕來捲動</string>
@@ -242,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">媒體檔案同步地址</string>
     <string name="custom_sync_server_media_url_invalid">媒體同步地址無效</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">指令對照</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">改變牌組群組選項將影響多個牌組。如果你希望僅改變當前牌組，請先為群組新增選項</string>
@@ -325,7 +320,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">打開更新日志</string>
     <string name="binding_add_gesture">新增手勢</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">新增按鍵</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">按一個按鍵</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">選取卡面</string>
