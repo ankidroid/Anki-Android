@@ -49,6 +49,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -106,6 +107,7 @@ import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 import kotlin.math.abs
@@ -449,8 +451,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
             }
-            DATABASE_DOWNGRADE_REQUIRED -> // This has a callback to continue with handleStartup
-                InitialActivity.downgradeBackend(this)
+            DATABASE_DOWNGRADE_REQUIRED -> { // This has a callback to continue with handleStartup
+                lifecycleScope.launch {
+                    InitialActivity.downgradeBackend(this@DeckPicker)
+                }
+            }
             WEBVIEW_FAILED -> MaterialDialog.Builder(this)
                 .title(R.string.ankidroid_init_failed_webview_title)
                 .content(getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.getWebViewErrorMessage()))
