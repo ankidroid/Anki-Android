@@ -42,7 +42,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Voeg afbeelding toe</string>
     <string name="multimedia_editor_popup_audio_clip">Audioclip toevoegen</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Audio / Video clip toevoegen</string>
     <string name="multimedia_editor_popup_audio">Neem audio op</string>
     <string name="multimedia_editor_popup_text">Geavanceerde editor</string>
     <string name="multimedia_editor_popup_cloze">Invuloefening</string>

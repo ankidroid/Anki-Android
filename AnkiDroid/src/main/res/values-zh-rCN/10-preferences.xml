@@ -51,7 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">常规</string>
     <string name="pref_cat_general_summ">常用设置</string>
     <string name="pref_cat_reviewing" maxLength="41">复习</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同步</string>
     <string name="pref_cat_reviewing_summ">复习通用设置</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">行为</string>
     <string name="pref_cat_flashcard" maxLength="41">显示</string>
