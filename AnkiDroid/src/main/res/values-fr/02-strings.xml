@@ -79,7 +79,7 @@
     <string name="webview_crash_nonfatal">Plantage du moteur de rendu Webview. Cause : %s</string>
     <string name="webview_crash_fatal">Erreur Fatale : Plantage du moteur de rendu Webview. Cause : %s</string>
     <string name="webview_crash_loop_dialog_title">Échec de rendu du système WebView</string>
-    <string name="webview_crash_loop_dialog_content">Le système WebView n\'a pas réussi à afficher la carte \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_loop_dialog_content">Le système WebView n\'a pas réussi à afficher la carte « %1$s ».\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Question</item>
@@ -163,8 +163,8 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">Ajouter « %s » à la collection ? Ceci peut prendre beaucoup de temps</item>
+        <item quantity="other">Voulez-vous importer ces fichiers : \n%s\nCeci peut prendre beaucoup de temps</item>
     </plurals>
     <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
     <string name="import_title_error" comment="Title of error dialog">Erreur</string>
@@ -182,8 +182,8 @@
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() a échoué (peut être un manque d\'espace de stockage)</string>
     <string name="import_error_unhandled_scheme">Importation non gérée depuis : \"%s\"</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_error_multiple_colpkg">Plusieurs fichiers colpkg étaient sélectionnés.</string>
+    <string name="import_error_colpkg_apkg">Des fichiers apkg &amp; colpkg étaient sélectionnés à la fois.</string>
     <string name="import_stats_error">Des erreurs se sont produites lors de l\'importation des fichiers suivants :\n%s</string>
     <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
     <string name="import_interrupted">Importation interrompue : AnkiDroid a fermé</string>

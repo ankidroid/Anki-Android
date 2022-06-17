@@ -119,8 +119,8 @@
     <string name="import_update_details">Mise à jour de %1$d de %2$d notes existantes.</string>
     <string name="import_update_ignored">Certaines mises à jour ont été ignorées parce que le type de note a changé</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Cartes importées : %2$d</item>
+        <item quantity="other">Fichiers importés : %1$d\nNombre total de cartes importées : %2$d</item>
     </plurals>
     <string name="sd_card_full_title">Carte SD pleine</string>
     <string name="sd_card_almost_full_title">Carte SD presque pleine</string>

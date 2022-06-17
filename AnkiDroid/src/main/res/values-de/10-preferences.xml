@@ -48,7 +48,7 @@
     <string name="disabled">Deaktiviert</string>
     <string name="enabled">Aktiviert</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Allgemein</string>
     <string name="pref_cat_general_summ">Allgemeine Einstellungen</string>
     <string name="pref_cat_reviewing" maxLength="41">Lernen</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
@@ -141,7 +141,7 @@
     <string name="automatic_sync_choice_summ">Bei Programmstart/-ende automatisch synchronisieren, falls die letzte Synchronisation mehr als 10 Minuten zurückliegt.</string>
     <string name="sync_status_badge" maxLength="41">Status der Synchronisation anzeigen</string>
     <string name="sync_status_badge_summ">Synchronisationssymbol ändern, wenn Änderungen hochgeladen werden können</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="app_theme" maxLength="41">Design</string>
     <string name="day_theme" maxLength="41">Design Tag</string>
     <string name="night_theme" maxLength="41">Design Nacht</string>
     <string name="default_font" maxLength="41">Standardschrift</string>
