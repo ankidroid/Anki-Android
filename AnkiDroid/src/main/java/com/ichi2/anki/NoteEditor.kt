@@ -556,7 +556,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
-                    mDeckSpinnerSelection!!.displayDeckSelectionDialog(col)
+                    mDeckSpinnerSelection!!.displayDeckSelectionDialog(col!!)
                 }
             KeyEvent.KEYCODE_L -> if (event.isCtrlPressed) {
                 showCardTemplateEditor()

@@ -70,7 +70,7 @@ class ModelBrowser : AnkiActivity() {
     private var mModelDisplayList: ArrayList<DisplayPair>? = null
     private var mNewModelLabels: ArrayList<String>? = null
     private var mExistingModelNames: ArrayList<String>? = null
-    private var mCol: Collection? = null
+    private lateinit var mCol: Collection
     private var mActionBar: ActionBar? = null
 
     // Dialogue used in renaming
@@ -318,7 +318,7 @@ class ModelBrowser : AnkiActivity() {
                 oldModel
             }
             model.put("name", modelName)
-            mCol!!.models.update(model)
+            mCol.models.update(model)
             fullRefresh()
         } else {
             showToast(resources.getString(R.string.toast_empty_name))
@@ -360,7 +360,7 @@ class ModelBrowser : AnkiActivity() {
     private fun deleteModelDialog() {
         if (mModelIds!!.size > 1) {
             val confirmTextId = try {
-                mCol!!.modSchema()
+                mCol.modSchema()
                 R.string.model_delete_warning
             } catch (e: ConfirmModSchemaException) {
                 e.log()
@@ -370,7 +370,7 @@ class ModelBrowser : AnkiActivity() {
                 ConfirmationDialog().apply {
                     setArgs(this@ModelBrowser.resources.getString(confirmTextId))
                     setConfirm {
-                        mCol!!.modSchemaNoCheck()
+                        mCol.modSchemaNoCheck()
                         deleteModel()
                     }
                 }
@@ -404,7 +404,7 @@ class ModelBrowser : AnkiActivity() {
                     }
                     if (deckName.isNotEmpty()) {
                         model.put("name", deckName)
-                        mCol!!.models.update(model)
+                        mCol.models.update(model)
                         mModels!![mModelListPosition].put("name", deckName)
                         mModelDisplayList!![mModelListPosition] = DisplayPair(
                             mModels!![mModelListPosition].getString("name"),

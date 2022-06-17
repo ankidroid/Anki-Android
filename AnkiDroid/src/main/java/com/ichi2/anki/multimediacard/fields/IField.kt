@@ -67,5 +67,5 @@ interface IField : Serializable {
      * @param col Collection - bad abstraction, used to obtain media directory only.
      * @param value The HTML to send to the field.
      */
-    fun setFormattedString(col: Collection?, value: String)
+    fun setFormattedString(col: Collection, value: String)
 }

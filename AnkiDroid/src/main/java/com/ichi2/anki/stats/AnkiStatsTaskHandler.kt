@@ -146,10 +146,10 @@ class AnkiStatsTaskHandler private constructor(
     }
 
     @Suppress("deprecation") // #7108: AsyncTask
-    class DeckPreviewStatistics : android.os.AsyncTask<Pair<Collection?, TextView?>?, Void?, String?>() {
+    class DeckPreviewStatistics : android.os.AsyncTask<Pair<Collection, TextView?>?, Void?, String?>() {
         private var mTextView: WeakReference<TextView>? = null
         private var mIsRunning = true
-        override fun doInBackground(vararg params: Pair<Collection?, TextView?>?): String? {
+        override fun doInBackground(vararg params: Pair<Collection, TextView?>?): String? {
             // make sure only one task of CreateChartTask is running, first to run should get sLock
             // only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
             sLock.lock()
