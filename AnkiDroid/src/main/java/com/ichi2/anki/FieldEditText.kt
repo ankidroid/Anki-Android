@@ -20,7 +20,10 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.LocaleList
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
@@ -41,7 +44,6 @@ import com.ichi2.utils.ClipboardUtil.getImageUri
 import com.ichi2.utils.ClipboardUtil.hasImage
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.lang.Exception
 import java.util.*
 
 class FieldEditText : FixedEditText, NoteService.NoteField {
@@ -198,12 +200,15 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         if (id == android.R.id.paste) {
             if (hasImage(mClipboard)) {
                 return onImagePaste(getImageUri(mClipboard))
-            } else if (mClipboard?.hasPrimaryClip() == true) {
+            }
+            if (mClipboard?.hasPrimaryClip() == true) {
                 mClipboard?.primaryClip?.run {
-                    this@FieldEditText.run {
-                        setText("${text}${getItemAt(0).coerceToText(context)}")
-                        setSelection(text!!.length)
-                    }
+                    this@FieldEditText
+                        .takeIf { itemCount > 0 }
+                        ?.run {
+                            setText("${text}${getItemAt(0).coerceToText(context)}")
+                            setSelection(text!!.length)
+                        }
                     return true
                 }
             }
