@@ -406,6 +406,13 @@ class Preferences : AnkiActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
+            // Reviewing preferences summary
+            findPreference<Preference>(getString(R.string.pref_reviewing_screen_key))!!
+                .summary = buildCategorySummary(
+                getString(R.string.pref_cat_scheduling),
+                getString(R.string.timeout_answer_text)
+            )
+
             // Sync preferences summary
             findPreference<Preference>(getString(R.string.pref_sync_screen_key))!!
                 .summary = buildCategorySummary(getString(R.string.sync_account), getString(R.string.automatic_sync_choice))
@@ -416,6 +423,13 @@ class Preferences : AnkiActivity() {
                 getString(R.string.notification_pref_title),
                 getString(R.string.notification_minimum_cards_due_vibrate),
                 getString(R.string.notification_minimum_cards_due_blink),
+            )
+
+            // Accessibility preferences summary
+            findPreference<Preference>(getString(R.string.pref_accessibility_screen_key))!!
+                .summary = buildCategorySummary(
+                getString(R.string.card_zoom),
+                getString(R.string.button_size),
             )
 
             // Controls preferences summary
@@ -769,33 +783,6 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_reviewing)
-            // Show error toast if the user tries to disable answer button without gestures on
-            val buttonsPreference = requirePreference<Preference>(getString(R.string.answer_buttons_position_preference))
-            buttonsPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
-                val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
-                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || newValue != "none") {
-                    return@OnPreferenceChangeListener true
-                } else {
-                    showThemedToast(
-                        requireContext(),
-                        R.string.full_screen_error_gestures, false
-                    )
-                    return@OnPreferenceChangeListener false
-                }
-            }
-            val fullscreenPreference = requirePreference<ListPreference>(FullScreenMode.PREF_KEY)
-            fullscreenPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue: Any ->
-                val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
-                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue() != newValue) {
-                    return@OnPreferenceChangeListener true
-                } else {
-                    showThemedToast(
-                        requireContext(),
-                        R.string.full_screen_error_gestures, false
-                    )
-                    return@OnPreferenceChangeListener false
-                }
-            }
         }
     }
 
@@ -837,6 +824,26 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_appearance)
+            // Show error toast if the user tries to disable answer button without gestures on
+            requirePreference<Preference>(R.string.answer_buttons_position_preference).setOnPreferenceChangeListener() { _, newValue: Any ->
+                val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
+                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || newValue != "none") {
+                    true
+                } else {
+                    showThemedToast(requireContext(), R.string.full_screen_error_gestures, false)
+                    false
+                }
+            }
+            requirePreference<ListPreference>(FullScreenMode.PREF_KEY).setOnPreferenceChangeListener { _, newValue: Any ->
+                val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
+                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue() != newValue) {
+                    true
+                } else {
+                    showThemedToast(requireContext(), R.string.full_screen_error_gestures, false)
+                    false
+                }
+            }
+            // Configure background
             mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
             mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 if (mBackgroundImage!!.isChecked) {
