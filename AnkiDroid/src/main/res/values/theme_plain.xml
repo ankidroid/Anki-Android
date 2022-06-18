@@ -49,7 +49,7 @@
         <item name="customTabNavBarColor">@color/material_grey_500</item>
 
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
-        <item name="prefIconColor">?attr/colorPrimary</item>
+        <item name="iconColor">?attr/colorPrimary</item>
     </style>
 
     <!-- Preferences screens -->
