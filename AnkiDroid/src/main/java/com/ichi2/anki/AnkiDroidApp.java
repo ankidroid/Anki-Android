@@ -44,6 +44,7 @@ import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
@@ -229,6 +230,9 @@ public class AnkiDroidApp extends Application {
 
         // Register for notifications
         mNotifications.observeForever(unused -> NotificationService.triggerNotificationFor(this));
+
+        Themes.systemIsInNightMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        Themes.updateCurrentTheme();
     }
 
     public void scheduleNotification() {

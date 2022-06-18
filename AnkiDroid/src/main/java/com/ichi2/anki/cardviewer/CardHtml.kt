@@ -23,6 +23,7 @@ import com.ichi2.anki.cardviewer.CardAppearance.Companion.hasUserDefinedNightMod
 import com.ichi2.libanki.*
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
+import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -110,7 +111,7 @@ class CardHtml(
 
     private fun getCardClass(requiresMathjax: Boolean): String {
         // CSS class for card-specific styling
-        var cardClass: String = context.cardAppearance.getCardClass(ord + 1, context.currentTheme)
+        var cardClass: String = context.cardAppearance.getCardClass(ord + 1)
         if (requiresMathjax) {
             cardClass += " mathjax-needs-to-render"
         }
@@ -130,7 +131,7 @@ class CardHtml(
         fun createInstance(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): CardHtml {
             val content = displayString(card, reload, side, context)
 
-            val nightModeInversion = context.cardAppearance.isNightMode && !hasUserDefinedNightMode(card)
+            val nightModeInversion = currentTheme.isDark && !hasUserDefinedNightMode(card)
 
             val renderOutput = card.render_output()
             val questionAv = renderOutput.question_av_tags

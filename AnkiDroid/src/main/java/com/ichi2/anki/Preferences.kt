@@ -69,8 +69,10 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.*
 import com.ichi2.preferences.ControlPreference.Companion.addAllControlPreferencesToCategory
 import com.ichi2.themes.Themes
+import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.themes.Themes.systemIsInNightMode
+import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
@@ -884,30 +886,41 @@ class Preferences : AnkiActivity() {
                 appThemePref.entryValues = appThemesValues.sliceArray(1..appThemesValues.lastIndex)
             }
 
-            val followSystem = Themes.themeFollowsSystem(requireContext())
-            dayThemePref.isEnabled = followSystem
-            nightThemePref.isEnabled = followSystem
+            val themeIsFollowSystem = appThemePref.value == Themes.FOLLOW_SYSTEM_MODE
+            dayThemePref.isEnabled = themeIsFollowSystem
+            nightThemePref.isEnabled = themeIsFollowSystem
 
             appThemePref.setOnPreferenceChangeListener { _, newValue ->
-                dayThemePref.isEnabled = newValue == Themes.FOLLOW_SYSTEM_MODE
-                nightThemePref.isEnabled = newValue == Themes.FOLLOW_SYSTEM_MODE
+                val selectedThemeIsFollowSystem = newValue == Themes.FOLLOW_SYSTEM_MODE
+                dayThemePref.isEnabled = selectedThemeIsFollowSystem
+                nightThemePref.isEnabled = selectedThemeIsFollowSystem
 
-                // Only restart if value was changed
+                // Only restart if theme has changed
                 if (newValue != appThemePref.value) {
-                    restartActivityOnBackStackTop()
+                    val previousThemeId = currentTheme.id
+                    appThemePref.value = newValue.toString()
+                    updateCurrentTheme()
+
+                    if (previousThemeId != currentTheme.id) {
+                        restartActivityOnBackStackTop()
+                    }
                 }
                 true
             }
 
             dayThemePref.setOnPreferenceChangeListener { _, newValue ->
-                if (newValue != dayThemePref.value && !systemIsInNightMode(requireContext())) {
+                if (newValue != dayThemePref.value && !systemIsInNightMode && newValue != currentTheme.id) {
+                    dayThemePref.value = newValue.toString()
+                    updateCurrentTheme()
                     restartActivityOnBackStackTop()
                 }
                 true
             }
 
             nightThemePref.setOnPreferenceChangeListener { _, newValue ->
-                if (newValue != nightThemePref.value && systemIsInNightMode(requireContext())) {
+                if (newValue != nightThemePref.value && systemIsInNightMode && newValue != currentTheme.id) {
+                    nightThemePref.value = newValue.toString()
+                    updateCurrentTheme()
                     restartActivityOnBackStackTop()
                 }
                 true

@@ -8,6 +8,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -65,6 +66,7 @@ import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
 import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
+import static com.ichi2.themes.Themes.currentTheme;
 
 public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener, CollectionGetter {
 
@@ -126,6 +128,20 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Timber.i("AnkiActivity::onStop - %s", mActivityName);
         super.onStop();
         mCustomTabActivityHelper.unbindCustomTabsService(this);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        boolean newNightModeStatus = (newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        // Check if theme should change
+        if (Themes.systemIsInNightMode != newNightModeStatus) {
+            Themes.systemIsInNightMode = newNightModeStatus;
+            if (Themes.themeFollowsSystem()) {
+                Themes.updateCurrentTheme();
+                restartActivity();
+            }
+        }
     }
 
 
@@ -468,10 +484,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
 
     private int getColorScheme() {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
             return COLOR_SCHEME_SYSTEM;
-        } else if (prefs.getBoolean("invertedColors", false)) {
+        } else if (currentTheme.isDark()) {
             return COLOR_SCHEME_DARK;
         } else {
             return COLOR_SCHEME_LIGHT;

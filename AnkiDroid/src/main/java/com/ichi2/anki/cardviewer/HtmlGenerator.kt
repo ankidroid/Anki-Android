@@ -24,8 +24,6 @@ import com.ichi2.anki.reviewer.ReviewerCustomFonts
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.Utils
-import com.ichi2.themes.Themes.AppTheme
-import com.ichi2.themes.Themes.getCurrentTheme
 import timber.log.Timber
 import java.io.IOException
 
@@ -33,7 +31,6 @@ class HtmlGenerator(
     private val typeAnswer: TypeAnswer,
     val cardAppearance: CardAppearance,
     val cardTemplate: CardTemplate,
-    val currentTheme: String,
     val resources: Resources,
     private val baseUrl: String
 ) {
@@ -58,11 +55,10 @@ class HtmlGenerator(
         @JvmStatic
         fun createInstance(context: Context, typeAnswer: TypeAnswer, baseUrl: String): HtmlGenerator {
             val preferences = AnkiDroidApp.getSharedPrefs(context)
-            @AppTheme val currentTheme = getCurrentTheme(context)
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(context), preferences)
             val cardHtmlTemplate = loadCardTemplate(context)
 
-            return HtmlGenerator(typeAnswer, cardAppearance, cardHtmlTemplate, currentTheme, context.resources, baseUrl)
+            return HtmlGenerator(typeAnswer, cardAppearance, cardHtmlTemplate, context.resources, baseUrl)
         }
 
         /**

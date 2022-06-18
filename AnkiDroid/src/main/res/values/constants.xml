@@ -244,13 +244,14 @@
         <item>3</item> <!-- Black -->
         <item>4</item> <!-- Dark -->
     </string-array>
+    <!-- Day and night values should be the same as their App theme equivalent -->
     <string-array name="day_theme_values">
-        <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
     <string-array name="night_theme_values">
-        <item>0</item>
-        <item>1</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
 
     <string name="answer_buttons_position_preference" translatable="false">answerButtonPosition</string>

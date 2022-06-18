@@ -144,4 +144,30 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         assertEquals("Button text prefs", "1", toolbarButtons[0].buttonText)
         assertEquals("Button text prefs", "2", toolbarButtons[1].buttonText)
     }
+
+    @Test
+    fun day_and_night_themes() {
+        // Plain and Dark
+        mPrefs.edit {
+            putString("dayTheme", "1")
+            putString("nightTheme", "1")
+            putBoolean("invertedColors", true)
+        }
+        PreferenceUpgrade.UpgradeDayAndNightThemes().performUpgrade(mPrefs)
+
+        assertThat(mPrefs.getString("dayTheme", "0"), equalTo("2"))
+        assertThat(mPrefs.getString("nightTheme", "0"), equalTo("4"))
+        assertThat(mPrefs.contains("invertedColors"), equalTo(false))
+
+        // Light and Black
+        mPrefs.edit {
+            putString("dayTheme", "0")
+            putString("nightTheme", "0")
+        }
+        PreferenceUpgrade.UpgradeDayAndNightThemes().performUpgrade(mPrefs)
+
+        assertThat(mPrefs.getString("dayTheme", "1"), equalTo("1"))
+        assertThat(mPrefs.getString("nightTheme", "1"), equalTo("3"))
+        assertThat(mPrefs.contains("invertedColors"), equalTo(false))
+    }
 }

@@ -31,11 +31,11 @@ import android.widget.LinearLayout
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
-import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeUtils
+import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions
 import com.ichi2.utils.KotlinCleanup
 import com.mrudultora.colorpicker.ColorPickerPopUp
@@ -519,8 +519,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         private var mWhiteboardMultiTouchMethods: WhiteboardMultiTouchMethods? = null
         @JvmStatic
         fun createInstance(context: AnkiActivity, handleMultiTouch: Boolean, whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?): Whiteboard {
-            val sharedPrefs = AnkiDroidApp.getSharedPrefs(context)
-            val whiteboard = Whiteboard(context, handleMultiTouch, isInNightMode(sharedPrefs))
+            val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isDark)
             mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods
             val lp2 = FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
