@@ -53,7 +53,6 @@ import com.ichi2.anki.UIUtils.getSnackbar
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
-import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
 import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
 import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
 import com.ichi2.anki.cardviewer.SoundPlayer.CardSoundConfig
@@ -85,6 +84,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.sched.AbstractSched
+import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.AdaptionUtil.hasWebBrowser
@@ -1425,7 +1425,7 @@ abstract class AbstractFlashcardViewer :
 
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal val isInNightMode: Boolean
-        get() = isInNightMode(AnkiDroidApp.getSharedPrefs(this))
+        get() = Themes.currentTheme.isDark
 
     private fun updateCard(content: CardHtml) {
         Timber.d("updateCard()")

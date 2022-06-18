@@ -26,7 +26,7 @@ import android.widget.CheckBox
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.util.DialogUtils
 import com.ichi2.anki.*
-import com.ichi2.anki.cardviewer.CardAppearance
+import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedTextView
 import timber.log.Timber
 
@@ -128,9 +128,7 @@ object ScopedStorageMigrationConfirmationDialog {
 
     private fun getContentColor(ctx: Context): Int? {
         return try {
-            val isDarkTheme = CardAppearance.isInNightMode(AnkiDroidApp.getSharedPrefs(ctx))
-
-            val theme = if (isDarkTheme) com.afollestad.materialdialogs.R.style.MD_Dark else com.afollestad.materialdialogs.R.style.MD_Light
+            val theme = if (Themes.currentTheme.isDark) com.afollestad.materialdialogs.R.style.MD_Dark else com.afollestad.materialdialogs.R.style.MD_Light
 
             val contextThemeWrapper = ContextThemeWrapper(ctx, theme)
             val contentColorFallback = DialogUtils.resolveColor(contextThemeWrapper, android.R.attr.textColorSecondary)

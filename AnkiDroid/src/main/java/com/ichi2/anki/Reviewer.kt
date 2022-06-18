@@ -57,7 +57,6 @@ import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
-import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -82,6 +81,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
+import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.Computation
@@ -1335,18 +1335,17 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun createWhiteboard() {
-        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
         whiteboard = createInstance(this, true, this)
 
         // We use the pen color of the selected deck at the time the whiteboard is enabled.
         // This is how all other whiteboard settings are
-        val whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, parentDid).fromPreferences(sharedPrefs)
+        val whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, parentDid).fromPreferences()
         if (whiteboardPenColor != null) {
             whiteboard!!.penColor = whiteboardPenColor
         }
         whiteboard!!.setOnPaintColorChangeListener(object : OnPaintColorChangeListener {
             override fun onPaintColorChange(color: Int?) {
-                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !isInNightMode(sharedPrefs), color)
+                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isDark, color)
             }
         })
         whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
