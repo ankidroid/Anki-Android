@@ -87,6 +87,8 @@ open class Collection constructor(
      */
     val backend: Backend
 ) : CollectionGetter {
+    /** Access backend translations */
+    val tr = backend.tr
 
     @get:JvmName("isDbClosed")
     val dbClosed: Boolean
