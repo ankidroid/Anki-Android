@@ -792,24 +792,28 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          */
         private fun deleteTemplate(tmpl: JSONObject, model: Model) {
             val oldTemplates = model.getJSONArray("tmpls")
-            val newTemplates = JSONArray()
-            for (possibleMatch in oldTemplates.jsonObjectIterable()) {
-                if (possibleMatch.getInt("ord") != tmpl.getInt("ord")) {
-                    newTemplates.put(possibleMatch)
-                } else {
-                    Timber.d("deleteTemplate() found match - removing template with ord %s", possibleMatch.getInt("ord"))
-                    mTemplateEditor.tempModel!!.removeTemplate(possibleMatch.getInt("ord"))
-                }
+            val newTemplates = JSONArray().apply {
+                oldTemplates.jsonObjectIterable()
+                    .forEach {
+                        if (it.getInt("ord") != tmpl.getInt("ord")) {
+                            put(it)
+                        } else {
+                            Timber.d("deleteTemplate() found match - removing template with ord %s", it.getInt("ord"))
+                            mTemplateEditor.tempModel!!.removeTemplate(it.getInt("ord"))
+                        }
+                    }
             }
             model.put("tmpls", newTemplates)
             Models._updateTemplOrds(model)
             // Make sure the fragments reinitialize, otherwise the reused ordinal causes staleness
-            (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter?)!!.ordinalShift()
-            mTemplateEditor.viewPager.adapter!!.notifyDataSetChanged()
-            mTemplateEditor.viewPager.setCurrentItem(newTemplates.length() - 1, mTemplateEditor.animationDisabled())
-            if (activity != null) {
-                (activity as CardTemplateEditor?)!!.dismissAllDialogFragments()
+            mTemplateEditor.viewPager.run {
+                (adapter as TemplatePagerAdapter?)!!.run {
+                    ordinalShift()
+                    notifyDataSetChanged()
+                }
+                setCurrentItem(newTemplates.length() - 1, mTemplateEditor.animationDisabled())
             }
+            (activity as CardTemplateEditor?)?.dismissAllDialogFragments()
         }
 
         /**
