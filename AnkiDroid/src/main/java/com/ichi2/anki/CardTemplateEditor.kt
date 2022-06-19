@@ -654,12 +654,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return false
         }
 
-        var onCardBrowserAppearanceActivityResult =
-            registerForActivityResult<Intent, ActivityResult>(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if (result.resultCode != RESULT_OK) {
-                    return@registerForActivityResult
+        private var onCardBrowserAppearanceActivityResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                if (result.resultCode == RESULT_OK) {
+                    onCardBrowserAppearanceResult(result.data)
                 }
-                onCardBrowserAppearanceResult(result.data)
             }
         var onRequestPreviewResult =
             registerForActivityResult<Intent, ActivityResult>(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
