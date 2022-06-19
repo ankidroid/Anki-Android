@@ -660,15 +660,16 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     onCardBrowserAppearanceResult(result.data)
                 }
             }
-        var onRequestPreviewResult =
-            registerForActivityResult<Intent, ActivityResult>(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if (result.resultCode != RESULT_OK) {
-                    return@registerForActivityResult
+        private var onRequestPreviewResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                if (result.resultCode == RESULT_OK) {
+                    TemporaryModel.clearTempModelFiles()
+                    // Make sure the fragments reinitialize, otherwise there is staleness on return
+                    (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter?)!!.run {
+                        ordinalShift()
+                        notifyDataSetChanged()
+                    }
                 }
-                TemporaryModel.clearTempModelFiles()
-                // Make sure the fragments reinitialize, otherwise there is staleness on return
-                (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter?)!!.ordinalShift()
-                mTemplateEditor.viewPager.adapter!!.notifyDataSetChanged()
             }
 
         private fun onCardBrowserAppearanceResult(data: Intent?) {
