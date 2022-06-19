@@ -924,9 +924,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private const val EDITOR_NOTE_ID = "noteId"
         private const val EDITOR_START_ORD_ID = "ordId"
         private const val CARD_INDEX = "card_ord"
-        @Suppress("unused")
         private const val REQUEST_PREVIEWER = 0
-        @Suppress("unused")
         private const val REQUEST_CARD_BROWSER_APPEARANCE = 1
     }
 }
