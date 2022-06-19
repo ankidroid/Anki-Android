@@ -441,13 +441,10 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         private fun initTabLayoutMediator() {
-            if (mTabLayoutMediator != null) {
-                mTabLayoutMediator!!.detach()
-            }
-            mTabLayoutMediator = TabLayoutMediator(mTemplateEditor.mSlidingTabLayout!!, mTemplateEditor.viewPager) { tab: TabLayout.Tab, position: Int ->
+            mTabLayoutMediator?.detach()
+            mTabLayoutMediator = TabLayoutMediator(mTemplateEditor.mSlidingTabLayout!!, mTemplateEditor.viewPager) { tab, position ->
                 tab.text = mTemplateEditor.tempModel!!.getTemplate(position).getString("name")
-            }
-            mTabLayoutMediator!!.attach()
+            }.apply { attach() }
         }
 
         override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
