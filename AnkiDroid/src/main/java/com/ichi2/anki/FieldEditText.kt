@@ -201,17 +201,25 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             if (hasImage(mClipboard)) {
                 return onImagePaste(getImageUri(mClipboard))
             }
-            if (mClipboard?.hasPrimaryClip() == true) {
-                mClipboard?.primaryClip?.run {
+            mClipboard
+                ?.takeIf { it.hasPrimaryClip() }
+                ?.primaryClip?.run {
                     this@FieldEditText
                         .takeIf { itemCount > 0 }
                         ?.run {
-                            setText("${text}${getItemAt(0).coerceToText(context)}")
-                            setSelection(text!!.length)
+                            val pasted = getItemAt(0).coerceToText(context)
+                            selectionStart.run {
+                                // setText also sets selectionStart to 0
+                                setText(
+                                    text!!.substring(0, selectionStart) +
+                                        pasted +
+                                        text!!.substring(selectionEnd)
+                                )
+                                setSelection(this + pasted.length)
+                            }
+                            return true
                         }
-                    return true
                 }
-            }
         }
         return false
     }
