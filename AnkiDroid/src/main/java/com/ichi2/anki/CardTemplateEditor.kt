@@ -35,7 +35,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
@@ -187,18 +186,16 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     @VisibleForTesting
-    @KotlinCleanup("Remove type declarations after _")
     fun showDiscardChangesDialog(): MaterialDialog {
-        val discardDialog = DiscardChangesDialog.getDefault(this)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+        return DiscardChangesDialog.getDefault(this)
+            .onPositive { _, _ ->
                 Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
                 // Clear the edited model from any cache files, and clear it from this objects memory to discard changes
                 TemporaryModel.clearTempModelFiles()
                 tempModel = null
                 finishWithAnimation(END)
             }.build()
-        discardDialog.show()
-        return discardDialog
+            .apply { show() }
     }
 
     /** When a deck is selected via Deck Override  */
