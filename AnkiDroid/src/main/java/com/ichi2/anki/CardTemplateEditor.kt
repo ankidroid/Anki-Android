@@ -258,14 +258,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         private var mBaseId: Long = 0
 
-        @KotlinCleanup("Turn `editorPosition` and `editorViewId` into val")
         override fun createFragment(position: Int): Fragment {
-            var editorPosition = 0
-            var editorViewId = R.id.front_edit
-            if (tabToCursorPosition!![position] != null && tabToViewId!![position] != null) {
-                editorPosition = tabToCursorPosition!![position]!!
-                editorViewId = tabToViewId!![position]!!
-            }
+            val editorPosition = tabToCursorPosition!![position] ?: 0
+            val editorViewId = tabToViewId!![position] ?: R.id.front_edit
             return CardTemplateFragment.newInstance(position, mNoteId, editorPosition, editorViewId)
         }
 
