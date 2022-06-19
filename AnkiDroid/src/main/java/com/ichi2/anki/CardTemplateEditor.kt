@@ -233,11 +233,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_P) {
-            if (event.isCtrlPressed) {
-                val currentFragment = currentFragment
-                currentFragment?.performPreview()
-            }
+        if (keyCode == KeyEvent.KEYCODE_P && event.isCtrlPressed) {
+            currentFragment?.performPreview()
         }
         return super.onKeyUp(keyCode, event)
     }
