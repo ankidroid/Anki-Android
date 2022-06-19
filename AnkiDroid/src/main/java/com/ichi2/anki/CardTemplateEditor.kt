@@ -598,12 +598,10 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             showDialogFragment(activity, dialog)
         }
 
-        @KotlinCleanup("Make tempModel non-null")
-        private fun getCurrentTemplateName(tempModel: TemporaryModel?): String {
+        private fun getCurrentTemplateName(tempModel: TemporaryModel): String {
             return try {
                 val ordinal = mTemplateEditor.viewPager.currentItem
-                val template = tempModel!!.getTemplate(ordinal)
-                template.getString("name")
+                tempModel.getTemplate(ordinal).getString("name")
             } catch (e: Exception) {
                 Timber.w(e, "Failed to get name for template")
                 ""
