@@ -58,7 +58,6 @@ import com.ichi2.utils.BundleUtils.getSerializableWithCast
 import timber.log.Timber
 import java.lang.Integer.max
 import java.lang.Integer.min
-import java.util.regex.Pattern
 
 /**
  * Allows the user to view the template for the current note type
@@ -875,17 +874,18 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          * Flip the question and answer side of the template
          * @param template template to flip
          */
-        @KotlinCleanup("Use Kotlin's Regex methods")
         private fun flipQA(template: JSONObject) {
-            val qfmt = template.getString("qfmt")
-            val afmt = template.getString("afmt")
-            val m = Pattern.compile("(?s)(.+)<hr id=answer>(.+)").matcher(afmt)
-            if (!m.find()) {
-                template.put("qfmt", afmt.replace("{{FrontSide}}", ""))
-            } else {
-                template.put("qfmt", m.group(2)!!.trim { it <= ' ' })
+            template.run {
+                val qfmt = getString("qfmt")
+                val afmt = getString("afmt")
+                val m = "(?s)(.+)<hr id=answer>(.+)".toRegex().find(afmt)
+                put(
+                    "qfmt",
+                    m?.destructured?.component2()?.trim { it <= ' ' }
+                        ?: afmt.replace("{{FrontSide}}", "")
+                )
+                put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n$qfmt")
             }
-            template.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n$qfmt")
         }
 
         /**
