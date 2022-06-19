@@ -31,6 +31,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -901,20 +902,15 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         companion object {
-            fun newInstance(
-                cardIndex: Int,
-                noteId: Long,
-                cursorPosition: Int,
-                viewId: Int
-            ): CardTemplateFragment {
-                val f = CardTemplateFragment()
-                val args = Bundle()
-                args.putInt(CARD_INDEX, cardIndex)
-                args.putLong(EDITOR_NOTE_ID, noteId)
-                args.putInt(CURSOR_POSITION_KEY, cursorPosition)
-                args.putInt(EDITOR_VIEW_ID_KEY, viewId)
-                f.arguments = args
-                return f
+            fun newInstance(cardIndex: Int, noteId: Long, cursorPosition: Int, viewId: Int): CardTemplateFragment {
+                return CardTemplateFragment().apply {
+                    arguments = bundleOf(
+                        CARD_INDEX to cardIndex,
+                        EDITOR_NOTE_ID to noteId,
+                        CURSOR_POSITION_KEY to cursorPosition,
+                        EDITOR_VIEW_ID_KEY to viewId
+                    )
+                }
             }
         }
     }
