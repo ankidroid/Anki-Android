@@ -273,7 +273,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         override fun containsItem(id: Long): Boolean {
-            return id - mBaseId < itemCount && id - mBaseId >= 0
+            return (id - mBaseId) in 0 until itemCount
         }
 
         /** Force fragments to reinitialize contents by invalidating previous set of ordinal-based ids  */
