@@ -56,6 +56,8 @@ import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
 import com.ichi2.utils.BundleUtils.getSerializableWithCast
 import timber.log.Timber
+import java.lang.Integer.max
+import java.lang.Integer.min
 import java.util.regex.Pattern
 
 /**
@@ -410,13 +412,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
         }
 
-        @Suppress("unused")
         private fun insertField(fieldName: String) {
-            val start = Math.max(mEditorEditText.selectionStart, 0)
-            val end = Math.max(mEditorEditText.selectionEnd, 0)
+            val start = max(mEditorEditText.selectionStart, 0)
+            val end = max(mEditorEditText.selectionEnd, 0)
             // add string to editText
             val updatedString = "{{$fieldName}}"
-            mEditorEditText.text!!.replace(Math.min(start, end), Math.max(start, end), updatedString, 0, updatedString.length)
+            mEditorEditText.text!!.replace(min(start, end), max(start, end), updatedString, 0, updatedString.length)
         }
 
         fun setCurrentEditorView(id: Int, editorContent: String, editorTitleId: Int) {
