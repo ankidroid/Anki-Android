@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -107,6 +108,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         mCustomTabActivityHelper = new CustomTabActivityHelper();
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.transparent));
+        }
     }
 
     @Override
