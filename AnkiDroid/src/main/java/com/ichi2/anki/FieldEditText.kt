@@ -31,6 +31,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.widget.EditText
 import androidx.annotation.RequiresApi
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.ContentInfoCompat
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.ViewCompat
@@ -52,7 +53,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     private var mOrigBackground: Drawable? = null
     private var mSelectionChangeListener: TextSelectionListener? = null
     private var mImageListener: ImagePasteListener? = null
-    private var mClipboard: ClipboardManager? = null
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var mClipboard: ClipboardManager? = null
 
     constructor(context: Context?) : super(context!!)
     constructor(context: Context?, attr: AttributeSet?) : super(context!!, attr)
@@ -202,12 +204,23 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             if (hasImage(mClipboard)) {
                 return onImagePaste(getImageUri(mClipboard))
             }
-            getPlainText(mClipboard, context)?.let { pasted ->
-                selectionStart.run {
-                    // setText also sets selectionStart to 0
-                    setText(text!!.substring(0, selectionStart) + pasted + text!!.substring(selectionEnd))
-                    setSelection(this + pasted.length)
-                }
+            return pastePlainText()
+        }
+        return false
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun pastePlainText(): Boolean {
+        getPlainText(mClipboard, context)?.let { pasted ->
+            selectionStart.run {
+                // setText also sets selectionStart to 0
+                setText(
+                    text!!.substring(
+                        0,
+                        selectionStart
+                    ) + pasted + text!!.substring(selectionEnd)
+                )
+                setSelection(this + pasted.length)
                 return true
             }
         }
