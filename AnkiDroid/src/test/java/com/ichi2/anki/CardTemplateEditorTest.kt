@@ -169,7 +169,6 @@ class CardTemplateEditorTest : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun testTemplateAdd() {
-
         // Make sure we test previewing a new card template - not working for real yet
         val modelName = "Basic"
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)

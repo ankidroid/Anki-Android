@@ -103,7 +103,9 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
                     intent.putExtra("title", modelName)
                     intent.putExtra("noteTypeID", findModelIdByName(modelName))
                     val modelFieldEditor = startActivityNormallyOpenCollectionWithIntent(
-                        this, ModelFieldEditor::class.java, intent
+                        this,
+                        ModelFieldEditor::class.java,
+                        intent
                     )
                     when (fieldOperationType) {
                         FieldOperationType.ADD_FIELD -> modelFieldEditor.addField(fieldNameInput)
@@ -130,6 +132,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
 
     companion object {
         private val sForbiddenCharacters = arrayOf("#", "^", "/", " ", "\t")
+
         @ParameterizedRobolectricTestRunner.Parameters(name = "\"{0}\"")
         @Suppress("unused")
         @JvmStatic // required: Parameters

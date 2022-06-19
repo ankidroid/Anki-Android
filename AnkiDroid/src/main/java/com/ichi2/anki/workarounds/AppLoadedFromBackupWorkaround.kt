@@ -66,7 +66,6 @@ object AppLoadedFromBackupWorkaround {
 
         // If we don't kill the process, the backup is not "done" and reopening the app show the same message.
         Thread {
-
             // 3.5 seconds sleep, as the toast is killed on process death.
             // Same as the default value of LENGTH_LONG
             try {

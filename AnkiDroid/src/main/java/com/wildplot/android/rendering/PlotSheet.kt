@@ -209,7 +209,8 @@ class PlotSheet : Drawable {
 
             // right frame
             g.fillRect(
-                field.width + 1 - rightFrameThickness, upperFrameThickness,
+                field.width + 1 - rightFrameThickness,
+                upperFrameThickness,
                 rightFrameThickness +
                     leftFrameThickness,
                 field.height - bottomFrameThickness
@@ -217,8 +218,10 @@ class PlotSheet : Drawable {
 
             // bottom frame
             g.fillRect(
-                leftFrameThickness, field.height - bottomFrameThickness,
-                field.width - rightFrameThickness, bottomFrameThickness + 1
+                leftFrameThickness,
+                field.height - bottomFrameThickness,
+                field.width - rightFrameThickness,
+                bottomFrameThickness + 1
             )
 
             // make small black border frame

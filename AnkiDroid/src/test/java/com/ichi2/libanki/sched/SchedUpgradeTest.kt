@@ -33,7 +33,8 @@ class SchedUpgradeTest : RobolectricTest() {
     @Test
     fun schedulerForNewCollectionIsV2() {
         assertThat(
-            "A new collection should be sched v2", col.sched,
+            "A new collection should be sched v2",
+            col.sched,
             not(
                 instanceOf(
                     Sched::class.java
@@ -50,7 +51,8 @@ class SchedUpgradeTest : RobolectricTest() {
         col.close()
 
         assertThat(
-            "A collection with no schedVer should be v1", col.sched,
+            "A collection with no schedVer should be v1",
+            col.sched,
             instanceOf(
                 Sched::class.java
             )

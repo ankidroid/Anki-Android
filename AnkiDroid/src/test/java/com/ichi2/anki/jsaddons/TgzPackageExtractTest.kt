@@ -114,7 +114,6 @@ class TgzPackageExtractTest : RobolectricTest() {
     @Test
     @Throws(IOException::class, ArchiveException::class)
     fun unTarTest() {
-
         // first unGzip .tgz file to .tar
         val unGzipFile = addonPackage.unGzip(File(tarballPath), addonDir)
 

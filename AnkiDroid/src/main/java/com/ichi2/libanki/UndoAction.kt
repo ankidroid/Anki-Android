@@ -27,8 +27,10 @@ import java.util.*
 abstract class UndoAction
 /**
  * For all descendants, we assume that a card/note/object passed as argument is never going to be changed again.
- * It's the caller responsibility to clone the object if necessary. */
-(@field:UndoNameId @field:StringRes @param:StringRes @param:UndoNameId val undoNameId: Int) {
+ * It's the caller responsibility to clone the object if necessary. */(
+    @field:UndoNameId @field:StringRes @param:StringRes @param:UndoNameId
+    val undoNameId: Int
+) {
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(R.string.undo_action_change_deck_multi, R.string.menu_delete_note, R.string.card_browser_delete_card, R.string.card_browser_mark_card, R.string.card_browser_unmark_card, R.string.menu_suspend_card, R.string.card_browser_unsuspend_card, R.string.undo_action_review, R.string.menu_bury_note, R.string.menu_suspend_note, R.string.card_editor_reposition_card, R.string.card_editor_reschedule_card, R.string.menu_bury_card, R.string.card_editor_reset_card)
     annotation class UndoNameId
@@ -54,7 +56,11 @@ abstract class UndoAction
          * @param card the card currently in the reviewer
          * @return An UndoAction which, if executed, put back the `card` in the state given here
          */
-        fun revertNoteToProvidedState(@StringRes @UndoNameId undoNameId: Int, card: Card): UndoAction {
+        fun revertNoteToProvidedState(
+            @StringRes @UndoNameId
+            undoNameId: Int,
+            card: Card
+        ): UndoAction {
             return revertToProvidedState(undoNameId, card, card.note().cards())
         }
 
@@ -64,7 +70,11 @@ abstract class UndoAction
          * @param card the card currently in the reviewer
          * @return An UndoAction which, if executed, put back the `card` in the state given here
          */
-        fun revertCardToProvidedState(@StringRes @UndoNameId undoNameId: Int, card: Card): UndoAction {
+        fun revertCardToProvidedState(
+            @StringRes @UndoNameId
+            undoNameId: Int,
+            card: Card
+        ): UndoAction {
             return revertToProvidedState(undoNameId, card, mutableListOf(card.clone()))
         }
 
@@ -75,7 +85,12 @@ abstract class UndoAction
          * @param cards The cards that must be reverted
          * @return An UndoAction which, if executed, put back the `card` in the state given here
          */
-        private fun revertToProvidedState(@StringRes @UndoNameId undoNameId: Int, card: Card, cards: Iterable<Card>): UndoAction {
+        private fun revertToProvidedState(
+            @StringRes @UndoNameId
+            undoNameId: Int,
+            card: Card,
+            cards: Iterable<Card>
+        ): UndoAction {
             return object : UndoAction(undoNameId) {
                 override fun undo(col: Collection): Card {
                     Timber.i("Undo: %d", undoNameId)

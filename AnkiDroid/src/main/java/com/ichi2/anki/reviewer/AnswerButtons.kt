@@ -54,6 +54,7 @@ enum class AnswerButtons {
      * * * See: [Anki - Hard/good interval is longer than good/easy](https://faqs.ankiweb.net/hard-good-interval-longer-than-good-easy.html)
      */
     HARD,
+
     /**
      * In Step-Mode, Good moves to the next step, or performs a regular graduation
      *

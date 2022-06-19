@@ -45,6 +45,7 @@ import java.io.IOException
 class NoteServiceTest : RobolectricTest() {
     @KotlinCleanup("lateinit")
     var testCol: Collection? = null
+
     @Before
     fun before() {
         testCol = col

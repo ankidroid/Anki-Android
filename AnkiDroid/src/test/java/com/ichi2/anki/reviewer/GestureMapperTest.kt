@@ -29,6 +29,7 @@ import kotlin.test.assertNull
 
 class GestureMapperTest {
     private val mSut = GestureMapper()
+
     @Test
     fun zeroWidthReturnsNothing() {
         assertNull(mSut.gesture(0, 10, 10f, 10f))

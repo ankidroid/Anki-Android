@@ -66,8 +66,10 @@ abstract class AbstractDeckTreeNode(
     /** Line representing this string without its children. Used in timbers only.  */
     protected open fun toStringLine(): String? {
         return String.format(
-            Locale.US, "%s, %d",
-            fullDeckName, did
+            Locale.US,
+            "%s, %d",
+            fullDeckName,
+            did
         )
     }
 

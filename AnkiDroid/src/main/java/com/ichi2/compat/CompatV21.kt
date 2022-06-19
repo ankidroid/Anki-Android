@@ -93,6 +93,7 @@ open class CompatV21 : Compat {
     ): T? {
         return intent.getParcelableExtra<T>(name)
     }
+
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
     override fun copyFile(source: String, target: String) {
@@ -190,7 +191,8 @@ open class CompatV21 : Compat {
         audioFocusRequest: AudioFocusRequest?
     ) {
         audioManager.requestAudioFocus(
-            audioFocusChangeListener, AudioManager.STREAM_MUSIC,
+            audioFocusChangeListener,
+            AudioManager.STREAM_MUSIC,
             AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
         )
     }

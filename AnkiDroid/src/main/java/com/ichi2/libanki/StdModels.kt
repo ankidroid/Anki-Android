@@ -27,7 +27,8 @@ class StdModels(
     private val function: CreateStdModels,
     /** Essentially, the default name. As a resource, so that it can
      * be localized later.  */
-    @field:StringRes @param:StringRes private val defaultNameRes: Int
+    @field:StringRes @param:StringRes
+    private val defaultNameRes: Int
 ) {
     fun interface CreateStdModels {
         fun create(mm: ModelManager, name: String): Model

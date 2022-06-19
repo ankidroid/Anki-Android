@@ -125,7 +125,7 @@ object LanguageUtil {
         "yue", // Cantonese / 粵語
         "zh-CN", // Chinese (China) / 中文 (中国)
         "zh-TW", // Chinese (Taiwan) / 中文 (台灣)
-        "zu", // Zulu / isiZulu
+        "zu" // Zulu / isiZulu
     )
 
     /** Backend languages; may not include recently added ones.
@@ -184,7 +184,7 @@ object LanguageUtil {
         "uk", // Yкраїнська мова
         "vi", // Tiếng Việt
         "zh-CN", // 简体中文
-        "zh-TW", // 繁體中文
+        "zh-TW" // 繁體中文
     )
 
     /**
@@ -271,6 +271,7 @@ object LanguageUtil {
      * @return the language defined by the preferences, or the empty string.
      */
     fun SharedPreferences.getLanguage() = getString(Preferences.LANGUAGE, "")
+
     /**
      * @return the language defined by the preferences, or otherwise the default locale
      */

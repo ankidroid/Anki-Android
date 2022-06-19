@@ -88,17 +88,19 @@ class RescheduleDialog : IntegerDialog() {
             )
             return if (currentCard.isInDynamicDeck) {
                 message
-            } else """
+            } else {
+                """
      $message
      
      ${
-            resources.getQuantityString(
-                R.plurals.reschedule_card_dialog_interval,
-                currentCard.ivl,
-                currentCard.ivl
-            )
+                resources.getQuantityString(
+                    R.plurals.reschedule_card_dialog_interval,
+                    currentCard.ivl,
+                    currentCard.ivl
+                )
+                }
+                """.trimIndent()
             }
-            """.trimIndent()
         }
     }
 }

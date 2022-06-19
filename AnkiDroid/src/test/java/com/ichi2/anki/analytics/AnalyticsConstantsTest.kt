@@ -88,7 +88,8 @@ object AnalyticsConstantsTest {
         fun checkAnalyticsString() {
             Assert.assertEquals(
                 "Re-check if you renamed any string in the analytics string constants of Actions class or AnalyticsConstantsTest.listOfConstantFields. If so, revert them as those string constants must not change as they are compared in analytics.",
-                analyticsString, getStringFromReflection(analyticsString)
+                analyticsString,
+                getStringFromReflection(analyticsString)
             )
         }
 
@@ -118,12 +119,14 @@ object AnalyticsConstantsTest {
             if (fieldSize > listOfConstantFields.size) {
                 Assert.assertEquals(
                     "Add the newly added analytics constant to AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
-                    listOfConstantFields.size, fieldSize
+                    listOfConstantFields.size,
+                    fieldSize
                 )
             } else if (fieldSize < listOfConstantFields.size) {
                 Assert.assertEquals(
                     "If a constant is removed, it should be removed from AnalyticsConstantsTest.listOfConstantFields. NOTE: Constants should not be renamed as we cannot compare these in analytics.",
-                    listOfConstantFields.size, fieldSize
+                    listOfConstantFields.size,
+                    fieldSize
                 )
             } else {
                 Assert.assertEquals(listOfConstantFields.size, fieldSize)

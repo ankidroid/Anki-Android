@@ -33,6 +33,7 @@
  *  https://android.googlesource.com/platform/tools/base/+/studio-master-dev/lint/libs/lint-checks/src/main/java/com/android/tools/lint/checks/StringCasingDetector.kt?autodive=0%2F
  */
 @file:Suppress("UnstableApiUsage")
+
 package com.ichi2.anki.lint.rules
 
 import com.android.SdkConstants.*

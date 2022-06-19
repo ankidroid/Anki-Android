@@ -38,7 +38,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun testPreviewUnsavedTemplate() {
-
         val modelName = "Basic"
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0)
@@ -142,7 +141,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun testPreviewNormal() {
-
         // Make sure we test previewing a new card template
         val modelName = "Basic (and reversed card)"
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)

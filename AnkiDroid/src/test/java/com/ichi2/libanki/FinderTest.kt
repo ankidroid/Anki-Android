@@ -301,7 +301,9 @@ class FinderTest : RobolectricTest() {
         // should be able to limit to parent col, no children
         var id = col.db.queryLongScalar("select id from cards limit 1")
         col.db.execute(
-            "update cards set did = ? where id = ?", addDeck("Default::Child"), id
+            "update cards set did = ? where id = ?",
+            addDeck("Default::Child"),
+            id
         )
         col.save()
         assertEquals(7, col.findCards("deck:default").size)
@@ -432,7 +434,8 @@ class FinderTest : RobolectricTest() {
         val did = note.firstCard().did
         assertEquals(currentDid, did)
         val cb = super.startActivityNormallyOpenCollectionWithIntent(
-            CardBrowser::class.java, Intent()
+            CardBrowser::class.java,
+            Intent()
         )
         cb.deckSpinnerSelection!!.updateDeckPosition(currentDid)
         advanceRobolectricLooperWithSleep()

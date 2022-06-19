@@ -128,7 +128,7 @@ class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : De
             minutesBetweenAutomaticBackupsPreference,
             dailyBackupsToKeepPreference,
             weeklyBackupsToKeepPreference,
-            monthlyBackupsToKeepPreference,
+            monthlyBackupsToKeepPreference
         ).forEach { preference ->
             preference.summaryProvider = Preference.SummaryProvider<EditTextPreference> {
                 when (viewModel.flowOfState.value) {

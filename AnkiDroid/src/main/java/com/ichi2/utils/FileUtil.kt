@@ -37,6 +37,7 @@ object FileUtil {
             defaultValue
         }
     }
+
     /** Returns the current download Directory */
     fun getDownloadDirectory(): String {
         return Environment.DIRECTORY_DOWNLOADS
@@ -78,7 +79,9 @@ object FileUtil {
         val index = fileName.lastIndexOf(".")
         return if (index < 1) {
             null
-        } else AbstractMap.SimpleEntry(fileName.substring(0, index), fileName.substring(index))
+        } else {
+            AbstractMap.SimpleEntry(fileName.substring(0, index), fileName.substring(index))
+        }
     }
 
     /**

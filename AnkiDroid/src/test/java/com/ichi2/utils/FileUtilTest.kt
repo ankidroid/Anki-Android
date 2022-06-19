@@ -32,6 +32,7 @@ class FileUtilTest {
     @get:Rule
     var temporaryDirectory = TemporaryFolder()
     private var testDirectorySize: Long = 0
+
     @Throws(Exception::class)
     private fun createSrcFilesForTest(temporaryRoot: File, testDirName: String): File {
         val grandParentDir = File(temporaryRoot, testDirName)

@@ -197,7 +197,8 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(
             "Tree has not the expected structure",
             expectedTree(
-                col, true
+                col,
+                true
             ),
             tree
         )

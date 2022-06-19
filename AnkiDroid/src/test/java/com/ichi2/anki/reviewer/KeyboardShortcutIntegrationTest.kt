@@ -42,6 +42,7 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class KeyboardShortcutIntegrationTest : RobolectricTest() {
     private lateinit var mReviewer: Reviewer
+
     @Before
     override fun setUp() {
         super.setUp()

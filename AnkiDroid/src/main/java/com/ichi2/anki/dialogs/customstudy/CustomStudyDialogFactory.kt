@@ -26,7 +26,9 @@ class CustomStudyDialogFactory(val collectionSupplier: Supplier<Collection>, pri
         val cls = loadFragmentClass(classLoader, className)
         return if (cls == CustomStudyDialog::class.java) {
             newCustomStudyDialog()
-        } else super.instantiate(classLoader, className)
+        } else {
+            super.instantiate(classLoader, className)
+        }
     }
 
     fun newCustomStudyDialog(): CustomStudyDialog {

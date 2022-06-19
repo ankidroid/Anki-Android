@@ -34,6 +34,7 @@ class ExecutorTest {
 
     /** the system under test: no initial operations */
     private val underTest = Executor(ArrayDeque())
+
     /** execution context: allows access to the order of execution */
     private val executionContext = MockMigrationContext()
 
@@ -127,7 +128,8 @@ class ExecutorTest {
         assertThat(executionContext.executed[0], equalTo(blockingOp))
         assertThat(
             "a preempted operation is not run if terminate() is called",
-            executionContext.executed, hasSize(1)
+            executionContext.executed,
+            hasSize(1)
         )
     }
 
@@ -148,7 +150,8 @@ class ExecutorTest {
         assertThat(executionContext.executed[0], equalTo(blockingOp))
         assertThat(
             "a regular operation is not run if terminate() is called",
-            executionContext.executed, hasSize(1)
+            executionContext.executed,
+            hasSize(1)
         )
     }
 
@@ -171,6 +174,7 @@ class ExecutorTest {
     class BlockedOperation : Operation() {
         // Semaphore that can be acquired once the operation is not blocked anymore
         val isBlocked = Semaphore(1).apply { acquire() }
+
         // Semaphore that can be acquired after operation start executing
         var isExecuting = Semaphore(1).apply { acquire() }
         override fun execute(context: MigrationContext): List<Operation> {

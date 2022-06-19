@@ -60,22 +60,29 @@ class PieChartTest {
     @Test
     fun paintShouldNotDrawAnythingIfValuesAreZero() {
         mPieChart = PieChart(
-            mPlot!!, doubleArrayOf(0.0, 0.0),
+            mPlot!!,
+            doubleArrayOf(0.0, 0.0),
             arrayOf(
-                ColorWrap.RED, ColorWrap.GREEN
+                ColorWrap.RED,
+                ColorWrap.GREEN
             )
         )
         mPieChart!!.paint(mGraphics!!)
         verify(mGraphics, never()).fillArc(
-            anyFloat(), anyFloat(), anyFloat(), anyFloat(),
-            anyFloat(), anyFloat()
+            anyFloat(),
+            anyFloat(),
+            anyFloat(),
+            anyFloat(),
+            anyFloat(),
+            anyFloat()
         )
     }
 
     @Test
     fun paintShouldDrawFullRedCircleIfOneValue() {
         mPieChart = PieChart(
-            mPlot!!, doubleArrayOf(1.0),
+            mPlot!!,
+            doubleArrayOf(1.0),
             arrayOf(
                 ColorWrap.RED
             )
@@ -85,7 +92,10 @@ class PieChartTest {
         mPieChart!!.paint(mGraphics)
         verify(mGraphics).color = ColorWrap.RED
         verify(mGraphics).fillArc(
-            anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+            anyFloat(),
+            anyFloat(),
+            anyFloat(),
+            anyFloat(),
             floatThat(closeTo(-90.0)),
             floatThat(closeTo(360.0))
         )
@@ -94,9 +104,11 @@ class PieChartTest {
     @Test
     fun paintShouldDrawTwoSectorsWithGivenColors() {
         mPieChart = PieChart(
-            mPlot!!, doubleArrayOf(1.0, 1.0),
+            mPlot!!,
+            doubleArrayOf(1.0, 1.0),
             arrayOf(
-                ColorWrap.RED, ColorWrap.GREEN
+                ColorWrap.RED,
+                ColorWrap.GREEN
             )
         )
         val r = createRectangleMock(100, 100)
@@ -105,13 +117,19 @@ class PieChartTest {
         mPieChart!!.paint(mGraphics)
         verify(mGraphics).color = ColorWrap.RED
         verify(mGraphics).fillArc(
-            anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+            anyFloat(),
+            anyFloat(),
+            anyFloat(),
+            anyFloat(),
             floatThat(closeTo(-90.0)),
             floatThat(closeTo(180.0))
         )
         verify(mGraphics).color = ColorWrap.GREEN
         verify(mGraphics).fillArc(
-            anyFloat(), anyFloat(), anyFloat(), anyFloat(),
+            anyFloat(),
+            anyFloat(),
+            anyFloat(),
+            anyFloat(),
             floatThat(closeTo(90.0)),
             floatThat(closeTo(180.0))
         )

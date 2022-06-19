@@ -30,32 +30,50 @@ object ViewAnimation {
         when (type) {
             SLIDE_IN_FROM_RIGHT -> {
                 animation = translateAnimation(
-                    +1.0f, 0.0f, 0.0f, 0.0f
+                    +1.0f,
+                    0.0f,
+                    0.0f,
+                    0.0f
                 )
             }
             SLIDE_OUT_TO_RIGHT -> {
                 animation = translateAnimation(
-                    0.0f, +1.0f, 0.0f, 0.0f
+                    0.0f,
+                    +1.0f,
+                    0.0f,
+                    0.0f
                 )
             }
             SLIDE_IN_FROM_LEFT -> {
                 animation = translateAnimation(
-                    -1.0f, 0.0f, 0.0f, 0.0f
+                    -1.0f,
+                    0.0f,
+                    0.0f,
+                    0.0f
                 )
             }
             SLIDE_OUT_TO_LEFT -> {
                 animation = translateAnimation(
-                    0.0f, -1.0f, 0.0f, 0.0f
+                    0.0f,
+                    -1.0f,
+                    0.0f,
+                    0.0f
                 )
             }
             SLIDE_IN_FROM_BOTTOM -> {
                 animation = translateAnimation(
-                    0.0f, 0.0f, +1.0f, 0.0f
+                    0.0f,
+                    0.0f,
+                    +1.0f,
+                    0.0f
                 )
             }
             SLIDE_IN_FROM_TOP -> {
                 animation = translateAnimation(
-                    0.0f, 0.0f, -1.0f, 0.0f
+                    0.0f,
+                    0.0f,
+                    -1.0f,
+                    0.0f
                 )
             }
         }

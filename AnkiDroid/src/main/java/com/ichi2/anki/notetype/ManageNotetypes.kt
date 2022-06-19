@@ -59,13 +59,13 @@ class ManageNotetypes : AnkiActivity() {
                 launchForChanges<ModelFieldEditor>(
                     mapOf(
                         "title" to it.name,
-                        "noteTypeID" to it.id,
+                        "noteTypeID" to it.id
                     )
                 )
             },
             onEditCards = { launchForChanges<CardTemplateEditor>(mapOf("modelId" to it.id)) },
             onRename = ::renameNotetype,
-            onDelete = ::deleteNotetype,
+            onDelete = ::deleteNotetype
         )
     }
     private val outsideChangesLauncher =
@@ -227,7 +227,7 @@ class ManageNotetypes : AnkiActivity() {
                 optionsToDisplay.map {
                     String.format(
                         if (it.isStandard) addPrefixStr else clonePrefixStr,
-                        it.name,
+                        it.name
                     )
                 }
             ).apply {

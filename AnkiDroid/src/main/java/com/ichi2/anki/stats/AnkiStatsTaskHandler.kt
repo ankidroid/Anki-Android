@@ -52,7 +52,7 @@ class AnkiStatsTaskHandler private constructor(
     suspend fun createChart(
         chartType: ChartType,
         progressBar: ProgressBar,
-        chartView: ChartView,
+        chartView: ChartView
     ) = withContext(defaultDispatcher) {
         mutex.withLock {
             val plotSheet = if (!this.isActive) {
@@ -61,8 +61,10 @@ class AnkiStatsTaskHandler private constructor(
             } else {
                 Timber.d("Starting CreateChartTask, type: %s", chartType.name)
                 val chartBuilder = ChartBuilder(
-                    chartView, collectionData,
-                    mDeckId, chartType
+                    chartView,
+                    collectionData,
+                    mDeckId,
+                    chartType
                 )
                 chartBuilder.renderChart(statType)
             }
@@ -114,6 +116,7 @@ class AnkiStatsTaskHandler private constructor(
         var instance: AnkiStatsTaskHandler? = null
             private set
         private val mutex = Mutex()
+
         @Synchronized
         fun getInstance(
             collection: Collection,

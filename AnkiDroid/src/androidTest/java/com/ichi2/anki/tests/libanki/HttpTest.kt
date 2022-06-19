@@ -43,7 +43,6 @@ class HttpTest {
     @Suppress("DEPRECATION")
     @Test
     fun testLogin() {
-
         val username = "AnkiDroidInstrumentedTestUser"
         val password = "AnkiDroidInstrumentedTestInvalidPass"
         val invalidPayload = Connection.Payload(arrayOf(username, password, HostNum(null)))

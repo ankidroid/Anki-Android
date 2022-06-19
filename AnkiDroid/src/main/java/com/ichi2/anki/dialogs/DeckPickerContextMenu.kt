@@ -180,7 +180,9 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             val cls = loadFragmentClass(classLoader, className)
             return if (cls == DeckPickerContextMenu::class.java) {
                 newDeckPickerContextMenu()
-            } else super.instantiate(classLoader, className)
+            } else {
+                super.instantiate(classLoader, className)
+            }
         }
 
         private fun newDeckPickerContextMenu(): DeckPickerContextMenu =

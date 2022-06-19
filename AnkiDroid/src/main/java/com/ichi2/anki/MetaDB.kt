@@ -63,10 +63,11 @@ object MetaDB {
     private fun openDB(context: Context) {
         try {
             mMetaDb = context.openOrCreateDatabase(DATABASE_NAME, 0, null).let {
-                if (it.needUpgrade(DATABASE_VERSION))
+                if (it.needUpgrade(DATABASE_VERSION)) {
                     upgradeDB(it, DATABASE_VERSION)
-                else
+                } else {
                     it
+                }
             }
             Timber.v("Opening MetaDB")
         } catch (e: Exception) {
@@ -225,7 +226,10 @@ object MetaDB {
                 mMetaDb!!.execSQL(
                     "INSERT INTO languages (did, ord, qa, language) " + " VALUES (?, ?, ?, ?);",
                     arrayOf<Any>(
-                        did, ord, qa.int, language
+                        did,
+                        ord,
+                        qa.int,
+                        language
                     )
                 )
                 Timber.v("Store language for deck %d", did)
@@ -233,7 +237,10 @@ object MetaDB {
                 mMetaDb!!.execSQL(
                     "UPDATE languages SET language = ? WHERE did = ? AND ord = ? AND qa = ?;",
                     arrayOf<Any>(
-                        language, did, ord, qa.int
+                        language,
+                        did,
+                        ord,
+                        qa.int
                     )
                 )
                 Timber.v("Update language for deck %d", did)
@@ -460,8 +467,13 @@ object MetaDB {
         var cursor: Cursor? = null
         try {
             cursor = mMetaDb!!.query(
-                "smallWidgetStatus", arrayOf("due", "eta"),
-                null, null, null, null, null
+                "smallWidgetStatus",
+                arrayOf("due", "eta"),
+                null,
+                null,
+                null,
+                null,
+                null
             )
             if (cursor.moveToNext()) {
                 return intArrayOf(cursor.getInt(0), cursor.getInt(1))

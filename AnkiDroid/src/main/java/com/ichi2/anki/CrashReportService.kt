@@ -48,12 +48,22 @@ object CrashReportService {
     /** Our ACRA configurations, initialized during Application.onCreate()  */
     @JvmStatic
     private var logcatArgs = arrayOf(
-        "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S"
+        "-t",
+        "100",
+        "-v",
+        "time",
+        "ActivityManager:I",
+        "SQLiteLog:W",
+        AnkiDroidApp.TAG + ":D",
+        "*:S"
     )
+
     @JvmStatic
     private var dialogEnabled = true
+
     @JvmStatic
     private lateinit var toastText: String
+
     @JvmStatic
     lateinit var acraCoreConfigBuilder: CoreConfigurationBuilder
         private set

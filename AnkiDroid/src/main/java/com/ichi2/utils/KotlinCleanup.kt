@@ -36,9 +36,13 @@ annotation class KotlinCleanup(val value: String)
  * by default.
  */
 @Target(
-    AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
-    AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION,
-    AnnotationTarget.FIELD, AnnotationTarget.PROPERTY, AnnotationTarget.LOCAL_VARIABLE
+    AnnotationTarget.CLASS,
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.VALUE_PARAMETER,
+    AnnotationTarget.EXPRESSION,
+    AnnotationTarget.FIELD,
+    AnnotationTarget.PROPERTY,
+    AnnotationTarget.LOCAL_VARIABLE
 )
 @Retention(AnnotationRetention.SOURCE)
 @Repeatable

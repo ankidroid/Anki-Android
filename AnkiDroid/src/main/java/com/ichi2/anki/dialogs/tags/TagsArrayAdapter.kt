@@ -38,6 +38,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         internal lateinit var node: TagTreeNode
         internal val mExpandButton: ImageButton = itemView.findViewById(R.id.id_expand_button)
         internal val mCheckBoxView: CheckBoxTriStates = itemView.findViewById(R.id.tags_dialog_tag_item_checkbox)
+
         // TextView contains the displayed tag (only the last part), while the full tag is stored in TagTreeNode
         internal val mTextView: TextView = itemView.findViewById(R.id.tags_dialog_tag_item_text)
 

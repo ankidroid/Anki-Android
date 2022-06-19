@@ -14,6 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 @file:Suppress("UnstableApiUsage")
+
 package com.ichi2.anki.lint.rules
 
 import com.android.tools.lint.detector.api.*
@@ -43,7 +44,8 @@ class DirectSystemTimeInstantiation : Detector(), SourceCodeScanner {
             "Creating SystemTime instances directly means time cannot be controlled during" +
                 " testing, so it is not allowed. Use the collection's getTime() method instead"
         private val implementation = Implementation(
-            DirectSystemTimeInstantiation::class.java, Scope.JAVA_FILE_SCOPE
+            DirectSystemTimeInstantiation::class.java,
+            Scope.JAVA_FILE_SCOPE
         )
         val ISSUE: Issue = Issue.create(
             ID,

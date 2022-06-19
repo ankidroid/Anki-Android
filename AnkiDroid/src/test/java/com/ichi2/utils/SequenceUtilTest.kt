@@ -26,7 +26,6 @@ class SequenceUtilTest {
 
     @Test
     fun test_take_while_including_first_non_match() {
-
         // empty works and returns empty
         val empty = listOf<String>().asSequence().takeWhileIncludingFirstNonMatch { true }.toList()
 

@@ -24,6 +24,7 @@ import androidx.annotation.UiThread
 
 object WebViewDebugging {
     private var sHasSetDataDirectory = false
+
     @UiThread
     fun initializeDebugging(sharedPrefs: SharedPreferences) {
         // DEFECT: We might be able to cache this value: check what happens on WebView Renderer crash

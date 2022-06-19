@@ -22,6 +22,7 @@
 // usage of 'this' in constructors when class is non-final - weak warning
 // should be OK as this is only non-final for tests
 @file:Suppress("LeakingThis")
+
 package com.ichi2.anki
 
 import android.Manifest
@@ -135,6 +136,7 @@ import kotlin.system.measureTimeMillis
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
 const val POSTPONE_MIGRATION_INTERVAL_DAYS = 5L
+
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
  *
@@ -177,6 +179,7 @@ open class DeckPicker :
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
     private lateinit var mDeckPickerContent: RelativeLayout
+
     @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
     private var mProgressDialog: android.app.ProgressDialog? = null
     private var mStudyoptionsFrame: View? = null // not lateInit - can be null
@@ -189,6 +192,7 @@ open class DeckPicker :
     private lateinit var mNoDecksPlaceholder: LinearLayout
     private lateinit var mPullToSyncWrapper: SwipeRefreshLayout
     private lateinit var mReviewSummaryTextView: TextView
+
     @KotlinCleanup("make lateinit, but needs more changes")
     private var mUnmountReceiver: BroadcastReceiver? = null
     private lateinit var mFloatingActionMenu: DeckPickerFloatingActionMenu
@@ -332,7 +336,9 @@ open class DeckPicker :
             if (context.mProgressDialog == null || !context.mProgressDialog!!.isShowing) {
                 context.mProgressDialog = StyledProgressDialog.show(
                     context,
-                    context.resources.getString(R.string.import_title), null, false
+                    context.resources.getString(R.string.import_title),
+                    null,
+                    false
                 )
             }
         }
@@ -366,7 +372,8 @@ open class DeckPicker :
                 context.mProgressDialog = StyledProgressDialog.show(
                     context,
                     context.resources.getString(R.string.import_title),
-                    context.resources.getString(R.string.import_replacing), false
+                    context.resources.getString(R.string.import_replacing),
+                    false
                 )
             }
         }
@@ -379,6 +386,7 @@ open class DeckPicker :
             context.mProgressDialog!!.setMessage(value)
         }
     }
+
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
@@ -1103,7 +1111,6 @@ open class DeckPicker :
     }
 
     private fun showStartupScreensAndDialogs(preferences: SharedPreferences, skip: Int) {
-
         // For Android 8/8.1 we want to use software rendering by default or the Reviewer UI is broken #7369
         if (sdkVersion == Build.VERSION_CODES.O ||
             sdkVersion == Build.VERSION_CODES.O_MR1
@@ -1620,7 +1627,8 @@ open class DeckPicker :
             if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
                 try {
                     mProgressDialog = StyledProgressDialog.show(
-                        this@DeckPicker, resources.getString(R.string.sync_title),
+                        this@DeckPicker,
+                        resources.getString(R.string.sync_title),
                         """
                                 ${resources.getString(R.string.sync_title)}
                                 ${resources.getString(R.string.sync_up_down_size, mCountUp, mCountDown)}
@@ -1745,7 +1753,8 @@ open class DeckPicker :
                                 diff >= 86100 -> {
                                     // The difference if more than a day minus 5 minutes acceptable by ankiweb error
                                     res.getString(
-                                        R.string.sync_log_clocks_unsynchronized, diff,
+                                        R.string.sync_log_clocks_unsynchronized,
+                                        diff,
                                         res.getString(R.string.sync_log_clocks_unsynchronized_date)
                                     )
                                 }
@@ -1753,7 +1762,8 @@ open class DeckPicker :
                                     // The difference would be within limit if we adjusted the time by few hours
                                     // It doesn't work for all timezones, but it covers most and it's a guess anyway
                                     res.getString(
-                                        R.string.sync_log_clocks_unsynchronized, diff,
+                                        R.string.sync_log_clocks_unsynchronized,
+                                        diff,
                                         res.getString(R.string.sync_log_clocks_unsynchronized_tz)
                                     )
                                 }
@@ -1849,7 +1859,8 @@ open class DeckPicker :
                                 if (dialogMessage == null) {
                                     dialogMessage = res.getString(
                                         R.string.sync_log_error_specific,
-                                        code.toString(), result[1]
+                                        code.toString(),
+                                        result[1]
                                     )
                                 }
                             } else {
@@ -1968,7 +1979,9 @@ open class DeckPicker :
             val frag = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)
             return if (frag is StudyOptionsFragment) {
                 frag
-            } else null
+            } else {
+                null
+            }
         }
 
     /**
@@ -2088,7 +2101,8 @@ open class DeckPicker :
                 setAction(R.string.study_more) {
                     val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.ContextMenuConfiguration.LIMITS,
-                        col.decks.selected(), true
+                        col.decks.selected(),
+                        true
                     )
                     showDialogFragment(d)
                 }
@@ -2127,7 +2141,8 @@ open class DeckPicker :
                 setAction(R.string.custom_study) {
                     val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
-                        col.decks.selected(), true
+                        col.decks.selected(),
+                        true
                     )
                     showDialogFragment(d)
                 }
@@ -2233,7 +2248,8 @@ open class DeckPicker :
             mNoDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
         } else {
             val translation = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 8f,
+                TypedValue.COMPLEX_UNIT_DIP,
+                8f,
                 resources.displayMetrics
             )
             val decksListShown = mDeckPickerContent.visibility == View.VISIBLE
@@ -2618,8 +2634,10 @@ open class DeckPicker :
     internal inner class CheckDatabaseListener : TaskListener<String, Pair<Boolean, CheckDatabaseResult?>?>() {
         override fun onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(
-                this@DeckPicker, AnkiDroidApp.appResources.getString(R.string.app_name),
-                resources.getString(R.string.check_db_message), false
+                this@DeckPicker,
+                AnkiDroidApp.appResources.getString(R.string.app_name),
+                resources.getString(R.string.check_db_message),
+                false
             )
         }
 
@@ -2842,6 +2860,7 @@ open class DeckPicker :
         get() = getSharedPrefs(baseContext).getLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, 0L)
         set(timeInSecond) = getSharedPrefs(baseContext)
             .edit { putLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, timeInSecond) }
+
     /**
      * Show a dialog offering to migrate, postpone or learn more.
      */
@@ -2856,7 +2875,8 @@ open class DeckPicker :
             else -> R.string.migration_update_request_dialog_download_warning
         }
 
-        @Language("HTML") val message = """${getString(R.string.migration_update_request)}
+        @Language("HTML")
+        val message = """${getString(R.string.migration_update_request)}
             <br>
             <br>${getString(ifYouUninstallMessageId)}"""
 
@@ -2903,7 +2923,7 @@ data class OptionsMenuState(
     /** If undo is available, a string describing the action. */
     val undoIcon: String?,
     val syncIcon: SyncIconState,
-    val offerToMigrate: Boolean,
+    val offerToMigrate: Boolean
 )
 
 enum class SyncIconState {
@@ -2911,10 +2931,11 @@ enum class SyncIconState {
     PendingChanges,
     FullSync,
     NotLoggedIn,
+
     /**
      * The icon should appear as disabled. Currently only occurs during scoped storage migration.
      */
-    Disabled,
+    Disabled
 }
 
 /**

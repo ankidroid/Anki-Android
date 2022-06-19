@@ -344,11 +344,15 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             if (deckId == Stats.ALL_DECKS_ID) {
                 return if (other.deckId == Stats.ALL_DECKS_ID) {
                     0
-                } else -1
+                } else {
+                    -1
+                }
             }
             return if (other.deckId == Stats.ALL_DECKS_ID) {
                 1
-            } else DeckNameComparator.INSTANCE.compare(name, other.name)
+            } else {
+                DeckNameComparator.INSTANCE.compare(name, other.name)
+            }
         }
 
         companion object {

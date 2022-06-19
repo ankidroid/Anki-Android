@@ -72,6 +72,7 @@ class ImageField : FieldBase(), IField {
 
     companion object {
         private const val serialVersionUID = 4431611060655809687L
+
         @VisibleForTesting
         fun formatImageFileName(file: File): String {
             return if (file.exists()) {

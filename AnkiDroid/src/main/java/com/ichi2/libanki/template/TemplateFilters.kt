@@ -203,7 +203,8 @@ object TemplateFilters {
                         replacement,
                         Matcher.quoteReplacement(
                             m.group(0)!!.replace(
-                                "{{c$ord::", "{{C$ord::"
+                                "{{c$ord::",
+                                "{{C$ord::"
                             )
                         )
                     )

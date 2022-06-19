@@ -182,8 +182,9 @@ class CanNotWriteToOrCreateFileException(val file: File) : Exception() {
 }
 
 suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirectory() {
-    if (!withContext(Dispatchers.IO) { collectionDirectory.canWriteToOrCreate() })
+    if (!withContext(Dispatchers.IO) { collectionDirectory.canWriteToOrCreate() }) {
         throw CanNotWriteToOrCreateFileException(collectionDirectory)
+    }
 }
 
 suspend fun CollectionDirectoryProvider.collectionDirectoryExists() =

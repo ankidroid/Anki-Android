@@ -33,6 +33,7 @@ import org.junit.runner.RunWith
 class StorageLockingTest : RobolectricTest() {
 
     private var toCleanup: Collection? = null
+
     @After
     fun after() {
         toCleanup?.close()

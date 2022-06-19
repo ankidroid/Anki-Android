@@ -30,6 +30,7 @@ class SearchService {
 
         @get:JvmName("hasResult")
         val hasResult = result != null
+
         @get:JvmName("hasError")
         val hasError = error != null
         fun size() = result?.size ?: 0

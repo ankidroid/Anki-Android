@@ -29,7 +29,6 @@ abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Fi
     }
 
     override fun performFiltering(constraint: CharSequence?): FilterResults {
-
         val itemsBeforeFiltering = getCurrentItems()
 
         if (constraint.isNullOrBlank()) {
@@ -60,6 +59,7 @@ abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Fi
      * @see Filter.performFiltering
      */
     abstract fun filterResults(constraint: CharSequence, items: List<T>): List<T>
+
     /** @see android.widget.Filter.publishResults */
     abstract fun publishResults(constraint: CharSequence?, results: List<T>)
 }

@@ -138,7 +138,8 @@ class YAxis
                     end,
                     field
                 ) + cleanSpace && plotSheet.yToGraphic(currentY, field) <= plotSheet.yToGraphic(
-                        start, field
+                        start,
+                        field
                     ) - cleanSpace && plotSheet.yToGraphic(
                         currentY,
                         field
@@ -175,7 +176,8 @@ class YAxis
             plotSheet.xToGraphic(xOffset, field),
             plotSheet.yToGraphic(
                 Math.min(
-                    plotSheet.getyRange()[1], end
+                    plotSheet.getyRange()[1],
+                    end
                 ),
                 field
             )
@@ -259,7 +261,8 @@ class YAxis
             g.drawString(font, middlePosition[0] - width * 0.1f, middlePosition[1] + width / 2.0f)
         } else {
             g.drawString(
-                font, Math.round(coordStart[0] - width * 1.1f).toFloat(),
+                font,
+                Math.round(coordStart[0] - width * 1.1f).toFloat(),
                 Math.round(
                     coordStart[1] + fontHeight * 0.4f
                 ).toFloat()
@@ -303,7 +306,8 @@ class YAxis
             g.drawString(font, middlePosition[0] + width * 0.1f, middlePosition[1] - width / 2.0f)
         } else {
             g.drawString(
-                font, Math.round(coordStart[0] + width * 0.1f).toFloat(),
+                font,
+                Math.round(coordStart[0] + width * 0.1f).toFloat(),
                 Math.round(
                     coordStart[1] + fontHeight * 0.4f
                 ).toFloat()
@@ -393,7 +397,8 @@ class YAxis
                     end,
                     field
                 ) + cleanSpace && plotSheet.yToGraphic(currentY, field) <= plotSheet.yToGraphic(
-                        start, field
+                        start,
+                        field
                     ) - cleanSpace && plotSheet.yToGraphic(
                         currentY,
                         field

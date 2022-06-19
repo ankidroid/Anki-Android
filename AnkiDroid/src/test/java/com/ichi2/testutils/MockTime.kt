@@ -37,7 +37,8 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
         milliseconds: Int,
         step: Int
     ) : this(
-        timeStamp(year, month, date, hourOfDay, minute, second, milliseconds), step
+        timeStamp(year, month, date, hourOfDay, minute, second, milliseconds),
+        step
     )
 
     /** Time in millisecond since epoch.  */

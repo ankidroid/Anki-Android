@@ -486,6 +486,7 @@ class AnkiPackageExporter : AnkiExporter {
  */
 internal class ZipFile(path: String?) {
     private val mZos: ZipArchiveOutputStream
+
     @Throws(IOException::class)
     fun write(path: String?, entry: String?) {
         val bis = BufferedInputStream(FileInputStream(path), BUFFER_SIZE)

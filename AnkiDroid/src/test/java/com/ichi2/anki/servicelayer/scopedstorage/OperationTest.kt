@@ -64,11 +64,13 @@ interface OperationTest {
          */
         var beforeFile: File? = null
             private set
+
         /**
          * The second file, it moves fails. Null if no moved occurred.
          */
         var failedFile: File? = null // ensure the second file fails
             private set
+
         /**
          * The last file moved, after the failed file. Null if no moved occurred.
          */

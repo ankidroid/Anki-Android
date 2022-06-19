@@ -209,7 +209,7 @@ class ManageSpaceFragment : SettingsFragment() {
             viewModel.flowOfDeleteUnusedMediaSize to deleteUnusedMediaPreference,
             viewModel.flowOfDeleteCollectionSize to deleteCollectionPreference,
             viewModel.flowOfDeleteEverythingSize to deleteEverythingPreference,
-            viewModel.flowOfDeleteBackupsSize to deleteBackupsPreference,
+            viewModel.flowOfDeleteBackupsSize to deleteBackupsPreference
         ).forEach { (flowOfSize, preference) ->
             lifecycleScope.launch { flowOfSize.collect { size -> preference.setWidgetTextBy(size) } }
         }
@@ -317,6 +317,7 @@ class ManageSpaceFragment : SettingsFragment() {
     /************************************* Delete everything **************************************/
 
     @StringRes private var deleteEverythingDialogTitle: Int = 0
+
     @StringRes private var deleteEverythingDialogMessage: Int = 0
 
     private fun adjustDeleteEverythingStringsDependingOnCollectionLocation(preference: Preference) {

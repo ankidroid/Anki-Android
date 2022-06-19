@@ -23,7 +23,9 @@ class TagsDialogFactory(val listener: TagsDialogListener) : ExtendedFragmentFact
         val cls = loadFragmentClass(classLoader, className)
         return if (cls == TagsDialog::class.java) {
             newTagsDialog()
-        } else super.instantiate(classLoader, className)
+        } else {
+            super.instantiate(classLoader, className)
+        }
     }
 
     fun newTagsDialog(): TagsDialog {

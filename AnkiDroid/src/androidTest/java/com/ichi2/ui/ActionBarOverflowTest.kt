@@ -34,7 +34,8 @@ class ActionBarOverflowTest {
     fun hasValidActionBarReflectionMethod() {
         assertThat(
             "Ensures that there is a valid way to obtain a listener",
-            ActionBarOverflow.hasUsableMethod(), equalTo(true)
+            ActionBarOverflow.hasUsableMethod(),
+            equalTo(true)
         )
     }
 

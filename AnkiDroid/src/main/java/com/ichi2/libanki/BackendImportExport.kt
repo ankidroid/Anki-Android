@@ -62,13 +62,13 @@ fun CollectionV16.awaitBackupCompletion() {
 fun importCollectionPackage(
     backend: Backend,
     colPath: String,
-    colpkgPath: String,
+    colpkgPath: String
 ) {
     backend.importCollectionPackage(
         colPath = colPath,
         backupPath = colpkgPath,
         mediaFolder = colPath.replace(".anki2", ".media"),
-        mediaDb = colPath.replace(".anki2", ".media.db"),
+        mediaDb = colPath.replace(".anki2", ".media.db")
     )
 }
 
@@ -108,7 +108,7 @@ fun CollectionV16.exportAnkiPackage(
     withScheduling: Boolean,
     withMedia: Boolean,
     limit: ExportLimit,
-    legacy: Boolean = true,
+    legacy: Boolean = true
 ) {
     backend.exportAnkiPackage(outPath, withScheduling, withMedia, legacy, limit)
 }

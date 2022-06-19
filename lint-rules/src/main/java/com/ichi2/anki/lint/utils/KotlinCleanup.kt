@@ -18,9 +18,13 @@ package com.ichi2.anki.lint.utils
 
 /** Use when code can be changed after further conversion to Kotlin */
 @Target(
-    AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
-    AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION,
-    AnnotationTarget.FIELD, AnnotationTarget.PROPERTY, AnnotationTarget.LOCAL_VARIABLE
+    AnnotationTarget.CLASS,
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.VALUE_PARAMETER,
+    AnnotationTarget.EXPRESSION,
+    AnnotationTarget.FIELD,
+    AnnotationTarget.PROPERTY,
+    AnnotationTarget.LOCAL_VARIABLE
 )
 @Retention(AnnotationRetention.SOURCE)
 @Repeatable

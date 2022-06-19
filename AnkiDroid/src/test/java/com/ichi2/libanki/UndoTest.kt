@@ -82,9 +82,9 @@ class UndoTest : RobolectricTest() {
         }
     }
 
+    // TODO why is this test ignored if it doesn't have @Ignore(happens for both java and kotlin versions)
     @Test
     @Throws(Exception::class)
-    // TODO why is this test ignored if it doesn't have @Ignore(happens for both java and kotlin versions)
     fun test_review() {
         val col = colV2
         with(col) {

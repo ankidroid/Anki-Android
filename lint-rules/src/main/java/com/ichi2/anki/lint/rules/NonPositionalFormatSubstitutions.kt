@@ -15,6 +15,7 @@
  */
 
 @file:Suppress("UnstableApiUsage")
+
 package com.ichi2.anki.lint.rules
 
 import com.android.SdkConstants
@@ -63,7 +64,6 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
     override fun getApplicableElements() = listOf(SdkConstants.TAG_STRING, SdkConstants.TAG_PLURALS)
 
     override fun visitElement(context: XmlContext, element: Element) {
-
         val elementsToCheck = when (element.tagName) {
             SdkConstants.TAG_PLURALS -> element.childrenSequence()
                 // skip if the item was not a plural (style, etc...)

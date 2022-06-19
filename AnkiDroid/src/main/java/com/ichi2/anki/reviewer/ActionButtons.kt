@@ -49,7 +49,9 @@ class ActionButtons(reviewerUi: ReviewerUi) {
     private fun findMenuItem(@IdRes resId: Int): MenuItem? {
         return if (mMenu == null) {
             null
-        } else mMenu!!.findItem(resId)
+        } else {
+            mMenu!!.findItem(resId)
+        }
     }
 
     private fun isLikelyActionButton(@IdRes resourceId: Int): Boolean {

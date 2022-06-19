@@ -109,7 +109,8 @@ class Tags
     override fun allItems(): Set<TagUsnTuple> {
         return mTags.entries.map { (key, value): Map.Entry<String, Int?> ->
             TagUsnTuple(
-                key, value!!
+                key,
+                value!!
             )
         }.toSet()
     }

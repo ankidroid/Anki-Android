@@ -267,7 +267,9 @@ class CardInfo : AnkiActivity() {
             fun intervalAsTimeSeconds(): Long {
                 return if (ivl < 0) {
                     -ivl
-                } else ivl * Stats.SECONDS_PER_DAY
+                } else {
+                    ivl * Stats.SECONDS_PER_DAY
+                }
             }
 
             // saves space if we just use seconds rather than a "s" suffix

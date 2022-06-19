@@ -168,7 +168,8 @@ fun openUrl(activity: AnkiActivity): OpenUri = activity::openUrl
  * @return the dialog
  */
 fun AlertDialog.Builder.addScopedStorageLearnMoreLinkAndShow(@Language("HTML") message: String): AlertDialog {
-    @Language("HTML") val messageWithLink = """$message
+    @Language("HTML")
+    val messageWithLink = """$message
             <br>
             <br><a href='${context.getString(R.string.link_scoped_storage_faq)}'>${context.getString(R.string.scoped_storage_learn_more)}</a>
     """.trimIndent().parseAsHtml()

@@ -32,7 +32,9 @@ object BundleUtils {
     fun getNullableLong(bundle: Bundle?, key: String): Long? {
         return if (bundle == null || !bundle.containsKey(key)) {
             null
-        } else bundle.getLong(key)
+        } else {
+            bundle.getLong(key)
+        }
     }
 
     /**

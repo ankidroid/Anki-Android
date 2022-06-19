@@ -81,6 +81,7 @@ class SetupCollectionFragment : Fragment() {
     enum class CollectionSetupOption {
         /** Continues to the DeckPicker with a new collection */
         DeckPickerWithNewCollection,
+
         /** Syncs an existing profile from AnkiWeb */
         SyncFromExistingAccount
     }

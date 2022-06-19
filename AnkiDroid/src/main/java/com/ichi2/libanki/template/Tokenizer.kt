@@ -172,6 +172,7 @@ class Tokenizer internal constructor(template: String) : Iterator<Tokenizer.Toke
          * Same as rslib/src/template's ALT_HANDLEBAR_DIRECTIVE upstream */
         @VisibleForTesting
         val ALT_HANDLEBAR_DIRECTIVE = "{{=<% %>=}}"
+
         @VisibleForTesting
         fun new_to_legacy(template_part: String): String {
             return template_part.replace("{{", "<%").replace("}}", "%>")
@@ -202,13 +203,15 @@ class Tokenizer internal constructor(template: String) : Iterator<Tokenizer.Toke
             }
             return if (text_size == 0) {
                 null
-            } else IResult(
-                Token(
-                    TokenKind.TEXT,
-                    template.substring(0, text_size)
-                ),
-                template.substring(text_size)
-            )
+            } else {
+                IResult(
+                    Token(
+                        TokenKind.TEXT,
+                        template.substring(0, text_size)
+                    ),
+                    template.substring(text_size)
+                )
+            }
         }
 
         /**
@@ -226,23 +229,25 @@ class Tokenizer internal constructor(template: String) : Iterator<Tokenizer.Toke
                     TokenKind.REPLACEMENT,
                     start
                 )
-            } else when (start[0]) {
-                '#' -> Token(
-                    TokenKind.OPEN_CONDITIONAL,
-                    start.substring(1).trim { it <= ' ' }
-                )
-                '/' -> Token(
-                    TokenKind.CLOSE_CONDITIONAL,
-                    start.substring(1).trim { it <= ' ' }
-                )
-                '^' -> Token(
-                    TokenKind.OPEN_NEGATED,
-                    start.substring(1).trim { it <= ' ' }
-                )
-                else -> Token(
-                    TokenKind.REPLACEMENT,
-                    start
-                )
+            } else {
+                when (start[0]) {
+                    '#' -> Token(
+                        TokenKind.OPEN_CONDITIONAL,
+                        start.substring(1).trim { it <= ' ' }
+                    )
+                    '/' -> Token(
+                        TokenKind.CLOSE_CONDITIONAL,
+                        start.substring(1).trim { it <= ' ' }
+                    )
+                    '^' -> Token(
+                        TokenKind.OPEN_NEGATED,
+                        start.substring(1).trim { it <= ' ' }
+                    )
+                    else -> Token(
+                        TokenKind.REPLACEMENT,
+                        start
+                    )
+                }
             }
         }
 
@@ -259,7 +264,9 @@ class Tokenizer internal constructor(template: String) : Iterator<Tokenizer.Toke
             }
             return if (legacy) {
                 legacy_handlebar_token(template)
-            } else null
+            } else {
+                null
+            }
         }
 
         /**

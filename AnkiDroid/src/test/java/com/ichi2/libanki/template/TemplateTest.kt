@@ -47,7 +47,8 @@ class TemplateTest : RobolectricTest() {
 
         assertThat(rendered, notNullValue())
         assertThat(
-            rendered, containsString("there is no field called '!Front'")
+            rendered,
+            containsString("there is no field called '!Front'")
         )
     }
 

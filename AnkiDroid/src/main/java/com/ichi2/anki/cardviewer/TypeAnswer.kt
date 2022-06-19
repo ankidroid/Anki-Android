@@ -46,9 +46,11 @@ class TypeAnswer(
 
     /** What the learner actually typed (externally mutable) */
     var input = ""
+
     /** Font face of the 'compare to' field */
     var font = ""
         private set
+
     /** The font size of the 'compare to' field */
     var size = 0
         private set

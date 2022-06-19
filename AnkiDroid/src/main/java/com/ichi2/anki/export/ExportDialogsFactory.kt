@@ -34,7 +34,9 @@ internal class ExportDialogsFactory(
         }
         return if (cls == ExportCompleteDialog::class.java) {
             newExportCompleteDialog()
-        } else super.instantiate(classLoader, className)
+        } else {
+            super.instantiate(classLoader, className)
+        }
     }
 
     fun newExportDialog(): ExportDialog {

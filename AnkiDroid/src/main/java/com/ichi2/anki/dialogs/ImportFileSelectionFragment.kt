@@ -60,7 +60,7 @@ class ImportFileSelectionFragment {
                     R.drawable.ic_manual_black_24dp,
                     UsageAnalytics.Actions.IMPORT_COLPKG_FILE,
                     OpenFilePicker(DeckPicker.PICK_APKG_FILE)
-                ),
+                )
             )
             if (!BackendFactory.defaultLegacySchema) {
                 val mimes = arrayOf("text/plain", "text/comma-separated-values", "text/csv", "text/tab-separated-values")

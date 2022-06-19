@@ -35,6 +35,7 @@ class TextNoteExporterTest(
     private lateinit var collection: Collection
     private lateinit var exporter: TextNoteExporter
     private lateinit var noteList: List<Note>
+
     @Before
     override fun setUp() {
         super.setUp()

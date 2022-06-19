@@ -113,7 +113,9 @@ open class BackupManager {
         // If have no backups, then a backup is necessary
         return if (len <= 0) {
             false
-        } else colBackups[len - 1].lastModified() == colFile.lastModified()
+        } else {
+            colBackups[len - 1].lastModified() == colFile.lastModified()
+        }
 
         // no collection changes means we don't need a backup
     }

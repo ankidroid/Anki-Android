@@ -65,7 +65,9 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
             val percentage: Double
                 get() = if (correct == 0) {
                     0.0
-                } else correct.toDouble() / total.toDouble() * 100.0
+                } else {
+                    correct.toDouble() / total.toDouble() * 100.0
+                }
         }
     }
 
@@ -98,7 +100,8 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
         val daysStudied = res.getString(
             stats_overview_days_studied,
             (oStats.daysStudied.toFloat() / oStats.allDays.toFloat() * 100).toInt(),
-            oStats.daysStudied, oStats.allDays
+            oStats.daysStudied,
+            oStats.allDays
         )
 
         // FORECAST
@@ -192,7 +195,9 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
         stringBuilder.append(
             res.getQuantityString(
                 com.ichi2.anki.R.plurals.stats_today_cards,
-                todayStats[CARDS_INDEX], todayStats[CARDS_INDEX], span
+                todayStats[CARDS_INDEX],
+                todayStats[CARDS_INDEX],
+                span
             )
         )
         stringBuilder.append("<br>")

@@ -84,6 +84,7 @@ class PagesActivity : AnkiActivity() {
          * as arguments of the [PageFragment] that will be opened
          */
         const val EXTRA_PAGE_ARGS = "pageArgs"
+
         /**
          * Extra key of [PagesActivity]'s intent that must be included and
          * hold the name of an [Anki HTML page](https://github.com/ankitects/anki/tree/main/ts)

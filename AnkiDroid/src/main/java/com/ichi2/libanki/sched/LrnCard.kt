@@ -21,7 +21,8 @@ import com.ichi2.libanki.Collection
 
 class LrnCard(col: Collection, val due: Long, cid: Long) :
     Card.Cache(
-        col, cid
+        col,
+        cid
     ),
     Comparable<LrnCard> {
     override fun compareTo(other: LrnCard): Int {

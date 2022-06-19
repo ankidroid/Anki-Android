@@ -54,8 +54,10 @@ class FilterSheetBottomFragment :
     private lateinit var flagListAdapter: FlagsAdapter
 
     private lateinit var flagToggleIcon: ImageView
+
     /** Heading of the Flags filter section */
     private lateinit var filterHeaderFlags: TextView
+
     /** Icon of the Flags filter section */
     private lateinit var filterIconFlags: ImageView
 
@@ -145,9 +147,7 @@ class FilterSheetBottomFragment :
         }
 
         flagsHeaderLayout.setOnClickListener {
-
             if (SystemClock.elapsedRealtime() - lastClickTime > DELAY_TIME) {
-
                 lastClickTime = SystemClock.elapsedRealtime().toInt()
 
                 if (flagsRecyclerViewLayout.isVisible) {
@@ -164,7 +164,6 @@ class FilterSheetBottomFragment :
     private fun createQuery(
         flagList: Set<SearchNode.Flag>
     ): String {
-
         if (flagList.isEmpty()) {
             return ""
         }
@@ -207,6 +206,7 @@ class FilterSheetBottomFragment :
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             private val itemTextView: TextView = view.findViewById(R.id.filter_list_item)
             val icon: ImageView = view.findViewById(R.id.filter_list_icon)
+
             /** Checks whether flagSearchItems was empty before adding new element to it */
 
             private fun onFlagItemClicked(item: Flags) {

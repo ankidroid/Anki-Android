@@ -41,7 +41,8 @@ open class VersatileTextPreference(context: Context, attrs: AttributeSet?) :
     EditTextPreference(context, attrs), DialogFragmentProvider {
 
     fun interface Validator {
-        @Throws(Exception::class) fun validate(value: String)
+        @Throws(Exception::class)
+        fun validate(value: String)
     }
 
     val referenceEditText = AppCompatEditText(context, attrs)

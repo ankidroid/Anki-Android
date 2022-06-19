@@ -64,6 +64,7 @@ class Toolbar : FrameLayout {
     var formatListener: TextFormatListener? = null
     private val mToolbar: LinearLayout
     private val mToolbarLayout: LinearLayout
+
     /** A list of buttons, typically user-defined which modify text + selection */
     private val mCustomButtons: MutableList<View> = ArrayList()
     private val mRows: MutableList<LinearLayout> = ArrayList()

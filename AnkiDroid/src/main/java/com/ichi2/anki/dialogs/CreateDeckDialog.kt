@@ -172,7 +172,6 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         if (deckName.isNotEmpty()) {
             when (deckDialogType) {
                 DeckDialogType.DECK -> {
-
                     // create deck
                     createDeck(deckName)
                 }
@@ -180,12 +179,10 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
                     renameDeck(deckName)
                 }
                 DeckDialogType.SUB_DECK -> {
-
                     // create sub deck
                     createSubDeck(parentId!!, deckName)
                 }
                 DeckDialogType.FILTERED_DECK -> {
-
                     // create filtered deck
                     createFilteredDeck(deckName)
                 }

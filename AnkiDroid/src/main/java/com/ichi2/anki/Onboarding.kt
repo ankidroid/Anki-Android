@@ -80,7 +80,7 @@ abstract class Onboarding<Feature>(
                     DECK_PICKER_ONBOARDING,
                     REVIEWER_ONBOARDING,
                     NOTE_EDITOR_ONBOARDING,
-                    CARD_BROWSER_ONBOARDING,
+                    CARD_BROWSER_ONBOARDING
                 )
             )
         }

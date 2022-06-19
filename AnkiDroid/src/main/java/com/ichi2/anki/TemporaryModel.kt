@@ -37,6 +37,7 @@ class TemporaryModel(model: Model) {
 
     private var mTemplateChanges = ArrayList<Array<Any>>()
     var editedModelFileName: String? = null
+
     @KotlinCleanup("make this a constructor property")
     val model: Model
 

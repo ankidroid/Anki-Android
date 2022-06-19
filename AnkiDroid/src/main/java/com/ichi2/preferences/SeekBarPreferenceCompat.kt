@@ -258,7 +258,8 @@ constructor(
         fun getLayoutParams(weight: Float): LinearLayout.LayoutParams {
             return LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT, weight
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                weight
             )
         }
     }

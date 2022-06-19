@@ -46,20 +46,33 @@ import kotlin.test.assertTrue
 class DeckPickerFloatingActionMenuTest {
 
     @Mock private val deckPicker: DeckPicker = mock()
+
     @Mock private lateinit var mFabMain: FloatingActionButton
+
     @Mock private val mAddSharedLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+
     @Mock private val mAddDeckLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+
     @Mock private val mAddNoteLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+
     @Mock private val mFabBGLayout: View = mock()
+
     @Mock private val mLinearLayout: LinearLayout = mock()
+
     @Mock private val mStudyOptionsFrame: View = mock()
+
     @Mock private lateinit var view: View
 
     @Mock private val addNoteButton: FloatingActionButton = mock()
+
     @Mock private val addSharedButton: FloatingActionButton = mock()
+
     @Mock private val addDeckButton: FloatingActionButton = mock()
+
     @Mock private val addNoteLabel: TextView = mock()
+
     @Mock private val addSharedLabel: TextView = mock()
+
     @Mock private val addDeckLabel: TextView = mock()
 
     @InjectMocks

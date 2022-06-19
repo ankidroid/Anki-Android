@@ -72,7 +72,8 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
                 showThemedToast(context, context.resources.getString(R.string.steps_error), false)
             } else if (validated.isEmpty() && !mAllowEmpty) {
                 showThemedToast(
-                    context, context.resources.getString(R.string.steps_min_error),
+                    context,
+                    context.resources.getString(R.string.steps_min_error),
                     false
                 )
             } else {

@@ -227,23 +227,27 @@ public object FlashCardsContract {
          */
         @Suppress("ObjectPropertyName")
         public const val _ID: String = "_id"
+
         // field is part of the default projection available to the clients
         @Suppress("MemberVisibilityCanBePrivate")
         public const val GUID: String = "guid"
         public const val MID: String = "mid"
         public const val ALLOW_EMPTY: String = "allow_empty"
         public const val MOD: String = "mod"
+
         // field is part of the default projection available to the clients
         @Suppress("MemberVisibilityCanBePrivate")
         public const val USN: String = "usn"
         public const val TAGS: String = "tags"
         public const val FLDS: String = "flds"
+
         // field is part of the default projection available to the clients
         @Suppress("MemberVisibilityCanBePrivate")
         public const val SFLD: String = "sfld"
         public const val CSUM: String = "csum"
         public const val FLAGS: String = "flags"
         public const val DATA: String = "data"
+
         @JvmField // required for Java API
         public val DEFAULT_PROJECTION: Array<String> = arrayOf(
             _ID,
@@ -372,6 +376,7 @@ public object FlashCardsContract {
          * This is only used when the "Deck for new cards" preference is set to "Decide by note type"
          */
         public const val DECK_ID: String = "deck_id"
+
         @JvmField // required for Java API
         public val DEFAULT_PROJECTION: Array<String> = arrayOf(
             _ID,
@@ -606,6 +611,7 @@ public object FlashCardsContract {
          * (like a duplicate of the question) this is removed for ANSWER_PURE
          */
         public const val ANSWER_PURE: String = "answer_pure"
+
         @JvmField // required for Java API
         public val DEFAULT_PROJECTION: Array<String> = arrayOf(
             NOTE_ID,
@@ -784,6 +790,7 @@ public object FlashCardsContract {
          * Write-only field, allows suspending of a card when set to 1
          */
         public const val SUSPEND: String = "suspended"
+
         @JvmField // required for Java API
         public val DEFAULT_PROJECTION: Array<String> = arrayOf(
             NOTE_ID,
@@ -894,6 +901,7 @@ public object FlashCardsContract {
     public object Deck {
         @JvmField // required for Java API
         public val CONTENT_ALL_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "decks")
+
         @JvmField // required for Java API
         public val CONTENT_SELECTED_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "selected_deck")
 
@@ -926,6 +934,7 @@ public object FlashCardsContract {
          * Deck description
          */
         public const val DECK_DESC: String = "deck_desc"
+
         @JvmField // required for Java API
         public val DEFAULT_PROJECTION: Array<String> = arrayOf(
             DECK_NAME,

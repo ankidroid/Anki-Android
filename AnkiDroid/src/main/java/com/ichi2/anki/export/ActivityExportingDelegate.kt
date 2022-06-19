@@ -202,7 +202,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                 activity.getString(
                     R.string.export_email_text,
                     activity.getString(R.string.link_manual),
-                    activity.getString(R.string.link_distributions),
+                    activity.getString(R.string.link_distributions)
                 )
             )
             .intent.apply {
@@ -311,13 +311,15 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         if (::mExportFileName.isInitialized && !mExportFileName.endsWith(".colpkg")) return
         AnkiDroidApp.getSharedPrefs(activity).edit {
             putLong(
-                LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY, TimeManager.time.intTime()
+                LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY,
+                TimeManager.time.intTime()
             )
         }
         val col = collectionSupplier.get()
         AnkiDroidApp.getSharedPrefs(activity).edit {
             putLong(
-                LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY, col.mod
+                LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY,
+                col.mod
             )
         }
     }

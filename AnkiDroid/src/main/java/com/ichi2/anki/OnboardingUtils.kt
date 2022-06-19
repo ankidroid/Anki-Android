@@ -32,6 +32,7 @@ class OnboardingUtils {
          * Preference can be toggled by visiting 'Advanced' settings in the app.
          */
         const val SHOW_ONBOARDING = "showOnboarding"
+
         @VisibleForTesting
         val featureConstants: MutableSet<String> = HashSet()
 

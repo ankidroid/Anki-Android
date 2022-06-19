@@ -72,7 +72,7 @@ class TemplateManager {
                                 TemplateReplacement(
                                     field_name = node.replacement.fieldName,
                                     current_text = node.replacement.currentText,
-                                    filters = node.replacement.filtersList,
+                                    filters = node.replacement.filtersList
                                 )
                             )
                         )
@@ -92,7 +92,7 @@ class TemplateManager {
                         lang = tag.tts.lang,
                         voices = tag.tts.voicesList,
                         otherArgs = tag.tts.otherArgsList,
-                        speed = tag.tts.speed,
+                        speed = tag.tts.speed
                     )
                 }
             }
@@ -145,7 +145,7 @@ class TemplateManager {
                 card: Card,
                 notetype: NoteType,
                 template: JSONObject,
-                fill_empty: bool,
+                fill_empty: bool
             ): TemplateRenderContext {
                 return TemplateRenderContext(
                     note.col,
@@ -153,7 +153,7 @@ class TemplateManager {
                     note,
                     notetype = notetype,
                     template = template,
-                    fill_empty = fill_empty,
+                    fill_empty = fill_empty
                 )
             }
         }
@@ -213,7 +213,7 @@ class TemplateManager {
                     question_text = e.localizedMessage ?: e.toString(),
                     answer_text = e.localizedMessage ?: e.toString(),
                     question_av_tags = emptyList(),
-                    answer_av_tags = emptyList(),
+                    answer_av_tags = emptyList()
                 )
             }
 
@@ -236,7 +236,7 @@ class TemplateManager {
                 answer_text = aoutText,
                 question_av_tags = av_tags_to_native(qout.avTagsList),
                 answer_av_tags = av_tags_to_native(aout.avTagsList),
-                css = note_type().getString("css"),
+                css = note_type().getString("css")
             )
 
             return output
@@ -251,7 +251,7 @@ class TemplateManager {
                         _note.toBackendNote(),
                         _card.ord,
                         BackendUtils.to_json_bytes(_template!!.deepClone()),
-                        _fill_empty,
+                        _fill_empty
                     )
                 } else {
                     // existing card (eg study mode)

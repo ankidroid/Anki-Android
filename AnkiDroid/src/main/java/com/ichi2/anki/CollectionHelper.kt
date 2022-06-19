@@ -74,7 +74,8 @@ open class CollectionHelper {
         Timber.i("Begin openCollection: %s", path)
         val backend = BackendFactory.getBackend(context)
         val collection = Storage.collection(
-            context, path,
+            context,
+            path,
             server = false,
             log = true,
             backend = backend
@@ -218,13 +219,15 @@ open class CollectionHelper {
             }
             val required = Formatter.formatShortFileSize(context, mRequiredSpace)
             val insufficientSpace = context.resources.getString(
-                R.string.integrity_check_insufficient_space, required
+                R.string.integrity_check_insufficient_space,
+                required
             )
 
             // Also concat in the extra content showing the current free space.
             val currentFree = Formatter.formatShortFileSize(context, mFreeSpace)
             val insufficientSpaceCurrentFree = context.resources.getString(
-                R.string.integrity_check_insufficient_space_extra_content, currentFree
+                R.string.integrity_check_insufficient_space_extra_content,
+                currentFree
             )
             return insufficientSpace + insufficientSpaceCurrentFree
         }
@@ -534,10 +537,12 @@ open class CollectionHelper {
                     getDefaultAnkiDroidDirectory(context),
                     "androidTest"
                 ).absolutePath
-            } else PreferenceExtensions.getOrSetString(
-                preferences,
-                PREF_COLLECTION_PATH
-            ) { getDefaultAnkiDroidDirectory(context) }
+            } else {
+                PreferenceExtensions.getOrSetString(
+                    preferences,
+                    PREF_COLLECTION_PATH
+                ) { getDefaultAnkiDroidDirectory(context) }
+            }
         }
 
         /** Fetches additional collection data not required for

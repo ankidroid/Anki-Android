@@ -57,6 +57,7 @@ class Directory private constructor(val directory: File) {
          * Otherwise returns `null`.
          */
         fun createInstance(path: String): Directory? = createInstance(File(path))
+
         /**
          * Returns a [Directory] from [file] if `Directory` precondition holds; i.e. [file] is an existing directory.
          * Otherwise returns `null`.
@@ -67,6 +68,7 @@ class Directory private constructor(val directory: File) {
             }
             return Directory(file)
         }
+
         /** Creates an instance. Only call it if [Directory] preconditions are known to be true */
         fun createInstanceUnsafe(file: File) = Directory(file)
     }

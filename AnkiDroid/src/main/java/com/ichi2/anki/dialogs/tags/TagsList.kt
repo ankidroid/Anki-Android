@@ -129,6 +129,7 @@ class TagsList constructor(
         addAncestors(tag)
         return true
     }
+
     /**
      * Mark a tag as checked tag.
      * Optionally mark ancestors as indeterminate

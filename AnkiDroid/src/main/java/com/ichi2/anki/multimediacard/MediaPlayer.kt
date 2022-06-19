@@ -53,8 +53,9 @@ class MediaPlayer :
 
     override fun setDataSource(context: Context, uri: Uri) {
         super.setDataSource(context, uri)
-        if (state == IDLE)
+        if (state == IDLE) {
             state = INITIALIZED
+        }
     }
 
     override fun setDataSource(
@@ -64,44 +65,51 @@ class MediaPlayer :
         cookies: MutableList<HttpCookie>?
     ) {
         super.setDataSource(context, uri, headers, cookies)
-        if (state == IDLE)
+        if (state == IDLE) {
             state = INITIALIZED
+        }
     }
 
     override fun setDataSource(context: Context, uri: Uri, headers: MutableMap<String, String>?) {
         super.setDataSource(context, uri, headers)
-        if (state == IDLE)
+        if (state == IDLE) {
             state = INITIALIZED
+        }
     }
 
     override fun setDataSource(path: String?) {
         super.setDataSource(path)
-        if (state == IDLE)
+        if (state == IDLE) {
             state = INITIALIZED
+        }
     }
 
     override fun setDataSource(afd: AssetFileDescriptor) {
         super.setDataSource(afd)
-        if (state == IDLE)
+        if (state == IDLE) {
             state = INITIALIZED
+        }
     }
 
     override fun setDataSource(fd: FileDescriptor?) {
         super.setDataSource(fd)
-        if (state == IDLE)
+        if (state == IDLE) {
             state = INITIALIZED
+        }
     }
 
     override fun setDataSource(fd: FileDescriptor?, offset: Long, length: Long) {
         super.setDataSource(fd, offset, length)
-        if (state == IDLE)
+        if (state == IDLE) {
             state = INITIALIZED
+        }
     }
 
     override fun setDataSource(dataSource: MediaDataSource?) {
         super.setDataSource(dataSource)
-        if (state == IDLE)
+        if (state == IDLE) {
             state = INITIALIZED
+        }
     }
 
     override fun reset() {

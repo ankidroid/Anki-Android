@@ -35,6 +35,7 @@ abstract class Importer(col: Collection, protected var file: String) {
     var cardCount: Int
         protected set
     protected val mCol: Collection
+
     @KotlinCleanup("rename")
     protected var _total: Int
     private var mTs: Long = 0
@@ -42,6 +43,7 @@ abstract class Importer(col: Collection, protected var file: String) {
     protected lateinit var src: Collection
     protected val context: Context
     protected var progress: TaskManager.ProgressCallback<String>? = null
+
     @Throws(ImportExportException::class)
     abstract fun run()
 

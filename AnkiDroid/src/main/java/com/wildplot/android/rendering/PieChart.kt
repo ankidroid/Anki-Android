@@ -79,7 +79,11 @@ class PieChart(plotSheet: PlotSheet, values: DoubleArray, colors: Array<ColorWra
         // last one does need some corrections to fill a full circle:
         g.color = lastSectorColor
         g.fillArc(
-            left, top, diameter, diameter, currentAngle,
+            left,
+            top,
+            diameter,
+            diameter,
+            currentAngle,
             360f + FIRST_SECTOR_OFFSET - currentAngle
         )
         g.color = ColorWrap.black

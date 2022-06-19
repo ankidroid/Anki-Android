@@ -31,7 +31,8 @@ class AnkiStatsTaskHandlerTest : RobolectricTest() {
     @Test
     fun testCreateReviewSummaryStatistics() = runTest {
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
-            DeckPicker::class.java, Intent()
+            DeckPicker::class.java,
+            Intent()
         )
         assertNull(AnkiStatsTaskHandler.getReviewSummaryStatisticsString(deckPicker))
     }

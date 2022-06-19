@@ -41,6 +41,7 @@ import java.util.*
 @KotlinCleanup("lots to do")
 class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
     private val mDeckList: MutableList<TreeNode<AbstractDeckTreeNode>>
+
     /** A subset of mDeckList (currently displayed)  */
     private val mCurrentDeckList: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList()
     private val mZeroCountColor: Int
@@ -356,7 +357,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
 
         private fun filterDeckInternal(filterPattern: String, root: TreeNode<AbstractDeckTreeNode>): TreeNode<AbstractDeckTreeNode>? {
-
             // If a deck contains the string, then all its children are valid
             if (containsFilterString(filterPattern, root.value)) {
                 return root

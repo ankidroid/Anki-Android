@@ -157,6 +157,7 @@ open class NumberRangePreference : android.preference.EditTextPreference, AutoFo
          * @return the persisted value.
          */
         get() = getPersistedInt(mMin)
+
         /**
          * Set this preference's value. The value is validated and persisted as an Integer.
          *

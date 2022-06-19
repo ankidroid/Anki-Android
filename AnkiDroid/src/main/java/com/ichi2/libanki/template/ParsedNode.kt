@@ -56,9 +56,13 @@ abstract class ParsedNode {
         } catch (er: TemplateError) {
             Timber.w(er)
             val side =
-                if (question) context.getString(R.string.card_template_editor_front) else context.getString(
-                    R.string.card_template_editor_back
-                )
+                if (question) {
+                    context.getString(R.string.card_template_editor_front)
+                } else {
+                    context.getString(
+                        R.string.card_template_editor_back
+                    )
+                }
             val explanation = context.getString(R.string.has_a_problem, side, er.message(context))
             val more_explanation =
                 "<a href=\"" + TEMPLATE_ERROR_LINK + "\">" + context.getString(R.string.more_information) + "</a>"

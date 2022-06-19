@@ -154,7 +154,8 @@ class CreateDeckDialogTest : RobolectricTest() {
 
             updateSearchDecksIcon(deckPicker)
             assertEquals(
-                deckPicker.optionsMenuState?.searchIcon, decksCount() >= 10
+                deckPicker.optionsMenuState?.searchIcon,
+                decksCount() >= 10
             )
 
             // After the last deck was created, delete a deck

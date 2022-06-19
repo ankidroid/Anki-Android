@@ -59,7 +59,7 @@ object NoteFieldDecorator {
         "unacvatpuvarfr",
         "jro5atnl",
         "FuevquneTbry",
-        "Nxfunl0701",
+        "Nxfunl0701"
     )
 
     fun aplicaHuevo(fieldText: String?): String? {
@@ -84,10 +84,13 @@ object NoteFieldDecorator {
         val revuelto = StringBuilder()
         for (i in 0 until huevo.length) {
             var c = huevo[i]
-            if (c >= 'a' && c <= 'm') c += 13.toChar().code
-            else if (c >= 'A' && c <= 'M') c += 13.toChar().code
-            else if (c >= 'n' && c <= 'z') c -= 13.toChar().code
-            else if (c >= 'N' && c <= 'Z') c -= 13.toChar().code
+            if (c >= 'a' && c <= 'm') {
+                c += 13.toChar().code
+            } else if (c >= 'A' && c <= 'M') {
+                c += 13.toChar().code
+            } else if (c >= 'n' && c <= 'z') {
+                c -= 13.toChar().code
+            } else if (c >= 'N' && c <= 'Z') c -= 13.toChar().code
             revuelto.append(c)
         }
         return revuelto.toString()

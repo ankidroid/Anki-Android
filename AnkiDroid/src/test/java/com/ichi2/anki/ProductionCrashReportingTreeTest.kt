@@ -35,7 +35,6 @@ import java.lang.RuntimeException
 class ProductionCrashReportingTreeTest {
     @Before
     fun setUp() {
-
         // setup - simply instrument the class and do same log init as production
         Timber.plant(AnkiDroidApp.ProductionCrashReportingTree())
     }
@@ -83,11 +82,10 @@ class ProductionCrashReportingTreeTest {
      */
     @Test
     fun testProductionLogTag() {
-
         var testWithProperClassNameCalled = false
+
         // this is required to ensure 'NativeMethodAccessorImpl' isn't the class name
         fun testWithProperClassName(autoClosed: MockedStatic<Log>) {
-
             // Now let's run through our API calls...
             Timber.i("info level message")
             Timber.w("warn level message")

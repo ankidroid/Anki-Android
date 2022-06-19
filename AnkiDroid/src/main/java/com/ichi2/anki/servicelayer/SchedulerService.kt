@@ -26,7 +26,6 @@ import com.ichi2.libanki.UndoAction.UndoNameId
 import com.ichi2.utils.Computation
 import timber.log.Timber
 import java.util.*
-import java.util.concurrent.CancellationException
 import kotlin.collections.ArrayList
 import com.ichi2.libanki.Collection as AnkiCollection
 
@@ -44,6 +43,7 @@ class SchedulerService {
      */
     class NextCard<out T>(private val card: Card?, val result: T) {
         fun hasNoMoreCards(): Boolean = card == null
+
         /** Returns the next scheduled card
          * Only call if noMoreCards returns false */
         fun nextScheduledCard(): Card = card!!
@@ -188,7 +188,11 @@ class SchedulerService {
         }
     }
 
-    class UndoRepositionRescheduleResetCards(@StringRes @UndoNameId undoNameId: Int, private val cardsCopied: Array<Card>) : UndoAction(undoNameId) {
+    class UndoRepositionRescheduleResetCards(
+        @StringRes @UndoNameId
+        undoNameId: Int,
+        private val cardsCopied: Array<Card>
+    ) : UndoAction(undoNameId) {
         override fun undo(col: AnkiCollection): Card? {
             Timber.i("Undoing action of type %s on %d cards", javaClass, cardsCopied.size)
             for (card in cardsCopied) {
@@ -221,7 +225,7 @@ class SchedulerService {
             }
         }
 
-        fun AnkiMethod<*>.rescheduleRepositionReset(cards: Array<Card>, @UndoNameId @StringRes undoNameId: Int, actualActualTask: () -> Unit): Computation<Optional<Card>> {
+        fun AnkiMethod<*>.rescheduleRepositionReset(cards: Array<Card>, @UndoNameId @StringRes undoNameId: Int, actualActualTask: () -> Unit): Computation<Optional<Card>> { // ktlint-disable
             val sched = col.sched
             // collect undo information, sensitive to memory pressure, same for all 3 cases
             try {

@@ -93,12 +93,16 @@ class XGrid
      */
     private fun drawGridLine(y: Double, g: GraphicsWrap, field: RectangleWrap) {
         g.drawLine(
-            plotSheet.xToGraphic(0.0, field), plotSheet.yToGraphic(y, field),
-            plotSheet.xToGraphic(-xLength, field), plotSheet.yToGraphic(y, field)
+            plotSheet.xToGraphic(0.0, field),
+            plotSheet.yToGraphic(y, field),
+            plotSheet.xToGraphic(-xLength, field),
+            plotSheet.yToGraphic(y, field)
         )
         g.drawLine(
-            plotSheet.xToGraphic(0.0, field), plotSheet.yToGraphic(y, field),
-            plotSheet.xToGraphic(xLength, field), plotSheet.yToGraphic(y, field)
+            plotSheet.xToGraphic(0.0, field),
+            plotSheet.yToGraphic(y, field),
+            plotSheet.xToGraphic(xLength, field),
+            plotSheet.yToGraphic(y, field)
         )
     }
 

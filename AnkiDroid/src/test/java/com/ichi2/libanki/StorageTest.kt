@@ -284,7 +284,9 @@ open class StorageTest : RobolectricTest() {
             val breq = e.getJSONArray(2)
             return if (areq.length() != 1 || breq.length() != 1) {
                 false
-            } else areq.getInt(0) == breq.getInt(0)
+            } else {
+                areq.getInt(0) == breq.getInt(0)
+            }
         }
 
         private fun assertConfEqual(expectedData: CollectionData) {

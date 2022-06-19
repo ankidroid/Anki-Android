@@ -50,7 +50,7 @@ class HtmlHelpPreference(context: Context, attrs: AttributeSet?) : Preference(co
         arrayOf(
             getString(R.styleable.HtmlHelpPreference_substitution1),
             getString(R.styleable.HtmlHelpPreference_substitution2),
-            getString(R.styleable.HtmlHelpPreference_substitution3),
+            getString(R.styleable.HtmlHelpPreference_substitution3)
         )
     }
 

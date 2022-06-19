@@ -299,10 +299,13 @@ object CollectionManager {
                 val caller = stackTraceElements.filter {
                     val klass = it.className
                     for (
-                        text in listOf(
-                            "CollectionManager", "dalvik", "java.lang",
-                            "CollectionHelper", "AnkiActivity"
-                        )
+                    text in listOf(
+                        "CollectionManager",
+                        "dalvik",
+                        "java.lang",
+                        "CollectionHelper",
+                        "AnkiActivity"
+                    )
                     ) {
                         if (text in klass) {
                             return@filter false

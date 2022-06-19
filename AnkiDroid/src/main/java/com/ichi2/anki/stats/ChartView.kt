@@ -32,6 +32,7 @@ class ChartView : View {
     private var mFragment: ChartFragment? = null
     private var mPlotSheet: PlotSheet? = null
     private var mDataIsSet = false
+
     @KotlinCleanup("is this really needed?")
     private val drawingBoundsRect = Rect()
     private val paint = Paint(Paint.LINEAR_TEXT_FLAG)

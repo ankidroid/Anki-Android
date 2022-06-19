@@ -43,7 +43,7 @@ class CardHtml(
     private val getAnswerContentWithoutFrontSide_slow: (() -> String),
     @RustCleanup("too many variables, combine once we move away from backend")
     private var questionSound: List<SoundOrVideoTag>? = null,
-    private var answerSound: List<SoundOrVideoTag>? = null,
+    private var answerSound: List<SoundOrVideoTag>? = null
 ) {
     fun getSoundTags(sideFor: Side): List<SoundOrVideoTag> {
         if (sideFor == this.side) {

@@ -35,6 +35,7 @@ import timber.log.Timber
 import java.io.File
 
 typealias NumberOfBytes = Long
+
 /**
  * Function that is executed when one file is migrated, with the number of bytes moved.
  * Called with 0 when the file is already present in destination (i.e. successful move with no byte copied)
@@ -162,6 +163,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
          * @param transferred The number of bytes of the transferred file
          */
         abstract fun reportProgress(transferred: NumberOfBytes)
+
         /**
          * Whether [File#renameTo] should be attempted
          *
@@ -296,6 +298,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
     open class Executor(private val operations: ArrayDeque<Operation>) {
         /** Whether [terminate] was called. Once this is called, a new instance should be used */
         private var terminated: Boolean = false
+
         /**
          * A list of operations to be executed before [operations]
          * [operations] should only be executed if this list is clear
@@ -479,7 +482,6 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @throws RuntimeException Various other failings if only a single exception was thrown
      */
     override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<NumberOfBytes>): Boolean {
-
         val context = initializeContext(collectionTask::doProgress)
 
         // define the function here, so we can execute it on retry

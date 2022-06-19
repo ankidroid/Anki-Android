@@ -115,8 +115,12 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             else -> Timber.w("Unknown defaultDeck: %s", defaultDeck)
         }
         mDeckSpinnerSelection = DeckSpinnerSelection(
-            this, col,
-            findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true, showFilteredDecks = true
+            this,
+            col,
+            findViewById(R.id.toolbar_spinner),
+            showAllDecks = true,
+            alwaysShowDefault = true,
+            showFilteredDecks = true
         )
         mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
         mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false)
@@ -285,7 +289,8 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
                 mTabLayoutMediator.detach()
             }
             mTabLayoutMediator = TabLayoutMediator(
-                slidingTabLayout, mActivityPager
+                slidingTabLayout,
+                mActivityPager
             ) { tab: TabLayout.Tab, position: Int -> tab.text = getTabTitle(position) }
             mTabLayoutMediator.attach()
         }

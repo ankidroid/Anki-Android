@@ -40,10 +40,13 @@ class TagsUtilTest {
         @Parameterized.Parameter(3)
         @JvmField // required for Parameter
         var updated: List<String>? = null
+
         @Test
         fun test() {
             val actual = TagsUtil.getUpdatedTags(
-                previous!!, selected!!, indeterminate!!
+                previous!!,
+                selected!!,
+                indeterminate!!
             )
             assertListEquals(updated, actual)
         }

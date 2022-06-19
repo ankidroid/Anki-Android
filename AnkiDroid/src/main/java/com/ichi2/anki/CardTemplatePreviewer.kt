@@ -385,7 +385,9 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         override val isEmpty: Boolean
             get() = if (mNote != null) {
                 false
-            } else super.isEmpty
+            } else {
+                super.isEmpty
+            }
 
         /** Override the method that fetches the model so we can render unsaved models  */
         override fun model(): Model {
