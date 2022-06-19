@@ -314,36 +314,31 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 mEditorEditText.customInsertionActionModeCallback = ActionModeCallback()
             }
 
-            val bottomNavigation: BottomNavigationView = mainView.findViewById(R.id.card_template_editor_bottom_navigation)
-            bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
-                val currentSelectedId = item.itemId
-                mTemplateEditor.tabToViewId!![cardIndex] = currentSelectedId
-                @KotlinCleanup("when")
-                if (currentSelectedId == R.id.styling_edit) {
-                    setCurrentEditorView(currentSelectedId, tempModel.css, R.string.card_template_editor_styling)
-                } else if (currentSelectedId == R.id.back_edit) {
-                    setCurrentEditorView(currentSelectedId, template.getString("afmt"), R.string.card_template_editor_back)
-                } else {
-                    setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front)
+            mainView.findViewById<BottomNavigationView>(R.id.card_template_editor_bottom_navigation).apply {
+                setOnItemSelectedListener { item: MenuItem ->
+                    val currentSelectedId = item.itemId
+                    mTemplateEditor.tabToViewId!![cardIndex] = currentSelectedId
+                    when (currentSelectedId) {
+                        R.id.styling_edit -> setCurrentEditorView(currentSelectedId, tempModel.css, R.string.card_template_editor_styling)
+                        R.id.back_edit -> setCurrentEditorView(currentSelectedId, template.getString("afmt"), R.string.card_template_editor_back)
+                        else -> setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front)
+                    }
+                    // contents of menu have changed and menu should be redrawn
+                    mTemplateEditor.invalidateOptionsMenu()
+                    true
                 }
-                // contents of menu have changed and menu should be redrawn
-                mTemplateEditor.invalidateOptionsMenu()
-                true
+                // set saved or default view
+                selectedItemId = requireArguments().getInt(EDITOR_VIEW_ID_KEY)
             }
-            // set saved or default view
-            bottomNavigation.selectedItemId = requireArguments().getInt(EDITOR_VIEW_ID_KEY)
 
             // Set text change listeners
-            val templateEditorWatcher: TextWatcher = object : TextWatcher {
+            val templateEditorWatcher = object : TextWatcher {
                 override fun afterTextChanged(arg0: Editable) {
                     mTemplateEditor.tabToCursorPosition!![cardIndex] = mEditorEditText.selectionStart
-                    @KotlinCleanup("when")
-                    if (currentEditorViewId == R.id.styling_edit) {
-                        tempModel.updateCss(mEditorEditText.text.toString())
-                    } else if (currentEditorViewId == R.id.back_edit) {
-                        template.put("afmt", mEditorEditText.text)
-                    } else {
-                        template.put("qfmt", mEditorEditText.text)
+                    when (currentEditorViewId) {
+                        R.id.styling_edit -> tempModel.updateCss(mEditorEditText.text.toString())
+                        R.id.back_edit -> template.put("afmt", mEditorEditText.text)
+                        else -> template.put("qfmt", mEditorEditText.text)
                     }
                     mTemplateEditor.tempModel!!.updateTemplate(cardIndex, template)
                 }
