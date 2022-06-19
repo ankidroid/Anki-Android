@@ -278,7 +278,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         /** Force fragments to reinitialize contents by invalidating previous set of ordinal-based ids  */
         fun ordinalShift() {
-            mBaseId += (itemCount + 1).toLong()
+            mBaseId += itemCount + 1
         }
     }
 
