@@ -523,7 +523,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     return true
                 }
                 R.id.action_add_deck_override -> {
-                    displayDeckOverrideDialog(col, tempModel)
+                    displayDeckOverrideDialog(col, tempModel!!)
                     return true
                 }
                 R.id.action_preview -> {
@@ -581,10 +581,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             onRequestPreviewResult.launch(i)
         }
 
-        @KotlinCleanup("Make tempModel non-null")
-        private fun displayDeckOverrideDialog(col: Collection, tempModel: TemporaryModel?) {
+        private fun displayDeckOverrideDialog(col: Collection, tempModel: TemporaryModel) {
             val activity = requireActivity() as AnkiActivity
-            if (tempModel!!.model.isCloze) {
+            if (tempModel.model.isCloze) {
                 UIUtils.showThemedToast(activity, getString(R.string.multimedia_editor_something_wrong), true)
                 return
             }
