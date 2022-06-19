@@ -894,13 +894,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          * @return name for new template
          */
         private fun newCardName(templates: JSONArray): String {
-            val cardRegex = resources.getString(R.string.card_n_name).replace("%d", "([0-9]+)").toRegex()
             return templates.jsonObjectIterable()
-                .mapNotNull {
-                    cardRegex.find(it.getString("name"))
-                        ?.destructured?.component1()?.toInt()
-                }
-                .reduce { acc, n -> max(acc, n) }
+                .mapNotNull { it.getString("name").split(" ").last().toInt() } // get "n" at the end of each "Card %d"
+                .reduce { acc, n -> max(acc, n) } // find maximum of all "n"
                 .let { resources.getString(R.string.card_n_name, it + 1) }
         }
 
