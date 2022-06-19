@@ -701,10 +701,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             override fun actualOnPostExecute(context: CardTemplateFragment, result: Pair<Boolean, String?>) {
                 Timber.d("saveModelAndExitHandler::postExecute called")
-                val button = context.mTemplateEditor.findViewById<View>(R.id.action_confirm)
-                if (button != null) {
-                    button.isEnabled = true
-                }
+                context.mTemplateEditor.findViewById<View>(R.id.action_confirm)
+                    ?.run { isEnabled = true }
                 if (mProgressDialog != null && mProgressDialog!!.isShowing) {
                     mProgressDialog!!.dismiss()
                 }
