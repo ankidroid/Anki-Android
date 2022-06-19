@@ -774,16 +774,15 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 deleteTemplate(tmpl, model)
             } catch (e: ConfirmModSchemaException) {
                 e.log()
-                val d = ConfirmationDialog()
-                d.setArgs(resources.getString(R.string.full_sync_confirmation))
-                val confirm = Runnable {
-                    mTemplateEditor.col.modSchemaNoCheck()
-                    deleteTemplate(tmpl, model)
+                ConfirmationDialog().run {
+                    setArgs(resources.getString(R.string.full_sync_confirmation))
+                    setConfirm {
+                        mTemplateEditor.col.modSchemaNoCheck()
+                        deleteTemplate(tmpl, model)
+                    }
+                    setCancel { mTemplateEditor.dismissAllDialogFragments() }
+                    mTemplateEditor.showDialogFragment(this)
                 }
-                val cancel = Runnable { mTemplateEditor.dismissAllDialogFragments() }
-                d.setConfirm(confirm)
-                d.setCancel(cancel)
-                mTemplateEditor.showDialogFragment(d)
             }
         }
 
