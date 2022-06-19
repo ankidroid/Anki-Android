@@ -294,6 +294,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private lateinit var mTemplateEditor: CardTemplateEditor
         private var mTabLayoutMediator: TabLayoutMediator? = null
 
+        /**
+         * @return The index of the card template which is currently referred to by the fragment
+         */
+        // COULD_BE_BETTER: Lots of duplicate code could call this. Hold off on the refactor until #5151 goes in.
+        private val currentCardTemplateIndex: Int
+            get() = requireArguments().getInt(CARD_INDEX)
+
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             // Storing a reference to the templateEditor allows us to use member variables
             mTemplateEditor = activity as CardTemplateEditor
@@ -616,7 +623,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         @CheckResult
         private fun getCurrentTemplate(): JSONObject? {
-            val currentCardTemplateIndex = getCurrentCardTemplateIndex()
             return try {
                 mTemplateEditor.tempModel!!.model.getJSONArray("tmpls")
                     .getJSONObject(currentCardTemplateIndex)
@@ -624,14 +630,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 Timber.w(e, "CardTemplateEditor::getCurrentTemplate - unexpectedly unable to fetch template? %d", currentCardTemplateIndex)
                 null
             }
-        } // COULD_BE_BETTER: Lots of duplicate code could call this. Hold off on the refactor until #5151 goes in.
-
-        /**
-         * @return The index of the card template which is currently referred to by the fragment
-         */
-        fun getCurrentCardTemplateIndex(): Int {
-            // COULD_BE_BETTER: Lots of duplicate code could call this. Hold off on the refactor until #5151 goes in.
-            return requireArguments().getInt(CARD_INDEX)
         }
 
         private fun deletionWouldOrphanNote(col: Collection, tempModel: TemporaryModel?, position: Int): Boolean {
