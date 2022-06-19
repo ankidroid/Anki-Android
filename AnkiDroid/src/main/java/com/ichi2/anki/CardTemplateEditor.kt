@@ -730,18 +730,19 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          * @param model model to remove template from, modified in place by reference
          * @param numAffectedCards number of cards which will be affected
          */
-        @KotlinCleanup("redundant `val res = resources`")
         private fun confirmDeleteCards(tmpl: JSONObject, model: Model, numAffectedCards: Int) {
-            val d = ConfirmationDialog()
-            val res = resources
-            val msg = String.format(
-                res.getQuantityString(R.plurals.card_template_editor_confirm_delete, numAffectedCards),
-                numAffectedCards, tmpl.optString("name")
-            )
-            d.setArgs(msg)
-            val confirm = Runnable { deleteTemplateWithCheck(tmpl, model) }
-            d.setConfirm(confirm)
-            mTemplateEditor.showDialogFragment(d)
+            ConfirmationDialog().run {
+                val msg = String.format(
+                    this@CardTemplateFragment.resources.getQuantityString(
+                        R.plurals.card_template_editor_confirm_delete,
+                        numAffectedCards
+                    ),
+                    numAffectedCards, tmpl.optString("name")
+                )
+                setArgs(msg)
+                setConfirm { deleteTemplateWithCheck(tmpl, model) }
+                mTemplateEditor.showDialogFragment(this)
+            }
         }
 
         /**
