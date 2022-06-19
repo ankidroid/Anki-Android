@@ -679,9 +679,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 return
             }
             Timber.i("Applying Card Template Browser Appearance result")
-            val currentTemplate = getCurrentTemplate()
-            if (currentTemplate != null) {
-                result.applyTo(currentTemplate)
+            getCurrentTemplate()?.run {
+                result.applyTo(this)
             }
         }
 
