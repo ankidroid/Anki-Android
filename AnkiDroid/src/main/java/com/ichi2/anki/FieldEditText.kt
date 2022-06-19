@@ -41,6 +41,7 @@ import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.ClipboardUtil.IMAGE_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.getImageUri
+import com.ichi2.utils.ClipboardUtil.getPlainText
 import com.ichi2.utils.ClipboardUtil.hasImage
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -201,25 +202,14 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             if (hasImage(mClipboard)) {
                 return onImagePaste(getImageUri(mClipboard))
             }
-            mClipboard
-                ?.takeIf { it.hasPrimaryClip() }
-                ?.primaryClip?.run {
-                    this@FieldEditText
-                        .takeIf { itemCount > 0 }
-                        ?.run {
-                            val pasted = getItemAt(0).coerceToText(context)
-                            selectionStart.run {
-                                // setText also sets selectionStart to 0
-                                setText(
-                                    text!!.substring(0, selectionStart) +
-                                        pasted +
-                                        text!!.substring(selectionEnd)
-                                )
-                                setSelection(this + pasted.length)
-                            }
-                            return true
-                        }
+            getPlainText(mClipboard, context)?.let { pasted ->
+                selectionStart.run {
+                    // setText also sets selectionStart to 0
+                    setText(text!!.substring(0, selectionStart) + pasted + text!!.substring(selectionEnd))
+                    setSelection(this + pasted.length)
                 }
+                return true
+            }
         }
         return false
     }
