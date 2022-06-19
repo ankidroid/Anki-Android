@@ -158,25 +158,19 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
      * Callback used to finish initializing the activity after the collection has been correctly loaded
      * @param col Collection which has been loaded
      */
-    @KotlinCleanup("Scope function")
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
-        if (tempModel == null) {
-            tempModel = TemporaryModel(Model(col.models.get(mModelId).toString()))
-            // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
-        }
+        tempModel = tempModel ?: TemporaryModel(Model(col.models.get(mModelId).toString()))
         mFieldNames = tempModel!!.model.fieldsNames
         // Set up the ViewPager with the sections adapter.
         viewPager = findViewById(R.id.pager)
         viewPager.adapter = TemplatePagerAdapter(this)
         mSlidingTabLayout = findViewById(R.id.sliding_tabs)
         // Set activity title
-        if (supportActionBar != null) {
-            supportActionBar!!.setTitle(R.string.title_activity_template_editor)
-            supportActionBar!!.subtitle = tempModel!!.model.optString("name")
-        }
+        supportActionBar?.setTitle(R.string.title_activity_template_editor)
+        supportActionBar?.subtitle = tempModel!!.model.optString("name")
         // Close collection opening dialog if needed
         Timber.i("CardTemplateEditor:: Card template editor successfully started for model id %d", mModelId)
 
