@@ -126,15 +126,16 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         startLoadingCollection()
     }
 
-    @KotlinCleanup("Scope function")
     public override fun onSaveInstanceState(outState: Bundle) {
-        outState.putAll(tempModel!!.toBundle())
-        outState.putLong(EDITOR_MODEL_ID, mModelId)
-        outState.putLong(EDITOR_NOTE_ID, mNoteId)
-        outState.putInt(EDITOR_START_ORD_ID, mStartingOrdId)
-        outState.putSerializable(TAB_TO_VIEW_ID, tabToViewId)
-        outState.putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPosition)
-        super.onSaveInstanceState(outState)
+        outState.run {
+            putAll(tempModel!!.toBundle())
+            putLong(EDITOR_MODEL_ID, mModelId)
+            putLong(EDITOR_NOTE_ID, mNoteId)
+            putInt(EDITOR_START_ORD_ID, mStartingOrdId)
+            putSerializable(TAB_TO_VIEW_ID, tabToViewId)
+            putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPosition)
+            super.onSaveInstanceState(this)
+        }
     }
 
     override fun onBackPressed() {
