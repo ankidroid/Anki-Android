@@ -137,7 +137,6 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="prefIconColor">?android:attr/textColor</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <!-- Navbar -->
         <item name="android:navigationBarColor">@color/semi_transparent_black</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>

@@ -49,7 +49,6 @@
         <item name="customTabNavBarColor">@color/material_grey_500</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">@color/theme_plain_primary</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <!-- Navbar -->
         <item name="android:navigationBarColor">@color/semi_transparent_black</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>

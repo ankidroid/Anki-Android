@@ -1283,7 +1283,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         // Show / hide the Action bar together with the status bar
         val prefs = AnkiDroidApp.getSharedPrefs(a)
         val fullscreenMode = fromPreference(prefs)
-        a.window.statusBarColor = getColorFromAttr(a, R.attr.colorPrimaryDark)
+        a.window.statusBarColor = getColorFromAttr(a, R.attr.colorPrimary)
         val decorView = a.window.decorView
         decorView.setOnSystemUiVisibilityChangeListener { flags: Int ->
             val toolbar = a.findViewById<View>(R.id.toolbar)
