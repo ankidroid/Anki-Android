@@ -894,18 +894,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          * @return name for new template
          */
         private fun newCardName(templates: JSONArray): String {
-            // Start by trying to set the name to "Card n" where n is the new num of templates
-            var n = templates.length() + 1
-            // If the starting point for name already exists, iteratively increase n until we find a unique name
-            while (true) {
-                // Get new name
-                val name = resources.getString(R.string.card_n_name, n)
-                // Cycle through all templates checking if new name exists
-                if (templates.jsonObjectIterable().all { name != it.getString("name") }) {
-                    return name
+            val cardRegex = resources.getString(R.string.card_n_name).replace("%d", "([0-9]+)").toRegex()
+            return templates.jsonObjectIterable()
+                .mapNotNull {
+                    cardRegex.find(it.getString("name"))
+                        ?.destructured?.component1()?.toInt()
                 }
-                n += 1
-            }
+                .reduce { acc, n -> max(acc, n) }
+                .let { resources.getString(R.string.card_n_name, it + 1) }
         }
 
         companion object {
