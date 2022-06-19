@@ -848,21 +848,27 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             val oldCardIndex = requireArguments().getInt(CARD_INDEX)
             val templates = model.getJSONArray("tmpls")
             val oldTemplate = templates.getJSONObject(oldCardIndex)
-            val newTemplate = Models.newTemplate(newCardName(templates))
-            // Set up question & answer formats
-            newTemplate.put("qfmt", oldTemplate.getString("qfmt"))
-            newTemplate.put("afmt", oldTemplate.getString("afmt"))
-            // Reverse the front and back if only one template
-            if (templates.length() == 1) {
-                flipQA(newTemplate)
+            Models.newTemplate(newCardName(templates)).apply {
+                // Set up question & answer formats
+                put("qfmt", oldTemplate.getString("qfmt"))
+                put("afmt", oldTemplate.getString("afmt"))
+
+                // Reverse the front and back if only one template
+                if (templates.length() == 1) {
+                    flipQA(this)
+                }
+
+                val lastExistingOrd = templates.getJSONObject(templates.length() - 1).getInt("ord")
+                Timber.d("addNewTemplate() lastExistingOrd was %s", lastExistingOrd)
+                put("ord", lastExistingOrd + 1)
+
+                templates.put(this)
+                mTemplateEditor.tempModel!!.addNewTemplate(this)
             }
-            val lastExistingOrd = templates.getJSONObject(templates.length() - 1).getInt("ord")
-            Timber.d("addNewTemplate() lastExistingOrd was %s", lastExistingOrd)
-            newTemplate.put("ord", lastExistingOrd + 1)
-            templates.put(newTemplate)
-            mTemplateEditor.tempModel!!.addNewTemplate(newTemplate)
-            mTemplateEditor.viewPager.adapter!!.notifyDataSetChanged()
-            mTemplateEditor.viewPager.setCurrentItem(templates.length() - 1, mTemplateEditor.animationDisabled())
+            mTemplateEditor.viewPager.run {
+                adapter!!.notifyDataSetChanged()
+                setCurrentItem(templates.length() - 1, mTemplateEditor.animationDisabled())
+            }
         }
 
         /**
