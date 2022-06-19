@@ -750,18 +750,16 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          * @param model model to add new template and modified in place by reference
          * @param numAffectedCards number of cards which will be affected
          */
-        @KotlinCleanup("redundant `val res = resources`")
         private fun confirmAddCards(model: Model, numAffectedCards: Int) {
-            val d = ConfirmationDialog()
-            val res = resources
-            val msg = String.format(
-                res.getQuantityString(R.plurals.card_template_editor_confirm_add, numAffectedCards),
-                numAffectedCards
-            )
-            d.setArgs(msg)
-            val confirm = Runnable { addNewTemplateWithCheck(model) }
-            d.setConfirm(confirm)
-            mTemplateEditor.showDialogFragment(d)
+            ConfirmationDialog().run {
+                val msg = String.format(
+                    this@CardTemplateFragment.resources.getQuantityString(R.plurals.card_template_editor_confirm_add, numAffectedCards),
+                    numAffectedCards
+                )
+                setArgs(msg)
+                setConfirm { addNewTemplateWithCheck(model) }
+                mTemplateEditor.showDialogFragment(this)
+            }
         }
 
         /**
