@@ -422,10 +422,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         fun setCurrentEditorView(id: Int, editorContent: String, editorTitleId: Int) {
             currentEditorViewId = id
-            mEditorEditText.setText(editorContent)
-            mCurrentEditorTitle!!.text = resources.getString(editorTitleId)
-            mEditorEditText.setSelection(cursorPosition)
-            mEditorEditText.requestFocus()
+            mEditorEditText.apply {
+                setText(editorContent)
+                mCurrentEditorTitle!!.text = resources.getString(editorTitleId)
+                setSelection(cursorPosition)
+                requestFocus()
+            }
         }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
