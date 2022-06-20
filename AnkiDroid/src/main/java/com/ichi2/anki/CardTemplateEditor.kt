@@ -78,7 +78,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     private lateinit var tabToCursorPosition: HashMap<Int, Int?>
 
     // the current editor view among front/style/back
-    private var tabToViewId: HashMap<Int, Int?>? = null
+    private lateinit var tabToViewId: HashMap<Int, Int?>
     private var mStartingOrdId = 0
 
     // ----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // get id for currently edited template (optional)
             mStartingOrdId = intent.getIntExtra("ordId", -1)
             tabToCursorPosition[0] = 0
-            tabToViewId!![0] = R.id.front_edit
+            tabToViewId[0] = R.id.front_edit
         }
         savedInstanceState?.run {
             mModelId = getLong(EDITOR_MODEL_ID)
@@ -261,7 +261,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         override fun createFragment(position: Int): Fragment {
             val editorPosition = tabToCursorPosition[position] ?: 0
-            val editorViewId = tabToViewId!![position] ?: R.id.front_edit
+            val editorViewId = tabToViewId[position] ?: R.id.front_edit
             return CardTemplateFragment.newInstance(position, mNoteId, editorPosition, editorViewId)
         }
 
@@ -325,7 +325,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             mainView.findViewById<BottomNavigationView>(R.id.card_template_editor_bottom_navigation).apply {
                 setOnItemSelectedListener { item: MenuItem ->
                     val currentSelectedId = item.itemId
-                    mTemplateEditor.tabToViewId!![cardIndex] = currentSelectedId
+                    mTemplateEditor.tabToViewId[cardIndex] = currentSelectedId
                     when (currentSelectedId) {
                         R.id.styling_edit -> setCurrentEditorView(currentSelectedId, tempModel.css, R.string.card_template_editor_styling)
                         R.id.back_edit -> setCurrentEditorView(currentSelectedId, template.getString("afmt"), R.string.card_template_editor_back)
