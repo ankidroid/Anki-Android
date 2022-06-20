@@ -37,6 +37,7 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -106,7 +107,7 @@ class Preferences : AnkiActivity() {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
         }
-        title = resources.getText(R.string.preferences_title)
+        title = resources.getText(R.string.settings)
 
         val fragment = getInitialFragment(intent)
 
@@ -134,7 +135,7 @@ class Preferences : AnkiActivity() {
         actionBar?.title = if (fragment is SpecificSettingsFragment) {
             fragment.preferenceScreen.title
         } else {
-            getString(R.string.preferences_title)
+            getString(R.string.settings)
         }
     }
 
@@ -405,8 +406,25 @@ class Preferences : AnkiActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
+            // Sync preferences summary
             findPreference<Preference>(getString(R.string.pref_sync_screen_key))!!
                 .summary = buildCategorySummary(getString(R.string.sync_account), getString(R.string.automatic_sync_choice))
+
+            // Notifications preferences summary
+            findPreference<Preference>(getString(R.string.pref_notifications_screen_key))!!
+                .summary = buildCategorySummary(
+                getString(R.string.notification_pref_title),
+                getString(R.string.notification_minimum_cards_due_vibrate),
+                getString(R.string.notification_minimum_cards_due_blink),
+            )
+
+            // Controls preferences summary
+            findPreference<Preference>(getString(R.string.pref_controls_screen_key))!!
+                .summary = buildCategorySummary(
+                getString(R.string.pref_cat_gestures),
+                getString(R.string.keyboard),
+                getString(R.string.bluetooth)
+            )
 
             if (isRestrictedLearningDevice) {
                 findPreference<Preference>("pref_screen_advanced")!!.isVisible = false
@@ -414,6 +432,7 @@ class Preferences : AnkiActivity() {
             if (BuildConfig.DEBUG) {
                 val devOptions = Preference(requireContext()).apply {
                     title = getString(R.string.pref_cat_dev_options)
+                    icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_code)
                     setOnPreferenceClickListener {
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.settings_container, DevOptionsFragment())
@@ -423,6 +442,11 @@ class Preferences : AnkiActivity() {
                     }
                 }
                 preferenceScreen.addPreference(devOptions)
+            }
+            // Set icons colors
+            for (index in 0 until preferenceScreen.preferenceCount) {
+                val preference = preferenceScreen.getPreference(index)
+                preference.icon?.setTint(Themes.getColorFromAttr(requireContext(), R.attr.prefIconColor))
             }
         }
     }
@@ -627,9 +651,6 @@ class Preferences : AnkiActivity() {
                     }
                     CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                     AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
-                    "gestureCornerTouch" -> {
-                        GesturesSettingsFragment.updateGestureCornerTouch(preferencesActivity, screen)
-                    }
                 }
                 // Update the summary text to reflect new value
                 preferencesActivity.updateSummary(pref)
@@ -974,40 +995,6 @@ class Preferences : AnkiActivity() {
             } else {
                 mBackgroundImage!!.isChecked = false
                 showThemedToast(requireContext(), getString(R.string.no_image_selected), false)
-            }
-        }
-    }
-
-    class GesturesSettingsFragment : SpecificSettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_gestures
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.gestures"
-
-        override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_gestures)
-            val screen = preferenceScreen
-            updateGestureCornerTouch(screen)
-        }
-
-        private fun updateGestureCornerTouch(screen: PreferenceScreen) {
-            updateGestureCornerTouch(requireContext(), screen)
-        }
-
-        companion object {
-            fun updateGestureCornerTouch(context: Context?, screen: PreferenceScreen) {
-                val gestureCornerTouch = AnkiDroidApp.getSharedPrefs(context).getBoolean("gestureCornerTouch", false)
-                if (gestureCornerTouch) {
-                    requirePreference<Preference>(screen, "gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center)
-                    requirePreference<Preference>(screen, "gestureTapLeft").setTitle(R.string.gestures_corner_tap_middle_left)
-                    requirePreference<Preference>(screen, "gestureTapRight").setTitle(R.string.gestures_corner_tap_middle_right)
-                    requirePreference<Preference>(screen, "gestureTapBottom").setTitle(R.string.gestures_corner_tap_bottom_center)
-                } else {
-                    requirePreference<Preference>(screen, "gestureTapTop").setTitle(R.string.gestures_tap_top)
-                    requirePreference<Preference>(screen, "gestureTapLeft").setTitle(R.string.gestures_tap_left)
-                    requirePreference<Preference>(screen, "gestureTapRight").setTitle(R.string.gestures_tap_right)
-                    requirePreference<Preference>(screen, "gestureTapBottom").setTitle(R.string.gestures_tap_bottom)
-                }
             }
         }
     }

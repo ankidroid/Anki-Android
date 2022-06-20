@@ -68,7 +68,6 @@
     <string name="reset_password">Wachtwoord resetten</string>
     <string name="lost_mail_instructions">Email vergeten?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Voorkeuren</string>
     <string name="deckpreferences_title">Opties voor XXX</string>
     <string name="sync_prepare_syncing">Synchronisatie wordt voorbereid...</string>
     <string name="sync_preparing_full_sync_message">Volledige synchronisatie wordt voorbereid...</string>

@@ -72,25 +72,25 @@ enum class AnswerButtons {
         return when (numberOfButtons) {
             2 -> {
                 when (this) {
-                    AGAIN -> ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1
-                    GOOD -> ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2
+                    AGAIN -> ViewerCommand.FLIP_OR_ANSWER_EASE1
+                    GOOD -> ViewerCommand.FLIP_OR_ANSWER_EASE2
                     else -> throw IllegalStateException("$numberOfButtons buttons with answer $this")
                 }
             }
             3 -> {
                 when (this) {
-                    AGAIN -> ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1
-                    GOOD -> ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2
-                    EASY -> ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3
+                    AGAIN -> ViewerCommand.FLIP_OR_ANSWER_EASE1
+                    GOOD -> ViewerCommand.FLIP_OR_ANSWER_EASE2
+                    EASY -> ViewerCommand.FLIP_OR_ANSWER_EASE3
                     else -> throw IllegalStateException("$numberOfButtons buttons with answer $this")
                 }
             }
             4 -> {
                 when (this) {
-                    AGAIN -> ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1
-                    HARD -> ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2
-                    GOOD -> ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3
-                    EASY -> ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE4
+                    AGAIN -> ViewerCommand.FLIP_OR_ANSWER_EASE1
+                    HARD -> ViewerCommand.FLIP_OR_ANSWER_EASE2
+                    GOOD -> ViewerCommand.FLIP_OR_ANSWER_EASE3
+                    EASY -> ViewerCommand.FLIP_OR_ANSWER_EASE4
                 }
             }
             else -> throw IllegalStateException("unexpected button count: $numberOfButtons. answer: $this")

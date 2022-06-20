@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Impostazioni generali</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetizioni</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">Impostazioni di ripetizione non specifiche per il mazzo</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportamento</string>
     <string name="pref_cat_flashcard" maxLength="41">Visualizzazione</string>
@@ -60,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Temi</string>
     <string name="pref_cat_fonts" maxLength="41">Caratteri</string>
     <string name="pref_cat_gestures" maxLength="41">Gesti</string>
-    <string name="pref_cat_gestures_summ">Usa tocchi e scorrimento al posto dei pulsanti</string>
-    <string name="pref_cat_actions" maxLength="41">Azioni</string>
     <string name="pref_cat_controls" maxLength="41">Controlli</string>
-    <string name="pref_cat_controls_summ">Configura tastiere e altri dispositivi</string>
     <string name="pref_cat_advanced" maxLength="41">Avanzate</string>
     <string name="pref_cat_advanced_summ">Ottimizzazione e funzionalità sperimentali</string>
     <string name="pref_cat_performance" maxLength="41">Prestazioni</string>
@@ -114,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Premi a destra</string>
     <string name="gestures_tap_bottom" maxLength="41">Premi giù</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Tocca in alto a sinistra</string>
-    <string name="gestures_corner_tap_top_center">Tocca in alto al centro</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Tocca in alto a destra</string>
-    <string name="gestures_corner_tap_middle_left">Tocca al centro a sinistra</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocca al centro</string>
-    <string name="gestures_corner_tap_middle_right">Tocca al centro a destra</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocca in basso a sinistra</string>
-    <string name="gestures_corner_tap_bottom_center">Tocca in centro in basso</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocca in basso a destra</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Utilizza anche pulsanti kanji/katakana, emoji/kao-moji per lo scorrimento</string>
@@ -241,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Url di sincronizzazione del contenuto multimediale</string>
     <string name="custom_sync_server_media_url_invalid">URL sincronizzazione media non valido</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Mappatura dei comandi</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Le modifiche alle opzioni del gruppo di mazzi influenzeranno più mazzi. Se desideri cambiare solo il mazzo corrente, aggiungi prima un nuovo gruppo di opzioni</string>
@@ -326,7 +322,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Apri il registro dei cambiamenti</string>
     <string name="binding_add_gesture">Aggiungi un gesto</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Aggiungi un tasto</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Premi un tasto</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Seleziona il lato della carta</string>

@@ -68,7 +68,6 @@
     <string name="reset_password">Obnovit heslo</string>
     <string name="lost_mail_instructions">Zapomněli jste e-mail?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Nastavení</string>
     <string name="deckpreferences_title">Možnosti pro XXX</string>
     <string name="sync_prepare_syncing">Příprava synchronizace...</string>
     <string name="sync_preparing_full_sync_message">Příprava úplné synchronizace...</string>

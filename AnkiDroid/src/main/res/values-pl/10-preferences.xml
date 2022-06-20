@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Ustawienia ogólne</string>
     <string name="pref_cat_reviewing" maxLength="41">Przegląd</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">Ustawienia wspólne dla wszystkich talii</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Zachowanie</string>
     <string name="pref_cat_flashcard" maxLength="41">Wyświetlanie</string>
@@ -60,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Motywy</string>
     <string name="pref_cat_fonts" maxLength="41">Czcionki</string>
     <string name="pref_cat_gestures" maxLength="41">Gesty</string>
-    <string name="pref_cat_gestures_summ">Użyj gestów zamiast przycisków</string>
-    <string name="pref_cat_actions" maxLength="41">Czynności</string>
     <string name="pref_cat_controls" maxLength="41">Sterowanie</string>
-    <string name="pref_cat_controls_summ">Skonfiguruj klawiatury i inne urządzenia</string>
     <string name="pref_cat_advanced" maxLength="41">Zaawansowane</string>
     <string name="pref_cat_advanced_summ">Optymalizacja i funkcje eksperymentalne</string>
     <string name="pref_cat_performance" maxLength="41">Wydajność</string>
@@ -114,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Dotknij po prawej</string>
     <string name="gestures_tap_bottom" maxLength="41">Dotknij na dole</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Dotknij lewej górnej części ekranu</string>
-    <string name="gestures_corner_tap_top_center">Dotknij górnej środkowej części ekranu</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Dotknij prawej górnej części ekranu</string>
-    <string name="gestures_corner_tap_middle_left">Dotknij lewej środkowej części ekranu</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Dotknij środka ekranu</string>
-    <string name="gestures_corner_tap_middle_right">Dotknij prawej środkowej części ekranu</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Dotknij lewej dolnej części ekranu</string>
-    <string name="gestures_corner_tap_bottom_center">Dotknij dolnej środkowej części ekranu</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Dotknij prawej dolnej części ekranu</string>
     <string name="more_scrolling_buttons" maxLength="41">eCzytnik</string>
     <string name="more_scrolling_buttons_summ">Użyj także przycisków kanji/katakana, emoji/kao-moji do przewijania</string>
@@ -241,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Adres url synchronizacji mediów</string>
     <string name="custom_sync_server_media_url_invalid">Nieprawidłowy adres url synchronizacji mediów</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Przypisywanie poleceń</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Zmiany opcji grup talii będzie mieć wpływ na wiele talii. Jeśli chcesz zmienić tylko obecną talię, najpierw dodaj nowe ustawienie talii</string>
@@ -330,7 +326,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Otwórz listę zmian w programie</string>
     <string name="binding_add_gesture">Dodaj gest</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Dodaj klawisz</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Naciśnij klawisz</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Wybierz stronę karty</string>

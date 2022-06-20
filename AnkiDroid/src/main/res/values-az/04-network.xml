@@ -68,7 +68,6 @@
     <string name="reset_password">Şifrəni dəyiş</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Seçimlərimiz</string>
     <string name="deckpreferences_title">XXX seçimləri</string>
     <string name="sync_prepare_syncing">Sinxronlaşdırma hazırlanılır...</string>
     <string name="sync_preparing_full_sync_message">Tam sinxronizasiya hazırlanır...</string>

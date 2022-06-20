@@ -14,15 +14,16 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-@file:Suppress("DEPRECATION") // #7108: AsyncTask deprecation
-
 package com.ichi2.anki
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.AsyncTask
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.webkit.WebView
 import android.widget.ProgressBar
@@ -31,6 +32,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -39,7 +41,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.runtimetools.TaskOperations.stopTaskGracefully
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.getInstance
 import com.ichi2.anki.stats.ChartView
@@ -50,6 +51,9 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
 import com.ichi2.ui.FixedTextView
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Locale
 
@@ -219,11 +223,9 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         // track current settings for each individual fragment
         protected var deckId: Long = 0
 
-        // #7108: AsyncTask
-        protected lateinit var statisticsTask: AsyncTask<*, *, *>
+        protected lateinit var statisticsJob: Job
+        private lateinit var statisticsOverviewJob: Job
 
-        // #7108: AsyncTask
-        protected lateinit var statisticsOverviewTask: AsyncTask<*, *, *>
         private lateinit var mActivityPager: ViewPager2
         private lateinit var mSlidingTabLayout: TabLayout
         private lateinit var mTabLayoutMediator: TabLayoutMediator
@@ -250,11 +252,11 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         protected fun cancelTasks() {
             Timber.w("canceling tasks")
 
-            if (this::statisticsTask.isInitialized) {
-                stopTaskGracefully(statisticsTask)
+            if (this::statisticsJob.isInitialized) {
+                statisticsJob.cancel()
             }
-            if (this::statisticsOverviewTask.isInitialized) {
-                stopTaskGracefully(statisticsOverviewTask)
+            if (this::statisticsOverviewJob.isInitialized) {
+                statisticsOverviewJob.cancel()
             }
         }
 
@@ -385,9 +387,12 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private fun createChart() {
             val statisticsActivity = requireActivity() as Statistics
             val taskHandler = statisticsActivity.taskHandler
-            statisticsTask = taskHandler!!.createChart(
-                getChartTypeFromPosition(mSectionNumber), mChart, mProgressBar
-            )
+            val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+                Timber.e(throwable, "createChart failed with error")
+            }
+            statisticsJob = viewLifecycleOwner.lifecycleScope.launch(exceptionHandler) {
+                taskHandler!!.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
+            }
         }
 
         override fun checkAndUpdate() {
@@ -466,7 +471,12 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         private fun createStatisticOverview() {
             val handler = (requireActivity() as Statistics).taskHandler
-            statisticsOverviewTask = handler!!.createStatisticsOverview(mWebView, mProgressBar)
+            val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+                Timber.e(throwable, "createChart failed with error")
+            }
+            statisticsJob = viewLifecycleOwner.lifecycleScope.launch(exceptionHandler) {
+                handler!!.createStatisticsOverview(mWebView, mProgressBar)
+            }
         }
 
         override fun checkAndUpdate() {

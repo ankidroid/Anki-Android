@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Pengaturan umum</string>
     <string name="pref_cat_reviewing" maxLength="41">Mengulas</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">Pengaturan ulasan yang bukan tentang dek</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Perilaku</string>
     <string name="pref_cat_flashcard" maxLength="41">Tampilan</string>
@@ -60,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Tema</string>
     <string name="pref_cat_fonts" maxLength="41">Fon</string>
     <string name="pref_cat_gestures" maxLength="41">Gestur</string>
-    <string name="pref_cat_gestures_summ">Gunakan tekan dan usapan menggantikan tombol</string>
-    <string name="pref_cat_actions" maxLength="41">Tindakan</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Tingkat lanjut</string>
     <string name="pref_cat_advanced_summ">Optimisasi dan fitur percobaan</string>
     <string name="pref_cat_performance" maxLength="41">Performa</string>
@@ -114,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Sentuh kanan</string>
     <string name="gestures_tap_bottom" maxLength="41">Sentuh bawah</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Sentuh bagian atas paling kiri</string>
-    <string name="gestures_corner_tap_top_center">Sentuh bagian atas tengah</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Sentuh bagian atas kanan</string>
-    <string name="gestures_corner_tap_middle_left">Sentuh bagian tengah kiri</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Sentuh bagian pas di tengah</string>
-    <string name="gestures_corner_tap_middle_right">Sentuh bagian tengah kanan</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Sentuh bagian bawah kiri</string>
-    <string name="gestures_corner_tap_bottom_center">Sentuh bagian bawah tengah</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Sentuh bagian bawah kanan</string>
     <string name="more_scrolling_buttons" maxLength="41">Pembaca elektronik</string>
     <string name="more_scrolling_buttons_summ">Gunakan kanji/katakana juga, tombol emoji/kao-moji untuk menggulir</string>
@@ -242,6 +236,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Url sinkronisasi media</string>
     <string name="custom_sync_server_media_url_invalid">Sinkronisasi media tidak valid</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Perubahan ke opsi grup dek akan mempengaruhi banyak dek. Jika kamu hanya ingin mengubah dek saat ini, harap tambahkan grup opsi baru terlebih dahulu</string>
@@ -325,7 +321,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Buka Changelog</string>
     <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Add key</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Press a key</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
@@ -337,5 +335,5 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="bindings_already_bound">Already bound to ‘%s’</string>
 </resources>

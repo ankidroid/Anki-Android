@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
     <string name="empty_cloze_warning">დაარედაქტირეთ შენიშვნა და დაამატეთ გამოტოვებები. (%1$s)</string>
-    <string name="button_sync">სინქრონიზაცია</string>
+    <string name="button_sync" comment="Text of the sync button">სინქრონიზაცია</string>
     <string name="cancel_sync_confirm">გინდათ დაასრულოთ სინქრონიზაცია?</string>
     <string name="continue_sync">სინქრონიზაციის გაგრძელება</string>
     <string name="sync_cancelled">სინქრონიზაცია გაუქმებულია</string>

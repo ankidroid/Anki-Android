@@ -68,7 +68,6 @@
     <string name="reset_password">Reimposta la password</string>
     <string name="lost_mail_instructions">Indirizzo dimenticato?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Preferenze</string>
     <string name="deckpreferences_title">Opzioni per XXX</string>
     <string name="sync_prepare_syncing">Preparazione sincronizzazione...</string>
     <string name="sync_preparing_full_sync_message">Sincronizzazione completa in preparazione...</string>

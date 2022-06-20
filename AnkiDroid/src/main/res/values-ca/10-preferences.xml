@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Configuració general</string>
     <string name="pref_cat_reviewing" maxLength="41">Revisió</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">Configuracions de revisió no específiques de malls</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportament</string>
     <string name="pref_cat_flashcard" maxLength="41">Pantalla</string>
@@ -60,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Temes</string>
     <string name="pref_cat_fonts" maxLength="41">Tipus de lletra</string>
     <string name="pref_cat_gestures" maxLength="41">Gestos</string>
-    <string name="pref_cat_gestures_summ">Utilitzar lliscades i tocs en lloc de botons</string>
-    <string name="pref_cat_actions" maxLength="41">Accions</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Avançat</string>
     <string name="pref_cat_advanced_summ">Optimització i característiques experimentals</string>
     <string name="pref_cat_performance" maxLength="41">Rendiment</string>
@@ -114,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Toqueu a la dreta</string>
     <string name="gestures_tap_bottom" maxLength="41">Toqueu la part inferior</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Tocar a dalt a l\'esquerra</string>
-    <string name="gestures_corner_tap_top_center">Tocar a dalt al centre</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Tocar a dalt a la dreta</string>
-    <string name="gestures_corner_tap_middle_left">Tocar al centre a l\'esquerra</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocar al centre</string>
-    <string name="gestures_corner_tap_middle_right">Tocar al centre a la dreta</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar a baix a l\'esquerra</string>
-    <string name="gestures_corner_tap_bottom_center">Tocar a baix al centre</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar a baix a la dreta</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">També utilitzar els botons kanji/katakana, emoji/kao-moji per moure\'s</string>
@@ -241,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Url de sincronització de multimèdia</string>
     <string name="custom_sync_server_media_url_invalid">Invàlida url de sincronització de multimèdia</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Els canvis a les opcions de grup de paquets afectaran varis paquets. Si voleu canviar només el paquet actual, afegiu primer un grup d\'opcions nou</string>
@@ -326,7 +322,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Obre el registre de canvis</string>
     <string name="binding_add_gesture">Afegeix gest</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Afegir una clau</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Premeu una tecla</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecciona cara de la carta</string>
@@ -338,5 +336,5 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="bindings_already_bound">Already bound to ‘%s’</string>
 </resources>

@@ -68,7 +68,6 @@
     <string name="reset_password">Restarigi pasvorton</string>
     <string name="lost_mail_instructions">Ĉu vi forgesis la retpoŝtadreson?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Agordoj</string>
     <string name="deckpreferences_title">Agordoj por XXX</string>
     <string name="sync_prepare_syncing">Preparado de samtempigo&#8230;</string>
     <string name="sync_preparing_full_sync_message">Preparado de tuta samtempigo&#8230;</string>

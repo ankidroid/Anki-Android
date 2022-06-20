@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Ĝeneralaj agordoj</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetado</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">Komunaj agordoj de ripetado por ĉiuj kartaroj</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Sinteno</string>
     <string name="pref_cat_flashcard" maxLength="41">Montrado</string>
@@ -60,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Etoso</string>
     <string name="pref_cat_fonts" maxLength="41">Tiparoj</string>
     <string name="pref_cat_gestures" maxLength="41">Gestoj</string>
-    <string name="pref_cat_gestures_summ">Stiri per frapeti kaj ŝovumi anstataŭ per butonoj</string>
-    <string name="pref_cat_actions" maxLength="41">Agoj</string>
     <string name="pref_cat_controls" maxLength="41">Stiriloj</string>
-    <string name="pref_cat_controls_summ">Agordi klavarojn kaj aliajn stirilojn</string>
     <string name="pref_cat_advanced" maxLength="41">Altnivelaj</string>
     <string name="pref_cat_advanced_summ">Plejbonigado kaj spertulaj eblaĵoj</string>
     <string name="pref_cat_performance" maxLength="41">Rendimento</string>
@@ -114,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Frapeti dekstre</string>
     <string name="gestures_tap_bottom" maxLength="41">Frapeti sube</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Frapeti supran maldekstron</string>
-    <string name="gestures_corner_tap_top_center">Frapeti supran mezon</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Frapeti supran maldekstron</string>
-    <string name="gestures_corner_tap_middle_left">Frapeti mezan maldekstron</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Frapeti centron</string>
-    <string name="gestures_corner_tap_middle_right">Frapeti mezan maldekstron</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Frapeti suban maldekstron</string>
-    <string name="gestures_corner_tap_bottom_center">Frapeti suban mezon</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Frapeti suban dekstron</string>
     <string name="more_scrolling_buttons" maxLength="41">Elektronika legilo</string>
     <string name="more_scrolling_buttons_summ">Ankaŭ uzi butonojn de kanji/katakana aŭ emoĝioj por rulumi</string>
@@ -241,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Ligilo de aŭdvidaĵa samtempigado</string>
     <string name="custom_sync_server_media_url_invalid">Malĝusta ligilo de samtempigo de aŭdvidaĵoj</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Asigni al ordonoj</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Ŝanĝoj al grupaj agordoj de kartaroj aplikos al pluraj kartaroj. Se vi volas ŝanĝi nur la nunan kartaron, bonvolu unue aldoni novan grupon de agordoj</string>
@@ -326,7 +322,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Montri ŝanĝoprotokolon</string>
     <string name="binding_add_gesture">Aldoni geston</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Aldoni klavon</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Premu klavon</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Elekti kartflankon</string>

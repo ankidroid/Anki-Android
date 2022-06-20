@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">Ingen kort i kø </string>
     <string name="sd_card_not_mounted">Enhedslagring er ikke monteret</string>
     <string name="empty_cloze_warning">Rediger denne note og tilføj nogle huller i teksten. (%1$s)</string>
-    <string name="button_sync">Synkroniser</string>
+    <string name="button_sync" comment="Text of the sync button">Synkroniser</string>
     <string name="cancel_sync_confirm">Vil du annullere synkroniseringen? </string>
     <string name="continue_sync">Fortsæt synkronisering</string>
     <string name="sync_cancelled">Synkronisering annulleret</string>

@@ -57,14 +57,14 @@
     <string name="tag_name">Sildi nimi</string>
     <string name="add_new_filter_tags">Lisa/filtri silte</string>
     <string name="add_tag">Lisa silt</string>
-    <string name="check_all_tags">Check/uncheck all tags</string>
+    <string name="check_all_tags">Vali või eemalda kõik märksõnad</string>
     <string name="filter_tags">Filtri silte</string>
     <string name="no_tags">Sa pole veel lisanud ühtegi silti</string>
     <string name="updated_version">Uuendatud versioonini %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Salvesta tahvel</string>
-    <string name="enable_whiteboard">Enable whiteboard</string>
-    <string name="disable_whiteboard">Disable whiteboard</string>
+    <string name="enable_whiteboard">Luba tahvlile kirjutamine</string>
+    <string name="disable_whiteboard">Sulge tahvel</string>
     <string name="show_whiteboard">Kuva valgetahvel</string>
     <string name="hide_whiteboard">Peida valgetahvel</string>
     <string name="clear_whiteboard">Puhasta valgetahvel</string>
@@ -107,7 +107,7 @@
     <string name="custom_study_review_forgotten">Review forgotten cards</string>
     <string name="custom_study_review_ahead">Review ahead</string>
     <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
+    <string name="custom_study_preview_new">Uute kaartide eelvaade</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Muuda märkust</string>
@@ -133,12 +133,12 @@
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d minut</item>
+        <item quantity="other">%1$d minutit</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid kaart</string>
-    <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="note_editor_copy_note">Kopeeri märge</string>
+    <string name="card_editor_reposition_card">Paiguta ümber</string>
     <string name="card_editor_reset_card">Lähtestamise progress</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Eelvaade</string>
@@ -159,7 +159,7 @@
     <string name="delete_deck">Kustutan kaardipakki&#8230;</string>
     <string name="show_hint">Kuva %s</string>
     <string name="info_rate">Rate AnkiDroid</string>
-    <string name="import_title">Importing</string>
+    <string name="import_title">Importimine</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lisa</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <plurals name="import_files_message_add_confirm">
@@ -167,14 +167,14 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
+    <string name="import_title_error" comment="Title of error dialog">Viga</string>
+    <string name="import_log_failed_unzip">Apkg avamine ebaõnnestus: %s</string>
+    <string name="import_log_failed_copy_to">Apkg kopeerimine %s ebaõnnestus</string>
+    <string name="import_log_failed_validate">apkg kinnitamine ebaõnnestus</string>
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_unhandled_request">Unable to process import request</string>
+    <string name="import_error_unhandled_request">Importimise taotlust pole võimalik töödelda</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_exception">Failed to import package\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
@@ -185,39 +185,39 @@
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Replacing collection&#8230;</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_include_schedule">Include scheduling</string>
-    <string name="export_include_media">Include media</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
-    <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_successful_title">Send Anki package?</string>
+    <string name="import_replacing">Kogu asendamine...</string>
+    <string name="import_interrupted">Importimine katkes: AnkiDroid suleti</string>
+    <string name="export_include_schedule">Koos ajakavaga</string>
+    <string name="export_include_media">Koos meediaga</string>
+    <string name="confirm_apkg_export">Ekspordi kogu Anki pakina?</string>
+    <string name="confirm_apkg_export_deck">Ekspordi \"%s\" apkg failina?</string>
+    <string name="export_in_progress">Anki pakifaili eksportimine...</string>
+    <string name="export_successful_title">Saada Anki pakk?</string>
     <string name="export_send_button">Saada</string>
     <string name="export_save_button">Salvesta faili</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_successful">File “%s” was exported. Do you want to send it with another app?</string>
-    <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_send_no_handlers">Puudub rakendus apkg käsitsemiseks. Salvestamine...</string>
+    <string name="export_save_apkg_successful">Anki paki salvestamine õnnestus</string>
+    <string name="export_save_apkg_unsuccessful">Anki paki salvestamine ebaõnnestus</string>
+    <string name="export_successful">Fail \"%s\" eksporditi. Kas soovid selle mõne teise rakendusega saata?</string>
+    <string name="export_email_subject">AnkiDroidist eksporditud mõistekaardid: %s</string>
+    <string name="export_email_text"><![CDATA[        Hei!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        See on AnkiDroidist[1] saadetud Anki mõistekaartide pakk.
+        Proovi see avada kasutades mõnd saadavalolevat Anki jaotust[2] ning naudi lihtsat ja efektiivset õppimist!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_unsuccessful">Error exporting apkg file</string>
+    <string name="export_unsuccessful">Viga apkg eksportimisel</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Valikud</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
-    <string name="select_tts">Set TTS language</string>
-    <string name="custom_study">Custom study</string>
+    <string name="menu__deck_options">Kaardipaki valikud</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Õppimise valikud</string>
+    <string name="select_tts">Vali TTS-i keel</string>
+    <string name="custom_study">Kohandatud õpe</string>
     <string name="more_options">Rohkem</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>
-    <string name="sched_end">(end)</string>
+    <string name="sched_end">(lõpp)</string>
     <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
     <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
@@ -250,29 +250,29 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s sekundit</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
     <string name="less_than_time">&lt; %s</string>
-    <string name="decks_rename_exists">That deck already exists</string>
+    <string name="decks_rename_exists">See kaardipakk on juba olemas.</string>
     <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
     <string name="filtered_deck_name">Filtered Deck</string>
-    <string name="reminder_title">Do not forget to study today!</string>
+    <string name="reminder_title">Ära unusta täna õppimast!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%2$d kaart korrata %1$s jooksul</item>
+        <item quantity="other">%2$d kaarti korrata %1$s jooksul</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">Error sharing apkg file</string>
+    <string name="apk_share_error">Viga apkg faili jagamisel</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
+    <string name="export_v2_dummy_note">See fail nõuab Anki uuemat versiooni.</string>
     <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
+    <string name="activity_start_failed_load_url">\'%s\' laadimine ebaõnnestus.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="web_page_error">Viga lehe laadimisel: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>

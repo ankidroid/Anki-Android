@@ -830,7 +830,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         val hkey = preferences.getString("hkey", "")
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
         if (hkey!!.isNotEmpty() && preferences.getBoolean("automaticSyncMode", false) &&
-            Connection.isOnline() && TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
+            Connection.isOnline && TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
         ) {
             Timber.i("Triggering Automatic Sync")
             sync()
@@ -1216,10 +1216,10 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             )
         } else {
             if (syncMessage == null || syncMessage.isEmpty()) {
-                if (messageResource == R.string.youre_offline && !Connection.getAllowLoginSyncOnNoConnection()) {
+                if (messageResource == R.string.youre_offline && !Connection.allowLoginSyncOnNoConnection) {
                     // #6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
                     showSnackbar(this, messageResource, false, R.string.sync_even_if_offline, {
-                        Connection.setAllowLoginSyncOnNoConnection(true)
+                        Connection.allowLoginSyncOnNoConnection = true
                         sync()
                     }, null)
                 } else {
@@ -1478,8 +1478,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                     if (event.action != KeyEvent.ACTION_DOWN) {
                         return@setOnKeyListener true
                     }
-                    if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable() &&
-                        !Connection.getIsCancelled()
+                    if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable &&
+                        !Connection.isCancelled
                     ) {
                         // If less than 2s has elapsed since sync started then don't ask for confirmation
                         if (TimeManager.time.intTimeMS() - syncStartTime < 2000) {
@@ -1511,7 +1511,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             preferences.edit().putLong("lastSyncTime", syncStartTime).apply()
         }
 
-        override fun onProgressUpdate(vararg values: Any) {
+        override fun onProgressUpdate(vararg values: Any?) {
             val res = resources
             if (values[0] is Int) {
                 val id = values[0] as Int

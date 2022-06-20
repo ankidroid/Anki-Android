@@ -55,6 +55,7 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.showWithKeyboard
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 import java.lang.NumberFormatException
@@ -182,8 +183,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldNameInput = FixedEditText(this)
         fieldNameInput?.let {
             it.isSingleLine = true
-            MaterialEditTextDialog.Builder(this, it)
+            MaterialDialog.Builder(this)
                 .title(R.string.model_field_editor_add)
+                .customView(it, true)
                 .positiveText(R.string.dialog_ok)
                 .onPositive { _: MaterialDialog?, _: DialogAction? ->
                     // Name is valid, now field is added
@@ -212,7 +214,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     fullRefreshList()
                 }
                 .negativeText(R.string.dialog_cancel)
-                .show()
+                .showWithKeyboard()
         }
     }
 
@@ -275,8 +277,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             it.isSingleLine = true
             it.setText(fieldLabels!![currentPos])
             it.setSelection(it.text!!.length)
-            MaterialEditTextDialog.Builder(this, fieldNameInput)
+            MaterialDialog.Builder(this)
                 .title(R.string.model_field_editor_rename)
+                .customView(it, true)
                 .positiveText(R.string.rename)
                 .onPositive { _: MaterialDialog?, _: DialogAction? ->
                     if (uniqueName(it) == null) {
@@ -305,7 +308,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     }
                 }
                 .negativeText(R.string.dialog_cancel)
-                .show()
+                .showWithKeyboard()
         }
     }
 
@@ -318,8 +321,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldNameInput = FixedEditText(this)
         fieldNameInput?.let {
             it.setRawInputType(InputType.TYPE_CLASS_NUMBER)
-            MaterialEditTextDialog.Builder(this, it)
+            MaterialDialog.Builder(this)
                 .title(String.format(resources.getString(R.string.model_field_editor_reposition), 1, fieldLabels!!.size))
+                .customView(it, true)
                 .positiveText(R.string.dialog_ok)
                 .onPositive { _: MaterialDialog?, _: DialogAction? ->
                     val newPosition = it.text.toString()
@@ -364,7 +368,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     }
                 }
                 .negativeText(R.string.dialog_cancel)
-                .show()
+                .showWithKeyboard()
         }
     }
 

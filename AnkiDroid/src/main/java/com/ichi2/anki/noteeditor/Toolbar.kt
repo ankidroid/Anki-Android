@@ -36,6 +36,7 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.ViewGroupUtils
@@ -378,7 +379,8 @@ class Toolbar : FrameLayout {
     companion object {
         /** @return true: toolbar should scroll horizontally. false: toolbar should be stacked vertically */
         fun shouldScrollToolbar(): Boolean {
-            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("noteEditorScrollToolbar", true)
+            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+                .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
         }
     }
 }

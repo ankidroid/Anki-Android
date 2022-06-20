@@ -80,7 +80,7 @@ class ReviewerTest : RobolectricTest() {
         ActivityScenario.launch(Reviewer::class.java).use { scenario ->
             scenario.onActivity { reviewer: Reviewer ->
                 reviewer.blockControls(true)
-                reviewer.executeCommand(ViewerCommand.COMMAND_EXIT)
+                reviewer.executeCommand(ViewerCommand.EXIT)
             }
             assertThat(scenario.result.resultCode, equalTo(RESULT_DEFAULT))
         }

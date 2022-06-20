@@ -68,7 +68,6 @@
     <string name="reset_password">重置密码</string>
     <string name="lost_mail_instructions">忘了电子邮件地址吗？</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">偏好设置</string>
     <string name="deckpreferences_title">XXX 选项</string>
     <string name="sync_prepare_syncing">准备同步&#8230;&#8230;</string>
     <string name="sync_preparing_full_sync_message">准备完全同步&#8230;</string>

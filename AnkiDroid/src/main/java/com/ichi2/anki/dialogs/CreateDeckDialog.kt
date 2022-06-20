@@ -20,11 +20,11 @@ import android.content.Context
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.CollectionHelper
-import com.ichi2.anki.MaterialEditTextDialog.Companion.displayKeyboard
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
+import com.ichi2.utils.displayKeyboard
 import timber.log.Timber
 import java.util.function.Consumer
 

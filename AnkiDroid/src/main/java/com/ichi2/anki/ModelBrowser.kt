@@ -47,6 +47,7 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.showWithKeyboard
 import com.ichi2.widget.WidgetStatus.update
 import timber.log.Timber
 import java.lang.RuntimeException
@@ -69,7 +70,7 @@ class ModelBrowser : AnkiActivity() {
     private var mModelDisplayList: ArrayList<DisplayPair>? = null
     private var mNewModelLabels: ArrayList<String>? = null
     private var mExistingModelNames: ArrayList<String>? = null
-    private var mCol: Collection? = null
+    private lateinit var mCol: Collection
     private var mActionBar: ActionBar? = null
 
     // Dialogue used in renaming
@@ -280,15 +281,16 @@ class ModelBrowser : AnkiActivity() {
                     it.setSelection(it.text.length)
 
                     // Create textbox to name new model
-                    MaterialEditTextDialog.Builder(this@ModelBrowser, mModelNameInput)
+                    MaterialDialog.Builder(this@ModelBrowser)
                         .title(R.string.model_browser_add)
+                        .customView(it, true)
                         .positiveText(R.string.dialog_ok)
                         .onPositive { _: MaterialDialog?, _: DialogAction? ->
                             val modelName = it.text.toString()
                             addNewNoteType(modelName, addSelectionSpinner.selectedItemPosition)
                         }
                         .negativeText(R.string.dialog_cancel)
-                        .show()
+                        .showWithKeyboard()
                 }
             }
             .negativeText(R.string.dialog_cancel)
@@ -316,7 +318,7 @@ class ModelBrowser : AnkiActivity() {
                 oldModel
             }
             model.put("name", modelName)
-            mCol!!.models.update(model)
+            mCol.models.update(model)
             fullRefresh()
         } else {
             showToast(resources.getString(R.string.toast_empty_name))
@@ -358,7 +360,7 @@ class ModelBrowser : AnkiActivity() {
     private fun deleteModelDialog() {
         if (mModelIds!!.size > 1) {
             val confirmTextId = try {
-                mCol!!.modSchema()
+                mCol.modSchema()
                 R.string.model_delete_warning
             } catch (e: ConfirmModSchemaException) {
                 e.log()
@@ -368,7 +370,7 @@ class ModelBrowser : AnkiActivity() {
                 ConfirmationDialog().apply {
                     setArgs(this@ModelBrowser.resources.getString(confirmTextId))
                     setConfirm {
-                        mCol!!.modSchemaNoCheck()
+                        mCol.modSchemaNoCheck()
                         deleteModel()
                     }
                 }
@@ -388,8 +390,9 @@ class ModelBrowser : AnkiActivity() {
             it.isSingleLine = true
             it.setText(mModels!![mModelListPosition].getString("name"))
             it.setSelection(it.text.length)
-            MaterialEditTextDialog.Builder(this, mModelNameInput)
+            MaterialDialog.Builder(this)
                 .title(R.string.rename_model)
+                .customView(it, true)
                 .positiveText(R.string.rename)
                 .negativeText(R.string.dialog_cancel)
                 .onPositive { _: MaterialDialog?, _: DialogAction? ->
@@ -401,7 +404,7 @@ class ModelBrowser : AnkiActivity() {
                     }
                     if (deckName.isNotEmpty()) {
                         model.put("name", deckName)
-                        mCol!!.models.update(model)
+                        mCol.models.update(model)
                         mModels!![mModelListPosition].put("name", deckName)
                         mModelDisplayList!![mModelListPosition] = DisplayPair(
                             mModels!![mModelListPosition].getString("name"),
@@ -412,7 +415,7 @@ class ModelBrowser : AnkiActivity() {
                         showToast(resources.getString(R.string.toast_empty_name))
                     }
                 }
-                .show()
+                .showWithKeyboard()
         }
     }
 

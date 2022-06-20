@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Général</string>
     <string name="pref_cat_general_summ">Paramètres généraux</string>
     <string name="pref_cat_reviewing" maxLength="41">Révision</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronisation</string>
     <string name="pref_cat_reviewing_summ">Paramètres de révision indépendants du paquet</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportement</string>
     <string name="pref_cat_flashcard" maxLength="41">Afficher</string>
@@ -60,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Thèmes</string>
     <string name="pref_cat_fonts" maxLength="41">Polices</string>
     <string name="pref_cat_gestures" maxLength="41">Gestes</string>
-    <string name="pref_cat_gestures_summ">Utiliser les gestes et mouvements au lieu des boutons</string>
-    <string name="pref_cat_actions" maxLength="41">Actions</string>
     <string name="pref_cat_controls" maxLength="41">Contrôles</string>
-    <string name="pref_cat_controls_summ">Configurer les claviers et les autres appareils</string>
     <string name="pref_cat_advanced" maxLength="41">Avancé</string>
     <string name="pref_cat_advanced_summ">Optimisation et fonctionnalités expérimentales</string>
     <string name="pref_cat_performance" maxLength="41">Performance</string>
@@ -114,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Toucher la droite</string>
     <string name="gestures_tap_bottom" maxLength="41">Toucher le bas</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Toucher en haut à gauche</string>
-    <string name="gestures_corner_tap_top_center">Toucher en haut au centre</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Toucher en haut à droite</string>
-    <string name="gestures_corner_tap_middle_left">Toucher au milieu à gauche</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toucher au milieu au centre</string>
-    <string name="gestures_corner_tap_middle_right">Toucher au milieu à droite</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toucher en bas à gauche</string>
-    <string name="gestures_corner_tap_bottom_center">Toucher en bas au centre</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toucher en bas à droite</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">Utiliser les boutons Kanji/Katakana, emoji/kao-moji pour le défilement</string>
@@ -241,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Synchroniser l’URL pour les médias</string>
     <string name="custom_sync_server_media_url_invalid">URL de synchronisation des médias invalide</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Mappage de commande</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Les modifications apportées aux options du groupe de paquets affecteront plusieurs paquets de cartes. Si vous souhaitez modifier uniquement le paquet actuel, veuillez d\'abord ajouter un nouveau groupe d\'options</string>
@@ -326,7 +322,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Ouvrir le journal des modifications</string>
     <string name="binding_add_gesture">Ajouter un geste</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Ajouter une touche</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Appuyer sur une touche</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Sélectionner le côté de la carte</string>

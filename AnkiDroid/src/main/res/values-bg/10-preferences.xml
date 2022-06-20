@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Общи настройки</string>
     <string name="pref_cat_reviewing" maxLength="41">Преглед</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">Специфични настройки на разглеждането, които не касаят тестетата</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">Поведение</string>
     <string name="pref_cat_flashcard" maxLength="41">Екран</string>
@@ -60,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">Теми</string>
     <string name="pref_cat_fonts" maxLength="41">Шрифтове</string>
     <string name="pref_cat_gestures" maxLength="41">Жестове</string>
-    <string name="pref_cat_gestures_summ">Използване на докосване и плъзване вместо бутони</string>
-    <string name="pref_cat_actions" maxLength="41">Действия</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Разширени</string>
     <string name="pref_cat_advanced_summ">Оптимизации и експериментални функции</string>
     <string name="pref_cat_performance" maxLength="41">Производителност</string>
@@ -114,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">Натиснете надясно</string>
     <string name="gestures_tap_bottom" maxLength="41">Натиснете отдолу</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
     <string name="more_scrolling_buttons" maxLength="41">е-четец</string>
     <string name="more_scrolling_buttons_summ">Също така използване на канджи/катакана, емоджи/као-моджи бутони за превъртане</string>
@@ -241,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">URL за синхрон на медии</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
@@ -326,7 +322,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
     <string name="binding_add_gesture">Добавяне на жест</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Добавяне на клавиш</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Натиснете клавиш</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Изберете страна на картата</string>
@@ -338,5 +336,5 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="bindings_already_bound">Already bound to ‘%s’</string>
 </resources>

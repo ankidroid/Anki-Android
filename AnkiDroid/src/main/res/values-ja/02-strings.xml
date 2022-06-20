@@ -179,7 +179,7 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() に失敗しました (おそらくストレージスペース外です)</string>
     <string name="import_error_unhandled_scheme">未処理のインポート: “%s”</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_error_colpkg_apkg">apkgファイルとcolpkgファイルが選択されました。それらを一度にインポートすることはできません。</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">コレクションを置き換えています...</string>
     <string name="import_interrupted">インポートが中断されました</string>
@@ -390,7 +390,7 @@
     <string name="scoped_storage_learn_more">詳細</string>
     <string name="scoped_storage_postpone">後で</string>
     <string name="scoped_storage_migrate">移行</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">検索対象が見つかりませんでした</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s は有効なJavaScriptアドオンパッケージではありません</string>
     <string name="could_not_create_dir">%s というディレクトリを作成できませんでした</string>

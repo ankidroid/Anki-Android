@@ -68,7 +68,6 @@
     <string name="reset_password">Resetare parolă</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Preferinţe</string>
     <string name="deckpreferences_title">Opţiuni pentru XXX</string>
     <string name="sync_prepare_syncing">Pregăteste sincronizarea&#8230;</string>
     <string name="sync_preparing_full_sync_message">Pregătire completă pentru sincronizare&#8230;</string>

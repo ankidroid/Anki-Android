@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">تنظیمات کلی</string>
     <string name="pref_cat_reviewing" maxLength="41">بازبینی</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">تنظیمات مرور بدون اختصاص به دسته ای خاص</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">رفتار</string>
     <string name="pref_cat_flashcard" maxLength="41">نمایش</string>
@@ -60,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">پوسته ها</string>
     <string name="pref_cat_fonts" maxLength="41">نوع خط</string>
     <string name="pref_cat_gestures" maxLength="41">حرکات دست</string>
-    <string name="pref_cat_gestures_summ">به جای دکمه ها از زدن و کشیدن استفاده کنید</string>
-    <string name="pref_cat_actions" maxLength="41">اقدامات</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">پیشرفته</string>
     <string name="pref_cat_advanced_summ">بهینه سازی و قابلیت های آزمایشی</string>
     <string name="pref_cat_performance" maxLength="41">کارآیی</string>
@@ -114,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">به راست ضربه بزنید</string>
     <string name="gestures_tap_bottom" maxLength="41">به پایین ضربه بزنید</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_center">Touch top center</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_left">Touch middle left</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_middle_right">Touch middle right</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_center">Touch bottom center</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
     <string name="more_scrolling_buttons" maxLength="41">خبرخوان</string>
     <string name="more_scrolling_buttons_summ">از دکمه‌های Kanji/Katakana, Emoji/Kao-moji هم برای پیمایش استفاده کن</string>
@@ -241,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">لینک همگام سازی رسانه</string>
     <string name="custom_sync_server_media_url_invalid">لینک همگام‌سازی فایل‌های رسانه نامعتبر است</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">تغییر این گروه اختیارات این دسته چندین دسته را تحت تأثیر قرار خواهد داد. اگر قصد اعمال تغییرات فقط بر روی این دسته را دارید، لطفاً ابتدا یک گروه اختیارات جدید اضافه کنید</string>
@@ -326,7 +322,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Open Changelog</string>
     <string name="binding_add_gesture">Add gesture</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Add key</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Press a key</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
@@ -338,5 +336,5 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="bindings_already_bound">Already bound to ‘%s’</string>
 </resources>

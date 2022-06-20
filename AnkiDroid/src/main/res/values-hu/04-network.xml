@@ -68,7 +68,6 @@
     <string name="reset_password">Jelszó visszaállítása</string>
     <string name="lost_mail_instructions">Elfelejtette az emailt?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Beállítások</string>
     <string name="deckpreferences_title">XXX lehetőségei</string>
     <string name="sync_prepare_syncing">Felkészülés a szinkronizálásra...</string>
     <string name="sync_preparing_full_sync_message">Teljes szinkronizálásra való felkészülés...</string>

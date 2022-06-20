@@ -187,7 +187,7 @@
     <string name="studyoptions_no_cards_due">אין קלפים נוספים</string>
     <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
     <string name="empty_cloze_warning">ערוך את הרשומה והוסף השלם את החסר. (%1$s)</string>
-    <string name="button_sync">סנכרון</string>
+    <string name="button_sync" comment="Text of the sync button">סנכרון</string>
     <string name="cancel_sync_confirm">לבטל את הסנכרון?</string>
     <string name="continue_sync">המשך סנכרון</string>
     <string name="sync_cancelled">סנכרון בוטל</string>

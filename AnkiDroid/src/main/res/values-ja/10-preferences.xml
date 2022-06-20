@@ -51,6 +51,7 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">全般</string>
     <string name="pref_cat_general_summ">一般設定</string>
     <string name="pref_cat_reviewing" maxLength="41">カードの学習</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_reviewing_summ">特定のデッキに限定されない設定</string>
     <string name="pref_cat_reviewer_behaviour" maxLength="41">動作</string>
     <string name="pref_cat_flashcard" maxLength="41">画面表示</string>
@@ -60,10 +61,7 @@
     <string name="pref_cat_themes" maxLength="41">テーマ</string>
     <string name="pref_cat_fonts" maxLength="41">フォント</string>
     <string name="pref_cat_gestures" maxLength="41">ジェスチャー</string>
-    <string name="pref_cat_gestures_summ">よく行う操作を、タップやスワイプをするだけで手軽に行えるようになります</string>
-    <string name="pref_cat_actions" maxLength="41">アクション</string>
     <string name="pref_cat_controls" maxLength="41">コントローラー</string>
-    <string name="pref_cat_controls_summ">外部デバイス（キーボードやゲームパッド）のキーやボタンに操作を割り当てます</string>
     <string name="pref_cat_advanced" maxLength="41">その他</string>
     <string name="pref_cat_advanced_summ">高度な最適化設定、実験的機能、AnkiDroidについて</string>
     <string name="pref_cat_performance" maxLength="41">パフォーマンス</string>
@@ -114,13 +112,9 @@
     <string name="gestures_tap_right" maxLength="41">右をタップ</string>
     <string name="gestures_tap_bottom" maxLength="41">下をタップ</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">上部左側をタップ</string>
-    <string name="gestures_corner_tap_top_center">上部中央をタップ</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">上部右側をタップ</string>
-    <string name="gestures_corner_tap_middle_left">中央左側をタップ</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">中央をタップ</string>
-    <string name="gestures_corner_tap_middle_right">中央右側をタップ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">下部左側をタップ</string>
-    <string name="gestures_corner_tap_bottom_center">下部中央をタップ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">下部右側をタップ</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
@@ -241,6 +235,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">メディア同期URL</string>
     <string name="custom_sync_server_media_url_invalid">メディア同期のためのURLが無効です</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">操作の割り当て</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">オプショングループの設定内容を変更すると、同じオプショングループを使用している他のデッキにも影響が及びます。現在のデッキについてのみオプショングループの設定内容を変更したい場合は、まず新規のオプショングループを追加してください（[オプショングループの管理]＞[追加]）。</string>
@@ -324,7 +320,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">変更履歴を開く</string>
     <string name="binding_add_gesture">ジェスチャーを追加</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">キーを追加</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">カードの表面と裏面、どちらでの操作ですか？</string>
