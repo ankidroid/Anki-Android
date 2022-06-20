@@ -123,6 +123,11 @@
         <item name="editTextDisabled">@color/material_grey_500</item>
 
         <item name="android:navigationBarColor">@color/black</item>
+
+        <!-- Filter Bottom Sheet-->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemeDark</item>
+        <item name="filterItemBackground">@color/theme_dark_primary_light</item>
+
     </style>
 
     <!-- Preferences screens -->
@@ -132,5 +137,17 @@
         <item name="windowNoTitle">false</item>
         <item name="android:textColor">@color/prefs_item_dark</item>
         <item name="android:textColorSecondary">@color/prefs_item_dark</item>
+    </style>
+
+    <!-- Filter Sheet Style -->
+    <style name="AppBottomSheetDialogThemeDark" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyleDark</item>
+    </style>
+
+    <style name="CustomBottomSheetStyleDark" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_bottom_sheet_dark</item>
     </style>
 </resources>

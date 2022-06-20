@@ -49,6 +49,10 @@
         <item name="customTabNavBarColor">@color/material_grey_500</item>
 
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
+
+        <!-- Filter Bottom sheet -->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemePlain</item>
+        <item name="filterItemBackground">@color/white</item>
     </style>
 
     <!-- Preferences screens -->
@@ -58,5 +62,17 @@
         <item name="windowNoTitle">false</item>
         <item name="android:textColor">@color/prefs_item_light</item>
         <item name="android:textColorSecondary">@color/prefs_item_light</item>
+    </style>
+
+    <!-- Filter Sheet Style -->
+    <style name="AppBottomSheetDialogThemePlain" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStylePlain</item>
+    </style>
+
+    <style name="CustomBottomSheetStylePlain" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_bottom_sheet</item>
     </style>
 </resources>

@@ -180,7 +180,7 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
 
     /* legacy */
 
-    fun allNames(): List<str> {
+    override fun allNames(): List<String> {
         return all_names_and_ids().map { it.name }.toMutableList()
     }
 
