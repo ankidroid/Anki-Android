@@ -35,6 +35,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.MaterialDialog.ListCallbackSingleChoice
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiFont.Companion.getTypeface
@@ -522,7 +523,20 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         mOnboarding.onCreate()
 
         val modalBottomSheet = BottomSheetFragment()
-        modalBottomSheet.show(supportFragmentManager, BottomSheetFragment.TAG)
+
+        val filterButton = findViewById<FloatingActionButton>(R.id.filter_sheet_fab)
+
+        filterButton.setOnClickListener {
+            modalBottomSheet.show(supportFragmentManager, BottomSheetFragment.TAG)
+        }
+    }
+
+    fun searchWithFilterQuery(filterQuery: String) {
+
+        mSearchTerms = filterQuery
+
+        mSearchView!!.setQuery(mSearchTerms!!, true)
+        searchCards()
     }
 
     // Finish initializing the activity after the collection has been correctly loaded

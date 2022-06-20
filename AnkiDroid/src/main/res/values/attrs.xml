@@ -116,6 +116,10 @@
     <attr name="dialogErrorIcon" format="integer"/>
     <attr name="dialogSyncErrorIcon" format="integer"/>
     <attr name="dialogSendIcon" format="integer"/>
+
+    <!-- Filter Bottom Sheet -->
+    <attr name="filterItemBackground" format="color"/>
+
     <!-- FAB -->
     <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->
     <attr name="fab_pressed" format="color"/>
