@@ -53,6 +53,7 @@
         <!-- Filter Bottom sheet -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemePlain</item>
         <item name="filterItemBackground">@color/white</item>
+        <item name="filterHeaderDivider">@color/black</item>
     </style>
 
     <!-- Preferences screens -->

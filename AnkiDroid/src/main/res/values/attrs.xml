@@ -119,6 +119,7 @@
 
     <!-- Filter Bottom Sheet -->
     <attr name="filterItemBackground" format="color"/>
+    <attr name="filterHeaderDivider" format="color"/>
 
     <!-- FAB -->
     <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->

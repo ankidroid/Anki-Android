@@ -140,6 +140,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!-- Filter Bottom sheet -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="filterItemBackground">@color/white</item>
+        <item name="filterHeaderDivider">@color/black</item>
     </style>
 
     <!-- Preferences screens -->
@@ -155,7 +156,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
     <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/white</item>
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
 
