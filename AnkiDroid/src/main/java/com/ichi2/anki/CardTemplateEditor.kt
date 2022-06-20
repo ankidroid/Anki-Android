@@ -70,7 +70,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     private lateinit var mSlidingTabLayout: TabLayout
     var tempModel: TemporaryModel? = null
         private set
-    private var mFieldNames: List<String>? = null
+    private lateinit var mFieldNames: List<String>
     private var mModelId: Long = 0
     private var mNoteId: Long = 0
 
@@ -413,7 +413,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             "the kotlin migration made this method crash due to a recursive call when the dialog would return its data"
         )
         private fun showInsertFieldDialog() {
-            mTemplateEditor.mFieldNames?.let { fieldNames ->
+            mTemplateEditor.mFieldNames.let { fieldNames ->
                 mTemplateEditor.showDialogFragment(InsertFieldDialog.newInstance(fieldNames))
             }
         }
