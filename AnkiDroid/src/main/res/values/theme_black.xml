@@ -119,6 +119,7 @@
         <!-- Filter Bottom sheet -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemeBlack</item>
         <item name="filterItemBackground">@color/theme_black_primary_light</item>
+        <item name="filterHeaderDivider">@color/white</item>
     </style>
 
     <!-- Preferences screens -->

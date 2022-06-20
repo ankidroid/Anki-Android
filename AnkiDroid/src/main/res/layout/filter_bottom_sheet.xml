@@ -42,11 +42,11 @@
             android:text="@string/apply_filter" />
 
     </LinearLayout>
-
+®
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="?attr/cardBrowserDivider" />
+        android:layout_height="1dp"
+        android:background="?attr/filterHeaderDivider" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -83,12 +83,20 @@
                         android:layout_gravity="center"
                         android:src="@drawable/filter_sheet_opened_list_icon"/>
 
+                    <ImageView
+                        android:id="@+id/filter_deckListToggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/filter_sheet_label_icon_decks"/>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_by_decks"
                         android:textStyle="bold"
                         android:textSize="16sp"
+                        android:layout_marginHorizontal="4dp"
                         android:layout_marginVertical="10dp" />
 
                 </LinearLayout>
@@ -132,12 +140,20 @@
                         android:layout_gravity="center"
                         android:src="@drawable/filter_sheet_opened_list_icon"/>
 
+                    <ImageView
+                        android:id="@+id/filter_deckListToggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/filter_sheet_label_icon_tags"/>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_by_tags"
                         android:textStyle="bold"
                         android:textSize="16sp"
+                        android:layout_marginHorizontal="4dp"
                         android:layout_marginVertical="10dp" />
 
                 </LinearLayout>
@@ -178,6 +194,13 @@
                         android:layout_gravity="center"
                         android:src="@drawable/filter_sheet_opened_list_icon"/>
 
+                    <ImageView
+                        android:id="@+id/filter_deckListToggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/filter_sheet_label_icon_flags"/>
+
                     <TextView
                         android:id="@+id/filterByFlagsText"
                         android:layout_width="match_parent"
@@ -185,6 +208,7 @@
                         android:text="@string/filter_by_flags"
                         android:textStyle="bold"
                         android:textSize="16sp"
+                        android:layout_marginHorizontal="4dp"
                         android:layout_marginVertical="10dp" />
 
                 </LinearLayout>
@@ -225,6 +249,13 @@
                         android:layout_gravity="center"
                         android:src="@drawable/filter_sheet_opened_list_icon"/>
 
+                    <ImageView
+                        android:id="@+id/filter_deckListToggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/filter_sheet_label_icon_note_types"/>
+
                     <TextView
                         android:id="@+id/filterByNoteTypesText"
                         android:layout_width="match_parent"
@@ -232,6 +263,7 @@
                         android:text="@string/filter_by_note_types"
                         android:textStyle="bold"
                         android:textSize="16sp"
+                        android:layout_marginHorizontal="4dp"
                         android:layout_marginVertical="10dp" />
 
                 </LinearLayout>
@@ -272,12 +304,20 @@
                         android:layout_gravity="center"
                         android:src="@drawable/filter_sheet_opened_list_icon"/>
 
+                    <ImageView
+                        android:id="@+id/filter_deckListToggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/filter_sheet_label_icon_card_states"/>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/filter_by_card_state"
                         android:textStyle="bold"
                         android:textSize="16sp"
+                        android:layout_marginHorizontal="4dp"
                         android:layout_marginVertical="10dp"/>
 
                 </LinearLayout>
