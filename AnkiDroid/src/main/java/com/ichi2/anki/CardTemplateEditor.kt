@@ -63,7 +63,6 @@ import java.lang.Integer.min
 /**
  * Allows the user to view the template for the current note type
  */
-@KotlinCleanup("IDE-lint")
 @KotlinCleanup("lateinit wherever possible")
 open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     @VisibleForTesting
