@@ -75,7 +75,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     private var mNoteId: Long = 0
 
     // the position of the cursor in the editor view
-    private var tabToCursorPosition: HashMap<Int, Int?>? = null
+    private lateinit var tabToCursorPosition: HashMap<Int, Int?>
 
     // the current editor view among front/style/back
     private var tabToViewId: HashMap<Int, Int?>? = null
@@ -109,7 +109,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             mNoteId = intent.getLongExtra(EDITOR_NOTE_ID, -1L)
             // get id for currently edited template (optional)
             mStartingOrdId = intent.getIntExtra("ordId", -1)
-            tabToCursorPosition!![0] = 0
+            tabToCursorPosition[0] = 0
             tabToViewId!![0] = R.id.front_edit
         }
         savedInstanceState?.run {
@@ -260,7 +260,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private var mBaseId: Long = 0
 
         override fun createFragment(position: Int): Fragment {
-            val editorPosition = tabToCursorPosition!![position] ?: 0
+            val editorPosition = tabToCursorPosition[position] ?: 0
             val editorViewId = tabToViewId!![position] ?: R.id.front_edit
             return CardTemplateFragment.newInstance(position, mNoteId, editorPosition, editorViewId)
         }
@@ -342,7 +342,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // Set text change listeners
             val templateEditorWatcher = object : TextWatcher {
                 override fun afterTextChanged(arg0: Editable) {
-                    mTemplateEditor.tabToCursorPosition!![cardIndex] = mEditorEditText.selectionStart
+                    mTemplateEditor.tabToCursorPosition[cardIndex] = mEditorEditText.selectionStart
                     when (currentEditorViewId) {
                         R.id.styling_edit -> tempModel.updateCss(mEditorEditText.text.toString())
                         R.id.back_edit -> template.put("afmt", mEditorEditText.text)
