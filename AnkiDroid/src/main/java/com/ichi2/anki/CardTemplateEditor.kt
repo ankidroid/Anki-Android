@@ -283,7 +283,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     class CardTemplateFragment : Fragment() {
-        private var mCurrentEditorTitle: FixedTextView? = null
+        private lateinit var mCurrentEditorTitle: FixedTextView
         private lateinit var mEditorEditText: FixedEditText
 
         var currentEditorViewId = 0
@@ -429,7 +429,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             currentEditorViewId = id
             mEditorEditText.apply {
                 setText(editorContent)
-                mCurrentEditorTitle!!.text = resources.getString(editorTitleId)
+                mCurrentEditorTitle.text = resources.getString(editorTitleId)
                 setSelection(cursorPosition)
                 requestFocus()
             }
