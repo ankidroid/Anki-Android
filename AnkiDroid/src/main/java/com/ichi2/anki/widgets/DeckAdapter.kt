@@ -138,14 +138,10 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         getFilter().filter(filter)
     }
 
-    fun getNodeByDid(did: Long): TreeNode<AbstractDeckTreeNode> {
-        return deckList[findDeckPosition(did)]
-    }
+    fun getNodeByDid(did: Long): TreeNode<AbstractDeckTreeNode> = deckList[findDeckPosition(did)]
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = layoutInflater.inflate(R.layout.deck_item, parent, false)
-        return ViewHolder(v)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(layoutInflater.inflate(R.layout.deck_item, parent, false))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Update views for this node
@@ -231,9 +227,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         return node.did == currentDeckId
     }
 
-    override fun getItemCount(): Int {
-        return deckList.size
-    }
+    override fun getItemCount(): Int = deckList.size
 
     private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<AbstractDeckTreeNode>) {
         val nodeValue = node.value
@@ -328,9 +322,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     val due: Int?
         get() = (mNew + mLrn + mRev).takeIf { mNumbersComputed }
 
-    override fun getFilter(): Filter {
-        return DeckFilter()
-    }
+    override fun getFilter(): Filter = DeckFilter()
 
     private inner class DeckFilter : TypedFilter<TreeNode<AbstractDeckTreeNode>>(mDeckList) {
         override fun filterResults(constraint: CharSequence, items: List<TreeNode<AbstractDeckTreeNode>>): List<TreeNode<AbstractDeckTreeNode>> {
@@ -377,9 +369,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
          * @param predicate the predicate to find index of
          * @return the index of [predicate]. returns null if none found
          */
-        fun <T> Iterable<T>.indexOfOrNull(predicate: (T) -> Boolean): Int? {
-            return indexOfFirst(predicate).takeIf { it >= 0 }
-        }
+        fun <T> Iterable<T>.indexOfOrNull(predicate: (T) -> Boolean): Int? =
+            indexOfFirst(predicate).takeIf { it >= 0 }
     }
 
     init {
