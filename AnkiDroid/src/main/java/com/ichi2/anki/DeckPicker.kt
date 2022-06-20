@@ -106,6 +106,7 @@ import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import kotlin.math.abs
@@ -1238,7 +1239,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      * @param messageResource String resource for message
      */
     @KotlinCleanup("nullOrEmpty")
-    private fun showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
+    fun showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
         if (mActivityPaused) {
             val res = AnkiDroidApp.getAppResources()
             showSimpleNotification(
@@ -1442,22 +1443,27 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     override fun sync(conflict: ConflictResolution?) {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         val hkey = preferences.getString("hkey", "")
+        val hostNum = HostNumFactory.getInstance(baseContext).getHostNum()
         if (hkey!!.isEmpty()) {
             Timber.w("User not logged in")
             mPullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
         } else {
-            Connection.sync(
-                mSyncListener,
-                Connection.Payload(
-                    arrayOf(
-                        hkey,
-                        preferences.getBoolean("syncFetchesMedia", true),
-                        conflict,
-                        HostNumFactory.getInstance(baseContext)
+            if (!BackendFactory.defaultLegacySchema) {
+                handleNewSync(hkey, hostNum ?: 0, conflict)
+            } else {
+                Connection.sync(
+                    mSyncListener,
+                    Connection.Payload(
+                        arrayOf(
+                            hkey,
+                            preferences.getBoolean("syncFetchesMedia", true),
+                            conflict,
+                            HostNumFactory.getInstance(baseContext)
+                        )
                     )
                 )
-            )
+            }
         }
     }
 

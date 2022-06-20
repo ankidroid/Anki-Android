@@ -432,9 +432,9 @@ open class Collection constructor(
     }
 
     @Synchronized
-    @KotlinCleanup("JvmOverloads")
     @KotlinCleanup("remove/rename val db")
-    fun close(save: Boolean, downgrade: Boolean) {
+    @JvmOverloads
+    fun close(save: Boolean, downgrade: Boolean, forFullSync: Boolean = false) {
         if (!dbClosed) {
             try {
                 val db = db.database
@@ -447,10 +447,9 @@ open class Collection constructor(
                 Timber.w(e)
                 CrashReportService.sendExceptionReport(e, "closeDB")
             }
-            if (!server) {
-                db.database.disableWriteAheadLogging()
+            if (!forFullSync) {
+                backend.closeCollection(downgrade)
             }
-            backend.closeCollection(downgrade)
             dbInternal = null
             media.close()
             _closeLog()
@@ -459,11 +458,11 @@ open class Collection constructor(
     }
 
     /** True if DB was created */
-    fun reopen(): Boolean {
+    @JvmOverloads
+    fun reopen(afterFullSync: Boolean = false): Boolean {
         Timber.i("(Re)opening Database: %s", path)
         if (dbClosed) {
-            // fixme: pass in time
-            val (db_, created) = Storage.openDB(path, backend)
+            val (db_, created) = Storage.openDB(path, backend, afterFullSync)
             dbInternal = db_
             media.connect()
             _openLog()

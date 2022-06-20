@@ -97,13 +97,17 @@ object Storage {
     /**
      * Called as part of Collection initialization. Don't call directly.
      */
-    internal fun openDB(path: String, backend: Backend): Pair<DB, Boolean> {
+    internal fun openDB(path: String, backend: Backend, afterFullSync: Boolean): Pair<DB, Boolean> {
         if (isLocked) {
             throw SQLiteDatabaseLockedException("AnkiDroid has locked the database")
         }
         val dbFile = File(path)
-        val create = !dbFile.exists()
-        backend.openCollection(if (isInMemory) ":memory:" else path)
+        var create = !dbFile.exists()
+        if (afterFullSync) {
+            create = false
+        } else {
+            backend.openCollection(if (isInMemory) ":memory:" else path)
+        }
         val db = DB.withRustBackend(backend)
 
         // initialize
