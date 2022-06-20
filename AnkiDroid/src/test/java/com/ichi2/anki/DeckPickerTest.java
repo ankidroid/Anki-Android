@@ -11,6 +11,7 @@ import android.view.Menu;
 
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
+import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.annotations.NeedsTest;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
@@ -38,6 +39,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -491,6 +493,16 @@ public class DeckPickerTest extends RobolectricTest {
         assertThat("Contains only default deck", getCol().getDecks().count(), is(1));
         DeckPicker deckPicker = startActivityNormallyOpenCollectionWithIntent(DeckPicker.class, new Intent());
         assertThat("No deck is being displayed", deckPicker.hasAtLeastOneDeckBeingDisplayed(), is(false));
+    }
+
+    @Test
+    public void iterableIndexOfOrNullTest() {
+        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(10, 20, 30, 40));
+        Integer actual = DeckAdapter.Companion.indexOfOrNull(arrayList, i -> i > 40);
+        assertNull(actual);
+        actual = DeckAdapter.Companion.indexOfOrNull(arrayList, i -> i > 30);
+        assertNotNull(actual);
+        assertThat(actual, is(3));
     }
 
 
