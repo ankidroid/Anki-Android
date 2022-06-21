@@ -26,8 +26,6 @@ package com.ichi2.anki
 
 import android.content.Context
 import androidx.core.content.edit
-import androidx.lifecycle.lifecycleScope
-import anki.collection.Progress
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -35,7 +33,6 @@ import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.async.Connection
 import com.ichi2.libanki.CollectionV16
-import com.ichi2.libanki.getProgress
 import com.ichi2.libanki.sync.*
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
@@ -54,7 +51,7 @@ fun DeckPicker.handleNewSync(
     val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
     val deckPicker = this
 
-    lifecycleScope.launch {
+    catchingLifecycleScope(this) {
         try {
             when (conflict) {
                 Connection.ConflictResolution.FULL_DOWNLOAD -> handleDownload(col, auth, deckPicker)
@@ -63,14 +60,8 @@ fun DeckPicker.handleNewSync(
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
             // auth failed; log out
-            AnkiDroidApp.getSharedPrefs(baseContext).edit {
-                putString("hkey", "")
-            }
-            Timber.e("login failed")
-            // FIXME: inform user
-        } catch (exc: Exception) {
-            Timber.e("exception in sync: $exc")
-            // FIXME: inform user
+            updateLogin(baseContext, "", "")
+            throw exc
         }
         deckPicker.refreshState()
     }
@@ -78,23 +69,26 @@ fun DeckPicker.handleNewSync(
 
 fun MyAccount.handleNewLogin(username: String, password: String) {
     val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
-    lifecycleScope.launch {
+    catchingLifecycleScope(this) {
         val auth = try {
             runInBackgroundWithProgress(col, { }) {
                 col.syncLogin(username, password)
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
-            Timber.e("login failed")
-            // FIXME: inform user
-            // auth failed; return empty values so preferences below logs us out
-            SyncAuth.newBuilder().build()
+            // auth failed; clear out login details
+            updateLogin(baseContext, "", "")
+            throw exc
         }
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-        preferences.edit {
-            putString("username", username)
-            putString("hkey", auth.hkey)
-        }
+        updateLogin(baseContext, username, auth.hkey)
         finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
+    }
+}
+
+private fun updateLogin(context: Context, username: String, hkey: String?) {
+    val preferences = AnkiDroidApp.getSharedPrefs(context)
+    preferences.edit {
+        putString("username", username)
+        putString("hkey", hkey)
     }
 }
 
@@ -206,37 +200,6 @@ private suspend fun handleMediaSync(
 }
 
 // FIXME: display/update a popup progress window instead of logging
-fun updateProgress(text: String) {
+private fun updateProgress(text: String) {
     Timber.i("progress: $text")
-}
-
-suspend fun <T> runInBackgroundWithProgress(
-    col: CollectionV16,
-    onProgress: (Progress) -> Unit,
-    op: suspend (CollectionV16) -> T
-): T = coroutineScope {
-    val monitor = launch { monitorProgress(col, onProgress) }
-    try {
-        withContext(Dispatchers.IO) {
-            op(col)
-        }
-    } finally {
-        monitor.cancel()
-    }
-}
-
-suspend fun monitorProgress(col: CollectionV16, op: (Progress) -> Unit) {
-    while (true) {
-        try {
-            val progress = col.getProgress()
-            // on main thread, so op can update UI
-            withContext(Dispatchers.Main) {
-                op(progress)
-            }
-        } catch (exc: Exception) {
-            Timber.e("exception in monitorProgress: $exc")
-            return
-        }
-        delay(100)
-    }
 }
