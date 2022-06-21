@@ -116,4 +116,9 @@ class CollectionV16(
         task?.doProgress(cardIdsList)
         return cardIdsList
     }
+
+    /** Takes raw input from TypeScript frontend and returns suitable translations. */
+    fun i18nResourcesRaw(input: ByteArray): ByteArray {
+        return backend.i18nResourcesRaw(input)
+    }
 }
