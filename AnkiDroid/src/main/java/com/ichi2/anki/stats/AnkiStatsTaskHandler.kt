@@ -16,7 +16,6 @@
 package com.ichi2.anki.stats
 
 import android.R
-import android.util.Pair
 import android.view.View
 import android.webkit.WebView
 import android.widget.ProgressBar
@@ -33,10 +32,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.lang.ref.WeakReference
 import java.net.URLEncoder
-import java.util.concurrent.locks.Lock
-import java.util.concurrent.locks.ReentrantLock
 import kotlin.math.roundToInt
 
 class AnkiStatsTaskHandler private constructor(
@@ -112,64 +108,10 @@ class AnkiStatsTaskHandler private constructor(
             }
         }
 
-    @Suppress("deprecation") // #7108: AsyncTask
-    class DeckPreviewStatistics : android.os.AsyncTask<Pair<Collection, TextView?>?, Void?, String?>() {
-        private var mTextView: WeakReference<TextView>? = null
-        private var mIsRunning = true
-        override fun doInBackground(vararg params: Pair<Collection, TextView?>?): String? {
-            // make sure only one task of CreateChartTask is running, first to run should get sLock
-            // only necessary on lower APIs because after honeycomb only one thread is used for all asynctasks
-            sLock.lock()
-            return try {
-                val collection = params[0]!!.first
-                val textView = params[0]!!.second
-                mTextView = WeakReference(textView)
-                if (!mIsRunning || collection == null || collection.dbClosed) {
-                    Timber.d("Quitting DeckPreviewStatistics before execution")
-                    return null
-                } else {
-                    Timber.d("Starting DeckPreviewStatistics")
-                }
-
-                // eventually put this in Stats (in desktop it is not though)
-                var cards: Int
-                var minutes: Int
-                val query = "select sum(case when ease > 0 then 1 else 0 end), " + /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
-                    "sum(time)/1000 from revlog where id > " + (collection.sched.dayCutoff - Stats.SECONDS_PER_DAY) * 1000
-                Timber.d("DeckPreviewStatistics query: %s", query)
-                collection.db
-                    .query(query).use { cur ->
-                        cur.moveToFirst()
-                        cards = cur.getInt(0)
-                        minutes = (cur.getInt(1) / 60.0).roundToInt()
-                    }
-                val res = textView!!.resources
-                val span = res.getQuantityString(com.ichi2.anki.R.plurals.in_minutes, minutes, minutes)
-                res.getQuantityString(com.ichi2.anki.R.plurals.studied_cards_today, cards, cards, span)
-            } finally {
-                sLock.unlock()
-            }
-        }
-
-        override fun onCancelled() {
-            mIsRunning = false
-        }
-
-        override fun onPostExecute(todayStatString: String?) {
-            val textView = mTextView!!.get()
-            if (todayStatString != null && mIsRunning && textView != null) {
-                textView.text = todayStatString
-                textView.visibility = View.VISIBLE
-                textView.invalidate()
-            }
-        }
-    }
-
     companion object {
         @JvmStatic
         var instance: AnkiStatsTaskHandler? = null
             private set
-        private val sLock: Lock = ReentrantLock()
         private val mutex = Mutex()
         @JvmStatic
         @Synchronized
@@ -184,12 +126,46 @@ class AnkiStatsTaskHandler private constructor(
             return instance
         }
 
-        @Suppress("deprecation") // #7108: AsyncTask
         @JvmStatic
-        fun createReviewSummaryStatistics(col: Collection, view: TextView): DeckPreviewStatistics {
-            val deckPreviewStatistics = DeckPreviewStatistics()
-            deckPreviewStatistics.execute(Pair(col, view))
-            return deckPreviewStatistics
+        suspend fun createReviewSummaryStatistics(
+            col: Collection,
+            view: TextView,
+            mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+            defaultDispatcher: CoroutineDispatcher = Dispatchers.Main
+        ): Unit = mutex.withLock {
+            withContext(defaultDispatcher) {
+                val todayStatString = if (!isActive || col.dbClosed) {
+                    Timber.d("Quitting DeckPreviewStatistics before execution")
+                    null
+                } else {
+                    Timber.d("Starting DeckPreviewStatistics")
+                    // eventually put this in Stats (in desktop it is not though)
+                    var cards: Int
+                    var minutes: Int
+                    /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
+                    val query = "select sum(case when ease > 0 then 1 else 0 end), " +
+                        "sum(time)/1000 from revlog where id > " + (col.sched.dayCutoff - Stats.SECONDS_PER_DAY) * 1000
+                    Timber.d("DeckPreviewStatistics query: %s", query)
+                    col.db
+                        .query(query).use { cur ->
+                            cur.moveToFirst()
+                            cards = cur.getInt(0)
+                            minutes = (cur.getInt(1) / 60.0).roundToInt()
+                        }
+                    val res = view.resources
+                    val span = res.getQuantityString(com.ichi2.anki.R.plurals.in_minutes, minutes, minutes)
+                    res.getQuantityString(com.ichi2.anki.R.plurals.studied_cards_today, cards, cards, span)
+                }
+                todayStatString?.let {
+                    withContext(mainDispatcher) {
+                        view.apply {
+                            text = it
+                            visibility = View.VISIBLE
+                            invalidate()
+                        }
+                    }
+                }
+            }
         }
     }
 }
