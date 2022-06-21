@@ -49,6 +49,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -106,6 +107,8 @@ import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 import kotlin.math.abs
@@ -1943,7 +1946,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         return UpdateDeckListListener(this)
     }
 
-    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>?>(deckPicker) {
+    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(private val deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>?>(deckPicker) {
         override fun actualOnPreExecute(context: DeckPicker) {
             if (!context.colIsOpen()) {
                 context.showProgressBar()
@@ -1966,7 +1969,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
             context.renderPage()
             // Update the mini statistics bar as well
-            AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
+            deckPicker?.lifecycleScope?.launch(
+                CoroutineExceptionHandler { _, throwable ->
+                    Timber.w(throwable)
+                }
+            ) {
+                AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
+            }
             Timber.d("Startup - Deck List UI Completed")
         }
     }
