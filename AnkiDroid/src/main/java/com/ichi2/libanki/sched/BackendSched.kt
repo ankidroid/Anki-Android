@@ -1,5 +1,5 @@
 /***************************************************************************************
- * Copyright (c) 2012 Ankitects Pty Ltd <http://apps.ankiweb.net>                       *
+ * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -25,7 +25,7 @@ import com.ichi2.libanki.utils.TimeManager
 // so for now these are stored in a separate file.
 
 fun CollectionV16.deckTree(includeCounts: Boolean): DeckTreeNode {
-    return backend.deckTree(if (includeCounts) TimeManager.time.intTime() else 0)
+    return backend.deckTree(now = if (includeCounts) TimeManager.time.intTime() else 0)
 }
 
 /**
@@ -33,7 +33,7 @@ fun CollectionV16.deckTree(includeCounts: Boolean): DeckTreeNode {
  * and AnkiDroid may wish to use .deckTree() in the future instead.
  */
 fun CollectionV16.deckTreeLegacy(includeCounts: Boolean): List<TreeNode<DeckDueTreeNode>> {
-    fun toLegacyNode(node: anki.decks.DeckTreeNode, parentName: String): TreeNode<DeckDueTreeNode> {
+    fun toLegacyNode(node: DeckTreeNode, parentName: String): TreeNode<DeckDueTreeNode> {
         val thisName = if (parentName.isEmpty()) {
             node.name
         } else {

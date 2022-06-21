@@ -1,5 +1,5 @@
 /***************************************************************************************
- * Copyright (c) 2012 Ankitects Pty Ltd <http://apps.ankiweb.net>                       *
+ * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -38,7 +38,7 @@ class BackendMedia(val col: CollectionV16, server: Boolean) : Media(col, server)
     }
 
     override fun forceResync() {
-        col.backend.removeMediaDb(col.path)
+        col.backend.removeMediaDb(colPath = col.path)
     }
 
     override fun removeFile(fname: String) {
@@ -56,7 +56,7 @@ class BackendMedia(val col: CollectionV16, server: Boolean) : Media(col, server)
     // FIXME: this currently removes files immediately, as the UI does not expose a way
     // to empty the trash or restore media files yet
     fun removeFiles(files: Iterable<String>) {
-        col.backend.trashMediaFiles(files)
+        col.backend.trashMediaFiles(fnames = files)
         emptyTrash()
     }
 

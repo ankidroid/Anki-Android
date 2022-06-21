@@ -1,5 +1,5 @@
 /***************************************************************************************
- * Copyright (c) 2012 Ankitects Pty Ltd <http://apps.ankiweb.net>                       *
+ * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -21,21 +21,21 @@ import anki.sync.SyncCollectionResponse
 import com.ichi2.libanki.CollectionV16
 
 fun CollectionV16.syncLogin(username: String, password: String): SyncAuth {
-    return backend.syncLogin(username, password)
+    return backend.syncLogin(username = username, password = password)
 }
 
 fun CollectionV16.syncCollection(auth: SyncAuth): SyncCollectionResponse {
-    return backend.syncCollection(auth)
+    return backend.syncCollection(input = auth)
 }
 
 fun CollectionV16.fullUpload(auth: SyncAuth) {
-    return backend.fullUpload(auth)
+    return backend.fullUpload(input = auth)
 }
 
 fun CollectionV16.fullDownload(auth: SyncAuth) {
-    return backend.fullDownload(auth)
+    return backend.fullDownload(input = auth)
 }
 
 fun CollectionV16.syncMedia(auth: SyncAuth) {
-    return backend.syncMedia(auth)
+    return backend.syncMedia(input = auth)
 }
