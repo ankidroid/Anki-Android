@@ -119,6 +119,6 @@ class CollectionV16(
 
     /** Takes raw input from TypeScript frontend and returns suitable translations. */
     fun i18nResourcesRaw(input: ByteArray): ByteArray {
-        return backend.i18nResourcesRaw(input)
+        return backend.i18nResourcesRaw(input = input)
     }
 }
