@@ -27,10 +27,10 @@ import timber.log.Timber
 /*
  * Launch a job that catches any uncaught errors and prints it to Log.
  */
-fun LifecycleCoroutineScope.launchCatching(block: suspend () -> Unit) =
+fun LifecycleCoroutineScope.launchCatching(errorMessage: String? = null, block: suspend () -> Unit) =
     this.launch(
         CoroutineExceptionHandler { _, throwable ->
-            Timber.w(throwable)
+            Timber.w(throwable, errorMessage)
         }
     ) {
         block()

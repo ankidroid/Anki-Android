@@ -45,15 +45,14 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.getInstance
 import com.ichi2.anki.stats.ChartView
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
+import com.ichi2.async.launchCatching
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
 import com.ichi2.ui.FixedTextView
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Locale
 
@@ -387,12 +386,10 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private fun createChart() {
             val statisticsActivity = requireActivity() as Statistics
             val taskHandler = statisticsActivity.taskHandler
-            val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-                Timber.e(throwable, "createChart failed with error")
-            }
-            statisticsJob = viewLifecycleOwner.lifecycleScope.launch(exceptionHandler) {
-                taskHandler!!.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
-            }
+            statisticsJob = viewLifecycleOwner.lifecycleScope
+                .launchCatching("createChart failed with error") {
+                    taskHandler!!.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
+                }
         }
 
         override fun checkAndUpdate() {
@@ -471,12 +468,10 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         private fun createStatisticOverview() {
             val handler = (requireActivity() as Statistics).taskHandler
-            val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-                Timber.e(throwable, "createChart failed with error")
-            }
-            statisticsJob = viewLifecycleOwner.lifecycleScope.launch(exceptionHandler) {
-                handler!!.createStatisticsOverview(mWebView, mProgressBar)
-            }
+            statisticsJob = viewLifecycleOwner.lifecycleScope
+                .launchCatching("createStatisticOverview failed with error") {
+                    handler!!.createStatisticsOverview(mWebView, mProgressBar)
+                }
         }
 
         override fun checkAndUpdate() {
