@@ -207,24 +207,26 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun initAllContentViews(studyOptionsView: View) {
-        if (mFragmented) {
-            studyOptionsView.findViewById<View>(R.id.studyoptions_gradient).visibility = View.VISIBLE
+        studyOptionsView.run {
+            if (mFragmented) {
+                findViewById<View>(R.id.studyoptions_gradient).visibility = View.VISIBLE
+            }
+            mDeckInfoLayout = findViewById(R.id.studyoptions_deckcounts)
+            mTextDeckName = findViewById(R.id.studyoptions_deck_name)
+            mTextDeckDescription = findViewById(R.id.studyoptions_deck_description)
+            // make links clickable
+            mTextDeckDescription!!.movementMethod = LinkMovementMethod.getInstance()
+            mButtonStart = findViewById(R.id.studyoptions_start)
+            mTextCongratsMessage = findViewById(R.id.studyoptions_congrats_message)
+            // Code common to both fragmented and non-fragmented view
+            mTextTodayNew = findViewById(R.id.studyoptions_new)
+            mTextTodayLrn = findViewById(R.id.studyoptions_lrn)
+            mTextTodayRev = findViewById(R.id.studyoptions_rev)
+            mTextNewTotal = findViewById(R.id.studyoptions_total_new)
+            mTextTotal = findViewById(R.id.studyoptions_total)
+            mTextETA = findViewById(R.id.studyoptions_eta)
+            mButtonStart!!.setOnClickListener(mButtonClickListener)
         }
-        mDeckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckcounts)
-        mTextDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
-        mTextDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
-        // make links clickable
-        mTextDeckDescription!!.movementMethod = LinkMovementMethod.getInstance()
-        mButtonStart = studyOptionsView.findViewById(R.id.studyoptions_start)
-        mTextCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message)
-        // Code common to both fragmented and non-fragmented view
-        mTextTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new)
-        mTextTodayLrn = studyOptionsView.findViewById(R.id.studyoptions_lrn)
-        mTextTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev)
-        mTextNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new)
-        mTextTotal = studyOptionsView.findViewById(R.id.studyoptions_total)
-        mTextETA = studyOptionsView.findViewById(R.id.studyoptions_eta)
-        mButtonStart!!.setOnClickListener(mButtonClickListener)
     }
 
     /**
