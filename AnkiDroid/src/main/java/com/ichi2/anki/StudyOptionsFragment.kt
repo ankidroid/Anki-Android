@@ -202,9 +202,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         animateLeft()
     }
 
-    private fun animateLeft() {
-        slide(requireActivity(), ActivityTransitionAnimation.Direction.START)
-    }
+    private fun animateLeft() = slide(requireActivity(), ActivityTransitionAnimation.Direction.START)
 
     private fun initAllContentViews(studyOptionsView: View) {
         studyOptionsView.run {
@@ -239,88 +237,80 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         ankiActivity.showDialogFragment(contextMenu)
     }
 
-    fun setFragmentContentView(newView: View?) {
-        (view as ViewGroup?)!!.run {
-            removeAllViews()
-            addView(newView)
-        }
+    fun setFragmentContentView(newView: View?) = (view as ViewGroup?)!!.run {
+        removeAllViews()
+        addView(newView)
     }
 
     private val mUndoListener: TaskListener<Unit, ComputeResult> = object : TaskListener<Unit, ComputeResult>() {
         override fun onPreExecute() {}
-        override fun onPostExecute(result: ComputeResult) {
-            openReviewer()
-        }
+        override fun onPostExecute(result: ComputeResult) = openReviewer()
     }
 
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_undo -> {
-                Timber.i("StudyOptionsFragment:: Undo button pressed")
-                Undo().runWithHandler(mUndoListener)
-                true
-            }
-            R.id.action_deck_or_study_options -> {
-                Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
-                if (col!!.decks.isDyn(col!!.decks.selected())) {
-                    openFilteredDeckOptions()
-                } else {
-                    val i = Intent(activity, DeckOptions::class.java)
-                    Timber.i("Opening deck options for activity result")
-                    onDeckOptionsActivityResult.launch(i)
-                    slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)
-                }
-                true
-            }
-            R.id.action_custom_study -> {
-                Timber.i("StudyOptionsFragment:: custom study button pressed")
-                showCustomStudyContextMenu()
-                true
-            }
-            R.id.action_unbury -> {
-                Timber.i("StudyOptionsFragment:: unbury button pressed")
-                col!!.sched.unburyCardsForDeck()
-                refreshInterfaceAndDecklist(true)
-                item.isVisible = false
-                true
-            }
-            R.id.action_rebuild -> {
-                Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
-                mProgressDialog = show(
-                    requireActivity(), null,
-                    resources.getString(R.string.rebuild_filtered_deck), true
-                )
-                TaskManager.launchCollectionTask(RebuildCram(), getCollectionTaskListener(true))
-                true
-            }
-            R.id.action_empty -> {
-                Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
-                mProgressDialog = show(
-                    requireActivity(), null,
-                    resources.getString(R.string.empty_filtered_deck), false
-                )
-                TaskManager.launchCollectionTask(EmptyCram(), getCollectionTaskListener(true))
-                true
-            }
-            R.id.action_rename -> {
-                (activity as DeckPicker?)!!.renameDeckDialog(col!!.decks.selected())
-                true
-            }
-            R.id.action_delete -> {
-                (activity as DeckPicker?)!!.confirmDeckDeletion(col!!.decks.selected())
-                true
-            }
-            R.id.action_export -> {
-                (activity as DeckPicker?)!!.exportDeck(col!!.decks.selected())
-                true
-            }
-            else -> false
+    override fun onMenuItemClick(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_undo -> {
+            Timber.i("StudyOptionsFragment:: Undo button pressed")
+            Undo().runWithHandler(mUndoListener)
+            true
         }
+        R.id.action_deck_or_study_options -> {
+            Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
+            if (col!!.decks.isDyn(col!!.decks.selected())) {
+                openFilteredDeckOptions()
+            } else {
+                val i = Intent(activity, DeckOptions::class.java)
+                Timber.i("Opening deck options for activity result")
+                onDeckOptionsActivityResult.launch(i)
+                slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)
+            }
+            true
+        }
+        R.id.action_custom_study -> {
+            Timber.i("StudyOptionsFragment:: custom study button pressed")
+            showCustomStudyContextMenu()
+            true
+        }
+        R.id.action_unbury -> {
+            Timber.i("StudyOptionsFragment:: unbury button pressed")
+            col!!.sched.unburyCardsForDeck()
+            refreshInterfaceAndDecklist(true)
+            item.isVisible = false
+            true
+        }
+        R.id.action_rebuild -> {
+            Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
+            mProgressDialog = show(
+                requireActivity(), null,
+                resources.getString(R.string.rebuild_filtered_deck), true
+            )
+            TaskManager.launchCollectionTask(RebuildCram(), getCollectionTaskListener(true))
+            true
+        }
+        R.id.action_empty -> {
+            Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
+            mProgressDialog = show(
+                requireActivity(), null,
+                resources.getString(R.string.empty_filtered_deck), false
+            )
+            TaskManager.launchCollectionTask(EmptyCram(), getCollectionTaskListener(true))
+            true
+        }
+        R.id.action_rename -> {
+            (activity as DeckPicker?)!!.renameDeckDialog(col!!.decks.selected())
+            true
+        }
+        R.id.action_delete -> {
+            (activity as DeckPicker?)!!.confirmDeckDeletion(col!!.decks.selected())
+            true
+        }
+        R.id.action_export -> {
+            (activity as DeckPicker?)!!.exportDeck(col!!.decks.selected())
+            true
+        }
+        else -> false
     }
 
-    fun configureToolbar() {
-        configureToolbarInternal(true)
-    }
+    fun configureToolbar() = configureToolbarInternal(true)
 
     // This will allow a maximum of one recur in order to workaround database closes
     // caused by sync on startup where this might be running then have the collection close
@@ -435,17 +425,12 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         mProgressDialog.dismissIfShowingWithException()
     }
 
-    fun refreshInterface() {
-        refreshInterface(resetSched = false, resetDecklist = false)
-    }
+    fun refreshInterface() = refreshInterface(resetSched = false, resetDecklist = false)
 
-    private fun refreshInterfaceAndDecklist(resetSched: Boolean = true) {
+    private fun refreshInterfaceAndDecklist(resetSched: Boolean = true) =
         refreshInterface(resetSched, true)
-    }
 
-    fun refreshInterface(resetSched: Boolean) {
-        refreshInterface(resetSched, false)
-    }
+    fun refreshInterface(resetSched: Boolean) = refreshInterface(resetSched, false)
 
     /**
      * Rebuild the fragment's interface to reflect the status of the currently selected deck.
@@ -678,10 +663,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
          * opening a new filtered deck for the first time.
          */
         @JvmStatic
-        fun newInstance(withDeckOptions: Boolean): StudyOptionsFragment {
-            return StudyOptionsFragment().apply {
-                arguments = bundleOf("withDeckOptions" to withDeckOptions)
-            }
+        fun newInstance(withDeckOptions: Boolean): StudyOptionsFragment = StudyOptionsFragment().apply {
+            arguments = bundleOf("withDeckOptions" to withDeckOptions)
         }
 
         @JvmStatic
@@ -695,15 +678,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             return HtmlCompat.fromHtml(withFixedNewlines!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
 
-        fun <T> Array<T>.second(): T {
-            return this[1]
-        }
+        fun <T> Array<T>.second(): T = this[1]
 
         @JvmStatic
-        fun deckNameText(deckName: String): String {
-            return Decks.path(deckName)
-                .run { takeUnless { size > 3 } ?: arrayOf(first(), second(), "...", last()) }
-                .joinToString("\n")
-        }
+        fun deckNameText(deckName: String): String = Decks.path(deckName)
+            .run { takeUnless { size > 3 } ?: arrayOf(first(), second(), "...", last()) }
+            .joinToString("\n")
     }
 }
