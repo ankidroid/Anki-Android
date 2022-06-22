@@ -115,7 +115,7 @@
 
         <item name="editTextDisabled">@color/material_grey_700</item>
         <item name="android:navigationBarColor">@color/black</item>
-        <item name="prefIconColor">?android:attr/textColor</item>
+        <item name="iconColor">?android:attr/textColor</item>
 
         <!-- Filter Bottom sheet -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemeBlack</item>
