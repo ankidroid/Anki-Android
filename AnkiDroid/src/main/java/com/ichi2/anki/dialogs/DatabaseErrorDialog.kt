@@ -199,7 +199,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         }
                 } else {
                     // Show backups sorted with latest on top
-                    mBackups.sortDescending()
+                    mBackups.reverse()
                     val localDf = SimpleDateFormat(getBestDateTimePattern(Locale.getDefault(), "dd MMM yyyy HH:mm"))
                     val dates = mutableListOf<String>()
                     /** Backups name pattern is defined at [BackupManager.getNameForNewBackup] */
