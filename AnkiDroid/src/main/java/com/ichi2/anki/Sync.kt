@@ -33,8 +33,8 @@ import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.async.Connection
 import com.ichi2.libanki.CollectionV16
+import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.sync.*
-import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 
@@ -150,7 +150,11 @@ private suspend fun handleDownload(
             it.fullSync.run { updateProgress("downloaded $transferred/$total") }
         }
     }) {
-        // TODO: backup
+        col.createBackup(
+            BackupManager.getBackupDirectoryFromCollection(col.path),
+            force = true,
+            waitForCompletion = true
+        )
         col.close(save = true, downgrade = false, forFullSync = true)
         try {
             col.fullDownload(auth)

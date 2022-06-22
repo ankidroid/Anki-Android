@@ -107,6 +107,7 @@ import com.ichi2.utils.*
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendFactory
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.File
 import kotlin.math.abs
@@ -922,7 +923,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      */
     private fun onFinishedStartup() {
         // create backup in background if needed
-        BackupManager.performBackupInBackground(col.path, TimeManager.time)
+        if (BackendFactory.defaultLegacySchema) {
+            BackupManager.performBackupInBackground(col.path, TimeManager.time)
+        } else {
+            // new code triggers backup in updateDeckList()
+        }
 
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
@@ -1418,7 +1423,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     fun restoreFromBackup(path: String) {
-        importReplace(listOf(path))
+        if (BackendFactory.defaultLegacySchema) {
+            importReplace(listOf(path))
+        } else {
+            importColpkg(path)
+        }
     }
 
     // Helper function to check if there are any saved stacktraces
@@ -2022,7 +2031,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         updateDeckList(false)
     }
 
+    @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     private fun updateDeckList(quick: Boolean) {
+        if (!BackendFactory.defaultLegacySchema) {
+            // uses user's desktop settings to determine whether a backup
+            // actually happens
+            performBackupInBackground()
+        }
         if (quick) {
             TaskManager.launchCollectionTask(LoadDeck(), updateDeckListListener())
         } else {
