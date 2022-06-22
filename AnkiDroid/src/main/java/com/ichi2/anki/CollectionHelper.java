@@ -37,12 +37,15 @@ import com.ichi2.utils.FileUtil;
 
 import net.ankiweb.rsdroid.Backend;
 import net.ankiweb.rsdroid.BackendException;
+import net.ankiweb.rsdroid.BackendFactory;
 
 import java.io.File;
 import java.io.IOException;
 
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
+
+import static com.ichi2.libanki.BackendImportExportKt.importCollectionPackage;
 
 /**
  * Singleton which opens, stores, and closes the reference to the Collection.
@@ -53,6 +56,9 @@ public class CollectionHelper {
     private Collection mCollection;
     // Name of anki2 file
     public static final String COLLECTION_FILENAME = "collection.anki2";
+
+    // A backend instance is reused after collection close.
+    private @Nullable Backend mBackend;
 
     /**
      * The preference key for the path to the current AnkiDroid directory
@@ -81,7 +87,7 @@ public class CollectionHelper {
      * return.
      */
     private static @Nullable CollectionOpenFailure mLastOpenFailure;
-    
+
     @Nullable
     public static Long getCollectionSize(Context context) {
         try {
@@ -137,17 +143,17 @@ public class CollectionHelper {
      */
     private Collection openCollection(Context context, String path) {
         Timber.i("Begin openCollection: %s", path);
-        Collection collection = Storage.collection(context, path, false, true, currentBackend());
+        Backend backend = getOrCreateBackend(context);
+        Collection collection = Storage.collection(context, path, false, true, backend);
         Timber.i("End openCollection: %s", path);
         return collection;
     }
 
-    private @Nullable Backend currentBackend() {
-        if (mCollection != null) {
-            return mCollection.getBackend();
-        } else {
-            return null;
+    @NonNull Backend getOrCreateBackend(Context context) {
+        if (mBackend == null) {
+            mBackend = BackendFactory.getBackend(context);
         }
+        return mBackend;
     }
 
     /**
@@ -243,6 +249,19 @@ public class CollectionHelper {
         if (mCollection != null) {
             mCollection.close(save);
         }
+    }
+
+    /**
+     * Replace the collection with the provided colpkg file if it is valid.
+     */
+    public synchronized void importColpkg(Context context, String colpkgPath) {
+        Backend backend = getOrCreateBackend(context);
+        if (mCollection != null) {
+            mCollection.close(true);
+        }
+        String colPath = getCollectionPath(context);
+        importCollectionPackage(backend, colPath, colpkgPath);
+        getCol(context);
     }
 
     /**
@@ -588,6 +607,13 @@ public class CollectionHelper {
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public void setColForTests(Collection col) {
+        if (col == null) {
+            try {
+                mCollection.close();
+            } catch (Exception exc) {
+                // may not be open
+            }
+        }
         this.mCollection = col;
     }
 }

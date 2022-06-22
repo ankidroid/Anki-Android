@@ -206,6 +206,10 @@ open class BackupManager {
             return directory
         }
 
+        fun getBackupDirectoryFromCollection(colPath: String): String {
+            return getBackupDirectory(File(colPath).parentFile!!).absolutePath
+        }
+
         private fun getBrokenDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BROKEN_DECKS_SUFFIX)
             if (!directory.isDirectory && !directory.mkdirs()) {
