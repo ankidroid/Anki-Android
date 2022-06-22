@@ -254,11 +254,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.action_undo -> {
                 Timber.i("StudyOptionsFragment:: Undo button pressed")
                 Undo().runWithHandler(mUndoListener)
-                return true
+                true
             }
             R.id.action_deck_or_study_options -> {
                 Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
@@ -270,19 +270,19 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     onDeckOptionsActivityResult.launch(i)
                     slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)
                 }
-                return true
+                true
             }
             R.id.action_custom_study -> {
                 Timber.i("StudyOptionsFragment:: custom study button pressed")
                 showCustomStudyContextMenu()
-                return true
+                true
             }
             R.id.action_unbury -> {
                 Timber.i("StudyOptionsFragment:: unbury button pressed")
                 col!!.sched.unburyCardsForDeck()
                 refreshInterfaceAndDecklist(true)
                 item.isVisible = false
-                return true
+                true
             }
             R.id.action_rebuild -> {
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
@@ -291,7 +291,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     resources.getString(R.string.rebuild_filtered_deck), true
                 )
                 TaskManager.launchCollectionTask(RebuildCram(), getCollectionTaskListener(true))
-                return true
+                true
             }
             R.id.action_empty -> {
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
@@ -300,21 +300,21 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     resources.getString(R.string.empty_filtered_deck), false
                 )
                 TaskManager.launchCollectionTask(EmptyCram(), getCollectionTaskListener(true))
-                return true
+                true
             }
             R.id.action_rename -> {
                 (activity as DeckPicker?)!!.renameDeckDialog(col!!.decks.selected())
-                return true
+                true
             }
             R.id.action_delete -> {
                 (activity as DeckPicker?)!!.confirmDeckDeletion(col!!.decks.selected())
-                return true
+                true
             }
             R.id.action_export -> {
                 (activity as DeckPicker?)!!.exportDeck(col!!.decks.selected())
-                return true
+                true
             }
-            else -> return false
+            else -> false
         }
     }
 
