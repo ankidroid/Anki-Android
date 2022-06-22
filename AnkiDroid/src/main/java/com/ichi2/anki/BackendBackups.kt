@@ -22,6 +22,7 @@ import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.awaitBackupCompletion
 import com.ichi2.libanki.createBackup
 import kotlinx.coroutines.*
+import timber.log.Timber
 
 fun DeckPicker.performBackupInBackground() {
     val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
@@ -33,12 +34,20 @@ fun DeckPicker.performBackupInBackground() {
     }
 }
 
-// TODO: show progress indicator
 fun DeckPicker.importColpkg(colpkgPath: String) {
     val deckPicker = this
     catchingLifecycleScope(this) {
         runInBackground {
-            CollectionHelper.getInstance().importColpkg(baseContext, colpkgPath)
+            val helper = CollectionHelper.getInstance()
+            val backend = helper.getOrCreateBackend(baseContext)
+            backend.withProgress({
+                if (it.hasImporting()) {
+                    // TODO: show progress in GUI
+                    Timber.i("%s", it.importing)
+                }
+            }) {
+                helper.importColpkg(baseContext, colpkgPath)
+            }
         }
         deckPicker.updateDeckList()
     }

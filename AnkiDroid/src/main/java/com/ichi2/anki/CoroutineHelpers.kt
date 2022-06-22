@@ -22,10 +22,9 @@ import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.libanki.CollectionV16
-import com.ichi2.libanki.getProgress
 import kotlinx.coroutines.*
+import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
-import timber.log.Timber
 
 /**
  * Launch a job that catches any uncaught errors and reports them to the user.
@@ -52,30 +51,36 @@ suspend fun <T> runInBackground(block: suspend CoroutineScope.() -> T): T {
     }
 }
 
+suspend fun <T> Backend.withProgress(onProgress: (Progress) -> Unit, block: suspend CoroutineScope.() -> T): T {
+    val backend = this
+    return coroutineScope {
+        val monitor = launch {
+            monitorProgress(backend, onProgress)
+        }
+        try {
+            block()
+        } finally {
+            monitor.cancel()
+        }
+    }
+}
+
 suspend fun <T> runInBackgroundWithProgress(
     col: CollectionV16,
     onProgress: (Progress) -> Unit,
     op: suspend (CollectionV16) -> T
 ): T = coroutineScope {
-    val monitor = launch { monitorProgress(col, onProgress) }
-    try {
+    col.backend.withProgress(onProgress) {
         runInBackground { op(col) }
-    } finally {
-        monitor.cancel()
     }
 }
 
-suspend fun monitorProgress(col: CollectionV16, op: (Progress) -> Unit) {
+suspend fun monitorProgress(backend: Backend, op: (Progress) -> Unit) {
     while (true) {
-        try {
-            val progress = col.getProgress()
-            // on main thread, so op can update UI
-            withContext(Dispatchers.Main) {
-                op(progress)
-            }
-        } catch (exc: Exception) {
-            Timber.e("exception in monitorProgress: $exc")
-            return
+        val progress = backend.latestProgress()
+        // on main thread, so op can update UI
+        withContext(Dispatchers.Main) {
+            op(progress)
         }
         delay(100)
     }
