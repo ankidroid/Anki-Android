@@ -53,6 +53,7 @@
 
         <!-- Filter Bottom sheet -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemePlain</item>
+        <item name="filterSheetBackground">@color/white</item>
         <item name="filterItemBackground">@color/white</item>
         <item name="filterItemBackgroundSelected">@color/theme_light_drawer_row_current</item>
         <item name="filterItemTextColor">@color/theme_light_drawer_item</item>
@@ -74,10 +75,6 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/white</item>
-        <item name="bottomSheetStyle">@style/CustomBottomSheetStylePlain</item>
-    </style>
-
-    <style name="CustomBottomSheetStylePlain" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/rounded_bottom_sheet</item>
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
 </resources>

@@ -118,6 +118,7 @@
     <attr name="dialogSendIcon" format="integer"/>
 
     <!-- Filter Bottom Sheet -->
+    <attr name="filterSheetBackground" format="color"/>
     <attr name="filterItemBackground" format="color"/>
     <attr name="filterItemBackgroundSelected" format="color"/>
     <attr name="filterItemTextColor" format="color"/>
