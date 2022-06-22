@@ -107,8 +107,6 @@ import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 import kotlin.math.abs
@@ -1969,11 +1967,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
             context.renderPage()
             // Update the mini statistics bar as well
-            deckPicker?.lifecycleScope?.launch(
-                CoroutineExceptionHandler { _, throwable ->
-                    Timber.w(throwable)
-                }
-            ) {
+            deckPicker?.lifecycleScope?.launchCatching {
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
             }
             Timber.d("Startup - Deck List UI Completed")
