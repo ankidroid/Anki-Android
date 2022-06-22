@@ -345,6 +345,7 @@ class BottomSheetFragment :
     override fun onDeckItemClicked(item: String, position: Int) {
 
         val itemBackground: ColorDrawable = mDeckRecyclerView[position].background as ColorDrawable
+        val itemTextView = mDeckRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
         if (itemBackground.color == Themes.getColorFromAttr(
                 activity,
@@ -352,7 +353,17 @@ class BottomSheetFragment :
             )
         ) {
             mDeckRecyclerView[position].setBackgroundColor(
-                ContextCompat.getColor(requireActivity(), R.color.material_light_blue_300)
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemBackgroundSelected
+                )
+            )
+
+            itemTextView.setTextColor(
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemTextColorSelected
+                )
             )
 
             deckSearchItems.add(item)
@@ -364,6 +375,13 @@ class BottomSheetFragment :
                 )
             )
 
+            itemTextView.setTextColor(
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemTextColor
+                )
+            )
+
             deckSearchItems.remove(item)
         }
     }
@@ -371,6 +389,7 @@ class BottomSheetFragment :
     override fun onTagItemClicked(item: String, position: Int) {
 
         val itemBackground: ColorDrawable = mTagRecyclerView[position].background as ColorDrawable
+        val itemTextView = mTagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
         if (itemBackground.color == Themes.getColorFromAttr(
                 activity,
@@ -378,7 +397,17 @@ class BottomSheetFragment :
             )
         ) {
             mTagRecyclerView[position].setBackgroundColor(
-                ContextCompat.getColor(requireActivity(), R.color.material_light_blue_300)
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemBackgroundSelected
+                )
+            )
+
+            itemTextView.setTextColor(
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemTextColorSelected
+                )
             )
 
             tagSearchItems.add(item)
@@ -387,6 +416,13 @@ class BottomSheetFragment :
                 Themes.getColorFromAttr(
                     activity,
                     R.attr.filterItemBackground
+                )
+            )
+
+            itemTextView.setTextColor(
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemTextColor
                 )
             )
 
@@ -423,6 +459,7 @@ class BottomSheetFragment :
         }
 
         val itemBackground: ColorDrawable = mFlagRecyclerView[position].background as ColorDrawable
+        val itemTextView = mFlagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
         if (itemBackground.color == Themes.getColorFromAttr(
                 activity,
@@ -430,7 +467,17 @@ class BottomSheetFragment :
             )
         ) {
             mFlagRecyclerView[position].setBackgroundColor(
-                ContextCompat.getColor(requireActivity(), R.color.material_light_blue_300)
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemBackgroundSelected
+                )
+            )
+
+            itemTextView.setTextColor(
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemTextColorSelected
+                )
             )
 
             flagSearchItems.add(flagNumber)
@@ -442,6 +489,13 @@ class BottomSheetFragment :
                 )
             )
 
+            itemTextView.setTextColor(
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemTextColor
+                )
+            )
+
             flagSearchItems.remove(flagNumber)
         }
     }
@@ -449,6 +503,7 @@ class BottomSheetFragment :
     override fun onNoteTypeItemClicked(item: String, position: Int) {
 
         val itemBackground: ColorDrawable = mNoteTypeRecyclerView[position].background as ColorDrawable
+        val itemTextView = mNoteTypeRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
         if (itemBackground.color == Themes.getColorFromAttr(
                 activity,
@@ -456,7 +511,17 @@ class BottomSheetFragment :
             )
         ) {
             mNoteTypeRecyclerView[position].setBackgroundColor(
-                ContextCompat.getColor(requireActivity(), R.color.material_light_blue_300)
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemBackgroundSelected
+                )
+            )
+
+            itemTextView.setTextColor(
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemTextColorSelected
+                )
             )
 
             noteTypeSearchItems.add(item)
@@ -468,6 +533,13 @@ class BottomSheetFragment :
                 )
             )
 
+            itemTextView.setTextColor(
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemTextColor
+                )
+            )
+
             noteTypeSearchItems.remove(item)
         }
     }
@@ -475,6 +547,7 @@ class BottomSheetFragment :
     override fun onCardStateItemClicked(item: String, position: Int) {
 
         val itemBackground: ColorDrawable = mCardStateRecyclerView[position].background as ColorDrawable
+        val itemTextView = mCardStateRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
         if (itemBackground.color == Themes.getColorFromAttr(
                 activity,
@@ -482,7 +555,17 @@ class BottomSheetFragment :
             )
         ) {
             mCardStateRecyclerView[position].setBackgroundColor(
-                ContextCompat.getColor(requireActivity(), R.color.material_light_blue_300)
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemBackgroundSelected
+                )
+            )
+
+            itemTextView.setTextColor(
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemTextColorSelected
+                )
             )
 
             cardStateSearchItems.add(item)
@@ -491,6 +574,13 @@ class BottomSheetFragment :
                 Themes.getColorFromAttr(
                     activity,
                     R.attr.filterItemBackground
+                )
+            )
+
+            itemTextView.setTextColor(
+                Themes.getColorFromAttr(
+                    activity,
+                    R.attr.filterItemTextColor
                 )
             )
 

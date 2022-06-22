@@ -119,6 +119,9 @@
 
     <!-- Filter Bottom Sheet -->
     <attr name="filterItemBackground" format="color"/>
+    <attr name="filterItemBackgroundSelected" format="color"/>
+    <attr name="filterItemTextColor" format="color"/>
+    <attr name="filterItemTextColorSelected" format="color"/>
     <attr name="filterHeaderDivider" format="color"/>
 
     <!-- FAB -->
