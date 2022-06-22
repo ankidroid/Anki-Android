@@ -54,8 +54,11 @@ import com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.*
 import com.ichi2.utils.BundleUtils.getSerializableWithCast
+import com.ichi2.utils.FunctionalInterfaces
+import com.ichi2.utils.JSONArray
+import com.ichi2.utils.JSONException
+import com.ichi2.utils.JSONObject
 import timber.log.Timber
 import java.lang.Integer.max
 import java.lang.Integer.min
@@ -125,16 +128,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         startLoadingCollection()
     }
 
-    public override fun onSaveInstanceState(outState: Bundle) {
-        outState.run {
-            putAll(tempModel!!.toBundle())
-            putLong(EDITOR_MODEL_ID, mModelId)
-            putLong(EDITOR_NOTE_ID, mNoteId)
-            putInt(EDITOR_START_ORD_ID, mStartingOrdId)
-            putSerializable(TAB_TO_VIEW_ID, tabToViewId)
-            putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPosition)
-            super.onSaveInstanceState(this)
-        }
+    public override fun onSaveInstanceState(outState: Bundle) = outState.run {
+        putAll(tempModel!!.toBundle())
+        putLong(EDITOR_MODEL_ID, mModelId)
+        putLong(EDITOR_NOTE_ID, mNoteId)
+        putInt(EDITOR_START_ORD_ID, mStartingOrdId)
+        putSerializable(TAB_TO_VIEW_ID, tabToViewId)
+        putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPosition)
+        super.onSaveInstanceState(this)
     }
 
     override fun onBackPressed() {
@@ -145,12 +146,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        android.R.id.home -> {
             onBackPressed()
-            return true
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> super.onOptionsItemSelected(item)
     }
 
     /**
@@ -264,17 +265,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return CardTemplateFragment.newInstance(position, mNoteId, editorPosition, editorViewId)
         }
 
-        override fun getItemCount(): Int {
-            return tempModel?.templateCount ?: 0
-        }
+        override fun getItemCount(): Int = tempModel?.templateCount ?: 0
 
-        override fun getItemId(position: Int): Long {
-            return mBaseId + position
-        }
+        override fun getItemId(position: Int): Long = mBaseId + position
 
-        override fun containsItem(id: Long): Boolean {
-            return (id - mBaseId) in 0 until itemCount
-        }
+        override fun containsItem(id: Long): Boolean = (id - mBaseId) in 0 until itemCount
 
         /** Force fragments to reinitialize contents by invalidating previous set of ordinal-based ids  */
         fun ordinalShift() {
@@ -374,9 +369,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             @RequiresApi(Build.VERSION_CODES.N)
             private val mInsertFieldId = 1
 
-            override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-                return true
-            }
+            override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean = true
 
             override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(mInsertFieldId) != null) {
@@ -392,16 +385,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 return initialSize != menu.size()
             }
 
-            override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-                val itemId = item.itemId
-                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == mInsertFieldId) {
+            override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && item.itemId == mInsertFieldId) {
                     showInsertFieldDialog()
                     mode.finish()
                     true
                 } else {
                     false
                 }
-            }
 
             override fun onDestroyActionMode(mode: ActionMode) {
                 // Left empty on purpose
@@ -411,10 +402,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         @NeedsTest(
             "the kotlin migration made this method crash due to a recursive call when the dialog would return its data"
         )
-        private fun showInsertFieldDialog() {
-            mTemplateEditor.mFieldNames.let { fieldNames ->
-                mTemplateEditor.showDialogFragment(InsertFieldDialog.newInstance(fieldNames))
-            }
+        private fun showInsertFieldDialog() = mTemplateEditor.mFieldNames.let { fieldNames ->
+            mTemplateEditor.showDialogFragment(InsertFieldDialog.newInstance(fieldNames))
         }
 
         private fun insertField(fieldName: String) {
@@ -425,15 +414,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             mEditorEditText.text!!.replace(min(start, end), max(start, end), updatedString, 0, updatedString.length)
         }
 
-        fun setCurrentEditorView(id: Int, editorContent: String, editorTitleId: Int) {
-            currentEditorViewId = id
-            mEditorEditText.apply {
+        fun setCurrentEditorView(id: Int, editorContent: String, editorTitleId: Int) =
+            mEditorEditText.run {
+                currentEditorViewId = id
                 setText(editorContent)
                 mCurrentEditorTitle.text = resources.getString(editorTitleId)
                 setSelection(cursorPosition)
                 requestFocus()
             }
-        }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             initTabLayoutMediator()
@@ -603,14 +591,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             showDialogFragment(activity, dialog)
         }
 
-        private fun getCurrentTemplateName(tempModel: TemporaryModel): String {
-            return try {
-                val ordinal = mTemplateEditor.viewPager.currentItem
-                tempModel.getTemplate(ordinal).getString("name")
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to get name for template")
-                ""
-            }
+        private fun getCurrentTemplateName(tempModel: TemporaryModel): String = try {
+            val ordinal = mTemplateEditor.viewPager.currentItem
+            tempModel.getTemplate(ordinal).getString("name")
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to get name for template")
+            ""
         }
 
         private fun launchCardBrowserAppearance(currentTemplate: JSONObject) {
@@ -717,9 +703,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
         }
 
-        private fun modelHasChanged(): Boolean {
-            return mTemplateEditor.modelHasChanged()
-        }
+        private fun modelHasChanged(): Boolean = mTemplateEditor.modelHasChanged()
 
         /**
          * Confirm if the user wants to delete all the cards associated with current template
@@ -873,7 +857,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          * Flip the question and answer side of the template
          * @param template template to flip
          */
-        private fun flipQA(template: JSONObject) {
+        private fun flipQA(template: JSONObject) =
             template.run {
                 val qfmt = getString("qfmt")
                 val afmt = getString("afmt")
@@ -885,23 +869,21 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 )
                 put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n$qfmt")
             }
-        }
 
         /**
          * Get name for new template
          * @param templates array of templates which is being added to
          * @return name for new template
          */
-        private fun newCardName(templates: JSONArray): String {
-            return templates.jsonObjectIterable()
+        private fun newCardName(templates: JSONArray): String =
+            templates.jsonObjectIterable()
                 .mapNotNull { it.getString("name").split(" ").last().toInt() } // get "n" at the end of each "Card %d"
                 .reduce { acc, n -> max(acc, n) } // find maximum of all "n"
                 .let { resources.getString(R.string.card_n_name, it + 1) }
-        }
 
         companion object {
-            fun newInstance(cardIndex: Int, noteId: Long, cursorPosition: Int, viewId: Int): CardTemplateFragment {
-                return CardTemplateFragment().apply {
+            fun newInstance(cardIndex: Int, noteId: Long, cursorPosition: Int, viewId: Int): CardTemplateFragment =
+                CardTemplateFragment().apply {
                     arguments = bundleOf(
                         CARD_INDEX to cardIndex,
                         EDITOR_NOTE_ID to noteId,
@@ -909,7 +891,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         EDITOR_VIEW_ID_KEY to viewId
                     )
                 }
-            }
         }
     }
 
