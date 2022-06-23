@@ -446,7 +446,7 @@ class Preferences : AnkiActivity() {
             // Set icons colors
             for (index in 0 until preferenceScreen.preferenceCount) {
                 val preference = preferenceScreen.getPreference(index)
-                preference.icon?.setTint(Themes.getColorFromAttr(requireContext(), R.attr.prefIconColor))
+                preference.icon?.setTint(Themes.getColorFromAttr(requireContext(), R.attr.iconColor))
             }
         }
     }

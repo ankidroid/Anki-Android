@@ -38,7 +38,7 @@
         android:fragment="com.ichi2.anki.Preferences$SyncSettingsFragment"
         android:key="@string/pref_sync_screen_key"
         android:title="@string/pref_cat_sync"
-        android:icon="@drawable/ic_sync_white">
+        android:icon="@drawable/ic_sync">
     </Preference>
 
     <!-- Notifications -->
