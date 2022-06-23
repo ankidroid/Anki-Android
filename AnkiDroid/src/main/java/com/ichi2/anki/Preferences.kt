@@ -447,13 +447,7 @@ class Preferences : AnkiActivity() {
                 val devOptions = Preference(requireContext()).apply {
                     title = getString(R.string.pref_cat_dev_options)
                     icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_code)
-                    setOnPreferenceClickListener {
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.settings_container, DevOptionsFragment())
-                            .addToBackStack(null)
-                            .commit()
-                        true
-                    }
+                    fragment = "com.ichi2.anki.Preferences\$DevOptionsFragment"
                 }
                 preferenceScreen.addPreference(devOptions)
             }
