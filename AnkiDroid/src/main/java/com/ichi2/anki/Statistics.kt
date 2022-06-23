@@ -32,7 +32,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -45,7 +44,7 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.getInstance
 import com.ichi2.anki.stats.ChartView
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
-import com.ichi2.async.launchCatching
+import com.ichi2.async.catchingLifecycleScope
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.stats.Stats
@@ -386,10 +385,9 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private fun createChart() {
             val statisticsActivity = requireActivity() as Statistics
             val taskHandler = statisticsActivity.taskHandler
-            statisticsJob = viewLifecycleOwner.lifecycleScope
-                .launchCatching("createChart failed with error") {
-                    taskHandler!!.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
-                }
+            statisticsJob = viewLifecycleOwner.catchingLifecycleScope(requireActivity()) {
+                taskHandler!!.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
+            }
         }
 
         override fun checkAndUpdate() {
@@ -468,10 +466,9 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         private fun createStatisticOverview() {
             val handler = (requireActivity() as Statistics).taskHandler
-            statisticsJob = viewLifecycleOwner.lifecycleScope
-                .launchCatching("createStatisticOverview failed with error") {
-                    handler!!.createStatisticsOverview(mWebView, mProgressBar)
-                }
+            statisticsJob = catchingLifecycleScope(requireActivity(), "createStatisticOverview failed with error") {
+                handler!!.createStatisticsOverview(mWebView, mProgressBar)
+            }
         }
 
         override fun checkAndUpdate() {

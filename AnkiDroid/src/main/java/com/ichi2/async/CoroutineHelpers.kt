@@ -19,19 +19,38 @@
 */
 package com.ichi2.async
 
-import androidx.lifecycle.LifecycleCoroutineScope
-import kotlinx.coroutines.CoroutineExceptionHandler
+import android.app.Activity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.coroutineScope
+import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.showDismissibleSnackbar
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 
 /*
- * Launch a job that catches any uncaught errors and prints it to Log.
+ * Launch a job that catches any uncaught errors, informs the user and prints it to Log.
+ * Errors from the backend contain localized text that is often suitable to show to the user as-is.
+ * Other errors should ideally be handled in the block.
  */
-fun LifecycleCoroutineScope.launchCatching(errorMessage: String? = null, block: suspend () -> Unit) =
-    this.launch(
-        CoroutineExceptionHandler { _, throwable ->
-            Timber.w(throwable, errorMessage)
-        }
-    ) {
+fun LifecycleOwner.catchingLifecycleScope(
+    activity: Activity,
+    errorMessage: String? = null,
+    block: suspend CoroutineScope.() -> Unit
+): Job = lifecycle.coroutineScope.launch {
+    try {
         block()
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: BackendException) {
+        Timber.w(e, errorMessage)
+        showDismissibleSnackbar(activity, e.localizedMessage!!, R.string.close)
+    } catch (e: Exception) {
+        // TODO: localize
+        Timber.w(e, errorMessage)
+        showDismissibleSnackbar(activity, "An error occurred: $e", R.string.close)
     }
+}
