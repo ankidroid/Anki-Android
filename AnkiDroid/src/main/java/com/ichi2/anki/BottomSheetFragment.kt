@@ -89,7 +89,6 @@ class BottomSheetFragment :
         super.onViewCreated(view, savedInstanceState)
 
         behavior = BottomSheetBehavior.from(requireView().parent as View)
-        behavior.skipCollapsed = true
 
         /* list of all deck names */
         mDeckRecyclerView = requireView().findViewById(R.id.filter_bottom_deck_list)
@@ -170,7 +169,6 @@ class BottomSheetFragment :
          * Set the filter headings to be clickable:
          * Show/Hide the filter list on clicking
          */
-
         val decksButton = requireView().findViewById<LinearLayout>(R.id.filterByDecksText)
         val deckIcon = requireView().findViewById<ImageView>(R.id.filter_deckListToggle)
         val decksRecyclerViewLayout =

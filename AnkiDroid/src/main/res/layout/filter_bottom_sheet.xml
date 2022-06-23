@@ -13,13 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/title_textsize"
-            android:layout_margin="10dp"
-            android:textStyle="bold"
-            android:text="@string/filter_sheet_heading" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -29,17 +22,17 @@
             android:id="@+id/cancel_filter_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:backgroundTint="?attr/largeButtonBackgroundColorFocused"
-            android:text="@string/dialog_cancel" />
+            android:text="@string/dialog_cancel"
+            android:textColor="?attr/filterItemTextColor"
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
 
         <Button
             android:id="@+id/apply_filter_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:backgroundTint="?attr/largeButtonBackgroundColorFocused"
-            android:text="@string/apply_filter" />
+            android:text="@string/apply_filter"
+            android:textColor="?attr/filterItemTextColor"
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
 
     </LinearLayout>
 ®
