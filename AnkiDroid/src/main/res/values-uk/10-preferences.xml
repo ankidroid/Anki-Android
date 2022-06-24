@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Основні налаштування</string>
     <string name="pref_cat_reviewing" maxLength="41">Навчання</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Параметри навчання, які впливають на всі колоди</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Поведінка</string>
-    <string name="pref_cat_flashcard" maxLength="41">Відображення</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
     <string name="pref_cat_appearance" maxLength="41">Зовнішній вигляд</string>
     <string name="pref_cat_appearance_summ">Зміна теми і шрифтів</string>
@@ -208,6 +206,9 @@
     <string name="thirdparty_apps_summary">Переглянути список програм, які використовують API AnkiDroid, наприклад словники, утиліти</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript налагодження</string>
     <string name="html_javascript_debugging_summ">Увімкнути віддалені з\'єднання WebView і зберегти HTML-карту в каталозі AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставити зображення у форматі PNG</string>
     <string name="paste_as_png_summary">За замовчуванням Anki вводить зображення в буфер обміну в якості JPG файлів для економії місця на диску. Ви можете змінити в меню на PNG зображення.</string>

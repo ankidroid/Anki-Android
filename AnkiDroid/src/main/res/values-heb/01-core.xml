@@ -78,13 +78,13 @@
         <item quantity="one">%1$d hour %2$d left</item>
         <item quantity="two">%1$d hours %2$d left</item>
         <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d שעות %2$d נותרו</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>
         <item quantity="two">%1$d days %2$d left</item>
         <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d ימים %2$d נותרו</item>
     </plurals>
     <string name="no_cards_placeholder_title">האוסף ריק</string>
     <string name="no_cards_placeholder_description">אפשר להוסיף קלפים\n
@@ -207,7 +207,7 @@
     <string name="card_template_editor_select_field">בחר שדה</string>
     <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">זה ייצור קלף אחד. להמשיך?</item>
+        <item quantity="one">זה ייצר קלף אחד. האם להמשיך?</item>
         <item quantity="two">This will create %1$d cards. Proceed?</item>
         <item quantity="many">זה ייצור %1$d  קלפים. להמשיך?</item>
         <item quantity="other">This will create %1$d cards. Proceed?</item>
@@ -253,7 +253,7 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="two">%1$d cards (0 due)</item>
         <item quantity="many">%1$d cards (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d קלפים (0 נותרו)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">עותק של %s</string>
 </resources>

@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Yleiset asetukset</string>
     <string name="pref_cat_reviewing" maxLength="41">Läpikäynti</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Pakasta riippumattomat kertausasetukset</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Toiminta</string>
-    <string name="pref_cat_flashcard" maxLength="41">Näyttö</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Valkotaulu</string>
     <string name="pref_cat_appearance" maxLength="41">Ulkoasu</string>
     <string name="pref_cat_appearance_summ">Vaihda teemaa ja oletusfonttia</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Listaa sovellukset jotka käyttävät AnkiDroid API:ta, kuten kansioita ja työkaluja.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Salli WebView-etäyhteydet ja tallenna kortti HTML AnkiDroid kansioon</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>

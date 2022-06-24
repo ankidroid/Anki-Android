@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Allmäna inställningar</string>
     <string name="pref_cat_reviewing" maxLength="41">Repetition</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Inställningar ej specifika för kortlek</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Uppförande</string>
-    <string name="pref_cat_flashcard" maxLength="41">Visning</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
     <string name="pref_cat_appearance" maxLength="41">Utseende</string>
     <string name="pref_cat_appearance_summ">Ändra teman och standardteckensnitt</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Se en lista över alla applikationer som använder AnkiDroids API, exempelvis ordböcker och händiga verktyg.</string>
     <string name="html_javascript_debugging" maxLength="41">Avlusning - HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Aktivera WebView fjärråtkomst, och spara korts HTML till AnkiDroid-katalogen</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Klistra in urklipps bilder som PNG</string>
     <string name="paste_as_png_summary">Som standard klistrar Anki in bilder från urklipp som JPG-filer för att spara diskutrymme. Du kan använda den här inställningen för att klistra in bilder som PNG-filer istället.</string>

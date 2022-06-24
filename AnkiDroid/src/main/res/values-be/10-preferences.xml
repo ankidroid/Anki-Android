@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Агульныя налады</string>
     <string name="pref_cat_reviewing" maxLength="41">Паўтарэнне</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Налады паўтарэнняў, якія не залежаць ад калоды</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Паводзіны</string>
-    <string name="pref_cat_flashcard" maxLength="41">Экран</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
     <string name="pref_cat_appearance" maxLength="41">Знешні выгляд</string>
     <string name="pref_cat_appearance_summ">Змена тэмы і стандартны шрыфт</string>
@@ -208,6 +206,9 @@
     <string name="thirdparty_apps_summary">Паглядзець спіс праграм, якія выкарыстоўваць API AnkiDroid (слоўнікі, службовыя праграмы і г.д.).</string>
     <string name="html_javascript_debugging" maxLength="41">Адладка HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Уключыць аддаленыя злучэнні WebView і захаваць картку HTML у каталозе AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Устаўляць з буфера абмену відарысы як PNG</string>
     <string name="paste_as_png_summary">Стандартна, праграма ўстаўляе відарысы ў буфер абмену як файлы JPG для эканоміі дыскавай прасторы. Вы можаце скарыстацца гэтым параметрам для ўстаўкі відарысаў PNG замест JPG.</string>

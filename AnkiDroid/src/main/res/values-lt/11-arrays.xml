@@ -83,9 +83,9 @@
     <!-- html_size_code_labels -->
     <string name="html_size_code_xx_small">xx-small</string>
     <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_small">mažas</string>
+    <string name="html_size_code_medium">vidutinis</string>
+    <string name="html_size_code_large">didelis</string>
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->

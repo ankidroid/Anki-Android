@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">إعدادات عامة</string>
     <string name="pref_cat_reviewing" maxLength="41">مراجعة</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">إعدادات المراجعة غير المحصورة برزمة محددة</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">السلوك</string>
-    <string name="pref_cat_flashcard" maxLength="41">الشاشة</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">السبورة</string>
     <string name="pref_cat_appearance" maxLength="41">المظهر</string>
     <string name="pref_cat_appearance_summ">تغيير السمات والخط الافتراضي</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">اطلع على قائمة تطبيقات تستخدم واجهة برمجة أنكيدرويد مثل القواميس، والأدوات.</string>
     <string name="html_javascript_debugging" maxLength="41">تصحيح أخطاء HTML / جافا سكريبت</string>
     <string name="html_javascript_debugging_summ">تمكين اتصالات عارض الويب البعيدة، وحفظ HTML البطاقة إلى مجلد أنكيدرويد</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">لصق صور الحافظة كـ PNG</string>
     <string name="paste_as_png_summary">بشكل افتراضي يلصق أنكي الصور في الحافظة بصيغة JPG لتوفير مساحة القرص. تستطيع استخدام هذا الخيار للصق الصور بصيعة PNG بدلًا من ذلك.</string>

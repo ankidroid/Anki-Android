@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">일반 설정</string>
     <string name="pref_cat_reviewing" maxLength="41">복습</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">특정 카드 묶음에 한정되지 않은 복습 설정</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">동작</string>
-    <string name="pref_cat_flashcard" maxLength="41">디스플레이</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">화이트보드</string>
     <string name="pref_cat_appearance" maxLength="41">외관</string>
     <string name="pref_cat_appearance_summ">기본 글꼴과 테마 변경</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Ankidroid API를 사용하는 어플 목록 보기 (사전, 편집기 등)</string>
     <string name="html_javascript_debugging" maxLength="41">HTML 자바스크립트 디버깅</string>
     <string name="html_javascript_debugging_summ">원격 WebView 연결을 활성화하고, 카드 HTML을 AnkiDroid 디렉토리에 저장하기</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">클립보드 이미지를 PNG로 붙여넣기</string>
     <string name="paste_as_png_summary">기본적으로 Anki는 클립보드의 이미지를 JPG로 저장해 저장 공간을 절약합니다. 이 옵션을 사용해 대신 PNG 이미지를 사용할 수 있습니다.</string>

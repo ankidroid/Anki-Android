@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Pengaturan umum</string>
     <string name="pref_cat_reviewing" maxLength="41">Mengulas</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Pengaturan ulasan yang bukan tentang dek</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Perilaku</string>
-    <string name="pref_cat_flashcard" maxLength="41">Tampilan</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
     <string name="pref_cat_appearance" maxLength="41">Tampilan</string>
     <string name="pref_cat_appearance_summ">Ubah tema dan fon dasar</string>
@@ -208,6 +206,9 @@
     <string name="thirdparty_apps_summary">Lihat daftar aplikasi yang menggunakan API AnkiDroid seperti kamus, alat.</string>
     <string name="html_javascript_debugging" maxLength="41">Pengawakutuan HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Aktifkan koneksi WebView jarak jauh, dan simpan kartu HTML ke direktori AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Tempel gambar di papan klip sebagai PNG</string>
     <string name="paste_as_png_summary">Anki menempel gambar papan klip berbentuk file JPG agar hemat penyimpanan. Gunakan opsi ini untuk menempel gambar sebagai file PNG.</string>

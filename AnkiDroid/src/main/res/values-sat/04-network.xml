@@ -116,6 +116,7 @@
     <string name="sync_sanity_remote">ᱥᱟᱝᱜᱤᱧ ᱨᱮᱭᱟᱜ</string>
     <string name="force_full_sync_title">ᱫᱟᱲᱮ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="force_full_sync_summary">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱟᱹᱭᱩᱨ ᱢᱤᱫ, ᱢᱤᱫ ᱱᱟᱜᱷᱟ ᱨᱮ ᱫᱚᱲᱮ ᱵᱚᱫᱚᱞᱮᱱᱟ </string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">ᱵᱚᱫᱚᱞᱠᱟᱱ ᱫᱚᱨᱠᱷᱥᱛᱚ ᱟᱢᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱩᱨᱟ ᱞᱟᱫᱮ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ ᱾  ᱚᱞᱜᱟ ᱰᱤᱵᱷᱟᱤᱥ ᱵᱟᱭ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱚᱜ ᱠᱷᱟᱱ ᱰᱟᱴᱟ ᱟᱫᱚᱜ ᱛᱟᱢᱮ, ᱞᱮᱛᱟᱲ ᱟᱢ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid ᱨᱮᱭᱟᱜ ᱢᱟᱲᱟᱝ ᱵᱷᱚᱨᱥᱚᱱ ᱨᱮ ᱰᱤᱜᱟᱹᱣ ᱧᱟᱢ ᱮᱱᱟ , ᱡᱩᱨ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ</string>
     <string name="sync_error_407_proxy_required">Proxy authentication ᱫᱚᱨᱠᱟᱨ ᱾</string>
