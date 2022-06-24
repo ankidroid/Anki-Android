@@ -415,4 +415,6 @@
     <string name="file_extract_exceeds_storage_space">Dosya çıkartımı depolama alanını aşıyor</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">\"%s\" etiketini genişlet</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>
