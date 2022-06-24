@@ -40,7 +40,7 @@
         android:key="showSyncStatusBadge"
         android:summary="@string/sync_status_badge_summ"
         android:title="@string/sync_status_badge" />
-    <com.ichi2.preferences.ConfirmationPreferenceCompat
+    <Preference
         android:key="@string/force_full_sync_key"
         android:title="@string/force_full_sync_title"
         android:summary="@string/force_full_sync_summary" />
