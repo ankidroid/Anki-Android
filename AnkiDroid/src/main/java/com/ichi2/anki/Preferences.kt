@@ -67,7 +67,7 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.*
-import com.ichi2.preferences.ControlPreference.Companion.setup
+import com.ichi2.preferences.ControlPreference.Companion.addAllControlPreferencesToCategory
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.themes.Themes.systemIsInNightMode
@@ -1262,8 +1262,7 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_controls)
-            val cat = requirePreference<PreferenceCategory>("key_map_category")
-            setup(cat)
+            addAllControlPreferencesToCategory(requirePreference(R.string.controls_command_mapping_cat_key))
         }
     }
 

@@ -238,16 +238,14 @@ class ControlPreference : ListPreference {
         private const val ADD_GESTURE_INDEX = -1
 
         /** Attaches all possible [ControlPreference] elements to a given [PreferenceCategory] */
-        @JvmStatic
-        fun setup(cat: PreferenceCategory) {
-            val commands = Arrays.stream(ViewerCommand.values()).collect(Collectors.toList())
-            val context = cat.context
-            for (c in commands) {
-                val p = ControlPreference(context)
-                p.setTitle(c.resourceId)
-                p.key = c.preferenceKey
-                p.setDefaultValue(c.defaultValue.toPreferenceString())
-                cat.addPreference(p)
+        fun addAllControlPreferencesToCategory(category: PreferenceCategory) {
+            for (command in ViewerCommand.values()) {
+                val preference = ControlPreference(category.context).apply {
+                    setTitle(command.resourceId)
+                    key = command.preferenceKey
+                    setDefaultValue(command.defaultValue.toPreferenceString())
+                }
+                category.addPreference(preference)
             }
         }
     }
