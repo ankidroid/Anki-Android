@@ -22,6 +22,7 @@ package com.ichi2.async
 import android.app.Activity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showDismissibleSnackbar
 import kotlinx.coroutines.CancellationException
@@ -48,9 +49,11 @@ fun LifecycleOwner.catchingLifecycleScope(
     } catch (e: BackendException) {
         Timber.w(e, errorMessage)
         showDismissibleSnackbar(activity, e.localizedMessage!!, R.string.close)
+        CrashReportService.sendExceptionReport(e, activity::class.java.simpleName)
     } catch (e: Exception) {
         // TODO: localize
         Timber.w(e, errorMessage)
         showDismissibleSnackbar(activity, "An error occurred: $e", R.string.close)
+        CrashReportService.sendExceptionReport(e, activity::class.java.simpleName)
     }
 }
