@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Impostazioni generali</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetizioni</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Impostazioni di ripetizione non specifiche per il mazzo</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportamento</string>
-    <string name="pref_cat_flashcard" maxLength="41">Visualizzazione</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Lavagna</string>
     <string name="pref_cat_appearance" maxLength="41">Aspetto</string>
     <string name="pref_cat_appearance_summ">Cambia temi e tipo di carattere predefinito</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Vedi un elenco di applicazioni che utilizzano l\'API AnkiDroid come dizionari, utilities.</string>
     <string name="html_javascript_debugging" maxLength="41">Debug HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Abilita connessioni WebView remote e salva l\'HTML della carta nella cartella AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Incolla le immagini degli appunti in PNG</string>
     <string name="paste_as_png_summary">Di default Anki incolla le immagini sugli appunti come file JPG per salvare lo spazio su disco. Puoi usare quest\'opzione per incollare invece come immagini PNG.</string>

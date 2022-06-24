@@ -116,6 +116,7 @@
     <string name="sync_sanity_remote">Vzdialenú</string>
     <string name="force_full_sync_title">Vynútiť úplnú synchronizáciu</string>
     <string name="force_full_sync_summary">Pri ďalšej synchronizácii, vynútiť zmeny v jednom smere</string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Požadované zmeny si vyžadujú úplné nahratie databázy na server pri ďalšej synchronizácii vašej zbierky. Ak máte naplánované skúšanie alebo zmeny na iných zariadeniach, ktoré ešte neboli synchronizované, budú stratené. Chcete pokračovať?</string>
     <string name="full_sync_confirmation_upgrade">Kvôli chybe v predchádzajúcej nainštalovanej verzii AnkiDroid, odporúča sa úplná synchronizácia.</string>
     <string name="sync_error_407_proxy_required">Vyžaduje sa autentifikácia serverom proxy.</string>

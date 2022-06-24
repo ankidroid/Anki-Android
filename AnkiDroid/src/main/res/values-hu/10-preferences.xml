@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Általános beállítások</string>
     <string name="pref_cat_reviewing" maxLength="41">Ismétlés</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Paklifüggetlen beállítások</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Viselkedés</string>
-    <string name="pref_cat_flashcard" maxLength="41">Kijelző</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tábla</string>
     <string name="pref_cat_appearance" maxLength="41">Kinézet</string>
     <string name="pref_cat_appearance_summ">Témák és az alapértelmezett betűtípus módosítása</string>
@@ -208,6 +206,9 @@
     <string name="thirdparty_apps_summary">Egy lista az alkalmazásokról, amik az AnkiDroid API-t használják, mint például szótárak és segédprogramok.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript hibakeresés</string>
     <string name="html_javascript_debugging_summ">Távoli WebView kapcsolatok engedélyezése és a HTML kártyák AnkiDroid mappába mentése</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Vágólap képeket PNG-ként illeszt be</string>
     <string name="paste_as_png_summary">Anki alapértelmezetten a vágólap képeket JPG fájlként illeszti be, tárterület spórolás miatt. Ha PNG-t szeretnél, használd ezt a beállítást.</string>

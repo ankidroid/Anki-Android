@@ -116,6 +116,7 @@
     <string name="sync_sanity_remote">Oddaljeno</string>
     <string name="force_full_sync_title">Vsili polno sinhronizacijo</string>
     <string name="force_full_sync_summary">Ob naslednji sinhronizaciji vsili spremembe v eno smer</string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Zahtevana sprememba bo potrebovala poln prejem podatkovne zbirke ob naslednji sinhronizaciji zbirke. Če imate čakajoče preglede ali druge spremembe na drugi napravi, ki še niso bile sinhronizirane, bodo izgubljene. Nadaljuj?</string>
     <string name="full_sync_confirmation_upgrade">Zaradi hrošča v prej nameščeni različici AnkiDroida je priporočljivo, da vsilite polno sinhronizacijo.</string>
     <string name="sync_error_407_proxy_required">Proxy authentication required.</string>

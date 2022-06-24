@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Ustawienia ogólne</string>
     <string name="pref_cat_reviewing" maxLength="41">Przegląd</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Ustawienia wspólne dla wszystkich talii</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Zachowanie</string>
-    <string name="pref_cat_flashcard" maxLength="41">Wyświetlanie</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tablica</string>
     <string name="pref_cat_appearance" maxLength="41">Wygląd</string>
     <string name="pref_cat_appearance_summ">Zmiana tematów i czcionki domyślnej</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Zobacz listę aplikacji, które używają API AnkiDroid takie jak słowniki, narzędzia.</string>
     <string name="html_javascript_debugging" maxLength="41">Debugowanie HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Włącz zdalne połączenia WebView i zapisz kartę HTML do katalogu AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Wklej zdjęcia ze schowka jako PNG</string>
     <string name="paste_as_png_summary">Domyślnie by oszczędzać miejsce na dysku Anki wkleja obrazy ze schowka w formacie JPG. Możesz użyć tej opcji by zamiast tego używać formatu PNG</string>

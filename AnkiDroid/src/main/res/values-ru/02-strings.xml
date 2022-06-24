@@ -179,7 +179,7 @@
     <string name="import_log_failed_unzip">Не удалось распаковать apkg: %s</string>
     <string name="import_log_failed_copy_to">Не удалось скопировать apkg в %s</string>
     <string name="import_log_failed_validate">Не удалось проверить apkg</string>
-    <string name="import_log_insufficient_space_error">Недостаточно места для импорта пакета.\nНужно %1$s \nДоступно %2$s.\n\nЧто-то не работает? Попытайтесь освободить место на телефоне. Или попробуйте синхронизацию, для которой нужно меньше места, чем для импорта. Вы можете импортировать пакет на устройстве с большим объемом памяти (например, Anki Desktop) и синхронизировать его с этим устройством.</string>
+    <string name="import_log_insufficient_space_error">Недостаточно места для импорта пакета.\nНужно %1$s \nДоступно %2$s.\n\nЧто-то не получается? Попытайтесь освободить место на телефоне. Или попробуйте синхронизацию, для которой нужно меньше места, чем для импорта. Вы можете импортировать пакет на устройстве с большим объемом памяти (например, Anki на компьютере) и синхронизировать его с этим устройством.</string>
     <string name="import_log_file_cache_cleared">Ошибка при импорте файла: скорее всего, был очищен кеш. Попробуйте снова</string>
     <string name="import_succeeded_but_check_database">Импорт данных удался, но очистка — нет. Выполните проверку базы данных. Главная причина: %s</string>
     <string name="import_error_unhandled_request">Не удаётся обработать запрос на импорт</string>
@@ -191,8 +191,8 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() не удалось. Возможно недостаточно места</string>
     <string name="import_error_unhandled_scheme">Необработанный импорт из «%s»</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_colpkg_apkg">Были выбраны одновременно файлы apkg и colpkg</string>
+    <string name="import_stats_error">При импорте этих файлов произошла ошибка:\n%s</string>
     <string name="import_replacing">Коллекция заменяется&#8230;</string>
     <string name="import_interrupted">Импорт прерван</string>
     <string name="export_include_schedule">Вместе с расписанием</string>
@@ -386,7 +386,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
     <string name="create_shortcut_error">Ошибка при добавлении ярлыка: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Предложение с заглавной буквы</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели инструментов</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -408,17 +408,17 @@
     <string name="deck_download_progress_message">Вы можете использовать другие приложения во время загрузки</string>
     <string name="check_network">Проверьте подключение к Интернету</string>
     <string name="search_using_deck_name">Искать по названию колоды</string>
-    <string name="home">Домой</string>
+    <string name="home">Главная</string>
     <!-- Importing -->
     <string name="import_mapped_to_field">Сопоставлено с %s</string>
     <string name="import_mapped_to_tags">Сопоставлено с метками</string>
     <string name="import_mapped_to_nothing">Проигнорировано</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Скрытая карта</string>
-    <string name="buried_note">Скрытая запись</string>
-    <string name="deleted_note">Удалённая запись</string>
-    <string name="suspended_card">Исключённая карточка</string>
-    <string name="suspended_note">Исключённая запись</string>
+    <string name="buried_card">Карточка отложена</string>
+    <string name="buried_note">Запись отложена</string>
+    <string name="deleted_note">Запись удалена</string>
+    <string name="suspended_card">Карточка исключена</string>
+    <string name="suspended_note">Запись исключена</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Сделать поле %s липким</string>
     <!-- Scoped Storage Migration -->
@@ -442,5 +442,5 @@
     <string name="malicious_archive_exceeds_limit">Вредоносный архив. Размер превышает %1$s или содержит более %2$d файлов</string>
     <string name="file_extract_exceeds_storage_space">Размер файла превышает объём памяти</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Развернуть метку «%s»</string>
 </resources>

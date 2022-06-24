@@ -116,6 +116,7 @@
     <string name="sync_sanity_remote">Remot</string>
     <string name="force_full_sync_title">Forçar sincronització completa</string>
     <string name="force_full_sync_summary">En la sincronització següent, força els canvis en una direcció</string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">El canvi sol·licitat requerirà una càrrega completa de la base de dades quan sincronitzeu la col·lecció. Si teniu revisions o altres canvis esperant a un altre dispositiu que encara no s\'han sincronitzat aquí encara, estaran perduts. Voleu continuar?</string>
     <string name="full_sync_confirmation_upgrade">Per un error en la versió anteriorment instal·lada de AnkiDroid, es recomana forçar una sincronització completa.</string>
     <string name="sync_error_407_proxy_required">Cal autenticació de servidor intermediari.</string>

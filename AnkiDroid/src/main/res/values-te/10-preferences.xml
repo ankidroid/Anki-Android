@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">సాధారణ సెట్టింగులు</string>
     <string name="pref_cat_reviewing" maxLength="41">సమీక్షిస్తోంది</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">నాన్-డెక్-నిర్దిష్ట సమీక్షకుడు సెట్టింగులు</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">ప్రవర్తన</string>
-    <string name="pref_cat_flashcard" maxLength="41">ప్రదర్శన</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">వైట్‌బోర్డ్</string>
     <string name="pref_cat_appearance" maxLength="41">స్వరూపం</string>
     <string name="pref_cat_appearance_summ">థీమ్లను మరియు డిఫాల్ట్ ఫాంట్ను మార్చండి</string>
@@ -208,6 +206,9 @@
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>

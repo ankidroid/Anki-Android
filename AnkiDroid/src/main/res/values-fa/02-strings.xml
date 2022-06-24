@@ -184,7 +184,7 @@
     <string name="import_error_unhandled_scheme">%s</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_stats_error">خطا ایجاد شد وقتی این فایل ها در حال وارد شدن بودند:\n%s</string>
     <string name="import_replacing">در حال جایگزین کردن مجموعه&#8230;</string>
     <string name="import_interrupted">در فرایند ورود اختلال ایجاد شد</string>
     <string name="export_include_schedule">به همراه زمانبندی</string>
@@ -282,8 +282,8 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">بازنشانی پیش‌فرض</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">مسال</string>
+    <string name="basic_answer_sample_text">یک مثال</string>
     <string name="reviewer_tts_cloze_spoken_replacement">خالی</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">لطفاً برای نمایش نوار ابزار جاواسکریپت حالت تمام صفحه را فعال کنید.</string>
@@ -323,8 +323,8 @@
     <string name="reviewer_invalid_api_version_visit_documentation">نما</string>
     <string name="anki_js_error_code">(شماره خطا: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug">اطلاعات debug به کلیپ بورد کپی شد</string>
+    <string name="about_ankidroid_error_copy_debug_info">خطا در کپی کردن اطلاعات debug به کلیپ بورد</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>

@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Algemene instellingen</string>
     <string name="pref_cat_reviewing" maxLength="41">Overhoren</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Niet-set-specifieke instellingen voor overhoren</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Gedrag</string>
-    <string name="pref_cat_flashcard" maxLength="41">Weergave</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Schrijfbord</string>
     <string name="pref_cat_appearance" maxLength="41">Opmaak</string>
     <string name="pref_cat_appearance_summ">Wijzig thema\'s en standaardlettertype</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Raadpleeg de lijst van applicaties die gebruik maken van de AnkiDroid API zoals woordenboeken, hulpprogramma\'s.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript debugging</string>
     <string name="html_javascript_debugging_summ">Schakel externe WebView-verbindingen in en sla de kaart HTML op in de AnkiDroid-folder</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Plak klembord afbeeldingen als PNG</string>
     <string name="paste_as_png_summary">Anki plakt standaard afbeeldingen op het klembord als JPG-bestanden om schijfruimte te besparen. U kunt deze optie gebruiken om in plaats daarvan als PNG-afbeeldingen te plakken.</string>

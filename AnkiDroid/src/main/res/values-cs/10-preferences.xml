@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Obecné nastavení</string>
     <string name="pref_cat_reviewing" maxLength="41">Opakování</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronizace</string>
-    <string name="pref_cat_reviewing_summ">Obecné nastavení pro opakování</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Chování</string>
-    <string name="pref_cat_flashcard" maxLength="41">Zobrazení</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tabule</string>
     <string name="pref_cat_appearance" maxLength="41">Nastavení vzhledu</string>
     <string name="pref_cat_appearance_summ">Změna motivu vzhledu a výchozího písma</string>
@@ -183,7 +181,7 @@
     <string name="time_limit" maxLength="41">Časové omezení</string>
     <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone" maxLength="41">Nové zpracování časového pásma</string>
-    <string name="day_offset_with_description" maxLength="41">Začátek příštího dne (0 je půlnoc, 23 je 11 večer)</string>
+    <string name="day_offset_with_description" maxLength="41">Začátek příštího dne</string>
     <string name="day_offset_summ">XXX hodin po půlnoci</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Půlnoc</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Zobrazit seznam aplikací, které používají AnkiDroid API, jako jsou slovníky, nástroje.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Umožnit vzdálené připojení k WebView a uložit HTML karet do adresáře AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Vkládat obrázky ze schránky jako PNG</string>
     <string name="paste_as_png_summary">Ve výchozím nastavení Anki vkládá obrázky ve schránce jako JPG soubory, aby se šetřilo místo na disku. Můžete použít tuto volbu, aby se místo toho vkládaly PNG obrázky.</string>

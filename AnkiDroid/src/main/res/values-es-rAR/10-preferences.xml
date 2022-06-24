@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Ajustes generales</string>
     <string name="pref_cat_reviewing" maxLength="41">Repasando</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Configuración de repasos sin especificación de mazo</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportamiento</string>
-    <string name="pref_cat_flashcard" maxLength="41">Mostrar</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Pizarra</string>
     <string name="pref_cat_appearance" maxLength="41">Apariencia</string>
     <string name="pref_cat_appearance_summ">Cambiar temas y fuente predeterminada</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Vea una lista de aplicaciones que hacen uso de la API de AnkiDroid como diccionarios, utilidades.</string>
     <string name="html_javascript_debugging" maxLength="41">Depuración de HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Habilitar conexiones remotas de WebView y guardar el HTML de la tarjeta en el directorio AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Pegar imágenes del portapapeles como PNG</string>
     <string name="paste_as_png_summary">Por defecto Anki pega imágenes en el portapapeles como archivos JPG para ahorrar espacio en disco. Puede utilizar esta opción para pegar como imágenes PNG en su lugar.</string>

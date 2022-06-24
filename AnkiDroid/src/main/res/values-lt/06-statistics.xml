@@ -86,7 +86,7 @@
     <string name="stats_overview_days_studied">Mokymosi dienų skaičius: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d iš %3$d)</string>
     <string name="stats_overview_reviews_per_day_studydays">Vidutiniškai mokytasi per dieną: &lt;b&gt;%1$.1f&lt;/b&gt; perž./d.</string>
     <string name="stats_overview_reviews_per_day_all">Jei mokytumėtės kasdien: &lt;b&gt;%1$.1f&lt;/b&gt; perž./d.</string>
-    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
+    <string name="stats_overview_total_time_in_period">Iš viso: &lt;b&gt;%d&lt;/b&gt; minučių</string>
     <string name="stats_overview_time_per_day_studydays">Mokymosi vidurkis per dieną: &lt;b&gt;%1$.1f&lt;/b&gt; min./dieną</string>
     <string name="stats_overview_time_per_day_all">Jei mokytumėtės kasdien:  &lt;b&gt;%1$.1f&lt;/b&gt; min./dieną</string>
     <string name="stats_overview_average_answer_time">Average answer time: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; cards/minute)</string>

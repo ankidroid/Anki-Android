@@ -116,6 +116,7 @@
     <string name="sync_sanity_remote">Etä</string>
     <string name="force_full_sync_title">Pakota täysi synkronointi</string>
     <string name="force_full_sync_summary">Pakota muutokset yhteen suuntaan seuraavan synkronoinnin yhteydessä</string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Pyytämäsi muutos vaatii tietokannan täyden lähetyksen AnkiWebiin kun synkronoit kokoelmasi seuraavan kerran. Jos sinulla on kertauksia tai muita muutoksia odottamassa toisessa laitteessa, jota ei ole vielä synkronoitu tänne, nämä synkronoimattomat tiedot katoavat. Haluatko jatkaa?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroidin edellisessä versiossa olleen bugin takia, täydellinen syknronointi on suositeltavaa.</string>
     <string name="sync_error_407_proxy_required">Välityspalvelimen todennus vaaditaan</string>

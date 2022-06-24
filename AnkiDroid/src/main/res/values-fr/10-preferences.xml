@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Paramètres généraux</string>
     <string name="pref_cat_reviewing" maxLength="41">Révision</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronisation</string>
-    <string name="pref_cat_reviewing_summ">Paramètres de révision indépendants du paquet</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportement</string>
-    <string name="pref_cat_flashcard" maxLength="41">Afficher</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tableau blanc</string>
     <string name="pref_cat_appearance" maxLength="41">Affichage</string>
     <string name="pref_cat_appearance_summ">Changer le thème et la police par défaut</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Voir la liste des applications qui utilisent l\'API AnkiDroid comme les dictionnaires, les outils.</string>
     <string name="html_javascript_debugging" maxLength="41">Débogage HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Activer les connexions WebView distantes et enregistrer la carte HTML dans le répertoire AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Coller les images du pressepapiers en PNG</string>
     <string name="paste_as_png_summary">Par default Anki colle les images dans le presse-papier au format JPG (format léger). Vous pouvez changer cette option pour coller les images au format PNG.</string>
