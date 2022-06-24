@@ -105,8 +105,8 @@ class ControlPreference : ListPreference {
     }
 
     /** The summary that appears on the preference */
-    override fun getSummary(): CharSequence =
-        TextUtils.join(", ", MappableBinding.fromPreferenceString(value).map { it.toDisplayString(context) })
+    override fun getSummary(): CharSequence = MappableBinding.fromPreferenceString(value)
+        .joinToString(", ") { it.toDisplayString(context) }
 
     /** Called when an element is selected in the ListView */
     override fun callChangeListener(newValue: Any?): Boolean {
@@ -157,13 +157,6 @@ class ControlPreference : ListPreference {
         }
         // don't persist the value
         return false
-    }
-
-    /** Volume keys shouldn't be mapped until we remove the 'Volume' gestures */
-    fun isVolumeKey(binding: Binding): Boolean {
-        if (!binding.isKeyCode) return false
-        val keycode = binding.keycode
-        return keycode == KEYCODE_VOLUME_DOWN || keycode == KEYCODE_VOLUME_UP
     }
 
     /**
