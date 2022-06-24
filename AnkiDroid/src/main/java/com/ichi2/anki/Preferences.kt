@@ -520,7 +520,6 @@ class Preferences : AnkiActivity() {
             val dialogFragment = when (preference) {
                 is IncrementerNumberRangePreferenceCompat -> IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
                 is NumberRangePreferenceCompat -> NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat.newInstance(preference.getKey())
-                is ResetLanguageDialogPreference -> ResetLanguageDialogPreference.ResetLanguageDialogFragmentCompat.newInstance(preference.getKey())
                 is SeekBarPreferenceCompat -> SeekBarPreferenceCompat.SeekBarDialogFragmentCompat.newInstance(preference.getKey())
                 is ControlPreference -> ControlPreference.View.newInstance(preference.getKey())
                 else -> null
@@ -1082,6 +1081,22 @@ class Preferences : AnkiActivity() {
             // Workaround preferences
             removeUnnecessaryAdvancedPrefs()
             addThirdPartyAppsListener()
+
+            // Configure "Reset languages" preference
+            requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
+                AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.reset_languages)
+                    .setIcon(R.drawable.ic_warning_black)
+                    .setMessage(R.string.reset_languages_question)
+                    .setPositiveButton(R.string.dialog_ok) { _, _ ->
+                        if (MetaDB.resetLanguages(requireContext())) {
+                            showThemedToast(requireContext(), R.string.reset_confirmation, true)
+                        }
+                    }
+                    .setNegativeButton(R.string.dialog_cancel, null)
+                    .show()
+                true
+            }
         }
 
         private fun setupContextMenuPreference(key: String, @StringRes contextMenuName: Int) {

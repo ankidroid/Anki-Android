@@ -30,6 +30,7 @@
     <string name="pref_reviewing_screen_key">reviewingScreen</string>
     <string name="pref_accessibility_screen_key">accessibilityScreen</string>
     <string name="pref_controls_screen_key">controlsScreen</string>
+    <string name="pref_reset_languages_key">resetLanguages</string>
     <!-- Sync preferences -->
     <string name="pref_sync_screen_key">syncScreen</string>
     <string name="sync_account_key">syncAccount</string>
