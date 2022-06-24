@@ -527,7 +527,6 @@ class Preferences : AnkiActivity() {
                 is IncrementerNumberRangePreferenceCompat -> IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
                 is NumberRangePreferenceCompat -> NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat.newInstance(preference.getKey())
                 is ResetLanguageDialogPreference -> ResetLanguageDialogPreference.ResetLanguageDialogFragmentCompat.newInstance(preference.getKey())
-                is ConfirmationPreferenceCompat -> ConfirmationPreferenceCompat.ConfirmationDialogFragmentCompat.newInstance(preference.getKey())
                 is SeekBarPreferenceCompat -> SeekBarPreferenceCompat.SeekBarDialogFragmentCompat.newInstance(preference.getKey())
                 is ControlPreference -> ControlPreference.View.newInstance(preference.getKey())
                 else -> null
@@ -799,18 +798,23 @@ class Preferences : AnkiActivity() {
             addPreferencesFromResource(preferenceResource)
 
             // Configure force full sync option
-            requirePreference<ConfirmationPreferenceCompat>(R.string.force_full_sync_key).apply {
-                setDialogMessage(R.string.force_full_sync_summary)
-                setDialogTitle(R.string.force_full_sync_title)
-                setOkHandler {
-                    if (col == null) {
-                        showThemedToast(requireContext(), R.string.directory_inaccessible, false)
-                        return@setOkHandler
+            requirePreference<Preference>(R.string.force_full_sync_key).setOnPreferenceClickListener {
+                MaterialDialog.Builder(requireContext())
+                    .title(R.string.force_full_sync_title)
+                    .content(R.string.force_full_sync_summary)
+                    .positiveText(R.string.dialog_ok)
+                    .negativeText(R.string.dialog_cancel)
+                    .onPositive { _, _ ->
+                        if (col == null) {
+                            showThemedToast(requireContext(), R.string.directory_inaccessible, false)
+                            return@onPositive
+                        }
+                        col!!.modSchemaNoCheck()
+                        col!!.setMod()
+                        showThemedToast(requireContext(), R.string.force_full_sync_confirmation, true)
                     }
-                    col!!.modSchemaNoCheck()
-                    col!!.setMod()
-                    showThemedToast(requireContext(), android.R.string.ok, true)
-                }
+                    .show()
+                true
             }
         }
     }
