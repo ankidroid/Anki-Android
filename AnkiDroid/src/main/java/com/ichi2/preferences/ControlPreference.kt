@@ -17,13 +17,8 @@
 package com.ichi2.preferences
 
 import android.content.Context
-import android.os.Bundle
-import android.text.TextUtils
 import android.util.AttributeSet
-import android.view.KeyEvent.KEYCODE_VOLUME_DOWN
-import android.view.KeyEvent.KEYCODE_VOLUME_UP
 import androidx.preference.ListPreference
-import androidx.preference.ListPreferenceDialogFragmentCompat
 import androidx.preference.PreferenceCategory
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiDroidApp
@@ -34,14 +29,10 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.CardSideSelectionDialog
 import com.ichi2.anki.dialogs.GestureSelectionDialogBuilder
 import com.ichi2.anki.dialogs.KeySelectionDialogBuilder
-import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromGesture
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import timber.log.Timber
-import java.util.*
-import java.util.stream.Collectors
 
 /**
  * A preference which allows mapping of inputs to actions (example: keys -> commands)
@@ -79,29 +70,9 @@ class ControlPreference : ListPreference {
         entryValues = entryIndices.map { it.toString() }.toTypedArray()
     }
 
-    class View : ListPreferenceDialogFragmentCompat() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            // must be called before super
-            refreshPreferenceEntities()
-            super.onCreate(savedInstanceState)
-        }
-
-        private fun refreshPreferenceEntities() {
-            Timber.d("refreshPreferenceEntities()")
-            val pref = this.preference as ControlPreference
-            pref.refreshEntries()
-        }
-
-        companion object {
-            @JvmStatic
-            fun newInstance(key: String): View {
-                val fragment = View()
-                val b = Bundle(1)
-                b.putString(ARG_KEY, key)
-                fragment.arguments = b
-                return fragment
-            }
-        }
+    override fun onClick() {
+        refreshEntries()
+        super.onClick()
     }
 
     /** The summary that appears on the preference */

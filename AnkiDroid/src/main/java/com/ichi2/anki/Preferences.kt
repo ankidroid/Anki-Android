@@ -521,7 +521,6 @@ class Preferences : AnkiActivity() {
                 is IncrementerNumberRangePreferenceCompat -> IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
                 is NumberRangePreferenceCompat -> NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat.newInstance(preference.getKey())
                 is SeekBarPreferenceCompat -> SeekBarPreferenceCompat.SeekBarDialogFragmentCompat.newInstance(preference.getKey())
-                is ControlPreference -> ControlPreference.View.newInstance(preference.getKey())
                 else -> null
             }
 
