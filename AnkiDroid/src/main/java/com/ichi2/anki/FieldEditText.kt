@@ -167,9 +167,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     /**
      * Restore the default style of this view.
      */
-    @Suppress("deprecation")
     fun setDefaultStyle() {
-        setBackgroundDrawable(mOrigBackground)
+        background = mOrigBackground
     }
 
     fun setSelectionChangeListener(listener: TextSelectionListener?) {

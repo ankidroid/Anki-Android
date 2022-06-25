@@ -51,10 +51,8 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Общие</string>
     <string name="pref_cat_general_summ">Общие настройки</string>
     <string name="pref_cat_reviewing" maxLength="41">Учёба</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Настройки обучения, не зависящие от колоды</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Поведение</string>
-    <string name="pref_cat_flashcard" maxLength="41">Экран</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронизация</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Доска</string>
     <string name="pref_cat_appearance" maxLength="41">Внешний вид</string>
     <string name="pref_cat_appearance_summ">Выбор темы и шрифтов</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Покажет список приложений, которые используют API AnkiDroid, например, словари</string>
     <string name="html_javascript_debugging" maxLength="41">Отладка HTML и JavaScript</string>
     <string name="html_javascript_debugging_summ">Включает удалённые соединения WebView и сохраняет HTML карточек в директорию AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставлять изображения буфера как PNG</string>
     <string name="paste_as_png_summary">По умолчанию Anki вставляет изображения в формате JPG, чтобы сэкономить место. Эта настройка заменяет JPG на PNG.</string>
@@ -235,7 +236,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">URL для медиафайлов</string>
     <string name="custom_sync_server_media_url_invalid">Недопустимый адрес синхронизация медиафайлов</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Клавиатура</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Сопоставление команд</string>
     <!-- studyoptions -->
@@ -326,9 +327,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Показать список изменений</string>
     <string name="binding_add_gesture">Добавить жест</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Заменить жест</string>
     <string name="binding_add_key">Добавить кнопку</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Заменить клавишу</string>
     <string name="key_picker_default_press_key">Нажмите кнопку</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберите сторону карточки</string>

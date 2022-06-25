@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Ĝeneralaj agordoj</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetado</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Komunaj agordoj de ripetado por ĉiuj kartaroj</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Sinteno</string>
-    <string name="pref_cat_flashcard" maxLength="41">Montrado</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Skribtabulo</string>
     <string name="pref_cat_appearance" maxLength="41">Aspekto</string>
     <string name="pref_cat_appearance_summ">Ŝanĝi etoson kaj implicitan tiparon</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
     <string name="html_javascript_debugging" maxLength="41">Senerarigado de HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Aktivigi forajn konektojn por WebView kaj konservi HTML de kartoj al la dosierujo “AnkiDroid”</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Alglui bildojn kiel PNG</string>
     <string name="paste_as_png_summary">Implicite la aplikaĵo Anki algluas bildojn el la tondujo kiel dosierojn JPG por konservi spacon. Vi povas uzi tiun ĉi agordon por alglui ilin kiel PNG.</string>

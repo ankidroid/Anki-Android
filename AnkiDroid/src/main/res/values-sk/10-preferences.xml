@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Všeobecné nastavenia</string>
     <string name="pref_cat_reviewing" maxLength="41">Opakovanie</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Všeobecné nastavenia pre opakovania</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Správanie</string>
-    <string name="pref_cat_flashcard" maxLength="41">Zobrazenie</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tabuľa</string>
     <string name="pref_cat_appearance" maxLength="41">Vzhľad</string>
     <string name="pref_cat_appearance_summ">Zmena motivu a východzieho písma</string>
@@ -208,6 +206,9 @@
     <string name="thirdparty_apps_summary">Pozrite si zoznam aplikácií, ktoré využívajú Ankidroid API ako sú slovníky, služby.</string>
     <string name="html_javascript_debugging" maxLength="41">Ladenie HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Povoliť pripojenia na vzdialené WebView a uložiť kartičku HTML do adresára AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Prilepiť obrázky zo schránky ako PNG</string>
     <string name="paste_as_png_summary">Východiskové nastavenie Anki ukladá obrázky do schránky ako JPG súbory aby sa ušetril ukladací priestor. Môžete použiť túto možnosť a ukladať obrázky ako PNG.</string>

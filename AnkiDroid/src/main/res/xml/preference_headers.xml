@@ -28,7 +28,7 @@
     <!-- Reviewing Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$ReviewingSettingsFragment"
-        android:summary="@string/pref_cat_reviewing_summ"
+        android:key="@string/pref_reviewing_screen_key"
         android:title="@string/pref_cat_reviewing"
         android:icon="@drawable/ic_flashcard_black">
     </Preference>
@@ -64,6 +64,14 @@
         android:key="@string/pref_controls_screen_key"
         android:title="@string/pref_cat_controls"
         android:icon="@drawable/ic_touch">
+    </Preference>
+
+    <!-- Accessibility -->
+    <Preference
+        android:fragment="com.ichi2.anki.preferences.AccessibilitySettingsFragment"
+        android:key="@string/pref_accessibility_screen_key"
+        android:title="@string/accessibility"
+        android:icon="@drawable/ic_accessibility_24">
     </Preference>
 
     <!-- Advanced Preferences -->

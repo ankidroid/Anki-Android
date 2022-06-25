@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">常用设置</string>
     <string name="pref_cat_reviewing" maxLength="41">复习</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同步</string>
-    <string name="pref_cat_reviewing_summ">复习通用设置</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">行为</string>
-    <string name="pref_cat_flashcard" maxLength="41">显示</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">白板</string>
     <string name="pref_cat_appearance" maxLength="41">外观</string>
     <string name="pref_cat_appearance_summ">更改主题和默认字体</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">查看使用 AnkiDroid API 的应用程序清单，如字典、实用工具。</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 调试</string>
     <string name="html_javascript_debugging_summ">启用远程 WebView 连接，并将卡片 HTML 保存到 AnkiDroid 目录</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">将剪贴板图像粘贴为 PNG</string>
     <string name="paste_as_png_summary">Anki 默认将剪贴板图粘贴为 JPG 以节省空间。 您可用此选项粘贴为 PNG。</string>
@@ -235,8 +236,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">媒体文件同步地址</string>
     <string name="custom_sync_server_media_url_invalid">媒体同步地址无效</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
-    <string name="bluetooth">Bluetooth</string>
+    <string name="keyboard">键盘</string>
+    <string name="bluetooth">蓝牙</string>
     <string name="controls_main_category" maxLength="41">命令映射</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">更改牌组集选项会影响多个牌组。如果您想仅更改当前牌组，请先添加一个新的选项组</string>
@@ -320,9 +321,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">打开更新日志</string>
     <string name="binding_add_gesture">添加手势</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">替换手势</string>
     <string name="binding_add_key">添加按键</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">替换按键</string>
     <string name="key_picker_default_press_key">按一个键</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">选择卡片正/反面</string>

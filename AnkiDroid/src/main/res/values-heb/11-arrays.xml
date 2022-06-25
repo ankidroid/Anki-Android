@@ -48,19 +48,19 @@
     <string name="error_reporting_choice_ask_user">לשאול אותי</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tag only</string>
+    <string name="leech_action_tag_only">רק תג</string>
     <!-- new_order_labels -->
     <string name="new_order_random">קלפים חדשים בסדר אקראי</string>
     <string name="new_order_order_added">קלפים חדשים בסדר הוספתם</string>
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">הישן ביותר קודם</string>
     <string name="cram_deck_conf_order_random">אקראי</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
+    <string name="cram_deck_conf_order_increasing_intervals">הגדל מרווח עלייה</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">הקטן מרווח עלייה</string>
+    <string name="cram_deck_conf_order_most_lapsed">רובם נפלו</string>
+    <string name="cram_deck_conf_order_order_added">הזמנה נוספה</string>
+    <string name="cram_deck_conf_order_order_due">מועד ההזמנה</string>
+    <string name="cram_deck_conf_order_latest_added_first">האחרון שנוסף ראשון</string>
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Use current deck</string>

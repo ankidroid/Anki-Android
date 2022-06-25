@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Configuració general</string>
     <string name="pref_cat_reviewing" maxLength="41">Revisió</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Configuracions de revisió no específiques de malls</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportament</string>
-    <string name="pref_cat_flashcard" maxLength="41">Pantalla</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Pissarra</string>
     <string name="pref_cat_appearance" maxLength="41">Aparença</string>
     <string name="pref_cat_appearance_summ">Canviar els temes i la font per defecte</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Consulteu una llista d\'aplicacions que fan ús de l\'API AnkiDroid, com ara diccionaris i utilitats.</string>
     <string name="html_javascript_debugging" maxLength="41">Depuració HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Activeu les connexions WebView remotes i deseu l\'HTML de la carta al directori AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Enganxa imatges del porta-retalls com PNG</string>
     <string name="paste_as_png_summary">Per defecte, Anki enganxa les imatges al porta-retalls com a fitxers JPG per estalviar espai al disc. Podeu utilitzar aquesta opció per enganxar com a imatges PNG.</string>

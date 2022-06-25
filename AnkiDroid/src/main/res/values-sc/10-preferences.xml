@@ -52,9 +52,7 @@
     <string name="pref_cat_general_summ">Impostatziones generales</string>
     <string name="pref_cat_reviewing" maxLength="41">Revisione</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Impostatziones de revisiones non ligadas a matzos ispetzìficos</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Cumportamentu</string>
-    <string name="pref_cat_flashcard" maxLength="41">Visualizatzione</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Lavagna</string>
     <string name="pref_cat_appearance" maxLength="41">Aparèntzia</string>
     <string name="pref_cat_appearance_summ">Muda sos temas e su caràtere predefinidu</string>
@@ -207,6 +205,9 @@
     <string name="thirdparty_apps_summary">Pòmpia·ti una lista de aplicatziones chi impreant s\'API de AnkiDroid che a ditzionàrios o àteras ainas.</string>
     <string name="html_javascript_debugging" maxLength="41">Depuratzione de còdighe HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Abìlita sas connessiones remotas WebView, e sarva s\'HTML de sa carta in sa cartella de AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Incolla sas immàgines in PNG</string>
     <string name="paste_as_png_summary">Comente impostatzione predefinida Anki incollat sas immàgines in punta de billete in formadu JPG pro savare logu in sa memòria. Pro incollare sas immàgines in formadu PNG podes, imbetzes, impreare custa optzione.</string>

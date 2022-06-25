@@ -47,7 +47,7 @@
     <!-- How to format a percentage shown in the summary field of a preference -->
     <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">引き出しメニューを開く</string>
+    <string name="drawer_open">ナビゲーションドロワーを開く</string>
     <string name="drawer_close">引き出しメニューを閉じる</string>
     <string name="CardEditorCardDeck">デッキ:</string>
     <string name="CardEditorNoteDeck">デッキ:</string>
@@ -399,4 +399,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">タグ \'%s \' を展開</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

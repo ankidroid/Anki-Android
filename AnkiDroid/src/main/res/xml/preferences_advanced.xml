@@ -121,15 +121,10 @@
                 android:key="tts"
                 android:summary="@string/tts_summ"
                 android:title="@string/tts" />
-            <com.ichi2.preferences.ResetLanguageDialogPreference
-                android:dialogIcon="@drawable/ic_warning_black"
-                android:dialogMessage="@string/reset_languages_question"
-                android:dialogTitle="@string/reset_languages"
-                android:negativeButtonText="@string/dialog_cancel"
-                android:positiveButtonText="@string/dialog_ok"
+            <Preference
                 android:summary="@string/reset_languages_summ"
                 android:title="@string/reset_languages"
-                android:key="resetLanguages" />
+                android:key="@string/pref_reset_languages_key" />
             <SwitchPreference
                 android:defaultValue="false"
                 android:key="convertFenText"

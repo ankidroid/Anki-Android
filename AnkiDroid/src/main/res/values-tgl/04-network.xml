@@ -116,6 +116,7 @@
     <string name="sync_sanity_remote">Malayo</string>
     <string name="force_full_sync_title">Pilitin ang buong pagsisingkronisa</string>
     <string name="force_full_sync_summary">Sa sususnod na pagsisingkronisa, pilitin ang mga pagbabago sa isang direksyon</string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Ang ninanais na pagbabago ay mangangailangan ng isang buong pag-upload ng talahanayan ng datos sa susunod na pagsisingkronisa ng iyong koleksyon. Kung mayroon kang mga balik-aral o iba pang mga pagbabago na naghihintay sa iba pang mga aparato na hindi pa naka-singkronisa dito, mawawala ang mga ito. Magpatuloy?</string>
     <string name="full_sync_confirmation_upgrade">Dahil sa isang bug sa naunang naka-install na bersyon ng AnkiDroid, iminumungkahi ang isang buong pag-sisingkronisa.</string>
     <string name="sync_error_407_proxy_required">Proxy authentication required.</string>

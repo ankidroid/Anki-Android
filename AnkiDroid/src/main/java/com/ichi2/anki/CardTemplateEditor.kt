@@ -334,8 +334,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
 
             val bottomNavigation: BottomNavigationView = mainView.findViewById(R.id.card_template_editor_bottom_navigation)
-            @Suppress("deprecation")
-            bottomNavigation.setOnNavigationItemSelectedListener { item: MenuItem ->
+            bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
                 val currentSelectedId = item.itemId
                 mTemplateEditor.tabToViewId!![cardIndex] = currentSelectedId
                 @KotlinCleanup("when")

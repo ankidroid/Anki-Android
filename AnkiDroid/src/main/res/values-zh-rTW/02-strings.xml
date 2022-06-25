@@ -178,7 +178,7 @@
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() 失敗（可能是儲存空間溢出）</string>
     <string name="import_error_unhandled_scheme">無法處理來自“%s”的匯入</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_multiple_colpkg">已選擇多個 colpkg 檔案。</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">正在匯入牌組集合&#8230;&#8230;</string>
@@ -392,13 +392,15 @@
     <string name="scoped_storage_learn_more">瞭解更多</string>
     <string name="scoped_storage_postpone">延後</string>
     <string name="scoped_storage_migrate">遷移</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">搜尋沒有任何結果</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
+    <string name="not_valid_js_addon">%s 不是一個有效的 JavaScript addon package</string>
     <string name="could_not_create_dir">無法建立目錄 %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

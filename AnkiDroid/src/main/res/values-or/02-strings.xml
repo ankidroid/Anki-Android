@@ -415,4 +415,6 @@
     <string name="file_extract_exceeds_storage_space">ଫାଇଲ୍ ଏକ୍ସଟ୍ରାକ୍ଟ କରିବାରେ ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଅତିକ୍ରମ ହେଉଛି</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">\'%s\' ଟ୍ୟାଗଟିକୁ ପ୍ରସାରିବା</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

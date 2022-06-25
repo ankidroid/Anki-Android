@@ -49,6 +49,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -106,11 +107,37 @@ import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 import kotlin.math.abs
 import kotlin.math.roundToLong
 
+/**
+ * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
+ *
+ * On a tablet, this is a fragmented view, with [StudyOptionsFragment] to the right: [loadStudyOptionsFragment]
+ *
+ * Often used as navigation to: [Reviewer], [NoteEditor] (adding notes), [StudyOptionsFragment] [SharedDecksDownloadFragment]
+ *
+ * Responsibilities:
+ * * Setup/upgrades of the application: [handleStartup]
+ * * Error handling [handleDbError] [handleDbLocked]
+ * * Displaying a tree of decks, some of which may be collapsible: [mDeckListAdapter]
+ *   * Allows users to study the decks
+ *   * Displays deck progress
+ *   * A long press opens a menu allowing modification of the deck
+ *   * Filtering decks (if more than 10) [mToolbarSearchView]
+ * * Controlling syncs
+ *   * A user may [pull down][mPullToSyncWrapper] on the 'tree view' to sync
+ *   * A [button][displaySyncBadge] which relies on [SyncStatus] to display whether a sync is needed
+ *   * Blocks the UI and displays sync progress when syncing
+ * * Displaying 'General' AnkiDroid options: backups, import, 'check media' etc...
+ *   * General handler for error/global dialogs (search for 'as DeckPicker')
+ *   * Such as import: [ImportDialogListener]
+ * * A Floating Action Button [mFloatingActionMenu] allowing the user to quickly add notes/cards.
+ * * A custom image as a background can be added: [applyDeckPickerBackground]
+ */
 @KotlinCleanup("lots to do")
 open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncErrorDialogListener, ImportDialogListener, MediaCheckDialogListener, OnRequestPermissionsResultCallback, CustomStudyListener {
     // Short animation duration from system
@@ -449,8 +476,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
             }
-            DATABASE_DOWNGRADE_REQUIRED -> // This has a callback to continue with handleStartup
-                InitialActivity.downgradeBackend(this)
+            DATABASE_DOWNGRADE_REQUIRED -> { // This has a callback to continue with handleStartup
+                lifecycleScope.launch {
+                    InitialActivity.downgradeBackend(this@DeckPicker)
+                }
+            }
             WEBVIEW_FAILED -> MaterialDialog.Builder(this)
                 .title(R.string.ankidroid_init_failed_webview_title)
                 .content(getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.getWebViewErrorMessage()))
@@ -1943,7 +1973,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         return UpdateDeckListListener(this)
     }
 
-    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>?>(deckPicker) {
+    private class UpdateDeckListListener<T : AbstractDeckTreeNode>(private val deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, List<TreeNode<T>>?>(deckPicker) {
         override fun actualOnPreExecute(context: DeckPicker) {
             if (!context.colIsOpen()) {
                 context.showProgressBar()
@@ -1966,7 +1996,9 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
             context.renderPage()
             // Update the mini statistics bar as well
-            AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
+            deckPicker?.lifecycleScope?.launchCatching {
+                AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
+            }
             Timber.d("Startup - Deck List UI Completed")
         }
     }
@@ -2374,8 +2406,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         createDeckDialog.showDialog()
     }
 
-    @get:VisibleForTesting
-    val deckCount: Int
+    /**
+     * The number of decks which are visible to the user (excluding decks if the parent is collapsed).
+     * Not the total number of decks
+     */
+    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    val visibleDeckCount: Int
         get() = mDeckListAdapter.itemCount
 
     @VisibleForTesting
