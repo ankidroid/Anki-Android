@@ -925,7 +925,7 @@ class Preferences : AnkiActivity() {
             val fragmentClassNames = arrayOf(AppearanceSettingsFragment::class.java.name)
             intent.putExtra(EXTRA_BACKSTACK_FRAGMENTS, fragmentClassNames)
             requireContext().startActivity(intent)
-            this.requireActivity().finish()
+            requireActivity().finish()
         }
 
         /** Initializes the list of custom fonts shown in the preferences.  */
