@@ -317,10 +317,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    @Deprecated
     @Override
     public void finish() {
-        super.finish();
+        finishWithAnimation(Direction.DEFAULT);
     }
 
 
