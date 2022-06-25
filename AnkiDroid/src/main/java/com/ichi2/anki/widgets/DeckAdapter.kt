@@ -35,6 +35,7 @@ import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
+import net.ankiweb.rsdroid.BackendFactory
 import java.util.*
 
 @KotlinCleanup("lots to do")
@@ -52,6 +53,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     private val mExpandImage: Drawable?
     private val mCollapseImage: Drawable?
     private val mNoExpander: Drawable = ColorDrawable(Color.TRANSPARENT)
+    private var currentDeckId: Long = 0
 
     // Listeners
     private var mDeckClickListener: View.OnClickListener? = null
@@ -129,6 +131,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         mNew = mLrn
         mNumbersComputed = true
         mHasSubdecks = false
+        currentDeckId = mCol.decks.current().optLong("id")
         processNodes(nodes)
         // Filtering performs notifyDataSetChanged after the async work is complete
         getFilter().filter(filter)
@@ -185,7 +188,12 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
         // Set deck name and colour. Filtered decks have their own colour
         holder.deckName.text = node.lastDeckNameComponent
-        if (mCol.decks.isDyn(node.did)) {
+        val filtered = if (!BackendFactory.defaultLegacySchema) {
+            node.filtered
+        } else {
+            mCol.decks.isDyn(node.did)
+        }
+        if (filtered) {
             holder.deckName.setTextColor(mDeckNameDynColor)
         } else {
             holder.deckName.setTextColor(mDeckNameDefaultColor)
@@ -218,7 +226,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     private fun isCurrentlySelectedDeck(node: AbstractDeckTreeNode): Boolean {
-        return node.did == mCol.decks.current().optLong("id")
+        return node.did == currentDeckId
     }
 
     override fun getItemCount(): Int {
@@ -227,7 +235,11 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<AbstractDeckTreeNode>) {
         val nodeValue = node.value
-        val collapsed = mCol.decks.get(nodeValue.did).optBoolean("collapsed", false)
+        val collapsed = if (BackendFactory.defaultLegacySchema) {
+            mCol.decks.get(nodeValue.did).optBoolean("collapsed", false)
+        } else {
+            node.value.collapsed
+        }
         // Apply the correct expand/collapse drawable
         if (node.hasChildren()) {
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
@@ -249,20 +261,30 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     private fun processNodes(nodes: List<TreeNode<AbstractDeckTreeNode>>) {
         for (node in nodes) {
-            // If the default deck is empty, hide it by not adding it to the deck list.
-            // We don't hide it if it's the only deck or if it has sub-decks.
-            if (node.value.did == 1L && nodes.size > 1 && !node.hasChildren()) {
-                if (!defaultDeckHasCards(mCol)) {
-                    continue
+            var shouldRecurse = true
+            if (BackendFactory.defaultLegacySchema) {
+                // If the default deck is empty, hide it by not adding it to the deck list.
+                // We don't hide it if it's the only deck or if it has sub-decks.
+                if (node.value.did == 1L && nodes.size > 1 && !node.hasChildren()) {
+                    if (!defaultDeckHasCards(mCol)) {
+                        continue
+                    }
+                }
+                // If any of this node's parents are collapsed, don't add it to the deck list
+                for (parent in mCol.decks.parents(node.value.did)) {
+                    mHasSubdecks = true // If a deck has a parent it means it's a subdeck so set a flag
+                    if (parent.optBoolean("collapsed")) {
+                        return
+                    }
+                }
+            } else {
+                // backend takes care of excluding default, and includes collapsed info
+                if (node.value.collapsed) {
+                    mHasSubdecks = true
+                    shouldRecurse = false
                 }
             }
-            // If any of this node's parents are collapsed, don't add it to the deck list
-            for (parent in mCol.decks.parents(node.value.did)) {
-                mHasSubdecks = true // If a deck has a parent it means it's a subdeck so set a flag
-                if (parent.optBoolean("collapsed")) {
-                    return
-                }
-            }
+
             mDeckList.add(node)
             mCurrentDeckList.add(node)
 
@@ -275,7 +297,9 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
                 }
             }
             // Process sub-decks
-            processNodes(node.children)
+            if (shouldRecurse) {
+                processNodes(node.children)
+            }
         }
     }
 

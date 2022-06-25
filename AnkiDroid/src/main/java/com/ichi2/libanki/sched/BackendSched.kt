@@ -46,6 +46,8 @@ fun CollectionV16.deckTreeLegacy(includeCounts: Boolean): List<TreeNode<DeckDueT
                 node.reviewCount,
                 node.learnCount,
                 node.newCount,
+                collapsed = node.collapsed,
+                filtered = node.filtered
             )
         )
         treeNode.children.addAll(node.childrenList.asSequence().map { toLegacyNode(it, thisName) })

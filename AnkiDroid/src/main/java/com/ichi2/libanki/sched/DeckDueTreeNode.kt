@@ -36,7 +36,16 @@ import kotlin.math.min
 @KotlinCleanup("maybe possible to remove gettres for revCount/lrnCount")
 @KotlinCleanup("rename name -> fullDeckName")
 @RustCleanup("after migration, consider dropping this and using backend tree structure directly")
-class DeckDueTreeNode(name: String, did: Long, override var revCount: Int, override var lrnCount: Int, override var newCount: Int) : AbstractDeckTreeNode(name, did) {
+class DeckDueTreeNode(
+    name: String,
+    did: Long,
+    override var revCount: Int,
+    override var lrnCount: Int,
+    override var newCount: Int,
+    // only set when defaultLegacySchema is false
+    override var collapsed: Boolean = false,
+    override var filtered: Boolean = false
+) : AbstractDeckTreeNode(name, did, collapsed, filtered) {
     override fun toString(): String {
         return String.format(
             Locale.US, "%s, %d, %d, %d, %d",
