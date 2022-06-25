@@ -71,6 +71,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     private var mSlidingTabLayout: TabLayout? = null
     var tempModel: TemporaryModel? = null
         private set
+    private var tempModelHasError: Boolean = false
     private var mFieldNames: List<String>? = null
     private var mModelId: NoteTypeId = 0
     private var mNoteId: NoteId = 0
@@ -114,12 +115,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             mStartingOrdId = intent.getIntExtra("ordId", -1)
             tabToCursorPosition!![0] = 0
             tabToViewId!![0] = R.id.front_edit
+            tempModelHasError = false
         } else {
             mModelId = savedInstanceState.getLong(EDITOR_MODEL_ID)
             mNoteId = savedInstanceState.getLong(EDITOR_NOTE_ID)
             mStartingOrdId = savedInstanceState.getInt(EDITOR_START_ORD_ID)
             tabToCursorPosition = savedInstanceState.getSerializable(TAB_TO_CURSOR_POSITION_KEY) as HashMap<Int, Int?>?
             tabToViewId = savedInstanceState.getSerializable(TAB_TO_VIEW_ID) as HashMap<Int, Int?>?
+            tempModelHasError = savedInstanceState.getBoolean(TEMP_MODEL_HAS_ERROR)
             tempModel = TemporaryModel.fromBundle(savedInstanceState)
         }
 
@@ -136,6 +139,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         outState.putInt(EDITOR_START_ORD_ID, mStartingOrdId)
         outState.putSerializable(TAB_TO_VIEW_ID, tabToViewId)
         outState.putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPosition)
+        outState.putBoolean(TEMP_MODEL_HAS_ERROR, tempModelHasError)
         super.onSaveInstanceState(outState)
     }
 
@@ -161,6 +165,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
      */
     @KotlinCleanup("Scope function")
     override fun onCollectionLoaded(col: Collection) {
+        Timber.d("onCollectionLoaded()")
         super.onCollectionLoaded(col)
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
@@ -186,6 +191,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         if (mStartingOrdId != -1) {
             viewPager.setCurrentItem(mStartingOrdId, animationDisabled())
         }
+    }
+
+    fun setCardIndex(cardIndex: Int) {
+        viewPager.adapter = null
+        viewPager.adapter = TemplatePagerAdapter(this)
+        viewPager.setCurrentItem(cardIndex, animationDisabled())
     }
 
     fun modelHasChanged(): Boolean {
@@ -305,6 +316,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     class CardTemplateFragment : Fragment() {
         private var mCurrentEditorTitle: FixedTextView? = null
         private lateinit var mEditorEditText: FixedEditText
+        private lateinit var mBottomNavigation: BottomNavigationView
 
         var currentEditorViewId = 0
         private var cursorPosition = 0
@@ -313,6 +325,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private var mTabLayoutMediator: TabLayoutMediator? = null
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+            Timber.d("CardTemplateFragment:: onCreateView")
             // Storing a reference to the templateEditor allows us to use member variables
             mTemplateEditor = activity as CardTemplateEditor
             val mainView = inflater.inflate(R.layout.card_template_editor_item, container, false)
@@ -329,29 +342,34 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             mCurrentEditorTitle = mainView.findViewById(R.id.title_edit)
             mEditorEditText = mainView.findViewById(R.id.editor_editText)
             cursorPosition = requireArguments().getInt(CURSOR_POSITION_KEY)
+            if (mTemplateEditor.tempModelHasError)
+                selectWrongField(mainView)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 mEditorEditText.customInsertionActionModeCallback = ActionModeCallback()
             }
 
-            val bottomNavigation: BottomNavigationView = mainView.findViewById(R.id.card_template_editor_bottom_navigation)
-            bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
-                val currentSelectedId = item.itemId
-                mTemplateEditor.tabToViewId!![cardIndex] = currentSelectedId
-                @KotlinCleanup("when")
-                if (currentSelectedId == R.id.styling_edit) {
-                    setCurrentEditorView(currentSelectedId, tempModel.css, R.string.card_template_editor_styling)
-                } else if (currentSelectedId == R.id.back_edit) {
-                    setCurrentEditorView(currentSelectedId, template.getString("afmt"), R.string.card_template_editor_back)
-                } else {
-                    setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front)
+            mBottomNavigation = mainView.findViewById<BottomNavigationView>(R.id.card_template_editor_bottom_navigation)!!.apply {
+                setOnItemSelectedListener { item: MenuItem ->
+                    Timber.d("OnItemSelectedListener")
+                    val currentSelectedId = item.itemId
+                    mTemplateEditor.tabToViewId!![cardIndex] = currentSelectedId
+                    @KotlinCleanup("when")
+                    if (currentSelectedId == R.id.styling_edit) {
+                        setCurrentEditorView(currentSelectedId, tempModel.css, R.string.card_template_editor_styling)
+                    } else if (currentSelectedId == R.id.back_edit) {
+                        setCurrentEditorView(currentSelectedId, template.getString("afmt"), R.string.card_template_editor_back)
+                    } else {
+                        setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front)
+                    }
+
+                    // contents of menu have changed and menu should be redrawn
+                    mTemplateEditor.invalidateOptionsMenu()
+                    true
                 }
-                // contents of menu have changed and menu should be redrawn
-                mTemplateEditor.invalidateOptionsMenu()
-                true
+                // set saved or default view
+                selectedItemId = requireArguments().getInt(EDITOR_VIEW_ID_KEY)
             }
-            // set saved or default view
-            bottomNavigation.selectedItemId = requireArguments().getInt(EDITOR_VIEW_ID_KEY)
 
             // Set text change listeners
             val templateEditorWatcher: TextWatcher = object : TextWatcher {
@@ -379,6 +397,20 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             mEditorEditText.addTextChangedListener(templateEditorWatcher)
 
             return mainView
+        }
+
+        private fun selectWrongField(mainView: View) {
+            mainView.post {
+                mEditorEditText.apply {
+                    Timber.i("selection = $cursorPosition")
+                    requestFocus()
+                    if (currentEditorViewId != R.id.styling_edit)
+                        setSelection(cursorPosition, (text ?: "").indexOf("}}", cursorPosition) + 2)
+                    else
+                        setSelection(cursorPosition)
+                }
+            }
+            mTemplateEditor.tempModelHasError = false
         }
 
         /**
@@ -443,9 +475,10 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         fun setCurrentEditorView(id: Int, editorContent: String, editorTitleId: Int) {
+            Timber.i("selection = $cursorPosition")
             currentEditorViewId = id
             mEditorEditText.setText(editorContent)
-            mCurrentEditorTitle!!.text = resources.getString(editorTitleId)
+            mCurrentEditorTitle!!.text = mTemplateEditor.resources.getString(editorTitleId)
             mEditorEditText.setSelection(cursorPosition)
             mEditorEditText.requestFocus()
         }
@@ -755,15 +788,45 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 if (mProgressDialog != null && mProgressDialog!!.isShowing) {
                     mProgressDialog!!.dismiss()
                 }
-                context.mTemplateEditor.tempModel = null
                 if (result!!.first) {
-                    context.mTemplateEditor.finishWithAnimation(
-                        END
-                    )
+                    context.mTemplateEditor.tempModel = null
+                    context.mTemplateEditor.finishWithAnimation(END)
                 } else {
-                    Timber.w("CardTemplateFragment:: save model task failed: %s", result.second)
-                    UIUtils.showThemedToast(context.mTemplateEditor, context.getString(R.string.card_template_editor_save_error, result.second), false)
-                    context.mTemplateEditor.finishWithoutAnimation()
+                    val errorMessage = result.second!!
+                    Timber.w("CardTemplateFragment:: save model task failed: %s", errorMessage)
+
+                    if (errorMessage.startsWith("InvalidFieldError")) {
+                        val errorMessageSplit = errorMessage.split(" - ")
+                        context.mTemplateEditor.run {
+                            val showErrorInTemplate = View.OnClickListener {
+                                val cardIndex = errorMessageSplit[1].toInt()
+                                val qa = errorMessageSplit[2]
+                                val invalidFieldStart = errorMessageSplit[3].toInt()
+
+                                tempModelHasError = true
+                                tabToCursorPosition!![cardIndex] = invalidFieldStart
+                                context.cursorPosition = invalidFieldStart
+                                setCardIndex(cardIndex)
+                                context.mBottomNavigation.selectedItemId = when (qa) {
+                                    "qfmt" -> R.id.front_edit
+                                    else -> R.id.back_edit
+                                }
+                            }
+                            UIUtils.showSnackbar(
+                                this,
+                                resources.getString(R.string.card_template_editor_invalid_field_error),
+                                false,
+                                R.string.card_template_editor_invalid_field_toast_button,
+                                showErrorInTemplate,
+                                findViewById(R.id.root_layout),
+                                null
+                            )
+                        }
+                    } else {
+                        context.mTemplateEditor.tempModel = null
+                        UIUtils.showThemedToast(context.mTemplateEditor, context.getString(R.string.card_template_editor_save_error, errorMessage), false)
+                        context.mTemplateEditor.finishWithoutAnimation()
+                    }
                 }
             }
         }
@@ -954,6 +1017,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private const val EDITOR_NOTE_ID = "noteId"
         private const val EDITOR_START_ORD_ID = "ordId"
         private const val CARD_INDEX = "card_ord"
+        private const val TEMP_MODEL_HAS_ERROR = "tempModelHasError"
         @Suppress("unused")
         private const val REQUEST_PREVIEWER = 0
         @Suppress("unused")
