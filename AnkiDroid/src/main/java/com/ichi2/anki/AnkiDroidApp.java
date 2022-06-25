@@ -34,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 
+import android.system.Os;
 import android.util.Log;
 import android.webkit.CookieManager;
 
@@ -144,6 +145,15 @@ public class AnkiDroidApp extends Application {
     @Override
     public void onCreate() {
         BackendFactory.setDefaultLegacySchema(BuildConfig.LEGACY_SCHEMA);
+        // Uncomment the following lines to see a log of all SQL statements
+        // executed by the backend. The log may be delayed by 100ms, so you should not
+        // assume than a given SQL statement has run after a Timber.* line just
+        // because the SQL statement appeared later.
+        //        try {
+        //            Os.setenv("TRACESQL", "1", false);
+        //        } catch (Exception exc) {
+        //
+        //        }
         super.onCreate();
         if (sInstance != null) {
             Timber.i("onCreate() called multiple times");
