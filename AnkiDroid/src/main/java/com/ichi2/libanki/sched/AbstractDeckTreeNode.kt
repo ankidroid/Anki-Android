@@ -36,7 +36,10 @@ abstract class AbstractDeckTreeNode(
      * @return The full deck name, e.g. "A::B::C"
      */
     val fullDeckName: String,
-    val did: Long
+    val did: Long,
+    // only set when new backend active
+    open var collapsed: Boolean = false,
+    open var filtered: Boolean = false
 ) : Comparable<AbstractDeckTreeNode> {
     private val mNameComponents: Array<String>
 

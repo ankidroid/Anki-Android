@@ -563,7 +563,7 @@ public class SchedV2 extends AbstractSched {
             int rlim = _deckRevLimitSingle(deck, plim, false);
             int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
-            deckNodes.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            deckNodes.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new, false, false));
             // add deck as a parent
             lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
         }
@@ -593,8 +593,7 @@ public class SchedV2 extends AbstractSched {
     }
 
     @Nullable
-    @RustCleanup("enable for v2 once backend is updated to 2.1.41+")
-    @RustCleanup("once both v1 and v2 are using backend, cancelListener can be removed")
+    @RustCleanup("once defaultLegacySchema is removed, cancelListener can be removed")
     public List<TreeNode<DeckDueTreeNode>> deckDueTree(@Nullable CancelListener cancelListener) {
         if (!BackendFactory.getDefaultLegacySchema()) {
             return BackendSchedKt.deckTreeLegacy(getCol().getNewBackend(), true);

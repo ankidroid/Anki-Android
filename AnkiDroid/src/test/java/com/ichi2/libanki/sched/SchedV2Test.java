@@ -112,16 +112,16 @@ public class SchedV2Test extends RobolectricTest {
         // These matched the previous Java data
         // These may want to be changed back
         List<TreeNode<DeckDueTreeNode>> expected = new ArrayList<>();
-        DeckDueTreeNode caz = new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh::ZYXW", 1596783600480L, 0, 0, 0);
-        DeckDueTreeNode ca = new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh", 1596783600460L, 0, 0, 0);
-        DeckDueTreeNode ci = new DeckDueTreeNode("cmxieunwoogyxsctnjmv::INSBGDS", 1596783600500L, 0, 0, 0);
-        DeckDueTreeNode c = new DeckDueTreeNode("cmxieunwoogyxsctnjmv", 1596783600440L, 0, 0, 0);
-        DeckDueTreeNode defaul = new DeckDueTreeNode("Default", 1, 0, 0, 0);
-        DeckDueTreeNode s = new DeckDueTreeNode("scxipjiyozczaaczoawo", 1596783600420L, 0, 0, 0);
-        DeckDueTreeNode f = new DeckDueTreeNode("blank::foobar", 1596783600540L, 0, 0, 0);
-        DeckDueTreeNode b = new DeckDueTreeNode("blank", 1596783600520L, 0, 0, 0);
-        DeckDueTreeNode aBlank = new DeckDueTreeNode("A::blank", 1596783600580L, 0, 0, 0);
-        DeckDueTreeNode a = new DeckDueTreeNode("A", 1596783600560L, 0, 0, 0);
+        DeckDueTreeNode caz = new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh::ZYXW", 1596783600480L, 0, 0, 0, false, false);
+        DeckDueTreeNode ca = new DeckDueTreeNode("cmxieunwoogyxsctnjmv::abcdefgh", 1596783600460L, 0, 0, 0, false, false);
+        DeckDueTreeNode ci = new DeckDueTreeNode("cmxieunwoogyxsctnjmv::INSBGDS", 1596783600500L, 0, 0, 0, false, false);
+        DeckDueTreeNode c = new DeckDueTreeNode("cmxieunwoogyxsctnjmv", 1596783600440L, 0, 0, 0, false, false);
+        DeckDueTreeNode defaul = new DeckDueTreeNode("Default", 1, 0, 0, 0, false, false);
+        DeckDueTreeNode s = new DeckDueTreeNode("scxipjiyozczaaczoawo", 1596783600420L, 0, 0, 0, false, false);
+        DeckDueTreeNode f = new DeckDueTreeNode("blank::foobar", 1596783600540L, 0, 0, 0, false, false);
+        DeckDueTreeNode b = new DeckDueTreeNode("blank", 1596783600520L, 0, 0, 0, false, false);
+        DeckDueTreeNode aBlank = new DeckDueTreeNode("A::blank", 1596783600580L, 0, 0, 0, false, false);
+        DeckDueTreeNode a = new DeckDueTreeNode("A", 1596783600560L, 0, 0, 0, false, false);
 
 
         TreeNode<DeckDueTreeNode> cazNode = new TreeNode<>(caz);
