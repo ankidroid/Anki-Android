@@ -21,6 +21,7 @@ import com.ichi2.anki.RunInBackground
 import com.ichi2.async.CollectionTask
 import com.ichi2.async.CollectionTask.CheckMedia
 import com.ichi2.async.TaskManager
+import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -38,6 +39,10 @@ class CheckMediaTest : RobolectricTest() {
     @Suppress("deprecation")
     @Throws(ExecutionException::class, InterruptedException::class)
     fun checkMediaWorksAfterMissingMetaTable() {
+        if (!BackendFactory.defaultLegacySchema) {
+            // this should not happen on the backend, as it creates the tables in a transaction
+            return
+        }
         // 7421
         col.media.db.database.execSQL("drop table meta")
         assertThat(

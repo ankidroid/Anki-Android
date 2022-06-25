@@ -141,8 +141,6 @@ public class Media {
                 Timber.e("Cannot create media directory: %s", mDir);
             }
         }
-        // change database
-//        connect();
     }
 
 
@@ -182,7 +180,7 @@ public class Media {
     }
 
 
-    public void maybeUpgrade() {
+    private void maybeUpgrade() {
         String oldPath = dir() + ".db";
         File oldDbFile = new File(oldPath);
         if (oldDbFile.exists()) {

@@ -487,7 +487,12 @@ internal constructor(
          */
         val PRIORITY_FILES = listOf(
             SQLiteDBFiles("collection.anki2"), // Anki collection
-            SQLiteDBFiles("collection.media.ad.db2"), // media database + journal
+            if (BackendFactory.defaultLegacySchema) {
+                SQLiteDBFiles("collection.media.ad.db2")
+            } else {
+                // this is created on demand in the new backend
+                OptionalFile("collection.media.db")
+            }, // media database + journal
             OptionalFile(".nomedia"), // written immediately
             OptionalFile("collection.log") // written immediately and conflicts
         )
