@@ -40,6 +40,7 @@ import com.ichi2.libanki.sched.DeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.*
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber
@@ -1078,8 +1079,13 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     class DeleteMedia(private val unused: List<String>) : TaskDelegate<Void, Int>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Int {
             val m = col.media
-            for (fname in unused) {
-                m.removeFile(fname)
+            if (!BackendFactory.defaultLegacySchema) {
+                // FIXME: this provides progress info that is not currently used
+                col.newMedia.removeFiles(unused)
+            } else {
+                for (fname in unused) {
+                    m.removeFile(fname)
+                }
             }
             return unused.size
         }

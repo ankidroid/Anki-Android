@@ -98,6 +98,8 @@ open class Collection constructor(
 
     open val newBackend: CollectionV16
         get() = throw Exception("invalid call to newBackend on old backend")
+    open val newMedia: BackendMedia
+        get() = throw Exception("invalid call to newMedia on old backend")
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun debugEnsureNoOpenPointers() {
@@ -142,8 +144,8 @@ open class Collection constructor(
     private var mStartReps: Int
 
     // BEGIN: SQL table columns
-    var crt: Long = 0
-    var mod: Long = 0
+    open var crt: Long = 0
+    open var mod: Long = 0
     var scm: Long = 0
     var dirty: Boolean = false
     private var mUsn = 0
@@ -161,7 +163,7 @@ open class Collection constructor(
     private var mLogHnd: PrintWriter? = null
 
     init {
-        media = Media(this, server)
+        media = initMedia()
         val created = reopen()
         log(path, VersionUtils.pkgVersionName)
         // mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
@@ -182,6 +184,10 @@ open class Collection constructor(
             col.onCreate()
             col.save()
         }
+    }
+
+    protected open fun initMedia(): Media {
+        return Media(this, server)
     }
 
     @KotlinCleanup("remove :DeckManager, remove ? on return value")
@@ -355,7 +361,7 @@ open class Collection constructor(
      */
     @KotlinCleanup("scope function")
     @JvmOverloads
-    fun flush(mod: Long = 0) {
+    open fun flush(mod: Long = 0) {
         Timber.i("flush - Saving information to DB...")
         this.mod = if (mod == 0L) TimeManager.time.intTimeMS() else mod
         val values = ContentValues()

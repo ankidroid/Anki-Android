@@ -215,7 +215,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
 
         col.close() // required for Windows, can't delete if locked.
 
-        CompatHelper.compat.deleteFile(File(defaultCollectionSourcePath, "collection.media.ad.db2"))
+        CompatHelper.compat.deleteFile(File(defaultCollectionSourcePath, "collection.anki2"))
 
         val ex = assertThrows<MissingEssentialFileException> {
             executeAlgorithmSuccessfully(defaultCollectionSourcePath) {
@@ -223,7 +223,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
             }
         }
 
-        assertThat(ex.file.name, equalTo("collection.media.ad.db2"))
+        assertThat(ex.file.name, equalTo("collection.anki2"))
     }
 
     /**

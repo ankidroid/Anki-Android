@@ -48,8 +48,25 @@ class CollectionV16(
         return ConfigV16(RustConfigBackend(backend))
     }
 
+    override fun initMedia(): BackendMedia {
+        return BackendMedia(this, server)
+    }
+
     override val newBackend: CollectionV16
         get() = this
+
+    override val newMedia: BackendMedia
+        get() = this.media as BackendMedia
+
+    override fun flush(mod: Long) {
+        // no-op
+    }
+
+    override var mod: Long = 0
+        get() = db.queryLongScalar("select mod from col")
+
+    override var crt: Long = 0
+        get() = db.queryLongScalar("select crt from col")
 
     /** col.conf is now unused, handled by [ConfigV16] which has a separate table */
     override fun flushConf(): Boolean = false
