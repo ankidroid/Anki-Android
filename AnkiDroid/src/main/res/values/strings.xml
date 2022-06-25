@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
     <string name="ga_trackingId" translatable="false">UA-125800786-1</string>
-    <string name="filter_sheet_heading">Filters</string>
     <string name="apply_filter">apply</string>
     <string name="filter_by_decks">Decks</string>
     <string name="filter_by_tags">Tags</string>

@@ -63,7 +63,7 @@
         android:gravity="center_vertical"
         android:backgroundTint="?attr/fab_normal"
         app:borderWidth="0dp"
-        android:src="@drawable/filter_sheet_fab_icon"
+        android:src="@drawable/ic_filter_list"
         app:fabSize="normal" />
 
     <FrameLayout
