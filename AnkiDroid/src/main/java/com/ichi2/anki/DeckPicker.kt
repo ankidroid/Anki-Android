@@ -172,6 +172,9 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     @VisibleForTesting
     var mDueTree: List<TreeNode<AbstractDeckTreeNode>>? = null
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var searchDecksIcon: MenuItem? = null
+
     /**
      * Flag to indicate whether the activity will perform a sync in its onResume.
      * Since syncing closes the database, this flag allows us to avoid doing any
@@ -194,12 +197,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     // LISTENERS
     // ----------------------------------------------------------------------------
     private val mDeckExpanderClickListener = View.OnClickListener { view: View ->
-        val did = view.tag as Long
-        if (!col.decks.children(did).isEmpty()) {
-            col.decks.collapse(did)
-            renderPage()
-            dismissAllDialogFragments()
-        }
+        toggleDeckExpand(view.tag as Long)
     }
     private val mDeckClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.DEFAULT) }
     private val mCountsClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) }
@@ -572,8 +570,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         menu.findItem(R.id.action_check_media).isEnabled = sdCardAvailable
         menu.findItem(R.id.action_empty_cards).isEnabled = sdCardAvailable
 
-        val toolbarSearchItem = menu.findItem(R.id.deck_picker_action_filter)
-        toolbarSearchItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+        searchDecksIcon = menu.findItem(R.id.deck_picker_action_filter)
+        searchDecksIcon!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             // When SearchItem is expanded
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 Timber.i("DeckPicker:: SearchItem opened")
@@ -591,7 +589,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             }
         })
 
-        mToolbarSearchView = toolbarSearchItem.actionView as SearchView
+        mToolbarSearchView = searchDecksIcon!!.actionView as SearchView
         mToolbarSearchView!!.queryHint = getString(R.string.search_decks)
         mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -617,11 +615,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 val undo = res.getString(R.string.studyoptions_congrats_undo, col.undoName(res))
                 menu.findItem(R.id.action_undo).title = undo
             }
-
-            // Remove the filter - not necessary and search has other implications for new users.
-            menu.findItem(R.id.deck_picker_action_filter).isVisible = col.decks.count() >= 10
         }
+        updateSearchDecksIconVisibility()
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun updateSearchDecksIconVisibility() {
+        searchDecksIcon?.isVisible = colIsOpen() && col.decks.count() >= 10
     }
 
     @VisibleForTesting
@@ -961,6 +961,15 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
 
     private fun showCollectionErrorDialog() {
         dialogHandler.sendEmptyMessage(DialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun toggleDeckExpand(did: Long) {
+        if (!col.decks.children(did).isEmpty()) {
+            col.decks.collapse(did)
+            renderPage()
+            dismissAllDialogFragments()
+        }
     }
 
     fun addNote() {
@@ -2099,6 +2108,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             scrollDecklistToDeck(current)
             mFocusedDeck = current
         }
+
+        updateSearchDecksIconVisibility()
     }
 
     // Callback to show study options for currently selected deck
