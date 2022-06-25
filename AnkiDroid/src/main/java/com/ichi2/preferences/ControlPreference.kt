@@ -17,13 +17,8 @@
 package com.ichi2.preferences
 
 import android.content.Context
-import android.os.Bundle
-import android.text.TextUtils
 import android.util.AttributeSet
-import android.view.KeyEvent.KEYCODE_VOLUME_DOWN
-import android.view.KeyEvent.KEYCODE_VOLUME_UP
 import androidx.preference.ListPreference
-import androidx.preference.ListPreferenceDialogFragmentCompat
 import androidx.preference.PreferenceCategory
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiDroidApp
@@ -34,14 +29,10 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.CardSideSelectionDialog
 import com.ichi2.anki.dialogs.GestureSelectionDialogBuilder
 import com.ichi2.anki.dialogs.KeySelectionDialogBuilder
-import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromGesture
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import timber.log.Timber
-import java.util.*
-import java.util.stream.Collectors
 
 /**
  * A preference which allows mapping of inputs to actions (example: keys -> commands)
@@ -79,34 +70,14 @@ class ControlPreference : ListPreference {
         entryValues = entryIndices.map { it.toString() }.toTypedArray()
     }
 
-    class View : ListPreferenceDialogFragmentCompat() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            // must be called before super
-            refreshPreferenceEntities()
-            super.onCreate(savedInstanceState)
-        }
-
-        private fun refreshPreferenceEntities() {
-            Timber.d("refreshPreferenceEntities()")
-            val pref = this.preference as ControlPreference
-            pref.refreshEntries()
-        }
-
-        companion object {
-            @JvmStatic
-            fun newInstance(key: String): View {
-                val fragment = View()
-                val b = Bundle(1)
-                b.putString(ARG_KEY, key)
-                fragment.arguments = b
-                return fragment
-            }
-        }
+    override fun onClick() {
+        refreshEntries()
+        super.onClick()
     }
 
     /** The summary that appears on the preference */
-    override fun getSummary(): CharSequence =
-        TextUtils.join(", ", MappableBinding.fromPreferenceString(value).map { it.toDisplayString(context) })
+    override fun getSummary(): CharSequence = MappableBinding.fromPreferenceString(value)
+        .joinToString(", ") { it.toDisplayString(context) }
 
     /** Called when an element is selected in the ListView */
     override fun callChangeListener(newValue: Any?): Boolean {
@@ -157,13 +128,6 @@ class ControlPreference : ListPreference {
         }
         // don't persist the value
         return false
-    }
-
-    /** Volume keys shouldn't be mapped until we remove the 'Volume' gestures */
-    fun isVolumeKey(binding: Binding): Boolean {
-        if (!binding.isKeyCode) return false
-        val keycode = binding.keycode
-        return keycode == KEYCODE_VOLUME_DOWN || keycode == KEYCODE_VOLUME_UP
     }
 
     /**
@@ -238,16 +202,14 @@ class ControlPreference : ListPreference {
         private const val ADD_GESTURE_INDEX = -1
 
         /** Attaches all possible [ControlPreference] elements to a given [PreferenceCategory] */
-        @JvmStatic
-        fun setup(cat: PreferenceCategory) {
-            val commands = Arrays.stream(ViewerCommand.values()).collect(Collectors.toList())
-            val context = cat.context
-            for (c in commands) {
-                val p = ControlPreference(context)
-                p.setTitle(c.resourceId)
-                p.key = c.preferenceKey
-                p.setDefaultValue(c.defaultValue.toPreferenceString())
-                cat.addPreference(p)
+        fun addAllControlPreferencesToCategory(category: PreferenceCategory) {
+            for (command in ViewerCommand.values()) {
+                val preference = ControlPreference(category.context).apply {
+                    setTitle(command.resourceId)
+                    key = command.preferenceKey
+                    setDefaultValue(command.defaultValue.toPreferenceString())
+                }
+                category.addPreference(preference)
             }
         }
     }
