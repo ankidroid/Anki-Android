@@ -315,6 +315,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     implementation 'com.github.ByteHamster:SearchPreference:v2.3.0'
     implementation 'com.github.AppIntro:AppIntro:6.2.0'
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
