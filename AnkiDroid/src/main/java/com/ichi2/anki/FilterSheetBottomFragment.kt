@@ -94,7 +94,13 @@ class BottomSheetFragment :
         mDeckRecyclerView = requireView().findViewById(R.id.filter_bottom_deck_list)
         mDeckRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        val deckNames = col.decks.allNames().sorted()
+        val deckNames = mutableListOf<FilterDeck>()
+
+        for (deckName in col.decks.allNames().sorted()) {
+            val deck = FilterDeck(deckName)
+            deckNames.add(deck)
+        }
+
         val mDeckListAdapter = DeckNamesAdapter(activity, deckNames, this)
 
         mDeckRecyclerView.adapter = mDeckListAdapter
@@ -106,7 +112,11 @@ class BottomSheetFragment :
         )
 
         /* list of all tag names */
-        val tags = col.tags.all().sorted()
+        val tags = mutableListOf<FilterTag>()
+        for (tagName in col.tags.all().sorted()) {
+            val tag = FilterTag(tagName)
+            tags.add(tag)
+        }
         val mTagListAdapter = TagsAdapter(activity, tags, this)
 
         mTagRecyclerView = requireView().findViewById(R.id.filter_bottom_tag_list)
@@ -340,7 +350,7 @@ class BottomSheetFragment :
      * Change background color accordingly
      * TODO: background color should be retained if selected and swiped down
      */
-    override fun onDeckItemClicked(item: String, position: Int) {
+    override fun onDeckItemClicked(item: FilterDeck, position: Int) {
 
         val itemBackground: ColorDrawable = mDeckRecyclerView[position].background as ColorDrawable
         val itemTextView = mDeckRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
@@ -364,7 +374,7 @@ class BottomSheetFragment :
                 )
             )
 
-            deckSearchItems.add(item)
+            deckSearchItems.add(item.name)
         } else {
             mDeckRecyclerView[position].setBackgroundColor(
                 Themes.getColorFromAttr(
@@ -380,11 +390,11 @@ class BottomSheetFragment :
                 )
             )
 
-            deckSearchItems.remove(item)
+            deckSearchItems.remove(item.name)
         }
     }
 
-    override fun onTagItemClicked(item: String, position: Int) {
+    override fun onTagItemClicked(item: FilterTag, position: Int) {
 
         val itemBackground: ColorDrawable = mTagRecyclerView[position].background as ColorDrawable
         val itemTextView = mTagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
@@ -408,7 +418,7 @@ class BottomSheetFragment :
                 )
             )
 
-            tagSearchItems.add(item)
+            tagSearchItems.add(item.name)
         } else {
             mTagRecyclerView[position].setBackgroundColor(
                 Themes.getColorFromAttr(
@@ -424,7 +434,7 @@ class BottomSheetFragment :
                 )
             )
 
-            tagSearchItems.remove(item)
+            tagSearchItems.remove(item.name)
         }
     }
 
@@ -587,6 +597,32 @@ class BottomSheetFragment :
     }
 }
 
+class FilterDeck(val name: String) {
+    /**
+     * The name to be displayed to the user. Contains
+     * only the sub-deck name with proper indentation
+     * rather than the entire deck name.
+     * Eg: foo::bar -> \t\tbar
+     */
+    val displayName: String by lazy {
+        val nameArr = name.split("::")
+        "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
+    }
+}
+
+class FilterTag(val name: String) {
+    /**
+     * The name to be displayed to the user. Contains
+     * only the sub-tag name with proper indentation
+     * rather than the entire tag name.
+     * Eg: foo::bar -> \t\tbar
+     */
+    val displayName: String by lazy {
+        val nameArr = name.split("::")
+        "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
+    }
+}
+
 /**
  * Adapters for the different types of filters
  * Each filter has a different adapter because
@@ -595,7 +631,7 @@ class BottomSheetFragment :
  */
 class DeckNamesAdapter(
     val context: Context?,
-    private var dataSet: List<String>,
+    private var dataSet: List<FilterDeck>,
     private val listener: OnDeckItemClickListener
 ) :
     RecyclerView.Adapter<DeckNamesAdapter.ViewHolder>() {
@@ -608,11 +644,11 @@ class DeckNamesAdapter(
         val deckName: TextView = view.findViewById(R.id.filter_list_item)
 
         fun bind(
-            currDeck: String,
+            currDeck: FilterDeck,
             clickListener: OnDeckItemClickListener,
             position: Int
         ) {
-            deckName.text = currDeck
+            deckName.text = currDeck.displayName
 
             itemView.setOnClickListener {
                 clickListener.onDeckItemClicked(currDeck, position)
@@ -652,13 +688,13 @@ class DeckNamesAdapter(
     override fun getItemCount() = dataSet.size
 
     interface OnDeckItemClickListener {
-        fun onDeckItemClicked(item: String, position: Int)
+        fun onDeckItemClicked(item: FilterDeck, position: Int)
     }
 }
 
 class TagsAdapter(
     val context: Context?,
-    private var dataSet: List<String>,
+    private var dataSet: List<FilterTag>,
     private val listener: OnItemClickListener
 ) :
     RecyclerView.Adapter<TagsAdapter.ViewHolder>() {
@@ -668,14 +704,14 @@ class TagsAdapter(
      * (custom ViewHolder).
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val deckName: TextView = view.findViewById(R.id.filter_list_item)
+        val tagName: TextView = view.findViewById(R.id.filter_list_item)
 
         fun bind(
-            currTag: String,
+            currTag: FilterTag,
             clickListener: OnItemClickListener,
             position: Int
         ) {
-            deckName.text = currTag
+            tagName.text = currTag.displayName
 
             itemView.setOnClickListener {
                 clickListener.onTagItemClicked(currTag, position)
@@ -715,7 +751,7 @@ class TagsAdapter(
     override fun getItemCount() = dataSet.size
 
     interface OnItemClickListener {
-        fun onTagItemClicked(item: String, position: Int)
+        fun onTagItemClicked(item: FilterTag, position: Int)
     }
 }
 
@@ -794,14 +830,14 @@ class NoteTypesAdapter(
      * (custom ViewHolder).
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val deckName: TextView = view.findViewById(R.id.filter_list_item)
+        val name: TextView = view.findViewById(R.id.filter_list_item)
 
         fun bind(
             currTag: String,
             clickListener: OnItemClickListener,
             position: Int
         ) {
-            deckName.text = currTag
+            name.text = currTag
 
             itemView.setOnClickListener {
                 clickListener.onNoteTypeItemClicked(currTag, position)
@@ -857,14 +893,14 @@ class CardStateAdapter(
      * (custom ViewHolder).
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val deckName: TextView = view.findViewById(R.id.filter_list_item)
+        val name: TextView = view.findViewById(R.id.filter_list_item)
 
         fun bind(
             currTag: String,
             clickListener: OnItemClickListener,
             position: Int
         ) {
-            deckName.text = currTag
+            name.text = currTag
 
             itemView.setOnClickListener {
                 clickListener.onCardStateItemClicked(currTag, position)
