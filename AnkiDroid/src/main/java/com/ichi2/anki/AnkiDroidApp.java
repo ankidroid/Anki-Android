@@ -145,6 +145,11 @@ public class AnkiDroidApp extends Application {
     @Override
     public void onCreate() {
         BackendFactory.setDefaultLegacySchema(BuildConfig.LEGACY_SCHEMA);
+        try {
+            // enable debug logging of sync actions
+            Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug", false);
+        } catch (Exception exc) {
+        }
         // Uncomment the following lines to see a log of all SQL statements
         // executed by the backend. The log may be delayed by 100ms, so you should not
         // assume than a given SQL statement has run after a Timber.* line just
