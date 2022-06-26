@@ -53,7 +53,7 @@ object UIUtils {
 
     @JvmStatic
     fun showDismissibleSnackbar(activity: Activity, mainText: String, dismissTextResource: Int, length: Int = 5000): Snackbar {
-        val root = activity.findViewById<View>(R.id.root_layout)
+        val root = activity.findViewById<View>(android.R.id.content)
         val sb = getDismissibleSnackbar(activity, mainText, length, dismissTextResource, root)
         sb.show()
         return sb

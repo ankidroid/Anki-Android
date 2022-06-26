@@ -29,7 +29,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 
 /*
@@ -46,10 +45,6 @@ fun LifecycleOwner.catchingLifecycleScope(
         block()
     } catch (e: CancellationException) {
         throw e
-    } catch (e: BackendException) {
-        Timber.w(e, errorMessage)
-        showDismissibleSnackbar(activity, e.localizedMessage!!, R.string.close)
-        CrashReportService.sendExceptionReport(e, activity::class.java.simpleName)
     } catch (e: Exception) {
         // TODO: localize
         Timber.w(e, errorMessage)
