@@ -33,6 +33,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.MaterialDialog.ListCallbackSingleChoice
 import com.google.android.material.snackbar.Snackbar
@@ -798,7 +799,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         // cancel rendering the question and answer, which has shared access to mCards
         super.onStop()
         if (!isFinishing) {
-            update(this)
+            update(this, lifecycleScope)
             saveCollectionInBackground()
         }
     }

@@ -46,6 +46,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ActionProvider
 import androidx.core.view.MenuItemCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
@@ -1135,7 +1136,7 @@ open class Reviewer : AbstractFlashcardViewer() {
     override fun onStop() {
         super.onStop()
         if (!isFinishing && colIsOpen() && sched != null) {
-            update(this)
+            update(this, lifecycleScope)
         }
         saveCollectionInBackground()
     }

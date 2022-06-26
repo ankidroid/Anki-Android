@@ -30,13 +30,18 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.*
 import timber.log.Timber
 import kotlin.math.sqrt
 
 class AnkiDroidWidgetSmall : AppWidgetProvider() {
+
+    private val job = SupervisorJob()
+    val scope = CoroutineScope(job)
+
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         Timber.d("SmallWidget: onUpdate")
-        WidgetStatus.update(context)
+        WidgetStatus.update(context, scope)
     }
 
     override fun onEnabled(context: Context) {
@@ -49,6 +54,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
 
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
+        job.cancel()
         Timber.d("SmallWidget: Widget disabled")
         val preferences = AnkiDroidApp.getSharedPrefs(context)
         preferences.edit().putBoolean("widgetSmallEnabled", false).commit()
@@ -65,6 +71,9 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
     class UpdateService : Service() {
         /** The cached number of total due cards.  */
         private var mDueCardsCount = 0
+        private val job = SupervisorJob()
+        private val scope = CoroutineScope(job)
+
         fun doUpdate(context: Context) {
             AppWidgetManager.getInstance(context)
                 .updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context, true))
@@ -98,7 +107,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                             if (action != null && action == Intent.ACTION_MEDIA_MOUNTED) {
                                 Timber.d("mMountReceiver - Action = Media Mounted")
                                 if (remounted) {
-                                    WidgetStatus.update(AnkiDroidApp.getInstance())
+                                    WidgetStatus.update(AnkiDroidApp.getInstance(), scope)
                                     remounted = false
                                     if (mMountReceiver != null) {
                                         AnkiDroidApp.getInstance().unregisterReceiver(mMountReceiver)
@@ -162,6 +171,11 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
         override fun onBind(arg0: Intent): IBinder? {
             Timber.d("onBind")
             return null
+        }
+
+        override fun onDestroy() {
+            super.onDestroy()
+            job.cancel()
         }
     }
 

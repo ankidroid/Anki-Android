@@ -47,6 +47,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
+import androidx.lifecycle.lifecycleScope
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -540,7 +541,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     override fun onStop() {
         super.onStop()
         if (!isFinishing) {
-            WidgetStatus.update(this)
+            WidgetStatus.update(this, lifecycleScope)
             UIUtils.saveCollectionInBackground()
         }
     }

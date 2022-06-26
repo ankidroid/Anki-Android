@@ -26,6 +26,7 @@ import android.widget.AdapterView.OnItemLongClickListener
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
+import androidx.lifecycle.lifecycleScope
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -188,7 +189,7 @@ class ModelBrowser : AnkiActivity() {
     public override fun onStop() {
         super.onStop()
         if (!isFinishing) {
-            update(this)
+            update(this, lifecycleScope)
             saveCollectionInBackground()
         }
     }

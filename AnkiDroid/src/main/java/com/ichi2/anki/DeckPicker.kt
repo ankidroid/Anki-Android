@@ -835,7 +835,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         Timber.d("onStop()")
         super.onStop()
         if (colIsOpen()) {
-            WidgetStatus.update(this)
+            WidgetStatus.update(this, lifecycleScope)
             // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
             UIUtils.saveCollectionInBackground(true)
         }
@@ -1753,7 +1753,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 SyncStatus.markSyncCompleted()
                 invalidateOptionsMenu()
                 updateDeckList()
-                WidgetStatus.update(this@DeckPicker)
+                WidgetStatus.update(this@DeckPicker, lifecycleScope)
                 if (fragmented) {
                     try {
                         loadStudyOptionsFragment(false)

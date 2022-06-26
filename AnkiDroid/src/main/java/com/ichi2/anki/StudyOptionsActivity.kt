@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.lifecycle.lifecycleScope
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
@@ -90,7 +91,7 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
     public override fun onStop() {
         super.onStop()
         if (colIsOpen()) {
-            WidgetStatus.update(this)
+            WidgetStatus.update(this, lifecycleScope)
             saveCollectionInBackground()
         }
     }

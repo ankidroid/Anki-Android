@@ -28,6 +28,7 @@ import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -93,7 +94,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     override fun onStop() {
         super.onStop()
         if (!isFinishing) {
-            WidgetStatus.update(this)
+            WidgetStatus.update(this, lifecycleScope)
             saveCollectionInBackground()
         }
     }
