@@ -59,7 +59,7 @@ import java.util.regex.Pattern
  */
 @KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
-open class AnkiDroidApp : Application() {
+open class AnkiDroidApp : Application(), androidx.work.Configuration.Provider {
     /** An exception if the WebView subsystem fails to load  */
     private var mWebViewError: Throwable? = null
     private val mNotifications = MutableLiveData<Void?>()
@@ -182,9 +182,11 @@ open class AnkiDroidApp : Application() {
                 }
             }
         }
+        // TODO: Notification CleanUP. Delete the Boot Service after successful implementation of Notification Work Manager.
         Timber.i("AnkiDroidApp: Starting Services")
         BootService().onReceive(this, Intent(this, BootService::class.java))
 
+        // TODO: Notification CleanUP. Delete the Notification Service after successful implementation of Notification Work Manager.
         // Register for notifications
         mNotifications.observeForever { NotificationService.triggerNotificationFor(this) }
         Themes.systemIsInNightMode =
@@ -211,6 +213,13 @@ open class AnkiDroidApp : Application() {
             false
         }
     }
+
+    /**
+     *  Our configuration for custom work manager.
+     *  We are using custom work manager because UNIT TESTS are failing.
+     * TODO: Remove custom implementation after implementing 14 tests using WorkManagerTestInitHelper. SEE: https://developer.android.com/topic/libraries/architecture/workmanager/how-to/integration-testing
+     */
+    override fun getWorkManagerConfiguration() = androidx.work.Configuration.Builder().build()
 
     /**
      * A tree which logs necessary data for crash reporting.
