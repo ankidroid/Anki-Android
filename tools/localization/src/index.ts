@@ -29,26 +29,22 @@ import { TEMP_DIR } from "./constants";
 process.argv.forEach(function (value, index, array) {
     switch (value) {
         case "upload":
-            // upload latest (english) source i18n files
-            console.log("uploadin...");
+            console.log("uploading source strings to crowdin...");
             uploadI18nFiles();
             break;
 
         case "download":
-            // download build target i18n files
-            console.log("downloading...");
+            console.log("requesting fresh translation build and downloading from crowdin...");
             buildAndDownload();
             break;
 
         case "extract":
-            // extract to a temp dir
-            console.log("extracting...");
+            console.log("extracting downloaded translation bundle to temporary directory...");
             extractZip("ankidroid.zip", TEMP_DIR);
             break;
 
         case "update":
-            // upload to target i18n files
-            console.log("updating...");
+            console.log("Copying downloaded translations to android resources directories...");
             updateI18nFiles();
             break;
     }

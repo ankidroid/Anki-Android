@@ -1,3 +1,12 @@
+/**
+ * @author
+ * AnkiDroid Open Source Team
+ * 
+ * @license
+ * Copyright (c) AnkiDroid. All rights reserved.
+ * Licensed under the GPL-3.0 license. See LICENSE file in the project root for details.
+ */
+
 import path from "path";
 import { Credentials } from "@crowdin/crowdin-api-client";
 import { createDirIfNotExisting } from "./update";
@@ -47,7 +56,16 @@ export const I18N_FILES = [
     '18-standard-models'
 ];
 
+// languages which are localized for more than one region
 export const LOCALIZED_REGIONS = ['es', 'pt', 'zh'];
+
+// The rules for making changes here:
+// 1) Add a language if 01-core.xml is translated
+// 2) Do not remove languages.
+// 3) When you add a language, please also add it to APP_LANGUAGES in LanguageUtil.java
+// 4) If you add a language with a regional variant (anything with a hyphen) and a different variant
+//    with the same root exists, you must add the root to 'localizedRegions'
+//    e.g., 'ga-IE' exists with no other 'ga-' entries yet, to add 'ga-EN', also add ga to localizedRegions
 export const LANGUAGES = ['af', 'am', 'ar', 'az', 'be', 'bg', 'bn', 'ca', 'ckb', 'cs', 'da', 'de', 'el', 'eo',
     'es-AR', 'es-ES', 'et', 'eu', 'fa', 'fi', 'fil', 'fr', 'fy-NL', 'ga-IE', 'gl', 'got',
     'gu-IN', 'he', 'hi', 'hr', 'hu', 'hy-AM', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk',

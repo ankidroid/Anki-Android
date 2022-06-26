@@ -24,9 +24,9 @@ let anyError = false;
  * e.g. %1s$ is invalid, %1$s is valid
  * 
  * @param fileName name of the file in res/value dir
- * @returns correct/replaced strings in the files
+ * @returns boolean true if any corrections were made, false if no corrections were needed
  */
-async function replacechars(fileName: string) {
+async function replacechars(fileName: string): Promise<boolean> {
     let errorOccured = false;
     let newfilename = fileName + ".tmp"
 
@@ -80,7 +80,7 @@ async function replacechars(fileName: string) {
  * @param f filename
  * @returns extension string
  */
-function fileExtFor(f: string) {
+function fileExtFor(f: string): string {
     if (f == '14-marketdescription') return '.txt';
     else if (f == '15-markettitle') return '.txt';
     else return '.xml';
@@ -107,7 +107,7 @@ export function createDirIfNotExisting(directory: string) {
  * @param language language code
  * @returns boolean for successfully replaced invalid string and copied updated files
  */
-async function update(valuesDirectory: string, translatedContent: string, f: string, fileExt: string, language = '') {
+async function update(valuesDirectory: string, translatedContent: string, f: string, fileExt: string, language = ''): Promise<boolean> {
     if (f == '14-marketdescription') {
         let newfile = path.join(MARKET_DESC_LANG + language + fileExt);
 
