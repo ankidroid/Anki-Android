@@ -27,6 +27,7 @@ import android.text.TextUtils
 import android.util.Pair
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import anki.search.SearchNode
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
@@ -1281,6 +1282,34 @@ open class Collection constructor(
     /*
       Finding cards ************************************************************ ***********************************
      */
+
+    /**
+     * Construct a search string from the provided search nodes. For example:
+     * */
+    /*
+            import anki.search.searchNode
+            import anki.search.SearchNode
+            import anki.search.SearchNodeKt.group
+
+            val node = searchNode {
+                group = SearchNodeKt.group {
+                    joiner = SearchNode.Group.Joiner.AND
+                    nodes += searchNode { deck = "a **test** deck" }
+                    nodes += searchNode {
+                        negated = searchNode {
+                            tag = "foo"
+                        }
+                    }
+                    nodes += searchNode { flag = SearchNode.Flag.FLAG_GREEN }
+                }
+            }
+            // yields "deck:a \*\*test\*\* deck" -tag:foo flag:3
+            val text = col.buildSearchString(node)
+        }
+    */
+    fun buildSearchString(node: SearchNode): String {
+        return backend.buildSearchString(node)
+    }
     /** Return a list of card ids  */
     @KotlinCleanup("set reasonable defaults")
     fun findCards(search: String): List<Long> {
