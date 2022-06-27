@@ -106,6 +106,7 @@
     <color name="note_editor_selected_item_background">#D1D0CE</color>
     <color name="note_editor_selected_item_text">#000000</color>
 
+    <!-- For Card background in Card Browser -->
     <color name="flag_red">#FF4747</color>
     <color name="flag_orange">#FFB647</color>
     <color name="flag_green">#6FF06F</color>
@@ -121,6 +122,15 @@
     <color name="flag_pink_dark">#A70D64</color>
     <color name="flag_turquoise_dark">#138072</color>
     <color name="flag_purple_dark">#6320A0</color>
+
+    <!-- For flag icons -->
+    <color name="flag_reviewer_red">#ff0000</color>
+    <color name="flag_reviewer_orange">#ff9800</color>
+    <color name="flag_reviewer_green">#77ff77</color>
+    <color name="flag_reviewer_blue">#ff1976d2</color>
+    <color name="flag_reviewer_pink">#FF82EE</color>
+    <color name="flag_reviewer_turquoise">#00D1B5</color>
+    <color name="flag_reviewer_purple">#9649DD</color>
 
     <color name="badge_error">#f45000</color>
     <color name="badge_warning">#ff5e13</color>
