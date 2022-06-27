@@ -16,6 +16,9 @@
 
 package com.ichi2.libanki
 
+import anki.generic.Empty
+import anki.import_export.ImportResponse
+import anki.import_export.exportLimit
 import net.ankiweb.rsdroid.Backend
 
 /**
@@ -76,6 +79,43 @@ fun importCollectionPackage(
  * * If legacy=false, a file targeting Anki 2.1.50+ is created. It compresses better and is faster to
  * create, but older clients can not read it.
  */
-fun CollectionV16.exportCollectionPackage(outPath: String, includeMedia: Boolean, legacy: Boolean = true) {
-    backend.exportCollectionPackage(outPath, includeMedia, legacy)
+fun CollectionV16.exportCollectionPackage(
+    outPath: String,
+    includeMedia: Boolean,
+    legacy: Boolean = true
+) {
+    backend.exportCollectionPackage(
+        outPath = outPath,
+        includeMedia = includeMedia,
+        legacy = legacy
+    )
+}
+
+/**
+ * Import an .apkg file into the current collection.
+ */
+fun CollectionV16.importAnkiPackage(path: String): ImportResponse {
+    return backend.importAnkiPackage(packagePath = path)
+}
+
+/**
+ * Export the specified deck to an .apkg file.
+ * * If legacy is false, an apkg will be created that can only
+ * be opened with recent Anki versions.
+ */
+fun CollectionV16.exportAnkiPackage(
+    outPath: String,
+    withScheduling: Boolean,
+    withMedia: Boolean,
+    deckId: Long?,
+    legacy: Boolean = true,
+) {
+    val limit = exportLimit {
+        if (deckId != null) {
+            this.deckId = deckId
+        } else {
+            this.wholeCollection = Empty.getDefaultInstance()
+        }
+    }
+    backend.exportAnkiPackage(outPath, withScheduling, withMedia, legacy, limit)
 }

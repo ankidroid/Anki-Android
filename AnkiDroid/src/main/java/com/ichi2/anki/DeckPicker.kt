@@ -53,6 +53,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import anki.collection.OpChanges
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.GravityEnum
 import com.afollestad.materialdialogs.MaterialDialog
@@ -91,6 +92,7 @@ import com.ichi2.async.CollectionTask.*
 import com.ichi2.async.Connection.CancellableTaskListener
 import com.ichi2.async.Connection.ConflictResolution
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
@@ -139,7 +141,15 @@ import kotlin.math.roundToLong
  * * A custom image as a background can be added: [applyDeckPickerBackground]
  */
 @KotlinCleanup("lots to do")
-open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncErrorDialogListener, ImportDialogListener, MediaCheckDialogListener, OnRequestPermissionsResultCallback, CustomStudyListener {
+open class DeckPicker :
+    NavigationDrawerActivity(),
+    StudyOptionsListener,
+    SyncErrorDialogListener,
+    ImportDialogListener,
+    MediaCheckDialogListener,
+    OnRequestPermissionsResultCallback,
+    CustomStudyListener,
+    ChangeManager.ChangeSubscriber {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
@@ -192,6 +202,10 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     private var mToolbarSearchView: SearchView? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
+
+    init {
+        ChangeManager.subscribe(this)
+    }
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -1812,7 +1826,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file")
     override fun importAdd(importPath: List<String>) {
         Timber.d("importAdd() for file %s", importPath)
-        TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
+        if (BackendFactory.defaultLegacySchema) {
+            TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
+        } else {
+            for (file in importPath) {
+                importApkg(file)
+            }
+        }
     }
 
     // Callback to import a file -- replacing the existing collection
@@ -2571,6 +2591,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .translationY(translation)
                 .setDuration(duration.toLong())
                 .withEndAction(endAction)
+        }
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if (changes.studyQueues && handler !== this) {
+            updateDeckList()
         }
     }
 }
