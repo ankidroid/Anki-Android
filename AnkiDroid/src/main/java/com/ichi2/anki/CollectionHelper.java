@@ -149,11 +149,24 @@ public class CollectionHelper {
         return collection;
     }
 
-    @NonNull Backend getOrCreateBackend(Context context) {
+    synchronized @NonNull Backend getOrCreateBackend(Context context) {
         if (mBackend == null) {
             mBackend = BackendFactory.getBackend(context);
         }
         return mBackend;
+    }
+
+
+    /**
+     * Close the currently cached backend and discard it. Useful when enabling the V16 scheduler in the
+     * dev preferences, or if the active language changes. The collection should be closed before calling
+     * this.
+     */
+    synchronized void discardBackend() {
+        if (mBackend != null) {
+            mBackend.close();
+            mBackend = null;
+        }
     }
 
     /**
