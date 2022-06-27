@@ -21,6 +21,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.CollectionV16
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
@@ -51,6 +52,18 @@ suspend fun <T> runInBackground(block: suspend CoroutineScope.() -> T): T {
     }
 }
 
+/**
+ * Run an operation and notify change subscribers.
+ * * See the docs in ChangeManager.kt
+ * */
+suspend fun <T> CollectionV16.op(handler: Any? = null, block: suspend CollectionV16.() -> T): T {
+    return runInBackground {
+        block()
+    }.also {
+        ChangeManager.notifySubscribers(it, handler)
+    }
+}
+
 suspend fun <T> Backend.withProgress(onProgress: (Progress) -> Unit, block: suspend CoroutineScope.() -> T): T {
     val backend = this
     return coroutineScope {
@@ -72,6 +85,23 @@ suspend fun <T> runInBackgroundWithProgress(
 ): T = coroutineScope {
     col.backend.withProgress(onProgress) {
         runInBackground { op(col) }
+    }
+}
+
+/**
+ * Run an operation and notify change subscribers, and capture backend progress.
+ *
+ * See the docs in ChangeManager.kt
+ * */
+suspend fun <T> CollectionV16.opWithProgress(
+    onProgress: (Progress) -> Unit,
+    handler: Any? = null,
+    op: suspend CollectionV16.() -> T,
+): T = coroutineScope {
+    backend.withProgress(onProgress) {
+        this@opWithProgress.op(handler) {
+            op()
+        }
     }
 }
 
