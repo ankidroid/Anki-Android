@@ -182,7 +182,9 @@ class Preferences : AnkiActivity() {
 
     fun restartWithNewDeckPicker() {
         // PERF: DB access on foreground thread
-        CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed")
+        val helper = CollectionHelper.getInstance()
+        helper.closeCollection(true, "Preference Modification: collection path changed")
+        helper.discardBackend()
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.DEFAULT)
