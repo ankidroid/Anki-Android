@@ -274,6 +274,18 @@ public class Models extends ModelManager {
     }
 
     /** {@inheritDoc} */
+    @NonNull
+    @Override
+    public ArrayList<String> allNames() {
+        ArrayList nameList = new ArrayList();
+        for (Model m : mModels.values()) {
+            nameList.add(m.getString("name"));
+        }
+
+        return nameList;
+    }
+
+    /** {@inheritDoc} */
     @Nullable
     @Override
     public Model byName(@NonNull String name) {
