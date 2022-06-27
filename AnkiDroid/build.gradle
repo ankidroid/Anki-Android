@@ -264,7 +264,7 @@ dependencies {
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-java:3.21.1' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-java:3.21.2' // This is required when loading from a file
 
     // To test with locally-built versions:
     // - use the docs in Anki-Android-Backend to build a local version
