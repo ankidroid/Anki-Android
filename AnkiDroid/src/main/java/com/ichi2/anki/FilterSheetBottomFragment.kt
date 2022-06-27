@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,9 @@ class BottomSheetFragment :
     var flagSearchItems = mutableListOf<String>()
 
     private lateinit var mFlagRecyclerView: RecyclerView
+
+    private var mLastClickTime = 0
+    private val DELAY_TIME = 500
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,7 +81,16 @@ class BottomSheetFragment :
         behavior = BottomSheetBehavior.from(requireView().parent as View)
 
         /* list of all flags */
-        val flags = listOf("Red flag", "Orange flag", "Green flag", "Blue flag", "Pink flag", "Turquoise flag", "Pink flag")
+        val flags = listOf(
+            FilterItemFlag("Red flag", 1),
+            FilterItemFlag("Orange flag", 2),
+            FilterItemFlag("Green flag", 3),
+            FilterItemFlag("Blue flag", 4),
+            FilterItemFlag("Pink flag", 5),
+            FilterItemFlag("Turquoise flag", 6),
+            FilterItemFlag("Purple flag", 7)
+        )
+
         val mFlagListAdapter = FlagsAdapter(activity, flags, this)
 
         mFlagRecyclerView = requireView().findViewById(R.id.filter_bottom_flag_list)
@@ -100,13 +113,20 @@ class BottomSheetFragment :
         val flagIcon = requireView().findViewById<ImageView>(R.id.filter_flagListToggle)
         val flagsRecyclerViewLayout =
             requireView().findViewById<LinearLayout>(R.id.flagsRecyclerViewLayout)
+
         flagsButton.setOnClickListener {
-            if (flagsRecyclerViewLayout.isVisible) {
-                flagsRecyclerViewLayout.visibility = View.GONE
-                flagIcon.setImageResource(R.drawable.filter_sheet_unopened_list_icon)
-            } else {
-                flagsRecyclerViewLayout.visibility = View.VISIBLE
-                flagIcon.setImageResource(R.drawable.filter_sheet_opened_list_icon)
+
+            if (SystemClock.elapsedRealtime() - mLastClickTime > DELAY_TIME) {
+
+                mLastClickTime = SystemClock.elapsedRealtime().toInt()
+
+                if (flagsRecyclerViewLayout.isVisible) {
+                    flagsRecyclerViewLayout.visibility = View.GONE
+                    flagIcon.setImageResource(R.drawable.filter_sheet_unopened_list_icon)
+                } else {
+                    flagsRecyclerViewLayout.visibility = View.VISIBLE
+                    flagIcon.setImageResource(R.drawable.filter_sheet_opened_list_icon)
+                }
             }
         }
     }
@@ -164,33 +184,7 @@ class BottomSheetFragment :
      * TODO: background color should be retained if selected and swiped down
      */
 
-    override fun onFlagItemClicked(item: String, position: Int) {
-
-        var flagNumber = "0"
-
-        when (item) {
-            "Red flag" -> {
-                flagNumber = "1"
-            }
-            "Orange flag" -> {
-                flagNumber = "2"
-            }
-            "Green flag" -> {
-                flagNumber = "3"
-            }
-            "Blue flag" -> {
-                flagNumber = "4"
-            }
-            "Pink flag" -> {
-                flagNumber = "5"
-            }
-            "Turquoise flag" -> {
-                flagNumber = "6"
-            }
-            "Purple flag" -> {
-                flagNumber = "7"
-            }
-        }
+    override fun onFlagItemClicked(item: FilterItemFlag, position: Int) {
 
         val itemBackground: ColorDrawable = mFlagRecyclerView[position].background as ColorDrawable
         val itemTextView = mFlagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
@@ -214,7 +208,7 @@ class BottomSheetFragment :
                 )
             )
 
-            flagSearchItems.add(flagNumber)
+            flagSearchItems.add("${item.flagNumber}")
         } else {
             mFlagRecyclerView[position].setBackgroundColor(
                 Themes.getColorFromAttr(
@@ -230,14 +224,16 @@ class BottomSheetFragment :
                 )
             )
 
-            flagSearchItems.remove(flagNumber)
+            flagSearchItems.remove("${item.flagNumber}")
         }
     }
 }
 
+class FilterItemFlag(val name: String, val flagNumber: Int)
+
 class FlagsAdapter(
     val context: Context?,
-    private var dataSet: List<String>,
+    private var dataSet: List<FilterItemFlag>,
     private val listener: OnItemClickListener
 ) :
     RecyclerView.Adapter<FlagsAdapter.ViewHolder>() {
@@ -250,11 +246,11 @@ class FlagsAdapter(
         val name: TextView = view.findViewById(R.id.filter_list_item)
 
         fun bind(
-            currFlag: String,
+            currFlag: FilterItemFlag,
             clickListener: OnItemClickListener,
             position: Int
         ) {
-            name.text = currFlag
+            name.text = currFlag.name
 
             itemView.setOnClickListener {
                 clickListener.onFlagItemClicked(currFlag, position)
@@ -268,7 +264,7 @@ class FlagsAdapter(
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.filter_list_item_layout, viewGroup, false)
 
-        val itemName: TextView = view.findViewById<TextView>(R.id.filter_list_item)
+        val itemName: TextView = view.findViewById(R.id.filter_list_item)
 
         if (BottomSheetFragment().flagSearchItems.contains(itemName.text)) {
             view.setBackgroundColor(
@@ -294,6 +290,6 @@ class FlagsAdapter(
     override fun getItemCount() = dataSet.size
 
     interface OnItemClickListener {
-        fun onFlagItemClicked(item: String, position: Int)
+        fun onFlagItemClicked(item: FilterItemFlag, position: Int)
     }
 }
