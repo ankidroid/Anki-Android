@@ -15,12 +15,12 @@
  */
 package com.ichi2.libanki.backend.model
 
-import BackendProto.AdBackend.SchedTimingTodayOut2
+import anki.scheduler.SchedTimingTodayResponse
 
 /**
  * Adapter for SchedTimingTodayOut2 result from Rust
  */
-class SchedTimingTodayProto(private val data: SchedTimingTodayOut2) : SchedTimingToday {
+class SchedTimingTodayProto(private val data: SchedTimingTodayResponse) : SchedTimingToday {
     override fun days_elapsed(): Int {
         return data.daysElapsed
     }

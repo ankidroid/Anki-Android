@@ -21,6 +21,7 @@
 package com.ichi2.libanki;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -31,6 +32,11 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.CrashReportService;
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.utils.DatabaseChangeDecorator;
+
+import net.ankiweb.rsdroid.Backend;
+import net.ankiweb.rsdroid.BackendException;
+import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase;
+import net.ankiweb.rsdroid.database.RustSupportSQLiteDatabase;
 
 import org.intellij.lang.annotations.Language;
 
@@ -46,7 +52,8 @@ import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory;
 import timber.log.Timber;
 
 /**
- * Database layer for AnkiDroid. Can read the native Anki format through Android's SQLite driver.
+ * Database layer for AnkiDroid. Wraps an SupportSQLiteDatabase (provided by either the Rust backend
+ * or the Android framework), and provides some helpers on top.
  */
 @SuppressWarnings({"PMD.AvoidThrowingRawExceptionTypes"})
 public class DB {
@@ -62,69 +69,39 @@ public class DB {
     private final SupportSQLiteDatabase mDatabase;
     private boolean mMod = false;
 
-    public DB(@NonNull String ankiFilename) {
-        this(ankiFilename, null);
+    /**
+     * Open a connection using the system framework.
+     */
+    public static DB withFramework(@NonNull Context context, @NonNull String path) {
+        SupportSQLiteDatabase db = AnkiSupportSQLiteDatabase.withFramework(context, path, new SupportSQLiteOpenHelperCallback(1));
+        db.disableWriteAheadLogging();
+        db.query("PRAGMA synchronous = 2", null);
+        return new DB(db);
     }
 
     /**
-     * Open a connection to the SQLite collection database.
+     * Wrap a Rust backend connection (which provides an SQL interface).
+     * Caller is responsible for opening&closing the database.
      */
-    public DB(@NonNull String ankiFilename, @Nullable OpenHelperFactory openHelperFactory) {
+    public static DB withRustBackend(@NonNull Backend backend) {
+        return new DB(AnkiSupportSQLiteDatabase.withRustBackend(backend));
+    }
 
-        SupportSQLiteOpenHelper.Configuration configuration = SupportSQLiteOpenHelper.Configuration.builder(AnkiDroidApp.getInstance())
-                .name(ankiFilename)
-                .callback(getDBCallback())
-                .build();
-        SupportSQLiteOpenHelper helper = getSqliteOpenHelperFactory(openHelperFactory).create(configuration);
-        // Note: This line creates the database and schema when executed using a Rust backend
-        mDatabase = new DatabaseChangeDecorator(helper.getWritableDatabase());
-        mDatabase.disableWriteAheadLogging();
-        mDatabase.query("PRAGMA synchronous = 2", null);
+    public DB(@NonNull SupportSQLiteDatabase db) {
+        mDatabase = new DatabaseChangeDecorator(db);
         mMod = false;
     }
-
-
-    /**
-     * You may swap in your own SQLite implementation by altering the factory here. An
-     * example might be to use the framework implementation. If you set to null, we default
-     * to requery
-     * @param factory connection factory for the desired sqlite implementation, null for requery
-     */
-    public static void setSqliteOpenHelperFactory(@Nullable SupportSQLiteOpenHelper.Factory factory) {
-        sqliteOpenHelperFactory = factory;
-    }
-
-
-    private SupportSQLiteOpenHelper.Factory getSqliteOpenHelperFactory(@Nullable OpenHelperFactory openHelper) {
-        if (openHelper != null) {
-            return openHelper.getFactory();
-        }
-
-        if (sqliteOpenHelperFactory == null) {
-            return new FrameworkSQLiteOpenHelperFactory();
-        }
-        return sqliteOpenHelperFactory;
-    }
-
-
-    /** Get the SQLite callback object to use when creating connections - overridable for testability */
-    protected SupportSQLiteOpenHelperCallback getDBCallback() {
-        return new SupportSQLiteOpenHelperCallback(1);
-    }
-
 
     /**
      * The default AnkiDroid SQLite database callback.
      * We do not handle versioning or connection config using the framework APIs, so those methods
      * do nothing in our implementation. However, we on corruption events we want to send messages but
      * not delete the database.
+     *
+     * Note: this does not apply when using the Rust backend (ie for Collection)
      */
-    public static class SupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelper.Callback {
-
+    public static class SupportSQLiteOpenHelperCallback extends AnkiSupportSQLiteDatabase.DefaultDbCallback {
         protected SupportSQLiteOpenHelperCallback(int version) { super(version); }
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {/* do nothing */ }
-        public void onUpgrade(@NonNull SupportSQLiteDatabase db, int oldVersion, int newVersion) { /* do nothing */ }
-
 
         /** Send error message, but do not call super() which would delete the database */
         public void onCorruption(SupportSQLiteDatabase db) {
@@ -379,10 +356,5 @@ public class DB {
         } else {
             Timber.w("Not in a transaction. Cannot end transaction.");
         }
-    }
-
-    @FunctionalInterface
-    public interface OpenHelperFactory {
-        SupportSQLiteOpenHelper.Factory getFactory();
     }
 }

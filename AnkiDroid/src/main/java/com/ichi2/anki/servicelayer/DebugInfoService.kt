@@ -35,12 +35,7 @@ object DebugInfoService {
         } catch (e: Throwable) {
             Timber.e(e, "Sched name not found")
         }
-        var dbV2Enabled: Boolean? = null
-        try {
-            dbV2Enabled = col.get().isUsingRustBackend
-        } catch (e: Throwable) {
-            Timber.w(e, "Unable to detect Rust Backend")
-        }
+        var dbV2Enabled = true
         val webviewUserAgent = getWebviewUserAgent(info)
         return """
                AnkiDroid Version = $pkgVersionName

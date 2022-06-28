@@ -16,10 +16,13 @@
 
 package com.ichi2.libanki;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.RobolectricTest;
 import com.ichi2.anki.exception.ConfirmModSchemaException;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
+
+import net.ankiweb.rsdroid.BackendFactory;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -210,6 +213,7 @@ public class ModelTest extends RobolectricTest {
         assertEquals("1", stripHTML(c.q()));
         // it shouldn't be possible to orphan notes by removing templates
         t = Models.newTemplate("template name");
+        t.put("qfmt", "{{Front}}1");
         mm.addTemplateModChanged(m, t);
         col.getModels().remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
         assertEquals(0,
@@ -547,9 +551,12 @@ public class ModelTest extends RobolectricTest {
         mm.save(opt, true);
         assertEquals(new JSONArray("[1, \"any\", [1, 2]]"), opt.getJSONArray("req").getJSONArray(1));
         // testing null
-        opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{^Add Reverse}}{{/Add Reverse}}");
-        mm.save(opt, true);
-        assertEquals(new JSONArray("[1, \"none\", []]"), opt.getJSONArray("req").getJSONArray(1));
+        if (BackendFactory.INSTANCE.getDefaultLegacySchema()) {
+            // can't add front without field in v16
+            opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{^Add Reverse}}{{/Add Reverse}}");
+            mm.save(opt, true);
+            assertEquals(new JSONArray("[1, \"none\", []]"), opt.getJSONArray("req").getJSONArray(1));
+        }
 
         opt = mm.byName("Basic (type in the answer)");
         reqSize(opt);

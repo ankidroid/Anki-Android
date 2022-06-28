@@ -62,7 +62,6 @@ import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.anki.web.CustomSyncServer.isEnabled
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.utils.TimeManager
@@ -77,6 +76,7 @@ import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
@@ -244,7 +244,7 @@ class Preferences : AnkiActivity() {
                         NEW_TIMEZONE_HANDLING -> {
                             val switch = pref as SwitchPreference
                             switch.isChecked = col.sched._new_timezone_enabled()
-                            if (col.schedVer() <= 1 || !col.isUsingRustBackend) {
+                            if (col.schedVer() <= 1) {
                                 Timber.d("Disabled 'newTimezoneHandling' box")
                                 switch.isEnabled = false
                             }
@@ -620,7 +620,7 @@ class Preferences : AnkiActivity() {
                         pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
                     }
                     NEW_TIMEZONE_HANDLING -> {
-                        if (preferencesActivity.col.schedVer() != 1 && preferencesActivity.col.isUsingRustBackend) {
+                        if (preferencesActivity.col.schedVer() != 1) {
                             val sched = preferencesActivity.col.sched
                             val wasEnabled = sched._new_timezone_enabled()
                             val isEnabled = (pref as SwitchPreference).isChecked
@@ -1281,10 +1281,9 @@ class Preferences : AnkiActivity() {
             }
             // Use V16 Backend
             requirePreference<Preference>(getString(R.string.pref_rust_backend_key)).apply {
-                setDefaultValue(AnkiDroidApp.TESTING_USE_V16_BACKEND)
+                setDefaultValue(!BackendFactory.defaultLegacySchema)
                 setOnPreferenceClickListener {
-                    AnkiDroidApp.TESTING_USE_V16_BACKEND = true
-                    Consts.SCHEMA_VERSION = 16
+                    BackendFactory.defaultLegacySchema = false
                     (requireActivity() as Preferences).restartWithNewDeckPicker()
                     true
                 }

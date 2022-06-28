@@ -18,7 +18,6 @@ package com.ichi2.anki
 
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.exception.OutOfSpaceException
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
@@ -38,23 +37,6 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 open class BackupManager {
-    @Throws(OutOfSpaceException::class)
-    fun performDowngradeBackupInForeground(path: String): Boolean {
-        val colFile = File(path)
-        if (!hasFreeDiscSpace(colFile)) {
-            Timber.w("Could not backup: no free disc space")
-            throw OutOfSpaceException()
-        }
-        val backupFile = getBackupFile(colFile, "ankiDroidv16.colpkg")
-        return try {
-            performBackup(colFile, backupFile)
-        } catch (e: Exception) {
-            Timber.w(e)
-            CrashReportService.sendExceptionReport(e, "performBackupInForeground")
-            false
-        }
-    }
-
     /**
      * Attempts to create a backup in a background thread. Returns `true` if the process is started.
      *

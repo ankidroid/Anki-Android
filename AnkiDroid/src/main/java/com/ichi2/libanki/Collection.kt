@@ -39,7 +39,6 @@ import com.ichi2.async.CollectionTask.PartialSearch
 import com.ichi2.async.ProgressSender
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.backend.DroidBackend
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.exception.NoSuchDeckException
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
@@ -53,11 +52,11 @@ import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
+import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.io.*
-import java.lang.NullPointerException
 import java.util.*
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.function.Consumer
@@ -73,35 +72,46 @@ import java.util.regex.Pattern
 @KotlinCleanup("TextUtils -> Kotlin isNotEmpty()")
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
 @KotlinCleanup("ids.size != 0")
-open class Collection @VisibleForTesting constructor(
+open class Collection constructor(
     /**
      * @return The context that created this Collection.
      */
     val context: Context,
-    db: DB,
     val path: String,
     var server: Boolean,
     private var debugLog: Boolean, // Not in libAnki.
-    protected val droidBackend: DroidBackend
+    /**
+     * Outside of libanki, you should not access the backend directly for collection operations.
+     * Operations that work on a closed collection (eg importing), or do not require a collection
+     * at all (eg translations) are the exception.
+     */
+    val backend: Backend
 ) : CollectionGetter {
 
     @get:JvmName("isDbClosed")
-    var dbClosed = false
-        private set
-
-    /** Allows a mock db to be inserted for testing  */
-    @set:VisibleForTesting
-    var db: DB = db
+    val dbClosed: Boolean
         get() {
-            if (dbClosed) {
-                throw NullPointerException("DB Closed")
-            }
-            return field
+            return dbInternal == null
         }
-        set(value) {
-            dbClosed = false
-            field = value
+
+    open val newBackend: CollectionV16
+        get() = throw Exception("invalid call to newBackend on old backend")
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun debugEnsureNoOpenPointers() {
+        val result = backend.getActiveSequenceNumbers()
+        if (result.isNotEmpty()) {
+            val numbers = result.toString()
+            throw IllegalStateException("Contained unclosed sequence numbers: $numbers")
         }
+    }
+
+    // a lot of legacy code does not check for nullability
+    val db: DB
+        get() = dbInternal!!
+
+    var dbInternal: DB? = null
+
     /**
      * Getters/Setters ********************************************************** *************************************
      */
@@ -149,11 +159,11 @@ open class Collection @VisibleForTesting constructor(
     private var mLogHnd: PrintWriter? = null
 
     init {
-        _openLog()
+        media = Media(this, server)
+        val created = reopen()
         log(path, VersionUtils.pkgVersionName)
         // mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
         clearUndo()
-        media = Media(this, server)
         tags = initTags()
         load()
         if (crt == 0L) {
@@ -164,6 +174,11 @@ open class Collection @VisibleForTesting constructor(
         _loadScheduler()
         if (!get_config("newBury", false)!!) {
             set_config("newBury", true)
+        }
+        if (created) {
+            Storage.addNoteTypes(col, backend)
+            col.onCreate()
+            col.save()
         }
     }
 
@@ -219,7 +234,7 @@ open class Collection @VisibleForTesting constructor(
             sched = Sched(this)
         } else if (ver == 2) {
             sched = SchedV2(this)
-            if (!server && isUsingRustBackend) {
+            if (!server) {
                 try {
                     set_config("localOffset", sched._current_timezone_offset())
                 } catch (e: BackendNotSupportedException) {
@@ -427,20 +442,26 @@ open class Collection @VisibleForTesting constructor(
             if (!server) {
                 db.database.disableWriteAheadLogging()
             }
-            droidBackend.closeCollection(db, downgrade)
-            dbClosed = true
+            backend.closeCollection(downgrade)
+            dbInternal = null
             media.close()
             _closeLog()
             Timber.i("Collection closed")
         }
     }
 
-    fun reopen() {
-        Timber.i("Reopening Database")
+    /** True if DB was created */
+    fun reopen(): Boolean {
+        Timber.i("(Re)opening Database: %s", path)
         if (dbClosed) {
-            db = droidBackend.openCollectionDatabase(path)
+            // fixme: pass in time
+            val (db_, created) = Storage.openDB(path, backend)
+            dbInternal = db_
             media.connect()
             _openLog()
+            return created
+        } else {
+            return false
         }
     }
 
@@ -1255,7 +1276,7 @@ open class Collection @VisibleForTesting constructor(
      */
     /** Return a list of card ids  */
     @KotlinCleanup("set reasonable defaults")
-    fun findCards(search: String?): List<Long> {
+    fun findCards(search: String): List<Long> {
         return findCards(search, SortOrder.NoOrdering())
     }
 
@@ -1263,7 +1284,7 @@ open class Collection @VisibleForTesting constructor(
      * @return A list of card ids
      * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
      */
-    fun findCards(search: String?, order: SortOrder): List<Long> {
+    fun findCards(search: String, order: SortOrder): List<Long> {
         return Finder(this).findCards(search, order)
     }
 
@@ -1271,8 +1292,7 @@ open class Collection @VisibleForTesting constructor(
      * @return A list of card ids
      * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
      */
-    @KotlinCleanup("non-null")
-    open fun findCards(search: String?, order: SortOrder, task: PartialSearch?): List<Long?>? {
+    open fun findCards(search: String, order: SortOrder, task: PartialSearch?): List<Long?>? {
         return Finder(this).findCards(search, order, task)
     }
 
@@ -1398,7 +1418,7 @@ open class Collection @VisibleForTesting constructor(
     }
 
     open fun onCreate() {
-        droidBackend.useNewTimezoneCode(this)
+        sched.useNewTimezoneCode()
         set_config("schedVer", 2)
         // we need to reload the scheduler: this was previously loaded as V1
         _loadScheduler()
@@ -2441,6 +2461,11 @@ open class Collection @VisibleForTesting constructor(
         _config!!.put(key, value!!)
     }
 
+    fun set_config(key: String, value: Any?) {
+        setMod()
+        _config!!.put(key, value)
+    }
+
     fun remove_config(key: String) {
         setMod()
         _config!!.remove(key)
@@ -2491,11 +2516,6 @@ open class Collection @VisibleForTesting constructor(
         sched.setReportLimit(reportLimit)
         return sched
     }
-
-    val isUsingRustBackend: Boolean
-        get() = droidBackend.isUsingRustBackend()
-    open val backend: DroidBackend
-        get() = droidBackend
 
     class CheckDatabaseResult(private val oldSize: Long) {
         private val mProblems: MutableList<String?> = ArrayList()

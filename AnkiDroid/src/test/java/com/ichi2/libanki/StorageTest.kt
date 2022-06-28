@@ -38,7 +38,6 @@ open class StorageTest : RobolectricTest() {
     }
 
     override fun setUp() {
-        Storage.setUseBackend(false)
         super.setUp()
     }
 
@@ -51,7 +50,6 @@ open class StorageTest : RobolectricTest() {
 
         // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
         disableNullCollection()
-        Storage.setUseBackend(true)
         val actual = results
         actual.assertEqualTo(expected)
     }

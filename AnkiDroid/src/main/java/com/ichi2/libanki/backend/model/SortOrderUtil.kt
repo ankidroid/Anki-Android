@@ -18,22 +18,16 @@
 
 package com.ichi2.libanki.backend.model
 
-import BackendProto.Backend
 import com.ichi2.libanki.SortOrder
-import com.ichi2.libanki.SortOrder.BuiltinSortKind.BuiltIn.*
-import BackendProto.Backend.BuiltinSearchOrder.BuiltinSortKind as BackendSortKind
 
-// Conversion functions from SortOrder to Backend.SortOrder
+// Conversion functions from SortOrder to anki.search.SortOrder
 
-fun SortOrder.toProtoBuf(): Backend.SortOrder {
-    val builder = Backend.SortOrder.newBuilder()
+fun SortOrder.toProtoBuf(): anki.search.SortOrder {
+    val builder = anki.search.SortOrder.newBuilder()
     return when (this) {
         is SortOrder.NoOrdering -> {
-            builder.setNone(Backend.Empty.getDefaultInstance())
+            builder.setNone(anki.generic.Empty.getDefaultInstance())
         }
-        is SortOrder.UseCollectionOrdering ->
-            builder.setFromConfig(Backend.Empty.getDefaultInstance())
-
         is SortOrder.AfterSqlOrderBy ->
             builder.setCustom(this.customOrdering)
         is SortOrder.BuiltinSortKind ->
@@ -42,26 +36,9 @@ fun SortOrder.toProtoBuf(): Backend.SortOrder {
     }.build()
 }
 
-fun SortOrder.BuiltinSortKind.toProtoBuf(): Backend.BuiltinSearchOrder {
-    val enumValue = when (this.value) {
-        NOTE_CREATION -> BackendSortKind.NOTE_CREATION
-        NOTE_MOD -> BackendSortKind.NOTE_MOD
-        NOTE_FIELD -> BackendSortKind.NOTE_FIELD
-        NOTE_TAGS -> BackendSortKind.NOTE_TAGS
-        NOTE_TYPE -> BackendSortKind.NOTE_TYPE
-        CARD_MOD -> BackendSortKind.CARD_MOD
-        CARD_REPS -> BackendSortKind.CARD_REPS
-        CARD_DUE -> BackendSortKind.CARD_DUE
-        CARD_EASE -> BackendSortKind.CARD_EASE
-        CARD_LAPSES -> BackendSortKind.CARD_LAPSES
-        CARD_INTERVAL -> BackendSortKind.CARD_INTERVAL
-        CARD_DECK -> BackendSortKind.CARD_DECK
-        CARD_TEMPLATE -> BackendSortKind.CARD_TEMPLATE
-        UNRECOGNIZED -> BackendSortKind.UNRECOGNIZED
-    }
-
-    return Backend.BuiltinSearchOrder.newBuilder()
-        .setKind(enumValue)
-        .setReverse(this.reverse)
+fun SortOrder.BuiltinSortKind.toProtoBuf(): anki.search.SortOrder.Builtin {
+    return anki.search.SortOrder.Builtin.newBuilder()
+        .setColumn(value)
+        .setReverse(reverse)
         .build()
 }

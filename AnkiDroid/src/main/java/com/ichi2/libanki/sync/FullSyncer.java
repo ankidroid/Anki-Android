@@ -35,7 +35,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -114,7 +113,7 @@ public class FullSyncer extends HttpSyncer {
         mCon.publishProgress(R.string.sync_check_download_file);
         DB tempDb = null;
         try {
-            tempDb = new DB(tpath);
+            tempDb = DB.withFramework(mCol.getContext(), tpath);
             if (!"ok".equalsIgnoreCase(tempDb.queryString("PRAGMA integrity_check"))) {
                 Timber.e("Full sync - downloaded file corrupt");
                 return REMOTE_DB_ERROR;

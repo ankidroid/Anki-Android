@@ -26,7 +26,7 @@ import org.junit.runner.RunWith
 class MetaTest : RobolectricTest() {
     @Test
     fun ensureDatabaseIsInMemory() {
-        val path = col.db.path
-        assertThat("Default test database should be in-memory.", path, equalTo(":memory:"))
+        val path = col.db.queryString("select file from pragma_database_list")
+        assertThat("Default test database should be in-memory.", path, equalTo(""))
     }
 }

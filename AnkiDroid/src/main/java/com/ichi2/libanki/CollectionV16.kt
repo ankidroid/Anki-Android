@@ -20,37 +20,36 @@ import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
+import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 
 class CollectionV16(
     context: Context,
-    db: DB,
     path: String,
     server: Boolean,
     log: Boolean,
-    backend: RustDroidV16Backend
-) : Collection(context, db, path, server, log, backend) {
-
-    /** Workaround as we shouldn't be overriding members which are used in the constructor */
-    override val backend: RustDroidV16Backend
-        get() = super.backend as RustDroidV16Backend
+    backend: Backend
+) : Collection(context, path, server, log, backend) {
 
     override fun initTags(): TagManager {
-        return TagsV16(this, RustTagsBackend(backend.backend))
+        return TagsV16(this, RustTagsBackend(backend))
     }
 
     override fun initDecks(deckConf: String?): DeckManager {
-        return DecksV16(this, RustDroidDeckBackend(backend.backend))
+        return DecksV16(this, RustDroidDeckBackend(backend))
     }
 
     override fun initModels(): ModelManager {
-        return ModelsV16(this, backend.backend)
+        return ModelsV16(this, backend)
     }
 
     override fun initConf(conf: String?): ConfigManager {
-        return ConfigV16(RustConfigBackend(backend.backend))
+        return ConfigV16(RustConfigBackend(backend))
     }
+
+    override val newBackend: CollectionV16
+        get() = this
 
     /** col.conf is now unused, handled by [ConfigV16] which has a separate table */
     override fun flushConf(): Boolean = false
@@ -69,18 +68,33 @@ class CollectionV16(
         }
     }
 
-    override fun render_output(c: Card, reload: Boolean, browser: Boolean): TemplateManager.TemplateRenderContext.TemplateRenderOutput {
+    override fun render_output(
+        c: Card,
+        reload: Boolean,
+        browser: Boolean
+    ): TemplateManager.TemplateRenderContext.TemplateRenderOutput {
         return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
     }
 
-    override fun findCards(search: String?, order: SortOrder, task: CollectionTask.PartialSearch?): MutableList<Long> {
-        val result = try {
-            backend.backend.searchCards(search, order.toProtoBuf())
+    override fun findCards(
+        search: String,
+        order: SortOrder,
+        task: CollectionTask.PartialSearch?
+    ): List<Long> {
+        val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
+            @Suppress("DEPRECATION")
+            SortOrder.BuiltinSortKind(
+                get_config("sortType", null as String?) ?: "noteFld",
+                get_config("sortBackwards", false) ?: false,
+            )
+        } else {
+            order
+        }
+        val cardIdsList = try {
+            backend.searchCards(search, adjustedOrder.toProtoBuf())
         } catch (e: BackendInvalidInputException) {
             throw InvalidSearchException(e)
         }
-
-        val cardIdsList = result.cardIdsList
 
         task?.doProgress(cardIdsList)
         return cardIdsList

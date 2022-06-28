@@ -517,6 +517,7 @@ abstract class AbstractSched(val col: Collection) {
     @Throws(BackendNotSupportedException::class)
     abstract fun set_creation_offset()
     abstract fun clear_creation_offset()
+    abstract fun useNewTimezoneCode()
 
     companion object {
         /**

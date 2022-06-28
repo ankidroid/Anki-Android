@@ -23,11 +23,11 @@ import com.ichi2.libanki.Storage
 object DbUtils {
     /** performs a query on an unopened collection  */
     @JvmStatic
-    fun performQuery(context: Context?, query: String?) {
+    fun performQuery(context: Context, query: String?) {
         check(!Storage.isInMemory) { "cannot use performQuery in memory" }
         var db: DB? = null
         try {
-            db = DB(CollectionHelper.getCollectionPath(context))
+            db = DB.withFramework(context, CollectionHelper.getCollectionPath(context))
             db.executeScript(query)
         } finally {
             db?.close()

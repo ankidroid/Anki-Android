@@ -59,6 +59,10 @@ class Config(configStr: String) : ConfigManager() {
         json.put(key, value)
     }
 
+    override fun put(key: String, value: Any?) {
+        json.put(key, value)
+    }
+
     override fun remove(key: String) {
         json.remove(key)
     }

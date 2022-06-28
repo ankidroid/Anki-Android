@@ -123,7 +123,7 @@ public class Anki2Importer extends Importer {
     }
 
 
-    private void _prepareFiles() {
+    private void _prepareFiles()  {
         boolean importingV2 = mFile.endsWith(".anki21");
         this.mMustResetLearning = false;
 

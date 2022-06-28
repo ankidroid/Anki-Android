@@ -74,7 +74,7 @@ class CardTest : RobolectricTest() {
         val mm = col.models
         // adding a new template should automatically create cards
         var t = Models.newTemplate("rev")
-        t.put("qfmt", "{{Front}}")
+        t.put("qfmt", "{{Front}}1")
         t.put("afmt", "")
         mm.addTemplateModChanged(m!!, t)
         mm.save(m, true)
