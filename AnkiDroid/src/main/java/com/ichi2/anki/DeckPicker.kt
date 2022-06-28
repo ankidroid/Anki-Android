@@ -2005,7 +2005,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
             context.renderPage()
             // Update the mini statistics bar as well
-            deckPicker?.lifecycleScope?.launchCatching {
+            deckPicker?.catchingLifecycleScope(deckPicker) {
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
             }
             Timber.d("Startup - Deck List UI Completed")
