@@ -60,9 +60,7 @@ object DeckService {
     }
 
     @JvmStatic
-    fun getParentDid(col: Collection, did: Long): Long? {
-        return col.decks.parents(did)
-            .takeUnless { pList -> pList.isEmpty() }
-            ?.run { last().optLong("id", 0) }
-    }
+    fun getParentDid(col: Collection, did: Long): Long? = col.decks.parents(did)
+        .lastOrNull()
+        ?.optLong("id", 0)
 }
