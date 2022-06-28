@@ -54,7 +54,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     private var mSelectionChangeListener: TextSelectionListener? = null
     private var mImageListener: ImagePasteListener? = null
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    var mClipboard: ClipboardManager? = null
+    var clipboard: ClipboardManager? = null
 
     constructor(context: Context?) : super(context!!)
     constructor(context: Context?, attr: AttributeSet?) : super(context!!, attr)
@@ -88,7 +88,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     fun init() {
         try {
-            mClipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         } catch (e: Exception) {
             Timber.w(e)
         }
@@ -201,8 +201,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     override fun onTextContextMenuItem(id: Int): Boolean {
         // This handles both CTRL+V and "Paste"
         if (id == android.R.id.paste) {
-            if (hasImage(mClipboard)) {
-                return onImagePaste(getImageUri(mClipboard))
+            if (hasImage(clipboard)) {
+                return onImagePaste(getImageUri(clipboard))
             }
             return pastePlainText()
         }
@@ -211,7 +211,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun pastePlainText(): Boolean {
-        getPlainText(mClipboard, context)?.let { pasted ->
+        getPlainText(clipboard, context)?.let { pasted ->
             selectionStart.run {
                 // setText also sets selectionStart to 0
                 setText(
