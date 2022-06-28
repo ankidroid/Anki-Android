@@ -451,4 +451,9 @@
     <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Browser Options</string>
+    <!--    notification-->
+    <plurals name="notification_study_reminder_all_decks_title">
+        <item quantity="one">You have %d card due</item>
+        <item quantity="other">You have %d cards due</item>
+    </plurals>
 </resources>
