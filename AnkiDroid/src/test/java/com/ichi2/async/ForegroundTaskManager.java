@@ -98,7 +98,7 @@ public class ForegroundTaskManager extends TaskManager {
 
 
     @Override
-    public boolean waitForAllToFinishConcrete(Integer timeoutSeconds) {
+    public boolean waitForAllToFinishConcrete(int timeoutSeconds) {
         return true;
     }
 

@@ -26,7 +26,7 @@ abstract class AbstractCollectionTaskTest : RobolectricTest() {
     @KotlinCleanup("see if we can make return value non-null")
     protected fun <Progress, Result> execute(task: TaskDelegate<Progress, Result>?): Result? {
         @Suppress("UNCHECKED_CAST")
-        val collectionTask = TaskManager.launchCollectionTask(task) as CollectionTask<Progress, Result>
+        val collectionTask = TaskManager.launchCollectionTask(task!!) as CollectionTask<Progress, Result>
         return try {
             collectionTask.get()
         } catch (e: Exception) {
@@ -34,7 +34,7 @@ abstract class AbstractCollectionTaskTest : RobolectricTest() {
         }
     }
 
-    protected fun <Progress, Result> waitForTask(task: TaskDelegate<Progress, Result>, listener: TaskListener<Progress, Result>?) {
+    protected fun <Progress, Result> waitForTask(task: TaskDelegate<Progress, Result>, listener: TaskListener<Progress, Result?>) {
         TaskManager.launchCollectionTask(task, listener)
         waitForAsyncTasksToComplete()
     }

@@ -45,7 +45,7 @@ class SingleTaskManager : TaskManager() {
      * The most recently started [CollectionTask] instance.
      */
     private var mLatestInstance: CollectionTask<*, *>? = null
-    override fun setLatestInstanceConcrete(task: CollectionTask<*, *>?) {
+    override fun setLatestInstanceConcrete(task: CollectionTask<*, *>) {
         mLatestInstance = task
     }
 

@@ -146,11 +146,11 @@ open class Reviewer : AbstractFlashcardViewer() {
     @VisibleForTesting
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
-    protected fun <T : Computation<NextCard<Array<Card>>>> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
-        return nextCardHandler<Computation<NextCard<*>>>().alsoExecuteAfter { result: T ->
+    protected fun <T : Computation<NextCard<Array<Card>>>?> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
+        return nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { result: T ->
             // BUG: If the method crashes, this will crash
             invalidateOptionsMenu()
-            val cardCount: Int = result.value.result.size
+            val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 this,
                 resources.getQuantityString(toastResourceId, cardCount, cardCount), true
