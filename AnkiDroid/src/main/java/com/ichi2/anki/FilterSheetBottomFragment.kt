@@ -26,7 +26,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -38,8 +37,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.themes.Themes
 
-@Suppress("DEPRECATION")
-class BottomSheetFragment :
+class FilterSheetBottomFragment :
     BottomSheetDialogFragment(),
     FlagsAdapter.OnItemClickListener,
     CollectionGetter {
@@ -50,7 +48,6 @@ class BottomSheetFragment :
     private lateinit var mFlagRecyclerView: RecyclerView
 
     private var mLastClickTime = 0
-    private val DELAY_TIME = 500
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -172,6 +169,7 @@ class BottomSheetFragment :
 
     companion object {
         const val TAG = "ModalBottomSheet"
+        private const val DELAY_TIME = 500
     }
 
     override fun getCol(): Collection {
@@ -263,14 +261,6 @@ class FlagsAdapter(
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.filter_list_item_layout, viewGroup, false)
-
-        val itemName: TextView = view.findViewById(R.id.filter_list_item)
-
-        if (BottomSheetFragment().flagSearchItems.contains(itemName.text)) {
-            view.setBackgroundColor(
-                ContextCompat.getColor(view.context, R.color.material_light_blue_300)
-            )
-        }
 
         return ViewHolder(view)
     }

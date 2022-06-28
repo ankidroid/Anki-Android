@@ -522,12 +522,12 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
         mOnboarding.onCreate()
 
-        val modalBottomSheet = BottomSheetFragment()
+        val modalBottomSheet = FilterSheetBottomFragment()
 
         val filterButton = findViewById<FloatingActionButton>(R.id.filter_sheet_fab)
 
         filterButton.setOnClickListener {
-            modalBottomSheet.show(supportFragmentManager, BottomSheetFragment.TAG)
+            modalBottomSheet.show(supportFragmentManager, FilterSheetBottomFragment.TAG)
         }
     }
 
