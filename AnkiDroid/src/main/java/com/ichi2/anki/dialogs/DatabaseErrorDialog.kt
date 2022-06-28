@@ -31,6 +31,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.contentNullable
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -375,7 +376,16 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 } catch (e: Exception) {
                     Timber.w(e, "Failed to get database version, using -1")
                 }
-                res().getString(R.string.incompatible_database_version_summary, Consts.SCHEMA_VERSION, databaseVersion)
+                val schemaVersion = if (BackendFactory.defaultLegacySchema) {
+                    Consts.LEGACY_SCHEMA_VERSION
+                } else {
+                    Consts.BACKEND_SCHEMA_VERSION
+                }
+                res().getString(
+                    R.string.incompatible_database_version_summary,
+                    schemaVersion,
+                    databaseVersion
+                )
             }
             else -> requireArguments().getString("dialogMessage")
         }

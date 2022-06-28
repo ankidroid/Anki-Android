@@ -47,6 +47,7 @@ import com.ichi2.libanki.DeckConfig;
 
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
+import com.ichi2.libanki.backend.model.SchedTimingTodayProto;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.Assert;
@@ -57,6 +58,7 @@ import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
 
 import net.ankiweb.rsdroid.RustCleanup;
+import net.ankiweb.rsdroid.RustV1Cleanup;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -2254,14 +2256,25 @@ public class SchedV2 extends AbstractSched {
     }
 
     @Nullable
+    @RustV1Cleanup("switch to non-legacy backend method")
     private SchedTimingToday _timingToday() {
+        /*
+         * Obtains Timing information for the current day.
+         *
+         * @param createdSecs A UNIX timestamp of the collection creation time
+         * @param createdMinsWest The offset west of UTC at the time of creation (eg UTC+10 hours is -600)
+         * @param nowSecs timestamp of the current time
+         * @param nowMinsWest The current offset west of UTC
+         * @param rolloverHour The hour of the day the rollover happens (eg 4 for 4am)
+         * @return Timing information for the current day. See [SchedTimingToday].
+         */
         try {
-            return getCol().getBackend().sched_timing_today(
+            return new SchedTimingTodayProto(getCol().getBackend().schedTimingTodayLegacy(
                     getCol().getCrt(),
                     _creation_timezone_offset(),
                     getTime().intTime(),
                     _current_timezone_offset(),
-                    _rolloverHour());
+                    _rolloverHour()));
         } catch (BackendNotSupportedException e) {
             Timber.w(e);
             return null;
@@ -2273,18 +2286,36 @@ public class SchedV2 extends AbstractSched {
         if (getCol().getServer()) {
             return getCol().get_config("localOffset", 0);
         } else {
-            return getCol().getBackend().local_minutes_west(getTime().intTime());
+            return localMinutesWest(getTime().intTime());
         }
+    }
+
+    /**
+     * For the given timestamp, return minutes west of UTC in the local timezone.
+     *
+     * eg, Australia at +10 hours is -600.<br>
+     * Includes the daylight savings offset if applicable.
+     *
+     * @param timestampSeconds The timestamp in seconds
+     * @return minutes west of UTC in the local timezone
+     */
+    private int localMinutesWest(long timestampSeconds) {
+        return getCol().getBackend().localMinutesWestLegacy(timestampSeconds);
+
     }
 
     private int _creation_timezone_offset() {
         return getCol().get_config("creationOffset", 0);
     }
+    
+    public void useNewTimezoneCode() {
+       set_creation_offset();
+    }
 
     @Override
-    public void set_creation_offset() throws BackendNotSupportedException {
-        int mins_west = getCol().getBackend().local_minutes_west(getCol().getCrt());
-        getCol().set_config("creationOffset", mins_west);
+    public void set_creation_offset() {
+        int minsWest = localMinutesWest(getCol().getCrt());
+        getCol().set_config("creationOffset", minsWest);
     }
 
     @Override

@@ -22,10 +22,12 @@
 
 package com.ichi2.libanki
 
-import BackendProto.Backend
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.av_tags_to_native
+import com.ichi2.libanki.backend.BackendUtils
+import com.ichi2.libanki.backend.model.to_backend_note
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
+import com.ichi2.utils.JSONObject
 import com.ichi2.utils.StringUtil
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
@@ -52,17 +54,17 @@ class TemplateManager {
     data class TemplateReplacement(val field_name: str, var current_text: str, val filters: List<str>)
     data class PartiallyRenderedCard(val qnodes: TemplateReplacementList, val anodes: TemplateReplacementList) {
         companion object {
-            fun from_proto(out: Backend.RenderCardOut): PartiallyRenderedCard {
+            fun from_proto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
                 val qnodes = nodes_from_proto(out.questionNodesList)
                 val anodes = nodes_from_proto(out.answerNodesList)
 
                 return PartiallyRenderedCard(qnodes, anodes)
             }
 
-            fun nodes_from_proto(nodes: List<Backend.RenderedTemplateNode>): TemplateReplacementList {
+            fun nodes_from_proto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
                 val results: TemplateReplacementList = mutableListOf()
                 for (node in nodes) {
-                    if (node.valueCase == Backend.RenderedTemplateNode.ValueCase.TEXT) {
+                    if (node.valueCase == anki.card_rendering.RenderedTemplateNode.ValueCase.TEXT) {
                         results.append(Pair(node.text, null))
                     } else {
                         results.append(
@@ -81,9 +83,9 @@ class TemplateManager {
                 return results
             }
 
-            fun av_tag_to_native(tag: Backend.AVTag): AvTag {
+            fun av_tag_to_native(tag: anki.card_rendering.AVTag): AvTag {
                 val value = tag.valueCase
-                return if (value == Backend.AVTag.ValueCase.SOUND_OR_VIDEO) {
+                return if (value == anki.card_rendering.AVTag.ValueCase.SOUND_OR_VIDEO) {
                     SoundOrVideoTag(filename = tag.soundOrVideo)
                 } else {
                     TTSTag(
@@ -96,7 +98,7 @@ class TemplateManager {
                 }
             }
 
-            fun av_tags_to_native(tags: List<Backend.AVTag>): List<AvTag> {
+            fun av_tags_to_native(tags: List<anki.card_rendering.AVTag>): List<AvTag> {
                 return tags.map { av_tag_to_native(it) }.toList()
             }
         }
@@ -126,7 +128,7 @@ class TemplateManager {
         internal var _template: Dict<str, str>? = template
         internal var _fill_empty: bool = fill_empty
         private var _fields: Dict<str, str>? = null
-        private var _note_type: NoteType = notetype ?: note.model()
+        internal var _note_type: NoteType = notetype ?: note.model()
 
         /**
          * if you need to store extra state to share amongst rendering
@@ -217,10 +219,10 @@ class TemplateManager {
             }
 
             val qtext = apply_custom_filters(partial.qnodes, this, front_side = null)
-            val qout = extract_av_tags(text = qtext, question_side = true)
+            val qout = col().backend.extractAVTags(text = qtext, questionSide = true)
 
             val atext = apply_custom_filters(partial.anodes, this, front_side = qout.text)
-            val aout = extract_av_tags(text = atext, question_side = false)
+            val aout = col().backend.extractAVTags(text = atext, questionSide = false)
 
             val output = TemplateRenderOutput(
                 question_text = qout.text,
@@ -238,12 +240,22 @@ class TemplateManager {
         }
 
         @RustCleanup("Remove when DroidBackend supports named arguments")
-        private fun extract_av_tags(text: str, question_side: Boolean) =
-            col().backend.extract_av_tags(text, question_side)
-
         fun _partially_render(): PartiallyRenderedCard {
-            val out: Backend.RenderCardOut = _col.backend.renderCardForTemplateManager(this)
-            return PartiallyRenderedCard.from_proto(out)
+            val proto = col().newBackend.run {
+                if (_template != null) {
+                    // card layout screen
+                    backend.renderUncommittedCardLegacy(
+                        _note.to_backend_note(),
+                        _card.ord,
+                        BackendUtils.to_json_bytes(JSONObject(_template)),
+                        _fill_empty,
+                    )
+                } else {
+                    // existing card (eg study mode)
+                    backend.renderExistingCard(_card.id, _browser)
+                }
+            }
+            return PartiallyRenderedCard.from_proto(proto)
         }
 
         /** Stores the rendered templates and extracted AV tags. */

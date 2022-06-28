@@ -22,7 +22,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -45,6 +44,7 @@ import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
+import com.ichi2.libanki.Consts;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
@@ -79,16 +79,6 @@ public class AnkiDroidApp extends Application {
      * TODO: Should be removed once app is fully functional under Scoped Storage
      */
     public static boolean TESTING_SCOPED_STORAGE = false;
-
-    /**
-     * Toggles opening the collection using schema 16 via the Rust backend
-     * and using the V16 versions of the major 'col' classes: models, decks, dconf, conf, tags
-     *
-     * UNSTABLE: DO NOT USE THIS ON A COLLECTION YOU CARE ABOUT.
-     *
-     * Set this and {@link com.ichi2.libanki.Consts#SCHEMA_VERSION} to 16.
-     */
-    public static boolean TESTING_USE_V16_BACKEND = false;
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
 

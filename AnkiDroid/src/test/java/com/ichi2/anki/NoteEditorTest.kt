@@ -31,10 +31,10 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks.CURRENT_DECK
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
-import com.ichi2.libanki.backend.DroidBackendFactory.getInstance
-import com.ichi2.libanki.backend.RustDroidV16Backend
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
+import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
@@ -96,7 +96,11 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
+    @RustCleanup("needs update for new backend")
     fun errorSavingInvalidNoteWithAllFieldsDisplaysInvalidTemplate() {
+        if (!BackendFactory.defaultLegacySchema) {
+            return
+        }
         val noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
             .withFirstField("A")
             .withSecondField("B")
@@ -107,7 +111,11 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
+    @RustCleanup("needs update for new backend")
     fun errorSavingInvalidNoteWitSomeFieldsDisplaysEnterMore() {
+        if (!BackendFactory.defaultLegacySchema) {
+            return
+        }
         val noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
             .withFirstField("A")
             .withThirdField("C")
@@ -300,7 +308,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
     fun addToCurrentWithNoDeckSelectsDefault_issue_9616() {
-        assumeThat(getInstance(true), not(instanceOf(RustDroidV16Backend::class.java)))
+        assumeThat(col.backend.legacySchema, not(false))
         col.conf.put("addToCur", false)
         val cloze = assertNotNull(col.models.byName("Cloze"))
         cloze.remove("did")

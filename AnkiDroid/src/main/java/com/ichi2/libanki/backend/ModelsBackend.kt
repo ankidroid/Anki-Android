@@ -18,12 +18,11 @@
 
 package com.ichi2.libanki.backend
 
-import BackendProto.Backend
 import android.content.res.Resources
 import com.ichi2.libanki.NoteType
 import com.ichi2.libanki.backend.BackendUtils.from_json_bytes
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
-import net.ankiweb.rsdroid.BackendV1
+import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
 
@@ -50,15 +49,15 @@ interface ModelsBackend {
 }
 
 @Suppress("unused")
-class ModelsBackendImpl(private val backend: BackendV1) : ModelsBackend {
+class ModelsBackendImpl(private val backend: Backend) : ModelsBackend {
     override fun get_notetype_names(): Sequence<NoteTypeNameID> {
-        return backend.notetypeNames.entriesList.map {
+        return backend.getNotetypeNames().map {
             NoteTypeNameID(it.name, it.id)
         }.asSequence()
     }
 
     override fun get_notetype_names_and_counts(): Sequence<NoteTypeNameIDUseCount> {
-        return backend.notetypeNamesAndCounts.entriesList.map {
+        return backend.getNotetypeNamesAndCounts().map {
             NoteTypeNameIDUseCount(it.id, it.name, it.useCount.toUInt())
         }.asSequence()
     }
@@ -69,20 +68,20 @@ class ModelsBackendImpl(private val backend: BackendV1) : ModelsBackend {
 
     override fun get_notetype_id_by_name(name: String): Optional<Long> {
         return try {
-            Optional.of(backend.getNotetypeIDByName(name).ntid)
+            Optional.of(backend.getNotetypeIdByName(name))
         } catch (ex: Resources.NotFoundException) {
             Optional.empty()
         }
     }
 
     override fun get_stock_notetype_legacy(): NoteType {
-        val fromJsonBytes = from_json_bytes(backend.getStockNotetypeLegacy(Backend.StockNoteType.STOCK_NOTE_TYPE_BASIC))
+        val fromJsonBytes = from_json_bytes(backend.getStockNotetypeLegacy(anki.notetypes.StockNotetype.Kind.BASIC))
         return NoteType(fromJsonBytes)
     }
 
     override fun cloze_numbers_in_note(flds: List<String>): List<Int> {
-        val note = Backend.Note.newBuilder().addAllFields(flds).build()
-        return backend.clozeNumbersInNote(note).numbersList
+        val note = anki.notes.Note.newBuilder().addAllFields(flds).build()
+        return backend.clozeNumbersInNote(note)
     }
 
     override fun remove_notetype(id: ntid) {
@@ -91,7 +90,7 @@ class ModelsBackendImpl(private val backend: BackendV1) : ModelsBackend {
 
     override fun add_or_update_notetype(model: NoteType, preserve_usn_and_mtime: Boolean): ntid {
         val toJsonBytes = to_json_bytes(model)
-        return backend.addOrUpdateNotetype(toJsonBytes, preserve_usn_and_mtime).ntid
+        return backend.addOrUpdateNotetype(toJsonBytes, preserve_usn_and_mtime, preserve_usn_and_mtime)
     }
 
     override fun after_note_updates(nids: List<Long>, mark_modified: Boolean, generate_cards: Boolean) {

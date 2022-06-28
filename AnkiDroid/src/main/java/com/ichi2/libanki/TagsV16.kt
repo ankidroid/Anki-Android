@@ -41,10 +41,12 @@ import java.util.regex.Pattern
 class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManager() {
 
     /** all tags */
-    override fun all(): List<String> = backend.all_tags().map { it.tag }
+    override fun all(): List<String> = backend.all_tags()
 
     /** List of (tag, usn) */
-    override fun allItems(): List<TagUsnTuple> = backend.all_tags()
+    override fun allItems(): List<TagUsnTuple> {
+        TODO("obsolete in new sync")
+    }
 
     /*
     # Registering and fetching tags
@@ -66,7 +68,6 @@ class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManage
             usn_ = usn
             preserve_usn = true
         }
-
         backend.register_tags(
             tags = " ".join(tags), preserve_usn = preserve_usn, usn = usn_, clear_first = clear_first
         )
@@ -128,14 +129,12 @@ class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManage
      * Tags replaced with an empty string will be removed.
      * @return changed count.
      */
-    fun bulk_update(
+    fun bulkRemove(
         nids: List<Long>,
         tags: String,
-        replacement: String,
-        regex: Boolean
     ): Int {
-        return backend.update_note_tags(
-            nids = nids, tags = tags, replacement = replacement, regex = regex
+        return backend.remove_note_tags(
+            nids = nids, tags = tags
         )
     }
 
@@ -146,7 +145,7 @@ class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManage
         if (add) {
             bulk_add(ids, tags)
         } else {
-            bulk_update(ids, tags, "", false)
+            bulkRemove(ids, tags)
         }
     }
 
