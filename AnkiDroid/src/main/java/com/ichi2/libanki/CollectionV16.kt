@@ -16,6 +16,7 @@
 package com.ichi2.libanki
 
 import android.content.Context
+import com.ichi2.async.CancelListener.Companion.isCancelled
 import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toProtoBuf
@@ -93,11 +94,15 @@ class CollectionV16(
         return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
     }
 
+    @RustCleanup("drop the PartialSearch handling in the browse screen, which slows things down")
     override fun findCards(
         search: String,
         order: SortOrder,
         task: CollectionTask.PartialSearch?
     ): List<Long> {
+        if (task?.isCancelled() == true) {
+            return listOf()
+        }
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
@@ -112,8 +117,12 @@ class CollectionV16(
         } catch (e: BackendInvalidInputException) {
             throw InvalidSearchException(e)
         }
-
-        task?.doProgress(cardIdsList)
+        for (id in cardIdsList) {
+            if (task?.isCancelled() == true) {
+                break
+            }
+            task?.doProgress(listOf(id))
+        }
         return cardIdsList
     }
 
