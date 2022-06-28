@@ -104,26 +104,47 @@ class Preferences : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
         setThemeLegacy(this)
-        enableToolbar().apply {
-            // Add a home button to the actionbar
+
+        val actionBar = enableToolbar().apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
         }
-        title = resources.getText(R.string.settings)
-
-        val fragment = getInitialFragment(intent)
 
         // onRestoreInstanceState takes priority, this is only set on init.
         mOldCollectionPath = CollectionHelper.getCollectionPath(this)
 
+        // Load initial fragment if activity is being first created.
+        // If activity is being recreated (i.e. savedInstanceState != null),
+        // which could happen on configuration changes as screen rotation and theme changes,
+        // don't replace the previous opened fragments
+        if (savedInstanceState == null) {
+            loadInitialFragment()
+        }
+        updateActionBarTitle(supportFragmentManager, actionBar)
+        supportFragmentManager.addOnBackStackChangedListener(mOnBackStackChangedListener)
+    }
+
+    /**
+     * Starts the first fragment for the [Preferences] activity,
+     * which by default is [HeaderFragment].
+     * The initial fragment may be overridden by putting the java class name
+     * of the fragment on an intent extra with the key [INITIAL_FRAGMENT_EXTRA]
+     */
+    private fun loadInitialFragment() {
+        val fragmentClassName = intent?.getStringExtra(INITIAL_FRAGMENT_EXTRA)
+        val initialFragment = if (fragmentClassName == null) {
+            HeaderFragment()
+        } else {
+            try {
+                Class.forName(fragmentClassName).newInstance() as Fragment
+            } catch (e: Exception) {
+                throw RuntimeException("Failed to load $fragmentClassName", e)
+            }
+        }
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.settings_container, fragment)
+            .replace(R.id.settings_container, initialFragment)
             .commit()
-
-        addFragmentsToBackStack(supportFragmentManager, intent)
-
-        supportFragmentManager.addOnBackStackChangedListener(mOnBackStackChangedListener)
     }
 
     override fun onDestroy() {
@@ -138,46 +159,6 @@ class Preferences : AnkiActivity() {
             fragment.preferenceScreen.title
         } else {
             getString(R.string.settings)
-        }
-    }
-
-    private fun getInitialFragment(intent: Intent?): Fragment {
-        if (intent == null) {
-            return HeaderFragment()
-        }
-        val fragmentClass = intent.getStringExtra(EXTRA_SHOW_FRAGMENT)
-            ?: return HeaderFragment()
-        return try {
-            Class.forName(fragmentClass).newInstance() as Fragment
-        } catch (e: Exception) {
-            throw RuntimeException("Failed to load $fragmentClass", e)
-        }
-    }
-
-    /**
-     * Adds fragments specified in [intent] extra to [fragmentManager] backstack,
-     * following the fragments array order
-     * @param intent with extra key [EXTRA_BACKSTACK_FRAGMENTS]
-     * and value of a array of fragments java class names
-     */
-    private fun addFragmentsToBackStack(fragmentManager: FragmentManager, intent: Intent?) {
-        if (intent == null) {
-            return
-        }
-        val fragmentClasses = intent.getStringArrayExtra(EXTRA_BACKSTACK_FRAGMENTS)
-            ?: return
-
-        for (fragmentClass in fragmentClasses) {
-            try {
-                val fragment = Class.forName(fragmentClass).newInstance() as Fragment
-                fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.settings_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
-            } catch (e: Exception) {
-                throw RuntimeException("Failed to load $fragmentClass", e)
-            }
         }
     }
 
@@ -716,10 +697,9 @@ class Preferences : AnkiActivity() {
 
         companion object {
             @JvmStatic
-            protected fun getSubscreenIntent(context: Context?, className: String): Intent {
-                val i = Intent(context, Preferences::class.java)
-                i.putExtra(EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$$className")
-                return i
+            protected fun getSubscreenIntent(context: Context?, javaClassName: String): Intent {
+                return Intent(context, Preferences::class.java)
+                    .putExtra(INITIAL_FRAGMENT_EXTRA, javaClassName)
             }
         }
     }
@@ -902,7 +882,7 @@ class Preferences : AnkiActivity() {
                     updateCurrentTheme()
 
                     if (previousThemeId != currentTheme.id) {
-                        restartActivityOnBackStackTop()
+                        requireActivity().recreate()
                     }
                 }
                 true
@@ -912,7 +892,7 @@ class Preferences : AnkiActivity() {
                 if (newValue != dayThemePref.value && !systemIsInNightMode && newValue != currentTheme.id) {
                     dayThemePref.value = newValue.toString()
                     updateCurrentTheme()
-                    restartActivityOnBackStackTop()
+                    requireActivity().recreate()
                 }
                 true
             }
@@ -921,24 +901,11 @@ class Preferences : AnkiActivity() {
                 if (newValue != nightThemePref.value && systemIsInNightMode && newValue != currentTheme.id) {
                     nightThemePref.value = newValue.toString()
                     updateCurrentTheme()
-                    restartActivityOnBackStackTop()
+                    requireActivity().recreate()
                 }
                 true
             }
             initializeCustomFontsDialog()
-        }
-
-        /**
-         * Restart [Preferences] activity with [AppearanceSettingsFragment]
-         * in the top of the backstack
-         */
-        private fun restartActivityOnBackStackTop() {
-            Timber.i("PreferenceActivity -- restartActivity()")
-            val intent = Intent(context, requireActivity().javaClass)
-            val fragmentClassNames = arrayOf(AppearanceSettingsFragment::class.java.name)
-            intent.putExtra(EXTRA_BACKSTACK_FRAGMENTS, fragmentClassNames)
-            requireContext().startActivity(intent)
-            requireActivity().finish()
         }
 
         /** Initializes the list of custom fonts shown in the preferences.  */
@@ -1161,7 +1128,7 @@ class Preferences : AnkiActivity() {
         companion object {
             @JvmStatic
             fun getSubscreenIntent(context: Context?): Intent {
-                return getSubscreenIntent(context, AdvancedSettingsFragment::class.java.simpleName)
+                return getSubscreenIntent(context, AdvancedSettingsFragment::class.java.name)
             }
         }
     }
@@ -1208,7 +1175,7 @@ class Preferences : AnkiActivity() {
         companion object {
             @JvmStatic
             fun getSubscreenIntent(context: Context?): Intent {
-                return getSubscreenIntent(context, CustomButtonsSettingsFragment::class.java.simpleName)
+                return getSubscreenIntent(context, CustomButtonsSettingsFragment::class.java.name)
             }
         }
     }
@@ -1256,12 +1223,6 @@ class Preferences : AnkiActivity() {
                     return@OnPreferenceChangeListener false
                 }
                 true
-            }
-        }
-
-        companion object {
-            fun getSubscreenIntent(context: Context?): Intent {
-                return getSubscreenIntent(context, CustomSyncServerSettingsFragment::class.java.simpleName)
             }
         }
     }
@@ -1430,12 +1391,7 @@ class Preferences : AnkiActivity() {
             SHOW_ESTIMATE, SHOW_PROGRESS,
             LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, NEW_TIMEZONE_HANDLING, AUTOMATIC_ANSWER_ACTION
         )
-        const val EXTRA_SHOW_FRAGMENT = ":android:show_fragment"
-
-        /**
-         * Key of intent extra used in [addFragmentsToBackStack]
-         */
-        const val EXTRA_BACKSTACK_FRAGMENTS = ":android:backstack_fragments"
+        const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
         /** Returns the hour that the collection rolls over to the next day  */
         @JvmStatic
