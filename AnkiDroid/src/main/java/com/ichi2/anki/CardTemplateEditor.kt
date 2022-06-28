@@ -736,7 +736,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         class SaveModelAndExitHandler(templateFragment: CardTemplateFragment) :
-            TaskListenerWithContext<CardTemplateFragment, Void?, Pair<Boolean, String?>>(
+            TaskListenerWithContext<CardTemplateFragment, Void?, Pair<Boolean, String?>?>(
                 templateFragment
             ) {
             @Suppress("Deprecation")
@@ -746,7 +746,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 mProgressDialog = StyledProgressDialog.show(context.mTemplateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model), context.resources.getString(R.string.saving_changes), false)
             }
 
-            override fun actualOnPostExecute(context: CardTemplateFragment, result: Pair<Boolean, String?>) {
+            override fun actualOnPostExecute(context: CardTemplateFragment, result: Pair<Boolean, String?>?) {
                 Timber.d("saveModelAndExitHandler::postExecute called")
                 val button = context.mTemplateEditor.findViewById<View>(R.id.action_confirm)
                 if (button != null) {
@@ -756,7 +756,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     mProgressDialog!!.dismiss()
                 }
                 context.mTemplateEditor.tempModel = null
-                if (result.first) {
+                if (result!!.first) {
                     context.mTemplateEditor.finishWithAnimation(
                         END
                     )

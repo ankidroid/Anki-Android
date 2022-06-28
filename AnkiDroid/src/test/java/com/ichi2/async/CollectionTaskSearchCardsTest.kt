@@ -51,7 +51,7 @@ class CollectionTaskSearchCardsTest : AbstractCollectionTaskTest() {
 
         val task = SearchCards("", NoOrdering(), cardsToRender, 0, 0)
         @Suppress("UNCHECKED_CAST")
-        val listener: TaskListener<List<CardCache>, SearchCardsResult> = mock(TaskListener::class.java) as TaskListener<List<CardCache>, SearchCardsResult>
+        val listener: TaskListener<List<CardCache>, SearchCardsResult?> = mock(TaskListener::class.java) as TaskListener<List<CardCache>, SearchCardsResult?>
 
         waitForTask(task, listener)
 

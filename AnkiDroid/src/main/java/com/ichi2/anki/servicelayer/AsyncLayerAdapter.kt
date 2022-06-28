@@ -29,22 +29,22 @@ import java.util.function.Consumer
 
 fun <TProgress, TResult> execute(
     task: AnkiTask<TProgress, TResult>,
-    listener: TaskListenerBuilder<TProgress, TResult>
+    listener: TaskListenerBuilder<TProgress, TResult?>
 ) {
     TaskManager.launchCollectionTask(task.toDelegate(), listener.toListener())
 }
 
-fun <TProgress, TResult> TaskListenerBuilder<TProgress, TResult>.execute(task: AnkiTask<TProgress, TResult>) {
+fun <TProgress, TResult> TaskListenerBuilder<TProgress, TResult?>.execute(task: AnkiTask<TProgress, TResult>) {
     TaskManager.launchCollectionTask(task.toDelegate(), this.toListener())
 }
 
-fun <TProgress, TResult> TaskListenerBuilder<TProgress, TResult>.toListener(): TaskListener<TProgress, TResult> {
-    return object : TaskListener<TProgress, TResult>() {
+fun <TProgress, TResult> TaskListenerBuilder<TProgress, TResult?>.toListener(): TaskListener<TProgress, TResult?> {
+    return object : TaskListener<TProgress, TResult?>() {
         override fun onPreExecute() {
             before?.run()
         }
 
-        override fun onPostExecute(result: TResult) {
+        override fun onPostExecute(result: TResult?) {
             after?.accept(result)
         }
 
