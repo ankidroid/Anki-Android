@@ -16,7 +16,6 @@
 
 package com.ichi2.anki
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.ColorDrawable
@@ -26,6 +25,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.StringRes
 import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -37,17 +37,34 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.themes.Themes
 
+/**
+ * This class handles the Filter Bottom Sheet present in the Card Browser
+ * This class is used to apply filters for search queries
+ */
 class FilterSheetBottomFragment :
     BottomSheetDialogFragment(),
     FlagsAdapter.OnItemClickListener,
     CollectionGetter {
     private lateinit var behavior: BottomSheetBehavior<View>
 
-    var flagSearchItems = mutableListOf<String>()
+    private var flagSearchItems = mutableListOf<String>()
 
     private lateinit var mFlagRecyclerView: RecyclerView
 
     private var mLastClickTime = 0
+
+    // flagName is displayed in filter sheet as the name of the filter
+    enum class Flags(@StringRes private val flagNameRes: Int, val flagNumber: Int) {
+        RED(R.string.menu_flag_card_one, 1),
+        ORANGE(R.string.menu_flag_card_two, 2),
+        GREEN(R.string.menu_flag_card_three, 3),
+        BLUE(R.string.menu_flag_card_four, 4),
+        PINK(R.string.menu_flag_card_five, 5),
+        TURQUOISE(R.string.menu_flag_card_six, 6),
+        PURPLE(R.string.menu_flag_card_seven, 7);
+
+        fun getFlagName(context: Context): String = context.getString(flagNameRes)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,29 +88,19 @@ class FilterSheetBottomFragment :
         return view
     }
 
-    @SuppressLint("VariableNamingDetector", "DirectToastMakeTextUsage")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         behavior = BottomSheetBehavior.from(requireView().parent as View)
 
         /* list of all flags */
-        val flags = listOf(
-            FilterItemFlag("Red flag", 1),
-            FilterItemFlag("Orange flag", 2),
-            FilterItemFlag("Green flag", 3),
-            FilterItemFlag("Blue flag", 4),
-            FilterItemFlag("Pink flag", 5),
-            FilterItemFlag("Turquoise flag", 6),
-            FilterItemFlag("Purple flag", 7)
-        )
 
-        val mFlagListAdapter = FlagsAdapter(activity, flags, this)
+        val flagListAdapter = FlagsAdapter(activity, Flags.values(), this)
 
         mFlagRecyclerView = requireView().findViewById(R.id.filter_bottom_flag_list)
         mFlagRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        mFlagRecyclerView.adapter = mFlagListAdapter
+        mFlagRecyclerView.adapter = flagListAdapter
         mFlagRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 activity,
@@ -150,7 +157,6 @@ class FilterSheetBottomFragment :
         }
 
         for (flagIndex in flagList.indices) {
-
             filterQuery.append(
                 if (flagIndex == 0) {
                     "flag:${flagList[flagIndex]}"
@@ -182,7 +188,7 @@ class FilterSheetBottomFragment :
      * TODO: background color should be retained if selected and swiped down
      */
 
-    override fun onFlagItemClicked(item: FilterItemFlag, position: Int) {
+    override fun onFlagItemClicked(item: Flags, position: Int) {
 
         val itemBackground: ColorDrawable = mFlagRecyclerView[position].background as ColorDrawable
         val itemTextView = mFlagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
@@ -227,28 +233,22 @@ class FilterSheetBottomFragment :
     }
 }
 
-class FilterItemFlag(val name: String, val flagNumber: Int)
-
 class FlagsAdapter(
     val context: Context?,
-    private var dataSet: List<FilterItemFlag>,
+    private var dataSet: Array<FilterSheetBottomFragment.Flags>,
     private val listener: OnItemClickListener
 ) :
     RecyclerView.Adapter<FlagsAdapter.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextView = view.findViewById(R.id.filter_list_item)
+        val item: TextView = view.findViewById(R.id.filter_list_item)
 
         fun bind(
-            currFlag: FilterItemFlag,
+            currFlag: FilterSheetBottomFragment.Flags,
             clickListener: OnItemClickListener,
             position: Int
         ) {
-            name.text = currFlag.name
+            item.text = currFlag.getFlagName(itemView.context)
 
             itemView.setOnClickListener {
                 clickListener.onFlagItemClicked(currFlag, position)
@@ -265,21 +265,15 @@ class FlagsAdapter(
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         val currTag = dataSet[position]
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-
         viewHolder.bind(currTag, listener, position)
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
     interface OnItemClickListener {
-        fun onFlagItemClicked(item: FilterItemFlag, position: Int)
+        fun onFlagItemClicked(item: FilterSheetBottomFragment.Flags, position: Int)
     }
 }
