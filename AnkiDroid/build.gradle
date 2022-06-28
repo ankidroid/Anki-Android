@@ -31,6 +31,9 @@ android {
     defaultConfig {
         applicationId "com.ichi2.anki"
         buildConfigField "Boolean", "CI", (System.getenv("CI") == "true").toString()
+        buildConfigField "Boolean", "LEGACY_SCHEMA", "true"
+        buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
+        buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
 
         // The version number is of the form:
         // <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
@@ -75,18 +78,20 @@ android {
             debuggable true
             splits.abi.universalApk = true // Build universal APK for debug always
             // Check Crash Reports page on developer wiki for info on ACRA testing
-            buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
-//            buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
-            buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
-            // #6009 Allow optional disabling of JaCoCo for general build (assembleDebug).
-            // jacocoDebug task was slow, hung, and wasn't required unless I wanted coverage
+            // buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
             if (project.rootProject.file('local.properties').exists()) {
                 Properties localProperties = new Properties()
                 localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+                // #6009 Allow optional disabling of JaCoCo for general build (assembleDebug).
+                // jacocoDebug task was slow, hung, and wasn't required unless I wanted coverage
                 testCoverageEnabled localProperties['enable_coverage'] != "false"
                 // not profiled: optimization for build times
                 if (localProperties['enable_languages'] == "false") {
                     android.defaultConfig.resConfigs "en"
+                }
+                // allow overriding default schema version
+                if (localProperties["legacy_schema"] != null) {
+                    buildConfigField "Boolean", "LEGACY_SCHEMA", localProperties["legacy_schema"]
                 }
             } else {
                 testCoverageEnabled true
@@ -101,8 +106,6 @@ android {
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
-            buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
         }
@@ -266,18 +269,19 @@ dependencies {
 
     implementation 'com.google.protobuf:protobuf-kotlin:3.21.2' // This is required when loading from a file
 
-    // To test with locally-built versions:
-    // - use the docs in Anki-Android-Backend to build a local version
-    // - switch the commented and uncommented lines below
-    // - run a gradle sync
-
-    implementation "io.github.david-allison-1:anki-android-backend:$ankidroid_backend_version"
-    testImplementation "io.github.david-allison-1:anki-android-backend-testing:$ankidroid_backend_version"
-    // implementation files("../../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")
-    // testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing-0.1.10.jar")
-
-    // On Windows, you can use something like
-    // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
+    Properties localProperties = new Properties()
+    if (project.rootProject.file('local.properties').exists()) {
+        localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+    }
+    if (localProperties['local_backend'] == "true") {
+        implementation files("../../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")
+        testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing-${ankidroid_backend_version}.jar")
+        // On Windows, you can use something like
+        // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
+    } else {
+        implementation "io.github.david-allison-1:anki-android-backend:$ankidroid_backend_version"
+        testImplementation "io.github.david-allison-1:anki-android-backend-testing:$ankidroid_backend_version"
+    }
 
     // A path for a testing library which provide Parameterized Test
     testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"

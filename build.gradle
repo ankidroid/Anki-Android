@@ -39,6 +39,12 @@ allprojects {
     apply plugin: "org.jlleitschuh.gradle.ktlint"
 }
 
+Properties localProperties = new Properties()
+if (project.rootProject.file('local.properties').exists()) {
+    localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+Boolean fatalWarnings = !(localProperties['fatal_warnings'] == "false")
+
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
     afterEvaluate { project ->
@@ -92,7 +98,7 @@ subprojects {
         */
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
             kotlinOptions {
-                allWarningsAsErrors = true
+                allWarningsAsErrors = fatalWarnings
                 freeCompilerArgs = ['-Xjvm-default=all']
             }
         }
