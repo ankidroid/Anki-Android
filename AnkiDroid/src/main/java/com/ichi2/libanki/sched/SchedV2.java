@@ -54,7 +54,6 @@ import net.ankiweb.rsdroid.RustCleanup;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;

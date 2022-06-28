@@ -423,4 +423,10 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
 
     <string name="already_logged_in">Already logged in</string>
+    <!--    notification-->
+    <string name="all_deck_notification_new_title">You have card due</string>
+    <plurals name="all_deck_notification_new_message">
+        <item quantity="one">%1$s card due</item>
+        <item quantity="other">%1$s cards due</item>
+    </plurals>
 </resources>
