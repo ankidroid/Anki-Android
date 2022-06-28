@@ -108,7 +108,7 @@ class FilterSheetBottomFragment :
             )
         )
 
-        /**
+        /*
          * Set the filter headings to be clickable:
          * Show/Hide the filter list on clicking
          */
