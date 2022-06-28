@@ -39,7 +39,7 @@ let anyError = false;
  */
 async function replacechars(fileName: string): Promise<boolean> {
     let errorOccured = false;
-    let newfilename = fileName + ".tmp";
+    const newfilename = fileName + ".tmp";
 
     const fileStream = fs.createReadStream(fileName);
 
@@ -63,7 +63,7 @@ async function replacechars(fileName: string): Promise<boolean> {
             line = line.replace(/…/g, "&#8230;");
 
             // valid format for xml file ankidroid is %1$s but some translator may put $1s$, so it needs to correct/replace
-            let regexp = new RegExp(/%[0-9]s\$/g);
+            const regexp = new RegExp(/%[0-9]s\$/g);
             if (line.search(regexp) != -1) {
                 errorOccured = true;
             }
@@ -126,7 +126,7 @@ async function update(
     language = "",
 ): Promise<boolean> {
     if (f == "14-marketdescription") {
-        let newfile = path.join(MARKET_DESC_LANG + language + fileExt);
+        const newfile = path.join(MARKET_DESC_LANG + language + fileExt);
 
         fs.writeFileSync(newfile, translatedContent);
 
@@ -166,14 +166,14 @@ async function update(
  * Update translated I18n files in res/value dir
  */
 export async function updateI18nFiles() {
-    for (let language of LANGUAGES) {
+    for (const language of LANGUAGES) {
         // Regional files need a marker in Android
         // https://developer.android.com/guide/topics/resources/providing-resources#AlternativeResources -
         // The language is defined by a two-letter ISO 639-1 language code, optionally followed by a two letter ISO 3166-1-alpha-2 region code (preceded by lowercase r).
         //
         // The codes are not case-sensitive; the r prefix is used to distinguish the region portion. You cannot specify a region alone.
         let androidLanguage = "";
-        let languageCode = language.split("-", 1)[0];
+        const languageCode = language.split("-", 1)[0];
         if (LOCALIZED_REGIONS.includes(languageCode)) {
             androidLanguage = language.replace("-", "-r"); // zh-CW becomes zh-rCW
         } else {
@@ -201,13 +201,13 @@ export async function updateI18nFiles() {
         console.log(
             "\nCopying language files from " + language + " to " + androidLanguage,
         );
-        let valuesDirectory = path.join(RES_VALUES_LANG_DIR + androidLanguage + "/");
+        const valuesDirectory = path.join(RES_VALUES_LANG_DIR + androidLanguage + "/");
         createDirIfNotExisting(valuesDirectory);
 
         // Copy localization files, mask chars and append gnu/gpl licence
-        for (let f of I18N_FILES) {
-            let fileExt = fileExtFor(f);
-            let translatedContent = fs.readFileSync(
+        for (const f of I18N_FILES) {
+            const fileExt = fileExtFor(f);
+            const translatedContent = fs.readFileSync(
                 TEMP_DIR + "/" + language + "/" + f + fileExt,
                 "utf-8",
             );

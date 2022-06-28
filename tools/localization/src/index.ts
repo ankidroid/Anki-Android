@@ -26,7 +26,7 @@ import { buildAndDownload, extractZip } from "./download";
 import { updateI18nFiles } from "./update";
 import { TEMP_DIR } from "./constants";
 
-process.argv.forEach(function (value, index, array) {
+process.argv.forEach(function (value) {
     switch (value) {
         case "upload":
             console.log("uploading source strings to crowdin...");

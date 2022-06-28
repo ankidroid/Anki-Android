@@ -18,8 +18,7 @@ import fs from "fs";
 import axios from "axios";
 import crowdin from "@crowdin/crowdin-api-client";
 import { PROJECT_ID, credentialsConst } from "./constants";
-
-const extract = require("extract-zip");
+import extract from "extract-zip";
 
 // initialization of crowdin client
 const { translationsApi } = new crowdin(credentialsConst);

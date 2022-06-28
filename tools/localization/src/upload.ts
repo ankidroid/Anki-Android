@@ -34,7 +34,7 @@ export async function uploadI18nFiles() {
     const files = await sourceFilesApi.listProjectFiles(PROJECT_ID);
 
     try {
-        for (let file of I18N_FILES) {
+        for (const file of I18N_FILES) {
             let I18N_FILE_TARGET_NAME = `${file}.xml`;
             let I18N_FILE_SOURCE_NAME = `${I18N_FILES_DIR}${I18N_FILE_TARGET_NAME}`;
 
@@ -50,12 +50,12 @@ export async function uploadI18nFiles() {
             }
 
             if (fs.existsSync(I18N_FILE_SOURCE_NAME)) {
-                let data = fs.readFileSync(I18N_FILE_SOURCE_NAME, {
+                const data = fs.readFileSync(I18N_FILE_SOURCE_NAME, {
                     encoding: "utf-8",
                 });
                 if (data) {
                     // if exists then update, else create new file
-                    let id = idOfFileOrNull(I18N_FILE_TARGET_NAME, files);
+                    const id = idOfFileOrNull(I18N_FILE_TARGET_NAME, files);
                     if (id != null) {
                         console.log(
                             `Update of Main File ${I18N_FILE_TARGET_NAME} from ${I18N_FILE_SOURCE_NAME}`,
@@ -83,7 +83,7 @@ export async function uploadI18nFiles() {
  * @param fileName name of the file
  * @param fileContent file conten
  */
-async function createFile(fileName: string, fileContent: any) {
+async function createFile(fileName: string, fileContent: string) {
     const storage = await uploadStorageApi.addStorage(fileName, fileContent);
     const file = await sourceFilesApi.createFile(PROJECT_ID, {
         name: fileName,
@@ -117,7 +117,7 @@ async function updateFile(id: number, fileName: string, fileContent: string) {
  * @returns id if filename stored on Crowdin else null
  */
 function idOfFileOrNull(fileName: string, files: ResponseList<SourceFilesModel.File>) {
-    for (let file of files.data) {
+    for (const file of files.data) {
         if (file.data.name === fileName) {
             return file.data.id;
         }
