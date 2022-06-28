@@ -139,7 +139,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             Themes.systemIsInNightMode = newNightModeStatus;
             if (Themes.themeFollowsSystem()) {
                 Themes.updateCurrentTheme();
-                restartActivity();
+                recreate();
             }
         }
     }
