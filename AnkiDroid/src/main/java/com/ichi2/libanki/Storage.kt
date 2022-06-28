@@ -64,7 +64,7 @@ object Storage {
             if (!File(path).exists()) {
                 throw UnknownDatabaseVersionException(FileNotFoundException(path))
             }
-            val db = DB.withFramework(context, path)
+            val db = DB.withAndroidFramework(context, path)
             val result = db.queryScalar("SELECT ver FROM col")
             db.close()
             result

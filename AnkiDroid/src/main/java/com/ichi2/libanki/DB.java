@@ -72,7 +72,7 @@ public class DB {
     /**
      * Open a connection using the system framework.
      */
-    public static DB withFramework(@NonNull Context context, @NonNull String path) {
+    public static DB withAndroidFramework(@NonNull Context context, @NonNull String path) {
         SupportSQLiteDatabase db = AnkiSupportSQLiteDatabase.withFramework(context, path, new SupportSQLiteOpenHelperCallback(1));
         db.disableWriteAheadLogging();
         db.query("PRAGMA synchronous = 2", null);
@@ -94,6 +94,10 @@ public class DB {
 
     /**
      * The default AnkiDroid SQLite database callback.
+     *
+     * IMPORTANT: this disables the default Android behaviour of removing the file if corruption
+     * is encountered.
+     *
      * We do not handle versioning or connection config using the framework APIs, so those methods
      * do nothing in our implementation. However, we on corruption events we want to send messages but
      * not delete the database.
@@ -103,7 +107,11 @@ public class DB {
     public static class SupportSQLiteOpenHelperCallback extends AnkiSupportSQLiteDatabase.DefaultDbCallback {
         protected SupportSQLiteOpenHelperCallback(int version) { super(version); }
 
-        /** Send error message, but do not call super() which would delete the database */
+        /** Send error message when corruption is encountered. We don't call super() as we don't accidentally
+         * want to opt-in to the standard Android behaviour of removing the corrupted file, but as we're
+         * inheriting from DefaultDbCallback which does not call super either, it would be technically safe
+         * if we did so. */
+        @Override
         public void onCorruption(SupportSQLiteDatabase db) {
             Timber.e("The database has been corrupted: %s", db.getPath());
             CrashReportService.sendExceptionReport(new RuntimeException("Database corrupted"), "DB.MyDbErrorHandler.onCorruption", "Db has been corrupted: " + db.getPath());

@@ -39,6 +39,7 @@ import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.KotlinCleanup;
 
 import net.ankiweb.rsdroid.BackendFactory;
+import net.ankiweb.rsdroid.RustCleanup;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -787,6 +788,7 @@ public class SchedV2Test extends RobolectricTest {
 
 
     @Test
+    @RustCleanup("the legacySchema special case can be removed")
     public void test_review_limits() throws Exception {
         Collection col = getColV2();
 

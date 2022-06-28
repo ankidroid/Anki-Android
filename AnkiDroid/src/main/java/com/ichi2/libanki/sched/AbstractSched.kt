@@ -182,10 +182,11 @@ abstract class AbstractSched(val col: Collection) {
     abstract fun deckDueTree(cancelListener: CancelListener?): List<TreeNode<DeckDueTreeNode>>?
 
     /**
-     * @return the due tree. Never null.
+     * @return the due tree.
      */
     fun deckDueTree(): List<TreeNode<DeckDueTreeNode>> {
-        return deckDueTree(null)!!
+        // without a cancelListener, guaranteed not null
+        return deckDueTree(cancelListener = null)!!
     }
 
     /**

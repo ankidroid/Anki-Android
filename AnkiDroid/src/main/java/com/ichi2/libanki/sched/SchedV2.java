@@ -575,6 +575,7 @@ public class SchedV2 extends AbstractSched {
      It may takes a lot of time to compute the number of card, it
      requires multiple database access by deck.  Ignoring this number
      lead to the creation of a tree more quickly.*/
+    @RustCleanup("consider updating callers to use col.deckTreeLegacy() directly, and removing this")
     @Override
     public @NonNull
     List<? extends TreeNode<? extends AbstractDeckTreeNode>> quickDeckDueTree() {

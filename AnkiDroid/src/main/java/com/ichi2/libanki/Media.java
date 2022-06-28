@@ -159,7 +159,7 @@ public class Media {
         String path = dir() + ".ad.db2";
         File dbFile = new File(path);
         boolean create = !(dbFile.exists());
-        mDb = DB.withFramework(mCol.getContext(), path);
+        mDb = DB.withAndroidFramework(mCol.getContext(), path);
         if (create) {
             _initDB();
         }
@@ -1048,7 +1048,7 @@ public class Media {
 
         new File(path).delete();
 
-        mDb = DB.withFramework(mCol.getContext(), path);
+        mDb = DB.withAndroidFramework(mCol.getContext(), path);
         _initDB();
     }
 

@@ -27,7 +27,7 @@ object DbUtils {
         check(!Storage.isInMemory) { "cannot use performQuery in memory" }
         var db: DB? = null
         try {
-            db = DB.withFramework(context, CollectionHelper.getCollectionPath(context))
+            db = DB.withAndroidFramework(context, CollectionHelper.getCollectionPath(context))
             db.executeScript(query)
         } finally {
             db?.close()
