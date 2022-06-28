@@ -19,6 +19,7 @@
 package com.ichi2.themes
 
 import android.content.Context
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
@@ -105,12 +106,14 @@ object Themes {
     }
 
     @JvmStatic
+    @ColorInt
     fun getColorFromAttr(context: Context?, colorAttr: Int): Int {
         val attrs = intArrayOf(colorAttr)
         return getColorFromAttr(context!!, attrs)[0]
     }
 
     @JvmStatic
+    @ColorInt
     fun getColorFromAttr(context: Context, attrs: IntArray): IntArray {
         val ta = context.obtainStyledAttributes(attrs)
         for (i in attrs.indices) {
