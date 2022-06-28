@@ -47,6 +47,8 @@ import com.ichi2.utils.ClipboardUtil.hasImage
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 class FieldEditText : FixedEditText, NoteService.NoteField {
     override var ord = 0
@@ -212,17 +214,13 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun pastePlainText(): Boolean {
         getPlainText(clipboard, context)?.let { pasted ->
-            selectionStart.run {
-                // setText also sets selectionStart to 0
-                setText(
-                    text!!.substring(
-                        0,
-                        selectionStart
-                    ) + pasted + text!!.substring(selectionEnd)
-                )
-                setSelection(this + pasted.length)
-                return true
-            }
+            val start = min(selectionStart, selectionEnd)
+            val end = max(selectionStart, selectionEnd)
+            setText(
+                text!!.substring(0, start) + pasted + text!!.substring(end)
+            )
+            setSelection(start + pasted.length)
+            return true
         }
         return false
     }

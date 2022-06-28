@@ -329,6 +329,14 @@ class NoteEditorTest : RobolectricTest() {
         assertEquals(5, field.selectionStart)
         assertEquals(5, field.selectionEnd)
 
+        // test pasting in the middle (cursor mode: selecting backwards)
+        editor.setField(0, "012345")
+        field.setSelection(2, 1) // selecting "1"
+        assertTrue(field.pastePlainText())
+        assertEquals("0text2345", field.fieldText)
+        assertEquals(5, field.selectionStart)
+        assertEquals(5, field.selectionEnd)
+
         // test pasting in the middle (cursor mode: normal)
         editor.setField(0, "012345")
         field.setSelection(4) // after "3"
