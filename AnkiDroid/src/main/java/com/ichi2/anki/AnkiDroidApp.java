@@ -147,7 +147,9 @@ public class AnkiDroidApp extends Application {
         BackendFactory.setDefaultLegacySchema(BuildConfig.LEGACY_SCHEMA);
         try {
             // enable debug logging of sync actions
-            Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug", false);
+            if (BuildConfig.DEBUG) {
+                Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug", false);
+            }
         } catch (Exception exc) {
         }
         // Uncomment the following lines to see a log of all SQL statements

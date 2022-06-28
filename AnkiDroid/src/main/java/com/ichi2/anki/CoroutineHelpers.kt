@@ -105,7 +105,10 @@ suspend fun <T> CollectionV16.opWithProgress(
     }
 }
 
-suspend fun monitorProgress(backend: Backend, op: (Progress) -> Unit) {
+/**
+ * Poll the backend for progress info every 100ms until cancelled by caller.
+ */
+private suspend fun monitorProgress(backend: Backend, op: (Progress) -> Unit) {
     while (true) {
         val progress = backend.latestProgress()
         // on main thread, so op can update UI

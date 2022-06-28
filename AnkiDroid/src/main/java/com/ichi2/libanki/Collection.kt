@@ -73,7 +73,7 @@ import java.util.regex.Pattern
 @KotlinCleanup("TextUtils -> Kotlin isNotEmpty()")
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
 @KotlinCleanup("ids.size != 0")
-open class Collection constructor(
+open class Collection(
     /**
      * @return The context that created this Collection.
      */
