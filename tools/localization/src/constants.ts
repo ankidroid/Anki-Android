@@ -1,7 +1,7 @@
 /**
  * @author
  * AnkiDroid Open Source Team
- * 
+ *
  * @license
  * Copyright (c) AnkiDroid. All rights reserved.
  * Licensed under the GPL-3.0 license. See LICENSE file in the project root for details.
@@ -11,17 +11,17 @@ import path from "path";
 import { Credentials } from "@crowdin/crowdin-api-client";
 import { createDirIfNotExisting } from "./update";
 
-require('dotenv').config({ path: path.join(__dirname, "../.env") });
+require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 const CROWDIN_API_KEY = process.env.CROWDIN_API_KEY ?? "";
 
 // credentials
 export const credentialsConst: Credentials = {
-    token: CROWDIN_API_KEY
+    token: CROWDIN_API_KEY,
 };
 
 export const PROJECT_ID = 520224;
-export const TITLE_STR = 'AnkiDroid Flashcards';
+export const TITLE_STR = "AnkiDroid Flashcards";
 
 const RES_DIR = "../../../AnkiDroid/src/main/res";
 const DOCS_MARKET_DIR = "../../../docs/marketing/localized_description";
@@ -31,33 +31,45 @@ createDirIfNotExisting(TEMP_DIR);
 
 export const I18N_FILES_DIR = path.join(__dirname, RES_DIR, "values/");
 export const RES_VALUES_LANG_DIR = path.join(__dirname, RES_DIR, "values-");
-export const TITLE_FILE = path.join(__dirname, DOCS_MARKET_DIR, 'ankidroid-titles.txt');
-export const MARKET_DESC_FILE = path.join(__dirname, DOCS_MARKET_DIR, "marketdescription.txt");
-export const OLD_VER_MARKET_DESC_FILE = path.join(__dirname, DOCS_MARKET_DIR, 'oldVersionJustToCompareWith.txt');
-export const MARKET_DESC_LANG = path.join(__dirname, DOCS_MARKET_DIR, 'marketdescription-');
+export const TITLE_FILE = path.join(__dirname, DOCS_MARKET_DIR, "ankidroid-titles.txt");
+export const MARKET_DESC_FILE = path.join(
+    __dirname,
+    DOCS_MARKET_DIR,
+    "marketdescription.txt",
+);
+export const OLD_VER_MARKET_DESC_FILE = path.join(
+    __dirname,
+    DOCS_MARKET_DIR,
+    "oldVersionJustToCompareWith.txt",
+);
+export const MARKET_DESC_LANG = path.join(
+    __dirname,
+    DOCS_MARKET_DIR,
+    "marketdescription-",
+);
 
 export const I18N_FILES = [
-    '01-core',
-    '02-strings',
-    '03-dialogs',
-    '04-network',
-    '05-feedback',
-    '06-statistics',
-    '07-cardbrowser',
-    '08-widget',
-    '09-backup',
-    '10-preferences',
-    '11-arrays',
-    '12-dont-translate',
-    '14-marketdescription',
-    '15-markettitle',
-    '16-multimedia-editor',
-    '17-model-manager',
-    '18-standard-models'
+    "01-core",
+    "02-strings",
+    "03-dialogs",
+    "04-network",
+    "05-feedback",
+    "06-statistics",
+    "07-cardbrowser",
+    "08-widget",
+    "09-backup",
+    "10-preferences",
+    "11-arrays",
+    "12-dont-translate",
+    "14-marketdescription",
+    "15-markettitle",
+    "16-multimedia-editor",
+    "17-model-manager",
+    "18-standard-models",
 ];
 
 // languages which are localized for more than one region
-export const LOCALIZED_REGIONS = ['es', 'pt', 'zh'];
+export const LOCALIZED_REGIONS = ["es", "pt", "zh"];
 
 // The rules for making changes here:
 // 1) Add a language if 01-core.xml is translated
@@ -66,16 +78,102 @@ export const LOCALIZED_REGIONS = ['es', 'pt', 'zh'];
 // 4) If you add a language with a regional variant (anything with a hyphen) and a different variant
 //    with the same root exists, you must add the root to 'localizedRegions'
 //    e.g., 'ga-IE' exists with no other 'ga-' entries yet, to add 'ga-EN', also add ga to localizedRegions
-export const LANGUAGES = ['af', 'am', 'ar', 'az', 'be', 'bg', 'bn', 'ca', 'ckb', 'cs', 'da', 'de', 'el', 'eo',
-    'es-AR', 'es-ES', 'et', 'eu', 'fa', 'fi', 'fil', 'fr', 'fy-NL', 'ga-IE', 'gl', 'got',
-    'gu-IN', 'he', 'hi', 'hr', 'hu', 'hy-AM', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk',
-    'km', 'kn', 'ko', 'ku', 'ky', 'lt', 'lv', 'mk', 'ml-IN', 'mn', 'mr', 'ms', 'my', 'nl', 'nn-NO', 'no',
-    'or', 'pa-IN', 'pl', 'pt-BR', 'pt-PT', 'ro', 'ru', 'sat', 'sc', 'sk', 'sl', 'sq', 'sr', 'ss', 'sv-SE',
-    'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tl', 'tn', 'tr', 'ts', 'tt-RU', 'uk', 'ur-PK',
-    'uz', 've', 'vi', 'wo', 'xh', 'yu', 'zh-CN', 'zh-TW', 'zu'];
+export const LANGUAGES = [
+    "af",
+    "am",
+    "ar",
+    "az",
+    "be",
+    "bg",
+    "bn",
+    "ca",
+    "ckb",
+    "cs",
+    "da",
+    "de",
+    "el",
+    "eo",
+    "es-AR",
+    "es-ES",
+    "et",
+    "eu",
+    "fa",
+    "fi",
+    "fil",
+    "fr",
+    "fy-NL",
+    "ga-IE",
+    "gl",
+    "got",
+    "gu-IN",
+    "he",
+    "hi",
+    "hr",
+    "hu",
+    "hy-AM",
+    "id",
+    "is",
+    "it",
+    "ja",
+    "jv",
+    "ka",
+    "kk",
+    "km",
+    "kn",
+    "ko",
+    "ku",
+    "ky",
+    "lt",
+    "lv",
+    "mk",
+    "ml-IN",
+    "mn",
+    "mr",
+    "ms",
+    "my",
+    "nl",
+    "nn-NO",
+    "no",
+    "or",
+    "pa-IN",
+    "pl",
+    "pt-BR",
+    "pt-PT",
+    "ro",
+    "ru",
+    "sat",
+    "sc",
+    "sk",
+    "sl",
+    "sq",
+    "sr",
+    "ss",
+    "sv-SE",
+    "sw",
+    "ta",
+    "te",
+    "tg",
+    "th",
+    "ti",
+    "tl",
+    "tn",
+    "tr",
+    "ts",
+    "tt-RU",
+    "uk",
+    "ur-PK",
+    "uz",
+    "ve",
+    "vi",
+    "wo",
+    "xh",
+    "yu",
+    "zh-CN",
+    "zh-TW",
+    "zu",
+];
 
-export const XML_LICENSE_HEADER =
-`<?xml version="1.0" encoding="utf-8"?> 
+export const XML_LICENSE_HEADER = `<?xml version="1.0" encoding="utf-8"?> 
  <!--
  ~ THIS IS AN AUTOMATICALLY GENERATED FILE. PLEASE DO NOT EDIT THIS FILE. 
  ~ 1. If you would like to add/delete/modify the original translatable strings, follow instructions here:  https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#adding-translations  

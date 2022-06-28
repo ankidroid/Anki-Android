@@ -1,40 +1,51 @@
 /**
  * @author
  * AnkiDroid Open Source Team
- * 
+ *
  * @license
  * Copyright (c) AnkiDroid. All rights reserved.
  * Licensed under the GPL-3.0 license. See LICENSE file in the project root for details.
- * 
+ *
  * @description
- * updateI18nFiles() to update files in AnkiDroid/src/main/res/values/ with downloaded files from crowdin. 
+ * updateI18nFiles() to update files in AnkiDroid/src/main/res/values/ with downloaded files from crowdin.
  * The downloaded file needs to extract first with 'yarn start extract'.
  * It's expected to be called through 'yarn start update'.
  */
 
-import fs from 'fs';
+import fs from "fs";
 import path from "path";
-import readline from 'readline';
-import { LANGUAGES, LOCALIZED_REGIONS, TEMP_DIR, TITLE_STR, TITLE_FILE, I18N_FILES, XML_LICENSE_HEADER, RES_VALUES_LANG_DIR, OLD_VER_MARKET_DESC_FILE, MARKET_DESC_LANG } from "./constants";
+import readline from "readline";
+import {
+    LANGUAGES,
+    LOCALIZED_REGIONS,
+    TEMP_DIR,
+    TITLE_STR,
+    TITLE_FILE,
+    I18N_FILES,
+    XML_LICENSE_HEADER,
+    RES_VALUES_LANG_DIR,
+    OLD_VER_MARKET_DESC_FILE,
+    MARKET_DESC_LANG,
+} from "./constants";
 
 let anyError = false;
 
 /**
  * Replace invalid chars in xml files in res/value dir
  * e.g. %1s$ is invalid, %1$s is valid
- * 
+ *
  * @param fileName name of the file in res/value dir
  * @returns boolean true if any corrections were made, false if no corrections were needed
  */
 async function replacechars(fileName: string): Promise<boolean> {
     let errorOccured = false;
-    let newfilename = fileName + ".tmp"
+    let newfilename = fileName + ".tmp";
 
     const fileStream = fs.createReadStream(fileName);
 
     const rl = readline.createInterface({
         input: fileStream,
-        crlfDelay: Infinity
+        crlfDelay: Infinity,
     });
 
     for await (let line of rl) {
@@ -46,12 +57,12 @@ async function replacechars(fileName: string): Promise<boolean> {
                 line = "    <item>0</item>\n";
             }
 
-            line = line.replace(/\'/g, '\\\'');
-            line = line.replace(/\\\\\'/g, '\\\'');
-            line = line.replace(/\n\s/g, '\\n');
+            line = line.replace(/\'/g, "\\'");
+            line = line.replace(/\\\\\'/g, "\\'");
+            line = line.replace(/\n\s/g, "\\n");
             line = line.replace(/…/g, "&#8230;");
 
-            // valid format for xml file ankidroid is %1$s but some translator may put $1s$, so it needs to correct/replace 
+            // valid format for xml file ankidroid is %1$s but some translator may put $1s$, so it needs to correct/replace
             let regexp = new RegExp(/%[0-9]s\$/g);
             if (line.search(regexp) != -1) {
                 errorOccured = true;
@@ -62,12 +73,12 @@ async function replacechars(fileName: string): Promise<boolean> {
     }
 
     fs.rename(newfilename, fileName, function (err) {
-        if (err) throw err
-        console.log(`File ${fileName} successfully copied`)
-    })
+        if (err) throw err;
+        console.log(`File ${fileName} successfully copied`);
+    });
 
     if (errorOccured) {
-        console.log('Error in file ' + fileName)
+        console.log("Error in file " + fileName);
         return false;
     }
 
@@ -76,19 +87,19 @@ async function replacechars(fileName: string): Promise<boolean> {
 
 /**
  * Get file extension for the file
- * 
+ *
  * @param f filename
  * @returns extension string
  */
 function fileExtFor(f: string): string {
-    if (f == '14-marketdescription') return '.txt';
-    else if (f == '15-markettitle') return '.txt';
-    else return '.xml';
+    if (f == "14-marketdescription") return ".txt";
+    else if (f == "15-markettitle") return ".txt";
+    else return ".xml";
 }
 
 /**
  * Create language resource directory in res/value dir
- * 
+ *
  * @param directory name of the directory
  */
 export function createDirIfNotExisting(directory: string) {
@@ -99,16 +110,22 @@ export function createDirIfNotExisting(directory: string) {
 
 /**
  * For existing directory update xml files in res/value dir for each languages
- * 
+ *
  * @param valuesDirectory res/value dir for the language
  * @param translatedContent content of target language xml file
  * @param f txt, xml file name
- * @param fileExt extension of the file 
+ * @param fileExt extension of the file
  * @param language language code
  * @returns boolean for successfully replaced invalid string and copied updated files
  */
-async function update(valuesDirectory: string, translatedContent: string, f: string, fileExt: string, language = ''): Promise<boolean> {
-    if (f == '14-marketdescription') {
+async function update(
+    valuesDirectory: string,
+    translatedContent: string,
+    f: string,
+    fileExt: string,
+    language = "",
+): Promise<boolean> {
+    if (f == "14-marketdescription") {
         let newfile = path.join(MARKET_DESC_LANG + language + fileExt);
 
         fs.writeFileSync(newfile, translatedContent);
@@ -118,28 +135,28 @@ async function update(valuesDirectory: string, translatedContent: string, f: str
 
         for (let i = 0; i < oldContent.length; i++) {
             if (oldContent[i] != newContent[i]) {
-                console.log('File ' + newfile + ' successfully copied');
+                console.log("File " + newfile + " successfully copied");
                 return true;
             }
         }
 
         fs.unlinkSync(newfile);
-        console.log('File marketdescription is not translated into language ' + language);
+        console.log(
+            "File marketdescription is not translated into language " + language,
+        );
         return true;
-
-    } else if (f == '15-markettitle') {
+    } else if (f == "15-markettitle") {
         const translatedTitle = translatedContent.split("\n")[0];
 
         if (TITLE_STR != translatedTitle) {
-            fs.appendFileSync(TITLE_FILE, "\n" + language + ': ' + translatedTitle);
-            console.log('Added translated title');
+            fs.appendFileSync(TITLE_FILE, "\n" + language + ": " + translatedTitle);
+            console.log("Added translated title");
         } else {
-            console.log('Title not translated');
+            console.log("Title not translated");
         }
         return true;
-
     } else {
-        const newfile = valuesDirectory + f + '.xml';
+        const newfile = valuesDirectory + f + ".xml";
         fs.writeFileSync(newfile, translatedContent);
         return replacechars(newfile);
     }
@@ -158,9 +175,9 @@ export async function updateI18nFiles() {
         let androidLanguage = "";
         let languageCode = language.split("-", 1)[0];
         if (LOCALIZED_REGIONS.includes(languageCode)) {
-            androidLanguage = language.replace('-', '-r') // zh-CW becomes zh-rCW
+            androidLanguage = language.replace("-", "-r"); // zh-CW becomes zh-rCW
         } else {
-            androidLanguage = language.split('-', 1)[0] // Example: es-ES becomes es
+            androidLanguage = language.split("-", 1)[0]; // Example: es-ES becomes es
         }
 
         switch (language) {
@@ -181,19 +198,32 @@ export async function updateI18nFiles() {
                 break;
         }
 
-        console.log("\nCopying language files from " + language + " to " + androidLanguage);
+        console.log(
+            "\nCopying language files from " + language + " to " + androidLanguage,
+        );
         let valuesDirectory = path.join(RES_VALUES_LANG_DIR + androidLanguage + "/");
         createDirIfNotExisting(valuesDirectory);
 
         // Copy localization files, mask chars and append gnu/gpl licence
         for (let f of I18N_FILES) {
             let fileExt = fileExtFor(f);
-            let translatedContent = fs.readFileSync(TEMP_DIR + "/" + language + "/" + f + fileExt, "utf-8");
-            anyError = !await update(valuesDirectory, translatedContent, f, fileExt, language);
+            let translatedContent = fs.readFileSync(
+                TEMP_DIR + "/" + language + "/" + f + fileExt,
+                "utf-8",
+            );
+            anyError = !(await update(
+                valuesDirectory,
+                translatedContent,
+                f,
+                fileExt,
+                language,
+            ));
         }
 
         if (anyError) {
-            console.error("At least one file of the last handled language contains an error.");
+            console.error(
+                "At least one file of the last handled language contains an error.",
+            );
             anyError = true;
         }
     }

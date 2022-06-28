@@ -1,25 +1,27 @@
 {
-  "name": "ankidroid-localization",
-  "version": "1.0.0",
-  "description": "Extract localization for AnkiDroid using Crowdin JS client api",
-  "main": "index.ts",
-  "scripts": {
-    "build": "tsc",
-    "start": "node ./dist/index.js",
-    "dev": "ts-node ./src/index.ts"
-  },
-  "repository": "https://github.com/ankidroid/Anki-Android",
-  "author": "AnkiDroid Open Source Team",
-  "license": "GPL-3.0",
-  "dependencies": {
-    "@crowdin/crowdin-api-client": "^1.18.1",
-    "@types/node": "^17.0.40",
-    "axios": "^0.27.2",
-    "dotenv": "^16.0.1",
-    "extract-zip": "^2.0.1",
-    "typescript": "^4.7.3"
-  },
-  "devDependencies": {
-    "ts-node": "^10.8.1"
-  }
+    "name": "ankidroid-localization",
+    "version": "1.0.0",
+    "description": "Extract localization for AnkiDroid using Crowdin JS client api",
+    "main": "index.ts",
+    "scripts": {
+        "build": "tsc",
+        "start": "node ./dist/index.js",
+        "dev": "ts-node ./src/index.ts",
+        "format": "npx prettier --write ."
+    },
+    "repository": "https://github.com/ankidroid/Anki-Android",
+    "author": "AnkiDroid Open Source Team",
+    "license": "GPL-3.0",
+    "dependencies": {
+        "@crowdin/crowdin-api-client": "^1.18.1",
+        "@types/node": "^17.0.40",
+        "axios": "^0.27.2",
+        "dotenv": "^16.0.1",
+        "extract-zip": "^2.0.1",
+        "typescript": "^4.7.3"
+    },
+    "devDependencies": {
+        "prettier": "^2.7.1",
+        "ts-node": "^10.8.1"
+    }
 }
