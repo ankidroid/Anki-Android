@@ -143,6 +143,7 @@ public class AnkiDroidApp extends Application {
      */
     @Override
     public void onCreate() {
+        BackendFactory.setDefaultLegacySchema(BuildConfig.LEGACY_SCHEMA);
         super.onCreate();
         if (sInstance != null) {
             Timber.i("onCreate() called multiple times");
