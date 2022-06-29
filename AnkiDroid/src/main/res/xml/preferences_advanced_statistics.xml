@@ -24,7 +24,6 @@
         android:dependency="@string/pref_advanced_statistics_enabled_key"
         android:key="@string/pref_computation_precision_key"
         android:max="99"
-        android:summary="@string/preference_summary_percentage"
         android:text=" %"
         android:title="@string/advanced_forecast_stats_compute_precision_title"
         app:interval="1"

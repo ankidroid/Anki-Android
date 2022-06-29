@@ -820,6 +820,10 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_appearance)
+            // Card browser font scaling
+            requirePreference<SeekBarPreferenceCompat>(R.string.pref_card_browser_font_scale_key)
+                .setFormattedSummary(R.string.pref_summary_percentage)
+
             // Show error toast if the user tries to disable answer button without gestures on
             requirePreference<Preference>(R.string.answer_buttons_position_preference).setOnPreferenceChangeListener() { _, newValue: Any ->
                 val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
@@ -1214,6 +1218,9 @@ class Preferences : AnkiActivity() {
             addPreferencesFromResource(R.xml.preferences_advanced_statistics)
             requirePreference<SeekBarPreferenceCompat>(R.string.pref_compute_n_days_key).useValueAsSummary()
             requirePreference<SeekBarPreferenceCompat>(R.string.pref_n_iterations_key).useValueAsSummary()
+            // Precision of computation
+            requirePreference<SeekBarPreferenceCompat>(R.string.pref_computation_precision_key)
+                .setFormattedSummary(R.string.pref_summary_percentage)
         }
     }
 
