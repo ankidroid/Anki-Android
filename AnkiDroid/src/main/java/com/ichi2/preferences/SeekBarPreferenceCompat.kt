@@ -95,6 +95,14 @@ class SeekBarPreferenceCompat : DialogPreference {
         }
     }
 
+    fun useValueAsSummary() {
+        setSummaryProvider { value.toString() }
+    }
+
+    fun setFormattedSummary(@StringRes resId: Int) {
+        setSummaryProvider { context.getString(resId, value) }
+    }
+
     var value: Int
         get() = if (mValue == 0) {
             getPersistedInt(mDefault)
@@ -157,7 +165,7 @@ class SeekBarPreferenceCompat : DialogPreference {
             }
         }
 
-        protected fun onValueUpdated() {
+        private fun onValueUpdated() {
             mValueText!!.text = preference.valueText
         }
 
@@ -166,6 +174,7 @@ class SeekBarPreferenceCompat : DialogPreference {
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar) {
+            preference.notifyChanged() // to reload the summary with summaryProvider
             this.dialog!!.dismiss()
         }
 

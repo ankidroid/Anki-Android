@@ -25,6 +25,7 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
+import androidx.annotation.StringRes
 import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
 import com.ichi2.anki.AnkiDroidApp
@@ -56,6 +57,14 @@ open class NumberRangePreferenceCompat : EditTextPreference {
         protected set
     var max = 0
         private set
+
+    fun useValueAsSummary() {
+        setSummaryProvider { text }
+    }
+
+    fun setFormattedSummary(@StringRes resId: Int) {
+        setSummaryProvider { context.getString(resId, text) }
+    }
 
     /** The maximum available number of digits */
     val maxDigits: Int get() = max.toString().length
@@ -197,11 +206,7 @@ open class NumberRangePreferenceCompat : EditTextPreference {
             editText.inputType = InputType.TYPE_CLASS_NUMBER
 
             // Clone the existing filters so we don't override them, then append our one at the end.
-            val filters: Array<InputFilter> = editText.filters
-            val newFilters = arrayOfNulls<InputFilter>(filters.size + 1)
-            System.arraycopy(filters, 0, newFilters, 0, filters.size)
-            newFilters[newFilters.size - 1] = InputFilter.LengthFilter(numberRangePreference.maxDigits)
-            editText.filters = newFilters
+            editText.filters = arrayOf(*editText.filters, InputFilter.LengthFilter(numberRangePreference.maxDigits))
         }
 
         override fun onDialogClosed(positiveResult: Boolean) {
