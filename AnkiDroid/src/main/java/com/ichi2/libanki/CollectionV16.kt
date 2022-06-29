@@ -130,4 +130,10 @@ class CollectionV16(
     fun i18nResourcesRaw(input: ByteArray): ByteArray {
         return backend.i18nResourcesRaw(input = input)
     }
+
+    /** Fixes and optimizes the database. If any errors are encountered, a list of
+     * problems is returned. Throws if DB is unreadable. */
+    fun fixIntegrity(): List<String> {
+        return backend.checkDatabase()
+    }
 }

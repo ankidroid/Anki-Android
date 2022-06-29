@@ -1370,7 +1370,11 @@ open class DeckPicker :
 
     private fun performIntegrityCheck() {
         Timber.i("performIntegrityCheck()")
-        TaskManager.launchCollectionTask(CheckDatabase(), CheckDatabaseListener())
+        if (BackendFactory.defaultLegacySchema) {
+            TaskManager.launchCollectionTask(CheckDatabase(), CheckDatabaseListener())
+        } else {
+            handleDatabaseCheck()
+        }
     }
 
     private fun mediaCheckListener(): MediaCheckListener {
