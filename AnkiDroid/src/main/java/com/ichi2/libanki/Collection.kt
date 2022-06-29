@@ -101,6 +101,8 @@ open class Collection(
         get() = throw Exception("invalid call to newBackend on old backend")
     open val newMedia: BackendMedia
         get() = throw Exception("invalid call to newMedia on old backend")
+    open val newTags: TagsV16
+        get() = throw Exception("invalid call to newTags on old backend")
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun debugEnsureNoOpenPointers() {

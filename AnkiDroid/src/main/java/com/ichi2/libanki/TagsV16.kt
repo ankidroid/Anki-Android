@@ -24,12 +24,13 @@
 
 package com.ichi2.libanki
 
+import anki.collection.OpChangesWithCount
 import com.ichi2.libanki.Utils.ids2str
-import com.ichi2.libanki.backend.TagsBackend
 import com.ichi2.libanki.backend.model.TagUsnTuple
 import com.ichi2.libanki.utils.join
 import com.ichi2.libanki.utils.list
 import com.ichi2.libanki.utils.set
+import net.ankiweb.rsdroid.RustCleanup
 import java.util.regex.Pattern
 
 /**
@@ -38,10 +39,10 @@ import java.util.regex.Pattern
  * tracked, so unused tags can only be removed from the list with a DB check.
  * This module manages the tag cache and tags for notes.
  */
-class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManager() {
+class TagsV16(val col: CollectionV16) : TagManager() {
 
     /** all tags */
-    override fun all(): List<String> = backend.all_tags()
+    override fun all(): List<String> = col.backend.allTags()
 
     /** List of (tag, usn) */
     override fun allItems(): List<TagUsnTuple> {
@@ -58,44 +59,15 @@ class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManage
         usn: Int?,
         clear_first: Boolean
     ) {
-
-        val preserve_usn: Boolean
-        val usn_: Int
-        if (usn == null) {
-            preserve_usn = false
-            usn_ = 0
-        } else {
-            usn_ = usn
-            preserve_usn = true
-        }
-        backend.register_tags(
-            tags = " ".join(tags), preserve_usn = preserve_usn, usn = usn_, clear_first = clear_first
-        )
+        TODO("no longer in backend")
     }
 
     /** Add any missing tags from notes to the tags list. */
     override fun registerNotes(nids: kotlin.collections.Collection<Long>?) {
-
-        // when called without an argument, the old list is cleared first.
-        val clear: Boolean
-        val lim: String
-        if (nids != null) {
-            lim = " where id in " + ids2str(nids)
-            clear = false
-        } else {
-            lim = ""
-            clear = true
-        }
-        register(
-            set(
-                split(
-                    " ".join(col.db.queryStringList("select distinct tags from notes" + lim))
-                )
-            ),
-            clear_first = clear,
-        )
+        TODO("no longer in backend")
     }
 
+    @RustCleanup("remove after migrating to backend custom study code")
     override fun byDeck(did: Long, children: Boolean): List<String> {
         val basequery = "select n.tags from cards c, notes n WHERE c.nid = n.id"
         val query: String
@@ -119,31 +91,25 @@ class TagsV16(val col: Collection, private val backend: TagsBackend) : TagManage
     #############################################################
      */
 
-    /** Add space-separate tags to provided notes,
-     * @return changed count. */
-    fun bulk_add(nids: List<Long>, tags: String): Int {
-        return backend.add_note_tags(nids = nids, tags = tags)
+    /** Add space-separate tags to provided notes. */
+    fun bulkAdd(noteIds: List<Long>, tags: String): OpChangesWithCount {
+        return col.backend.addNoteTags(noteIds = noteIds, tags = tags)
     }
 
-    /** Replace space-separated tags, returning changed count.
-     * Tags replaced with an empty string will be removed.
-     * @return changed count.
-     */
+    /* Remove space-separated tags from provided notes. */
     fun bulkRemove(
-        nids: List<Long>,
+        noteIds: List<Long>,
         tags: String,
-    ): Int {
-        return backend.remove_note_tags(
-            nids = nids, tags = tags
+    ): OpChangesWithCount {
+        return col.backend.removeNoteTags(
+            noteIds = noteIds, tags = tags
         )
     }
 
-    // legacy routines
-
-    /**  Add tags in bulk. TAGS is space-separated. */
+    /* Legacy signature, used by unit tests. */
     override fun bulkAdd(ids: List<Long>, tags: String, add: Boolean) {
         if (add) {
-            bulk_add(ids, tags)
+            bulkAdd(ids, tags)
         } else {
             bulkRemove(ids, tags)
         }
