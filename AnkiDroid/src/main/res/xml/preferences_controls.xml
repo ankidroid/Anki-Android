@@ -43,10 +43,8 @@
     <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="100"
         android:dependency="@string/gestures_preference"
-        android:dialogMessage="@string/preference_summary_literal"
         android:key="@string/pref_swipe_sensitivity_key"
         android:max="180"
-        android:summary="@string/preference_summary_literal"
         android:text=""
         android:title="@string/swipe_sensitivity"
         app:interval="1"

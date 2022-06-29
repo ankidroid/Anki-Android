@@ -1009,6 +1009,9 @@ class Preferences : AnkiActivity() {
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_advanced)
             val screen = preferenceScreen
+            // Backups limit
+            requirePreference<IncrementerNumberRangePreferenceCompat>(R.string.pref_backup_max_key)
+                .useValueAsSummary()
             // Check that input is valid before committing change in the collection path
             requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
                 this.summary = this.text
@@ -1209,6 +1212,8 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_advanced_statistics)
+            requirePreference<SeekBarPreferenceCompat>(R.string.pref_compute_n_days_key).useValueAsSummary()
+            requirePreference<SeekBarPreferenceCompat>(R.string.pref_n_iterations_key).useValueAsSummary()
         }
     }
 
@@ -1256,6 +1261,7 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_controls)
+            requirePreference<SeekBarPreferenceCompat>(R.string.pref_swipe_sensitivity_key).useValueAsSummary()
             addAllControlPreferencesToCategory(requirePreference(R.string.controls_command_mapping_cat_key))
         }
     }

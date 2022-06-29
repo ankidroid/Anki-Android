@@ -34,7 +34,6 @@
             <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
                 android:defaultValue="8"
                 android:key="@string/pref_backup_max_key"
-                android:summary="@string/preference_summary_literal"
                 android:title="@string/pref_backup_max"
                 app:min="0"
                 app:max="99" />
