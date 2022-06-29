@@ -21,6 +21,7 @@ import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
+import com.ichi2.libanki.utils.TimeManager
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
@@ -135,5 +136,9 @@ class CollectionV16(
      * problems is returned. Throws if DB is unreadable. */
     fun fixIntegrity(): List<String> {
         return backend.checkDatabase()
+    }
+
+    override fun modSchemaNoCheck() {
+        db.execute("update col set scm=?", TimeManager.time.intTimeMS())
     }
 }

@@ -479,7 +479,7 @@ open class Collection(
      * is used so that the type does not states that an exception is
      * thrown when in fact it is never thrown.
      */
-    fun modSchemaNoCheck() {
+    open fun modSchemaNoCheck() {
         scm = TimeManager.time.intTimeMS()
         setMod()
     }
