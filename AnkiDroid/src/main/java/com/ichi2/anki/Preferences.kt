@@ -1010,22 +1010,25 @@ class Preferences : AnkiActivity() {
             addPreferencesFromResource(R.xml.preferences_advanced)
             val screen = preferenceScreen
             // Check that input is valid before committing change in the collection path
-            val collectionPathPreference = requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH)
-            collectionPathPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue: Any? ->
-                val newPath = newValue as String?
-                try {
-                    CollectionHelper.initializeAnkiDroidDirectory(newPath)
-                    return@OnPreferenceChangeListener true
-                } catch (e: StorageAccessException) {
-                    Timber.e(e, "Could not initialize directory: %s", newPath)
-                    MaterialDialog.Builder(requireContext())
-                        .title(R.string.dialog_collection_path_not_dir)
-                        .positiveText(R.string.dialog_ok)
-                        .negativeText(R.string.reset_custom_buttons)
-                        .onPositive { dialog: MaterialDialog, _ -> dialog.dismiss() }
-                        .onNegative { _, _ -> collectionPathPreference.text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext()) }
-                        .show()
-                    return@OnPreferenceChangeListener false
+            requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
+                this.summary = this.text
+                setOnPreferenceChangeListener { _, newValue: Any? ->
+                    val newPath = newValue as String?
+                    this.summary = newPath
+                    try {
+                        CollectionHelper.initializeAnkiDroidDirectory(newPath)
+                        true
+                    } catch (e: StorageAccessException) {
+                        Timber.e(e, "Could not initialize directory: %s", newPath)
+                        MaterialDialog.Builder(requireContext())
+                            .title(R.string.dialog_collection_path_not_dir)
+                            .positiveText(R.string.dialog_ok)
+                            .negativeText(R.string.reset_custom_buttons)
+                            .onPositive { dialog: MaterialDialog, _ -> dialog.dismiss() }
+                            .onNegative { _, _ -> this.text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext()) }
+                            .show()
+                        false
+                    }
                 }
             }
             setupContextMenuPreference(CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu)
