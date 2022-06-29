@@ -35,7 +35,7 @@ class CollectionV16(
 ) : Collection(context, path, server, log, backend) {
 
     override fun initTags(): TagManager {
-        return TagsV16(this, RustTagsBackend(backend))
+        return TagsV16(this)
     }
 
     override fun initDecks(deckConf: String?): DeckManager {
@@ -59,6 +59,9 @@ class CollectionV16(
 
     override val newMedia: BackendMedia
         get() = this.media as BackendMedia
+
+    override val newTags: TagsV16
+        get() = this.tags as TagsV16
 
     override fun load() {
         _config = initConf(null)

@@ -165,7 +165,7 @@ class FinderTest : RobolectricTest() {
         col.tags.bulkAdd(col.db.queryLongList("select id from notes"), "foo bar")
         assertEquals(5, col.findCards("tag:foo").size)
         assertEquals(5, col.findCards("tag:bar").size)
-        col.tags.bulkRem(col.db.queryLongList("select id from notes"), "foo")
+        col.tags.bulkAdd(col.db.queryLongList("select id from notes"), "foo", add = false)
         assertEquals(0, col.findCards("tag:foo").size)
         assertEquals(5, col.findCards("tag:bar").size)
         // text searches

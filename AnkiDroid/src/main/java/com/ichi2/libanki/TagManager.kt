@@ -74,24 +74,9 @@ abstract class TagManager {
     * ***********************************************************
     */
 
-    /**
-     * FIXME: This method must be fixed before it is used. See note below.
-     * Add/remove tags in bulk. TAGS is space-separated.
-     *
-     * @param ids The cards to tag.
-     * @param tags List of tags to add/remove. They are space-separated.
-     */
-    fun bulkAdd(ids: List<Long>, tags: String) = bulkAdd(ids, tags, true)
-    /**
-     * FIXME: This method must be fixed before it is used. Its behaviour is currently incorrect.
-     * This method is currently unused in AnkiDroid so it will not cause any errors in its current state.
-     *
-     * @param ids The cards to tag.
-     * @param tags List of tags to add/remove. They are space-separated.
-     * @param add True/False to add/remove.
-     */
+    /* Legacy signature, currently only used by unit tests. New code in TagsV16
+      takes two args. */
     abstract fun bulkAdd(ids: List<Long>, tags: String, add: Boolean = true)
-    fun bulkRem(ids: List<Long>, tags: String) = bulkAdd(ids, tags, false)
 
     /*
      * String-based utilities
