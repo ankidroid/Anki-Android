@@ -68,13 +68,6 @@ jobs:
           cd ./tools/localization
           yarn start update
         
-      - name: Find broken strings
-        run: |
-          echo "Checking translations for known classes of error."
-          echo "(Note that if errors are found and you correct on crowdin, they make you wait 30 minutes for a new zip build)"
-          chmod +x ./tools/find-broken-strings-variables.sh
-          ./tools/find-broken-strings-variables.sh
-  
       - name: Commit changes
         run: |
           git add docs/marketing/localized_description AnkiDroid/src/main/res/values*
