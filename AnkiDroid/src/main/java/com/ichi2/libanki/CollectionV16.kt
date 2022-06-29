@@ -39,7 +39,7 @@ class CollectionV16(
     }
 
     override fun initDecks(deckConf: String?): DeckManager {
-        return DecksV16(this, RustDroidDeckBackend(backend))
+        return DecksV16(this)
     }
 
     override fun initModels(): ModelManager {
@@ -65,6 +65,9 @@ class CollectionV16(
 
     override val newModels: ModelsV16
         get() = this.models as ModelsV16
+
+    override val newDecks: DecksV16
+        get() = this.decks as DecksV16
 
     override fun load() {
         _config = initConf(null)
