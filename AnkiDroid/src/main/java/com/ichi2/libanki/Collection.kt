@@ -109,6 +109,9 @@ open class Collection(
     open val newModels: ModelsV16
         get() = throw Exception("invalid call to newModels on old backend")
 
+    open val newDecks: DecksV16
+        get() = throw Exception("invalid call to newDecks on old backend")
+
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun debugEnsureNoOpenPointers() {
         val result = backend.getActiveSequenceNumbers()
