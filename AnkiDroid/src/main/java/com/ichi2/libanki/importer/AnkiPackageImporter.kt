@@ -96,14 +96,14 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col, 
                 mLog.add(res.getString(R.string.import_log_failed_copy_to, colpath))
                 return
             }
-            tmpCol = Storage.Collection(mContext, colpath)
+            tmpCol = Storage.collection(mContext, colpath)
             try {
                 if (!tmpCol.validCollection()) {
                     mLog.add(res.getString(R.string.import_log_failed_validate))
                     return
                 }
             } finally {
-                tmpCol?.close()
+                tmpCol.close()
             }
             mFile = colpath
             // we need the media dict in advance, and we'll need a map of fname ->

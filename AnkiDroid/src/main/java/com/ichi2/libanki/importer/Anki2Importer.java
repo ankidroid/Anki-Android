@@ -128,7 +128,7 @@ public class Anki2Importer extends Importer {
         this.mMustResetLearning = false;
 
         mDst = mCol;
-        mSrc = Storage.Collection(mContext, mFile);
+        mSrc = Storage.collection(mContext, mFile);
 
         if (!importingV2 && mCol.schedVer() != 1) {
             // any scheduling included?

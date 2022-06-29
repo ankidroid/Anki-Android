@@ -162,7 +162,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
                 Mockito
                     .doAnswer {
                         called = true
-                        assertThat("collection should be locked", Storage.isLocked(), equalTo(true))
+                        assertThat("collection should be locked", Storage.isLocked, equalTo(true))
                         throw TestException("")
                     }
                     .whenever(it)
@@ -171,7 +171,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         }
 
         assertThat("mock was unused", called, equalTo(true))
-        assertThat("the collection is no longer locked", Storage.isLocked(), equalTo(false))
+        assertThat("the collection is no longer locked", Storage.isLocked, equalTo(false))
     }
 
     @Test

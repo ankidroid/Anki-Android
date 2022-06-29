@@ -123,7 +123,7 @@ public class CollectionHelper {
      */
     private Collection openCollection(Context context, String path) {
         Timber.i("Begin openCollection: %s", path);
-        Collection collection = Storage.Collection(context, path, false, true);
+        Collection collection = Storage.collection(context, path, false, true);
         Timber.i("End openCollection: %s", path);
         return collection;
     }
