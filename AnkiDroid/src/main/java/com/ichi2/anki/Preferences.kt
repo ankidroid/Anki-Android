@@ -57,9 +57,7 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.web.CustomSyncServer
-import com.ichi2.anki.web.CustomSyncServer.getSyncBaseUrlOrDefault
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
-import com.ichi2.anki.web.CustomSyncServer.isEnabled
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
@@ -262,6 +260,9 @@ class Preferences : AnkiActivity() {
         } else if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key) {
             updateNotificationPreference(pref as ListPreference)
         }
+        if (pref is ListPreference) {
+            pref.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance())
+        }
         // Set the value from the summary cache
         val s = pref.summary
         mOriginalSummaries[pref.key] = s?.toString() ?: ""
@@ -300,19 +301,15 @@ class Preferences : AnkiActivity() {
         listPreference.summary = listPreference.entry.toString()
     }
 
-    private fun updateSummary(pref: Preference?) {
-        if (pref == null || pref.key == null) {
-            return
-        }
+    fun updateSummary(pref: Preference) {
         // Handle special cases
         when (pref.key) {
-            "about_dialog_preference" -> pref.summary = resources.getString(R.string.about_version) + " " + pkgVersionName
             "custom_sync_server_link" -> {
                 val preferences = AnkiDroidApp.getSharedPrefs(this)
-                if (!isEnabled(preferences)) {
+                if (!CustomSyncServer.isEnabled(preferences)) {
                     pref.setSummary(R.string.disabled)
                 } else {
-                    pref.summary = getSyncBaseUrlOrDefault(preferences, "")
+                    pref.summary = CustomSyncServer.getSyncBaseUrlOrDefault(preferences, "")
                 }
             }
             "advanced_statistics_link" -> if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("advanced_statistics_enabled", false)) {
@@ -320,54 +317,6 @@ class Preferences : AnkiActivity() {
             } else {
                 pref.setSummary(R.string.enabled)
             }
-        }
-        // Get value text
-        val value: String = when (pref) {
-            is NumberRangePreferenceCompat -> pref.getValue().toString()
-            is SeekBarPreferenceCompat -> pref.value.toString()
-            is ListPreference -> pref.entry?.toString() ?: ""
-            is EditTextPreference -> pref.text ?: ""
-            is ControlPreference -> return
-            else -> return
-        }
-
-        // Get summary text
-        val oldSummary = mOriginalSummaries[pref.key] ?: ""
-        // Replace summary text with value according to some rules
-        pref.summary = when {
-            oldSummary == "" -> value
-            value == "" -> oldSummary
-            MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key -> replaceStringIfNumeric(oldSummary, value)
-            else -> replaceString(oldSummary, value)
-        }
-    }
-
-    /**
-     * Replace "XXX" in [str] with [value]
-     *
-     * This exists to enable formatting the summary of a preference with data
-     * As summary is set via XML, this cannot have format strings, so we use "XXX" later on.
-     */
-    private fun replaceString(str: String, value: String): String {
-        return if (str.contains("XXX")) {
-            str.replace("XXX", value)
-        } else {
-            str
-        }
-    }
-
-    /**
-     * If [value] is convertible to a double, replace "XXX" in [str] with the value
-     * @param str A string which may have "XXX", if so, this may be replaced
-     * @param value If this is a double, the "XXX" string in [str] is replaced with [value]
-     */
-    private fun replaceStringIfNumeric(str: String, value: String): String? {
-        return try {
-            value.toDouble()
-            replaceString(str, value)
-        } catch (e: NumberFormatException) {
-            Timber.w(e)
-            value
         }
     }
 
@@ -1104,6 +1053,9 @@ class Preferences : AnkiActivity() {
                     .show()
                 true
             }
+            // About summary
+            requirePreference<Preference>("about_dialog_preference")
+                .summary = getString(R.string.about_version) + " " + pkgVersionName
         }
 
         private fun setupContextMenuPreference(key: String, @StringRes contextMenuName: Int) {
