@@ -52,7 +52,7 @@
     <string name="pref_cat_general_summ">常用设置</string>
     <string name="pref_cat_reviewing" maxLength="41">复习</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同步</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">计划任务</string>
     <string name="pref_cat_whiteboard" maxLength="41">白板</string>
     <string name="pref_cat_appearance" maxLength="41">外观</string>
     <string name="pref_cat_appearance_summ">更改主题和默认字体</string>
@@ -206,8 +206,8 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript 调试</string>
     <string name="html_javascript_debugging_summ">启用远程 WebView 连接，并将卡片 HTML 保存到 AnkiDroid 目录</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">查看器</string>
+    <string name="accessibility" maxLength="41">无障碍功能</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">将剪贴板图像粘贴为 PNG</string>
     <string name="paste_as_png_summary">Anki 默认将剪贴板图粘贴为 JPG 以节省空间。 您可用此选项粘贴为 PNG。</string>

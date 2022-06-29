@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_space_left">Backup not saved. Not enough space left on SD card. Lower the backup depth or remove some other files.</string>
+    <string name="backup_deck_no_space_left">הגיבוי לא נשמר. לא נשאר מספיק מקום בכרטיס SD. הפחת את עומק הגיבוי או הסר כמה קבצים אחרים.</string>
     <string name="sd_space_warning">פחות מ־%d מ״ב נותרו בכרטיס ה־SD.\nכדי למנוע אובדן מידע יש לפנות מקום בכרטיס.</string>
     <string name="backup_restore">שחזור מגיבוי</string>
     <string name="backup_new_collection">אוסף חדש</string>
@@ -62,7 +62,7 @@
     <string name="backup_restore_select_title">נא לבחור גיבוי לשחזור</string>
     <string name="backup_restore_no_backups">אין גיבויים במכשיר. אם יש לך גיבויים במחשב האישי, ניתן להעתיק אותם ידנית אל הספריה של AnkiDroid.</string>
     <string name="open_collection_failed_title">האוסף לא נפתח</string>
-    <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-    <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
+    <string name="corrupt_db_message">האוסף שלך פגום.\n\nגע ב\"אפשרויות\" כדי לשחזר מגיבוי, או אם זה לא עובד, עיין בהוראות הבאות לתיקון ידני של מסד הנתונים:\n%1$s</string>
+    <string name="access_collection_failed_message">אירעה שגיאה בעת הגישה לאוסף שלך. ייתכן שזה נגרם על ידי באג לא מזיק, או שיש בעיה איתו. \n\nנסה להפעיל את בדיקת מסד הנתונים, או לשחזר מגיבוי על ידי לחיצה על כפתור \"אפשרויות\". אם אתה ממשיך לראות את ההודעה הזו, נא להגיש דוח באג:\n%1$s</string>
     <string name="deck_repair_error">לא ניתן היה לתקן את האוסף</string>
 </resources>

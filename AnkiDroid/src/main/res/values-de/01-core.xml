@@ -75,7 +75,7 @@
         <item quantity="other">%1$d Stunden %2$d verbleiben</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="one">%1$d Stunden %2$d übrig</item>
         <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>

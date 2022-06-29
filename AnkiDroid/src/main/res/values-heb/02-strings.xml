@@ -89,7 +89,7 @@
         <item>תשובה</item>
         <item>קלף</item>
         <item>חפיסה</item>
-        <item>הערה</item>
+        <item>פתק</item>
         <item>שאלה</item>
         <item>תגים</item>
         <item>מעידות</item>
@@ -110,14 +110,14 @@
     <string name="custom_study_preview_new">מעבר מקדים על כרטסיות חדשות</string>
     <string name="custom_study_limit_tags">הגבל לתיוג ספציפי</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">ערוך הערה</string>
+    <string name="cardeditor_title_edit_card">ערוך רשומה</string>
     <string name="discard_unsaved_changes">סגור ולאבד קלט הנוכחי?</string>
     <string name="note_editor_no_cards_created">לא נוצרו קלפים. יש למלא יותר שדות</string>
     <string name="note_editor_no_first_field">השדה הראשון ריק</string>
     <string name="note_editor_no_cloze_delations">סוג הרשומה חייב לכלול \'השלם את החסר\'</string>
     <string name="note_editor_no_cards_created_all_fields">לסוג הרשומה הנוכחי אין כרטיסים. \n אנא בחר סוג רשומה אחר, או הקש על \'כרטיסים\' והוסף חלופת שדה</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">השלמת החסר פועלת רק בכרטיסים מסוג \'השלם את החסר\'</string>
-    <string name="saving_facts">שמירת הערה</string>
+    <string name="saving_facts">שמירת רשומה</string>
     <string name="saving_model">שומר סוג רשומה</string>
     <string name="save">שמירה</string>
     <string name="close">סגירה</string>
@@ -169,9 +169,9 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">הוספה</string>
     <string name="import_message_replace_confirm">אפשרות זאת תמחק את האוסף הנוכחי שלך ותחליפו במידע מקובץ %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="two">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">האם להוסיף \"%s\" לאוסף? זה עשוי להימשך זמן רב</item>
+        <item quantity="two">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
+        <item quantity="many">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
         <item quantity="other">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
     </plurals>
     <string name="import_log_no_apkg">קובץ זה אינו קובץ חבילה תקין</string>
@@ -282,9 +282,9 @@
     <string name="filtered_deck_name">חפיסה מסוננת</string>
     <string name="reminder_title">לא לשכוח ללמוד היום!</string>
     <plurals name="reminder_text">
-        <item quantity="one">קלף אחד לשינון בעוד</item>
-        <item quantity="two">%2$d cards to review in %1$s</item>
-        <item quantity="many">%2$d כרטיסים לשינון ב־%1$s</item>
+        <item quantity="one">קלף אחד לשינון בעוד %1$s</item>
+        <item quantity="two">%2$d קלפים לשינון בעוד %1$s</item>
+        <item quantity="many">%2$d קלפים לשינון בעוד %1$s</item>
         <item quantity="other">%2$d קלפים לשינון בעוד %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
@@ -323,27 +323,27 @@
     <string name="note_importer_error_first_field_matched">שדה ראשון תואם: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">נוספה עם כפילות בשדה הראשון: %s</string>
     <string name="note_importer_error_appeared_twice">מופיע פעמיים בקובץ: %s</string>
-    <string name="note_importer_error_empty_notes">הערה אחת או יותר לא הובאו מאחר והן לא יצרו שום קלף. זה קורה כאשר יש שדות ריקים או כאשר לא בוצע מיפוי של התוכן בקובץ טקסט לשדות המתאימים. </string>
+    <string name="note_importer_error_empty_notes">רשומה אחת או יותר לא הובאו מאחר והן לא יצרו שום קלף. זה קורה כאשר יש שדות ריקים או כאשר לא בוצע מיפוי של התוכן בקובץ טקסט לשדות המתאימים. </string>
     <string name="csv_importer_error_invalid_field_count">ל %1$s יש %2$d שדות, צריך %3$d</string>
     <string name="csv_importer_error_exception">בוטל: %s</string>
     <string name="user_is_a_robot">זוהה אוטומציה ממוחשבת, אם אתה אנושי, צור קשר עם תמיכת AnkiDroid</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d הערה נוספה</item>
-        <item quantity="two">%d notes added</item>
+        <item quantity="one">%d רשומה נוספה</item>
+        <item quantity="two">%d רשומות נוספו</item>
         <item quantity="many">%d הערות נוספו</item>
-        <item quantity="other">%d הערות נוספו</item>
+        <item quantity="other">%d רשומות נוספו</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d הערה עודכנה</item>
-        <item quantity="two">%d notes updated</item>
-        <item quantity="many">%d הערות עודכנו</item>
-        <item quantity="other">%d הערות עודכנו</item>
+        <item quantity="one">%d רשומה עודכנה</item>
+        <item quantity="two">%d רשומות עודכנו</item>
+        <item quantity="many">%d רשומות עודכנו</item>
+        <item quantity="other">%d רשומות עודכנו</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d הערה ללא שינוי</item>
-        <item quantity="two">%d notes unchanged</item>
-        <item quantity="many">%d הערות ללא שינוי</item>
-        <item quantity="other">%d הערות ללא שינוי</item>
+        <item quantity="one">%d רשומה ללא שינוי</item>
+        <item quantity="two">%d רשומות ללא שינוי</item>
+        <item quantity="many">%d רשומות ללא שינוי</item>
+        <item quantity="other">%d רשומות ללא שינוי</item>
     </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">קלף זה משתמש באפשרויות שאינן נתמכות בAnkiDroid. צור קשר עם המפתח %1$s, או קרא בויקי. %2$s</string>
@@ -417,8 +417,8 @@
     <string name="import_mapped_to_nothing">התעלמו</string>
     <!-- Reviewer actions -->
     <string name="buried_card">קלף נקבר</string>
-    <string name="buried_note">הערה נקברה</string>
-    <string name="deleted_note">הערה נמחקה </string>
+    <string name="buried_note">רשומה נקברה</string>
+    <string name="deleted_note">רשומה נמחקה</string>
     <string name="suspended_card">קלף הוקפא</string>
     <string name="suspended_note">רשומה הוקפאה</string>
     <!--  Note Editor Toggle Sticky  -->
@@ -446,5 +446,5 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">הרחב את התג \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">הגישה לאוסף נכשלה. בבקשה נסה שוב!</string>
 </resources>
