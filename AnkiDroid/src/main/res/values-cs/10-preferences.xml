@@ -52,7 +52,7 @@
     <string name="pref_cat_general_summ">Obecné nastavení</string>
     <string name="pref_cat_reviewing" maxLength="41">Opakování</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronizace</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">Plánování</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tabule</string>
     <string name="pref_cat_appearance" maxLength="41">Nastavení vzhledu</string>
     <string name="pref_cat_appearance_summ">Změna motivu vzhledu a výchozího písma</string>
@@ -94,7 +94,7 @@
         <item>Žádné</item>
     </string-array>
     <string name="gestures" maxLength="41">Povolit gesta</string>
-    <string name="gestures_summ">Přiřazení gest akcím, jako je odpovídání a úprava karet.</string>
+    <string name="gestures_summ">Přiřazení gest akcím, jako je odpovídání a úprava karet</string>
     <string name="gestures_corner_touch" maxLength="41">Devítibodový dotyk</string>
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigační menu v režimu celé obrazovky</string>
@@ -129,7 +129,7 @@
     <string name="sync_account_summ_logged_out">Nejste přihlášen</string>
     <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Automatická synchronizace</string>
-    <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut.</string>
+    <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut</string>
     <string name="sync_status_badge" maxLength="41">Zobrazit stav synchronizace</string>
     <string name="sync_status_badge_summ">Změnit ikonu synchronizace, když lze nahrát změny</string>
     <string name="app_theme" maxLength="41">Motiv</string>
@@ -148,18 +148,18 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikající světlo</string>
     <string name="timeout_answer_text" maxLength="41">Automatické zobrazení odpovědi</string>
     <string name="timeout_answer" maxLength="41">Odpověď po časovém limitu</string>
-    <string name="timeout_answer_summ">Zobrazit odpověď automaticky bez zásahu uživatele. Zpoždění zahrnuje čas pro automaticky přehrávané audio soubory.</string>
+    <string name="timeout_answer_summ">Zobrazit odpověď automaticky bez zásahu uživatele. Zpoždění zahrnuje čas pro automaticky přehrávané audio soubory</string>
     <string name="timeout_answer_seconds" maxLength="41">Čas pro zobrazení odpovědi</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Čas pro zobrazení další otázky</string>
     <string name="select_locale_title">Vyberte jazyk</string>
     <string name="software_render" maxLength="41">Zakázat hardwarové vykreslování karty</string>
-    <string name="software_render_summ">Hardwarové vykreslování je rychlejší, ale může způsobovat problémy, konkrétně na Android 8/8.1. Pokud nevidíte části uživatelského rozhraní pro opakování karet, zkuste toto nastavení.</string>
+    <string name="software_render_summ">Hardwarové vykreslování je rychlejší, ale může způsobovat problémy, konkrétně na Android 8/8.1. Pokud nevidíte části uživatelského rozhraní pro opakování karet, zkuste toto nastavení</string>
     <string name="safe_display" maxLength="41">Režim bezpečného zobrazení</string>
-    <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink zařízení toto mohou vyžadovat.</string>
+    <string name="safe_display_summ">Zakázat všechny animace a použít bezpečnější metodu pro vykreslení karty. E-ink zařízení toto mohou vyžadovat</string>
     <string name="disable_extended_text_ui" maxLength="41">Zakázat režim úprav v jednom poli</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Povolit kontextové menu doplňovačky v režimu na šířku.</string>
+    <string name="disable_extended_text_ui_summ">Povolit kontextové menu „doplňovačky“ v režimu na šířku</string>
     <string name="vertical_centering" maxLength="41">Zarovnání na střed</string>
     <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
     <string name="pref_backup_max" maxLength="41">Maximální počet záloh</string>
@@ -206,11 +206,11 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Umožnit vzdálené připojení k WebView a uložit HTML karet do adresáře AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Opakování karet</string>
+    <string name="accessibility" maxLength="41">Usnadnění přístupu</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Vkládat obrázky ze schránky jako PNG</string>
-    <string name="paste_as_png_summary">Ve výchozím nastavení Anki vkládá obrázky ve schránce jako JPG soubory, aby se šetřilo místo na disku. Můžete použít tuto volbu, aby se místo toho vkládaly PNG obrázky.</string>
+    <string name="paste_as_png_summary">Ve výchozím nastavení Anki vkládá obrázky ve schránce jako JPG soubory, aby se šetřilo místo na disku. Můžete použít tuto volbu, aby se místo toho vkládaly PNG obrázky</string>
     <string name="exit_via_double_tap_back" maxLength="41">Pro návrat/ukončit stisknout zpět dvakrát</string>
     <string name="exit_via_double_tap_back_summ">Vyhnout se nechtěnému opuštění opakování nebo ukončení aplikace</string>
     <!-- Allow all files in media imports -->
@@ -236,7 +236,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Sync url pro média</string>
     <string name="custom_sync_server_media_url_invalid">Neplatná URL synchronizace médií</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Klávesnice</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Přiřazení příkazů</string>
     <!-- studyoptions -->
@@ -319,7 +319,7 @@
     <string name="analytics_title" maxLength="41">Sdílet používání funkcí</string>
     <string name="analytics_summ">Můžete přispět do AnkiDroid tím, že pomůžete vývojovému týmu dozvědět se, které funkce lidé používají</string>
     <string name="note_editor_replace_newlines" maxLength="41">Nahradit nové řádky HTML</string>
-    <string name="note_editor_replace_newlines_summ">V editoru poznámek převede při úpravě karty každý výskyt &lt;br&gt; na nový řádek.</string>
+    <string name="note_editor_replace_newlines_summ">V editoru poznámek převede při úpravě karty každý výskyt &lt;br&gt; na nový řádek</string>
     <string name="no_code_formatting" maxLength="41">Jednoduché formátování napsané odpovědi</string>
     <string name="no_code_formatting_summ">Opraví „􏿾“, které se vyskytuje ve výsledcích napsaných odpovědí</string>
     <string name="type_in_answer_focus" maxLength="41">Vybrat „napište odpověď“</string>
@@ -327,9 +327,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Otevřít seznam změn</string>
     <string name="binding_add_gesture">Přidat gesto</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Nahradit gesto</string>
     <string name="binding_add_key">Přidat klávesu</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Nahradit klávesu</string>
     <string name="key_picker_default_press_key">Stiskněte tlačítko</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Vybrat stranu karty</string>

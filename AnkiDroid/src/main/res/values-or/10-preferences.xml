@@ -52,7 +52,7 @@
     <string name="pref_cat_general_summ">ସାଧାରଣ ସେଟିଂସ୍</string>
     <string name="pref_cat_reviewing" maxLength="41">ସମୀକ୍ଷା</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ସିଙ୍କ୍</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">ନିର୍ଦ୍ଧାରଣ</string>
     <string name="pref_cat_whiteboard" maxLength="41">ଧଳାପଟା</string>
     <string name="pref_cat_appearance" maxLength="41">ରୂପ</string>
     <string name="pref_cat_appearance_summ">ଥିମ୍ ଏବଂ ଡିଫଲ୍ଟ ଫଣ୍ଟ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
@@ -206,8 +206,8 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript ତ୍ରୁଟି ନିବାରଣ</string>
     <string name="html_javascript_debugging_summ">ସୁଦୂର WebView ସଂଯୋଗଗୁଡ଼ିକ ସକ୍ଷମ କରନ୍ତୁ, ଏବଂ AnkiDroid ଡିରେକ୍ଟୋରୀରେ ପତ୍ର HTML ସଂରକ୍ଷଣ କରିବା</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">ସମୀକ୍ଷକ</string>
+    <string name="accessibility" maxLength="41">ଅଭିଗମ୍ୟତା</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିଗୁଡ଼ିକୁ PNG ଭାବରେ ଲେପନ</string>
     <string name="paste_as_png_summary">ଡିଫଲ୍ଟ ଭାବରେ Anki ଡିସ୍କ ସ୍ପେସ୍ ସଞ୍ଚୟ କରିବାକୁ JPG ଫାଇଲ୍ ଭାବରେ କ୍ଲିପବୋର୍ଡରେ ପ୍ରତିଛବିଗୁଡ଼ିକୁ ପେଷ୍ଟ କରେ। ଏହା ପରିବର୍ତ୍ତେ PNG ପ୍ରତିଛବି ଭାବରେ ପେଷ୍ଟ କରିବାକୁ ଆପଣ ଏହି ବିକଳ୍ପକୁ ବ୍ୟବହାର କରିପାରିବେ।</string>
