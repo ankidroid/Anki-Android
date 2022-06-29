@@ -848,7 +848,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
                 var tmpCol: Collection? = null
                 try {
-                    tmpCol = Storage.Collection(context, colFile)
+                    tmpCol = Storage.collection(context, colFile)
                     if (!tmpCol.validCollection()) {
                         tmpCol.close()
                         return Computation.ERR

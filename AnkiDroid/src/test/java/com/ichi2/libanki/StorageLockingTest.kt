@@ -53,9 +53,9 @@ class StorageLockingTest : RobolectricTest() {
     @Test
     fun lock_sets_value() {
         Storage.lockCollection()
-        assertThat("locking the collection sets isLocked", Storage.isLocked(), equalTo(true))
+        assertThat("locking the collection sets isLocked", Storage.isLocked, equalTo(true))
         Storage.unlockCollection()
-        assertThat("unlocking the collection sets isLocked", Storage.isLocked(), equalTo(false))
+        assertThat("unlocking the collection sets isLocked", Storage.isLocked, equalTo(false))
     }
 
     @Test
@@ -75,11 +75,11 @@ class StorageLockingTest : RobolectricTest() {
 
     @Test
     fun collection_unlocked_by_default() {
-        assertThat("by default, collection should be unlocked", Storage.isLocked(), equalTo(false))
+        assertThat("by default, collection should be unlocked", Storage.isLocked, equalTo(false))
     }
 
     /** Opens a valid collection */
     private fun successfulOpen() {
-        toCleanup = Storage.Collection(getApplicationContext(), createTransientFile(extension = "anki2").path)
+        toCleanup = Storage.collection(getApplicationContext(), createTransientFile(extension = "anki2").path)
     }
 }

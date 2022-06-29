@@ -139,7 +139,7 @@ open class AnkiExporter(col: Collection, did: Long?, val includeSched: Boolean, 
     open fun exportInto(path: String, context: Context) {
         // create a new collection at the target
         File(path).delete()
-        val dst = Storage.Collection(context, path)
+        val dst = Storage.collection(context, path)
         // find cards
         val cids: Array<Long> = cardIds()
         // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
@@ -468,7 +468,7 @@ class AnkiPackageExporter : AnkiExporter {
         val f = File.createTempFile("dummy", ".anki2")
         val path = f.absolutePath
         f.delete()
-        val c = Storage.Collection(context, path)
+        val c = Storage.collection(context, path)
         val n = c.newNote()
         // The created dummy collection only contains the StdModels.
         // The field names for those are localised during creation, so we need to consider that when creating dummy note
