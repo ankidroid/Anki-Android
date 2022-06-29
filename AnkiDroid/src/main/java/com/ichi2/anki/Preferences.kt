@@ -71,7 +71,6 @@ import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.themes.Themes.systemIsInNightMode
 import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import net.ankiweb.rsdroid.BackendFactory
@@ -80,15 +79,12 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.*
+import kotlin.collections.HashSet
 
 /**
  * Preferences dialog.
  */
 class Preferences : AnkiActivity() {
-    // Other variables
-    @KotlinCleanup("we use string? as some keys were null")
-    private val mOriginalSummaries = HashMap<String?, String>()
-
     /** The collection path when Preferences was opened   */
     private var mOldCollectionPath: String? = null
 
@@ -263,9 +259,6 @@ class Preferences : AnkiActivity() {
         if (pref is ListPreference) {
             pref.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance())
         }
-        // Set the value from the summary cache
-        val s = pref.summary
-        mOriginalSummaries[pref.key] = s?.toString() ?: ""
         // Update summary
         updateSummary(pref)
     }
@@ -326,11 +319,6 @@ class Preferences : AnkiActivity() {
             col.save()
         }
     }
-
-    /** This is not fit for purpose (other than testing a single screen)  */
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val loadedPreferenceKeys: Set<String>
-        get() = mOriginalSummaries.keys.filterNotNull().toSet()
 
     // ----------------------------------------------------------------------------
     // Inner classes
@@ -1150,6 +1138,22 @@ class Preferences : AnkiActivity() {
                 refreshScreen()
                 true
             }
+        }
+
+        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+        fun allKeys(): HashSet<String> {
+            val allKeys = HashSet<String>()
+            for (i in 0 until preferenceScreen.preferenceCount) {
+                val pref = preferenceScreen.getPreference(i)
+                if (pref is PreferenceCategory) {
+                    for (j in 0 until pref.preferenceCount) {
+                        allKeys.add(pref.getPreference(j).key)
+                    }
+                } else {
+                    allKeys.add(pref.key)
+                }
+            }
+            return allKeys
         }
 
         companion object {
