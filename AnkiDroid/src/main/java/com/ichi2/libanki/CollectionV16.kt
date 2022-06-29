@@ -43,7 +43,7 @@ class CollectionV16(
     }
 
     override fun initModels(): ModelManager {
-        return ModelsV16(this, backend)
+        return ModelsV16(this)
     }
 
     override fun initConf(conf: String?): ConfigManager {
@@ -62,6 +62,9 @@ class CollectionV16(
 
     override val newTags: TagsV16
         get() = this.tags as TagsV16
+
+    override val newModels: ModelsV16
+        get() = this.models as ModelsV16
 
     override fun load() {
         _config = initConf(null)

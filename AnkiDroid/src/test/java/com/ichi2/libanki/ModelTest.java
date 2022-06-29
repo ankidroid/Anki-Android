@@ -427,6 +427,10 @@ public class ModelTest extends RobolectricTest {
 
     @Test
     public void test_modelChange() throws ConfirmModSchemaException {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            // backend provides different API with TypeScript frontend
+            return;
+        }
         Collection col = getCol();
         Model cloze = col.getModels().byName("Cloze");
         // enable second template and add a note
