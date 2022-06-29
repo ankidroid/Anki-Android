@@ -141,7 +141,7 @@ class Preferences : AnkiActivity() {
         }
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.settings_container, initialFragment)
+            .replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
             .commit()
     }
 
