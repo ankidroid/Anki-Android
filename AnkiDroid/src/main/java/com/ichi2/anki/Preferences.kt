@@ -758,6 +758,22 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_reviewing)
+
+            // Learn ahead limit
+            requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference)
+                .setFormattedSummary(R.string.pref_summary_minutes)
+            // Timebox time limit
+            requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference)
+                .setFormattedSummary(R.string.pref_summary_minutes)
+            // Start of next day
+            requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference)
+                .setFormattedSummary(R.string.day_offset_summary)
+            // Time to show answer
+            requirePreference<SeekBarPreferenceCompat>(R.string.timeout_answer_seconds_preference)
+                .setFormattedSummary(R.string.pref_summary_seconds)
+            // Time to show question
+            requirePreference<SeekBarPreferenceCompat>(R.string.timeout_question_seconds_preference)
+                .setFormattedSummary(R.string.pref_summary_seconds)
         }
     }
 
