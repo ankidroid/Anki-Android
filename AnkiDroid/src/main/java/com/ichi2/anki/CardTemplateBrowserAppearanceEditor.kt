@@ -217,10 +217,10 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
         @CheckResult
         fun getIntent(context: Context, questionFormat: String, answerFormat: String): Intent {
-            val intent = Intent(context, CardTemplateBrowserAppearanceEditor::class.java)
-            intent.putExtra(INTENT_QUESTION_FORMAT, questionFormat)
-            intent.putExtra(INTENT_ANSWER_FORMAT, answerFormat)
-            return intent
+            return Intent(context, CardTemplateBrowserAppearanceEditor::class.java).apply {
+                putExtra(INTENT_QUESTION_FORMAT, questionFormat)
+                putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+            }
         }
     }
 }
