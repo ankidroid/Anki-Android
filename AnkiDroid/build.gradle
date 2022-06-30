@@ -328,7 +328,7 @@ dependencies {
     testImplementation 'org.apache.commons:commons-exec:1.3' // obtaining the OS
 
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
-    debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
+    debugImplementation 'androidx.fragment:fragment-testing:1.5.0'
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
