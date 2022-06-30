@@ -737,7 +737,7 @@ class Preferences : AnkiActivity() {
                 val languageDialogLabels = arrayOfNulls<CharSequence>(items.size + 1)
                 val languageDialogValues = arrayOfNulls<CharSequence>(items.size + 1)
                 languageDialogLabels[0] = resources.getString(R.string.language_system)
-                languageDialogValues[0] = ""
+                languageDialogValues[0] = "${LanguageUtil.getSystemLocale()}"
                 val itemsList = items.toList()
                 for (i in 1..itemsList.size) {
                     languageDialogLabels[i] = itemsList[i - 1].first

@@ -108,4 +108,7 @@ object LanguageUtil {
     fun getLocaleCompat(resources: Resources): Locale? {
         return ConfigurationCompat.getLocales(resources.configuration)[0]
     }
+
+    @JvmStatic
+    fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
 }
