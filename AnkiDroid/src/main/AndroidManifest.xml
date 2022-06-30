@@ -60,6 +60,11 @@
         </intent>
     </queries>
 
+    <!--
+       Attribute usesCleartextTraffic, added in API 23 and false by default if targeting API >= 28,
+       is ignored on Android 7 (API 24) and above if networkSecurityConfig is present.
+       https://developer.android.com/guide/topics/manifest/application-element#usesCleartextTraffic
+    -->
     <application
         android:name="com.ichi2.anki.AnkiDroidApp"
         android:label="@string/app_name"
