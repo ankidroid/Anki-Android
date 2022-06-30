@@ -47,6 +47,7 @@ import com.ichi2.libanki.StdModels
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
+import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus.update
@@ -427,7 +428,7 @@ class ModelBrowser : AnkiActivity() {
      */
     private fun openTemplateEditor() {
         if (!BackendFactory.defaultLegacySchema) {
-            // this screen needs rewriting for the new backend
+            @BlocksSchemaUpgrade("this screen needs rewriting for the new backend")
             AlertDialog.Builder(this).setTitle("Not yet supported on new backend").show()
             return
         }
