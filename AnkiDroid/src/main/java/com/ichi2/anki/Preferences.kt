@@ -65,6 +65,7 @@ import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.*
 import com.ichi2.preferences.ControlPreference.Companion.addAllControlPreferencesToCategory
+import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.themes.Themes.setThemeLegacy
@@ -810,22 +811,21 @@ class Preferences : AnkiActivity() {
             val appThemePref = requirePreference<ListPreference>(getString(R.string.app_theme_key))
             val dayThemePref = requirePreference<ListPreference>(getString(R.string.day_theme_key))
             val nightThemePref = requirePreference<ListPreference>(getString(R.string.night_theme_key))
+            val themeIsFollowSystem = appThemePref.value == Themes.FOLLOW_SYSTEM_MODE
 
             // Remove follow system options in android versions which do not have system dark mode
-            // When minSdk reaches 29, only this if block needs to be removed
+            // When minSdk reaches 29, the only necessary change is to remove this if-block
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 dayThemePref.isVisible = false
                 nightThemePref.isVisible = false
 
                 // Drop "Follow system" option (the first one)
-                val appThemesLabels = resources.getStringArray(R.array.app_theme_labels)
-                val appThemesValues = resources.getStringArray(R.array.app_theme_values)
-
-                appThemePref.entries = appThemesLabels.sliceArray(1..appThemesLabels.lastIndex)
-                appThemePref.entryValues = appThemesValues.sliceArray(1..appThemesValues.lastIndex)
+                appThemePref.entries = resources.getStringArray(R.array.app_theme_labels).drop(1).toTypedArray()
+                appThemePref.entryValues = resources.getStringArray(R.array.app_theme_values).drop(1).toTypedArray()
+                if (themeIsFollowSystem) {
+                    appThemePref.value = Theme.fallback.id
+                }
             }
-
-            val themeIsFollowSystem = appThemePref.value == Themes.FOLLOW_SYSTEM_MODE
             dayThemePref.isEnabled = themeIsFollowSystem
             nightThemePref.isEnabled = themeIsFollowSystem
 
