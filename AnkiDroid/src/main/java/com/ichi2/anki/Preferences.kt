@@ -260,8 +260,6 @@ class Preferences : AnkiActivity() {
         if (pref is ListPreference) {
             pref.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance())
         }
-        // Update summary
-        updateSummary(pref)
     }
 
     /** Sets the hour that the collection rolls over to the next day  */
@@ -293,25 +291,6 @@ class Preferences : AnkiActivity() {
         }
         listPreference.entries = entries
         listPreference.summary = listPreference.entry.toString()
-    }
-
-    fun updateSummary(pref: Preference) {
-        // Handle special cases
-        when (pref.key) {
-            "custom_sync_server_link" -> {
-                val preferences = AnkiDroidApp.getSharedPrefs(this)
-                if (!CustomSyncServer.isEnabled(preferences)) {
-                    pref.setSummary(R.string.disabled)
-                } else {
-                    pref.summary = CustomSyncServer.getSyncBaseUrlOrDefault(preferences, "")
-                }
-            }
-            "advanced_statistics_link" -> if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("advanced_statistics_enabled", false)) {
-                pref.setSummary(R.string.disabled)
-            } else {
-                pref.setSummary(R.string.enabled)
-            }
-        }
     }
 
     private fun closePreferences() {
@@ -425,8 +404,6 @@ class Preferences : AnkiActivity() {
             // syncAccount's summary can change while preferences are still open (user logs
             // in from preferences screen), so we need to update it here.
             updatePreference(activity as Preferences, prefs, "syncAccount")
-            updatePreference(activity as Preferences, prefs, "custom_sync_server_link")
-            updatePreference(activity as Preferences, prefs, "advanced_statistics_link")
         }
 
         override fun onPause() {
@@ -580,8 +557,6 @@ class Preferences : AnkiActivity() {
                     CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                     AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                 }
-                // Update the summary text to reflect new value
-                preferencesActivity.updateSummary(pref)
             } catch (e: BadTokenException) {
                 Timber.e(e, "Preferences: BadTokenException on showDialog")
             } catch (e: NumberFormatException) {
@@ -745,6 +720,15 @@ class Preferences : AnkiActivity() {
                     }
                     .show()
                 true
+            }
+            // Custom sync server
+            requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
+                val preferences = AnkiDroidApp.getSharedPrefs(requireContext())
+                if (!CustomSyncServer.isEnabled(preferences)) {
+                    getString(R.string.disabled)
+                } else {
+                    CustomSyncServer.getSyncBaseUrlOrDefault(preferences, "")
+                }
             }
         }
     }
@@ -1040,6 +1024,14 @@ class Preferences : AnkiActivity() {
                     .setNegativeButton(R.string.dialog_cancel, null)
                     .show()
                 true
+            }
+            // Advanced statistics
+            requirePreference<Preference>(R.string.pref_advanced_statistics_key).setSummaryProvider {
+                if (AnkiDroidApp.getSharedPrefs(requireContext()).getBoolean("advanced_statistics_enabled", false)) {
+                    getString(R.string.enabled)
+                } else {
+                    getString(R.string.disabled)
+                }
             }
             // About summary
             requirePreference<Preference>("about_dialog_preference")
