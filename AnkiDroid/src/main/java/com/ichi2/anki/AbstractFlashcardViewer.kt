@@ -98,7 +98,6 @@ import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.MaxExecFunction
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
@@ -2211,10 +2210,6 @@ abstract class AbstractFlashcardViewer :
             if (isLoadedFromProtocolRelativeUrl(url)) {
                 mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
             }
-            if (isLoadedFromHttpUrl(url)) {
-                // shouldInterceptRequest is not running on the UI thread.
-                runOnUiThread { mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard!!) }
-            }
             return null
         }
 
@@ -2235,19 +2230,7 @@ abstract class AbstractFlashcardViewer :
             if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
                 mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
             }
-            if (isLoadedFromHttpUrl(url)) {
-                // shouldInterceptRequest is not running on the UI thread.
-                runOnUiThread { mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard!!) }
-            }
             return null
-        }
-
-        private fun isLoadedFromHttpUrl(url: String): Boolean {
-            return url.trim { it <= ' ' }.lowercase(Locale.ROOT).startsWith("http")
-        }
-
-        private fun isLoadedFromHttpUrl(uri: Uri): Boolean {
-            return uri.scheme.equals("http", ignoreCase = true)
         }
 
         private fun isLoadedFromProtocolRelativeUrl(url: String): Boolean {
@@ -2508,11 +2491,6 @@ abstract class AbstractFlashcardViewer :
         override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
             return mOnRenderProcessGoneDelegate.onRenderProcessGone(view, detail)
         }
-    }
-
-    private val mDisplayMediaLoadedFromHttpWarningSnackbar = MaxExecFunction(3) {
-        val onClickListener = View.OnClickListener { openUrl(Uri.parse(getString(R.string.link_faq_external_http_content))) }
-        showSnackbar(getString(R.string.cannot_load_http_resource), R.string.help, onClickListener)
     }
 
     private fun displayCouldNotFindMediaSnackbar(filename: String?) {
