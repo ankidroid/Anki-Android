@@ -60,6 +60,11 @@ class CollectionV16(
     override val newMedia: BackendMedia
         get() = this.media as BackendMedia
 
+    override fun load() {
+        _config = initConf(null)
+        decks = initDecks(null)
+    }
+
     override fun flush(mod: Long) {
         // no-op
     }
@@ -69,6 +74,20 @@ class CollectionV16(
 
     override var crt: Long = 0
         get() = db.queryLongScalar("select crt from col")
+
+    override var scm: Long = 0
+        get() = db.queryLongScalar("select scm from col")
+
+    var lastSync: Long = 0
+        get() = db.queryLongScalar("select ls from col")
+
+    override fun usn(): Int {
+        return -1
+    }
+
+    override fun schemaChanged(): Boolean {
+        return scm > lastSync
+    }
 
     /** col.conf is now unused, handled by [ConfigV16] which has a separate table */
     override fun flushConf(): Boolean = false

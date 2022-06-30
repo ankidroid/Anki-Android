@@ -135,7 +135,7 @@ open class Collection(
         "move accessor methods here, maybe reconsider return type." +
             "See variable: conf"
     )
-    private var _config: ConfigManager? = null
+    protected var _config: ConfigManager? = null
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
     lateinit var sched: AbstractSched
@@ -147,7 +147,8 @@ open class Collection(
     // BEGIN: SQL table columns
     open var crt: Long = 0
     open var mod: Long = 0
-    var scm: Long = 0
+    open var scm: Long = 0
+    @RustCleanup("remove")
     var dirty: Boolean = false
     private var mUsn = 0
     private var mLs: Long = 0
@@ -278,7 +279,7 @@ open class Collection(
      * DB-related *************************************************************** ********************************
      */
     @KotlinCleanup("Cleanup: make cursor a val + move cursor and cursor.close() to the try block")
-    fun load() {
+    open fun load() {
         var cursor: Cursor? = null
         var deckConf: String?
         try {
@@ -504,12 +505,12 @@ open class Collection(
     }
 
     /** True if schema changed since last sync.  */
-    fun schemaChanged(): Boolean {
+    open fun schemaChanged(): Boolean {
         return scm > mLs
     }
 
     @KotlinCleanup("maybe change to getter")
-    fun usn(): Int {
+    open fun usn(): Int {
         return if (server) {
             mUsn
         } else {
