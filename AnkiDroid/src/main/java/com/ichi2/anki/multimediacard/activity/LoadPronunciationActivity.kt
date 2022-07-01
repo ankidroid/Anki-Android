@@ -207,7 +207,7 @@ open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelL
             mPronunciationAddress = BeolingusParser.getPronunciationAddressFromTranslation(result, source)
             if (mPronunciationAddress.contentEquals("no")) {
                 failNoPronunciation()
-                if (source.split(" ").size > 1) {
+                if (source.contains(" ")) {
                     showToastLong(gtxt(R.string.multimedia_editor_only_one_words))
                 } else if (!source.lowercase(Locale.getDefault()).contentEquals(source)) {
                     showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case))
