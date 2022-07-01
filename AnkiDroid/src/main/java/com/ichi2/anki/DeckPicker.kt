@@ -1758,11 +1758,7 @@ open class DeckPicker :
                     Timber.i("Syncing had additional information")
                     // There was a media error, so show it
                     // Note: Do not log this data. May contain user email.
-                    val message = """
-                        ${res.getString(R.string.sync_database_acknowledge)}
-                        
-                        ${data.data[2]}
-                    """.trimIndent()
+                    val message = res.getString(R.string.sync_database_acknowledge) + "\n\n" + data.data[2]
                     showSimpleMessageDialog(message)
                 } else if (data.data.isNotEmpty() && data.data[0] is ConflictResolution) {
                     // A full sync occurred
