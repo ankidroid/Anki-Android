@@ -165,7 +165,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         finishActivityWithFade(this)
     }
 
-    fun hasChanges(): Boolean {
+    private fun hasChanges(): Boolean {
         return try {
             questionHasChanged(intent) || answerHasChanged(intent)
         } catch (e: Exception) {
