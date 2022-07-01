@@ -182,6 +182,10 @@ open class AnkiDroidApp : Application(), androidx.work.Configuration.Provider {
                 }
             }
         }
+
+        Timber.i("AnkiDroidApp: Starting Workers")
+        startNotificationWorker()
+
         // TODO: Notification CleanUP. Delete the Boot Service after successful implementation of Notification Work Manager.
         Timber.i("AnkiDroidApp: Starting Services")
         BootService().onReceive(this, Intent(this, BootService::class.java))
@@ -192,6 +196,24 @@ open class AnkiDroidApp : Application(), androidx.work.Configuration.Provider {
         Themes.systemIsInNightMode =
             resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
         Themes.updateCurrentTheme()
+    }
+
+    private fun startNotificationWorker() {
+        val sharedPreferences = getSharedPrefs(this)
+        val notificationTime = sharedPreferences.getString(
+            ReminderNotificationHelper.GLOBAL_NOTIFICATION_TIME,
+            null
+        )
+
+        if (notificationTime == null) {
+            // Set the default notification time
+            sharedPreferences.edit {
+                putString(
+                    ReminderNotificationHelper.GLOBAL_NOTIFICATION_TIME,
+                    ReminderNotificationHelper.GLOBAL_NOTIFICATION_DEFAULT_TIME
+                )
+            }
+        }
     }
 
     fun scheduleNotification() {
@@ -222,7 +244,6 @@ open class AnkiDroidApp : Application(), androidx.work.Configuration.Provider {
      * TODO: Remove custom implementation after implementing 14 tests using WorkManagerTestInitHelper. SEE: https://developer.android.com/topic/libraries/architecture/workmanager/how-to/integration-testing
      */
     override fun getWorkManagerConfiguration() = androidx.work.Configuration.Builder().build()
-
 
     /**
      * A tree which logs necessary data for crash reporting.
