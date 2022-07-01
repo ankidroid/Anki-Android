@@ -186,6 +186,10 @@ open class AnkiDroidApp : Application(), androidx.work.Configuration.Provider {
                 }
             }
         }
+
+        Timber.i("AnkiDroidApp: Starting Workers")
+        NotificationHelper(this).startNotificationWorker(0, false)
+
         // TODO: Notification CleanUP. Delete the Boot Service after successful implementation of Notification Work Manager.
         Timber.i("AnkiDroidApp: Starting Services")
         BootService().onReceive(this, Intent(this, BootService::class.java))
