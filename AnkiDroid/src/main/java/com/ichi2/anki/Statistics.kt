@@ -337,7 +337,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            setHasOptionsMenu(true)
             val bundle = arguments
             mSectionNumber = bundle!!.getInt(ARG_SECTION_NUMBER)
             // int sectionNumber = 0;
@@ -424,7 +423,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            setHasOptionsMenu(true)
             val rootView = inflater.inflate(R.layout.fragment_anki_stats_overview, container, false)
             val handler = (requireActivity() as Statistics).taskHandler
             // Workaround for issue 2406 -- crash when resuming after app is purged from RAM
