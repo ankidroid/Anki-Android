@@ -2067,10 +2067,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (menu.findItem(mClozeMenuId) != null) {
                 return false
             }
-            //Test commit
+            // Test commit
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(mSetLanguageId) != null) {
                 return false
             }
+            // Removes paste as plain text from ContextMenu in NoteEditor
+            menu.removeItem(android.R.id.pasteAsPlainText)
             val initialSize = menu.size()
             if (isClozeType) {
                 // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
