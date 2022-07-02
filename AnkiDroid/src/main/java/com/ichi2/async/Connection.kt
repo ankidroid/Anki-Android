@@ -240,6 +240,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
     @KotlinCleanup("Scoped function")
     private fun doInBackgroundSync(data: Payload): Payload {
         isCancellable = true
+        Companion.isCancelled = false
         Timber.d("doInBackgroundSync()")
         // Block execution until any previous background task finishes, or timeout after 5s
         val ok = TaskManager.waitToFinish(5)
