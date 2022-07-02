@@ -179,7 +179,7 @@ class RecursivePictureMenu : DialogFragment() {
         }
 
         companion object {
-            val CREATOR: Parcelable.Creator<ItemHeader?> = object : Parcelable.Creator<ItemHeader?> {
+            @JvmField val CREATOR: Parcelable.Creator<ItemHeader?> = object : Parcelable.Creator<ItemHeader?> {
                 override fun createFromParcel(parcel: Parcel): ItemHeader {
                     return ItemHeader(parcel)
                 }
