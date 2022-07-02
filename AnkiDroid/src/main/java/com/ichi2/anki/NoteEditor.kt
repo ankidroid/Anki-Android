@@ -48,6 +48,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.view.contains
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -2071,8 +2072,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(mSetLanguageId) != null) {
                 return false
             }
+
             // Removes paste as plain text from ContextMenu in NoteEditor
-            menu.removeItem(android.R.id.pasteAsPlainText)
+
+            val item: MenuItem = menu.findItem(android.R.id.pasteAsPlainText)
+            if (menu.contains(item) && menu.contains(menu.findItem(android.R.id.paste))) {
+                item.setVisible(false)
+            }
+
             val initialSize = menu.size()
             if (isClozeType) {
                 // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
@@ -2083,6 +2090,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     getString(R.string.multimedia_editor_popup_cloze)
                 )
             }
+
             return initialSize != menu.size()
         }
 
