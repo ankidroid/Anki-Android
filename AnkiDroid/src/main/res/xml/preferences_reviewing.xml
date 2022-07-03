@@ -23,6 +23,7 @@
 <!-- Reviewing Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_reviewing"
     android:key="@string/pref_reviewing_screen_key">
     <PreferenceCategory android:title="@string/pref_cat_scheduling" >
@@ -30,7 +31,8 @@
             android:entries="@array/new_spread_labels"
             android:entryValues="@array/new_spread_values"
             android:key="@string/new_spread_preference"
-            android:title="@string/new_spread" />
+            android:title="@string/new_spread"
+            app1:useSimpleSummaryProvider="true"/>
         <com.ichi2.preferences.SeekBarPreferenceCompat
             android:key="@string/day_offset_preference"
             android:max="23"
@@ -63,7 +65,8 @@
             android:entryValues="@array/automatic_answer_values"
             android:defaultValue="0"
             android:key="@string/automatic_answer_action_preference"
-            android:title="@string/timeout_answer" />
+            android:title="@string/timeout_answer"
+            app1:useSimpleSummaryProvider="true"/>
         <com.ichi2.preferences.SeekBarPreferenceCompat
             android:defaultValue="20"
             android:dependency="@string/timeout_answer_preference"

@@ -23,18 +23,21 @@
 <!-- Advanced Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_advanced"
     android:summary="@string/pref_cat_advanced_summ"
     android:key="pref_screen_advanced">
         <EditTextPreference
             android:defaultValue="/sdcard/AnkiDroid"
             android:key="deckPath"
-            android:title="@string/col_path" />
+            android:title="@string/col_path"
+            app1:useSimpleSummaryProvider="true"/>
         <PreferenceCategory android:title="@string/pref_cat_performance" >
             <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
                 android:defaultValue="8"
                 android:key="@string/pref_backup_max_key"
                 android:title="@string/pref_backup_max"
+                app1:useSimpleSummaryProvider="true"
                 app:min="0"
                 app:max="99" />
         </PreferenceCategory>
@@ -143,7 +146,8 @@
                 android:entryValues="@array/stats_default_deck_values"
                 android:key="stats_default_deck"
                 android:title="@string/stats_default_deck_title"
-                android:defaultValue="current" />
+                android:defaultValue="current"
+                app1:useSimpleSummaryProvider="true"/>
             <Preference
                 android:key="@string/pref_advanced_statistics_key"
                 android:title="@string/advanced_statistics_title"

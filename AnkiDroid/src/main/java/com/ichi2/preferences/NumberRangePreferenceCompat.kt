@@ -58,10 +58,6 @@ open class NumberRangePreferenceCompat : EditTextPreference {
     var max = 0
         private set
 
-    fun useValueAsSummary() {
-        setSummaryProvider { text }
-    }
-
     fun setFormattedSummary(@StringRes resId: Int) {
         setSummaryProvider { context.getString(resId, text) }
     }
