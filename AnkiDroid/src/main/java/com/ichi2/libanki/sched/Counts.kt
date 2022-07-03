@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki.sched
 
+import androidx.annotation.CheckResult
 import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
@@ -56,6 +57,7 @@ class Counts @JvmOverloads constructor(var new: Int = 0, var lrn: Int = 0, var r
     /**
      * @return the sum of the three counts
      */
+    @CheckResult
     fun count(): Int {
         return new + lrn + rev
     }
