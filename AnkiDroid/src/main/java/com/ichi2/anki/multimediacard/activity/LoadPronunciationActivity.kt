@@ -50,7 +50,6 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
-import java.util.Locale
 
 /**
  * Activity to load pronunciation files from Beolingus.
@@ -207,7 +206,9 @@ open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelL
             mPronunciationAddress = BeolingusParser.getPronunciationAddressFromTranslation(result, source)
             if (mPronunciationAddress.contentEquals("no")) {
                 failNoPronunciation()
-                if (!source.lowercase(Locale.getDefault()).contentEquals(source)) {
+                if (source.contains(" ")) {
+                    showToastLong(gtxt(R.string.multimedia_editor_only_one_word))
+                } else if (source.any { it.isUpperCase() }) {
                     showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case))
                 }
                 return
