@@ -873,3 +873,8 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     val Deck.name: str get() = this.getString("name")
     val Deck.conf: Long get() = this.getLong("conf")
 }
+
+// These take and return bytes that the frontend TypeScript code will encode/decode.
+fun CollectionV16.getDeckNamesRaw(input: ByteArray): ByteArray {
+    return backend.getDeckNamesRaw(input)
+}
