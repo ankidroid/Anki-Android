@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -74,6 +75,7 @@ class InitialActivityTest : RobolectricTest() {
     }
 
     @Test
+    @SuppressLint("CheckResult") // performSetupFromFreshInstallOrClearedPreferences
     fun new_install_or_preference_data_wipe_means_preferences_up_to_date() {
         mockStatic(PreferenceUpgradeService::class.java).use { mocked ->
             InitialActivity.performSetupFromFreshInstallOrClearedPreferences(mSharedPreferences)
