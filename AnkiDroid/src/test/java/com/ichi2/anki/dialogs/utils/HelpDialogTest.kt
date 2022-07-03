@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.dialogs.utils
 
+import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.RunInBackground
@@ -33,7 +34,7 @@ class HelpDialogTest : RobolectricTest() {
     @RunInBackground
     fun testMenuDoesNotCrash() {
         val dialog = createInstance(targetContext) as RecursivePictureMenu
-        super.openDialogFragmentUsingActivity(dialog)
+        openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
         MatcherAssert.assertThat(v.childCount, Matchers.`is`(4))
     }
@@ -42,8 +43,13 @@ class HelpDialogTest : RobolectricTest() {
     @RunInBackground
     fun testMenuSupportAnkiDroidDoesNotCrash() {
         val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
-        super.openDialogFragmentUsingActivity(dialog)
+        openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
         MatcherAssert.assertThat(v.childCount, Matchers.`is`(5))
+    }
+
+    @SuppressLint("CheckResult") // openDialogFragmentUsingActivity
+    private fun openDialogFragment(dialog: RecursivePictureMenu) {
+        super.openDialogFragmentUsingActivity(dialog)
     }
 }

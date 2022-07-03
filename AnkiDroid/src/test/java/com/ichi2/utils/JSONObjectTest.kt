@@ -36,6 +36,7 @@ Most of the code is:
  */
 package com.ichi2.utils
 
+import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.AnkiAssert.assertThrows
 import com.ichi2.testutils.EmptyApplication
@@ -57,6 +58,7 @@ import java.util.*
  */
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@SuppressLint("CheckResult") // many usages: checking exceptions
 class JSONObjectTest {
     @Test
     fun testEmptyObject() {

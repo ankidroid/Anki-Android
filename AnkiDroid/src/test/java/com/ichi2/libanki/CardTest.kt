@@ -53,6 +53,7 @@ class CardTest : RobolectricTest() {
     }
 
     @Test
+    @SuppressLint("CheckResult") // col.models.current()!!.getLong("id")
     fun test_misc_cards() {
         val note = col.newNote()
         note.setItem("Front", "1")
