@@ -720,3 +720,12 @@ private fun Deck.getLongOrNull(key: String): int? {
         return null
     }
 }
+
+// These take and return bytes that the frontend TypeScript code will encode/decode.
+fun CollectionV16.getNotetypeNamesRaw(input: ByteArray): ByteArray {
+    return backend.getNotetypeNamesRaw(input)
+}
+
+fun CollectionV16.getFieldNamesRaw(input: ByteArray): ByteArray {
+    return backend.getFieldNamesRaw(input)
+}
