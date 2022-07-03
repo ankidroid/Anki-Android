@@ -232,7 +232,6 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
     private var mLastRenderStart: Long = 0
     private var mActionBarTitle: TextView? = null
-    private var mReloadRequired = false
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var isInMultiSelectMode = false
@@ -810,15 +809,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     override fun onBackPressed() {
         when {
-            isDrawerOpen -> super.onBackPressed()
             isInMultiSelectMode -> endMultiSelectMode()
-            else -> {
-                Timber.i("Back key pressed")
-                val data = Intent()
-                // Add reload flag to result intent so that schedule reset when returning to note editor
-                data.putExtra("reloadRequired", mReloadRequired)
-                closeCardBrowser(RESULT_OK, data)
-            }
+            else -> super.onBackPressed()
         }
     }
 

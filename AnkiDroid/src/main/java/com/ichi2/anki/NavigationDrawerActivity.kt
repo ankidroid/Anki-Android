@@ -69,6 +69,14 @@ abstract class NavigationDrawerActivity :
      */
     private var mPendingRunnable: Runnable? = null
 
+    protected var mReloadRequired = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mReloadRequired = savedInstanceState?.getBoolean("reloadRequired")
+            ?: intent.getBooleanExtra("reloadRequired", false)
+    }
+
     override fun setContentView(@LayoutRes layoutResID: Int) {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
 
@@ -90,6 +98,11 @@ abstract class NavigationDrawerActivity :
             closableDrawerLayout.addView(coordinatorLayout, 0)
         }
         setContentView(closableDrawerLayout)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Timber.i("mReloadRequired = $mReloadRequired")
     }
 
     @get:LayoutRes
@@ -230,8 +243,8 @@ abstract class NavigationDrawerActivity :
 
     @Suppress("deprecation") // onActivityResult()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val preferences = preferences
         Timber.i("Handling Activity Result: %d. Result: %d", requestCode, resultCode)
+        Timber.i("data = ${data?.extras?.isEmpty} data extras = ${listOf("reloadRequired", "currentCard").map { it to data?.extras?.get(it) }}")
         NotificationChannels.setup(applicationContext)
         // Restart the activity on preference change
         if (requestCode == REQUEST_PREFERENCES_UPDATE) {
@@ -244,17 +257,31 @@ abstract class NavigationDrawerActivity :
                 restartActivity()
             }
         } else {
-            super.onActivityResult(requestCode, resultCode, data)
+            if (listOf("reloadRequired", "currentCard").map { data?.extras?.get(it) }.all { it != null }) {
+                mReloadRequired = true
+                intent.putExtra("currentCard", data?.getLongExtra("currentCard", -1))
+            } else {
+                super.onActivityResult(requestCode, resultCode, data)
+            }
         }
     }
 
     override fun onBackPressed() {
+        Timber.i("Back key pressed")
         if (isDrawerOpen) {
-            Timber.i("Back key pressed")
             closeDrawer()
         } else {
-            super.onBackPressed()
+            Timber.i("mReloadRequired = $mReloadRequired, currentCardId = $currentCardId")
+            val data = Intent().apply {
+                setupCardIdAndReloadRequired(toIntent = this, reloadRequired = mReloadRequired)
+            }
+            close(RESULT_OK, data)
         }
+    }
+
+    private fun close(result: Int, data: Intent) {
+        setResult(result, data)
+        finishWithAnimation(END)
     }
 
     /**
@@ -295,13 +322,12 @@ abstract class NavigationDrawerActivity :
                 openCardBrowser()
             } else if (itemId == R.id.nav_stats) {
                 Timber.i("Navigating to stats")
-                val intent = Intent(this@NavigationDrawerActivity, Statistics::class.java)
-                startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START)
+                openStatistics()
             } else if (itemId == R.id.nav_settings) {
                 Timber.i("Navigating to settings")
-                startActivityForResultWithAnimation(Intent(this@NavigationDrawerActivity, Preferences::class.java), REQUEST_PREFERENCES_UPDATE, FADE)
+                openPreferences()
                 // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
-                (this as? Statistics)?.finishWithAnimation(FADE)
+                (this as? Statistics)?.onBackPressed()
             } else if (itemId == R.id.nav_help) {
                 Timber.i("Navigating to help")
                 showDialogFragment(HelpDialog.createInstance(this))
@@ -315,19 +341,41 @@ abstract class NavigationDrawerActivity :
         return true
     }
 
-    @KotlinCleanup("Remove redundant `val currentCardId`")
+    private fun openPreferences() {
+        val data = Intent(this@NavigationDrawerActivity, Preferences::class.java)
+        setupCardIdAndReloadRequired(fromIntent = intent, toIntent = data)
+        startActivityForResultWithAnimation(data, REQUEST_PREFERENCES_UPDATE, FADE)
+    }
+
+    private fun openStatistics() {
+        val data = Intent(this@NavigationDrawerActivity, Statistics::class.java)
+        setupCardIdAndReloadRequired(fromIntent = intent, toIntent = data)
+        startActivityForResultWithAnimation(data, REQUEST_STATISTICS, START)
+    }
+
     protected fun openCardBrowser() {
-        val intent = Intent(this@NavigationDrawerActivity, CardBrowser::class.java)
-        val currentCardId = currentCardId
+        val data = Intent(this@NavigationDrawerActivity, CardBrowser::class.java)
+        setupCardIdAndReloadRequired(fromIntent = intent, toIntent = data)
+        startActivityForResultWithAnimation(data, REQUEST_BROWSE_CARDS, START)
+    }
+
+    protected fun setupCardIdAndReloadRequired(
+        toIntent: Intent,
+        fromIntent: Intent? = null,
+        currentCardId: Long? = this.currentCardId,
+        reloadRequired: Boolean = fromIntent?.hasExtra("reloadRequired") == true
+    ) {
         if (currentCardId != null) {
-            intent.putExtra("currentCard", currentCardId)
+            toIntent.putExtra("currentCard", currentCardId)
         }
-        startActivityForResultWithAnimation(intent, REQUEST_BROWSE_CARDS, START)
+        if (reloadRequired) {
+            toIntent.putExtra("reloadRequired", true)
+        }
     }
 
     // Override this to specify a specific card id
     protected open val currentCardId: Long?
-        get() = null
+        get() = intent.extras?.get("currentCard") as? Long
 
     protected fun showBackIcon() {
         drawerToggle.isDrawerIndicatorEnabled = false

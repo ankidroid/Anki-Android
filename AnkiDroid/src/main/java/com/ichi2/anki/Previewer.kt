@@ -50,7 +50,6 @@ class Previewer : AbstractFlashcardViewer() {
     private lateinit var mProgressText: TextView
 
     /** Communication with Browser  */
-    private var mReloadRequired = false
     private var mNoteChanged = false
     private var previewLayout: PreviewLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {

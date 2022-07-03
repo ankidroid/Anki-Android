@@ -495,6 +495,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             if (intent.hasExtra("selectedDeck")) {
                 data.putExtra("originalDeck", intent.getLongExtra("selectedDeck", 0L))
             }
+            setupCardIdAndReloadRequired(toIntent = data, reloadRequired = mReloadRequired)
             setResult(RESULT_CANCELED, data)
             finishWithAnimation(ActivityTransitionAnimation.Direction.END)
         }
