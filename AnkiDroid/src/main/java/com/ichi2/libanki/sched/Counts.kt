@@ -17,8 +17,6 @@
 package com.ichi2.libanki.sched
 
 import androidx.annotation.CheckResult
-import com.ichi2.utils.KotlinCleanup
-import java.util.*
 
 /**
  * Represents the three counts shown in deck picker and reviewer. Semantically more meaningful than int[]
@@ -58,9 +56,7 @@ class Counts @JvmOverloads constructor(var new: Int = 0, var lrn: Int = 0, var r
      * @return the sum of the three counts
      */
     @CheckResult
-    fun count(): Int {
-        return new + lrn + rev
-    }
+    fun count(): Int = new + lrn + rev
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -73,12 +69,7 @@ class Counts @JvmOverloads constructor(var new: Int = 0, var lrn: Int = 0, var r
         return new == counts.new && rev == counts.rev && lrn == counts.lrn
     }
 
-    override fun hashCode(): Int {
-        @KotlinCleanup("Kotlin listOf instead of Java Arrays.asList")
-        return Arrays.asList(new, rev, lrn).hashCode()
-    }
+    override fun hashCode(): Int = listOf(new, rev, lrn).hashCode()
 
-    override fun toString(): String {
-        return "[" + new + ", " + lrn + ", " + rev + "]"
-    }
+    override fun toString(): String = "[$new, $lrn, $rev]"
 }
