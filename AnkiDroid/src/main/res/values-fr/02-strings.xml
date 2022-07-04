@@ -414,5 +414,5 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Développer le tag \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Impossible d\'accéder à la collection. Veuillez réessayer !</string>
 </resources>

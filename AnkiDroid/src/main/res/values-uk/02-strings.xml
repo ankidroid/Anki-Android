@@ -169,10 +169,10 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="one">Додати \"%s\" до колекції? Це може зайняти багато часу</item>
         <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
         <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
     </plurals>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Помилка</string>
@@ -191,7 +191,7 @@
     <string name="import_error_copy_file_to_cache">Не вдалося copyFileToCache() (копіюванння файлу до кешу, можливо, бракує пам\'яті) </string>
     <string name="import_error_unhandled_scheme">Необроблений імпорт з: «%s»</string>
     <string name="import_error_multiple_colpkg">Було вибрано декілька файлів colpkl.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_error_colpkg_apkg">Файли apkg &amp; colpkg були вибрані одночасно</string>
     <string name="import_stats_error">Виникли помилки під час імпорту наступних файлів:\n%s</string>
     <string name="import_replacing">Заміна колекції&#8230;</string>
     <string name="import_interrupted">Імпортування перервано</string>
@@ -436,7 +436,7 @@
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Нічого не знайдено</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
+    <string name="not_valid_js_addon">%s не є дійсним пакетом доповнення javascript</string>
     <string name="could_not_create_dir">Не вдалося створити каталог %s</string>
     <string name="malicious_archive_entry_outside">Шкідливий архів. Містить запис за межами цільового каталогу: %s</string>
     <string name="malicious_archive_exceeds_limit">Шкідливий архів. Розмір перевищує %1$s або містить більше ніж %2$d файлів</string>
@@ -444,5 +444,5 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Розгорнути тег \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Не вдалося отримати доступ до колекції. Будь ласка, спробуйте ще раз!</string>
 </resources>

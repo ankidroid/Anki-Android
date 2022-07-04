@@ -52,7 +52,7 @@
     <string name="pref_cat_general_summ">Paramètres généraux</string>
     <string name="pref_cat_reviewing" maxLength="41">Révision</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronisation</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">Planification</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tableau blanc</string>
     <string name="pref_cat_appearance" maxLength="41">Affichage</string>
     <string name="pref_cat_appearance_summ">Changer le thème et la police par défaut</string>
@@ -207,7 +207,7 @@
     <string name="html_javascript_debugging_summ">Activer les connexions WebView distantes et enregistrer la carte HTML dans le répertoire AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">Accessibilité</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Coller les images du pressepapiers en PNG</string>
     <string name="paste_as_png_summary">Par default Anki colle les images dans le presse-papier au format JPG (format léger). Vous pouvez changer cette option pour coller les images au format PNG.</string>
@@ -236,7 +236,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Synchroniser l’URL pour les médias</string>
     <string name="custom_sync_server_media_url_invalid">URL de synchronisation des médias invalide</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Clavier</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Mappage de commande</string>
     <!-- studyoptions -->
@@ -323,9 +323,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Ouvrir le journal des modifications</string>
     <string name="binding_add_gesture">Ajouter un geste</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Remplacer le geste</string>
     <string name="binding_add_key">Ajouter une touche</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Remplacer la clé</string>
     <string name="key_picker_default_press_key">Appuyer sur une touche</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Sélectionner le côté de la carte</string>

@@ -76,14 +76,14 @@
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">Остался %1$d час %2$d</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
+        <item quantity="few">Осталось %1$d часа %2$d</item>
+        <item quantity="many">Осталось %1$d часов %2$d</item>
         <item quantity="other">Осталось %1$d часов %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">Остался %1$d день %2$d</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
+        <item quantity="few">Остался %1$d дня %2$d</item>
+        <item quantity="many">Остался %1$d дней %2$d</item>
         <item quantity="other">Осталось %1$d дней %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Коллекция пуста</string>
@@ -182,7 +182,7 @@
     <string name="studyoptions_congrats_finished">Ура! На сегодня всё.</string>
     <string name="studyoptions_congrats_more_rev">Вы достигли дневного лимита, но ещё остались карточки для повторения. Вы можете увеличить лимит в параметрах.</string>
     <string name="studyoptions_congrats_more_new">Вы достигли дневного лимита, но ещё остались новые карточки. Вы можете увеличить лимит в параметрах, но тогда увеличится объём повторения в ближайшие дни.</string>
-    <string name="studyoptions_congrats_custom">Для обучения вне плана нажмите кнопку \"Учить ещё\"</string>
+    <string name="studyoptions_congrats_custom">Для обучения вне расписания нажмите кнопку «Учить ещё»</string>
     <string name="studyoptions_no_cards_due">Нет карточек на сегодня</string>
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>
     <string name="empty_cloze_warning">Правьте эту заметку и добавьте пропуски. (%1$s)</string>
@@ -234,11 +234,11 @@
     <string name="context_menu_anki_card_label">Карточка Anki</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">В %1$s есть проблема:<br/>%2$s</string>
     <string name="more_information">Подробнее</string>
-    <string name="no_field">Найдена \'{{%1$s}}\', но нет поля с названием \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Найдено \'{{/%1$s}}\', но отсутствует \'{{#%1$s}}\' или \'{{{^%1$s}}\'.</string>
+    <string name="no_field">Найдено «{{%1$s}}», но нет поля с названием «%1$s».</string>
+    <string name="closed_tag_not_open">Найдено «{{/%1$s}}», но отсутствуют «{{#%1$s}}» и «{{{^%1$s}}».</string>
     <string name="missing_closing_bracket">Отсутствуют «}}» в «%s».</string>
-    <string name="open_tag_not_closed">Отсутствует \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Найдено \'{{/%1$s}}\', но ожидалось \'{{/%2$s}}\'</string>
+    <string name="open_tag_not_closed">Отсутствует «{{%s}}».</string>
+    <string name="wrong_tag_closed">Найдено «{{/%1$s}}», но ожидалось «{{/%2$s}}».</string>
     <string name="filter_error">Ошибка в фильтре %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Коллекции не могут быть объединены.\nКакую коллекцию вы хотите оставить?</string>

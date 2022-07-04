@@ -167,7 +167,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">این یک فایل معتبر آنکی نیست</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">خطا</string>
     <string name="import_log_failed_unzip">خطا در بازکردن فایل apkg: %s</string>
     <string name="import_log_failed_copy_to">خطا در کپی کردن apkg به %s</string>
     <string name="import_log_failed_validate">apkg معتبر نیست</string>
@@ -182,7 +182,7 @@
     <string name="import_error_content_provider">فایل انتخاب شده به صورت خودکار توسط ankidroid نمی تواند وارد شود. لطفا راهنمای کاربر را ببینید که چگونه به صورت دستی بتوان فایل anki را وارد کرد:\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() با مشکل مواجه شد (احتمالاً به دلیل کمبود حافظه)</string>
     <string name="import_error_unhandled_scheme">%s</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_multiple_colpkg">چندین فایل colpkg انتخاب شده.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">خطا ایجاد شد وقتی این فایل ها در حال وارد شدن بودند:\n%s</string>
     <string name="import_replacing">در حال جایگزین کردن مجموعه&#8230;</string>
@@ -200,13 +200,11 @@
     <string name="export_save_apkg_unsuccessful">بسته انکی ذخیره نشد</string>
     <string name="export_successful">فایل \"%s\" صادر شد. آیا می خواهید آن را با برنامه دیگری نیز ارسال کنید؟</string>
     <string name="export_email_subject">فلش کارت های صادر شده: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
-        <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
-        [1] %1$s<br/>
-        [2] %2$s
-        ]]></string>
+    <string name="export_email_text"><![CDATA[سلام!
+این یک دسته فلش کارت Anki فرستاده شده از AnkiDroid است. [1]
+با استفاده از یکی از عوامل در دسترس Anki، آن را باز کنید[2] و از آموزش آسان و کارآمد لذت ببرید!<br/><br/>
+[1] %1$s<br/>
+[2]%2$s]]></string>
     <string name="export_unsuccessful">هنگام صادر کردن پرونده apkg خطایی رخ داد</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
     <string name="menu__deck_options">گزینه های دسته</string>
@@ -281,7 +279,7 @@
     <string name="choose_an_image">انتخاب تصویر</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">بازنشانی پیش‌فرض</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="cloze_sample_text">این یک {{%1$s::نمونه}} حذف کلوز است.</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">مسال</string>
     <string name="basic_answer_sample_text">یک مثال</string>
     <string name="reviewer_tts_cloze_spoken_replacement">خالی</string>
@@ -326,84 +324,84 @@
     <string name="about_ankidroid_successfully_copied_debug">اطلاعات debug به کلیپ بورد کپی شد</string>
     <string name="about_ankidroid_error_copy_debug_info">خطا در کپی کردن اطلاعات debug به کلیپ بورد</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
-    <string name="cannot_load_http_resource">Loading http resources is no longer supported</string>
+    <string name="card_viewer_could_not_find_image">خطا در محتویات کارت:‌ بارگیری \'%s\' ناموفق بود</string>
+    <string name="card_viewer_media_relative_protocol">خطا در محتویات کارت:‌ نیازمند به‌روز‌رسانی رسانه‌ها</string>
+    <string name="cannot_load_http_resource">بارگذاری منابع http دیگر حمایت نمی شود</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
+    <string name="deck_picker_failed_deck_load">خطا در بارگیری دسته \'%s\'</string>
     <string name="search_decks">جستجو در تمام دسته‌ها</string>
     <string name="ankidroid_init_failed_webview_title">خطای مخرب</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">اندازه فونت</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">نمایش نوار ابزار</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
+    <string name="format_insert_bold">قالب‌بندی پررنگ</string>
+    <string name="format_insert_italic">قالب‌بندی کج (ایتالیک)</string>
+    <string name="format_insert_underline">قالب‌بندی خط‌ زیرین</string>
     <string name="insert_horizontal_line">افزودن خط افقی</string>
     <string name="insert_heading">افزودن سربرگ</string>
     <string name="format_font_size">تغییر اندازۀ قلم</string>
     <string name="insert_mathjax">افزودن معادله MathJax</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
+    <string name="note_editor_toolbar_icon">نوشته دکمه</string>
+    <string name="before_text">کد HTML قبل از نوشته</string>
+    <string name="after_text">کد HTML بعد از نوشته</string>
+    <string name="add_toolbar_item">ساخت مورد نوار‌ابزاری</string>
+    <string name="edit_toolbar_item">ویرایش دکمه نوارابزاری</string>
+    <string name="toolbar_item_explain_edit_or_remove">کد HTMLای که میخواهید قبل و بعد نوشته‌تان قرار بگیرد را وارد کنید\n\nبرای ویرایش یا حذف هریک از دکمه‌های نوارابزار، آنرا نگه دارید</string>
+    <string name="remove_toolbar_item">حذف دکمه نوارابزاری؟</string>
+    <string name="note_editor_paste_too_large">عکس برای پِیست کردن زیادی بزرگ است، لطفا عکس را دستی وارد کنید</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">پشتیبانی Android در حال انجام است. لطفا دوباره سعی کنید</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">شما به iManager نیاز دارید تا به AnkiDroid اجازه اضافه کردن میانبر بدهید</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">صفحه اصلی شما به AnkiDroid اجازه میانبور اضافه کردن نمیدهد </string>
+    <string name="create_shortcut_error">خطا در افزودن میانبُر: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">جملات را با حروف بزرگ بنویس</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="email_id_empty">آدرس ایمیل ضروری است</string>
+    <string name="password_empty">رمز عبور لازم است</string>
+    <string name="back_pressed_once">برای خروج، دکمه بازگشت را مجددا فشار دهید</string>
+    <string name="back_pressed_once_reviewer">برای بازگشت، دکمه بازگشت را مجددا فشار دهید</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Download deck</string>
     <string name="try_again">دوباره تلاش کنید</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="cancel_download">لغو دانلود</string>
+    <string name="cancel_download_question_title">لغو دانلود؟</string>
+    <string name="downloading_file">در حال دانلود %s</string>
+    <string name="import_deck">وارد کردن دسته</string>
+    <string name="something_wrong">مشکلی پیش آمد، لطفا دوباره تلاش کنید</string>
+    <string name="download_failed">دانلود نشد</string>
+    <string name="deck_download_progress_message">شما می‌توانید زمانی که این در حال دانلود است از برنامه‌های دیگر استفاده کنید</string>
+    <string name="check_network">لطفا اتصال اینترنت خود را چک کنید</string>
+    <string name="search_using_deck_name">جست و جو با استفاده از اسم دسته</string>
+    <string name="home">خانه</string>
     <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
+    <string name="import_mapped_to_field">انتقال به %s</string>
+    <string name="import_mapped_to_tags">انتقال به تگ ها</string>
+    <string name="import_mapped_to_nothing">صرف نظر</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="buried_card">کارت دفن شد</string>
+    <string name="buried_note">یادداشت دفن شد</string>
+    <string name="deleted_note">یادداشت حذف شد</string>
+    <string name="suspended_card">کارت معطل شد</string>
+    <string name="suspended_note">یادداشت معلق شد</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
+    <string name="scoped_storage_title">مهاجرت انبار</string>
+    <string name="scoped_storage_initial_message">AnkiDroid باید اطلاعات خود را جا‌به‌جا کند که بتواند قوانین حریم خصوصی Android را رعایت کند
+/n/nاگر شما AnkiDroid را قبل از مهاجرت حذف کنید، اطلاعات شما گم خواهد شد
+/n/nلطفا هر‌چه زودتر مهاجرت را انجام دهید</string>
     <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
+    <string name="scoped_storage_term_1">من از اطلاعات خود پشتیبانی گرفتم</string>
+    <string name="scoped_storage_term_1_ankiweb">من به تازگی با AnkiWeb همگام شده‌ام</string>
+    <string name="scoped_storage_term_2">من برنامه را حذف نمیکنم تا اطلاعات جا‌به‌جا شود</string>
+    <string name="scoped_storage_select_all_terms">برای ادامه لطفا همه موارد را بپذیرید</string>
+    <string name="scoped_storage_learn_more">بیشتر بدانید</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>

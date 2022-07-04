@@ -85,8 +85,8 @@
     <string name="stats_overview_forecast_due_tomorrow">לעשות מחר: &lt;b&gt;%1$d&lt;/b&gt;</string>
     <string name="stats_overview_days_studied">ימים שנלמדו: &lt;b&gt;%1$d%%&lt;/b&gt; (%2$d of %3$d)</string>
     <string name="stats_overview_reviews_per_day_studydays">ממוצע עבור ימים שנבדקו: &lt;b&gt;%1$.1f&lt;/b&gt; ביקורות/יום</string>
-    <string name="stats_overview_reviews_per_day_all">If you studied every day: &lt;b&gt;%1$.1f&lt;/b&gt; reviews/day</string>
-    <string name="stats_overview_total_time_in_period">Total: &lt;b&gt;%d&lt;/b&gt; minutes</string>
+    <string name="stats_overview_reviews_per_day_all">אם למדת כל יום: &lt;b&gt;%1$.1f&lt;/b&gt; חזרות/יום</string>
+    <string name="stats_overview_total_time_in_period">סך הכל: &lt;b&gt;%d&lt;/b&gt; דקות</string>
     <string name="stats_overview_time_per_day_studydays">ממוצע עבור ימים שנבדקו: &lt;b&gt;%1$.1f&lt;/b&gt; דקות/יום</string>
     <string name="stats_overview_time_per_day_all">אם למדת כל יום: &lt;b&gt;%1$.1f&lt;/b&gt; דקות/יום</string>
     <string name="stats_overview_average_answer_time">זמן תשובה ממוצע: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; קלפים לדקה)</string>

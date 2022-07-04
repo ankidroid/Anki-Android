@@ -235,8 +235,8 @@
     <string name="sync_conflict_title_new">مجموعه‌ای که می‌خواهید نگه دارید را انتخاب کنید</string>
     <string name="sync_conflict_replace_title">جابجا کردن مجموعه</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d کارت (موعد)</item>
-        <item quantity="other">%1$d کارت‌ها (0 موعد مرور)</item>
+        <item quantity="one">%1$d کارت (۰ منقضی)</item>
+        <item quantity="other">%1$d کارت‌ (۰ منقضی)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s کپی</string>
 </resources>
