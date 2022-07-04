@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">Iskanje izgovorjave</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Izgovorjava spodletela</string>
+    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
     <string name="multimedia_editor_word_search_try_lower_case">Poizkusite uporabiti samo male črke</string>
     <string name="multimedia_editor_poweredbeolingus">Omogoča Beolingus</string>
     <!-- Field editing general -->

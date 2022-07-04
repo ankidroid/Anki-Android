@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">Söker efter uttal</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Uttal misslyckades</string>
+    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
     <string name="multimedia_editor_word_search_try_lower_case">Försök att använda enbart små bokstäver</string>
     <string name="multimedia_editor_poweredbeolingus">Använder Beolingus</string>
     <!-- Field editing general -->

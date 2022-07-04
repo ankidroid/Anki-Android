@@ -51,8 +51,8 @@
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Загальні</string>
     <string name="pref_cat_general_summ">Основні налаштування</string>
     <string name="pref_cat_reviewing" maxLength="41">Навчання</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронізація</string>
+    <string name="pref_cat_scheduling" maxLength="41">Планування</string>
     <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
     <string name="pref_cat_appearance" maxLength="41">Зовнішній вигляд</string>
     <string name="pref_cat_appearance_summ">Зміна теми і шрифтів</string>
@@ -207,8 +207,8 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript налагодження</string>
     <string name="html_javascript_debugging_summ">Увімкнути віддалені з\'єднання WebView і зберегти HTML-карту в каталозі AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Повторення</string>
+    <string name="accessibility" maxLength="41">Доступність</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставити зображення у форматі PNG</string>
     <string name="paste_as_png_summary">За замовчуванням Anki вводить зображення в буфер обміну в якості JPG файлів для економії місця на диску. Ви можете змінити в меню на PNG зображення.</string>
@@ -237,7 +237,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">URL Media-даних</string>
     <string name="custom_sync_server_media_url_invalid">Непрацююче посилання для синхронізації медіа</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Клавіатура</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Прив\'язування команд</string>
     <!-- studyoptions -->
@@ -328,9 +328,9 @@
     <!-- Open Changelog-->
     <string name="open_changelog">Відкрити список змін</string>
     <string name="binding_add_gesture">Додати жест</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Замінити жест</string>
     <string name="binding_add_key">Додати ключ</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Замінити клавішу</string>
     <string name="key_picker_default_press_key">Натисніть клавішу</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Вибрати сторону карти</string>
