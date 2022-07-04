@@ -29,7 +29,7 @@ import java.util.stream.Stream
 @KotlinCleanup("lateinit")
 @RequiresApi(api = Build.VERSION_CODES.O)
 class TextImporter(col: Collection, file: String) : NoteImporter(col, file) {
-    private val mNeedDelimiter = true
+    override var needDelimiter = true
     val mPatterns = "\t|,;:"
     private var mFileObj: FileObj? = null
     private var mDelimiter = '\u0000'
@@ -40,7 +40,7 @@ class TextImporter(col: Collection, file: String) : NoteImporter(col, file) {
     override fun foreignNotes(): List<ForeignNote> {
         open()
         // process all lines
-        val log: MutableList<String> = ArrayList() // Number of element is reader's size
+        val _log: MutableList<String> = ArrayList() // Number of element is reader's size
         val notes: MutableList<ForeignNote> = ArrayList() // Number of element is reader's size
         var ignored = 0
         // Note: This differs from libAnki as we don't have csv.reader
@@ -65,7 +65,7 @@ class TextImporter(col: Collection, file: String) : NoteImporter(col, file) {
                             rowAsString.size,
                             mNumFields
                         )
-                        log.add(formatted)
+                        _log.add(formatted)
                         ignored += 1
                     }
                     continue
@@ -74,9 +74,9 @@ class TextImporter(col: Collection, file: String) : NoteImporter(col, file) {
                 notes.add(note)
             }
         } catch (e: CsvException) {
-            log.add(getString(R.string.csv_importer_error_exception, e))
+            _log.add(getString(R.string.csv_importer_error_exception, e))
         }
-        mLog = log
+        log = _log
         mFileObj!!.close()
         return notes
     }
@@ -115,7 +115,7 @@ class TextImporter(col: Collection, file: String) : NoteImporter(col, file) {
     @KotlinCleanup("simplify null comparison")
     private fun openFile() {
         mDialect = null
-        mFileObj = FileObj.open(mFile)
+        mFileObj = FileObj.open(file)
         val firstLine = firstFileLine.orElse(null)
         if (firstLine != null) {
             if (firstLine.startsWith("tags:")) {
