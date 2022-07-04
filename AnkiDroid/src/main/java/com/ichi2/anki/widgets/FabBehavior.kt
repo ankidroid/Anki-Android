@@ -20,8 +20,10 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
-import kotlin.math.min
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.UIUtils
 
 /**
  * Originally created by Paul Woitaschek (http://www.paul-woitaschek.de, woitaschek@posteo.de)
@@ -61,21 +63,23 @@ class FabBehavior : CoordinatorLayout.Behavior<View> {
             }
         }
     }
+}
 
-    companion object {
-        private fun getFabTranslationYForSnackbar(parent: CoordinatorLayout, fab: View): Float {
-            var minOffset = 0.0f
-            val dependencies = parent.getDependencies(fab)
-            var i = 0
-            val z = dependencies.size
-            while (i < z) {
-                val view = dependencies[i]
-                if (view is SnackbarLayout && parent.doViewsOverlap(fab, view)) {
-                    minOffset = min(minOffset, view.getTranslationY() - view.getHeight().toFloat())
-                }
-                ++i
-            }
-            return minOffset
-        }
-    }
+/**
+ * Here, fab is the entire layout containing the button itself, related menu and the margin.
+ * It extends to the very bottom of the screen.
+ * We allow the fab and the snackbar to overlap a bit, so that the fab doesn't appear too high.
+ */
+private val MAX_OVERLAP = UIUtils.convertDpToPixel(10f, AnkiDroidApp.getInstance().applicationContext)
+
+private fun getFabTranslationYForSnackbar(parent: CoordinatorLayout, fab: View): Float {
+    return parent.getDependencies(fab)
+        .filter { view -> view is SnackbarLayout && view.isVisible }
+        .minOfOrNull { snackbar ->
+            val untranslatedFabBottom = fab.bottom
+            val effectiveSnackbarTop = snackbar.top + snackbar.translationY
+            val overlap = untranslatedFabBottom - effectiveSnackbarTop
+
+            if (overlap > MAX_OVERLAP) -(overlap - MAX_OVERLAP) else 0f
+        } ?: 0f
 }
