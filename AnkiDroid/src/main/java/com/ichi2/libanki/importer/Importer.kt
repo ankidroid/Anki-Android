@@ -14,53 +14,36 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.importer;
+package com.ichi2.libanki.importer
 
+import android.content.Context
+import android.content.res.Resources
+import com.ichi2.anki.exception.ImportExportException
+import com.ichi2.async.TaskManager
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.utils.TimeManager.time
+import com.ichi2.utils.KotlinCleanup
+import java.io.File
 
-import android.content.Context;
-import android.content.res.Resources;
-
-import com.ichi2.anki.exception.ImportExportException;
-import com.ichi2.async.TaskManager;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.utils.TimeManager;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-
-@SuppressWarnings({"PMD.MethodNamingConventions"})
-public abstract class Importer {
-
-    protected boolean mNeedMapper = false;
-    protected boolean mNeedDelimiter = false;
-    protected @NonNull String mFile;
-    protected String mFileName;
-    protected List<String> mLog;
-    protected Integer mCardCount;
-    protected final Collection mCol;
-    protected int mTotal;
-
-    private long mTs;
-    protected Collection mDst;
-    protected Collection mSrc;
-
-    protected final Context mContext;
-    protected TaskManager.ProgressCallback<String> mProgress;
-
-    public Importer(Collection col, @NonNull String file) {
-        mFile = file;
-        mFileName = new File(file).getName();
-        mLog = new ArrayList<>();
-        mCol = col;
-        mTotal = 0;
-        mCardCount = 0;
-        mContext = col.getContext();
-    }
-
-    abstract public void run() throws ImportExportException;
+abstract class Importer(col: Collection, protected var file: String) {
+    protected open var needMapper = false
+    protected open var needDelimiter = false
+    var fileName: String
+        protected set
+    var log: MutableList<String>
+        protected set
+    var cardCount: Int
+        protected set
+    protected val mCol: Collection
+    @KotlinCleanup("rename")
+    protected var _total: Int
+    private var mTs: Long = 0
+    protected lateinit var dst: Collection
+    protected lateinit var src: Collection
+    protected val context: Context
+    protected var progress: TaskManager.ProgressCallback<String>? = null
+    @Throws(ImportExportException::class)
+    abstract fun run()
 
     /**
      * Timestamps
@@ -69,37 +52,33 @@ public abstract class Importer {
      * and a previous import may have created timestamps in the future, so we
      * need to make sure our starting point is safe.
      */
-
-    protected void _prepareTS() {
-        mTs = TimeManager.INSTANCE.getTime().maxID(mDst.getDb());
+    protected fun _prepareTS() {
+        mTs = time.maxID(dst.db)
     }
 
-
-    protected long ts() {
-        mTs++;
-        return mTs;
+    protected fun ts(): Long {
+        mTs++
+        return mTs
     }
-
 
     /**
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-
-    public void setProgressCallback(TaskManager.ProgressCallback<String> progressCallback) {
-        mProgress = progressCallback;
+    fun setProgressCallback(progressCallback: TaskManager.ProgressCallback<String>?) {
+        progress = progressCallback
     }
 
+    protected val res: Resources
+        get() = context.resources
 
-    protected Resources getRes() {
-        return mContext.getResources();
+    init {
+        @KotlinCleanup("combined declaration and initialization")
+        fileName = File(file).name
+        log = ArrayList()
+        mCol = col
+        _total = 0
+        cardCount = 0
+        context = col.context
     }
-
-    public List<String> getLog() {
-        return mLog;
-    }
-
-    public Integer getCardCount() { return mCardCount; }
-
-    public String getFileName() { return mFileName; }
 }
