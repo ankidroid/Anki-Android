@@ -56,7 +56,7 @@ class FabBehavior : CoordinatorLayout.Behavior<View> {
         super.onDependentViewRemoved(parent, fab, dependency)
         if (dependency is SnackbarLayout && fab.visibility == View.VISIBLE) {
             val translationY = getFabTranslationYForSnackbar(parent, fab)
-            if (translationY == mTranslationY) {
+            if (translationY != mTranslationY) {
                 ViewCompat.animate(fab).cancel()
                 fab.translationY = 0f
                 mTranslationY = 0f
