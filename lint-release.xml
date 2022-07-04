@@ -331,7 +331,6 @@
     <issue id="WrongThread" severity="ignore" />
     <issue id="VisibleForTests" severity="ignore" />
     <issue id="ProtectedPermissions" severity="ignore" />
-    <issue id="TextFields" severity="ignore" />
     <issue id="TextViewEdits" severity="ignore" />
     <issue id="SelectableText" severity="ignore" />
     <issue id="MenuTitle" severity="ignore" />
