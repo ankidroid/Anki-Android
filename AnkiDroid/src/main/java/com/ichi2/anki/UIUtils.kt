@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.snackbar.fixSwipeDismissBehavior
 import com.ichi2.async.CollectionTask.SaveCollection
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
@@ -122,6 +123,7 @@ object UIUtils {
     @JvmStatic
     fun getSnackbar(activity: Activity?, mainText: String?, length: Int, actionTextResource: Int, listener: View.OnClickListener?, root: View, callback: Snackbar.Callback?): Snackbar {
         val sb = Snackbar.make(root, mainText!!, length)
+        sb.fixSwipeDismissBehavior()
         if (listener != null) {
             sb.setAction(actionTextResource, listener)
         }
@@ -143,6 +145,7 @@ object UIUtils {
     @JvmStatic
     fun getDismissibleSnackbar(activity: Activity?, mainText: String, length: Int, dismissTextResource: Int, root: View): Snackbar {
         val sb = Snackbar.make(root, mainText, length)
+        sb.fixSwipeDismissBehavior()
         sb.setAction(dismissTextResource) {
             sb.dismiss()
         }
