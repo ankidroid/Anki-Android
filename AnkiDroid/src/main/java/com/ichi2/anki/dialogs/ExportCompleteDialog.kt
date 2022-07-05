@@ -19,7 +19,7 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
-import com.ichi2.themes.Themes
+import com.ichi2.utils.iconAttr
 import java.io.File
 
 class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
@@ -46,7 +46,7 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
         return MaterialDialog(requireActivity()).show {
             title(text = notificationTitle)
             message(text = notificationMessage)
-            icon(Themes.getResFromAttr(context, R.attr.dialogSendIcon))
+            iconAttr(R.attr.dialogSendIcon)
             positiveButton(R.string.export_send_button) {
                 listener.dismissAllDialogFragments()
                 listener.emailFile(exportPath)
