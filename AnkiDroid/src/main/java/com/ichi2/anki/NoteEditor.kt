@@ -1250,6 +1250,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     }
 
+    /** Sets EditText at index [fieldIndex]'s text to [newString] */
+    @VisibleForTesting
+    fun setField(fieldIndex: Int, newString: String) {
+        clearField(fieldIndex)
+        insertStringInField(getFieldForTest(fieldIndex), newString)
+    }
+
     /** @param col Readonly variable to get cache dir
      */
     @KotlinCleanup("fix the requireNoNulls")

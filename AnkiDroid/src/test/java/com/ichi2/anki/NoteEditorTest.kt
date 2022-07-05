@@ -16,6 +16,7 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.content.ClipData
 import android.content.Intent
 import android.widget.EditText
 import android.widget.TextView
@@ -42,8 +43,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
-import java.util.*
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("IDE lint")
@@ -316,6 +318,56 @@ class NoteEditorTest : RobolectricTest() {
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
         editor.setCurrentlySelectedModel(cloze.getLong("id"))
         assertThat(editor.deckId, equalTo(Consts.DEFAULT_DECK_ID))
+    }
+
+    @Test
+    fun pasteHtmlAsPlainTextTest() {
+        val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
+        editor.setCurrentlySelectedModel(col.models.byName("Basic")!!.getLong("id"))
+        val field = editor.getFieldForTest(0)
+        field.clipboard!!.setPrimaryClip(ClipData.newHtmlText("text", "text", "<span style=\"color: red\">text</span>"))
+        assertTrue(field.clipboard!!.hasPrimaryClip())
+        assertNotNull(field.clipboard!!.primaryClip)
+
+        // test pasting in the middle (cursor mode: selecting)
+        editor.setField(0, "012345")
+        field.setSelection(1, 2) // selecting "1"
+        assertTrue(field.pastePlainText())
+        assertEquals("0text2345", field.fieldText)
+        assertEquals(5, field.selectionStart)
+        assertEquals(5, field.selectionEnd)
+
+        // test pasting in the middle (cursor mode: selecting backwards)
+        editor.setField(0, "012345")
+        field.setSelection(2, 1) // selecting "1"
+        assertTrue(field.pastePlainText())
+        assertEquals("0text2345", field.fieldText)
+        assertEquals(5, field.selectionStart)
+        assertEquals(5, field.selectionEnd)
+
+        // test pasting in the middle (cursor mode: normal)
+        editor.setField(0, "012345")
+        field.setSelection(4) // after "3"
+        assertTrue(field.pastePlainText())
+        assertEquals("0123text45", field.fieldText)
+        assertEquals(8, field.selectionStart)
+        assertEquals(8, field.selectionEnd)
+
+        // test pasting at the start
+        editor.setField(0, "012345")
+        field.setSelection(0) // before "0"
+        assertTrue(field.pastePlainText())
+        assertEquals("text012345", field.fieldText)
+        assertEquals(4, field.selectionStart)
+        assertEquals(4, field.selectionEnd)
+
+        // test pasting at the end
+        editor.setField(0, "012345")
+        field.setSelection(6) // after "5"
+        assertTrue(field.pastePlainText())
+        assertEquals("012345text", field.fieldText)
+        assertEquals(10, field.selectionStart)
+        assertEquals(10, field.selectionEnd)
     }
 
     private fun getCopyNoteIntent(editor: NoteEditor): Intent {
