@@ -47,6 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">Désactivé</string>
     <string name="enabled">Activé</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Général</string>
     <string name="pref_cat_general_summ">Paramètres généraux</string>
@@ -179,10 +182,9 @@
     <string name="new_spread" maxLength="41">Position des nouvelles cartes</string>
     <string name="learn_cutoff" maxLength="41">Limite d’apprentissage</string>
     <string name="time_limit" maxLength="41">Limite de temps</string>
-    <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone" maxLength="41">Nouvelle gestion du fuseau horaire</string>
     <string name="day_offset_with_description" maxLength="41">Début du jour suivant (0 est minuit, 23 est 23 h)</string>
-    <string name="day_offset_summ">XXX heures après minuit</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Minuit</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23h00</string>
     <string name="sched_v2" maxLength="41">Planificateur V2</string>

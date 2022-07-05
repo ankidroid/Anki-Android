@@ -47,6 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">Vypnuté</string>
     <string name="enabled">Zapnuté</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Všeobecné nastavenia</string>
@@ -180,10 +183,9 @@
     <string name="new_spread" maxLength="41">Pozícia novej kartičky</string>
     <string name="learn_cutoff" maxLength="41">Limit pre učenie sa dopredu</string>
     <string name="time_limit" maxLength="41">Hodnota časového limitu</string>
-    <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone" maxLength="41">Nové spracovanie časového pásma</string>
     <string name="day_offset_with_description" maxLength="41">Začiatok ďalšieho dňa</string>
-    <string name="day_offset_summ">Počet hodín po polnoci: XXX</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Polnoc</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">2300</string>
     <string name="sched_v2" maxLength="41">V2 plánovač</string>
