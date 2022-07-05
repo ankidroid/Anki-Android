@@ -62,7 +62,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private set
     var taskHandler: AnkiStatsTaskHandler? = null
         private set
-    private var mDeckSpinnerSelection: DeckSpinnerSelection? = null
+    private lateinit var mDeckSpinnerSelection: DeckSpinnerSelection
     private var mStatsDeckId: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -118,8 +118,8 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             this, col,
             findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true
         )
-        mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-        mDeckSpinnerSelection!!.selectDeckById(mStatsDeckId, false)
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
+        mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false)
         taskHandler!!.setDeckId(mStatsDeckId)
         viewPager.adapter!!.notifyDataSetChanged()
     }
@@ -194,9 +194,9 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         if (deck == null) {
             return
         }
-        mDeckSpinnerSelection?.initializeActionBarDeckSpinner(this.supportActionBar!!)
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
         mStatsDeckId = deck.deckId
-        mDeckSpinnerSelection?.selectDeckById(mStatsDeckId, true)
+        mDeckSpinnerSelection.selectDeckById(mStatsDeckId, true)
         taskHandler!!.setDeckId(mStatsDeckId)
         viewPager.adapter!!.notifyDataSetChanged()
     }
