@@ -101,6 +101,7 @@ import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
+import com.ichi2.utils.iconAttr
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
@@ -884,7 +885,7 @@ abstract class AbstractFlashcardViewer :
         val res = resources
         MaterialDialog(this).show {
             title(R.string.delete_card_title)
-            icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+            iconAttr(R.attr.dialogErrorIcon)
             message(
                 text = res.getString(
                     R.string.delete_note_message,
@@ -1535,7 +1536,7 @@ abstract class AbstractFlashcardViewer :
     private fun readCardTts(soundSide: SoundSide) {
         val tags = legacyGetTtsTags(mCurrentCard!!, soundSide, this)
         if (tags != null) {
-            mTTS.readCardText(tags, mCurrentCard!!, soundSide, baseContext)
+            mTTS.readCardText(tags, mCurrentCard!!, soundSide)
         }
     }
 
