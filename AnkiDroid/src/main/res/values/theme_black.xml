@@ -125,6 +125,11 @@
         <item name="filterItemTextColor">@color/theme_dark_drawer_item</item>
         <item name="filterItemTextColorSelected">@color/material_light_blue_500</item>
         <item name="filterHeaderDivider">@color/white</item>
+
+        <!-- Snackbar -->
+        <item name="snackbarTextViewStyle">@style/SnackbarTextStyleBlack</item>
+        <item name="snackbarBackgroundTintColor">#ff303030</item>
+        <item name="snackbarButtonTextColor">@color/material_light_blue_300</item>
     </style>
 
     <!-- Preferences screens -->
@@ -141,5 +146,9 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/black</item>
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="SnackbarTextStyleBlack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

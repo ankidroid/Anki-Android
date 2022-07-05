@@ -171,4 +171,21 @@
     <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rounded_bottom_sheet</item>
     </style>
+
+    <!-- Snackbars -->
+    <style name="SnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:backgroundTint">?attr/snackbarBackgroundTintColor</item>
+        <!-- Material snackbar sets button text color by layering its current text color, set with
+             android:textColor below, over surface color with the alpha set by this attribute.
+             Since the app doesn't use material theming, let's disable this color blending.
+             TODO Remove if the app moves to material theming. -->
+        <item name="actionTextColorAlpha">1.0</item>
+    </style>
+    <style name="SnackbarButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">?attr/snackbarButtonTextColor</item>
+        <!-- Material buttons have some letter spacing added, but since no other components
+             in the app use material theming, let's remove it for the sake of consistency.
+             TODO Remove if the app moves to material theming. -->
+        <item name="android:letterSpacing">0</item>
+    </style>
 </resources>
