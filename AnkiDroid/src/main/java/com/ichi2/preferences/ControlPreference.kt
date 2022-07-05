@@ -102,6 +102,7 @@ class ControlPreference : ListPreference {
                             dismiss()
                         }
                     }
+                    negativeButton(R.string.dialog_cancel) { dismiss() }
                     customView(view = gesturePicker)
 
                     gesturePicker.onGestureChanged { gesture ->
@@ -135,6 +136,7 @@ class ControlPreference : ListPreference {
                             }
                         }
                     }
+                    negativeButton(R.string.dialog_cancel) { dismiss() }
 
                     keyPicker.setKeycodeValidation(KeySelectionDialogUtils.disallowModifierKeyCodes())
                     noAutoDismiss()
