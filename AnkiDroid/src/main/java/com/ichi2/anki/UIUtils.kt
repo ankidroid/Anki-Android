@@ -52,14 +52,6 @@ object UIUtils {
         return showSnackbar(activity, mainText, shortLength, -1, null, root, null)
     }
 
-    @JvmStatic
-    fun showDismissibleSnackbar(activity: Activity, mainText: String, dismissTextResource: Int, length: Int = 5000): Snackbar {
-        val root = activity.findViewById<View>(android.R.id.content)
-        val sb = getDismissibleSnackbar(activity, mainText, length, dismissTextResource, root)
-        sb.show()
-        return sb
-    }
-
     /**
      * Show a snackbar with an action
      * @param mainTextResource resource for the main text string
@@ -129,25 +121,6 @@ object UIUtils {
         }
         if (callback != null) {
             sb.addCallback(callback)
-        }
-        // Make the text white to avoid interference from our theme colors.
-        val view = sb.view
-        val tv = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-        val action = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action)
-        if (tv != null && action != null) {
-            tv.setTextColor(Color.WHITE)
-            action.setTextColor(ContextCompat.getColor(activity!!, R.color.material_light_blue_500))
-            tv.maxLines = 2 // prevent tablets from truncating to 1 line
-        }
-        return sb
-    }
-
-    @JvmStatic
-    fun getDismissibleSnackbar(activity: Activity?, mainText: String, length: Int, dismissTextResource: Int, root: View): Snackbar {
-        val sb = Snackbar.make(root, mainText, length)
-        sb.fixSwipeDismissBehavior()
-        sb.setAction(dismissTextResource) {
-            sb.dismiss()
         }
         // Make the text white to avoid interference from our theme colors.
         val view = sb.view
