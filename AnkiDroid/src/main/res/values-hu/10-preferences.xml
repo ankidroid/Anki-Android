@@ -47,6 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">Kikapcsolva</string>
     <string name="enabled">Engedélyezve</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Általános</string>
     <string name="pref_cat_general_summ">Általános beállítások</string>
@@ -180,10 +183,9 @@
     <string name="new_spread" maxLength="41">Új kártyák beszúrása</string>
     <string name="learn_cutoff" maxLength="41">Korai tanulás korlátai</string>
     <string name="time_limit" maxLength="41">Időkorlát érték</string>
-    <string name="time_limit_summ">XXX perc</string>
     <string name="new_timezone" maxLength="41">Új időzóna kezelés</string>
     <string name="day_offset_with_description" maxLength="41">Nap kezdete</string>
-    <string name="day_offset_summ">XXX órával éjfél után</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Éjfél</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">Este 11h</string>
     <string name="sched_v2" maxLength="41">V2 ütemező</string>
