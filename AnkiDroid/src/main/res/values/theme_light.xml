@@ -23,7 +23,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
     <color name="theme_light_drawer_item">#DE000000</color>
 
     <!-- DarkActionBar needed for readable text in the menu opened by the hardware menu button -->
-    <style name="Theme_Light" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme_Light" parent="@style/Theme.MaterialComponents.Light.DarkActionBar.Bridge">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_light_primary</item>
         <item name="colorPrimaryDark">@color/theme_light_primary_dark</item>
@@ -145,6 +145,13 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="filterItemTextColor">@color/theme_light_drawer_item</item>
         <item name="filterItemTextColorSelected">@color/material_light_blue_500</item>
         <item name="filterHeaderDivider">@color/black</item>
+
+        <!-- Snackbar. Attributes snackbarStyle, snackbarTextViewStyle and snackbarButtonStyle
+             must be *all* present in a theme (or its parent) in order for the snackbar
+             to pick up the proper layout that uses these attributes. -->
+        <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.MaterialComponents.Snackbar.TextView</item>
+        <item name="snackbarButtonStyle">@style/Widget.MaterialComponents.Button.TextButton.Snackbar</item>
     </style>
 
     <!-- Preferences screens -->

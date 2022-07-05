@@ -10,7 +10,7 @@
     <color name="theme_dark_drawer_row_current">#33999999</color>
     <color name="theme_dark_drawer_item">#DEFFFFFF</color>
 
-    <style name="Theme_Dark" parent="@style/Theme.AppCompat">
+    <style name="Theme_Dark" parent="@style/Theme.MaterialComponents.Bridge">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_dark_primary</item>
         <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
@@ -133,6 +133,12 @@
         <item name="filterItemTextColorSelected">@color/theme_dark_accent</item>
         <item name="filterHeaderDivider">@color/white</item>
 
+        <!-- Snackbar. Attributes snackbarStyle, snackbarTextViewStyle and snackbarButtonStyle
+             must be *all* present in a theme (or its parent) in order for the snackbar
+             to pick up the proper layout that uses these attributes. -->
+        <item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.MaterialComponents.Snackbar.TextView</item>
+        <item name="snackbarButtonStyle">@style/Widget.MaterialComponents.Button.TextButton.Snackbar</item>
     </style>
 
     <!-- Preferences screens -->
