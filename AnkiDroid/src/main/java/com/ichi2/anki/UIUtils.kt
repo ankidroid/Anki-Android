@@ -4,13 +4,11 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.util.DisplayMetrics
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.snackbar.fixSwipeDismissBehavior
 import com.ichi2.async.CollectionTask.SaveCollection
@@ -107,13 +105,13 @@ object UIUtils {
                 return null
             }
         }
-        val sb = getSnackbar(activity, mainText, length, actionTextResource, listener, root, callback)
+        val sb = getSnackbar(mainText, length, actionTextResource, listener, root, callback)
         sb.show()
         return sb
     }
 
     @JvmStatic
-    fun getSnackbar(activity: Activity?, mainText: String?, length: Int, actionTextResource: Int, listener: View.OnClickListener?, root: View, callback: Snackbar.Callback?): Snackbar {
+    fun getSnackbar(mainText: String?, length: Int, actionTextResource: Int, listener: View.OnClickListener?, root: View, callback: Snackbar.Callback?): Snackbar {
         val sb = Snackbar.make(root, mainText!!, length)
         sb.fixSwipeDismissBehavior()
         if (listener != null) {
@@ -122,15 +120,10 @@ object UIUtils {
         if (callback != null) {
             sb.addCallback(callback)
         }
-        // Make the text white to avoid interference from our theme colors.
-        val view = sb.view
-        val tv = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-        val action = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action)
-        if (tv != null && action != null) {
-            tv.setTextColor(Color.WHITE)
-            action.setTextColor(ContextCompat.getColor(activity!!, R.color.material_light_blue_500))
-            tv.maxLines = 2 // prevent tablets from truncating to 1 line
-        }
+
+        // Prevent tablets from truncating to 1 line
+        sb.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.maxLines = 2
+
         return sb
     }
 
