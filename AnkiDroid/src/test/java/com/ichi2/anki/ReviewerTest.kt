@@ -286,8 +286,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     private fun undo(reviewer: Reviewer) {
-        reviewer.undo()
-        waitForAsyncTasksToComplete()
+        awaitJob(reviewer.undo())
     }
 
     @Suppress("SameParameterValue")

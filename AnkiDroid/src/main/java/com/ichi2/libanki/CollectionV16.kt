@@ -16,7 +16,7 @@
 package com.ichi2.libanki
 
 import android.content.Context
-import com.ichi2.async.CancelListener.Companion.isCancelled
+import android.content.res.Resources
 import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toProtoBuf
@@ -25,6 +25,7 @@ import com.ichi2.libanki.utils.TimeManager
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
+import timber.log.Timber
 
 class CollectionV16(
     context: Context,
@@ -168,5 +169,22 @@ class CollectionV16(
 
     override fun modSchemaNoCheck() {
         db.execute("update col set scm=?", TimeManager.time.intTimeMS())
+    }
+
+    override fun undoAvailable(): Boolean {
+        val status = undoStatus()
+        Timber.i("undo: %s, %s", status, super.undoAvailable())
+        if (status.undo != null) {
+            // any legacy undo state is invalid after a backend op
+            clearUndo()
+            return true
+        }
+        // if no backend undo state, try legacy undo state
+        return super.undoAvailable()
+    }
+
+    override fun undoName(res: Resources): String {
+        val status = undoStatus()
+        return status.undo ?: super.undoName(res)
     }
 }

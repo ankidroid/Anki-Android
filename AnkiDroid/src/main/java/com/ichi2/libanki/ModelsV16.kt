@@ -119,7 +119,12 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
             Timber.w("a null model is no longer supported - data is automatically flushed")
             return
         }
-        update(m, preserve_usn_and_mtime = false)
+        // legacy code expects preserve_usn=false behaviour, but that
+        // causes a backup entry to be created, which invalidates the
+        // v2 review history. So we manually update the usn/mtime here
+        m.put("mod", TimeManager.time.intTime())
+        m.put("usn", col.usn())
+        update(m, preserve_usn_and_mtime = true)
     }
 
     @RustCleanup("not required - java only")

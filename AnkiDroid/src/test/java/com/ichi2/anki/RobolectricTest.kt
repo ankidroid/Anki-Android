@@ -48,6 +48,8 @@ import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import com.ichi2.utils.JSONException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
@@ -59,6 +61,7 @@ import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
+import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
@@ -204,6 +207,17 @@ open class RobolectricTest : CollectionGetter {
             return null
         }
         return dialog.view.contentLayout.findViewById<TextView>(R.id.md_text_message).text.toString()
+    }
+
+    fun awaitJob(job: Job?) {
+        job?.let {
+            runBlocking {
+                while (!job.isCompleted) {
+                    waitForAsyncTasksToComplete()
+                    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+                }
+            }
+        }
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
