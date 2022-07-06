@@ -30,14 +30,15 @@ enum class SyncStatus {
 
         @JvmStatic
         fun getSyncStatus(getCol: Supplier<Collection>): SyncStatus {
-            val col: Collection
-            col = try {
-                getCol.get()
+            return try {
+                val col = getCol.get()
+                // may fail when the collection is closed for a full sync,
+                // as col.db is null
+                getSyncStatus(col)
             } catch (e: Exception) {
                 Timber.w(e)
                 return INCONCLUSIVE
             }
-            return getSyncStatus(col)
         }
 
         @JvmStatic
