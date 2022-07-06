@@ -360,7 +360,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 return dialogOptions.toList()
             }
             LIMITS -> // Special custom study options to show when the daily study limit has been reached
-                return if (collection.sched.newDue() != true && collection.sched.revDue() != true) {
+                return if (!collection.sched.newDue() && !collection.sched.revDue()) {
                     listOf(STUDY_NEW, STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
                 } else {
                     if (collection.sched.newDue()) {
