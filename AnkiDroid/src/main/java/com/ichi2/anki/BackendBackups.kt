@@ -22,11 +22,9 @@ import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.awaitBackupCompletion
 import com.ichi2.libanki.createBackup
 import kotlinx.coroutines.*
-import timber.log.Timber
 
 fun DeckPicker.performBackupInBackground() {
-    val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
-    catchingLifecycleScope(this) {
+    launchCatchingCollectionTask { col ->
         // Wait a second to allow the deck list to finish loading first, or it
         // will hang until the first stage of the backup completes.
         delay(1000)
@@ -35,21 +33,21 @@ fun DeckPicker.performBackupInBackground() {
 }
 
 fun DeckPicker.importColpkg(colpkgPath: String) {
-    val deckPicker = this
-    catchingLifecycleScope(this) {
-        runInBackground {
-            val helper = CollectionHelper.getInstance()
-            val backend = helper.getOrCreateBackend(baseContext)
-            backend.withProgress({
-                if (it.hasImporting()) {
-                    // TODO: show progress in GUI
-                    Timber.i("%s", it.importing)
+    launchCatchingTask {
+        val helper = CollectionHelper.getInstance()
+        val backend = helper.getOrCreateBackend(baseContext)
+        runInBackgroundWithProgress(
+            backend,
+            extractProgress = {
+                if (progress.hasImporting()) {
+                    text = progress.importing
                 }
-            }) {
-                helper.importColpkg(baseContext, colpkgPath)
-            }
+            },
+        ) {
+            helper.importColpkg(baseContext, colpkgPath)
         }
-        deckPicker.updateDeckList()
+        invalidateOptionsMenu()
+        updateDeckList()
     }
 }
 
