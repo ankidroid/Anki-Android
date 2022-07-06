@@ -26,7 +26,6 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.libanki.Model
 import com.ichi2.testutils.assertFalse
 import com.ichi2.utils.JSONObject
-import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -351,17 +350,6 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertNull("Can delete both templates?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
         assertEquals("Change in database despite no change?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
         assertEquals("Model should have 2 templates still", 2, testEditor.tempModel?.templateCount)
-
-        if (!BackendFactory.defaultLegacySchema) {
-            // the new backend behaves differently, which breaks these tests:
-            // - multiple templates with identical question format can't be saved
-            // - if that check is patched out, the test fails later with 3 cards remaining instead
-            //   of 2 after deleting
-
-            // rather than attempting to fix this, it's probably worth rewriting this screen
-            // to use the backend logic and cutting out these tests
-            return
-        }
 
         // Add a template - click add, click confirm for card add, click confirm again for full sync
         addCardType(testEditor, shadowTestEditor)
