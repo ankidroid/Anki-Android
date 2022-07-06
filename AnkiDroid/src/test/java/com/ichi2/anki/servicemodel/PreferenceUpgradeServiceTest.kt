@@ -45,7 +45,8 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     private lateinit var mPrefs: SharedPreferences
 
     @Before
-    fun before() {
+    override fun setUp() {
+        super.setUp()
         mPrefs = AnkiDroidApp.getSharedPrefs(targetContext)
     }
 
