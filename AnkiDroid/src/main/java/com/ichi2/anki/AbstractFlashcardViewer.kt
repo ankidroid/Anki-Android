@@ -42,7 +42,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
 import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
@@ -1790,20 +1790,13 @@ abstract class AbstractFlashcardViewer :
     private fun showSnackbar(mainText: String?, @StringRes buttonText: Int, onClickListener: View.OnClickListener?) {
         // BUG: Moving from full screen to non-full screen obscures the buttons
         val sb = getSnackbar(mainText, Snackbar.LENGTH_LONG, buttonText, onClickListener, webView!!, null)
-        val easeButtons = findViewById<View>(R.id.answer_options_layout)
-        val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
-        val upperView = if (previewButtons != null && previewButtons.visibility != View.GONE) previewButtons else easeButtons
 
-        // we need to check for View.GONE as setting the anchor does not seem to respect this property
-        // (there's a gap even if the view is invisible)
-        if (upperView != null && upperView.visibility != View.GONE && mAnswerButtonsPosition == "bottom") {
-            val sbView = sb.view
-            val layoutParams = sbView.layoutParams as CoordinatorLayout.LayoutParams
-            layoutParams.anchorId = upperView.id
-            layoutParams.anchorGravity = Gravity.TOP
-            layoutParams.gravity = Gravity.TOP
-            sbView.layoutParams = layoutParams
+        if (mAnswerButtonsPosition == "bottom") {
+            val easeButtons = findViewById<View>(R.id.answer_options_layout)
+            val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
+            sb.anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
         }
+
         sb.show()
     }
 
