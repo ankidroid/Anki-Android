@@ -32,8 +32,6 @@ class TTS {
     @get:JvmName("isEnabled")
     var enabled: Boolean = false
 
-    private val mTTS: ReadText? = null
-
     /**
      * Returns the card ordinal for TTS language storage.
      *
@@ -74,7 +72,7 @@ class TTS {
         ReadText.selectTts(getTextForTts(context, textToRead), CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card), qa, context)
     }
 
-    fun getTextForTts(context: Context, text: String): String {
+    private fun getTextForTts(context: Context, text: String): String {
         val clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
         val clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement)
         return Utils.stripHTML(clozeReplaced)
