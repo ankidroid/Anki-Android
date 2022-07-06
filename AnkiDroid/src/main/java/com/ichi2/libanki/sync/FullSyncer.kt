@@ -107,7 +107,7 @@ class FullSyncer(col: Collection?, hkey: String?, con: Connection, hostNum: Host
         mCon.publishProgress(R.string.sync_check_download_file)
         var tempDb: DB? = null
         try {
-            tempDb = DB.withAndroidFramework(mCol!!.context, tpath)
+            tempDb = DB.withAndroidFramework(AnkiDroidApp.getInstance(), tpath)
             if (!"ok".equals(tempDb.queryString("PRAGMA integrity_check"), ignoreCase = true)) {
                 Timber.e("Full sync - downloaded file corrupt")
                 return ConnectionResultType.REMOTE_DB_ERROR
