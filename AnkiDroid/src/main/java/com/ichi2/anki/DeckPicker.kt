@@ -42,6 +42,7 @@ import android.view.WindowManager.BadTokenException
 import android.widget.*
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
@@ -95,6 +96,7 @@ import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
+import com.ichi2.libanki.sched.upgradeScheduler
 import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
 import com.ichi2.libanki.utils.TimeManager
@@ -1950,10 +1952,38 @@ open class DeckPicker :
         }
     }
 
+    private fun promptUserToUpdateScheduler() {
+        AlertDialog.Builder(this)
+            .setMessage(col.tr.schedulingUpdateRequired())
+            .setPositiveButton(R.string.dialog_ok) { _, _ ->
+                launchCatchingTask {
+                    if (!userAcceptsSchemaChange(col)) {
+                        return@launchCatchingTask
+                    }
+                    runInBackgroundWithProgress {
+                        CollectionHelper.getInstance().updateScheduler(this@DeckPicker)
+                    }
+                    showThemedToast(this@DeckPicker, col.tr.schedulingUpdateDone(), false)
+                    refreshState()
+                }
+            }
+            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                // nothing to do
+            }
+            .setNeutralButton(col.tr.schedulingUpdateMoreInfoButton()) { _, _ ->
+                this.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
+            }
+            .show()
+    }
+
     private fun handleDeckSelection(did: Long, selectionType: DeckSelectionType) {
         // Clear the undo history when selecting a new deck
         if (col.decks.selected() != did) {
             col.clearUndo()
+        }
+        if (col.get_config_int("schedVer") == 1) {
+            promptUserToUpdateScheduler()
+            return
         }
         // Select the deck
         col.decks.select(did)
@@ -2653,5 +2683,34 @@ open class DeckPicker :
             invalidateOptionsMenu()
             updateDeckList()
         }
+    }
+}
+
+/** Upgrade from v1 to v2 scheduler.
+ * Caller must have confirmed schema modification already.
+ */
+@KotlinCleanup("move into CollectionHelper once it's converted to Kotlin")
+@Synchronized
+fun CollectionHelper.updateScheduler(context: Context) {
+    if (BackendFactory.defaultLegacySchema) {
+        // We'll need to temporarily update to the latest schema.
+        closeCollection(true, "sched upgrade")
+        discardBackend()
+        BackendFactory.defaultLegacySchema = false
+        // Ensure collection closed if upgrade fails, and schema reverted
+        // even if close fails.
+        try {
+            try {
+                getCol(context).newBackend.upgradeScheduler()
+            } finally {
+                closeCollection(true, "sched upgrade")
+            }
+        } finally {
+            BackendFactory.defaultLegacySchema = true
+            discardBackend()
+        }
+    } else {
+        // Can upgrade directly
+        getCol(context).newBackend.upgradeScheduler()
     }
 }
