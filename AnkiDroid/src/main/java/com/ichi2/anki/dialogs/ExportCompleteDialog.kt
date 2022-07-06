@@ -46,7 +46,7 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
             title(text = notificationTitle)
             message(text = notificationMessage)
             icon(Themes.getResFromAttr(context, R.attr.dialogSendIcon))
-            positiveButton(R.string.export_share_button) {
+            positiveButton(R.string.export_send_button) {
                 listener.dismissAllDialogFragments()
                 listener.shareFile(exportPath)
             }
