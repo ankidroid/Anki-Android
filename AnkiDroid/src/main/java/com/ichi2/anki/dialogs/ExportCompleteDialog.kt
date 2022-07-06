@@ -28,20 +28,18 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
         fun shareFile(path: String)
         fun saveExportFile(exportPath: String)
     }
+    val exportPath
+        get() = requireArguments().getString("exportPath")!!
 
     fun withArguments(exportPath: String): ExportCompleteDialog {
-        var args = this.arguments
-        if (args == null) {
-            args = Bundle()
+        arguments = (arguments ?: Bundle()).apply {
+            putString("exportPath", exportPath)
         }
-        args.putString("exportPath", exportPath)
-        this.arguments = args
         return this
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        val exportPath = requireArguments().getString("exportPath")!!
         return MaterialDialog(requireActivity()).show {
             title(text = notificationTitle)
             message(text = notificationMessage)
@@ -58,8 +56,5 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
         get() = res().getString(R.string.export_successful_title)
 
     override val notificationMessage: String
-        get() {
-            val exportPath = File(requireArguments().getString("exportPath")!!)
-            return res().getString(R.string.export_successful, exportPath.name)
-        }
+        get() = res().getString(R.string.export_successful, File(exportPath).name)
 }
