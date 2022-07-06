@@ -67,9 +67,11 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         if (args == null) {
             args = Bundle()
         }
-        args.putInt("id", contextMenuAttribute.value)
-        args.putLong("did", did)
-        args.putBoolean("jumpToReviewer", jumpToReviewer)
+        args.apply {
+            putInt("id", contextMenuAttribute.value)
+            putLong("did", did)
+            putBoolean("jumpToReviewer", jumpToReviewer)
+        }
         this.arguments = args
         return this
     }
