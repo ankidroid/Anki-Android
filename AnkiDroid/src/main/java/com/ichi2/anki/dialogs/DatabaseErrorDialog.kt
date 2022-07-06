@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Message
@@ -46,6 +47,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     private lateinit var mBackups: Array<File>
 
     @Suppress("Deprecation") // Material dialog neutral button deprecation
+    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         val type = requireArguments().getInt("dialogType")
