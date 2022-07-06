@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.export
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.ParcelFileDescriptor
@@ -116,8 +115,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         activity.dismissAllDialogFragments()
     }
 
-    @SuppressLint("StringFormatInvalid")
-    override fun emailFile(path: String) {
+    override fun shareFile(path: String) {
         // Make sure the file actually exists
         val attachment = File(path)
         if (!attachment.exists()) {
@@ -133,12 +131,18 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
             return
         }
+
         val shareIntent = IntentBuilder(activity)
             .setType("application/apkg")
             .setStream(uri)
+            .setChooserTitle(activity.getString(R.string.export_share_title))
             .setSubject(activity.getString(R.string.export_email_subject, attachment.name))
             .setHtmlText(activity.getString(R.string.export_email_text, activity.getString(R.string.link_manual), activity.getString(R.string.link_distributions)))
             .intent
+            .setAction(Intent.ACTION_SEND)
+            .setDataAndType(uri, "application/apkg")
+            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
         if (shareIntent.resolveActivity(activity.packageManager) != null) {
             activity.startActivityWithoutAnimation(shareIntent)
         } else {

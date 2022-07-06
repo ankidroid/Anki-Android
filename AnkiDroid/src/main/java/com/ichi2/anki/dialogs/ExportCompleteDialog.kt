@@ -25,7 +25,7 @@ import java.io.File
 class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
     interface ExportCompleteDialogListener {
         fun dismissAllDialogFragments()
-        fun emailFile(path: String)
+        fun shareFile(path: String)
         fun saveExportFile(exportPath: String)
     }
 
@@ -39,28 +39,18 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
         return this
     }
 
-    @Suppress("Deprecation") // Material dialog neutral button deprecation
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         val exportPath = requireArguments().getString("exportPath")!!
         return MaterialDialog(requireActivity()).show {
             title(text = notificationTitle)
             message(text = notificationMessage)
-            iconAttr(R.attr.dialogSendIcon)
-            positiveButton(R.string.export_send_button) {
+            icon(Themes.getResFromAttr(context, R.attr.dialogSendIcon))
+            positiveButton(R.string.export_share_button) {
                 listener.dismissAllDialogFragments()
-                listener.emailFile(exportPath)
+                listener.shareFile(exportPath)
             }
-            negativeButton(R.string.export_save_button) {
-                listener.dismissAllDialogFragments()
-                listener.saveExportFile(exportPath)
-            }
-            neutralButton(R.string.dialog_cancel) {
-                // TODO: Discuss regarding alternatives to using a neutral button here
-                //  since it is deprecated and not recommended in material guidelines
-
-                listener.dismissAllDialogFragments()
-            }
+            negativeButton(R.string.dialog_cancel) { listener.dismissAllDialogFragments() }
         }
     }
 
