@@ -99,7 +99,7 @@ suspend fun <T> Backend.withProgress(
 
 /**
  * Run the provided operation in the background, showing a progress
- * window.
+ * window. Progress info is polled from the backend.
  */
 suspend fun <T> AnkiActivity.runInBackgroundWithProgress(
     backend: Backend,
@@ -119,6 +119,24 @@ suspend fun <T> AnkiActivity.runInBackgroundWithProgress(
         updateUi = { updateDialog(dialog) }
     ) {
         runInBackground { op() }
+    }
+}
+
+/**
+ * Run the provided operation in the background, showing a progress
+ * window with the provided message.
+ */
+suspend fun <T> AnkiActivity.runInBackgroundWithProgress(
+    message: String = "",
+    op: suspend () -> T
+): T = withProgressDialog(
+    context = this@runInBackgroundWithProgress,
+    onCancel = null
+) { dialog ->
+    @Suppress("Deprecation") // ProgressDialog deprecation
+    dialog.setMessage(message)
+    runInBackground {
+        op()
     }
 }
 

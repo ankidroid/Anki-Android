@@ -45,6 +45,7 @@ import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.*
+import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.CollectionUtils
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
@@ -235,7 +236,14 @@ class DecksV16(private val col: CollectionV16) :
 
     @Throws(DeckRenameException::class)
     fun save(g: DeckV16) {
-        this.update(g, preserve_usn = false)
+        // legacy code expects preserve_usn=false behaviour, but that
+        // causes a backup entry to be created, which invalidates the
+        // v2 review history. So we manually update the usn/mtime here
+        g.getJsonObject().run {
+            put("mod", time.intTime())
+            put("usn", col.usn())
+        }
+        this.update(g, preserve_usn = true)
     }
 
     @RustCleanup("unused in V16")
@@ -421,6 +429,9 @@ class DecksV16(private val col: CollectionV16) :
     }
 
     @Throws(DeckRenameException::class)
+    /** This skips the backend undo queue, so is required instead of save()
+     * to avoid clobbering the v2 review queue.
+     */
     override fun update(g: Deck) {
         // we preserve USN here as this method is used for syncing and merging
         update(DeckV16.Generic(g), preserve_usn = true)
