@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
@@ -46,6 +47,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
+        @SuppressLint("CheckResult")
         val show = MaterialDialog(requireActivity()).show {
             title(text = requireArguments().getString("title")!!)
             positiveButton(R.string.dialog_ok)

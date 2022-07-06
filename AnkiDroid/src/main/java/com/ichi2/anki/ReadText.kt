@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -87,6 +88,7 @@ object ReadText {
      * @param ord  The card template ordinal
      * @param qa   The card question or card answer
      */
+    @SuppressLint("CheckResult")
     fun selectTts(text: String?, did: Long, ord: Int, qa: SoundSide?, context: Context) {
         // TODO: Consolidate with ReadText.readCardSide
         textToSpeak = text

@@ -1,6 +1,7 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,6 +31,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
     }
 
     @Suppress("UNCHECKED_CAST")
+    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val dialog = MaterialDialog(requireActivity())

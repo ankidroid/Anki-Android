@@ -1,6 +1,7 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import androidx.annotation.StringRes
@@ -14,6 +15,7 @@ import timber.log.Timber
 
 class ModelBrowserContextMenu : AnalyticsDialogFragment() {
 
+    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val items = ModelBrowserContextMenuAction.values().sortedBy { it.order }

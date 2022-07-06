@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.noteeditor
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
@@ -217,6 +218,7 @@ class Toolbar : FrameLayout {
      *
      * @see [R.array.html_size_codes]
      */
+    @SuppressLint("CheckResult")
     private fun displayFontSizeDialog() {
         val results = resources.getStringArray(R.array.html_size_codes)
 
@@ -236,6 +238,7 @@ class Toolbar : FrameLayout {
     /**
      * Displays a dialog which allows `<h1>` to `<h6>` to be inserted
      */
+    @SuppressLint("CheckResult")
     private fun displayInsertHeadingDialog() {
         MaterialDialog(context).show {
             listItems(items = listOf("h1", "h2", "h3", "h4", "h5")) { _: MaterialDialog, _: Int, charSequence: CharSequence ->

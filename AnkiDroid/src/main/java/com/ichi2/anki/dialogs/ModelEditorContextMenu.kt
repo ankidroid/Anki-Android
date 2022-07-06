@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +22,7 @@ import timber.log.Timber
  */
 open class ModelEditorContextMenu : AnalyticsDialogFragment() {
 
+    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         // add only the actions which can be done at the current API level

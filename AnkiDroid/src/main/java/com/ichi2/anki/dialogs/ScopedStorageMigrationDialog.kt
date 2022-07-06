@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.net.Uri
@@ -45,6 +46,7 @@ typealias OpenUri = (Uri) -> Unit
  */
 object ScopedStorageMigrationDialog {
     @Suppress("Deprecation") // Material dialog neutral button deprecation
+    @SuppressLint("CheckResult")
     @JvmStatic
     fun showDialog(ctx: Context, openUri: OpenUri, initiateScopedStorage: Runnable): Dialog {
         return MaterialDialog(ctx).show {
@@ -81,6 +83,7 @@ object ScopedStorageMigrationDialog {
  * Then performs a migration to scoped storage
  */
 object ScopedStorageMigrationConfirmationDialog {
+    @SuppressLint("CheckResult")
     fun showDialog(ctx: Context, initiateScopedStorage: Runnable): Dialog {
         val li = LayoutInflater.from(ctx)
         val view = li.inflate(R.layout.scoped_storage_confirmation, null)

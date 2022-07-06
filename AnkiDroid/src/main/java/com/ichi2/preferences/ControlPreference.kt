@@ -16,6 +16,7 @@
 
 package com.ichi2.preferences
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import androidx.preference.ListPreference
@@ -84,6 +85,7 @@ class ControlPreference : ListPreference {
         .joinToString(", ") { it.toDisplayString(context) }
 
     /** Called when an element is selected in the ListView */
+    @SuppressLint("CheckResult")
     override fun callChangeListener(newValue: Any?): Boolean {
         when (val index: Int = (newValue as String).toInt()) {
             ADD_GESTURE_INDEX -> {

@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
@@ -60,6 +61,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         }
 
     fun showDialog(): MaterialDialog {
+        @SuppressLint("CheckResult")
         val dialog = MaterialDialog(context).show {
             title(title)
             positiveButton(R.string.dialog_ok) {

@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
@@ -25,6 +26,7 @@ import com.ichi2.anki.reviewer.CardSide
 class CardSideSelectionDialog {
 
     companion object {
+        @SuppressLint("CheckResult")
         fun displayInstance(ctx: Context, callback: (c: CardSide) -> Unit) {
             val items = listOf(
                 R.string.card_side_both,
