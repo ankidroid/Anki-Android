@@ -26,7 +26,6 @@ import android.widget.AdapterView.OnItemLongClickListener
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -47,11 +46,9 @@ import com.ichi2.libanki.StdModels
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
 import com.ichi2.widget.WidgetStatus.update
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.lang.RuntimeException
 import java.util.ArrayList
@@ -427,11 +424,6 @@ class ModelBrowser : AnkiActivity() {
      * the user to edit the current note's templates.
      */
     private fun openTemplateEditor() {
-        if (!BackendFactory.defaultLegacySchema) {
-            @BlocksSchemaUpgrade("this screen needs rewriting for the new backend")
-            AlertDialog.Builder(this).setTitle("Not yet supported on new backend").show()
-            return
-        }
         val intent = Intent(this, CardTemplateEditor::class.java)
         intent.putExtra("modelId", mCurrentID)
         launchActivityForResultWithAnimation(intent, mEditTemplateResultLauncher, ActivityTransitionAnimation.Direction.START)
