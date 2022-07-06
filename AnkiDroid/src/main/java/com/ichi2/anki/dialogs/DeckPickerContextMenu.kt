@@ -55,7 +55,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             .noAutoDismiss()
             .listItems(items = contextMenuOptions.map { resources.getString(it.optionName) }) {
                     _: MaterialDialog, index: Int, _: CharSequence ->
-                handleActionOnLongClick(index)
+                handleActionOnLongClick(contextMenuOptions[index])
             }
     }
 
@@ -90,8 +90,8 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         }
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
-    private fun handleActionOnLongClick(index: Int) {
-        when (DeckPickerContextMenuOption.fromId(index)) {
+    private fun handleActionOnLongClick(selectedOption: DeckPickerContextMenuOption) {
+        when (selectedOption) {
             DeckPickerContextMenuOption.DELETE_DECK -> {
                 Timber.i("Delete deck selected")
                 (activity as DeckPicker?)!!.confirmDeckDeletion(deckId)
