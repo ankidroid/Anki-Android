@@ -25,7 +25,6 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
@@ -46,7 +45,6 @@ class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
     }
 
     @Test
-    @Ignore("flaky in CI")
     fun test_preferences_not_opened_happy_path() {
         // if the user has not opened the gestures, then nothing should be mapped
         assertThat(prefs.contains(PREF_KEY_VOLUME_DOWN), equalTo(false))
@@ -59,7 +57,6 @@ class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
     }
 
     @Test
-    @Ignore("flaky in CI")
     fun test_preferences_opened_happy_path() {
         // the default is that the user has not mapped the gesture, but has opened the screen
         // so they are set to NOTHING which had "0" as value
