@@ -21,22 +21,26 @@ package com.ichi2.anki
 import anki.import_export.ImportResponse
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.importAnkiPackage
+import com.ichi2.libanki.undoableOp
 import net.ankiweb.rsdroid.Translations
-import timber.log.Timber
 
-fun DeckPicker.importApkg(apkgPath: String) {
-    val deckPicker = this
-    val col = CollectionHelper.getInstance().getCol(deckPicker.baseContext).newBackend
-    catchingLifecycleScope(this) {
-        val report = col.opWithProgress({
-            if (it.hasImporting()) {
-                // TODO: show progress in GUI
-                Timber.i("%s", it.importing)
+fun DeckPicker.importApkgs(apkgPaths: List<String>) {
+    launchCatchingCollectionTask { col ->
+        for (apkgPath in apkgPaths) {
+            val report = runInBackgroundWithProgress(
+                col.backend,
+                extractProgress = {
+                    if (progress.hasImporting()) {
+                        text = progress.importing
+                    }
+                },
+            ) {
+                undoableOp {
+                    col.importAnkiPackage(apkgPath)
+                }
             }
-        }) {
-            importAnkiPackage(apkgPath)
+            showSimpleMessageDialog(summarizeReport(col.tr, report))
         }
-        showSimpleMessageDialog(summarizeReport(col.tr, report))
     }
 }
 
@@ -65,15 +69,15 @@ fun DeckPicker.exportApkg(
     withMedia: Boolean,
     deckId: Long?
 ) {
-    val deckPicker = this
-    val col = CollectionHelper.getInstance().getCol(deckPicker.baseContext).newBackend
-    catchingLifecycleScope(this) {
-        runInBackgroundWithProgress(col, {
-            if (it.hasExporting()) {
-                // TODO: show progress in GUI
-                Timber.i("%s", it.exporting)
-            }
-        }) {
+    launchCatchingCollectionTask { col ->
+        runInBackgroundWithProgress(
+            col.backend,
+            extractProgress = {
+                if (progress.hasExporting()) {
+                    text = progress.exporting
+                }
+            },
+        ) {
             col.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
         }
     }

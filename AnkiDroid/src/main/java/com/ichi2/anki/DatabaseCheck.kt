@@ -16,24 +16,24 @@
 
 package com.ichi2.anki
 
-import timber.log.Timber
-
 fun DeckPicker.handleDatabaseCheck() {
-    val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
-    val deckPicker = this
-    catchingLifecycleScope(this) {
-        val problems = runInBackgroundWithProgress(col, {
-            if (it.hasDatabaseCheck()) {
-                // TODO: show progress in GUI
-                it.databaseCheck.run {
-                    if (stageTotal > 0) {
-                        Timber.i("$stage: $stageCurrent/$stageTotal")
-                    } else {
-                        Timber.i("$stage")
+    launchCatchingCollectionTask { col ->
+        val problems = runInBackgroundWithProgress(
+            col.backend,
+            extractProgress = {
+                if (progress.hasDatabaseCheck()) {
+                    progress.databaseCheck.let {
+                        text = it.stage
+                        if (it.stageTotal > 0) {
+                            amount = Pair(it.stageCurrent, it.stageTotal)
+                        } else {
+                            amount = null
+                        }
                     }
                 }
-            }
-        }) {
+            },
+            onCancel = null,
+        ) {
             col.fixIntegrity()
         }
         val message = if (problems.isNotEmpty()) {
@@ -41,6 +41,6 @@ fun DeckPicker.handleDatabaseCheck() {
         } else {
             col.tr.databaseCheckRebuilt()
         }
-        deckPicker.showSimpleMessageDialog(message)
+        showSimpleMessageDialog(message)
     }
 }
