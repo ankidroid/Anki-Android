@@ -23,7 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
-import com.ichi2.anki.UIUtils.showSimpleSnackbar
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
@@ -37,6 +37,17 @@ import kotlin.coroutines.suspendCoroutine
  * Launch a job that catches any uncaught errors and reports them to the user.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
+ *
+ * TODO: This seems to be similar to [com.ichi2.async.catchingLifecycleScope],
+ *   perhaps put the two methods together?
+ *
+ * TODO: The try/except block here catches CancellationException, is this right?
+ *   If it is, add a comment explaining why.
+ *
+ * TODO: `Throwable.getLocalizedMessage()` might be null, and `BackendException` constructor
+ *   accepts a null message, so `exc.localizedMessage!!` is probably dangerous.
+ *   If not, add a comment explaining why, or refactor to have a method that returns
+ *   a non-null localized message.
  */
 fun FragmentActivity.launchCatchingTask(
     errorMessage: String? = null,
@@ -50,7 +61,7 @@ fun FragmentActivity.launchCatchingTask(
             // do nothing
         } catch (exc: BackendInterruptedException) {
             Timber.e("caught: %s %s", exc, extraInfo)
-            showSimpleSnackbar(this@launchCatchingTask, exc.localizedMessage, false)
+            exc.localizedMessage?.let { showSnackbar(it) }
         } catch (exc: BackendException) {
             Timber.e("caught: %s %s", exc, extraInfo)
             showError(this@launchCatchingTask, exc.localizedMessage!!)

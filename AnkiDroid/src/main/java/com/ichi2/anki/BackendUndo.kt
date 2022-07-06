@@ -18,7 +18,7 @@ package com.ichi2.anki
 
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.UIUtils.showSimpleSnackbar
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.undoNew
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BlocksSchemaUpgrade
@@ -31,11 +31,7 @@ suspend fun FragmentActivity.backendUndoAndShowPopup(): Boolean {
                 undoNew()
             }
         }
-        showSimpleSnackbar(
-            this,
-            TR.undoActionUndone(changes.operation),
-            false
-        )
+        showSnackbar(TR.undoActionUndone(changes.operation))
         true
     } catch (exc: BackendException) {
         @BlocksSchemaUpgrade("Backend module should export this as a separate Exception")
