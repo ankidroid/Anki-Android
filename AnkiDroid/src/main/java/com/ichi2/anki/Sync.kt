@@ -166,16 +166,19 @@ private suspend fun handleDownload(
         extractProgress = fullDownloadProgress(col.tr.syncDownloadingFromAnkiweb()),
         onCancel = ::cancelSync
     ) {
-        col.createBackup(
-            BackupManager.getBackupDirectoryFromCollection(col.path),
-            force = true,
-            waitForCompletion = true
-        )
-        col.close(save = true, downgrade = false, forFullSync = true)
+        val helper = CollectionHelper.getInstance()
+        helper.lockCollection()
         try {
+            col.createBackup(
+                BackupManager.getBackupDirectoryFromCollection(col.path),
+                force = true,
+                waitForCompletion = true
+            )
+            col.close(save = true, downgrade = false, forFullSync = true)
             col.fullDownload(auth)
         } finally {
             col.reopen(afterFullSync = true)
+            helper.unlockCollection()
         }
     }
 
@@ -193,11 +196,14 @@ private suspend fun handleUpload(
         extractProgress = fullDownloadProgress(col.tr.syncUploadingToAnkiweb()),
         onCancel = ::cancelSync
     ) {
+        val helper = CollectionHelper.getInstance()
+        helper.lockCollection()
         col.close(save = true, downgrade = false, forFullSync = true)
         try {
             col.fullUpload(auth)
         } finally {
             col.reopen(afterFullSync = true)
+            helper.unlockCollection()
         }
     }
     Timber.i("Full Upload Completed")
