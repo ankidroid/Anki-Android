@@ -19,7 +19,7 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
-import com.ichi2.utils.iconAttr
+import com.ichi2.themes.Themes
 import java.io.File
 
 class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
@@ -55,9 +55,7 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
     }
 
     override val notificationTitle: String
-        get() {
-            return res().getString(R.string.export_successful_title)
-        }
+        get() = res().getString(R.string.export_successful_title)
 
     override val notificationMessage: String
         get() {
