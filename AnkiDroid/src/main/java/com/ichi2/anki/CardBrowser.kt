@@ -33,6 +33,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import anki.collection.OpChanges
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -97,6 +98,7 @@ import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.update
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.lang.Exception
@@ -113,7 +115,12 @@ import kotlin.math.min
 @Suppress("LeakingThis") // The class is only 'open' due to testing
 @KotlinCleanup("scan through this class and add attributes - not started")
 @KotlinCleanup("Add TextUtils.isNotNullOrEmpty accepting nulls and use it. Remove TextUtils import")
-open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelectionListener, TagsDialogListener {
+open class CardBrowser :
+    NavigationDrawerActivity(),
+    SubtitleListener,
+    DeckSelectionListener,
+    TagsDialogListener,
+    ChangeManager.Subscriber {
     @KotlinCleanup("using ?. and let keyword would be good here")
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
@@ -255,6 +262,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      */
     private var mUnmountReceiver: BroadcastReceiver? = null
     private val orderSingleChoiceDialogListener: SingleChoiceListener = { _, index: Int, _ -> changeCardOrder(index) }
+
+    init {
+        ChangeManager.subscribe(this)
+    }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     fun changeCardOrder(which: Int) {
@@ -1271,7 +1282,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     @VisibleForTesting
     fun onUndo() {
         if (col.undoAvailable()) {
-            Undo().runWithHandler(mUndoHandler)
+            if (BackendFactory.defaultLegacySchema) {
+                Undo().runWithHandler(mUndoHandler)
+            } else {
+                launchCatchingCollectionTask { col ->
+                    if (!backendUndoAndShowPopup(col)) {
+                        Undo().runWithHandler(mUndoHandler)
+                    }
+                }
+            }
         }
     }
 
@@ -2626,6 +2645,19 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     fun searchCards(searchQuery: String?) {
         mSearchTerms = searchQuery
         searchCards()
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if ((
+            changes.browserSidebar ||
+                changes.browserTable ||
+                changes.noteText ||
+                changes.card
+            ) && handler !== this
+        ) {
+            // executing this only for the refresh side effects; there may be a better way
+            Undo().runWithHandler(mUndoHandler)
+        }
     }
 
     companion object {

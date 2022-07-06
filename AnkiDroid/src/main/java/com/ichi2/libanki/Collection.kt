@@ -1446,17 +1446,17 @@ open class Collection(
         } else null
     }
 
-    fun undoName(res: Resources?): String {
+    open fun undoName(res: Resources): String {
         val type = undoType()
-        return type?.name(res!!) ?: ""
+        return type?.name(res) ?: ""
     }
 
-    fun undoAvailable(): Boolean {
+    open fun undoAvailable(): Boolean {
         Timber.d("undoAvailable() undo size: %s", undo.size)
         return !undo.isEmpty()
     }
 
-    fun undo(): Card? {
+    open fun undo(): Card? {
         val lastUndo: UndoAction = undo.removeLast()
         Timber.d("undo() of type %s", lastUndo.javaClass)
         return lastUndo.undo(this)

@@ -1222,9 +1222,20 @@ open class DeckPicker :
 
     private fun undo() {
         Timber.i("undo()")
-        val undoReviewString = resources.getString(R.string.undo_action_review)
-        val isReview = undoReviewString == col.undoName(resources)
-        Undo().runWithHandler(undoTaskListener(isReview))
+        fun legacyUndo() {
+            val undoReviewString = resources.getString(R.string.undo_action_review)
+            val isReview = undoReviewString == col.undoName(resources)
+            Undo().runWithHandler(undoTaskListener(isReview))
+        }
+        if (BackendFactory.defaultLegacySchema) {
+            legacyUndo()
+        } else {
+            launchCatchingCollectionTask { col ->
+                if (!backendUndoAndShowPopup(col)) {
+                    legacyUndo()
+                }
+            }
+        }
     }
 
     // Show dialogs to deal with database loading issues etc
@@ -2623,6 +2634,7 @@ open class DeckPicker :
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
         if (changes.studyQueues && handler !== this) {
+            invalidateOptionsMenu()
             updateDeckList()
         }
     }

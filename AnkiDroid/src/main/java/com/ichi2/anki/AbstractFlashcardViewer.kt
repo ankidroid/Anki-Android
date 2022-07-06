@@ -44,6 +44,7 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.webkit.WebViewAssetLoader
+import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
@@ -98,6 +99,8 @@ import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MaxExecFunction
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
+import kotlinx.coroutines.Job
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.*
@@ -120,7 +123,8 @@ abstract class AbstractFlashcardViewer :
     TagsDialogListener,
     WhiteboardMultiTouchMethods,
     AutomaticallyAnswered,
-    OnPageFinishedCallback {
+    OnPageFinishedCallback,
+    ChangeManager.Subscriber {
     private var mTtsInitialized = false
     private var mReplayOnTtsInit = false
     private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
@@ -275,6 +279,10 @@ abstract class AbstractFlashcardViewer :
         mLastClickTime = elapsedRealTime
         mAutomaticAnswer.onShowAnswer()
         displayCardAnswer()
+    }
+
+    init {
+        ChangeManager.subscribe(this)
     }
 
     // Event handler for eases (answer buttons)
@@ -826,21 +834,33 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    open fun undo() {
+    open fun undo(): Job? {
         if (isUndoAvailable) {
             val res = resources
             val undoName = col.undoName(res)
-            Undo().runWithHandler(
-                answerCardHandler(false)
-                    .alsoExecuteAfter {
-                        showThemedToast(
-                            this@AbstractFlashcardViewer,
-                            res.getString(R.string.undo_succeeded, undoName),
-                            true
-                        )
+            fun legacyUndo() {
+                Undo().runWithHandler(
+                    answerCardHandler(false)
+                        .alsoExecuteAfter {
+                            showThemedToast(
+                                this@AbstractFlashcardViewer,
+                                res.getString(R.string.undo_succeeded, undoName),
+                                true
+                            )
+                        }
+                )
+            }
+            if (BackendFactory.defaultLegacySchema) {
+                legacyUndo()
+            } else {
+                return launchCatchingCollectionTask { col ->
+                    if (!backendUndoAndShowPopup(col)) {
+                        legacyUndo()
                     }
-            )
+                }
+            }
         }
+        return null
     }
 
     private fun finishNoStorageAvailable() {
@@ -2557,6 +2577,15 @@ abstract class AbstractFlashcardViewer :
 
     open fun javaScriptFunction(): AnkiDroidJsAPI? {
         return AnkiDroidJsAPI(this)
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if ((changes.studyQueues || changes.noteText || changes.card) && handler !== this) {
+            // executing this only for the refresh side effects; there may be a better way
+            Undo().runWithHandler(
+                answerCardHandler(false)
+            )
+        }
     }
 
     companion object {
