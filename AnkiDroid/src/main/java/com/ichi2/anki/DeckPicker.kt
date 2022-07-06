@@ -619,7 +619,7 @@ open class DeckPicker :
                 return true
             }
         })
-        if (colIsOpen()) {
+        if (colIsOpen() && !CollectionHelper.getInstance().isCollectionLocked) {
             displaySyncBadge(menu)
 
             // Show / hide undo
