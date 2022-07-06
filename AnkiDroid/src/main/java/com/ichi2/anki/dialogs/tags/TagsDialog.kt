@@ -24,8 +24,8 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
@@ -288,11 +288,10 @@ class TagsDialog : AnalyticsDialogFragment {
                 setExpandTarget(tag)
                 refresh()
             }
+
             // Show a snackbar to let the user know the tag was added successfully
-            showSnackbar(
-                requireActivity(), feedbackText, false, -1, null,
-                mDialog!!.view.findViewById(R.id.tags_dialog_snackbar), null
-            )
+            mDialog!!.view.findViewById<View>(R.id.tags_dialog_snackbar)
+                .showSnackbar(feedbackText)
         }
     }
 

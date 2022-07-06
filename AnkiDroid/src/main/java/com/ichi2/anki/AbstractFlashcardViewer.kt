@@ -47,10 +47,8 @@ import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
 import com.drakeet.drawer.FullDraggableContainer
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
-import com.ichi2.anki.UIUtils.getSnackbar
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
@@ -74,6 +72,7 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.PreloadNextCard
 import com.ichi2.async.CollectionTask.UpdateNote
@@ -1787,17 +1786,17 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** Displays a snackbar which does not obscure the answer buttons  */
-    private fun showSnackbar(mainText: String?, @StringRes buttonText: Int, onClickListener: View.OnClickListener?) {
+    private fun showSnackbarAboveAnswerButtons(text: String, @StringRes buttonTextResource: Int, onClickListener: View.OnClickListener) {
         // BUG: Moving from full screen to non-full screen obscures the buttons
-        val sb = getSnackbar(mainText, Snackbar.LENGTH_LONG, buttonText, onClickListener, webView!!, null)
+        showSnackbar(text) {
+            setAction(buttonTextResource, onClickListener)
 
-        if (mAnswerButtonsPosition == "bottom") {
-            val easeButtons = findViewById<View>(R.id.answer_options_layout)
-            val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
-            sb.anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
+            if (mAnswerButtonsPosition == "bottom") {
+                val easeButtons = findViewById<View>(R.id.answer_options_layout)
+                val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
+                anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
+            }
         }
-
-        sb.show()
     }
 
     private fun onPageUp() {
@@ -2507,12 +2506,12 @@ abstract class AbstractFlashcardViewer :
 
     private fun displayCouldNotFindMediaSnackbar(filename: String?) {
         val onClickListener = View.OnClickListener { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
-        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename), R.string.help, onClickListener)
+        showSnackbarAboveAnswerButtons(getString(R.string.card_viewer_could_not_find_image, filename), R.string.help, onClickListener)
     }
 
     private fun displayMediaUpgradeRequiredSnackbar() {
         val onClickListener = View.OnClickListener { openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative))) }
-        showSnackbar(getString(R.string.card_viewer_media_relative_protocol), R.string.help, onClickListener)
+        showSnackbarAboveAnswerButtons(getString(R.string.card_viewer_media_relative_protocol), R.string.help, onClickListener)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

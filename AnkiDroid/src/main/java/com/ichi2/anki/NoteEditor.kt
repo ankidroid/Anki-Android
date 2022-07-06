@@ -73,6 +73,7 @@ import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.NoteTypeSpinnerUtils
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.anki.widgets.PopupMenuWithIcons
@@ -566,11 +567,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     insertCloze(if (event.isAltPressed) AddClozeType.SAME_NUMBER else AddClozeType.INCREMENT_NUMBER)
                     // Anki Desktop warns, but still inserts the cloze
                     if (!isClozeType) {
-                        UIUtils.showSimpleSnackbar(
-                            this,
-                            R.string.note_editor_insert_cloze_no_cloze_note_type,
-                            false
-                        )
+                        showSnackbar(R.string.note_editor_insert_cloze_no_cloze_note_type)
                     }
                 }
             }

@@ -24,9 +24,9 @@ import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
 
 /**
- * This custom Lint rules will raise an error if a developer uses the {com.google.android.material.snackbar.Snackbar#make(...)} method
- * instead of using the method provided by the UIUtils class {com.ichi2.anki.UIUtils#showSimpleSnackbar(...)}
- * or {com.ichi2.anki.UIUtils#showSnackbar(...)}.
+ * This custom Lint rule will raise an error if a developer uses
+ * the com.google.android.material.snackbar.Snackbar.make method instead of
+ * using the method provided in com.ichi2.anki.snackbar.SnackbarsKt.showSnackbar.
  */
 class DirectSnackbarMakeUsage : Detector(), SourceCodeScanner {
 
@@ -35,8 +35,9 @@ class DirectSnackbarMakeUsage : Detector(), SourceCodeScanner {
         const val ID = "DirectSnackbarMakeUsage"
 
         @VisibleForTesting
-        const val DESCRIPTION = "Use UIUtils.showSimpleSnackbar or UIUtils.showSnackbar instead of Snackbar.make"
-        private const val EXPLANATION = "To improve code consistency within the codebase you should use UIUtils.showSimpleSnackbar or UIUtils.showSnackbar " +
+        const val DESCRIPTION = "Use SnackbarsKt.showSnackbar instead of Snackbar.make"
+        private const val EXPLANATION = "To improve code consistency within the codebase " +
+            "you should use SnackbarsKt.showSnackbar " +
             "in place of the library Snackbar.make(...).show()"
         private val implementation = Implementation(DirectSnackbarMakeUsage::class.java, Scope.JAVA_FILE_SCOPE)
         @JvmField
@@ -57,7 +58,7 @@ class DirectSnackbarMakeUsage : Detector(), SourceCodeScanner {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
-        if (!LintUtils.isAnAllowedClass(foundClasses, "UIUtils") &&
+        if (!LintUtils.isAnAllowedClass(foundClasses, "SnackbarsKt") &&
             evaluator.isMemberInClass(method, "com.google.android.material.snackbar.Snackbar")
         ) {
             context.report(

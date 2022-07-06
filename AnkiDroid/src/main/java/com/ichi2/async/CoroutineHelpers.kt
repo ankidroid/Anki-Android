@@ -23,7 +23,7 @@ import android.app.Activity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
 import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.UIUtils.showSimpleSnackbar
+import com.ichi2.anki.snackbar.showSnackbar
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -47,7 +47,7 @@ fun LifecycleOwner.catchingLifecycleScope(
     } catch (e: Exception) {
         // TODO: localize
         Timber.w(e, errorMessage)
-        showSimpleSnackbar(activity, "An error occurred: $e", shortLength = false)
+        activity.showSnackbar("An error occurred: $e")
         CrashReportService.sendExceptionReport(e, activity::class.java.simpleName)
     }
 }

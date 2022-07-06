@@ -25,9 +25,8 @@ import android.view.WindowManager.BadTokenException
 import androidx.annotation.VisibleForTesting
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
-import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.TTSTag
@@ -274,13 +273,11 @@ object ReadText {
                     override fun onError(utteranceId: String) {
                         Timber.v("Android TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.")
                         val helpUrl = Uri.parse(context.getString(R.string.link_faq_tts))
-                        val ankiActivity = context as AnkiActivity?
-                        ankiActivity!!.mayOpenUrl(helpUrl)
-                        showSnackbar(
-                            ankiActivity, R.string.no_tts_available_message, false, R.string.help,
-                            { openTtsHelpUrl(helpUrl) }, ankiActivity.findViewById(R.id.root_layout),
-                            Snackbar.Callback()
-                        )
+                        val ankiActivity = context as AnkiActivity
+                        ankiActivity.mayOpenUrl(helpUrl)
+                        ankiActivity.showSnackbar(R.string.no_tts_available_message) {
+                            setAction(R.string.help) { openTtsHelpUrl(helpUrl) }
+                        }
                     }
 
                     override fun onStart(arg0: String) {

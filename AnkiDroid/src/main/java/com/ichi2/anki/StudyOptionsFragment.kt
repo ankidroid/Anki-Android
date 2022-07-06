@@ -34,10 +34,10 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
-import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.servicelayer.ComputeResult
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.*
 import com.ichi2.async.TaskListener
@@ -414,8 +414,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
             if (col!!.sched.count() > 0 && mStudyOptionsView != null) {
-                val rootLayout = mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
-                showSnackbar(requireActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout)
+                mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
+                    .showSnackbar(R.string.studyoptions_no_cards_due)
             }
         }
     }

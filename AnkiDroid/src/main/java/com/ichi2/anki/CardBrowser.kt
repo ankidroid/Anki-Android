@@ -42,8 +42,6 @@ import com.ichi2.anki.AnkiFont.Companion.getTypeface
 import com.ichi2.anki.CardUtils.getAllCards
 import com.ichi2.anki.CardUtils.getNotes
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
-import com.ichi2.anki.UIUtils.showSimpleSnackbar
-import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
@@ -65,6 +63,7 @@ import com.ichi2.anki.servicelayer.SchedulerService.RescheduleCards
 import com.ichi2.anki.servicelayer.SchedulerService.ResetCards
 import com.ichi2.anki.servicelayer.SearchService.SearchCardsResult
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.async.CollectionTask
 import com.ichi2.async.CollectionTask.ChangeDeckMulti
@@ -1688,13 +1687,8 @@ open class CardBrowser :
             }
             // snackbar to offer undo
             val deckName = browser.col.decks.name(browser.mNewDid)
-            browser.mUndoSnackbar = showSnackbar(
-                browser, String.format(browser.getString(R.string.changed_deck_message), deckName),
-                SNACKBAR_DURATION,
-                R.string.undo,
-                { TaskManager.launchCollectionTask(Undo().toDelegate(), browser.mUndoHandler) },
-                browser.mCardsListView, null
-            )
+            val message = browser.getString(R.string.changed_deck_message, deckName)
+            browser.showUndoSnackbar(message)
         }
     }
 
@@ -1776,14 +1770,18 @@ open class CardBrowser :
             browser.hideProgressBar()
             browser.mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(browser.resources), "%d", browser.checkedCardCount())
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
-            // snackbar to offer undo
+
             val deletedMessage = browser.resources.getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted)
-            browser.mUndoSnackbar = showSnackbar(
-                browser, deletedMessage, SNACKBAR_DURATION,
-                R.string.undo, { Undo().runWithHandler(browser.mUndoHandler) },
-                browser.mCardsListView, null
-            )
+            browser.showUndoSnackbar(deletedMessage)
+
             browser.searchCards()
+        }
+    }
+
+    private fun showUndoSnackbar(message: CharSequence) {
+        showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
+            setAction(R.string.undo) { TaskManager.launchCollectionTask(Undo().toDelegate(), mUndoHandler) }
+            mUndoSnackbar = this
         }
     }
 
@@ -1839,27 +1837,21 @@ open class CardBrowser :
             if (mSearchView == null || mSearchView!!.isIconified) {
                 return
             }
-            if (hasSelectedAllDecks()) {
-                showSimpleSnackbar(this@CardBrowser, subtitleText, true)
-                return
-            }
 
-            // If we haven't selected all decks, allow the user the option to search all decks.
-            val displayText: String = if (cardCount == 0) {
-                getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi)
+            if (hasSelectedAllDecks()) {
+                showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
             } else {
-                subtitleText
+                // If we haven't selected all decks, allow the user the option to search all decks.
+                val message = if (cardCount == 0) {
+                    getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi)
+                } else {
+                    subtitleText
+                }
+
+                showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
+                    setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
+                }
             }
-            val root = findViewById<View>(R.id.root_layout)
-            showSnackbar(
-                this@CardBrowser,
-                displayText,
-                SNACKBAR_DURATION,
-                R.string.card_browser_search_all_decks,
-                { searchAllDecks() },
-                root,
-                null
-            )
         }
 
         override fun actualOnCancelled(context: CardBrowser) {
@@ -2653,7 +2645,6 @@ open class CardBrowser :
         // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
         // Note: the last 6 are currently hidden
         private val COLUMN2_KEYS = arrayOf(Column.ANSWER, Column.CARD, Column.DECK, Column.NOTE_TYPE, Column.QUESTION, Column.TAGS, Column.LAPSES, Column.REVIEWS, Column.INTERVAL, Column.EASE, Column.DUE, Column.CHANGED, Column.CREATED, Column.EDITED)
-        private const val SNACKBAR_DURATION = 8000
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L
