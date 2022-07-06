@@ -79,3 +79,11 @@ object ChangeManager {
         notifySubscribers(opChanges, initiator)
     }
 }
+
+/** Wrap a routine that returns OpChanges* or similar undo info with this
+ * to notify change subscribers of the changes. */
+fun<T> undoableOp(handler: Any? = null, block: () -> T): T {
+    return block().also {
+        ChangeManager.notifySubscribers(it, handler)
+    }
+}

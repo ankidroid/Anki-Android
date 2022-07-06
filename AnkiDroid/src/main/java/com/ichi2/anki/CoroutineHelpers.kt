@@ -1,5 +1,5 @@
 /***************************************************************************************
- * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>                       *
+ * Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -16,59 +16,78 @@
 
 package com.ichi2.anki
 
-import android.app.Activity
-import androidx.lifecycle.LifecycleOwner
+import android.content.Context
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
-import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.CollectionV16
+import com.ichi2.themes.StyledProgressDialog
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
+import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
+import timber.log.Timber
 
 /**
  * Launch a job that catches any uncaught errors and reports them to the user.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
  */
-// TODO: require user confirmation before message disappears
-fun LifecycleOwner.catchingLifecycleScope(activity: Activity, block: suspend CoroutineScope.() -> Unit): Job {
+fun AnkiActivity.launchCatchingTask(
+    block: suspend CoroutineScope.() -> Unit
+): Job {
     return lifecycle.coroutineScope.launch {
         try {
             block()
+        } catch (exc: BackendInterruptedException) {
+            Timber.e("caught: %s", exc)
+            showSimpleSnackbar(this@launchCatchingTask, exc.localizedMessage, false)
         } catch (exc: BackendException) {
-            showSimpleSnackbar(activity, exc.localizedMessage, false)
+            Timber.e("caught: %s", exc)
+            showError(this@launchCatchingTask, exc.localizedMessage!!)
         } catch (exc: Exception) {
-            // TODO: localize
-            showSimpleSnackbar(activity, "An error occurred: {exc}", false)
+            Timber.e("caught: %s", exc)
+            showError(this@launchCatchingTask, exc.toString())
         }
     }
 }
 
+private fun showError(context: Context, msg: String) {
+    AlertDialog.Builder(context)
+        .setTitle(R.string.vague_error)
+        .setMessage(msg)
+        .setPositiveButton(R.string.dialog_ok) { _, _ -> }
+        .show()
+}
+
+/** Launch a catching task that requires a collection with the new schema enabled. */
+fun AnkiActivity.launchCatchingCollectionTask(block: suspend CoroutineScope.(col: CollectionV16) -> Unit): Job {
+    val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
+    return launchCatchingTask {
+        block(col)
+    }
+}
+
+/** Run a blocking call in a background thread pool. */
 suspend fun <T> runInBackground(block: suspend CoroutineScope.() -> T): T {
     return withContext(Dispatchers.IO) {
         block()
     }
 }
 
-/**
- * Run an operation and notify change subscribers.
- * * See the docs in ChangeManager.kt
- * */
-suspend fun <T> CollectionV16.op(handler: Any? = null, block: suspend CollectionV16.() -> T): T {
-    return runInBackground {
-        block()
-    }.also {
-        ChangeManager.notifySubscribers(it, handler)
-    }
-}
-
-suspend fun <T> Backend.withProgress(onProgress: (Progress) -> Unit, block: suspend CoroutineScope.() -> T): T {
-    val backend = this
+/** In most cases, you'll want [AnkiActivity.runInBackgroundWithProgress]
+ * instead. This lower-level routine can be used to integrate your own
+ * progress UI.
+ */
+suspend fun <T> Backend.withProgress(
+    extractProgress: ProgressContext.() -> Unit,
+    updateUi: ProgressContext.() -> Unit,
+    block: suspend CoroutineScope.() -> T,
+): T {
     return coroutineScope {
         val monitor = launch {
-            monitorProgress(backend, onProgress)
+            monitorProgress(this@withProgress, extractProgress, updateUi)
         }
         try {
             block()
@@ -78,43 +97,93 @@ suspend fun <T> Backend.withProgress(onProgress: (Progress) -> Unit, block: susp
     }
 }
 
-suspend fun <T> runInBackgroundWithProgress(
-    col: CollectionV16,
-    onProgress: (Progress) -> Unit,
-    op: suspend (CollectionV16) -> T
-): T = coroutineScope {
-    col.backend.withProgress(onProgress) {
-        runInBackground { op(col) }
+/**
+ * Run the provided operation in the background, showing a progress
+ * window.
+ */
+suspend fun <T> AnkiActivity.runInBackgroundWithProgress(
+    backend: Backend,
+    extractProgress: ProgressContext.() -> Unit,
+    onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
+    op: suspend () -> T
+): T = withProgressDialog(
+    context = this@runInBackgroundWithProgress,
+    onCancel = if (onCancel != null) {
+        fun() { onCancel(backend) }
+    } else {
+        null
+    }
+) { dialog ->
+    backend.withProgress(
+        extractProgress = extractProgress,
+        updateUi = { updateDialog(dialog) }
+    ) {
+        runInBackground { op() }
     }
 }
 
-/**
- * Run an operation and notify change subscribers, and capture backend progress.
- *
- * See the docs in ChangeManager.kt
- * */
-suspend fun <T> CollectionV16.opWithProgress(
-    onProgress: (Progress) -> Unit,
-    handler: Any? = null,
-    op: suspend CollectionV16.() -> T,
-): T = coroutineScope {
-    backend.withProgress(onProgress) {
-        this@opWithProgress.op(handler) {
-            op()
-        }
+private suspend fun <T> withProgressDialog(
+    context: AnkiActivity,
+    onCancel: (() -> Unit)?,
+    @Suppress("Deprecation") // ProgressDialog deprecation
+    op: suspend (android.app.ProgressDialog) -> T
+): T {
+    val dialog = StyledProgressDialog.show(
+        context, null,
+        null, onCancel != null
+    )
+    onCancel?.let {
+        dialog.setOnCancelListener { it() }
+    }
+    return try {
+        op(dialog)
+    } finally {
+        dialog.dismiss()
     }
 }
 
 /**
  * Poll the backend for progress info every 100ms until cancelled by caller.
+ * Calls extractProgress() to gather progress info and write it into
+ * [ProgressContext]. Calls updateUi() to update the UI with the extracted
+ * progress.
  */
-private suspend fun monitorProgress(backend: Backend, op: (Progress) -> Unit) {
+private suspend fun monitorProgress(
+    backend: Backend,
+    extractProgress: ProgressContext.() -> Unit,
+    updateUi: ProgressContext.() -> Unit,
+) {
+    var state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
-        val progress = backend.latestProgress()
+        state.progress = backend.latestProgress()
+        state.extractProgress()
         // on main thread, so op can update UI
         withContext(Dispatchers.Main) {
-            op(progress)
+            state.updateUi()
         }
         delay(100)
     }
+}
+
+/** Holds the current backend progress, and text/amount properties
+ * that can be written to in order to update the UI.
+ */
+data class ProgressContext(
+    var progress: Progress,
+    var text: String = "",
+    /** If set, shows progress bar with a of b complete. */
+    var amount: Pair<Int, Int>? = null,
+)
+
+@Suppress("Deprecation") // ProgressDialog deprecation
+private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
+    // ideally this would show a progress bar, but MaterialDialog does not support
+    // setting progress after starting with indeterminate progress, so we just use
+    // this for now
+    // this code has since been updated to ProgressDialog, and the above not rechecked
+    val progressText = amount?.let {
+        " ${it.first}/${it.second}"
+    } ?: ""
+    @Suppress("Deprecation") // ProgressDialog deprecation
+    dialog.setMessage(text + progressText)
 }

@@ -1846,16 +1846,19 @@ open class DeckPicker :
         if (BackendFactory.defaultLegacySchema) {
             TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
         } else {
-            for (file in importPath) {
-                importApkg(file)
-            }
+            importApkgs(importPath)
         }
     }
 
     // Callback to import a file -- replacing the existing collection
     @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file")
     override fun importReplace(importPath: List<String>) {
-        TaskManager.launchCollectionTask(ImportReplace(importPath), importReplaceListener())
+        if (BackendFactory.defaultLegacySchema) {
+            TaskManager.launchCollectionTask(ImportReplace(importPath), importReplaceListener())
+        } else {
+            // multiple colpkg files is nonsensical
+            importColpkg(importPath[0])
+        }
     }
 
     /**
@@ -2050,7 +2053,7 @@ open class DeckPicker :
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
             context.renderPage()
             // Update the mini statistics bar as well
-            deckPicker?.catchingLifecycleScope(deckPicker) {
+            deckPicker?.launchCatchingTask {
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
             }
             Timber.d("Startup - Deck List UI Completed")
