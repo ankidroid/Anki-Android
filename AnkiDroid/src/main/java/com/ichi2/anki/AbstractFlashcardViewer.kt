@@ -148,6 +148,7 @@ abstract class AbstractFlashcardViewer :
     private var mScrollingButtons = false
     private var mGesturesEnabled = false
     private var mLargeAnswerButtons = false
+    private var mAnswerButtonsPosition: String? = "bottom"
     private var mDoubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL
 
     // Android WebView
@@ -1006,6 +1007,7 @@ abstract class AbstractFlashcardViewer :
             getString(R.string.answer_buttons_position_preference),
             "bottom"
         )
+        mAnswerButtonsPosition = answerButtonsPosition
         val answerArea = findViewById<LinearLayout>(R.id.bottom_area_layout)
         val answerAreaParams = answerArea.layoutParams as RelativeLayout.LayoutParams
         val whiteboardContainer = findViewById<FrameLayout>(R.id.whiteboard)
@@ -1794,7 +1796,7 @@ abstract class AbstractFlashcardViewer :
 
         // we need to check for View.GONE as setting the anchor does not seem to respect this property
         // (there's a gap even if the view is invisible)
-        if (upperView != null && upperView.visibility != View.GONE) {
+        if (upperView != null && upperView.visibility != View.GONE && mAnswerButtonsPosition == "bottom") {
             val sbView = sb.view
             val layoutParams = sbView.layoutParams as CoordinatorLayout.LayoutParams
             layoutParams.anchorId = upperView.id
