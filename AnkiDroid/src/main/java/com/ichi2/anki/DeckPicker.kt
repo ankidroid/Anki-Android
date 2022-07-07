@@ -155,7 +155,8 @@ open class DeckPicker :
     @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
     private var mProgressDialog: android.app.ProgressDialog? = null
     private var mStudyoptionsFrame: View? = null // not lateInit - can be null
-    private lateinit var mRecyclerView: RecyclerView
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var mRecyclerView: RecyclerView
     private lateinit var mRecyclerViewLayoutManager: LinearLayoutManager
     private lateinit var mDeckListAdapter: DeckAdapter
     private val mSnackbarShowHideCallback = Snackbar.Callback()
@@ -2060,7 +2061,8 @@ open class DeckPicker :
      *
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
-    internal fun updateDeckList() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    fun updateDeckList() {
         updateDeckList(false)
     }
 

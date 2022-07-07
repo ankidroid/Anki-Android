@@ -16,13 +16,58 @@
 
 package com.ichi2.anki.dialogs
 
+import android.content.Intent
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.dialogs.DeckPickerContextMenu.Companion.instance
 import com.ichi2.testutils.assertThrows
+import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowLooper
 
+@RunWith(AndroidJUnit4::class)
 class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
     fun ensure_cannot_be_instantiated_without_arguments() {
         assertThrows<IllegalStateException> { DeckPickerContextMenu(col).deckId }
+    }
+
+    @Test
+    fun testBrowseCards() {
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            val deckId = addDeck("Deck 1")
+            updateDeckList()
+            assertEquals(1, visibleDeckCount)
+
+            openContextMenuAndSelectItem(mRecyclerView, 0)
+
+            val browser = shadowOf(this).nextStartedActivity!!
+            assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
+
+            assertEquals(deckId, col.decks.selected())
+        }
+    }
+
+    private fun openContextMenuAndSelectItem(contextMenu: RecyclerView, index: Int) {
+        contextMenu.postDelayed({
+            contextMenu.findViewHolderForAdapterPosition(0)!!
+                .itemView.performLongClick()
+
+            val dialogRecyclerView = instance!!.mRecyclerView!!
+
+            dialogRecyclerView.apply {
+                scrollToPosition(index)
+                postDelayed({
+                    findViewHolderForAdapterPosition(index)!!
+                        .itemView.performClick()
+                }, 1)
+            }
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+        }, 1)
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
     }
 }

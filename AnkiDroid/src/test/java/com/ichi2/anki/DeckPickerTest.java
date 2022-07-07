@@ -474,7 +474,7 @@ public class DeckPickerTest extends RobolectricTest {
         StudyOptionsFragment studyOptionsFragment = (StudyOptionsFragment) deckPickerEx.getSupportFragmentManager().findFragmentById(R.id.studyoptions_fragment);
         assertThat("Study options should show on start on tablet", studyOptionsFragment, notNullValue());
     }
-    
+
     @Test
     public void checkIfReturnsTrueWhenAtLeastOneDeckIsDisplayed() {
         addDeck("Hello World");
