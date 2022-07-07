@@ -69,14 +69,14 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
         }
     }
 
-    protected fun sendKeyDownUp(activity: Activity, keyCode: Int) {
+    private fun sendKeyDownUp(activity: Activity, keyCode: Int) {
         val inputConnection = BaseInputConnection(activity.currentFocus, true)
         inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
         inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, keyCode))
     }
 
     @Throws(Throwable::class)
-    protected fun onActivity(
+    private fun onActivity(
         scenario: ActivityScenario<NoteEditor>,
         noteEditorActivityAction: ActivityAction<NoteEditor>
     ) {
