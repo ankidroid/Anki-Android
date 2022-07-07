@@ -82,6 +82,21 @@ class DeckPickerContextMenuTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun testShowDeckOptions() {
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            val deckId = addDeck("Deck 1")
+            updateDeckList()
+            assertEquals(1, visibleDeckCount)
+
+            openContextMenuAndSelectItem(mRecyclerView, 3)
+
+            val deckOptions = shadowOf(this).nextStartedActivity!!
+            assertEquals("com.ichi2.anki.DeckOptions", deckOptions.component!!.className)
+            assertEquals(deckId, deckOptions.getLongExtra("did", 1))
+        }
+    }
+
     private fun openContextMenuAndSelectItem(contextMenu: RecyclerView, index: Int) {
         contextMenu.postDelayed({
             contextMenu.findViewHolderForAdapterPosition(0)!!
