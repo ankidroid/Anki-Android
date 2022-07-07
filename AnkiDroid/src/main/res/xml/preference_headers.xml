@@ -16,7 +16,9 @@
 -->
 
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <!--  General Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$GeneralSettingsFragment"
@@ -81,6 +83,13 @@
         android:summary="@string/pref_cat_advanced_summ"
         android:title="@string/pref_cat_advanced"
         android:icon="@drawable/ic_tune_white">
+    </Preference>
+    <Preference
+        android:key="@string/pref_dev_options_screen_key"
+        android:title="@string/pref_cat_dev_options"
+        android:icon="@drawable/ic_code"
+        android:fragment="com.ichi2.anki.Preferences$DevOptionsFragment"
+        app:isPreferenceVisible="false">
     </Preference>
     <!-- About -->
     <Preference

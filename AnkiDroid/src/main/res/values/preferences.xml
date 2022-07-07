@@ -54,6 +54,7 @@
     <string name="pref_notifications_blink_key">widgetBlink</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="pref_dev_options_screen_key">devOptionsKey</string>
     <string name="pref_trigger_crash_key">trigger_crash_preference</string>
     <string name="pref_analytics_debug_key">analytics_debug_preference</string>
     <string name="pref_lock_database_key">debug_lock_database</string>
