@@ -19,7 +19,6 @@ import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.customview.widget.ViewDragHelper
 import com.google.android.material.behavior.SwipeDismissBehavior
-import com.google.android.material.snackbar.Snackbar
 
 /**
  * This exists to help Snackbars actually move on the screen when you try to swipe them away.
@@ -70,27 +69,4 @@ class SwipeDismissBehaviorFix<V : View> : SwipeDismissBehavior<V>() {
         if (ignoreCallsToOnTouchEvent) return false
         return super.onTouchEvent(parent, child, event)
     }
-}
-
-/**
- * This does three things:
- *   * Changes the default behavior to the fixed one;
- *   * Copies the listener from the default behavior. When dragging or settling,
- *     this listener pauses the timer that removes the snackbar,
- *     so it does not disappear from under your finger;
- *   * Allows swiping the snackbar to the left, as well as to the right.
- */
-fun Snackbar.fixSwipeDismissBehavior() {
-    addCallback(object : Snackbar.Callback() {
-        override fun onShown(snackbar: Snackbar) {
-            super.onShown(snackbar)
-            val params = snackbar.view.layoutParams
-            if (params is CoordinatorLayout.LayoutParams) {
-                params.behavior = SwipeDismissBehaviorFix<View>().apply {
-                    listener = (params.behavior as? SwipeDismissBehavior)?.listener
-                    setSwipeDirection(SwipeDismissBehavior.SWIPE_DIRECTION_ANY)
-                }
-            }
-        }
-    })
 }
