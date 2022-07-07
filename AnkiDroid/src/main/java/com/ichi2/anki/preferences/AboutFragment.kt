@@ -17,6 +17,7 @@ package com.ichi2.anki.preferences
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -24,10 +25,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
+import com.ichi2.anki.Preferences.DevOptionsFragment
 import com.ichi2.anki.dialogs.HelpDialog
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.utils.IntentUtil
@@ -44,6 +49,10 @@ class AboutFragment : Fragment() {
 
         // Version text
         layoutView.findViewById<TextView>(R.id.about_version).text = pkgVersionName
+
+        // Logo secret
+        layoutView.findViewById<ImageView>(R.id.about_app_logo)
+            .setOnClickListener(DevOptionsSecretClickListener(parentFragmentManager))
 
         // Contributors text
         val contributorsLink = getString(R.string.link_contributors)
@@ -98,6 +107,58 @@ class AboutFragment : Fragment() {
             UIUtils.showThemedToast(context, getString(R.string.about_ankidroid_successfully_copied_debug), true)
         } else {
             UIUtils.showThemedToast(context, getString(R.string.about_ankidroid_error_copy_debug_info), false)
+        }
+    }
+
+    /**
+     * Click listener which enables developer options on release builds
+     * if the user clicks it a minimum number of times
+     */
+    private class DevOptionsSecretClickListener(val fragmentManager: FragmentManager) : View.OnClickListener {
+        private var clickCount = 0
+        private val clickLimit = 6
+
+        override fun onClick(view: View) {
+            if (DevOptionsFragment.isEnabled(view.context)) {
+                return
+            }
+            clickCount += 1
+            if (clickCount == clickLimit) {
+                showEnableDevOptionsDialog(view.context)
+            }
+        }
+
+        /**
+         * Shows a dialog to confirm if developer options should be enabled or not
+         */
+        fun showEnableDevOptionsDialog(context: Context) {
+            MaterialDialog(context).show {
+                title(R.string.dev_options_enabled_pref)
+                icon(R.drawable.ic_warning_black)
+                message(R.string.dev_options_warning)
+                positiveButton(R.string.dialog_ok) { enableDevOptions(context) }
+                // Reset click count if user has cancelled the action
+                negativeButton(R.string.dialog_cancel) { clickCount = 0 }
+                // avoid dismissing the dialog, as there is a high chance the user
+                // taps outside the dialog while trying to unlock the secret
+                cancelOnTouchOutside(false)
+            }
+        }
+
+        /**
+         * Enables developer options for the user and shows it on [Preferences.HeaderFragment]
+         */
+        fun enableDevOptions(context: Context) {
+            DevOptionsFragment.setDevOptionsEnabledByUser(context, true)
+
+            val message = context.getString(R.string.dev_options_enabled_msg)
+            UIUtils.showThemedToast(context, message, true)
+
+            // Make developer options visible on headers fragment if it is open
+            val headersFragment = fragmentManager.findFragmentByTag(Preferences.HeaderFragment::class.java.name)
+            if (headersFragment is Preferences.HeaderFragment) {
+                headersFragment.setDevOptionsVisibility(true)
+            }
         }
     }
 }
