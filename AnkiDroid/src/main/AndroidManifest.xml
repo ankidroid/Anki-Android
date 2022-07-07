@@ -269,7 +269,7 @@
             />
         <activity
             android:name="com.ichi2.anki.Info"
-            android:label="@string/about_title"
+            android:label="@string/pref_cat_about_title"
             android:exported="false"
             android:configChanges="locale|uiMode"
             />

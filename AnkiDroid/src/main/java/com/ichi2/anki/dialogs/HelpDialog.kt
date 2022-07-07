@@ -44,7 +44,7 @@ object HelpDialog {
         ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getManualUrl()))
     }
 
-    private fun openFeedback(ankiActivity: AnkiActivity) {
+    fun openFeedback(ankiActivity: AnkiActivity) {
         ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()))
     }
 

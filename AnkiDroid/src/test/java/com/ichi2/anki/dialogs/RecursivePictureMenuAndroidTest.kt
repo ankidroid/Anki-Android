@@ -31,10 +31,10 @@ class RecursivePictureMenuAndroidTest : RecursivePictureMenuUtilTest() {
     @Test
     @RunInBackground
     fun testNormalStartupSelectingItem() {
-        val linkedItem = getItemLinkingTo(R.string.link_anki)
+        val linkedItem = getItemLinkingTo(R.string.link_manual)
         val v = getRecyclerViewFor(linkedItem)
         clickChildAtIndex(v, 0)
-        MatcherAssert.assertThat(activity!!.lastUrlOpened, Matchers.`is`(getResourceString(R.string.link_anki)))
+        MatcherAssert.assertThat(activity!!.lastUrlOpened, Matchers.`is`(getResourceString(R.string.link_manual)))
     }
 
     @Test

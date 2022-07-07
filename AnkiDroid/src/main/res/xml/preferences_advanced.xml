@@ -168,13 +168,4 @@
                 android:defaultValue="true"
                 android:key="anki_card_enable_external_context_menu"/>
         </PreferenceCategory>
-
-
-    <Preference
-        android:key="about_dialog_preference"
-        android:title="@string/about_title">
-        <intent
-            android:targetPackage="com.ichi2.anki"
-            android:targetClass="com.ichi2.anki.Info"/>
-    </Preference>
 </PreferenceScreen>

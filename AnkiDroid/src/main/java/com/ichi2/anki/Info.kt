@@ -19,9 +19,6 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -29,16 +26,12 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
-import androidx.annotation.VisibleForTesting
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.servicelayer.DebugInfoService.getDebugInfo
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
 import com.ichi2.utils.VersionUtils.appName
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
-import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
 /**
@@ -54,7 +47,7 @@ class Info : AnkiActivity() {
         Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
         val res = resources
-        val type = intent.getIntExtra(TYPE_EXTRA, TYPE_ABOUT)
+        val type = intent.getIntExtra(TYPE_EXTRA, TYPE_NEW_VERSION)
         // If the page crashes, we do not want to display it again (#7135 maybe)
         if (type == TYPE_NEW_VERSION) {
             val prefs = AnkiDroidApp.getSharedPrefs(this.baseContext)
@@ -95,14 +88,6 @@ class Info : AnkiActivity() {
         mWebView!!.setBackgroundColor(backgroundColor)
         setRenderWorkaround(this)
         when (type) {
-            TYPE_ABOUT -> {
-                val htmlContent = getAboutAnkiDroidHtml(res, textColor)
-                mWebView!!.loadDataWithBaseURL("", htmlContent, "text/html", "utf-8", null)
-                findViewById<Button>(R.id.right_button).run {
-                    text = res.getString(R.string.feedback_copy_debug)
-                    setOnClickListener { copyDebugInfo() }
-                }
-            }
             TYPE_NEW_VERSION -> {
                 findViewById<Button>(R.id.right_button).run {
                     text = res.getString(R.string.dialog_continue)
@@ -149,22 +134,6 @@ class Info : AnkiActivity() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.START)
     }
 
-    /**
-     * Copy debug information about the device to the clipboard
-     * @return debugInfo
-     */
-    private fun copyDebugInfo(): String {
-        val debugInfo = getDebugInfo(this) { this.col }
-        val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
-        if (clipboardManager != null) {
-            clipboardManager.setPrimaryClip(ClipData.newPlainText(this.title, debugInfo))
-            showThemedToast(this, getString(R.string.about_ankidroid_successfully_copied_debug), true)
-        } else {
-            showThemedToast(this, getString(R.string.about_ankidroid_error_copy_debug_info), false)
-        }
-        return debugInfo
-    }
-
     override fun onBackPressed() {
         if (mWebView!!.canGoBack()) {
             mWebView!!.goBack()
@@ -175,39 +144,6 @@ class Info : AnkiActivity() {
 
     companion object {
         const val TYPE_EXTRA = "infoType"
-        const val TYPE_ABOUT = 0
         const val TYPE_NEW_VERSION = 2
-        @JvmStatic
-        @VisibleForTesting
-        @Language("HTML")
-        fun getAboutAnkiDroidHtml(res: Resources, textColor: String): String {
-            val content = res.getStringArray(R.array.about_content)
-            val appName = String.format(content[0], res.getString(R.string.app_name), res.getString(R.string.link_anki))
-            val linksIssueWikiAndforum = String.format(
-                content[1], res.getString(R.string.link_issue_tracker),
-                res.getString(R.string.link_wiki), res.getString(R.string.link_forum)
-            )
-            val openSource = String.format(
-                content[2], res.getString(R.string.link_wikipedia_open_source),
-                res.getString(R.string.link_contribution)
-            )
-            val translation = String.format(content[3], res.getString(R.string.link_translation))
-            val wikiAndSource = String.format(
-                content[4], res.getString(R.string.licence_wiki),
-                res.getString(R.string.link_source)
-            )
-            return """<html><style>body {color:$textColor;}</style>
-            <body text="#000000" link="#E37068" alink="#E37068" vlink="#E37068">
-            $appName
-            <br/><br/>
-            $linksIssueWikiAndforum
-            <br/><br/>
-            $openSource
-            $translation
-            <br/><br/>
-            $wikiAndSource
-            <br/><br/>
-            </body></html>"""
-        }
     }
 }

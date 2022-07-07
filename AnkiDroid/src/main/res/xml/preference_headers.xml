@@ -82,4 +82,10 @@
         android:title="@string/pref_cat_advanced"
         android:icon="@drawable/ic_tune_white">
     </Preference>
+    <!-- About -->
+    <Preference
+        android:key="@string/about_screen_key"
+        android:icon="@drawable/ic_outline_info_24"
+        android:title="@string/pref_cat_about_title"
+        android:fragment="com.ichi2.anki.preferences.AboutFragment"/>
 </PreferenceScreen>
