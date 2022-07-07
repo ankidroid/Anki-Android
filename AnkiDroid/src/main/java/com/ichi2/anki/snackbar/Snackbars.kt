@@ -18,6 +18,8 @@ import android.app.Activity
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.behavior.SwipeDismissBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
@@ -175,14 +177,41 @@ fun View.showSnackbar(
     snackbarBuilder: SnackbarBuilder? = null
 ) {
     val snackbar = Snackbar.make(this, text, duration)
-    snackbar.fixSwipeDismissBehavior()
     snackbar.setMaxLines(2)
+    snackbar.fixSwipeDismissBehavior()
+    snackbar.actualBehavior?.setSwipeDirection(SwipeDismissBehavior.SWIPE_DIRECTION_ANY)
 
     if (snackbarBuilder != null) { snackbar.snackbarBuilder() }
 
     snackbar.show()
 }
 
+/* ********************************************************************************************** */
+
 fun Snackbar.setMaxLines(maxLines: Int) {
     view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.maxLines = maxLines
 }
+
+/**
+ * This changes the default behavior to the fixed one, preserving the original listener.
+ * When dragging or settling, this listener pauses the timer that removes the snackbar,
+ * so it does not disappear from under your finger.
+ */
+private fun Snackbar.fixSwipeDismissBehavior() {
+    addCallback(object : Snackbar.Callback() {
+        override fun onShown(snackbar: Snackbar) {
+            actualBehavior = SwipeDismissBehaviorFix<View>().apply {
+                listener = actualBehavior?.listener
+            }
+        }
+    })
+}
+
+private var Snackbar.actualBehavior: SwipeDismissBehavior<View>?
+    get() {
+        return (view.layoutParams as? CoordinatorLayout.LayoutParams)
+            ?.behavior as? SwipeDismissBehavior
+    }
+    set(value) {
+        (view.layoutParams as? CoordinatorLayout.LayoutParams)?.behavior = value
+    }
