@@ -39,10 +39,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
-import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.navigation.NavigationView
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.dialogs.HelpDialog
+import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.libanki.CardId
 import com.ichi2.themes.Themes
 import com.ichi2.utils.HandlerUtils
@@ -84,7 +84,7 @@ abstract class NavigationDrawerActivity :
         if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
             // Then add coordinatorLayout as a child view of fullDraggableContainer.
-            val fullDraggableContainer = FullDraggableContainer(this)
+            val fullDraggableContainer = FullDraggableContainerFix(this)
             fullDraggableContainer.addView(coordinatorLayout)
             closableDrawerLayout.addView(fullDraggableContainer, 0)
         } else {
