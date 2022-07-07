@@ -52,6 +52,7 @@ import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.preferences.AboutFragment
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
@@ -73,7 +74,6 @@ import com.ichi2.themes.Themes.systemIsInNightMode
 import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
 import com.ichi2.utils.LanguageUtil
-import com.ichi2.utils.VersionUtils.pkgVersionName
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
@@ -150,10 +150,10 @@ class Preferences : AnkiActivity() {
     private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
         val fragment = fragmentManager.findFragmentById(R.id.settings_container)
 
-        actionBar?.title = if (fragment is SpecificSettingsFragment) {
-            fragment.preferenceScreen.title
-        } else {
-            getString(R.string.settings)
+        actionBar?.title = when (fragment) {
+            is SpecificSettingsFragment -> fragment.preferenceScreen.title
+            is AboutFragment -> getString(R.string.pref_cat_about_title)
+            else -> getString(R.string.settings)
         }
     }
 
@@ -1034,9 +1034,6 @@ class Preferences : AnkiActivity() {
                     getString(R.string.disabled)
                 }
             }
-            // About summary
-            requirePreference<Preference>("about_dialog_preference")
-                .summary = getString(R.string.about_version) + " " + pkgVersionName
         }
 
         private fun setupContextMenuPreference(key: String, @StringRes contextMenuName: Int) {
