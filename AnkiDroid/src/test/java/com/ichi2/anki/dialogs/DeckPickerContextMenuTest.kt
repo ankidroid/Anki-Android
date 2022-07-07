@@ -52,6 +52,20 @@ class DeckPickerContextMenuTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun testRenameDeck() {
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            val deckId = addDeck("Deck 1")
+            updateDeckList()
+            assertEquals(1, visibleDeckCount)
+
+            openContextMenuAndSelectItem(mRecyclerView, 1)
+
+            CreateDeckDialog.instance!!.renameDeck("Deck 2")
+            assertEquals("Deck 2", col.decks.name(deckId))
+        }
+    }
+
     private fun openContextMenuAndSelectItem(contextMenu: RecyclerView, index: Int) {
         contextMenu.postDelayed({
             contextMenu.findViewHolderForAdapterPosition(0)!!

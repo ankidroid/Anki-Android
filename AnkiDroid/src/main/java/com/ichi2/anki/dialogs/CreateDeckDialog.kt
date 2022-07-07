@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
@@ -35,6 +36,8 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
     private var mOnNewDeckCreated: Consumer<Long>? = null
     private var mInitialDeckName = ""
     private var mShownDialog: MaterialDialog? = null
+
+    init { instance = this }
 
     enum class DeckDialogType {
         FILTERED_DECK, DECK, SUB_DECK, RENAME_DECK
@@ -166,5 +169,10 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
 
     fun setOnNewDeckCreated(c: Consumer<Long>?) {
         mOnNewDeckCreated = c
+    }
+
+    companion object {
+        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+        var instance: CreateDeckDialog? = null
     }
 }
