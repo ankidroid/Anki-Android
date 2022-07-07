@@ -19,6 +19,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
@@ -127,7 +128,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 (activity as AnkiActivity?)!!.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD -> {
-                Timber.i("Empty deck selected")
+                Timber.i("Rebuild deck selected")
                 (activity as DeckPicker?)!!.rebuildFiltered(deckId)
                 (activity as AnkiActivity?)!!.dismissAllDialogFragments()
             }
@@ -146,6 +147,11 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 (activity as DeckPicker?)!!.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
             }
         }
+    }
+
+    companion object {
+        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+        var instance: DeckPickerContextMenu? = null
     }
 
     private enum class DeckPickerContextMenuOption(val itemId: Int, @StringRes val optionName: Int) {
@@ -178,8 +184,10 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
 
         private fun newDeckPickerContextMenu(): DeckPickerContextMenu =
             DeckPickerContextMenu(collectionSupplier.get())
+                .also { instance = it }
 
         fun newDeckPickerContextMenu(deckId: Long): DeckPickerContextMenu =
             DeckPickerContextMenu(collectionSupplier.get()).withArguments(deckId)
+                .also { instance = it }
     }
 }
