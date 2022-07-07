@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicReference
 class FieldEditLineTest : NoteEditorTest() {
     @Test
     fun testSetters() {
-        val line = fieldEditLine
+        val line = fieldEditLine()
 
         line.setContent("Hello", true)
         line.name = "Name"
@@ -42,7 +42,7 @@ class FieldEditLineTest : NoteEditorTest() {
 
     @Test
     fun testSaveRestore() {
-        val toSave = fieldEditLine
+        val toSave = fieldEditLine()
 
         toSave.setContent("Hello", true)
         toSave.name = "Name"
@@ -50,7 +50,7 @@ class FieldEditLineTest : NoteEditorTest() {
 
         val b = toSave.onSaveInstanceState()
 
-        val restored = fieldEditLine
+        val restored = fieldEditLine()
         restored.onRestoreInstanceState(b!!)
 
         val text = restored.editText
@@ -59,17 +59,11 @@ class FieldEditLineTest : NoteEditorTest() {
         assertThat(toSave.name, `is`("Name"))
     }
 
-    @KotlinCleanup("move this back to a method")
-    protected val fieldEditLine: FieldEditLine
-        get() {
-            val l = AtomicReference<FieldEditLine>()
-            mActivityRule.scenario.onActivity { a: NoteEditor? ->
-                l.set(
-                    FieldEditLine(
-                        a!!
-                    )
-                )
-            }
-            return l.get()
+    private fun fieldEditLine(): FieldEditLine {
+        val reference = AtomicReference<FieldEditLine>()
+        mActivityRule.scenario.onActivity { noteEditor: NoteEditor? ->
+            reference.set(FieldEditLine(noteEditor!!))
         }
+        return reference.get()
+    }
 }
