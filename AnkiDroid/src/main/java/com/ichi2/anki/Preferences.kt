@@ -342,7 +342,7 @@ class Preferences : AnkiActivity() {
                 findPreference<Preference>("pref_screen_advanced")!!.isVisible = false
             }
 
-            if (BuildConfig.DEBUG) {
+            if (DevOptionsFragment.isEnabled(requireContext())) {
                 setDevOptionsVisibility(true)
             }
 
@@ -1229,6 +1229,17 @@ class Preferences : AnkiActivity() {
         override fun initSubscreen() {
             addPreferencesFromResource(preferenceResource)
 
+            val enableDevOptionsPref = requirePreference<SwitchPreference>(R.string.dev_options_enabled_by_user_key)
+            // If it is a DEBUG build, hide the preference to disable developer options
+            // If it is a RELEASE build, configure the preference to disable dev options
+            if (BuildConfig.DEBUG) {
+                enableDevOptionsPref.isVisible = false
+            } else {
+                enableDevOptionsPref.setOnPreferenceChangeListener { _, _ ->
+                    showDisableDevOptionsDialog()
+                    false
+                }
+            }
             // Make it possible to test crash reporting
             requirePreference<Preference>(getString(R.string.pref_trigger_crash_key)).setOnPreferenceClickListener {
                 Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
@@ -1272,6 +1283,49 @@ class Preferences : AnkiActivity() {
                     AnkiDroidApp.TESTING_SCOPED_STORAGE = true
                     (requireActivity() as Preferences).restartWithNewDeckPicker()
                     true
+                }
+            }
+        }
+
+        /**
+         * Shows dialog to confirm if developer options should be disabled
+         */
+        private fun showDisableDevOptionsDialog() {
+            MaterialDialog(requireContext()).show {
+                title(R.string.disable_dev_options)
+                positiveButton(R.string.dialog_ok) {
+                    disableDevOptions()
+                }
+                negativeButton(R.string.dialog_cancel)
+            }
+        }
+
+        /**
+         * Destroys the fragment and hides developer options on [HeaderFragment]
+         */
+        private fun disableDevOptions() {
+            val fragment = parentFragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
+            if (fragment is HeaderFragment) {
+                fragment.setDevOptionsVisibility(false)
+            }
+            parentFragmentManager.popBackStack()
+            setDevOptionsEnabledByUser(requireContext(), false)
+        }
+
+        companion object {
+            /**
+             * @return whether developer options should be shown to the user.
+             * True in case [BuildConfig.DEBUG] is true
+             * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
+             */
+            fun isEnabled(context: Context): Boolean {
+                return BuildConfig.DEBUG || AnkiDroidApp.getSharedPrefs(context)
+                    .getBoolean(context.getString(R.string.dev_options_enabled_by_user_key), false)
+            }
+
+            fun setDevOptionsEnabledByUser(context: Context, isEnabled: Boolean) {
+                AnkiDroidApp.getSharedPrefs(context).edit {
+                    putBoolean(context.getString(R.string.dev_options_enabled_by_user_key), isEnabled)
                 }
             }
         }

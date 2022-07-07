@@ -53,7 +53,7 @@
     <string name="pref_notifications_vibrate_key">widgetVibrate</string>
     <string name="pref_notifications_blink_key">widgetBlink</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="dev_options_enabled_msg">Enabled developer options</string>
     <string name="pref_dev_options_screen_key">devOptionsKey</string>
     <string name="pref_trigger_crash_key">trigger_crash_preference</string>
     <string name="pref_analytics_debug_key">analytics_debug_preference</string>
@@ -62,6 +62,7 @@
     <string name="pref_reset_onboarding_key">resetOnboarding</string>
     <string name="pref_rust_backend_key">useRustBackend</string>
     <string name="pref_scoped_storage_key">useScopedStorage</string>
+    <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <!-- About -->
     <string name="about_screen_key">aboutScreen</string>
 </resources>
