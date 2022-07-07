@@ -15,12 +15,15 @@
 package com.ichi2.anki.snackbar
 
 import android.app.Activity
+import android.os.Build
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.behavior.SwipeDismissBehavior
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.onAttachedToWindow2
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -180,6 +183,10 @@ fun View.showSnackbar(
     snackbar.setMaxLines(2)
     snackbar.fixSwipeDismissBehavior()
 
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        snackbar.fixMarginsWhenInsetsChange()
+    }
+
     if (snackbarBuilder != null) { snackbar.snackbarBuilder() }
 
     snackbar.show()
@@ -214,3 +221,35 @@ private var Snackbar.actualBehavior: SwipeDismissBehavior<View>?
     set(value) {
         (view.layoutParams as? CoordinatorLayout.LayoutParams)?.behavior = value
     }
+
+/**
+ * When bottom inset change, for instance, when keyboard is open or closed,
+ * snackbar fails to adjust its margins and can appear too high or too low.
+ * While snackbar does employ an `OnApplyWindowInsetsListener`, its methods don't get called.
+ * This here is an atrocious workaround that solves the issue. It is awful and despicable.
+ *
+ * First of all, we use our own `OnApplyWindowInsetsListener`. Note that we *need to post it*,
+ * as apparently something else resets it after this call. (Not sure if it's feasible
+ * to find out what as this requires method breakpoints, which are prohibitively slow.)
+ * Also, if we set an inset listener for a view, [View.dispatchApplyWindowInsets] will call
+ * `onApplyWindowInsets` on our listener rather than the view, so we better call the original.
+ *
+ * Then, we want to call [Snackbar.updateMargins], which is private,
+ * and the one method is not private that calls it is [Snackbar.onAttachedToWindow],
+ * so we hack into its package namespace using a helper method.
+ */
+@RequiresApi(Build.VERSION_CODES.Q)
+private fun Snackbar.fixMarginsWhenInsetsChange() {
+    view.post {
+        view.rootView.setOnApplyWindowInsetsListener { rootView, insets ->
+            onAttachedToWindow2()
+            rootView.onApplyWindowInsets(insets)
+        }
+    }
+
+    addCallback(object : Snackbar.Callback() {
+        override fun onDismissed(snackbar: Snackbar, event: Int) {
+            view.rootView.setOnApplyWindowInsetsListener(null)
+        }
+    })
+}
