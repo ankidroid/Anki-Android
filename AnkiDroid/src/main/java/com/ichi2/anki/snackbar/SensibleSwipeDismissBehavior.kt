@@ -73,6 +73,10 @@ open class SensibleSwipeDismissBehavior<V : View> : SwipeDismissBehavior<V>() {
 
         override fun clampViewPositionVertical(child: View, top: Int, dy: Int) = child.top
 
+        override fun onViewDragStateChanged(state: Int) {
+            listener?.onDragStateChanged(state)
+        }
+
         override fun tryCaptureView(child: View, pointerId: Int) = true
 
         override fun onViewCaptured(child: View, pointerId: Int) {
@@ -83,7 +87,9 @@ open class SensibleSwipeDismissBehavior<V : View> : SwipeDismissBehavior<V>() {
         }
 
         override fun onViewReleased(child: View, xvel: Float, yvel: Float) {
-            val targetChildLeft = when (shouldDismiss(child, xvel)) {
+            val dismiss = shouldDismiss(child, xvel)
+
+            val targetChildLeft = when (dismiss) {
                 Dismiss.DoNotDismiss -> initialChildLeft
                 Dismiss.ToTheRight -> initialChildLeft + child.width + child.marginRight
                 Dismiss.ToTheLeft -> initialChildLeft - child.width - child.marginLeft
@@ -94,9 +100,13 @@ open class SensibleSwipeDismissBehavior<V : View> : SwipeDismissBehavior<V>() {
                     override fun run() {
                         if (viewDragHelper?.continueSettling(true) == true) {
                             child.postOnAnimation(this)
+                        } else if (dismiss != Dismiss.DoNotDismiss) {
+                            listener?.onDismiss(child)
                         }
                     }
                 })
+            } else if (dismiss != Dismiss.DoNotDismiss) {
+                listener?.onDismiss(child)
             }
         }
 
