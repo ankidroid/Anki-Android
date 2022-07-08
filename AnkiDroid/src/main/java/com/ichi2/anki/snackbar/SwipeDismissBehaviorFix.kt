@@ -52,8 +52,11 @@ import com.google.android.material.behavior.SwipeDismissBehavior
  * This does prevent the user from moving snackbar if they put a finger on it,
  * move it directly upwards, and then to the side.
  * However, this inconvenience is rather minor and fixing it properly might require too much effort.
+ *
+ * Note that this fix is currently used for [SensibleSwipeDismissBehavior],
+ * but is applicable to [SwipeDismissBehavior] as well.
  */
-class SwipeDismissBehaviorFix<V : View> : SwipeDismissBehavior<V>() {
+class SwipeDismissBehaviorFix<V : View> : SensibleSwipeDismissBehavior<V>() {
     private var ignoreCallsToOnTouchEvent = false
 
     override fun onInterceptTouchEvent(parent: CoordinatorLayout, child: V, event: MotionEvent): Boolean {
