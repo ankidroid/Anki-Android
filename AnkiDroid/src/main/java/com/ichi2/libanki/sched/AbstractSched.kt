@@ -17,16 +17,13 @@ package com.ichi2.libanki.sched
 
 import android.app.Activity
 import android.content.Context
-import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.async.CancelListener
-import com.ichi2.libanki.Card
+import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
-import com.ichi2.libanki.Deck
-import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import timber.log.Timber
 import java.lang.ref.WeakReference
@@ -68,10 +65,11 @@ abstract class AbstractSched(val col: Collection) {
 
     /** Recompute the counts of the currently selected deck.  */
     abstract fun resetCounts()
-    abstract fun resetCounts(cancelListener: CancelListener?)
 
     /** Ensure that reset will be called before returning any card or count.  */
-    abstract fun deferReset()
+    fun deferReset() {
+        deferReset(null)
+    }
 
     /**
      * Same as deferReset(). When `reset` is done, it then simulates that `getCard` returned undoneCard. I.e. it will
@@ -112,7 +110,16 @@ abstract class AbstractSched(val col: Collection) {
      */
     // TODO: consider counting the card currently in the reviewer, this would simplify the code greatly
     // We almost never want to consider the card in the reviewer differently, and a lot of code is added to correct this.
-    abstract fun counts(): Counts
+    abstract fun counts(cancelListener: CancelListener?): Counts
+    fun counts(): Counts {
+        return counts(null)
+    }
+
+    /**
+     * @param card A card that should be added to the count result.
+     * @return same array as counts(), apart that Card is added
+     */
+    abstract fun counts(card: Card): Counts
 
     /** @return Number of new card in selected decks. Recompute it if we reseted.
      */
@@ -135,19 +142,6 @@ abstract class AbstractSched(val col: Collection) {
     }
 
     /**
-     * @param card A card that should be added to the count result.
-     * @return same array as counts(), apart that Card is added
-     */
-    abstract fun counts(card: Card): Counts
-    abstract fun counts(cancelListener: CancelListener): Counts
-
-    /**
-     * @param days A number of day
-     * @return counts over next DAYS. Includes today.
-     */
-    abstract fun dueForecast(days: Int): Int
-
-    /**
      * @param card A Card which is in a mode allowing review. I.e. neither suspended nor buried.
      * @return Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.
      */
@@ -160,14 +154,35 @@ abstract class AbstractSched(val col: Collection) {
     abstract fun answerButtons(card: Card): Int
 
     /**
-     * Unbury all buried cards in all decks
+     * @param did An id of a deck
+     * @return Whether there is any buried cards in the deck
      */
-    abstract fun unburyCards()
+    abstract fun haveBuried(did: Long): Boolean
+
+    /**
+     * Unbury cards.
+     * @param type Which kind of cards should be unburied.
+     */
+    abstract fun unburyCardsForDeck(did: Long, type: UnburyType = UnburyType.ALL)
+    enum class UnburyType {
+        ALL, MANUAL, SIBLINGS
+    }
 
     /**
      * Unbury all buried cards in selected decks
      */
-    abstract fun unburyCardsForDeck()
+    fun unburyCardsForDeck(type: UnburyType = UnburyType.ALL) {
+        unburyCardsForDeck(col.decks.selected(), type)
+    }
+
+    /**
+     * Unbury all buried cards in all decks. Only used for tests.
+     */
+    open fun unburyCards() {
+        for (did in col.decks.allIds()) {
+            unburyCardsForDeck(did)
+        }
+    }
 
     /**
      * @param newc Extra number of NEW cards to see today in selected deck
@@ -194,13 +209,6 @@ abstract class AbstractSched(val col: Collection) {
      */
     abstract fun<T : AbstractDeckTreeNode> quickDeckDueTree(): List<TreeNode<T>>
 
-    /** New count for a single deck.
-     * @param did The deck to consider (descendants and ancestors are ignored)
-     * @param lim Value bounding the result. It is supposed to be the limit taking deck configuration and today's review into account
-     * @return Number of new card in deck `did` that should be seen today, at most `lim`.
-     */
-    abstract fun _newForDeck(did: Long, lim: Int): Int
-
     /**
      * @return Number of new card in current deck and its descendants. Capped at reportLimit = 99999.
      */
@@ -210,15 +218,11 @@ abstract class AbstractSched(val col: Collection) {
      */
     abstract fun totalRevForCurrentDeck(): Int
 
-    /**
-     * @param ivl A number of days for the interval before fuzzing.
-     * @return An interval around `ivl`, with a few less or more days for fuzzing.
-     */
-    // In this abstract class for testing purpose only
-    abstract fun _fuzzIvlRange(ivl: Int): Pair<Int?, Int?>
     // In this abstract class for testing purpose only
     /** Rebuild selected dynamic deck.  */
-    abstract fun rebuildDyn()
+    fun rebuildDyn() {
+        rebuildDyn(0)
+    }
 
     /** Rebuild a dynamic deck.
      * @param did The deck to rebuild. 0 means current deck.
@@ -234,8 +238,10 @@ abstract class AbstractSched(val col: Collection) {
      * i @param cids Cards to remove from their dynamic deck (it is assumed they are in one)
      */
     // In this abstract class for testing purpose only
-    abstract fun remFromDyn(cids: List<Long?>?)
-    abstract fun remFromDyn(cids: LongArray?)
+    abstract fun remFromDyn(cids: Iterable<Long>)
+    fun remFromDyn(cids: LongArray) {
+        remFromDyn(cids.toList())
+    }
 
     /**
      * @param card A random card
@@ -243,6 +249,7 @@ abstract class AbstractSched(val col: Collection) {
      */
     // In this abstract class for testing purpose only
     abstract fun _cardConf(card: Card): DeckConfig
+
     abstract fun _checkDay()
 
     /**
@@ -305,7 +312,9 @@ abstract class AbstractSched(val col: Collection) {
     /**
      * @param cids Ids of cards to bury
      */
-    abstract fun buryCards(cids: LongArray)
+    fun buryCards(cids: LongArray) {
+        buryCards(cids, manual = true)
+    }
 
     /**
      * @param cids Ids of the cards to bury
@@ -323,7 +332,7 @@ abstract class AbstractSched(val col: Collection) {
     /**
      * @param ids Ids of cards to put at the end of the new queue.
      */
-    abstract fun forgetCards(ids: List<Long?>)
+    abstract fun forgetCards(ids: List<Long>)
 
     /**
      * Put cards in review queue with a new interval in days (min, max).
@@ -332,7 +341,7 @@ abstract class AbstractSched(val col: Collection) {
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    abstract fun reschedCards(ids: List<Long?>, imin: Int, imax: Int)
+    abstract fun reschedCards(ids: List<Long>, imin: Int, imax: Int)
 
     /**
      * @param ids Ids of cards to reset for export
@@ -346,7 +355,7 @@ abstract class AbstractSched(val col: Collection) {
      * @param shuffle Whether the list should be shuffled.
      * @param shift Whether the cards already new should be shifted to make room for cards of cids
      */
-    abstract fun sortCards(cids: List<Long?>, start: Int, step: Int, shuffle: Boolean, shift: Boolean)
+    abstract fun sortCards(cids: List<Long>, start: Int, step: Int, shuffle: Boolean, shift: Boolean)
 
     /**
      * Randomize the cards of did
@@ -371,30 +380,15 @@ abstract class AbstractSched(val col: Collection) {
      * This is used to deal which are imported
      * @param did Id of a deck
      */
-    abstract fun maybeRandomizeDeck(did: Long?)
+    abstract fun maybeRandomizeDeck(did: Long)
 
     /**
-     * @param did An id of a deck
-     * @return Whether there is any buried cards in the deck
-     */
-    abstract fun haveBuried(did: Long): Boolean
-    enum class UnburyType {
-        ALL, MANUAL, SIBLINGS
-    }
 
-    /**
-     * Unbury cards of active decks
-     * @param type Which kind of cards should be unburied.
-     */
-    abstract fun unburyCardsForDeck(type: UnburyType)
-
-    /**
+     /**
      * Unbury all buried card of the deck
      * @param did An id of the deck
      */
-    abstract fun unburyCardsForDeck(did: Long)
-
-    /**
+     abstract fun unburyCardsForDeck(did: Long)
      * @return Name of the scheduler. std or std2 currently.
      */
     abstract val name: String
@@ -408,17 +402,6 @@ abstract class AbstractSched(val col: Collection) {
      * @return Timestamp of when the day ends. Takes into account hour at which day change for anki and timezone
      */
     abstract val dayCutoff: Long
-
-    /**
-     * Increment the number of reps for today. Currently any getCard is counted,
-     * even if the card is never actually reviewed.
-     */
-    protected abstract fun incrReps()
-
-    /**
-     * Decrement the number of reps for today (useful for undo reviews)
-     */
-    protected abstract fun decrReps()
 
     /** @return Number of repetitions today. Note that a repetition is the fact that the scheduler sent a card, and not the fact that the card was answered.
      * So buried, suspended, ... cards are also counted as repetitions.
@@ -446,15 +429,17 @@ abstract class AbstractSched(val col: Collection) {
      * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
      * @param reload Force rebuild of estimator rates using the revlog.
      */
-    abstract fun eta(counts: Counts?, reload: Boolean): Int
+    abstract fun eta(counts: Counts, reload: Boolean): Int
 
     /** Same as above and force reload. */
-    abstract fun eta(counts: Counts?): Int
+    fun eta(counts: Counts): Int {
+        return eta(counts, true)
+    }
 
     /**
      * @param contextReference An activity on which a message can be shown. Does not force the activity to remains in memory
      */
-    abstract fun setContext(contextReference: WeakReference<Activity?>?)
+    abstract fun setContext(contextReference: WeakReference<Activity>)
 
     /**
      * Change the maximal number shown in counts.
@@ -470,7 +455,7 @@ abstract class AbstractSched(val col: Collection) {
      */
     abstract fun undoReview(card: Card, wasLeech: Boolean)
     interface LimitMethod {
-        fun operation(g: Deck?): Int
+        fun operation(g: Deck): Int
     }
 
     /** Given a deck, compute the number of cards to see today, taking its pre-computed limit into consideration.  It
@@ -479,15 +464,6 @@ abstract class AbstractSched(val col: Collection) {
     interface CountMethod {
         fun operation(did: Long, lim: Int): Int
     }
-
-    /**
-     * Notifies the scheduler that the provided card is being reviewed. Ensures that a different card is prefetched.
-     *
-     * Note that counts() does not consider current card, since number are decreased as soon as a card is sent to reviewer.
-     *
-     * @param card the current card in the reviewer
-     */
-    abstract fun setCurrentCard(card: Card)
 
     /** Notifies the scheduler that there is no more current card. This is the case when a card is answered, when the
      * scheduler is reset...  */
@@ -504,8 +480,6 @@ abstract class AbstractSched(val col: Collection) {
      */
     abstract fun logCount(): Int
 
-    @Throws(BackendNotSupportedException::class)
-    abstract fun _current_timezone_offset(): Int
     abstract fun _new_timezone_enabled(): Boolean
 
     /**
