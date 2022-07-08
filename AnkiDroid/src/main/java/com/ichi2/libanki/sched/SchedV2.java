@@ -209,17 +209,15 @@ public class SchedV2 extends AbstractSched {
     }
 
     /** Ensures that reset is executed before the next card is selected */
-    public void deferReset(@NonNull Card card){
+    public void deferReset(@Nullable Card card){
         mHaveQueues = false;
         mHaveCounts = false;
-        setCurrentCard(card);
-    }
-
-    public void deferReset() {
-        mHaveQueues = false;
-        mHaveCounts = false;
-        discardCurrentCard();
-        getCol().getDecks().update_active();
+        if (card != null) {
+            setCurrentCard(card);
+        } else {
+            discardCurrentCard();
+            getCol().getDecks().update_active();
+        }
     }
 
     public void reset() {
@@ -228,9 +226,8 @@ public class SchedV2 extends AbstractSched {
         resetCounts(false);
         resetQueues(false);
     }
-
-    @Override
-    public void resetCounts(@NonNull CancelListener cancelListener) {
+    
+    public void resetCounts(@Nullable CancelListener cancelListener) {
         resetCounts(cancelListener, true);
     }
 
@@ -360,9 +357,6 @@ public class SchedV2 extends AbstractSched {
 
 
     /** new count, lrn count, rev count.  */
-    public @NonNull Counts counts() {
-        return counts((CancelListener) null);
-    }
     public @NonNull Counts counts(@Nullable CancelListener cancelListener) {
         if (!mHaveCounts) {
             resetCounts(cancelListener);
@@ -382,16 +376,6 @@ public class SchedV2 extends AbstractSched {
         counts.changeCount(idx, 1);
         return counts;
     }
-
-
-    /**
-     * Return counts over next DAYS. Includes today.
-     */
-    public int dueForecast(int days) {
-        // TODO:...
-        return 0;
-    }
-
 
     /**
      * Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.
@@ -1882,12 +1866,6 @@ public class SchedV2 extends AbstractSched {
       *****************************
      */
 
-    /** Rebuild a dynamic deck. */
-    public void rebuildDyn() {
-        rebuildDyn(0);
-    }
-
-
     // Overridden, because upstream implements exactly the same method in two different way for unknown reason
     public void rebuildDyn(long did) {
         if (did == 0) {
@@ -1960,14 +1938,9 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public void remFromDyn(long[] cids) {
+    public void remFromDyn(Iterable<Long> cids) {
         emptyDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
     }
-
-    public void remFromDyn(List<Long> cids) {
-        emptyDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
-    }
-
 
     /**
      * Generates the required SQL for order by and limit clauses, for dynamic decks.
@@ -2286,7 +2259,6 @@ public class SchedV2 extends AbstractSched {
         }
     }
 
-    @Override
     public int _current_timezone_offset() throws BackendNotSupportedException {
         if (getCol().getServer()) {
             return getCol().get_config("localOffset", 0);
@@ -2606,11 +2578,6 @@ public class SchedV2 extends AbstractSched {
                 getTime().intTime(), getCol().usn());
     }
 
-    // Overridden. manual is false by default in V1
-    public void buryCards(@NonNull long[] cids) {
-        buryCards(cids, true);
-    }
-
     @Override
     // Overridden: V1 also remove from dyns and lrn
     @VisibleForTesting
@@ -2621,25 +2588,11 @@ public class SchedV2 extends AbstractSched {
                 queue, getTime().intTime(), getCol().usn());
     }
 
-
-    /**
-     * Unbury all buried cards in all decks
-     * Overridden: V1 change lastUnburied
-     */
-    public void unburyCards() {
-        getCol().log(getCol().getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet()));
-        getCol().getDb().execute("update cards set " + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet());
-    }
-
-
-    // Overridden
-    public void unburyCardsForDeck() {
-        unburyCardsForDeck(ALL);
-    }
-
-
-    public void unburyCardsForDeck(@NonNull UnburyType type) {
-        unburyCardsForDeck(type, null);
+    @Override
+    public void unburyCardsForDeck(long did, @NonNull UnburyType type) {
+        List<Long> dids = getCol().getDecks().childDids(did, getCol().getDecks().childMap());
+        dids.add(did);
+        unburyCardsForDeck(type, dids);
     }
 
     public void unburyCardsForDeck(@NonNull UnburyType type, @Nullable List<Long> allDecks) {
@@ -2858,14 +2811,7 @@ public class SchedV2 extends AbstractSched {
     /**
      * for post-import
      */
-    public void maybeRandomizeDeck() {
-        maybeRandomizeDeck(null);
-    }
-
-    public void maybeRandomizeDeck(@Nullable Long did) {
-        if (did == null) {
-            did = getCol().getDecks().selected();
-        }
+    public void maybeRandomizeDeck(long did) {
         DeckConfig conf = getCol().getDecks().confForDid(did);
         // in order due?
         if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {
@@ -3003,12 +2949,6 @@ public class SchedV2 extends AbstractSched {
         String dids = _deckLimit();
         return getCol().getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids);
     }
-
-
-    public int eta(Counts counts) {
-        return eta(counts, true);
-    }
-
 
     /**
      * Return an estimate, in minutes, for how long it will take to complete all the reps in {@code counts}.
@@ -3257,5 +3197,4 @@ public class SchedV2 extends AbstractSched {
     public @Consts.BUTTON_TYPE int getGoodNewButton() {
         return Consts.BUTTON_THREE;
     }
-
 }
