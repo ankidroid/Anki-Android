@@ -218,7 +218,7 @@ abstract class AbstractSched(val col: Collection) {
     abstract fun _fuzzIvlRange(ivl: Int): Pair<Int?, Int?>
     // In this abstract class for testing purpose only
     /** Rebuild selected dynamic deck.  */
-    protected abstract fun rebuildDyn()
+    abstract fun rebuildDyn()
 
     /** Rebuild a dynamic deck.
      * @param did The deck to rebuild. 0 means current deck.
@@ -290,7 +290,7 @@ abstract class AbstractSched(val col: Collection) {
      * @return the next interval for CARD, in seconds if ease is pressed.
      */
     // In this abstract class for testing purpose only
-    protected abstract fun nextIvl(card: Card, @BUTTON_TYPE ease: Int): Long
+    abstract fun nextIvl(card: Card, @BUTTON_TYPE ease: Int): Long
 
     /**
      * @param ids Id of cards to suspend

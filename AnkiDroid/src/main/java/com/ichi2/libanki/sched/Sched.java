@@ -1146,7 +1146,7 @@ public class Sched extends SchedV2 {
      * Return the next interval for CARD, in seconds.
      */
     @Override
-    protected long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    public long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         if (card.getQueue() == Consts.QUEUE_TYPE_NEW || card.getQueue() == Consts.QUEUE_TYPE_LRN || card.getQueue() == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
             return _nextLrnIvl(card, ease);
         } else if (ease == Consts.BUTTON_ONE) {
