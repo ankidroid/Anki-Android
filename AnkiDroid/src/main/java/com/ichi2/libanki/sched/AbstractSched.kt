@@ -57,9 +57,6 @@ abstract class AbstractSched(val col: Collection) {
     // Should ideally be protected. It's public only because CollectionTask should call it when the scheduler planned this task
     abstract fun reset()
 
-    /** Check whether we are a new day, and update if so.  */
-    abstract fun _updateCutoff()
-
     /** Ensure that the question on the potential next card can be accessed quickly. */
     abstract fun preloadNextCard()
 
@@ -250,8 +247,6 @@ abstract class AbstractSched(val col: Collection) {
     // In this abstract class for testing purpose only
     abstract fun _cardConf(card: Card): DeckConfig
 
-    abstract fun _checkDay()
-
     /**
      * @param context Some Context to access the lang
      * @return A message to show to user when they reviewed the last card. Let them know if they can see learning card later today
@@ -440,12 +435,6 @@ abstract class AbstractSched(val col: Collection) {
      * @param contextReference An activity on which a message can be shown. Does not force the activity to remains in memory
      */
     abstract fun setContext(contextReference: WeakReference<Activity>)
-
-    /**
-     * Change the maximal number shown in counts.
-     * @param reportLimit A maximal number of cards added in the queue at once.
-     */
-    abstract fun setReportLimit(reportLimit: Int)
 
     /**
      * Reverts answering a card.

@@ -2558,18 +2558,6 @@ open class Collection(
         }
     }
 
-    // This duplicates _loadScheduler (but returns the value and sets the report limit).
-    fun createScheduler(reportLimit: Int): AbstractSched? {
-        val ver = schedVer()
-        if (ver == 1) {
-            sched = Sched(this)
-        } else if (ver == 2) {
-            sched = SchedV2(this)
-        }
-        sched.setReportLimit(reportLimit)
-        return sched
-    }
-
     class CheckDatabaseResult(private val oldSize: Long) {
         private val mProblems: MutableList<String?> = ArrayList()
         var cardsWithFixedHomeDeckCount = 0

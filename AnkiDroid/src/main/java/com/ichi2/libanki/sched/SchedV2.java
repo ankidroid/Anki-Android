@@ -583,6 +583,7 @@ public class SchedV2 extends AbstractSched {
         if (!BackendFactory.getDefaultLegacySchema()) {
             return BackendSchedKt.deckTreeLegacy(getCol().getNewBackend(), true);
         } else {
+            _checkDay();
             List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
             if (allDecksSorted == null) {
                 return null;
@@ -3114,12 +3115,6 @@ public class SchedV2 extends AbstractSched {
 
     public void setContext(@Nullable WeakReference<Activity> contextReference) {
         mContextReference = contextReference;
-    }
-
-    /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
-    @Override
-    public void setReportLimit(int reportLimit) {
-        this.mReportLimit = reportLimit;
     }
 
     @Override
