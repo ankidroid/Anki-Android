@@ -20,6 +20,7 @@ import android.util.Pair;
 
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.sched.SchedV2;
 
 import java.util.Arrays;
 import java.util.List;
@@ -82,7 +83,7 @@ public class AnkiAssert {
     }
 
     public static boolean checkRevIvl(Collection col, Card c, int targetIvl) {
-        Pair<Integer, Integer> min_max = col.getSched()._fuzzIvlRange(targetIvl);
+        Pair<Integer, Integer> min_max = ((SchedV2)col.getSched())._fuzzIvlRange(targetIvl);
         return min_max.first <= c.getIvl() && c.getIvl() <= min_max.second;
     }
 

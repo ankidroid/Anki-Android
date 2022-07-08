@@ -256,7 +256,7 @@ open class Collection(
             sched = SchedV2(this)
             if (!server) {
                 try {
-                    set_config("localOffset", sched._current_timezone_offset())
+                    set_config("localOffset", (sched as SchedV2)._current_timezone_offset())
                 } catch (e: BackendNotSupportedException) {
                     throw e.alreadyUsingRustBackend()
                 }
