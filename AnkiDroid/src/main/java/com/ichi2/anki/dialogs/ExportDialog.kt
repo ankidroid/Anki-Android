@@ -83,16 +83,11 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
             listItemsMultiChoice(
                 items = items,
                 initialSelection = checked.toIntArray(),
+                allowEmptySelection = true,
                 waitForPositiveButton = false
             ) { _: MaterialDialog, ints: IntArray, _: List<CharSequence> ->
-                mIncludeMedia = false
-                mIncludeSched = false
-                for (integer in ints) {
-                    when (integer) {
-                        INCLUDE_SCHED -> mIncludeSched = true
-                        INCLUDE_MEDIA -> mIncludeMedia = true
-                    }
-                }
+                mIncludeMedia = ints.contains(INCLUDE_MEDIA)
+                mIncludeSched = ints.contains(INCLUDE_SCHED)
             }
         }
     }
