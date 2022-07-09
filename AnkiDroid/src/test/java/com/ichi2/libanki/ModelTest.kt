@@ -13,408 +13,505 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.Consts.MODEL_CLOZE
+import com.ichi2.libanki.Models.REQ_ALL
+import com.ichi2.libanki.Models.REQ_ANY
+import com.ichi2.libanki.Utils.stripHTML
+import com.ichi2.utils.JSONArray
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.ListUtil.Companion.assertListEquals
+import net.ankiweb.rsdroid.BackendFactory
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.*
+import org.junit.Assert.*
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
+import java.util.*
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.anki.exception.ConfirmModSchemaException;
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONObject;
-
-import net.ankiweb.rsdroid.BackendFactory;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static com.ichi2.libanki.Consts.MODEL_CLOZE;
-import static com.ichi2.libanki.Models.REQ_ALL;
-import static com.ichi2.libanki.Models.REQ_ANY;
-import static com.ichi2.libanki.Utils.stripHTML;
-import static com.ichi2.utils.ListUtil.assertListEquals;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-@RunWith(AndroidJUnit4.class)
-public class ModelTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("fix IDE lint issues")
+@KotlinCleanup("improve kotlin code where possible")
+class ModelTest : RobolectricTest() {
     @Test
-    public void test_frontSide_field() {
+    fun test_frontSide_field() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
-        Collection col = getCol();
-        Model m = col.getModels().current();
-        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}");
-        col.getModels().save(m);
-        Note note = col.newNote();
-        note.setItem("Front", "helloworld");
-        col.addNote(note);
-        Card card = note.firstCard();
-        String q = card.q();
-        assertThat("field should be at the end of the template - empty string for front", q, endsWith("helloworld"));
-        assertThat("field should not have a problem", q, not(containsString("has a problem")));
+        val col = col
+        val m = col.models.current()
+        m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}")
+        col.models.save(m)
+        val note = col.newNote()
+        note.setItem("Front", "helloworld")
+        col.addNote(note)
+        val card = note.firstCard()
+        val q = card.q()
+        assertThat(
+            "field should be at the end of the template - empty string for front",
+            q,
+            endsWith("helloworld")
+        )
+        assertThat(
+            "field should not have a problem",
+            q,
+            not(containsString("has a problem"))
+        )
     }
 
     @Test
-    public void test_field_named_frontSide() {
+    fun test_field_named_frontSide() {
         // #8951 - A field named "FrontSide" is ignored - this matches Anki 2.1.34 (8af8f565)
-        Collection col = getCol();
-        Model m = col.getModels().current();
+        val col = col
+        val m = col.models.current()
 
         // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
-        col.getModels().addFieldModChanged(m, col.getModels().newField("FrontSide"));
-        col.getModels().addFieldModChanged(m, col.getModels().newField("FrontSide2"));
-        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}{{FrontSide2}}");
-        col.getModels().save(m);
+        col.models.addFieldModChanged(m!!, col.models.newField("FrontSide"))
+        col.models.addFieldModChanged(m, col.models.newField("FrontSide2"))
+        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}{{FrontSide2}}")
+        col.models.save(m)
 
-        Note note = col.newNote();
-        note.setItem("Front", "helloworld");
-        note.setItem("FrontSide", "1");
-        note.setItem("FrontSide2", "2");
-        col.addNote(note);
-        Card card = note.firstCard();
-        String q = card.q();
-        assertThat("FrontSide should be an empty string, even though it was set", q, endsWith("helloworld2"));
+        val note = col.newNote()
+        note.setItem("Front", "helloworld")
+        note.setItem("FrontSide", "1")
+        note.setItem("FrontSide2", "2")
+        col.addNote(note)
+        val card = note.firstCard()
+        val q = card.q()
+        assertThat(
+            "FrontSide should be an empty string, even though it was set",
+            q,
+            endsWith("helloworld2")
+        )
     }
 
     /*****************
-     ** Models       *
-     *****************/
-
+     * Models       *
+     */
     @Test
-    public void test_modelDelete() throws ConfirmModSchemaException {
-        Collection col = getCol();
-        Note note = col.newNote();
-        note.setItem("Front", "1");
-        note.setItem("Back", "2");
-        col.addNote(note);
-        assertEquals(1, col.cardCount());
-        col.getModels().rem(col.getModels().current());
-        assertEquals(0, col.cardCount());
+    @Throws(ConfirmModSchemaException::class)
+    fun test_modelDelete() {
+
+        val col = col
+        val note = col.newNote()
+        note.setItem("Front", "1")
+        note.setItem("Back", "2")
+        col.addNote(note)
+        assertEquals(1, col.cardCount())
+        col.models.rem(col.models.current()!!)
+        assertEquals(0, col.cardCount())
     }
 
-
     @Test
-    public void test_modelCopy() {
-        Collection col = getCol();
-        Model m = col.getModels().current();
-        Model m2 = col.getModels().copy(m);
-        assertEquals("Basic copy", m2.getString("name"));
-        assertNotEquals(m2.getLong("id"), m.getLong("id"));
-        assertEquals(2, m2.getJSONArray("flds").length());
-        assertEquals(2, m.getJSONArray("flds").length());
-        assertEquals(m.getJSONArray("flds").length(), m2.getJSONArray("flds").length());
-        assertEquals(1, m.getJSONArray("tmpls").length());
-        assertEquals(1, m2.getJSONArray("tmpls").length());
-        assertEquals(col.getModels().scmhash(m), col.getModels().scmhash(m2));
+    fun test_modelCopy() {
+        val col = col
+        val m = col.models.current()
+        val m2 = col.models.copy(m!!)
+        assertEquals("Basic copy", m2.getString("name"))
+        assertNotEquals(m2.getLong("id"), m.getLong("id"))
+        assertEquals(2, m2.getJSONArray("flds").length())
+        assertEquals(2, m.getJSONArray("flds").length())
+        assertEquals(
+            m.getJSONArray("flds").length(),
+            m2.getJSONArray("flds").length()
+        )
+        assertEquals(1, m.getJSONArray("tmpls").length())
+        assertEquals(1, m2.getJSONArray("tmpls").length())
+        assertEquals(col.models.scmhash(m), col.models.scmhash(m2))
     }
 
-
     @Test
-    public void test_fields() throws ConfirmModSchemaException {
-        Collection col = getCol();
-        Note note = col.newNote();
-        note.setItem("Front", "1");
-        note.setItem("Back", "2");
-        col.addNote(note);
-        Model m = col.getModels().current();
+    @Throws(ConfirmModSchemaException::class)
+    fun test_fields() {
+        val col = col
+        var note = col.newNote()
+        note.setItem("Front", "1")
+        note.setItem("Back", "2")
+        col.addNote(note)
+        val m = col.models.current()
         // make sure renaming a field updates the templates
-        col.getModels().renameField(m, m.getJSONArray("flds").getJSONObject(0), "NewFront");
-        assertThat(m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"), containsString("{{NewFront}}"));
-        String h = col.getModels().scmhash(m);
+        col.models.renameField(m!!, m.getJSONArray("flds").getJSONObject(0), "NewFront")
+        assertThat(
+            m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"),
+            containsString("{{NewFront}}")
+        )
+        val h = col.models.scmhash(m)
         // add a field
-        JSONObject field = col.getModels().newField("foo");
-        col.getModels().addField(m, field);
-        assertArrayEquals(new String[] {"1", "2", ""}, col.getNote(col.getModels().nids(m).get(0)).getFields());
-        assertNotEquals(h, col.getModels().scmhash(m));
+        var field: JSONObject? = col.models.newField("foo")
+        col.models.addField(m, field!!)
+        assertArrayEquals(
+            arrayOf("1", "2", ""),
+            col.getNote(
+                col.models.nids(
+                    m
+                )[0]
+            ).fields
+        )
+        assertNotEquals(h, col.models.scmhash(m))
         // rename it
-        field = m.getJSONArray("flds").getJSONObject(2);
-        col.getModels().renameField(m, field, "bar");
-        assertEquals("", col.getNote(col.getModels().nids(m).get(0)).getItem("bar"));
+        field = m.getJSONArray("flds").getJSONObject(2)
+        col.models.renameField(m, field, "bar")
+        assertEquals("", col.getNote(col.models.nids(m)[0]).getItem("bar"))
         // delete back
-        col.getModels().remField(m, m.getJSONArray("flds").getJSONObject(1));
-        assertArrayEquals(new String[] {"1", ""}, col.getNote(col.getModels().nids(m).get(0)).getFields());
+        col.models.remField(m, m.getJSONArray("flds").getJSONObject(1))
+        assertArrayEquals(
+            arrayOf("1", ""),
+            col.getNote(
+                col.models.nids(
+                    m
+                )[0]
+            ).fields
+        )
         // move 0 -> 1
-        col.getModels().moveField(m, m.getJSONArray("flds").getJSONObject(0), 1);
-        assertArrayEquals(new String[] {"", "1"}, col.getNote(col.getModels().nids(m).get(0)).getFields());
+        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        assertArrayEquals(
+            arrayOf("", "1"),
+            col.getNote(
+                col.models.nids(
+                    m
+                )[0]
+            ).fields
+        )
         // move 1 -> 0
-        col.getModels().moveField(m, m.getJSONArray("flds").getJSONObject(1), 0);
-        assertArrayEquals(new String[] {"1", ""}, col.getNote(col.getModels().nids(m).get(0)).getFields());
+        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(1), 0)
+        assertArrayEquals(
+            arrayOf("1", ""),
+            col.getNote(
+                col.models.nids(
+                    m
+                )[0]
+            ).fields
+        )
         // add another and put in middle
-        field = col.getModels().newField("baz");
-        col.getModels().addField(m, field);
-        note = col.getNote(col.getModels().nids(m).get(0));
-        note.setItem("baz", "2");
-        note.flush();
-        assertArrayEquals(new String[] {"1", "", "2"}, col.getNote(col.getModels().nids(m).get(0)).getFields());
+        field = col.models.newField("baz")
+        col.models.addField(m, field)
+        note = col.getNote(col.models.nids(m)[0])
+        note.setItem("baz", "2")
+        note.flush()
+        assertArrayEquals(
+            arrayOf("1", "", "2"),
+            col.getNote(
+                col.models.nids(
+                    m
+                )[0]
+            ).fields
+        )
         // move 2 -> 1
-        col.getModels().moveField(m, m.getJSONArray("flds").getJSONObject(2), 1);
-        assertArrayEquals(new String[] {"1", "2", ""}, col.getNote(col.getModels().nids(m).get(0)).getFields());
+        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(2), 1)
+        assertArrayEquals(
+            arrayOf("1", "2", ""),
+            col.getNote(
+                col.models.nids(
+                    m
+                )[0]
+            ).fields
+        )
         // move 0 -> 2
-        col.getModels().moveField(m, m.getJSONArray("flds").getJSONObject(0), 2);
-        assertArrayEquals(new String[] {"2", "", "1"}, col.getNote(col.getModels().nids(m).get(0)).getFields());
+        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(0), 2)
+        assertArrayEquals(
+            arrayOf("2", "", "1"),
+            col.getNote(
+                col.models.nids(
+                    m
+                )[0]
+            ).fields
+        )
         // move 0 -> 1
-        col.getModels().moveField(m, m.getJSONArray("flds").getJSONObject(0), 1);
-        assertArrayEquals(new String[] {"", "2", "1"}, col.getNote(col.getModels().nids(m).get(0)).getFields());
+        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        assertArrayEquals(
+            arrayOf("", "2", "1"),
+            col.getNote(
+                col.models.nids(
+                    m
+                )[0]
+            ).fields
+        )
     }
 
-
     @Test
-    public void test_templates() throws ConfirmModSchemaException {
-        Collection col = getCol();
-        Model m = col.getModels().current();
-        ModelManager mm = col.getModels();
-        JSONObject t = Models.newTemplate("Reverse");
-        t.put("qfmt", "{{Back}}");
-        t.put("afmt", "{{Front}}");
-        mm.addTemplateModChanged(m, t);
-        mm.save(m);
-        Note note = col.newNote();
-        note.setItem("Front", "1");
-        note.setItem("Back", "2");
-        col.addNote(note);
-        assertEquals(2, col.cardCount());
-        List<Card> cards = note.cards();
-        assertEquals(2, cards.size());
-        Card c = cards.get(0);
-        Card c2 = cards.get(1);
+    @Throws(ConfirmModSchemaException::class)
+    fun test_templates() {
+        val col = col
+        val m = col.models.current()
+        val mm = col.models
+        var t = Models.newTemplate("Reverse")
+        t.put("qfmt", "{{Back}}")
+        t.put("afmt", "{{Front}}")
+        mm.addTemplateModChanged(m!!, t)
+        mm.save(m)
+        val note = col.newNote()
+        note.setItem("Front", "1")
+        note.setItem("Back", "2")
+        col.addNote(note)
+        assertEquals(2, col.cardCount())
+        val cards: List<Card> = note.cards()
+        assertEquals(2, cards.size)
+        var c = cards[0]
+        val c2 = cards[1]
         // first card should have first ord
-        assertEquals(0, c.getOrd());
-        assertEquals(1, c2.getOrd());
+        assertEquals(0, c.ord)
+        assertEquals(1, c2.ord)
         // switch templates
-        col.getModels().moveTemplate(m, c.template(), 1);
-        c.load();
-        c2.load();
-        assertEquals(1, c.getOrd());
-        assertEquals(0, c2.getOrd());
+        col.models.moveTemplate(m, c.template(), 1)
+        c.load()
+        c2.load()
+        assertEquals(1, c.ord)
+        assertEquals(0, c2.ord)
         // removing a template should delete its cards
-        col.getModels().remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
-        assertEquals(1, col.cardCount());
+        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        assertEquals(1, col.cardCount())
         // and should have updated the other cards' ordinals
-        c = note.cards().get(0);
-        assertEquals(0, c.getOrd());
-        assertEquals("1", stripHTML(c.q()));
+        c = note.cards()[0]
+        assertEquals(0, c.ord)
+        assertEquals("1", stripHTML(c.q()))
         // it shouldn't be possible to orphan notes by removing templates
-        t = Models.newTemplate("template name");
-        t.put("qfmt", "{{Front}}1");
-        mm.addTemplateModChanged(m, t);
-        col.getModels().remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
-        assertEquals(0,
-                col.getDb().queryLongScalar(
-                        "select count() from cards where nid not in (select id from notes)"));
+        t = Models.newTemplate("template name")
+        t.put("qfmt", "{{Front}}1")
+        mm.addTemplateModChanged(m, t)
+        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        assertEquals(
+            0,
+            col.db.queryLongScalar(
+                "select count() from cards where nid not in (select id from notes)"
+            )
+        )
     }
 
-
     @Test
-    public void test_cloze_ordinals() throws ConfirmModSchemaException {
-        Collection col = getCol();
-        col.getModels().setCurrent(col.getModels().byName("Cloze"));
-        Model m = col.getModels().current();
-        ModelManager mm = col.getModels();
+    @Throws(ConfirmModSchemaException::class)
+    fun test_cloze_ordinals() {
+        val col = col
+        col.models.setCurrent(col.models.byName("Cloze")!!)
+        val m = col.models.current()
+        val mm = col.models
 
         // We replace the default Cloze template
-        JSONObject t = Models.newTemplate("ChainedCloze");
-        t.put("qfmt", "{{text:cloze:Text}}");
-        t.put("afmt", "{{text:cloze:Text}}");
-        mm.addTemplateModChanged(m, t);
-        mm.save(m);
-        col.getModels().remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
+        val t = Models.newTemplate("ChainedCloze")
+        t.put("qfmt", "{{text:cloze:Text}}")
+        t.put("afmt", "{{text:cloze:Text}}")
+        mm.addTemplateModChanged(m!!, t)
+        mm.save(m)
+        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
 
-        Note note = col.newNote();
-        note.setItem("Text", "{{c1::firstQ::firstA}}{{c2::secondQ::secondA}}");
-        col.addNote(note);
-        assertEquals(2, col.cardCount());
-        List<Card> cards = note.cards();
-        assertEquals(2, cards.size());
-        Card c = cards.get(0);
-        Card c2 = cards.get(1);
+        val note = col.newNote()
+        note.setItem("Text", "{{c1::firstQ::firstA}}{{c2::secondQ::secondA}}")
+        col.addNote(note)
+        assertEquals(2, col.cardCount())
+        val cards: List<Card> = note.cards()
+        assertEquals(2, cards.size)
+        val c = cards[0]
+        val c2 = cards[1]
         // first card should have first ord
-        assertEquals(0, c.getOrd());
-        assertEquals(1, c2.getOrd());
+        assertEquals(0, c.ord)
+        assertEquals(1, c2.ord)
     }
 
     @Test
-    public void test_cloze_empty() {
-        Collection col = getCol();
-        ModelManager mm = col.getModels();
-        Model cloze_model = mm.byName("Cloze");
-        mm.setCurrent(cloze_model);
-        assertListEquals(Arrays.asList(0, 1), Models.availOrds(cloze_model, new String[]{"{{c1::Empty}} and {{c2::}}", ""}));
+    fun test_cloze_empty() {
+        val col = col
+        val mm = col.models
+        val cloze_model = mm.byName("Cloze")
+        mm.setCurrent(cloze_model!!)
+        assertListEquals(
+            Arrays.asList(0, 1),
+            Models.availOrds(cloze_model, arrayOf("{{c1::Empty}} and {{c2::}}", ""))
+        )
     }
 
-
     @Test
-    public void test_text() {
-        Collection col = getCol();
-        Model m = col.getModels().current();
-        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}");
-        col.getModels().save(m);
-        Note note = col.newNote();
-        note.setItem("Front", "hello<b>world");
-        col.addNote(note);
-        assertThat(note.cards().get(0).q(), containsString("helloworld"));
+    fun test_text() {
+        val col = col
+        val m = col.models.current()
+        m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}")
+        col.models.save(m)
+        val note = col.newNote()
+        note.setItem("Front", "hello<b>world")
+        col.addNote(note)
+        assertThat(note.cards()[0].q(), containsString("helloworld"))
     }
 
-
     @Test
-    public void test_cloze() {
-        Collection col = getCol();
-        col.getModels().setCurrent(col.getModels().byName("Cloze"));
-        Note note = col.newNote();
-        assertEquals("Cloze", note.model().getString("name"));
+    fun test_cloze() {
+        val col = col
+        col.models.setCurrent(col.models.byName("Cloze")!!)
+        var note = col.newNote()
+        assertEquals("Cloze", note.model().getString("name"))
         // a cloze model with no clozes is not empty
-        note.setItem("Text", "nothing");
-        assertEquals(1, col.addNote(note));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
-        assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE));
+        note.setItem("Text", "nothing")
+        assertEquals(1, col.addNote(note))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE))
         // try with one cloze
-        note = col.newNote();
-        note.setItem("Text", "hello {{c1::world}}");
-        assertEquals(1, col.addNote(note));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE));
-        assertThat(note.cards().get(0).q(), containsString("hello <span class=cloze>[...]</span>"));
-        assertThat(note.cards().get(0).a(), containsString("hello <span class=cloze>world</span>"));
+        note = col.newNote()
+        note.setItem("Text", "hello {{c1::world}}")
+        assertEquals(1, col.addNote(note))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
+        assertThat(
+            note.cards()[0].q(),
+            containsString("hello <span class=cloze>[...]</span>")
+        )
+        assertThat(
+            note.cards()[0].a(),
+            containsString("hello <span class=cloze>world</span>")
+        )
         // and with a comment
-        note = col.newNote();
-        note.setItem("Text", "hello {{c1::world::typical}}");
-        assertEquals(1, col.addNote(note));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE));
-        assertThat(note.cards().get(0).q(), containsString("<span class=cloze>[typical]</span>"));
-        assertThat(note.cards().get(0).a(), containsString("<span class=cloze>world</span>"));
+        note = col.newNote()
+        note.setItem("Text", "hello {{c1::world::typical}}")
+        assertEquals(1, col.addNote(note))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
+        assertThat(
+            note.cards()[0].q(),
+            containsString("<span class=cloze>[typical]</span>")
+        )
+        assertThat(
+            note.cards()[0].a(),
+            containsString("<span class=cloze>world</span>")
+        )
         // and with 2 clozes
-        note = col.newNote();
-        note.setItem("Text", "hello {{c1::world}} {{c2::bar}}");
-        assertEquals(2, col.addNote(note));
-        List<Card> cards = note.cards();
-        assertEquals(2, cards.size());
-        Card c1 = cards.get(0);
-        Card c2 = cards.get(1);
-        assertThat(c1.q(), containsString("<span class=cloze>[...]</span> bar"));
-        assertThat(c1.a(), containsString("<span class=cloze>world</span> bar"));
-        assertThat(c2.q(), containsString("world <span class=cloze>[...]</span>"));
-        assertThat(c2.a(), containsString("world <span class=cloze>bar</span>"));
+        note = col.newNote()
+        note.setItem("Text", "hello {{c1::world}} {{c2::bar}}")
+        assertEquals(2, col.addNote(note))
+        val cards: List<Card> = note.cards()
+        assertEquals(2, cards.size)
+        val c1 = cards[0]
+        val c2 = cards[1]
+        assertThat(
+            c1.q(),
+            containsString("<span class=cloze>[...]</span> bar")
+        )
+        assertThat(
+            c1.a(),
+            containsString("<span class=cloze>world</span> bar")
+        )
+        assertThat(
+            c2.q(),
+            containsString("world <span class=cloze>[...]</span>")
+        )
+        assertThat(
+            c2.a(),
+            containsString("world <span class=cloze>bar</span>")
+        )
         // if there are multiple answers for a single cloze, they are given in a
         // list
-        note.setItem("Text", "a {{c1::b}} {{c1::c}}");
-        assertEquals(1, col.addNote(note));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE));
-        assertThat(note.cards().get(0).a(), containsString("<span class=cloze>b</span> <span class=cloze>c</span>"));
+        note.setItem("Text", "a {{c1::b}} {{c1::c}}")
+        assertEquals(1, col.addNote(note))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
+        assertThat(
+            note.cards()[0].a(),
+            containsString("<span class=cloze>b</span> <span class=cloze>c</span>")
+        )
         // if we add another cloze, a card should be generated
-        note.setItem("Text", "{{c2::hello}} {{c1::foo}}");
-        assertEquals(2, col.addNote(note));
-        assertEquals(2, col.addNote(note, Models.AllowEmpty.TRUE));
-        assertEquals(2, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
-        assertEquals(2, col.addNote(note, Models.AllowEmpty.FALSE));
+        note.setItem("Text", "{{c2::hello}} {{c1::foo}}")
+        assertEquals(2, col.addNote(note))
+        assertEquals(2, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(2, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(2, col.addNote(note, Models.AllowEmpty.FALSE))
         // 0 or negative indices are not supported
-        note.setItem("Text", "{{c0::zero}} {{c-1:foo}}");
-        assertEquals(1, col.addNote(note));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE));
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE));
-        assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE));
+        note.setItem("Text", "{{c0::zero}} {{c-1:foo}}")
+        assertEquals(1, col.addNote(note))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE))
 
-        note = col.newNote();
-        note.setItem("Text", "hello {{c1::world}}");
-        col.addNote(note);
-        assertEquals(1, note.numberOfCards());
-        note.setItem("Text", "hello {{c2::world}}");
-        note.flush();
-        assertEquals(2, note.numberOfCards());
-        note.setItem("Text", "{{c1::hello}} {{c2::world}}");
-        note.flush();
-        assertEquals(2, note.numberOfCards());
-        note.setItem("Text", "{{c1::hello}} {{c3::world}}");
-        note.flush();
-        assertEquals(3, note.numberOfCards());
-        note.setItem("Text", "{{c0::hello}} {{c-1::world}}");
-        note.flush();
-        assertEquals(3, note.numberOfCards());
+        note = col.newNote()
+        note.setItem("Text", "hello {{c1::world}}")
+        col.addNote(note)
+        assertEquals(1, note.numberOfCards())
+        note.setItem("Text", "hello {{c2::world}}")
+        note.flush()
+        assertEquals(2, note.numberOfCards())
+        note.setItem("Text", "{{c1::hello}} {{c2::world}}")
+        note.flush()
+        assertEquals(2, note.numberOfCards())
+        note.setItem("Text", "{{c1::hello}} {{c3::world}}")
+        note.flush()
+        assertEquals(3, note.numberOfCards())
+        note.setItem("Text", "{{c0::hello}} {{c-1::world}}")
+        note.flush()
+        assertEquals(3, note.numberOfCards())
     }
 
-
     @Test
-    public void test_cloze_mathjax() {
-        Collection col = getCol();
-        col.getModels().setCurrent(col.getModels().byName("Cloze"));
-        Note note = col.newNote();
-        note.setItem("Text", "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}");
-        assertNotEquals(0, col.addNote(note));
-        assertEquals(5, note.numberOfCards());
-        assertThat(note.cards().get(0).q(), containsString("class=cloze"));
-        assertThat(note.cards().get(1).q(), containsString("class=cloze"));
-        assertThat(note.cards().get(2).q(), not(containsString("class=cloze")));
-        assertThat(note.cards().get(3).q(), containsString("class=cloze"));
-        assertThat(note.cards().get(4).q(), containsString("class=cloze"));
+    fun test_cloze_mathjax() {
+        val col = col
+        col.models.setCurrent(col.models.byName("Cloze")!!)
+        var note = col.newNote()
+        note.setItem(
+            "Text",
+            "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}"
+        )
+        assertNotEquals(0, col.addNote(note))
+        assertEquals(5, note.numberOfCards())
+        assertThat(note.cards()[0].q(), containsString("class=cloze"))
+        assertThat(note.cards()[1].q(), containsString("class=cloze"))
+        assertThat(
+            note.cards()[2].q(),
+            not(containsString("class=cloze"))
+        )
+        assertThat(note.cards()[3].q(), containsString("class=cloze"))
+        assertThat(note.cards()[4].q(), containsString("class=cloze"))
 
-        note = col.newNote();
-        note.setItem("Text", "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]");
-        assertNotEquals(0, col.addNote(note));
-        assertEquals(1, note.numberOfCards());
-        String question = note.cards().get(0).q();
-        assertTrue("Question «" + question + "» does not end correctly", question.endsWith("\\(a\\) <span class=cloze>[...]</span> \\[ [...] \\]"));
+        note = col.newNote()
+        note.setItem("Text", "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]")
+        assertNotEquals(0, col.addNote(note))
+        assertEquals(1, note.numberOfCards())
+        val question = note.cards()[0].q()
+        assertTrue(
+            "Question «$question» does not end correctly",
+            question.endsWith("\\(a\\) <span class=cloze>[...]</span> \\[ [...] \\]")
+        )
     }
 
-
     @Test
-    public void test_typecloze() {
-        Collection col = getCol();
-        Model m = col.getModels().byName("Cloze");
-        col.getModels().setCurrent(m);
-        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{cloze:Text}}{{type:cloze:Text}}");
-        col.getModels().save(m);
-        Note note = col.newNote();
-        note.setItem("Text", "hello {{c1::world}}");
-        col.addNote(note);
-        assertThat(note.cards().get(0).q(), containsString("[[type:cloze:Text]]"));
+    fun test_typecloze() {
+        val col = col
+        val m = col.models.byName("Cloze")
+        col.models.setCurrent(m!!)
+        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{cloze:Text}}{{type:cloze:Text}}")
+        col.models.save(m)
+        val note = col.newNote()
+        note.setItem("Text", "hello {{c1::world}}")
+        col.addNote(note)
+        assertThat(
+            note.cards()[0].q(),
+            containsString("[[type:cloze:Text]]")
+        )
     }
 
-
     @Test
-    public void test_chained_mods() throws ConfirmModSchemaException {
-        Collection col = getCol();
-        col.getModels().setCurrent(col.getModels().byName("Cloze"));
-        Model m = col.getModels().current();
-        ModelManager mm = col.getModels();
+    @Throws(ConfirmModSchemaException::class)
+    fun test_chained_mods() {
+        val col = col
+        col.models.setCurrent(col.models.byName("Cloze")!!)
+        val m = col.models.current()
+        val mm = col.models
 
         // We replace the default Cloze template
-        JSONObject t = Models.newTemplate("ChainedCloze");
-        t.put("qfmt", "{{cloze:text:Text}}");
-        t.put("afmt", "{{cloze:text:Text}}");
-        mm.addTemplateModChanged(m, t);
-        mm.save(m);
-        col.getModels().remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0));
-
-        Note note = col.newNote();
-        String q1 = "<span style=\"color:red\">phrase</span>";
-        String a1 = "<b>sentence</b>";
-        String q2 = "<span style=\"color:red\">en chaine</span>";
-        String a2 = "<i>chained</i>";
-        note.setItem("Text", "This {{c1::" + q1 + "::" + a1 + "}} demonstrates {{c1::" + q2 + "::" + a2 + "}} clozes.");
-        assertEquals(1, col.addNote(note));
-        String question = note.cards().get(0).q();
+        val t = Models.newTemplate("ChainedCloze")
+        t.put("qfmt", "{{cloze:text:Text}}")
+        t.put("afmt", "{{cloze:text:Text}}")
+        mm.addTemplateModChanged(m!!, t)
+        mm.save(m)
+        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        val note = col.newNote()
+        val q1 = "<span style=\"color:red\">phrase</span>"
+        val a1 = "<b>sentence</b>"
+        val q2 = "<span style=\"color:red\">en chaine</span>"
+        val a2 = "<i>chained</i>"
+        note.setItem("Text", "This {{c1::$q1::$a1}} demonstrates {{c1::$q2::$a2}} clozes.")
+        assertEquals(1, col.addNote(note))
+        note.cards()[0].q()
         /* TODO: chained modifier
         assertThat("Question «"+question+"» does not contain the expected string", question, containsString("This <span class=cloze>[sentence]</span> demonstrates <span class=cloze>[chained]</span> clozes.")
                    );
@@ -424,284 +521,390 @@ public class ModelTest extends RobolectricTest {
          */
     }
 
-
     @Test
-    public void test_modelChange() throws ConfirmModSchemaException {
-        if (!BackendFactory.getDefaultLegacySchema()) {
+    @Throws(ConfirmModSchemaException::class)
+    fun test_modelChange() {
+
+        if (!BackendFactory.defaultLegacySchema) {
             // backend provides different API with TypeScript frontend
-            return;
+            return
         }
-        Collection col = getCol();
-        Model cloze = col.getModels().byName("Cloze");
+        val col = col
+        val cloze = col.models.byName("Cloze")
         // enable second template and add a note
-        Model basic = col.getModels().current();
-        ModelManager mm = col.getModels();
-        JSONObject t = Models.newTemplate("Reverse");
-        t.put("qfmt", "{{Back}}");
-        t.put("afmt", "{{Front}}");
-        mm.addTemplateModChanged(basic, t);
-        mm.save(basic);
-        Note note = col.newNote();
-        note.setItem("Front", "note");
-        note.setItem("Back", "b123");
-        col.addNote(note);
+        val basic = col.models.current()
+        val mm = col.models
+        val t = Models.newTemplate("Reverse")
+        t.put("qfmt", "{{Back}}")
+        t.put("afmt", "{{Front}}")
+        mm.addTemplateModChanged(basic!!, t)
+        mm.save(basic)
+        var note = col.newNote()
+        note.setItem("Front", "note")
+        note.setItem("Back", "b123")
+        col.addNote(note)
         // switch fields
-        Map<Integer, Integer> map = new HashMap<>();
-        map.put(0, 1);
-        map.put(1, 0);
-        col.getModels().change(basic, note.getId(), basic, map, null);
-        note.load();
-        assertEquals("b123", note.getItem("Front"));
-        assertEquals("note", note.getItem("Back"));
+        var map: MutableMap<Int, Int?> = HashMap()
+        map[0] = 1
+        map[1] = 0
+        col.models.change(basic, note.id, basic, map, null)
+        note.load()
+        assertEquals("b123", note.getItem("Front"))
+        assertEquals("note", note.getItem("Back"))
         // switch cards
-        Card c0 = note.cards().get(0);
-        Card c1 = note.cards().get(1);
-        assertThat(c0.q(), containsString("b123"));
-        assertThat(c1.q(), containsString("note"));
-        assertEquals(0, c0.getOrd());
-        assertEquals(1, c1.getOrd());
-        col.getModels().change(basic, note.getId(), basic, null, map);
-        note.load();
-        c0.load();
-        c1.load();
-        assertThat(c0.q(), containsString("note"));
-        assertThat(c1.q(), containsString("b123"));
-        assertEquals(1, c0.getOrd());
-        assertEquals(0, c1.getOrd());
+        val c0 = note.cards()[0]
+        val c1 = note.cards()[1]
+        assertThat(c0.q(), containsString("b123"))
+        assertThat(c1.q(), containsString("note"))
+        assertEquals(0, c0.ord)
+        assertEquals(1, c1.ord)
+        col.models.change(basic, note.id, basic, null, map)
+        note.load()
+        c0.load()
+        c1.load()
+        assertThat(c0.q(), containsString("note"))
+        assertThat(c1.q(), containsString("b123"))
+        assertEquals(1, c0.ord)
+        assertEquals(0, c1.ord)
         // .cards() returns cards in order
-        assertEquals(c1.getId(), note.cards().get(0).getId());
+        assertEquals(c1.id, note.cards()[0].id)
         // delete first card
-        map = new HashMap<>();
-        map.put(0, null);
-        map.put(1, 1);
+        map = HashMap()
+        map[0] = null
+        map[1] = 1
         // if (isWin) {
         //     // The low precision timer on Windows reveals a race condition
         //     time.sleep(0.05);
         // }
-        col.getModels().change(basic, note.getId(), basic, null, map);
-        note.load();
-        c0.load();
+        col.models.change(basic, note.id, basic, null, map)
+        note.load()
+        c0.load()
         // the card was deleted
         // but we have two cards, as a new one was generated
-        assertEquals(2, note.numberOfCards());
+        assertEquals(2, note.numberOfCards())
         // an unmapped field becomes blank
-        assertEquals("b123", note.getItem("Front"));
-        assertEquals("note", note.getItem("Back"));
-        col.getModels().change(basic, note.getId(), basic, map, null);
-        note.load();
-        assertEquals("", note.getItem("Front"));
-        assertEquals("note", note.getItem("Back"));
+        assertEquals("b123", note.getItem("Front"))
+        assertEquals("note", note.getItem("Back"))
+        col.models.change(basic, note.id, basic, map, null)
+        note.load()
+        assertEquals("", note.getItem("Front"))
+        assertEquals("note", note.getItem("Back"))
         // another note to try model conversion
-        note = col.newNote();
-        note.setItem("Front", "f2");
-        note.setItem("Back", "b2");
-        col.addNote(note);
+        note = col.newNote()
+        note.setItem("Front", "f2")
+        note.setItem("Back", "b2")
+        col.addNote(note)
         // counts = col.getModels().all_use_counts();
         // Using older version of the test
-        assertEquals(2, col.getModels().useCount(basic));
-        assertEquals(0, col.getModels().useCount(cloze));
+        assertEquals(2, col.models.useCount(basic))
+        assertEquals(0, col.models.useCount(cloze!!))
         // Identity map
-        map = new HashMap<>();
-        map.put(0, 0);
-        map.put(1, 1);
-        col.getModels().change(basic, note.getId(), cloze, map, map);
-        note.load();
-        assertEquals("f2", note.getItem("Text"));
-        assertEquals(2, note.numberOfCards());
+        map = HashMap()
+        map[0] = 0
+        map[1] = 1
+        col.models.change(basic, note.id, cloze, map, map)
+        note.load()
+        assertEquals("f2", note.getItem("Text"))
+        assertEquals(2, note.numberOfCards())
         // back the other way, with deletion of second ord
-        col.getModels().remTemplate(basic, basic.getJSONArray("tmpls").getJSONObject(1));
-        assertEquals(2, col.getDb().queryScalar("select count() from cards where nid = ?", note.getId()));
-        map = new HashMap<>();
-        map.put(0, 0);
-        col.getModels().change(cloze, note.getId(), basic, map, map);
-        assertEquals(1, col.getDb().queryScalar("select count() from cards where nid = ?", note.getId()));
+        col.models.remTemplate(basic, basic.getJSONArray("tmpls").getJSONObject(1))
+        assertEquals(
+            2,
+            col.db.queryScalar("select count() from cards where nid = ?", note.id)
+        )
+        map = HashMap()
+        map[0] = 0
+        col.models.change(cloze, note.id, basic, map, map)
+        assertEquals(
+            1,
+            col.db.queryScalar("select count() from cards where nid = ?", note.id)
+        )
     }
 
-
-    private void reqSize(Model model) {
-        if (model.getInt("type") == MODEL_CLOZE) {
-            return;
+    private fun reqSize(model: Model?) {
+        if (model!!.getInt("type") == MODEL_CLOZE) {
+            return
         }
-        assertEquals(model.getJSONArray("req").length(), model.getJSONArray("tmpls").length());
+        assertEquals(
+            model.getJSONArray("req").length(),
+            model.getJSONArray("tmpls").length()
+        )
     }
 
     @Test
-    public void test_req() {
+    fun test_req() {
+        val col = col
+        val mm = col.models
+        val basic = mm.byName("Basic")
+        assertTrue(basic!!.has("req"))
+        reqSize(basic)
+        var r = basic.getJSONArray("req").getJSONArray(0)
+        assertEquals(0, r.getInt(0))
+        assertTrue(
+            Arrays.asList(Models.REQ_ANY, Models.REQ_ALL).contains(r.getString(1))
+        )
+        assertEquals(1, r.getJSONArray(2).length())
+        assertEquals(0, r.getJSONArray(2).getInt(0))
 
-        Collection col = getCol();
-        ModelManager mm = col.getModels();
-        Model basic = mm.byName("Basic");
-        assertTrue(basic.has("req"));
-        reqSize(basic);
-        JSONArray r = basic.getJSONArray("req").getJSONArray(0);
-        assertEquals(0, r.getInt(0));
-        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
-        assertEquals(1, r.getJSONArray(2).length());
-        assertEquals(0, r.getJSONArray(2).getInt(0));
+        var opt = mm.byName("Basic (optional reversed card)")
+        reqSize(opt)
 
-        Model opt = mm.byName("Basic (optional reversed card)");
-        reqSize(opt);
+        r = opt!!.getJSONArray("req").getJSONArray(0)
+        assertTrue(
+            Arrays.asList(Models.REQ_ANY, Models.REQ_ALL).contains(r.getString(1))
+        )
+        assertEquals(1, r.getJSONArray(2).length())
+        assertEquals(0, r.getJSONArray(2).getInt(0))
 
-        r = opt.getJSONArray("req").getJSONArray(0);
-        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
-        assertEquals(1, r.getJSONArray(2).length());
-        assertEquals(0, r.getJSONArray(2).getInt(0));
-
-
-        assertEquals(new JSONArray("[1,\"all\",[1,2]]"), opt.getJSONArray("req").getJSONArray(1));
+        assertEquals(JSONArray("[1,\"all\",[1,2]]"), opt.getJSONArray("req").getJSONArray(1))
 
         // testing any
-        opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{Back}}{{Add Reverse}}");
-        mm.save(opt, true);
-        assertEquals(new JSONArray("[1, \"any\", [1, 2]]"), opt.getJSONArray("req").getJSONArray(1));
+        opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{Back}}{{Add Reverse}}")
+        mm.save(opt, true)
+        assertEquals(
+            JSONArray("[1, \"any\", [1, 2]]"),
+            opt.getJSONArray("req").getJSONArray(1)
+        )
         // testing null
-        if (BackendFactory.INSTANCE.getDefaultLegacySchema()) {
+        if (BackendFactory.defaultLegacySchema) {
             // can't add front without field in v16
-            opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{^Add Reverse}}{{/Add Reverse}}");
-            mm.save(opt, true);
-            assertEquals(new JSONArray("[1, \"none\", []]"), opt.getJSONArray("req").getJSONArray(1));
+            opt.getJSONArray("tmpls").getJSONObject(1)
+                .put("qfmt", "{{^Add Reverse}}{{/Add Reverse}}")
+            mm.save(opt, true)
+            assertEquals(
+                JSONArray("[1, \"none\", []]"),
+                opt.getJSONArray("req").getJSONArray(1)
+            )
         }
 
-        opt = mm.byName("Basic (type in the answer)");
-        reqSize(opt);
-        r = opt.getJSONArray("req").getJSONArray(0);
-        assertTrue(Arrays.asList(new String[] {REQ_ANY, REQ_ALL}).contains(r.getString(1)));
-        if (col.getModels() instanceof ModelsV16) {
-            assertEquals(new JSONArray("[0, 1]"), r.getJSONArray(2));
+        opt = mm.byName("Basic (type in the answer)")
+        reqSize(opt)
+        r = opt!!.getJSONArray("req").getJSONArray(0)
+        assertTrue(
+            Arrays.asList(REQ_ANY, REQ_ALL).contains(r.getString(1))
+        )
+        if (col.models is ModelsV16) {
+            assertEquals(JSONArray("[0, 1]"), r.getJSONArray(2))
         } else {
             // TODO: Port anki@4e33775ed4346ef136ece6ef5efec5ba46057c6b
-            assertEquals(new JSONArray("[0]"), r.getJSONArray(2));
+            assertEquals(JSONArray("[0]"), r.getJSONArray(2))
         }
     }
 
     @Test
     @Config(qualifiers = "en")
-    public void regression_test_pipe() {
-        Collection col = getCol();
-        ModelManager mm = col.getModels();
-        Model basic = mm.byName("Basic");
-        JSONObject template = basic.getJSONArray("tmpls").getJSONObject(0);
-        template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}");
+    fun regression_test_pipe() {
+        val col = col
+        val mm = col.models
+        val basic = mm.byName("Basic")
+        val template = basic!!.getJSONArray("tmpls").getJSONObject(0)
+        template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}")
         try {
             // in V16, the "save" throws, in V11, the "add" throws
-            mm.save(basic, true);
-            Note note = addNoteUsingBasicModel("foo", "bar");
-            fail();
-        } catch (Exception er) {
+            mm.save(basic, true)
+            addNoteUsingBasicModel("foo", "bar")
+            fail()
+        } catch (er: Exception) {
         }
     }
 
     @Test
-    public void test_getNamesOfFieldContainingCloze() {
-        assertListEquals(new ArrayList<>(), Models.getNamesOfFieldsContainingCloze(""));
-        String example = "{{cloze::foo}} <%cloze:bar%>";
-        assertListEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
-        assertListEquals(Arrays.asList("foo", "bar"), Models.getNamesOfFieldsContainingCloze(example));
+    fun test_getNamesOfFieldContainingCloze() {
+        assertListEquals(ArrayList(), Models.getNamesOfFieldsContainingCloze(""))
+        val example = "{{cloze::foo}} <%cloze:bar%>"
+        assertListEquals(
+            Arrays.asList("foo", "bar"),
+            Models.getNamesOfFieldsContainingCloze(example)
+        )
+        assertListEquals(
+            Arrays.asList("foo", "bar"),
+            Models.getNamesOfFieldsContainingCloze(example)
+        )
     }
 
     @Test
-    public void nonEmptyFieldTest() {
-        Collection col = getCol();
-        ModelManager mm = col.getModels();
-        Model basic = mm.byName("Basic");
-        Set s = new HashSet<>();
-        assertEquals(s, basic.nonEmptyFields(new String[] {"", ""}));
-        s.add("Front");
-        assertEquals(s, basic.nonEmptyFields(new String[] {"<br/>", "   \t "})); // Html is not stripped to check for card generation
-        assertEquals(s, basic.nonEmptyFields(new String[] {"P", ""}));
-        s.add("Back");
-        assertEquals(s, basic.nonEmptyFields(new String[] {"P", "A"}));
+    fun nonEmptyFieldTest() {
+        val col = col
+        val mm = col.models
+        val basic = mm.byName("Basic")
+        val s: MutableSet<String> = HashSet<String>()
+        assertEquals(s, basic!!.nonEmptyFields(arrayOf("", "")))
+        s.add("Front")
+        assertEquals(
+            s,
+            basic.nonEmptyFields(arrayOf("<br/>", "   \t "))
+        ) // Html is not stripped to check for card generation
+        assertEquals(s, basic.nonEmptyFields(arrayOf("P", "")))
+        s.add("Back")
+        assertEquals(s, basic.nonEmptyFields(arrayOf("P", "A")))
     }
 
     @Test
-    public void avail_standard_order_test() {
-        Collection col = getCol();
-        ModelManager mm = col.getModels();
-        Model basic = mm.byName("Basic");
-        Model reverse = mm.byName("Basic (and reversed card)");
+    fun avail_standard_order_test() {
+        val col = col
+        val mm = col.models
+        val basic = mm.byName("Basic")
+        val reverse = mm.byName("Basic (and reversed card)")
 
-        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", ""}));
-        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", "Back"}));
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"Foo", ""}));
-        assertListEquals(Arrays.asList(), Models._availStandardOrds(basic, new String[]{"  \t ", ""}));
-        assertListEquals(new ArrayList<>(), Models._availStandardOrds(reverse, new String[]{"", ""}));
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"Foo", ""}));
-        assertListEquals(Arrays.asList(0, 1), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}));
-        assertListEquals(Arrays.asList(1), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}));
+        assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "")))
+        assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "Back")))
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, arrayOf("Foo", "")))
+        assertListEquals(Arrays.asList(), Models._availStandardOrds(basic, arrayOf("  \t ", "")))
+        assertListEquals(ArrayList(), Models._availStandardOrds(reverse, arrayOf("", "")))
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, arrayOf("Foo", "")))
+        assertListEquals(
+            Arrays.asList(0, 1),
+            Models._availStandardOrds(reverse, arrayOf("Foo", "Bar"))
+        )
+        assertListEquals(
+            Arrays.asList(1),
+            Models._availStandardOrds(reverse, arrayOf("  \t ", "Bar"))
+        )
 
-        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", ""}, false) );
-        assertListEquals(new ArrayList<>(), Models._availStandardOrds(basic, new String[]{"", "Back"}, false));
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"Foo", ""}, false));
-        assertListEquals(Arrays.asList(), Models._availStandardOrds(basic, new String[]{"  \t ", ""}, false));
-        assertListEquals(new ArrayList<>(), Models._availStandardOrds(reverse, new String[]{"", ""}, false));
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"Foo", ""}, false));
-        assertListEquals(Arrays.asList(0, 1), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}, false));
-        assertListEquals(Arrays.asList(1), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}, false));
+        assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", ""), false))
+        assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "Back"), false))
+        assertListEquals(
+            Arrays.asList(0),
+            Models._availStandardOrds(basic, arrayOf("Foo", ""), false)
+        )
+        assertListEquals(
+            Arrays.asList(),
+            Models._availStandardOrds(basic, arrayOf("  \t ", ""), false)
+        )
+        assertListEquals(ArrayList(), Models._availStandardOrds(reverse, arrayOf("", ""), false))
+        assertListEquals(
+            Arrays.asList(0),
+            Models._availStandardOrds(reverse, arrayOf("Foo", ""), false)
+        )
+        assertListEquals(
+            Arrays.asList(0, 1),
+            Models._availStandardOrds(reverse, arrayOf("Foo", "Bar"), false)
+        )
+        assertListEquals(
+            Arrays.asList(1),
+            Models._availStandardOrds(reverse, arrayOf("  \t ", "Bar"), false)
+        )
 
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"", ""}, true) );
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"", "Back"}, true));
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"Foo", ""}, true));
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, new String[]{"  \t ", ""}, true));
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"", ""}, true));
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, new String[]{"Foo", ""}, true));
-        assertListEquals(Arrays.asList(0, 1), Models._availStandardOrds(reverse, new String[]{"Foo", "Bar"}, true));
-        assertListEquals(Arrays.asList(1), Models._availStandardOrds(reverse, new String[]{"  \t ", "Bar"}, true));
+        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, arrayOf("", ""), true))
+        assertListEquals(
+            Arrays.asList(0),
+            Models._availStandardOrds(basic, arrayOf("", "Back"), true)
+        )
+        assertListEquals(
+            Arrays.asList(0),
+            Models._availStandardOrds(basic, arrayOf("Foo", ""), true)
+        )
+        assertListEquals(
+            Arrays.asList(0),
+            Models._availStandardOrds(basic, arrayOf("  \t ", ""), true)
+        )
+        assertListEquals(
+            Arrays.asList(0),
+            Models._availStandardOrds(reverse, arrayOf("", ""), true)
+        )
+        assertListEquals(
+            Arrays.asList(0),
+            Models._availStandardOrds(reverse, arrayOf("Foo", ""), true)
+        )
+        assertListEquals(
+            Arrays.asList(0, 1),
+            Models._availStandardOrds(reverse, arrayOf("Foo", "Bar"), true)
+        )
+        assertListEquals(
+            Arrays.asList(1),
+            Models._availStandardOrds(reverse, arrayOf("  \t ", "Bar"), true)
+        )
     }
 
     @Test
-    public void avail_ords_test() {
-        Collection col = getCol();
-        ModelManager mm = col.getModels();
-        Model basic = mm.byName("Basic");
-        Model reverse = mm.byName("Basic (and reversed card)");
+    fun avail_ords_test() {
+        val col = col
+        val mm = col.models
+        val basic = mm.byName("Basic")
+        val reverse = mm.byName("Basic (and reversed card)")
 
-        assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", ""}));
-        assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[]{"", "Back"}));
-        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"Foo", ""}));
-        assertListEquals(Arrays.asList(), Models.availOrds(basic, new String[]{"  \t ", ""}));
-        assertListEquals(new ArrayList<>(), Models.availOrds(reverse, new String[]{"", ""}));
-        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[]{"Foo", ""}));
-        assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, new String[]{"Foo", "Bar"}));
-        assertListEquals(Arrays.asList(1), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}));
+        assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "")))
+        assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "Back")))
+        assertListEquals(Arrays.asList(0), Models.availOrds(basic, arrayOf("Foo", "")))
+        assertListEquals(Arrays.asList(), Models.availOrds(basic, arrayOf("  \t ", "")))
+        assertListEquals(ArrayList(), Models.availOrds(reverse, arrayOf("", "")))
+        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, arrayOf("Foo", "")))
+        assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, arrayOf("Foo", "Bar")))
+        assertListEquals(Arrays.asList(1), Models.availOrds(reverse, arrayOf("  \t ", "Bar")))
 
-        for (Models.AllowEmpty allow : new Models.AllowEmpty[] {Models.AllowEmpty.ONLY_CLOZE, Models.AllowEmpty.FALSE}) {
-            assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[] {"", ""}, allow));
-            assertListEquals(new ArrayList<>(), Models.availOrds(basic, new String[] {"", "Back"}, allow));
-            assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[] {"Foo", ""}, allow));
-            assertListEquals(Arrays.asList(), Models.availOrds(basic, new String[] {"  \t ", ""}, allow));
-            assertListEquals(new ArrayList<>(), Models.availOrds(reverse, new String[] {"", ""}, allow));
-            assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[] {"Foo", ""}, allow));
-            assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, new String[] {"Foo", "Bar"}, allow));
-            assertListEquals(Arrays.asList(1), Models.availOrds(reverse, new String[] {"  \t ", "Bar"}, allow));
+        for (allow in arrayOf(Models.AllowEmpty.ONLY_CLOZE, Models.AllowEmpty.FALSE)) {
+            assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", ""), allow))
+            assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "Back"), allow))
+            assertListEquals(Arrays.asList(0), Models.availOrds(basic, arrayOf("Foo", ""), allow))
+            assertListEquals(Arrays.asList(), Models.availOrds(basic, arrayOf("  \t ", ""), allow))
+            assertListEquals(ArrayList(), Models.availOrds(reverse, arrayOf("", ""), allow))
+            assertListEquals(Arrays.asList(0), Models.availOrds(reverse, arrayOf("Foo", ""), allow))
+            assertListEquals(
+                Arrays.asList(0, 1),
+                Models.availOrds(reverse, arrayOf("Foo", "Bar"), allow)
+            )
+            assertListEquals(
+                Arrays.asList(1),
+                Models.availOrds(reverse, arrayOf("  \t ", "Bar"), allow)
+            )
         }
 
-        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"", ""}, Models.AllowEmpty.TRUE));
-        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"", "Back"}, Models.AllowEmpty.TRUE));
-        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"Foo", ""}, Models.AllowEmpty.TRUE));
-        assertListEquals(Arrays.asList(0), Models.availOrds(basic, new String[]{"  \t ", ""}, Models.AllowEmpty.TRUE));
-        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[]{"", ""}, Models.AllowEmpty.TRUE));
-        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, new String[]{"Foo", ""}, Models.AllowEmpty.TRUE));
-        assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, new String[]{"Foo", "Bar"}, Models.AllowEmpty.TRUE));
-        assertListEquals(Arrays.asList(1), Models.availOrds(reverse, new String[]{"  \t ", "Bar"}, Models.AllowEmpty.TRUE));
+        assertListEquals(
+            Arrays.asList(0),
+            Models.availOrds(basic, arrayOf("", ""), Models.AllowEmpty.TRUE)
+        )
+        assertListEquals(
+            Arrays.asList(0),
+            Models.availOrds(basic, arrayOf("", "Back"), Models.AllowEmpty.TRUE)
+        )
+        assertListEquals(
+            Arrays.asList(0),
+            Models.availOrds(basic, arrayOf("Foo", ""), Models.AllowEmpty.TRUE)
+        )
+        assertListEquals(
+            Arrays.asList(0),
+            Models.availOrds(basic, arrayOf("  \t ", ""), Models.AllowEmpty.TRUE)
+        )
+        assertListEquals(
+            Arrays.asList(0),
+            Models.availOrds(reverse, arrayOf("", ""), Models.AllowEmpty.TRUE)
+        )
+        assertListEquals(
+            Arrays.asList(0),
+            Models.availOrds(reverse, arrayOf("Foo", ""), Models.AllowEmpty.TRUE)
+        )
+        assertListEquals(
+            Arrays.asList(0, 1),
+            Models.availOrds(reverse, arrayOf("Foo", "Bar"), Models.AllowEmpty.TRUE)
+        )
+        assertListEquals(
+            Arrays.asList(1),
+            Models.availOrds(reverse, arrayOf("  \t ", "Bar"), Models.AllowEmpty.TRUE)
+        )
     }
 
     /**
      * tests if Model.getDid() returns model did
      * or default deck id (1) if null
      */
-    @Test
-    public void getDid_test() {
-        Collection col = getCol();
-        ModelManager mm = col.getModels();
-        Model basic = mm.byName("Basic");
-        basic.put("did", 999L);
 
-        Long expected = 999L;
-        assertEquals("getDid() should return the model did", expected, basic.getDid());
+    @Test
+    fun getDid_test() {
+        val col = col
+        val mm = col.models
+        val basic = mm.byName("Basic")
+        basic!!.put("did", 999L)
+
+        val expected = 999L
+        assertEquals("getDid() should return the model did", expected, basic.did)
 
         // Check if returns default deck id (1) when did is null
-        basic.put("did", null);
-        Long expected2 = 1L;
-        assertEquals("getDid() should return 1 (default deck id) if model did is null", expected2, basic.getDid());
+        basic.put("did", null)
+        val expected2 = 1L
+        assertEquals(
+            "getDid() should return 1 (default deck id) if model did is null",
+            expected2,
+            basic.did
+        )
     }
 }
