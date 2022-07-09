@@ -97,7 +97,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         adjustToolbar(dialogView, adapter)
         mDialog = MaterialDialog(requireActivity())
             .neutralButton(R.string.dialog_cancel) // Shouldn't it be negative button?
-            .customView(view = dialogView)
+            .customView(view = dialogView, noVerticalPadding = true)
         if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
             (mDialog as MaterialDialog).negativeButton(R.string.restore_default) {
                 onDeckSelected(null)
