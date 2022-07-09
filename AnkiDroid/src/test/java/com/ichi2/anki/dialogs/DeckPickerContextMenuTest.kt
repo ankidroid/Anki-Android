@@ -24,6 +24,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.Companion.instance
 import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -94,6 +95,19 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             val deckOptions = shadowOf(this).nextStartedActivity!!
             assertEquals("com.ichi2.anki.DeckOptions", deckOptions.component!!.className)
             assertEquals(deckId, deckOptions.getLongExtra("did", 1))
+        }
+    }
+
+    @Test
+    fun testDeleteDeck() {
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            addDeck("Deck 1")
+            updateDeckList()
+            assertEquals(1, visibleDeckCount)
+
+            openContextMenuAndSelectItem(mRecyclerView, 7)
+
+            assertThat(col.decks.allNames(), contains("Default"))
         }
     }
 
