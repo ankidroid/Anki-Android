@@ -179,7 +179,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 )
             }
             .negativeButton(R.string.dialog_cancel)
-            .customView(view = tagsDialogView)
+            .customView(view = tagsDialogView, noVerticalPadding = true)
         val dialog: MaterialDialog? = mDialog
         resizeWhenSoftInputShown(dialog?.window!!)
         return dialog
