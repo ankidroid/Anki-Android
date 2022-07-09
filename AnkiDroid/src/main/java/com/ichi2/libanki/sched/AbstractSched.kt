@@ -16,7 +16,6 @@
 package com.ichi2.libanki.sched
 
 import android.app.Activity
-import android.content.Context
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -24,7 +23,6 @@ import com.ichi2.async.CancelListener
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import timber.log.Timber
 import java.lang.ref.WeakReference
 
@@ -34,7 +32,7 @@ import java.lang.ref.WeakReference
  * reset`). Some promise only apply in normal use.
  *
  */
-abstract class AbstractSched(val col: Collection) {
+abstract class AbstractSched(col: Collection) : BaseSched(col) {
     /**
      * Pop the next card from the queue. null if finished.
      *
@@ -142,7 +140,7 @@ abstract class AbstractSched(val col: Collection) {
      * @param card A Card which is in a mode allowing review. I.e. neither suspended nor buried.
      * @return Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.
      */
-    abstract fun countIdx(card: Card): Counts.Queue?
+    abstract fun countIdx(card: Card): Counts.Queue
 
     /**
      * @param card A card in a queue allowing review.
@@ -151,285 +149,22 @@ abstract class AbstractSched(val col: Collection) {
     abstract fun answerButtons(card: Card): Int
 
     /**
+     * specific-deck case not supported by the backend; UI only uses this
+     * for long-press on deck
      * @param did An id of a deck
      * @return Whether there is any buried cards in the deck
      */
     abstract fun haveBuried(did: Long): Boolean
 
     /**
-     * Unbury cards.
-     * @param type Which kind of cards should be unburied.
-     */
-    abstract fun unburyCardsForDeck(did: Long, type: UnburyType = UnburyType.ALL)
-    enum class UnburyType {
-        ALL, MANUAL, SIBLINGS
-    }
-
-    /**
-     * Unbury all buried cards in selected decks
-     */
-    fun unburyCardsForDeck(type: UnburyType = UnburyType.ALL) {
-        unburyCardsForDeck(col.decks.selected(), type)
-    }
-
-    /**
-     * Unbury all buried cards in all decks. Only used for tests.
-     */
-    open fun unburyCards() {
-        for (did in col.decks.allIds()) {
-            unburyCardsForDeck(did)
-        }
-    }
-
-    /**
-     * @param newc Extra number of NEW cards to see today in selected deck
-     * @param rev Extra number of REV cards to see today in selected deck
-     */
-    abstract fun extendLimits(newc: Int, rev: Int)
-
-    /**
-     * @param cancelListener A task that is potentially cancelled
-     * @return the due tree. null only if task is cancelled
-     */
-    abstract fun deckDueTree(cancelListener: CancelListener?): List<TreeNode<DeckDueTreeNode>>?
-
-    /**
-     * @return the due tree.
-     */
-    fun deckDueTree(): List<TreeNode<DeckDueTreeNode>> {
-        // without a cancelListener, guaranteed not null
-        return deckDueTree(cancelListener = null)!!
-    }
-
-    /**
-     * @return The tree of decks, without numbers
-     */
-    abstract fun<T : AbstractDeckTreeNode> quickDeckDueTree(): List<TreeNode<T>>
-
-    /**
-     * @return Number of new card in current deck and its descendants. Capped at reportLimit = 99999.
-     */
-    abstract fun totalNewForCurrentDeck(): Int
-
-    /** @return Number of review cards in current deck.
-     */
-    abstract fun totalRevForCurrentDeck(): Int
-
-    // In this abstract class for testing purpose only
-    /** Rebuild selected dynamic deck.  */
-    fun rebuildDyn() {
-        rebuildDyn(0)
-    }
-
-    /** Rebuild a dynamic deck.
-     * @param did The deck to rebuild. 0 means current deck.
-     */
-    abstract fun rebuildDyn(did: Long)
-
-    /** Remove all cards from a dynamic deck
-     * @param did The deck to empty. 0 means current deck.
-     */
-    abstract fun emptyDyn(did: Long)
-
-    /**
-     * i @param cids Cards to remove from their dynamic deck (it is assumed they are in one)
-     */
-    // In this abstract class for testing purpose only
-    abstract fun remFromDyn(cids: Iterable<Long>)
-    fun remFromDyn(cids: LongArray) {
-        remFromDyn(cids.toList())
-    }
-
-    /**
-     * @param card A random card
-     * @return The conf of the deck of the card.
-     */
-    // In this abstract class for testing purpose only
-    abstract fun _cardConf(card: Card): DeckConfig
-
-    /**
-     * @param context Some Context to access the lang
-     * @return A message to show to user when they reviewed the last card. Let them know if they can see learning card later today
-     * or if they could see more card today by extending review.
-     */
-    abstract fun finishedMsg(context: Context): CharSequence
-
-    /** @return whether there are any rev cards due.
-     */
-    abstract fun revDue(): Boolean
-
-    /** @return whether there are any new cards due.
-     */
-    abstract fun newDue(): Boolean
-
-    /** @return whether there are cards in learning, with review due the same
-     * day, in the selected decks.
-     */
-    abstract fun hasCardsTodayAfterStudyAheadLimit(): Boolean
-
-    /**
-     * @return Whether there are buried card is selected deck
-     */
-    abstract fun haveBuried(): Boolean
-
-    /**
-     * Return the next interval for a card and ease as a string.
-     *
-     * For a given card and ease, this returns a string that shows when the card will be shown again when the
-     * specific ease button (AGAIN, GOOD etc.) is touched. This uses unit symbols like “s” rather than names
-     * (“second”), like Anki desktop.
-     *
-     * @param context The app context, used for localization
-     * @param card The card being reviewed
-     * @param ease The button number (easy, good etc.)
-     * @return A string like “1 min” or “1.7 mo”
-     */
-    abstract fun nextIvlStr(context: Context, card: Card, @BUTTON_TYPE ease: Int): String
-
-    /**
-     * @param card A card
-     * @param ease a button, between 1 and answerButtons(card)
-     * @return the next interval for CARD, in seconds if ease is pressed.
-     */
-    // In this abstract class for testing purpose only
-    abstract fun nextIvl(card: Card, @BUTTON_TYPE ease: Int): Long
-
-    /**
-     * @param ids Id of cards to suspend
-     */
-    abstract fun suspendCards(ids: LongArray)
-
-    /**
-     * @param ids Id of cards to unsuspend
-     */
-    abstract fun unsuspendCards(ids: LongArray)
-
-    /**
-     * @param cids Ids of cards to bury
-     */
-    fun buryCards(cids: LongArray) {
-        buryCards(cids, manual = true)
-    }
-
-    /**
-     * @param cids Ids of the cards to bury
-     * @param manual Whether bury is made manually or not. Only useful for sched v2.
-     */
-    @VisibleForTesting
-    abstract fun buryCards(cids: LongArray, manual: Boolean)
-
-    /**
-     * Bury all cards for note until next session.
-     * @param nid The id of the targeted note.
-     */
-    abstract fun buryNote(nid: Long)
-
-    /**
-     * @param ids Ids of cards to put at the end of the new queue.
-     */
-    abstract fun forgetCards(ids: List<Long>)
-
-    /**
-     * Put cards in review queue with a new interval in days (min, max).
-     *
-     * @param ids The list of card ids to be affected
-     * @param imin the minimum interval (inclusive)
-     * @param imax The maximum interval (inclusive)
-     */
-    abstract fun reschedCards(ids: List<Long>, imin: Int, imax: Int)
-
-    /**
-     * @param ids Ids of cards to reset for export
-     */
-    abstract fun resetCards(ids: Array<Long>)
-
-    /**
-     * @param cids Ids of card to set to new and sort
-     * @param start The lowest due value for those cards
-     * @param step The step between two successive due value set to those cards
-     * @param shuffle Whether the list should be shuffled.
-     * @param shift Whether the cards already new should be shifted to make room for cards of cids
-     */
-    abstract fun sortCards(cids: List<Long>, start: Int, step: Int, shuffle: Boolean, shift: Boolean)
-
-    /**
-     * Randomize the cards of did
-     * @param did Id of a deck
-     */
-    abstract fun randomizeCards(did: Long)
-
-    /**
-     * Sort the cards of deck `id` by creation date of the note
-     * @param did Id of a deck
-     */
-    abstract fun orderCards(did: Long)
-
-    /**
-     * Sort or randomize all cards of all decks with this deck configuration.
-     * @param conf A deck configuration
-     */
-    abstract fun resortConf(conf: DeckConfig)
-
-    /**
-     * If the deck with id did is set to random order, then randomize their card.
-     * This is used to deal which are imported
-     * @param did Id of a deck
-     */
-    abstract fun maybeRandomizeDeck(did: Long)
-
-    /**
-
-     /**
-     * Unbury all buried card of the deck
-     * @param did An id of the deck
-     */
-     abstract fun unburyCardsForDeck(did: Long)
      * @return Name of the scheduler. std or std2 currently.
      */
     abstract val name: String
-
-    /**
-     * @return Number of days since creation of the collection.
-     */
-    abstract val today: Int
-
-    /**
-     * @return Timestamp of when the day ends. Takes into account hour at which day change for anki and timezone
-     */
-    abstract val dayCutoff: Long
 
     /** @return Number of repetitions today. Note that a repetition is the fact that the scheduler sent a card, and not the fact that the card was answered.
      * So buried, suspended, ... cards are also counted as repetitions.
      */
     abstract val reps: Int
-
-    /** @return Number of cards in the current decks, its descendants and ancestors.
-     */
-    abstract fun cardCount(): Int
-
-    /**
-     * Return an estimate, in minutes, for how long it will take to complete all the reps in `counts`.
-     *
-     * The estimator builds rates for each queue type by looking at 10 days of history from the revlog table. For
-     * efficiency, and to maintain the same rates for a review session, the rates are cached and reused until a
-     * reload is forced.
-     *
-     * Notes:
-     * - Because the revlog table does not record deck IDs, the rates cannot be reduced to a single deck and thus cover
-     * the whole collection which may be inaccurate for some decks.
-     * - There is no efficient way to determine how many lrn cards are generated by each new card. This estimator
-     * assumes 1 card is generated as a compromise.
-     * - If there is no revlog data to work with, reasonable defaults are chosen as a compromise to predicting 0 minutes.
-     *
-     * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
-     * @param reload Force rebuild of estimator rates using the revlog.
-     */
-    abstract fun eta(counts: Counts, reload: Boolean): Int
-
-    /** Same as above and force reload. */
-    fun eta(counts: Counts): Int {
-        return eta(counts, true)
-    }
 
     /**
      * @param contextReference An activity on which a message can be shown. Does not force the activity to remains in memory
@@ -443,42 +178,12 @@ abstract class AbstractSched(val col: Collection) {
      * @param wasLeech Whether the card was a leech before the review was made (if false, remove the leech tag)
      */
     abstract fun undoReview(card: Card, wasLeech: Boolean)
-    interface LimitMethod {
-        fun operation(g: Deck): Int
-    }
-
-    /** Given a deck, compute the number of cards to see today, taking its pre-computed limit into consideration.  It
-     * considers either review or new cards. Used by WalkingCount to consider all subdecks and parents of a specific
-     * decks. */
-    interface CountMethod {
-        fun operation(did: Long, lim: Int): Int
-    }
-
-    /** Notifies the scheduler that there is no more current card. This is the case when a card is answered, when the
-     * scheduler is reset...  */
-    abstract fun discardCurrentCard()
 
     /** @return The button to press to enter "good" on a new card.
      */
     @get:BUTTON_TYPE
     @get:VisibleForTesting
     abstract val goodNewButton: Int
-
-    /**
-     * @return The number of revlog in the collection
-     */
-    abstract fun logCount(): Int
-
-    abstract fun _new_timezone_enabled(): Boolean
-
-    /**
-     * Save the UTC west offset at the time of creation into the DB.
-     * Once stored, this activates the new timezone handling code.
-     */
-    @Throws(BackendNotSupportedException::class)
-    abstract fun set_creation_offset()
-    abstract fun clear_creation_offset()
-    abstract fun useNewTimezoneCode()
 
     companion object {
         /**

@@ -875,9 +875,6 @@ public class Sched extends SchedV2 {
 
     @Override
     public void rebuildDyn(long did) {
-        if (did == 0) {
-            did = getCol().getDecks().selected();
-        }
         Deck deck = getCol().getDecks().get(did);
         if (deck.isStd()) {
             Timber.e("error: deck is not a filtered deck");
@@ -916,10 +913,7 @@ public class Sched extends SchedV2 {
 
 
     @Override
-    public void emptyDyn(long did, String lim) {
-        if (lim == null) {
-            lim = "did = " + did;
-        }
+    public void emptyDyn(String lim) {
         getCol().log(getCol().getDb().queryLongList("select id from cards where " + lim));
         // move out of cram queue
         getCol().getDb().execute(
