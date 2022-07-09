@@ -84,6 +84,7 @@ open class SensibleSwipeDismissBehavior<V : View> : SwipeDismissBehavior<V>() {
                 initialChildLeft = child.left
             }
             child.parent?.requestDisallowInterceptTouchEvent(true)
+            child.startIgnoringExternalChangesOfHorizontalPosition()
         }
 
         override fun onViewReleased(child: View, xvel: Float, yvel: Float) {
@@ -95,18 +96,25 @@ open class SensibleSwipeDismissBehavior<V : View> : SwipeDismissBehavior<V>() {
                 Dismiss.ToTheLeft -> initialChildLeft - child.width - child.marginLeft
             }
 
+            fun onViewSettled() {
+                if (dismiss != Dismiss.DoNotDismiss) {
+                    listener?.onDismiss(child)
+                }
+                child.stopIgnoringExternalChangesOfHorizontalPosition()
+            }
+
             if (viewDragHelper?.settleCapturedViewAt(targetChildLeft, child.top) == true) {
                 child.postOnAnimation(object : Runnable {
                     override fun run() {
                         if (viewDragHelper?.continueSettling(true) == true) {
                             child.postOnAnimation(this)
-                        } else if (dismiss != Dismiss.DoNotDismiss) {
-                            listener?.onDismiss(child)
+                        } else {
+                            onViewSettled()
                         }
                     }
                 })
-            } else if (dismiss != Dismiss.DoNotDismiss) {
-                listener?.onDismiss(child)
+            } else {
+                onViewSettled()
             }
         }
 
@@ -136,6 +144,33 @@ open class SensibleSwipeDismissBehavior<V : View> : SwipeDismissBehavior<V>() {
                     else -> Dismiss.ToTheLeft
                 }
             }
+        }
+
+        /**
+         * `CoordinatorLayout` may try to layout its children while the snackbar is settling,
+         * for instance, if you touch other views after dragging and releasing the snackbar,
+         * or if you try dragging a snackbar right after flicking the card list in Card browser.
+         * This makes it briefly flicker in the original position--
+         * especially if the alpha of the snackbar isn't changed.
+         *
+         * While this glitch is quite rare in practice, there's a straightforward workaround.
+         * When such a layout event occurs, we are undoing any horizontal changes. There's probably
+         * a more decent way of resolving this, but--again--this is an extremely rare glitch.
+         */
+        @Suppress("UNUSED_ANONYMOUS_PARAMETER") // just to make parameter list readable
+        private val horizontalLayoutChangeUndoingLayoutChangeListener = View.OnLayoutChangeListener {
+                view, newLeft, newTop, newRight, newBottom, oldLeft, oldTop, oldRight, oldBottom ->
+            if (newLeft != oldLeft && newLeft == initialChildLeft) {
+                view.layout(oldLeft, newTop, oldRight, newBottom)
+            }
+        }
+
+        private fun View.startIgnoringExternalChangesOfHorizontalPosition() {
+            addOnLayoutChangeListener(horizontalLayoutChangeUndoingLayoutChangeListener)
+        }
+
+        private fun View.stopIgnoringExternalChangesOfHorizontalPosition() {
+            removeOnLayoutChangeListener(horizontalLayoutChangeUndoingLayoutChangeListener)
         }
     }
 }
