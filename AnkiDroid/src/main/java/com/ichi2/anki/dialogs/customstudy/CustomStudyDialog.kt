@@ -106,7 +106,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         return MaterialDialog(requireActivity())
             .title(R.string.custom_study)
             .cancelable(true)
-            .listItems(items = getValuesFromKeys(keyValueMap, listIds).toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, charSequence: CharSequence ->
+            .listItems(items = getValuesFromKeys(keyValueMap, listIds).toList().map { it as CharSequence }) { _: MaterialDialog, _: Int, charSequence: CharSequence ->
                 when (ContextMenuOption.fromString(resources, charSequence.toString())) {
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
@@ -144,7 +144,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         // User asked for a standard custom study option
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
-                                ContextMenuOption.fromInt(index),
+                                ContextMenuOption.fromString(resources, charSequence.toString()),
                                 requireArguments().getLong("did"),
                                 jumpToReviewer
                             )
