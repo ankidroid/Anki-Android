@@ -162,7 +162,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
                 Mockito
                     .doAnswer {
                         called = true
-                        assertThat("collection should be locked", Storage.isLocked(), equalTo(true))
+                        assertThat("collection should be locked", Storage.isLocked, equalTo(true))
                         throw TestException("")
                     }
                     .whenever(it)
@@ -171,7 +171,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
         }
 
         assertThat("mock was unused", called, equalTo(true))
-        assertThat("the collection is no longer locked", Storage.isLocked(), equalTo(false))
+        assertThat("the collection is no longer locked", Storage.isLocked, equalTo(false))
     }
 
     @Test
@@ -215,7 +215,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
 
         col.close() // required for Windows, can't delete if locked.
 
-        CompatHelper.compat.deleteFile(File(defaultCollectionSourcePath, "collection.media.ad.db2"))
+        CompatHelper.compat.deleteFile(File(defaultCollectionSourcePath, "collection.anki2"))
 
         val ex = assertThrows<MissingEssentialFileException> {
             executeAlgorithmSuccessfully(defaultCollectionSourcePath) {
@@ -223,7 +223,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
             }
         }
 
-        assertThat(ex.file.name, equalTo("collection.media.ad.db2"))
+        assertThat(ex.file.name, equalTo("collection.anki2"))
     }
 
     /**

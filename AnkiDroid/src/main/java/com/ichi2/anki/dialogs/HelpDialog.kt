@@ -265,7 +265,7 @@ object HelpDialog {
 
         companion object {
 
-            val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
+            @JvmField val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
                 override fun createFromParcel(`in`: Parcel): ExceptionReportItem {
                     return ExceptionReportItem(`in`)
                 }

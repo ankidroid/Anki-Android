@@ -27,7 +27,6 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.edit
-import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
@@ -38,6 +37,7 @@ import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.lang.Exception
 import java.net.UnknownHostException
@@ -48,7 +48,8 @@ class MyAccount : AnkiActivity() {
     private lateinit var mUsername: EditText
     private lateinit var mPassword: TextInputEditField
     private lateinit var mUsernameLoggedIn: TextView
-    private var mProgressDialog: MaterialDialog? = null
+    @Suppress("Deprecation")
+    private var mProgressDialog: android.app.ProgressDialog? = null
     var toolbar: Toolbar? = null
     private lateinit var mPasswordLayout: TextInputLayout
     private lateinit var mAnkidroidLogo: ImageView
@@ -107,15 +108,19 @@ class MyAccount : AnkiActivity() {
             return
         }
         Timber.i("Attempting auto-login")
-        Connection.login(
-            mLoginListener,
-            Connection.Payload(
-                arrayOf(
-                    username, password,
-                    getInstance(this)
+        if (!BackendFactory.defaultLegacySchema) {
+            handleNewLogin(username, password)
+        } else {
+            Connection.login(
+                mLoginListener,
+                Connection.Payload(
+                    arrayOf(
+                        username, password,
+                        getInstance(this)
+                    )
                 )
             )
-        )
+        }
     }
 
     private fun saveUserInformation(username: String, hkey: String) {
@@ -142,15 +147,19 @@ class MyAccount : AnkiActivity() {
             mPassword.requestFocus()
             return
         }
-        Connection.login(
-            mLoginListener,
-            Connection.Payload(
-                arrayOf(
-                    username, password,
-                    getInstance(this)
+        if (!BackendFactory.defaultLegacySchema) {
+            handleNewLogin(username, password)
+        } else {
+            Connection.login(
+                mLoginListener,
+                Connection.Payload(
+                    arrayOf(
+                        username, password,
+                        getInstance(this)
+                    )
                 )
             )
-        )
+        }
     }
 
     private fun logout() {

@@ -22,18 +22,21 @@
 
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_general"
     android:summary="@string/pref_cat_general_summ">
         <ListPreference
             android:entries="@array/add_to_cur_labels"
             android:entryValues="@array/add_to_cur_values"
             android:key="useCurrent"
-            android:title="@string/use_current" />
+            android:title="@string/use_current"
+            app:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="@string/empty_string"
             android:key="language"
             android:icon="@drawable/ic_language_black_24dp"
-            android:title="@string/language" />
+            android:title="@string/language"
+            app:useSimpleSummaryProvider="true"/>
         <SwitchPreference
             android:defaultValue="false"
             android:key="analyticsOptIn"
@@ -50,5 +53,6 @@
             android:entries="@array/error_reporting_choice_labels"
             android:entryValues="@array/error_reporting_choice_values"
             android:key="reportErrorMode"
-            android:title="@string/error_reporting_choice" />
+            android:title="@string/error_reporting_choice"
+            app:useSimpleSummaryProvider="true"/>
 </PreferenceScreen>

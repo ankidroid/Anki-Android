@@ -47,6 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">Deshabilitado</string>
     <string name="enabled">Habilitado</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Ajustes generales</string>
@@ -179,10 +182,9 @@
     <string name="new_spread" maxLength="41">Nueva posición de tarjeta</string>
     <string name="learn_cutoff" maxLength="41">Aprender antes del límite</string>
     <string name="time_limit" maxLength="41">Límite de tiempo para Timebox</string>
-    <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone" maxLength="41">Nuevo manejo de zona horaria</string>
     <string name="day_offset_with_description" maxLength="41">Comienzo del día siguiente (0 es medianoche, 23 es 11PM)</string>
-    <string name="day_offset_summ">XXX horas luego pasada la medianoche</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Medianoche</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11 PM</string>
     <string name="sched_v2" maxLength="41">Planificador V2</string>

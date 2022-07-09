@@ -40,6 +40,8 @@ import com.ichi2.libanki.sched.DeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.*
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
+import net.ankiweb.rsdroid.BackendFactory
+import net.ankiweb.rsdroid.RustCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber
 import java.io.File
@@ -553,6 +555,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
      * A class allowing to send partial search result to the browser to display while the search ends
      */
     @KotlinCleanup("move variables to constructor")
+    @RustCleanup("This provides little value since moving to the backend for DB access. Strip out?")
     class PartialSearch(cards: List<CardCache>, columnIndex1: Int, columnIndex2: Int, numCardsToRender: Int, collectionTask: ProgressSenderAndCancelListener<List<CardCache>>, col: Collection) : ProgressSenderAndCancelListener<List<Long>> {
         private val mCards: MutableList<CardCache>
         private val mColumn1Index: Int
@@ -848,7 +851,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
                 var tmpCol: Collection? = null
                 try {
-                    tmpCol = Storage.Collection(context, colFile)
+                    tmpCol = Storage.collection(context, colFile)
                     if (!tmpCol.validCollection()) {
                         tmpCol.close()
                         return Computation.ERR
@@ -1076,8 +1079,13 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     class DeleteMedia(private val unused: List<String>) : TaskDelegate<Void, Int>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Int {
             val m = col.media
-            for (fname in unused) {
-                m.removeFile(fname)
+            if (!BackendFactory.defaultLegacySchema) {
+                // FIXME: this provides progress info that is not currently used
+                col.newMedia.removeFiles(unused)
+            } else {
+                for (fname in unused) {
+                    m.removeFile(fname)
+                }
             }
             return unused.size
         }

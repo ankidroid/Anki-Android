@@ -30,6 +30,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.customListAdapter
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -60,23 +61,23 @@ class RecursivePictureMenu : DialogFragment() {
                 return items.size
             }
         }
-        val dialog = MaterialDialog.Builder(requireContext())
-            .adapter(adapter, null)
-            .title(title)
-            .show()
+        val dialog = MaterialDialog(requireContext())
+            .customListAdapter(adapter, null)
+            .title(text = title)
         setMenuBreadcrumbHeader(dialog)
-        val v = dialog.findViewById(R.id.md_contentRecyclerView)
+        val v = dialog.findViewById<RecyclerView>(R.id.md_recyclerview_content)
         v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, 0)
         // DEFECT: There is 9dp of bottom margin which I can't seem to get rid of.
+        dialog.show()
         return dialog
     }
 
     protected fun setMenuBreadcrumbHeader(dialog: MaterialDialog) {
         try {
-            val titleFrame = dialog.findViewById(R.id.md_titleFrame)
+            val titleFrame = dialog.findViewById<View>(R.id.md_title_layout)
             titleFrame.setPadding(10, 22, 10, 10)
             titleFrame.setOnClickListener { dismiss() }
-            val icon = dialog.findViewById(R.id.md_icon) as ImageView
+            val icon = dialog.findViewById<ImageView>(R.id.md_icon_title)
             icon.visibility = View.VISIBLE
             val iconValue = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_menu_back_black_24dp)
             iconValue!!.isAutoMirrored = true
@@ -179,7 +180,7 @@ class RecursivePictureMenu : DialogFragment() {
         }
 
         companion object {
-            val CREATOR: Parcelable.Creator<ItemHeader?> = object : Parcelable.Creator<ItemHeader?> {
+            @JvmField val CREATOR: Parcelable.Creator<ItemHeader?> = object : Parcelable.Creator<ItemHeader?> {
                 override fun createFromParcel(parcel: Parcel): ItemHeader {
                     return ItemHeader(parcel)
                 }

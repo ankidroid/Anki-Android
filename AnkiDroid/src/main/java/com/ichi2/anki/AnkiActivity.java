@@ -52,6 +52,7 @@ import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.CollectionGetter;
+import com.ichi2.themes.Theme;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
@@ -66,7 +67,6 @@ import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction.*;
 import static com.ichi2.anim.ActivityTransitionAnimation.Direction;
 import static com.ichi2.anki.Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION;
-import static com.ichi2.themes.Themes.currentTheme;
 
 public class AnkiActivity extends AppCompatActivity implements SimpleMessageDialog.SimpleMessageDialogListener, CollectionGetter {
 
@@ -80,6 +80,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     private final String mActivityName;
 
     private final DialogHandler mHandler = new DialogHandler(this);
+
+    private Theme mPreviousTheme = null;
 
     // custom tabs
     private CustomTabActivityHelper mCustomTabActivityHelper;
@@ -103,6 +105,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         // Set the theme
         Themes.setTheme(this);
         Themes.disableXiaomiForceDarkMode(this);
+        mPreviousTheme = Themes.currentTheme;
         super.onCreate(savedInstanceState);
         // Disable the notifications bar if running under the test monkey.
         if (AdaptionUtil.isUserATestClient()) {
@@ -121,6 +124,10 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Timber.i("AnkiActivity::onStart - %s", mActivityName);
         super.onStart();
         mCustomTabActivityHelper.bindCustomTabsService(this);
+        // Reload theme in case it was changed on another activity
+        if (mPreviousTheme != Themes.currentTheme) {
+            recreate();
+        }
     }
 
     @Override
@@ -139,7 +146,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             Themes.systemIsInNightMode = newNightModeStatus;
             if (Themes.themeFollowsSystem()) {
                 Themes.updateCurrentTheme();
-                restartActivity();
+                recreate();
             }
         }
     }
@@ -486,7 +493,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     private int getColorScheme() {
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
             return COLOR_SCHEME_SYSTEM;
-        } else if (currentTheme.isNightMode()) {
+        } else if (Themes.currentTheme.isNightMode()) {
             return COLOR_SCHEME_DARK;
         } else {
             return COLOR_SCHEME_LIGHT;

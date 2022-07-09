@@ -18,6 +18,7 @@ package com.ichi2.utils
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.ClipboardManager
+import android.content.Context
 import android.net.Uri
 import androidx.annotation.CheckResult
 
@@ -28,68 +29,48 @@ object ClipboardUtil {
 
     @JvmStatic
     fun hasImage(clipboard: ClipboardManager?): Boolean {
-        if (clipboard == null) {
-            return false
-        }
-        if (!clipboard.hasPrimaryClip()) {
-            return false
-        }
-        val primaryClip = clipboard.primaryClip
-        return hasImage(primaryClip!!.description)
+        return clipboard
+            ?.takeIf { it.hasPrimaryClip() }
+            ?.primaryClip
+            ?.let { hasImage(it.description) }
+            ?: false
     }
 
     @JvmStatic
     fun hasImage(description: ClipDescription?): Boolean {
-        if (description == null) {
-            return false
-        }
-        for (mimeType in IMAGE_MIME_TYPES) {
-            if (description.hasMimeType(mimeType)) {
-                return true
-            }
-        }
-        return false
+        return description
+            ?.run { IMAGE_MIME_TYPES.any { hasMimeType(it) } }
+            ?: false
     }
+
+    private fun getFirstItem(clipboard: ClipboardManager?) = clipboard
+        ?.takeIf { it.hasPrimaryClip() }
+        ?.primaryClip
+        ?.takeIf { it.itemCount > 0 }
+        ?.getItemAt(0)
 
     @JvmStatic
     fun getImageUri(clipboard: ClipboardManager?): Uri? {
-        if (clipboard == null) {
-            return null
-        }
-        if (!clipboard.hasPrimaryClip()) {
-            return null
-        }
-        val primaryClip = clipboard.primaryClip
-        return if (primaryClip!!.itemCount == 0) {
-            null
-        } else primaryClip.getItemAt(0).uri
+        return getFirstItem(clipboard)?.uri
     }
 
     @JvmStatic
     @CheckResult
     fun getText(clipboard: ClipboardManager?): CharSequence? {
-        if (clipboard == null) {
-            return null
-        }
-        if (!clipboard.hasPrimaryClip()) {
-            return null
-        }
-        val data = clipboard.primaryClip
-        if (data!!.itemCount == 0) {
-            return null
-        }
-        val i = data.getItemAt(0)
-        return i.text
+        return getFirstItem(clipboard)?.text
     }
 
     @JvmStatic
     @CheckResult
-    fun getDescriptionLabel(clip: ClipData?): CharSequence? {
-        if (clip == null) {
-            return null
-        }
-        return if (clip.description == null) {
-            null
-        } else clip.description.label
+    fun getPlainText(clipboard: ClipboardManager?, context: Context): CharSequence? {
+        return getFirstItem(clipboard)?.coerceToText(context)
+    }
+
+    @JvmStatic
+    @CheckResult
+    fun getDescriptionLabel(clipboard: ClipData?): CharSequence? {
+        return clipboard
+            ?.description
+            ?.label
     }
 }

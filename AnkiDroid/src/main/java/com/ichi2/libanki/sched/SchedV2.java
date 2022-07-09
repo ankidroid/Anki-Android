@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.util.Pair;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
@@ -47,6 +48,7 @@ import com.ichi2.libanki.DeckConfig;
 
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
 import com.ichi2.libanki.backend.model.SchedTimingToday;
+import com.ichi2.libanki.backend.model.SchedTimingTodayProto;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.Assert;
@@ -56,7 +58,9 @@ import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
 
+import net.ankiweb.rsdroid.BackendFactory;
 import net.ankiweb.rsdroid.RustCleanup;
+import net.ankiweb.rsdroid.RustV1Cleanup;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -521,14 +525,14 @@ public class SchedV2 extends AbstractSched {
      *
      * Return nulls when deck task is cancelled.
      */
-    public @NonNull List<DeckDueTreeNode> deckDueList() {
+    private @NonNull List<DeckDueTreeNode> deckDueList() {
         return deckDueList(null);
     }
 
     // Overridden
     /**
      * Return sorted list of all decks.*/
-    public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
+    protected @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener collectionTask) {
         _checkDay();
         getCol().getDecks().checkIntegrity();
         List<Deck> allDecksSorted = getCol().getDecks().allSorted();
@@ -559,7 +563,7 @@ public class SchedV2 extends AbstractSched {
             int rlim = _deckRevLimitSingle(deck, plim, false);
             int rev = _revForDeck(deck.getLong("id"), rlim, childMap);
             // save to list
-            deckNodes.add(new DeckDueTreeNode(getCol(), deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            deckNodes.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new, false, false));
             // add deck as a parent
             lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
         }
@@ -571,14 +575,17 @@ public class SchedV2 extends AbstractSched {
      It may takes a lot of time to compute the number of card, it
      requires multiple database access by deck.  Ignoring this number
      lead to the creation of a tree more quickly.*/
+    @RustCleanup("consider updating callers to use col.deckTreeLegacy() directly, and removing this")
     @Override
-    public @NonNull List<TreeNode<DeckTreeNode>> quickDeckDueTree() {
-        // Similar to deckDueTree, ignoring the numbers
-
+    public @NonNull
+    List<? extends TreeNode<? extends AbstractDeckTreeNode>> quickDeckDueTree() {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            return BackendSchedKt.deckTreeLegacy(getCol().getNewBackend(), false);
+        }
         // Similar to deckDueList
         ArrayList<DeckTreeNode> allDecksSorted = new ArrayList<>();
         for (JSONObject deck : getCol().getDecks().allSorted()) {
-            DeckTreeNode g = new DeckTreeNode(getCol(), deck.getString("name"), deck.getLong("id"));
+            DeckTreeNode g = new DeckTreeNode(deck.getString("name"), deck.getLong("id"));
             allDecksSorted.add(g);
         }
         // End of the similar part.
@@ -586,18 +593,18 @@ public class SchedV2 extends AbstractSched {
         return _groupChildren(allDecksSorted, false);
     }
 
-
-    public @NonNull List<TreeNode<DeckDueTreeNode>> deckDueTree() {
-        return deckDueTree(null);
-    }
-
     @Nullable
+    @RustCleanup("once defaultLegacySchema is removed, cancelListener can be removed")
     public List<TreeNode<DeckDueTreeNode>> deckDueTree(@Nullable CancelListener cancelListener) {
-        List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
-        if (allDecksSorted == null) {
-            return null;
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            return BackendSchedKt.deckTreeLegacy(getCol().getNewBackend(), true);
+        } else {
+            List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
+            if (allDecksSorted == null) {
+                return null;
+            }
+            return _groupChildren(allDecksSorted, true);
         }
-        return _groupChildren(allDecksSorted, true);
     }
 
     /**
@@ -664,7 +671,7 @@ public class SchedV2 extends AbstractSched {
             TreeNode<T> toAdd = new TreeNode<>(child);
             toAdd.getChildren().addAll(childrenNode);
             List<T> childValues = childrenNode.stream().map(TreeNode::getValue).collect(Collectors.toList());
-            child.processChildren(childValues, "std".equals(getName()));
+            child.processChildren(getCol(), childValues, "std".equals(getName()));
 
             sortedChildren.add(toAdd);
         }
@@ -2254,14 +2261,25 @@ public class SchedV2 extends AbstractSched {
     }
 
     @Nullable
+    @RustV1Cleanup("switch to non-legacy backend method")
     private SchedTimingToday _timingToday() {
+        /*
+         * Obtains Timing information for the current day.
+         *
+         * @param createdSecs A UNIX timestamp of the collection creation time
+         * @param createdMinsWest The offset west of UTC at the time of creation (eg UTC+10 hours is -600)
+         * @param nowSecs timestamp of the current time
+         * @param nowMinsWest The current offset west of UTC
+         * @param rolloverHour The hour of the day the rollover happens (eg 4 for 4am)
+         * @return Timing information for the current day. See [SchedTimingToday].
+         */
         try {
-            return getCol().getBackend().sched_timing_today(
+            return new SchedTimingTodayProto(getCol().getBackend().schedTimingTodayLegacy(
                     getCol().getCrt(),
                     _creation_timezone_offset(),
                     getTime().intTime(),
                     _current_timezone_offset(),
-                    _rolloverHour());
+                    _rolloverHour()));
         } catch (BackendNotSupportedException e) {
             Timber.w(e);
             return null;
@@ -2273,18 +2291,36 @@ public class SchedV2 extends AbstractSched {
         if (getCol().getServer()) {
             return getCol().get_config("localOffset", 0);
         } else {
-            return getCol().getBackend().local_minutes_west(getTime().intTime());
+            return localMinutesWest(getTime().intTime());
         }
+    }
+
+    /**
+     * For the given timestamp, return minutes west of UTC in the local timezone.
+     *
+     * eg, Australia at +10 hours is -600.<br>
+     * Includes the daylight savings offset if applicable.
+     *
+     * @param timestampSeconds The timestamp in seconds
+     * @return minutes west of UTC in the local timezone
+     */
+    private int localMinutesWest(long timestampSeconds) {
+        return getCol().getBackend().localMinutesWestLegacy(timestampSeconds);
+
     }
 
     private int _creation_timezone_offset() {
         return getCol().get_config("creationOffset", 0);
     }
+    
+    public void useNewTimezoneCode() {
+       set_creation_offset();
+    }
 
     @Override
-    public void set_creation_offset() throws BackendNotSupportedException {
-        int mins_west = getCol().getBackend().local_minutes_west(getCol().getCrt());
-        getCol().set_config("creationOffset", mins_west);
+    public void set_creation_offset() {
+        int minsWest = localMinutesWest(getCol().getCrt());
+        getCol().set_config("creationOffset", minsWest);
     }
 
     @Override

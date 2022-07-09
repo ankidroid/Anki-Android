@@ -47,6 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">비활성화됨</string>
     <string name="enabled">활성화됨</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">일반 설정</string>
@@ -179,10 +182,9 @@
     <string name="new_spread" maxLength="41">새 카드 위치</string>
     <string name="learn_cutoff" maxLength="41">미리 학습하기 시간 설정</string>
     <string name="time_limit" maxLength="41">타임박스 시간 설정</string>
-    <string name="time_limit_summ">XXX 분</string>
     <string name="new_timezone" maxLength="41">새 시간대 다루기</string>
     <string name="day_offset_with_description" maxLength="41">다음 날의 시작</string>
-    <string name="day_offset_summ">자정으로부터 지난 XXX 시간</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">자정</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">오후 11시</string>
     <string name="sched_v2" maxLength="41">V2 스케쥴러</string>

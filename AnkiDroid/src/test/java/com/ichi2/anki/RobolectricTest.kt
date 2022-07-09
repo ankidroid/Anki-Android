@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Looper
+import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.annotation.CheckResult
 import androidx.annotation.NonNull
@@ -28,8 +29,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.exception.ConfirmModSchemaException
@@ -94,43 +96,11 @@ open class RobolectricTest : CollectionGetter {
             runTasksInBackground()
         }
 
-        // Allow an override for the testing library (allowing Robolectric to access the Rust backend)
-        // This allows M1 macs to access a .dylib built for arm64, despite it not existing in the .jar
-        val backendPath = System.getenv("ANKIDROID_BACKEND_PATH")
-        if (backendPath != null) {
-            if (BuildConfig.BACKEND_VERSION != System.getenv("ANKIDROID_BACKEND_VERSION")) {
-                throw java.lang.IllegalStateException(
-                    "AnkiDroid backend testing library requires an update.\n" +
-                        "Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v ${System.getenv("ANKIDROID_BACKEND_VERSION")})\n" +
-                        "And then set \$ANKIDROID_BACKEND_VERSION to ${BuildConfig.BACKEND_VERSION}\n" +
-                        "Error: \$ANKIDROID_BACKEND_VERSION: expected '${BuildConfig.BACKEND_VERSION}', got '${System.getenv("ANKIDROID_BACKEND_VERSION")}'"
-                )
-            }
-            // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
-            RustBackendLoader.loadRsdroid(backendPath)
-        } else {
-            // default (no env variable): Extract the backend testing lib from the jar
-            try {
-                RustBackendLoader.init()
-            } catch (e: UnsatisfiedLinkError) {
-                if (e.message.toString().contains("arm64e")) {
-                    // Giving the commands to user to add the required env variables
-                    val exception = "Please download the arm64 dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/${BuildConfig.BACKEND_VERSION} and add the following environment variables to your device by using following commands: \n" +
-                        "export ANKIDROID_BACKEND_PATH=\"{Path to the dylib file}\"\n" +
-                        "export ANKIDROID_BACKEND_VERSION=\"${BuildConfig.BACKEND_VERSION}\""
-                    throw IllegalStateException(exception, e)
-                }
-                throw e
-            }
-        }
+        maybeSetupBackend()
 
         // If you want to see the Android logging (from Timber), you need to set it up here
         ShadowLog.stream = System.out
 
-        // Robolectric can't handle our default sqlite implementation of requery, it needs the framework
-        DB.setSqliteOpenHelperFactory(getHelperFactory())
-        // But, don't use the helper unless useLegacyHelper is true
-        Storage.setUseBackend(!useLegacyHelper())
         Storage.setUseInMemory(useInMemoryDatabase())
 
         // Reset static variable for custom tabs failure.
@@ -175,7 +145,7 @@ open class RobolectricTest : CollectionGetter {
 
         try {
             if (CollectionHelper.getInstance().colIsOpen()) {
-                CollectionHelper.getInstance().getCol(targetContext).backend.debugEnsureNoOpenPointers()
+                CollectionHelper.getInstance().getCol(targetContext).debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
             CollectionHelper.getInstance().closeCollection(false, "RobolectricTest: End")
@@ -188,9 +158,6 @@ open class RobolectricTest : CollectionGetter {
         } finally {
             // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
             disableNullCollection()
-
-            // After every test, make sure the sqlite implementation is set back to default
-            DB.setSqliteOpenHelperFactory(null)
 
             // called on each AnkiDroidApp.onCreate(), and spams the build
             // there is no onDestroy(), so call it here.
@@ -217,7 +184,7 @@ open class RobolectricTest : CollectionGetter {
         mBackground = true
     }
 
-    protected fun clickDialogButton(button: DialogAction?, checkDismissed: Boolean) {
+    protected fun clickDialogButton(button: WhichButton?, checkDismissed: Boolean) {
         val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
         dialog.getActionButton(button!!).performClick()
         if (checkDismissed) {
@@ -231,15 +198,12 @@ open class RobolectricTest : CollectionGetter {
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      */
     protected fun getDialogText(checkDismissed: Boolean): String? {
-        val dialog: MaterialDialog? = ShadowDialog.getLatestDialog() as MaterialDialog
-        if (dialog == null || dialog.contentView == null) {
-            return null
-        }
+        val dialog: MaterialDialog = ShadowDialog.getLatestDialog() as MaterialDialog
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
             return null
         }
-        return dialog.contentView!!.text.toString()
+        return dialog.view.contentLayout.findViewById<TextView>(R.id.md_text_message).text.toString()
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
@@ -401,7 +365,7 @@ open class RobolectricTest : CollectionGetter {
     protected fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
         val model = col.models.newModel(name)
         for (field in fields) {
-            addField(model, field)
+            col.models.addFieldInNewModel(model, col.models.newField(field))
         }
         val t = Models.newTemplate("Card 1")
         t.put("qfmt", qfmt)
@@ -559,4 +523,54 @@ open class RobolectricTest : CollectionGetter {
      */
     fun editPreferences(action: SharedPreferences.Editor.() -> Unit) =
         getPreferences().edit(action = action)
+
+    private fun maybeSetupBackend() {
+        try {
+            targetContext
+        } catch (exc: IllegalStateException) {
+            // We must make sure not to load the backend library into a test running outside
+            // the Robolectric classloader, or subsequent Robolectric tests that run in this
+            // process will be unable to make calls into the backend.
+            println("not annotated with junit, not setting up backend")
+            return
+        }
+        // Allow an override for the testing library (allowing Robolectric to access the Rust backend)
+        // This allows M1 macs to access a .dylib built for arm64, despite it not existing in the .jar
+        val backendPath = System.getenv("ANKIDROID_BACKEND_PATH")
+        if (backendPath != null) {
+            if (BuildConfig.BACKEND_VERSION != System.getenv("ANKIDROID_BACKEND_VERSION")) {
+                throw java.lang.IllegalStateException(
+                    "AnkiDroid backend testing library requires an update.\n" +
+                        "Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v ${
+                        System.getenv(
+                            "ANKIDROID_BACKEND_VERSION"
+                        )
+                        })\n" +
+                        "And then set \$ANKIDROID_BACKEND_VERSION to ${BuildConfig.BACKEND_VERSION}\n" +
+                        "Error: \$ANKIDROID_BACKEND_VERSION: expected '${BuildConfig.BACKEND_VERSION}', got '${
+                        System.getenv(
+                            "ANKIDROID_BACKEND_VERSION"
+                        )
+                        }'"
+                )
+            }
+            // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
+            RustBackendLoader.ensureSetup(backendPath)
+        } else {
+            // default (no env variable): Extract the backend testing lib from the jar
+            try {
+                RustBackendLoader.ensureSetup(null)
+            } catch (e: UnsatisfiedLinkError) {
+                if (e.message.toString().contains("arm64e")) {
+                    // Giving the commands to user to add the required env variables
+                    val exception =
+                        "Please download the arm64 dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/${BuildConfig.BACKEND_VERSION} and add the following environment variables to your device by using following commands: \n" +
+                            "export ANKIDROID_BACKEND_PATH=\"{Path to the dylib file}\"\n" +
+                            "export ANKIDROID_BACKEND_VERSION=\"${BuildConfig.BACKEND_VERSION}\""
+                    throw IllegalStateException(exception, e)
+                }
+                throw e
+            }
+        }
+    }
 }

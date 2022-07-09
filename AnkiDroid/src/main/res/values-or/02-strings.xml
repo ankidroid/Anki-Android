@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ଡ୍ରର୍ ଖୋଲନ୍ତୁ</string>
     <string name="drawer_close">ଡ୍ରର୍ ବନ୍ଦ କରନ୍ତୁ</string>
@@ -416,5 +414,5 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">\'%s\' ଟ୍ୟାଗଟିକୁ ପ୍ରସାରିବା</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">ସଂଗ୍ରହକୁ ପ୍ରବେଶ କରିବାରେ ବିଫଳ। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ!</string>
 </resources>

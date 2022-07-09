@@ -47,6 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">已停用</string>
     <string name="enabled">已啟用</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">一般</string>
     <string name="pref_cat_general_summ">一般設定</string>
@@ -179,10 +182,9 @@
     <string name="new_spread" maxLength="41">新卡片的位置</string>
     <string name="learn_cutoff" maxLength="41">提早學習上限</string>
     <string name="time_limit" maxLength="41">時間盒的時間上限</string>
-    <string name="time_limit_summ">XXX分鐘</string>
     <string name="new_timezone" maxLength="41">時區變更處理</string>
     <string name="day_offset_with_description" maxLength="41">下一天開始的時間</string>
-    <string name="day_offset_summ">午夜過後 XXX 小時</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
     <string name="sched_v2" maxLength="41">V2調度器</string>

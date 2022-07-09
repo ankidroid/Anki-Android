@@ -17,6 +17,7 @@ package com.ichi2.anki.preferences
 
 import com.ichi2.anki.Preferences.SpecificSettingsFragment
 import com.ichi2.anki.R
+import com.ichi2.preferences.SeekBarPreferenceCompat
 
 /**
  * Fragment with preferences related to notifications
@@ -29,5 +30,15 @@ class AccessibilitySettingsFragment : SpecificSettingsFragment() {
 
     override fun initSubscreen() {
         addPreferencesFromResource(preferenceResource)
+
+        // Card zoom
+        requirePreference<SeekBarPreferenceCompat>(R.string.card_zoom_preference)
+            .setFormattedSummary(R.string.pref_summary_percentage)
+        // Image zoom
+        requirePreference<SeekBarPreferenceCompat>(R.string.image_zoom_preference)
+            .setFormattedSummary(R.string.pref_summary_percentage)
+        // Answer button size
+        requirePreference<SeekBarPreferenceCompat>(R.string.answer_button_size_preference)
+            .setFormattedSummary(R.string.pref_summary_percentage)
     }
 }

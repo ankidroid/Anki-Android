@@ -20,6 +20,7 @@ package com.ichi2.anki
 
 import android.app.AlarmManager
 import android.content.*
+import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.CheckBoxPreference
 import android.preference.ListPreference
@@ -28,7 +29,6 @@ import android.preference.PreferenceScreen
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.MenuItem
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
@@ -50,6 +50,8 @@ import com.ichi2.preferences.StepsPreference
 import com.ichi2.preferences.TimePreference
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.themes.Themes
+import com.ichi2.themes.Themes.themeFollowsSystem
+import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
 import com.ichi2.utils.*
 import timber.log.Timber
@@ -69,7 +71,8 @@ class DeckOptions :
     inner class DeckPreferenceHack : SharedPreferences {
         val mValues: MutableMap<String, String> = HashUtil.HashMapInit(30) // At most as many as in cacheValues
         val mSummaries: MutableMap<String, String?> = HashMap()
-        lateinit var progressDialog: MaterialDialog
+        @Suppress("Deprecation")
+        lateinit var progressDialog: android.app.ProgressDialog
         private val mListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
         val deckOptions: DeckOptions
@@ -260,11 +263,9 @@ class DeckOptions :
                                     e.log()
                                     // Libanki determined that a full sync will be required, so confirm with the user before proceeding
                                     // TODO : Use ConfirmationDialog DialogFragment -- not compatible with PreferenceActivity
-                                    MaterialDialog.Builder(this@DeckOptions)
-                                        .content(R.string.full_sync_confirmation)
-                                        .positiveText(R.string.dialog_ok)
-                                        .negativeText(R.string.dialog_cancel)
-                                        .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                                    MaterialDialog(this@DeckOptions).show {
+                                        message(R.string.full_sync_confirmation)
+                                        positiveButton(R.string.dialog_ok) {
                                             col.modSchemaNoCheck()
                                             try {
                                                 remConf()
@@ -273,7 +274,8 @@ class DeckOptions :
                                                 throw RuntimeException(cmse)
                                             }
                                         }
-                                        .build().show()
+                                        negativeButton(R.string.dialog_cancel)
+                                    }
                                 }
                             }
                             "confSetSubdecks" -> if (value as Boolean) {
@@ -523,6 +525,20 @@ class DeckOptions :
     override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
         Timber.d("getSharedPreferences(name=%s)", name)
         return mPref
+    }
+
+    @KotlinCleanup("Remove this once DeckOptions is an AnkiActivity")
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val newNightModeStatus = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        // Check if theme should change
+        if (Themes.systemIsInNightMode != newNightModeStatus) {
+            Themes.systemIsInNightMode = newNightModeStatus
+            if (themeFollowsSystem()) {
+                updateCurrentTheme()
+                recreate()
+            }
+        }
     }
 
     // conversion to fragments tracked as #5019 in github

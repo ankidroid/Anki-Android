@@ -136,28 +136,28 @@
     <string name="menu_delete_note">حذف الملحوظة</string>
     <string name="menu_flag">مؤشر</string>
     <string name="menu_flag_card">تأشير البطاقة</string>
-    <string name="menu_flag_card_zero">لا مؤشر</string>
+    <string name="menu_flag_card_zero">بلا مؤشر</string>
     <string name="menu_flag_card_one">مؤشر أحمر</string>
     <string name="menu_flag_card_two">مؤشر برتقالي</string>
     <string name="menu_flag_card_three">مؤشر أخضر</string>
     <string name="menu_flag_card_four">مؤشر أزرق</string>
-    <string name="menu_flag_card_five">علم وردي</string>
-    <string name="menu_flag_card_six">علم تركواز</string>
-    <string name="menu_flag_card_seven">علم بنفسجي</string>
+    <string name="menu_flag_card_five">مؤشر وردي</string>
+    <string name="menu_flag_card_six">مؤشر تركوازي</string>
+    <string name="menu_flag_card_seven">مؤشر بنفسجي</string>
     <string name="menu_edit_tags">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
     <string name="menu_search">البحث في %1$s</string>
-    <string name="menu_mark_note">تعليم الملحوظة</string>
-    <string name="menu_unmark_note">إلغاء تعليم الملحوظة</string>
+    <string name="menu_mark_note">تأشير الملحوظة</string>
+    <string name="menu_unmark_note">إلغاء تأشير الملحوظة</string>
     <string name="menu_toggle_mic_tool_bar">تحقق من النطق</string>
     <string name="new_deck">إنشاء رزمة</string>
     <string name="new_dynamic_deck">إنشاء رزمة مفلترة</string>
-    <string name="directory_inaccessible">لا يمكن الوصول لمجلد أنكيدرويد</string>
+    <string name="directory_inaccessible">لا يمكن الوصول لمجلد آنكيدرويد</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">الرجاء منح أنكيدرويد إذن «التخزين» للاستمرار</string>
+    <string name="startup_no_storage_permission">الرجاء منح آنكيدرويد إذن «التخزين» للاستمرار</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -178,7 +178,7 @@
     <string name="rebuild_cram_label">إعادة إنشاء</string>
     <string name="empty_cram_label">إفراغ</string>
     <string name="create_subdeck">إنشاء رزمة فرعية</string>
-    <string name="empty_filtered_deck">إفراغ الرزمة المفلترة&#8230;</string>
+    <string name="empty_filtered_deck">جار إفراغ الرزمة المفلترة&#8230;</string>
     <string name="custom_study_deck_name">جلسة دراسة مخصصة</string>
     <string name="custom_study_deck_exists">أعد تسمية رزمة الدراسة المخصصة الموجودة أولًا</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
@@ -200,7 +200,7 @@
     <string name="cancel_sync_confirm">هل تود إلغاء المزامنة؟</string>
     <string name="continue_sync">واصِل المزامنة</string>
     <string name="sync_cancelled">أُلغِيت المزامنة</string>
-    <string name="sync_cancel_message">إلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
+    <string name="sync_cancel_message">جار الإلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
     <string name="export">تصدير</string>
     <string name="export_collection">تصدير المجموعة</string>
     <string name="export_deck">تصدير الرزمة</string>
@@ -237,11 +237,11 @@
     <string name="template_for_current_card_deleted">تم حذف نوع البطاقة للبطاقة الحالية.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">مظهر المتصفح</string>
-    <string name="current_and_default_deck">%1$s(%2$s)</string>
+    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">معلومات البطاقة</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة بيانات أنكيدرويد</string>
+    <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة بيانات آنكيدرويد</string>
     <string name="read_write_permission_description">الوصول إلى الملحوظات الموجودة، والبطاقات، وأنواع الملحوظات، والرزم، بالإضافة إلى إنشاء أخرى</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">متصفح البطاقات</string>
