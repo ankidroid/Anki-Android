@@ -9,11 +9,17 @@
     android:background="?attr/filterItemBackground"
     android:foreground="?android:attr/selectableItemBackground">
 
+    <ImageView
+        android:id="@+id/filter_list_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"/>
+
     <TextView
         android:id="@+id/filter_list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginVertical="8dp"
         tools:text="TEST" />
 
 </LinearLayout>

@@ -31,6 +31,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import anki.search.SearchNode
+import anki.search.SearchNodeKt.group
+import anki.search.searchNode
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.libanki.Collection
@@ -47,22 +50,22 @@ class FilterSheetBottomFragment :
     CollectionGetter {
     private lateinit var behavior: BottomSheetBehavior<View>
 
-    private var flagSearchItems = mutableListOf<String>()
+    private var flagSearchItems = mutableListOf<SearchNode.Flag>()
 
     private lateinit var flagRecyclerView: RecyclerView
 
     private var lastClickTime = 0
 
     // flagName is displayed in filter sheet as the name of the filter
-    enum class Flags(@StringRes private val flagNameRes: Int, val flagNumber: Int) {
-        RED(R.string.menu_flag_card_one, 1),
-        ORANGE(R.string.menu_flag_card_two, 2),
-        GREEN(R.string.menu_flag_card_three, 3),
-        BLUE(R.string.menu_flag_card_four, 4),
-        PINK(R.string.menu_flag_card_five, 5),
-        TURQUOISE(R.string.menu_flag_card_six, 6),
-        PURPLE(R.string.menu_flag_card_seven, 7),
-        NO_FLAG(R.string.menu_flag_card_zero, 0);
+    enum class Flags(@StringRes private val flagNameRes: Int, val flagNumber: SearchNode.Flag, val flagIcon: Int) {
+        RED(R.string.menu_flag_card_one, SearchNode.Flag.FLAG_RED, R.drawable.ic_flag_red),
+        ORANGE(R.string.menu_flag_card_two, SearchNode.Flag.FLAG_ORANGE, R.drawable.ic_flag_orange),
+        GREEN(R.string.menu_flag_card_three, SearchNode.Flag.FLAG_GREEN, R.drawable.ic_flag_green),
+        BLUE(R.string.menu_flag_card_four, SearchNode.Flag.FLAG_BLUE, R.drawable.ic_flag_blue),
+        PINK(R.string.menu_flag_card_five, SearchNode.Flag.FLAG_PINK, R.drawable.ic_flag_pink),
+        TURQUOISE(R.string.menu_flag_card_six, SearchNode.Flag.FLAG_TURQUOISE, R.drawable.ic_flag_turquoise),
+        PURPLE(R.string.menu_flag_card_seven, SearchNode.Flag.FLAG_PURPLE, R.drawable.ic_flag_purple),
+        NO_FLAG(R.string.menu_flag_card_zero, SearchNode.Flag.FLAG_NONE, R.drawable.ic_flag_transparent);
 
         fun getFlagName(context: Context): String = context.getString(flagNameRes)
     }
@@ -71,10 +74,8 @@ class FilterSheetBottomFragment :
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.filter_bottom_sheet, container, false)
-
-        val applyButton = view.findViewById<Button>(R.id.apply_filter_button)
+    ): View = inflater.inflate(R.layout.filter_bottom_sheet, container, false).apply {
+        val applyButton = this.findViewById<Button>(R.id.apply_filter_button)
         applyButton.setOnClickListener {
             val filterQuery = createQuery(flagSearchItems)
 
@@ -82,11 +83,10 @@ class FilterSheetBottomFragment :
             dismiss()
         }
 
-        val cancelButton = view.findViewById<Button>(R.id.cancel_filter_button)
+        val cancelButton = this.findViewById<Button>(R.id.cancel_filter_button)
         cancelButton.setOnClickListener {
             dismiss()
         }
-        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,16 +98,16 @@ class FilterSheetBottomFragment :
 
         val flagListAdapter = FlagsAdapter(activity, Flags.values(), this)
 
-        flagRecyclerView = requireView().findViewById(R.id.filter_bottom_flag_list)
-        flagRecyclerView.layoutManager = LinearLayoutManager(activity)
-
-        flagRecyclerView.adapter = flagListAdapter
-        flagRecyclerView.addItemDecoration(
-            DividerItemDecoration(
-                activity,
-                DividerItemDecoration.VERTICAL
+        flagRecyclerView = requireView().findViewById<RecyclerView?>(R.id.filter_bottom_flag_list).apply {
+            this.layoutManager = LinearLayoutManager(activity)
+            this.adapter = flagListAdapter
+            this.addItemDecoration(
+                DividerItemDecoration(
+                    activity,
+                    DividerItemDecoration.VERTICAL
+                )
             )
-        )
+        }
 
         /*
          * Set the filter headings to be clickable:
@@ -148,26 +148,20 @@ class FilterSheetBottomFragment :
     }
 
     private fun createQuery(
-        flagList: MutableList<String>
-    ): StringBuffer {
+        flagList: MutableList<SearchNode.Flag>
+    ): String {
 
-        val filterQuery = StringBuffer()
+        val node = searchNode {
+            group = group {
+                joiner = SearchNode.Group.Joiner.OR
 
-        if (flagList.isEmpty()) {
-            return filterQuery
-        }
-
-        for (flagIndex in flagList.indices) {
-            filterQuery.append(
-                if (flagIndex == 0) {
-                    "flag:${flagList[flagIndex]}"
-                } else {
-                    " OR flag:${flagList[flagIndex]}"
+                for (flagNumber in flagList) {
+                    nodes += searchNode { flag = flagNumber }
                 }
-            )
+            }
         }
 
-        return filterQuery
+        return col.buildSearchString(node)
     }
 
     private fun clearQuery() {
@@ -213,7 +207,7 @@ class FilterSheetBottomFragment :
                 )
             )
 
-            flagSearchItems.add("${item.flagNumber}")
+            flagSearchItems.add(item.flagNumber)
         } else {
             flagRecyclerView[position].setBackgroundColor(
                 Themes.getColorFromAttr(
@@ -229,7 +223,7 @@ class FilterSheetBottomFragment :
                 )
             )
 
-            flagSearchItems.remove("${item.flagNumber}")
+            flagSearchItems.remove(item.flagNumber)
         }
     }
 }
@@ -243,6 +237,7 @@ class FlagsAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val item: TextView = view.findViewById(R.id.filter_list_item)
+        val icon: ImageView = view.findViewById(R.id.filter_list_icon)
 
         fun bind(
             currFlag: FilterSheetBottomFragment.Flags,
@@ -250,6 +245,7 @@ class FlagsAdapter(
             position: Int
         ) {
             item.text = currFlag.getFlagName(itemView.context)
+            icon.setImageResource(currFlag.flagIcon)
 
             itemView.setOnClickListener {
                 clickListener.onFlagItemClicked(currFlag, position)
@@ -257,17 +253,14 @@ class FlagsAdapter(
         }
     }
 
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.filter_list_item_layout, viewGroup, false)
+            .inflate(R.layout.filter_list_flag_item_layout, viewGroup, false)
 
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
         val currTag = dataSet[position]
         viewHolder.bind(currTag, listener, position)
     }

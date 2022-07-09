@@ -527,9 +527,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
     }
 
-    fun searchWithFilterQuery(filterQuery: StringBuffer) {
-
-        mSearchTerms = filterQuery.toString()
+    fun searchWithFilterQuery(filterQuery: String) {
+        mSearchTerms = filterQuery
 
         mSearchView!!.setQuery(mSearchTerms!!, true)
         searchCards()
