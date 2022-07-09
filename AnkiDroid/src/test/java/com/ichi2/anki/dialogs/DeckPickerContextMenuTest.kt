@@ -167,6 +167,20 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     }
 
     @Test
+    fun testExportDeck() {
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            val deckId = addDeck("Deck 1")
+            updateDeckList()
+            assertEquals(1, visibleDeckCount)
+
+            openContextMenuAndSelectItem(recyclerView, 5)
+
+            assertNotNull(ExportDialog.instance)
+            assertEquals(deckId, ExportDialog.instance!!.requireArguments().getLong("did"))
+        }
+    }
+
+    @Test
     fun testDynRebuildAndEmpty() {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             val cardIds = (0..3)
