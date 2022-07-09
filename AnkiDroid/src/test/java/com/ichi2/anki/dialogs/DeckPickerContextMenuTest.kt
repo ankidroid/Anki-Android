@@ -33,6 +33,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowLooper
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerContextMenuTest : RobolectricTest() {
@@ -126,6 +128,24 @@ class DeckPickerContextMenuTest : RobolectricTest() {
                 "Deck 1",
                 ShortcutManagerCompat.getShortcuts(this, FLAG_MATCH_PINNED).first().shortLabel
             )
+        }
+    }
+
+    @Test
+    fun testUnbury() {
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            val deckId = addDeck("Deck 1")
+            col.models.byName("Basic")!!.put("did", deckId)
+            val card = addNoteUsingBasicModel("front", "back").firstCard()
+            col.sched.buryCards(longArrayOf(card.id))
+            updateDeckList()
+            assertEquals(1, visibleDeckCount)
+
+            assertTrue(col.sched.haveBuried(deckId))
+
+            openContextMenuAndSelectItem(mRecyclerView, 6)
+
+            assertFalse(col.sched.haveBuried(deckId))
         }
     }
 
