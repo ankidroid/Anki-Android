@@ -1832,7 +1832,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun displayAddToolbarDialog() {
         toolbarDialog.show {
             title(R.string.add_toolbar_item)
-            customView(R.layout.note_editor_toolbar_add_custom_item, scrollable = true)
+            customView(R.layout.note_editor_toolbar_add_custom_item, scrollable = true, horizontalPadding = true)
             positiveButton(R.string.dialog_positive_create) {
                 val view = it.view
                 val etIcon = view.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
@@ -1852,8 +1852,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         etIcon.setText(currentButton.buttonText)
         et.setText(currentButton.prefix)
         et2.setText(currentButton.suffix)
-        toolbarDialog
-            .customView(view = view, scrollable = true)
+        val editToolbarDialog = toolbarDialog
+            .customView(view = view, scrollable = true, horizontalPadding = true)
             .positiveButton(R.string.save) {
                 editToolbarButton(
                     etIcon.text.toString(),
@@ -1865,10 +1865,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         btnDelete.setOnClickListener {
             suggestRemoveButton(
                 currentButton,
-                toolbarDialog
+                editToolbarDialog
             )
         }
-        toolbarDialog.show()
+        editToolbarDialog.show()
     }
 
     private fun setNoteTypePosition() {
