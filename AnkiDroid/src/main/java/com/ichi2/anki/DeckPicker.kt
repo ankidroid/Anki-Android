@@ -49,13 +49,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.afollestad.materialdialogs.DialogAction
-import com.afollestad.materialdialogs.GravityEnum
+import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
@@ -92,6 +90,7 @@ import com.ichi2.async.CollectionTask.*
 import com.ichi2.async.Connection.CancellableTaskListener
 import com.ichi2.async.Connection.ConflictResolution
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
@@ -107,7 +106,8 @@ import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
-import kotlinx.coroutines.launch
+import net.ankiweb.rsdroid.BackendFactory
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.File
 import kotlin.math.abs
@@ -139,12 +139,21 @@ import kotlin.math.roundToLong
  * * A custom image as a background can be added: [applyDeckPickerBackground]
  */
 @KotlinCleanup("lots to do")
-open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncErrorDialogListener, ImportDialogListener, MediaCheckDialogListener, OnRequestPermissionsResultCallback, CustomStudyListener {
+open class DeckPicker :
+    NavigationDrawerActivity(),
+    StudyOptionsListener,
+    SyncErrorDialogListener,
+    ImportDialogListener,
+    MediaCheckDialogListener,
+    OnRequestPermissionsResultCallback,
+    CustomStudyListener,
+    ChangeManager.ChangeSubscriber {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
     private lateinit var mDeckPickerContent: RelativeLayout
-    private var mProgressDialog: MaterialDialog? = null
+    @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
+    private var mProgressDialog: android.app.ProgressDialog? = null
     private var mStudyoptionsFrame: View? = null // not lateInit - can be null
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mRecyclerViewLayoutManager: LinearLayoutManager
@@ -192,6 +201,10 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     private var mToolbarSearchView: SearchView? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
+
+    init {
+        ChangeManager.subscribe(this)
+    }
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -294,7 +307,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         }
 
         override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-            context.mProgressDialog!!.setContent(value)
+            @Suppress("Deprecation")
+            context.mProgressDialog!!.setMessage(value)
         }
     }
 
@@ -330,7 +344,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
          * @param value A message
          */
         override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-            context.mProgressDialog!!.setContent(value)
+            @Suppress("Deprecation")
+            context.mProgressDialog!!.setMessage(value)
         }
     }
     // ----------------------------------------------------------------------------
@@ -474,18 +489,19 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
             }
-            DATABASE_DOWNGRADE_REQUIRED -> { // This has a callback to continue with handleStartup
-                lifecycleScope.launch {
-                    InitialActivity.downgradeBackend(this@DeckPicker)
+            WEBVIEW_FAILED -> MaterialDialog(this).show {
+                title(R.string.ankidroid_init_failed_webview_title)
+                message(
+                    text = getString(
+                        R.string.ankidroid_init_failed_webview,
+                        AnkiDroidApp.getWebViewErrorMessage()
+                    )
+                )
+                positiveButton(R.string.close) {
+                    exit()
                 }
+                cancelable(false)
             }
-            WEBVIEW_FAILED -> MaterialDialog.Builder(this)
-                .title(R.string.ankidroid_init_failed_webview_title)
-                .content(getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.getWebViewErrorMessage()))
-                .positiveText(R.string.close)
-                .onPositive { _: MaterialDialog?, _: DialogAction? -> exit() }
-                .cancelable(false)
-                .show()
             DB_ERROR -> displayDatabaseFailure()
             else -> displayDatabaseFailure()
         }
@@ -536,18 +552,20 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         } else {
             Timber.i("Displaying initial permission request dialog")
             // Request storage permission if we don't have it (e.g. on Android 6.0+)
-            MaterialDialog.Builder(this)
-                .title(R.string.collection_load_welcome_request_permissions_title)
-                .titleGravity(GravityEnum.CENTER)
-                .content(R.string.collection_load_welcome_request_permissions_details)
-                .positiveText(R.string.dialog_ok)
-                .onPositive { _: MaterialDialog?, _: DialogAction? ->
+            MaterialDialog(this).show {
+                title(R.string.collection_load_welcome_request_permissions_title)
+                message(R.string.collection_load_welcome_request_permissions_details)
+                positiveButton(R.string.dialog_ok) {
                     sharedPrefs.edit().putBoolean("welcomeDialogDismissed", true).apply()
-                    ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
+                    ActivityCompat.requestPermissions(
+                        this@DeckPicker,
+                        storagePermissions,
+                        REQUEST_STORAGE_PERMISSION
+                    )
                 }
-                .cancelable(false)
-                .canceledOnTouchOutside(false)
-                .show()
+                cancelable(false)
+                cancelOnTouchOutside(false)
+            }
         }
     }
 
@@ -928,7 +946,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      */
     private fun onFinishedStartup() {
         // create backup in background if needed
-        BackupManager.performBackupInBackground(col.path, TimeManager.time)
+        if (BackendFactory.defaultLegacySchema) {
+            BackupManager.performBackupInBackground(col.path, TimeManager.time)
+        } else {
+            // new code triggers backup in updateDeckList()
+        }
 
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
@@ -1080,18 +1102,23 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 Timber.i("showStartupScreensAndDialogs() running integrityCheck()")
                 // #5852 - since we may have a warning about disk space, we don't want to force a check database
                 // and show a warning before the user knows what is happening.
-                MaterialDialog.Builder(this)
-                    .title(R.string.integrity_check_startup_title)
-                    .content(R.string.integrity_check_startup_content)
-                    .positiveText(R.string.check_db)
-                    .negativeText(R.string.close)
-                    .onPositive { _: MaterialDialog?, _: DialogAction? -> integrityCheck() }
-                    .onNeutral { _: MaterialDialog?, _: DialogAction? -> restartActivity() }
-                    .onNegative { _: MaterialDialog?, _: DialogAction? -> restartActivity() }
-                    .canceledOnTouchOutside(false)
-                    .cancelable(false)
-                    .build()
-                    .show()
+                MaterialDialog(this).show {
+                    title(R.string.integrity_check_startup_title)
+                    message(R.string.integrity_check_startup_content)
+                    positiveButton(R.string.check_db) {
+                        integrityCheck()
+                    }
+                    negativeButton(R.string.close) {
+                        restartActivity()
+                    }
+                    @Suppress("Deprecation")
+                    // TODO: Cleanup - Remove neutral button from here
+                    neutralButton {
+                        restartActivity()
+                    }
+                    cancelOnTouchOutside(false)
+                    cancelable(false)
+                }
                 return
             }
             if (upgradedPreferences) {
@@ -1245,7 +1272,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
      * @param messageResource String resource for message
      */
     @KotlinCleanup("nullOrEmpty")
-    private fun showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
+    fun showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
         if (mActivityPaused) {
             val res = AnkiDroidApp.getAppResources()
             showSimpleNotification(
@@ -1328,13 +1355,14 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         val status = CollectionIntegrityStorageCheck.createInstance(this)
         if (status.shouldWarnOnIntegrityCheck()) {
             Timber.d("Displaying File Size confirmation")
-            MaterialDialog.Builder(this)
-                .title(R.string.check_db_title)
-                .content(status.getWarningDetails(this))
-                .positiveText(R.string.integrity_check_continue_anyway)
-                .onPositive { _: MaterialDialog?, _: DialogAction? -> performIntegrityCheck() }
-                .negativeText(R.string.dialog_cancel)
-                .show()
+            MaterialDialog(this).show {
+                title(R.string.check_db_title)
+                message(text = status.getWarningDetails(this@DeckPicker))
+                positiveButton(R.string.integrity_check_continue_anyway) {
+                    performIntegrityCheck()
+                }
+                negativeButton(R.string.dialog_cancel)
+            }
         } else {
             performIntegrityCheck()
         }
@@ -1424,7 +1452,11 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     }
 
     fun restoreFromBackup(path: String) {
-        importReplace(listOf(path))
+        if (BackendFactory.defaultLegacySchema) {
+            importReplace(listOf(path))
+        } else {
+            importColpkg(path)
+        }
     }
 
     // Helper function to check if there are any saved stacktraces
@@ -1449,22 +1481,27 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     override fun sync(conflict: ConflictResolution?) {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         val hkey = preferences.getString("hkey", "")
+        val hostNum = HostNumFactory.getInstance(baseContext).getHostNum()
         if (hkey!!.isEmpty()) {
             Timber.w("User not logged in")
             mPullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
         } else {
-            Connection.sync(
-                mSyncListener,
-                Connection.Payload(
-                    arrayOf(
-                        hkey,
-                        preferences.getBoolean("syncFetchesMedia", true),
-                        conflict,
-                        HostNumFactory.getInstance(baseContext)
+            if (!BackendFactory.defaultLegacySchema) {
+                handleNewSync(hkey, hostNum ?: 0, conflict)
+            } else {
+                Connection.sync(
+                    mSyncListener,
+                    Connection.Payload(
+                        arrayOf(
+                            hkey,
+                            preferences.getBoolean("syncFetchesMedia", true),
+                            conflict,
+                            HostNumFactory.getInstance(baseContext)
+                        )
                     )
                 )
-            )
+            }
         }
     }
 
@@ -1523,20 +1560,21 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                         // If less than 2s has elapsed since sync started then don't ask for confirmation
                         if (TimeManager.time.intTimeMS() - syncStartTime < 2000) {
                             Connection.cancel()
-                            mProgressDialog!!.setContent(R.string.sync_cancel_message)
+                            @Suppress("Deprecation")
+                            mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
                             return@setOnKeyListener true
                         }
                         // Show confirmation dialog to check if the user wants to cancel the sync
-                        val builder = MaterialDialog.Builder(mProgressDialog!!.context)
-                        builder.content(R.string.cancel_sync_confirm)
-                            .cancelable(false)
-                            .positiveText(R.string.dialog_ok)
-                            .negativeText(R.string.continue_sync)
-                            .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                                mProgressDialog!!.setContent(R.string.sync_cancel_message)
+                        MaterialDialog(mProgressDialog!!.context).show {
+                            message(R.string.cancel_sync_confirm)
+                            cancelable(false)
+                            positiveButton(R.string.dialog_ok) {
+                                @Suppress("Deprecation")
+                                mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
                                 Connection.cancel()
                             }
-                        builder.show()
+                            negativeButton(R.string.continue_sync)
+                        }
                         return@setOnKeyListener true
                     } else {
                         return@setOnKeyListener false
@@ -1569,7 +1607,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 }
             }
             if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                mProgressDialog!!.setContent(
+                @Suppress("Deprecation")
+                mProgressDialog!!.setMessage(
                     """
     $mCurrentMessage
     
@@ -1736,11 +1775,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                     Timber.i("Syncing had additional information")
                     // There was a media error, so show it
                     // Note: Do not log this data. May contain user email.
-                    val message = """
-                        ${res.getString(R.string.sync_database_acknowledge)}
-                        
-                        ${data.data[2]}
-                    """.trimIndent()
+                    val message = res.getString(R.string.sync_database_acknowledge) + "\n\n" + data.data[2]
                     showSimpleMessageDialog(message)
                 } else if (data.data.isNotEmpty() && data.data[0] is ConflictResolution) {
                     // A full sync occurred
@@ -1804,7 +1839,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
     @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file")
     override fun importAdd(importPath: List<String>) {
         Timber.d("importAdd() for file %s", importPath)
-        TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
+        if (BackendFactory.defaultLegacySchema) {
+            TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
+        } else {
+            for (file in importPath) {
+                importApkg(file)
+            }
+        }
     }
 
     // Callback to import a file -- replacing the existing collection
@@ -2005,7 +2046,7 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
             context.renderPage()
             // Update the mini statistics bar as well
-            deckPicker?.lifecycleScope?.launchCatching {
+            deckPicker?.catchingLifecycleScope(deckPicker) {
                 AnkiStatsTaskHandler.createReviewSummaryStatistics(context.col, context.mReviewSummaryTextView)
             }
             Timber.d("Startup - Deck List UI Completed")
@@ -2023,7 +2064,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         updateDeckList(false)
     }
 
+    @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     private fun updateDeckList(quick: Boolean) {
+        if (!BackendFactory.defaultLegacySchema) {
+            // uses user's desktop settings to determine whether a backup
+            // actually happens
+            performBackupInBackground()
+        }
         if (quick) {
             TaskManager.launchCollectionTask(LoadDeck(), updateDeckListListener())
         } else {
@@ -2328,12 +2375,15 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
         private var mIncreaseSinceLastUpdate = 0
         @KotlinCleanup("remove _ parameters")
         private fun confirmCancel(deckPicker: DeckPicker, task: Cancellable) {
-            MaterialDialog.Builder(deckPicker)
-                .content(R.string.confirm_cancel)
-                .positiveText(deckPicker.resources.getString(R.string.yes))
-                .negativeText(deckPicker.resources.getString(R.string.dialog_no))
-                .onNegative { _: MaterialDialog?, _: DialogAction? -> actualOnPreExecute(deckPicker) }
-                .onPositive { _: MaterialDialog?, _: DialogAction? -> task.safeCancel() }.show()
+            MaterialDialog(deckPicker).show {
+                message(R.string.confirm_cancel)
+                positiveButton(R.string.yes) {
+                    actualOnPreExecute(deckPicker)
+                }
+                negativeButton(R.string.dialog_no) {
+                    task.safeCancel()
+                }
+            }
         }
 
         @KotlinCleanup("scope function")
@@ -2343,11 +2393,13 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 val emptyCardTask = context.mEmptyCardTask
                 emptyCardTask?.let { confirmCancel(context, it) }
             }
-            context.mProgressDialog = MaterialDialog.Builder(context)
-                .progress(false, mNumberOfCards)
-                .title(R.string.emtpy_cards_finding)
-                .cancelable(true)
-                .show()
+            @Suppress("Deprecation")
+            context.mProgressDialog = android.app.ProgressDialog(context).apply {
+                progress = mNumberOfCards
+                setTitle(R.string.emtpy_cards_finding)
+                setCancelable(true)
+                show()
+            }
             context.mProgressDialog!!.setOnCancelListener(onCancel)
             context.mProgressDialog!!.setCanceledOnTouchOutside(false)
         }
@@ -2360,7 +2412,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
             mIncreaseSinceLastUpdate += value
             // Increase each time at least a percent of card has been processed since last update
             if (mIncreaseSinceLastUpdate > mOnePercent) {
-                context.mProgressDialog!!.incrementProgress(mIncreaseSinceLastUpdate)
+                @Suppress("Deprecation")
+                context.mProgressDialog!!.incrementProgressBy(mIncreaseSinceLastUpdate)
                 mIncreaseSinceLastUpdate = 0
             }
         }
@@ -2475,7 +2528,8 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
          * @param value message
          */
         override fun onProgressUpdate(value: String) {
-            mProgressDialog!!.setContent(value)
+            @Suppress("Deprecation")
+            mProgressDialog!!.setMessage(value)
         }
     }
 
@@ -2557,6 +2611,12 @@ open class DeckPicker : NavigationDrawerActivity(), StudyOptionsListener, SyncEr
                 .translationY(translation)
                 .setDuration(duration.toLong())
                 .withEndAction(endAction)
+        }
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if (changes.studyQueues && handler !== this) {
+            updateDeckList()
         }
     }
 }

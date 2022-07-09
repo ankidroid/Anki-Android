@@ -47,12 +47,15 @@
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
     <string name="enabled">Включено</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Общие</string>
     <string name="pref_cat_general_summ">Общие настройки</string>
     <string name="pref_cat_reviewing" maxLength="41">Учёба</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронизация</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">Расписание</string>
     <string name="pref_cat_whiteboard" maxLength="41">Доска</string>
     <string name="pref_cat_appearance" maxLength="41">Внешний вид</string>
     <string name="pref_cat_appearance_summ">Выбор темы и шрифтов</string>
@@ -179,10 +182,9 @@
     <string name="new_spread" maxLength="41">Позиция новых карточек</string>
     <string name="learn_cutoff" maxLength="41">Лимит опережения</string>
     <string name="time_limit" maxLength="41">Лимит учебного блока</string>
-    <string name="time_limit_summ">XXX мин.</string>
     <string name="new_timezone" maxLength="41">Новая обработка часовых поясов</string>
     <string name="day_offset_with_description" maxLength="41">Начало нового дня</string>
-    <string name="day_offset_summ">XXX ч. утра</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Полночь</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="sched_v2" maxLength="41">Планировщик V2</string>
@@ -206,8 +208,8 @@
     <string name="html_javascript_debugging" maxLength="41">Отладка HTML и JavaScript</string>
     <string name="html_javascript_debugging_summ">Включает удалённые соединения WebView и сохраняет HTML карточек в директорию AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Повторение</string>
+    <string name="accessibility" maxLength="41">Специальные возможности</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Вставлять изображения буфера как PNG</string>
     <string name="paste_as_png_summary">По умолчанию Anki вставляет изображения в формате JPG, чтобы сэкономить место. Эта настройка заменяет JPG на PNG.</string>

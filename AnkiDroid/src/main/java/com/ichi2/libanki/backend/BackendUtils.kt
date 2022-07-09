@@ -18,7 +18,6 @@
 
 package com.ichi2.libanki.backend
 
-import BackendProto.Backend
 import com.google.protobuf.ByteString
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
@@ -26,17 +25,19 @@ import net.ankiweb.rsdroid.RustCleanup
 import java.io.UnsupportedEncodingException
 
 object BackendUtils {
-    fun from_json_bytes(json: Backend.Json): JSONObject {
-        val str = jsonToString(json)
-        return JSONObject(str)
+    fun from_json_bytes(json: ByteString): JSONObject {
+        return JSONObject(json.toStringUtf8())
     }
 
-    fun jsonToArray(json: Backend.Json): JSONArray {
-        val str = jsonToString(json)
-        return JSONArray(str)
+    fun jsonToArray(json: ByteString): JSONArray {
+        return JSONArray(json.toStringUtf8())
     }
 
-    fun jsonToString(json: Backend.Json): String {
+    fun jsonToString(json: ByteString): String {
+        return json.toStringUtf8()
+    }
+
+    fun jsonToString(json: anki.generic.Json): String {
         return try {
             json.json.toString("UTF-8")
         } catch (e: UnsupportedEncodingException) {
@@ -45,11 +46,11 @@ object BackendUtils {
     }
 
     @RustCleanup("Confirm edge cases")
-    fun toByteString(conf: Any): ByteString {
+    fun toByteString(conf: Any?): ByteString {
         val asString: String = conf.toString()
         return ByteString.copyFromUtf8(asString)
     }
 
     @RustCleanup("Confirm edge cases")
-    fun to_json_bytes(json: Any): ByteString = toByteString(json)
+    fun to_json_bytes(json: Any?): ByteString = toByteString(json)
 }

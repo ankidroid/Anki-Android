@@ -16,6 +16,7 @@ import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
 import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Storage;
+import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.sched.AbstractSched;
 import com.ichi2.testutils.AnkiActivityUtils;
 import com.ichi2.testutils.BackendEmulatingOpenConflict;
@@ -446,18 +447,20 @@ public class DeckPickerTest extends RobolectricTest {
     }
 
     @Test
-    public void notEnoughSpaceToBackupBeforeDowngradeShowsError() {
-        Class<DeckPickerNoSpaceForBackup> clazz = DeckPickerNoSpaceForBackup.class;
-        try (MockedStatic<InitialActivity> initialActivityMock = mockStatic(InitialActivity.class, Mockito.CALLS_REAL_METHODS)) {
-            initialActivityMock
-                .when(() -> InitialActivity.getStartupFailureType(any()))
-                .thenAnswer((Answer<InitialActivity.StartupFailure>) invocation -> InitialActivity.StartupFailure.DATABASE_DOWNGRADE_REQUIRED);
+    public void futureSchemaShowsError() {
+        try {
+            setupColV250();
 
             InitialActivityWithConflictTest.setupForValid(getTargetContext());
 
-            DeckPickerNoSpaceForBackup deckPicker = super.startActivityNormallyOpenCollectionWithIntent(clazz, new Intent());
+            DeckPickerEx deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx.class, new Intent());
+            waitForAsyncTasksToComplete();
 
-            assertThat("A downgrade failed dialog should be shown", deckPicker.mDisplayedDowngradeFailed, is(true));
+            assertThat("Collection should not be open", !CollectionHelper.getInstance().colIsOpen());
+            assertThat("An error dialog should be displayed", deckPicker.mDatabaseErrorDialog, is(DatabaseErrorDialog.INCOMPATIBLE_DB_VERSION));
+            assertThat(CollectionHelper.getDatabaseVersion(getTargetContext()), is(250));
+        } catch (UnknownDatabaseVersionException e) {
+            assertThat("no exception should be thrown", false, is(true));
         } finally {
             InitialActivityWithConflictTest.setupForDefault();
         }
@@ -510,13 +513,17 @@ public class DeckPickerTest extends RobolectricTest {
 
     protected void setupColV16() {
         Storage.setUseInMemory(false);
-        DB.setSqliteOpenHelperFactory(new FrameworkSQLiteOpenHelperFactory());
         useCollection(CollectionType.SCHEMA_V_16);
     }
 
+    protected void setupColV250() {
+        Storage.setUseInMemory(false);
+        useCollection(CollectionType.SCHEMA_V_250);
+    }
 
     public enum CollectionType {
-        SCHEMA_V_16("schema16.anki2", "ThisIsSchema16");
+        SCHEMA_V_16("schema16.anki2", "ThisIsSchema16"),
+        SCHEMA_V_250("schema250.anki2", "ThisIsSchema250");
 
         private final String mAssetFile;
         private final String mDeckName;
@@ -534,26 +541,6 @@ public class DeckPickerTest extends RobolectricTest {
 
         public boolean isCollection(Collection col) {
             return col.getDecks().allNames().contains(mDeckName);
-        }
-    }
-
-    private static class DeckPickerNoSpaceForBackup extends DeckPickerEx {
-
-        private boolean mDisplayedDowngradeFailed;
-
-
-        @Override
-        public BackupManager getBackupManager() {
-            BackupManager bm = spy(new BackupManager());
-            doReturn(false).when(bm).hasFreeDiscSpace(any());
-            return bm;
-        }
-
-
-        @Override
-        public void displayDowngradeFailedNoSpace() {
-            this.mDisplayedDowngradeFailed = true;
-            super.displayDowngradeFailedNoSpace();
         }
     }
 

@@ -75,15 +75,15 @@
         <item quantity="other">נותרו %d דקות</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="two">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
+        <item quantity="one">שעה %2$d %1$d נותרה</item>
+        <item quantity="two">%1$d שעות %2$d נותרו</item>
+        <item quantity="many">%1$d שעות %2$d נותרו</item>
         <item quantity="other">%1$d שעות %2$d נותרו</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="two">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
+        <item quantity="one">יום %2$d  %1$d נותר</item>
+        <item quantity="two">%1$d ימים %2$d נותרו</item>
+        <item quantity="many">%1$d ימים %2$d נותרו</item>
         <item quantity="other">%1$d ימים %2$d נותרו</item>
     </plurals>
     <string name="no_cards_placeholder_title">האוסף ריק</string>
@@ -115,16 +115,16 @@
     <string name="create_shortcut">צור קיצור דרך</string>
     <string name="browse_cards">לעיין בקלפים</string>
     <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">הוספה</string>
-    <string name="menu_add_note">הוספת רשומה</string>
+    <string name="menu_add_note">הוספת פתק</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>
     <string name="menu_dismiss_note">הסתרה / מחיקה</string>
     <string name="menu_bury_card">לקבור קלף</string>
-    <string name="menu_bury_note">דילוג על רשומה</string>
+    <string name="menu_bury_note">דילוג על פתק</string>
     <string name="menu_suspend_card">הקפאת קלף</string>
     <string name="menu_suspend_note">הקפאת רשומה</string>
     <string name="menu_bury">דילוג</string>
     <string name="menu_suspend">הקפאה</string>
-    <string name="menu_delete_note">מחיקת רשומה</string>
+    <string name="menu_delete_note">מחיקת פתק</string>
     <string name="menu_flag">דגל</string>
     <string name="menu_flag_card">סימון קלף</string>
     <string name="menu_flag_card_zero">ללא סימון</string>
@@ -138,8 +138,8 @@
     <string name="menu_edit_tags">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
     <string name="menu_search">חפש ב%1$s</string>
-    <string name="menu_mark_note">סמן הערה</string>
-    <string name="menu_unmark_note">הסר סימון הערה</string>
+    <string name="menu_mark_note">סמן רשומה</string>
+    <string name="menu_unmark_note">הסר סימון רשומה</string>
     <string name="menu_toggle_mic_tool_bar">בדוק הגיה</string>
     <string name="new_deck">יצירת חפיסה</string>
     <string name="new_dynamic_deck">יצירת חפיסה מסוננת</string>
@@ -208,9 +208,9 @@
     <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">זה ייצר קלף אחד. האם להמשיך?</item>
-        <item quantity="two">This will create %1$d cards. Proceed?</item>
-        <item quantity="many">זה ייצור %1$d  קלפים. להמשיך?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="two">פעולה זו תיצור %1$d כרטיסים. להמשיך?</item>
+        <item quantity="many">פעולה זו תיצור %1$d כרטיסים. להמשיך?</item>
+        <item quantity="other">פעולה זו תיצור %1$d כרטיסים. להמשיך?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">מחק את סוג הקלף \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
@@ -219,7 +219,7 @@
         <item quantity="other">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
     </plurals>
     <string name="invalid_template">לא ניתן לייצר קלף</string>
-    <string name="card_template_editor_would_delete_note">הסרת סוג קלף זה תוביל למחיקת הערה אחת או יותר. נא ליצור ולשמור סוג קלף חדש תחילה.</string>
+    <string name="card_template_editor_would_delete_note">הסרת סוג קלף זה תוביל למחיקת רשומה אחת או יותר. נא ליצור ולשמור סוג קלף חדש תחילה.</string>
     <string name="card_template_editor_save_error">לא ניתן לשמור שינויים לתבנית הקלף: %s</string>
     <string name="template_for_current_card_deleted">סוג הקלף של הקלף הנוכחי נמחק.</string>
     <!-- Card Browser Appearance -->
@@ -250,9 +250,9 @@
     <string name="sync_conflict_title_new">בחר את האוסף לשמירה</string>
     <string name="sync_conflict_replace_title">החלפת אוסף</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="two">%1$d cards (0 due)</item>
-        <item quantity="many">%1$d cards (0 due)</item>
+        <item quantity="one">קלף %1$d (0 נותרו)</item>
+        <item quantity="two">%1$d קלפים (0 נותרו)</item>
+        <item quantity="many">%1$d קלפים (0 נותרו)</item>
         <item quantity="other">%1$d קלפים (0 נותרו)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">עותק של %s</string>

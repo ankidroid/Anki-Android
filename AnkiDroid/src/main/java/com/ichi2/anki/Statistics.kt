@@ -32,7 +32,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -45,15 +44,14 @@ import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.getInstance
 import com.ichi2.anki.stats.ChartView
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
+import com.ichi2.async.catchingLifecycleScope
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
 import com.ichi2.ui.FixedTextView
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Locale
 
@@ -64,7 +62,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private set
     var taskHandler: AnkiStatsTaskHandler? = null
         private set
-    private var mDeckSpinnerSelection: DeckSpinnerSelection? = null
+    private lateinit var mDeckSpinnerSelection: DeckSpinnerSelection
     private var mStatsDeckId: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -120,8 +118,8 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             this, col,
             findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true
         )
-        mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-        mDeckSpinnerSelection!!.selectDeckById(mStatsDeckId, false)
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
+        mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false)
         taskHandler!!.setDeckId(mStatsDeckId)
         viewPager.adapter!!.notifyDataSetChanged()
     }
@@ -196,9 +194,9 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         if (deck == null) {
             return
         }
-        mDeckSpinnerSelection?.initializeActionBarDeckSpinner(this.supportActionBar!!)
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
         mStatsDeckId = deck.deckId
-        mDeckSpinnerSelection?.selectDeckById(mStatsDeckId, true)
+        mDeckSpinnerSelection.selectDeckById(mStatsDeckId, true)
         taskHandler!!.setDeckId(mStatsDeckId)
         viewPager.adapter!!.notifyDataSetChanged()
     }
@@ -339,7 +337,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            setHasOptionsMenu(true)
             val bundle = arguments
             mSectionNumber = bundle!!.getInt(ARG_SECTION_NUMBER)
             // int sectionNumber = 0;
@@ -387,10 +384,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private fun createChart() {
             val statisticsActivity = requireActivity() as Statistics
             val taskHandler = statisticsActivity.taskHandler
-            val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-                Timber.e(throwable, "createChart failed with error")
-            }
-            statisticsJob = viewLifecycleOwner.lifecycleScope.launch(exceptionHandler) {
+            statisticsJob = viewLifecycleOwner.catchingLifecycleScope(requireActivity()) {
                 taskHandler!!.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
             }
         }
@@ -429,7 +423,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            setHasOptionsMenu(true)
             val rootView = inflater.inflate(R.layout.fragment_anki_stats_overview, container, false)
             val handler = (requireActivity() as Statistics).taskHandler
             // Workaround for issue 2406 -- crash when resuming after app is purged from RAM
@@ -471,10 +464,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         private fun createStatisticOverview() {
             val handler = (requireActivity() as Statistics).taskHandler
-            val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-                Timber.e(throwable, "createChart failed with error")
-            }
-            statisticsJob = viewLifecycleOwner.lifecycleScope.launch(exceptionHandler) {
+            statisticsJob = catchingLifecycleScope(requireActivity(), "createStatisticOverview failed with error") {
                 handler!!.createStatisticsOverview(mWebView, mProgressBar)
             }
         }

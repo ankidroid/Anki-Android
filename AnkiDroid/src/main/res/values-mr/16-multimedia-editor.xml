@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">उच्चार पहात आहात</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">उच्चारण अयशस्वी</string>
+    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
     <string name="multimedia_editor_word_search_try_lower_case">फक्त लोअर केस वर्ण वापरुन पहा</string>
     <string name="multimedia_editor_poweredbeolingus">बेओलिंगस द्वारा समर्थित</string>
     <!-- Field editing general -->

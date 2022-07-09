@@ -332,8 +332,8 @@ class ReviewerTest : RobolectricTest() {
         models.add(m)
         m = models.byName("Three")
         models.flush()
-        cloneTemplate(models, m)
-        cloneTemplate(models, m)
+        cloneTemplate(models, m, "1")
+        cloneTemplate(models, m, "2")
 
         val newNote = col.newNote()
         newNote.setField(0, "Hello")
@@ -343,7 +343,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Throws(ConfirmModSchemaException::class)
-    private fun cloneTemplate(models: ModelManager, m: Model?) {
+    private fun cloneTemplate(models: ModelManager, m: Model?, extra: String) {
         val tmpls = m!!.getJSONArray("tmpls")
         val defaultTemplate = tmpls.getJSONObject(0)
 
@@ -352,6 +352,7 @@ class ReviewerTest : RobolectricTest() {
 
         val cardName = targetContext.getString(R.string.card_n_name, tmpls.length() + 1)
         newTemplate.put("name", cardName)
+        newTemplate.put("qfmt", newTemplate.getString("qfmt") + extra)
 
         models.addTemplate(m, newTemplate)
     }

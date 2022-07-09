@@ -47,6 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">Đã tắt</string>
     <string name="enabled">Đã bật</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Chung</string>
     <string name="pref_cat_general_summ">Cài đặt chung</string>
@@ -179,10 +182,9 @@
     <string name="new_spread" maxLength="41">Vị trí thẻ mới</string>
     <string name="learn_cutoff" maxLength="41">Tìm hiểu trước giới hạn</string>
     <string name="time_limit" maxLength="41">Giới hạn thời gian của hộp thời gian</string>
-    <string name="time_limit_summ">XXX phút</string>
     <string name="new_timezone" maxLength="41">Xử lý múi giờ mới</string>
     <string name="day_offset_with_description" maxLength="41">Bắt đầu ngày hôm sau (0 là nửa đêm, 23 là 11 giờ tối)</string>
-    <string name="day_offset_summ">XXX giờ quá nửa đêm</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="sched_v2" maxLength="41">V2 scheduler</string>

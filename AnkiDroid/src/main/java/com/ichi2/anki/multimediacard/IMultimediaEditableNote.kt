@@ -20,7 +20,6 @@
 package com.ichi2.anki.multimediacard
 
 import com.ichi2.anki.multimediacard.fields.IField
-import com.ichi2.utils.KotlinCleanup
 import java.io.Serializable
 
 /**
@@ -32,6 +31,5 @@ interface IMultimediaEditableNote : Serializable {
     fun setField(index: Int, field: IField?): Boolean
     val isModified: Boolean
     val initialFieldCount: Int
-    @KotlinCleanup("make return non-null")
     fun getInitialField(index: Int): IField?
 }

@@ -16,12 +16,10 @@
 
 package com.ichi2.libanki.backend
 
-import com.ichi2.libanki.backend.model.TagUsnTuple
-
 interface TagsBackend {
-    fun all_tags(): List<TagUsnTuple>
+    fun all_tags(): List<String>
     fun register_tags(tags: String, preserve_usn: Boolean, usn: Int, clear_first: Boolean)
-    fun update_note_tags(nids: List<Long>, tags: String, replacement: String, regex: Boolean): Int
+    fun remove_note_tags(nids: List<Long>, tags: String): Int
     /** @return changed count. */
     fun add_note_tags(nids: List<Long>, tags: String): Int
 }

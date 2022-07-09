@@ -30,8 +30,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -73,6 +73,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         isCancelable = true
     }
 
+    @Suppress("Deprecation") // Material dialog neutral button deprecation
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView = LayoutInflater.from(activity)
             .inflate(R.layout.deck_picker_dialog, null, false)
@@ -94,13 +95,14 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val adapter = DecksArrayAdapter(decks)
         recyclerView.adapter = adapter
         adjustToolbar(dialogView, adapter)
-        var builder = MaterialDialog.Builder(requireActivity())
-            .neutralText(R.string.dialog_cancel)
-            .customView(dialogView, false)
+        mDialog = MaterialDialog(requireActivity())
+            .neutralButton(R.string.dialog_cancel) // Shouldn't it be negative button?
+            .customView(view = dialogView)
         if (arguments.getBoolean(KEEP_RESTORE_DEFAULT_BUTTON)) {
-            builder = builder.negativeText(R.string.restore_default).onNegative { _: MaterialDialog?, _: DialogAction? -> onDeckSelected(null) }
+            (mDialog as MaterialDialog).negativeButton(R.string.restore_default) {
+                onDeckSelected(null)
+            }
         }
-        mDialog = builder.build()
         return mDialog!!
     }
 

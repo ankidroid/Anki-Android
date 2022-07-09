@@ -45,7 +45,6 @@ import java8.util.Optional
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
-import BackendProto.Backend as pb
 
 // legacy code may pass this in as the type argument to .id()
 const val defaultDeck = 0
@@ -249,8 +248,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
 
         val deck = this.new_deck_legacy(type != 0)
         deck.name = name
-        this.update(deck, preserve_usn = false)
-
+        deck.id = decksBackend.addDeckLegacy(deck)
         return Optional.of(deck.id)
     }
 
@@ -289,11 +287,23 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
         return decksBackend.all_decks_legacy()
     }
     fun new_deck_legacy(filtered: bool): DeckV16 {
-        return decksBackend.new_deck_legacy(filtered)
+        val deck = decksBackend.new_deck_legacy(filtered)
+        if (filtered) {
+            // until migrating to the dedicated method for creating filtered decks,
+            // we need to ensure the default config matches legacy expectations
+            val json = deck.getJsonObject()
+            val terms = json.getJSONArray("terms").getJSONArray(0)
+            terms.put(0, "")
+            terms.put(2, 0)
+            json.put("terms", JSONArray(listOf(terms)))
+            json.put("browserCollapsed", false)
+            json.put("collapsed", false)
+        }
+        return deck
     }
 
     fun deck_tree(): DeckTreeNode {
-        return decksBackend.deck_tree(now = 0L, top_deck_id = 0L)
+        return decksBackend.deck_tree(now = 0L)
     }
 
     /** All decks. Expensive; prefer all_names_and_ids() */
@@ -636,7 +646,7 @@ class DecksV16(private val col: Collection, private val decksBackend: DecksBacke
     companion object {
 
         @JvmStatic
-        fun find_deck_in_tree(node: pb.DeckTreeNode, deck_id: did): Optional<pb.DeckTreeNode> {
+        fun find_deck_in_tree(node: anki.decks.DeckTreeNode, deck_id: did): Optional<anki.decks.DeckTreeNode> {
             if (node.deckId == deck_id) {
                 return Optional.of(node)
             }

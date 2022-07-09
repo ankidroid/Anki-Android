@@ -37,7 +37,7 @@ class RustTest : InstrumentedTest() {
     fun collectionIsVersion11AfterOpen() {
         // This test will be decommissioned, but before we get an upgrade strategy, we need to ensure we're not upgrading the database.
         val path = Shared.getTestFilePath(testContext, "initial_version_2_12_1.anki2")
-        val collection = Storage.Collection(testContext, path)
+        val collection = Storage.collection(testContext, path)
         val ver = collection.db.queryScalar("select ver from col")
         MatcherAssert.assertThat(ver, equalTo(11))
     }

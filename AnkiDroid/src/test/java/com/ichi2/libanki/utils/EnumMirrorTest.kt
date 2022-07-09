@@ -16,53 +16,43 @@
 
 package com.ichi2.libanki.utils
 
-import com.ichi2.libanki.SortOrder
-import net.ankiweb.rsdroid.RustCleanup
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
-import kotlin.reflect.KClass
-import kotlin.reflect.full.findAnnotation
-
-@RunWith(Parameterized::class)
-class EnumMirrorTest(val clazz: TestData) {
-
-    @Test
-    fun ensureEnumsHaveSameConstants() {
-        assertThat("A class marked with @EnumMirror should have all the enum constants of the class that it mirrors", clazz.targetNames, equalTo(clazz.mirrorNames))
-    }
-
-    companion object {
-        @JvmStatic
-        @Suppress("deprecation")
-        @RustCleanup("remove suppress on BuiltinSortKind")
-        @Parameterized.Parameters(name = "{0}")
-        fun data(): Iterable<Array<Any>> = sequence<Array<Any>> {
-            // HACK: We list the classes manually as "Reflections" doesn't work on Android out the box
-            // and it would be better to code a gradle plugin to streamline the current hacks
-            // (use gradle to serialize the list of possible classes, and load that at runtime).
-            yield(arrayOf(getClass(SortOrder.BuiltinSortKind.BuiltIn::class)))
-        }.asIterable()
-
-        @Suppress("unchecked_cast")
-        fun getClass(clazz: KClass<*>): TestData {
-            assertThat("target class should be an enum", clazz.java.isEnum, equalTo(true))
-            val annotation = clazz.findAnnotation<EnumMirror>()
-            assertThat("target class should have @EnumMirror", annotation, notNullValue())
-            val annotatedClass = annotation!!.value
-            assertThat("mirror target should be an enum", annotatedClass.java.isEnum, equalTo(true))
-
-            return TestData(clazz as KClass<out Enum<*>>, annotatedClass as KClass<out Enum<*>>)
-        }
-
-        data class TestData(val clazz: KClass<out Enum<*>>, val shouldMirror: KClass<out Enum<*>>) {
-            private fun getEnumNames(enumClass: KClass<out Enum<*>>) = enumClass.java.enumConstants.map { it.name }
-            val targetNames; get() = getEnumNames(clazz)
-            val mirrorNames; get() = getEnumNames(shouldMirror)
-            override fun toString() = "${clazz.simpleName} -> ${shouldMirror.simpleName}"
-        }
-    }
-}
+//
+// @RunWith(Parameterized::class)
+// class EnumMirrorTest(val clazz: TestData) {
+//
+//    @Test
+//    fun ensureEnumsHaveSameConstants() {
+//        assertThat("A class marked with @EnumMirror should have all the enum constants of the class that it mirrors", clazz.targetNames, equalTo(clazz.mirrorNames))
+//    }
+//
+//    companion object {
+//        @JvmStatic
+//        @Suppress("deprecation")
+//        @RustCleanup("remove suppress on BuiltinSortKind")
+//        @Parameterized.Parameters(name = "{0}")
+//        fun data(): Iterable<Array<Any>> = sequence<Array<Any>> {
+//            // HACK: We list the classes manually as "Reflections" doesn't work on Android out the box
+//            // and it would be better to code a gradle plugin to streamline the current hacks
+//            // (use gradle to serialize the list of possible classes, and load that at runtime).
+// //            yield(arrayOf(getClass(SortOrder.BuiltinSortKind.BuiltIn::class)))
+//        }.asIterable()
+//
+//        @Suppress("unchecked_cast")
+//        fun getClass(clazz: KClass<*>): TestData {
+//            assertThat("target class should be an enum", clazz.java.isEnum, equalTo(true))
+//            val annotation = clazz.findAnnotation<EnumMirror>()
+//            assertThat("target class should have @EnumMirror", annotation, notNullValue())
+//            val annotatedClass = annotation!!.value
+//            assertThat("mirror target should be an enum", annotatedClass.java.isEnum, equalTo(true))
+//
+//            return TestData(clazz as KClass<out Enum<*>>, annotatedClass as KClass<out Enum<*>>)
+//        }
+//
+//        data class TestData(val clazz: KClass<out Enum<*>>, val shouldMirror: KClass<out Enum<*>>) {
+//            private fun getEnumNames(enumClass: KClass<out Enum<*>>) = enumClass.java.enumConstants.map { it.name }
+//            val targetNames; get() = getEnumNames(clazz)
+//            val mirrorNames; get() = getEnumNames(shouldMirror)
+//            override fun toString() = "${clazz.simpleName} -> ${shouldMirror.simpleName}"
+//        }
+//    }
+// }

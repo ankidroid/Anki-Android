@@ -28,7 +28,11 @@ object PreferenceUtils {
         val i = Preferences.CustomButtonsSettingsFragment.getSubscreenIntent(context)
         ActivityScenario.launch<Preferences>(i).use { scenario ->
             scenario.moveToState(Lifecycle.State.STARTED)
-            scenario.onActivity { a: Preferences -> ret.set(a.loadedPreferenceKeys) }
+            scenario.onActivity { a: Preferences ->
+                val customButtonsFragment = a.supportFragmentManager
+                    .findFragmentByTag(Preferences.CustomButtonsSettingsFragment::class.java.name) as Preferences.CustomButtonsSettingsFragment
+                ret.set(customButtonsFragment.allKeys())
+            }
         }
         val preferenceKeys = ret.get()?.toMutableSet() ?: throw IllegalStateException("no keys were set")
         preferenceKeys.remove("reset_custom_buttons")

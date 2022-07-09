@@ -32,6 +32,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
+import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.io.FileUtils
 import timber.log.Timber
 import java.io.Closeable
@@ -126,6 +127,13 @@ internal constructor(
         // set the preferences to the new deck path + checks CollectionHelper
         // sets migration variables (migrationIsInProgress will be true)
         updatePreferences(destinationPath)
+
+        // updatePreferences() opened the collection in the new location, which will have created
+        // a -wal file if the new backend code is active. Close it again, so that tests don't
+        // fail due to the presence of a -wal file in the destination folder.
+        if (!BackendFactory.defaultLegacySchema) {
+            closeCollection()
+        }
     }
 
     /**
@@ -479,7 +487,12 @@ internal constructor(
          */
         val PRIORITY_FILES = listOf(
             SQLiteDBFiles("collection.anki2"), // Anki collection
-            SQLiteDBFiles("collection.media.ad.db2"), // media database + journal
+            if (BackendFactory.defaultLegacySchema) {
+                SQLiteDBFiles("collection.media.ad.db2")
+            } else {
+                // this is created on demand in the new backend
+                OptionalFile("collection.media.db")
+            }, // media database + journal
             OptionalFile(".nomedia"), // written immediately
             OptionalFile("collection.log") // written immediately and conflicts
         )

@@ -49,40 +49,40 @@ class TagsUtilTest {
         }
 
         companion object {
-            // suppressed to have a symmetry in all parameters, Arrays.asList(...) should be all you need.
+            // suppressed to have a symmetry in all parameters, listOf(...) should be all you need.
             @JvmStatic
             @Parameterized.Parameters
             fun data(): Collection<Array<Any>> {
-                return Arrays.asList(
+                return listOf(
                     arrayOf(
-                        Arrays.asList<Any>(),
-                        Arrays.asList<Any>(),
-                        Arrays.asList<Any>(),
-                        Arrays.asList<Any>()
+                        listOf<Any>(),
+                        listOf<Any>(),
+                        listOf<Any>(),
+                        listOf<Any>()
                     ),
                     arrayOf(
-                        Arrays.asList("a"),
-                        Arrays.asList("b", "c"),
-                        Arrays.asList<Any>(),
-                        Arrays.asList("b", "c")
+                        listOf("a"),
+                        listOf("b", "c"),
+                        listOf<Any>(),
+                        listOf("b", "c")
                     ),
                     arrayOf(
-                        Arrays.asList("a"),
-                        Arrays.asList("a", "b"),
-                        Arrays.asList("c"),
-                        Arrays.asList("a", "b")
+                        listOf("a"),
+                        listOf("a", "b"),
+                        listOf("c"),
+                        listOf("a", "b")
                     ),
                     arrayOf(
-                        Arrays.asList("a"),
-                        Arrays.asList("a", "b"),
-                        Arrays.asList("c"),
-                        Arrays.asList("a", "b")
+                        listOf("a"),
+                        listOf("a", "b"),
+                        listOf("c"),
+                        listOf("a", "b")
                     ),
                     arrayOf(
-                        Arrays.asList("a", "b", "c"),
-                        Arrays.asList("a"),
-                        Arrays.asList("b"),
-                        Arrays.asList("a", "b")
+                        listOf("a", "b", "c"),
+                        listOf("a"),
+                        listOf("b"),
+                        listOf("a", "b")
                     )
                 )
             }
@@ -94,14 +94,14 @@ class TagsUtilTest {
         fun test_getTagParts() {
             assertEquals(listOf("single"), TagsUtil.getTagParts("single"))
             assertEquals(listOf(":single:"), TagsUtil.getTagParts(":single:"))
-            assertEquals(Arrays.asList("first", "second"), TagsUtil.getTagParts("first::second"))
-            assertEquals(Arrays.asList("first", "second:"), TagsUtil.getTagParts("first::second:"))
+            assertEquals(listOf("first", "second"), TagsUtil.getTagParts("first::second"))
+            assertEquals(listOf("first", "second:"), TagsUtil.getTagParts("first::second:"))
             assertEquals(
-                Arrays.asList("first", "second", "blank"),
+                listOf("first", "second", "blank"),
                 TagsUtil.getTagParts("first::second::")
             )
             assertEquals(
-                Arrays.asList("blank", "first", "blank", ":second", "blank"),
+                listOf("blank", "first", "blank", ":second", "blank"),
                 TagsUtil.getTagParts("::first:::::second::")
             )
         }
@@ -128,11 +128,11 @@ class TagsUtilTest {
         @Test
         fun test_getTagAncestors() {
             assertEquals(
-                Arrays.asList("foo", "foo::bar", "foo::bar::aaa"),
+                listOf("foo", "foo::bar", "foo::bar::aaa"),
                 TagsUtil.getTagAncestors("foo::bar::aaa::bbb")
             )
-            assertEquals(Arrays.asList("foo", "foo::blank"), TagsUtil.getTagAncestors("foo::::aaa"))
-            assertEquals(Arrays.asList("blank", "blank::foo"), TagsUtil.getTagAncestors("::foo::aaa"))
+            assertEquals(listOf("foo", "foo::blank"), TagsUtil.getTagAncestors("foo::::aaa"))
+            assertEquals(listOf("blank", "blank::foo"), TagsUtil.getTagAncestors("::foo::aaa"))
         }
 
         @Test

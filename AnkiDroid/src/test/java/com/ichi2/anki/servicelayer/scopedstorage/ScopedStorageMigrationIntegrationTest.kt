@@ -23,6 +23,7 @@ import com.ichi2.anki.servicelayer.scopedstorage.MigrateUserData.*
 import com.ichi2.async.ProgressSenderAndCancelListener
 import com.ichi2.exceptions.AggregateException
 import com.ichi2.testutils.*
+import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.hamcrest.io.FileMatchers.anExistingDirectory
@@ -221,7 +222,6 @@ private constructor(source: Directory, destination: Directory, val filesToMigrat
         }
     }
 
-    /** Asserts [source] is empty */
     fun integrationAssertOnlyIntendedFilesRemain() {
         if (sourceFilesCount == INTEGRATION_INTENDED_REMAINING_FILE_COUNT) {
             return
@@ -253,7 +253,8 @@ private constructor(source: Directory, destination: Directory, val filesToMigrat
     }
 
     companion object {
-        const val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = 5
+        // media DB created on demand, and no -journal file in new backend
+        val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = if (BackendFactory.defaultLegacySchema) 5 else 3
 
         /**
          * A MigrateUserDataTest from inputSource to inputDestination (or transient directories if not provided)

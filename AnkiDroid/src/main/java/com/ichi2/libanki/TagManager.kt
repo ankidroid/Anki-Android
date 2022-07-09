@@ -136,5 +136,8 @@ abstract class TagManager {
 
     /** Whether any tags have a usn of -1 */
     @RustCleanup("not optimised")
-    open fun minusOneValue(): Boolean = allItems().any { it.usn == -1 }
+    open fun minusOneValue(): Boolean {
+        TODO("obsolete when moving to backend for sync")
+//        allItems().any { it.usn == -1 }
+    }
 }

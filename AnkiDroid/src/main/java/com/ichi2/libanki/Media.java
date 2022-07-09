@@ -24,7 +24,6 @@ import android.text.TextUtils;
 
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.CrashReportService;
 import com.ichi2.libanki.exception.EmptyMediaException;
 import com.ichi2.libanki.template.TemplateFilters;
@@ -34,8 +33,6 @@ import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
-
-import org.intellij.lang.annotations.Language;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -50,7 +47,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -145,8 +141,6 @@ public class Media {
                 Timber.e("Cannot create media directory: %s", mDir);
             }
         }
-        // change database
-        connect();
     }
 
 
@@ -165,7 +159,7 @@ public class Media {
         String path = dir() + ".ad.db2";
         File dbFile = new File(path);
         boolean create = !(dbFile.exists());
-        mDb = new DB(path);
+        mDb = DB.withAndroidFramework(mCol.getContext(), path);
         if (create) {
             _initDB();
         }
@@ -186,7 +180,7 @@ public class Media {
     }
 
 
-    public void maybeUpgrade() {
+    private void maybeUpgrade() {
         String oldPath = dir() + ".db";
         File oldDbFile = new File(oldPath);
         if (oldDbFile.exists()) {
@@ -1054,7 +1048,7 @@ public class Media {
 
         new File(path).delete();
 
-        mDb = new DB(path);
+        mDb = DB.withAndroidFramework(mCol.getContext(), path);
         _initDB();
     }
 

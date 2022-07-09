@@ -21,8 +21,11 @@ import android.database.Cursor;
 
 import android.util.Pair;
 
+import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.JSONObject;
+
+import net.ankiweb.rsdroid.BackendFactory;
 
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -136,7 +139,11 @@ public class Note implements Cloneable {
         mMod = mod != null ? mod : TimeManager.INSTANCE.getTime().intTime();
         mCol.getDb().execute("insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
                 mId, mGuId, mMid, mMod, mUsn, tags, fields, sfld, csum, mFlags, mData);
-        mCol.getTags().register(mTags);
+        if (BackendFactory.INSTANCE.getDefaultLegacySchema()) {
+            mCol.getTags().register(mTags);
+        } else {
+            Timber.w("new backend must update to native note adding routine");
+        }
         _postFlush();
     }
 

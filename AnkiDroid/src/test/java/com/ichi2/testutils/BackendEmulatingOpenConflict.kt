@@ -15,21 +15,25 @@
  */
 package com.ichi2.testutils
 
-import BackendProto.Backend.BackendError
-import com.ichi2.libanki.DB
-import com.ichi2.libanki.backend.DroidBackendFactory.setOverride
-import com.ichi2.libanki.backend.RustDroidBackend
+import android.content.Context
+import anki.backend.BackendError
+import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.RustBackendFailedException
 import org.mockito.Mockito
-import java.lang.RuntimeException
 
 /** Test helper:
  * causes getCol to emulate an exception caused by having another AnkiDroid instance open on the same collection
  */
-class BackendEmulatingOpenConflict(backend: BackendFactory?) : RustDroidBackend(backend!!) {
-    override fun openCollectionDatabase(path: String): DB {
+class BackendEmulatingOpenConflict(context: Context) : Backend(context) {
+    @Suppress("UNUSED_PARAMETER")
+    override fun openCollection(
+        collectionPath: String,
+        mediaFolderPath: String,
+        mediaDbPath: String,
+        logPath: String,
+        forceSchema11: Boolean
+    ) {
         val error = Mockito.mock(BackendError::class.java)
         throw BackendDbLockedException(error)
     }
@@ -37,16 +41,12 @@ class BackendEmulatingOpenConflict(backend: BackendFactory?) : RustDroidBackend(
     companion object {
         @JvmStatic
         fun enable() {
-            try {
-                setOverride(BackendEmulatingOpenConflict(BackendFactory.createInstance()))
-            } catch (e: RustBackendFailedException) {
-                throw RuntimeException(e)
-            }
+            BackendFactory.setOverride() { context, _, _ -> BackendEmulatingOpenConflict(context) }
         }
 
         @JvmStatic
         fun disable() {
-            setOverride(null)
+            BackendFactory.setOverride(null)
         }
     }
 }

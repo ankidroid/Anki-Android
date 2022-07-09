@@ -36,7 +36,7 @@ import com.ichi2.libanki.backend.NoteTypeNameIDUseCount
 import com.ichi2.libanki.utils.*
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
-import net.ankiweb.rsdroid.BackendV1
+import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
@@ -102,7 +102,7 @@ var NoteType.type: Int
         put("type", value)
     }
 
-class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
+class ModelsV16(col: Collection, backend: Backend) : ModelManager(col) {
     /*
     # Saving/loading registry
     #############################################################

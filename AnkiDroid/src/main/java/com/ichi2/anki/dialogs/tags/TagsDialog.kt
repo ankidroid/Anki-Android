@@ -19,8 +19,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -169,12 +171,15 @@ class TagsDialog : AnalyticsDialogFragment {
             mTagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { false }
         }
         adjustToolbar(tagsDialogView)
-        val builder = MaterialDialog.Builder(requireActivity())
-            .positiveText(mPositiveText!!)
-            .negativeText(R.string.dialog_cancel)
-            .customView(tagsDialogView, false)
-            .onPositive { _: MaterialDialog?, _: DialogAction? -> tagsDialogListener.onSelectedTags(mTags!!.copyOfCheckedTagList(), mTags!!.copyOfIndeterminateTagList(), mSelectedOption) }
-        mDialog = builder.build()
+        mDialog = MaterialDialog(requireActivity())
+            .positiveButton(text = mPositiveText!!) {
+                tagsDialogListener.onSelectedTags(
+                    mTags!!.copyOfCheckedTagList(),
+                    mTags!!.copyOfIndeterminateTagList(), mSelectedOption
+                )
+            }
+            .negativeButton(R.string.dialog_cancel)
+            .customView(view = tagsDialogView)
         val dialog: MaterialDialog? = mDialog
         resizeWhenSoftInputShown(dialog?.window!!)
         return dialog
@@ -232,9 +237,9 @@ class TagsDialog : AnalyticsDialogFragment {
     /**
      * A wrapper function around dialog.getInputEditText() to get non null [EditText]
      */
+    // TODO: Remove this, no longer needed
     private fun requireDialogInputEditText(dialog: MaterialDialog): EditText {
-        return dialog.inputEditText
-            ?: throw IllegalStateException("MaterialDialog $dialog does not have an input edit text.")
+        return dialog.getInputField()
     }
 
     /**
@@ -244,13 +249,14 @@ class TagsDialog : AnalyticsDialogFragment {
      */
     @NeedsTest("The prefixTag should be prefilled properly")
     private fun createAddTagDialog(prefixTag: String?) {
-        val addTagBuilder = MaterialDialog.Builder(requireActivity())
-            .title(getString(R.string.add_tag))
-            .negativeText(R.string.dialog_cancel)
-            .positiveText(R.string.dialog_ok)
-            .inputType(InputType.TYPE_CLASS_TEXT)
-            .input(R.string.tag_name, R.string.empty_string) { _: MaterialDialog?, input: CharSequence -> addTag(input.toString()) }
-        val addTagDialog = addTagBuilder.build()
+        val addTagDialog = MaterialDialog(requireActivity())
+            .title(text = getString(R.string.add_tag))
+            .positiveButton(R.string.dialog_ok)
+            .negativeButton(R.string.dialog_cancel)
+            .input(
+                hintRes = R.string.tag_name,
+                inputType = InputType.TYPE_CLASS_TEXT
+            ) { _: MaterialDialog?, input: CharSequence -> addTag(input.toString()) }
         val inputET = requireDialogInputEditText(addTagDialog)
         inputET.filters = arrayOf(addTagFilter)
         if (!prefixTag.isNullOrEmpty()) {

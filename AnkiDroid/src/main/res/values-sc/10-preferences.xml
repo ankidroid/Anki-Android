@@ -47,6 +47,9 @@
     <!-- generic strings -->
     <string name="disabled">Disabilitadu</string>
     <string name="enabled">Abilitadu</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Impostatziones generales</string>
@@ -179,10 +182,9 @@
     <string name="new_spread" maxLength="41">Positzione de sas cartas noas</string>
     <string name="learn_cutoff" maxLength="41">Lìmite pro s\'antitzipatzione de s\'imparu</string>
     <string name="time_limit" maxLength="41">Lìmite de tempus pro sessione</string>
-    <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone" maxLength="41">Gestione noa de su fusu oràriu</string>
     <string name="day_offset_with_description" maxLength="41">Incumintzu de sa die chi benit</string>
-    <string name="day_offset_summ">XXX oras a pustis de mesanote</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Mesanote</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="sched_v2" maxLength="41">Pranificadore V2</string>

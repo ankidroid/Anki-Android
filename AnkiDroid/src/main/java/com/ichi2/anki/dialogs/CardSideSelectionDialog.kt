@@ -15,8 +15,10 @@
  */
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.R
 import com.ichi2.anki.reviewer.CardSide
 
@@ -24,6 +26,7 @@ import com.ichi2.anki.reviewer.CardSide
 class CardSideSelectionDialog {
 
     companion object {
+        @SuppressLint("CheckResult")
         fun displayInstance(ctx: Context, callback: (c: CardSide) -> Unit) {
             val items = listOf(
                 R.string.card_side_both,
@@ -31,17 +34,16 @@ class CardSideSelectionDialog {
                 R.string.card_side_answer
             )
 
-            MaterialDialog.Builder(ctx)
-                .title(R.string.card_side_selection_title)
-                .items(items.map { ctx.getString(it) })
-                .itemsCallback { _, _, which, _ ->
-                    when (items[which]) {
+            MaterialDialog(ctx).show {
+                title(R.string.card_side_selection_title)
+                listItems(items = items.map { ctx.getString(it) }) { _: MaterialDialog, index: Int, _: CharSequence ->
+                    when (items[index]) {
                         R.string.card_side_both -> callback(CardSide.BOTH)
                         R.string.card_side_question -> callback(CardSide.QUESTION)
                         R.string.card_side_answer -> callback(CardSide.ANSWER)
                     }
                 }
-                .show()
+            }
         }
     }
 }

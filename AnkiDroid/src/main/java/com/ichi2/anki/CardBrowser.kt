@@ -33,8 +33,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.MaterialDialog.ListCallbackSingleChoice
+import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -255,10 +254,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private var mUnmountReceiver: BroadcastReceiver? = null
-    private val mOrderDialogListener = ListCallbackSingleChoice { _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
-        changeCardOrder(which)
-        true
-    }
+    private val orderSingleChoiceDialogListener: SingleChoiceListener = { _, index: Int, _ -> changeCardOrder(index) }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     fun changeCardOrder(which: Int) {
@@ -836,10 +832,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             else -> {
                 Timber.i("Back key pressed")
                 val data = Intent()
-                if (mReloadRequired) {
-                    // Add reload flag to result intent so that schedule reset when returning to note editor
-                    data.putExtra("reloadRequired", true)
-                }
+                // Add reload flag to result intent so that schedule reset when returning to note editor
+                data.putExtra("reloadRequired", mReloadRequired)
                 closeCardBrowser(RESULT_OK, data)
             }
         }
@@ -1067,7 +1061,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 return true
             }
             R.id.action_sort_by_size -> {
-                showDialogFragment(newInstance(mOrder, mOrderAsc, mOrderDialogListener))
+                showDialogFragment(newInstance(mOrder, mOrderAsc, orderSingleChoiceDialogListener))
                 return true
             }
             R.id.action_show_marked -> {
@@ -1647,20 +1641,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     /**
+     * Loads/Reloads (Updates the Q, A & etc) of cards in the [cards] list
      * @param cards Cards that were changed
      */
     private fun updateCardsInList(cards: List<Card>) {
-        val cardList: CardCollection<CardCache> = this.mCards
-        val idToPos = getPositionMap(cardList)
-        for (c in cards) {
-            // get position in the mCards search results HashMap
-            val pos = idToPos[c.id]
-            if (pos == null || pos >= cardCount) {
-                continue
-            }
-            // update Q & A etc
-            cardList[pos].load(true, mColumn1Index, mColumn2Index)
-        }
+        val idToPos = getPositionMap(mCards)
+        cards
+            .mapNotNull { c -> idToPos[c.id] }
+            .filterNot { pos -> pos >= cardCount }
+            .forEach { pos -> mCards[pos].load(true, mColumn1Index, mColumn2Index) }
         updateList()
     }
 
@@ -1723,25 +1712,13 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
     private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
-        val reviewerCardId = reviewerCardId
-        val oldMCards = mCards
-        val idToPos = getPositionMap(oldMCards)
-        val idToRemove: MutableSet<Long> = HashSet()
-        for (cardId in cardsIds) {
-            if (cardId == reviewerCardId) {
-                mReloadRequired = true
-            }
-            if (idToPos.containsKey(cardId)) {
-                idToRemove.add(cardId)
-            }
-        }
-        val newMCards: MutableList<CardCache> = java.util.ArrayList(oldMCards.size())
-        var pos = 0
-        for (card in oldMCards) {
-            if (!idToRemove.contains(card.id)) {
-                newMCards.add(CardCache(card, pos++))
-            }
-        }
+        val idToPos = getPositionMap(mCards)
+        val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
+        mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
+        val newMCards: MutableList<CardCache> = mCards
+            .filterNot { c -> idToRemove.contains(c.id) }
+            .mapIndexed { i, c -> CardCache(c, i) }
+            .toMutableList()
         mCards.replaceWith(newMCards)
         if (reorderCards) {
             // Suboptimal from a UX perspective, we should reorder
@@ -1918,23 +1895,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     private val newPositionOfSelectedCard: Int
-        get() {
-            if (mCards.size() == 0) {
-                return CARD_NOT_AVAILABLE
-            }
-            for (card in mCards) {
-                if (card.id == mOldCardId) {
-                    return card.position
-                }
-            }
-            return CARD_NOT_AVAILABLE
-        }
+        get() = mCards.find { c -> c.id == mOldCardId }?.position
+            ?: CARD_NOT_AVAILABLE
 
-    @KotlinCleanup("why do we create a separate variable just to check the below conditions?")
-    fun hasSelectedAllDecks(): Boolean {
-        val lastDeckId = lastDeckId
-        return lastDeckId != null && lastDeckId == ALL_DECKS_ID
-    }
+    fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
 
     fun searchAllDecks() {
         // all we need to do is select all decks
@@ -2146,15 +2110,12 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
-            val columns = v.tag as Array<View>
             val card = mCards[position]
-            for (i in toIds.indices) {
-                val col = columns[i] as TextView
-                // set font for column
-                setFont(col)
-                // set text for column
-                col.text = card.getColumnHeaderText(fromKeys[i])
-            }
+            (v.tag as Array<*>)
+                .forEachIndexed { i, col ->
+                    setFont(col as TextView) // set font for column
+                    col.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
+                }
             // set card's background color
             val backgroundColor: Int = getColorFromAttr(this@CardBrowser, card.color)
             v.setBackgroundColor(backgroundColor)
@@ -2609,14 +2570,11 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun checkCardsAtPositions(vararg positions: Int) {
-        for (position in positions) {
-            check(position < mCards.size()) {
-                String.format(
-                    Locale.US, "Attempted to check card at index %d. %d cards available",
-                    position, mCards.size()
-                )
+        positions.forEach { pos ->
+            check(pos < mCards.size()) {
+                "Attempted to check card at index $pos. ${mCards.size()} cards available"
             }
-            mCheckedCards.add(mCards[position])
+            mCheckedCards.add(mCards[pos])
         }
         onSelectionChanged()
     }
@@ -2717,12 +2675,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().remove(LAST_DECK_ID_KEY).apply()
         }
 
-        private fun getPositionMap(list: CardCollection<CardCache>): Map<Long, Int> {
-            val positions: MutableMap<Long, Int> = HashMapInit(list.size())
-            for (i in 0 until list.size()) {
-                positions[list[i].id] = i
-            }
-            return positions
+        private fun getPositionMap(cards: CardCollection<CardCache>): Map<Long, Int> {
+            return cards.mapIndexed { i, c -> c.id to i }.toMap()
         }
 
         @CheckResult

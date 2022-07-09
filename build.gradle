@@ -9,10 +9,11 @@ buildscript {
     ext.kotlin_version = '1.7.0'
     ext.lint_version = '30.2.1'
     ext.acra_version = '5.7.0'
-    ext.ankidroid_backend_version = '0.1.11'
+    ext.ankidroid_backend_version = '0.1.14-anki2.1.54'
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.8.2'
     ext.coroutines_version = '1.6.2'
+    ext.fragments_version = "1.5.0"
 
     repositories {
         google()
@@ -38,6 +39,12 @@ repositories {
 allprojects {
     apply plugin: "org.jlleitschuh.gradle.ktlint"
 }
+
+Properties localProperties = new Properties()
+if (project.rootProject.file('local.properties').exists()) {
+    localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+Boolean fatalWarnings = !(localProperties['fatal_warnings'] == "false")
 
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
@@ -92,7 +99,7 @@ subprojects {
         */
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
             kotlinOptions {
-                allWarningsAsErrors = true
+                allWarningsAsErrors = fatalWarnings
                 freeCompilerArgs = ['-Xjvm-default=all']
             }
         }

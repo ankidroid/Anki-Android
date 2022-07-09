@@ -81,6 +81,10 @@ class SeekBarPreferenceCompat : DialogPreference {
         mInterval = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "interval", 1) ?: 1
         mXLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "xlabel", 0) ?: 0
         mYLabel = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "ylabel", 0) ?: 0
+        val useSimpleSummaryProvider = attrs?.getAttributeBooleanValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "useSimpleSummaryProvider", false) ?: false
+        if (useSimpleSummaryProvider) {
+            setSummaryProvider { value.toString() }
+        }
     }
 
     @Suppress("DEPRECATION")
@@ -93,6 +97,10 @@ class SeekBarPreferenceCompat : DialogPreference {
         } else {
             defaultValue as Int
         }
+    }
+
+    fun setFormattedSummary(@StringRes resId: Int) {
+        setSummaryProvider { context.getString(resId, value) }
     }
 
     var value: Int
@@ -157,7 +165,7 @@ class SeekBarPreferenceCompat : DialogPreference {
             }
         }
 
-        protected fun onValueUpdated() {
+        private fun onValueUpdated() {
             mValueText!!.text = preference.valueText
         }
 
@@ -166,6 +174,7 @@ class SeekBarPreferenceCompat : DialogPreference {
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar) {
+            preference.notifyChanged() // to reload the summary with summaryProvider
             this.dialog!!.dismiss()
         }
 

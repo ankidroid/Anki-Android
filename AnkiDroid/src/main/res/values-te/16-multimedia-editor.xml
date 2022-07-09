@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">ఉచ్చారణ గురించి</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">ఉచ్చారణ విఫలమైంది</string>
+    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
     <string name="multimedia_editor_word_search_try_lower_case">తక్కువ కేస్ అక్షరాలని ఉపయోగించి ప్రయత్నించండి</string>
     <string name="multimedia_editor_poweredbeolingus">Beolingus ద్వారా ఆధారితం</string>
     <!-- Field editing general -->

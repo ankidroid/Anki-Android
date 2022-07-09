@@ -213,7 +213,7 @@ public class Sched extends SchedV2 {
      * Returns [deckname, did, rev, lrn, new]
      */
     @Override
-    public @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener cancelListener) {
+    protected @Nullable List<DeckDueTreeNode> deckDueList(@Nullable CancelListener cancelListener) {
         _checkDay();
         getCol().getDecks().checkIntegrity();
         List<Deck> allDecksSorted = getCol().getDecks().allSorted();
@@ -242,7 +242,7 @@ public class Sched extends SchedV2 {
             // reviews
             int rev = _revForDeck(deck.getLong("id"), rlim);
             // save to list
-            deckNodes.add(new DeckDueTreeNode(getCol(), deck.getString("name"), deck.getLong("id"), rev, lrn, _new));
+            deckNodes.add(new DeckDueTreeNode(deck.getString("name"), deck.getLong("id"), rev, lrn, _new, false, false));
             // add deck as a parent
             lims.put(Decks.normalizeName(deck.getString("name")), new Integer[]{nlim, rlim});
         }
