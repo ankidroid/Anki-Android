@@ -21,9 +21,11 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.content.pm.ShortcutManagerCompat.FLAG_MATCH_PINNED
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.decks.deckId
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.Companion.instance
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
@@ -34,6 +36,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowLooper
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -146,6 +149,20 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             openContextMenuAndSelectItem(recyclerView, 6)
 
             assertFalse(col.sched.haveBuried(deckId))
+        }
+    }
+
+    @Test
+    fun testCustomStudy() {
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            val deckId = addDeck("Deck 1")
+            updateDeckList()
+            assertEquals(1, visibleDeckCount)
+
+            openContextMenuAndSelectItem(recyclerView, 4)
+
+            assertNotNull(CustomStudyDialog.instance)
+            assertEquals(deckId, CustomStudyDialog.instance!!.requireArguments().getLong("did"))
         }
     }
 

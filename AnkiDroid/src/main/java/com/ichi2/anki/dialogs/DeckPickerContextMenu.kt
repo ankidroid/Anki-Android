@@ -41,6 +41,8 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
     val mRecyclerView: RecyclerView?
         get() = requireDialog().findViewById(R.id.md_recyclerview_content)
 
+    init { instance = this }
+
     fun withArguments(did: Long): DeckPickerContextMenu {
         val args = this.arguments ?: Bundle()
         args.putLong("did", did)
@@ -188,10 +190,8 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
 
         private fun newDeckPickerContextMenu(): DeckPickerContextMenu =
             DeckPickerContextMenu(collectionSupplier.get())
-                .also { instance = it }
 
         fun newDeckPickerContextMenu(deckId: Long): DeckPickerContextMenu =
             DeckPickerContextMenu(collectionSupplier.get()).withArguments(deckId)
-                .also { instance = it }
     }
 }
