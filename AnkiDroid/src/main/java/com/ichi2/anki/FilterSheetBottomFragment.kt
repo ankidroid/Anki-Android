@@ -49,9 +49,9 @@ class FilterSheetBottomFragment :
 
     private var flagSearchItems = mutableListOf<String>()
 
-    private lateinit var mFlagRecyclerView: RecyclerView
+    private lateinit var flagRecyclerView: RecyclerView
 
-    private var mLastClickTime = 0
+    private var lastClickTime = 0
 
     // flagName is displayed in filter sheet as the name of the filter
     enum class Flags(@StringRes private val flagNameRes: Int, val flagNumber: Int) {
@@ -61,7 +61,8 @@ class FilterSheetBottomFragment :
         BLUE(R.string.menu_flag_card_four, 4),
         PINK(R.string.menu_flag_card_five, 5),
         TURQUOISE(R.string.menu_flag_card_six, 6),
-        PURPLE(R.string.menu_flag_card_seven, 7);
+        PURPLE(R.string.menu_flag_card_seven, 7),
+        NO_FLAG(R.string.menu_flag_card_zero, 0);
 
         fun getFlagName(context: Context): String = context.getString(flagNameRes)
     }
@@ -97,11 +98,11 @@ class FilterSheetBottomFragment :
 
         val flagListAdapter = FlagsAdapter(activity, Flags.values(), this)
 
-        mFlagRecyclerView = requireView().findViewById(R.id.filter_bottom_flag_list)
-        mFlagRecyclerView.layoutManager = LinearLayoutManager(activity)
+        flagRecyclerView = requireView().findViewById(R.id.filter_bottom_flag_list)
+        flagRecyclerView.layoutManager = LinearLayoutManager(activity)
 
-        mFlagRecyclerView.adapter = flagListAdapter
-        mFlagRecyclerView.addItemDecoration(
+        flagRecyclerView.adapter = flagListAdapter
+        flagRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 activity,
                 DividerItemDecoration.VERTICAL
@@ -120,9 +121,9 @@ class FilterSheetBottomFragment :
 
         flagsButton.setOnClickListener {
 
-            if (SystemClock.elapsedRealtime() - mLastClickTime > DELAY_TIME) {
+            if (SystemClock.elapsedRealtime() - lastClickTime > DELAY_TIME) {
 
-                mLastClickTime = SystemClock.elapsedRealtime().toInt()
+                lastClickTime = SystemClock.elapsedRealtime().toInt()
 
                 if (flagsRecyclerViewLayout.isVisible) {
                     flagsRecyclerViewLayout.visibility = View.GONE
@@ -190,15 +191,15 @@ class FilterSheetBottomFragment :
 
     override fun onFlagItemClicked(item: Flags, position: Int) {
 
-        val itemBackground: ColorDrawable = mFlagRecyclerView[position].background as ColorDrawable
-        val itemTextView = mFlagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
+        val itemBackground: ColorDrawable = flagRecyclerView[position].background as ColorDrawable
+        val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
         if (itemBackground.color == Themes.getColorFromAttr(
                 activity,
                 R.attr.filterItemBackground
             )
         ) {
-            mFlagRecyclerView[position].setBackgroundColor(
+            flagRecyclerView[position].setBackgroundColor(
                 Themes.getColorFromAttr(
                     activity,
                     R.attr.filterItemBackgroundSelected
@@ -214,7 +215,7 @@ class FilterSheetBottomFragment :
 
             flagSearchItems.add("${item.flagNumber}")
         } else {
-            mFlagRecyclerView[position].setBackgroundColor(
+            flagRecyclerView[position].setBackgroundColor(
                 Themes.getColorFromAttr(
                     activity,
                     R.attr.filterItemBackground
