@@ -96,7 +96,6 @@ import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
-import com.ichi2.libanki.sched.upgradeScheduler
 import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
 import com.ichi2.libanki.utils.TimeManager
@@ -2701,7 +2700,7 @@ fun CollectionHelper.updateScheduler(context: Context) {
         // even if close fails.
         try {
             try {
-                getCol(context).newBackend.upgradeScheduler()
+                getCol(context).sched.upgradeToV2()
             } finally {
                 closeCollection(true, "sched upgrade")
             }
@@ -2711,6 +2710,6 @@ fun CollectionHelper.updateScheduler(context: Context) {
         }
     } else {
         // Can upgrade directly
-        getCol(context).newBackend.upgradeScheduler()
+        getCol(context).sched.upgradeToV2()
     }
 }

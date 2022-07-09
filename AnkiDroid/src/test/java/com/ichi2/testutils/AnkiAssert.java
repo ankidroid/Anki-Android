@@ -83,7 +83,7 @@ public class AnkiAssert {
     }
 
     public static boolean checkRevIvl(Collection col, Card c, int targetIvl) {
-        Pair<Integer, Integer> min_max = ((SchedV2)col.getSched())._fuzzIvlRange(targetIvl);
+        Pair<Integer, Integer> min_max = SchedV2._fuzzIvlRange(targetIvl);
         return min_max.first <= c.getIvl() && c.getIvl() <= min_max.second;
     }
 

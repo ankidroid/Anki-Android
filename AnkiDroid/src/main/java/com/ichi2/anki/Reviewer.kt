@@ -1075,7 +1075,6 @@ open class Reviewer : AbstractFlashcardViewer() {
             Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
             Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
             Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
-            else -> Timber.w("Unknown card type %s", sched!!.countIdx(mCurrentCard!!))
         }
         mTextBarNew.text = mNewCount
         mTextBarLearn.text = mLrnCount
