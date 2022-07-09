@@ -71,9 +71,11 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         if (args == null) {
             args = Bundle()
         }
-        args.putInt("id", contextMenuAttribute.value)
-        args.putLong("did", did)
-        args.putBoolean("jumpToReviewer", jumpToReviewer)
+        args.apply {
+            putInt("id", contextMenuAttribute.value)
+            putLong("did", did)
+            putBoolean("jumpToReviewer", jumpToReviewer)
+        }
         this.arguments = args
         return this
     }
@@ -343,14 +345,15 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         when (dialogId) {
             STANDARD -> {
                 // Standard context menu
-                val dialogOptions = mutableListOf<ContextMenuOption>()
-                dialogOptions.add(STUDY_NEW)
-                dialogOptions.add(STUDY_REV)
-                dialogOptions.add(STUDY_FORGOT)
-                dialogOptions.add(STUDY_AHEAD)
-                dialogOptions.add(STUDY_RANDOM)
-                dialogOptions.add(STUDY_PREVIEW)
-                dialogOptions.add(STUDY_TAGS)
+                val dialogOptions = mutableListOf<ContextMenuOption>().apply {
+                    add(STUDY_NEW)
+                    add(STUDY_REV)
+                    add(STUDY_FORGOT)
+                    add(STUDY_AHEAD)
+                    add(STUDY_RANDOM)
+                    add(STUDY_PREVIEW)
+                    add(STUDY_TAGS)
+                }
                 if (collection.sched.totalNewForCurrentDeck() == 0) {
                     // If no new cards we wont show CUSTOM_STUDY_NEW
                     dialogOptions.remove(STUDY_NEW)
@@ -358,7 +361,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 return dialogOptions.toList()
             }
             LIMITS -> // Special custom study options to show when the daily study limit has been reached
-                return if (collection.sched.newDue() != true && collection.sched.revDue() != true) {
+                return if (!collection.sched.newDue() && !collection.sched.revDue()) {
                     listOf(STUDY_NEW, STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
                 } else {
                     if (collection.sched.newDue()) {
