@@ -17,6 +17,8 @@
 package com.ichi2.anki.dialogs
 
 import android.content.Intent
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.content.pm.ShortcutManagerCompat.FLAG_MATCH_PINNED
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.DeckPicker
@@ -108,6 +110,22 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             openContextMenuAndSelectItem(mRecyclerView, 7)
 
             assertThat(col.decks.allNames(), contains("Default"))
+        }
+    }
+
+    @Test
+    fun testCreateShortcut() {
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            addDeck("Deck 1")
+            updateDeckList()
+            assertEquals(1, visibleDeckCount)
+
+            openContextMenuAndSelectItem(mRecyclerView, 6)
+
+            assertEquals(
+                "Deck 1",
+                ShortcutManagerCompat.getShortcuts(this, FLAG_MATCH_PINNED).first().shortLabel
+            )
         }
     }
 
