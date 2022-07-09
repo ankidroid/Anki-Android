@@ -14,129 +14,109 @@
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.libanki.sync;
+package com.ichi2.libanki.sync
 
-import android.content.SharedPreferences;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Ignore
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import com.ichi2.anki.AnkiDroidApp;
-
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.annotation.NonNull;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-@RunWith(AndroidJUnit4.class)
-public class HttpSyncerTest {
-    private static final String sCustomServerWithNoFormatting = "https://sync.example.com/";
-    private static final String sCustomServerWithFormatting   = "https://sync%s.example.com/";
-    private static final String sDefaultUrlNoHostNum    = "https://sync.ankiweb.net/sync/";
-    private static final String sDefaultUrlWithHostNum  = "https://sync1.ankiweb.net/sync/";
-
+@KotlinCleanup("`is` => equalTo")
+@RunWith(AndroidJUnit4::class)
+class HttpSyncerTest {
 
     @Test
-    public void getDefaultMediaUrlWithNoHostNum() {
-        HttpSyncer underTest = getServerWithHostNum(null);
-
-        String syncUrl = underTest.syncURL();
-
-        assertThat(syncUrl, is(sDefaultUrlNoHostNum));
+    fun defaultMediaUrlWithNoHostNum() {
+        val underTest = getServerWithHostNum(null)
+        val syncUrl = underTest.syncURL()
+        assertThat(syncUrl, `is`(sDefaultUrlNoHostNum))
     }
 
-
     @Test
-    public void getDefaultMediaUrlWithHostNum() {
-        HttpSyncer underTest = getServerWithHostNum(1);
-
-        String syncUrl = underTest.syncURL();
-
-        assertThat(syncUrl, is(sDefaultUrlWithHostNum));
+    fun defaultMediaUrlWithHostNum() {
+        val underTest = getServerWithHostNum(1)
+        val syncUrl = underTest.syncURL()
+        assertThat(syncUrl, `is`(sDefaultUrlWithHostNum))
     }
 
-
-    @Test
     @Ignore("Not yet supported")
-    public void getCustomMediaUrlWithNoHostNum() {
-        HttpSyncer underTest = getServerWithHostNum(null);
-        setCustomServer(sCustomServerWithFormatting);
-
-        String syncUrl = underTest.syncURL();
-
-        assertThat(syncUrl, is("https://sync.example.com/sync/"));
+    @Test
+    fun customMediaUrlWithNoHostNum() {
+        val underTest = getServerWithHostNum(null)
+        setCustomServer(sCustomServerWithFormatting)
+        val syncUrl = underTest.syncURL()
+        assertThat(syncUrl, `is`("https://sync.example.com/sync/"))
     }
 
-
-    @Test
     @Ignore("Not yet supported")
-    public void getCustomMediaUrlWithHostNum() {
-        HttpSyncer underTest = getServerWithHostNum(1);
-        setCustomServer(sCustomServerWithFormatting);
-
-        String syncUrl = underTest.syncURL();
-
-        assertThat(syncUrl, is("https://sync1.example.com/sync/"));
+    @Test
+    fun customMediaUrlWithHostNum() {
+        val underTest = getServerWithHostNum(1)
+        setCustomServer(sCustomServerWithFormatting)
+        val syncUrl = underTest.syncURL()
+        assertThat(syncUrl, `is`("https://sync1.example.com/sync/"))
     }
 
     @Test
-    public void getUnformattedCustomMediaUrlWithHostNum() {
-        HttpSyncer underTest = getServerWithHostNum(null);
-        setCustomServer(sCustomServerWithNoFormatting);
-
-        String syncUrl = underTest.syncURL();
-
-        assertThat(syncUrl, is("https://sync.example.com/sync/"));
+    fun unformattedCustomMediaUrlWithHostNum() {
+        val underTest = getServerWithHostNum(null)
+        setCustomServer(sCustomServerWithNoFormatting)
+        val syncUrl = underTest.syncURL()
+        assertThat(syncUrl, `is`("https://sync.example.com/sync/"))
     }
 
     @Test
-    public void getUnformattedCustomMediaUrlWithNoHostNum() {
-        HttpSyncer underTest = getServerWithHostNum(1);
-        setCustomServer(sCustomServerWithNoFormatting);
-
-        String syncUrl = underTest.syncURL();
-
-        assertThat(syncUrl, is("https://sync.example.com/sync/"));
+    fun unformattedCustomMediaUrlWithNoHostNum() {
+        val underTest = getServerWithHostNum(1)
+        setCustomServer(sCustomServerWithNoFormatting)
+        val syncUrl = underTest.syncURL()
+        assertThat(syncUrl, `is`("https://sync.example.com/sync/"))
     }
 
     @Test
-    public void invalidSettingReturnsCorrectResultWithNoHostNum() {
-        HttpSyncer underTest = getServerWithHostNum(null);
-        setCustomServerWithNoUrl();
-
-        String syncUrl = underTest.syncURL();
-
-        assertThat(syncUrl, is(sDefaultUrlNoHostNum));
+    fun invalidSettingReturnsCorrectResultWithNoHostNum() {
+        val underTest = getServerWithHostNum(null)
+        setCustomServerWithNoUrl()
+        val syncUrl = underTest.syncURL()
+        assertThat(syncUrl, `is`(sDefaultUrlNoHostNum))
     }
 
     @Test
-    public void invalidSettingReturnsCorrectResultWithHostNum() {
-        HttpSyncer underTest = getServerWithHostNum(1);
-        setCustomServerWithNoUrl();
-
-        String syncUrl = underTest.syncURL();
-
-        assertThat(syncUrl, is(sDefaultUrlWithHostNum));
+    fun invalidSettingReturnsCorrectResultWithHostNum() {
+        val underTest = getServerWithHostNum(1)
+        setCustomServerWithNoUrl()
+        val syncUrl = underTest.syncURL()
+        assertThat(syncUrl, `is`(sDefaultUrlWithHostNum))
     }
 
-    private void setCustomServerWithNoUrl() {
-        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        userPreferences.edit().putBoolean("useCustomSyncServer", true).apply();
+    @KotlinCleanup("use edit{} extension function")
+    private fun setCustomServerWithNoUrl() {
+        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+        userPreferences.edit().putBoolean("useCustomSyncServer", true).apply()
     }
 
-    private void setCustomServer(String s) {
-
-        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
-        SharedPreferences.Editor e = userPreferences.edit();
-        e.putBoolean("useCustomSyncServer", true);
-        e.putString("syncBaseUrl", s);
-        e.apply();
+    @KotlinCleanup("use edit{} extension function")
+    private fun setCustomServer(s: String) {
+        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+        val e = userPreferences.edit()
+        e.putBoolean("useCustomSyncServer", true)
+        e.putString("syncBaseUrl", s)
+        e.apply()
     }
 
-    @NonNull
-    private HttpSyncer getServerWithHostNum(Integer hostNum) {
-        return new HttpSyncer(null, null, new HostNum(hostNum));
+    private fun getServerWithHostNum(hostNum: Int?): HttpSyncer {
+        return HttpSyncer(null, null, HostNum(hostNum))
+    }
+
+    @KotlinCleanup("rename all")
+    companion object {
+        private const val sCustomServerWithNoFormatting = "https://sync.example.com/"
+        private const val sCustomServerWithFormatting = "https://sync%s.example.com/"
+        private const val sDefaultUrlNoHostNum = "https://sync.ankiweb.net/sync/"
+        private const val sDefaultUrlWithHostNum = "https://sync1.ankiweb.net/sync/"
     }
 }
