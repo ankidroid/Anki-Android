@@ -679,10 +679,9 @@ class DecksV16(private val col: CollectionV16) :
     override fun select(did: did) {
         // make sure arg is an int
         // did = int(did) - code removed, logically impossible
-        val current = this.selected()
+        col.backend.setCurrentDeck(did)
         val active = this.deck_and_child_ids(did)
-        if (current != did || active != this.active()) {
-            this.col.set_config(CURRENT_DECK, did)
+        if (active != this.active()) {
             this.col.set_config(ACTIVE_DECKS, active.toJsonArray())
         }
     }
