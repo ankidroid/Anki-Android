@@ -189,6 +189,17 @@ class CollectionV16(
         return status.undo ?: super.undoName(res)
     }
 
+    /** Provided for legacy code/tests; new code should call undoNew() directly
+     * so that OpChanges can be observed.
+     */
+    override fun undo(): Card? {
+        if (undoStatus().undo != null) {
+            undoNew()
+            return null
+        }
+        return super.undo()
+    }
+
     /** True if the V3 scheduled is enabled when schedVer is 2. */
     var v3Enabled: Boolean
         get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
