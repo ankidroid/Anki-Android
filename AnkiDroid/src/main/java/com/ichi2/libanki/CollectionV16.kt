@@ -17,6 +17,7 @@ package com.ichi2.libanki
 
 import android.content.Context
 import android.content.res.Resources
+import anki.config.ConfigKey
 import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toProtoBuf
@@ -187,4 +188,12 @@ class CollectionV16(
         val status = undoStatus()
         return status.undo ?: super.undoName(res)
     }
+
+    /** True if the V3 scheduled is enabled when schedVer is 2. */
+    var v3Enabled: Boolean
+        get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
+        set(value) {
+            backend.setConfigBool(ConfigKey.Bool.SCHED_2021, value, undoable = false)
+            _loadScheduler()
+        }
 }
