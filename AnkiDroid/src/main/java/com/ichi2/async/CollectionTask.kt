@@ -259,7 +259,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             Timber.d("doInBackgroundLoadDeckCounts")
             return try {
                 // Get due tree
-                col.sched.deckDueTree(collectionTask)!!
+                col.sched.deckDueTree(collectionTask)
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundLoadDeckCounts - error")
                 null
