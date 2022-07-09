@@ -149,6 +149,31 @@ class DeckPickerContextMenuTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun testDynRebuildAndEmpty() {
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
+            val cardIds = (0..3)
+                .map { addNoteUsingBasicModel("$it", "").firstCard().id }
+            assertTrue(allCardsInSameDeck(cardIds, 1))
+            val deckId = addDynamicDeck("Deck 1")
+            col.sched.rebuildDyn(deckId)
+            assertTrue(allCardsInSameDeck(cardIds, deckId))
+            updateDeckList()
+            assertEquals(1, visibleDeckCount)
+
+            openContextMenuAndSelectItem(mRecyclerView, 2) // Empty
+
+            assertTrue(allCardsInSameDeck(cardIds, 1))
+
+            openContextMenuAndSelectItem(mRecyclerView, 1) // Rebuild
+
+            assertTrue(allCardsInSameDeck(cardIds, deckId))
+        }
+    }
+
+    private fun allCardsInSameDeck(cardIds: List<Long>, deckId: Long): Boolean =
+        cardIds.all { col.getCard(it).did == deckId }
+
     private fun openContextMenuAndSelectItem(contextMenu: RecyclerView, index: Int) {
         contextMenu.postDelayed({
             contextMenu.findViewHolderForAdapterPosition(0)!!
