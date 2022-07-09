@@ -40,13 +40,13 @@ import com.ichi2.async.CollectionTask.PartialSearch
 import com.ichi2.async.ProgressSender
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.exception.NoSuchDeckException
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.libanki.hooks.ChessFilter
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.libanki.sched.SchedV3
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
@@ -54,6 +54,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
@@ -253,13 +254,13 @@ open class Collection(
         if (ver == 1) {
             sched = Sched(this)
         } else if (ver == 2) {
-            sched = SchedV2(this)
+            if (!BackendFactory.defaultLegacySchema && newBackend.v3Enabled) {
+                sched = SchedV3(this.newBackend)
+            } else {
+                sched = SchedV2(this)
+            }
             if (!server) {
-                try {
-                    set_config("localOffset", (sched as SchedV2)._current_timezone_offset())
-                } catch (e: BackendNotSupportedException) {
-                    throw e.alreadyUsingRustBackend()
-                }
+                set_config("localOffset", sched._current_timezone_offset())
             }
         }
     }

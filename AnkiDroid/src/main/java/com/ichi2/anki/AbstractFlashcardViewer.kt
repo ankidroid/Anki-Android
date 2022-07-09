@@ -2583,7 +2583,7 @@ abstract class AbstractFlashcardViewer :
     override fun opExecuted(changes: OpChanges, handler: Any?) {
         if ((changes.studyQueues || changes.noteText || changes.card) && handler !== this) {
             // executing this only for the refresh side effects; there may be a better way
-            Undo().runWithHandler(
+            GetCard().runWithHandler(
                 answerCardHandler(false)
             )
         }
