@@ -50,7 +50,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(mRecyclerView, 0)
+            openContextMenuAndSelectItem(recyclerView, 0)
 
             val browser = shadowOf(this).nextStartedActivity!!
             assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
@@ -66,7 +66,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(mRecyclerView, 1)
+            openContextMenuAndSelectItem(recyclerView, 1)
 
             CreateDeckDialog.instance!!.renameDeck("Deck 2")
             assertEquals("Deck 2", col.decks.name(deckId))
@@ -80,7 +80,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(mRecyclerView, 2)
+            openContextMenuAndSelectItem(recyclerView, 2)
 
             CreateDeckDialog.instance!!.createSubDeck(deckId, "Deck 2")
             assertThat(col.decks.allNames(), containsInAnyOrder("Default", "Deck 1", "Deck 1::Deck 2"))
@@ -94,7 +94,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(mRecyclerView, 3)
+            openContextMenuAndSelectItem(recyclerView, 3)
 
             val deckOptions = shadowOf(this).nextStartedActivity!!
             assertEquals("com.ichi2.anki.DeckOptions", deckOptions.component!!.className)
@@ -109,7 +109,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(mRecyclerView, 7)
+            openContextMenuAndSelectItem(recyclerView, 7)
 
             assertThat(col.decks.allNames(), contains("Default"))
         }
@@ -122,7 +122,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(mRecyclerView, 6)
+            openContextMenuAndSelectItem(recyclerView, 6)
 
             assertEquals(
                 "Deck 1",
@@ -143,7 +143,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             assertTrue(col.sched.haveBuried(deckId))
 
-            openContextMenuAndSelectItem(mRecyclerView, 6)
+            openContextMenuAndSelectItem(recyclerView, 6)
 
             assertFalse(col.sched.haveBuried(deckId))
         }
@@ -161,11 +161,11 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            openContextMenuAndSelectItem(mRecyclerView, 2) // Empty
+            openContextMenuAndSelectItem(recyclerView, 2) // Empty
 
             assertTrue(allCardsInSameDeck(cardIds, 1))
 
-            openContextMenuAndSelectItem(mRecyclerView, 1) // Rebuild
+            openContextMenuAndSelectItem(recyclerView, 1) // Rebuild
 
             assertTrue(allCardsInSameDeck(cardIds, deckId))
         }
