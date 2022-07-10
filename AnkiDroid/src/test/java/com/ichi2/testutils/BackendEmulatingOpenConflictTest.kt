@@ -13,43 +13,37 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.RobolectricTest
+import net.ankiweb.rsdroid.BackendException.BackendDbException.*
+import org.junit.After
+import org.junit.Assert.assertThrows
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import com.ichi2.anki.CollectionHelper;
-import com.ichi2.anki.RobolectricTest;
-
-import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import static org.junit.Assert.assertThrows;
-
-@RunWith(AndroidJUnit4.class)
-public class BackendEmulatingOpenConflictTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+class BackendEmulatingOpenConflictTest : RobolectricTest() {
     @Before
-    @Override
-    public void setUp() {
-        super.setUp();
-        BackendEmulatingOpenConflict.enable();
+    override fun setUp() {
+        super.setUp()
+        BackendEmulatingOpenConflict.enable()
     }
 
     @After
-    @Override
-    public void tearDown() {
-        super.tearDown();
-        BackendEmulatingOpenConflict.disable();
+    override fun tearDown() {
+        super.tearDown()
+        BackendEmulatingOpenConflict.disable()
     }
 
     @Test
-    public void assumeMocksAreValid() {
-        assertThrows(BackendDbLockedException.class, () -> CollectionHelper.getInstance().getCol(super.getTargetContext()));
+    fun assumeMocksAreValid() {
+        assertThrows(
+            BackendDbLockedException::class.java,
+            { CollectionHelper.getInstance().getCol(super.targetContext) }
+        )
     }
-
 }
