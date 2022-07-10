@@ -119,11 +119,11 @@ class AnkiStatsTaskHandler private constructor(
             collection: Collection,
             mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
             defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
-        ): AnkiStatsTaskHandler? {
+        ): AnkiStatsTaskHandler {
             if (instance == null || instance!!.collectionData !== collection) {
                 instance = AnkiStatsTaskHandler(collection, mainDispatcher, defaultDispatcher)
             }
-            return instance
+            return instance!!
         }
 
         @JvmStatic
@@ -131,7 +131,7 @@ class AnkiStatsTaskHandler private constructor(
             col: Collection,
             view: TextView,
             mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
-            defaultDispatcher: CoroutineDispatcher = Dispatchers.Main
+            defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
         ): Unit = mutex.withLock {
             withContext(defaultDispatcher) {
                 val todayStatString = if (!isActive || col.dbClosed) {
