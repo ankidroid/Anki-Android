@@ -69,7 +69,10 @@ abstract class NavigationDrawerActivity :
      */
     private var mPendingRunnable: Runnable? = null
 
+    private var mFullScreenDrawerEnabled: Boolean = false
+
     override fun setContentView(@LayoutRes layoutResID: Int) {
+        Timber.d("setContentView()")
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
 
         // Using ClosableDrawerLayout as a parent view.
@@ -79,7 +82,8 @@ abstract class NavigationDrawerActivity :
         // Get CoordinatorLayout using resource ID
         val coordinatorLayout = LayoutInflater.from(this)
             .inflate(layoutResID, closableDrawerLayout, false) as CoordinatorLayout
-        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
+        mFullScreenDrawerEnabled = preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)
+        if (mFullScreenDrawerEnabled) {
             // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
             // Then add coordinatorLayout as a child view of fullDraggableContainer.
             val fullDraggableContainer = FullDraggableContainer(this)
@@ -90,6 +94,14 @@ abstract class NavigationDrawerActivity :
             closableDrawerLayout.addView(coordinatorLayout, 0)
         }
         setContentView(closableDrawerLayout)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Fixes #11813
+        if (mFullScreenDrawerEnabled != preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
+            restartActivity()
+        }
     }
 
     @get:LayoutRes
