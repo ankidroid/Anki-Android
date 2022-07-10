@@ -69,11 +69,11 @@ abstract class NavigationDrawerActivity :
      */
     private var mPendingRunnable: Runnable? = null
 
-    protected var mReloadRequired = false
+    protected var reloadRequired = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mReloadRequired = savedInstanceState?.getBoolean("reloadRequired")
+        reloadRequired = savedInstanceState?.getBoolean("reloadRequired")
             ?: intent.getBooleanExtra("reloadRequired", false)
     }
 
@@ -102,7 +102,7 @@ abstract class NavigationDrawerActivity :
 
     override fun onStart() {
         super.onStart()
-        Timber.i("mReloadRequired = $mReloadRequired")
+        Timber.i("mReloadRequired = $reloadRequired")
     }
 
     @get:LayoutRes
@@ -258,7 +258,7 @@ abstract class NavigationDrawerActivity :
             }
         } else {
             if (listOf("reloadRequired", "currentCard").map { data?.extras?.get(it) }.all { it != null }) {
-                mReloadRequired = true
+                reloadRequired = true
                 intent.putExtra("currentCard", data?.getLongExtra("currentCard", -1))
             } else {
                 super.onActivityResult(requestCode, resultCode, data)
@@ -271,9 +271,9 @@ abstract class NavigationDrawerActivity :
         if (isDrawerOpen) {
             closeDrawer()
         } else {
-            Timber.i("mReloadRequired = $mReloadRequired, currentCardId = $currentCardId")
+            Timber.i("mReloadRequired = $reloadRequired, currentCardId = $currentCardId")
             val data = Intent().apply {
-                setupCardIdAndReloadRequired(toIntent = this, reloadRequired = mReloadRequired)
+                setupCardIdAndReloadRequired(toIntent = this, reloadRequired = reloadRequired)
             }
             close(RESULT_OK, data)
         }

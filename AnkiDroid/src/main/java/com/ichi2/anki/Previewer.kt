@@ -63,7 +63,7 @@ class Previewer : AbstractFlashcardViewer() {
         if (savedInstanceState != null) {
             mIndex = savedInstanceState.getInt("index", mIndex)
             mShowingAnswer = savedInstanceState.getBoolean("showingAnswer", mShowingAnswer)
-            mReloadRequired = savedInstanceState.getBoolean("reloadRequired")
+            reloadRequired = savedInstanceState.getBoolean("reloadRequired")
             mNoteChanged = savedInstanceState.getBoolean("noteChanged")
         }
         if (mCardList.isEmpty() || mIndex < 0 || mIndex > mCardList.size - 1) {
@@ -184,7 +184,7 @@ class Previewer : AbstractFlashcardViewer() {
         outState.putLongArray("cardList", mCardList)
         outState.putInt("index", mIndex)
         outState.putBoolean("showingAnswer", mShowingAnswer)
-        outState.putBoolean("reloadRequired", mReloadRequired)
+        outState.putBoolean("reloadRequired", reloadRequired)
         outState.putBoolean("noteChanged", mNoteChanged)
         super.onSaveInstanceState(outState)
     }
@@ -217,7 +217,7 @@ class Previewer : AbstractFlashcardViewer() {
     }
 
     override fun performReload() {
-        mReloadRequired = true
+        reloadRequired = true
         val newCardList = col.filterToValidCards(mCardList)
         if (newCardList.isEmpty()) {
             finishWithoutAnimation()
@@ -274,7 +274,7 @@ class Previewer : AbstractFlashcardViewer() {
     private val resultIntent: Intent
         get() {
             val intent = Intent()
-            intent.putExtra("reloadRequired", mReloadRequired)
+            intent.putExtra("reloadRequired", reloadRequired)
             intent.putExtra("noteChanged", mNoteChanged)
             return intent
         }

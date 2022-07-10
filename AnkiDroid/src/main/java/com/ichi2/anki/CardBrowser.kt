@@ -193,7 +193,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             mShouldRestoreScroll = true
             // in use by reviewer?
             if (reviewerCardId == mCurrentCardId) {
-                mReloadRequired = true
+                reloadRequired = true
             }
         }
         invalidateOptionsMenu() // maybe the availability of undo changed
@@ -225,7 +225,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         ) {
             searchCards()
             if (reviewerCardId == mCurrentCardId) {
-                mReloadRequired = true
+                reloadRequired = true
             }
         }
         invalidateOptionsMenu() // maybe the availability of undo changed
@@ -295,7 +295,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
         override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute")
-            context.mReloadRequired = true
+            context.reloadRequired = true
             val cardCount: Int = result.value.result.size
             showThemedToast(
                 context,
@@ -317,7 +317,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
         override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute")
-            context.mReloadRequired = true
+            context.reloadRequired = true
             val cardCount: Int = result.value.result.size
             showThemedToast(
                 context,
@@ -339,7 +339,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
         override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute")
-            context.mReloadRequired = true
+            context.reloadRequired = true
             val cardCount: Int = result.value.result.size
             showThemedToast(
                 context,
@@ -454,7 +454,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 mCardsAdapter!!.notifyDataSetChanged()
             } else {
                 if (contains(reviewerCardId)) {
-                    mReloadRequired = true
+                    reloadRequired = true
                 }
                 executeChangeCollectionTask(this, mNewDid)
             }
@@ -1690,7 +1690,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
         val idToPos = getPositionMap(mCards)
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
-        mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
+        reloadRequired = reloadRequired || cardsIds.contains(reviewerCardId)
         val newMCards: MutableList<CardCache> = mCards
             .filterNot { c -> idToRemove.contains(c.id) }
             .mapIndexed { i, c -> CardCache(c, i) }
@@ -1716,7 +1716,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             browser.hideProgressBar()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
             if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
-                browser.mReloadRequired = true
+                browser.reloadRequired = true
             }
         }
     }
@@ -1737,7 +1737,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             browser.hideProgressBar()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
             if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
-                browser.mReloadRequired = true
+                browser.reloadRequired = true
             }
         }
     }
