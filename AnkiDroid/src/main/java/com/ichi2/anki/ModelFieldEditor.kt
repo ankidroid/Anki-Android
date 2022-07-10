@@ -175,7 +175,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldNameInput?.let { _fieldNameInput ->
             _fieldNameInput.isSingleLine = true
             MaterialDialog(this).show {
-                customView(view = _fieldNameInput)
+                customView(view = _fieldNameInput, horizontalPadding = true)
                 title(R.string.model_field_editor_add)
                 positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
@@ -266,7 +266,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             _fieldNameInput.setText(mFieldsLabels[currentPos])
             _fieldNameInput.setSelection(_fieldNameInput.text!!.length)
             MaterialDialog(this).show {
-                customView(view = _fieldNameInput)
+                customView(view = _fieldNameInput, horizontalPadding = true)
                 title(R.string.model_field_editor_rename)
                 positiveButton(R.string.rename) {
                     if (uniqueName(_fieldNameInput) == null) {
