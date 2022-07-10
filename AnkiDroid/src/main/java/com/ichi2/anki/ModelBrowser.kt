@@ -263,7 +263,7 @@ class ModelBrowser : AnkiActivity() {
         val newModelAdapter = ArrayAdapter(this, R.layout.dropdown_deck_item, mNewModelLabels!!.toList())
         addSelectionSpinner.adapter = newModelAdapter
         MaterialDialog(this).show {
-            customView(view = addSelectionSpinner, scrollable = true)
+            customView(view = addSelectionSpinner, scrollable = true, horizontalPadding = true)
             title(R.string.model_browser_add)
             positiveButton(R.string.dialog_ok) {
                 modelNameInput = FixedEditText(this@ModelBrowser)
