@@ -31,7 +31,6 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
-import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
@@ -59,17 +58,6 @@ import timber.log.Timber
 import java.util.*
 
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val mRecyclerView: RecyclerView?
-        get() = requireDialog().findViewById(R.id.md_recyclerview_content)
-
-    init { instance = this }
-
-    companion object {
-        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-        var instance: CustomStudyDialog? = null
-    }
-
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
         fun onExtendStudyLimits()
         fun showDialogFragment(newFragment: DialogFragment?)

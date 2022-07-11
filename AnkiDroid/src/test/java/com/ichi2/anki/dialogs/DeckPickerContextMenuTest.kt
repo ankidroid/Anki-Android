@@ -26,7 +26,6 @@ import com.afollestad.materialdialogs.internal.rtl.RtlTextView
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
@@ -160,14 +159,13 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
     fun testCustomStudy() {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val deckId = addDeck("Deck 1")
+            addDeck("Deck 1")
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
             openContextMenuAndSelectItem(recyclerView, 4)
 
-            assertNotNull(CustomStudyDialog.instance)
-            assertEquals(deckId, CustomStudyDialog.instance!!.requireArguments().getLong("did"))
+            assertNotNull(ShadowDialog.getLatestDialog() as MaterialDialog?)
         }
     }
 
