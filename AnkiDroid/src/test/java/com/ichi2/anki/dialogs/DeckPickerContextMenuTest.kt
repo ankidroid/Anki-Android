@@ -21,7 +21,10 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.content.pm.ShortcutManagerCompat.FLAG_MATCH_PINNED
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.internal.rtl.RtlTextView
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.Companion.instance
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
@@ -33,6 +36,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -85,7 +89,10 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             openContextMenuAndSelectItem(recyclerView, 2)
 
             createDeckDialog!!.createSubDeck(deckId, "Deck 2")
-            assertThat(col.decks.allNames(), containsInAnyOrder("Default", "Deck 1", "Deck 1::Deck 2"))
+            assertThat(
+                col.decks.allNames(),
+                containsInAnyOrder("Default", "Deck 1", "Deck 1::Deck 2")
+            )
         }
     }
 
@@ -174,8 +181,12 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             openContextMenuAndSelectItem(recyclerView, 5)
 
-            assertNotNull(ExportDialog.instance)
-            assertEquals(deckId, ExportDialog.instance!!.requireArguments().getLong("did"))
+            assertEquals(
+                "Export “${col.decks.name(deckId)}” as apkg file?",
+                (ShadowDialog.getLatestDialog() as MaterialDialog?)!!
+                    .view.findViewById<RtlTextView>(R.id.md_text_message)
+                    .text
+            )
         }
     }
 

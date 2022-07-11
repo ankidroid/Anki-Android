@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.annotation.VisibleForTesting
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.ichi2.anki.R
@@ -34,8 +33,6 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
 
     private var mIncludeSched = false
     private var mIncludeMedia = false
-
-    init { instance = this }
 
     /**
      * Creates a new instance of ExportDialog to export a deck of cards
@@ -107,8 +104,5 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
     companion object {
         private const val INCLUDE_SCHED = 0
         private const val INCLUDE_MEDIA = 1
-
-        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-        var instance: ExportDialog? = null
     }
 }
