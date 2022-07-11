@@ -358,7 +358,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             deckId = (requireActivity() as Statistics).mStatsDeckId
             if (deckId != Stats.ALL_DECKS_ID) {
                 val col = CollectionHelper.getInstance().getCol(requireActivity())
-                val baseName = Decks.basename(col.decks.current().getString("name"))
+                val baseName = Decks.basename(col!!.decks.current().getString("name"))
                 if (sIsSubtitle) {
                     (requireActivity() as AppCompatActivity).supportActionBar!!.subtitle = baseName
                 } else {
@@ -434,7 +434,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             val col = CollectionHelper.getInstance().getCol(requireActivity())
             deckId = (requireActivity() as Statistics).mStatsDeckId
             if (deckId != Stats.ALL_DECKS_ID) {
-                val basename = Decks.basename(col.decks.current().getString("name"))
+                val basename = Decks.basename(col!!.decks.current().getString("name"))
                 if (sIsSubtitle) {
                     (requireActivity() as AppCompatActivity).supportActionBar!!.subtitle = basename
                 } else {

@@ -145,7 +145,7 @@ open class RobolectricTest : CollectionGetter {
 
         try {
             if (CollectionHelper.getInstance().colIsOpen()) {
-                CollectionHelper.getInstance().getCol(targetContext).debugEnsureNoOpenPointers()
+                CollectionHelper.getInstance().getCol(targetContext)!!.debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
             CollectionHelper.getInstance().closeCollection(false, "RobolectricTest: End")
@@ -287,7 +287,7 @@ open class RobolectricTest : CollectionGetter {
      * we don't get two equal time. */
     override fun getCol(): Collection {
         try {
-            return CollectionHelper.getInstance().getCol(targetContext)
+            return CollectionHelper.getInstance().getCol(targetContext)!!
         } catch (e: UnsatisfiedLinkError) {
             throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
         }

@@ -26,7 +26,7 @@ import timber.log.Timber
 
 fun DeckPicker.importApkg(apkgPath: String) {
     val deckPicker = this
-    val col = CollectionHelper.getInstance().getCol(deckPicker.baseContext).newBackend
+    val col = CollectionHelper.getInstance().getCol(deckPicker.baseContext)!!.newBackend
     catchingLifecycleScope(this) {
         val report = col.opWithProgress({
             if (it.hasImporting()) {
@@ -66,7 +66,7 @@ fun DeckPicker.exportApkg(
     deckId: Long?
 ) {
     val deckPicker = this
-    val col = CollectionHelper.getInstance().getCol(deckPicker.baseContext).newBackend
+    val col = CollectionHelper.getInstance().getCol(deckPicker.baseContext)!!.newBackend
     catchingLifecycleScope(this) {
         runInBackgroundWithProgress(col, {
             if (it.hasExporting()) {

@@ -73,7 +73,7 @@ class BootService : BroadcastReceiver() {
 
     private fun scheduleDeckReminder(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        for (deckConfiguration in CollectionHelper.getInstance().getCol(context).decks.allConf()) {
+        for (deckConfiguration in CollectionHelper.getInstance().getCol(context)!!.decks.allConf()) {
             if (deckConfiguration.has("reminder")) {
                 val reminder = deckConfiguration.getJSONObject("reminder")
                 if (reminder.getBoolean("enabled")) {
@@ -132,7 +132,7 @@ class BootService : BroadcastReceiver() {
             val defValue = 4
             return try {
                 val col = CollectionHelper.getInstance().getCol(context)
-                when (col.schedVer()) {
+                when (col!!.schedVer()) {
                     1 -> {
                         val sp = AnkiDroidApp.getSharedPrefs(context)
                         sp.getInt("dayOffset", defValue)

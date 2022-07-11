@@ -285,7 +285,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                     // Check if there was a sanity check error
                     if (SANITY_CHECK_ERROR == ret.first) {
                         // Force full sync next time
-                        col.modSchemaNoCheck()
+                        col!!.modSchemaNoCheck()
                         col.save()
                     }
                     return data
@@ -305,7 +305,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                             Timber.i("Sync - fullsync - upload collection")
                             publishProgress(R.string.sync_preparing_full_sync_message)
                             val ret = fullSyncServer.upload()
-                            col.reopen()
+                            col!!.reopen()
                             if (ret == null) {
                                 return returnGenericError(data)
                             }
@@ -322,14 +322,14 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                             val ret = fullSyncServer.download()
                             if (SUCCESS == ret) {
                                 data.success = true
-                                col.reopen()
+                                col!!.reopen()
                             }
                             if (SUCCESS != ret) {
                                 Timber.w("Sync - fullsync - download failed")
                                 data.success = false
                                 data.resultType = ret
                                 if (!colCorruptFullSync) {
-                                    col.reopen()
+                                    col!!.reopen()
                                 }
                                 return data
                             }
@@ -360,7 +360,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
 
             // clear undo to avoid non syncing orphans (because undo resets usn too
             if (!noChanges) {
-                col.clearUndo()
+                col!!.clearUndo()
             }
             // then move on to media sync
             isCancellable = true
@@ -368,7 +368,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
             var mediaError: String? = null
             if (media) {
                 val mediaServer = RemoteMediaServer(col, hkey, this, hostNum)
-                val mediaClient = MediaSyncer(col, mediaServer, this)
+                val mediaClient = MediaSyncer(col!!, mediaServer, this)
                 val ret: Pair<Syncer.ConnectionResultType, String?>
                 try {
                     Timber.i("Sync - Performing media sync")

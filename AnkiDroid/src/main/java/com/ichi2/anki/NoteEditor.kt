@@ -1381,7 +1381,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 val col = CollectionHelper.getInstance().getCol(this@NoteEditor)
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
-                val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col)
+                val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col!!)
                 startMultimediaFieldEditor(index, note)
             } else {
                 // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
@@ -1475,7 +1475,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun startMultimediaFieldEditorForField(index: Int, field: IField) {
         val col = CollectionHelper.getInstance().getCol(this@NoteEditor)
-        val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col)
+        val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col!!)
         note.setField(index, field)
         startMultimediaFieldEditor(index, note)
     }

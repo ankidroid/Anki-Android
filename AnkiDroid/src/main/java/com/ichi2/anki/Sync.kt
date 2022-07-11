@@ -48,7 +48,7 @@ fun DeckPicker.handleNewSync(
         this.hostNumber = hostNum
     }.build()
 
-    val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
+    val col = CollectionHelper.getInstance().getCol(baseContext)!!.newBackend
     val deckPicker = this
 
     catchingLifecycleScope(this) {
@@ -68,7 +68,7 @@ fun DeckPicker.handleNewSync(
 }
 
 fun MyAccount.handleNewLogin(username: String, password: String) {
-    val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
+    val col = CollectionHelper.getInstance().getCol(baseContext)!!.newBackend
     catchingLifecycleScope(this) {
         val auth = try {
             runInBackgroundWithProgress(col, { }) {

@@ -239,10 +239,8 @@ internal constructor(
      * This will temporarily open the collection during the operation if it was already closed
      */
     private fun closeCollection() {
-        val instance = CollectionHelper.getInstance()
         // this opens col if it wasn't closed
-        val col = instance.getCol(context)
-        col.close()
+        CollectionHelper.getInstance().getCol(context)?.close()
     }
 
     /** Converts the current AnkiDroid collection path to an [AnkiDroidDirectory] instance */
@@ -528,7 +526,7 @@ internal constructor(
             destination: File,
             transformAlgo: ((MigrateEssentialFiles) -> MigrateEssentialFiles)? = null
         ) {
-            val collectionPath: CollectionFilePath = CollectionHelper.getInstance().getCol(context).path
+            val collectionPath: CollectionFilePath = CollectionHelper.getInstance().getCol(context)!!.path
             val sourceDirectory = File(collectionPath).parent!!
 
             if (!ScopedStorageService.isLegacyStorage(sourceDirectory, context)) {

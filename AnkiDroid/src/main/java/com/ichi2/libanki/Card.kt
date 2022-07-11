@@ -589,7 +589,7 @@ open class Card : Cloneable {
 
                 // TODO: the performance-naive implementation loads from database instead of working in memory
                 // the high performance version would implement .clone() on Card and test it well
-                copies.add(Card(col, originals[i].id))
+                copies.add(Card(col!!, originals[i].id))
             }
             return copies.toTypedArray()
         }

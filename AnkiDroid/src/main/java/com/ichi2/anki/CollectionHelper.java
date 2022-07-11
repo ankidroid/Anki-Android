@@ -53,6 +53,7 @@ import static com.ichi2.libanki.BackendImportExportKt.importCollectionPackage;
 public class CollectionHelper {
 
     // Collection instance belonging to sInstance
+    @Nullable
     private Collection mCollection;
     // Name of anki2 file
     public static final String COLLECTION_FILENAME = "collection.anki2";
@@ -89,7 +90,7 @@ public class CollectionHelper {
     private static @Nullable CollectionOpenFailure mLastOpenFailure;
 
     @Nullable
-    public static Long getCollectionSize(Context context) {
+    public static Long getCollectionSize(@NonNull Context context) {
         try {
             String path = getCollectionPath(context);
             return new File(path).length();
@@ -126,12 +127,14 @@ public class CollectionHelper {
     @VisibleForTesting
     public static class LazyHolder {
         @VisibleForTesting
+        @NonNull
         public static CollectionHelper INSTANCE = new CollectionHelper();
     }
 
     /**
      * @return Singleton instance of the helper class
      */
+    @NonNull
     public static CollectionHelper getInstance() {
         return LazyHolder.INSTANCE;
     }
@@ -141,6 +144,7 @@ public class CollectionHelper {
      *
      * path should be tested with File.exists() and File.canWrite() before this is called
      */
+    @NonNull
     private Collection openCollection(Context context, String path) {
         Timber.i("Begin openCollection: %s", path);
         Backend backend = getOrCreateBackend(context);
@@ -174,6 +178,7 @@ public class CollectionHelper {
      * @param context context which can be used to get the setting for the path to the Collection
      * @return instance of the Collection
      */
+    @Nullable
     public synchronized Collection getCol(Context context) {
         // Open collection
         if (!colIsOpen()) {
@@ -203,6 +208,7 @@ public class CollectionHelper {
      * @throws StorageAccessException the file at `path` is not writable
      * @throws StorageAccessException `path` does not exist
      */
+    @NonNull
     public Collection getColFromPath(String path, Context context) throws StorageAccessException {
         File f = new File(path);
 
@@ -218,6 +224,7 @@ public class CollectionHelper {
     }
 
     /** Collection time if possible, otherwise real time.*/
+    @NonNull
     public synchronized Time getTimeSafe(Context context) {
         try {
             return TimeManager.INSTANCE.getTime();
@@ -233,6 +240,7 @@ public class CollectionHelper {
      * @param context
      * @return
      */
+    @Nullable
     public synchronized Collection getColSafe(Context context) {
         mLastOpenFailure = null;
         try {
@@ -519,7 +527,8 @@ public class CollectionHelper {
             this.mErrorMessage = errorMessage;
         }
 
-        private static CollectionIntegrityStorageCheck fromError(String errorMessage) {
+        @NonNull
+        private static CollectionIntegrityStorageCheck fromError(@NonNull String errorMessage) {
             return new CollectionIntegrityStorageCheck(errorMessage);
         }
 
@@ -528,7 +537,7 @@ public class CollectionHelper {
             return Formatter.formatShortFileSize(context, oneHundredFiftyMB);
         }
 
-        public static CollectionIntegrityStorageCheck createInstance(Context context) {
+        public static CollectionIntegrityStorageCheck createInstance(@NonNull Context context) {
 
             Long maybeCurrentCollectionSizeInBytes = getCollectionSize(context);
             if (maybeCurrentCollectionSizeInBytes == null) {
@@ -601,7 +610,7 @@ public class CollectionHelper {
         col.getModels();
     }
 
-    public static int getDatabaseVersion(Context context) throws UnknownDatabaseVersionException {
+    public static int getDatabaseVersion(@NonNull Context context) throws UnknownDatabaseVersionException {
         // backend can't open a schema version outside range, so fall back to a pure DB implementation
         return Storage.getDatabaseVersion(context, getCollectionPath(context));
     }
@@ -619,7 +628,7 @@ public class CollectionHelper {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public void setColForTests(Collection col) {
+    public void setColForTests(@Nullable Collection col) {
         if (col == null) {
             try {
                 mCollection.close();

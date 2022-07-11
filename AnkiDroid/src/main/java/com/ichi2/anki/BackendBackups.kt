@@ -25,7 +25,7 @@ import kotlinx.coroutines.*
 import timber.log.Timber
 
 fun DeckPicker.performBackupInBackground() {
-    val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
+    val col = CollectionHelper.getInstance().getCol(baseContext)!!.newBackend
     catchingLifecycleScope(this) {
         // Wait a second to allow the deck list to finish loading first, or it
         // will hang until the first stage of the backup completes.

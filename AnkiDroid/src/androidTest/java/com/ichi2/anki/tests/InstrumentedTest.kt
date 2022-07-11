@@ -27,7 +27,7 @@ import java.io.IOException
 
 abstract class InstrumentedTest {
     protected val col: Collection
-        get() = CollectionHelper.getInstance().getCol(testContext)
+        get() = CollectionHelper.getInstance().getCol(testContext)!!
 
     @get:Throws(IOException::class)
     protected val emptyCol: Collection

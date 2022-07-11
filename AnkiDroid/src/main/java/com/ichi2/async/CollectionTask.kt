@@ -91,7 +91,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     private val col: Collection
-        get() = CollectionHelper.getInstance().getCol(context)
+        get() = CollectionHelper.getInstance().getCol(context)!!
 
     protected override fun doInBackground(vararg arg0: Void): Result? {
         return try {
