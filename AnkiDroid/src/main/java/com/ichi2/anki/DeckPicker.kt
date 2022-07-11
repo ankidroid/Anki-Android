@@ -154,6 +154,8 @@ open class DeckPicker :
     private lateinit var mDeckPickerContent: RelativeLayout
     @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
     private var mProgressDialog: android.app.ProgressDialog? = null
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    var createDeckDialog: CreateDeckDialog? = null
     private var mStudyoptionsFrame: View? = null // not lateInit - can be null
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var recyclerView: RecyclerView

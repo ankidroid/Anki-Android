@@ -21,7 +21,6 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.content.pm.ShortcutManagerCompat.FLAG_MATCH_PINNED
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import anki.decks.deckId
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.Companion.instance
@@ -71,7 +70,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             openContextMenuAndSelectItem(recyclerView, 1)
 
-            CreateDeckDialog.instance!!.renameDeck("Deck 2")
+            createDeckDialog!!.renameDeck("Deck 2")
             assertEquals("Deck 2", col.decks.name(deckId))
         }
     }
@@ -85,7 +84,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             openContextMenuAndSelectItem(recyclerView, 2)
 
-            CreateDeckDialog.instance!!.createSubDeck(deckId, "Deck 2")
+            createDeckDialog!!.createSubDeck(deckId, "Deck 2")
             assertThat(col.decks.allNames(), containsInAnyOrder("Default", "Deck 1", "Deck 1::Deck 2"))
         }
     }
