@@ -85,7 +85,8 @@ Join Us On
 <a href="https://twitter.com/ankidroid"><img src="docs/graphics/logos/twitter_logo_color.png" height="50px"/></a>
 
 ## Credits
-
+<!--- Do not rename this section. AnkiDroid contains a deep link to the section
+header - see https://github.com/ankidroid/Anki-Android/pull/11803 --->
 
 ### Code Contributors
 
