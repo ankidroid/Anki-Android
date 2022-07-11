@@ -19,9 +19,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.StringRes
-import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -37,11 +35,6 @@ import timber.log.Timber
 import java.util.function.Supplier
 
 class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialogFragment() {
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val mRecyclerView: RecyclerView?
-        get() = requireDialog().findViewById(R.id.md_recyclerview_content)
-
-    init { instance = this }
 
     fun withArguments(did: Long): DeckPickerContextMenu {
         val args = this.arguments ?: Bundle()
@@ -153,11 +146,6 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 (activity as DeckPicker?)!!.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
             }
         }
-    }
-
-    companion object {
-        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-        var instance: DeckPickerContextMenu? = null
     }
 
     private enum class DeckPickerContextMenuOption(val itemId: Int, @StringRes val optionName: Int) {

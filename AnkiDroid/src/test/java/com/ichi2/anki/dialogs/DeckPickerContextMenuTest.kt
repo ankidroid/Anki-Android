@@ -26,7 +26,6 @@ import com.afollestad.materialdialogs.internal.rtl.RtlTextView
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.dialogs.DeckPickerContextMenu.Companion.instance
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
@@ -220,7 +219,8 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             contextMenu.findViewHolderForAdapterPosition(0)!!
                 .itemView.performLongClick()
 
-            val dialogRecyclerView = instance!!.mRecyclerView!!
+            val dialogRecyclerView = (ShadowDialog.getLatestDialog() as MaterialDialog?)!!
+                .view.findViewById<RecyclerView>(R.id.md_recyclerview_content)
 
             dialogRecyclerView.apply {
                 scrollToPosition(index)
