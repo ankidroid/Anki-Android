@@ -20,7 +20,6 @@
 package com.ichi2.libanki.sched;
 
 import android.app.Activity;
-
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
@@ -33,13 +32,12 @@ import com.ichi2.async.TaskManager;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.Consts;
+import com.ichi2.libanki.Deck;
+import com.ichi2.libanki.DeckConfig;
 import com.ichi2.libanki.Decks;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.SortOrder;
 import com.ichi2.libanki.Utils;
-import com.ichi2.libanki.Deck;
-import com.ichi2.libanki.DeckConfig;
-
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.Assert;
@@ -54,7 +52,6 @@ import net.ankiweb.rsdroid.RustCleanup;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -71,9 +68,11 @@ import anki.scheduler.SchedTimingTodayResponse;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.libanki.sched.BaseSched.UnburyType.*;
-import static com.ichi2.libanki.sched.Counts.Queue.*;
+import static com.ichi2.libanki.sched.BaseSched.UnburyType.ALL;
 import static com.ichi2.libanki.sched.Counts.Queue;
+import static com.ichi2.libanki.sched.Counts.Queue.LRN;
+import static com.ichi2.libanki.sched.Counts.Queue.NEW;
+import static com.ichi2.libanki.sched.Counts.Queue.REV;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
 
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters",
@@ -124,7 +123,7 @@ public class SchedV2 extends AbstractSched {
     /** Given a deck, compute the number of cards to see today, taking its pre-computed limit into consideration.  It
      * considers either review or new cards. Used by WalkingCount to consider all subdecks and parents of a specific
      * decks. */
-    
+
     interface CountMethod {
         int operation(long did, int lim);
     }
@@ -224,7 +223,7 @@ public class SchedV2 extends AbstractSched {
         resetCounts(false);
         resetQueues(false);
     }
-    
+
     public void resetCounts(@Nullable CancelListener cancelListener) {
         resetCounts(cancelListener, true);
     }
@@ -2834,7 +2833,7 @@ public class SchedV2 extends AbstractSched {
         List<Long> currentCardParentsDid = mCurrentCardParentsDid;
         return currentCard != null && currentCard.getQueue() == queue && currentCardParentsDid != null && currentCardParentsDid.contains(did);
     }
-    
+
     @Override
     @VisibleForTesting
     public @Consts.BUTTON_TYPE int getGoodNewButton() {
