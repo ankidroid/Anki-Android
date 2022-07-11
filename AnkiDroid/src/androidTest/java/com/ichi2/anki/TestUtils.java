@@ -59,6 +59,13 @@ public class TestUtils {
     }
 
     /**
+     * Get first view when there are multiple matches
+     */
+    public static Matcher<View> first(final Matcher<View> matcher) {
+        return withIndex(matcher, 0);
+    }
+
+    /**
      * Get instance of current activity
      */
     public static Activity getActivityInstance() {
