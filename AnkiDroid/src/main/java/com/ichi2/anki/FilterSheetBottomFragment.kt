@@ -18,13 +18,13 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.view.get
 import androidx.core.view.isVisible
@@ -38,6 +38,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
+import com.ichi2.libanki.bool
 import com.ichi2.themes.Themes
 
 /**
@@ -57,15 +58,15 @@ class FilterSheetBottomFragment :
     private var lastClickTime = 0
 
     // flagName is displayed in filter sheet as the name of the filter
-    enum class Flags(@StringRes private val flagNameRes: Int, val flagNumber: SearchNode.Flag, val flagIcon: Int) {
+    enum class Flags(@StringRes private val flagNameRes: Int, val flagNode: SearchNode.Flag, @DrawableRes val flagIcon: Int) {
+        NO_FLAG(R.string.menu_flag_card_zero, SearchNode.Flag.FLAG_NONE, R.drawable.ic_flag_transparent),
         RED(R.string.menu_flag_card_one, SearchNode.Flag.FLAG_RED, R.drawable.ic_flag_red),
         ORANGE(R.string.menu_flag_card_two, SearchNode.Flag.FLAG_ORANGE, R.drawable.ic_flag_orange),
         GREEN(R.string.menu_flag_card_three, SearchNode.Flag.FLAG_GREEN, R.drawable.ic_flag_green),
         BLUE(R.string.menu_flag_card_four, SearchNode.Flag.FLAG_BLUE, R.drawable.ic_flag_blue),
         PINK(R.string.menu_flag_card_five, SearchNode.Flag.FLAG_PINK, R.drawable.ic_flag_pink),
         TURQUOISE(R.string.menu_flag_card_six, SearchNode.Flag.FLAG_TURQUOISE, R.drawable.ic_flag_turquoise),
-        PURPLE(R.string.menu_flag_card_seven, SearchNode.Flag.FLAG_PURPLE, R.drawable.ic_flag_purple),
-        NO_FLAG(R.string.menu_flag_card_zero, SearchNode.Flag.FLAG_NONE, R.drawable.ic_flag_transparent);
+        PURPLE(R.string.menu_flag_card_seven, SearchNode.Flag.FLAG_PURPLE, R.drawable.ic_flag_purple);
 
         fun getFlagName(context: Context): String = context.getString(flagNameRes)
     }
@@ -155,8 +156,8 @@ class FilterSheetBottomFragment :
             group = group {
                 joiner = SearchNode.Group.Joiner.OR
 
-                for (flagNumber in flagList) {
-                    nodes += searchNode { flag = flagNumber }
+                for (flagNode in flagList) {
+                    nodes += searchNode { flag = flagNode }
                 }
             }
         }
@@ -185,14 +186,9 @@ class FilterSheetBottomFragment :
 
     override fun onFlagItemClicked(item: Flags, position: Int) {
 
-        val itemBackground: ColorDrawable = flagRecyclerView[position].background as ColorDrawable
         val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
-        if (itemBackground.color == Themes.getColorFromAttr(
-                activity,
-                R.attr.filterItemBackground
-            )
-        ) {
+        if (!isSelected(item, flagSearchItems)) {
             flagRecyclerView[position].setBackgroundColor(
                 Themes.getColorFromAttr(
                     activity,
@@ -207,7 +203,7 @@ class FilterSheetBottomFragment :
                 )
             )
 
-            flagSearchItems.add(item.flagNumber)
+            flagSearchItems.add(item.flagNode)
         } else {
             flagRecyclerView[position].setBackgroundColor(
                 Themes.getColorFromAttr(
@@ -223,8 +219,12 @@ class FilterSheetBottomFragment :
                 )
             )
 
-            flagSearchItems.remove(item.flagNumber)
+            flagSearchItems.remove(item.flagNode)
         }
+    }
+
+    fun isSelected(flag: Flags, flagSearchItems: List<SearchNode.Flag>): bool {
+        return flagSearchItems.contains(flag.flagNode)
     }
 }
 
