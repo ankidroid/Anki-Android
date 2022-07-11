@@ -132,5 +132,6 @@ Our Awesome Team of Contributors
 
 
 License
+-------
 * [GPL-3.0 License](https://github.com/ankidroid/Anki-Android/blob/main/COPYING)
 * [AGPL-3.0 Licence](https://github.com/ankitects/anki/blob/main/LICENSE) for some part of the back-end
