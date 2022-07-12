@@ -49,6 +49,20 @@ class BeolingusParserTest {
     }
 
     @Test
+    fun `Test to check trimming of extra spaces`() {
+        // confirm " Hello " matches "Hello" when loading pronunciation using Beolingus search
+        @Language("HTML")
+        val html = "" +
+            "<a href=\"/dings.cgi?speak=en/2/0/zQbP7qZh_u2;text=Hello\" " +
+            "onclick=\"return s(this)\" onmouseover=\"return u('Hello')\">" +
+            "<img src=\"/pics/s1.png\" width=\"16\" height=\"16\" " +
+            "alt=\"[listen]\" title=\"Hello\" border=\"0\" align=\"top\" /></a>"
+
+        val pronunciationUrl = BeolingusParser.getPronunciationAddressFromTranslation(html, " Hello ".trim())
+        assertEquals("https://dict.tu-chemnitz.de/dings.cgi?speak=en/2/0/zQbP7qZh_u2;text=Hello", pronunciationUrl)
+    }
+
+    @Test
     fun testEszettCasing() {
         // Some transformations lose the Eszett: "ß".toUpperCase() == "SS".
         // Ensure that we don't do this.
