@@ -38,7 +38,7 @@ class RemoteServer(
 
     /** Returns hkey or null if user/pw incorrect.  */
     @Throws(UnknownHttpResponseException::class)
-    fun hostKey(user: String?, pw: String?): Response? {
+    suspend fun hostKey(user: String?, pw: String?): Response? {
         return try {
             postVars = HashMapInit(0)
             val credentials = JSONObject()
@@ -52,7 +52,7 @@ class RemoteServer(
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun meta(): Response {
+    suspend fun meta(): Response {
         postVars = HashMapInit(2)
         postVars["k"] = hKey
         postVars["s"] = checksumKey
@@ -63,44 +63,44 @@ class RemoteServer(
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun applyChanges(kw: JSONObject): JSONObject {
+    suspend fun applyChanges(kw: JSONObject): JSONObject {
         return parseDict(runCommand("applyChanges", kw))
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun start(kw: JSONObject): JSONObject {
+    suspend fun start(kw: JSONObject): JSONObject {
         return parseDict(runCommand("start", kw))
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun chunk(): JSONObject {
+    suspend fun chunk(): JSONObject {
         val co = JSONObject()
         return parseDict(runCommand("chunk", co))
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun applyChunk(chunk: JSONObject) {
+    suspend fun applyChunk(chunk: JSONObject) {
         runCommand("applyChunk", chunk)
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun sanityCheck2(client: JSONObject): JSONObject {
+    suspend fun sanityCheck2(client: JSONObject): JSONObject {
         return parseDict(runCommand("sanityCheck2", client))
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun finish(): Long {
+    suspend fun finish(): Long {
         return parseLong(runCommand("finish", JSONObject()))
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun abort() {
+    suspend fun abort() {
         runCommand("abort", JSONObject())
     }
 
     /** Python has dynamic type deduction, but we don't, so return String  */
     @Throws(UnknownHttpResponseException::class)
-    private fun runCommand(cmd: String, data: JSONObject): String {
+    private suspend fun runCommand(cmd: String, data: JSONObject): String {
         val ret = req(cmd, getInputStream(Utils.jsonToString(data)))
         return try {
             ret.body!!.string()

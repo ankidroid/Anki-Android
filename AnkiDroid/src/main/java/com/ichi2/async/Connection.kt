@@ -33,6 +33,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.exception.MediaSyncException
 import com.ichi2.anki.exception.UnknownHttpResponseException
 import com.ichi2.async.Connection.ConflictResolution.*
+import com.ichi2.async.coroutines.BaseCoroutineTask
+import com.ichi2.async.coroutines.CoroutineTask.Companion.Status
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.FullSyncer
@@ -47,6 +49,8 @@ import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import okhttp3.Response
 import timber.log.Timber
 import java.io.IOException
@@ -55,7 +59,7 @@ import java.util.Arrays
 @Suppress("DEPRECATION") // #7108: AsyncTask
 @KotlinCleanup("Simplify null comparison, !! -> ?.")
 @KotlinCleanup("IDE-lint")
-class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() {
+class Connection : BaseCoroutineTask<Connection.Payload, Any, Connection.Payload>(Connection::class.java.simpleName) {
 
     @KotlinCleanup("lateinit")
     private var mListener: TaskListener? = null
@@ -84,7 +88,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
      * Runs on GUI thread
      */
     @SuppressLint("WakelockTimeout")
-    override fun onPreExecute() {
+    override suspend fun onPreExecute() {
         super.onPreExecute()
         // Acquire the wake lock before syncing to ensure CPU remains on until the sync completes.
         if (Permissions.canUseWakeLock(AnkiDroidApp.getInstance().applicationContext)) {
@@ -98,7 +102,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
     /*
      * Runs on GUI thread
      */
-    override fun onPostExecute(result: Payload?) {
+    override suspend fun onPostExecute(result: Payload?) {
         super.onPostExecute(result)
         // Sync has ended so release the wake lock
         if (mWakeLock.isHeld) {
@@ -112,20 +116,20 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
     /*
      * Runs on GUI thread
      */
-    override fun onProgressUpdate(vararg values: Any) {
-        super.onProgressUpdate(*values)
+    override suspend fun onProgressUpdate(values: Array<Any?>) {
+        super.onProgressUpdate(values)
         if (mListener != null) {
             mListener!!.onProgressUpdate(*values)
         }
     }
 
-    override fun doInBackground(vararg arg0: Payload): Payload? {
-        super.doInBackground(*arg0)
-        require(arg0.size == 1)
-        return doOneInBackground(arg0[0])
+    override suspend fun doInBackground(params: Array<Payload>): Payload? {
+        super.doInBackground(params)
+        require(params.size == 1)
+        return doOneInBackground(params[0])
     }
 
-    private fun doOneInBackground(data: Payload): Payload? {
+    private suspend fun doOneInBackground(data: Payload): Payload? {
         return when (data.taskType) {
             LOGIN -> doInBackgroundLogin(data)
             SYNC -> doInBackgroundSync(data)
@@ -134,7 +138,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
     }
 
     @KotlinCleanup("use scoped function")
-    private fun doInBackgroundLogin(data: Payload): Payload {
+    private suspend fun doInBackgroundLogin(data: Payload): Payload {
         val username = data.data[0] as String
         val password = data.data[1] as String
         val hostNum = data.data[2] as HostNum
@@ -238,7 +242,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
      * So success can be false without error, if no change occurred at all. */
     @KotlinCleanup("Make colCorruptFullSync a val")
     @KotlinCleanup("Scoped function")
-    private fun doInBackgroundSync(data: Payload): Payload {
+    private suspend fun doInBackgroundSync(data: Payload): Payload {
         isCancellable = true
         Companion.isCancelled = false
         Timber.d("doInBackgroundSync()")
@@ -462,18 +466,18 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
     }
 
     // #7108: AsyncTask
-    fun publishProgress(id: Int) {
-        super.publishProgress(id)
+    suspend fun publishProgress(id: Int) {
+        super.publishProgress(arrayOf(id))
     }
 
     // #7108: AsyncTask
-    fun publishProgress(message: String?) {
-        super.publishProgress(message)
+    suspend fun publishProgress(message: String?) {
+        super.publishProgress(arrayOf(message))
     }
 
     // #7108: AsyncTask
-    fun publishProgress(id: Int, up: Long, down: Long) {
-        super.publishProgress(id, up, down)
+    suspend fun publishProgress(id: Int, up: Long, down: Long) {
+        super.publishProgress(arrayOf(id, up, down))
     }
 
     interface TaskListener {
@@ -531,7 +535,12 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
 
         // #7108: AsyncTask
         @KotlinCleanup("Scoped function")
-        private fun launchConnectionTask(listener: TaskListener, data: Payload): Connection? {
+        private suspend fun launchConnectionTask(
+            listener: TaskListener,
+            data: Payload,
+            mainDispatcher: CoroutineDispatcher,
+            bgDispatcher: CoroutineDispatcher
+        ): Connection? {
             if (!isOnline) {
                 data.success = false
                 listener.onDisconnected()
@@ -546,19 +555,28 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
             }
             sInstance = Connection()
             sInstance!!.mListener = listener
-            sInstance!!.execute(data)
+            sInstance!!.execute(arrayOf(data), mainDispatcher, bgDispatcher)
             return sInstance
         }
 
-        @JvmStatic
-        fun login(listener: TaskListener, data: Payload): Connection? {
+        suspend fun login(
+            listener: TaskListener,
+            data: Payload,
+            mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+            bgDispatcher: CoroutineDispatcher = Dispatchers.IO
+        ): Connection? {
             data.taskType = LOGIN
-            return launchConnectionTask(listener, data)
+            return launchConnectionTask(listener, data, mainDispatcher, bgDispatcher)
         }
 
-        fun sync(listener: TaskListener, data: Payload): Connection? {
+        suspend fun sync(
+            listener: TaskListener,
+            data: Payload,
+            mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+            bgDispatcher: CoroutineDispatcher = Dispatchers.IO
+        ): Connection? {
             data.taskType = SYNC
-            return launchConnectionTask(listener, data)
+            return launchConnectionTask(listener, data, mainDispatcher, bgDispatcher)
         }
 
         /**

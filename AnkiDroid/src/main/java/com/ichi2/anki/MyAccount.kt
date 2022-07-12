@@ -27,6 +27,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.edit
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
@@ -37,6 +38,7 @@ import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
+import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.lang.Exception
@@ -111,15 +113,17 @@ class MyAccount : AnkiActivity() {
         if (!BackendFactory.defaultLegacySchema) {
             handleNewLogin(username, password)
         } else {
-            Connection.login(
-                mLoginListener,
-                Connection.Payload(
-                    arrayOf(
-                        username, password,
-                        getInstance(this)
+            lifecycleScope.launch {
+                Connection.login(
+                    mLoginListener,
+                    Connection.Payload(
+                        arrayOf(
+                            username, password,
+                            getInstance(this@MyAccount)
+                        )
                     )
                 )
-            )
+            }
         }
     }
 
@@ -150,15 +154,17 @@ class MyAccount : AnkiActivity() {
         if (!BackendFactory.defaultLegacySchema) {
             handleNewLogin(username, password)
         } else {
-            Connection.login(
-                mLoginListener,
-                Connection.Payload(
-                    arrayOf(
-                        username, password,
-                        getInstance(this)
+            lifecycleScope.launch {
+                Connection.login(
+                    mLoginListener,
+                    Connection.Payload(
+                        arrayOf(
+                            username, password,
+                            getInstance(this@MyAccount)
+                        )
                     )
                 )
-            )
+            }
         }
     }
 

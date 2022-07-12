@@ -49,6 +49,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -104,6 +105,7 @@ import com.ichi2.utils.*
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -1503,17 +1505,19 @@ open class DeckPicker :
             if (!BackendFactory.defaultLegacySchema) {
                 handleNewSync(hkey, hostNum ?: 0, conflict)
             } else {
-                Connection.sync(
-                    mSyncListener,
-                    Connection.Payload(
-                        arrayOf(
-                            hkey,
-                            preferences.getBoolean("syncFetchesMedia", true),
-                            conflict,
-                            HostNumFactory.getInstance(baseContext)
+                lifecycleScope.launch {
+                    Connection.sync(
+                        mSyncListener,
+                        Connection.Payload(
+                            arrayOf(
+                                hkey,
+                                preferences.getBoolean("syncFetchesMedia", true),
+                                conflict,
+                                HostNumFactory.getInstance(baseContext)
+                            )
                         )
                     )
-                )
+                }
             }
         }
     }

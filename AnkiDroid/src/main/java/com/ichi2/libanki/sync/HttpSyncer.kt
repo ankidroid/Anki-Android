@@ -31,6 +31,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.runBlocking
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType
@@ -128,7 +129,7 @@ open class HttpSyncer(
     @JvmOverloads
     @Throws(UnknownHttpResponseException::class)
     @KotlinCleanup("use template strings")
-    fun req(method: String?, fobj: InputStream? = null, comp: Int = 6): Response {
+    suspend fun req(method: String?, fobj: InputStream? = null, comp: Int = 6): Response {
         var tmpFileBuffer: File? = null
         return try {
             val bdry = "--" + BOUNDARY
@@ -187,7 +188,8 @@ open class HttpSyncer(
                     object : CountingFileRequestBody.ProgressListener {
                         override fun transferred(num: Long) {
                             bytesSent.addAndGet(num)
-                            publishProgress()
+                            // TODO: improve this code, try to remove blocking call
+                            runBlocking { publishProgress() }
                         }
                     }
                 )
@@ -247,7 +249,7 @@ open class HttpSyncer(
 
     // Could be replaced by Compat copy method if that method took listener for bytesReceived/publishProgress()
     @Throws(IOException::class)
-    fun writeToFile(source: InputStream, destination: String?) {
+    suspend fun writeToFile(source: InputStream, destination: String?) {
         val file = File(destination!!)
         var output: OutputStream? = null
         try {
@@ -271,7 +273,7 @@ open class HttpSyncer(
         }
     }
 
-    fun stream2String(stream: InputStream?, maxSize: Int): String {
+    suspend fun stream2String(stream: InputStream?, maxSize: Int): String {
         val rd: BufferedReader
         return try {
             rd = BufferedReader(InputStreamReader(stream, "UTF-8"), if (maxSize == -1) 4096 else Math.min(4096, maxSize))
@@ -289,7 +291,7 @@ open class HttpSyncer(
         }
     }
 
-    private fun publishProgress() {
+    private suspend fun publishProgress() {
         Timber.d("Publishing progress")
         if (con != null && (nextSendR <= bytesReceived.get() || nextSendS <= bytesSent.get())) {
             val bR = bytesReceived.get()

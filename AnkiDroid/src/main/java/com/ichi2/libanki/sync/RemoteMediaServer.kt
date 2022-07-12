@@ -58,7 +58,7 @@ class RemoteMediaServer(
     }
 
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
-    fun begin(): JSONObject {
+    suspend fun begin(): JSONObject {
         return try {
             postVars = HashMapInit(2)
             postVars["k"] = hKey
@@ -75,7 +75,7 @@ class RemoteMediaServer(
 
     // args: lastUsn
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
-    fun mediaChanges(lastUsn: Int): JSONArray {
+    suspend fun mediaChanges(lastUsn: Int): JSONArray {
         return try {
             postVars = HashMapInit(1)
             postVars["sk"] = checksumKey
@@ -96,7 +96,7 @@ class RemoteMediaServer(
      * be automatically deleted when the stream is closed.
      */
     @Throws(UnknownHttpResponseException::class)
-    fun downloadFiles(top: List<String?>?): ZipFile {
+    suspend fun downloadFiles(top: List<String?>?): ZipFile {
         var resp: Response? = null
         return try {
             resp = req(
@@ -119,7 +119,7 @@ class RemoteMediaServer(
     }
 
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
-    fun uploadChanges(zip: File?): JSONArray {
+    suspend fun uploadChanges(zip: File?): JSONArray {
         return try {
             // no compression, as we compress the zip file instead
             val resp = super.req("uploadChanges", FileInputStream(zip), 0)
@@ -134,7 +134,7 @@ class RemoteMediaServer(
 
     // args: local
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
-    fun mediaSanity(lcnt: Int): String {
+    suspend fun mediaSanity(lcnt: Int): String {
         return try {
             val resp = req(
                 "mediaSanity",

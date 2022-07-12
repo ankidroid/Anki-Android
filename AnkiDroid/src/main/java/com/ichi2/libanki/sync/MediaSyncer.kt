@@ -70,7 +70,7 @@ class MediaSyncer(
 
     // Returned string may be null. ConnectionResultType and Pair are not null
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
-    fun sync(): Pair<ConnectionResultType, String?> {
+    suspend fun sync(): Pair<ConnectionResultType, String?> {
         // check if there have been any changes
         // If we haven't built the media db yet, do so on this sync. See note at the top
         // of this class about this difference to the original.
@@ -224,7 +224,7 @@ class MediaSyncer(
         }
     }
 
-    private fun _downloadFiles(_fnames: MutableList<String>) {
+    private suspend fun _downloadFiles(_fnames: MutableList<String>) {
         var fnames = _fnames
         col.log(fnames.size.toString() + " files to fetch")
         while (!fnames.isEmpty()) {

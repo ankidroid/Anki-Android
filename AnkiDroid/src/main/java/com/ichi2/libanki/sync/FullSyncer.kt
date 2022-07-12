@@ -58,7 +58,7 @@ class FullSyncer(col: Collection?, hkey: String?, con: Connection, hostNum: Host
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun download(): ConnectionResultType? {
+    suspend fun download(): ConnectionResultType? {
         val cont: InputStream
         var body: ResponseBody? = null
         try {
@@ -131,7 +131,7 @@ class FullSyncer(col: Collection?, hkey: String?, con: Connection, hostNum: Host
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun upload(): Pair<ConnectionResultType, Array<Any?>>? {
+    suspend fun upload(): Pair<ConnectionResultType, Array<Any?>>? {
         // make sure it's ok before we try to upload
         mCon.publishProgress(R.string.sync_check_upload_file)
         if (!"ok".equals(mCol!!.db.queryString("PRAGMA integrity_check"), ignoreCase = true)) {

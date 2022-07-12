@@ -102,7 +102,7 @@ class Syncer(
     }
 
     @Throws(UnknownHttpResponseException::class)
-    fun sync(con: Connection): Pair<ConnectionResultType, Any?>? {
+    suspend fun sync(con: Connection): Pair<ConnectionResultType, Any?>? {
         syncMsg = ""
         // if the deck has any pending changes, flush them first and bump mod time
         col.sched._updateCutoff()
@@ -279,7 +279,7 @@ class Syncer(
         col.save()
     }
 
-    private fun publishProgress(con: Connection?, id: Int) {
+    private suspend fun publishProgress(con: Connection?, id: Int) {
         con?.publishProgress(id)
     }
 
@@ -841,7 +841,7 @@ class Syncer(
      * If the user asked to cancel the sync then we just throw a Runtime exception which should be gracefully handled
      * @param con
      */
-    private fun throwExceptionIfCancelled(con: Connection) {
+    private suspend fun throwExceptionIfCancelled(con: Connection) {
         if (isCancelled) {
             Timber.i("Sync was cancelled")
             publishProgress(con, R.string.sync_cancelled)
