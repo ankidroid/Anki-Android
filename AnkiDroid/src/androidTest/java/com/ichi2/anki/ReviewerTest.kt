@@ -26,11 +26,15 @@ import androidx.test.espresso.contrib.DrawerActions.open
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.ichi2.anki.TestUtils.first
+import com.ichi2.anki.testutil.RetryRule
 import com.ichi2.libanki.utils.TimeManager
 import org.junit.Rule
 import org.junit.Test
 
 class ReviewerTest {
+    @get:Rule
+    val mRetryRule: RetryRule = RetryRule(5)
+
     @get:Rule
     val mActivityRule = ActivityScenarioRule(DeckPicker::class.java)
 
@@ -56,6 +60,7 @@ class ReviewerTest {
 
         // start reviewing note
         onView(withText(deckName)).perform(click())
+        Thread.sleep(1000)
         onView(withId(R.id.mark_icon)).check(isInvisible())
 
         // go to Stats
@@ -75,6 +80,7 @@ class ReviewerTest {
         Espresso.pressBack() // back to stats
         Espresso.pressBack() // back to reviewer
 
+        Thread.sleep(1000)
         onView(withId(R.id.mark_icon)).check(isVisible())
     }
 
