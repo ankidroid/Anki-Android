@@ -17,52 +17,45 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sync;
+package com.ichi2.libanki.sync
 
-
-import android.content.SharedPreferences;
-import android.net.Uri;
-
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.exception.UnknownHttpResponseException;
-import com.ichi2.anki.web.CustomSyncServer;
-import com.ichi2.anki.web.HttpFetcher;
-import com.ichi2.async.Connection;
-import com.ichi2.libanki.Consts;
-import com.ichi2.libanki.Utils;
-import com.ichi2.utils.HashUtil;
-
-
-import com.ichi2.utils.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.zip.GZIPOutputStream;
-
-import javax.net.ssl.SSLException;
-
-import androidx.annotation.Nullable;
-import okhttp3.HttpUrl;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import timber.log.Timber;
+import android.content.SharedPreferences
+import android.net.Uri
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.exception.UnknownHttpResponseException
+import com.ichi2.anki.web.CustomSyncServer.getSyncBaseUrl
+import com.ichi2.anki.web.CustomSyncServer.isEnabled
+import com.ichi2.anki.web.HttpFetcher
+import com.ichi2.async.Connection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Utils
+import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.KotlinCleanup
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import timber.log.Timber
+import java.io.BufferedInputStream
+import java.io.BufferedOutputStream
+import java.io.BufferedReader
+import java.io.ByteArrayInputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.OutputStream
+import java.io.StringWriter
+import java.io.UnsupportedEncodingException
+import java.util.Locale
+import java.util.Random
+import java.util.concurrent.atomic.AtomicLong
+import java.util.zip.GZIPOutputStream
+import javax.net.ssl.SSLException
 
 /**
  * # HTTP syncing tools
@@ -71,307 +64,298 @@ import timber.log.Timber;
  * - 502: ankiweb down
  * - 503/504: server too busy
  */
-@SuppressWarnings( {"PMD.AvoidThrowingRawExceptionTypes", "PMD.NPathComplexity"})
-public class HttpSyncer {
-
-    private static final String BOUNDARY = "Anki-sync-boundary";
-    private static final MediaType ANKI_POST_TYPE = MediaType.get("multipart/form-data; boundary=" + BOUNDARY);
-
-    public static final String ANKIWEB_STATUS_OK = "OK";
-
-    public final AtomicLong bytesSent = new AtomicLong();
-    public final AtomicLong bytesReceived = new AtomicLong();
-    public volatile long mNextSendS = 1024;
-    public volatile long mNextSendR = 1024;
-
+@KotlinCleanup("IDE-lint")
+open class HttpSyncer(
     /**
      * Synchronization.
      */
+    @KotlinCleanup("rename")
+    protected val hKey: String?,
+    con: Connection?,
+    hostNum: HostNum
+) {
+    val bytesSent = AtomicLong()
+    val bytesReceived = AtomicLong()
 
-    protected final String mHKey;
-    protected String mSKey;
-    protected final Connection mCon;
-    protected Map<String, Object> mPostVars;
-    private volatile OkHttpClient mHttpClient;
-    private final HostNum mHostNum;
+    @Volatile
+    var nextSendS: Long = 1024
 
-    public HttpSyncer(String hkey, Connection con, HostNum hostNum) {
-        mHKey = hkey;
-        mSKey = Utils.checksum(Float.toString(new Random().nextFloat())).substring(0, 8);
-        mCon = con;
-        mPostVars = HashUtil.HashMapInit(0); // New map is created each time it is filled. No need to allocate room
-        mHostNum = hostNum;
-    }
+    @Volatile
+    var nextSendR: Long = 1024
+    protected var checksumKey: String
+    protected val con: Connection?
+    @JvmField
+    protected var postVars: MutableMap<String, Any?>
 
-    private OkHttpClient getHttpClient() {
-        if (this.mHttpClient != null) {
-            return mHttpClient;
-        }
-        return setupHttpClient();
-    }
+    @Volatile
+    private var mHttpClient: OkHttpClient? = null
+    private val mHostNum: HostNum
+    @KotlinCleanup("simplify with ?:")
+    private val httpClient: OkHttpClient
+        get() = if (mHttpClient != null) {
+            mHttpClient!!
+        } else setupHttpClient()
 
-    //PERF: Thread safety isn't required for the current implementation
-    private synchronized OkHttpClient setupHttpClient() {
+    // PERF: Thread safety isn't required for the current implementation
+    @Synchronized
+    private fun setupHttpClient(): OkHttpClient {
         if (mHttpClient != null) {
-            return mHttpClient;
+            return mHttpClient!!
         }
         mHttpClient = HttpFetcher.getOkHttpBuilder(false)
-                .followRedirects(true)
-                .followSslRedirects(true)
-                .retryOnConnectionFailure(true)
-                .cache(null)
-                .build();
-        return mHttpClient;
+            .followRedirects(true)
+            .followSslRedirects(true)
+            .retryOnConnectionFailure(true)
+            .cache(null)
+            .build()
+        return mHttpClient!!
     }
 
-
-    public void assertOk(Response resp) throws UnknownHttpResponseException {
+    @Throws(UnknownHttpResponseException::class)
+    fun assertOk(resp: Response?) {
         // Throw RuntimeException if HTTP error
         if (resp == null) {
-            throw new UnknownHttpResponseException("Null HttpResponse", -2);
+            throw UnknownHttpResponseException("Null HttpResponse", -2)
         }
-        int resultCode = resp.code();
+        val resultCode = resp.code
         if (!(resultCode == 200 || resultCode == 403)) {
-            String reason = resp.message();
-            throw new UnknownHttpResponseException(reason, resultCode);
+            val reason = resp.message
+            throw UnknownHttpResponseException(reason, resultCode)
         }
     }
 
-    /** Note: Return value must be closed */
-    public Response req(String method) throws UnknownHttpResponseException {
-        return req(method, null);
-    }
-
-    /** Note: Return value must be closed */
-    public Response req(String method, InputStream fobj) throws UnknownHttpResponseException {
-        return req(method, fobj, 6);
-    }
-
-    /** Note: Return value must be closed */
-    @SuppressWarnings("CharsetObjectCanBeUsed")
-    public Response req(String method, InputStream fobj, int comp) throws UnknownHttpResponseException {
-        File tmpFileBuffer = null;
-        try {
-            String bdry = "--" + BOUNDARY;
-            StringWriter buf = new StringWriter();
+    /** Note: Return value must be closed  */
+    @JvmOverloads
+    @Throws(UnknownHttpResponseException::class)
+    @KotlinCleanup("use template strings")
+    fun req(method: String?, fobj: InputStream? = null, comp: Int = 6): Response {
+        var tmpFileBuffer: File? = null
+        return try {
+            val bdry = "--" + BOUNDARY
+            val buf = StringWriter()
             // post vars
-            mPostVars.put("c", comp != 0 ? 1 : 0);
-            for (Map.Entry<String, Object> entry : mPostVars.entrySet()) {
-                buf.write(bdry + "\r\n");
-                buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", entry.getKey(),
-                        entry.getValue()));
+            postVars["c"] = if (comp != 0) 1 else 0
+            for ((key, value) in postVars) {
+                buf.write(bdry + "\r\n")
+                buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", key, value))
             }
-            tmpFileBuffer = File.createTempFile("syncer", ".tmp", new File(AnkiDroidApp.getCacheStorageDirectory()));
-            FileOutputStream fos = new FileOutputStream(tmpFileBuffer);
-            BufferedOutputStream bos = new BufferedOutputStream(fos);
-            GZIPOutputStream tgt;
+            tmpFileBuffer = File.createTempFile("syncer", ".tmp", File(AnkiDroidApp.getCacheStorageDirectory()))
+            val fos = FileOutputStream(tmpFileBuffer)
+            var bos = BufferedOutputStream(fos)
+            val tgt: GZIPOutputStream
             // payload as raw data or json
             if (fobj != null) {
                 // header
-                buf.write(bdry + "\r\n");
-                buf.write("Content-Disposition: form-data; name=\"data\"; filename=\"data\"\r\nContent-Type: application/octet-stream\r\n\r\n");
-                buf.close();
-                bos.write(buf.toString().getBytes("UTF-8"));
+                buf.write(bdry + "\r\n")
+                buf.write("Content-Disposition: form-data; name=\"data\"; filename=\"data\"\r\nContent-Type: application/octet-stream\r\n\r\n")
+                buf.close()
+                bos.write(buf.toString().toByteArray(charset("UTF-8")))
                 // write file into buffer, optionally compressing
-                int len;
-                BufferedInputStream bfobj = new BufferedInputStream(fobj);
-                byte[] chunk = new byte[65536];
+                var len: Int
+                val bfobj = BufferedInputStream(fobj)
+                val chunk = ByteArray(65536)
                 if (comp != 0) {
-                    tgt = new GZIPOutputStream(bos);
-                    while ((len = bfobj.read(chunk)) >= 0) {
-                        tgt.write(chunk, 0, len);
+                    tgt = GZIPOutputStream(bos)
+                    while (bfobj.read(chunk).also { len = it } >= 0) {
+                        tgt.write(chunk, 0, len)
                     }
-                    tgt.close();
-                    bos = new BufferedOutputStream(new FileOutputStream(tmpFileBuffer, true));
+                    tgt.close()
+                    bos = BufferedOutputStream(FileOutputStream(tmpFileBuffer, true))
                 } else {
-                    while ((len = bfobj.read(chunk)) >= 0) {
-                        bos.write(chunk, 0, len);
+                    while (bfobj.read(chunk).also { len = it } >= 0) {
+                        bos.write(chunk, 0, len)
                     }
                 }
-                bos.write(("\r\n" + bdry + "--\r\n").getBytes("UTF-8"));
+                bos.write("\r\n$bdry--\r\n".toByteArray(charset("UTF-8")))
             } else {
-                buf.close();
-                bos.write(buf.toString().getBytes("UTF-8"));
-                bos.write((bdry + "--\r\n").getBytes("UTF-8"));
+                buf.close()
+                bos.write(buf.toString().toByteArray(charset("UTF-8")))
+                bos.write("$bdry--\r\n".toByteArray(charset("UTF-8")))
             }
-            bos.flush();
-            bos.close();
+            bos.flush()
+            bos.close()
             // connection headers
-
-            String url = Uri.parse(syncURL()).buildUpon().appendPath(method).toString();
-
-            Request.Builder requestBuilder = new Request.Builder();
-            requestBuilder.url(parseUrl(url));
+            val url = Uri.parse(syncURL()).buildUpon().appendPath(method).toString()
+            val requestBuilder = Request.Builder()
+            requestBuilder.url(parseUrl(url))
 
             // Set our request up to count upstream traffic including headers
-            requestBuilder.post(new CountingFileRequestBody(tmpFileBuffer, ANKI_POST_TYPE.toString(), num -> {
-                bytesSent.addAndGet(num);
-                publishProgress();
-            }));
-            Request httpPost = requestBuilder.build();
-            bytesSent.addAndGet(httpPost.headers().byteCount());
-            publishProgress();
-
+            requestBuilder.post(
+                CountingFileRequestBody(
+                    tmpFileBuffer,
+                    ANKI_POST_TYPE.toString(),
+                    object : CountingFileRequestBody.ProgressListener {
+                        override fun transferred(num: Long) {
+                            bytesSent.addAndGet(num)
+                            publishProgress()
+                        }
+                    }
+                )
+            )
+            val httpPost: Request = requestBuilder.build()
+            bytesSent.addAndGet(httpPost.headers.byteCount())
+            publishProgress()
             try {
-                OkHttpClient httpClient = getHttpClient();
-                Response httpResponse = httpClient.newCall(httpPost).execute();
+                val httpClient = httpClient
+                val httpResponse = httpClient.newCall(httpPost).execute()
 
                 // we assume badAuthRaises flag from Anki Desktop always False
                 // so just throw new RuntimeException if response code not 200 or 403
-                Timber.d("TLSVersion in use is: %s",
-                        (httpResponse.handshake() != null ? httpResponse.handshake().tlsVersion() : "unknown"));
-
+                Timber.d(
+                    "TLSVersion in use is: %s",
+                    if (httpResponse.handshake != null) httpResponse.handshake!!.tlsVersion else "unknown"
+                )
 
                 // Count downstream traffic including headers
-                bytesReceived.addAndGet(httpResponse.headers().byteCount());
+                bytesReceived.addAndGet(httpResponse.headers.byteCount())
                 try {
-                    bytesReceived.addAndGet(httpResponse.body().contentLength());
-                } catch (NullPointerException npe) {
-                    Timber.d(npe, "Unexpected null response body");
+                    bytesReceived.addAndGet(httpResponse.body!!.contentLength())
+                } catch (npe: NullPointerException) {
+                    Timber.d(npe, "Unexpected null response body")
                 }
-                publishProgress();
-
-                assertOk(httpResponse);
-                return httpResponse;
-            } catch (SSLException e) {
-                Timber.e(e, "SSLException while building HttpClient");
-                throw new RuntimeException("SSLException while building HttpClient", e);
+                publishProgress()
+                assertOk(httpResponse)
+                httpResponse
+            } catch (e: SSLException) {
+                Timber.e(e, "SSLException while building HttpClient")
+                throw RuntimeException("SSLException while building HttpClient", e)
             }
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            Timber.e(e, "BasicHttpSyncer.sync: IOException");
-            throw new RuntimeException(e);
+        } catch (e: UnsupportedEncodingException) {
+            throw RuntimeException(e)
+        } catch (e: IOException) {
+            Timber.e(e, "BasicHttpSyncer.sync: IOException")
+            throw RuntimeException(e)
         } finally {
             if (tmpFileBuffer != null && tmpFileBuffer.exists()) {
-                tmpFileBuffer.delete();
+                tmpFileBuffer.delete()
             }
         }
     }
 
-
-    private HttpUrl parseUrl(String url) {
+    private fun parseUrl(url: String): HttpUrl {
         // #5843 - show better exception if the URL is invalid
-        try {
-            return HttpUrl.get(url);
-        } catch (IllegalArgumentException ex) {
+        return try {
+            url.toHttpUrl()
+        } catch (ex: IllegalArgumentException) {
             if (isUsingCustomSyncServer(AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()))) {
-                throw new CustomSyncServerUrlException(url, ex);
+                throw CustomSyncServerUrlException(url, ex)
             } else {
-                throw ex;
+                throw ex
             }
         }
     }
-
 
     // Could be replaced by Compat copy method if that method took listener for bytesReceived/publishProgress()
-    public void writeToFile(InputStream source, String destination) throws IOException {
-        File file = new File(destination);
-        OutputStream output = null;
+    @Throws(IOException::class)
+    fun writeToFile(source: InputStream, destination: String?) {
+        val file = File(destination!!)
+        var output: OutputStream? = null
         try {
-            file.createNewFile();
-            output = new BufferedOutputStream(new FileOutputStream(file));
-            byte[] buf = new byte[Utils.CHUNK_SIZE];
-            int len;
-            while ((len = source.read(buf)) >= 0) {
-                output.write(buf, 0, len);
-                bytesReceived.addAndGet(len);
-                publishProgress();
+            file.createNewFile()
+            output = BufferedOutputStream(FileOutputStream(file))
+            val buf = ByteArray(Utils.CHUNK_SIZE)
+            var len: Int
+            while (source.read(buf).also { len = it } >= 0) {
+                output.write(buf, 0, len)
+                bytesReceived.addAndGet(len.toLong())
+                publishProgress()
             }
-        } catch (IOException e) {
+        } catch (e: IOException) {
             if (file.exists()) {
                 // Don't keep the file if something went wrong. It'll be corrupt.
-                file.delete();
+                file.delete()
             }
-            // Re-throw so we know what the error was.
-            throw e;
+            throw e
         } finally {
-            if (output != null) {
-                output.close();
+            output?.close()
+        }
+    }
+
+    fun stream2String(stream: InputStream?, maxSize: Int): String {
+        val rd: BufferedReader
+        return try {
+            rd = BufferedReader(InputStreamReader(stream, "UTF-8"), if (maxSize == -1) 4096 else Math.min(4096, maxSize))
+            var line: String
+            val sb = StringBuilder()
+            while (rd.readLine().also { line = it } != null && (maxSize == -1 || sb.length < maxSize)) {
+                sb.append(line)
+                bytesReceived.addAndGet(line.length.toLong())
+                publishProgress()
             }
+            rd.close()
+            sb.toString()
+        } catch (e: IOException) {
+            throw RuntimeException(e)
         }
     }
 
-
-    @SuppressWarnings("CharsetObjectCanBeUsed")
-    public String stream2String(InputStream stream, int maxSize) {
-        BufferedReader rd;
-        try {
-            rd = new BufferedReader(new InputStreamReader(stream, "UTF-8"), maxSize == -1 ? 4096 : Math.min(4096,
-                    maxSize));
-            String line;
-            StringBuilder sb = new StringBuilder();
-            while ((line = rd.readLine()) != null && (maxSize == -1 || sb.length() < maxSize)) {
-                sb.append(line);
-                bytesReceived.addAndGet(line.length());
-                publishProgress();
-            }
-            rd.close();
-            return sb.toString();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private fun publishProgress() {
+        Timber.d("Publishing progress")
+        if (con != null && (nextSendR <= bytesReceived.get() || nextSendS <= bytesSent.get())) {
+            val bR = bytesReceived.get()
+            val bS = bytesSent.get()
+            Timber.d("Current progress: %d, %d", bR, bS)
+            nextSendR = (bR / 1024 + 1) * 1024
+            nextSendS = (bS / 1024 + 1) * 1024
+            con.publishProgress(0, bS, bR)
         }
     }
 
-
-    private void publishProgress() {
-        Timber.d("Publishing progress");
-        if (mCon != null && (mNextSendR <= bytesReceived.get() || mNextSendS <= bytesSent.get())) {
-            long bR = bytesReceived.get();
-            long bS = bytesSent.get();
-            Timber.d("Current progress: %d, %d", bR, bS);
-            mNextSendR = (bR / 1024 + 1) * 1024;
-            mNextSendS = (bS / 1024 + 1) * 1024;
-            mCon.publishProgress(0, bS, bR);
-        }
-    }
-
-
-    @SuppressWarnings("CharsetObjectCanBeUsed")
-    public static ByteArrayInputStream getInputStream(String string) {
-        try {
-            return new ByteArrayInputStream(string.getBytes("UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            Timber.e(e, "HttpSyncer: error on getting bytes from string");
-            return null;
-        }
-    }
-
-
-    public String syncURL() {
+    open fun syncURL(): String? {
         // Allow user to specify custom sync server
-        SharedPreferences userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance());
+        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
         if (isUsingCustomSyncServer(userPreferences)) {
-            String syncBaseString = CustomSyncServer.getSyncBaseUrl(userPreferences);
-            if (syncBaseString == null) {
-                return getDefaultAnkiWebUrl();
-            }
-            return Uri.parse(syncBaseString).buildUpon().appendPath(getUrlPrefix()).toString() + "/";
+            val syncBaseString = getSyncBaseUrl(userPreferences) ?: return defaultAnkiWebUrl
+            return Uri.parse(syncBaseString).buildUpon().appendPath(getUrlPrefix()).toString() + "/"
         }
         // Usual case
-        return getDefaultAnkiWebUrl();
+        return defaultAnkiWebUrl
     }
 
-    protected String getUrlPrefix() {
-        return "sync";
+    open fun getUrlPrefix(): String {
+        return "sync"
     }
 
-    protected Integer getHostNum() {
-        return mHostNum.getHostNum();
+    protected val hostNum: Int?
+        get() = mHostNum.getHostNum()
+
+    protected fun isUsingCustomSyncServer(userPreferences: SharedPreferences?): Boolean {
+        return userPreferences != null && isEnabled(userPreferences)
     }
 
-    protected boolean isUsingCustomSyncServer(@Nullable SharedPreferences userPreferences) {
-        return userPreferences != null && CustomSyncServer.isEnabled(userPreferences);
-    }
-
-    protected String getDefaultAnkiWebUrl() {
-        String hostNumAsStringFormat = "";
-        Integer hostNum = getHostNum();
-        if (hostNum != null) {
-            hostNumAsStringFormat = hostNum.toString();
+    @KotlinCleanup("simplify")
+    protected val defaultAnkiWebUrl: String
+        get() {
+            var hostNumAsStringFormat = ""
+            val hostNum = hostNum
+            if (hostNum != null) {
+                hostNumAsStringFormat = hostNum.toString()
+            }
+            return String.format(Consts.SYNC_BASE, hostNumAsStringFormat) + getUrlPrefix() + "/"
         }
-        return String.format(Consts.SYNC_BASE, hostNumAsStringFormat) + getUrlPrefix() + "/";
+
+    companion object {
+        private const val BOUNDARY = "Anki-sync-boundary"
+        private val ANKI_POST_TYPE: MediaType = ("multipart/form-data; boundary=$BOUNDARY").toMediaType()
+        const val ANKIWEB_STATUS_OK = "OK"
+        fun getInputStream(string: String): ByteArrayInputStream? {
+            return try {
+                ByteArrayInputStream(string.toByteArray(charset("UTF-8")))
+            } catch (e: UnsupportedEncodingException) {
+                Timber.e(e, "HttpSyncer: error on getting bytes from string")
+                null
+            }
+        }
+    }
+
+    init {
+        @KotlinCleanup("combined declaration and initialization")
+        checksumKey = Utils.checksum(java.lang.Float.toString(Random().nextFloat())).substring(0, 8)
+        @KotlinCleanup("move to constructor")
+        this.con = con
+        @KotlinCleanup("combined declaration and initialization")
+        postVars = HashMapInit(0) // New map is created each time it is filled. No need to allocate room
+        @KotlinCleanup("move to constructor")
+        mHostNum = hostNum
     }
 }
-
-

@@ -40,11 +40,11 @@ class RemoteServer(
     @Throws(UnknownHttpResponseException::class)
     fun hostKey(user: String?, pw: String?): Response? {
         return try {
-            mPostVars = HashMapInit(0)
+            postVars = HashMapInit(0)
             val credentials = JSONObject()
             credentials.put("u", user)
             credentials.put("p", pw)
-            super.req("hostKey", getInputStream(Utils.jsonToString(credentials)))
+            req("hostKey", getInputStream(Utils.jsonToString(credentials)))
         } catch (e: JSONException) {
             Timber.w(e)
             null
@@ -53,13 +53,13 @@ class RemoteServer(
 
     @Throws(UnknownHttpResponseException::class)
     fun meta(): Response {
-        mPostVars = HashMapInit(2)
-        mPostVars["k"] = mHKey
-        mPostVars["s"] = mSKey
+        postVars = HashMapInit(2)
+        postVars["k"] = hKey
+        postVars["s"] = checksumKey
         val meta = JSONObject()
         meta.put("v", Consts.SYNC_VER)
         meta.put("cv", String.format(Locale.US, "ankidroid,%s,%s", pkgVersionName, Utils.platDesc()))
-        return super.req("meta", getInputStream(Utils.jsonToString(meta)))
+        return req("meta", getInputStream(Utils.jsonToString(meta)))
     }
 
     @Throws(UnknownHttpResponseException::class)
@@ -101,7 +101,7 @@ class RemoteServer(
     /** Python has dynamic type deduction, but we don't, so return String  */
     @Throws(UnknownHttpResponseException::class)
     private fun runCommand(cmd: String, data: JSONObject): String {
-        val ret = super.req(cmd, getInputStream(Utils.jsonToString(data)))
+        val ret = req(cmd, getInputStream(Utils.jsonToString(data)))
         return try {
             ret.body!!.string()
         } catch (e: IllegalStateException) {
