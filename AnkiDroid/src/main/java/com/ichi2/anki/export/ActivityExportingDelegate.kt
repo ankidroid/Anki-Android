@@ -25,14 +25,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.core.app.ShareCompat.IntentBuilder
 import androidx.core.content.FileProvider
-import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.R
+import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
-import com.ichi2.anki.exportApkg
 import com.ichi2.async.CollectionTask.ExportApkg
 import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
@@ -103,11 +100,15 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                 exportListener
             )
         } else {
-            // TODO: this code needs reworking so that the post-export dialogs can be
-            // shown correctly
-            (activity as DeckPicker).exportApkg(exportPath.path, includeSched, includeMedia, did)
-            // exportListener.actualOnPreExecute(activity)
-            // exportListener.actualOnPostExecute(activity, android.util.Pair(false, exportPath.path))
+            activity.launchCatchingTask {
+                if (did == null && includeSched) {
+                    activity.exportColpkg(exportPath.path, includeMedia)
+                } else {
+                    activity.exportApkg(exportPath.path, includeSched, includeMedia, did)
+                }
+                val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
+                activity.showAsyncDialogFragment(dialog)
+            }
         }
     }
 
