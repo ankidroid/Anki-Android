@@ -22,6 +22,7 @@ import anki.import_export.ImportResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.exportAnkiPackage
+import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
 import com.ichi2.libanki.undoableOp
 import net.ankiweb.rsdroid.Translations
@@ -64,23 +65,38 @@ private fun summarizeReport(tr: Translations, output: ImportResponse): String {
     return msgs.joinToString("\n")
 }
 
-fun DeckPicker.exportApkg(
+suspend fun AnkiActivity.exportApkg(
     apkgPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
     deckId: DeckId?
 ) {
-    launchCatchingTask {
-        withProgress(
-            extractProgress = {
-                if (progress.hasExporting()) {
-                    text = progress.exporting
-                }
-            },
-        ) {
-            withCol {
-                newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
+    withProgress(
+        extractProgress = {
+            if (progress.hasExporting()) {
+                text = progress.exporting
             }
+        },
+    ) {
+        withCol {
+            newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
+        }
+    }
+}
+
+suspend fun AnkiActivity.exportColpkg(
+    colpkgPath: String,
+    withMedia: Boolean,
+) {
+    withProgress(
+        extractProgress = {
+            if (progress.hasExporting()) {
+                text = progress.exporting
+            }
+        },
+    ) {
+        withCol {
+            newBackend.exportCollectionPackage(colpkgPath, withMedia, true)
         }
     }
 }
