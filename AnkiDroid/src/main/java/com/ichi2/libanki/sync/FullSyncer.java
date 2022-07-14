@@ -54,9 +54,9 @@ public class FullSyncer extends HttpSyncer {
 
     public FullSyncer(Collection col, String hkey, Connection con, HostNum hostNum) {
         super(hkey, con, hostNum);
-        mPostVars = HashUtil.HashMapInit(2);
-        mPostVars.put("k", hkey);
-        mPostVars.put("v",
+        postVars = HashUtil.HashMapInit(2);
+        postVars.put("k", hkey);
+        postVars.put("v",
                 String.format(Locale.US, "ankidroid,%s,%s", VersionUtils.getPkgVersionName(), Utils.platDesc()));
         mCol = col;
         mCon = con;
