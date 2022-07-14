@@ -918,6 +918,7 @@ open class CardBrowser :
                 // Provide SearchView with the previous search terms
                 mSearchView!!.setQuery(mSearchTerms!!, false)
             }
+            menu.findItem(R.id.action_truncate).isChecked = isTruncated
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
