@@ -1889,8 +1889,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             if (mShouldRestoreScroll) {
                 mShouldRestoreScroll = false
                 val newPosition = newPositionOfSelectedCard
-                val isRestorePossible = newPosition != CARD_NOT_AVAILABLE
-                if (isRestorePossible) {
+                if (newPosition != CARD_NOT_AVAILABLE) {
                     autoScrollTo(newPosition)
                 }
             }
