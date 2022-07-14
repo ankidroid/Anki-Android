@@ -589,6 +589,7 @@ open class DeckPicker :
         menu.findItem(R.id.action_empty_cards).isEnabled = sdCardAvailable
 
         searchDecksIcon = menu.findItem(R.id.deck_picker_action_filter)
+        updateSearchDecksIconVisibility()
         searchDecksIcon!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             // When SearchItem is expanded
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
@@ -634,12 +635,15 @@ open class DeckPicker :
                 menu.findItem(R.id.action_undo).title = undo
             }
         }
-        updateSearchDecksIconVisibility()
         return super.onCreateOptionsMenu(menu)
     }
 
     private fun updateSearchDecksIconVisibility() {
-        searchDecksIcon?.isVisible = colIsOpen() && col.decks.count() >= 10
+        searchDecksIcon?.isVisible = try {
+            col.decks.count() >= 10
+        } catch (e: Exception) {
+            false
+        }
     }
 
     @VisibleForTesting
