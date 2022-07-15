@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation,DuplicateCrowdInStrings">
+    <!-- General -->
+    <string name="pref_general_screen_key">generalScreen</string>
+    <string name="deck_for_new_cards_key">useCurrent</string>
+    <string name="pref_language_key">language</string>
+    <string name="analytics_opt_in_key">analyticsOptIn</string>
+    <string name="paste_png_key">pastePNG</string>
+    <string name="error_reporting_mode_key">reportErrorMode</string>
     <!-- Reviewing -->
     <string name="pref_reviewing_screen_key">reviewingScreen</string>
     <string name="new_spread_preference">newSpread</string>

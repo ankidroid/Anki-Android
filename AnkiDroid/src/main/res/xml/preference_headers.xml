@@ -24,7 +24,8 @@
         android:fragment="com.ichi2.anki.Preferences$GeneralSettingsFragment"
         android:summary="@string/pref_cat_general_summ"
         android:title="@string/pref_cat_general"
-        android:icon="@drawable/ic_settings_black">
+        android:icon="@drawable/ic_settings_black"
+        android:key="@string/pref_general_screen_key">
     </Preference>
 
     <!-- Reviewing Preferences -->
