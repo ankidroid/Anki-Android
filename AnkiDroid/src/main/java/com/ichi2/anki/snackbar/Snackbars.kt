@@ -21,7 +21,6 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.behavior.SwipeDismissBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.onAttachedToWindow2
 import com.ichi2.anki.BuildConfig
@@ -181,7 +180,7 @@ fun View.showSnackbar(
 ) {
     val snackbar = Snackbar.make(this, text, duration)
     snackbar.setMaxLines(2)
-    snackbar.fixSwipeDismissBehavior()
+    snackbar.behavior = SwipeDismissBehaviorFix()
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         snackbar.fixMarginsWhenInsetsChange()
@@ -197,30 +196,6 @@ fun View.showSnackbar(
 fun Snackbar.setMaxLines(maxLines: Int) {
     view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.maxLines = maxLines
 }
-
-/**
- * This changes the default behavior to the fixed one, preserving the original listener.
- * When dragging or settling, this listener pauses the timer that removes the snackbar,
- * so it does not disappear from under your finger.
- */
-private fun Snackbar.fixSwipeDismissBehavior() {
-    addCallback(object : Snackbar.Callback() {
-        override fun onShown(snackbar: Snackbar) {
-            actualBehavior = SwipeDismissBehaviorFix<View>().apply {
-                listener = actualBehavior?.listener
-            }
-        }
-    })
-}
-
-private var Snackbar.actualBehavior: SwipeDismissBehavior<View>?
-    get() {
-        return (view.layoutParams as? CoordinatorLayout.LayoutParams)
-            ?.behavior as? SwipeDismissBehavior
-    }
-    set(value) {
-        (view.layoutParams as? CoordinatorLayout.LayoutParams)?.behavior = value
-    }
 
 /**
  * When bottom inset change, for instance, when keyboard is open or closed,

@@ -56,10 +56,10 @@ import com.google.android.material.behavior.SwipeDismissBehavior
  * Note that this fix is currently used for [SensibleSwipeDismissBehavior],
  * but is applicable to [SwipeDismissBehavior] as well.
  */
-class SwipeDismissBehaviorFix<V : View> : SensibleSwipeDismissBehavior<V>() {
+class SwipeDismissBehaviorFix : SensibleSwipeDismissBehavior() {
     private var ignoreCallsToOnTouchEvent = false
 
-    override fun onInterceptTouchEvent(parent: CoordinatorLayout, child: V, event: MotionEvent): Boolean {
+    override fun onInterceptTouchEvent(parent: CoordinatorLayout, child: View, event: MotionEvent): Boolean {
         if (!parent.isPointInChildBounds(child, event.x.toInt(), event.y.toInt())) return false
 
         ignoreCallsToOnTouchEvent = true
@@ -68,7 +68,7 @@ class SwipeDismissBehaviorFix<V : View> : SensibleSwipeDismissBehavior<V>() {
         }
     }
 
-    override fun onTouchEvent(parent: CoordinatorLayout, child: V, event: MotionEvent): Boolean {
+    override fun onTouchEvent(parent: CoordinatorLayout, child: View, event: MotionEvent): Boolean {
         if (ignoreCallsToOnTouchEvent) return false
         return super.onTouchEvent(parent, child, event)
     }
