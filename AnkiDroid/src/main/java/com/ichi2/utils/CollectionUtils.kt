@@ -15,6 +15,8 @@
  */
 package com.ichi2.utils
 
+import androidx.annotation.VisibleForTesting
+
 object CollectionUtils {
     /** Throws IndexOutOfBoundsException on empty list */
     @JvmStatic
@@ -49,4 +51,12 @@ object CollectionUtils {
             }
         }
     }
+
+    /**
+     * @param predicate the predicate to find index of
+     * @return the index of [predicate]. returns null if none found
+     */
+    @VisibleForTesting
+    fun <T> Iterable<T>.indexOfOrNull(predicate: (T) -> Boolean): Int? =
+        indexOfFirst(predicate).takeIf { it >= 0 }
 }

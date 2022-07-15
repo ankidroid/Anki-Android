@@ -25,7 +25,6 @@ import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
@@ -365,14 +364,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     companion object {
         /* Make the selected deck roughly half transparent if there is a background */
         const val SELECTED_DECK_ALPHA_AGAINST_BACKGROUND = 0.45
-
-        /**
-         * @param predicate the predicate to find index of
-         * @return the index of [predicate]. returns null if none found
-         */
-        @VisibleForTesting
-        fun <T> Iterable<T>.indexOfOrNull(predicate: (T) -> Boolean): Int? =
-            indexOfFirst(predicate).takeIf { it >= 0 }
     }
 
     init {
