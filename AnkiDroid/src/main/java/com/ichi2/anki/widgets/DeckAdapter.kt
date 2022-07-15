@@ -34,6 +34,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.TreeNode
+import com.ichi2.utils.CollectionUtils.indexOfOrNull
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
 import net.ankiweb.rsdroid.BackendFactory
