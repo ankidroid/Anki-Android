@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation,DuplicateCrowdInStrings">
+    <!-- Reviewing -->
+    <string name="pref_reviewing_screen_key">reviewingScreen</string>
     <string name="new_spread_preference">newSpread</string>
     <string name="day_offset_preference">dayOffset</string>
     <string name="learn_cutoff_preference">learnCutoff</string>
     <string name="time_limit_preference">timeLimit</string>
+    <string name="timeout_answer_preference">timeoutAnswer</string>
+    <string name="automatic_answer_action_preference">automaticAnswerAction</string>
+    <string name="timeout_answer_seconds_preference">timeoutAnswerSeconds</string>
+    <string name="timeout_question_seconds_preference">timeoutQuestionSeconds</string>
+    <string name="keep_screen_on_preference">keepScreenOn</string>
     <string name="new_timezone_handling_preference">newTimezoneHandling</string>
     <string name="double_tap_time_interval_preference">doubleTapTimeInterval</string>
+
     <string name="custom_buttons_link_preference">custom_buttons_link</string>
-    <string name="keep_screen_on_preference">keepScreenOn</string>
     <string name="fullscreen_mode_preference">fullscreenMode</string>
     <string name="center_vertically_preference">centerVertically</string>
     <string name="show_estimates_preference">showEstimates</string>
@@ -18,16 +25,11 @@
     <string name="show_progress_preference">showProgress</string>
     <string name="show_eta_preference">showETA</string>
     <string name="show_large_answer_buttons_preference">showLargeAnswerButtons</string>
-    <string name="timeout_answer_preference">timeoutAnswer</string>
-    <string name="automatic_answer_action_preference">automaticAnswerAction</string>
-    <string name="timeout_answer_seconds_preference">timeoutAnswerSeconds</string>
-    <string name="timeout_question_seconds_preference">timeoutQuestionSeconds</string>
     <string name="app_theme_key">appTheme</string>
     <string name="day_theme_key">dayTheme</string>
     <string name="night_theme_key">nightTheme</string>
     <string name="gestures_preference">gestures</string>
     <string name="gestures_corner_touch_preference">gestureCornerTouch</string>
-    <string name="pref_reviewing_screen_key">reviewingScreen</string>
     <string name="pref_accessibility_screen_key">accessibilityScreen</string>
     <string name="pref_controls_screen_key">controlsScreen</string>
     <string name="pref_reset_languages_key">resetLanguages</string>
