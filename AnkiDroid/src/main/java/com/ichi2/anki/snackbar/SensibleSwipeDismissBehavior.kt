@@ -22,7 +22,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
 import androidx.customview.widget.ViewDragHelper
-import com.google.android.material.behavior.SwipeDismissBehavior
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.UIUtils
 import kotlin.math.absoluteValue
@@ -44,15 +44,15 @@ import kotlin.math.sign
  *   * If you drag the snackbar to the right, and then flinging it to the left,
  *     it will suddenly change course and start moving to the right.
  */
-open class SensibleSwipeDismissBehavior<V : View> : SwipeDismissBehavior<V>() {
+open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
     private var viewDragHelper: ViewDragHelper? = null
 
-    override fun onInterceptTouchEvent(parent: CoordinatorLayout, child: V, event: MotionEvent): Boolean {
+    override fun onInterceptTouchEvent(parent: CoordinatorLayout, child: View, event: MotionEvent): Boolean {
         ensureViewDragHelper(parent)
         return viewDragHelper!!.shouldInterceptTouchEvent(event)
     }
 
-    override fun onTouchEvent(parent: CoordinatorLayout, child: V, event: MotionEvent): Boolean {
+    override fun onTouchEvent(parent: CoordinatorLayout, child: View, event: MotionEvent): Boolean {
         viewDragHelper?.processTouchEvent(event)
         return viewDragHelper != null
     }
