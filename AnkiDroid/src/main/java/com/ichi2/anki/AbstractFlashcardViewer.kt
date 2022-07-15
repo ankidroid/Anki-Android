@@ -999,9 +999,9 @@ abstract class AbstractFlashcardViewer :
                 answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 answerArea.removeView(mAnswerField)
                 answerArea.addView(mAnswerField, 1)
-                answerArea.visibility = View.VISIBLE
             }
-            "bottom" -> {
+            "bottom",
+            "none" -> {
                 whiteboardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
                 whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 flashcardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
@@ -1009,11 +1009,10 @@ abstract class AbstractFlashcardViewer :
                 touchLayerContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
                 touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                answerArea.visibility = View.VISIBLE
             }
-            "none" -> answerArea.visibility = View.GONE
             else -> Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition)
         }
+        answerArea.visibility = if (answerButtonsPosition == "none") View.GONE else View.VISIBLE
         answerArea.layoutParams = answerAreaParams
         whiteboardContainer.layoutParams = whiteboardContainerParams
         mCardFrame!!.layoutParams = flashcardContainerParams
