@@ -58,9 +58,4 @@ object DeckService {
             "select count() from cards where did in $ids or odid in $ids"
         )
     }
-
-    @JvmStatic
-    fun getParentDid(col: Collection, did: Long): Long? = col.decks.parents(did)
-        .lastOrNull()
-        ?.optLong("id", 0)
 }

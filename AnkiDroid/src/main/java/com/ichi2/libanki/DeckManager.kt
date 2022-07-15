@@ -161,6 +161,9 @@ abstract class DeckManager {
     /** All parents of did. */
     abstract fun parents(did: Long): List<Deck>
 
+    fun lastParentDid(did: Long): Long? = parents(did).lastOrNull()
+        ?.optLong("id", 0)
+
     /*
      * Sync handling
      * ***********************************************************

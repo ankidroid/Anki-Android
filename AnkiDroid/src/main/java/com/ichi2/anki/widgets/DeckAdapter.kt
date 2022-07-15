@@ -29,7 +29,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.DeckService.defaultDeckHasCards
-import com.ichi2.anki.servicelayer.DeckService.getParentDid
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.Counts
@@ -310,7 +309,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         return mDisplayedDeckList
             .indexOfOrNull { it.value.did == did }
             // If the deck is not in our list, we search again using the immediate parent
-            ?: getParentDid(mCol, did)?.run { findDeckPosition(this) }
+            ?: mCol.decks.lastParentDid(did)?.run { findDeckPosition(this) }
             ?: 0
     }
 
