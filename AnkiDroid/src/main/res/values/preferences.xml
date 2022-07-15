@@ -13,6 +13,14 @@
     <string name="keep_screen_on_preference">keepScreenOn</string>
     <string name="new_timezone_handling_preference">newTimezoneHandling</string>
     <string name="double_tap_time_interval_preference">doubleTapTimeInterval</string>
+    <!-- Sync preferences -->
+    <string name="pref_sync_screen_key">syncScreen</string>
+    <string name="sync_account_key">syncAccount</string>
+    <string name="sync_fetch_missing_media_key">syncFetchesMedia</string>
+    <string name="automatic_sync_choice_key">automaticSyncMode</string>
+    <string name="force_full_sync_key">force_full_sync</string>
+    <string name="sync_status_badge_key">showSyncStatusBadge</string>
+    <string name="custom_sync_server_key">custom_sync_server_link</string>
 
     <string name="custom_buttons_link_preference">custom_buttons_link</string>
     <string name="fullscreen_mode_preference">fullscreenMode</string>
@@ -42,13 +50,6 @@
     <string name="pref_compute_n_days_key">advanced_forecast_stats_compute_n_days</string>
     <string name="pref_advanced_statistics_enabled_key">advanced_statistics_enabled</string>
     <string name="pref_n_iterations_key">advanced_forecast_stats_mc_n_iterations</string>
-    <!-- Sync preferences -->
-    <string name="pref_sync_screen_key">syncScreen</string>
-    <string name="sync_account_key">syncAccount</string>
-    <string name="sync_fetch_missing_media_key">syncFetchesMedia</string>
-    <string name="automatic_sync_choice_key">automaticSyncMode</string>
-    <string name="force_full_sync_key">force_full_sync</string>
-    <string name="custom_sync_server_key">custom_sync_server_link</string>
     <!-- Notification preferences -->
     <string name="pref_notifications_screen_key">notificationsScreen</string>
     <string name="pref_notifications_minimum_cards_due_key">minimumCardsDueForNotification</string>
