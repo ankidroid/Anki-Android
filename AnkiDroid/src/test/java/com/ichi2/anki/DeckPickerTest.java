@@ -11,7 +11,6 @@ import android.view.Menu;
 
 import com.ichi2.anki.dialogs.DatabaseErrorDialog;
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog;
-import com.ichi2.anki.widgets.DeckAdapter;
 import com.ichi2.annotations.NeedsTest;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.DB;
@@ -23,6 +22,7 @@ import com.ichi2.testutils.AnkiActivityUtils;
 import com.ichi2.testutils.BackendEmulatingOpenConflict;
 import com.ichi2.testutils.BackupManagerTestUtilities;
 import com.ichi2.testutils.DbUtils;
+import com.ichi2.utils.CollectionUtils;
 import com.ichi2.utils.ResourceLoader;
 
 import org.apache.commons.exec.OS;
@@ -498,9 +498,9 @@ public class DeckPickerTest extends RobolectricTest {
     @Test
     public void iterableIndexOfOrNullTest() {
         ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(10, 20, 30, 40));
-        Integer actual = DeckAdapter.Companion.indexOfOrNull(arrayList, i -> i > 40);
+        Integer actual = CollectionUtils.INSTANCE.indexOfOrNull(arrayList, i -> i > 40);
         assertNull(actual);
-        actual = DeckAdapter.Companion.indexOfOrNull(arrayList, i -> i > 30);
+        actual = CollectionUtils.INSTANCE.indexOfOrNull(arrayList, i -> i > 30);
         assertNotNull(actual);
         assertThat(actual, is(3));
     }
