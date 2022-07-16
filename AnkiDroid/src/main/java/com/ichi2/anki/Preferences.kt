@@ -228,7 +228,6 @@ class Preferences : AnkiActivity() {
             if (col != null) {
                 try {
                     when (pref.key) {
-                        TIME_LIMIT -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("timeLim") / 60)
                         USE_CURRENT -> (pref as ListPreference).setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
                         AUTOMATIC_ANSWER_ACTION -> (pref as ListPreference).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
                         NEW_SPREAD -> (pref as ListPreference).setValueIndex(col.get_config_int("newSpread"))
@@ -444,10 +443,6 @@ class Preferences : AnkiActivity() {
                         preferencesActivity.col.set_config("newSpread", (pref as ListPreference).value.toInt())
                         preferencesActivity.col.setMod()
                     }
-                    TIME_LIMIT -> {
-                        preferencesActivity.col.set_config("timeLim", (pref as NumberRangePreferenceCompat).getValue() * 60)
-                        preferencesActivity.col.setMod()
-                    }
                     USE_CURRENT -> {
                         preferencesActivity.col.set_config("addToCur", "0" == (pref as ListPreference).value)
                         preferencesActivity.col.setMod()
@@ -650,8 +645,18 @@ class Preferences : AnkiActivity() {
                 }
             }
             // Timebox time limit
-            requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference)
-                .setFormattedSummary(R.string.pref_summary_minutes)
+            // Represents in Android preferences the collections configuration "timeLim": i.e.
+            // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
+            // Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
+            requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
+                setValue(col.get_config_int("timeLim") / 60)
+                setFormattedSummary(R.string.pref_summary_minutes)
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("timeLim", ((newValue as String).toInt() * 60))
+                    col.setMod()
+                    true
+                }
+            }
             // Start of next day
             requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference)
                 .setFormattedSummary(R.string.day_offset_summary)
@@ -1363,13 +1368,6 @@ class Preferences : AnkiActivity() {
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
         /**
-         * Represents in Android preferences the collections configuration "timeLim": i.e.
-         * the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
-         * Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
-         */
-        private const val TIME_LIMIT = "timeLimit"
-
-        /**
          * Represents in Android preferences the collections configuration "addToCur": i.e.
          * if true, then add note to current decks, otherwise let the note type's configuration decide
          * Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
@@ -1411,7 +1409,7 @@ class Preferences : AnkiActivity() {
          */
         const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
         private val sCollectionPreferences = arrayOf(
-            TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, AUTOMATIC_ANSWER_ACTION
+            USE_CURRENT, NEW_SPREAD, DAY_OFFSET, AUTOMATIC_ANSWER_ACTION
         )
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
