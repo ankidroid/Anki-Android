@@ -50,6 +50,7 @@ import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.preferences.AboutFragment
+import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
@@ -370,19 +371,6 @@ class Preferences : AnkiActivity() {
                     CrashReportService.FEEDBACK_REPORT_KEY -> {
                         val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
                         CrashReportService.onPreferenceChanged(preferencesActivity, value!!)
-                    }
-                    "providerEnabled" -> {
-                        val providerName = ComponentName(preferencesActivity, "com.ichi2.anki.provider.CardContentProvider")
-                        val pm = preferencesActivity.packageManager
-                        val state: Int
-                        if ((pref as SwitchPreference).isChecked) {
-                            state = PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                            Timber.i("AnkiDroid ContentProvider enabled by user")
-                        } else {
-                            state = PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                            Timber.i("AnkiDroid ContentProvider disabled by user")
-                        }
-                        pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
                     }
                     CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                     AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
@@ -1012,6 +1000,20 @@ class Preferences : AnkiActivity() {
                 } else {
                     getString(R.string.disabled)
                 }
+            }
+
+            // Enable API
+            requirePreference<SwitchPreference>(R.string.enable_api_key).setOnPreferenceChangeListener { _, newValue ->
+                val providerName = ComponentName(requireContext(), CardContentProvider::class.java.name)
+                val state = if (newValue == true) {
+                    Timber.i("AnkiDroid ContentProvider enabled by user")
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                } else {
+                    Timber.i("AnkiDroid ContentProvider disabled by user")
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                }
+                requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
+                true
             }
         }
 
