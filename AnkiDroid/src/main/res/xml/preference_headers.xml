@@ -55,7 +55,7 @@
     <!-- Appearance Preferences  -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$AppearanceSettingsFragment"
-        android:key="appearance_preference_group"
+        android:key="@string/pref_appearance_screen_key"
         android:summary="@string/pref_cat_appearance_summ"
         android:title="@string/pref_cat_appearance"
         android:icon="@drawable/ic_color_lens_white_24dp">
@@ -80,7 +80,7 @@
     <!-- Advanced Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$AdvancedSettingsFragment"
-        android:key="pref_screen_advanced"
+        android:key="@string/pref_advanced_screen_key"
         android:summary="@string/pref_cat_advanced_summ"
         android:title="@string/pref_cat_advanced"
         android:icon="@drawable/ic_tune_white">
