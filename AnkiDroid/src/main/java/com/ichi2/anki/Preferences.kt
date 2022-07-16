@@ -228,7 +228,6 @@ class Preferences : AnkiActivity() {
             if (col != null) {
                 try {
                     when (pref.key) {
-                        SHOW_PROGRESS -> (pref as SwitchPreference).isChecked = col.get_config_boolean("dueCounts")
                         LEARN_CUTOFF -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("collapseTime") / 60)
                         TIME_LIMIT -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("timeLim") / 60)
                         USE_CURRENT -> (pref as ListPreference).setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
@@ -442,10 +441,6 @@ class Preferences : AnkiActivity() {
                         keepScreenOn!!.isChecked = (pref as SwitchPreference).isChecked
                     }
                     LANGUAGE -> preferencesActivity.closePreferences()
-                    SHOW_PROGRESS -> {
-                        preferencesActivity.col.set_config("dueCounts", (pref as SwitchPreference).isChecked)
-                        preferencesActivity.col.setMod()
-                    }
                     NEW_SPREAD -> {
                         preferencesActivity.col.set_config("newSpread", (pref as ListPreference).value.toInt())
                         preferencesActivity.col.setMod()
@@ -857,6 +852,17 @@ class Preferences : AnkiActivity() {
                 isChecked = col.get_config_boolean("estTimes")
                 setOnPreferenceChangeListener { _, newValue ->
                     col.set_config("estTimes", newValue)
+                    col.setMod()
+                    true
+                }
+            }
+            // Show progress
+            // Represents the collection pref "dueCounts": i.e.
+            // whether the remaining number of cards should be shown.
+            requirePreference<SwitchPreference>(R.string.show_progress_preference).apply {
+                isChecked = col.get_config_boolean("dueCounts")
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("dueCounts", newValue)
                     col.setMod()
                     true
                 }
@@ -1352,12 +1358,6 @@ class Preferences : AnkiActivity() {
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
         /**
-         * Represents in Android preferences the collections configuration "dueCounts": i.e.
-         * whether the remaining number of cards should be shown.
-         */
-        private const val SHOW_PROGRESS = "showProgress"
-
-        /**
          * Represents in Android preferences the collections configuration "collapseTime": i.e.
          * if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
          * Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
@@ -1413,7 +1413,6 @@ class Preferences : AnkiActivity() {
          */
         const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
         private val sCollectionPreferences = arrayOf(
-            SHOW_PROGRESS,
             LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, AUTOMATIC_ANSWER_ACTION
         )
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
