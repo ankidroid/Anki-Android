@@ -205,14 +205,6 @@ open class NumberRangePreferenceCompat : EditTextPreference {
             editText.filters = arrayOf(*editText.filters, InputFilter.LengthFilter(numberRangePreference.maxDigits))
         }
 
-        override fun onDialogClosed(positiveResult: Boolean) {
-            if (!positiveResult) {
-                return
-            }
-
-            numberRangePreference.setValue(editText.text.toString())
-        }
-
         companion object {
             @JvmStatic
             fun newInstance(key: String?): NumberRangeDialogFragmentCompat {
