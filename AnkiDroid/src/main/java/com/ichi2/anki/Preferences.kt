@@ -368,8 +368,6 @@ class Preferences : AnkiActivity() {
                 when (key) {
                     CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, CustomSyncServer.PREFERENCE_CUSTOM_SYNC_BASE, CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER -> // This may be a tad hasty - performed before "back" is pressed.
                         handleSyncServerPreferenceChange(preferencesActivity.baseContext)
-                    CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
-                    AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                 }
             } catch (e: BadTokenException) {
                 Timber.e(e, "Preferences: BadTokenException on showDialog")
@@ -929,8 +927,25 @@ class Preferences : AnkiActivity() {
                     }
                 }
             }
-            setupContextMenuPreference(CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu)
-            setupContextMenuPreference(AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label)
+            // Card browser context menu
+            requirePreference<SwitchPreference>(R.string.card_browser_external_context_menu_key).apply {
+                title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.card_browser_context_menu))
+                summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.card_browser_context_menu))
+                setOnPreferenceChangeListener { _, newValue ->
+                    CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)
+                    true
+                }
+            }
+            // Anki card context menu
+            requirePreference<SwitchPreference>(R.string.anki_card_external_context_menu_key).apply {
+                title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.context_menu_anki_card_label))
+                summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.context_menu_anki_card_label))
+                setOnPreferenceChangeListener { _, newValue ->
+                    AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)
+                    true
+                }
+            }
+
             if (col != null && col!!.schedVer() == 1) {
                 Timber.i("Displaying V1-to-V2 scheduler preference")
                 val schedVerPreference = SwitchPreference(requireContext())
@@ -1016,16 +1031,6 @@ class Preferences : AnkiActivity() {
                 requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
                 true
             }
-        }
-
-        private fun setupContextMenuPreference(key: String, @StringRes contextMenuName: Int) {
-            // FIXME: The menu is named in the system language (as it's defined in the manifest which may be
-            //  different than the app language
-            val cardBrowserContextMenuPreference = requirePreference<SwitchPreference>(key)
-            val menuName = getString(contextMenuName)
-            // Note: The below format strings are generic, not card browser specific despite the name
-            cardBrowserContextMenuPreference.title = getString(R.string.card_browser_enable_external_context_menu, menuName)
-            cardBrowserContextMenuPreference.summary = getString(R.string.card_browser_enable_external_context_menu_summary, menuName)
         }
 
         private fun removeUnnecessaryAdvancedPrefs() {
