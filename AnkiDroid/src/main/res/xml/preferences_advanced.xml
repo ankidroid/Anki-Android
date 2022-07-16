@@ -26,7 +26,7 @@
     xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_advanced"
     android:summary="@string/pref_cat_advanced_summ"
-    android:key="pref_screen_advanced">
+    android:key="@string/pref_advanced_screen_key">
         <EditTextPreference
             android:defaultValue="/sdcard/AnkiDroid"
             android:key="@string/pref_ankidroid_directory_key"
@@ -42,7 +42,7 @@
                 app:max="99" />
         </PreferenceCategory>
         <PreferenceCategory
-            android:key="category_workarounds"
+            android:key="@string/pref_cat_workarounds_key"
             android:title="@string/pref_cat_workarounds" >
             <SwitchPreference
                 android:defaultValue="false"
