@@ -228,7 +228,6 @@ class Preferences : AnkiActivity() {
             if (col != null) {
                 try {
                     when (pref.key) {
-                        LEARN_CUTOFF -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("collapseTime") / 60)
                         TIME_LIMIT -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("timeLim") / 60)
                         USE_CURRENT -> (pref as ListPreference).setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
                         AUTOMATIC_ANSWER_ACTION -> (pref as ListPreference).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
@@ -449,10 +448,6 @@ class Preferences : AnkiActivity() {
                         preferencesActivity.col.set_config("timeLim", (pref as NumberRangePreferenceCompat).getValue() * 60)
                         preferencesActivity.col.setMod()
                     }
-                    LEARN_CUTOFF -> {
-                        preferencesActivity.col.set_config("collapseTime", (pref as NumberRangePreferenceCompat).getValue() * 60)
-                        preferencesActivity.col.setMod()
-                    }
                     USE_CURRENT -> {
                         preferencesActivity.col.set_config("addToCur", "0" == (pref as ListPreference).value)
                         preferencesActivity.col.setMod()
@@ -642,8 +637,18 @@ class Preferences : AnkiActivity() {
             val col = col!!
 
             // Learn ahead limit
-            requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference)
-                .setFormattedSummary(R.string.pref_summary_minutes)
+            // Represents the collections pref "collapseTime": i.e.
+            // if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
+            // Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
+            requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
+                setValue(col.get_config_int("collapseTime") / 60)
+                setFormattedSummary(R.string.pref_summary_minutes)
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("collapseTime", ((newValue as String).toInt() * 60))
+                    col.setMod()
+                    true
+                }
+            }
             // Timebox time limit
             requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference)
                 .setFormattedSummary(R.string.pref_summary_minutes)
@@ -1358,13 +1363,6 @@ class Preferences : AnkiActivity() {
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
         /**
-         * Represents in Android preferences the collections configuration "collapseTime": i.e.
-         * if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
-         * Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
-         */
-        private const val LEARN_CUTOFF = "learnCutoff"
-
-        /**
          * Represents in Android preferences the collections configuration "timeLim": i.e.
          * the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
          * Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
@@ -1413,7 +1411,7 @@ class Preferences : AnkiActivity() {
          */
         const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
         private val sCollectionPreferences = arrayOf(
-            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, AUTOMATIC_ANSWER_ACTION
+            TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, AUTOMATIC_ANSWER_ACTION
         )
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
