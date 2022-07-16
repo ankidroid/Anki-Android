@@ -5,16 +5,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/custom_sync_server_title">
     <SwitchPreference
-        android:key="useCustomSyncServer"
+        android:key="@string/custom_sync_server_enable_key"
         android:title="@string/custom_sync_server_enable_title"
         android:summary="@string/custom_sync_server_enable_summary"
         android:defaultValue="false"/>
     <EditTextPreference
         android:dependency="useCustomSyncServer"
-        android:key="syncBaseUrl"
+        android:key="@string/custom_sync_server_base_url_key"
         android:title="@string/custom_sync_server_base_url_title" />
     <EditTextPreference
         android:dependency="useCustomSyncServer"
-        android:key="syncMediaUrl"
+        android:key="@string/custom_sync_server_media_url_key"
         android:title="@string/custom_sync_server_media_url_title" />
 </PreferenceScreen>
