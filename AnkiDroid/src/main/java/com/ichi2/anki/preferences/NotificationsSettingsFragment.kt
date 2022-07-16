@@ -21,7 +21,7 @@ import android.content.Intent
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreference
 import com.ichi2.anki.Preferences
-import com.ichi2.anki.Preferences.SpecificSettingsFragment
+import com.ichi2.anki.Preferences.SettingsFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.anki.services.NotificationService
@@ -32,14 +32,13 @@ import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
 /**
  * Fragment with preferences related to notifications
  */
-class NotificationsSettingsFragment : SpecificSettingsFragment() {
+class NotificationsSettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
         get() = R.xml.preferences_notifications
     override val analyticsScreenNameConstant: String
         get() = "prefs.notifications"
 
     override fun initSubscreen() {
-        addPreferencesFromResource(preferenceResource)
         if (isRestrictedLearningDevice) {
             preferenceScreen.removePreference(requirePreference<SwitchPreference>(R.string.pref_notifications_vibrate_key))
             preferenceScreen.removePreference(requirePreference<SwitchPreference>(R.string.pref_notifications_blink_key))

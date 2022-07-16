@@ -146,7 +146,7 @@ class Preferences : AnkiActivity() {
         val fragment = fragmentManager.findFragmentById(R.id.settings_container)
 
         actionBar?.title = when (fragment) {
-            is SpecificSettingsFragment -> fragment.preferenceScreen.title
+            is SettingsFragment -> fragment.preferenceScreen.title
             is AboutFragment -> getString(R.string.pref_cat_about_title)
             else -> getString(R.string.settings)
         }
@@ -282,9 +282,29 @@ class Preferences : AnkiActivity() {
     }
 
     abstract class SettingsFragment : PreferenceFragmentCompat() {
+        /** @return The XML file which defines the preferences displayed by this PreferenceFragment
+         */
+        @get:XmlRes
+        abstract val preferenceResource: Int
+
+        /**
+         * Refreshes all values on the screen
+         * Call if a large number of values are changed from one preference.
+         */
+        protected fun refreshScreen() {
+            preferenceScreen.removeAll()
+            addPreferencesFromResource(preferenceResource)
+            initSubscreen()
+        }
+
+        protected val col: Collection?
+            get() = CollectionHelper.getInstance().getCol(requireContext())
+
+        abstract fun initSubscreen()
+
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            val screenName = analyticsScreenNameConstant
-            UsageAnalytics.sendAnalyticsScreenView(screenName)
+            UsageAnalytics.sendAnalyticsScreenView(analyticsScreenNameConstant)
+            addPreferencesFromResource(preferenceResource)
             initSubscreen()
         }
 
@@ -310,12 +330,6 @@ class Preferences : AnkiActivity() {
 
         protected abstract val analyticsScreenNameConstant: String
 
-        /**
-         * Loads preferences (via addPreferencesFromResource) and sets up appropriate listeners for the preferences
-         * Called by base class, do not call directly.
-         */
-        protected abstract fun initSubscreen()
-
         @Suppress("deprecation") // setTargetFragment
         override fun onDisplayPreferenceDialog(preference: Preference) {
             val dialogFragment = when (preference) {
@@ -334,52 +348,6 @@ class Preferences : AnkiActivity() {
         }
 
         companion object {
-            /** Obtains a non-null reference to the preference defined by the key, or throws  */
-            @JvmStatic
-            @Suppress("UNCHECKED_CAST")
-            protected fun <T : Preference?> requirePreference(screen: PreferenceScreen, key: String): T {
-                val preference = screen.findPreference<Preference>(key)
-                    ?: throw IllegalStateException("missing preference: '$key'")
-                return preference as T
-            }
-        }
-    }
-
-    /**
-     * Temporary abstraction
-     * Due to deprecation, we need to move from all Preference code in the Preference activity
-     * into separate fragments.
-     *
-     * Fragments will inherit from this class
-     *
-     * This class adds methods which were previously in Preferences, and are now shared between Settings Fragments
-     * To be merged with SettingsFragment once it can be made abstract
-     */
-    abstract class SpecificSettingsFragment : SettingsFragment() {
-        /** @return The XML file which defines the preferences displayed by this PreferenceFragment
-         */
-        @get:XmlRes
-        abstract val preferenceResource: Int
-
-        /**
-         * Refreshes all values on the screen
-         * Call if a large number of values are changed from one preference.
-         */
-        protected fun refreshScreen() {
-            preferenceScreen.removeAll()
-            initSubscreen()
-        }
-
-        protected val col: Collection?
-            get() = CollectionHelper.getInstance().getCol(requireContext())
-
-        /**
-         * Loads preferences (via addPreferencesFromResource) and sets up appropriate listeners for the preferences
-         * Called by base class, do not call directly.
-         */
-        abstract override fun initSubscreen()
-
-        companion object {
             @JvmStatic
             protected fun getSubscreenIntent(context: Context?, javaClassName: String): Intent {
                 return Intent(context, Preferences::class.java)
@@ -388,14 +356,13 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    class GeneralSettingsFragment : SpecificSettingsFragment() {
+    class GeneralSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_general
         override val analyticsScreenNameConstant: String
             get() = "prefs.general"
 
         override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_general)
             val col = col!!
             if (isRestrictedLearningDevice) {
                 val switchPrefVibrate = requirePreference<SwitchPreference>("widgetVibrate")
@@ -466,14 +433,13 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    class ReviewingSettingsFragment : SpecificSettingsFragment() {
+    class ReviewingSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_reviewing
         override val analyticsScreenNameConstant: String
             get() = "prefs.reviewing"
 
         override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_reviewing)
             val col = col!!
 
             // New cards position
@@ -576,15 +542,13 @@ class Preferences : AnkiActivity() {
     /**
      * Fragment with preferences related to syncing
      */
-    class SyncSettingsFragment : SpecificSettingsFragment() {
+    class SyncSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_sync
         override val analyticsScreenNameConstant: String
             get() = "prefs.sync"
 
         override fun initSubscreen() {
-            addPreferencesFromResource(preferenceResource)
-
             // AnkiWeb Account
             updateSyncAccountSummary()
 
@@ -638,7 +602,7 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    class AppearanceSettingsFragment : SpecificSettingsFragment() {
+    class AppearanceSettingsFragment : SettingsFragment() {
         private var mBackgroundImage: SwitchPreference? = null
         override val preferenceResource: Int
             get() = R.xml.preferences_appearance
@@ -646,7 +610,6 @@ class Preferences : AnkiActivity() {
             get() = "prefs.appearance"
 
         override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_appearance)
             val col = col!!
             // Card browser font scaling
             requirePreference<SeekBarPreferenceCompat>(R.string.pref_card_browser_font_scale_key)
@@ -852,7 +815,7 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    class AdvancedSettingsFragment : SpecificSettingsFragment() {
+    class AdvancedSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_advanced
         override val analyticsScreenNameConstant: String
@@ -860,7 +823,6 @@ class Preferences : AnkiActivity() {
 
         @Suppress("Deprecation") // Material dialog neutral button deprecation
         override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_advanced)
             val screen = preferenceScreen
             // Check that input is valid before committing change in the collection path
             requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
@@ -1035,14 +997,13 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    class CustomButtonsSettingsFragment : SpecificSettingsFragment() {
+    class CustomButtonsSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_custom_buttons
         override val analyticsScreenNameConstant: String
             get() = "prefs.custom_buttons"
 
         override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_custom_buttons)
             // Reset toolbar button customizations
             val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
             resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -1098,28 +1059,26 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    class AdvancedStatisticsSettingsFragment : SpecificSettingsFragment() {
+    class AdvancedStatisticsSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_advanced_statistics
         override val analyticsScreenNameConstant: String
             get() = "prefs.advanced_statistics"
 
         override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_advanced_statistics)
             // Precision of computation
             requirePreference<SeekBarPreferenceCompat>(R.string.pref_computation_precision_key)
                 .setFormattedSummary(R.string.pref_summary_percentage)
         }
     }
 
-    class CustomSyncServerSettingsFragment : SpecificSettingsFragment() {
+    class CustomSyncServerSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_custom_sync_server
         override val analyticsScreenNameConstant: String
             get() = "prefs.custom_sync_server"
 
         override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_custom_sync_server)
             // Use custom sync server
             requirePreference<SwitchPreference>(R.string.custom_sync_server_enable_key).setOnPreferenceChangeListener { _, _ ->
                 handleSyncServerPreferenceChange(requireContext())
@@ -1155,14 +1114,13 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    class ControlsSettingsFragment : SpecificSettingsFragment() {
+    class ControlsSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_controls
         override val analyticsScreenNameConstant: String
             get() = "prefs.controls"
 
         override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_controls)
             addAllControlPreferencesToCategory(requirePreference(R.string.controls_command_mapping_cat_key))
         }
     }
@@ -1171,15 +1129,13 @@ class Preferences : AnkiActivity() {
      * Fragment exclusive to DEBUG builds which can be used
      * to add options useful for developers or WIP features.
      */
-    class DevOptionsFragment : SpecificSettingsFragment() {
+    class DevOptionsFragment : SettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_dev_options
         override val analyticsScreenNameConstant: String
             get() = "prefs.dev_options"
 
         override fun initSubscreen() {
-            addPreferencesFromResource(preferenceResource)
-
             val enableDevOptionsPref = requirePreference<SwitchPreference>(R.string.dev_options_enabled_by_user_key)
             // If it is a DEBUG build, hide the preference to disable developer options
             // If it is a RELEASE build, configure the preference to disable dev options
