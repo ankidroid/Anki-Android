@@ -42,6 +42,28 @@
     <string name="pref_font_applicability_key">overrideFontBehavior</string>
     <string name="pref_browser_and_editor_font_key">browserEditorFont</string>
     <string name="pref_display_filenames_in_browser_key">card_browser_show_media_filenames</string>
+    <!-- App bar buttons -->
+    <string name="reset_custom_buttons_key">reset_custom_buttons</string>
+    <string name="custom_button_undo_key">customButtonUndo</string>
+    <string name="custom_button_schedule_card_key">customButtonScheduleCard</string>
+    <string name="custom_button_flag_key">customButtonFlag</string>
+    <string name="custom_button_edit_card_key">customButtonEditCard</string>
+    <string name="custom_button_tags_key">customButtonTags</string>
+    <string name="custom_button_add_card_key">customButtonAddCard</string>
+    <string name="custom_button_replay_key">customButtonReplay</string>
+    <string name="custom_button_card_info_key">customButtonCardInfo</string>
+    <string name="custom_button_select_tts_key">customButtonSelectTts</string>
+    <string name="custom_button_deck_options_key">customButtonDeckOptions</string>
+    <string name="custom_button_mark_card_key">customButtonMarkCard</string>
+    <string name="custom_button_toggle_mic_toolbar_key">customButtonToggleMicToolBar</string>
+    <string name="custom_button_bury_key">customButtonBury</string>
+    <string name="custom_button_suspend_key">customButtonSuspend</string>
+    <string name="custom_button_delete_key">customButtonDelete</string>
+    <string name="custom_button_enable_whiteboard_key">customButtonEnableWhiteboard</string>
+    <string name="custom_button_save_whiteboard_key">customButtonSaveWhiteboard</string>
+    <string name="custom_button_whiteboard_pen_color_key">customButtonWhiteboardPenColor</string>
+    <string name="custom_button_show_hide_whiteboard_key">customButtonShowHideWhiteboard</string>
+    <string name="custom_button_clear_whiteboard_key">customButtonClearWhiteboard</string>
     <!-- Controls -->
     <string name="pref_controls_screen_key">controlsScreen</string>
     <string name="gestures_preference">gestures</string>
