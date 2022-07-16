@@ -21,14 +21,12 @@ package com.ichi2.anki
 
 import android.app.AlertDialog
 import android.content.*
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
-import android.view.WindowManager.BadTokenException
 import android.webkit.URLUtil
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
@@ -283,7 +281,7 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    abstract class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener {
+    abstract class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             val screenName = analyticsScreenNameConstant
             UsageAnalytics.sendAnalyticsScreenView(screenName)
@@ -318,21 +316,6 @@ class Preferences : AnkiActivity() {
          */
         protected abstract fun initSubscreen()
 
-        override fun onResume() {
-            super.onResume()
-            val prefs = preferenceManager.sharedPreferences
-            prefs!!.registerOnSharedPreferenceChangeListener(this)
-        }
-
-        override fun onPause() {
-            preferenceManager.sharedPreferences!!.unregisterOnSharedPreferenceChangeListener(this)
-            super.onPause()
-        }
-
-        override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-            updatePreference(activity as Preferences, key)
-        }
-
         @Suppress("deprecation") // setTargetFragment
         override fun onDisplayPreferenceDialog(preference: Preference) {
             val dialogFragment = when (preference) {
@@ -347,32 +330,6 @@ class Preferences : AnkiActivity() {
                 dialogFragment.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
             } else {
                 super.onDisplayPreferenceDialog(preference)
-            }
-        }
-
-        /**
-         * Code which is run when a SharedPreference change has been detected
-         * @param preferencesActivity A handle to the calling activity
-         * @param prefs instance of SharedPreferences
-         * @param key key in prefs which is being updated
-         */
-        private fun updatePreference(preferencesActivity: Preferences, key: String) {
-            try {
-                val screen = preferenceScreen
-                val pref = screen.findPreference<Preference>(key)
-                if (pref == null) {
-                    Timber.e("Preferences: no preference found for the key: %s", key)
-                    return
-                }
-                // Handle special cases
-                when (key) {
-                    CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, CustomSyncServer.PREFERENCE_CUSTOM_SYNC_BASE, CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER -> // This may be a tad hasty - performed before "back" is pressed.
-                        handleSyncServerPreferenceChange(preferencesActivity.baseContext)
-                }
-            } catch (e: BadTokenException) {
-                Timber.e(e, "Preferences: BadTokenException on showDialog")
-            } catch (e: NumberFormatException) {
-                throw RuntimeException(e)
             }
         }
 
@@ -1163,9 +1120,13 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_custom_sync_server)
-            val syncUrlPreference = requirePreference<Preference>("syncBaseUrl")
-            val syncMediaUrlPreference = requirePreference<Preference>("syncMediaUrl")
-            syncUrlPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue: Any ->
+            // Use custom sync server
+            requirePreference<SwitchPreference>(R.string.custom_sync_server_enable_key).setOnPreferenceChangeListener { _, _ ->
+                handleSyncServerPreferenceChange(requireContext())
+                true
+            }
+            // Sync url
+            requirePreference<Preference>(R.string.custom_sync_server_base_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
                 val newUrl = newValue.toString()
                 if (!URLUtil.isValidUrl(newUrl)) {
                     AlertDialog.Builder(requireContext())
@@ -1173,19 +1134,22 @@ class Preferences : AnkiActivity() {
                         .setPositiveButton(R.string.dialog_ok, null)
                         .show()
 
-                    return@OnPreferenceChangeListener false
+                    return@setOnPreferenceChangeListener false
                 }
+                handleSyncServerPreferenceChange(requireContext())
                 true
             }
-            syncMediaUrlPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue: Any ->
+            // Media url
+            requirePreference<Preference>(R.string.custom_sync_server_media_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
                 val newUrl = newValue.toString()
                 if (!URLUtil.isValidUrl(newUrl)) {
                     AlertDialog.Builder(requireContext())
                         .setTitle(R.string.custom_sync_server_media_url_invalid)
                         .setPositiveButton(R.string.dialog_ok, null)
                         .show()
-                    return@OnPreferenceChangeListener false
+                    return@setOnPreferenceChangeListener false
                 }
+                handleSyncServerPreferenceChange(requireContext())
                 true
             }
         }
