@@ -222,22 +222,7 @@ class Preferences : AnkiActivity() {
     }
 
     private fun initPreference(pref: Preference) {
-        // Load stored values from Preferences which are stored in the Collection
-        if (sCollectionPreferences.contains(pref.key)) {
-            val col = col
-            if (col != null) {
-                try {
-                    when (pref.key) {
-                        AUTOMATIC_ANSWER_ACTION -> (pref as ListPreference).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
-                    }
-                } catch (e: NumberFormatException) {
-                    throw RuntimeException(e)
-                }
-            } else {
-                // Disable Col preferences if Collection closed
-                pref.isEnabled = false
-            }
-        } else if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key) {
+        if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key) {
             updateNotificationPreference(pref as ListPreference)
         }
     }
@@ -436,10 +421,6 @@ class Preferences : AnkiActivity() {
                         keepScreenOn!!.isChecked = (pref as SwitchPreference).isChecked
                     }
                     LANGUAGE -> preferencesActivity.closePreferences()
-                    AUTOMATIC_ANSWER_ACTION -> {
-                        preferencesActivity.col.set_config(AutomaticAnswerAction.CONFIG_KEY, (pref as ListPreference).value.toInt())
-                        preferencesActivity.col.setMod()
-                    }
                     MINIMUM_CARDS_DUE_FOR_NOTIFICATION -> {
                         val listPreference = screen.findPreference<ListPreference>(MINIMUM_CARDS_DUE_FOR_NOTIFICATION)
                         if (listPreference != null) {
@@ -675,6 +656,22 @@ class Preferences : AnkiActivity() {
                 setFormattedSummary(R.string.day_offset_summary)
                 setOnPreferenceChangeListener { _, newValue ->
                     (requireActivity() as Preferences).setDayOffset(newValue as Int)
+                    true
+                }
+            }
+            /**
+             * Timeout answer
+             * An integer representing the action when "Automatic Answer" flips a card from answer to question
+             * 0 represents "bury", 1-4 represents the named buttons
+             * @see com.ichi2.anki.reviewer.AutomaticAnswerAction
+             * We use the same key in the collection config
+             * @see com.ichi2.anki.reviewer.AutomaticAnswerAction.CONFIG_KEY
+             * */
+            requirePreference<ListPreference>(R.string.automatic_answer_action_preference).apply {
+                setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config(AutomaticAnswerAction.CONFIG_KEY, (newValue as String).toInt())
+                    col.setMod()
                     true
                 }
             }
@@ -1386,30 +1383,10 @@ class Preferences : AnkiActivity() {
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
         /**
-         * Represents in Android preferences the collection's "Automatic Answer" action.
-         *
-         * An integer representing the action when "Automatic Answer" flips a card from answer to question
-         *
-         * 0 represents "bury", 1-4 represents the named buttons
-         *
-         * @see com.ichi2.anki.reviewer.AutomaticAnswerAction
-         *
-         * Although AnkiMobile and AnkiDroid have the feature, this config key is currently AnkiDroid only
-         *
-         * We use the same key in the collection config
-         *
-         *
-         * @see com.ichi2.anki.reviewer.AutomaticAnswerAction.CONFIG_KEY
-         */
-        private const val AUTOMATIC_ANSWER_ACTION = "automaticAnswerAction"
-
-        /**
          * The number of cards that should be due today in a deck to justify adding a notification.
          */
         const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
-        private val sCollectionPreferences = arrayOf(
-            AUTOMATIC_ANSWER_ACTION
-        )
+
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
         /** Returns the hour that the collection rolls over to the next day  */
