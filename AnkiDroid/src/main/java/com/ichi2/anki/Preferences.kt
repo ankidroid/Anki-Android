@@ -237,14 +237,6 @@ class Preferences : AnkiActivity() {
                         NEW_SPREAD -> (pref as ListPreference).setValueIndex(col.get_config_int("newSpread"))
                         DAY_OFFSET -> (pref as SeekBarPreferenceCompat).value = getDayOffset(col)
                         PASTE_PNG -> (pref as SwitchPreference).isChecked = col.get_config("pastePNG", false)!!
-                        NEW_TIMEZONE_HANDLING -> {
-                            val switch = pref as SwitchPreference
-                            switch.isChecked = col.sched._new_timezone_enabled()
-                            if (col.schedVer() <= 1) {
-                                Timber.d("Disabled 'newTimezoneHandling' box")
-                                switch.isEnabled = false
-                            }
-                        }
                     }
                 } catch (e: NumberFormatException) {
                     throw RuntimeException(e)
@@ -533,24 +525,6 @@ class Preferences : AnkiActivity() {
                         }
                         pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
                     }
-                    NEW_TIMEZONE_HANDLING -> {
-                        if (preferencesActivity.col.schedVer() != 1) {
-                            val sched = preferencesActivity.col.sched
-                            val wasEnabled = sched._new_timezone_enabled()
-                            val isEnabled = (pref as SwitchPreference).isChecked
-                            if (wasEnabled != isEnabled) {
-                                if (isEnabled) {
-                                    try {
-                                        sched.set_creation_offset()
-                                    } catch (e: BackendNotSupportedException) {
-                                        throw e.alreadyUsingRustBackend()
-                                    }
-                                } else {
-                                    sched.clear_creation_offset()
-                                }
-                            }
-                        }
-                    }
                     CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                     AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                 }
@@ -668,6 +642,7 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_reviewing)
+            val col = col!!
 
             // Learn ahead limit
             requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference)
@@ -684,6 +659,24 @@ class Preferences : AnkiActivity() {
             // Time to show question
             requirePreference<SeekBarPreferenceCompat>(R.string.timeout_question_seconds_preference)
                 .setFormattedSummary(R.string.pref_summary_seconds)
+
+            // New timezone handling
+            requirePreference<SwitchPreference>(R.string.new_timezone_handling_preference).apply {
+                isChecked = col.sched._new_timezone_enabled()
+                isEnabled = col.schedVer() > 1
+                setOnPreferenceChangeListener { _, newValue ->
+                    if (newValue == true) {
+                        try {
+                            col.sched.set_creation_offset()
+                        } catch (e: BackendNotSupportedException) {
+                            throw e.alreadyUsingRustBackend()
+                        }
+                    } else {
+                        col.sched.clear_creation_offset()
+                    }
+                    true
+                }
+            }
         }
     }
 
@@ -1416,10 +1409,9 @@ class Preferences : AnkiActivity() {
          * The number of cards that should be due today in a deck to justify adding a notification.
          */
         const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
-        private const val NEW_TIMEZONE_HANDLING = "newTimezoneHandling"
         private val sCollectionPreferences = arrayOf(
             SHOW_ESTIMATE, SHOW_PROGRESS,
-            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, NEW_TIMEZONE_HANDLING, AUTOMATIC_ANSWER_ACTION
+            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, AUTOMATIC_ANSWER_ACTION
         )
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
