@@ -19,7 +19,6 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.app.AlarmManager
 import android.app.AlertDialog
 import android.content.*
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
@@ -55,7 +54,6 @@ import com.ichi2.anki.preferences.AboutFragment
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
-import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.compat.CompatHelper
@@ -198,35 +196,6 @@ class Preferences : AnkiActivity() {
     // Class methods
     // ----------------------------------------------------------------------------
 
-    /**
-     * Loop over every preference in the list and set the summary text
-     */
-    private fun initAllPreferences(screen: PreferenceScreen) {
-        for (i in 0 until screen.preferenceCount) {
-            val preference = screen.getPreference(i)
-            if (preference is PreferenceGroup) {
-                for (j in 0 until preference.preferenceCount) {
-                    val nestedPreference = preference.getPreference(j)
-                    if (nestedPreference is PreferenceGroup) {
-                        for (k in 0 until nestedPreference.preferenceCount) {
-                            initPreference(nestedPreference.getPreference(k))
-                        }
-                    } else {
-                        initPreference(preference.getPreference(j))
-                    }
-                }
-            } else {
-                initPreference(preference)
-            }
-        }
-    }
-
-    private fun initPreference(pref: Preference) {
-        if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key) {
-            updateNotificationPreference(pref as ListPreference)
-        }
-    }
-
     /** Sets the hour that the collection rolls over to the next day  */
     @VisibleForTesting
     fun setDayOffset(hours: Int) {
@@ -243,19 +212,6 @@ class Preferences : AnkiActivity() {
             }
         }
         scheduleNotification(TimeManager.time, this)
-    }
-
-    fun updateNotificationPreference(listPreference: ListPreference) {
-        val entries = listPreference.entries
-        val values = listPreference.entryValues
-        for (i in entries.indices) {
-            val value = values[i].toString().toInt()
-            if (entries[i].toString().contains("%d")) {
-                entries[i] = String.format(entries[i].toString(), value)
-            }
-        }
-        listPreference.entries = entries
-        listPreference.summary = listPreference.entry.toString()
     }
 
     private fun closePreferences() {
@@ -332,7 +288,6 @@ class Preferences : AnkiActivity() {
             val screenName = analyticsScreenNameConstant
             UsageAnalytics.sendAnalyticsScreenView(screenName)
             initSubscreen()
-            (activity as Preferences?)!!.initAllPreferences(preferenceScreen)
         }
 
         /** Obtains a non-null reference to the preference defined by the key, or throws  */
@@ -421,22 +376,6 @@ class Preferences : AnkiActivity() {
                         keepScreenOn!!.isChecked = (pref as SwitchPreference).isChecked
                     }
                     LANGUAGE -> preferencesActivity.closePreferences()
-                    MINIMUM_CARDS_DUE_FOR_NOTIFICATION -> {
-                        val listPreference = screen.findPreference<ListPreference>(MINIMUM_CARDS_DUE_FOR_NOTIFICATION)
-                        if (listPreference != null) {
-                            preferencesActivity.updateNotificationPreference(listPreference)
-                            if (listPreference.value.toInt() < PENDING_NOTIFICATIONS_ONLY) {
-                                scheduleNotification(TimeManager.time, preferencesActivity)
-                            } else {
-                                val intent = CompatHelper.compat.getImmutableBroadcastIntent(
-                                    preferencesActivity, 0,
-                                    Intent(preferencesActivity, NotificationService::class.java), 0
-                                )
-                                val alarmManager = preferencesActivity.getSystemService(ALARM_SERVICE) as AlarmManager
-                                alarmManager.cancel(intent)
-                            }
-                        }
-                    }
                     CrashReportService.FEEDBACK_REPORT_KEY -> {
                         val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
                         CrashReportService.onPreferenceChanged(preferencesActivity, value!!)
