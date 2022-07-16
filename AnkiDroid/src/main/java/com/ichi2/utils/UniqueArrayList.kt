@@ -125,8 +125,10 @@ private constructor(
         Arrays.sort(elements, c)
         val i = list.listIterator()
         for (element in elements) {
-            i.next()
-            i.set(element)
+            i.apply {
+                next()
+                set(element)
+            }
         }
     }
 
