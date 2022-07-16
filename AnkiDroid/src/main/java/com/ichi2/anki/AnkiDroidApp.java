@@ -45,7 +45,6 @@ import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
-import com.ichi2.libanki.Consts;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
@@ -55,7 +54,6 @@ import com.ichi2.utils.Permissions;
 import net.ankiweb.rsdroid.BackendFactory;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -209,9 +207,9 @@ public class AnkiDroidApp extends Application {
         if (BuildConfig.DEBUG && !AdaptionUtil.isRunningAsUnitTest()) {
             preferences.edit().putBoolean("html_javascript_debugging", true).apply();
         }
-        
-        CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
-        AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
+
+        CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(this, preferences.getBoolean(getString(R.string.card_browser_external_context_menu_key), false));
+        AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(this, preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true));
         NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.
