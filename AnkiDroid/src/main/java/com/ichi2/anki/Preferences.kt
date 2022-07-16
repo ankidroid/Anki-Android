@@ -228,7 +228,6 @@ class Preferences : AnkiActivity() {
             if (col != null) {
                 try {
                     when (pref.key) {
-                        SHOW_ESTIMATE -> (pref as SwitchPreference).isChecked = col.get_config_boolean("estTimes")
                         SHOW_PROGRESS -> (pref as SwitchPreference).isChecked = col.get_config_boolean("dueCounts")
                         LEARN_CUTOFF -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("collapseTime") / 60)
                         TIME_LIMIT -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("timeLim") / 60)
@@ -445,10 +444,6 @@ class Preferences : AnkiActivity() {
                     LANGUAGE -> preferencesActivity.closePreferences()
                     SHOW_PROGRESS -> {
                         preferencesActivity.col.set_config("dueCounts", (pref as SwitchPreference).isChecked)
-                        preferencesActivity.col.setMod()
-                    }
-                    SHOW_ESTIMATE -> {
-                        preferencesActivity.col.set_config("estTimes", (pref as SwitchPreference).isChecked)
                         preferencesActivity.col.setMod()
                     }
                     NEW_SPREAD -> {
@@ -746,6 +741,7 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_appearance)
+            val col = col!!
             // Card browser font scaling
             requirePreference<SeekBarPreferenceCompat>(R.string.pref_card_browser_font_scale_key)
                 .setFormattedSummary(R.string.pref_summary_percentage)
@@ -853,6 +849,18 @@ class Preferences : AnkiActivity() {
                 true
             }
             initializeCustomFontsDialog()
+
+            // Show estimate time
+            // Represents the collection pref "estTime": i.e.
+            // whether the buttons should indicate the duration of the interval if we click on them.
+            requirePreference<SwitchPreference>(R.string.show_estimates_preference).apply {
+                isChecked = col.get_config_boolean("estTimes")
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("estTimes", newValue)
+                    col.setMod()
+                    true
+                }
+            }
         }
 
         /** Initializes the list of custom fonts shown in the preferences.  */
@@ -1344,11 +1352,6 @@ class Preferences : AnkiActivity() {
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
         /**
-         * Represents in Android preferences the collections configuration "estTime": i.e. whether the buttons should indicate the duration of the interval if we click on them.
-         */
-        private const val SHOW_ESTIMATE = "showEstimates"
-
-        /**
          * Represents in Android preferences the collections configuration "dueCounts": i.e.
          * whether the remaining number of cards should be shown.
          */
@@ -1410,7 +1413,7 @@ class Preferences : AnkiActivity() {
          */
         const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
         private val sCollectionPreferences = arrayOf(
-            SHOW_ESTIMATE, SHOW_PROGRESS,
+            SHOW_PROGRESS,
             LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, AUTOMATIC_ANSWER_ACTION
         )
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
