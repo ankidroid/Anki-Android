@@ -229,7 +229,6 @@ class Preferences : AnkiActivity() {
                 try {
                     when (pref.key) {
                         AUTOMATIC_ANSWER_ACTION -> (pref as ListPreference).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
-                        DAY_OFFSET -> (pref as SeekBarPreferenceCompat).value = getDayOffset(col)
                     }
                 } catch (e: NumberFormatException) {
                     throw RuntimeException(e)
@@ -440,9 +439,6 @@ class Preferences : AnkiActivity() {
                     AUTOMATIC_ANSWER_ACTION -> {
                         preferencesActivity.col.set_config(AutomaticAnswerAction.CONFIG_KEY, (pref as ListPreference).value.toInt())
                         preferencesActivity.col.setMod()
-                    }
-                    DAY_OFFSET -> {
-                        preferencesActivity.setDayOffset((pref as SeekBarPreferenceCompat).value)
                     }
                     MINIMUM_CARDS_DUE_FOR_NOTIFICATION -> {
                         val listPreference = screen.findPreference<ListPreference>(MINIMUM_CARDS_DUE_FOR_NOTIFICATION)
@@ -672,8 +668,16 @@ class Preferences : AnkiActivity() {
                 }
             }
             // Start of next day
-            requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference)
-                .setFormattedSummary(R.string.day_offset_summary)
+            // Represents the collection pref "rollover"
+            // in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
+            requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference).apply {
+                value = getDayOffset(col)
+                setFormattedSummary(R.string.day_offset_summary)
+                setOnPreferenceChangeListener { _, newValue ->
+                    (requireActivity() as Preferences).setDayOffset(newValue as Int)
+                    true
+                }
+            }
             // Time to show answer
             requirePreference<SeekBarPreferenceCompat>(R.string.timeout_answer_seconds_preference)
                 .setFormattedSummary(R.string.pref_summary_seconds)
@@ -1382,12 +1386,6 @@ class Preferences : AnkiActivity() {
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
         /**
-         * Represents in Android preference the collection's configuration "rollover"
-         * in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
-         */
-        private const val DAY_OFFSET = "dayOffset"
-
-        /**
          * Represents in Android preferences the collection's "Automatic Answer" action.
          *
          * An integer representing the action when "Automatic Answer" flips a card from answer to question
@@ -1410,7 +1408,7 @@ class Preferences : AnkiActivity() {
          */
         const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
         private val sCollectionPreferences = arrayOf(
-            DAY_OFFSET, AUTOMATIC_ANSWER_ACTION
+            AUTOMATIC_ANSWER_ACTION
         )
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
