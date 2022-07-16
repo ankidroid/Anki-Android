@@ -27,7 +27,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.view.MenuItem
 import android.view.WindowManager.BadTokenException
 import android.webkit.URLUtil
@@ -322,9 +321,6 @@ class Preferences : AnkiActivity() {
             super.onResume()
             val prefs = preferenceManager.sharedPreferences
             prefs!!.registerOnSharedPreferenceChangeListener(this)
-            // syncAccount's summary can change while preferences are still open (user logs
-            // in from preferences screen), so we need to update it here.
-            updatePreference(activity as Preferences, prefs, "syncAccount")
         }
 
         override fun onPause() {
@@ -379,18 +375,6 @@ class Preferences : AnkiActivity() {
                     CrashReportService.FEEDBACK_REPORT_KEY -> {
                         val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
                         CrashReportService.onPreferenceChanged(preferencesActivity, value!!)
-                    }
-                    "syncAccount" -> {
-                        val preferences = AnkiDroidApp.getSharedPrefs(preferencesActivity.baseContext)
-                        val username = preferences.getString("username", "")
-                        val syncAccount = screen.findPreference<Preference>("syncAccount")
-                        if (syncAccount != null) {
-                            if (TextUtils.isEmpty(username)) {
-                                syncAccount.setSummary(R.string.sync_account_summ_logged_out)
-                            } else {
-                                syncAccount.summary = preferencesActivity.getString(R.string.sync_account_summ_logged_in, username)
-                            }
-                        }
                     }
                     "providerEnabled" -> {
                         val providerName = ComponentName(preferencesActivity, "com.ichi2.anki.provider.CardContentProvider")
@@ -647,6 +631,9 @@ class Preferences : AnkiActivity() {
         override fun initSubscreen() {
             addPreferencesFromResource(preferenceResource)
 
+            // AnkiWeb Account
+            updateSyncAccountSummary()
+
             // Configure force full sync option
             requirePreference<Preference>(R.string.force_full_sync_key).setOnPreferenceClickListener {
                 MaterialDialog(requireContext()).show {
@@ -681,6 +668,19 @@ class Preferences : AnkiActivity() {
                     CustomSyncServer.getSyncBaseUrlOrDefault(preferences, "")
                 }
             }
+        }
+
+        private fun updateSyncAccountSummary() {
+            requirePreference<Preference>(R.string.sync_account_key)
+                .summary = preferenceManager.sharedPreferences!!.getString("username", "")!!
+                .ifEmpty { getString(R.string.sync_account_summ_logged_out) }
+        }
+
+        // TODO trigger the summary change from MyAccount.kt once it is migrated to a fragment
+        override fun onResume() {
+            // Trigger a summary update in case the user logged in/out on MyAccount activity
+            updateSyncAccountSummary()
+            super.onResume()
         }
     }
 
