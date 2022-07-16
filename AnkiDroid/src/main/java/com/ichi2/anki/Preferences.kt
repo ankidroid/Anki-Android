@@ -236,7 +236,6 @@ class Preferences : AnkiActivity() {
                         AUTOMATIC_ANSWER_ACTION -> (pref as ListPreference).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
                         NEW_SPREAD -> (pref as ListPreference).setValueIndex(col.get_config_int("newSpread"))
                         DAY_OFFSET -> (pref as SeekBarPreferenceCompat).value = getDayOffset(col)
-                        PASTE_PNG -> (pref as SwitchPreference).isChecked = col.get_config("pastePNG", false)!!
                     }
                 } catch (e: NumberFormatException) {
                     throw RuntimeException(e)
@@ -475,11 +474,6 @@ class Preferences : AnkiActivity() {
                     DAY_OFFSET -> {
                         preferencesActivity.setDayOffset((pref as SeekBarPreferenceCompat).value)
                     }
-                    PASTE_PNG -> {
-
-                        preferencesActivity.col.set_config("pastePNG", (pref as SwitchPreference).isChecked)
-                        preferencesActivity.col.setMod()
-                    }
                     MINIMUM_CARDS_DUE_FOR_NOTIFICATION -> {
                         val listPreference = screen.findPreference<ListPreference>(MINIMUM_CARDS_DUE_FOR_NOTIFICATION)
                         if (listPreference != null) {
@@ -598,6 +592,7 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_general)
+            val col = col!!
             val screen = preferenceScreen
             if (isRestrictedLearningDevice) {
                 val switchPrefVibrate = requirePreference<SwitchPreference>("widgetVibrate")
@@ -608,6 +603,18 @@ class Preferences : AnkiActivity() {
             }
             // Build languages
             initializeLanguageDialog(screen)
+
+            // Paste PNG
+            // Represents in the collection's pref "pastePNG" , i.e.
+            // whether to convert clipboard uri to png format or not.
+            requirePreference<SwitchPreference>(R.string.paste_png_key).apply {
+                isChecked = col.get_config("pastePNG", false)!!
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("pastePNG", newValue)
+                    col.setMod()
+                    true
+                }
+            }
         }
 
         private fun initializeLanguageDialog(screen: PreferenceScreen) {
@@ -1379,13 +1386,6 @@ class Preferences : AnkiActivity() {
          * in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
          */
         private const val DAY_OFFSET = "dayOffset"
-
-        /**
-         * Represents in Android preference the collection's configuration "pastePNG" , i.e.
-         * whether to convert clipboard uri to png format or not.
-         * TODO: convert to png if a image file has transparency, or at least if it supports it.
-         */
-        private const val PASTE_PNG = "pastePNG"
 
         /**
          * Represents in Android preferences the collection's "Automatic Answer" action.
