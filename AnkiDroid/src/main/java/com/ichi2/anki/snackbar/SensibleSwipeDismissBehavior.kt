@@ -23,6 +23,7 @@ import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
 import androidx.customview.widget.ViewDragHelper
 import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.UIUtils
 import kotlin.math.absoluteValue
@@ -77,7 +78,7 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
             listener?.onDragStateChanged(state)
         }
 
-        override fun tryCaptureView(child: View, pointerId: Int) = true
+        override fun tryCaptureView(child: View, pointerId: Int) = child is Snackbar.SnackbarLayout
 
         override fun onViewCaptured(child: View, pointerId: Int) {
             if (initialChildLeft == Int.MIN_VALUE) {
