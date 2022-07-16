@@ -330,7 +330,7 @@ class Preferences : AnkiActivity() {
         }
 
         override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-            updatePreference(activity as Preferences, sharedPreferences, key)
+            updatePreference(activity as Preferences, key)
         }
 
         @Suppress("deprecation") // setTargetFragment
@@ -356,7 +356,7 @@ class Preferences : AnkiActivity() {
          * @param prefs instance of SharedPreferences
          * @param key key in prefs which is being updated
          */
-        private fun updatePreference(preferencesActivity: Preferences, prefs: SharedPreferences?, key: String) {
+        private fun updatePreference(preferencesActivity: Preferences, key: String) {
             try {
                 val screen = preferenceScreen
                 val pref = screen.findPreference<Preference>(key)
@@ -368,10 +368,6 @@ class Preferences : AnkiActivity() {
                 when (key) {
                     CustomSyncServer.PREFERENCE_CUSTOM_MEDIA_SYNC_URL, CustomSyncServer.PREFERENCE_CUSTOM_SYNC_BASE, CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER -> // This may be a tad hasty - performed before "back" is pressed.
                         handleSyncServerPreferenceChange(preferencesActivity.baseContext)
-                    CrashReportService.FEEDBACK_REPORT_KEY -> {
-                        val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
-                        CrashReportService.onPreferenceChanged(preferencesActivity, value!!)
-                    }
                     CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                     AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                 }
@@ -476,6 +472,11 @@ class Preferences : AnkiActivity() {
                     col.set_config("pastePNG", newValue)
                     true
                 }
+            }
+            // Error reporting mode
+            requirePreference<ListPreference>(R.string.error_reporting_mode_key).setOnPreferenceChangeListener { _, newValue ->
+                CrashReportService.onPreferenceChanged(requireContext(), newValue as String)
+                true
             }
         }
 
