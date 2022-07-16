@@ -55,6 +55,29 @@
     <string name="image_zoom_preference">imageZoom</string>
     <string name="answer_button_size_preference">answerButtonSize</string>
     <string name="show_large_answer_buttons_preference">showLargeAnswerButtons</string>
+    <!-- Advanced -->
+    <string name="pref_ankidroid_directory_key">deckPath</string>
+    <string name="disable_hardware_render_key">softwareRender</string>
+    <string name="safe_display_key">safeDisplay</string>
+    <string name="use_input_tag_key">useInputTag</string>
+    <string name="disable_single_field_edit_key">disableExtendedTextUi</string>
+    <string name="note_editor_newline_replace_key">noteEditorNewlineReplace</string>
+    <string name="no_code_formatting_key">noCodeFormatting</string>
+    <string name="type_in_answer_focus_key">autoFocusTypeInAnswer</string>
+    <string name="exit_via_double_tap_back_key">exitViaDoubleTapBack</string>
+    <string name="media_import_allow_all_files_key">mediaImportAllowAllFiles</string>
+    <string name="pref_cat_plugins_key">category_plugins</string>
+    <string name="enable_api_key">providerEnabled</string>
+    <string name="thirdparty_apps_key">thirdpartyapps_link</string>
+    <string name="tts_key">tts</string>
+    <string name="convert_fen_text_key">convertFenText</string>
+    <string name="more_scrolling_buttons_key">scrolling_buttons</string>
+    <string name="double_scrolling_gap_key">double_scrolling</string>
+    <string name="stats_default_deck_key">stats_default_deck</string>
+    <string name="pref_advanced_statistics_key">advanced_statistics_link</string>
+    <string name="html_javascript_debugging_key">html_javascript_debugging</string>
+    <string name="card_browser_external_context_menu_key">card_browser_enable_external_context_menu</string>
+    <string name="anki_card_external_context_menu_key">anki_card_enable_external_context_menu</string>
 
     <string name="show_topbar_preference">showTopbar</string>
     <string name="show_progress_preference">showProgress</string>
@@ -63,7 +86,6 @@
     <string name="pref_backup_max_key">backupMax</string>
     <string name="pref_card_browser_font_scale_key">relativeCardBrowserFontSize</string>
     <string name="pref_computation_precision_key">advanced_forecast_stats_compute_precision</string>
-    <string name="pref_advanced_statistics_key">advanced_statistics_link</string>
     <string name="pref_compute_n_days_key">advanced_forecast_stats_compute_n_days</string>
     <string name="pref_advanced_statistics_enabled_key">advanced_statistics_enabled</string>
     <string name="pref_n_iterations_key">advanced_forecast_stats_mc_n_iterations</string>
