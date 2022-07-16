@@ -371,7 +371,6 @@ class Preferences : AnkiActivity() {
                         val keepScreenOn = screen.findPreference<SwitchPreference>("keepScreenOn")
                         keepScreenOn!!.isChecked = (pref as SwitchPreference).isChecked
                     }
-                    LANGUAGE -> preferencesActivity.closePreferences()
                     CrashReportService.FEEDBACK_REPORT_KEY -> {
                         val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
                         CrashReportService.onPreferenceChanged(preferencesActivity, value!!)
@@ -463,7 +462,6 @@ class Preferences : AnkiActivity() {
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_general)
             val col = col!!
-            val screen = preferenceScreen
             if (isRestrictedLearningDevice) {
                 val switchPrefVibrate = requirePreference<SwitchPreference>("widgetVibrate")
                 val switchPrefBlink = requirePreference<SwitchPreference>("widgetBlink")
@@ -472,7 +470,7 @@ class Preferences : AnkiActivity() {
                 category.removePreference(switchPrefBlink)
             }
             // Build languages
-            initializeLanguageDialog(screen)
+            initializeLanguageDialog()
 
             // Deck for new cards
             // Represents in the collections pref "addToCur": i.e.
@@ -497,26 +495,33 @@ class Preferences : AnkiActivity() {
             }
         }
 
-        private fun initializeLanguageDialog(screen: PreferenceScreen) {
-            val languageSelection = screen.findPreference<ListPreference>(LANGUAGE)
-            if (languageSelection != null) {
-                val items: MutableMap<String, String> = TreeMap(java.lang.String.CASE_INSENSITIVE_ORDER)
-                for (localeCode in LanguageUtil.APP_LANGUAGES) {
-                    val loc = LanguageUtil.getLocale(localeCode)
-                    items[loc.getDisplayName(loc)] = loc.toString()
-                }
-                val languageDialogLabels = arrayOfNulls<CharSequence>(items.size + 1)
-                val languageDialogValues = arrayOfNulls<CharSequence>(items.size + 1)
-                languageDialogLabels[0] = resources.getString(R.string.language_system)
-                languageDialogValues[0] = ""
-                val itemsList = items.toList()
-                for (i in 1..itemsList.size) {
-                    languageDialogLabels[i] = itemsList[i - 1].first
-                    languageDialogValues[i] = itemsList[i - 1].second
-                }
+        private fun initializeLanguageDialog() {
+            val languageSelection = requirePreference<ListPreference>(R.string.pref_language_key)
 
-                languageSelection.entries = languageDialogLabels
-                languageSelection.entryValues = languageDialogValues
+            val items: MutableMap<String, String> = TreeMap(java.lang.String.CASE_INSENSITIVE_ORDER)
+            for (localeCode in LanguageUtil.APP_LANGUAGES) {
+                val loc = LanguageUtil.getLocale(localeCode)
+                items[loc.getDisplayName(loc)] = loc.toString()
+            }
+            val languageDialogLabels = arrayOfNulls<CharSequence>(items.size + 1)
+            val languageDialogValues = arrayOfNulls<CharSequence>(items.size + 1)
+            languageDialogLabels[0] = resources.getString(R.string.language_system)
+            languageDialogValues[0] = ""
+            val itemsList = items.toList()
+            for (i in 1..itemsList.size) {
+                languageDialogLabels[i] = itemsList[i - 1].first
+                languageDialogValues[i] = itemsList[i - 1].second
+            }
+
+            languageSelection.entries = languageDialogLabels
+            languageSelection.entryValues = languageDialogValues
+
+            // It's only possible to change the language by recreating the activity,
+            // so do it if the language has changed.
+            // TODO recreate the activity and keep its previous state instead of just closing it
+            languageSelection.setOnPreferenceChangeListener { _, _ ->
+                (requireActivity() as Preferences).closePreferences()
+                true
             }
         }
     }
