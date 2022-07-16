@@ -228,7 +228,6 @@ class Preferences : AnkiActivity() {
             if (col != null) {
                 try {
                     when (pref.key) {
-                        USE_CURRENT -> (pref as ListPreference).setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
                         AUTOMATIC_ANSWER_ACTION -> (pref as ListPreference).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
                         NEW_SPREAD -> (pref as ListPreference).setValueIndex(col.get_config_int("newSpread"))
                         DAY_OFFSET -> (pref as SeekBarPreferenceCompat).value = getDayOffset(col)
@@ -443,10 +442,6 @@ class Preferences : AnkiActivity() {
                         preferencesActivity.col.set_config("newSpread", (pref as ListPreference).value.toInt())
                         preferencesActivity.col.setMod()
                     }
-                    USE_CURRENT -> {
-                        preferencesActivity.col.set_config("addToCur", "0" == (pref as ListPreference).value)
-                        preferencesActivity.col.setMod()
-                    }
                     AUTOMATIC_ANSWER_ACTION -> {
                         preferencesActivity.col.set_config(AutomaticAnswerAction.CONFIG_KEY, (pref as ListPreference).value.toInt())
                         preferencesActivity.col.setMod()
@@ -584,6 +579,18 @@ class Preferences : AnkiActivity() {
             // Build languages
             initializeLanguageDialog(screen)
 
+            // Deck for new cards
+            // Represents in the collections pref "addToCur": i.e.
+            // if true, then add note to current decks, otherwise let the note type's configuration decide
+            // Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
+            requirePreference<ListPreference>(R.string.deck_for_new_cards_key).apply {
+                setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("addToCur", "0" == newValue)
+                    col.setMod()
+                    true
+                }
+            }
             // Paste PNG
             // Represents in the collection's pref "pastePNG" , i.e.
             // whether to convert clipboard uri to png format or not.
@@ -1368,13 +1375,6 @@ class Preferences : AnkiActivity() {
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
         /**
-         * Represents in Android preferences the collections configuration "addToCur": i.e.
-         * if true, then add note to current decks, otherwise let the note type's configuration decide
-         * Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
-         */
-        private const val USE_CURRENT = "useCurrent"
-
-        /**
          * Represents in Android preferences the collections configuration "newSpread": i.e.
          * whether the new cards are added at the end of the queue or randomly in it.
          */
@@ -1409,7 +1409,7 @@ class Preferences : AnkiActivity() {
          */
         const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
         private val sCollectionPreferences = arrayOf(
-            USE_CURRENT, NEW_SPREAD, DAY_OFFSET, AUTOMATIC_ANSWER_ACTION
+            NEW_SPREAD, DAY_OFFSET, AUTOMATIC_ANSWER_ACTION
         )
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
