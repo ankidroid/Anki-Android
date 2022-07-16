@@ -39,6 +39,8 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.receiver.TimeZoneChangeReceiver
+import com.ichi2.anki.receiver.TimeZoneChangeReceiver.Companion.registerTimeZoneChangeReceiver
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
@@ -50,6 +52,7 @@ import timber.log.Timber.DebugTree
 import java.io.InputStream
 import java.util.*
 import java.util.regex.Pattern
+
 
 /**
  * Application class.
@@ -186,6 +189,8 @@ open class AnkiDroidApp : Application(), androidx.work.Configuration.Provider {
         // TODO: Notification CleanUP. Delete the Boot Service after successful implementation of Notification Work Manager.
         Timber.i("AnkiDroidApp: Starting Services")
         BootService().onReceive(this, Intent(this, BootService::class.java))
+        Timber.i("AnkiDroidApp: Registering Broadcast Receivers")
+        registerTimeZoneChangeReceiver(this, TimeZoneChangeReceiver())
 
         // TODO: Notification CleanUP. Delete the Notification Service after successful implementation of Notification Work Manager.
         // Register for notifications
