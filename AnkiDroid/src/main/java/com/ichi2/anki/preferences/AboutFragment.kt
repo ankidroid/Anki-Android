@@ -45,7 +45,7 @@ class AboutFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val layoutView = inflater.inflate(R.layout.about_scrollable_layout, container, false)
+        val layoutView = inflater.inflate(R.layout.about_layout, container, false)
 
         // Version text
         layoutView.findViewById<TextView>(R.id.about_version).text = pkgVersionName
@@ -122,8 +122,7 @@ class AboutFragment : Fragment() {
             if (DevOptionsFragment.isEnabled(view.context)) {
                 return
             }
-            clickCount += 1
-            if (clickCount == clickLimit) {
+            if (++clickCount == clickLimit) {
                 showEnableDevOptionsDialog(view.context)
             }
         }
