@@ -17,6 +17,8 @@
 
 <!-- An item in a deck selection screen. Partially based off deck_item -->
 <com.ichi2.ui.FixedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/deck_picker_dialog"
     android:id="@+id/deck_picker_dialog_list_item_value"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
