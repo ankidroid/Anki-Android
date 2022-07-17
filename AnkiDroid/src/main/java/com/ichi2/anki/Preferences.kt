@@ -48,6 +48,7 @@ import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.preferences.AboutFragment
+import com.ichi2.anki.preferences.setOnPreferenceChangeListener
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.FullScreenMode
@@ -380,9 +381,8 @@ class Preferences : AnkiActivity() {
             // Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
             requirePreference<ListPreference>(R.string.deck_for_new_cards_key).apply {
                 setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     col.set_config("addToCur", "0" == newValue)
-                    true
                 }
             }
             // Paste PNG
@@ -390,15 +390,13 @@ class Preferences : AnkiActivity() {
             // whether to convert clipboard uri to png format or not.
             requirePreference<SwitchPreference>(R.string.paste_png_key).apply {
                 isChecked = col.get_config("pastePNG", false)!!
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     col.set_config("pastePNG", newValue)
-                    true
                 }
             }
             // Error reporting mode
-            requirePreference<ListPreference>(R.string.error_reporting_mode_key).setOnPreferenceChangeListener { _, newValue ->
+            requirePreference<ListPreference>(R.string.error_reporting_mode_key).setOnPreferenceChangeListener { newValue ->
                 CrashReportService.onPreferenceChanged(requireContext(), newValue as String)
-                true
             }
         }
 
@@ -426,9 +424,8 @@ class Preferences : AnkiActivity() {
             // It's only possible to change the language by recreating the activity,
             // so do it if the language has changed.
             // TODO recreate the activity and keep its previous state instead of just closing it
-            languageSelection.setOnPreferenceChangeListener { _, _ ->
+            languageSelection.setOnPreferenceChangeListener { _ ->
                 (requireActivity() as Preferences).closePreferences()
-                true
             }
         }
     }
@@ -447,9 +444,8 @@ class Preferences : AnkiActivity() {
             // whether the new cards are added at the end of the queue or randomly in it.
             requirePreference<ListPreference>(R.string.new_spread_preference).apply {
                 setValueIndex(col.get_config_int("newSpread"))
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     col.set_config("newSpread", ((newValue as String).toInt()))
-                    true
                 }
             }
 
@@ -460,9 +456,8 @@ class Preferences : AnkiActivity() {
             requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
                 setValue(col.get_config_int("collapseTime") / 60)
                 setFormattedSummary(R.string.pref_summary_minutes)
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     col.set_config("collapseTime", ((newValue as String).toInt() * 60))
-                    true
                 }
             }
             // Timebox time limit
@@ -472,9 +467,8 @@ class Preferences : AnkiActivity() {
             requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
                 setValue(col.get_config_int("timeLim") / 60)
                 setFormattedSummary(R.string.pref_summary_minutes)
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     col.set_config("timeLim", ((newValue as String).toInt() * 60))
-                    true
                 }
             }
             // Start of next day
@@ -483,18 +477,16 @@ class Preferences : AnkiActivity() {
             requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference).apply {
                 value = getDayOffset(col)
                 setFormattedSummary(R.string.day_offset_summary)
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     (requireActivity() as Preferences).setDayOffset(newValue as Int)
-                    true
                 }
             }
             // Automatic display answer
-            requirePreference<SwitchPreference>(R.string.timeout_answer_preference).setOnPreferenceChangeListener { _, newValue ->
+            requirePreference<SwitchPreference>(R.string.timeout_answer_preference).setOnPreferenceChangeListener { newValue ->
                 // Enable `Keep screen on` along with the automatic display answer preference
                 if (newValue == true) {
                     requirePreference<SwitchPreference>(R.string.keep_screen_on_preference).isChecked = true
                 }
-                true
             }
 
             /**
@@ -507,9 +499,8 @@ class Preferences : AnkiActivity() {
              * */
             requirePreference<ListPreference>(R.string.automatic_answer_action_preference).apply {
                 setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     col.set_config(AutomaticAnswerAction.CONFIG_KEY, (newValue as String).toInt())
-                    true
                 }
             }
             // Time to show answer
@@ -523,7 +514,7 @@ class Preferences : AnkiActivity() {
             requirePreference<SwitchPreference>(R.string.new_timezone_handling_preference).apply {
                 isChecked = col.sched._new_timezone_enabled()
                 isEnabled = col.schedVer() > 1
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     if (newValue == true) {
                         try {
                             col.sched.set_creation_offset()
@@ -533,7 +524,6 @@ class Preferences : AnkiActivity() {
                     } else {
                         col.sched.clear_creation_offset()
                     }
-                    true
                 }
             }
         }
@@ -682,7 +672,7 @@ class Preferences : AnkiActivity() {
             dayThemePref.isEnabled = themeIsFollowSystem
             nightThemePref.isEnabled = themeIsFollowSystem
 
-            appThemePref.setOnPreferenceChangeListener { _, newValue ->
+            appThemePref.setOnPreferenceChangeListener { newValue ->
                 val selectedThemeIsFollowSystem = newValue == Themes.FOLLOW_SYSTEM_MODE
                 dayThemePref.isEnabled = selectedThemeIsFollowSystem
                 nightThemePref.isEnabled = selectedThemeIsFollowSystem
@@ -697,25 +687,22 @@ class Preferences : AnkiActivity() {
                         requireActivity().recreate()
                     }
                 }
-                true
             }
 
-            dayThemePref.setOnPreferenceChangeListener { _, newValue ->
+            dayThemePref.setOnPreferenceChangeListener { newValue ->
                 if (newValue != dayThemePref.value && !systemIsInNightMode && newValue != currentTheme.id) {
                     dayThemePref.value = newValue.toString()
                     updateCurrentTheme()
                     requireActivity().recreate()
                 }
-                true
             }
 
-            nightThemePref.setOnPreferenceChangeListener { _, newValue ->
+            nightThemePref.setOnPreferenceChangeListener { newValue ->
                 if (newValue != nightThemePref.value && systemIsInNightMode && newValue != currentTheme.id) {
                     nightThemePref.value = newValue.toString()
                     updateCurrentTheme()
                     requireActivity().recreate()
                 }
-                true
             }
             initializeCustomFontsDialog()
 
@@ -724,9 +711,8 @@ class Preferences : AnkiActivity() {
             // whether the buttons should indicate the duration of the interval if we click on them.
             requirePreference<SwitchPreference>(R.string.show_estimates_preference).apply {
                 isChecked = col.get_config_boolean("estTimes")
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     col.set_config("estTimes", newValue)
-                    true
                 }
             }
             // Show progress
@@ -734,9 +720,8 @@ class Preferences : AnkiActivity() {
             // whether the remaining number of cards should be shown.
             requirePreference<SwitchPreference>(R.string.show_progress_preference).apply {
                 isChecked = col.get_config_boolean("dueCounts")
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     col.set_config("dueCounts", newValue)
-                    true
                 }
             }
         }
@@ -850,18 +835,16 @@ class Preferences : AnkiActivity() {
             requirePreference<SwitchPreference>(R.string.card_browser_external_context_menu_key).apply {
                 title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.card_browser_context_menu))
                 summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.card_browser_context_menu))
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)
-                    true
                 }
             }
             // Anki card context menu
             requirePreference<SwitchPreference>(R.string.anki_card_external_context_menu_key).apply {
                 title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.context_menu_anki_card_label))
                 summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.context_menu_anki_card_label))
-                setOnPreferenceChangeListener { _, newValue ->
+                setOnPreferenceChangeListener { newValue ->
                     AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)
-                    true
                 }
             }
 
@@ -938,7 +921,7 @@ class Preferences : AnkiActivity() {
             }
 
             // Enable API
-            requirePreference<SwitchPreference>(R.string.enable_api_key).setOnPreferenceChangeListener { _, newValue ->
+            requirePreference<SwitchPreference>(R.string.enable_api_key).setOnPreferenceChangeListener { newValue ->
                 val providerName = ComponentName(requireContext(), CardContentProvider::class.java.name)
                 val state = if (newValue == true) {
                     Timber.i("AnkiDroid ContentProvider enabled by user")
@@ -948,7 +931,6 @@ class Preferences : AnkiActivity() {
                     PackageManager.COMPONENT_ENABLED_STATE_DISABLED
                 }
                 requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
-                true
             }
         }
 
@@ -1080,9 +1062,8 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             // Use custom sync server
-            requirePreference<SwitchPreference>(R.string.custom_sync_server_enable_key).setOnPreferenceChangeListener { _, _ ->
+            requirePreference<SwitchPreference>(R.string.custom_sync_server_enable_key).setOnPreferenceChangeListener { _ ->
                 handleSyncServerPreferenceChange(requireContext())
-                true
             }
             // Sync url
             requirePreference<Preference>(R.string.custom_sync_server_base_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
