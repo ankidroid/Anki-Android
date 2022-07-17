@@ -75,6 +75,7 @@
         android:preserveLegacyExternalStorage="true"
         android:resizeableActivity="true"
         android:supportsRtl="true"
+        android:theme="@style/Theme_Light"
         >
         <activity android:name=".DrawingActivity"
             android:label="@string/drawing"
