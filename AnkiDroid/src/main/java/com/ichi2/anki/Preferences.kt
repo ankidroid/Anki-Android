@@ -498,7 +498,6 @@ class Preferences : AnkiActivity() {
                 setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
                 setOnPreferenceChangeListener { _, newValue ->
                     col.set_config("addToCur", "0" == newValue)
-                    col.setMod()
                     true
                 }
             }
@@ -509,7 +508,6 @@ class Preferences : AnkiActivity() {
                 isChecked = col.get_config("pastePNG", false)!!
                 setOnPreferenceChangeListener { _, newValue ->
                     col.set_config("pastePNG", newValue)
-                    col.setMod()
                     true
                 }
             }
@@ -556,7 +554,6 @@ class Preferences : AnkiActivity() {
                 setValueIndex(col.get_config_int("newSpread"))
                 setOnPreferenceChangeListener { _, newValue ->
                     col.set_config("newSpread", ((newValue as String).toInt()))
-                    col.setMod()
                     true
                 }
             }
@@ -570,7 +567,6 @@ class Preferences : AnkiActivity() {
                 setFormattedSummary(R.string.pref_summary_minutes)
                 setOnPreferenceChangeListener { _, newValue ->
                     col.set_config("collapseTime", ((newValue as String).toInt() * 60))
-                    col.setMod()
                     true
                 }
             }
@@ -583,7 +579,6 @@ class Preferences : AnkiActivity() {
                 setFormattedSummary(R.string.pref_summary_minutes)
                 setOnPreferenceChangeListener { _, newValue ->
                     col.set_config("timeLim", ((newValue as String).toInt() * 60))
-                    col.setMod()
                     true
                 }
             }
@@ -610,7 +605,6 @@ class Preferences : AnkiActivity() {
                 setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
                 setOnPreferenceChangeListener { _, newValue ->
                     col.set_config(AutomaticAnswerAction.CONFIG_KEY, (newValue as String).toInt())
-                    col.setMod()
                     true
                 }
             }
@@ -668,7 +662,6 @@ class Preferences : AnkiActivity() {
                             return@positiveButton
                         }
                         col!!.modSchemaNoCheck()
-                        col!!.setMod()
                         showThemedToast(
                             requireContext(),
                             R.string.force_full_sync_confirmation,
@@ -816,7 +809,6 @@ class Preferences : AnkiActivity() {
                 isChecked = col.get_config_boolean("estTimes")
                 setOnPreferenceChangeListener { _, newValue ->
                     col.set_config("estTimes", newValue)
-                    col.setMod()
                     true
                 }
             }
@@ -827,7 +819,6 @@ class Preferences : AnkiActivity() {
                 isChecked = col.get_config_boolean("dueCounts")
                 setOnPreferenceChangeListener { _, newValue ->
                     col.set_config("dueCounts", newValue)
-                    col.setMod()
                     true
                 }
             }
