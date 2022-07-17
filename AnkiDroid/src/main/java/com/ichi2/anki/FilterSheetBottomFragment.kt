@@ -80,7 +80,9 @@ class FilterSheetBottomFragment :
         applyButton.setOnClickListener {
             val filterQuery = createQuery(flagSearchItems)
 
-            (activity as CardBrowser).searchWithFilterQuery(filterQuery)
+            if (filterQuery != "") {
+                (activity as CardBrowser).searchWithFilterQuery(filterQuery)
+            }
             dismiss()
         }
 
@@ -151,6 +153,10 @@ class FilterSheetBottomFragment :
     private fun createQuery(
         flagList: MutableList<SearchNode.Flag>
     ): String {
+
+        if (flagList.isEmpty()) {
+            return ""
+        }
 
         val node = searchNode {
             group = group {
