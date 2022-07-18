@@ -484,15 +484,15 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         }
     }
 
-    class SearchCardListener(private val webView: WebView, private val context: Context) : TaskListener<List<CardBrowser.CardCache>, SearchService.SearchCardsResult>() {
+    class SearchCardListener(private val webView: WebView, private val context: Context) : TaskListener<List<CardBrowser.CardCache>, SearchService.SearchCardsResult?>() {
         override fun onPreExecute() {
             // nothing to do
         }
 
-        override fun onPostExecute(result: SearchService.SearchCardsResult) {
+        override fun onPostExecute(result: SearchService.SearchCardsResult?) {
             val searchResult: MutableList<String> = ArrayList()
 
-            if (result.result == null) {
+            if (result!!.result == null) {
                 webView.evaluateJavascript("console.log('${context.getString(R.string.search_card_js_api_no_results)}')", null)
             }
 

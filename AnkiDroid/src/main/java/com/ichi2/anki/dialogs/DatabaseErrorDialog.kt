@@ -331,7 +331,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     positiveButton(R.string.close) {
                         exit()
                     }
-                    listItems(items = options) { _: MaterialDialog, index: Int, _: CharSequence ->
+                    listItems(items = options, waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
                         when (values[index]) {
                             0 -> (activity as DeckPicker?)!!.showDatabaseErrorDialog(
                                 DIALOG_RESTORE_BACKUP

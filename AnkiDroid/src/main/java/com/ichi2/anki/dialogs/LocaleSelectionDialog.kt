@@ -75,7 +75,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 
         // Only show a negative button, use the RecyclerView for positive actions
         val dialog = MaterialDialog(activity).show {
-            customView(view = tagsDialogView)
+            customView(view = tagsDialogView, noVerticalPadding = true)
             negativeButton(text = getString(R.string.dialog_cancel)) {
                 mDialogHandler!!.onLocaleSelectionCancelled()
             }

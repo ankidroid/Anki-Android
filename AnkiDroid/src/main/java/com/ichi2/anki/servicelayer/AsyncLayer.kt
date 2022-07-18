@@ -56,11 +56,11 @@ abstract class AnkiTask<TProgress, TResult> : CancelListener {
     /* Below should be extension methods. They exist for a clean Java interface */
     fun toDelegate() = this.asDelegate()
 
-    fun runWithHandler(block: TaskListenerBuilder<TProgress, TResult>) {
+    fun runWithHandler(block: TaskListenerBuilder<TProgress, TResult?>) {
         runWithHandler(block.toListener())
     }
 
-    fun runWithHandler(toListener: TaskListener<TProgress, TResult>) {
+    fun runWithHandler(toListener: TaskListener<TProgress, TResult?>) {
         TaskManager.launchCollectionTask(this.toDelegate(), toListener)
     }
 }

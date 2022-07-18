@@ -1883,7 +1883,7 @@ public class SchedV2 extends AbstractSched {
      */
 
     /** Rebuild a dynamic deck. */
-    protected void rebuildDyn() {
+    public void rebuildDyn() {
         rebuildDyn(0);
     }
 
@@ -2485,7 +2485,7 @@ public class SchedV2 extends AbstractSched {
      * Return the next interval for CARD, in seconds.
      */
     // Overridden
-    protected long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    public long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         // preview mode?
         if (_previewingCard(card)) {
             if (ease == Consts.BUTTON_ONE) {

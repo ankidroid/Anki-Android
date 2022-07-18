@@ -1,8 +1,5 @@
-/****************************************************************************************
- * Copyright (c) 2013 Bibek Shrestha <bibekshrestha@gmail.com>                          *
- * Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>                              *
- * Copyright (c) 2013 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
- * Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>                                   *
+/***************************************************************************************
+ * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>                       *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -17,21 +14,16 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-@file:Suppress("DEPRECATION") // #7108: AsyncTask
-package com.ichi2.anki.runtimetools
+package com.ichi2.libanki.importer
 
-import android.os.AsyncTask
+import com.ichi2.libanki.CollectionV16
 
-object TaskOperations {
-    /**
-     * Gently killing AsyncTask
-     */
-    @JvmStatic
-    fun stopTaskGracefully(t: AsyncTask<*, *, *>?) {
-        if (t != null) {
-            if (t.status == AsyncTask.Status.RUNNING) {
-                t.cancel(true)
-            }
-        }
-    }
+// These take and return bytes that the frontend TypeScript code will encode/decode.
+
+fun CollectionV16.getCsvMetadataRaw(input: ByteArray): ByteArray {
+    return backend.getCsvMetadataRaw(input)
+}
+
+fun CollectionV16.importCsvRaw(input: ByteArray): ByteArray {
+    return backend.importCsvRaw(input)
 }

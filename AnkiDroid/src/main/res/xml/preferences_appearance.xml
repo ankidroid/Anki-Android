@@ -25,7 +25,7 @@
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
         android:title="@string/pref_cat_appearance"
-        android:key="appearance_preference_group"
+        android:key="@string/pref_appearance_screen_key"
         android:summary="@string/pref_cat_appearance_summ">
     <PreferenceCategory android:title="@string/pref_cat_themes" >
         <ListPreference
@@ -56,7 +56,7 @@
         <SwitchPreference
             android:checked="false"
             android:defaultValue="0"
-            android:key="deckPickerBackground"
+            android:key="@string/pref_deck_picker_background_key"
             android:shouldDisableView="true"
             android:title="@string/choose_an_image" />
     </PreferenceCategory>
@@ -107,20 +107,20 @@
     <PreferenceCategory android:title="@string/pref_cat_fonts" >
         <ListPreference
             android:defaultValue="@string/empty_string"
-            android:key="defaultFont"
+            android:key="@string/pref_default_font_key"
             android:shouldDisableView="true"
             android:title="@string/default_font"
             app1:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="0"
-            android:key="overrideFontBehavior"
+            android:key="@string/pref_font_applicability_key"
             android:entries="@array/override_font_labels"
             android:entryValues="@array/override_font_values"
             android:title="@string/override_font"
             app1:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="@string/empty_string"
-            android:key="browserEditorFont"
+            android:key="@string/pref_browser_and_editor_font_key"
             android:title="@string/pref_browser_editor_font"
             app1:useSimpleSummaryProvider="true"/>
         <com.ichi2.preferences.SeekBarPreferenceCompat
@@ -136,7 +136,7 @@
         <SwitchPreference
             android:checked="false"
             android:defaultValue="false"
-            android:key="card_browser_show_media_filenames"
+            android:key="@string/pref_display_filenames_in_browser_key"
             android:title="@string/card_browser_hide_media"
             android:summary="@string/card_browser_hide_media_summary"/>
     </PreferenceCategory>

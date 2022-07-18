@@ -43,7 +43,6 @@ object BeolingusParser {
         val m = PRONUNCIATION_PATTERN.matcher(html)
         while (m.find()) {
             // Perform .contains() due to #5376 (a "%20{noun}" suffix).
-            // Perform .toLowerCase() due to #5810 ("hello" should match "Hello").
             // See #5810 for discussion on Locale complexities. Currently unhandled.
             @KotlinCleanup("improve null handling of m.group() possibly returning null")
             if (m.group(2)!!.contains(wordToSearchFor!!, ignoreCase = true)) {

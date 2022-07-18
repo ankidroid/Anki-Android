@@ -387,7 +387,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private val mUpdateCardHandler: TaskListener<Card, Computation<*>> = object : TaskListener<Card, Computation<*>>() {
+    private val mUpdateCardHandler: TaskListener<Card, Computation<*>?> = object : TaskListener<Card, Computation<*>?>() {
         private var mNoMoreCards = false
         override fun onPreExecute() {
             showProgressBar()
@@ -422,8 +422,8 @@ abstract class AbstractFlashcardViewer :
             hideProgressBar()
         }
 
-        override fun onPostExecute(result: Computation<*>) {
-            if (!result.succeeded()) {
+        override fun onPostExecute(result: Computation<*>?) {
+            if (!result!!.succeeded()) {
                 // RuntimeException occurred on update cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
                 return
@@ -445,7 +445,7 @@ abstract class AbstractFlashcardViewer :
         // intentionally blank
     }
 
-    internal inner class NextCardHandler<Result : Computation<NextCard<*>>> :
+    internal inner class NextCardHandler<Result : Computation<NextCard<*>>?> :
         TaskListener<Unit, Result>() {
         override fun onPreExecute() {
             dealWithTimeBox()
@@ -481,7 +481,7 @@ abstract class AbstractFlashcardViewer :
                 finishWithoutAnimation()
                 return
             }
-            val displaySuccess = result.succeeded()
+            val displaySuccess = result!!.succeeded()
             if (!displaySuccess) {
                 // RuntimeException occurred on answering cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
@@ -519,8 +519,8 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    protected fun answerCardHandler(quick: Boolean): TaskListenerBuilder<Unit, Computation<NextCard<*>>> {
-        return nextCardHandler<Computation<NextCard<*>>>()
+    protected fun answerCardHandler(quick: Boolean): TaskListenerBuilder<Unit, Computation<NextCard<*>>?> {
+        return nextCardHandler<Computation<NextCard<*>>?>()
             .alsoExecuteBefore { blockControls(quick) }
     }
 
@@ -2086,7 +2086,7 @@ abstract class AbstractFlashcardViewer :
         return isMarked(mCurrentCard!!.note())
     }
 
-    protected fun <TResult : Computation<NextCard<*>>> nextCardHandler(): TaskListenerBuilder<Unit, TResult> {
+    protected fun <TResult : Computation<NextCard<*>>?> nextCardHandler(): TaskListenerBuilder<Unit, TResult> {
         return TaskListenerBuilder(NextCardHandler())
     }
 
@@ -2096,7 +2096,7 @@ abstract class AbstractFlashcardViewer :
      */
     protected open fun dismiss(dismiss: AnkiMethod<Computation<NextCard<*>>>, executeAfter: Runnable): Boolean {
         blockControls(false)
-        dismiss.runWithHandler(nextCardHandler<Computation<NextCard<*>>>().alsoExecuteAfter { executeAfter.run() })
+        dismiss.runWithHandler(nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { executeAfter.run() })
         return true
     }
 

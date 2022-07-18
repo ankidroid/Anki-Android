@@ -661,6 +661,46 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
+    class SearchNotes(private val query: String, private val numCardsToRender: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<List<CardCache>, SearchCardsResult>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<List<CardCache>>): SearchCardsResult {
+            Timber.d("doInBackgroundSearchCards")
+            if (collectionTask.isCancelled()) {
+                Timber.d("doInBackgroundSearchCards was cancelled so return null")
+                return SearchCardsResult.invalidResult()
+            }
+            val searchResult: MutableList<CardCache> = ArrayList()
+            val searchResult_: List<Long>
+            searchResult_ = try {
+                col.findNotes(query).requireNoNulls()
+            } catch (e: Exception) {
+                // exception can occur via normal operation
+                Timber.w(e)
+                return SearchCardsResult.error(e)
+            }
+            Timber.d("The search found %d cards", searchResult_.size)
+            var position = 0
+            for (nid in searchResult_) {
+                val card = CardCache(Note(col, nid).firstCard().id, col, position++)
+                searchResult.add(card)
+            }
+            // Render the first few items
+            for (i in 0 until Math.min(numCardsToRender, searchResult.size)) {
+                if (collectionTask.isCancelled()) {
+                    Timber.d("doInBackgroundSearchCards was cancelled so return null")
+                    return SearchCardsResult.invalidResult()
+                }
+                searchResult[i].load(false, column1Index, column2Index)
+            }
+            // Finish off the task
+            return if (collectionTask.isCancelled()) {
+                Timber.d("doInBackgroundSearchCards was cancelled so return null")
+                SearchCardsResult.invalidResult()
+            } else {
+                SearchCardsResult.success(searchResult)
+            }
+        }
+    }
+
     class RenderBrowserQA(private val cards: CardCollection<CardCache>, private val startPos: Int, private val n: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<Int, Pair<CardCollection<CardCache>, List<Long>>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): Pair<CardCollection<CardCache>, List<Long>>? {
             Timber.d("doInBackgroundRenderBrowserQA")
