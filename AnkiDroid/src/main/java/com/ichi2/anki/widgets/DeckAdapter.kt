@@ -376,7 +376,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
             // we have a root, and a list of trees with the counts already calculated.
             return TreeNode(root.value).apply {
-                children.addAll(ret)
+                childrenCopy.addAll(ret)
             }
         }
 
