@@ -17,6 +17,7 @@
 package com.ichi2.utils
 
 import android.widget.Filter
+import timber.log.Timber
 
 /** Implementation of [Filter] which is strongly typed */
 abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Filter() {
@@ -51,7 +52,14 @@ abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Fi
     override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
         // this is only ever called from performFiltering so we can guarantee the value is non-null
         // and can be cast to List<T>
-        val list = results!!.values as List<T>
+        val list = try {
+            results!!.values as List<T>
+        } catch (npe: NullPointerException) {
+            // allow publishResults to fail gracefully while reporting error
+            Timber.e(npe)
+
+            listOf()
+        }
         publishResults(constraint, list)
     }
 
