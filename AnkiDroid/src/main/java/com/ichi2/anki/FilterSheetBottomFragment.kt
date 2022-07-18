@@ -39,7 +39,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.libanki.bool
-import com.ichi2.themes.Themes
+import com.ichi2.themes.ThemeUtils.getThemedColor
 
 /**
  * This class handles the Filter Bottom Sheet present in the Card Browser
@@ -195,35 +195,13 @@ class FilterSheetBottomFragment :
         val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
         if (!isSelected(item, flagSearchItems)) {
-            flagRecyclerView[position].setBackgroundColor(
-                Themes.getColorFromAttr(
-                    activity,
-                    R.attr.filterItemBackgroundSelected
-                )
-            )
-
-            itemTextView.setTextColor(
-                Themes.getColorFromAttr(
-                    activity,
-                    R.attr.filterItemTextColorSelected
-                )
-            )
+            flagRecyclerView[position].setBackgroundColor(getThemedColor(R.attr.filterItemBackgroundSelected))
+            itemTextView.setTextColor(getThemedColor(R.attr.filterItemTextColorSelected))
 
             flagSearchItems.add(item.flagNode)
         } else {
-            flagRecyclerView[position].setBackgroundColor(
-                Themes.getColorFromAttr(
-                    activity,
-                    R.attr.filterItemBackground
-                )
-            )
-
-            itemTextView.setTextColor(
-                Themes.getColorFromAttr(
-                    activity,
-                    R.attr.filterItemTextColor
-                )
-            )
+            flagRecyclerView[position].setBackgroundColor(getThemedColor(R.attr.filterItemBackground))
+            itemTextView.setTextColor(getThemedColor(R.attr.filterItemTextColor))
 
             flagSearchItems.remove(item.flagNode)
         }
