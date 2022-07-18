@@ -23,6 +23,7 @@ import android.graphics.Typeface
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import androidx.annotation.VisibleForTesting
+import anki.ankidroid.schedTimingTodayLegacyRequest
 import anki.decks.DeckTreeNode
 import anki.scheduler.*
 import com.ichi2.anki.R
@@ -478,13 +479,16 @@ abstract class BaseSched(val col: Collection) {
     fun _timingToday(): SchedTimingTodayResponse {
         return if (true) { // (BackendFactory.defaultLegacySchema) {
             @Suppress("useless_cast")
-            return col.backend.schedTimingTodayLegacy(
-                col.crt,
-                col.get_config("creationOffset", 0 as Int)!!,
-                time.intTime(),
-                _current_timezone_offset(),
-                _rolloverHour()
-            )
+            val request = schedTimingTodayLegacyRequest {
+                createdSecs = col.crt
+                col.get_config("creationOffset", null as Int?)?.let {
+                    createdMinsWest = it
+                }
+                nowSecs = time.intTime()
+                nowMinsWest = _current_timezone_offset()
+                rolloverHour = _rolloverHour()
+            }
+            return col.backend.schedTimingTodayLegacy(request)
         } else {
             // this currently breaks a bunch of unit tests that assume a mocked time,
             // as it uses the real time to calculate daysElapsed
