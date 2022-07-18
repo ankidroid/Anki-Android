@@ -320,7 +320,8 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
             )
         }
         val changes2 = mCol.db.queryScalar("select total_changes()")
-        mUpdateCount = changes2 - changes
+        // if any changes are made, col.mod is also bumped
+        mUpdateCount = Math.max(0, changes2 - changes - 1)
     }
 
     private fun processFields(note: ForeignNote, fields: Array<String>? = null): Boolean {
