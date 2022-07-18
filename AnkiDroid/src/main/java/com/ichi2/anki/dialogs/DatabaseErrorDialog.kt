@@ -238,6 +238,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 }
                             }
                         }
+                        // needed because listItemsSingleChoice disables the positive button and we
+                        // want to allow in the dialog direct item selection and different action for
+                        // positive button
+                        .setActionButtonEnabled(WhichButton.POSITIVE, true)
                 }
                 dialog.setOnKeyListener { _: DialogInterface?, keyCode: Int, _: KeyEvent? ->
                     if (keyCode == KeyEvent.KEYCODE_BACK) {
