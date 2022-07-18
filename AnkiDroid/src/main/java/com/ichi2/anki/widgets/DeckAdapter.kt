@@ -361,7 +361,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             if (containsFilterString(filterPattern, root.value)) {
                 return root
             }
-            // Must use copy for iteration to avoid ConcurrentModificationException
             val children = root.children
             val ret: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList(children.size)
             for (child in children) {
