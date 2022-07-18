@@ -52,13 +52,7 @@ abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Fi
     override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
         // this is only ever called from performFiltering so we can guarantee the value is non-null
         // and can be cast to List<T>
-        val list = try {
-            results!!.values as List<T>
-        } catch (npe: NullPointerException) {
-            // allow publishResults to fail gracefully while reporting error
-            Timber.e(npe)
-            listOf()
-        }
+        val list = results!!.values as List<T>
         publishResults(constraint, list)
     }
 
