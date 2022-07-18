@@ -361,7 +361,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             if (containsFilterString(filterPattern, root.value)) {
                 return root
             }
-            val children = root.children
+            val children = root.children.toMutableList()
             val ret: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList(children.size)
             for (child in children) {
                 val returned = filterDeckInternal(filterPattern, child)
