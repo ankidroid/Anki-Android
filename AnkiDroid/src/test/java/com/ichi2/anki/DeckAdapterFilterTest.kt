@@ -28,9 +28,9 @@ import org.mockito.MockitoAnnotations
 class DeckAdapterFilterTest {
 
     @Mock
-    lateinit var adapter: DeckAdapter
+    private lateinit var adapter: DeckAdapter
 
-    lateinit var filter: DeckAdapter.DeckFilter
+    private lateinit var filter: DeckAdapter.DeckFilter
 
     @Before
     fun setUp() {
@@ -40,16 +40,12 @@ class DeckAdapterFilterTest {
 
     @Test
     fun verifyFilterResultsReturnsCorrectList() {
-
         val pattern = "Math"
 
         val actual = filter.filterResults(pattern, deckList)
         val expected = deckList.getByDids(0, 4, 5, 6, 8)
 
-        Assert.assertArrayEquals(
-            actual.toTypedArray(),
-            expected.toTypedArray()
-        )
+        Assert.assertEquals(actual, expected)
     }
 
     @Test
