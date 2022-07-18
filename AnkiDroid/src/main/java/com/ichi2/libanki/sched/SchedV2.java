@@ -2127,13 +2127,8 @@ public class SchedV2 extends AbstractSched {
 
         SchedTimingTodayResponse timing = _timingToday();
 
-        if (_new_timezone_enabled()) {
-            mToday = timing.getDaysElapsed();
-            mDayCutoff = timing.getNextDayAt();
-        } else {
-            mToday = _daysSinceCreation();
-            mDayCutoff = _dayCutoff();
-        }
+        mToday = timing.getDaysElapsed();
+        mDayCutoff = timing.getNextDayAt();
 
         if (oldToday != mToday) {
             getCol().log(mToday, mDayCutoff);
@@ -2149,36 +2144,6 @@ public class SchedV2 extends AbstractSched {
             SyncStatus.ignoreDatabaseModification(this::unburyCards);
             getCol().set_config("lastUnburied", mToday);
         }
-    }
-
-
-    private long _dayCutoff() {
-        int rolloverTime = getCol().get_config("rollover", 4);
-        if (rolloverTime < 0) {
-            rolloverTime = 24 + rolloverTime;
-        }
-        Calendar date = getTime().calendar();
-        date.set(Calendar.HOUR_OF_DAY, rolloverTime);
-        date.set(Calendar.MINUTE, 0);
-        date.set(Calendar.SECOND, 0);
-        date.set(Calendar.MILLISECOND, 0);
-        Calendar today = getTime().calendar();
-        if (date.before(today)) {
-            date.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
-        return date.getTimeInMillis() / 1000;
-    }
-
-
-    private int _daysSinceCreation() {
-        Calendar c = getCol().crtCalendar();
-        c.set(Calendar.HOUR, _rolloverHour());
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
-
-        return (int) (((getTime().intTimeMS() - c.getTimeInMillis()) / 1000) / SECONDS_PER_DAY);
     }
 
     protected void update(@NonNull Deck g) {
