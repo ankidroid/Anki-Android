@@ -164,7 +164,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
                     // After the last deck was created, delete a deck
                     if (decks.count() >= 10) {
-                        deckPicker.confirmDeckDeletion(did)
+                        awaitJob(deckPicker.confirmDeckDeletion(did))
                         assertEquals(deckCounter.decrementAndGet(), decks.count())
 
                         assertEquals(deckCounter.get(), decks.count())
@@ -188,7 +188,8 @@ class CreateDeckDialogTest : RobolectricTest() {
                 deckPicker.updateDeckList()
                 assertTrue(deckPicker.searchDecksIcon!!.isVisible)
 
-                deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1"))
+                awaitJob(deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1")))
+
                 assertEquals(2, decks.count())
                 deckPicker.updateDeckList()
                 assertFalse(deckPicker.searchDecksIcon!!.isVisible)
@@ -201,7 +202,8 @@ class CreateDeckDialogTest : RobolectricTest() {
                 deckPicker.updateDeckList()
                 assertTrue(deckPicker.searchDecksIcon!!.isVisible)
 
-                deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1"))
+                awaitJob(deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1")))
+
                 assertEquals(2, decks.count())
                 deckPicker.updateDeckList()
                 assertFalse(deckPicker.searchDecksIcon!!.isVisible)

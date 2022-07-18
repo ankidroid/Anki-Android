@@ -17,6 +17,7 @@ import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.DbUtils
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
+import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
@@ -207,13 +208,17 @@ class DeckPickerTest : RobolectricTest() {
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )
-        deckPicker.confirmDeckDeletion(did)
+        awaitJob(deckPicker.confirmDeckDeletion(did))
         advanceRobolectricLooperWithSleep()
         assertThat("deck was deleted", col.decks.count(), `is`(1))
     }
 
     @Test
     fun deletion_of_filtered_deck_shows_warning_issue_10238() {
+        if (!BackendFactory.defaultLegacySchema) {
+            // undoable
+            return
+        }
         // Filtered decks contain their own options, deleting one can cause a significant loss of work.
         // And they are more likely to be empty temporarily
         val did = addDynamicDeck("filtered")
