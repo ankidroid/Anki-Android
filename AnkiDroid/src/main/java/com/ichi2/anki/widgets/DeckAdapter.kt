@@ -362,9 +362,9 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
                 return root
             }
             // Must use copy for iteration to avoid ConcurrentModificationException
-            val childrenCopy = root.children.toMutableList()
-            val ret: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList(childrenCopy.size)
-            for (child in childrenCopy) {
+            val children = root.children
+            val ret: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList(children.size)
+            for (child in children) {
                 val returned = filterDeckInternal(filterPattern, child)
                 if (returned != null) {
                     ret.add(returned)
@@ -376,7 +376,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
             // we have a root, and a list of trees with the counts already calculated.
             return TreeNode(root.value).apply {
-                childrenCopy.addAll(ret)
+                this.children.addAll(ret)
             }
         }
 
