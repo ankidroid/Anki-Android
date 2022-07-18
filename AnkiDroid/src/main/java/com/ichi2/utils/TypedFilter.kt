@@ -17,7 +17,6 @@
 package com.ichi2.utils
 
 import android.widget.Filter
-import timber.log.Timber
 
 /** Implementation of [Filter] which is strongly typed */
 abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Filter() {
