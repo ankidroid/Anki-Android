@@ -45,7 +45,7 @@ class DeckAdapterFilterTest {
         val actual = filter.filterResults(pattern, deckList)
         val expected = deckList.getByDids(0, 4, 5, 6, 8)
 
-        Assert.assertEquals(actual, expected)
+        Assert.assertEquals(expected, actual)
     }
 
     @Test
