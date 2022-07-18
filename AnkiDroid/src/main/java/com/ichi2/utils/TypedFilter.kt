@@ -57,7 +57,6 @@ abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Fi
         } catch (npe: NullPointerException) {
             // allow publishResults to fail gracefully while reporting error
             Timber.e(npe)
-
             listOf()
         }
         publishResults(constraint, list)
