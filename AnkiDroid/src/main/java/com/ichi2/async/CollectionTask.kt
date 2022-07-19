@@ -671,7 +671,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             val searchResult: MutableList<CardCache> = ArrayList()
             val searchResult_: List<Long>
             searchResult_ = try {
-                col.findNotes(query).requireNoNulls()
+                col.findOneCardByNote(query).requireNoNulls()
             } catch (e: Exception) {
                 // exception can occur via normal operation
                 Timber.w(e)
@@ -679,8 +679,8 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             }
             Timber.d("The search found %d cards", searchResult_.size)
             var position = 0
-            for (nid in searchResult_) {
-                val card = CardCache(Note(col, nid).firstCard().id, col, position++)
+            for (cid in searchResult_) {
+                val card = CardCache(cid, col, position++)
                 searchResult.add(card)
             }
             // Render the first few items
