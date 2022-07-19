@@ -383,7 +383,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
         private fun containsFilterString(filterPattern: String, root: AbstractDeckTreeNode): Boolean {
             val deckName = root.fullDeckName
-            return deckName.contains(filterPattern, ignoreCase = true)
+            return deckName.lowercase(Locale.getDefault()).contains(filterPattern) || deckName.lowercase(Locale.ROOT).contains(filterPattern)
         }
     }
 
