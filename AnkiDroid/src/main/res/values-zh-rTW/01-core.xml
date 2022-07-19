@@ -99,7 +99,7 @@
     <string name="rename_deck">重新命名牌組</string>
     <string name="create_shortcut">建立捷徑</string>
     <string name="browse_cards">瀏覽卡片</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">新增</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">新增</string>
     <string name="menu_add_note">新增筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳號</string>
     <string name="menu_dismiss_note">隱藏/刪除</string>

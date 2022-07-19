@@ -103,7 +103,7 @@
     <string name="rename_deck">hernoem dek</string>
     <string name="create_shortcut">Snelkoppeling maken</string>
     <string name="browse_cards">Blader door kaarten</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Toevoegen</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Toevoegen</string>
     <string name="menu_add_note">Memo toevoegen</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Account synchroniseren</string>
     <string name="menu_dismiss_note">Verbergen / Verwijderen</string>
