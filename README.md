@@ -122,6 +122,10 @@ Thank you to all our backers! 🙏
 
 <a href="https://opencollective.com/ankidroid#backers" target="_blank"><img src="https://opencollective.com/ankidroid/backers.svg?width=890"></a>
 
+### [Translators](https://crowdin.com/project/ankidroid/activity-stream)
+
+Thanks to our 1400 translators, for allowing us to be available, partially or totally, in 99 languages as of July 2022.
+
 License
 -------
 * [GPL-3.0 License](https://github.com/ankidroid/Anki-Android/blob/main/COPYING)
