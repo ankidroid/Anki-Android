@@ -60,13 +60,6 @@
     <string name="initializing_tts">TTS indítása&#8230;</string>
     <string name="tts_no_tts">Ne beszélj</string>
     <string name="unused_strings">\n\bNem használt fájlok:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Flashcards for Android</h2>Az AnkiDroid egy tanulókártya alkalmazás, amely teljesen kompatibilis a Pc-s asztali kiadással <a href=\"%2$s\">Anki</a>. Létrehozhatsz, letölthetsz és tanulhatsz anyagokat az AnkiDroid és Pc-s verzió segítségével is. Ezeket az AnkiWeb segítségével egyszerűen szinkronizálhatod.]]></item>
-        <item><![CDATA[AnkiDroid fejlesztése érdekében, kérjük jelentsd a hibákat <a href=\"%1$s\">the issue tracker</a>; az újabb funkciókkal kapcsolatos ötleteidnek is nagyon örülünk <a href=\"%2$s\">a wiki</a> vagy beszélgess másokkal <a href=\"%3$s\">a fórum</a>.]]></item>
-        <item><![CDATA[Az AnkiDroid <a href=\"%1$s\">nyílt forráskódú szoftver<a/>, így mindenki arra biztatunk, hogy <a href=\"%2$s\">legyen közreműködő</a> :-)]]></item>
-        <item><![CDATA[Ha nem vagy fejlesztő, akkor is segíthetsz. Például ezen az AnkiDroid oldalon<a href=\"%1$s\"> fordítással kapcsolatosan </a>, frissíthető a wiki, vagy írhatsz a blogra és képernyőképeket is megoszthatsz az AnkiDroid-ról.]]></item>
-        <item><![CDATA[Az AnkiDroid megjelent a <a href=\"%1$s\">GNU-GPL v3 license</a> és a forráskód elérhető <a href=\"%2$s\">on GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Előnézet</string>
     <string name="reposition_card_dialog_title">Helyezze át az új kártyát</string>
     <string name="reposition_card_dialog_message">Kiinduló helyzet:</string>

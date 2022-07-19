@@ -99,6 +99,9 @@
         <item>已创建</item>
         <item>已修改笔记</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>
     <string name="custom_study_increase_review_limit">修改今天的复习卡片数量限制</string>

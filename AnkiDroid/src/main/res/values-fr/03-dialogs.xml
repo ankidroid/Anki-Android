@@ -60,13 +60,6 @@
     <string name="initializing_tts">Initialisation de la synthèse vocale&#8230;</string>
     <string name="tts_no_tts">Ne pas parler</string>
     <string name="unused_strings">\n\nFichiers inutilisés :\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s : <br/>Cartes mémoire pour Android</h2>AnkiDroid est une application de cartes à mémoriser qui est entièrement compatible avec le logiciel <a href=\"%2$s\"> Anki</a>. Vous pouvez créer, télécharger et apprendre le matériel à votre convenance sur AnkiDroid ou Anki Desktop, et synchroniser facilement avec AnkiWeb.]]></item>
-        <item><![CDATA[Pour nous aider à améliorer AnkiDroid, veuillez signaler les bogues sur <a href=\"%1$s\"> le gestionnaire d\'incidents</a> ; vos idées de nouvelles fonctionnalité sont également bienvenues. Trouvez des réponses à vos questions sur <a href=\"%2$s\">le wiki</a> ou entamez une discussion sur <a href=\"%3$s\">le forum</a>.]]></item>
-        <item><![CDATA[AnkiDroid est <a href=\"%1$s\">un logiciel open source <a/>, tout le monde est donc encouragé à <a href=\"%2$s\">devenir un contributeur</a> :-)]]></item>
-        <item><![CDATA[Les non-programmeurs peuvent aussi aider. Par exemple, vous pouvez aider à <a href=\"%1$s\">traduire</a> AnkiDroid, mettre à jour le wiki, envoyer des screenshots ou partager AnkiDroid sur votre blog.]]></item>
-        <item><![CDATA[AnkiDroid est distribué sous la <a href=\"%1$s\">licence GNU-GPL v3</a> et le code source est disponible <a href=\"%2$s\">sur GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Aperçu</string>
     <string name="reposition_card_dialog_title">Repositionner la nouvelle carte</string>
     <string name="reposition_card_dialog_message">Position de départ:</string>

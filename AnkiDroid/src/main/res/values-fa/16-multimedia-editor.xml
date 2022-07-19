@@ -42,7 +42,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">افزودن تصویر</string>
     <string name="multimedia_editor_popup_audio_clip">افزودن صدا</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">افزودن ویدیو</string>
     <string name="multimedia_editor_popup_audio">ضبط صدا</string>
     <string name="multimedia_editor_popup_text">ویرایش‌گر پیشرفته</string>
     <string name="multimedia_editor_popup_cloze">انصراف از پاک کردن</string>
@@ -54,7 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">در حال پیدا کردن تلفظ</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">تلفظ انجام نشد</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
+    <string name="multimedia_editor_only_one_word">فقط یک کلمه در جا میتوانید استفاده کنید</string>
     <string name="multimedia_editor_word_search_try_lower_case">سعی کنید فقط از حروف کوچک استفاده کنید</string>
     <string name="multimedia_editor_poweredbeolingus">طراحی شده توسط Beolingus</string>
     <!-- Field editing general -->
@@ -80,8 +80,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">گالری</string>
     <string name="multimedia_editor_image_field_editing_photo">دوربین</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">صدا</string>
+    <string name="multimedia_editor_import_video">ویدیو</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">در حال دریافت</string>
@@ -95,8 +95,8 @@
     <string name="multimedia_editor_progress_wait_title">صبر کنید</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">متأسفیم، مشکلی به وجود آمد</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_svg_preview">SVGها برای از قبل دیدن در دسترس نیستند</string>
+    <string name="multimedia_editor_png_paste_error">خطا در تبدیل عکس های کلیپ برد به png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">ضمیمه کردن محتوای چند رسانه ای به زمینه %1$s</string>
     <string name="multimedia_editor_attach_media">ضمیمه رسانه</string>
     <!-- Audio view -->
@@ -114,5 +114,5 @@
     <string name="save_dialog_content">حجم فعلی تصویر %s مگابایت است. حداکثر حجم پیش‌فرض تصویر یک مگابایت است. آیا می‌خواهید تصویر را برش دهید؟</string>
     <string name="select_image_failed">"انتخاب تصویر انجام نشد، لطفاً دوباره تلاش کنید"</string>
     <string name="activity_result_unexpected">نرم‌افزار مقداری نامعتبر را وارد کرد. احتمالاً باید از نرم‌افزار دیگری استفاده کنید</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">محتوای قسمت</string>
 </resources>

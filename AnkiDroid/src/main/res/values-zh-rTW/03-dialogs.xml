@@ -59,13 +59,6 @@
     <string name="initializing_tts">正在初始化 TTS&#8230;</string>
     <string name="tts_no_tts">不要發音</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>給 Android 的單字卡</h2>AnkiDroid 是完全相容桌面版本的單字卡應用程式 <a href=\"%2$s\">Anki</a>。 你可以任意在 AnkiDroid 或是桌面版 Anki 上新增、下載和學習東西，並使用 AnkiWeb 輕鬆同步這些記錄。]]></item>
-        <item><![CDATA[為了協助我們讓 AnkiDroid 更好，請到 <a href=\"%1$s\">Issue Tracker</a> 回報錯誤; 任何有關新功能的點子也歡迎。在 <a href=\"%2$s\">Wiki</a> 尋找答案或是在<a href=\"%3$s\">論壇</a>參與討論。]]></item>
-        <item><![CDATA[AnkiDroid 是<a href=\"%1$s\">自由軟體<a/>，所以我們鼓勵任何人<a href=\"%2$s\">成爲貢獻者</a> :-)]]></item>
-        <item><![CDATA[非開發者亦可提供幫助。例如，你可以<a href=\"%1$s\">幫助翻譯</a>AnkiDroid、更新wiki、提供螢幕截圖，或撰寫關於 AnkiDroid 的博客。]]></item>
-        <item><![CDATA[AnkiDroid 在 <a href=\"%1$s\">GNU-GPL v3 授權</a> 下釋出，而且你可在 <a href=\"%2$s\">GitHub</a> 上取得其程式碼。]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">預覽</string>
     <string name="reposition_card_dialog_title">變更新卡片位置</string>
     <string name="reposition_card_dialog_message">開始位置：</string>

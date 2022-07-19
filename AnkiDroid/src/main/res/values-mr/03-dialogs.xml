@@ -60,13 +60,6 @@
     <string name="initializing_tts">टीटीएस प्रारंभ करीत आहे&#8230;</string>
     <string name="tts_no_tts">बोलू नका</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s: <br/> Android साठी फ्लॅशकार्ड </ h2> AnkiDroid एक फ्लॅशकार्ड अनुप्रयोग आहे जो डेस्कटॉप सॉफ्टवेअर <a href=\"%2$s\"> अंकी </a> सह पूर्णपणे सुसंगत आहे . आपण अँकीड्रोइड किंवा आंकी डेस्कटॉप दोन्हीवर सामग्री तयार करू, डाउनलोड आणि शिकू शकता आणि त्यांना अँकीवेब सह सहजपणे समक्रमित करू शकता.]]></item>
-        <item><![CDATA[आम्हाला अँकीड्रोइड अधिक चांगले करण्यात मदत करण्यासाठी, कृपया <a href=\"%1$s\"> इश्यू ट्रॅकर </a> वर बग नोंदवा; नवीन वैशिष्ट्यांचे कल्पना देखील खूप स्वागत आहे. <a href=\"%2$s\"> विकी </a> वर उत्तरे शोधा किंवा <a href=\"%3$s\"> मंच </a> वर चर्चा प्रारंभ करा.]]></item>
-        <item><![CDATA[अंकीड्रोइड <a href=\"%1$s\"> मुक्त स्त्रोत सॉफ्टवेअर <a/> आहे, म्हणून प्रत्येकास <a href=\"%2$s$"> सहयोगी होण्यासाठी </a> प्रोत्साहित केले जाते: - )]]></item>
-        <item><![CDATA[गैर-विकसक देखील मदत करू शकतात. उदाहरणार्थ, आपण <a href=\"%1$s\"> AnkiDroid भाषांतरित करण्यात मदत करू शकता </a>, विकी अद्यतनित करू शकता, स्क्रीनशॉट प्रदान करू शकता किंवा अंकीड्रोइड विषयी ब्लॉग करू शकता.]]></item>
-        <item><![CDATA[AnkiDroid <a href=\"%1$s\"> GNU-GPL v3 परवाना </a> अंतर्गत सोडला आहे आणि स्त्रोत कोड GitHub <a href=\"%2$s\"> वर उपलब्ध आहे a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">पूर्वावलोकन</string>
     <string name="reposition_card_dialog_title">नवीन कार्ड पुनर्स्थित करा</string>
     <string name="reposition_card_dialog_message">प्रारंभ स्थितीः</string>

@@ -99,6 +99,9 @@
         <item>ᱛᱮᱭᱟᱨ ᱮᱱᱟ</item>
         <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱫᱚᱞᱮᱱᱟ</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="custom_study_increase_review_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱧᱮᱧᱮᱞ  ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>

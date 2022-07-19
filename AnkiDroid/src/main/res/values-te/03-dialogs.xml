@@ -60,13 +60,6 @@
     <string name="initializing_tts">TTS ను ప్రారంభిస్తోంది&#8230;</string>
     <string name="tts_no_tts">మాట్లాడకండి</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/> Android కోసం ఫ్లాష్ కార్డ్లు </h2> AnkiDroid డెస్క్టాప్ సాఫ్ట్వేర్ <a href=\"%2$s\"> Anki </a> తో పూర్తిగా అనుకూల ఫ్లాష్ కార్డ్ అనువర్తనం. మీరు సృష్టించవచ్చు, డౌన్లోడ్ మరియు AnkiDroid రెండు లేదా AnkiWeb డెస్క్టాప్ రెండు తెలుసుకోవడానికి, మరియు సులభంగా AnkiWeb వాటిని సింక్రనైజ్ చేయవచ్చు.]]></item>
-        <item><![CDATA[AnkiDroid ను మెరుగుపరచడంలో మాకు సహాయం చెయ్యడానికి, దయచేసి బగ్లను <a href=\"%1$s\"> సమస్య ట్రాకర్ </a> కు నివేదించండి; కొత్త ఫీచర్ చాలా స్వాగతం ఆలోచనలు. <a href=\"%2$s\"> వికీ </a> లో సమాధానాలను కనుగొనండి లేదా <a href=\"%3$s\"> ఫోరమ్ </a> లో చర్చను ప్రారంభించండి.]]></item>
-        <item><![CDATA[AnkiDroid <a href=\"%1$s\"> ఓపెన్ సోర్స్ సాఫ్ట్వేర్ <a/>, కాబట్టి ప్రతిఒక్కరూ <a href=\"%2$s\"> కంట్రిబ్యూటర్ </a> కావాలని ప్రోత్సహించబడ్డారు: -)]]></item>
-        <item><![CDATA[నాన్ డెవలపర్లు కూడా సహాయపడతాయి. ఉదాహరణకు, మీరు <a href=\"%1$s\"> అనువదించడానికి సహాయం చెయ్యవచ్చు </a> AnkiDroid, వికీని నవీకరించండి, స్క్రీన్షాట్లను అందిస్తుంది లేదా AnkiDroid గురించి బ్లాగ్ చేయవచ్చు.]]></item>
-        <item><![CDATA[AnkiDroid <a href=\"%1$s\"> GNU-GPL v3 లైసెన్సు </a> కింద విడుదల చేయబడింది మరియు సోర్స్ కోడ్ <a href=\"%2$s\"> GitHub లో అందుబాటులో ఉంది </a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ప్రత్యేక ప్రదర్శన</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>

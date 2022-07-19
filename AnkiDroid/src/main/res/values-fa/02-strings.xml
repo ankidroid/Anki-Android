@@ -99,6 +99,9 @@
         <item>ساخته شده</item>
         <item>زمان ویرایش یادداشت</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعیین محدودیت برای کارت جدید امروز</string>
     <string name="custom_study_increase_review_limit">تعیین محدودیت برای مرور کارت امروز</string>
@@ -161,8 +164,8 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">اضافه کردن</string>
     <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد. آیا مطمئنید؟</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">آیا میخواهید \"%s\" را به مجموعه اضافه کنید؟ ممکن است زمان زیادی طول بکشد</item>
+        <item quantity="other">آیا میخواهید این فایل ها را وارد کنید:\n%s\nممکن است زمان زیادی طول بکشد</item>
     </plurals>
     <string name="import_log_no_apkg">این یک فایل معتبر آنکی نیست</string>
     <string name="import_title_error" comment="Title of error dialog">خطا</string>
@@ -181,7 +184,7 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() با مشکل مواجه شد (احتمالاً به دلیل کمبود حافظه)</string>
     <string name="import_error_unhandled_scheme">%s</string>
     <string name="import_error_multiple_colpkg">چندین فایل colpkg انتخاب شده.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_error_colpkg_apkg">هر دو apkg و colpkg فایل ها هم‌زمان انتخاب شده اند</string>
     <string name="import_stats_error">خطا ایجاد شد وقتی این فایل ها در حال وارد شدن بودند:\n%s</string>
     <string name="import_replacing">در حال جایگزین کردن مجموعه&#8230;</string>
     <string name="import_interrupted">در فرایند ورود اختلال ایجاد شد</string>
@@ -329,7 +332,7 @@
     <string name="deck_picker_failed_deck_load">خطا در بارگیری دسته \'%s\'</string>
     <string name="search_decks">جستجو در تمام دسته‌ها</string>
     <string name="ankidroid_init_failed_webview_title">خطای مخرب</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid بر روی سیستم WebView تکیه میکند که غیرقابل دسترسی است. این میتواند اتفاق بیفتد اگر سیستم در حال نسب کردن آپدیت باشد. لطفا دقایقی دیگر تلاش کنید.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">اندازه فونت</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">نمایش نوار ابزار</string>
@@ -340,7 +343,7 @@
     <string name="insert_heading">افزودن سربرگ</string>
     <string name="format_font_size">تغییر اندازۀ قلم</string>
     <string name="insert_mathjax">افزودن معادله MathJax</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="insert_cloze">کلوز را وارد کن</string>
     <string name="note_editor_toolbar_icon">نوشته دکمه</string>
     <string name="before_text">کد HTML قبل از نوشته</string>
     <string name="after_text">کد HTML بعد از نوشته</string>
@@ -354,7 +357,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">صفحه اصلی شما به AnkiDroid اجازه میانبور اضافه کردن نمیدهد </string>
     <string name="create_shortcut_error">خطا در افزودن میانبُر: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">جملات را با حروف بزرگ بنویس</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">پیمایش نوار ابزار</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -388,29 +391,29 @@
     <string name="suspended_card">کارت معطل شد</string>
     <string name="suspended_note">یادداشت معلق شد</string>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">بخش %s را بچسبان</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">مهاجرت انبار</string>
     <string name="scoped_storage_initial_message">AnkiDroid باید اطلاعات خود را جا‌به‌جا کند که بتواند قوانین حریم خصوصی Android را رعایت کند
 /n/nاگر شما AnkiDroid را قبل از مهاجرت حذف کنید، اطلاعات شما گم خواهد شد
 /n/nلطفا هر‌چه زودتر مهاجرت را انجام دهید</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
+    <string name="scoped_storage_terms_message">محاجرت در پشت صحنه در حال انجام است. شما نمیتوانید همگام کنید زمانی که برنامه در حال محاجرت است\n\nزمان تقریبی: %s</string>
     <string name="scoped_storage_term_1">من از اطلاعات خود پشتیبانی گرفتم</string>
     <string name="scoped_storage_term_1_ankiweb">من به تازگی با AnkiWeb همگام شده‌ام</string>
     <string name="scoped_storage_term_2">من برنامه را حذف نمیکنم تا اطلاعات جا‌به‌جا شود</string>
     <string name="scoped_storage_select_all_terms">برای ادامه لطفا همه موارد را بپذیرید</string>
     <string name="scoped_storage_learn_more">بیشتر بدانید</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="scoped_storage_postpone">به تعویق انداختن</string>
+    <string name="scoped_storage_migrate">مهاجرت</string>
+    <string name="search_card_js_api_no_results">جست و جوی شما نتیجه‌ای نداشت</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon">%s بسته ی JavaScript معتبری نیست</string>
+    <string name="could_not_create_dir">ساخت فهرست %s ناموفق بود</string>
+    <string name="malicious_archive_entry_outside">آرشیو خطرناک. حاوی ورودی خارج از فهرست هدف است: %s</string>
+    <string name="malicious_archive_exceeds_limit">ارشیو خطرناک. حجم آن از %1$s بیشتر است یا شامل بیشتر از %2$d فایل است</string>
+    <string name="file_extract_exceeds_storage_space">فایل استخراج حجیم تر از فضای باقی مانده است</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">گسترش تگ \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">دسترسی به مجموعه ناموقف بود. لطفا دوباره تلاش کنید</string>
 </resources>

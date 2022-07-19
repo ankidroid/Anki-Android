@@ -62,13 +62,6 @@
     <string name="initializing_tts">Začenjanje TTS-a &#8230;</string>
     <string name="tts_no_tts">Bodite tiho</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Pomnilne kartice za Android</h2>AnkiDroid je program za pomnilne kartice, ki je v celoti združljiv z namiznim programom <a href=\"%2$s\">Anki</a>. Snov lahko ustvarjate, prejmete in se jo naučite tako v AnkiDroidu kot namiznem Ankiju in jo enostavno sinhronizirate z AnkiWebom.]]></item>
-        <item><![CDATA[Da ga nam pomagate izboljšati, prijavite hrošče v <a href=\"%1$s\">sledilniku težav</a>; nove zamisli o značilnostih so tudi dobrodošle. Odgovore poiščite v <a href=\"%2$s\">wikiju</a> ali začnite razpravo v <a href=\"%3$s\">forumu</a>.]]></item>
-        <item><![CDATA[AnkiDroid je <a href=\"%1$s\">odprtokodna programska oprema<a/>, tako da spodbujamo vsakogar, ki želi <a href=\"%2$s\">prispevati</a> :-)]]></item>
-        <item><![CDATA[Poleg razvijalcev lahko pomagajo tudi ostali. Na primer lahko ga <a href=\"%1$s\">pomagate prevesti</a>, posodobiti wiki, priskrbeti zaslonske slike ali o njem blogati.]]></item>
-        <item><![CDATA[AnkiDroid je izdan pod <a href=\"%1$s\">dovoljenjem GNU-GPL v3</a> in izvorna koda je na voljo <a href=\"%2$s\">na GitHubu</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Predogled</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>

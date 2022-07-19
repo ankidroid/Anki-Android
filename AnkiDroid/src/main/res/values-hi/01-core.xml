@@ -71,8 +71,8 @@
         <item quantity="other">%d मिनट बचे हैं</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d घंटे %2$d बचे हैं</item>
+        <item quantity="other">%1$d घंटे %2$d बचे हैं</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>

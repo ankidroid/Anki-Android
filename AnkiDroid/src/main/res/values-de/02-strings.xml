@@ -99,6 +99,9 @@
         <item>Erstellt</item>
         <item>Notiz geändert</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Heutiges Limit für neue Karten ändern</string>
     <string name="custom_study_increase_review_limit">Heutiges Limit für Karten-Wiederholungen ändern</string>

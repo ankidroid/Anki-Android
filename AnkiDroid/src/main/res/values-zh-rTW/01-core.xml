@@ -69,10 +69,10 @@
         <item quantity="other">還有%d分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">剩餘 %1$d 小時 %2$d </item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">剩餘 %1$d 天 %2$d </item>
     </plurals>
     <string name="no_cards_placeholder_title">牌組是空的</string>
     <string name="no_cards_placeholder_description">使用「+」符號\n

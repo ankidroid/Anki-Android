@@ -59,13 +59,6 @@
     <string name="initializing_tts">Memulai TTS&#8230;</string>
     <string name="tts_no_tts">Jangan bicara</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/> Kartu flash untuk Android </h2> AnkiDroid adalah aplikasi flashcard yang sepenuhnya kompatibel dengan perangkat lunak desktop <a href=\"%2$s\"> Anki </a>. Kamu dapat membuat, mendownload dan mempelajari materi pada Desktop AnkiDroid atau Anki, dan menyinkronkannya dengan mudah dengan AnkiWeb.]]></item>
-        <item><![CDATA[Untuk membantu kami membuat AnkiDroid lebih baik, harap laporkan bug ke <a href=\"%1$s\">issue tracker</a>; Ide fitur baru juga diterima. Cari jawaban di <a href=\"%2$s\">wiki</a> atau mulai diskusi di <a href=\"%3$s\">forum</a>.]]></item>
-        <item><![CDATA[AnkiDroid adalah <a href=\"%1$s\">perangkat lunak sumber terbuka<a/>, semua orang dianjurkan untuk <a href=\"%2$s\">menjadi kontributor</a> :-)]]></item>
-        <item><![CDATA[Yang bukan pengembang juga bisa membantu. Contohnya, kamu dapat <a href=\"%1$s\">membantu menerjemahkan</a> AnkiDroid, menambah artikel wiki, memberikan tangkapan layar, atau membuat postingan tentang AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid dirilis dibawah <a href=\"%1$s\">lisensi GNU-GPL v3</a> dan kode sumber tersedia <a href=\"%2$s\">di GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pratinjau</string>
     <string name="reposition_card_dialog_title">Pindah posisi kartu baru</string>
     <string name="reposition_card_dialog_message">Posisi Mulai:</string>

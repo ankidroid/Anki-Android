@@ -60,13 +60,6 @@
     <string name="initializing_tts">A inicializar TTS&#8230;</string>
     <string name="tts_no_tts">Não falar</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Flashcards para Android</h2>AnkiDroid é uma aplicação de flashcards que é totalmente compatível com o software de PC <a href=\"%2$s\">Anki</a>. Você pode criar, descarregar e aprender conteúdos em ambos, AnkiDroid ou Anki Desktop, e sincronizá-los facilmente com AnkiWeb.]]></item>
-        <item><![CDATA[Para nos ajudar a melhorar a AnkiDroid, por favor, comunique os erros para <a href=\"%1$s\">o rastreador de problemas</a>; também são bem-vindas novas ideias de funcionalidades. Encontrar respostas na <a href=\"%2$s\">wiki</a> ou iniciar uma discussão no <a href=\"%3$s\">fórum</a>.]]></item>
-        <item><![CDATA[AnkiDroid é um <a href=\"%1$s\">programa de código aberto<a/>, e assim toda a gente é incentivada a <a href=\"%2$s\">tornar-se um colaborador</a> :-)]]></item>
-        <item><![CDATA[Não desenvolvedores também podem ajudar. Por exemplo, você pode <a href=\"%1$s\">ajudar a traduzir</a> AnkiDroid, actualizar a wiki, fornecer capturas de ecrã ou escrever um blogue sobre AnkiDroid.]]></item>
-        <item><![CDATA[O AnkiDroid é publicado sob a <a href=\"%1$s\">licença GNU-GPL v3</a> e o código fonte está disponível no <a href=\"%2$s\">GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pré-visualizar</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>

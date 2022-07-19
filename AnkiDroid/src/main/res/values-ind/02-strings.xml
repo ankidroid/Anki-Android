@@ -99,6 +99,9 @@
         <item>Dibuat</item>
         <item>Catatan diubah</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ubah batas kartu baru hari ini</string>
     <string name="custom_study_increase_review_limit">Ubah batas ulasan kartu hari ini</string>

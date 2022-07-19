@@ -47,8 +47,8 @@
     <!-- generic strings -->
     <string name="disabled">Вимкнено</string>
     <string name="enabled">Ввімкнено</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_seconds">%s сек</string>
+    <string name="pref_summary_minutes">%s хв</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Загальні</string>
@@ -68,8 +68,6 @@
     <string name="pref_cat_performance" maxLength="41">Продуктивність</string>
     <string name="pref_cat_workarounds" maxLength="41">Спеціальні функції</string>
     <string name="pref_cat_plugins" maxLength="41">Плагіни</string>
-    <string name="about_title" maxLength="41">Про AnkiDroid</string>
-    <string name="about_version">Версія: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Ширина штриха</string>
     <string name="use_input_tag" maxLength="41">Введіть відповідь на картці</string>
@@ -185,7 +183,7 @@
     <string name="time_limit" maxLength="41">Період лічильника переглядів</string>
     <string name="new_timezone" maxLength="41">Обробка нового часового поясу</string>
     <string name="day_offset_with_description" maxLength="41">Початок наступного дня (0 – опівніч, 23 – 23:00)</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s годин після опівночі</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Північ</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="sched_v2" maxLength="41">Планувальник V2</string>
@@ -327,8 +325,15 @@
     <string name="no_code_formatting_summ">Виправляє «􏿾», що з\'являються у результатах введених відповідей</string>
     <string name="type_in_answer_focus" maxLength="41">Перемкнути на «Вводити відповідь»</string>
     <string name="type_in_answer_focus_summ">Під час повторення автоматично переходити до поля «Ввести відповідь»</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">Відкрити список змін</string>
+    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="license">License</string>
+    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">Додати жест</string>
     <string name="binding_replace_gesture">Замінити жест</string>
     <string name="binding_add_key">Додати ключ</string>
@@ -345,4 +350,10 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Видалити \'%s\'</string>
     <string name="bindings_already_bound">Вже прив\'язано до %s</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
+    <string name="disable_dev_options">Disable developer options</string>
+    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    </string>
 </resources>

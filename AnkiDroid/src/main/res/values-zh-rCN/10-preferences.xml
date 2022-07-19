@@ -47,8 +47,8 @@
     <!-- generic strings -->
     <string name="disabled">禁用</string>
     <string name="enabled">启用</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_seconds">%s 秒</string>
+    <string name="pref_summary_minutes">%s 分钟</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">常规</string>
@@ -68,8 +68,6 @@
     <string name="pref_cat_performance" maxLength="41">性能</string>
     <string name="pref_cat_workarounds" maxLength="41">变通方法</string>
     <string name="pref_cat_plugins" maxLength="41">插件</string>
-    <string name="about_title" maxLength="41">关于</string>
-    <string name="about_version">版本：</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">笔画粗细</string>
     <string name="use_input_tag" maxLength="41">在卡片中输入答案</string>
@@ -184,7 +182,7 @@
     <string name="time_limit" maxLength="41">时间盒时间限制</string>
     <string name="new_timezone" maxLength="41">新时区处理</string>
     <string name="day_offset_with_description" maxLength="41">次日开始时间 (0为午夜，23为 11PM)</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">午夜过后 %s 小时</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
     <string name="sched_v2" maxLength="41">V2 调度器</string>
@@ -320,8 +318,15 @@
     <string name="no_code_formatting_summ">修复在输入的答案结果中出现的“􏿾”</string>
     <string name="type_in_answer_focus" maxLength="41">聚焦“输入答案”</string>
     <string name="type_in_answer_focus_summ">自动聚焦在复习者的“输入答案”字段</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">打开更新日志</string>
+    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="license">License</string>
+    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">添加手势</string>
     <string name="binding_replace_gesture">替换手势</string>
     <string name="binding_add_key">添加按键</string>
@@ -338,4 +343,10 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">移除“%s”</string>
     <string name="bindings_already_bound">已绑定到 %s</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
+    <string name="disable_dev_options">Disable developer options</string>
+    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    </string>
 </resources>
