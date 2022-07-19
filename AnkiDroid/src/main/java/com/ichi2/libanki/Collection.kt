@@ -1332,6 +1332,12 @@ open class Collection(
         return Finder(this).findCards(search, order, task)
     }
 
+    /** Return a list of card ids  */
+    @KotlinCleanup("Remove in V16.") // Not in libAnki
+    fun findOneCardByNote(query: String?): List<Long> {
+        return Finder(this).findOneCardByNote(query)
+    }
+
     /** Return a list of note ids  */
     fun findNotes(query: String?): List<Long> {
         return Finder(this).findNotes(query)
