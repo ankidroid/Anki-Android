@@ -13,122 +13,80 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.async
 
-package com.ichi2.async;
+import com.ichi2.libanki.CollectionGetter
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
 
-import com.ichi2.libanki.CollectionGetter;
-import com.ichi2.utils.KotlinCleanup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-public class ForegroundTaskManager extends TaskManager {
-    private final CollectionGetter mColGetter;
-
-
-    public ForegroundTaskManager(CollectionGetter colGetter) {
-        mColGetter = colGetter;
+@KotlinCleanup("fix IDE lint issues")
+class ForegroundTaskManager(private val colGetter: CollectionGetter) : TaskManager() {
+    protected override fun removeTaskConcrete(task: CollectionTask<*, *>): Boolean {
+        return true
     }
 
-    @Override
-    protected boolean removeTaskConcrete(CollectionTask task) {
-        return true;
+    override fun <Progress, Result> launchCollectionTaskConcrete(task: TaskDelegateBase<Progress, Result>): Cancellable {
+        return launchCollectionTaskConcrete(task, null)
     }
 
-
-    @Override
-    public <Progress, Result> Cancellable launchCollectionTaskConcrete(TaskDelegateBase<Progress, Result> task) {
-        return launchCollectionTaskConcrete(task, null);
+    protected override fun setLatestInstanceConcrete(task: CollectionTask<*, *>) {}
+    override fun <Progress, Result> launchCollectionTaskConcrete(
+        task: TaskDelegateBase<Progress, Result>,
+        listener: TaskListener<in Progress, in Result?>?
+    ): Cancellable {
+        return executeTaskWithListener(task, listener, colGetter)
     }
 
-
-    @Override
-    protected void setLatestInstanceConcrete(CollectionTask task) {
+    override fun waitToFinishConcrete() {}
+    override fun waitToFinishConcrete(timeoutSeconds: Int?): Boolean {
+        return true
     }
 
-
-    @Override
-    public <Progress, Result> Cancellable launchCollectionTaskConcrete(
-            @NonNull TaskDelegateBase<Progress, Result> task,
-            @Nullable TaskListener<? super Progress, ? super Result> listener) {
-        return executeTaskWithListener(task, listener, mColGetter);
+    override fun cancelCurrentlyExecutingTaskConcrete() {}
+    override fun cancelAllTasksConcrete(taskType: Class<*>) {}
+    override fun waitForAllToFinishConcrete(timeoutSeconds: Int): Boolean {
+        return true
     }
 
-    @KotlinCleanup("getCol should be allowed to return null: maybe getColSafe here?")
-    public static <Progress, Result> Cancellable executeTaskWithListener(
-            @NonNull TaskDelegateBase<Progress, Result> task,
-            @Nullable TaskListener<? super Progress, ? super Result> listener, CollectionGetter colGetter) {
-        if (listener != null) {
-            listener.onPreExecute();
-        }
-        final Result res;
-        try {
-            res = task.execTask(colGetter.getCol(), new MockTaskManager<>(listener));
-        } catch (Exception e) {
-            Timber.w(e, "A new failure may have something to do with running in the foreground.");
-            throw e;
-        }
-        if (listener != null) {
-            listener.onPostExecute(res);
-        }
-        return new EmptyTask<>(task, listener);
-    }
-
-
-    @Override
-    public void waitToFinishConcrete() {
-    }
-
-
-    @Override
-    public boolean waitToFinishConcrete(@Nullable Integer timeoutSeconds) {
-        return true;
-    }
-
-
-    @Override
-    public void cancelCurrentlyExecutingTaskConcrete() {
-    }
-
-
-    @Override
-    public void cancelAllTasksConcrete(Class taskType) {
-    }
-
-
-    @Override
-    public boolean waitForAllToFinishConcrete(int timeoutSeconds) {
-        return true;
-    }
-
-    public static class MockTaskManager<ProgressListener, Progress extends ProgressListener> implements ProgressSenderAndCancelListener<Progress> {
-
-        private final @Nullable TaskListener<? super Progress, ?> mTaskListener;
-
-
-        public MockTaskManager(@Nullable TaskListener<? super Progress, ?> listener) {
-            mTaskListener = listener;
+    class MockTaskManager<ProgressListener, Progress : ProgressListener?>(
+        private val taskListener: TaskListener<in Progress, *>?
+    ) : ProgressSenderAndCancelListener<Progress> {
+        override fun isCancelled(): Boolean {
+            return false
         }
 
-
-        @Override
-        public boolean isCancelled() {
-            return false;
-        }
-
-
-        @Override
-        public void doProgress(@Nullable Progress value) {
-            mTaskListener.onProgressUpdate(value);
+        override fun doProgress(value: Progress?) {
+            taskListener!!.onProgressUpdate(value!!)
         }
     }
 
-    public static class EmptyTask<Progress, Result> extends
-            CollectionTask<Progress, Result> {
+    class EmptyTask<Progress, Result>(
+        task: TaskDelegateBase<Progress, Result>?,
+        listener: TaskListener<in Progress, in Result?>?
+    ) : CollectionTask<Progress, Result>(
+        task!!, listener, null
+    )
 
-        protected EmptyTask(TaskDelegateBase<Progress, Result> task, TaskListener<? super Progress, ? super Result> listener) {
-            super(task, listener, null);
+    companion object {
+        @KotlinCleanup("getCol should be allowed to return null: maybe getColSafe here?")
+        fun <Progress, Result> executeTaskWithListener(
+            task: TaskDelegateBase<Progress, Result>,
+            listener: TaskListener<in Progress, in Result?>?,
+            colGetter: CollectionGetter
+        ): Cancellable {
+            listener?.onPreExecute()
+            val res: Result
+            res = try {
+                task.execTask(colGetter.col, MockTaskManager(listener))
+            } catch (e: Exception) {
+                Timber.w(
+                    e,
+                    "A new failure may have something to do with running in the foreground."
+                )
+                throw e
+            }
+            listener?.onPostExecute(res)
+            return EmptyTask(task, listener)
         }
     }
 }
