@@ -99,6 +99,9 @@
         <item>作成日</item>
         <item>ノート編集日</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
     <string name="custom_study_increase_review_limit">今日の復習カード上限を変更</string>

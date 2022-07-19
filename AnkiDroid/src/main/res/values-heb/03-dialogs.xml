@@ -62,13 +62,6 @@
     <string name="initializing_tts">מאתחל מנוע כתוב-אל-דיבור...‏</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
     <string name="unused_strings">\n\nקבצים שאינם בשימוש:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>קלפי לימוד ל־Android</h2>AnkiDroid הוא יישום עם קלפי זיכרון עם תאימות לתכנית שולחן העבודה <a href=\"%2$s\">Anki</a>. ניתן ליצור, להוריד וללמוד חומר גם ב־AnkiDroid או ב־Anki Desktop, ולסנכרן ביניהם בקלות עם AnkiWeb.]]></item>
-        <item><![CDATA[כדי לעזור לנו לשפר את AnkiDroid, אנא דווח על באגים ל<a href=\"%1$s\">עקוב אחר הבעיות</a>; גם רעיונות לתכונות חדשות יתקבלו בברכה. מצא תשובות ב<a href=\"%2$s\">הויקי</a> או התחל דיון ב<a href=\"%3$s\">הפורום</a>.]]></item>
-        <item><![CDATA[AnkiDroid הוא <a href=\"%1$s\">תכנה חופשית <a/>, כולם מוזמנים  <a href=\"%2$s\">להיות תורמים ומשפיעים  a </a> :-)]]></item>
-        <item><![CDATA[גם חסרי ידע טכנולוגי יכולים לסייע. למשל,  ניתן <a href=\"%1$s\">לעזור בתרגום</a> AnkiDroid, לעדכן את הויקי, לספק צילומי מסך, או לכתוב בלוג על AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid משוחררת ב<a href=\"%1$s\">רשיון הציבורי הכללי של גנו, גרסה 3</a> וקוד המקור שלה זמין <a href=\"%2$s\">באתר GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">תצוגה מקדימה</string>
     <string name="reposition_card_dialog_title">שינוי מיקום כרטיס חדש</string>
     <string name="reposition_card_dialog_message">מיקום התחלתי:</string>

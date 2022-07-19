@@ -49,7 +49,7 @@
     <string name="enabled">Activé</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s \%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Général</string>
     <string name="pref_cat_general_summ">Paramètres généraux</string>
@@ -68,8 +68,6 @@
     <string name="pref_cat_performance" maxLength="41">Performance</string>
     <string name="pref_cat_workarounds" maxLength="41">Solution</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="about_title" maxLength="41">À propos d’AnkiDroid</string>
-    <string name="about_version">Version : </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Largeur des traits</string>
     <string name="use_input_tag" maxLength="41">Saisir la réponse dans la carte</string>
@@ -184,7 +182,7 @@
     <string name="time_limit" maxLength="41">Limite de temps</string>
     <string name="new_timezone" maxLength="41">Nouvelle gestion du fuseau horaire</string>
     <string name="day_offset_with_description" maxLength="41">Début du jour suivant (0 est minuit, 23 est 23 h)</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s heures après minuit</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Minuit</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23h00</string>
     <string name="sched_v2" maxLength="41">Planificateur V2</string>
@@ -322,8 +320,15 @@
     <string name="no_code_formatting_summ">Corrige ‘􏿾’ apparaissant dans les résultats de réponse saisie</string>
     <string name="type_in_answer_focus" maxLength="41">Mettre en évidence « Saisir la réponse »</string>
     <string name="type_in_answer_focus_summ">Mettre automatiquement en évidence le champ « Saisir la réponse » dans le vérificateur</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">Ouvrir le journal des modifications</string>
+    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="license">License</string>
+    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">Ajouter un geste</string>
     <string name="binding_replace_gesture">Remplacer le geste</string>
     <string name="binding_add_key">Ajouter une touche</string>
@@ -340,4 +345,10 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Retirer « %s »</string>
     <string name="bindings_already_bound">Déjà lié à %s</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
+    <string name="disable_dev_options">Disable developer options</string>
+    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    </string>
 </resources>

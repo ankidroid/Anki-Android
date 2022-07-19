@@ -60,13 +60,6 @@
     <string name="initializing_tts">Initierar TTS&#8230;</string>
     <string name="tts_no_tts">Tala inte</string>
     <string name="unused_strings">\n\nOanvända filer:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Flash-kort för Android</h2>AnkiDroid är en flash-kort applikation som är helt kompatibel med stationära mjukvaran <a href=\"%2$s\">Anki</a>. Du kan skapa, ladda ner och lära dig material på både AnkiDroid eller Anki Desktop, och synkronisera dem lätt med AnkiWeb.]]></item>
-        <item><![CDATA[För att hjälpa oss göra AnkiDroid bättre, vänligen rapportera buggar till <a href=\"%1$s\">issue trackern</a>; nya funktionsidéer är också mycket välkomna. Hitta svar på <a href=\"%2$s\">wikin</a> eller starta en diskussion på <a href=\"%3$s\">forumet</a>.]]></item>
-        <item><![CDATA[AnkiDroid är en <a href=\"%1$s\">open source mjukvara<a/>, så alla uppmuntras till att <a href=\"%2$s\">bli en bidragsgivare</a> :-)]]></item>
-        <item><![CDATA[Icke-utvecklare kan också hjälpa. Exempelvis kan du <a href=\"%1$s\"> hjälpa till att översätta</a> AnkiDroid, uppdatera wikin, ta skärmdumpar eller blogga om AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid är släppt under <a href=\"%1$s\">GNU-GPL v3 licensen</a> och all källkod finns tillgänglig <a href=\"%2$s\">på GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Förhandsgranskning</string>
     <string name="reposition_card_dialog_title">Ompositionera nytt kort</string>
     <string name="reposition_card_dialog_message">Startposition:</string>

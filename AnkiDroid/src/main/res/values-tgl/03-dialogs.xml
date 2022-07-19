@@ -60,13 +60,6 @@
     <string name="initializing_tts">Magpasimula ng TTS&#8230;</string>
     <string name="tts_no_tts">Huwag kang magsalita</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Mga Flashcard para sa Android</h2>Ang AnkiDroid ay isang flashcard na aplikasyon na ganap na katugma sa desktop softweyr<a href=\"%2$s\">Anki</a>. Maaari kang lumikha, mag-download at matuto ng materyal sa parehong AnkiDroid o Anki Desktop, at madaling i-synchronize ang mga ito sa AnkiWeb.]]></item>
-        <item><![CDATA[Upang matulungan kaming gawing mahusay ang AnkiDroid, mangyaring mag-ulat ng mga bug sa <a href+\"%1$s\">ang isyu ng tracker</a>; ang mga bagong tampok na ideya ay masyadong tinatanggap nang malugod. Maghanap ng mga sagot sa <a href=\"%2$s\">sa wiki</a> o magsimula ng talakayan sa <a href=\"%3$s\"> ang forum</a>.]]></item>
-        <item><![CDATA[Ang AnkiDroid ay isang <a href=\"%1$s\">open source na softweyr<a/>, kaya lahat ay hinihikayat na <a href=\"%2$s\">maging isang kontribyutor</a> :-)]]></item>
-        <item><![CDATA[Makakatulong din ang mga hindi nagde-develop. Halimbawa, maari mong <a href=\"%1$s\">tulong sa pagsalin</a> AnkiDroid, i-update ang wiki, magbigay ng mga screenshot, o blog tungkol sa AnkiDroid.]]></item>
-        <item><![CDATA[Inilabas ang AnkiDroid sa ilalim ng <a href=\"%1$s\">lisenya ng GNU-GPL v3</a> at magagamit ang source code <a href=\"%2$s\">sa GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Prebiyu</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>

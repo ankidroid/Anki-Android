@@ -60,13 +60,6 @@
     <string name="initializing_tts">Valmistellaan TTS:ää&#8230;</string>
     <string name="tts_no_tts">Älä puhu</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Kääntökorttisovellus Androidille</h2>AnkiDroid on ohjelma opiskeluun kääntökorttien (flashcard) avulla. Se on täysin yhteensopiva <a href=\"%2$s\">Anki</a> -työpöytäsovelluksen kanssa. Voit luoda kortteja, ladata niitä ja opiskella sekä AnkiDroidilla, että Ankilla ja synkronoida ne helposti toistensa kanssa.]]></item>
-        <item><![CDATA[Auta tekemään AnkiDroidista parempi, raportoi löytämäsi virheet <a href=\"%1$s\">täällä</a>. Ideoita uusiksi ominaisuuksiksi otetaan myös vastaan, käytä <a href=\"%2$s\">wikiä</a> ja käy <a href=\"%3$s\">foorumilla</a>.]]></item>
-        <item><![CDATA[AnkiDroid on <a href=\"%1$s\">avoimen lähdekoodin ohjelma<a/>, joten kaikki ovat <a href=\"%2$s\">tervetulleita vaikuttamaan</a> :-)]]></item>
-        <item><![CDATA[Muutkin kuin ohjelmistokehittäjät voivat auttaa. Esimerkiksi, voit <a href=\"%1$s\">auttaa Ankidroidin käännöstyössä</a>, päivittää wikiä, jakaa kuvakaappauksia tai kertoa Ankidroidista sosiaalisessa mediassa.]]></item>
-        <item><![CDATA[Ankidroid on julkaistu <a href=\"%1$s\">GNU-GPL v3-lisenssin</a> alaisena ja lähdekoodi on saatavilla <a href=\"%2$s\">GitHub:ssa</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Esikatselu</string>
     <string name="reposition_card_dialog_title">Siirrä uusi kortti</string>
     <string name="reposition_card_dialog_message">Aloituspiste:</string>

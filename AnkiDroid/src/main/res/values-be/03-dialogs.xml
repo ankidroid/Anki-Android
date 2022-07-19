@@ -62,13 +62,6 @@
     <string name="initializing_tts">Ініцыялізацыя сінтэзу маўлення...</string>
     <string name="tts_no_tts">Не прамаўляць</string>
     <string name="unused_strings">\n\nНявыкарыстаныя файлы:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s: <br/>Навучальныя карткі для Android</h2>AnkiDroid - гэта праграма навучальных картак, якая цалкам сумяшчальная з версіяй праграмы для настольных камп\'ютараў <a href=\"%2$s\"> Anki</a>. Стварайце, пампуйце і вучыце матэрыял на любой прыладзе, а потым з лёгкасцю сінхранізуйце іх з дапамогай AnkiWeb.]]></item>
-        <item><![CDATA[Для таго, каб дапамагчы зрабіць нам праграму яшчэ лепш, калі ласка, адпраўляйце справаздачы пра памылкі <a href=\"%1$s\">ў цэнтр адсочвання праблем</a>; мы таксама вітаем прапановы новых магчымасцяў у праграме. Шукайце адказы ў <a href=\"%2$s\">Wikipedia</a> або пачніце абмеркаванне на <a href=\"%3$s\">форуме</a>.]]></item>
-        <item><![CDATA[AnkiDroid — гэта <a href=\"%1$s\">праграмнае забеспячэнне з адкрытым зыходным кодам<a/>, таму любы ахвотны можа <a href=\"%2$s\">зрабіць свой унёсак</a> :-)]]></item>
-        <item><![CDATA[Калі вы не з\'яўляецеся распрацоўшчыкам, вы таксама можаце дапамагчы. Напрыклад, можна <a href=\"%1$s\">перакласці AnkiDroid на сваю родную мову</a>, абнавіць інфармацыю ў Wikipedia, зрабіць свае здымкі экрана або распавесці іншым пра AnkiDroid у сваім блогу.]]></item>
-        <item><![CDATA[Усе версіі AnkiDroid выпускаюцца пад <a href=\"%1$s\">ліцэнзіяй GNU-GPL v3</a> і зыходны код даступны <a href=\"%2$s\">на GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Папярэдні прагляд</string>
     <string name="reposition_card_dialog_title">Перамясціць новую картку</string>
     <string name="reposition_card_dialog_message">Пачатковая пазіцыя:</string>

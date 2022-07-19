@@ -99,6 +99,9 @@
         <item>Oluşturulma</item>
         <item>Değiştirilmiş notlar</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
     <string name="custom_study_increase_review_limit">Bugünün tekrar edilecek kart sınırını düzenle</string>

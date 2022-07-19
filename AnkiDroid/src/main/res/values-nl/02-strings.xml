@@ -99,6 +99,9 @@
         <item>Gemaakt</item>
         <item>Memo gewijzigd</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Nieuwe kaartenlimiet voor vandaag wijzigen</string>
     <string name="custom_study_increase_review_limit">Limiet te overhoren kaarten voor vandaag wijzigen</string>

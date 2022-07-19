@@ -60,13 +60,6 @@
     <string name="initializing_tts">Initialisiere Vorlesen&#8230;</string>
     <string name="tts_no_tts">Nicht vorlesen</string>
     <string name="unused_strings">\n\nUnbenutzte Dateien:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Lernkartei für Android</h2>AnkiDroid ist eine Lernkartei-Anwendung, die voll kompatibel mit der Desktop-Software <a href=\"%2$s\">Anki</a> ist. Sie können mit AnkiDroid oder Anki Desktop Inhalte erstellen, herunterladen und lernen, und dann ganz einfach mit AnkiWeb synchronisieren.]]></item>
-        <item><![CDATA[Um AnkiDroid zu verbessern, melden Sie Bugs bitte in dem <a href=\"%1$s\">Issue-Tracker</a>. Ideen zu neuen Features sind dort auch willkommen. Schauen Sie bei Fragen in das <a href=\"%2$s\">Wiki</a> oder starten Sie eine Diskussion im <a href=\"%3$s\">Forum</a>.]]></item>
-        <item><![CDATA[AnkiDroid ist <a href=\"%1$s\">quelloffene Software<a/> und wir würden uns freuen, auch Sie <a href=\"%2$s\">als neue Mitwirkende</a> willkommen zu heißen :-)]]></item>
-        <item><![CDATA[Auch Nicht-Entwickler können helfen. Sie können z. B. beim <a href=\"%1$s\">Übersetzen</a> von AnkiDroid helfen, das Wiki aktualisieren, Bildschirmfotos machen oder über AnkiDroid bloggen.]]></item>
-        <item><![CDATA[AnkiDroid ist nach <a href=\"%1$s\">GNU-GPL v3</a> lizenziert, der Quellcode ist <a href=\"%2$s\">bei GitHub</a> verfügbar.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Vorschau</string>
     <string name="reposition_card_dialog_title">Position der neuen Karte ändern</string>
     <string name="reposition_card_dialog_message">Anfangsposition:</string>

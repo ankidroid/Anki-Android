@@ -47,15 +47,15 @@
     <!-- generic strings -->
     <string name="disabled">Адключана</string>
     <string name="enabled">Уключана</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_seconds">%s сек.</string>
+    <string name="pref_summary_minutes">%s хв.</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Агульныя</string>
     <string name="pref_cat_general_summ">Агульныя налады</string>
     <string name="pref_cat_reviewing" maxLength="41">Паўтарэнне</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Сінхранізацыя</string>
+    <string name="pref_cat_scheduling" maxLength="41">Расклад</string>
     <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
     <string name="pref_cat_appearance" maxLength="41">Знешні выгляд</string>
     <string name="pref_cat_appearance_summ">Змена тэмы і стандартны шрыфт</string>
@@ -68,8 +68,6 @@
     <string name="pref_cat_performance" maxLength="41">Прадукцыйнасць</string>
     <string name="pref_cat_workarounds" maxLength="41">Абходныя шляхі</string>
     <string name="pref_cat_plugins" maxLength="41">Плагiны</string>
-    <string name="about_title" maxLength="41">Пра AnkiDroid</string>
-    <string name="about_version">Версія: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Шырыня штрыха</string>
     <string name="use_input_tag" maxLength="41">Уводзіць адказ на картцы</string>
@@ -185,7 +183,7 @@
     <string name="time_limit" maxLength="41">Абмежаванне навучальнага блока</string>
     <string name="new_timezone" maxLength="41">Апрацоўка новага часавога пояса</string>
     <string name="day_offset_with_description" maxLength="41">Пачатак наступнага дня</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s гадз. пасля поўначы</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Поўнач</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="sched_v2" maxLength="41">2-ая версія планіроўшчыка</string>
@@ -209,8 +207,8 @@
     <string name="html_javascript_debugging" maxLength="41">Адладка HTML / JavaScript</string>
     <string name="html_javascript_debugging_summ">Уключыць аддаленыя злучэнні WebView і захаваць картку HTML у каталозе AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Паўтарэнне</string>
+    <string name="accessibility" maxLength="41">Спецыяльныя магчымасці</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Устаўляць з буфера абмену відарысы як PNG</string>
     <string name="paste_as_png_summary">Стандартна, праграма ўстаўляе відарысы ў буфер абмену як файлы JPG для эканоміі дыскавай прасторы. Вы можаце скарыстацца гэтым параметрам для ўстаўкі відарысаў PNG замест JPG.</string>
@@ -239,7 +237,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Спасылка для медыяфайлаў</string>
     <string name="custom_sync_server_media_url_invalid">Памылковая спасылка сінхранізацыі медыяфайлаў</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Клавіятура</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Супастаўленне каманд</string>
     <!-- studyoptions -->
@@ -327,12 +325,19 @@
     <string name="no_code_formatting_summ">Выпраўляе ‘􏿾’ падчас уводу адказу</string>
     <string name="type_in_answer_focus" maxLength="41">Пераключацца на поле \"Увесці адказ\"</string>
     <string name="type_in_answer_focus_summ">Падчас паўтарэння аўтаматычна пераключацца на поле \"Увесці адказ\"</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">Адкрыць спіс змен</string>
+    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="license">License</string>
+    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">Дадаць жэст</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Замяніць жэст</string>
     <string name="binding_add_key">Дадаць кнопку</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Замяніць ключ</string>
     <string name="key_picker_default_press_key">Націсніце кнопку</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберыце бок карткі</string>
@@ -345,4 +350,10 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Выдаліць “%s”</string>
     <string name="bindings_already_bound">Ужо прызначана \"%s\"</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
+    <string name="disable_dev_options">Disable developer options</string>
+    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    </string>
 </resources>

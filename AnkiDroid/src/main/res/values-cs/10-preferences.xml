@@ -49,7 +49,7 @@
     <string name="enabled">Povoleno</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s \%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Obecné</string>
     <string name="pref_cat_general_summ">Obecné nastavení</string>
@@ -68,15 +68,13 @@
     <string name="pref_cat_performance" maxLength="41">Výkon</string>
     <string name="pref_cat_workarounds" maxLength="41">Možná zástupná řešení</string>
     <string name="pref_cat_plugins" maxLength="41">Pluginy</string>
-    <string name="about_title" maxLength="41">O AnkiDroid</string>
-    <string name="about_version">Verze: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Šířka tahu</string>
     <string name="use_input_tag" maxLength="41">Napište odpověď do karty</string>
     <string name="use_input_tag_summ">Odpověď vložte do textového pole na kartě</string>
     <string name="reset_languages" maxLength="41">Obnovit jazyky</string>
     <string name="reset_languages_summ">Vynulovat přiřazení jazyka (pro převod textu na řeč a slovníky) pro všechny balíčky</string>
-    <string name="reset_languages_question">Obnovit všechny přiřazení jazyka?</string>
+    <string name="reset_languages_question">Obnovit všechna přiřazení jazyka?</string>
     <string name="reset_confirmation">Obnovit všechny stavy</string>
     <string name="card_zoom" maxLength="41">Zvětšení karty</string>
     <string name="image_zoom" maxLength="41">Zvětšení obrázku</string>
@@ -184,7 +182,7 @@
     <string name="time_limit" maxLength="41">Časové omezení</string>
     <string name="new_timezone" maxLength="41">Nové zpracování časového pásma</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s hodin(y) po půlnoci</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Půlnoc</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="sched_v2" maxLength="41">V2 plánovač</string>
@@ -194,7 +192,7 @@
     <string name="pref_keep_screen_on" maxLength="41">Nevypínat obrazovku</string>
     <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>
     <string name="convert_fen_text" maxLength="41">Podpora šachové notace</string>
-    <string name="convert_fen_text_summ">Vykreslení šachovnice z Forsyth-Edwardsovy notace. Notace musí být uzavřena mezi značky [fen][/fen].</string>
+    <string name="convert_fen_text_summ">Vykreslení šachovnice z Forsyth-Edwardsovy notace. Notace musí být uzavřena mezi značky [fen][/fen]</string>
     <string name="enable_api_title" maxLength="41">Povolit AnkiDroid API</string>
     <string name="enable_api_summary">Umožnit ostatním aplikacím připojit se k AnkiDroid a číst/zapisovat data bez zásahu uživatele</string>
     <string name="custom_buttons" maxLength="41">Tlačítka na panelu aplikace</string>
@@ -204,7 +202,7 @@
     <string name="custom_buttons_setting_menu_only">Pouze nabídka</string>
     <string name="reset_custom_buttons" maxLength="41">Obnovit výchozí nastavení</string>
     <string name="thirdparty_apps_title" maxLength="41">API aplikace třetích stran</string>
-    <string name="thirdparty_apps_summary">Zobrazit seznam aplikací, které používají AnkiDroid API, jako jsou slovníky, nástroje.</string>
+    <string name="thirdparty_apps_summary">Zobrazit seznam aplikací, které používají AnkiDroid API, jako jsou slovníky, nástroje</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
     <string name="html_javascript_debugging_summ">Umožnit vzdálené připojení k WebView a uložit HTML karet do adresáře AnkiDroid</string>
     <!-- Appearance settings -->
@@ -225,7 +223,7 @@
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Pokročilé statistiky</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Zapnout pokročilé statistiky</string>
-    <string name="enable_advanced_statistics_summ">Zobrazení předpovědi statistiky založené na výpočtu nebo simulaci budoucích opakování (povoleno) nebo na základě již naplánovaných budoucích opakování (zakázáno).</string>
+    <string name="enable_advanced_statistics_summ">Zobrazení předpovědi statistiky založené na výpočtu nebo simulaci budoucích opakování (povoleno) nebo na základě již naplánovaných budoucích opakování (zakázáno)</string>
     <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Vypočítat prvních n dní a zbytek simulovat</string>
     <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Přesnost výpočtu</string>
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Počet iterací simulace</string>
@@ -271,7 +269,7 @@
     <string name="deck_conf_rev_bury" maxLength="41">Přeskočit související opakování</string>
     <string name="deck_conf_rev_bury_summ">Související opakování jsou odloženy na další den</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">Použít obecné nastavení</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Použít obecné nastavení „automaticky zobrazovat odpověď“ místo nastavení pro tuto skupinu.</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">Použít obecné nastavení „automaticky zobrazovat odpověď“ místo nastavení pro tuto skupinu</string>
     <string name="deck_conf_easy_bonus" maxLength="41">Bonus pro snadné</string>
     <string name="deck_conf_hard_factor" maxLength="41">Interval pro těžké</string>
     <string name="deck_conf_ivl_fct" maxLength="41">Modifikátor intervalu</string>
@@ -326,8 +324,15 @@
     <string name="no_code_formatting_summ">Opraví „􏿾“, které se vyskytuje ve výsledcích napsaných odpovědí</string>
     <string name="type_in_answer_focus" maxLength="41">Vybrat „napište odpověď“</string>
     <string name="type_in_answer_focus_summ">Automaticky vybrat pole „napište odpověď“ při opakování</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">Otevřít seznam změn</string>
+    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="license">License</string>
+    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">Přidat gesto</string>
     <string name="binding_replace_gesture">Nahradit gesto</string>
     <string name="binding_add_key">Přidat klávesu</string>
@@ -344,4 +349,10 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Odstranit „%s“</string>
     <string name="bindings_already_bound">Již přiřazeno k %s</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
+    <string name="disable_dev_options">Disable developer options</string>
+    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    </string>
 </resources>

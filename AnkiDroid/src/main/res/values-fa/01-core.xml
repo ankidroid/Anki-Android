@@ -71,8 +71,8 @@
         <item quantity="other">%d دقیقه باقیمانده</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d ساعت %2$d مانده</item>
+        <item quantity="other">%1$d ساعت %2$d مانده</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>

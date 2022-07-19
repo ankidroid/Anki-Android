@@ -99,6 +99,9 @@
         <item>Створана</item>
         <item>Запіс зменены</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змяніць абмежаванні новых картак на сёння</string>
     <string name="custom_study_increase_review_limit">Змяніць абмежаванні паўтарэння картак на сёння</string>
@@ -442,5 +445,5 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Разгарнуць тэг \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Збой атрымання доступу да калекцыі. Калі ласка, паспрабуйце яшчэ раз!</string>
 </resources>

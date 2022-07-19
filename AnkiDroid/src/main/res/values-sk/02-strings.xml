@@ -99,6 +99,9 @@
         <item>Vytvorené</item>
         <item>Poznámka modifikovaná</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifikovať dnešný limit nových kartičiek</string>
     <string name="custom_study_increase_review_limit">Modifikovať dnešný limit kartičiek na zopakovanie</string>

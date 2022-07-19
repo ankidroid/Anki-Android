@@ -99,6 +99,9 @@
         <item>बनाया गया</item>
         <item>नोट संशोधित किया गया</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">आज की नई कार्ड सीमा को संशोधित करें</string>
     <string name="custom_study_increase_review_limit">आज की समीक्षा कार्ड सीमा को संशोधित करें</string>

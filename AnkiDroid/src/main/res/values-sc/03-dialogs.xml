@@ -61,13 +61,6 @@
     <string name="initializing_tts">Initzializende sa sìntesi vocale TTS&#8230;</string>
     <string name="tts_no_tts">Non chistiones</string>
     <string name="unused_strings">\n\nDocumentos no impreados:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Cartas mnemònicas pro Android</h2>AnkiDroid est un\'aplicatzione a cartas mnemònicas chi est cumpatìbile de su totu cun su programma de iscrivania <a href=\"%2$s\">Anki</a>. Podes creare, iscarrigare e imparare materiale siat in AnkiDroid siat in Anki Desktop, e los podes sincronizare in manera fàtzile impreende AnkiWeb.]]></item>
-        <item><![CDATA[Pro nos agiudare a megiorare AnkiDroid sinnala·nos sas faddinas de còdighe in <a href=\"%1$s\">s\'arrastadore de errores</a>; sunt benebènnidas fintzas sas ideas pro funtzionalidades noas. Busca rispostas in <a href=\"%2$s\">sa wiki</a> o incumintza un\'arresonu in <a href=\"%3$s\">su forum</a>.]]></item>
-        <item><![CDATA[AnkiDroid est unu <a href=\"%1$s\">programma a còdighe abertu<a/>, duncas totu cantos sunt incoragiados a <a href=\"%2$s\">contribuire</a> :-)]]></item>
-        <item><![CDATA[Fintzas chie no est un\'isvilupadore podet agiudare. Pro nàrrere, podes <a href=\"%1$s\">agiudare a bortare</a> AnkiDroid, atualizare sa wiki, frunire ischermadas, o iscrìere in su blog tuo in subra de AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid est publicadu in suta de sa <a href=\"%1$s\">litzèntzia GNU-GPL v3</a> e su còdighe de orìgine suo est a disponimentu <a href=\"%2$s\">in GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Antiprima</string>
     <string name="reposition_card_dialog_title">Torra a positzionare sa carta noa</string>
     <string name="reposition_card_dialog_message">Positzione de incumintzu:</string>
@@ -84,8 +77,8 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">Torra a pranificare %d carta</item>
+        <item quantity="other">Torra a pranificare %d cartas</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Intervallu atuale: %d die</item>
@@ -127,8 +120,8 @@
     <string name="import_update_details">%1$d de %2$d notas chi esistint atualizadas.</string>
     <string name="import_update_ignored">Unas cantas atualizatziones sunt istadas ignoradas ca sa casta de nota est cambiada</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Cartas importadas: %2$d</item>
+        <item quantity="other">Documentos importados: %1$d\nTotale de cartas importadas: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">S\'ischeda SD est prena</string>
     <string name="sd_card_almost_full_title">S\'ischeda SD est belle prena</string>

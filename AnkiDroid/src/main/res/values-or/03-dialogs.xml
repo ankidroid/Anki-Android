@@ -60,13 +60,6 @@
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>ଆଣ୍ଡ୍ରଏଡ୍ ପାଇଁ ଫ୍ଲାସକାର୍ଡ</h2>AnkiDroid ହେଉଛି ଏକ ଫ୍ଲାସକାର୍ଡ ଆପ୍ଲିକେସନ୍ ଯାହା ଡେସ୍କଟପ୍ ସଫ୍ଟୱେର୍ <a href=\"%2$s\">Anki</a> ସହିତ ସମ୍ପୂର୍ଣ୍ଣ ସୁସଙ୍ଗତ। ଆପଣ ଉଭୟ Ankidroid କିମ୍ବା Anki ଡେସ୍କଟପରେ ସାମଗ୍ରୀ ସୃଷ୍ଟି, ଡାଉନଲୋଡ୍ ଏବଂ ଶିଖିପାରିବେ, ଏବଂ ସେମାନଙ୍କୁ AnkiWeb ସହିତ ସହଜରେ ସିଙ୍କ୍ରୋନାଇଜ୍ କରିପାରିବେ।]]></item>
-        <item><![CDATA[ଆମକୁ AnkiDroid କୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରିବାକୁ, ଦୟାକରି <a href=\"%1$s\">issue tracker</a>କୁ ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ; ନୂତନ ବୈଶିଷ୍ଟ୍ୟ ଚିନ୍ତାଧାରା ମଧ୍ୟ ବହୁତ ସ୍ୱାଗତଯୋଗ୍ୟ। <a href=\"%2$s\">Wiki</a>ରେ ଉତ୍ତର ଖୋଜ କିମ୍ବା <a href=\"%3$s\">Forum</a>ରେ ଏକ ଆଲୋଚନା ଆରମ୍ଭ କର।]]></item>
-        <item><![CDATA[Ankidroid ହେଉଛି <a href=\"%1$s\">ଖୋଲା-ଉତ୍ସ ସଫ୍ଟୱେର<a/>, ତେଣୁ ସମସ୍ତଙ୍କୁ <a href=\"%2$s\">ଯୋଗଦାନ କରିବା</a>କୁ ଉତ୍ସାହିତ କରାଯାଏ :-)]]></item>
-        <item><![CDATA[Non-developer ମାନେ ମଧ୍ୟ ସାହାଯ୍ୟ କରିପାରିବେ। ଉଦାହରଣ ସ୍ୱରୂପ, ଆପଣ Ankidroid <a href=\"%1$s\">ଅନୁବାଦ କରିବା</a>, Wiki ଅପଡେଟ୍ କରିବା, screenshot ପ୍ରଦାନ କରିବା, କିମ୍ବା Ankidroid ବିଷୟରେ blog କରିବାରେ ସାହାଯ୍ୟ କରିପାରିବେ।]]></item>
-        <item><![CDATA[AnkiDroid <a href=\"%1$s\">GNU-GPL v3 ଲାଇସେନ୍ସ</a> ଅଧୀନରେ ପ୍ରକାଶିତ ହୋଇଛି ଏବଂ source code <a href=\"%2$s\">GitHub ରେ</a> ଉପଲବ୍ଧ।]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ବାବଲୋକନ</string>
     <string name="reposition_card_dialog_title">ନୂଆ ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା</string>
     <string name="reposition_card_dialog_message">ଆରମ୍ଭ ପୋଜିସନ୍:</string>
