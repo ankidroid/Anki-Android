@@ -497,6 +497,12 @@ open class CardBrowser :
         initNavigationDrawer(findViewById(android.R.id.content))
         startLoadingCollection()
 
+        // search card using deep links
+        intent.data?.getQueryParameter("search_query")?.let {
+            mSearchTerms = it
+            searchCards()
+        }
+
         // for intent coming from search query js api
         intent.getStringExtra("search_query")?.let {
             mSearchTerms = it
