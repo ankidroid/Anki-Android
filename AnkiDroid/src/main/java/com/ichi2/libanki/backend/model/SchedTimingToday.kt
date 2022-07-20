@@ -20,12 +20,12 @@ interface SchedTimingToday {
      *
      * uint32 upstream
      * */
-    fun days_elapsed(): Int
+    fun daysElapsed(): Int
 
     /**
      * Timestamp of the next day rollover.
      *
      * int64 upstream
      * */
-    fun next_day_at(): Long
+    fun nextDayAt(): Long
 }

@@ -31,7 +31,6 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDroidApp;
 import com.ichi2.anki.R;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
@@ -2195,8 +2194,8 @@ public class SchedV2 extends AbstractSched {
             mToday = _daysSinceCreation();
             mDayCutoff = _dayCutoff();
         } else if (_new_timezone_enabled()) {
-            mToday = timing.days_elapsed();
-            mDayCutoff = timing.next_day_at();
+            mToday = timing.daysElapsed();
+            mDayCutoff = timing.nextDayAt();
         } else {
             mToday = _daysSinceCreation();
             mDayCutoff = _dayCutoff();

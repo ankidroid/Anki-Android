@@ -21,11 +21,11 @@ import anki.scheduler.SchedTimingTodayResponse
  * Adapter for SchedTimingTodayOut2 result from Rust
  */
 class SchedTimingTodayProto(private val data: SchedTimingTodayResponse) : SchedTimingToday {
-    override fun days_elapsed(): Int {
+    override fun daysElapsed(): Int {
         return data.daysElapsed
     }
 
-    override fun next_day_at(): Long {
+    override fun nextDayAt(): Long {
         return data.nextDayAt
     }
 }
