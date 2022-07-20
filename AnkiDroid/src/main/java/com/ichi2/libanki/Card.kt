@@ -324,11 +324,13 @@ open class Card : Cloneable {
     val pureAnswer: String
         get() {
             val s = render_output(false).answer_text
-            val target = "<hr id=answer>"
-            val pos = s.indexOf(target)
-            return if (pos == -1) {
-                s
-            } else s.substring(pos + target.length).trim { it <= ' ' }
+            for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+                val pos = s.indexOf(target)
+                if (pos == -1) continue
+                return s.substring(pos + target.length).trim { it <= ' ' }
+            }
+            // neither found
+            return s
         }
 
     /**
