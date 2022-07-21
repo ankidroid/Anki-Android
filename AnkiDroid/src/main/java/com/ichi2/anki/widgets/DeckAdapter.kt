@@ -25,6 +25,7 @@ import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
@@ -343,7 +344,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         return DeckFilter()
     }
 
-    private inner class DeckFilter : TypedFilter<TreeNode<AbstractDeckTreeNode>>(mDeckList) {
+    @VisibleForTesting
+    inner class DeckFilter(deckList: List<TreeNode<AbstractDeckTreeNode>> = mDeckList) : TypedFilter<TreeNode<AbstractDeckTreeNode>>(deckList) {
         override fun filterResults(constraint: CharSequence, items: List<TreeNode<AbstractDeckTreeNode>>): List<TreeNode<AbstractDeckTreeNode>> {
             val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
             return items.mapNotNull { t: TreeNode<AbstractDeckTreeNode> -> filterDeckInternal(filterPattern, t) }
@@ -375,7 +377,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
             // we have a root, and a list of trees with the counts already calculated.
             return TreeNode(root.value).apply {
-                children.addAll(ret)
+                this.children.addAll(ret)
             }
         }
 
