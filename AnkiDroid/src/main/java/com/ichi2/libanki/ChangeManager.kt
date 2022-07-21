@@ -34,10 +34,12 @@ import anki.collection.OpChangesAfterUndo
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import anki.import_export.ImportResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
 object ChangeManager {
-    interface ChangeSubscriber {
+    interface Subscriber {
         /**
          * Called after a backend method invoked via col.op() or col.opWithProgress()
          * has modified the collection. Subscriber should inspect the changes, and update
@@ -46,14 +48,14 @@ object ChangeManager {
         fun opExecuted(changes: OpChanges, handler: Any?)
     }
 
-    private val subscribers = mutableListOf<WeakReference<ChangeSubscriber>>()
+    private val subscribers = mutableListOf<WeakReference<Subscriber>>()
 
-    fun subscribe(subscriber: ChangeSubscriber) {
+    fun subscribe(subscriber: Subscriber) {
         subscribers.add(WeakReference(subscriber))
     }
 
     private fun notifySubscribers(changes: OpChanges, handler: Any?) {
-        val expired = mutableListOf<WeakReference<ChangeSubscriber>>()
+        val expired = mutableListOf<WeakReference<Subscriber>>()
         for (subscriber in subscribers) {
             val ref = subscriber.get()
             if (ref == null) {
@@ -67,7 +69,7 @@ object ChangeManager {
         }
     }
 
-    fun<T> notifySubscribers(changes: T, initiator: Any?) {
+    internal fun<T> notifySubscribers(changes: T, initiator: Any?) {
         val opChanges = when (changes) {
             is OpChanges -> changes
             is OpChangesWithCount -> changes.changes
@@ -82,8 +84,10 @@ object ChangeManager {
 
 /** Wrap a routine that returns OpChanges* or similar undo info with this
  * to notify change subscribers of the changes. */
-fun<T> undoableOp(handler: Any? = null, block: () -> T): T {
+suspend fun<T> undoableOp(handler: Any? = null, block: () -> T): T {
     return block().also {
-        ChangeManager.notifySubscribers(it, handler)
+        withContext(Dispatchers.Main) {
+            ChangeManager.notifySubscribers(it, handler)
+        }
     }
 }
