@@ -932,7 +932,7 @@ class Preferences : AnkiActivity() {
             }
             setupContextMenuPreference(CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu)
             setupContextMenuPreference(AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label)
-            if (col!!.schedVer() == 1) {
+            if (col != null && col!!.schedVer() == 1) {
                 Timber.i("Displaying V1-to-V2 scheduler preference")
                 val schedVerPreference = SwitchPreference(requireContext())
                 schedVerPreference.setTitle(R.string.sched_v2)
