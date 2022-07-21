@@ -147,7 +147,7 @@ open class DeckPicker :
     MediaCheckDialogListener,
     OnRequestPermissionsResultCallback,
     CustomStudyListener,
-    ChangeManager.ChangeSubscriber {
+    ChangeManager.Subscriber {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
