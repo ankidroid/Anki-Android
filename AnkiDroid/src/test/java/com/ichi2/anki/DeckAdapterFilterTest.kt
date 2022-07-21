@@ -49,7 +49,7 @@ class DeckAdapterFilterTest {
     }
 
     @Test
-    fun verifyFilterResultsReturnsNullWhenForNoMatches() {
+    fun verifyFilterResultsReturnsEmptyForNoMatches() {
         val deckList = deckList
         val pattern = "geometry"
 
