@@ -56,6 +56,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         val isLoggedIn = SyncStatus.isLoggedIn
         dialog.cancelable(true)
             .title(text = title)
+            .cancelOnTouchOutside(false)
         var sqliteInstalled = false
         try {
             sqliteInstalled = Runtime.getRuntime().exec("sqlite3 --version").waitFor() == 0
