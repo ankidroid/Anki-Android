@@ -442,14 +442,14 @@ class Syncer(
     // }
     // return result;
     // }
-    private fun usnLim(): Pair<String, Array<Any>?> {
+    private fun usnLim(): Pair<String, Array<Any>> {
         return if (col.server) {
             Pair(
                 "usn >= ?",
                 arrayOf(mMinUsn)
             )
         } else {
-            Pair("usn = -1", null)
+            Pair("usn = -1", arrayOf())
         }
     }
 
@@ -582,7 +582,7 @@ class Syncer(
         val decks = JSONArray()
         val limAndArgs = usnLim()
         col.db
-            .query("SELECT oid, type FROM graves WHERE " + limAndArgs.first, *limAndArgs.second!!)
+            .query("SELECT oid, type FROM graves WHERE " + limAndArgs.first, *limAndArgs.second)
             .use { cur ->
                 while (cur.moveToNext()) {
                     @Consts.REM_TYPE val type = cur.getInt(1)
