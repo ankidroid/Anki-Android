@@ -42,15 +42,22 @@ import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 
+fun DeckPicker.syncAuth(): SyncAuth? {
+    val preferences = AnkiDroidApp.getSharedPrefs(this)
+    val hkey = preferences.getString("hkey", null)
+    val hostNum = HostNumFactory.getInstance(baseContext).getHostNum()
+    return hkey?.let {
+        syncAuth {
+            this.hkey = hkey
+            this.hostNumber = hostNum ?: 0
+        }
+    }
+}
+
 fun DeckPicker.handleNewSync(
-    hkey: String,
-    hostNum: Int,
     conflict: Connection.ConflictResolution?
 ) {
-    val auth = syncAuth {
-        this.hkey = hkey
-        this.hostNumber = hostNum
-    }
+    val auth = this.syncAuth() ?: return
     val deckPicker = this
     launchCatchingTask {
         try {
@@ -121,6 +128,7 @@ private suspend fun handleNormalSync(
         SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
             // a successful sync returns this value
             deckPicker.showSyncLogMessage(R.string.sync_database_acknowledge, output.serverMessage)
+            deckPicker.refreshState()
             // kick off media sync - future implementations may want to run this in the
             // background instead
             handleMediaSync(deckPicker, auth)
@@ -128,12 +136,10 @@ private suspend fun handleNormalSync(
 
         SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> {
             handleDownload(deckPicker, auth)
-            handleMediaSync(deckPicker, auth)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> {
             handleUpload(deckPicker, auth)
-            handleMediaSync(deckPicker, auth)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
@@ -178,6 +184,8 @@ private suspend fun handleDownload(
                 reopen(afterFullSync = true)
             }
         }
+        deckPicker.refreshState()
+        handleMediaSync(deckPicker, auth)
     }
 
     Timber.i("Full Download Completed")
@@ -200,6 +208,8 @@ private suspend fun handleUpload(
                 reopen(afterFullSync = true)
             }
         }
+        deckPicker.refreshState()
+        handleMediaSync(deckPicker, auth)
     }
     Timber.i("Full Upload Completed")
     deckPicker.showSyncLogMessage(R.string.sync_log_uploading_message, "")

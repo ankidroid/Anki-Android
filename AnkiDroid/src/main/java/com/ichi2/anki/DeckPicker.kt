@@ -665,15 +665,20 @@ open class DeckPicker :
 
     @VisibleForTesting
     protected open suspend fun displaySyncBadge(menu: Menu) {
-        val syncStatus = withOpenColOrNull { SyncStatus.getSyncStatus(this) }
+        val auth = syncAuth()
+        val syncStatus = withOpenColOrNull {
+            SyncStatus.getSyncStatus(this, auth)
+        }
         if (syncStatus == null) {
             return
         }
         val syncMenu = menu.findItem(R.id.action_sync)
         when (syncStatus) {
             SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.INCONCLUSIVE -> {
-                BadgeDrawableBuilder.removeBadge(syncMenu)
-                syncMenu.setTitle(R.string.button_sync)
+                syncMenu?.let {
+                    BadgeDrawableBuilder.removeBadge(it)
+                    it.setTitle(R.string.button_sync)
+                }
             }
             SyncStatus.HAS_CHANGES -> {
                 // Light orange icon
@@ -1521,14 +1526,13 @@ open class DeckPicker :
     override fun sync(conflict: ConflictResolution?) {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
         val hkey = preferences.getString("hkey", "")
-        val hostNum = HostNumFactory.getInstance(baseContext).getHostNum()
         if (hkey!!.isEmpty()) {
             Timber.w("User not logged in")
             mPullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
         } else {
             if (!BackendFactory.defaultLegacySchema) {
-                handleNewSync(hkey, hostNum ?: 0, conflict)
+                handleNewSync(conflict)
             } else {
                 Connection.sync(
                     mSyncListener,
