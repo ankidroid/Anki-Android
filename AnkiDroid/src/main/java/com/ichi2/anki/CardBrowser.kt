@@ -1179,28 +1179,28 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             R.id.action_reposition_cards -> {
                 Timber.i("CardBrowser:: Reposition button pressed")
 
-                selectedCardIds.let { cardIds ->
-                    // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-                    if (cardIds.any { col.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
-                        showDialogFragment(
-                            SimpleMessageDialog.newInstance(
-                                title = getString(R.string.vague_error),
-                                message = getString(R.string.reposition_card_not_new_error),
-                                reload = false
-                            )
+                // `selectedCardIds` getter does alot of work so save it in a val beforehand
+                val selectedCardIds = selectedCardIds
+                // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+                if (selectedCardIds.any { col.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
+                    showDialogFragment(
+                        SimpleMessageDialog.newInstance(
+                            title = getString(R.string.vague_error),
+                            message = getString(R.string.reposition_card_not_new_error),
+                            reload = false
                         )
-                        return false
-                    }
-                    val repositionDialog = IntegerDialog().apply {
-                        setArgs(
-                            title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
-                            prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
-                            digits = 5
-                        )
-                        setCallbackRunnable { pos -> repositionCardsNoValidation(cardIds, pos) }
-                    }
-                    showDialogFragment(repositionDialog)
+                    )
+                    return false
                 }
+                val repositionDialog = IntegerDialog().apply {
+                    setArgs(
+                        title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
+                        prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
+                        digits = 5
+                    )
+                    setCallbackRunnable { pos -> repositionCardsNoValidation(selectedCardIds, pos) }
+                }
+                showDialogFragment(repositionDialog)
                 return true
             }
             R.id.action_edit_note -> {
