@@ -44,20 +44,15 @@ import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
+import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog.Companion.newInstance
-import com.ichi2.anki.dialogs.ConfirmationDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.dialogs.IntegerDialog
-import com.ichi2.anki.dialogs.RescheduleDialog
 import com.ichi2.anki.dialogs.RescheduleDialog.rescheduleMultipleCards
 import com.ichi2.anki.dialogs.RescheduleDialog.rescheduleSingleCard
-import com.ichi2.anki.dialogs.SimpleMessageDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -1188,15 +1183,19 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                     // Only new cards may be repositioned (If any non-new found show error dialog and return false)
                     if (cardIds.any { col.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
                         showDialogFragment(
-                            newInstance(getString(R.string.vague_error), getString(R.string.reposition_card_not_new_error), false)
+                            SimpleMessageDialog.newInstance(
+                                title = getString(R.string.vague_error),
+                                message = getString(R.string.reposition_card_not_new_error),
+                                reload = false
+                            )
                         )
                         return false
                     }
                     val repositionDialog = IntegerDialog().apply {
                         setArgs(
-                            this@CardBrowser.getString(R.string.reposition_card_dialog_title),
-                            this@CardBrowser.getString(R.string.reposition_card_dialog_message),
-                            5
+                            title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
+                            prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
+                            digits = 5
                         )
                         setCallbackRunnable { pos -> repositionCardsNoValidation(cardIds, pos) }
                     }
