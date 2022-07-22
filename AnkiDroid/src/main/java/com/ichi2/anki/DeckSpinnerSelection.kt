@@ -246,6 +246,6 @@ class DeckSpinnerSelection(
     }
 
     companion object {
-        private const val ALL_DECKS_ID = 0L
+        const val ALL_DECKS_ID = 0L
     }
 }
