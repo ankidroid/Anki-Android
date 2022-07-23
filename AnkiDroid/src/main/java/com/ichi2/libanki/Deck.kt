@@ -14,52 +14,40 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
-import com.ichi2.utils.JSONObject;
+import androidx.annotation.CheckResult
+import com.ichi2.utils.JSONObject
 
-import androidx.annotation.CheckResult;
-
-public class Deck extends JSONObject {
+class Deck : JSONObject {
     /**
-     * Creates a copy from {@link JSONObject} and use it as a string
+     * Creates a copy from [JSONObject] and use it as a string
      *
      * This function will perform deepCopy on the passed object
      *
-     * @see Deck#from(JSONObject) if you want to create a
-     *                            Deck without deepCopy
+     * If you want to create a Deck without deepCopy
+     * @see Deck.from
      */
-    public Deck(JSONObject json) {
-        super(json);
-    }
+    constructor(json: JSONObject) : super(json)
 
     /**
      * Creates a deck object form a json string
      */
-    public Deck(String json) {
-        super(json);
-    }
-
+    constructor(json: String) : super(json)
 
     /**
      * Creates a new empty deck object
      */
-    public Deck() {
-        super();
-    }
+    constructor() : super()
 
-    @Override
     @CheckResult
-    public Deck deepClone() {
-        Deck clone = new Deck();
-        return deepClonedInto(clone);
+    override fun deepClone(): Deck {
+        val clone = Deck()
+        return deepClonedInto(clone)
     }
 
-    public boolean isDyn() {
-        return getInt("dyn") == Consts.DECK_DYN;
-    }
-
-    public boolean isStd() {
-        return getInt("dyn") == Consts.DECK_STD;
-    }
+    val isDyn: Boolean
+        get() = getInt("dyn") == Consts.DECK_DYN
+    val isStd: Boolean
+        get() = getInt("dyn") == Consts.DECK_STD
 }
