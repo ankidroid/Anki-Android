@@ -171,11 +171,12 @@ public class CollectionHelper {
 
     /**
      * Get the single instance of the {@link Collection}, creating it if necessary  (lazy initialization).
-     * @param context context which can be used to get the setting for the path to the Collection
+     * @param _context is no longer used, as the global AnkidroidApp instance is used instead
      * @return instance of the Collection
      */
-    public synchronized Collection getCol(Context context) {
+    public synchronized Collection getCol(Context _context) {
         // Open collection
+        Context context = AnkiDroidApp.getInstance();
         if (!colIsOpen()) {
             String path = getCollectionPath(context);
             // Check that the directory has been created and initialized
