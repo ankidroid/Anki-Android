@@ -220,6 +220,8 @@ public class AnkiDroidApp extends Application {
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId();
 
+        LanguageUtil.setDefaultBackendLanguages();
+
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
         if (Permissions.hasStorageAccessPermission(this)) {
             try {
@@ -317,8 +319,6 @@ public class AnkiDroidApp extends Application {
                 preferences = getSharedPrefs(remoteContext);
             }
             Configuration langConfig = getLanguageConfig(remoteContext.getResources().getConfiguration(), preferences);
-            // TODO: support fallback languages (backend already automatically adds English to the end)
-            BackendFactory.INSTANCE.setDefaultLanguagesFromLocales(Arrays.asList(langConfig.locale));
             return remoteContext.createConfigurationContext(langConfig);
         } catch (Exception e) {
             Timber.e(e, "failed to update context with new language");
