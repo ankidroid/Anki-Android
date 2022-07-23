@@ -1349,8 +1349,11 @@ open class Collection(
         return Finder(this).findOneCardByNote(query)
     }
 
-    /** Return a list of note ids  */
-    fun findNotes(query: String?): List<Long> {
+    /** Return a list of note ids
+     * @param order only used in overridden V16 findNotes() method
+     * */
+    @JvmOverloads
+    open fun findNotes(query: String?, order: SortOrder = SortOrder.NoOrdering()): List<Long> {
         return Finder(this).findNotes(query)
     }
 
