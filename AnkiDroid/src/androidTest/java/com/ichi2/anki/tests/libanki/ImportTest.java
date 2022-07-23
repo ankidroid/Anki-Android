@@ -36,6 +36,8 @@ import com.ichi2.libanki.importer.TextImporter;
 import com.ichi2.utils.JSONException;
 import com.ichi2.utils.JSONObject;
 
+import net.ankiweb.rsdroid.BackendFactory;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -57,8 +59,10 @@ import androidx.test.rule.GrantPermissionRule;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeThat;
 
 @RunWith(AndroidJUnit4.class)
 public class ImportTest extends InstrumentedTest {
@@ -86,6 +90,8 @@ public class ImportTest extends InstrumentedTest {
     @Before
     public void setUp() throws IOException {
         mTestCol = getEmptyCol();
+        // the backend provides its own importing methods
+        assumeThat(BackendFactory.getDefaultLegacySchema(), is(true));
     }
 
     @After
