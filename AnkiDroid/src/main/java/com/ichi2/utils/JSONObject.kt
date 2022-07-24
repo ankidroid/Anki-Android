@@ -306,22 +306,21 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
 
     /** deep clone this into clone.
      *
-     * Given a subtype [T] of JSONObject, and a JSONObject [j], we could do
+     * Given a subtype [T] of JSONObject, and a JSONObject [clone], we could do
      * ```
      * T t = new T();
-     * j.deepClonedInto(t);
+     * clone.deepClonedInto(t);
      * ```
-     * in order to obtain a deep clone of [j] of type [T].  */
+     * in order to obtain a deep clone of [clone] of type [T].  */
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    @KotlinCleanup("make JSONObject non-null")
-    fun <T : JSONObject?> deepClonedInto(clone: T): T {
+    fun <T : JSONObject> deepClonedInto(clone: T): T {
         for (key in this) {
             if (get(key) is JSONObject) {
-                clone!!.put(key, getJSONObject(key).deepClone())
+                clone.put(key, getJSONObject(key).deepClone())
             } else if (get(key) is JSONArray) {
-                clone!!.put(key, getJSONArray(key).deepClone())
+                clone.put(key, getJSONArray(key).deepClone())
             } else {
-                clone!!.put(key, get(key))
+                clone.put(key, get(key))
             }
         }
         return clone
