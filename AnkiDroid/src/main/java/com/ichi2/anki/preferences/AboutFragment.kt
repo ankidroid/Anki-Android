@@ -145,7 +145,7 @@ class AboutFragment : Fragment() {
         }
 
         /**
-         * Enables developer options for the user and shows it on [Preferences.HeaderFragment]
+         * Enables developer options for the user and shows it on [HeaderFragment]
          */
         fun enableDevOptions(context: Context) {
             DevOptionsFragment.setDevOptionsEnabledByUser(context, true)
@@ -154,8 +154,8 @@ class AboutFragment : Fragment() {
             UIUtils.showThemedToast(context, message, true)
 
             // Make developer options visible on headers fragment if it is open
-            val headersFragment = fragmentManager.findFragmentByTag(Preferences.HeaderFragment::class.java.name)
-            if (headersFragment is Preferences.HeaderFragment) {
+            val headersFragment = fragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
+            if (headersFragment is HeaderFragment) {
                 headersFragment.setDevOptionsVisibility(true)
             }
         }
