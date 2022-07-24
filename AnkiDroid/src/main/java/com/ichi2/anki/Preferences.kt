@@ -50,7 +50,6 @@ import com.ichi2.anki.preferences.HeaderFragment
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.setOnPreferenceChangeListener
 import com.ichi2.anki.provider.CardContentProvider
-import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.anki.web.CustomSyncServer
@@ -58,7 +57,6 @@ import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.*
 import com.ichi2.preferences.ControlPreference.Companion.addAllControlPreferencesToCategory
@@ -221,105 +219,6 @@ class Preferences : AnkiActivity() {
     // ----------------------------------------------------------------------------
     // Inner classes
     // ----------------------------------------------------------------------------
-
-    class ReviewingSettingsFragment : SettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_reviewing
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.reviewing"
-
-        override fun initSubscreen() {
-            val col = col!!
-
-            // New cards position
-            // Represents the collections pref "newSpread": i.e.
-            // whether the new cards are added at the end of the queue or randomly in it.
-            requirePreference<ListPreference>(R.string.new_spread_preference).apply {
-                setValueIndex(col.get_config_int("newSpread"))
-                setOnPreferenceChangeListener { newValue ->
-                    col.set_config("newSpread", ((newValue as String).toInt()))
-                }
-            }
-
-            // Learn ahead limit
-            // Represents the collections pref "collapseTime": i.e.
-            // if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
-            // Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
-            requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
-                setValue(col.get_config_int("collapseTime") / 60)
-                setFormattedSummary(R.string.pref_summary_minutes)
-                setOnPreferenceChangeListener { newValue ->
-                    col.set_config("collapseTime", ((newValue as String).toInt() * 60))
-                }
-            }
-            // Timebox time limit
-            // Represents in Android preferences the collections configuration "timeLim": i.e.
-            // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
-            // Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
-            requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
-                setValue(col.get_config_int("timeLim") / 60)
-                setFormattedSummary(R.string.pref_summary_minutes)
-                setOnPreferenceChangeListener { newValue ->
-                    col.set_config("timeLim", ((newValue as String).toInt() * 60))
-                }
-            }
-            // Start of next day
-            // Represents the collection pref "rollover"
-            // in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
-            requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference).apply {
-                value = getDayOffset(col)
-                setFormattedSummary(R.string.day_offset_summary)
-                setOnPreferenceChangeListener { newValue ->
-                    (requireActivity() as Preferences).setDayOffset(newValue as Int)
-                }
-            }
-            // Automatic display answer
-            requirePreference<SwitchPreference>(R.string.timeout_answer_preference).setOnPreferenceChangeListener { newValue ->
-                // Enable `Keep screen on` along with the automatic display answer preference
-                if (newValue == true) {
-                    requirePreference<SwitchPreference>(R.string.keep_screen_on_preference).isChecked = true
-                }
-            }
-
-            /**
-             * Timeout answer
-             * An integer representing the action when "Automatic Answer" flips a card from answer to question
-             * 0 represents "bury", 1-4 represents the named buttons
-             * @see com.ichi2.anki.reviewer.AutomaticAnswerAction
-             * We use the same key in the collection config
-             * @see com.ichi2.anki.reviewer.AutomaticAnswerAction.CONFIG_KEY
-             * */
-            requirePreference<ListPreference>(R.string.automatic_answer_action_preference).apply {
-                setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
-                setOnPreferenceChangeListener { newValue ->
-                    col.set_config(AutomaticAnswerAction.CONFIG_KEY, (newValue as String).toInt())
-                }
-            }
-            // Time to show answer
-            requirePreference<SeekBarPreferenceCompat>(R.string.timeout_answer_seconds_preference)
-                .setFormattedSummary(R.string.pref_summary_seconds)
-            // Time to show question
-            requirePreference<SeekBarPreferenceCompat>(R.string.timeout_question_seconds_preference)
-                .setFormattedSummary(R.string.pref_summary_seconds)
-
-            // New timezone handling
-            requirePreference<SwitchPreference>(R.string.new_timezone_handling_preference).apply {
-                isChecked = col.sched._new_timezone_enabled()
-                isEnabled = col.schedVer() > 1
-                setOnPreferenceChangeListener { newValue ->
-                    if (newValue == true) {
-                        try {
-                            col.sched.set_creation_offset()
-                        } catch (e: BackendNotSupportedException) {
-                            throw e.alreadyUsingRustBackend()
-                        }
-                    } else {
-                        col.sched.clear_creation_offset()
-                    }
-                }
-            }
-        }
-    }
 
     /**
      * Fragment with preferences related to syncing
