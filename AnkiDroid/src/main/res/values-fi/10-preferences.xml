@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Hakee automaattisesti puuttuvat mediat kun synkronoidaan.</string>
     <string name="sync_account" maxLength="41">AnkiWeb tili</string>
     <string name="sync_account_summ_logged_out">Ei kirjautuneena</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Automaattinen synkronointi</string>
     <string name="automatic_sync_choice_summ">Synkronoi automaattisesti sovelluksen auetessa tai suljetessam, jos viimeistä synkronoinnista on enemmän kuin 10         minuuttia.</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>

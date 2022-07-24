@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Аутоматски додај недостајуће медија датотеке при синхронизацији.</string>
     <string name="sync_account" maxLength="41">AnkiWeb налог</string>
     <string name="sync_account_summ_logged_out">Нисте ауторизовани</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Аутоматска синхронизација</string>
     <string name="automatic_sync_choice_summ">Синхронизуј аутоматски на старт/излаз, ако је од последње синхронизације прошло више
         од 10 минута.</string>

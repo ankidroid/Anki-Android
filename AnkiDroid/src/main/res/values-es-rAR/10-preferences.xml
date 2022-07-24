@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Buscar automáticamente archivos media faltantes al sincronizar.</string>
     <string name="sync_account" maxLength="41">Cuenta de AnkiWeb</string>
     <string name="sync_account_summ_logged_out">No ha iniciado sesión</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronización automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automáticamente al abrir / cerrar la aplicación si la última sincronización fue hace más de 10 minutos.</string>
     <string name="sync_status_badge" maxLength="41">Mostrar estado de sincronización</string>

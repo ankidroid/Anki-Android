@@ -47,15 +47,15 @@
     <!-- generic strings -->
     <string name="disabled">無効</string>
     <string name="enabled">有効</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_seconds">%s秒</string>
+    <string name="pref_summary_minutes">%s分</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">全般</string>
     <string name="pref_cat_general_summ">一般設定</string>
     <string name="pref_cat_reviewing" maxLength="41">カードの学習</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同期</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">スケジュール</string>
     <string name="pref_cat_whiteboard" maxLength="41">ホワイトボード機能</string>
     <string name="pref_cat_appearance" maxLength="41">デザイン</string>
     <string name="pref_cat_appearance_summ">テーマと標準フォントの変更</string>
@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">同期時に、不足しているメディア（画像・音声・動画）ファイルを自動的に取得します</string>
     <string name="sync_account" maxLength="41">AnkiWebアカウント</string>
     <string name="sync_account_summ_logged_out">ログインしていません</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">自動同期</string>
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
@@ -206,8 +205,8 @@
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascriptのデバッグ</string>
     <string name="html_javascript_debugging_summ">リモートのWebView接続を有効にし、カードのHTMLをAnkiDroidディレクトリに保存します</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">レビュア</string>
+    <string name="accessibility" maxLength="41">アクセシビリティ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">PNG形式でクリップボード画像を貼り付け</string>
     <string name="paste_as_png_summary">デフォルトでは、AnkiはJPGファイルとしてクリップボードに画像を貼り付けてディスク領域を節約します。 このオプションを使用すると、代わりに PNGファイルとして画像を貼り付けることができます。</string>
@@ -323,14 +322,14 @@
     <string name="pref_cat_about_title" maxLength="41">About</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="license">ライセンス</string>
+    <string name="license_description"><![CDATA[AnkiDroid は、 <a href=\"%1$s\">GPL-3.0</a> および <a href=\"%2$s\">AGPL-3.0</a> ライセンスの下でリリースされています。GitHub に <a href=\"%3$s\">利用可能なソースコードがあります</a>]]></string>
+    <string name="donate_description"><![CDATA[AnkiDroidの開発を <a href=\"%1$s\">寄付</a>することでサポートしていただけます。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ジェスチャーを追加</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">ジェスチャーを置き換える</string>
     <string name="binding_add_key">キーを追加</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">キーを置き換える</string>
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">カードの表面と裏面、どちらでの操作ですか？</string>
@@ -344,9 +343,9 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">&lt;unk&gt;%s を削除</string>
     <string name="bindings_already_bound">このキーには既に %s の操作を割り当て済みです</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
+    <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>
+    <string name="disable_dev_options">開発者向けオプションを無効にする</string>
+    <string name="dev_options_warning">        これらの設定を有効化すると、アプリ自体を破壊したり、保存されているコレクションを破損させるおそれがあります。\n\nこれらの設定はほとんどのユーザーに適していないため、項目は英語でのみ表示されます。
     </string>
 </resources>

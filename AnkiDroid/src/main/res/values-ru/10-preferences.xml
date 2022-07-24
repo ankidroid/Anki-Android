@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Автоматически загружает медиафайлы при синхронизации</string>
     <string name="sync_account" maxLength="41">Учётная запись AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Вы не вошли в учётную запись</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматическая синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
     <string name="sync_status_badge" maxLength="41">Отображать состояние синхронизации</string>

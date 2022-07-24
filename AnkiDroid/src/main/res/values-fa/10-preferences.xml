@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">هنگام همگام سازی، بطور خودکار رسانه گم شده را بیاور.</string>
     <string name="sync_account" maxLength="41">حساب کاربری آنکی وب</string>
     <string name="sync_account_summ_logged_out">هنوز وارد سایت نشده</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">همگام سازی خودکار</string>
     <string name="automatic_sync_choice_summ">همگام سازی خودکار موقع ورود و خروج از برنامه اگر از آخرین همگام سازی بیشتر از 10 دقیقه گذشته باشد.</string>
     <string name="sync_status_badge" maxLength="41">وضعیت همگام سازی را نشان بده</string>
@@ -186,7 +185,7 @@
     <string name="xlabel_dayoffset_seekbar" maxLength="41">نیمه‌شب</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11 شب</string>
     <string name="sched_v2" maxLength="41">زمانبندی V2</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
+    <string name="sched_v2_summ">زمانبندی جدید را فعالسازی کن. در همگام سازی بعد، تغییرات را در یک جهت اجبار میکند</string>
     <string name="sched_ver_toggle_title">تایید</string>
     <string name="sched_ver_1to2">سیستم زمانبندی آزمایشی ممکن است کارت‌ها را اشتباه زمانبندی کند. لطفاً قبل از اعمال تغییرات راهنما را بخوانید. اعمال تغییرات؟</string>
     <string name="pref_keep_screen_on" maxLength="41">روشن نگه‌داشتن صفحه</string>
@@ -210,7 +209,7 @@
     <string name="accessibility" maxLength="41">قابلیت دسترسی</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">عکس های کلیپبورد را به عنوان PNG پِیست کن</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png_summary">طبق پیش فرض Anki عکس های روی کلیپ بورد را به صورت فایل های JPG پیست میکند تا مقداری حجم ذخیره کند. شما میتوانید از این گزینه استفاده کنید تا عکس ها را به صورت PNG پیست کنید.</string>
     <string name="exit_via_double_tap_back" maxLength="41">دوبار عقب را بزنید که به عقب/خروج بروید</string>
     <string name="exit_via_double_tap_back_summ">تا از اشتباهی بیرون رفتن از مرورگر یا برنامه جلوگیری کنید</string>
     <!-- Allow all files in media imports -->
@@ -315,19 +314,19 @@
     <string name="analytics_title" maxLength="41">به اشتراک گذاشتن ویژگی‌های مورد استفاده</string>
     <string name="analytics_summ">شما می‌توانید با به اشتراک گذاشتن ویژگی‌هایی که استفاده می‌کنید می‌توانید به توسعۀ آنکی‌دروید کمک کنید</string>
     <string name="note_editor_replace_newlines" maxLength="41">خط های جدید را با HTML جایگذین کن</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
+    <string name="note_editor_replace_newlines_summ">در ویرایشگر یادداشت، همه &lt;br&gt; را به خط جدید تبدیل کن موقع ویرایش کارت</string>
+    <string name="no_code_formatting" maxLength="41">قالب‌بندی پاسخ تایپ شده ی ساده</string>
     <string name="no_code_formatting_summ">مشکل پدید آمدن ‘􏿾’ در نتایج جواب تایپ شده را درست میکند</string>
     <string name="type_in_answer_focus" maxLength="41">روی ‘تایپ کردن در جای جواب’ تمرکز کن</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- About -->
     <string name="open_changelog">Changelog را باز کن</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="pref_cat_about_title" maxLength="41">درباره ما</string>
+    <string name="contributors_title">مشارکت کنندگان</string>
+    <string name="about_contributors_description"><![CDATA[این ها <a href=\"%1$s\">مشارکت کنندگان</a> عزیزمان هستند. شما هم می نوانید با برنامه ریزی، ترجمه، اهدای پول و <a href=\"%2$s\">کارهای دیگر</a> به ما کمک کنید!]]></string>
+    <string name="license">مجوّز</string>
+    <string name="license_description"><![CDATA[AnkiDroid زیر مجوز های <a href=\"%1$s\">GPL-3.0</a> و <a href=\"%2$s\">AGPL-3.0</a> منتشر شده است و منبع کد های آن در <a href=\"%3$s\">GitHub</a> قابل دسترسی است]]></string>
+    <string name="donate_description"><![CDATA[شما میتوانید توسعه AnkiDroid را همایت کنید با <a href=\"%1$s\">اهدای پول</a>. هر مقداری ما را بی نهایت خوشحال میکند.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">حرکت لمس اضافه کن</string>
     <string name="binding_replace_gesture">حرکت لمس با جایگذین کن</string>
@@ -346,9 +345,9 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' را حذف کن</string>
     <string name="bindings_already_bound">قبلا به ‘%s’ وابسته بود</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="pref_cat_dev_options" maxLength="41">گزینه های توسعه دهنده</string>
+    <string name="dev_options_enabled_pref" maxLength="41">فعال‌سازی گزینه های توسعه دهنده</string>
+    <string name="disable_dev_options">غیر فعال‌سازی گزینه‌های توسعه دهنده</string>
+    <string name="dev_options_warning">        لطفا از تصمیم خود برای فعال‌سازی گزینه‌های توسعه دهنده مطمئن شوید. این گزینه ها خطرناک هستند و توانایی خراب کردن برنامه یا فاسد کردن مجموعه ی شما را دارند.\n\nاین را بدانید که این گزینه ها مخصوص اکثریت افراد نیستند و بنابراین ترجمه نشده اند، پس به زبان انگلیسی هستند.
     </string>
 </resources>
