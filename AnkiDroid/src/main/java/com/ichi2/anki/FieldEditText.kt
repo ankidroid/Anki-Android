@@ -224,7 +224,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return false
     }
 
-    protected fun onImagePaste(imageUri: Uri): Boolean {
+    private fun onImagePaste(imageUri: Uri): Boolean {
         return mImageListener!!.onImagePaste(this, imageUri)
     }
 
