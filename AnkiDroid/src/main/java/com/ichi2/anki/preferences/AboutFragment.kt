@@ -32,7 +32,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
-import com.ichi2.anki.Preferences.DevOptionsFragment
 import com.ichi2.anki.dialogs.HelpDialog
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.utils.IntentUtil
