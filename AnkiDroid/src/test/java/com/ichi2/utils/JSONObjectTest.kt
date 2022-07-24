@@ -854,9 +854,6 @@ class JSONObjectTest {
             "9223372036854775806",
             JSONObject.numberToString(BigInteger("9223372036854775806"))
         )
-        assertThrows<JSONException> {
-            JSONObject.numberToString(null)
-        }
     }
 
     /* *************************************************************************

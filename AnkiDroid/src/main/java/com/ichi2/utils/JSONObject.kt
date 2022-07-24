@@ -353,9 +353,7 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
         fun objectToObject(obj: org.json.JSONObject?): JSONObject = obj as JSONObject
 
         @CheckResult
-        @KotlinCleanup("make number non-null")
-        fun numberToString(number: Number?): String = try {
-            number ?: throw org.json.JSONException("")
+        fun numberToString(number: Number): String = try {
             org.json.JSONObject.numberToString(number)
         } catch (e: org.json.JSONException) {
             throw JSONException(e)
