@@ -78,6 +78,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.export.ActivityExportingDelegate
+import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.DeckService
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
@@ -476,7 +477,7 @@ open class DeckPicker :
             }
             DIRECTORY_NOT_ACCESSIBLE -> {
                 Timber.i("AnkiDroid directory inaccessible")
-                val i = Preferences.AdvancedSettingsFragment.getSubscreenIntent(this)
+                val i = AdvancedSettingsFragment.getSubscreenIntent(this)
                 startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE)
                 showThemedToast(this, R.string.directory_inaccessible, false)
             }
