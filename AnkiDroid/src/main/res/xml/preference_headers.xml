@@ -30,7 +30,7 @@
 
     <!-- Reviewing Preferences -->
     <Preference
-        android:fragment="com.ichi2.anki.Preferences$ReviewingSettingsFragment"
+        android:fragment="com.ichi2.anki.preferences.ReviewingSettingsFragment"
         android:key="@string/pref_reviewing_screen_key"
         android:title="@string/pref_cat_reviewing"
         android:icon="@drawable/ic_flashcard_black">
