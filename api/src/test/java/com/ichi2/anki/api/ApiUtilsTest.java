@@ -86,6 +86,6 @@ public class ApiUtilsTest {
 
     @Test
     public void shouldGenerateProperCheckSum() {
-        assertEquals(Long.valueOf(3533307532L), Utils.fieldChecksum("AnkiDroid"));
+        assertEquals(3533307532L, Utils.fieldChecksum("AnkiDroid"));
     }
 }
