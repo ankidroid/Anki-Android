@@ -49,7 +49,6 @@ import com.ichi2.themes.Themes.setThemeLegacy
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.HashSet
 
 /**
  * Preferences dialog.
@@ -196,68 +195,6 @@ class Preferences : AnkiActivity() {
     // ----------------------------------------------------------------------------
     // Inner classes
     // ----------------------------------------------------------------------------
-
-    class CustomButtonsSettingsFragment : SettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_custom_buttons
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.custom_buttons"
-
-        override fun initSubscreen() {
-            // Reset toolbar button customizations
-            val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
-            resetCustomButtons.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                AnkiDroidApp.getSharedPrefs(requireContext()).edit {
-                    remove("customButtonUndo")
-                    remove("customButtonScheduleCard")
-                    remove("customButtonEditCard")
-                    remove("customButtonTags")
-                    remove("customButtonAddCard")
-                    remove("customButtonReplay")
-                    remove("customButtonCardInfo")
-                    remove("customButtonSelectTts")
-                    remove("customButtonDeckOptions")
-                    remove("customButtonMarkCard")
-                    remove("customButtonToggleMicToolBar")
-                    remove("customButtonBury")
-                    remove("customButtonSuspend")
-                    remove("customButtonFlag")
-                    remove("customButtonDelete")
-                    remove("customButtonEnableWhiteboard")
-                    remove("customButtonSaveWhiteboard")
-                    remove("customButtonWhiteboardPenColor")
-                    remove("customButtonClearWhiteboard")
-                    remove("customButtonShowHideWhiteboard")
-                }
-                // #9263: refresh the screen to display the changes
-                refreshScreen()
-                true
-            }
-        }
-
-        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-        fun allKeys(): HashSet<String> {
-            val allKeys = HashSet<String>()
-            for (i in 0 until preferenceScreen.preferenceCount) {
-                val pref = preferenceScreen.getPreference(i)
-                if (pref is PreferenceCategory) {
-                    for (j in 0 until pref.preferenceCount) {
-                        allKeys.add(pref.getPreference(j).key)
-                    }
-                } else {
-                    allKeys.add(pref.key)
-                }
-            }
-            return allKeys
-        }
-
-        companion object {
-            @JvmStatic
-            fun getSubscreenIntent(context: Context?): Intent {
-                return getSubscreenIntent(context, CustomButtonsSettingsFragment::class.java.name)
-            }
-        }
-    }
 
     class AdvancedStatisticsSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int

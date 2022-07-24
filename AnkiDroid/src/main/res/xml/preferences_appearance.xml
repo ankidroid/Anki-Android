@@ -65,7 +65,7 @@
             android:summary="@string/custom_buttons_summary"
             android:title="@string/custom_buttons"
             android:key="@string/custom_buttons_link_preference"
-            android:fragment="com.ichi2.anki.Preferences$CustomButtonsSettingsFragment" />
+            android:fragment="com.ichi2.anki.preferences.CustomButtonsSettingsFragment" />
         <ListPreference
             android:defaultValue="0"
             android:key="@string/fullscreen_mode_preference"

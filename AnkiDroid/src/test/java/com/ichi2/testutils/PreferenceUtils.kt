@@ -19,18 +19,19 @@ import android.content.Context
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.Preferences
+import com.ichi2.anki.preferences.CustomButtonsSettingsFragment
 import java.util.concurrent.atomic.AtomicReference
 
 object PreferenceUtils {
     @JvmStatic
     fun getAllCustomButtonKeys(context: Context?): Set<String> {
         val ret = AtomicReference<Set<String>>()
-        val i = Preferences.CustomButtonsSettingsFragment.getSubscreenIntent(context)
+        val i = CustomButtonsSettingsFragment.getSubscreenIntent(context)
         ActivityScenario.launch<Preferences>(i).use { scenario ->
             scenario.moveToState(Lifecycle.State.STARTED)
             scenario.onActivity { a: Preferences ->
                 val customButtonsFragment = a.supportFragmentManager
-                    .findFragmentByTag(Preferences.CustomButtonsSettingsFragment::class.java.name) as Preferences.CustomButtonsSettingsFragment
+                    .findFragmentByTag(CustomButtonsSettingsFragment::class.java.name) as CustomButtonsSettingsFragment
                 ret.set(customButtonsFragment.allKeys())
             }
         }
