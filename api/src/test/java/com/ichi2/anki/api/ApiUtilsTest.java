@@ -47,11 +47,6 @@ public class ApiUtilsTest {
     }
 
     @Test
-    public void splitFieldsShouldReturnNullWhenStringIsNull() {
-        assertNull(Utils.splitFields(null));
-    }
-
-    @Test
     public void joinTagsShouldReturnEmptyStringWhenSetIsValid() {
         Set<String> set = new HashSet<>();
         set.add("A");
