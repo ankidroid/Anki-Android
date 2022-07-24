@@ -54,7 +54,7 @@
 
     <!-- Appearance Preferences  -->
     <Preference
-        android:fragment="com.ichi2.anki.Preferences$AppearanceSettingsFragment"
+        android:fragment="com.ichi2.anki.preferences.AppearanceSettingsFragment"
         android:key="@string/pref_appearance_screen_key"
         android:summary="@string/pref_cat_appearance_summ"
         android:title="@string/pref_cat_appearance"

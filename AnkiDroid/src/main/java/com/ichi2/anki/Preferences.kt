@@ -23,12 +23,9 @@ import android.app.AlertDialog
 import android.content.*
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.MenuItem
 import android.webkit.URLUtil
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.edit
@@ -40,7 +37,6 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.ConfirmModSchemaException
@@ -50,7 +46,6 @@ import com.ichi2.anki.preferences.HeaderFragment
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.setOnPreferenceChangeListener
 import com.ichi2.anki.provider.CardContentProvider
-import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.compat.CompatHelper
@@ -59,17 +54,9 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.*
 import com.ichi2.preferences.ControlPreference.Companion.addAllControlPreferencesToCategory
-import com.ichi2.themes.Theme
-import com.ichi2.themes.Themes
-import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.themes.Themes.setThemeLegacy
-import com.ichi2.themes.Themes.systemIsInNightMode
-import com.ichi2.themes.Themes.updateCurrentTheme
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.util.*
 import kotlin.collections.HashSet
 
@@ -218,214 +205,6 @@ class Preferences : AnkiActivity() {
     // ----------------------------------------------------------------------------
     // Inner classes
     // ----------------------------------------------------------------------------
-
-    class AppearanceSettingsFragment : SettingsFragment() {
-        private var mBackgroundImage: SwitchPreference? = null
-        override val preferenceResource: Int
-            get() = R.xml.preferences_appearance
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.appearance"
-
-        override fun initSubscreen() {
-            val col = col!!
-            // Card browser font scaling
-            requirePreference<SeekBarPreferenceCompat>(R.string.pref_card_browser_font_scale_key)
-                .setFormattedSummary(R.string.pref_summary_percentage)
-
-            // Show error toast if the user tries to disable answer button without gestures on
-            requirePreference<Preference>(R.string.answer_buttons_position_preference).setOnPreferenceChangeListener() { _, newValue: Any ->
-                val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
-                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || newValue != "none") {
-                    true
-                } else {
-                    showThemedToast(requireContext(), R.string.full_screen_error_gestures, false)
-                    false
-                }
-            }
-            requirePreference<ListPreference>(FullScreenMode.PREF_KEY).setOnPreferenceChangeListener { _, newValue: Any ->
-                val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
-                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue() != newValue) {
-                    true
-                } else {
-                    showThemedToast(requireContext(), R.string.full_screen_error_gestures, false)
-                    false
-                }
-            }
-            // Configure background
-            mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
-            mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                if (mBackgroundImage!!.isChecked) {
-                    try {
-                        mBackgroundImageResultLauncher.launch("image/*")
-                        mBackgroundImage!!.isChecked = true
-                    } catch (ex: Exception) {
-                        Timber.e("%s", ex.localizedMessage)
-                    }
-                } else {
-                    mBackgroundImage!!.isChecked = false
-                    val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
-                    val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
-                    if (imgFile.exists()) {
-                        if (imgFile.delete()) {
-                            showThemedToast(requireContext(), getString(R.string.background_image_removed), false)
-                        } else {
-                            showThemedToast(requireContext(), getString(R.string.error_deleting_image), false)
-                        }
-                    } else {
-                        showThemedToast(requireContext(), getString(R.string.background_image_removed), false)
-                    }
-                }
-                true
-            }
-
-            val appThemePref = requirePreference<ListPreference>(getString(R.string.app_theme_key))
-            val dayThemePref = requirePreference<ListPreference>(getString(R.string.day_theme_key))
-            val nightThemePref = requirePreference<ListPreference>(getString(R.string.night_theme_key))
-            val themeIsFollowSystem = appThemePref.value == Themes.FOLLOW_SYSTEM_MODE
-
-            // Remove follow system options in android versions which do not have system dark mode
-            // When minSdk reaches 29, the only necessary change is to remove this if-block
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-                dayThemePref.isVisible = false
-                nightThemePref.isVisible = false
-
-                // Drop "Follow system" option (the first one)
-                appThemePref.entries = resources.getStringArray(R.array.app_theme_labels).drop(1).toTypedArray()
-                appThemePref.entryValues = resources.getStringArray(R.array.app_theme_values).drop(1).toTypedArray()
-                if (themeIsFollowSystem) {
-                    appThemePref.value = Theme.fallback.id
-                }
-            }
-            dayThemePref.isEnabled = themeIsFollowSystem
-            nightThemePref.isEnabled = themeIsFollowSystem
-
-            appThemePref.setOnPreferenceChangeListener { newValue ->
-                val selectedThemeIsFollowSystem = newValue == Themes.FOLLOW_SYSTEM_MODE
-                dayThemePref.isEnabled = selectedThemeIsFollowSystem
-                nightThemePref.isEnabled = selectedThemeIsFollowSystem
-
-                // Only restart if theme has changed
-                if (newValue != appThemePref.value) {
-                    val previousThemeId = currentTheme.id
-                    appThemePref.value = newValue.toString()
-                    updateCurrentTheme()
-
-                    if (previousThemeId != currentTheme.id) {
-                        requireActivity().recreate()
-                    }
-                }
-            }
-
-            dayThemePref.setOnPreferenceChangeListener { newValue ->
-                if (newValue != dayThemePref.value && !systemIsInNightMode && newValue != currentTheme.id) {
-                    dayThemePref.value = newValue.toString()
-                    updateCurrentTheme()
-                    requireActivity().recreate()
-                }
-            }
-
-            nightThemePref.setOnPreferenceChangeListener { newValue ->
-                if (newValue != nightThemePref.value && systemIsInNightMode && newValue != currentTheme.id) {
-                    nightThemePref.value = newValue.toString()
-                    updateCurrentTheme()
-                    requireActivity().recreate()
-                }
-            }
-            initializeCustomFontsDialog()
-
-            // Show estimate time
-            // Represents the collection pref "estTime": i.e.
-            // whether the buttons should indicate the duration of the interval if we click on them.
-            requirePreference<SwitchPreference>(R.string.show_estimates_preference).apply {
-                isChecked = col.get_config_boolean("estTimes")
-                setOnPreferenceChangeListener { newValue ->
-                    col.set_config("estTimes", newValue)
-                }
-            }
-            // Show progress
-            // Represents the collection pref "dueCounts": i.e.
-            // whether the remaining number of cards should be shown.
-            requirePreference<SwitchPreference>(R.string.show_progress_preference).apply {
-                isChecked = col.get_config_boolean("dueCounts")
-                setOnPreferenceChangeListener { newValue ->
-                    col.set_config("dueCounts", newValue)
-                }
-            }
-        }
-
-        /** Initializes the list of custom fonts shown in the preferences.  */
-        private fun initializeCustomFontsDialog() {
-            val defaultFontPreference = requirePreference<ListPreference>("defaultFont")
-            defaultFontPreference.entries = getCustomFonts("System default")
-            defaultFontPreference.entryValues = getCustomFonts("")
-            val browserEditorCustomFontsPreference = requirePreference<ListPreference>("browserEditorFont")
-            browserEditorCustomFontsPreference.entries = getCustomFonts("System default")
-            browserEditorCustomFontsPreference.entryValues = getCustomFonts("", true)
-        }
-
-        /** Returns a list of the names of the installed custom fonts.  */
-        private fun getCustomFonts(defaultValue: String): Array<String?> {
-            return getCustomFonts(defaultValue, false)
-        }
-
-        private fun getCustomFonts(defaultValue: String, useFullPath: Boolean): Array<String?> {
-            val fonts = Utils.getCustomFonts(requireContext())
-            val count = fonts.size
-            Timber.d("There are %d custom fonts", count)
-            val names = arrayOfNulls<String>(count + 1)
-            names[0] = defaultValue
-            if (useFullPath) {
-                for (index in 1 until count + 1) {
-                    names[index] = fonts[index - 1].path
-                    Timber.d("Adding custom font: %s", names[index])
-                }
-            } else {
-                for (index in 1 until count + 1) {
-                    names[index] = fonts[index - 1].name
-                    Timber.d("Adding custom font: %s", names[index])
-                }
-            }
-            return names
-        }
-
-        private val mBackgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
-            if (selectedImage != null) {
-                // handling file may result in exception
-                try {
-                    val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE)
-                    requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
-                        cursor!!.moveToFirst()
-                        // file size in MB
-                        val fileLength = cursor.getLong(0) / (1024 * 1024)
-                        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(requireContext())
-                        val imageName = "DeckPickerBackground.png"
-                        val destFile = File(currentAnkiDroidDirectory, imageName)
-                        // Image size less than 10 MB copied to AnkiDroid directory
-                        if (fileLength < 10) {
-                            (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream?)!!.channel.use { sourceChannel ->
-                                FileOutputStream(destFile).channel.use { destChannel ->
-                                    destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
-                                    showThemedToast(requireContext(), getString(R.string.background_image_applied), false)
-                                }
-                            }
-                        } else {
-                            mBackgroundImage!!.isChecked = false
-                            showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, 10), false)
-                        }
-                    }
-                } catch (e: OutOfMemoryError) {
-                    Timber.w(e)
-                    showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
-                } catch (e: Exception) {
-                    Timber.w(e)
-                    showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
-                }
-            } else {
-                mBackgroundImage!!.isChecked = false
-                showThemedToast(requireContext(), getString(R.string.no_image_selected), false)
-            }
-        }
-    }
 
     class AdvancedSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
