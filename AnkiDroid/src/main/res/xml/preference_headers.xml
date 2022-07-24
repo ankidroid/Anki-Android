@@ -16,55 +16,86 @@
 -->
 
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <!--  General Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$GeneralSettingsFragment"
         android:summary="@string/pref_cat_general_summ"
-        android:title="@string/pref_cat_general">
+        android:title="@string/pref_cat_general"
+        android:icon="@drawable/ic_settings_black"
+        android:key="@string/pref_general_screen_key">
     </Preference>
 
     <!-- Reviewing Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$ReviewingSettingsFragment"
-        android:summary="@string/pref_cat_reviewing_summ"
-        android:title="@string/pref_cat_reviewing">
+        android:key="@string/pref_reviewing_screen_key"
+        android:title="@string/pref_cat_reviewing"
+        android:icon="@drawable/ic_flashcard_black">
     </Preference>
 
     <!-- Sync Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$SyncSettingsFragment"
         android:key="@string/pref_sync_screen_key"
-        android:title="@string/pref_cat_sync">
+        android:title="@string/pref_cat_sync"
+        android:icon="@drawable/ic_sync">
+    </Preference>
+
+    <!-- Notifications -->
+    <Preference
+        android:fragment="com.ichi2.anki.preferences.NotificationsSettingsFragment"
+        android:key="@string/pref_notifications_screen_key"
+        android:title="@string/notification_pref"
+        android:icon="@drawable/ic_notifications">
     </Preference>
 
     <!-- Appearance Preferences  -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$AppearanceSettingsFragment"
-        android:key="appearance_preference_group"
+        android:key="@string/pref_appearance_screen_key"
         android:summary="@string/pref_cat_appearance_summ"
-        android:title="@string/pref_cat_appearance">
-    </Preference>
-
-    <!-- Navigation Preferences -->
-    <Preference
-        android:fragment="com.ichi2.anki.Preferences$GesturesSettingsFragment"
-        android:summary="@string/pref_cat_gestures_summ"
-        android:title="@string/pref_cat_gestures">
+        android:title="@string/pref_cat_appearance"
+        android:icon="@drawable/ic_color_lens_white_24dp">
     </Preference>
 
     <!-- Keybinding preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$ControlsSettingsFragment"
-        android:summary="@string/pref_cat_controls_summ"
-        android:title="@string/pref_cat_controls">
+        android:key="@string/pref_controls_screen_key"
+        android:title="@string/pref_cat_controls"
+        android:icon="@drawable/ic_touch">
+    </Preference>
+
+    <!-- Accessibility -->
+    <Preference
+        android:fragment="com.ichi2.anki.preferences.AccessibilitySettingsFragment"
+        android:key="@string/pref_accessibility_screen_key"
+        android:title="@string/accessibility"
+        android:icon="@drawable/ic_accessibility_24">
     </Preference>
 
     <!-- Advanced Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.Preferences$AdvancedSettingsFragment"
-        android:key="pref_screen_advanced"
+        android:key="@string/pref_advanced_screen_key"
         android:summary="@string/pref_cat_advanced_summ"
-        android:title="@string/pref_cat_advanced">
+        android:title="@string/pref_cat_advanced"
+        android:icon="@drawable/ic_tune_white">
     </Preference>
+    <Preference
+        android:key="@string/pref_dev_options_screen_key"
+        android:title="@string/pref_cat_dev_options"
+        android:icon="@drawable/ic_code"
+        android:fragment="com.ichi2.anki.Preferences$DevOptionsFragment"
+        app:isPreferenceVisible="false">
+    </Preference>
+    <!-- About -->
+    <Preference
+        android:key="@string/about_screen_key"
+        android:icon="@drawable/ic_outline_info_24"
+        android:title="@string/pref_cat_about_title"
+        android:fragment="com.ichi2.anki.preferences.AboutFragment"/>
 </PreferenceScreen>

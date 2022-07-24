@@ -33,8 +33,9 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.MaterialDialog.ListCallbackSingleChoice
+import anki.collection.OpChanges
+import com.afollestad.materialdialogs.list.SingleChoiceListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiFont.Companion.getTypeface
@@ -97,6 +98,7 @@ import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.update
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.lang.Exception
@@ -113,7 +115,12 @@ import kotlin.math.min
 @Suppress("LeakingThis") // The class is only 'open' due to testing
 @KotlinCleanup("scan through this class and add attributes - not started")
 @KotlinCleanup("Add TextUtils.isNotNullOrEmpty accepting nulls and use it. Remove TextUtils import")
-open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelectionListener, TagsDialogListener {
+open class CardBrowser :
+    NavigationDrawerActivity(),
+    SubtitleListener,
+    DeckSelectionListener,
+    TagsDialogListener,
+    ChangeManager.Subscriber {
     @KotlinCleanup("using ?. and let keyword would be good here")
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
@@ -254,9 +261,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private var mUnmountReceiver: BroadcastReceiver? = null
-    private val mOrderDialogListener = ListCallbackSingleChoice { _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
-        changeCardOrder(which)
-        true
+    private val orderSingleChoiceDialogListener: SingleChoiceListener = { _, index: Int, _ -> changeCardOrder(index) }
+
+    init {
+        ChangeManager.subscribe(this)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -293,15 +301,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         return RepositionCardHandler(this)
     }
 
-    private class RepositionCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>>(browser) {
+    private class RepositionCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
         override fun actualOnPreExecute(context: CardBrowser) {
             Timber.d("CardBrowser::RepositionCardHandler() onPreExecute")
         }
 
-        override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>) {
+        override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>?) {
             Timber.d("CardBrowser::RepositionCardHandler() onPostExecute")
             context.mReloadRequired = true
-            val cardCount: Int = result.value.result.size
+            val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 context,
                 context.resources.getQuantityString(R.plurals.reposition_card_dialog_acknowledge, cardCount, cardCount), true
@@ -315,15 +323,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         return ResetProgressCardHandler(this)
     }
 
-    private class ResetProgressCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>>(browser) {
+    private class ResetProgressCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
         override fun actualOnPreExecute(context: CardBrowser) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPreExecute")
         }
 
-        override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>) {
+        override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>?) {
             Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute")
             context.mReloadRequired = true
-            val cardCount: Int = result.value.result.size
+            val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 context,
                 context.resources.getQuantityString(R.plurals.reset_cards_dialog_acknowledge, cardCount, cardCount), true
@@ -337,15 +345,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         return RescheduleCardHandler(this)
     }
 
-    private class RescheduleCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>>(browser) {
+    private class RescheduleCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
         override fun actualOnPreExecute(context: CardBrowser) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPreExecute")
         }
 
-        override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>) {
+        override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>?) {
             Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute")
             context.mReloadRequired = true
-            val cardCount: Int = result.value.result.size
+            val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 context,
                 context.resources.getQuantityString(R.plurals.reschedule_cards_dialog_acknowledge, cardCount, cardCount), true
@@ -520,6 +528,21 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             }
         }
         mOnboarding.onCreate()
+
+        val modalBottomSheet = FilterSheetBottomFragment()
+
+        val filterButton = findViewById<FloatingActionButton>(R.id.filter_sheet_fab)
+
+        filterButton.setOnClickListener {
+            modalBottomSheet.show(supportFragmentManager, FilterSheetBottomFragment.TAG)
+        }
+    }
+
+    fun searchWithFilterQuery(filterQuery: String) {
+        mSearchTerms = filterQuery
+
+        mSearchView!!.setQuery(mSearchTerms!!, true)
+        searchCards()
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
@@ -819,10 +842,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             else -> {
                 Timber.i("Back key pressed")
                 val data = Intent()
-                if (mReloadRequired) {
-                    // Add reload flag to result intent so that schedule reset when returning to note editor
-                    data.putExtra("reloadRequired", true)
-                }
+                // Add reload flag to result intent so that schedule reset when returning to note editor
+                data.putExtra("reloadRequired", mReloadRequired)
                 closeCardBrowser(RESULT_OK, data)
             }
         }
@@ -907,9 +928,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
             showBackIcon()
         }
-        val undo = mActionBarMenu?.findItem(R.id.action_undo)
-        undo?.isVisible = col.undoAvailable()
-        undo?.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+        mActionBarMenu?.findItem(R.id.action_undo)?.run {
+            isVisible = col.undoAvailable()
+            title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+        }
 
         // Maybe we were called from ACTION_PROCESS_TEXT.
         // In that case we already fill in the search.
@@ -1050,7 +1072,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
                 return true
             }
             R.id.action_sort_by_size -> {
-                showDialogFragment(newInstance(mOrder, mOrderAsc, mOrderDialogListener))
+                showDialogFragment(newInstance(mOrder, mOrderAsc, orderSingleChoiceDialogListener))
                 return true
             }
             R.id.action_show_marked -> {
@@ -1260,7 +1282,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     @VisibleForTesting
     fun onUndo() {
         if (col.undoAvailable()) {
-            Undo().runWithHandler(mUndoHandler)
+            if (BackendFactory.defaultLegacySchema) {
+                Undo().runWithHandler(mUndoHandler)
+            } else {
+                launchCatchingCollectionTask { col ->
+                    if (!backendUndoAndShowPopup(col)) {
+                        Undo().runWithHandler(mUndoHandler)
+                    }
+                }
+            }
         }
     }
 
@@ -1630,20 +1660,15 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     /**
+     * Loads/Reloads (Updates the Q, A & etc) of cards in the [cards] list
      * @param cards Cards that were changed
      */
     private fun updateCardsInList(cards: List<Card>) {
-        val cardList: CardCollection<CardCache> = this.mCards
-        val idToPos = getPositionMap(cardList)
-        for (c in cards) {
-            // get position in the mCards search results HashMap
-            val pos = idToPos[c.id]
-            if (pos == null || pos >= cardCount) {
-                continue
-            }
-            // update Q & A etc
-            cardList[pos].load(true, mColumn1Index, mColumn2Index)
-        }
+        val idToPos = getPositionMap(mCards)
+        cards
+            .mapNotNull { c -> idToPos[c.id] }
+            .filterNot { pos -> pos >= cardCount }
+            .forEach { pos -> mCards[pos].load(true, mColumn1Index, mColumn2Index) }
         updateList()
     }
 
@@ -1651,14 +1676,14 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         return UpdateMultipleNotesHandler(this)
     }
 
-    private class UpdateMultipleNotesHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<List<Note>, Computation<*>>("Card Browser - UpdateMultipleNotesHandler.actualOnPostExecute(CardBrowser browser)", browser) {
+    private class UpdateMultipleNotesHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<List<Note>, Computation<*>?>("Card Browser - UpdateMultipleNotesHandler.actualOnPostExecute(CardBrowser browser)", browser) {
         override fun actualOnProgressUpdate(context: CardBrowser, value: List<Note>) {
             val cardsToUpdate = value
                 .flatMap { n: Note -> n.cards() }
             context.updateCardsInList(cardsToUpdate)
         }
 
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<*>) {
+        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<*>?) {
             browser.hideProgressBar()
         }
     }
@@ -1677,14 +1702,14 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         }
     }
 
-    private class ChangeDeckHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Any?, Computation<Array<Card>>>("Card Browser - changeDeckHandler.actualOnPostExecute(CardBrowser browser)", browser) {
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>) {
+    private class ChangeDeckHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Any?, Computation<Array<Card>>?>("Card Browser - changeDeckHandler.actualOnPostExecute(CardBrowser browser)", browser) {
+        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>?) {
             browser.hideProgressBar()
             browser.searchCards()
             browser.endMultiSelectMode()
             browser.mCardsAdapter!!.notifyDataSetChanged()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
-            if (!result.succeeded()) {
+            if (!result!!.succeeded()) {
                 Timber.i("changeDeckHandler failed, not offering undo")
                 browser.displayCouldNotChangeDeck()
                 return
@@ -1706,25 +1731,13 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
     private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
-        val reviewerCardId = reviewerCardId
-        val oldMCards = mCards
-        val idToPos = getPositionMap(oldMCards)
-        val idToRemove: MutableSet<Long> = HashSet()
-        for (cardId in cardsIds) {
-            if (cardId == reviewerCardId) {
-                mReloadRequired = true
-            }
-            if (idToPos.containsKey(cardId)) {
-                idToRemove.add(cardId)
-            }
-        }
-        val newMCards: MutableList<CardCache> = java.util.ArrayList(oldMCards.size())
-        var pos = 0
-        for (card in oldMCards) {
-            if (!idToRemove.contains(card.id)) {
-                newMCards.add(CardCache(card, pos++))
-            }
-        }
+        val idToPos = getPositionMap(mCards)
+        val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
+        mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
+        val newMCards: MutableList<CardCache> = mCards
+            .filterNot { c -> idToRemove.contains(c.id) }
+            .mapIndexed { i, c -> CardCache(c, i) }
+            .toMutableList()
         mCards.replaceWith(newMCards)
         if (reorderCards) {
             // Suboptimal from a UX perspective, we should reorder
@@ -1740,9 +1753,9 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         return SuspendCardHandler(this)
     }
 
-    private open class SuspendCardHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Void?, Computation<Array<Card>>>(browser) {
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>) {
-            browser.updateCardsInList(result.value.toList())
+    private open class SuspendCardHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Void?, Computation<Array<Card>>?>(browser) {
+        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>?) {
+            browser.updateCardsInList(result!!.value.toList())
             browser.hideProgressBar()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
             if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
@@ -1761,9 +1774,9 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         return MarkCardHandler(this)
     }
 
-    private class MarkCardHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Void?, Computation<Array<Card>>>(browser) {
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>) {
-            browser.updateCardsInList(getAllCards(getNotes(result.value.toList())))
+    private class MarkCardHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Void?, Computation<Array<Card>>?>(browser) {
+        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<Array<Card>>?) {
+            browser.updateCardsInList(getAllCards(getNotes(result!!.value.toList())))
             browser.hideProgressBar()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
             if (result.value.map { card -> card.id }.contains(browser.reviewerCardId)) {
@@ -1774,7 +1787,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     private val mDeleteNoteHandler = DeleteNoteHandler(this)
 
-    private class DeleteNoteHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Array<Card>, Computation<*>>(browser) {
+    private class DeleteNoteHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Array<Card>, Computation<*>?>(browser) {
         private var mCardsDeleted = -1
         override fun actualOnPreExecute(context: CardBrowser) {
             super.actualOnPreExecute(context)
@@ -1787,7 +1800,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             mCardsDeleted = value.size
         }
 
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<*>) {
+        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<*>?) {
             browser.hideProgressBar()
             browser.mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(browser.resources), "%d", browser.checkedCardCount())
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
@@ -1804,8 +1817,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     private val mUndoHandler = UndoHandler(this)
 
-    private class UndoHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Unit, Computation<NextCard<*>>>(browser) {
-        public override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<NextCard<*>>) {
+    private class UndoHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Unit, Computation<NextCard<*>>?>(browser) {
+        public override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<NextCard<*>>?) {
             Timber.d("Card Browser - mUndoHandler.actualOnPostExecute(CardBrowser browser)")
             browser.hideProgressBar()
             // reload whole view
@@ -1820,7 +1833,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     private val mSearchCardsHandler = SearchCardsHandler(this)
 
     @VisibleForTesting
-    internal inner class SearchCardsHandler(browser: CardBrowser) : ListenerWithProgressBar<List<CardCache>, SearchCardsResult>(browser) {
+    internal inner class SearchCardsHandler(browser: CardBrowser) : ListenerWithProgressBar<List<CardCache>, SearchCardsResult?>(browser) {
         override fun actualOnProgressUpdate(context: CardBrowser, value: List<CardCache>) {
             // Need to copy the list into a new list, because the original list is modified, and
             // ListAdapter crash
@@ -1828,8 +1841,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             updateList()
         }
 
-        override fun actualOnPostExecute(context: CardBrowser, result: SearchCardsResult) {
-            if (result.hasResult) {
+        override fun actualOnPostExecute(context: CardBrowser, result: SearchCardsResult?) {
+            if (result!!.hasResult) {
                 mCards.replaceWith(result.result!!.toMutableList())
                 updateList()
                 handleSearchResult()
@@ -1901,23 +1914,10 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
     }
 
     private val newPositionOfSelectedCard: Int
-        get() {
-            if (mCards.size() == 0) {
-                return CARD_NOT_AVAILABLE
-            }
-            for (card in mCards) {
-                if (card.id == mOldCardId) {
-                    return card.position
-                }
-            }
-            return CARD_NOT_AVAILABLE
-        }
+        get() = mCards.find { c -> c.id == mOldCardId }?.position
+            ?: CARD_NOT_AVAILABLE
 
-    @KotlinCleanup("why do we create a separate variable just to check the below conditions?")
-    fun hasSelectedAllDecks(): Boolean {
-        val lastDeckId = lastDeckId
-        return lastDeckId != null && lastDeckId == ALL_DECKS_ID
-    }
+    fun hasSelectedAllDecks(): Boolean = lastDeckId == ALL_DECKS_ID
 
     fun searchAllDecks() {
         // all we need to do is select all decks
@@ -2129,15 +2129,12 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
-            val columns = v.tag as Array<View>
             val card = mCards[position]
-            for (i in toIds.indices) {
-                val col = columns[i] as TextView
-                // set font for column
-                setFont(col)
-                // set text for column
-                col.text = card.getColumnHeaderText(fromKeys[i])
-            }
+            (v.tag as Array<*>)
+                .forEachIndexed { i, col ->
+                    setFont(col as TextView) // set font for column
+                    col.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
+                }
             // set card's background color
             val backgroundColor: Int = getColorFromAttr(this@CardBrowser, card.color)
             v.setBackgroundColor(backgroundColor)
@@ -2332,7 +2329,7 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         private var mQa: Pair<String, String>? = null
         override var position: Int
 
-        constructor(id: Long, col: com.ichi2.libanki.Collection?, position: Int) : super(col!!, id) {
+        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int) : super(col, id) {
             this.position = position
         }
 
@@ -2592,14 +2589,11 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun checkCardsAtPositions(vararg positions: Int) {
-        for (position in positions) {
-            check(position < mCards.size()) {
-                String.format(
-                    Locale.US, "Attempted to check card at index %d. %d cards available",
-                    position, mCards.size()
-                )
+        positions.forEach { pos ->
+            check(pos < mCards.size()) {
+                "Attempted to check card at index $pos. ${mCards.size()} cards available"
             }
-            mCheckedCards.add(mCards[position])
+            mCheckedCards.add(mCards[pos])
         }
         onSelectionChanged()
     }
@@ -2653,6 +2647,19 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
         searchCards()
     }
 
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if ((
+            changes.browserSidebar ||
+                changes.browserTable ||
+                changes.noteText ||
+                changes.card
+            ) && handler !== this
+        ) {
+            // executing this only for the refresh side effects; there may be a better way
+            Undo().runWithHandler(mUndoHandler)
+        }
+    }
+
     companion object {
         @JvmField
         var sCardBrowserCard: Card? = null
@@ -2700,12 +2707,8 @@ open class CardBrowser : NavigationDrawerActivity(), SubtitleListener, DeckSelec
             context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit().remove(LAST_DECK_ID_KEY).apply()
         }
 
-        private fun getPositionMap(list: CardCollection<CardCache>): Map<Long, Int> {
-            val positions: MutableMap<Long, Int> = HashMapInit(list.size())
-            for (i in 0 until list.size()) {
-                positions[list[i].id] = i
-            }
-            return positions
+        private fun getPositionMap(cards: CardCollection<CardCache>): Map<Long, Int> {
+            return cards.mapIndexed { i, c -> c.id to i }.toMap()
         }
 
         @CheckResult

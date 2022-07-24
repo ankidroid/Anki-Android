@@ -108,7 +108,7 @@
     <string name="rename_deck">Preimenuj skupinu</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Dodaj</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Dodaj</string>
     <string name="menu_add_note">Dodaj bilješku</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkroniziraj račun</string>
     <string name="menu_dismiss_note">Sakrij / izbriši</string>
@@ -181,7 +181,7 @@
     <string name="studyoptions_no_cards_due">Još nije potrebno dovršiti ni jednu karticu</string>
     <string name="sd_card_not_mounted">Pohrana uređaja nije montirana</string>
     <string name="empty_cloze_warning">Uredi bilješku i dodaj cloze brisanja (%1$s)</string>
-    <string name="button_sync">Sinkroniziraj</string>
+    <string name="button_sync" comment="Text of the sync button">Sinkroniziraj</string>
     <string name="cancel_sync_confirm">Želite li prekinuti sinkronizaciju?</string>
     <string name="continue_sync">Nastavi sinkronizaciju</string>
     <string name="sync_cancelled">Sinkronizacija je otkazana</string>

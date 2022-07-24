@@ -22,7 +22,6 @@ import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.Gesture.SWIPE_DOWN
-import com.ichi2.anki.cardviewer.Gesture.SWIPE_LEFT
 import com.ichi2.anki.cardviewer.Gesture.SWIPE_RIGHT
 import com.ichi2.anki.cardviewer.Gesture.SWIPE_UP
 import com.ichi2.anki.cardviewer.GestureProcessor
@@ -30,8 +29,10 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.WhiteboardPenColor
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
+import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.libanki.Consts
-import net.ankiweb.rsdroid.database.NotImplementedException
+import com.ichi2.themes.Theme
+import com.ichi2.themes.Themes.currentTheme
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Before
@@ -153,7 +154,8 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val hideCount = reviewer.delayedHideCount
 
-        reviewer.executeCommand(ViewerCommand.COMMAND_UNDO)
+        awaitJob(reviewer.undo())
+
         advanceRobolectricLooperWithSleep()
 
         assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
@@ -163,6 +165,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     @RunInBackground
     fun defaultDrawerConflictIsTrueIfGesturesEnabled() {
         enableGestureSetting()
+        enableGesture(SWIPE_RIGHT)
         val reviewer = startReviewerFullScreen()
 
         assertThat(reviewer.hasDrawerSwipeConflicts(), equalTo(true))
@@ -272,30 +275,20 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     private fun disableGestures(vararg gestures: Gesture) {
-        AnkiDroidApp.getSharedPrefs(targetContext).edit {
-            for (g in gestures) {
-                val k = getKey(g)
-                putString(k, ViewerCommand.COMMAND_NOTHING.toPreferenceString())
+        val prefs = AnkiDroidApp.getSharedPrefs(targetContext)
+        for (command in ViewerCommand.values()) {
+            for (mappableBinding in MappableBinding.fromPreference(prefs, command)) {
+                if (mappableBinding.binding.gesture in gestures) {
+                    command.removeBinding(prefs, mappableBinding)
+                }
             }
         }
     }
 
     /** Enables a gesture (without changing the overall setting of whether gestures are allowed)  */
     private fun enableGesture(gesture: Gesture) {
-        AnkiDroidApp.getSharedPrefs(targetContext).edit {
-            val k = getKey(gesture)
-            putString(k, ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1.toPreferenceString())
-        }
-    }
-
-    private fun getKey(gesture: Gesture): String {
-        return when (gesture) {
-            SWIPE_UP -> "gestureSwipeUp"
-            SWIPE_DOWN -> "gestureSwipeDown"
-            SWIPE_LEFT -> "gestureSwipeLeft"
-            SWIPE_RIGHT -> "gestureSwipeRight"
-            else -> throw NotImplementedException(gesture.toString())
-        }
+        val prefs = AnkiDroidApp.getSharedPrefs(targetContext)
+        ViewerCommand.FLIP_OR_ANSWER_EASE1.addBinding(prefs, MappableBinding.fromGesture(gesture))
     }
 
     private fun startReviewerFullScreen(): ReviewerExt {
@@ -314,10 +307,6 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     private fun storeLightModeColor(value: Int) {
         MetaDB.storeWhiteboardPenColor(targetContext, Consts.DEFAULT_DECK_ID, true, value)
-    }
-
-    private fun enableDarkMode() {
-        AnkiDroidApp.getSharedPrefs(targetContext).edit().putBoolean("invertedColors", true).apply()
     }
 
     private val penColor: WhiteboardPenColor
@@ -341,7 +330,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         addNoteUsingBasicModel("Hello", "World")
 
         val reviewer = startReviewer()
-        enableDarkMode()
+        currentTheme = Theme.DARK
         reviewer.toggleWhiteboard()
 
         return reviewer.whiteboard

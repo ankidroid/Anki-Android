@@ -68,7 +68,6 @@
     <string name="reset_password">Нулиране на паролата</string>
     <string name="lost_mail_instructions">Забравен имейл?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Предпочитания</string>
     <string name="deckpreferences_title">Опции за ХХХ</string>
     <string name="sync_prepare_syncing">Подготовка за синхронизиране...</string>
     <string name="sync_preparing_full_sync_message">Подготовка на пълно синхронизиране...</string>
@@ -117,6 +116,7 @@
     <string name="sync_sanity_remote">Отдалечено</string>
     <string name="force_full_sync_title">Пълна синхронизация</string>
     <string name="force_full_sync_summary">При следващото синхронизиране, презаписът е в една посока</string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">При следващото синхронизиране ще се извърши пълно синхронизиране на колекцията Ви от това устройство на сървъра. Ако имате коментари или други промени на друго устройство, които все още не са синхронизирани тук, ще бъдат загубени. Ще продължите ли?</string>
     <string name="full_sync_confirmation_upgrade">Поради грешка във вече инсталирана версия на AnkiDroid е препоръчително да се направи пълно синхронизиране.</string>
     <string name="sync_error_407_proxy_required">Proxy authentication required.</string>

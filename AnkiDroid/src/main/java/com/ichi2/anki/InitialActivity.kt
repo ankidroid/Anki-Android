@@ -18,18 +18,11 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.*
 import androidx.annotation.CheckResult
-import com.ichi2.anki.CollectionHelper.DatabaseVersion
-import com.ichi2.anki.exception.OutOfSpaceException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.utils.VersionUtils.pkgVersionName
-import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
-import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.RustBackendFailedException
 import timber.log.Timber
-import java.lang.ref.WeakReference
 
 /** Utilities for launching the first activity (currently the DeckPicker)  */
 object InitialActivity {
@@ -53,48 +46,15 @@ object InitialActivity {
             return StartupFailure.DIRECTORY_NOT_ACCESSIBLE
         }
 
-        return when (isFutureAnkiDroidVersion(context)) {
-            DatabaseVersion.FUTURE_NOT_DOWNGRADABLE -> StartupFailure.FUTURE_ANKIDROID_VERSION
-            DatabaseVersion.FUTURE_DOWNGRADABLE -> StartupFailure.DATABASE_DOWNGRADE_REQUIRED
-            DatabaseVersion.UNKNOWN, DatabaseVersion.USABLE -> try {
-                CollectionHelper.getInstance().getCol(context)
-                StartupFailure.DB_ERROR
-            } catch (e: BackendDbLockedException) {
-                StartupFailure.DATABASE_LOCKED
-            } catch (ignored: Exception) {
-                StartupFailure.DB_ERROR
+        return when (CollectionHelper.getLastOpenFailure()) {
+            CollectionHelper.CollectionOpenFailure.FILE_TOO_NEW -> StartupFailure.FUTURE_ANKIDROID_VERSION
+            CollectionHelper.CollectionOpenFailure.CORRUPT -> StartupFailure.DB_ERROR
+            CollectionHelper.CollectionOpenFailure.LOCKED -> StartupFailure.DATABASE_LOCKED
+            null -> {
+                // if getColSafe returned null, this should never happen
+                null
             }
         }
-    }
-
-    private fun isFutureAnkiDroidVersion(context: Context): DatabaseVersion {
-        return try {
-            CollectionHelper.isFutureAnkiDroidVersion(context)
-        } catch (e: Exception) {
-            Timber.w(e, "Could not determine if future AnkiDroid version - assuming not")
-            DatabaseVersion.UNKNOWN
-        }
-    }
-
-    /**
-     * Downgrades the database at the currently selected collection path from V16 to V11 in a background task
-     */
-    // #7108: AsyncTask
-    @Suppress("deprecation")
-    @JvmStatic
-    fun downgradeBackend(deckPicker: DeckPicker) {
-        // Note: This method does not require a backend pointer or an open collection
-        Timber.i("Downgrading backend")
-        PerformDowngradeTask(WeakReference(deckPicker)).execute()
-    }
-
-    @Throws(OutOfSpaceException::class, RustBackendFailedException::class)
-    internal fun downgradeCollection(deckPicker: DeckPicker?, backupManager: BackupManager) {
-        requireNotNull(deckPicker) { "deckPicker was null" }
-        val collectionPath = CollectionHelper.getCollectionPath(deckPicker)
-        require(backupManager.performDowngradeBackupInForeground(collectionPath)) { "backup failed" }
-        Timber.d("Downgrading database to V11: '%s'", collectionPath)
-        BackendFactory.createInstance().backend.downgradeBackend(collectionPath)
     }
 
     /** @return Whether any preferences were upgraded
@@ -147,54 +107,8 @@ object InitialActivity {
         return preferences.getString("lastVersion", "") == pkgVersionName
     }
 
-    // I disapprove, but it's best to keep consistency with the rest of the app
-    // #7108: AsyncTask
-    @Suppress("deprecation")
-    private class PerformDowngradeTask(private val deckPicker: WeakReference<DeckPicker>) : AsyncTask<Void?, Void?, Void?>() {
-        private var mException: Exception? = null
-        override fun doInBackground(vararg p0: Void?): Void? {
-            // It would be great if we could catch the OutOfSpaceException here
-            try {
-                val deckPicker = deckPicker.get()
-                downgradeCollection(deckPicker, deckPicker!!.backupManager!!)
-            } catch (e: Exception) {
-                Timber.w(e)
-                mException = e
-            }
-            return null
-        }
-
-        override fun onPreExecute() {
-            super.onPreExecute()
-            val d = deckPicker.get()
-            d?.showProgressBar()
-        }
-
-        override fun onPostExecute(result: Void?) {
-            super.onPostExecute(result)
-            val d = deckPicker.get() ?: return
-            d.hideProgressBar()
-            if (mException != null) {
-                if (mException is OutOfSpaceException) {
-                    d.displayDowngradeFailedNoSpace()
-                } else {
-                    d.displayDatabaseFailure()
-                }
-                return
-            }
-            Timber.i("Database downgrade successful - starting up")
-            // no exception - continue
-            d.handleStartup()
-            // This call should probably be in handleStartup - but it's also called there onRefresh
-            // TODO: PERF: to fix the above, add test to ensure that this is only called once on each startup path
-            d.refreshState()
-        }
-    }
-
     enum class StartupFailure {
         SD_CARD_NOT_MOUNTED, DIRECTORY_NOT_ACCESSIBLE, FUTURE_ANKIDROID_VERSION,
-
-        /** A downgrade of the AnkiDroid database is required (and possible)  */
-        DATABASE_DOWNGRADE_REQUIRED, DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED
+        DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED
     }
 }

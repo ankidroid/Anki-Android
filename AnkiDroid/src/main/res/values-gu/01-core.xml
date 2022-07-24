@@ -103,7 +103,7 @@
     <string name="rename_deck">થપ્પીનું નામ બદલો </string>
     <string name="create_shortcut">ટૂંકો રસ્તો બનાવો</string>
     <string name="browse_cards">કાર્ડસ જોવો</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ઉમેરો</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ઉમેરો</string>
     <string name="menu_add_note">નોંધ ઉમેરો</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ખાતું સિંક્રનાઇઝ કરો </string>
     <string name="menu_dismiss_note">છુપાવો / કાઢો</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-    <string name="button_sync">Sync</string>
+    <string name="button_sync" comment="Text of the sync button">Sync</string>
     <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
     <string name="continue_sync">Continue sync</string>
     <string name="sync_cancelled">Sync cancelled</string>

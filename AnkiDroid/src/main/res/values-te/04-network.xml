@@ -68,7 +68,6 @@
     <string name="reset_password">పాస్వర్డ్ మార్చండి</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">ప్రాధాన్యతలు</string>
     <string name="deckpreferences_title">XXX కోసం ఎంపికలు</string>
     <string name="sync_prepare_syncing">సమకాలీకరించడానికి సిద్ధం చేస్తోంది&#8230;</string>
     <string name="sync_preparing_full_sync_message">పూర్తి సమకాలీకరణను సిద్ధం చేస్తోంది&#8230;</string>
@@ -117,6 +116,7 @@
     <string name="sync_sanity_remote">రిమోట్</string>
     <string name="force_full_sync_title">పూర్తి సమకాలీకరణను బలవంతం చేయండి</string>
     <string name="force_full_sync_summary">తదుపరి సమకాలీకరణలో, ఒక దిశలో మార్పులను మార్చండి</string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">మీ సేకరణ సమకాలీకరించినప్పుడు అభ్యర్థించిన మార్పుకు మీ డేటాబేస్ యొక్క పూర్తి అప్లోడ్ అవసరం అవుతుంది. ఇప్పటికీ సమీక్షలు లేదా ఇతర మార్పులు ఇప్పటికీ ఇక్కడ సమకాలీకరించబడకపోతే, అవి పోతాయి. కొనసాగించు?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid గతంలో సంస్థాపించిన సంస్కరణలో బగ్, ఇది పూర్తి సమకాలీకరణను బలపరచటానికి మద్దతిస్తుంది.</string>
     <string name="sync_error_407_proxy_required">Proxy authentication required.</string>

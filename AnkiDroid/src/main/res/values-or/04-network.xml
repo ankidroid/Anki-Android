@@ -68,7 +68,6 @@
     <string name="reset_password">ପାସ୍‍ୱାର୍ଡ଼ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
     <string name="lost_mail_instructions">ଇମେଲ୍ ଭୁଲିଗଲେ କି?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">ଅଗ୍ରାଧିକାରସମୂହ</string>
     <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="sync_prepare_syncing">ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
     <string name="sync_preparing_full_sync_message">ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
@@ -117,6 +116,7 @@
     <string name="sync_sanity_remote">ସୁଦୂର</string>
     <string name="force_full_sync_title">ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ବାଧ୍ୟ କରନ୍ତୁ</string>
     <string name="force_full_sync_summary">ପରବର୍ତ୍ତୀ ସିଙ୍କ୍ ରେ, ଗୋଟିଏ ଦିଗରେ ପରିବର୍ତ୍ତନ କରିବାକୁ ବାଧ୍ୟ କରନ୍ତୁ</string>
+    <string name="force_full_sync_confirmation">ବାଧ୍ୟତାମୂଳକ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍</string>
     <string name="full_sync_confirmation">ଯେତେବେଳେ ଆପଣ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ପରବର୍ତ୍ତୀ ସମୟରେ ସମକାଳୀନ କରିବେ ସେତେବେଳେ ଅନୁରୋଧ କରାଯାଇଥିବା ପରିବର୍ତ୍ତନ ଡାଟାବେସର ସମ୍ପୂର୍ଣ୍ଣ ଅପଲୋଡ୍ ଆବଶ୍ୟକ କରିବ। ଯଦି ଆପଣଙ୍କର ସମୀକ୍ଷା କିମ୍ବା ଅନ୍ୟାନ୍ୟ ପରିବର୍ତ୍ତନ ଅନ୍ୟ ଡିଭାଇସରେ ଅପେକ୍ଷା କରିଛି ଯାହା ଏପର୍ଯ୍ୟନ୍ତ ଏଠାରେ ସମକାଳୀନ ହୋଇନାହିଁ, ସେଗୁଡ଼ିକ ହଜିଯିବ। ଜାରି ରଖନ୍ତୁ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid ର ପୂର୍ବରୁ ସ୍ଥାପିତ ସଂସ୍କରଣରେ ଏକ ତ୍ରୁଟି ହେତୁ, ଏହାକୁ ସମ୍ପୂର୍ଣ୍ଣ ସିଙ୍କ କରିବାକୁ ବାଧ୍ୟ କରିବାକୁ ପରାମର୍ଶ ଦିଆଯାଇଛି।</string>
     <string name="sync_error_407_proxy_required">ପ୍ରକ୍ସି ପ୍ରାମାଣିକିକରଣ ଆବଶ୍ୟକ।</string>

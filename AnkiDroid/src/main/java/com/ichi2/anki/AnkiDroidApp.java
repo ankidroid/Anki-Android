@@ -22,7 +22,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -35,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.MutableLiveData;
 
+import android.system.Os;
 import android.util.Log;
 import android.webkit.CookieManager;
 
@@ -44,13 +44,19 @@ import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.themes.Themes;
+import com.ichi2.libanki.Consts;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
 
+import net.ankiweb.rsdroid.BackendFactory;
+
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,16 +84,6 @@ public class AnkiDroidApp extends Application {
      * TODO: Should be removed once app is fully functional under Scoped Storage
      */
     public static boolean TESTING_SCOPED_STORAGE = false;
-
-    /**
-     * Toggles opening the collection using schema 16 via the Rust backend
-     * and using the V16 versions of the major 'col' classes: models, decks, dconf, conf, tags
-     *
-     * UNSTABLE: DO NOT USE THIS ON A COLLECTION YOU CARE ABOUT.
-     *
-     * Set this and {@link com.ichi2.libanki.Consts#SCHEMA_VERSION} to 16.
-     */
-    public static boolean TESTING_USE_V16_BACKEND = false;
 
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
 
@@ -148,6 +144,23 @@ public class AnkiDroidApp extends Application {
      */
     @Override
     public void onCreate() {
+        BackendFactory.setDefaultLegacySchema(BuildConfig.LEGACY_SCHEMA);
+        try {
+            // enable debug logging of sync actions
+            if (BuildConfig.DEBUG) {
+                Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug", false);
+            }
+        } catch (Exception exc) {
+        }
+        // Uncomment the following lines to see a log of all SQL statements
+        // executed by the backend. The log may be delayed by 100ms, so you should not
+        // assume than a given SQL statement has run after a Timber.* line just
+        // because the SQL statement appeared later.
+        //        try {
+        //            Os.setenv("TRACESQL", "1", false);
+        //        } catch (Exception exc) {
+        //
+        //        }
         super.onCreate();
         if (sInstance != null) {
             Timber.i("onCreate() called multiple times");
@@ -229,6 +242,9 @@ public class AnkiDroidApp extends Application {
 
         // Register for notifications
         mNotifications.observeForever(unused -> NotificationService.triggerNotificationFor(this));
+
+        Themes.systemIsInNightMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        Themes.updateCurrentTheme();
     }
 
     public void scheduleNotification() {
@@ -303,6 +319,8 @@ public class AnkiDroidApp extends Application {
                 preferences = getSharedPrefs(remoteContext);
             }
             Configuration langConfig = getLanguageConfig(remoteContext.getResources().getConfiguration(), preferences);
+            // TODO: support fallback languages (backend already automatically adds English to the end)
+            BackendFactory.INSTANCE.setDefaultLanguagesFromLocales(Arrays.asList(langConfig.locale));
             return remoteContext.createConfigurationContext(langConfig);
         } catch (Exception e) {
             Timber.e(e, "failed to update context with new language");

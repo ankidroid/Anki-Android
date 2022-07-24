@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Fiók megnyitása</string>
     <string name="drawer_close">Fiók bezárása</string>
@@ -101,6 +99,9 @@
         <item>Létrehozva</item>
         <item>A jegyzet módosítva lett</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Módosítsa a mai új kártyakorlátot</string>
     <string name="custom_study_increase_review_limit">Módosítsa a megismételhető kártyák számát a mai napra</string>
@@ -416,4 +417,6 @@
     <string name="file_extract_exceeds_storage_space">Fájl kibontás túllépi a meglévő tárhelyet</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Címke kibontás \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

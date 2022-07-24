@@ -113,7 +113,7 @@
     <string name="rename_deck">Перайменаваць калоду</string>
     <string name="create_shortcut">Стварыць ярлык</string>
     <string name="browse_cards">Праглядзець карткі</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Дадаць</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Дадаць</string>
     <string name="menu_add_note">Дадаць запіс</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Сінхранізаваць уліковы запіс</string>
     <string name="menu_dismiss_note">Схаваць / выдаліць</string>
@@ -186,7 +186,7 @@
     <string name="studyoptions_no_cards_due">На сёння картак не засталося.</string>
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
     <string name="empty_cloze_warning">Адрэдагуйце гэты запіс і дадайце пропускі. (%1$s)</string>
-    <string name="button_sync">Сінхранізаваць</string>
+    <string name="button_sync" comment="Text of the sync button">Сінхранізаваць</string>
     <string name="cancel_sync_confirm">Скасаваць сінхранізацыю?</string>
     <string name="continue_sync">Працягнуць сiнхранiзацыю</string>
     <string name="sync_cancelled">Сiнхранiзацыя скасаваная</string>

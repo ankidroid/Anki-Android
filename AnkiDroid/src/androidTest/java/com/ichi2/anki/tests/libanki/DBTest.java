@@ -25,6 +25,8 @@ import com.ichi2.anki.CollectionHelper;
 import com.ichi2.anki.tests.InstrumentedTest;
 import com.ichi2.libanki.DB;
 
+import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase;
+
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,7 +36,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Random;
 
+import androidx.annotation.NonNull;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.GrantPermissionRule;
 
@@ -55,8 +59,10 @@ public class DBTest extends InstrumentedTest {
         SQLiteDatabase.deleteDatabase(illFatedDBFile);
         Assert.assertFalse("database exists already", illFatedDBFile.exists());
 
-        TestDB illFatedDB = new TestDB(illFatedDBFile.getCanonicalPath());
-        Assert.assertFalse("database should not be corrupt yet", illFatedDB.mDatabaseIsCorrupt);
+        TestCallback callback = new TestCallback(1);
+        DB illFatedDB = new DB(AnkiSupportSQLiteDatabase.withFramework(getTestContext(), illFatedDBFile.getCanonicalPath(), callback));
+
+        Assert.assertFalse("database should not be corrupt yet", callback.mDatabaseIsCorrupt);
 
         // Scribble in it
         byte[] b = new byte[1024];
@@ -75,7 +81,7 @@ public class DBTest extends InstrumentedTest {
             // do nothing, it is expected
         }
 
-        Assert.assertTrue("database corruption not detected", illFatedDB.mDatabaseIsCorrupt);
+        Assert.assertTrue("database corruption not detected", callback.mDatabaseIsCorrupt);
 
         // our handler avoids deleting databases, in contrast with default handler
         Assert.assertTrue("database incorrectly deleted on corruption", illFatedDBFile.exists());
@@ -87,29 +93,17 @@ public class DBTest extends InstrumentedTest {
 
 
     // Test fixture that lets us inspect corruption handler status
-    public static class TestDB extends DB {
-
+    public class TestCallback extends AnkiSupportSQLiteDatabase.DefaultDbCallback {
         private boolean mDatabaseIsCorrupt = false;
 
-        private TestDB(String ankiFilename) {
-            super(ankiFilename);
+        public TestCallback(int version) {
+            super(version);
         }
 
         @Override
-        protected SupportSQLiteOpenHelperCallback getDBCallback() {
-            return new TestSupportSQLiteOpenHelperCallback(1);
-        }
-
-        public class TestSupportSQLiteOpenHelperCallback extends SupportSQLiteOpenHelperCallback {
-            private TestSupportSQLiteOpenHelperCallback(int version) {
-                super(version);
-            }
-
-            @Override
-            public void onCorruption(SupportSQLiteDatabase db) {
-                mDatabaseIsCorrupt = true;
-                super.onCorruption(db);
-            }
+        public void onCorruption(SupportSQLiteDatabase db) {
+            mDatabaseIsCorrupt = true;
+            super.onCorruption(db);
         }
     }
 }

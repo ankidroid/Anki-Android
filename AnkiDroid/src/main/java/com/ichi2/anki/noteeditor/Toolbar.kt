@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.noteeditor
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
@@ -25,7 +26,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.util.TypedValue
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -35,8 +35,11 @@ import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils.convertDpToPixel
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
@@ -83,7 +86,7 @@ class Toolbar : FrameLayout {
     init {
         LayoutInflater.from(context).inflate(R.layout.note_editor_toolbar, this, true)
         mStringPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            textSize = dpToPixels(24).toFloat()
+            textSize = convertDpToPixel(24F, context)
             color = Color.BLACK
             textAlign = Paint.Align.CENTER
         }
@@ -138,14 +141,6 @@ class Toolbar : FrameLayout {
         return super.onKeyUp(keyCode, event)
     }
 
-    private fun dpToPixels(value: Int): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            value.toFloat(),
-            resources.displayMetrics
-        ).toInt()
-    }
-
     fun insertItem(@IdRes id: Int, @DrawableRes drawable: Int, runnable: Runnable): AppCompatImageButton {
         // we use the light theme here to ensure the tint is black on both
         // A null theme can be passed after colorControlNormal is defined (API 25)
@@ -172,7 +167,7 @@ class Toolbar : FrameLayout {
         */
 
         // apply style
-        val margin = dpToPixels(8)
+        val margin = convertDpToPixel(8F, context).toInt()
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         params.gravity = Gravity.CENTER
         params.setMargins(margin, margin / 2, margin, margin / 2)
@@ -180,7 +175,9 @@ class Toolbar : FrameLayout {
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
         button.setPadding(twoDp, twoDp, twoDp, twoDp)
         // end apply style
-        if (shouldScrollToolbar()) {
+        val shouldScroll = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+            .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
+        if (shouldScroll) {
             mToolbar.addView(button, mToolbar.childCount)
         } else {
             addViewToToolbar(button)
@@ -190,7 +187,7 @@ class Toolbar : FrameLayout {
 
         // Hack - items are truncated from the scrollview
         val v = findViewById<View>(R.id.toolbar_layout)
-        val expectedWidth = getVisibleItemCount(mToolbar) * dpToPixels(48)
+        val expectedWidth = getVisibleItemCount(mToolbar) * convertDpToPixel(48F, context)
         val width = screenWidth
         val p = LayoutParams(v.layoutParams)
         p.gravity = Gravity.CENTER_VERTICAL or if (expectedWidth > width) Gravity.START else Gravity.CENTER_HORIZONTAL
@@ -221,35 +218,35 @@ class Toolbar : FrameLayout {
      *
      * @see [R.array.html_size_codes]
      */
+    @SuppressLint("CheckResult")
     private fun displayFontSizeDialog() {
         val results = resources.getStringArray(R.array.html_size_codes)
 
         // Might be better to add this as a fragment - let's see.
-        MaterialDialog.Builder(context)
-            .items(R.array.html_size_code_labels)
-            .itemsCallback { _: MaterialDialog?, _: View?, pos: Int, _: CharSequence? ->
+        MaterialDialog(context).show {
+            listItems(R.array.html_size_code_labels) { _: MaterialDialog, index: Int, _: CharSequence ->
                 val formatter = TextWrapper(
-                    prefix = "<span style=\"font-size:${results[pos]}\">",
+                    prefix = "<span style=\"font-size:${results[index]}\">",
                     suffix = "</span>"
                 )
                 onFormat(formatter)
             }
-            .title(R.string.menu_font_size)
-            .show()
+            title(R.string.menu_font_size)
+        }
     }
 
     /**
      * Displays a dialog which allows `<h1>` to `<h6>` to be inserted
      */
+    @SuppressLint("CheckResult")
     private fun displayInsertHeadingDialog() {
-        MaterialDialog.Builder(context)
-            .items("h1", "h2", "h3", "h4", "h5")
-            .itemsCallback { _: MaterialDialog?, _: View?, _: Int, string: CharSequence ->
-                val formatter = TextWrapper(prefix = "<$string>", suffix = "</$string>")
+        MaterialDialog(context).show {
+            listItems(items = listOf("h1", "h2", "h3", "h4", "h5")) { _: MaterialDialog, _: Int, charSequence: CharSequence ->
+                val formatter = TextWrapper(prefix = "<$charSequence>", suffix = "</$charSequence>")
                 onFormat(formatter)
             }
-            .title(R.string.insert_heading)
-            .show()
+            title(R.string.insert_heading)
+        }
     }
 
     /** Given a string [text], generates a [Drawable] which can be used as a button icon */
@@ -267,7 +264,7 @@ class Toolbar : FrameLayout {
         ViewGroupUtils.getAllChildren(layout).count { it.visibility == VISIBLE }
 
     private fun addViewToToolbar(button: AppCompatImageButton) {
-        val expectedWidth = getVisibleItemCount(mToolbar) * dpToPixels(48)
+        val expectedWidth = getVisibleItemCount(mToolbar) * convertDpToPixel(48F, context)
         val width = screenWidth
         if (expectedWidth <= width) {
             mToolbar.addView(button, mToolbar.childCount)
@@ -276,7 +273,7 @@ class Toolbar : FrameLayout {
         var spaceLeft = false
         if (mRows.isNotEmpty()) {
             val row = mRows.last()
-            val expectedRowWidth = getVisibleItemCount(row) * dpToPixels(48)
+            val expectedRowWidth = getVisibleItemCount(row) * convertDpToPixel(48F, context)
             if (expectedRowWidth <= width) {
                 row.addView(button, row.childCount)
                 spaceLeft = true
@@ -374,11 +371,4 @@ class Toolbar : FrameLayout {
         @JvmField var selectionStart: Int = 0,
         @JvmField var selectionEnd: Int = 0
     )
-
-    companion object {
-        /** @return true: toolbar should scroll horizontally. false: toolbar should be stacked vertically */
-        fun shouldScrollToolbar(): Boolean {
-            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("noteEditorScrollToolbar", true)
-        }
-    }
 }

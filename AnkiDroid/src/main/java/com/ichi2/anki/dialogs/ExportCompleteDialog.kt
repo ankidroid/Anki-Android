@@ -17,9 +17,9 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
+import com.ichi2.themes.Themes
 import java.io.File
 
 class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
@@ -39,26 +39,29 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
         return this
     }
 
+    @Suppress("Deprecation") // Material dialog neutral button deprecation
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         val exportPath = requireArguments().getString("exportPath")!!
-        val dialogBuilder = MaterialDialog.Builder(requireActivity())
-            .title(notificationTitle)
-            .content(notificationMessage)
-            .iconAttr(R.attr.dialogSendIcon)
-            .positiveText(R.string.export_send_button)
-            .negativeText(R.string.export_save_button)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+        return MaterialDialog(requireActivity()).show {
+            title(text = notificationTitle)
+            message(text = notificationMessage)
+            icon(Themes.getResFromAttr(context, R.attr.dialogSendIcon))
+            positiveButton(R.string.export_send_button) {
                 listener.dismissAllDialogFragments()
                 listener.emailFile(exportPath)
             }
-            .onNegative { _: MaterialDialog?, _: DialogAction? ->
+            negativeButton(R.string.export_save_button) {
                 listener.dismissAllDialogFragments()
                 listener.saveExportFile(exportPath)
             }
-            .neutralText(R.string.dialog_cancel)
-            .onNeutral { _: MaterialDialog?, _: DialogAction? -> listener.dismissAllDialogFragments() }
-        return dialogBuilder.show()
+            neutralButton(R.string.dialog_cancel) {
+                // TODO: Discuss regarding alternatives to using a neutral button here
+                //  since it is deprecated and not recommended in material guidelines
+
+                listener.dismissAllDialogFragments()
+            }
+        }
     }
 
     override val notificationTitle: String

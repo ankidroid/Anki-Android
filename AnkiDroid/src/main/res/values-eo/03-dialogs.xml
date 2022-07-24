@@ -60,13 +60,6 @@
     <string name="initializing_tts">Lanĉado de parol-sintezilo&#8230;</string>
     <string name="tts_no_tts">ne paroli</string>
     <string name="unused_strings">\n\nNeuzataj dosieroj:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>fulmokartoj por Androido</h2>AnkiDroid estas aplikaĵo por lerni per kartoj. Ĝi estas plene kongrua kun skribotabla programo <a href=\"%2$s\">Anki</a>. Vi povas krei kaj elŝuti lernilojn ambaŭ ĉe komputilo kaj poŝtelefono kaj samtempigi ilin per la servo AnkiWeb.]]></item>
-        <item><![CDATA[Por helpi al ni igi AnkiDroid pli bona, bonvolu raporti erarojn per la <a href=\"%1$s\">erar-spurilo</a>, ideoj pri novaj eblaĵoj ankaŭ estas laŭdindaj. En kaze de problemoj, vi trovos solvojn ĉe la <a href=\"%2$s\">vikio</a> (malesperante) aŭ pridiskutu ilin ĉe la <a href=\"%3$s\">forumo</a>.]]></item>
-        <item><![CDATA[AnkiDroid estas <a href=\"%1$s\">malfermkoda programo<a/>, do ĉiu povas <a href=\"%2$s\">al ĝi kontribui</a> :-)]]></item>
-        <item><![CDATA[Neprogramistoj ankaŭ povas helpi. Ekzemple vi povas <a href=\"%1$s\">helpi traduki</a> la aplikaĵon, aktualigi la vikion, aldoni ekranokopiojn aŭ afiŝi sur via ret-taglibro pri AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid estas eldonita laŭ la <a href=\"%1$s\">permesilo GNU-GPL v3</a> kaj ĝia fontkodo estas disponebla ĉe <a href=\"%2$s\">GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Antaŭrigardo</string>
     <string name="reposition_card_dialog_title">Repozicii novan karton</string>
     <string name="reposition_card_dialog_message">Komenca pozicio:</string>

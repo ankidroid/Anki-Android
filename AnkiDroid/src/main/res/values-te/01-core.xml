@@ -103,7 +103,7 @@
     <string name="rename_deck">పేరు మార్చండి</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">చేర్చు</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">చేర్చు</string>
     <string name="menu_add_note">గమనిక చేర్చు</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ఖాతాను సమకాలీకరించండి</string>
     <string name="menu_dismiss_note">దాచు / తొలగించు</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">ఎక్కువ కార్డులు లేవు</string>
     <string name="sd_card_not_mounted">పరికర నిల్వ మౌంట్ చేయబడలేదు</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-    <string name="button_sync">సమకాలీకరణ</string>
+    <string name="button_sync" comment="Text of the sync button">సమకాలీకరణ</string>
     <string name="cancel_sync_confirm">మీరు సమకాలీకరణను రద్దు చేయాలనుకుంటున్నారా?</string>
     <string name="continue_sync">సమకాలీకరించండి</string>
     <string name="sync_cancelled">సమకాలీకరణ రద్దు చేయబడింది</string>

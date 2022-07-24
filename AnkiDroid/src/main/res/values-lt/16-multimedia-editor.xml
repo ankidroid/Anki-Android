@@ -41,12 +41,12 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Pridėti paveikslėlį</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_audio_clip">Pridėti garso įrašą</string>
+    <string name="multimedia_editor_popup_video_clip">Pridėti vaizdo įrašą</string>
     <string name="multimedia_editor_popup_audio">Įrašyti garsą</string>
     <string name="multimedia_editor_popup_text">Išplėstinė tekstų rengyklė</string>
     <string name="multimedia_editor_popup_cloze">Praleistų žodžių spėjimas</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
+    <string name="multimedia_editor_popup_clear_field">Išvalyti laukelį</string>
     <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">Versti</string>
     <!-- Pronunciation activity (Beolingus) -->
@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">Ieškoma tarimo</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Rasti tarimo nepavyko</string>
+    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
     <string name="multimedia_editor_word_search_try_lower_case">Bandykite naudoti tik mažąsias raides</string>
     <string name="multimedia_editor_poweredbeolingus">Parengta pagal Beolingus</string>
     <!-- Field editing general -->
@@ -61,7 +62,7 @@
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Tekstas</string>
     <string name="multimedia_editor_field_editing_image">Paveikslėlis</string>
     <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio_clip">Garso įrašas</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Atlikta</string>
     <!-- Text field editing -->
     <!-- buttons -->
@@ -108,8 +109,8 @@
     <!-- Network failure -->
     <string name="network_no_connection">Nėra ryšio</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
+    <string name="crop_image">Ar norite apkarpyti šį paveikslėlį?</string>
+    <string name="crop_button">Apkarpyti paveikslėlį</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
     <string name="select_image_failed">"Select image failed, Please retry"</string>
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>

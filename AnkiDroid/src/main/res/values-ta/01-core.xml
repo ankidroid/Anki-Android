@@ -103,7 +103,7 @@
     <string name="rename_deck">மறுபெயரிடு</string>
     <string name="create_shortcut">குறுக்குவழி சேர்</string>
     <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">கூட்டு</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">கூட்டு</string>
     <string name="menu_add_note">குறிப்பு சேர்க்க</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ஒத்திசைக்க</string>
     <string name="menu_dismiss_note">மறைக்க/அழி</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">இல்லை அட்டைகள் இன்னும் காரணமாக உள்ளன</string>
     <string name="sd_card_not_mounted">சாதன சேமிப்பகம் பொருத்தப்படவில்லை</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-    <string name="button_sync">ஒத்திசைக்க</string>
+    <string name="button_sync" comment="Text of the sync button">ஒத்திசைக்க</string>
     <string name="cancel_sync_confirm">ஒத்திசைவை ரத்து செய்ய விரும்புகிறீர்களா?</string>
     <string name="continue_sync">ஒத்திசைவைத் தொடரவும்</string>
     <string name="sync_cancelled">ஒத்திசைவு ரத்துசெய்யப்பட்டது</string>

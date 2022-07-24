@@ -46,7 +46,7 @@
 -->
 <resources>
     <string name="youre_offline">במצב לא מקוון</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">נסה בכל זאת</string>
     <string name="sync_error">שגיאת סנכרון</string>
     <string name="vague_error" comment="Network error dialog title">שגיאה</string>
     <string name="retry">נסה שנית</string>
@@ -66,9 +66,8 @@
     <string name="alert_logging_message">מתבצעת כניסה&#8230;</string>
     <string name="invalid_username_password">כתובת דוא״ל או ססמה שגויים</string>
     <string name="reset_password">איפוס ססמה</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">שכחת את הדוא\"ל?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">העדפות</string>
     <string name="deckpreferences_title">אפשרויות עבור XXX</string>
     <string name="sync_prepare_syncing">הסינכרון בהכנה&#8230;</string>
     <string name="sync_preparing_full_sync_message">סינכרון מלא בהכנה&#8230;</string>
@@ -88,7 +87,7 @@
     <string name="sync_overwrite_error">אוסף החפיסות הנוכחי לא יכול היה להיות מוחלף בקובץ שהורד</string>
     <string name="sync_connection_error">הזמן שהוקצב להתחברות עבר. יתכן שיש בעיות בחיבור לאינטרנט, או שיש קובץ גדול מאוד בספריית המדיה.</string>
     <string name="sync_write_access_error">אי אפשר לשמור את הקובץ שהורדת בכרטיס ה־SD. או שהכרטיס מעוגן במצב קריאה־בלבד או שאין בו די מקום.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
+    <string name="sync_error_invalid_sync_server">שרת הסנכרון המותאם אישית בהגדרות מתקדמות אינו חוקי (%s). אנא הזן שרת חוקי, או השבת את ההגדרה.</string>
     <string name="sync_deletions_message">המחיקות מסונכרנות&#8230;</string>
     <string name="sync_small_objects_message">סנכרון פריטים קטנים&#8230;</string>
     <string name="sync_finish_message">הסנכרון מסתיים&#8230;</string>
@@ -96,27 +95,28 @@
     <string name="sync_writing_db">השינויים נכתבים אל מסד הנתונים&#8230;</string>
     <string name="sync_download_chunk">השינויים בתהליך הורדה&#8230;</string>
     <string name="sync_upload_chunk">השינויים בתהליך העלאה&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">הועלה: %1$d KB, ירד: %2$d KB</string>
     <string name="sync_generic_error">התרחשה תקלה. אנא נסו שוב מאוחר יותר.</string>
     <string name="sync_check_upload_file">הקובץ בבדיקה לפני העלאתו&#8230;</string>
     <string name="sync_check_download_file">הקובץ שירד בבדיקה&#8230;</string>
     <string name="sync_media_find">חיפוש שינויים בקבצי המדיה&#8230;</string>
     <string name="sync_media_no_changes">אין שינויים בקבצי המדיה</string>
     <string name="sync_media_success">קבצי המדיה סונכרנו</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
+    <string name="sync_media_partial_updated">סנכרון המדיה הושלם חלקית:\n%1$d קובצי מדיה הורדו.\n%2$d קובצי מדיה הועלו.</string>
     <string name="sync_media_changes_count">%d קבצי מדיה נותרו להעלאה</string>
     <string name="sync_media_downloaded_count">%d קבצי מדיה נותרו להורדה</string>
     <string name="sync_sanity_failed">לאחר הסכנרון אוסף החפיסות נותר במצב בלתי עקבי. כדי לתקן את הבעיה, אפליקציית AnkiDroid תבצע סינכרון מלא. עליך לבחור איזה משני הצדדים תרצה לשמור.</string>
     <string name="sync_media_sanity_failed">סנכרון קבצי המדיה הושלם, אך קיימת חוסר התאמה בין קבצי המדיה המקומיים ואלה שבשרת. סנכרון המדיה הבא יהיה מלא, במטרה לתקן את התקלה.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
+    <string name="sync_media_db_error">סנכרון המדיה נכשל כי מסד הנתונים הנוכחי פגום. מומלץ לבצע בדיקת מדיה.</string>
     <string name="sync_media_error">תקלה בסנכרון המידע של קבצי המדיה</string>
     <string name="sync_media_error_check">תקלה בסנכרון המדיה. מומלץ לבצע בדיקה של קבצי המדיה.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
+    <string name="sync_basic_check_failed">נא להפעיל את \'%s\' לפני הסנכרון</string>
     <string name="sync_sanity_local">מקומי</string>
     <string name="sync_sanity_remote">מרוחק</string>
     <string name="force_full_sync_title">כפיית סנכרון מלא</string>
     <string name="force_full_sync_summary">בסנכרון הבא, כפה שינויים בצד אחד</string>
+    <string name="force_full_sync_confirmation">כפיית סנכרון מלא</string>
     <string name="full_sync_confirmation">השינוי שביקשת לבצע יחייב העלאה של כל מסד הנתונים בסנכרון הבא של אוסף החפיסות. אם יש שינונים או שינויים אחרים במכשיר אחר שלא סונכרנו עדיין, הם יאבדו. להמשיך?</string>
     <string name="full_sync_confirmation_upgrade">עקב באג בגרסת AnkiDroid קודמת שהותקנה מומלץ לבצע סינכרון מלא.</string>
     <string name="sync_error_407_proxy_required">נדרש אימות proxy.</string>
@@ -127,7 +127,7 @@
     <string name="sync_error_502_maintenance">AnkiWeb בתחזוקה כרגע. אנא נסו שוב בעוד מספר דקות.</string>
     <string name="sync_error_504_gateway_timeout">התקבלה שגיאת 504 gateway timeout.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
+    <string name="sync_menu_title_full_sync">סנכרון (מלא)</string>
+    <string name="sync_menu_title_no_account">סנכרון (מתחבר)</string>
+    <string name="sync_error_unknown_host_readable">לא ניתן להתחבר ל-AnkiWeb. האם האינטרנט שלך עובד?\n\n%s</string>
 </resources>

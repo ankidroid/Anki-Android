@@ -330,7 +330,7 @@ enum class AutomaticAnswerAction(private val preferenceValue: Int) {
     /** Convert to a [ViewerCommand] */
     private fun toCommand(numberOfButtons: Int): ViewerCommand {
         return when (this) {
-            BURY_CARD -> ViewerCommand.COMMAND_BURY_CARD
+            BURY_CARD -> ViewerCommand.BURY_CARD
             ANSWER_AGAIN -> AGAIN.toViewerCommand(numberOfButtons)
             ANSWER_HARD -> HARD.toViewerCommand(numberOfButtons)
             ANSWER_GOOD -> GOOD.toViewerCommand(numberOfButtons)

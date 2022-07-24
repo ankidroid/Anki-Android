@@ -36,6 +36,7 @@ Most of the code is:
  */
 package com.ichi2.utils
 
+import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.AnkiAssert.assertThrows
 import com.ichi2.testutils.EmptyApplication
@@ -57,6 +58,7 @@ import java.util.*
  */
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@SuppressLint("CheckResult") // many usages: checking exceptions
 class JSONObjectTest {
     @Test
     fun testEmptyObject() {
@@ -513,7 +515,7 @@ class JSONObjectTest {
         names.put("baz")
         names.put("quux")
         names.put("foo")
-        val array = testObject.toJSONArray(names)
+        val array = testObject.toJSONArray(names)!!
         assertEquals(-0.0, array[0])
         assertEquals(value, array[1])
         assertEquals(true, array[2])
@@ -532,7 +534,7 @@ class JSONObjectTest {
         names.put("foo")
         names.put("quux")
         names.put("baz")
-        val array = testObject.toJSONArray(names)
+        val array = testObject.toJSONArray(names)!!
         assertEquals(4, array.length())
         assertEquals(5.0, array[0])
         assertEquals(true, array[1])
@@ -561,7 +563,7 @@ class JSONObjectTest {
         testObject.put("foo", 5)
         val array = JSONArray()
         array.put("bar")
-        assertEquals(1, testObject.toJSONArray(array).length())
+        assertEquals(1, testObject.toJSONArray(array)!!.length())
     }
 
     @Test
@@ -575,7 +577,7 @@ class JSONObjectTest {
         names.put(false)
         names.put("foo")
         // array elements are converted to strings to do name lookups on the map!
-        val array = testObject.toJSONArray(names)
+        val array = testObject.toJSONArray(names)!!
         assertEquals(3, array.length())
         assertEquals(10, array[0])
         assertEquals(15, array[1])
@@ -632,7 +634,7 @@ class JSONObjectTest {
         contents["foo"] = Double.NaN
         contents["bar"] = Double.NEGATIVE_INFINITY
         contents["baz"] = Double.POSITIVE_INFINITY
-        val testObject = JSONObject(contents)
+        val testObject = JSONObject(contents.toMap())
         assertEquals(Double.NaN, testObject["foo"])
         assertEquals(Double.NEGATIVE_INFINITY, testObject["bar"])
         assertEquals(Double.POSITIVE_INFINITY, testObject["baz"])
@@ -649,7 +651,7 @@ class JSONObjectTest {
     fun testMapConstructorCopiesContents() {
         val contents: MutableMap<String?, Any?> = HashMap()
         contents["foo"] = 5
-        val testObject = JSONObject(contents)
+        val testObject = JSONObject(contents.toMap())
         contents["foo"] = 10
         assertEquals(5, testObject["foo"])
     }
@@ -920,7 +922,7 @@ class JSONObjectTest {
 
     @Test
     fun testQuoteNull() {
-        assertEquals("\"\"", JSONObject.quote(null))
+        assertEquals("\"\"", org.json.JSONObject.quote(null))
     }
 
     @Test
@@ -971,6 +973,7 @@ class JSONObjectTest {
     private val mNoClosingBracket = "{\"key1\":value1"
     private val mWrongKeyValueSeparator = "{\"key1\":\"value1\",\"key2\" \"value2\"}"
     private val mDuplicateKey = "{\"key1\":\"value1\",\"key1\":\"value2\"}"
+    @KotlinCleanup("make mCorrectJsonObjectBasic and related values lateinit")
     private var mCorrectJsonObjectBasic: JSONObject? = null
     private var mCorrectJsonObjectNested: JSONObject? = null
     private var mCorrectJsonObjectWithArray: JSONObject? = null
@@ -1013,9 +1016,9 @@ class JSONObjectTest {
 
     @Test
     fun copyJsonTest() {
-        Assert.assertEquals(mCorrectJsonObjectBasic.toString(), JSONObject(mCorrectJsonObjectBasic).toString())
-        Assert.assertEquals(mCorrectJsonObjectNested.toString(), JSONObject(mCorrectJsonObjectNested).toString())
-        Assert.assertEquals(mCorrectJsonObjectWithArray.toString(), JSONObject(mCorrectJsonObjectWithArray).toString())
+        Assert.assertEquals(mCorrectJsonObjectBasic.toString(), JSONObject(mCorrectJsonObjectBasic!!).toString())
+        Assert.assertEquals(mCorrectJsonObjectNested.toString(), JSONObject(mCorrectJsonObjectNested!!).toString())
+        Assert.assertEquals(mCorrectJsonObjectWithArray.toString(), JSONObject(mCorrectJsonObjectWithArray!!).toString())
     }
 
     @Test

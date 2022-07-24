@@ -68,7 +68,6 @@
     <string name="reset_password">Restarigi pasvorton</string>
     <string name="lost_mail_instructions">Ĉu vi forgesis la retpoŝtadreson?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Agordoj</string>
     <string name="deckpreferences_title">Agordoj por XXX</string>
     <string name="sync_prepare_syncing">Preparado de samtempigo&#8230;</string>
     <string name="sync_preparing_full_sync_message">Preparado de tuta samtempigo&#8230;</string>
@@ -117,6 +116,7 @@
     <string name="sync_sanity_remote">Fora</string>
     <string name="force_full_sync_title">Devigi plenan samtempigadon</string>
     <string name="force_full_sync_summary">Dum la sekva semtempigado devigi ŝanĝojn nur al unu direkto</string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">La petita ŝanĝo postulos plenan alŝuton de la datumbazo dum la sekva samtempigado de via kolekto. Se vi havas ripetojn aŭ aliajn ŝanĝojn atendantajn ĉe alia aparato, kiuj jam ne estas samtempigitajn tie ĉi, ili perdiĝos. Ĉu pluigi?</string>
     <string name="full_sync_confirmation_upgrade">Pro la eraro en antaŭe instalita versio de AnkiDroid, estas konsilinde devigi plenan samtempigadon.</string>
     <string name="sync_error_407_proxy_required">Fiaskis aŭtentigi retperanton.</string>

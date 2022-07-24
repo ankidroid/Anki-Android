@@ -109,7 +109,7 @@ Pinagaralang %1$d mga baraha %2$s ngayong araw</item>
     <string name="rename_deck">Palitan ang pangalan ng deck</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Idagdag</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Idagdag</string>
     <string name="menu_add_note">Magdagdag ng paalala</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Isingkronisa ang account</string>
     <string name="menu_dismiss_note">Itago / burahin</string>
@@ -182,7 +182,7 @@ Pinagaralang %1$d mga baraha %2$s ngayong araw</item>
     <string name="studyoptions_no_cards_due">Wala pang barahang kailangan</string>
     <string name="sd_card_not_mounted">Hindi nakamount ang storage ng aparato</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-    <string name="button_sync">I-singkronisa</string>
+    <string name="button_sync" comment="Text of the sync button">I-singkronisa</string>
     <string name="cancel_sync_confirm">Gusto mo bang kanselahin ang pagsisingkronisa?</string>
     <string name="continue_sync">Ipagpatuloy ang pagsisingkronisa</string>
     <string name="sync_cancelled">Ang pagsisingkronisa ay kinansela</string>

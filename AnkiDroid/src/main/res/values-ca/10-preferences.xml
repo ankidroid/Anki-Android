@@ -47,30 +47,27 @@
     <!-- generic strings -->
     <string name="disabled">Deshabilitat</string>
     <string name="enabled">Habilitat</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_general_summ">Configuració general</string>
     <string name="pref_cat_reviewing" maxLength="41">Revisió</string>
-    <string name="pref_cat_reviewing_summ">Configuracions de revisió no específiques de malls</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportament</string>
-    <string name="pref_cat_flashcard" maxLength="41">Pantalla</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Pissarra</string>
     <string name="pref_cat_appearance" maxLength="41">Aparença</string>
     <string name="pref_cat_appearance_summ">Canviar els temes i la font per defecte</string>
     <string name="pref_cat_themes" maxLength="41">Temes</string>
     <string name="pref_cat_fonts" maxLength="41">Tipus de lletra</string>
     <string name="pref_cat_gestures" maxLength="41">Gestos</string>
-    <string name="pref_cat_gestures_summ">Utilitzar lliscades i tocs en lloc de botons</string>
-    <string name="pref_cat_actions" maxLength="41">Accions</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_controls_summ">Configure keyboards and other devices</string>
     <string name="pref_cat_advanced" maxLength="41">Avançat</string>
     <string name="pref_cat_advanced_summ">Optimització i característiques experimentals</string>
     <string name="pref_cat_performance" maxLength="41">Rendiment</string>
     <string name="pref_cat_workarounds" maxLength="41">Solucions</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
-    <string name="about_title" maxLength="41">Sobre AnkiDroid</string>
-    <string name="about_version">Versió: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Amplada del traç</string>
     <string name="use_input_tag" maxLength="41">Tipus de resposta a la targeta</string>
@@ -114,13 +111,9 @@
     <string name="gestures_tap_right" maxLength="41">Toqueu a la dreta</string>
     <string name="gestures_tap_bottom" maxLength="41">Toqueu la part inferior</string>
     <string name="gestures_corner_tap_top_left" maxLength="41">Tocar a dalt a l\'esquerra</string>
-    <string name="gestures_corner_tap_top_center">Tocar a dalt al centre</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Tocar a dalt a la dreta</string>
-    <string name="gestures_corner_tap_middle_left">Tocar al centre a l\'esquerra</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocar al centre</string>
-    <string name="gestures_corner_tap_middle_right">Tocar al centre a la dreta</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar a baix a l\'esquerra</string>
-    <string name="gestures_corner_tap_bottom_center">Tocar a baix al centre</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar a baix a la dreta</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
     <string name="more_scrolling_buttons_summ">També utilitzar els botons kanji/katakana, emoji/kao-moji per moure\'s</string>
@@ -187,10 +180,9 @@
     <string name="new_spread" maxLength="41">Nova posició de la carta</string>
     <string name="learn_cutoff" maxLength="41">Informeu-vos de límit per davant</string>
     <string name="time_limit" maxLength="41">Límit de temps de Timebox</string>
-    <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone" maxLength="41">Gestió de nova zona horària</string>
     <string name="day_offset_with_description" maxLength="41">Principi del proper dia</string>
-    <string name="day_offset_summ">XXX hores passada la mitjanit</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Mitjanit</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11 PM</string>
     <string name="sched_v2" maxLength="41">Organitzador V2</string>
@@ -213,6 +205,9 @@
     <string name="thirdparty_apps_summary">Consulteu una llista d\'aplicacions que fan ús de l\'API AnkiDroid, com ara diccionaris i utilitats.</string>
     <string name="html_javascript_debugging" maxLength="41">Depuració HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Activeu les connexions WebView remotes i deseu l\'HTML de la carta al directori AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Enganxa imatges del porta-retalls com PNG</string>
     <string name="paste_as_png_summary">Per defecte, Anki enganxa les imatges al porta-retalls com a fitxers JPG per estalviar espai al disc. Podeu utilitzar aquesta opció per enganxar com a imatges PNG.</string>
@@ -241,6 +236,8 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Url de sincronització de multimèdia</string>
     <string name="custom_sync_server_media_url_invalid">Invàlida url de sincronització de multimèdia</string>
     <!-- Key Bindings -->
+    <string name="keyboard">Keyboard</string>
+    <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Els canvis a les opcions de grup de paquets afectaran varis paquets. Si voleu canviar només el paquet actual, afegiu primer un grup d\'opcions nou</string>
@@ -323,10 +320,19 @@
     <string name="no_code_formatting_summ">Es corregeixen els ‘􏿾’ que apareixen als resultats de les respostes escrites</string>
     <string name="type_in_answer_focus" maxLength="41">Enfoca \'escriu resposta\'</string>
     <string name="type_in_answer_focus_summ">Enfoca automàticament el camp \'escriu resposta\' al revisor</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">Obre el registre de canvis</string>
+    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="license">License</string>
+    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">Afegeix gest</string>
+    <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Afegir una clau</string>
+    <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Premeu una tecla</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecciona cara de la carta</string>
@@ -338,5 +344,11 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to %s</string>
+    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
+    <string name="disable_dev_options">Disable developer options</string>
+    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    </string>
 </resources>

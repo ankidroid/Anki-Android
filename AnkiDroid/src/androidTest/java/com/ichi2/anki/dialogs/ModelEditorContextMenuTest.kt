@@ -25,6 +25,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -33,6 +34,7 @@ class ModelEditorContextMenuTest {
     private val testDialogTitle = "test editor title"
 
     @Test
+    @Ignore("flaky")
     fun showsAllOptionsIfAboveN() {
         launchFragment(
             fragmentArgs = bundleOf(ModelEditorContextMenu.KEY_LABEL to testDialogTitle),
@@ -45,6 +47,7 @@ class ModelEditorContextMenuTest {
     }
 
     @Test
+    @Ignore("flaky")
     fun doesNotShowLanguageHintOptionIfBelowN() {
         launchFragment(
             fragmentArgs = bundleOf(ModelEditorContextMenu.KEY_LABEL to testDialogTitle),

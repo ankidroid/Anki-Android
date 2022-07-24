@@ -103,7 +103,7 @@
     <string name="rename_deck">Nimeä pakka uudelleen</string>
     <string name="create_shortcut">Luo pikakuvake</string>
     <string name="browse_cards">Selaa kortteja</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Lisää</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Lisää</string>
     <string name="menu_add_note">Lisää merkintä</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkronoi tili</string>
     <string name="menu_dismiss_note">Piilota / Poista</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">Kortteja ei tarvitse vielä kerrata</string>
     <string name="sd_card_not_mounted">Laitteen muistia ei ole asennettu</string>
     <string name="empty_cloze_warning">Muokkaa tätä merkintää ja lisää täydennystehtäviä. (%1$s)</string>
-    <string name="button_sync">Synkronoi</string>
+    <string name="button_sync" comment="Text of the sync button">Synkronoi</string>
     <string name="cancel_sync_confirm">Haluatko peruuttaa synkronoinnin?</string>
     <string name="continue_sync">Jatka synkronointia</string>
     <string name="sync_cancelled">Synkronointi peruutettu</string>

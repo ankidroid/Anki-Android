@@ -51,43 +51,40 @@ import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.preferences.AboutFragment
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.web.CustomSyncServer
-import com.ichi2.anki.web.CustomSyncServer.getSyncBaseUrlOrDefault
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
-import com.ichi2.anki.web.CustomSyncServer.isEnabled
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.*
-import com.ichi2.preferences.ControlPreference.Companion.setup
+import com.ichi2.preferences.ControlPreference.Companion.addAllControlPreferencesToCategory
+import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
+import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.themes.Themes.systemIsInNightMode
+import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
-import com.ichi2.utils.VersionUtils.pkgVersionName
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.*
+import kotlin.collections.HashSet
 
 /**
  * Preferences dialog.
  */
 class Preferences : AnkiActivity() {
-    // Other variables
-    @KotlinCleanup("we use string? as some keys were null")
-    private val mOriginalSummaries = HashMap<String?, String>()
-
     /** The collection path when Preferences was opened   */
     private var mOldCollectionPath: String? = null
 
@@ -101,26 +98,47 @@ class Preferences : AnkiActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
         setThemeLegacy(this)
-        enableToolbar().apply {
-            // Add a home button to the actionbar
+
+        val actionBar = enableToolbar().apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
         }
-        title = resources.getText(R.string.preferences_title)
-
-        val fragment = getInitialFragment(intent)
 
         // onRestoreInstanceState takes priority, this is only set on init.
         mOldCollectionPath = CollectionHelper.getCollectionPath(this)
 
+        // Load initial fragment if activity is being first created.
+        // If activity is being recreated (i.e. savedInstanceState != null),
+        // which could happen on configuration changes as screen rotation and theme changes,
+        // don't replace the previous opened fragments
+        if (savedInstanceState == null) {
+            loadInitialFragment()
+        }
+        updateActionBarTitle(supportFragmentManager, actionBar)
+        supportFragmentManager.addOnBackStackChangedListener(mOnBackStackChangedListener)
+    }
+
+    /**
+     * Starts the first fragment for the [Preferences] activity,
+     * which by default is [HeaderFragment].
+     * The initial fragment may be overridden by putting the java class name
+     * of the fragment on an intent extra with the key [INITIAL_FRAGMENT_EXTRA]
+     */
+    private fun loadInitialFragment() {
+        val fragmentClassName = intent?.getStringExtra(INITIAL_FRAGMENT_EXTRA)
+        val initialFragment = if (fragmentClassName == null) {
+            HeaderFragment()
+        } else {
+            try {
+                Class.forName(fragmentClassName).newInstance() as Fragment
+            } catch (e: Exception) {
+                throw RuntimeException("Failed to load $fragmentClassName", e)
+            }
+        }
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.settings_container, fragment)
+            .replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
             .commit()
-
-        addFragmentsToBackStack(supportFragmentManager, intent)
-
-        supportFragmentManager.addOnBackStackChangedListener(mOnBackStackChangedListener)
     }
 
     override fun onDestroy() {
@@ -131,50 +149,10 @@ class Preferences : AnkiActivity() {
     private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
         val fragment = fragmentManager.findFragmentById(R.id.settings_container)
 
-        actionBar?.title = if (fragment is SpecificSettingsFragment) {
-            fragment.preferenceScreen.title
-        } else {
-            getString(R.string.preferences_title)
-        }
-    }
-
-    private fun getInitialFragment(intent: Intent?): Fragment {
-        if (intent == null) {
-            return HeaderFragment()
-        }
-        val fragmentClass = intent.getStringExtra(EXTRA_SHOW_FRAGMENT)
-            ?: return HeaderFragment()
-        return try {
-            Class.forName(fragmentClass).newInstance() as Fragment
-        } catch (e: Exception) {
-            throw RuntimeException("Failed to load $fragmentClass", e)
-        }
-    }
-
-    /**
-     * Adds fragments specified in [intent] extra to [fragmentManager] backstack,
-     * following the fragments array order
-     * @param intent with extra key [EXTRA_BACKSTACK_FRAGMENTS]
-     * and value of a array of fragments java class names
-     */
-    private fun addFragmentsToBackStack(fragmentManager: FragmentManager, intent: Intent?) {
-        if (intent == null) {
-            return
-        }
-        val fragmentClasses = intent.getStringArrayExtra(EXTRA_BACKSTACK_FRAGMENTS)
-            ?: return
-
-        for (fragmentClass in fragmentClasses) {
-            try {
-                val fragment = Class.forName(fragmentClass).newInstance() as Fragment
-                fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.settings_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
-            } catch (e: Exception) {
-                throw RuntimeException("Failed to load $fragmentClass", e)
-            }
+        actionBar?.title = when (fragment) {
+            is SpecificSettingsFragment -> fragment.preferenceScreen.title
+            is AboutFragment -> getString(R.string.pref_cat_about_title)
+            else -> getString(R.string.settings)
         }
     }
 
@@ -198,7 +176,9 @@ class Preferences : AnkiActivity() {
 
     fun restartWithNewDeckPicker() {
         // PERF: DB access on foreground thread
-        CollectionHelper.getInstance().closeCollection(true, "Preference Modification: collection path changed")
+        val helper = CollectionHelper.getInstance()
+        helper.closeCollection(true, "Preference Modification: collection path changed")
+        helper.discardBackend()
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.DEFAULT)
@@ -260,7 +240,7 @@ class Preferences : AnkiActivity() {
                         NEW_TIMEZONE_HANDLING -> {
                             val switch = pref as SwitchPreference
                             switch.isChecked = col.sched._new_timezone_enabled()
-                            if (col.schedVer() <= 1 || !col.isUsingRustBackend) {
+                            if (col.schedVer() <= 1) {
                                 Timber.d("Disabled 'newTimezoneHandling' box")
                                 switch.isEnabled = false
                             }
@@ -276,11 +256,6 @@ class Preferences : AnkiActivity() {
         } else if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key) {
             updateNotificationPreference(pref as ListPreference)
         }
-        // Set the value from the summary cache
-        val s = pref.summary
-        mOriginalSummaries[pref.key] = s?.toString() ?: ""
-        // Update summary
-        updateSummary(pref)
     }
 
     /** Sets the hour that the collection rolls over to the next day  */
@@ -314,88 +289,12 @@ class Preferences : AnkiActivity() {
         listPreference.summary = listPreference.entry.toString()
     }
 
-    private fun updateSummary(pref: Preference?) {
-        if (pref == null || pref.key == null) {
-            return
-        }
-        // Handle special cases
-        when (pref.key) {
-            "about_dialog_preference" -> pref.summary = resources.getString(R.string.about_version) + " " + pkgVersionName
-            "custom_sync_server_link" -> {
-                val preferences = AnkiDroidApp.getSharedPrefs(this)
-                if (!isEnabled(preferences)) {
-                    pref.setSummary(R.string.disabled)
-                } else {
-                    pref.summary = getSyncBaseUrlOrDefault(preferences, "")
-                }
-            }
-            "advanced_statistics_link" -> if (!AnkiDroidApp.getSharedPrefs(this).getBoolean("advanced_statistics_enabled", false)) {
-                pref.setSummary(R.string.disabled)
-            } else {
-                pref.setSummary(R.string.enabled)
-            }
-        }
-        // Get value text
-        val value: String = when (pref) {
-            is NumberRangePreferenceCompat -> pref.getValue().toString()
-            is SeekBarPreferenceCompat -> pref.value.toString()
-            is ListPreference -> pref.entry?.toString() ?: ""
-            is EditTextPreference -> pref.text ?: ""
-            is ControlPreference -> return
-            else -> return
-        }
-
-        // Get summary text
-        val oldSummary = mOriginalSummaries[pref.key] ?: ""
-        // Replace summary text with value according to some rules
-        pref.summary = when {
-            oldSummary == "" -> value
-            value == "" -> oldSummary
-            MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key -> replaceStringIfNumeric(oldSummary, value)
-            else -> replaceString(oldSummary, value)
-        }
-    }
-
-    /**
-     * Replace "XXX" in [str] with [value]
-     *
-     * This exists to enable formatting the summary of a preference with data
-     * As summary is set via XML, this cannot have format strings, so we use "XXX" later on.
-     */
-    private fun replaceString(str: String, value: String): String {
-        return if (str.contains("XXX")) {
-            str.replace("XXX", value)
-        } else {
-            str
-        }
-    }
-
-    /**
-     * If [value] is convertible to a double, replace "XXX" in [str] with the value
-     * @param str A string which may have "XXX", if so, this may be replaced
-     * @param value If this is a double, the "XXX" string in [str] is replaced with [value]
-     */
-    private fun replaceStringIfNumeric(str: String, value: String): String? {
-        return try {
-            value.toDouble()
-            replaceString(str, value)
-        } catch (e: NumberFormatException) {
-            Timber.w(e)
-            value
-        }
-    }
-
     private fun closePreferences() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
         if (col != null && !col.dbClosed) {
             col.save()
         }
     }
-
-    /** This is not fit for purpose (other than testing a single screen)  */
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val loadedPreferenceKeys: Set<String>
-        get() = mOriginalSummaries.keys.filterNotNull().toSet()
 
     // ----------------------------------------------------------------------------
     // Inner classes
@@ -405,25 +304,57 @@ class Preferences : AnkiActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
+            // Reviewing preferences summary
+            findPreference<Preference>(getString(R.string.pref_reviewing_screen_key))!!
+                .summary = buildCategorySummary(
+                getString(R.string.pref_cat_scheduling),
+                getString(R.string.timeout_answer_text)
+            )
+
+            // Sync preferences summary
             findPreference<Preference>(getString(R.string.pref_sync_screen_key))!!
                 .summary = buildCategorySummary(getString(R.string.sync_account), getString(R.string.automatic_sync_choice))
+
+            // Notifications preferences summary
+            findPreference<Preference>(getString(R.string.pref_notifications_screen_key))!!
+                .summary = buildCategorySummary(
+                getString(R.string.notification_pref_title),
+                getString(R.string.notification_minimum_cards_due_vibrate),
+                getString(R.string.notification_minimum_cards_due_blink),
+            )
+
+            // Accessibility preferences summary
+            findPreference<Preference>(getString(R.string.pref_accessibility_screen_key))!!
+                .summary = buildCategorySummary(
+                getString(R.string.card_zoom),
+                getString(R.string.button_size),
+            )
+
+            // Controls preferences summary
+            findPreference<Preference>(getString(R.string.pref_controls_screen_key))!!
+                .summary = buildCategorySummary(
+                getString(R.string.pref_cat_gestures),
+                getString(R.string.keyboard),
+                getString(R.string.bluetooth)
+            )
 
             if (isRestrictedLearningDevice) {
                 findPreference<Preference>("pref_screen_advanced")!!.isVisible = false
             }
-            if (BuildConfig.DEBUG) {
-                val devOptions = Preference(requireContext()).apply {
-                    title = getString(R.string.pref_cat_dev_options)
-                    setOnPreferenceClickListener {
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.settings_container, DevOptionsFragment())
-                            .addToBackStack(null)
-                            .commit()
-                        true
-                    }
-                }
-                preferenceScreen.addPreference(devOptions)
+
+            if (DevOptionsFragment.isEnabled(requireContext())) {
+                setDevOptionsVisibility(true)
             }
+
+            // Set icons colors
+            for (index in 0 until preferenceScreen.preferenceCount) {
+                val preference = preferenceScreen.getPreference(index)
+                preference.icon?.setTint(Themes.getColorFromAttr(requireContext(), R.attr.iconColor))
+            }
+        }
+
+        fun setDevOptionsVisibility(isVisible: Boolean) {
+            findPreference<Preference>(getString(R.string.pref_dev_options_screen_key))!!.isVisible = isVisible
         }
     }
 
@@ -470,8 +401,6 @@ class Preferences : AnkiActivity() {
             // syncAccount's summary can change while preferences are still open (user logs
             // in from preferences screen), so we need to update it here.
             updatePreference(activity as Preferences, prefs, "syncAccount")
-            updatePreference(activity as Preferences, prefs, "custom_sync_server_link")
-            updatePreference(activity as Preferences, prefs, "advanced_statistics_link")
         }
 
         override fun onPause() {
@@ -488,10 +417,7 @@ class Preferences : AnkiActivity() {
             val dialogFragment = when (preference) {
                 is IncrementerNumberRangePreferenceCompat -> IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
                 is NumberRangePreferenceCompat -> NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat.newInstance(preference.getKey())
-                is ResetLanguageDialogPreference -> ResetLanguageDialogPreference.ResetLanguageDialogFragmentCompat.newInstance(preference.getKey())
-                is ConfirmationPreferenceCompat -> ConfirmationPreferenceCompat.ConfirmationDialogFragmentCompat.newInstance(preference.getKey())
                 is SeekBarPreferenceCompat -> SeekBarPreferenceCompat.SeekBarDialogFragmentCompat.newInstance(preference.getKey())
-                is ControlPreference -> ControlPreference.View.newInstance(preference.getKey())
                 else -> null
             }
 
@@ -608,7 +534,7 @@ class Preferences : AnkiActivity() {
                         pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
                     }
                     NEW_TIMEZONE_HANDLING -> {
-                        if (preferencesActivity.col.schedVer() != 1 && preferencesActivity.col.isUsingRustBackend) {
+                        if (preferencesActivity.col.schedVer() != 1) {
                             val sched = preferencesActivity.col.sched
                             val wasEnabled = sched._new_timezone_enabled()
                             val isEnabled = (pref as SwitchPreference).isChecked
@@ -627,12 +553,7 @@ class Preferences : AnkiActivity() {
                     }
                     CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                     AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
-                    "gestureCornerTouch" -> {
-                        GesturesSettingsFragment.updateGestureCornerTouch(preferencesActivity, screen)
-                    }
                 }
-                // Update the summary text to reflect new value
-                preferencesActivity.updateSummary(pref)
             } catch (e: BadTokenException) {
                 Timber.e(e, "Preferences: BadTokenException on showDialog")
             } catch (e: NumberFormatException) {
@@ -688,10 +609,9 @@ class Preferences : AnkiActivity() {
 
         companion object {
             @JvmStatic
-            protected fun getSubscreenIntent(context: Context?, className: String): Intent {
-                val i = Intent(context, Preferences::class.java)
-                i.putExtra(EXTRA_SHOW_FRAGMENT, "com.ichi2.anki.Preferences$$className")
-                return i
+            protected fun getSubscreenIntent(context: Context?, javaClassName: String): Intent {
+                return Intent(context, Preferences::class.java)
+                    .putExtra(INITIAL_FRAGMENT_EXTRA, javaClassName)
             }
         }
     }
@@ -748,33 +668,22 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_reviewing)
-            // Show error toast if the user tries to disable answer button without gestures on
-            val buttonsPreference = requirePreference<Preference>(getString(R.string.answer_buttons_position_preference))
-            buttonsPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, newValue: Any ->
-                val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
-                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || newValue != "none") {
-                    return@OnPreferenceChangeListener true
-                } else {
-                    showThemedToast(
-                        requireContext(),
-                        R.string.full_screen_error_gestures, false
-                    )
-                    return@OnPreferenceChangeListener false
-                }
-            }
-            val fullscreenPreference = requirePreference<ListPreference>(FullScreenMode.PREF_KEY)
-            fullscreenPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue: Any ->
-                val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
-                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue() != newValue) {
-                    return@OnPreferenceChangeListener true
-                } else {
-                    showThemedToast(
-                        requireContext(),
-                        R.string.full_screen_error_gestures, false
-                    )
-                    return@OnPreferenceChangeListener false
-                }
-            }
+
+            // Learn ahead limit
+            requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference)
+                .setFormattedSummary(R.string.pref_summary_minutes)
+            // Timebox time limit
+            requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference)
+                .setFormattedSummary(R.string.pref_summary_minutes)
+            // Start of next day
+            requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference)
+                .setFormattedSummary(R.string.day_offset_summary)
+            // Time to show answer
+            requirePreference<SeekBarPreferenceCompat>(R.string.timeout_answer_seconds_preference)
+                .setFormattedSummary(R.string.pref_summary_seconds)
+            // Time to show question
+            requirePreference<SeekBarPreferenceCompat>(R.string.timeout_question_seconds_preference)
+                .setFormattedSummary(R.string.pref_summary_seconds)
         }
     }
 
@@ -791,17 +700,38 @@ class Preferences : AnkiActivity() {
             addPreferencesFromResource(preferenceResource)
 
             // Configure force full sync option
-            requirePreference<ConfirmationPreferenceCompat>(R.string.force_full_sync_key).apply {
-                setDialogMessage(R.string.force_full_sync_summary)
-                setDialogTitle(R.string.force_full_sync_title)
-                setOkHandler {
-                    if (col == null) {
-                        showThemedToast(requireContext(), R.string.directory_inaccessible, false)
-                        return@setOkHandler
+            requirePreference<Preference>(R.string.force_full_sync_key).setOnPreferenceClickListener {
+                MaterialDialog(requireContext()).show {
+                    title(R.string.force_full_sync_title)
+                    message(R.string.force_full_sync_summary)
+                    positiveButton(R.string.dialog_ok) {
+                        if (col == null) {
+                            showThemedToast(
+                                requireContext(),
+                                R.string.directory_inaccessible,
+                                false
+                            )
+                            return@positiveButton
+                        }
+                        col!!.modSchemaNoCheck()
+                        col!!.setMod()
+                        showThemedToast(
+                            requireContext(),
+                            R.string.force_full_sync_confirmation,
+                            true
+                        )
                     }
-                    col!!.modSchemaNoCheck()
-                    col!!.setMod()
-                    showThemedToast(requireContext(), android.R.string.ok, true)
+                    negativeButton(R.string.dialog_cancel)
+                }
+                true
+            }
+            // Custom sync server
+            requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
+                val preferences = AnkiDroidApp.getSharedPrefs(requireContext())
+                if (!CustomSyncServer.isEnabled(preferences)) {
+                    getString(R.string.disabled)
+                } else {
+                    CustomSyncServer.getSyncBaseUrlOrDefault(preferences, "")
                 }
             }
         }
@@ -816,6 +746,30 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_appearance)
+            // Card browser font scaling
+            requirePreference<SeekBarPreferenceCompat>(R.string.pref_card_browser_font_scale_key)
+                .setFormattedSummary(R.string.pref_summary_percentage)
+
+            // Show error toast if the user tries to disable answer button without gestures on
+            requirePreference<Preference>(R.string.answer_buttons_position_preference).setOnPreferenceChangeListener() { _, newValue: Any ->
+                val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
+                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || newValue != "none") {
+                    true
+                } else {
+                    showThemedToast(requireContext(), R.string.full_screen_error_gestures, false)
+                    false
+                }
+            }
+            requirePreference<ListPreference>(FullScreenMode.PREF_KEY).setOnPreferenceChangeListener { _, newValue: Any ->
+                val prefs = AnkiDroidApp.getSharedPrefs(requireContext())
+                if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue() != newValue) {
+                    true
+                } else {
+                    showThemedToast(requireContext(), R.string.full_screen_error_gestures, false)
+                    false
+                }
+            }
+            // Configure background
             mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
             mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 if (mBackgroundImage!!.isChecked) {
@@ -845,63 +799,60 @@ class Preferences : AnkiActivity() {
             val appThemePref = requirePreference<ListPreference>(getString(R.string.app_theme_key))
             val dayThemePref = requirePreference<ListPreference>(getString(R.string.day_theme_key))
             val nightThemePref = requirePreference<ListPreference>(getString(R.string.night_theme_key))
+            val themeIsFollowSystem = appThemePref.value == Themes.FOLLOW_SYSTEM_MODE
 
             // Remove follow system options in android versions which do not have system dark mode
-            // When minSdk reaches 29, only this if block needs to be removed
+            // When minSdk reaches 29, the only necessary change is to remove this if-block
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                 dayThemePref.isVisible = false
                 nightThemePref.isVisible = false
 
                 // Drop "Follow system" option (the first one)
-                val appThemesLabels = resources.getStringArray(R.array.app_theme_labels)
-                val appThemesValues = resources.getStringArray(R.array.app_theme_values)
-
-                appThemePref.entries = appThemesLabels.sliceArray(1..appThemesLabels.lastIndex)
-                appThemePref.entryValues = appThemesValues.sliceArray(1..appThemesValues.lastIndex)
+                appThemePref.entries = resources.getStringArray(R.array.app_theme_labels).drop(1).toTypedArray()
+                appThemePref.entryValues = resources.getStringArray(R.array.app_theme_values).drop(1).toTypedArray()
+                if (themeIsFollowSystem) {
+                    appThemePref.value = Theme.fallback.id
+                }
             }
-
-            val followSystem = Themes.themeFollowsSystem(requireContext())
-            dayThemePref.isEnabled = followSystem
-            nightThemePref.isEnabled = followSystem
+            dayThemePref.isEnabled = themeIsFollowSystem
+            nightThemePref.isEnabled = themeIsFollowSystem
 
             appThemePref.setOnPreferenceChangeListener { _, newValue ->
-                dayThemePref.isEnabled = newValue == Themes.FOLLOW_SYSTEM_MODE
-                nightThemePref.isEnabled = newValue == Themes.FOLLOW_SYSTEM_MODE
+                val selectedThemeIsFollowSystem = newValue == Themes.FOLLOW_SYSTEM_MODE
+                dayThemePref.isEnabled = selectedThemeIsFollowSystem
+                nightThemePref.isEnabled = selectedThemeIsFollowSystem
 
-                // Only restart if value was changed
+                // Only restart if theme has changed
                 if (newValue != appThemePref.value) {
-                    restartActivityOnBackStackTop()
+                    val previousThemeId = currentTheme.id
+                    appThemePref.value = newValue.toString()
+                    updateCurrentTheme()
+
+                    if (previousThemeId != currentTheme.id) {
+                        requireActivity().recreate()
+                    }
                 }
                 true
             }
 
             dayThemePref.setOnPreferenceChangeListener { _, newValue ->
-                if (newValue != dayThemePref.value && !systemIsInNightMode(requireContext())) {
-                    restartActivityOnBackStackTop()
+                if (newValue != dayThemePref.value && !systemIsInNightMode && newValue != currentTheme.id) {
+                    dayThemePref.value = newValue.toString()
+                    updateCurrentTheme()
+                    requireActivity().recreate()
                 }
                 true
             }
 
             nightThemePref.setOnPreferenceChangeListener { _, newValue ->
-                if (newValue != nightThemePref.value && systemIsInNightMode(requireContext())) {
-                    restartActivityOnBackStackTop()
+                if (newValue != nightThemePref.value && systemIsInNightMode && newValue != currentTheme.id) {
+                    nightThemePref.value = newValue.toString()
+                    updateCurrentTheme()
+                    requireActivity().recreate()
                 }
                 true
             }
             initializeCustomFontsDialog()
-        }
-
-        /**
-         * Restart [Preferences] activity with [AppearanceSettingsFragment]
-         * in the top of the backstack
-         */
-        private fun restartActivityOnBackStackTop() {
-            Timber.i("PreferenceActivity -- restartActivity()")
-            val intent = Intent(context, requireActivity().javaClass)
-            val fragmentClassNames = arrayOf(AppearanceSettingsFragment::class.java.name)
-            intent.putExtra(EXTRA_BACKSTACK_FRAGMENTS, fragmentClassNames)
-            requireContext().startActivity(intent)
-            this.requireActivity().finish()
         }
 
         /** Initializes the list of custom fonts shown in the preferences.  */
@@ -978,66 +929,36 @@ class Preferences : AnkiActivity() {
         }
     }
 
-    class GesturesSettingsFragment : SpecificSettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_gestures
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.gestures"
-
-        override fun initSubscreen() {
-            addPreferencesFromResource(R.xml.preferences_gestures)
-            val screen = preferenceScreen
-            updateGestureCornerTouch(screen)
-        }
-
-        private fun updateGestureCornerTouch(screen: PreferenceScreen) {
-            updateGestureCornerTouch(requireContext(), screen)
-        }
-
-        companion object {
-            fun updateGestureCornerTouch(context: Context?, screen: PreferenceScreen) {
-                val gestureCornerTouch = AnkiDroidApp.getSharedPrefs(context).getBoolean("gestureCornerTouch", false)
-                if (gestureCornerTouch) {
-                    requirePreference<Preference>(screen, "gestureTapTop").setTitle(R.string.gestures_corner_tap_top_center)
-                    requirePreference<Preference>(screen, "gestureTapLeft").setTitle(R.string.gestures_corner_tap_middle_left)
-                    requirePreference<Preference>(screen, "gestureTapRight").setTitle(R.string.gestures_corner_tap_middle_right)
-                    requirePreference<Preference>(screen, "gestureTapBottom").setTitle(R.string.gestures_corner_tap_bottom_center)
-                } else {
-                    requirePreference<Preference>(screen, "gestureTapTop").setTitle(R.string.gestures_tap_top)
-                    requirePreference<Preference>(screen, "gestureTapLeft").setTitle(R.string.gestures_tap_left)
-                    requirePreference<Preference>(screen, "gestureTapRight").setTitle(R.string.gestures_tap_right)
-                    requirePreference<Preference>(screen, "gestureTapBottom").setTitle(R.string.gestures_tap_bottom)
-                }
-            }
-        }
-    }
-
     class AdvancedSettingsFragment : SpecificSettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_advanced
         override val analyticsScreenNameConstant: String
             get() = "prefs.advanced"
 
+        @Suppress("Deprecation") // Material dialog neutral button deprecation
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_advanced)
             val screen = preferenceScreen
             // Check that input is valid before committing change in the collection path
-            val collectionPathPreference = requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH)
-            collectionPathPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue: Any? ->
-                val newPath = newValue as String?
-                try {
-                    CollectionHelper.initializeAnkiDroidDirectory(newPath)
-                    return@OnPreferenceChangeListener true
-                } catch (e: StorageAccessException) {
-                    Timber.e(e, "Could not initialize directory: %s", newPath)
-                    MaterialDialog.Builder(requireContext())
-                        .title(R.string.dialog_collection_path_not_dir)
-                        .positiveText(R.string.dialog_ok)
-                        .negativeText(R.string.reset_custom_buttons)
-                        .onPositive { dialog: MaterialDialog, _ -> dialog.dismiss() }
-                        .onNegative { _, _ -> collectionPathPreference.text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext()) }
-                        .show()
-                    return@OnPreferenceChangeListener false
+            requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
+                setOnPreferenceChangeListener { _, newValue: Any? ->
+                    val newPath = newValue as String?
+                    try {
+                        CollectionHelper.initializeAnkiDroidDirectory(newPath)
+                        true
+                    } catch (e: StorageAccessException) {
+                        Timber.e(e, "Could not initialize directory: %s", newPath)
+                        MaterialDialog(requireContext()).show {
+                            title(R.string.dialog_collection_path_not_dir)
+                            positiveButton(R.string.dialog_ok) {
+                                dismiss()
+                            }
+                            negativeButton(R.string.reset_custom_buttons) {
+                                text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext())
+                            }
+                        }
+                        false
+                    }
                 }
             }
             setupContextMenuPreference(CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu)
@@ -1048,31 +969,30 @@ class Preferences : AnkiActivity() {
                 schedVerPreference.setTitle(R.string.sched_v2)
                 schedVerPreference.setSummary(R.string.sched_v2_summ)
                 schedVerPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
-                    val builder = MaterialDialog.Builder(requireContext())
-                    // Going to V2
-                    builder.title(R.string.sched_ver_toggle_title)
-                    builder.content(R.string.sched_ver_1to2)
-                    builder.onPositive { _, _ ->
-                        col!!.modSchemaNoCheck()
-                        try {
-                            col!!.changeSchedulerVer(2)
-                            screen.removePreference(schedVerPreference)
-                        } catch (e2: ConfirmModSchemaException) {
-                            // This should never be reached as we explicitly called modSchemaNoCheck()
-                            throw RuntimeException(e2)
-                        }
+                    MaterialDialog(requireContext()).show {
+                        // Going to V2
+                        title(R.string.sched_ver_toggle_title)
+                            .message(R.string.sched_ver_1to2)
+                            .positiveButton(R.string.dialog_ok) {
+                                col!!.modSchemaNoCheck()
+                                try {
+                                    col!!.changeSchedulerVer(2)
+                                    screen.removePreference(schedVerPreference)
+                                } catch (e2: ConfirmModSchemaException) {
+                                    // This should never be reached as we explicitly called modSchemaNoCheck()
+                                    throw RuntimeException(e2)
+                                }
+                            }
+                            .neutralButton(R.string.help) {
+                                // call v2 scheduler documentation website
+                                val uri = Uri.parse(getString(R.string.link_anki_2_scheduler))
+                                val intent = Intent(Intent.ACTION_VIEW, uri)
+                                startActivity(intent)
+                            }
+                            .negativeButton(R.string.dialog_cancel) {
+                                schedVerPreference.isChecked = false
+                            }
                     }
-                    builder.onNegative { _, _ -> schedVerPreference.isChecked = false }
-                    builder.onNeutral { _, _ ->
-                        // call v2 scheduler documentation website
-                        val uri = Uri.parse(getString(R.string.link_anki_2_scheduler))
-                        val intent = Intent(Intent.ACTION_VIEW, uri)
-                        startActivity(intent)
-                    }
-                    builder.positiveText(R.string.dialog_ok)
-                    builder.neutralText(R.string.help)
-                    builder.negativeText(R.string.dialog_cancel)
-                    builder.show()
                     false
                 }
                 // meaning of order here is the position of Preference in xml layout.
@@ -1090,6 +1010,30 @@ class Preferences : AnkiActivity() {
             // Workaround preferences
             removeUnnecessaryAdvancedPrefs()
             addThirdPartyAppsListener()
+
+            // Configure "Reset languages" preference
+            requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
+                AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.reset_languages)
+                    .setIcon(R.drawable.ic_warning_black)
+                    .setMessage(R.string.reset_languages_question)
+                    .setPositiveButton(R.string.dialog_ok) { _, _ ->
+                        if (MetaDB.resetLanguages(requireContext())) {
+                            showThemedToast(requireContext(), R.string.reset_confirmation, true)
+                        }
+                    }
+                    .setNegativeButton(R.string.dialog_cancel, null)
+                    .show()
+                true
+            }
+            // Advanced statistics
+            requirePreference<Preference>(R.string.pref_advanced_statistics_key).setSummaryProvider {
+                if (AnkiDroidApp.getSharedPrefs(requireContext()).getBoolean("advanced_statistics_enabled", false)) {
+                    getString(R.string.enabled)
+                } else {
+                    getString(R.string.disabled)
+                }
+            }
         }
 
         private fun setupContextMenuPreference(key: String, @StringRes contextMenuName: Int) {
@@ -1142,7 +1086,7 @@ class Preferences : AnkiActivity() {
         companion object {
             @JvmStatic
             fun getSubscreenIntent(context: Context?): Intent {
-                return getSubscreenIntent(context, AdvancedSettingsFragment::class.java.simpleName)
+                return getSubscreenIntent(context, AdvancedSettingsFragment::class.java.name)
             }
         }
     }
@@ -1186,10 +1130,26 @@ class Preferences : AnkiActivity() {
             }
         }
 
+        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+        fun allKeys(): HashSet<String> {
+            val allKeys = HashSet<String>()
+            for (i in 0 until preferenceScreen.preferenceCount) {
+                val pref = preferenceScreen.getPreference(i)
+                if (pref is PreferenceCategory) {
+                    for (j in 0 until pref.preferenceCount) {
+                        allKeys.add(pref.getPreference(j).key)
+                    }
+                } else {
+                    allKeys.add(pref.key)
+                }
+            }
+            return allKeys
+        }
+
         companion object {
             @JvmStatic
             fun getSubscreenIntent(context: Context?): Intent {
-                return getSubscreenIntent(context, CustomButtonsSettingsFragment::class.java.simpleName)
+                return getSubscreenIntent(context, CustomButtonsSettingsFragment::class.java.name)
             }
         }
     }
@@ -1202,6 +1162,9 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_advanced_statistics)
+            // Precision of computation
+            requirePreference<SeekBarPreferenceCompat>(R.string.pref_computation_precision_key)
+                .setFormattedSummary(R.string.pref_summary_percentage)
         }
     }
 
@@ -1239,12 +1202,6 @@ class Preferences : AnkiActivity() {
                 true
             }
         }
-
-        companion object {
-            fun getSubscreenIntent(context: Context?): Intent {
-                return getSubscreenIntent(context, CustomSyncServerSettingsFragment::class.java.simpleName)
-            }
-        }
     }
 
     class ControlsSettingsFragment : SpecificSettingsFragment() {
@@ -1255,8 +1212,7 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_controls)
-            val cat = requirePreference<PreferenceCategory>("key_map_category")
-            setup(cat)
+            addAllControlPreferencesToCategory(requirePreference(R.string.controls_command_mapping_cat_key))
         }
     }
 
@@ -1273,6 +1229,17 @@ class Preferences : AnkiActivity() {
         override fun initSubscreen() {
             addPreferencesFromResource(preferenceResource)
 
+            val enableDevOptionsPref = requirePreference<SwitchPreference>(R.string.dev_options_enabled_by_user_key)
+            // If it is a DEBUG build, hide the preference to disable developer options
+            // If it is a RELEASE build, configure the preference to disable dev options
+            if (BuildConfig.DEBUG) {
+                enableDevOptionsPref.isVisible = false
+            } else {
+                enableDevOptionsPref.setOnPreferenceChangeListener { _, _ ->
+                    showDisableDevOptionsDialog()
+                    false
+                }
+            }
             // Make it possible to test crash reporting
             requirePreference<Preference>(getString(R.string.pref_trigger_crash_key)).setOnPreferenceClickListener {
                 Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
@@ -1302,10 +1269,9 @@ class Preferences : AnkiActivity() {
             }
             // Use V16 Backend
             requirePreference<Preference>(getString(R.string.pref_rust_backend_key)).apply {
-                setDefaultValue(AnkiDroidApp.TESTING_USE_V16_BACKEND)
+                setDefaultValue(!BackendFactory.defaultLegacySchema)
                 setOnPreferenceClickListener {
-                    AnkiDroidApp.TESTING_USE_V16_BACKEND = true
-                    Consts.SCHEMA_VERSION = 16
+                    BackendFactory.defaultLegacySchema = false
                     (requireActivity() as Preferences).restartWithNewDeckPicker()
                     true
                 }
@@ -1317,6 +1283,49 @@ class Preferences : AnkiActivity() {
                     AnkiDroidApp.TESTING_SCOPED_STORAGE = true
                     (requireActivity() as Preferences).restartWithNewDeckPicker()
                     true
+                }
+            }
+        }
+
+        /**
+         * Shows dialog to confirm if developer options should be disabled
+         */
+        private fun showDisableDevOptionsDialog() {
+            MaterialDialog(requireContext()).show {
+                title(R.string.disable_dev_options)
+                positiveButton(R.string.dialog_ok) {
+                    disableDevOptions()
+                }
+                negativeButton(R.string.dialog_cancel)
+            }
+        }
+
+        /**
+         * Destroys the fragment and hides developer options on [HeaderFragment]
+         */
+        private fun disableDevOptions() {
+            val fragment = parentFragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
+            if (fragment is HeaderFragment) {
+                fragment.setDevOptionsVisibility(false)
+            }
+            parentFragmentManager.popBackStack()
+            setDevOptionsEnabledByUser(requireContext(), false)
+        }
+
+        companion object {
+            /**
+             * @return whether developer options should be shown to the user.
+             * True in case [BuildConfig.DEBUG] is true
+             * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
+             */
+            fun isEnabled(context: Context): Boolean {
+                return BuildConfig.DEBUG || AnkiDroidApp.getSharedPrefs(context)
+                    .getBoolean(context.getString(R.string.dev_options_enabled_by_user_key), false)
+            }
+
+            fun setDevOptionsEnabledByUser(context: Context, isEnabled: Boolean) {
+                AnkiDroidApp.getSharedPrefs(context).edit {
+                    putBoolean(context.getString(R.string.dev_options_enabled_by_user_key), isEnabled)
                 }
             }
         }
@@ -1412,12 +1421,7 @@ class Preferences : AnkiActivity() {
             SHOW_ESTIMATE, SHOW_PROGRESS,
             LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, NEW_TIMEZONE_HANDLING, AUTOMATIC_ANSWER_ACTION
         )
-        const val EXTRA_SHOW_FRAGMENT = ":android:show_fragment"
-
-        /**
-         * Key of intent extra used in [addFragmentsToBackStack]
-         */
-        const val EXTRA_BACKSTACK_FRAGMENTS = ":android:backstack_fragments"
+        const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
         /** Returns the hour that the collection rolls over to the next day  */
         @JvmStatic

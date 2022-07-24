@@ -60,13 +60,6 @@
     <string name="initializing_tts">TTS ᱮᱛᱚᱷᱚᱵᱽᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
     <string name="unused_strings">\n\nUnused ᱯᱟᱹᱤᱞ:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[&lt;h2&gt;%1$s:&lt;br/&gt;Android ᱞᱟᱹᱜᱤᱫ ᱯᱷᱞᱟᱥᱠᱟᱰ&lt;/h2&gt;AnkiDroid ᱫᱚ ᱯᱷᱞᱟᱥᱠᱟᱰ ᱮᱯᱞᱤᱠᱮᱚᱱ ᱱᱚᱶᱟᱫᱚ ᱰᱮᱥᱠᱴᱟᱹᱯ ᱥᱚᱯᱷᱴᱣᱮᱨ ᱥᱟᱞᱟᱜ ᱛᱮ ᱦᱚᱸ ᱠᱟᱹᱢᱤᱟᱭ&lt;a href=\&quot;%2$s\&quot;&gt;Anki&lt;/a&gt; ᱾ ᱟᱢ Ankidroid ᱟᱨ Anki Desktop ᱨᱮ ᱠᱟᱰ ᱛᱮᱭᱟᱨ, ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ , ᱟᱨᱦᱚᱸ ᱡᱷᱚᱛᱚ Ankiweb ᱨᱮ synchronize ᱫᱟᱲᱮᱭᱟᱜᱟ ᱾]]></item>
-        <item><![CDATA[AnkiDroid ᱟᱨᱦᱚᱸ ᱵᱮᱥ ᱛᱮᱭᱟᱨ ᱞᱟᱹᱜᱤᱫ bugs ᱨᱤᱯᱚᱴ ᱢᱮ&lt;a href=\&quot;%1$s\&quot;&gt;Issue tracker ᱴᱷᱮᱱ&lt;/a&gt;; ᱱᱟᱶᱟ ᱵᱤᱪᱟᱨ ᱠᱚ ᱮᱢᱟᱱ ᱵᱟᱛᱟᱣᱫᱟᱲᱮᱟᱜ ᱯᱮ ᱾ answers ᱯᱟᱱᱛᱮ ᱯᱮ &lt;a href=\&quot;%2$s\&quot;&gt;ᱣᱤᱠᱤ ᱨᱮ&lt;/a&gt;ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ discussion ᱮᱛᱦᱚᱵ ᱯᱮ&lt;a href=\&quot;%3$s\&quot;&gt;ᱯᱷᱚᱨᱩᱢ ᱨᱮ&lt;/a&gt;.]]></item>
-        <item><![CDATA[AnkiDroid ᱫᱚ&lt;a href=\&quot;%1$s\&quot;&gt;open source software ᱠᱟᱱᱟ&lt;a/&gt;, ᱡᱷᱚᱛᱚᱦᱚᱲ encourage ᱠᱚ ᱠᱟᱱᱟ ᱡᱮ &lt;a href=\&quot;%2$s\&quot;&gt;contributor ᱛᱮᱭᱟᱨᱚᱜ ᱯᱮ&lt;/a&gt; :-)]]></item>
-        <item><![CDATA[Non-developers ᱦᱚᱸ ᱜᱚᱸᱲᱚᱸ ᱢᱮᱥᱟ ᱫᱟᱲᱮᱭᱟᱜ ᱠᱚ. ᱡᱮᱢᱛᱤ ᱟᱢ&lt;a href=\&quot;%1$s\&quot;&gt;translate ᱠᱚᱨᱮ&lt;/a&gt; AnkiDroid ᱜᱚᱲᱚᱭᱯᱮ, ᱣᱤᱠᱤ ᱠᱚᱨᱮ ᱟᱹᱯᱰᱮᱴ ᱠᱟᱛᱮ, screenshots ᱮᱢ ᱟᱨᱦᱚᱸ AnkiDroid blog ᱠᱟᱛᱮ ᱾]]></item>
-        <item><![CDATA[AnkiDroid ᱫᱚ&lt;a href=\&quot;%1$s\&quot;&gt;GNU-GPL v3 license&lt;/a&gt;ᱛᱮ ᱚᱰᱚᱠ ᱟᱠᱟᱱᱟ ᱟᱨ source code&lt;a href=\&quot;%2$s\&quot;&gt;ᱫᱚ GitHub ᱨᱮ ᱯᱮ ᱧᱟᱢᱟ&lt;/a&gt;.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
     <string name="reposition_card_dialog_title">ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱯᱮ</string>
     <string name="reposition_card_dialog_message">ᱮᱛᱦᱚᱵ ᱡᱟᱭᱜᱟᱺ</string>

@@ -21,6 +21,10 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.createReviewSummaryStatistics
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,6 +34,7 @@ import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
 import java.util.concurrent.ExecutionException
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class AnkiStatsTaskHandlerTest : RobolectricTest() {
     @Mock
@@ -38,8 +43,11 @@ class AnkiStatsTaskHandlerTest : RobolectricTest() {
     @Mock
     private lateinit var mView: TextView
 
+    private val testDispatcher = StandardTestDispatcher()
+
     @Before
     override fun setUp() {
+        super.setUp()
         MockitoAnnotations.openMocks(this)
         whenever(mCol.db).thenReturn(null)
         whenever(mCol.dbClosed).thenReturn(true)
@@ -48,12 +56,10 @@ class AnkiStatsTaskHandlerTest : RobolectricTest() {
     @Test
     @Throws(ExecutionException::class, InterruptedException::class)
     @NeedsTest("explain this test")
-    @Suppress("deprecation") // #7108: AsyncTask
-    fun testCreateReviewSummaryStatistics() {
+    fun testCreateReviewSummaryStatistics() = runTest(testDispatcher) {
         verify(mCol, atMost(0))!!.db
-        val result = createReviewSummaryStatistics(mCol, mView)
-        result.get()
-        advanceRobolectricLooper()
+        createReviewSummaryStatistics(mCol, mView, testDispatcher, testDispatcher)
+        advanceUntilIdle()
         verify(mCol, atLeast(0))!!.db
         verify(mCol, atLeast(1))!!.dbClosed
     }

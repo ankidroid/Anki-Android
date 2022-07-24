@@ -42,7 +42,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Bild hinzufügen</string>
     <string name="multimedia_editor_popup_audio_clip">Audioclip hinzufügen</string>
-    <string name="multimedia_editor_popup_video_clip">Video hinzufügen</string>
+    <string name="multimedia_editor_popup_video_clip">Videoclip hinzufügen</string>
     <string name="multimedia_editor_popup_audio">Ton aufnehmen</string>
     <string name="multimedia_editor_popup_text">Erweiterter Editor</string>
     <string name="multimedia_editor_popup_cloze">Auslassung erzeugen</string>
@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">Schlage Aussprache nach</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Aussprache fehlgeschlagen</string>
+    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
     <string name="multimedia_editor_word_search_try_lower_case">Versuchen Sie es nur mit Kleinbuchstaben</string>
     <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->

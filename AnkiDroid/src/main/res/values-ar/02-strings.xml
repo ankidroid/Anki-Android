@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">فتح القائمة</string>
     <string name="drawer_close">إغلاق القائمة</string>
@@ -101,6 +99,9 @@
         <item>تاريخ الإنشاء</item>
         <item>تاريخ تعديل الملحوظة</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعديل الحد اليومي للبطاقات الجديدة</string>
     <string name="custom_study_increase_review_limit">تعديل الحد اليومي لبطاقات المراجعة</string>
@@ -176,11 +177,11 @@
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
     <plurals name="import_files_message_add_confirm">
         <item quantity="zero">إضافة \"%s\" إلى المجموعة؟ قد يستغرق ذلك وقتاً طويلاً</item>
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="two">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
+        <item quantity="two">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
+        <item quantity="few">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
+        <item quantity="many">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
+        <item quantity="other">هل تريد استيراد الملفات التالية:\n%s\nقد يستغرق هذا وقتًا طويلًا.</item>
     </plurals>
     <string name="import_log_no_apkg">ليس هذا ملف حزمة أنكي صالحًا</string>
     <string name="import_title_error" comment="Title of error dialog">خطأ</string>
@@ -469,4 +470,6 @@
     <string name="file_extract_exceeds_storage_space">يتخطى الملف المستخرج مساحة التخزين</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">إسدال الوسم \"%s\"</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">فشل الوصول إلى المجموعة. يرجى المحاولة مجددًا!</string>
 </resources>

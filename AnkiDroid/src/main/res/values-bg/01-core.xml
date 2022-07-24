@@ -103,7 +103,7 @@
     <string name="rename_deck">Преименувай тестето</string>
     <string name="create_shortcut">Създай пряк път</string>
     <string name="browse_cards">Разглеждане на картичките</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Добави</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Добави</string>
     <string name="menu_add_note">Добави бележка</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Акаунт за синхронизириране</string>
     <string name="menu_dismiss_note">Скрий / изтрий</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">Няма оставащи карти</string>
     <string name="sd_card_not_mounted">Не е поставена SD-карта памет</string>
     <string name="empty_cloze_warning">Редактирай тази бележка и добави празни полета. (%1$s)</string>
-    <string name="button_sync">Синхрон</string>
+    <string name="button_sync" comment="Text of the sync button">Синхрон</string>
     <string name="cancel_sync_confirm">Искате ли да прекратите синхронизирането?</string>
     <string name="continue_sync">Продължи синхронизацията</string>
     <string name="sync_cancelled">Синхронизирането е прекратено</string>

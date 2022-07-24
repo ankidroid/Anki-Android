@@ -25,23 +25,21 @@
 
 package com.ichi2.libanki
 
+import anki.notetypes.StockNotetype
 import com.ichi2.anki.R
-import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.*
-import com.ichi2.libanki.backend.ModelsBackend
-import com.ichi2.libanki.backend.ModelsBackendImpl
-import com.ichi2.libanki.backend.NoteTypeNameID
-import com.ichi2.libanki.backend.NoteTypeNameIDUseCount
+import com.ichi2.libanki.backend.*
+import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.utils.*
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
-import net.ankiweb.rsdroid.BackendV1
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
-import java.util.*
-import kotlin.collections.HashMap
+
+class NoteTypeNameID(val name: String, val id: ntid)
+class NoteTypeNameIDUseCount(val id: Long, val name: String, val useCount: UInt)
+class BackendNote(val fields: MutableList<String>)
 
 private typealias int = Long
 // # types
@@ -102,14 +100,13 @@ var NoteType.type: Int
         put("type", value)
     }
 
-class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
+class ModelsV16(col: CollectionV16) : ModelManager(col) {
     /*
     # Saving/loading registry
     #############################################################
      */
 
     private var _cache: Dict<int, NoteType> = Dict()
-    private val modelsBackend: ModelsBackend = ModelsBackendImpl(backend)
 
     init {
         _cache = Dict()
@@ -122,7 +119,12 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
             Timber.w("a null model is no longer supported - data is automatically flushed")
             return
         }
-        update(m, preserve_usn_and_mtime = false)
+        // legacy code expects preserve_usn=false behaviour, but that
+        // causes a backup entry to be created, which invalidates the
+        // v2 review history. So we manually update the usn/mtime here
+        m.put("mod", TimeManager.time.intTime())
+        m.put("usn", col.usn())
+        update(m, preserve_usn_and_mtime = true)
     }
 
     @RustCleanup("not required - java only")
@@ -157,8 +159,8 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
         _cache.remove(ntid)
     }
 
-    private fun _get_cached(ntid: int): Optional<NoteType> {
-        return _cache.getOptional(ntid)
+    private fun _get_cached(ntid: int): NoteType? {
+        return _cache.get(ntid)
     }
 
     fun _clear_cache() {
@@ -171,16 +173,20 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
      */
 
     fun all_names_and_ids(): Sequence<NoteTypeNameID> {
-        return modelsBackend.get_notetype_names()
+        return col.backend.getNotetypeNames().map {
+            NoteTypeNameID(it.name, it.id)
+        }.asSequence()
     }
 
     fun all_use_counts(): Sequence<NoteTypeNameIDUseCount> {
-        return modelsBackend.get_notetype_names_and_counts()
+        return col.backend.getNotetypeNamesAndCounts().map {
+            NoteTypeNameIDUseCount(it.id, it.name, it.useCount.toUInt())
+        }.asSequence()
     }
 
     /* legacy */
 
-    fun allNames(): List<str> {
+    override fun allNames(): List<String> {
         return all_names_and_ids().map { it.name }.toMutableList()
     }
 
@@ -218,11 +224,11 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
     #############################################################
      */
 
-    fun id_for_name(name: str): Optional<int> {
-        try {
-            return modelsBackend.get_notetype_id_by_name(name)
+    fun id_for_name(name: str): Long? {
+        return try {
+            col.backend.getNotetypeIdByName(name)
         } catch (e: BackendNotFoundException) {
-            return Optional.empty()
+            null
         }
     }
 
@@ -237,15 +243,19 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
             return null
         }
         var nt = _get_cached(id)
-        if (!nt.isPresent) {
+        if (nt == null) {
             try {
-                nt = Optional.of(modelsBackend.get_notetype_legacy(id))
-                _update_cache(nt.get())
+                nt = NoteType(
+                    BackendUtils.from_json_bytes(
+                        col.backend.getNotetypeLegacy(id)
+                    )
+                )
+                _update_cache(nt)
             } catch (e: BackendNotFoundException) {
                 return null
             }
         }
-        return nt.orElse(null)
+        return nt
     }
 
     /** Get all models */
@@ -256,24 +266,28 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
     /** Get model with NAME. */
     override fun byName(name: str): NoteType? {
         val id = id_for_name(name)
-        if (id.isPresent) {
-            return get(id.get())
-        } else {
-            return null
-        }
+        return id?.let { get(it) }
     }
 
     @RustCleanup("When we're kotlin only, rename to 'new', name existed due to Java compat")
     override fun newModel(name: str): NoteType = new(name)
 
-    /** Create a new model, and return it. */
+    /** Create a new non-cloze model, and return it. */
     fun new(name: str): NoteType {
         // caller should call save() after modifying
-        val nt = modelsBackend.get_stock_notetype_legacy()
+        val nt = newBasicNotetype()
         nt.flds = JSONArray()
         nt.tmpls = JSONArray()
         nt.name = name
         return nt
+    }
+
+    private fun newBasicNotetype(): NoteType {
+        return NoteType(
+            BackendUtils.from_json_bytes(
+                col.backend.getStockNotetypeLegacy(StockNotetype.Kind.BASIC)
+            )
+        )
     }
 
     /** Delete model, and all its cards/notes. */
@@ -284,29 +298,27 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
     fun remove_all_notetypes() {
         for (nt in all_names_and_ids()) {
             _remove_from_cache(nt.id)
-            modelsBackend.remove_notetype(nt.id)
+            col.backend.removeNotetype(nt.id)
         }
     }
 
     /** Modifies schema. */
     fun remove(id: int) {
         _remove_from_cache(id)
-        modelsBackend.remove_notetype(id)
+        col.backend.removeNotetype(id)
     }
 
     override fun add(m: NoteType) {
         save(m)
     }
 
-    @RustCleanup("Python uses .time()")
     fun ensureNameUnique(m: NoteType) {
-        val existing_id = id_for_name(m.name)
-        if (existing_id.isPresent && existing_id.get() != m.id) {
-            /*
-            >>> pp(anki.utils.checksum(str(time.time()))[:5])   = '07a29'
-            >>> pp(anki.utils.checksum(str(time.time())))       = '07a2939b5546263476ba9c7eca7489fa95af4a18'
-             */
-            m.name += "-" + checksum(TimeManager.time.intTimeMS().toString()).substring(0, 5)
+        val existingId = id_for_name(m.name)
+        existingId?.let {
+            if (it != m.id) {
+                // Python uses a float time, but it doesn't really matter, the goal is just a random id.
+                m.name += "-" + checksum(TimeManager.time.intTimeMS().toString()).substring(0, 5)
+            }
         }
     }
 
@@ -314,7 +326,11 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
     override fun update(m: NoteType, preserve_usn_and_mtime: Boolean) {
         _remove_from_cache(m.id)
         ensureNameUnique(m)
-        m.id = modelsBackend.add_or_update_notetype(model = m, preserve_usn_and_mtime = preserve_usn_and_mtime)
+        m.id = col.backend.addOrUpdateNotetype(
+            json = to_json_bytes(m),
+            preserveUsnAndMtime = preserve_usn_and_mtime,
+            skipChecks = preserve_usn_and_mtime
+        )
         setCurrent(m)
         _mutate_after_write(m)
     }
@@ -346,7 +362,11 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
 
     @RustCleanup("not in libAnki any more - may not be needed")
     override fun tmplUseCount(m: NoteType, ord: Int): Int {
-        return col.db.queryScalar("select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?", m.id, ord)
+        return col.db.queryScalar(
+            "select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?",
+            m.id,
+            ord
+        )
     }
 
     /*
@@ -370,8 +390,7 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
 
     /** Mapping of field name : (ord, field). */
     fun fieldMap(m: NoteType): Map<str, Tuple<int, Field>> {
-        return m.flds.jsonObjectIterable().map {
-                f ->
+        return m.flds.jsonObjectIterable().map { f ->
             Pair(f.getString("name"), Pair(f.getLong("ord"), f))
         }.toMap()
     }
@@ -391,7 +410,7 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
 
     @RustCleanup("Check JSONObject.NULL")
     fun new_field(name: str): Field {
-        val nt = modelsBackend.get_stock_notetype_legacy()
+        val nt = newBasicNotetype()
         val field = nt.flds.getJSONObject(0)
         field.put("name", name)
         field.put("ord", JSONObject.NULL)
@@ -483,7 +502,7 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
 
     @RustCleanup("Check JSONObject.NULL")
     fun new_template(name: str): Template {
-        val nt = modelsBackend.get_stock_notetype_legacy()
+        val nt = newBasicNotetype()
         val template = nt.tmpls.getJSONObject(0)
         template["name"] = name
         template["qfmt"] = ""
@@ -534,20 +553,6 @@ class ModelsV16(col: Collection, backend: BackendV1) : ModelManager(col) {
         save(m)
     }
 
-    override fun change(m: NoteType, nid: Long, newModel: NoteType, fmap: Map<Int, Int?>?, cmap: Map<Int, Int?>?) {
-        change(m, listOf(nid), newModel, Optional.ofNullable(fmap), Optional.ofNullable(cmap))
-    }
-
-    fun template_use_count(ntid: int, ord: int): int {
-        return col.db.queryLongScalar(
-            """
-select count() from cards, notes where cards.nid = notes.id
-and notes.mid = ? and cards.ord = ?""",
-            ntid,
-            ord,
-        )
-    }
-
     /*
     # Model changing
     ##########################################################################
@@ -555,103 +560,14 @@ and notes.mid = ? and cards.ord = ?""",
     # - newModel should be self if model is not changing
      */
 
-    @Throws(ConfirmModSchemaException::class)
-    fun change(
+    override fun change(
         m: NoteType,
-        nids: List<int>,
+        nid: Long,
         newModel: NoteType,
-        fmap: Optional<Map<Int, Int?>>,
-        cmap: Optional<Map<Int, Int?>>,
+        fmap: Map<Int, Int?>?,
+        cmap: Map<Int, Int?>?
     ) {
-        col.modSchema()
-        assert(newModel.id == m.id || (fmap.isPresent && cmap.isPresent))
-        if (fmap.isPresent) {
-            _changeNotes(nids, newModel, fmap.get())
-        }
-        if (cmap.isPresent) {
-            _changeCards(nids, m, newModel, cmap.get())
-        }
-        modelsBackend.after_note_updates(nids, mark_modified = true)
-    }
-
-    private fun _changeNotes(nids: List<int>, newModel: NoteType, map: Map<Int, Int?>) {
-        val d = mutableListOf<Array<Any>>()
-
-        val cursor = col.db.query("select id, flds from notes where id in " + ids2str(nids))
-        cursor.use {
-            while (cursor.moveToNext()) {
-                val nid = cursor.getLong(0)
-                val fldsString = cursor.getString(1)
-
-                var flds = splitFields(fldsString)
-                // Kotlin: we can't expand a list via index, so use a HashMap
-                val newflds = HashMap<Int, str>()
-                for ((old, new) in list(map.entries)) {
-                    if (new == null) {
-                        continue
-                    }
-                    newflds[new] = flds[old]
-                }
-                flds = Array(flds.size) { "" }
-                newflds.forEach {
-                        (i, fld) ->
-                    flds[i] = fld
-                }
-                val fldsAsString = joinFields(flds)
-                d.append(
-                    arrayOf(
-                        fldsAsString,
-                        newModel.id,
-                        TimeManager.time.intTime(),
-                        col.usn(),
-                        nid,
-                    )
-                )
-            }
-        }
-        col.db.executeMany("update notes set flds=?,mid=?,mod=?,usn=? where id = ?", d)
-    }
-
-    private fun _changeCards(
-        nids: List<int>,
-        oldModel: NoteType,
-        newModel: NoteType,
-        map: Map<Int, Int?>,
-    ) {
-        val d = mutableListOf<Array<Any>>()
-        val deleted = mutableListOf<Long>()
-        val c = col.db.query(
-            "select id, ord from cards where nid in " + ids2str(nids)
-        )
-        c.use {
-            while (c.moveToNext()) {
-                val cid = c.getLong(0)
-                val ord = c.getInt(1)
-                // if the src model is a cloze, we ignore the map, as the gui
-                // doesn't currently support mapping them
-                var new: Int?
-                if (oldModel.type == MODEL_CLOZE) {
-                    new = ord
-                    if (newModel.type != MODEL_CLOZE) {
-                        // if we're mapping to a regular note, we need to check if
-                        // the destination ord is valid
-                        if (len(newModel.tmpls) <= ord) {
-                            new = null
-                        }
-                    }
-                } else {
-                    // mapping from a regular note, so the map should be valid
-                    new = map[ord]
-                }
-                if (new != null) {
-                    d.append(arrayOf(new, col.usn(), TimeManager.time.intTime(), cid))
-                } else {
-                    deleted.append(cid)
-                }
-            }
-        }
-        col.db.executeMany("update cards set ord=?,usn=?,mod=? where id=?", d)
-        modelsBackend.remove_cards_and_orphaned_notes(deleted)
+        TODO("backend provides new API")
     }
 
     /*
@@ -682,8 +598,9 @@ and notes.mid = ? and cards.ord = ?""",
         flds: str,
         allowEmpty: bool = true
     ): kotlin.collections.Collection<Int> {
-        print("_availClozeOrds() is deprecated; use note.cloze_numbers_in_fields()")
-        return modelsBackend.cloze_numbers_in_note(listOf(flds))
+        TODO("should no longer be needed")
+//        print("_availClozeOrds() is deprecated; use note.cloze_numbers_in_fields()")
+//        return modelsBackend.cloze_numbers_in_note(listOf(flds))
     }
 
     /*
@@ -719,4 +636,13 @@ private fun Deck.getLongOrNull(key: String): int? {
     } catch (ex: Exception) {
         return null
     }
+}
+
+// These take and return bytes that the frontend TypeScript code will encode/decode.
+fun CollectionV16.getNotetypeNamesRaw(input: ByteArray): ByteArray {
+    return backend.getNotetypeNamesRaw(input)
+}
+
+fun CollectionV16.getFieldNamesRaw(input: ByteArray): ByteArray {
+    return backend.getFieldNamesRaw(input)
 }

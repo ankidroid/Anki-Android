@@ -60,13 +60,6 @@
     <string name="initializing_tts">TTS-ni başlatma ...</string>
     <string name="tts_no_tts">Söhbət etməyin</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2><br/>Android üçün Flashcards</ h2>AnkiDroid masa üstü proqram<a href=\"\"> Anki</ a> ilə tam uyğun bir flashcard proqramdır.Həm AnkiDroid, həm də Anki Desktop-da material yaratmaq,yükləyə və öyrənə və AnkiWeb ilə asanlıqla sinxronizasiya edə bilərsiniz.]]></item>
-        <item><![CDATA[AnkiDroid\'ü daha yaxşı etmək üçün,Xahiş edirik xətaları bildirin <a href=\"\">the issue tracker </a>; yeni xüsusiyyət fikirləri çox xoşdur.Cavab tapın <a href=\"\"> viki ya da bir müzakirəyə başlayın <a href=\"\"> forumda </a>.]]></item>
-        <item><![CDATA[AnkiDroid <a href=\"\"> açıq mənbə proqram <a/>, belə ki hər kəs <a href=\"\"> bir iştirakçı olmaq üçün təşviq olunur </ a>: - )]]></item>
-        <item><![CDATA[Qeyri-inkişaf edənlər də kömək edə bilər. Məsələn, AnkiDroid\'yi <a href=\"\"> tərcümə etmə kömək edə bilər, wikiyi yeniləyir, ekran görüntüləri və ya AnkiDroid haqqında blog verə bilərsiniz.]]></item>
-        <item><![CDATA[AnkiDroid<a href=\"<a href=\"\">\">GNU-GPL v3 lisenziyası</ a>daxilində buraxılır və mənbə kodu<a href=\"\"> GitHub haqqındadır</ a> a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Ön görünüş</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>

@@ -103,7 +103,7 @@
     <string name="rename_deck">Pakli átnevezése</string>
     <string name="create_shortcut">Kezdőképernyőre</string>
     <string name="browse_cards">cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Hozzáadás</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Hozzáadás</string>
     <string name="menu_add_note">Megjegyzés hozzáadása</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Fiók szinkronizálása</string>
     <string name="menu_dismiss_note">Elrejtés / Törlés</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">Jelenleg nincs esedékes kártya</string>
     <string name="sd_card_not_mounted">Nincs elérhető tárolóhely</string>
     <string name="empty_cloze_warning">Szerkessze ezt a megjegyzést, és adjon hozzá néhány törlést. (%1$s)</string>
-    <string name="button_sync">Szinkronizálás</string>
+    <string name="button_sync" comment="Text of the sync button">Szinkronizálás</string>
     <string name="cancel_sync_confirm">Tényleg megszakítod a szinkronizálást?</string>
     <string name="continue_sync">Szinkronizálás folytatása</string>
     <string name="sync_cancelled">Szinkronizálás megszakítva</string>

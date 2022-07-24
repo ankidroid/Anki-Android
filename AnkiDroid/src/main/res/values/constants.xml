@@ -22,8 +22,6 @@
     -->
     <!-- App name -->
     <string name="app_name" comment="The name of the app">AnkiDroid</string>
-    <!-- Text to be shown in preference summary -->
-    <string name="preference_summary_literal">XXX</string>
     <!-- Used in deck preferences -->
     <string-array name="custom_button_labels">
         <item>@string/custom_buttons_setting_always_show</item>
@@ -61,86 +59,6 @@
         <item>150</item>
         <item>200</item>
         <item>500</item>
-    </string-array>
-    <string-array name="gestures_labels">
-        <item>@string/gesture_no_action</item>
-        <item>@string/show_answer</item>
-        <item>@string/gesture_answer_1</item>
-        <item>@string/gesture_answer_2</item>
-        <item>@string/gesture_answer_3</item>
-        <item>@string/gesture_answer_4</item>
-        <item>@string/gesture_answer_green</item>
-        <item>@string/gesture_answer_better_recommended</item>
-        <item>@string/undo</item>
-        <item>@string/cardeditor_title_edit_card</item>
-        <item>@string/card_info_title</item>
-        <item>@string/gesture_tag_note</item>
-        <item>@string/menu_mark_note</item>
-        <item>@string/menu_bury_card</item>
-        <item>@string/menu_suspend_card</item>
-        <item>@string/menu_delete_note</item>
-        <item>@string/gesture_play</item>
-        <item>@string/gesture_abort_learning</item>
-        <item>@string/menu_bury_note</item>
-        <item>@string/menu_suspend_note</item>
-        <item>@string/gesture_flag_red</item>
-        <item>@string/gesture_flag_orange</item>
-        <item>@string/gesture_flag_green</item>
-        <item>@string/gesture_flag_blue</item>
-        <item>@string/gesture_flag_pink</item>
-        <item>@string/gesture_flag_turquoise</item>
-        <item>@string/gesture_flag_purple</item>
-        <item>@string/gesture_flag_remove</item>
-        <item>@string/gesture_page_up</item>
-        <item>@string/gesture_page_down</item>
-        <item>@string/gesture_abort_sync</item>
-        <item>@string/record_voice</item>
-        <item>@string/replay_voice</item>
-        <item>@string/gesture_toggle_whiteboard</item>
-        <item>@string/gesture_show_hint</item>
-        <item>@string/gesture_show_all_hints</item>
-        <item>@string/menu_add_note</item>
-    </string-array>
-    <string-array name="gestures_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>33</item> <!-- Card Info -->
-        <item>32</item> <!-- Tag Note -->
-        <item>10</item>
-        <!--11 was deleted: Lookup Dictionary-->
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <!--15 reserved for clear whiteboard action-->
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item> <!-- Red Flag -->
-        <item>21</item> <!-- Orange Flag -->
-        <item>22</item> <!-- Green Flag -->
-        <item>23</item> <!-- Blue Flag -->
-        <item>38</item> <!-- Pink Flag -->
-        <item>39</item> <!-- Turquoise Flag -->
-        <item>40</item> <!-- Purple Flag -->
-        <item>24</item> <!-- Unset Flag -->
-        <item>30</item> <!-- Page Up -->
-        <item>31</item> <!-- Page Down -->
-        <item>34</item> <!-- Abort Learning and Sync -->
-        <item>35</item> <!-- Record voice -->
-        <item>36</item> <!-- Replay voice -->
-        <item>37</item> <!-- Toggle whiteboard -->
-        <item>41</item> <!-- Show hint -->
-        <item>42</item> <!-- Show all hints -->
-        <item>43</item> <!-- Add note -->
     </string-array>
     <string-array name="custom_button_values">
         <item>2</item>
@@ -204,19 +122,17 @@
         <item>@string/html_size_code_xx_large</item>
     </string-array>
 
-    <string name="link_anki">https://ankisrs.net</string>
     <string name="link_anki_manual">https://docs.ankiweb.net/#/</string>
     <string name="link_anki_forum">https://forums.ankiweb.net/</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
-    <string name="link_wiki">https://github.com/ankidroid/Anki-Android/wiki</string>
-    <string name="link_issue_tracker">https://github.com/ankidroid/Anki-Android/issues</string>
     <string name="licence_wiki">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="link_agpl_wiki">https://www.gnu.org/licenses/agpl-3.0.html</string>
     <string name="link_source">https://github.com/ankidroid/Anki-Android</string>
     <string name="link_market">market://details?id=com.ichi2.anki</string>
     <string name="link_market_kindle">http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki</string>
     <string name="link_translation">https://crowdin.net/project/ankidroid</string>
-    <string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
     <string name="link_contribution">https://github.com/ankidroid/Anki-Android/wiki/Contributing</string>
+    <string name="link_contributors">https://github.com/ankidroid/Anki-Android#credits</string>
     <string name="link_help">https://docs.ankidroid.org/help.html</string>
     <string name="link_manual">https://docs.ankidroid.org/manual.html</string>
     <string name="link_help_ja">https://docs.ankidroid.org/help-ja.html</string>
@@ -324,13 +240,14 @@
         <item>3</item> <!-- Black -->
         <item>4</item> <!-- Dark -->
     </string-array>
+    <!-- Day and night values should be the same as their App theme equivalent -->
     <string-array name="day_theme_values">
-        <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
     <string-array name="night_theme_values">
-        <item>0</item>
-        <item>1</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
 
     <string name="answer_buttons_position_preference" translatable="false">answerButtonPosition</string>

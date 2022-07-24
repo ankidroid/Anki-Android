@@ -98,7 +98,7 @@
     <string name="rename_deck">Đổi tên bộ thẻ</string>
     <string name="create_shortcut">Tạo lối tắt</string>
     <string name="browse_cards">Xem các thẻ</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Thêm</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Thêm</string>
     <string name="menu_add_note">Thêm ghi chú</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Tài khoản đồng bộ</string>
     <string name="menu_dismiss_note">Ẩn / xoá</string>
@@ -171,7 +171,7 @@
     <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
     <string name="empty_cloze_warning">Chỉnh sửa ghi chú và thêm miêu tả đúng nhất. (%1$s)</string>
-    <string name="button_sync">Đồng bộ</string>
+    <string name="button_sync" comment="Text of the sync button">Đồng bộ</string>
     <string name="cancel_sync_confirm">Bạn có muốn huỷ đồng bộ?</string>
     <string name="continue_sync">Tiếp tục đồng bộ</string>
     <string name="sync_cancelled">Đã huỷ đồng bộ</string>

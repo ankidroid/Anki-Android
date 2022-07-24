@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs
 import android.content.Context
 import android.os.Bundle
 import android.text.format.Formatter
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.DeckPicker
@@ -29,14 +28,14 @@ import java.io.File
 class DeckPickerNoSpaceToDowngradeDialog(private val formatter: FileSizeFormatter, private val collection: File) : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        val res = resources
-        return MaterialDialog.Builder(requireActivity())
-            .title(res.getString(R.string.no_space_to_downgrade_title))
-            .content(res.getString(R.string.no_space_to_downgrade_content, requiredSpaceString))
-            .cancelable(false)
-            .positiveText(R.string.close)
-            .onPositive { _: MaterialDialog?, _: DialogAction? -> (activity as DeckPicker?)!!.exit() }
-            .show()
+        return MaterialDialog(requireActivity()).show {
+            title(R.string.no_space_to_downgrade_title)
+            message(R.string.no_space_to_downgrade_content, requiredSpaceString)
+            cancelable(false)
+            positiveButton(R.string.close) {
+                (activity as DeckPicker?)!!.exit()
+            }
+        }
     }
 
     private val requiredSpaceString: String

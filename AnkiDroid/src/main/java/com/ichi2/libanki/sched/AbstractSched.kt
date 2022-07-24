@@ -37,10 +37,7 @@ import java.lang.ref.WeakReference
  * reset`). Some promise only apply in normal use.
  *
  */
-abstract class AbstractSched {
-    @JvmField
-    protected var mCol: Collection? = null
-
+abstract class AbstractSched(val col: Collection) {
     /**
      * Pop the next card from the queue. null if finished.
      *
@@ -179,25 +176,23 @@ abstract class AbstractSched {
     abstract fun extendLimits(newc: Int, rev: Int)
 
     /**
-     * @return [deckname, did, rev, lrn, new]
-     */
-    abstract fun deckDueList(): List<DeckDueTreeNode>
-
-    /**
      * @param cancelListener A task that is potentially cancelled
-     * @return the due tree. null if task is cancelled
+     * @return the due tree. null only if task is cancelled
      */
     abstract fun deckDueTree(cancelListener: CancelListener?): List<TreeNode<DeckDueTreeNode>>?
 
     /**
-     * @return the due tree. null if task is cancelled.
+     * @return the due tree.
      */
-    abstract fun deckDueTree(): List<TreeNode<DeckDueTreeNode>>
+    fun deckDueTree(): List<TreeNode<DeckDueTreeNode>> {
+        // without a cancelListener, guaranteed not null
+        return deckDueTree(cancelListener = null)!!
+    }
 
     /**
      * @return The tree of decks, without numbers
      */
-    abstract fun quickDeckDueTree(): List<TreeNode<DeckTreeNode>>
+    abstract fun<T : AbstractDeckTreeNode> quickDeckDueTree(): List<TreeNode<T>>
 
     /** New count for a single deck.
      * @param did The deck to consider (descendants and ancestors are ignored)
@@ -223,7 +218,7 @@ abstract class AbstractSched {
     abstract fun _fuzzIvlRange(ivl: Int): Pair<Int?, Int?>
     // In this abstract class for testing purpose only
     /** Rebuild selected dynamic deck.  */
-    protected abstract fun rebuildDyn()
+    abstract fun rebuildDyn()
 
     /** Rebuild a dynamic deck.
      * @param did The deck to rebuild. 0 means current deck.
@@ -295,7 +290,7 @@ abstract class AbstractSched {
      * @return the next interval for CARD, in seconds if ease is pressed.
      */
     // In this abstract class for testing purpose only
-    protected abstract fun nextIvl(card: Card, @BUTTON_TYPE ease: Int): Long
+    abstract fun nextIvl(card: Card, @BUTTON_TYPE ease: Int): Long
 
     /**
      * @param ids Id of cards to suspend
@@ -498,11 +493,6 @@ abstract class AbstractSched {
      * scheduler is reset...  */
     abstract fun discardCurrentCard()
 
-    /**
-     * @return The collection to which the scheduler is linked
-     */
-    abstract val col: Collection?
-
     /** @return The button to press to enter "good" on a new card.
      */
     @get:BUTTON_TYPE
@@ -525,6 +515,7 @@ abstract class AbstractSched {
     @Throws(BackendNotSupportedException::class)
     abstract fun set_creation_offset()
     abstract fun clear_creation_offset()
+    abstract fun useNewTimezoneCode()
 
     companion object {
         /**

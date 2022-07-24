@@ -100,7 +100,7 @@ class TemporaryModel(model: Model) {
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempModelFiles()
-        TaskManager.launchCollectionTask<Void, Pair<Boolean, String?>>(
+        TaskManager.launchCollectionTask<Void, Pair<Boolean, String?>?>(
             SaveModel(
                 model, adjustedTemplateChanges
             ),

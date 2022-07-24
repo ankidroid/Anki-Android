@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.cardviewer
 
+import android.annotation.SuppressLint
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -34,6 +35,7 @@ class CardTemplateTest {
     }
 
     @Test
+    @SuppressLint("CheckResult") //  .render
     fun stressTest() {
         // At length = 10000000
         // ~500ms before

@@ -105,21 +105,17 @@ class CardInfo : AnkiActivity() {
         this.model = model
     }
 
-    fun closeCardInfo() {
+    override fun finish() {
         val animation: Parcelable? = intent.getParcelableExtra(FINISH_ANIMATION_EXTRA)
         if (animation is ActivityTransitionAnimation.Direction) {
             finishWithAnimation(animation)
         } else {
-            finishWithoutAnimation()
+            super.finish()
         }
     }
 
-    override fun onBackPressed() {
-        closeCardInfo()
-    }
-
     override fun onActionBarBackPressed(): Boolean {
-        closeCardInfo()
+        finish()
         return true
     }
 

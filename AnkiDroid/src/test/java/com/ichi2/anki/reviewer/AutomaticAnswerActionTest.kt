@@ -18,7 +18,6 @@ package com.ichi2.anki.reviewer
 
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.cardviewer.ViewerCommand.*
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.*
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.fromPreferenceValue
 import org.hamcrest.CoreMatchers.equalTo
@@ -41,23 +40,23 @@ class AutomaticAnswerActionTest {
 
     @Test
     fun testExecute() {
-        assertExecuteReturns(BURY_CARD, 2, COMMAND_BURY_CARD)
+        assertExecuteReturns(BURY_CARD, 2, ViewerCommand.BURY_CARD)
 
         // easy and hard are mapped to "good" if they don't exist
-        assertExecuteReturns(ANSWER_AGAIN, 2, COMMAND_FLIP_OR_ANSWER_EASE1)
-        assertExecuteReturns(ANSWER_HARD, 2, COMMAND_FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_GOOD, 2, COMMAND_FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_EASY, 2, COMMAND_FLIP_OR_ANSWER_EASE2)
+        assertExecuteReturns(ANSWER_AGAIN, 2, ViewerCommand.FLIP_OR_ANSWER_EASE1)
+        assertExecuteReturns(ANSWER_HARD, 2, ViewerCommand.FLIP_OR_ANSWER_EASE2)
+        assertExecuteReturns(ANSWER_GOOD, 2, ViewerCommand.FLIP_OR_ANSWER_EASE2)
+        assertExecuteReturns(ANSWER_EASY, 2, ViewerCommand.FLIP_OR_ANSWER_EASE2)
 
-        assertExecuteReturns(ANSWER_AGAIN, 3, COMMAND_FLIP_OR_ANSWER_EASE1)
-        assertExecuteReturns(ANSWER_HARD, 3, COMMAND_FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_GOOD, 3, COMMAND_FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_EASY, 3, COMMAND_FLIP_OR_ANSWER_EASE3)
+        assertExecuteReturns(ANSWER_AGAIN, 3, ViewerCommand.FLIP_OR_ANSWER_EASE1)
+        assertExecuteReturns(ANSWER_HARD, 3, ViewerCommand.FLIP_OR_ANSWER_EASE2)
+        assertExecuteReturns(ANSWER_GOOD, 3, ViewerCommand.FLIP_OR_ANSWER_EASE2)
+        assertExecuteReturns(ANSWER_EASY, 3, ViewerCommand.FLIP_OR_ANSWER_EASE3)
 
-        assertExecuteReturns(ANSWER_AGAIN, 4, COMMAND_FLIP_OR_ANSWER_EASE1)
-        assertExecuteReturns(ANSWER_HARD, 4, COMMAND_FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_GOOD, 4, COMMAND_FLIP_OR_ANSWER_EASE3)
-        assertExecuteReturns(ANSWER_EASY, 4, COMMAND_FLIP_OR_ANSWER_EASE4)
+        assertExecuteReturns(ANSWER_AGAIN, 4, ViewerCommand.FLIP_OR_ANSWER_EASE1)
+        assertExecuteReturns(ANSWER_HARD, 4, ViewerCommand.FLIP_OR_ANSWER_EASE2)
+        assertExecuteReturns(ANSWER_GOOD, 4, ViewerCommand.FLIP_OR_ANSWER_EASE3)
+        assertExecuteReturns(ANSWER_EASY, 4, ViewerCommand.FLIP_OR_ANSWER_EASE4)
     }
 
     private fun assertExecuteReturns(action: AutomaticAnswerAction, numberOfButtons: Int, expectedCommand: ViewerCommand) {

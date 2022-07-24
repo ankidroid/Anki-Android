@@ -36,13 +36,11 @@ import android.text.style.UnderlineSpan
 import android.view.*
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.*
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -59,7 +57,6 @@ import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
-import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -84,6 +81,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
+import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.Computation
@@ -148,11 +146,11 @@ open class Reviewer : AbstractFlashcardViewer() {
     @VisibleForTesting
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
-    protected fun <T : Computation<NextCard<Array<Card>>>> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
-        return nextCardHandler<Computation<NextCard<*>>>().alsoExecuteAfter { result: T ->
+    protected fun <T : Computation<NextCard<Array<Card>>>?> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
+        return nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { result: T ->
             // BUG: If the method crashes, this will crash
             invalidateOptionsMenu()
-            val cardCount: Int = result.value.result.size
+            val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 this,
                 resources.getQuantityString(toastResourceId, cardCount, cardCount), true
@@ -1155,51 +1153,51 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        if (isControlBlocked() && which !== ViewerCommand.COMMAND_EXIT) {
+        if (isControlBlocked() && which !== ViewerCommand.EXIT) {
             return false
         }
         when (which) {
-            ViewerCommand.COMMAND_TOGGLE_FLAG_RED -> {
+            ViewerCommand.TOGGLE_FLAG_RED -> {
                 toggleFlag(CardMarker.FLAG_RED)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE -> {
+            ViewerCommand.TOGGLE_FLAG_ORANGE -> {
                 toggleFlag(CardMarker.FLAG_ORANGE)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN -> {
+            ViewerCommand.TOGGLE_FLAG_GREEN -> {
                 toggleFlag(CardMarker.FLAG_GREEN)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE -> {
+            ViewerCommand.TOGGLE_FLAG_BLUE -> {
                 toggleFlag(CardMarker.FLAG_BLUE)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_PINK -> {
+            ViewerCommand.TOGGLE_FLAG_PINK -> {
                 toggleFlag(CardMarker.FLAG_PINK)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_TURQUOISE -> {
+            ViewerCommand.TOGGLE_FLAG_TURQUOISE -> {
                 toggleFlag(CardMarker.FLAG_TURQUOISE)
                 return true
             }
-            ViewerCommand.COMMAND_TOGGLE_FLAG_PURPLE -> {
+            ViewerCommand.TOGGLE_FLAG_PURPLE -> {
                 toggleFlag(CardMarker.FLAG_PURPLE)
                 return true
             }
-            ViewerCommand.COMMAND_UNSET_FLAG -> {
+            ViewerCommand.UNSET_FLAG -> {
                 onFlag(mCurrentCard, CardMarker.FLAG_NONE)
                 return true
             }
-            ViewerCommand.COMMAND_MARK -> {
+            ViewerCommand.MARK -> {
                 onMark(mCurrentCard)
                 return true
             }
-            ViewerCommand.COMMAND_ADD_NOTE -> {
+            ViewerCommand.ADD_NOTE -> {
                 addNote(fromGesture)
                 return true
             }
-            ViewerCommand.COMMAND_CARD_INFO -> {
+            ViewerCommand.CARD_INFO -> {
                 openCardInfo(fromGesture)
                 return true
             }
@@ -1337,18 +1335,17 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun createWhiteboard() {
-        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
         whiteboard = createInstance(this, true, this)
 
         // We use the pen color of the selected deck at the time the whiteboard is enabled.
         // This is how all other whiteboard settings are
-        val whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, parentDid).fromPreferences(sharedPrefs)
+        val whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, parentDid).fromPreferences()
         if (whiteboardPenColor != null) {
             whiteboard!!.penColor = whiteboardPenColor
         }
         whiteboard!!.setOnPaintColorChangeListener(object : OnPaintColorChangeListener {
             override fun onPaintColorChange(color: Int?) {
-                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !isInNightMode(sharedPrefs), color)
+                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
             }
         })
         whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
@@ -1438,6 +1435,12 @@ open class Reviewer : AbstractFlashcardViewer() {
      */
     internal inner class SuspendProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
 
+        override fun onCreateActionView(forItem: MenuItem): View {
+            return createActionViewWith(context, forItem, R.menu.reviewer_suspend, ::onMenuItemClick) {
+                hasSubMenu()
+            }
+        }
+
         override val subMenu: Int
             get() = R.menu.reviewer_suspend
 
@@ -1469,6 +1472,12 @@ open class Reviewer : AbstractFlashcardViewer() {
      */
     internal inner class BuryProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
 
+        override fun onCreateActionView(forItem: MenuItem): View {
+            return createActionViewWith(context, forItem, R.menu.reviewer_bury, ::onMenuItemClick) {
+                hasSubMenu()
+            }
+        }
+
         override val subMenu: Int
             get() = R.menu.reviewer_bury
 
@@ -1495,8 +1504,40 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
+    private fun createActionViewWith(
+        context: Context,
+        menuItem: MenuItem,
+        @MenuRes subMenuRes: Int,
+        onMenuItemSelection: (MenuItem) -> Boolean,
+        showsSubMenu: () -> Boolean
+    ): View = ImageButton(context, null, R.attr.actionButtonStyle).apply {
+        TooltipCompat.setTooltipText(this, menuItem.title)
+        menuItem.icon.isAutoMirrored = true
+        setImageDrawable(menuItem.icon)
+        id = menuItem.itemId
+        setOnClickListener {
+            if (!menuItem.isEnabled) {
+                return@setOnClickListener
+            }
+            if (showsSubMenu()) {
+                PopupMenu(context, this).apply {
+                    inflate(subMenuRes)
+                    setOnMenuItemClickListener(onMenuItemSelection)
+                    show()
+                }
+            } else {
+                onOptionsItemSelected(menuItem)
+            }
+        }
+    }
+
     /**
      * Inner class which implements the submenu for the Schedule button
+     *
+     * NOTE: this action provider doesn't handle the menu item being shown directly in the toolbar,
+     * if the menu item is set to appear in the toolbar, the onCreateActionView(MenuItem) needs to be
+     * overridden. See one of its siblings([BuryProvider] or [SuspendProvider]) for an example of an
+     * implementation.
      */
     internal inner class ScheduleProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
 

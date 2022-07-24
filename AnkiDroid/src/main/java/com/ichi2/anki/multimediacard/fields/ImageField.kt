@@ -73,7 +73,7 @@ class ImageField : FieldBase(), IField {
             return formatImageFileName(file)
         }
 
-    override fun setFormattedString(col: Collection?, value: String) {
+    override fun setFormattedString(col: Collection, value: String) {
         extraImagePathRef = getImageFullPath(col, value)
     }
 
@@ -82,7 +82,7 @@ class ImageField : FieldBase(), IField {
         @VisibleForTesting
         fun formatImageFileName(file: File): String {
             return if (file.exists()) {
-                String.format("<img src=\"%s\">", file.name)
+                "<img src=\"${file.name}\">"
             } else {
                 ""
             }
@@ -90,12 +90,12 @@ class ImageField : FieldBase(), IField {
 
         @VisibleForTesting
         @KotlinCleanup("remove ? from value")
-        fun getImageFullPath(col: Collection?, value: String?): String {
+        fun getImageFullPath(col: Collection, value: String?): String {
             val path = parseImageSrcFromHtml(value)
             if ("" == path) {
                 return ""
             }
-            val mediaDir = col!!.media.dir() + "/"
+            val mediaDir = col.media.dir() + "/"
             return mediaDir + path
         }
 

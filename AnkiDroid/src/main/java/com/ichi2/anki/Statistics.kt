@@ -14,15 +14,16 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-@file:Suppress("DEPRECATION") // #7108: AsyncTask deprecation
-
 package com.ichi2.anki
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.AsyncTask
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.webkit.WebView
 import android.widget.ProgressBar
@@ -39,17 +40,18 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.runtimetools.TaskOperations.stopTaskGracefully
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.getInstance
 import com.ichi2.anki.stats.ChartView
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
+import com.ichi2.async.catchingLifecycleScope
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
 import com.ichi2.ui.FixedTextView
+import kotlinx.coroutines.Job
 import timber.log.Timber
 import java.util.Locale
 
@@ -58,9 +60,8 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private set
     lateinit var slidingTabLayout: TabLayout
         private set
-    var taskHandler: AnkiStatsTaskHandler? = null
-        private set
-    private var mDeckSpinnerSelection: DeckSpinnerSelection? = null
+    private lateinit var taskHandler: AnkiStatsTaskHandler
+    private lateinit var mDeckSpinnerSelection: DeckSpinnerSelection
     private var mStatsDeckId: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -72,13 +73,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         setContentView(R.layout.activity_anki_stats)
         initNavigationDrawer(findViewById(android.R.id.content))
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        // Set up the ViewPager with the sections adapter.
-        viewPager = findViewById<ViewPager2?>(R.id.pager).apply {
-            adapter = StatsPagerAdapter(this@Statistics)
-            offscreenPageLimit = 8
-        }
         slidingTabLayout = findViewById(R.id.sliding_tabs)
         startLoadingCollection()
     }
@@ -89,6 +83,13 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         // Setup Task Handler
         taskHandler = getInstance(col)
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        // Set up the ViewPager with the sections adapter.
+        viewPager = findViewById<ViewPager2?>(R.id.pager).apply {
+            adapter = StatsPagerAdapter(this@Statistics)
+            offscreenPageLimit = 8
+        }
         // Fixes #8984: scroll to position 0 in RTL layouts
         val tabObserver = slidingTabLayout.viewTreeObserver
         tabObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
@@ -103,7 +104,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         // Dirty way to get text size from a TextView with current style, change if possible
         val size = FixedTextView(this).textSize
-        taskHandler!!.standardTextSize = size
+        taskHandler.standardTextSize = size
         // Prepare options menu only after loading everything
         invalidateOptionsMenu()
         //        StatisticFragment.updateAllFragments();
@@ -116,9 +117,9 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             this, col,
             findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true
         )
-        mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-        mDeckSpinnerSelection!!.selectDeckById(mStatsDeckId, false)
-        taskHandler!!.setDeckId(mStatsDeckId)
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
+        mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false)
+        taskHandler.setDeckId(mStatsDeckId)
         viewPager.adapter!!.notifyDataSetChanged()
     }
 
@@ -135,8 +136,8 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         inflater.inflate(R.menu.anki_stats, menu)
 
         // exit if mTaskHandler not initialized yet
-        if (taskHandler != null) {
-            val menuItemToCheck = when (taskHandler!!.statType) {
+        if (this::taskHandler.isInitialized) {
+            val menuItemToCheck = when (taskHandler.statType) {
                 AxisType.TYPE_MONTH -> R.id.item_time_month
                 AxisType.TYPE_YEAR -> R.id.item_time_year
                 AxisType.TYPE_LIFE -> R.id.item_time_all
@@ -153,24 +154,24 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         when (item.itemId) {
             R.id.item_time_month -> {
                 item.isChecked = !item.isChecked
-                if (taskHandler!!.statType != AxisType.TYPE_MONTH) {
-                    taskHandler!!.statType = AxisType.TYPE_MONTH
+                if (taskHandler.statType != AxisType.TYPE_MONTH) {
+                    taskHandler.statType = AxisType.TYPE_MONTH
                     viewPager.adapter!!.notifyDataSetChanged()
                 }
                 return true
             }
             R.id.item_time_year -> {
                 item.isChecked = !item.isChecked
-                if (taskHandler!!.statType != AxisType.TYPE_YEAR) {
-                    taskHandler!!.statType = AxisType.TYPE_YEAR
+                if (taskHandler.statType != AxisType.TYPE_YEAR) {
+                    taskHandler.statType = AxisType.TYPE_YEAR
                     viewPager.adapter!!.notifyDataSetChanged()
                 }
                 return true
             }
             R.id.item_time_all -> {
                 item.isChecked = !item.isChecked
-                if (taskHandler!!.statType != AxisType.TYPE_LIFE) {
-                    taskHandler!!.statType = AxisType.TYPE_LIFE
+                if (taskHandler.statType != AxisType.TYPE_LIFE) {
+                    taskHandler.statType = AxisType.TYPE_LIFE
                     viewPager.adapter!!.notifyDataSetChanged()
                 }
                 return true
@@ -192,10 +193,10 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         if (deck == null) {
             return
         }
-        mDeckSpinnerSelection?.initializeActionBarDeckSpinner(this.supportActionBar!!)
+        mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
         mStatsDeckId = deck.deckId
-        mDeckSpinnerSelection?.selectDeckById(mStatsDeckId, true)
-        taskHandler!!.setDeckId(mStatsDeckId)
+        mDeckSpinnerSelection.selectDeckById(mStatsDeckId, true)
+        taskHandler.setDeckId(mStatsDeckId)
         viewPager.adapter!!.notifyDataSetChanged()
     }
 
@@ -219,11 +220,9 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         // track current settings for each individual fragment
         protected var deckId: Long = 0
 
-        // #7108: AsyncTask
-        protected lateinit var statisticsTask: AsyncTask<*, *, *>
+        protected lateinit var statisticsJob: Job
+        private lateinit var statisticsOverviewJob: Job
 
-        // #7108: AsyncTask
-        protected lateinit var statisticsOverviewTask: AsyncTask<*, *, *>
         private lateinit var mActivityPager: ViewPager2
         private lateinit var mSlidingTabLayout: TabLayout
         private lateinit var mTabLayoutMediator: TabLayoutMediator
@@ -250,11 +249,11 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         protected fun cancelTasks() {
             Timber.w("canceling tasks")
 
-            if (this::statisticsTask.isInitialized) {
-                stopTaskGracefully(statisticsTask)
+            if (this::statisticsJob.isInitialized) {
+                statisticsJob.cancel()
             }
-            if (this::statisticsOverviewTask.isInitialized) {
-                stopTaskGracefully(statisticsOverviewTask)
+            if (this::statisticsOverviewJob.isInitialized) {
+                statisticsOverviewJob.cancel()
             }
         }
 
@@ -337,7 +336,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            setHasOptionsMenu(true)
             val bundle = arguments
             mSectionNumber = bundle!!.getInt(ARG_SECTION_NUMBER)
             // int sectionNumber = 0;
@@ -351,17 +349,11 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             // mChart.setVisibility(View.GONE);
 
             // TODO: Implementing loader for Collection in Fragment itself would be a better solution.
-            if ((requireActivity() as Statistics).taskHandler == null) {
-                // Close statistics if the TaskHandler hasn't been loaded yet
-                Timber.e("Statistics.ChartFragment.onCreateView() TaskHandler not found")
-                requireActivity().finish()
-                return rootView
-            }
             createChart()
             mHeight = mChart.measuredHeight
             mWidth = mChart.measuredWidth
             mChart.addFragment(this)
-            mType = (requireActivity() as Statistics).taskHandler!!.statType
+            mType = (requireActivity() as Statistics).taskHandler.statType
             mIsCreated = true
             deckId = (requireActivity() as Statistics).mStatsDeckId
             if (deckId != Stats.ALL_DECKS_ID) {
@@ -385,9 +377,9 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private fun createChart() {
             val statisticsActivity = requireActivity() as Statistics
             val taskHandler = statisticsActivity.taskHandler
-            statisticsTask = taskHandler!!.createChart(
-                getChartTypeFromPosition(mSectionNumber), mChart, mProgressBar
-            )
+            statisticsJob = viewLifecycleOwner.catchingLifecycleScope(requireActivity()) {
+                taskHandler.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
+            }
         }
 
         override fun checkAndUpdate() {
@@ -399,10 +391,10 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
             // are height and width checks still necessary without bitmaps?
             if (height != 0 && width != 0) {
-                if (mHeight != height || mWidth != width || mType != (requireActivity() as Statistics).taskHandler!!.statType || deckId != (requireActivity() as Statistics).mStatsDeckId) {
+                if (mHeight != height || mWidth != width || mType != (requireActivity() as Statistics).taskHandler.statType || deckId != (requireActivity() as Statistics).mStatsDeckId) {
                     mHeight = height
                     mWidth = width
-                    mType = (requireActivity() as Statistics).taskHandler!!.statType
+                    mType = (requireActivity() as Statistics).taskHandler.statType
                     mProgressBar.visibility = View.VISIBLE
                     mChart.visibility = View.GONE
                     deckId = (requireActivity() as Statistics).mStatsDeckId
@@ -424,16 +416,10 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            setHasOptionsMenu(true)
             val rootView = inflater.inflate(R.layout.fragment_anki_stats_overview, container, false)
             val handler = (requireActivity() as Statistics).taskHandler
             // Workaround for issue 2406 -- crash when resuming after app is purged from RAM
             // TODO: Implementing loader for Collection in Fragment itself would be a better solution.
-            if (handler == null) {
-                Timber.e("Statistics.OverviewStatisticsFragment.onCreateView() TaskHandler not found")
-                requireActivity().finish()
-                return rootView
-            }
             mWebView = rootView.findViewById(R.id.web_view_stats)
 
             // Set transparent color to prevent flashing white when night mode enabled
@@ -466,17 +452,19 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         private fun createStatisticOverview() {
             val handler = (requireActivity() as Statistics).taskHandler
-            statisticsOverviewTask = handler!!.createStatisticsOverview(mWebView, mProgressBar)
+            statisticsJob = catchingLifecycleScope(requireActivity(), "createStatisticOverview failed with error") {
+                handler.createStatisticsOverview(mWebView, mProgressBar)
+            }
         }
 
         override fun checkAndUpdate() {
             if (!mIsCreated) {
                 return
             }
-            if (mType != (requireActivity() as Statistics).taskHandler!!.statType ||
+            if (mType != (requireActivity() as Statistics).taskHandler.statType ||
                 deckId != (requireActivity() as Statistics).mStatsDeckId
             ) {
-                mType = (requireActivity() as Statistics).taskHandler!!.statType
+                mType = (requireActivity() as Statistics).taskHandler.statType
                 mProgressBar.visibility = View.VISIBLE
                 mWebView.visibility = View.GONE
                 deckId = (requireActivity() as Statistics).mStatsDeckId

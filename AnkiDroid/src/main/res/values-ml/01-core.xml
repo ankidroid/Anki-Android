@@ -103,7 +103,7 @@
     <string name="rename_deck">ഡെക്കിന്റെ പേരുമാറ്റുക</string>
     <string name="create_shortcut">കുറുക്കുവഴി സൃഷ്ടിക്കുക</string>
     <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ചേർക്കുക</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ചേർക്കുക</string>
     <string name="menu_add_note">കുറിപ്പ് ചേർക്കുക</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">അക്കൗണ്ട് സമന്വയിപ്പിക്കുക</string>
     <string name="menu_dismiss_note">മറയ്‌ക്കുക / ഇല്ലാതാക്കുക</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">കാർഡുകളൊന്നും ഇതുവരെ ലഭിച്ചിട്ടില്ല</string>
     <string name="sd_card_not_mounted">ഉപകരണ സംഭരണം മ .ണ്ട് ചെയ്തിട്ടില്ല</string>
     <string name="empty_cloze_warning">ഈ കുറിപ്പ് എഡിറ്റുചെയ്‌ത് കുറച്ച് ക്ലോസ് ഇല്ലാതാക്കലുകൾ ചേർക്കുക. (%1$s)</string>
-    <string name="button_sync">സമന്വയിപ്പിക്കുക</string>
+    <string name="button_sync" comment="Text of the sync button">സമന്വയിപ്പിക്കുക</string>
     <string name="cancel_sync_confirm">സമന്വയം റദ്ദാക്കണോ?</string>
     <string name="continue_sync">സമന്വയം തുടരുക</string>
     <string name="sync_cancelled">സമന്വയം റദ്ദാക്കി</string>

@@ -15,7 +15,8 @@
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/pref_cat_sync">
+    android:title="@string/pref_cat_sync"
+    android:key="@string/pref_sync_screen_key">
     <Preference
         android:dialogTitle="@string/sync_account"
         android:key="@string/sync_account_key"
@@ -37,10 +38,10 @@
         android:title="@string/automatic_sync_choice" />
     <SwitchPreference
         android:defaultValue="true"
-        android:key="showSyncStatusBadge"
+        android:key="@string/sync_status_badge_key"
         android:summary="@string/sync_status_badge_summ"
         android:title="@string/sync_status_badge" />
-    <com.ichi2.preferences.ConfirmationPreferenceCompat
+    <Preference
         android:key="@string/force_full_sync_key"
         android:title="@string/force_full_sync_title"
         android:summary="@string/force_full_sync_summary" />

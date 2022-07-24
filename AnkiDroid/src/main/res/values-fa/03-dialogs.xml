@@ -59,14 +59,7 @@
     <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
     <string name="initializing_tts">در حال راه‌اندازی تبدیل متن به گفتار&#8230;</string>
     <string name="tts_no_tts">حرف نزن</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>فلش کارتهایی برای آندروید</h2>این یک برنامه ای است که فلش کارتهای آن کاملا با نسخه رایانه ای سازگاری دارند<a href=\"%2$s\">آنکى</a>. شما در هر دو نسخه تلفن همراه و رایانه می توانید فلش کارت بسازید، دانلود کنید و یاد بگیرید، و به آسانی آنها را با پایگاه اینترنتی برنامه همگام سازی کنید.]]></item>
-        <item><![CDATA[برای بهتر کردن برنامه لطفا اشکالات را به <a href=\"%1$s\">دنبال کننده موضوع </a> گزارش کنید. نظراتي که قابلیت جدید معرفی کنند هم مورد استقبال قرار خواهد گرفت. پاسخ اشکالات خود را در<a href=\"%2$s\">ویکی </a>پیدا کنید یا یک بحث جدید را در <a href=\"%3$s\"> انجمن </a> شروع کنید.]]></item>
-        <item><![CDATA[این برنامه یک <a href=\"%1$s\"> نرم افزار متن باز است <a/>،بنابراین همه ترغیب به <a href=\"%2$s\"> یک مشارکت کننده بودن می شوند</a>]]></item>
-        <item><![CDATA[غیر برنامه نویسان نیز می توانند کمک کنند. برای مثال، شما می توانید <a href=\"%1$s\">به ترجمه این برنامه </a> کمک کنید، یا ویکی را به روز کنید، عکس صفحه تهیه کنید، يا درباره این برنامه وبلاگ بزنید.]]></item>
-        <item><![CDATA[این برنامه تحت مجوز <a href=\"%1$s\">GNU-GPL v3</a>منتشر شده است و منبع کدها قابل دسترسی است <a href=\"%2$s\">در GitHub</a>.]]></item>
-    </string-array>
+    <string name="unused_strings">\n\nفایل های استفاده نشده:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">پیش نمایش</string>
     <string name="reposition_card_dialog_title">تغییر مکان کارت جدید</string>
     <string name="reposition_card_dialog_message">موقعیت شروع:</string>
@@ -83,8 +76,8 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">%d کارت را زمانبندی مجدد کن</item>
+        <item quantity="other">%d کارت را زمانبندی مجدد کن</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">بازۀ کنونی: %d روز</item>
@@ -106,8 +99,8 @@
     <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>
     <string name="custom_study_new_total_new">کارت‌های جدید در دسته کارت: %d</string>
     <string name="custom_study_rev_total_rev">موعد مرورهای دسته: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_extend">محدودیت تعداد کارت های امروز را کم/زیاد (\"-۳\") کن به این اندازه</string>
+    <string name="custom_study_rev_extend">محدودیت تعداد مرور های امروز را کم/زیاد (\"-۳\") کن به این اندازه</string>
     <string name="custom_study_forgotten">مرور کارت های فراموش شده در x روز گذشته:</string>
     <string name="custom_study_ahead">مرور پیش از موعد تا x روز:</string>
     <string name="custom_study_random">انتخاب x کارت تصادفی از دسته:</string>
@@ -121,16 +114,16 @@
     <string name="import_update_details">%1$d از %2$d یادداشت موجود به روزرسانی شده است.</string>
     <string name="import_update_ignored">بعضی از به روزرسانی ها نادیده گرفته شدند زیرا نوع یادداشت تغییر کرده است</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">کارت های وارد شده: %2$d</item>
+        <item quantity="other">فایل های وارد شده: %1$d\nکل کارت های وارد شده: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">کارت حافظه پر</string>
     <string name="sd_card_almost_full_title">کارت حافظه تقریبا پر</string>
-    <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title">جای خالی وجود ندارد</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid %s فضای خالی لازم دارد تا ادامه دهد. لطفا کمی جا خالی کنید</string>
     <string name="restore_backup_title">بازیابی نسخه پشتیبان؟</string>
     <string name="restore_backup">مجموعه شما با یک نسخه قدیمی تر جایگزین خواهد شد. موارد ذخیره نشده از بین خواهند رفت.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">انتخاب دیگری</string>
     <string name="dialog_cancel">لغو</string>
     <string name="dialog_ok">تایید</string>
     <string name="dialog_no">خیر</string>
@@ -196,7 +189,7 @@
     <string name="card_browser_deck_change_error">تغییر دسته انجام نشد</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">خطا در دریافت اطلاعات از کارت</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">\"%s\" برگشت به حالت قبل</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">پردازش اختیارات دسته انجام نشد: %s</string>
     <!-- Database Errors-->
@@ -243,10 +236,10 @@
     <string name="help_item_discord">دیسکورد</string>
     <string name="help_item_facebook">فیسبوک</string>
     <string name="help_item_twitter">توییتر</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_title_privacy">حریم خصوصی</string>
+    <string name="help_item_ankidroid_privacy_policy">قوانین حریم خصوصی AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">قوانین حریم خصوصی AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">شرایط و ضوابط AnkiWeb</string>
     <string name="help_title_send_exception">ارسال گزارش عیب یابی</string>
     <string name="help_dialog_exception_report_debounce">گزارش قبلا ثبت شده است</string>
     <!--Sync-->
@@ -254,13 +247,13 @@
         <item quantity="one">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
         <item quantity="other">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
     </plurals>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
+    <string name="deck_picker_new">تعداد کارت های جدیدی که امروز در این دسته خواهید دید.</string>
+    <string name="deck_picker_rev">تعداد کارت های تا مهلت امروز در این دسته</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_deck_package">بسته ی دسته کارت (.apkg)</string>
+    <string name="import_collection_package">بسته ی مجموعه (.colpkg)</string>
 </resources>

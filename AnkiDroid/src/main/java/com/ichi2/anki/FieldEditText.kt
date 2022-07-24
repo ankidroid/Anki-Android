@@ -224,6 +224,20 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return false
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun pastePlainText(): Boolean {
+        getPlainText(clipboard, context)?.let { pasted ->
+            val start = min(selectionStart, selectionEnd)
+            val end = max(selectionStart, selectionEnd)
+            setText(
+                text!!.substring(0, start) + pasted + text!!.substring(end)
+            )
+            setSelection(start + pasted.length)
+            return true
+        }
+        return false
+    }
+
     private fun onImagePaste(imageUri: Uri): Boolean {
         return mImageListener!!.onImagePaste(this, imageUri)
     }

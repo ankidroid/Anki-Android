@@ -68,7 +68,6 @@
     <string name="reset_password">ᱫᱚᱦᱲᱟ ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">ᱟᱹᱲᱤ ᱠᱩᱥᱤᱭᱟᱠ</string>
     <string name="deckpreferences_title">XXX ᱞᱟᱹᱜᱤᱫ ᱟᱯᱟᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>
     <string name="sync_prepare_syncing">ᱟᱹᱭᱩᱨᱚᱜ ᱥᱚᱡᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="sync_preparing_full_sync_message">ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨᱚᱜ ᱥᱚᱡᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
@@ -117,6 +116,7 @@
     <string name="sync_sanity_remote">ᱥᱟᱝᱜᱤᱧ ᱨᱮᱭᱟᱜ</string>
     <string name="force_full_sync_title">ᱫᱟᱲᱮ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="force_full_sync_summary">ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ ᱟᱹᱭᱩᱨ ᱢᱤᱫ, ᱢᱤᱫ ᱱᱟᱜᱷᱟ ᱨᱮ ᱫᱚᱲᱮ ᱵᱚᱫᱚᱞᱮᱱᱟ </string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">ᱵᱚᱫᱚᱞᱠᱟᱱ ᱫᱚᱨᱠᱷᱥᱛᱚ ᱟᱢᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱩᱨᱟ ᱞᱟᱫᱮ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ ᱾  ᱚᱞᱜᱟ ᱰᱤᱵᱷᱟᱤᱥ ᱵᱟᱭ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱚᱜ ᱠᱷᱟᱱ ᱰᱟᱴᱟ ᱟᱫᱚᱜ ᱛᱟᱢᱮ, ᱞᱮᱛᱟᱲ ᱟᱢ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid ᱨᱮᱭᱟᱜ ᱢᱟᱲᱟᱝ ᱵᱷᱚᱨᱥᱚᱱ ᱨᱮ ᱰᱤᱜᱟᱹᱣ ᱧᱟᱢ ᱮᱱᱟ , ᱡᱩᱨ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ</string>
     <string name="sync_error_407_proxy_required">Proxy authentication ᱫᱚᱨᱠᱟᱨ ᱾</string>

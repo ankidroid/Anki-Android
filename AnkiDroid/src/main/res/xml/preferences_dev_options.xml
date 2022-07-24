@@ -16,6 +16,10 @@
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/pref_cat_dev_options">
+    <SwitchPreference
+        android:title="@string/dev_options_enabled_pref"
+        android:key="@string/dev_options_enabled_by_user_key"
+        android:defaultValue="true"/>
     <Preference
         android:title="Trigger test crash"
         android:summary="Touch here for an immediate test crash"

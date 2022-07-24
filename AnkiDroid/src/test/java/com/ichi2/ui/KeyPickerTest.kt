@@ -18,7 +18,7 @@ package com.ichi2.ui
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.dialogs.KeySelectionDialogBuilder
+import com.ichi2.anki.dialogs.KeySelectionDialogUtils
 import com.ichi2.testutils.KeyEventUtils
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -65,7 +65,7 @@ class KeyPickerTest : RobolectricTest() {
         // We don't want shift/alt as a single keypress - this stops them being used as modifier keys
         val leftShiftPress = KeyEventUtils.leftShift()
 
-        mKeyPicker.setKeycodeValidation(KeySelectionDialogBuilder.disallowModifierKeyCodes())
+        mKeyPicker.setKeycodeValidation(KeySelectionDialogUtils.disallowModifierKeyCodes())
         mKeyPicker.dispatchKeyEvent(leftShiftPress)
         assertThat(mKeyPicker.getBinding(), nullValue())
 

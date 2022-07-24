@@ -19,32 +19,31 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.customListAdapter
+import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.R
 import java.util.*
 
 /**
- * This is a reusable convenience class which makes it easy to show a insert field dialog as a DialogFragment.
- * Create a new instance with required fields list, then show it via the fragment manager as usual.
+ * Dialog fragment used to show the fields that the user can insert in the card editor. This
+ * fragment can notify other fragments from the same activity about an inserted field.
+ *
+ * @see [CardTemplateEditor.CardTemplateFragment]
  */
-class InsertFieldDialog(private val insertFieldListener: InsertFieldListener) : DialogFragment() {
+class InsertFieldDialog : DialogFragment() {
     private lateinit var mDialog: MaterialDialog
     private lateinit var mFieldList: List<String>
-    fun withArguments(fieldItems: List<String>): InsertFieldDialog {
-        val args = Bundle()
-        args.putStringArrayList("fieldItems", ArrayList(fieldItems))
-        this.arguments = args
-        return this
-    }
 
     /**
      * A dialog for inserting field in card template editor
      */
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        mFieldList = requireArguments().getStringArrayList("fieldItems")!!
+        mFieldList = requireArguments().getStringArrayList(KEY_FIELD_ITEMS)!!
         val adapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
                 val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
@@ -61,20 +60,36 @@ class InsertFieldDialog(private val insertFieldListener: InsertFieldListener) : 
                 return mFieldList.size
             }
         }
-        mDialog = MaterialDialog.Builder(requireContext())
+        mDialog = MaterialDialog(requireContext())
             .title(R.string.card_template_editor_select_field)
-            .negativeText(R.string.dialog_cancel)
-            .adapter(adapter, null)
-            .build()
+            .negativeButton(R.string.dialog_cancel)
+            .customListAdapter(adapter)
         return mDialog
     }
 
     private fun selectFieldAndClose(textView: TextView) {
-        insertFieldListener.insertField(textView.text.toString())
+        parentFragmentManager.setFragmentResult(
+            REQUEST_FIELD_INSERT,
+            bundleOf(KEY_INSERTED_FIELD to textView.text.toString())
+        )
         mDialog.dismiss()
     }
 
-    interface InsertFieldListener {
-        fun insertField(field: String?)
+    companion object {
+        /**
+         * Other fragments sharing the activity can use this with
+         * [androidx.fragment.app.FragmentManager.setFragmentResultListener] to get a result back.
+         */
+        const val REQUEST_FIELD_INSERT = "request_field_insert"
+
+        /**
+         * This fragment requires that a list of fields names to be passed in.
+         */
+        const val KEY_INSERTED_FIELD = "key_inserted_field"
+        private const val KEY_FIELD_ITEMS = "key_field_items"
+
+        fun newInstance(fieldItems: List<String>): InsertFieldDialog = InsertFieldDialog().apply {
+            arguments = bundleOf(KEY_FIELD_ITEMS to ArrayList(fieldItems))
+        }
     }
 }

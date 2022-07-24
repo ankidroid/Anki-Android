@@ -31,24 +31,24 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.dialogs.ConfirmationDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.dialogs.DiscardChangesDialog
-import com.ichi2.anki.dialogs.InsertFieldDialog.InsertFieldListener
-import com.ichi2.anki.dialogs.InsertFieldDialogFactory
+import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -196,14 +196,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     @VisibleForTesting
     @KotlinCleanup("Remove type declarations after _")
     fun showDiscardChangesDialog(): MaterialDialog {
-        val discardDialog = DiscardChangesDialog.getDefault(this)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
-                // Clear the edited model from any cache files, and clear it from this objects memory to discard changes
-                TemporaryModel.clearTempModelFiles()
-                tempModel = null
-                finishWithAnimation(END)
-            }.build()
+        val discardDialog = DiscardChangesDialog.showDialog(this) {
+            Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
+            // Clear the edited model from any cache files, and clear it from this objects memory to discard changes
+            TemporaryModel.clearTempModelFiles()
+            tempModel = null
+            finishWithAnimation(END)
+        }
         discardDialog.show()
         return discardDialog
     }
@@ -336,8 +335,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
 
             val bottomNavigation: BottomNavigationView = mainView.findViewById(R.id.card_template_editor_bottom_navigation)
-            @Suppress("deprecation")
-            bottomNavigation.setOnNavigationItemSelectedListener { item: MenuItem ->
+            bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
                 val currentSelectedId = item.itemId
                 mTemplateEditor.tabToViewId!![cardIndex] = currentSelectedId
                 @KotlinCleanup("when")
@@ -380,8 +378,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
             mEditorEditText.addTextChangedListener(templateEditorWatcher)
 
-            // Enable menu
-            setHasOptionsMenu(true)
             return mainView
         }
 
@@ -428,20 +424,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
         }
 
+        @NeedsTest(
+            "the kotlin migration made this method crash due to a recursive call when the dialog would return its data"
+        )
         private fun showInsertFieldDialog() {
-            if (mTemplateEditor.mFieldNames == null) {
-                return
+            mTemplateEditor.mFieldNames?.let { fieldNames ->
+                mTemplateEditor.showDialogFragment(InsertFieldDialog.newInstance(fieldNames))
             }
-            val insertFieldDialogFactory = InsertFieldDialogFactory(
-                object : InsertFieldListener {
-                    override fun insertField(field: String?) {
-                        insertField(field)
-                    }
-                }).attachToActivity<InsertFieldDialogFactory>(mTemplateEditor)
-            val insertFieldDialog = insertFieldDialogFactory
-                .newInsertFieldDialog()
-                .withArguments(mTemplateEditor.mFieldNames!!)
-            mTemplateEditor.showDialogFragment(insertFieldDialog)
         }
 
         @Suppress("unused")
@@ -463,6 +452,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             initTabLayoutMediator()
+            parentFragmentManager.setFragmentResultListener(REQUEST_FIELD_INSERT, viewLifecycleOwner) { key, bundle ->
+                if (key == REQUEST_FIELD_INSERT) {
+                    // this is guaranteed to be non null, as we put a non null value on the other side
+                    insertField(bundle.getString(InsertFieldDialog.KEY_INSERTED_FIELD)!!)
+                }
+            }
+            setupMenu()
         }
 
         private fun initTabLayoutMediator() {
@@ -480,111 +476,118 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             super.onResume()
         }
 
-        override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-            menu.clear()
-            inflater.inflate(R.menu.card_template_editor, menu)
+        private fun setupMenu() {
+            // Enable menu
+            (requireActivity() as MenuHost).addMenuProvider(
+                object : MenuProvider {
+                    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                        menu.clear()
+                        menuInflater.inflate(R.menu.card_template_editor, menu)
 
-            if (mTemplateEditor.tempModel!!.model.isCloze) {
-                Timber.d("Editing cloze model, disabling add/delete card template and deck override functionality")
-                menu.findItem(R.id.action_add).isVisible = false
-                menu.findItem(R.id.action_add_deck_override).isVisible = false
-            } else {
-                val template = getCurrentTemplate()
+                        if (mTemplateEditor.tempModel!!.model.isCloze) {
+                            Timber.d("Editing cloze model, disabling add/delete card template and deck override functionality")
+                            menu.findItem(R.id.action_add).isVisible = false
+                            menu.findItem(R.id.action_add_deck_override).isVisible = false
+                        } else {
+                            val template = getCurrentTemplate()
 
-                @StringRes val overrideStringRes = if (template != null && template.has("did") && !template.isNull("did")) {
-                    R.string.card_template_editor_deck_override_on
-                } else {
-                    R.string.card_template_editor_deck_override_off
-                }
-                menu.findItem(R.id.action_add_deck_override).setTitle(overrideStringRes)
-            }
+                            @StringRes val overrideStringRes = if (template != null && template.has("did") && !template.isNull("did")) {
+                                R.string.card_template_editor_deck_override_on
+                            } else {
+                                R.string.card_template_editor_deck_override_off
+                            }
+                            menu.findItem(R.id.action_add_deck_override).setTitle(overrideStringRes)
+                        }
 
-            // It is invalid to delete if there is only one card template, remove the option from UI
-            if (mTemplateEditor.tempModel!!.templateCount < 2) {
-                menu.findItem(R.id.action_delete).isVisible = false
-            }
+                        // It is invalid to delete if there is only one card template, remove the option from UI
+                        if (mTemplateEditor.tempModel!!.templateCount < 2) {
+                            menu.findItem(R.id.action_delete).isVisible = false
+                        }
 
-            // marked insert field menu item invisible for style view
-            val isInsertFieldItemVisible = currentEditorViewId != R.id.styling_edit
-            menu.findItem(R.id.action_insert_field).isVisible = isInsertFieldItemVisible
-            super.onCreateOptionsMenu(menu, inflater)
-        }
+                        // marked insert field menu item invisible for style view
+                        val isInsertFieldItemVisible = currentEditorViewId != R.id.styling_edit
+                        menu.findItem(R.id.action_insert_field).isVisible = isInsertFieldItemVisible
+                    }
 
-        override fun onOptionsItemSelected(item: MenuItem): Boolean {
-            val col = mTemplateEditor.col
-            val tempModel = mTemplateEditor.tempModel
-            val itemId = item.itemId
-            @KotlinCleanup("when")
-            if (itemId == R.id.action_add) {
-                Timber.i("CardTemplateEditor:: Add template button pressed")
-                // Show confirmation dialog
-                val ordinal = mTemplateEditor.viewPager.currentItem
-                // isOrdinalPendingAdd method will check if there are any new card types added or not,
-                // if TempModel has new card type then numAffectedCards will be 0 by default.
-                val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(tempModel!!, ordinal)) {
-                    col.models.tmplUseCount(tempModel.model, ordinal)
-                } else {
-                    0
-                }
-                confirmAddCards(tempModel.model, numAffectedCards)
-                return true
-            } else if (itemId == R.id.action_insert_field) {
-                showInsertFieldDialog()
-            } else if (itemId == R.id.action_delete) {
-                Timber.i("CardTemplateEditor:: Delete template button pressed")
-                val res = resources
-                val ordinal = mTemplateEditor.viewPager.currentItem
-                val template = tempModel!!.getTemplate(ordinal)
-                // Don't do anything if only one template
-                if (tempModel.templateCount < 2) {
-                    mTemplateEditor.showSimpleMessageDialog(res.getString(R.string.card_template_editor_cant_delete))
-                    return true
-                }
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                        val col = mTemplateEditor.col
+                        val tempModel = mTemplateEditor.tempModel
+                        val itemId = menuItem.itemId
+                        @KotlinCleanup("when")
+                        if (itemId == R.id.action_add) {
+                            Timber.i("CardTemplateEditor:: Add template button pressed")
+                            // Show confirmation dialog
+                            val ordinal = mTemplateEditor.viewPager.currentItem
+                            // isOrdinalPendingAdd method will check if there are any new card types added or not,
+                            // if TempModel has new card type then numAffectedCards will be 0 by default.
+                            val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(tempModel!!, ordinal)) {
+                                col.models.tmplUseCount(tempModel.model, ordinal)
+                            } else {
+                                0
+                            }
+                            confirmAddCards(tempModel.model, numAffectedCards)
+                            return true
+                        } else if (itemId == R.id.action_insert_field) {
+                            showInsertFieldDialog()
+                        } else if (itemId == R.id.action_delete) {
+                            Timber.i("CardTemplateEditor:: Delete template button pressed")
+                            val res = resources
+                            val ordinal = mTemplateEditor.viewPager.currentItem
+                            val template = tempModel!!.getTemplate(ordinal)
+                            // Don't do anything if only one template
+                            if (tempModel.templateCount < 2) {
+                                mTemplateEditor.showSimpleMessageDialog(res.getString(R.string.card_template_editor_cant_delete))
+                                return true
+                            }
 
-                if (deletionWouldOrphanNote(col, tempModel, ordinal)) {
-                    return true
-                }
+                            if (deletionWouldOrphanNote(col, tempModel, ordinal)) {
+                                return true
+                            }
 
-                // Show confirmation dialog
-                val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(tempModel, ordinal)) {
-                    Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
-                    col.models.tmplUseCount(tempModel.model, ordinal)
-                } else {
-                    0
-                }
-                confirmDeleteCards(template, tempModel.model, numAffectedCards)
-                return true
-            } else if (itemId == R.id.action_add_deck_override) {
-                displayDeckOverrideDialog(col, tempModel)
-                return true
-            } else if (itemId == R.id.action_preview) {
-                performPreview()
-                return true
-            } else if (itemId == R.id.action_confirm) {
-                Timber.i("CardTemplateEditor:: Save model button pressed")
-                if (modelHasChanged()) {
-                    val confirmButton = mTemplateEditor.findViewById<View>(R.id.action_confirm)
-                    if (confirmButton != null) {
-                        if (!confirmButton.isEnabled) {
-                            Timber.d("CardTemplateEditor::discarding extra click after button disabled")
+                            // Show confirmation dialog
+                            val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(tempModel, ordinal)) {
+                                Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
+                                col.models.tmplUseCount(tempModel.model, ordinal)
+                            } else {
+                                0
+                            }
+                            confirmDeleteCards(template, tempModel.model, numAffectedCards)
+                            return true
+                        } else if (itemId == R.id.action_add_deck_override) {
+                            displayDeckOverrideDialog(col, tempModel)
+                            return true
+                        } else if (itemId == R.id.action_preview) {
+                            performPreview()
+                            return true
+                        } else if (itemId == R.id.action_confirm) {
+                            Timber.i("CardTemplateEditor:: Save model button pressed")
+                            if (modelHasChanged()) {
+                                val confirmButton = mTemplateEditor.findViewById<View>(R.id.action_confirm)
+                                if (confirmButton != null) {
+                                    if (!confirmButton.isEnabled) {
+                                        Timber.d("CardTemplateEditor::discarding extra click after button disabled")
+                                        return true
+                                    }
+                                    confirmButton.isEnabled = false
+                                }
+                                tempModel!!.saveToDatabase(saveModelAndExitHandler())
+                            } else {
+                                Timber.d("CardTemplateEditor:: model has not changed, exiting")
+                                mTemplateEditor.finishWithAnimation(END)
+                            }
+
+                            return true
+                        } else if (itemId == R.id.action_card_browser_appearance) {
+                            Timber.i("CardTemplateEditor::Card Browser Template button pressed")
+                            val currentTemplate = getCurrentTemplate()
+                            currentTemplate?.let { launchCardBrowserAppearance(it) }
                             return true
                         }
-                        confirmButton.isEnabled = false
+                        return false
                     }
-                    tempModel!!.saveToDatabase(saveModelAndExitHandler())
-                } else {
-                    Timber.d("CardTemplateEditor:: model has not changed, exiting")
-                    mTemplateEditor.finishWithAnimation(END)
-                }
-
-                return true
-            } else if (itemId == R.id.action_card_browser_appearance) {
-                Timber.i("CardTemplateEditor::Card Browser Template button pressed")
-                val currentTemplate = getCurrentTemplate()
-                currentTemplate?.let { launchCardBrowserAppearance(it) }
-                return super.onOptionsItemSelected(item)
-            }
-            return super.onOptionsItemSelected(item)
+                },
+                viewLifecycleOwner, Lifecycle.State.RESUMED
+            )
         }
 
         fun performPreview() {
@@ -733,16 +736,17 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         class SaveModelAndExitHandler(templateFragment: CardTemplateFragment) :
-            TaskListenerWithContext<CardTemplateFragment, Void?, Pair<Boolean, String?>>(
+            TaskListenerWithContext<CardTemplateFragment, Void?, Pair<Boolean, String?>?>(
                 templateFragment
             ) {
-            private var mProgressDialog: MaterialDialog? = null
+            @Suppress("Deprecation")
+            private var mProgressDialog: android.app.ProgressDialog? = null
             override fun actualOnPreExecute(context: CardTemplateFragment) {
                 Timber.d("saveModelAndExitHandler::preExecute called")
                 mProgressDialog = StyledProgressDialog.show(context.mTemplateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model), context.resources.getString(R.string.saving_changes), false)
             }
 
-            override fun actualOnPostExecute(context: CardTemplateFragment, result: Pair<Boolean, String?>) {
+            override fun actualOnPostExecute(context: CardTemplateFragment, result: Pair<Boolean, String?>?) {
                 Timber.d("saveModelAndExitHandler::postExecute called")
                 val button = context.mTemplateEditor.findViewById<View>(R.id.action_confirm)
                 if (button != null) {
@@ -752,7 +756,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     mProgressDialog!!.dismiss()
                 }
                 context.mTemplateEditor.tempModel = null
-                if (result.first) {
+                if (result!!.first) {
                     context.mTemplateEditor.finishWithAnimation(
                         END
                     )

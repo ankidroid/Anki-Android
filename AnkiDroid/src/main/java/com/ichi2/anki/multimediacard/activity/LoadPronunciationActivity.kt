@@ -19,28 +19,37 @@
 
 package com.ichi2.anki.multimediacard.activity
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.lifecycleScope
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus
-import com.ichi2.anki.runtimetools.TaskOperations.stopTaskGracefully
 import com.ichi2.anki.web.HttpFetcher.downloadFileToSdCard
 import com.ichi2.anki.web.HttpFetcher.fetchThroughHttp
 import com.ichi2.async.Connection
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
-import org.intellij.lang.annotations.Language
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
-import java.util.*
 
 /**
  * Activity to load pronunciation files from Beolingus.
@@ -48,9 +57,8 @@ import java.util.*
  * User picks a source language and the source is passed as extra.
  * <p>
  * When activity finished, it passes the filepath as another extra to the caller.
- * FIXME why isn't this extending AnkiActivity?
  */
-open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListener {
+open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelListener {
     private var mStopped = false
     private lateinit var source: String
     private lateinit var mTranslationAddress: String
@@ -61,11 +69,17 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     private lateinit var mLoadingLayoutMessage: TextView
     private lateinit var mLoadingLayout: View
     private lateinit var mMainLayout: LinearLayout
-    private var mPostTranslation: BackgroundPost? = null
-    private var mPostPronunciation: BackgroundPost? = null
-    private var mDownloadMp3Task: DownloadFileTask? = null
+    private lateinit var postTranslationJob: Job
+    private lateinit var postPronunciationJob: Job
+    private lateinit var downloadMp3Job: Job
     private lateinit var mLanguageLister: LanguageListerBeolingus
     private lateinit var mSpinnerFrom: Spinner
+    private val unknownExceptionHandler = CoroutineExceptionHandler { _, e ->
+        Timber.w(e)
+        hideProgressBar()
+        showToast(gtxt(R.string.multimedia_editor_something_wrong))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         disableXiaomiForceDarkMode(this)
@@ -81,7 +95,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
             }
         }
         setContentView(R.layout.activity_load_pronounciation)
-        source = intent.extras!!.getString(EXTRA_SOURCE)!!
+        source = intent.extras!!.getString(EXTRA_SOURCE)!!.trim()
         mMainLayout = findViewById(R.id.layoutInLoadPronActivity)
         mLoadingLayout = findViewById(R.id.progress_bar_layout)
         mLoadingLayoutTitle = findViewById(R.id.progress_bar_layout_title)
@@ -104,6 +118,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         saveButton.setOnClickListener { }
         mActivity = this
         mStopped = false
+        enableToolbar()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -123,7 +138,7 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         mLoadingLayoutMessage.text = message
     }
 
-    private fun hideProgressBar() {
+    override fun hideProgressBar() {
         mLoadingLayout.visibility = View.GONE
         mMainLayout.visibility = View.VISIBLE
     }
@@ -131,86 +146,51 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
     /**
      * @param v Start of the story.
      */
-    @Suppress("deprecation") // #7108: AsyncTask
     private fun onLoadPronunciation(@Suppress("UNUSED_PARAMETER") v: View?) {
-        if (!Connection.isOnline()) {
+        if (!Connection.isOnline) {
             showToast(gtxt(R.string.network_no_connection))
             return
         }
         val message = gtxt(R.string.multimedia_editor_searching_word)
         showProgressBar(message)
         mTranslationAddress = computeAddressOfTranslationPage()
-        try {
-            mPostTranslation = BackgroundPost()
-            mPostTranslation!!.address = mTranslationAddress
-            // post.setStopper(PRONUNC_STOPPER);
-            mPostTranslation!!.execute()
-        } catch (e: Exception) {
-            Timber.w(e)
-            hideProgressBar()
-            showToast(gtxt(R.string.multimedia_editor_something_wrong))
-        }
+        lifecycleScope.launch(unknownExceptionHandler) { backgroundPost(mTranslationAddress) }
     }
 
     /**
-     * @author zaur This class is used two times. First time from Beolingus it requests a page with the word
+     * This method is used two times. First time from Beolingus it requests a page with the word
      * translation. Second time it loads a page with the link to mp3 pronunciation file.
      */
-    @Suppress("deprecation") // #7108: AsyncTask
-    inner class BackgroundPost : android.os.AsyncTask<Void?, Void?, String?>() {
-        /**
-         * @return Used to know, which of the posts finished, to differentiate.
-         *
-         * @param address Used to set the download address
-         */
-        var address: String? = null
+    private suspend fun backgroundPost(address: String) = withContext(ioDispatcher) {
+        // TMP CODE for quick testing
+        // val response = if (address.contentEquals(mTranslationAddress))
+        // {
+        //  MockTranslationFetcher.get();
+        // }
+        // else if (address.contentEquals(mPronunciationAddress))
+        // {
+        //  MockPronounciationPageFetcher.get();
+        // }
 
-        // private String mStopper;
-        override fun doInBackground(vararg p0: Void?): String {
-            // TMP CODE for quick testing
-            // if (mAddress.contentEquals(mTranslationAddress))
-            // {
-            // return MockTranslationFetcher.get();
-            // }
-            // else if (mAddress.contentEquals(mPronunciationAddress))
-            // {
-            // return MockPronounciationPageFetcher.get();
-            // }
-
-            // Should be just this
-            return fetchThroughHttp(address, "ISO-8859-1")
-        }
-
-        override fun onPostExecute(@Language("HTML") result: String?) {
-            // Result here is the whole HTML of the page
-            // this is passed to ask for address and differentiate, which of the
-            // post has finished.
-            processPostFinished(this, result!!)
-        }
+        // Should be just this
+        val result = fetchThroughHttp(address, "ISO-8859-1")
+        Timber.d("Fetched response")
+        // Result here is the whole HTML of the page
+        // address is passed to ask and differentiate, which of the
+        // post has finished.
+        withContext(mainDispatcher) { processPostFinished(address, result) }
     }
 
     /**
-     * @author zaur This is to load finally the MP3 file with pronunciation.
+     *  This is to load finally the MP3 file with pronunciation.
      */
-    @Suppress("deprecation") // #7108: AsyncTask
-
-    private inner class DownloadFileTask : android.os.AsyncTask<Void?, Void?, String?>() {
-        private lateinit var mAddress: String
-        override fun doInBackground(vararg p0: Void?): String {
-            return downloadFileToSdCard(mAddress, mActivity, "pronunc")
-        }
-
-        fun setAddress(address: String) {
-            mAddress = address
-        }
-
-        override fun onPostExecute(result: String?) {
-            receiveMp3File(result)
-        }
+    private suspend fun downloadFile(address: String) = withContext(ioDispatcher) {
+        val result = downloadFileToSdCard(address, mActivity, "pronunc")
+        Timber.d("Fetched mp3")
+        withContext(mainDispatcher) { receiveMp3File(result) }
     }
 
-    @Suppress("deprecation") // #7108: AsyncTask
-    protected fun processPostFinished(post: BackgroundPost, @Language("HTML") result: String) {
+    protected fun processPostFinished(address: String, result: String) {
         if (mStopped) {
             return
         }
@@ -218,28 +198,24 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         // First call returned
         // Means we get the page with the word translation,
         // And we have to start fetching the page with pronunciation
-        if (post.address.contentEquals(mTranslationAddress)) {
+        if (address.contentEquals(mTranslationAddress)) {
             if (result.startsWith("FAILED")) {
                 failNoPronunciation()
                 return
             }
-            mPronunciationAddress = BeolingusParser.getPronunciationAddressFromTranslation(result, source)
+            mPronunciationAddress = BeolingusParser.getPronunciationAddressFromTranslation(result, source.trim())
             if (mPronunciationAddress.contentEquals("no")) {
                 failNoPronunciation()
-                if (!source.lowercase(Locale.getDefault()).contentEquals(source)) {
+                if (source.contains(" ")) {
+                    showToastLong(gtxt(R.string.multimedia_editor_only_one_word))
+                } else if (source.any { it.isUpperCase() }) {
                     showToastLong(gtxt(R.string.multimedia_editor_word_search_try_lower_case))
                 }
                 return
             }
-            try {
-                showProgressBar(gtxt(R.string.multimedia_editor_pron_looking_up))
-                mPostPronunciation = BackgroundPost()
-                mPostPronunciation!!.address = mPronunciationAddress
-                mPostPronunciation!!.execute()
-            } catch (e: Exception) {
-                Timber.w(e)
-                hideProgressBar()
-                showToast(gtxt(R.string.multimedia_editor_something_wrong))
+            showProgressBar(gtxt(R.string.multimedia_editor_pron_looking_up))
+            postPronunciationJob = lifecycleScope.launch(unknownExceptionHandler) {
+                backgroundPost(mPronunciationAddress)
             }
             return
         }
@@ -247,25 +223,18 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         // Else
         // second call returned
         // This is a call when pronunciation page has been fetched.
-        // We chekc if mp3 file could be downloaded and download it.
-        if (post.address.contentEquals(mPronunciationAddress)) {
+        // We check if mp3 file could be downloaded and download it.
+        if (address.contentEquals(mPronunciationAddress)) {
             // else here = pronunciation post returned;
             mMp3Address = BeolingusParser.getMp3AddressFromPronunciation(result)
             if (mMp3Address.contentEquals("no")) {
                 failNoPronunciation()
                 return
             }
-
             // Download MP3 file
-            try {
-                showProgressBar(gtxt(R.string.multimedia_editor_general_downloading))
-                mDownloadMp3Task = DownloadFileTask()
-                mDownloadMp3Task!!.setAddress(mMp3Address)
-                mDownloadMp3Task!!.execute()
-            } catch (e: Exception) {
-                Timber.w(e)
-                hideProgressBar()
-                showToast(gtxt(R.string.multimedia_editor_something_wrong))
+            showProgressBar(gtxt(R.string.multimedia_editor_general_downloading))
+            downloadMp3Job = lifecycleScope.launch(unknownExceptionHandler) {
+                downloadFile(mMp3Address)
             }
         }
     }
@@ -288,13 +257,13 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         val resultData = Intent()
         resultData.putExtra(EXTRA_PRONUNCIATION_FILE_PATH, result)
         setResult(RESULT_OK, resultData)
-        finish()
+        finishWithoutAnimation()
     }
 
     private fun finishCancel() {
         val resultData = Intent()
         setResult(RESULT_CANCELED, resultData)
-        finish()
+        finishWithoutAnimation()
     }
 
     private fun failNoPronunciation() {
@@ -343,17 +312,19 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
         stopAllTasks()
         val resultData = Intent()
         setResult(RESULT_CANCELED, resultData)
-        finish()
+        finishWithoutAnimation()
     }
 
-    @Suppress("deprecation") // #7108: AsyncTask
     private fun stopAllTasks() {
-        var t: android.os.AsyncTask<*, *, *>? = mPostTranslation
-        stopTaskGracefully(t)
-        t = mPostPronunciation
-        stopTaskGracefully(t)
-        t = mDownloadMp3Task
-        stopTaskGracefully(t)
+        if (this::postPronunciationJob.isInitialized) {
+            postPronunciationJob.cancel()
+        }
+        if (this::postTranslationJob.isInitialized) {
+            postTranslationJob.cancel()
+        }
+        if (this::downloadMp3Job.isInitialized) {
+            downloadMp3Job.cancel()
+        }
     }
 
     override fun onPause() {
@@ -374,5 +345,14 @@ open class LoadPronunciationActivity : Activity(), DialogInterface.OnCancelListe
 
         // Passed out as a result
         const val EXTRA_PRONUNCIATION_FILE_PATH = "com.ichi2.anki.LoadPronounciationActivity.extra.pronun.file.path"
+
+        private var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+        private var mainDispatcher: CoroutineDispatcher = Dispatchers.Main
+
+        @VisibleForTesting
+        fun setTestDispatchers(dispatcher: CoroutineDispatcher) {
+            ioDispatcher = dispatcher
+            mainDispatcher = dispatcher
+        }
     }
 }

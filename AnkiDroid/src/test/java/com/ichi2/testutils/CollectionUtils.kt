@@ -36,6 +36,6 @@ object CollectionUtils {
         whenever(spy.database).thenReturn(spiedDb)
         doThrow(SQLiteDatabaseLockedException::class.java).whenever(spiedDb).beginTransaction()
 
-        collection.db = spy
+        collection.dbInternal = spy
     }
 }

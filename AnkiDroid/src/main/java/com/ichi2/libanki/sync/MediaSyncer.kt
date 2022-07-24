@@ -97,7 +97,7 @@ class MediaSyncer(
         mDownloadCount = 0
         while (true) {
             // Allow cancellation (note: media sync has no finish command, so just throw)
-            if (Connection.getIsCancelled()) {
+            if (Connection.isCancelled) {
                 Timber.i("Sync was cancelled")
                 throw RuntimeException(ConnectionResultType.USER_ABORTED_SYNC.toString())
             }
@@ -110,7 +110,7 @@ class MediaSyncer(
             lastUsn = data.getJSONArray(data.length() - 1).getInt(1)
             for (i in 0 until data.length()) {
                 // Allow cancellation (note: media sync has no finish command, so just throw)
-                if (Connection.getIsCancelled()) {
+                if (Connection.isCancelled) {
                     Timber.i("Sync was cancelled")
                     throw RuntimeException(ConnectionResultType.USER_ABORTED_SYNC.toString())
                 }

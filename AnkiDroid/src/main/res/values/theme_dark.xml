@@ -86,13 +86,13 @@
         <!-- Browser colors -->
         <item name="suspendedColor">@color/material_grey_700</item>
         <item name="markedColor">@color/material_deep_purple_400</item>
-        <item name="flagRed">@color/flag_red</item>
-        <item name="flagOrange">@color/flag_orange</item>
-        <item name="flagGreen">@color/flag_green</item>
-        <item name="flagBlue">@color/flag_blue</item>
-        <item name="flagPink">@color/flag_pink</item>
-        <item name="flagTurquoise">@color/flag_turquoise</item>
-        <item name="flagPurple">@color/flag_purple</item>
+        <item name="flagRed">@color/flag_red_dark</item>
+        <item name="flagOrange">@color/flag_orange_dark</item>
+        <item name="flagGreen">@color/flag_green_dark</item>
+        <item name="flagBlue">@color/flag_blue_dark</item>
+        <item name="flagPink">@color/flag_pink_dark</item>
+        <item name="flagTurquoise">@color/flag_turquoise_dark</item>
+        <item name="flagPurple">@color/flag_purple_dark</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#855</item>
         <item name="editTextBackgroundColor">#EE5C5C5C</item>
@@ -116,13 +116,23 @@
         <item name="dialogSendIcon">@drawable/ic_send_white</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
-        <item name="md_dark_theme">true</item>
+        <item name="md_color_button_text">@color/white</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_800</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
         <item name="editTextDisabled">@color/material_grey_500</item>
 
         <item name="android:navigationBarColor">@color/black</item>
+
+        <!-- Filter Bottom Sheet-->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemeDark</item>
+        <item name="filterSheetBackground">@color/theme_dark_primary</item>
+        <item name="filterItemBackground">@color/theme_dark_primary_dark</item>
+        <item name="filterItemBackgroundSelected">@color/theme_dark_drawer_row_current</item>
+        <item name="filterItemTextColor">@color/theme_dark_drawer_item</item>
+        <item name="filterItemTextColorSelected">@color/theme_dark_accent</item>
+        <item name="filterHeaderDivider">@color/white</item>
+
     </style>
 
     <!-- Preferences screens -->
@@ -131,6 +141,14 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
         <item name="android:textColor">@color/prefs_item_dark</item>
-        <item name="android:textColorSecondary">@color/prefs_item_dark</item>
+        <item name="android:textColorSecondary">@color/prefs_item_dark_secondary</item>
+    </style>
+
+    <!-- Filter Sheet Style -->
+    <style name="AppBottomSheetDialogThemeDark" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
 </resources>

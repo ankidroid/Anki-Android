@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Відкрити шухляду</string>
     <string name="drawer_close">Закрити шухляду</string>
@@ -101,6 +99,9 @@
         <item>Створено</item>
         <item>Запис змінено</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>
     <string name="custom_study_increase_review_limit">Змінити сьогоднішній ліміт на повторення карток</string>
@@ -169,10 +170,10 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="one">Додати \"%s\" до колекції? Це може зайняти багато часу</item>
         <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
         <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
     </plurals>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Помилка</string>
@@ -191,7 +192,7 @@
     <string name="import_error_copy_file_to_cache">Не вдалося copyFileToCache() (копіюванння файлу до кешу, можливо, бракує пам\'яті) </string>
     <string name="import_error_unhandled_scheme">Необроблений імпорт з: «%s»</string>
     <string name="import_error_multiple_colpkg">Було вибрано декілька файлів colpkl.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_error_colpkg_apkg">Файли apkg &amp; colpkg були вибрані одночасно</string>
     <string name="import_stats_error">Виникли помилки під час імпорту наступних файлів:\n%s</string>
     <string name="import_replacing">Заміна колекції&#8230;</string>
     <string name="import_interrupted">Імпортування перервано</string>
@@ -417,8 +418,8 @@
     <string name="buried_card">Картку відкладено</string>
     <string name="buried_note">Відкладений запис</string>
     <string name="deleted_note">Видалено запис</string>
-    <string name="suspended_card">Виключено картку</string>
-    <string name="suspended_note">Виключено запис</string>
+    <string name="suspended_card">Картку призупинено</string>
+    <string name="suspended_note">Запис призупинено</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Зробити поле %s липким</string>
     <!-- Scoped Storage Migration -->
@@ -436,11 +437,13 @@
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Нічого не знайдено</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
+    <string name="not_valid_js_addon">%s не є дійсним пакетом доповнення javascript</string>
     <string name="could_not_create_dir">Не вдалося створити каталог %s</string>
     <string name="malicious_archive_entry_outside">Шкідливий архів. Містить запис за межами цільового каталогу: %s</string>
     <string name="malicious_archive_exceeds_limit">Шкідливий архів. Розмір перевищує %1$s або містить більше ніж %2$d файлів</string>
     <string name="file_extract_exceeds_storage_space">Розмір файлу перевищує обсяг пам\'яті</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Розгорнути тег \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Не вдалося отримати доступ до колекції. Будь ласка, спробуйте ще раз!</string>
 </resources>

@@ -44,10 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">引き出しメニューを開く</string>
+    <string name="drawer_open">ナビゲーションドロワーを開く</string>
     <string name="drawer_close">引き出しメニューを閉じる</string>
     <string name="CardEditorCardDeck">デッキ:</string>
     <string name="CardEditorNoteDeck">デッキ:</string>
@@ -101,6 +99,9 @@
         <item>作成日</item>
         <item>ノート編集日</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
     <string name="custom_study_increase_review_limit">今日の復習カード上限を変更</string>
@@ -179,7 +180,7 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() に失敗しました (おそらくストレージスペース外です)</string>
     <string name="import_error_unhandled_scheme">未処理のインポート: “%s”</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_error_colpkg_apkg">apkgファイルとcolpkgファイルが選択されました。それらを一度にインポートすることはできません。</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">コレクションを置き換えています...</string>
     <string name="import_interrupted">インポートが中断されました</string>
@@ -390,7 +391,7 @@
     <string name="scoped_storage_learn_more">詳細</string>
     <string name="scoped_storage_postpone">後で</string>
     <string name="scoped_storage_migrate">移行</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">検索対象が見つかりませんでした</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s は有効なJavaScriptアドオンパッケージではありません</string>
     <string name="could_not_create_dir">%s というディレクトリを作成できませんでした</string>
@@ -399,4 +400,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">タグ \'%s \' を展開</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

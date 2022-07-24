@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Zijmenu openen</string>
     <string name="drawer_close">Zijmenu sluiten</string>
@@ -101,6 +99,9 @@
         <item>Gemaakt</item>
         <item>Memo gewijzigd</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Nieuwe kaartenlimiet voor vandaag wijzigen</string>
     <string name="custom_study_increase_review_limit">Limiet te overhoren kaarten voor vandaag wijzigen</string>
@@ -167,7 +168,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">Dit is geen geldig Anki-pakketbestand</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Fout</string>
     <string name="import_log_failed_unzip">Fout bij het uitpakken van apkg: %s</string>
     <string name="import_log_failed_copy_to">Fout bij het kopiëren van apkg naar %s</string>
     <string name="import_log_failed_validate">apkg-validatie mislukt</string>
@@ -182,9 +183,9 @@
     <string name="import_error_content_provider">Het selecteerde bestand kon niet automatisch geïmporteerd worden door AnkiDroid. Bekijk de gebruikershandleiding om te zien hoe je anki bestanden handmatig importeert: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() is mislukt (mogelijk uit gebrek aan opslagruimte)</string>
     <string name="import_error_unhandled_scheme">Niet-afgehandelde import vanuit:%s\"</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_multiple_colpkg">Er zijn meerdere colpkg bestanden geselecteerd.</string>
+    <string name="import_error_colpkg_apkg">Zowel apkg als colpkg bestanden werden in een keer geselecteerd.</string>
+    <string name="import_stats_error">Er zijn enkele fouten opgetreden tijdens het importeren van de volgende bestanden:\n%s</string>
     <string name="import_replacing">Collectie vervangen&#8230;</string>
     <string name="import_interrupted">Importeren onderbroken</string>
     <string name="export_include_schedule">Inclusief de planning</string>
@@ -350,7 +351,7 @@
     <string name="after_text">HTML na de selectie</string>
     <string name="add_toolbar_item">Werkbalkitem aanmaken</string>
     <string name="edit_toolbar_item">Werkbalkitem bewerken</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">Voer HTML in die voor en na de geselecteerde tekst moet worden ingevoegd.\n\nDruk lang op een item op de werkbalk om het te bewerken of te verwijderen.</string>
     <string name="remove_toolbar_item">Werkbalkitem verwijderen?</string>
     <string name="note_editor_paste_too_large">De afbeelding is te groot om te plakken, gelieve de afbeelding manueel in te voegen</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Bezig met Android back-up. Probeer het opnieuw</string>
@@ -410,9 +411,11 @@
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is geen geldig javascript addon pakket</string>
     <string name="could_not_create_dir">Kon de map %s niet creëeren </string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
+    <string name="malicious_archive_entry_outside">Schadelijk archief. Bevat item buiten de doelmap: %s</string>
+    <string name="malicious_archive_exceeds_limit">Schadelijk archief. Grootte overschrijdt %1$s of bevat meer dan %2$d bestanden</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

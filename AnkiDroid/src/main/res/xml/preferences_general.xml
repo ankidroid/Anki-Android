@@ -22,22 +22,25 @@
 
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_general"
-    android:summary="@string/pref_cat_general_summ">
-    <PreferenceCategory android:title="@string/app_name">
+    android:summary="@string/pref_cat_general_summ"
+    android:key="@string/pref_general_screen_key">
         <ListPreference
             android:entries="@array/add_to_cur_labels"
             android:entryValues="@array/add_to_cur_values"
-            android:key="useCurrent"
-            android:title="@string/use_current" />
+            android:key="@string/deck_for_new_cards_key"
+            android:title="@string/use_current"
+            app:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="@string/empty_string"
-            android:key="language"
+            android:key="@string/pref_language_key"
             android:icon="@drawable/ic_language_black_24dp"
-            android:title="@string/language" />
+            android:title="@string/language"
+            app:useSimpleSummaryProvider="true"/>
         <SwitchPreference
             android:defaultValue="false"
-            android:key="analyticsOptIn"
+            android:key="@string/analytics_opt_in_key"
             android:summary="@string/analytics_summ"
             android:title="@string/analytics_title" />
         <SwitchPreference
@@ -45,29 +48,12 @@
             android:title="@string/paste_as_png"
             android:summary="@string/paste_as_png_summary"
             android:maxLength="41"
-            android:key="pastePNG"/>
+            android:key="@string/paste_png_key"/>
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/error_reporting_choice_labels"
             android:entryValues="@array/error_reporting_choice_values"
-            android:key="reportErrorMode"
-            android:title="@string/error_reporting_choice" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/notification_pref"
-        android:key="category_general_notification_pref">
-        <ListPreference
-            android:defaultValue="1000000"
-            android:entries="@array/notification_minimum_cards_due_labels"
-            android:entryValues="@array/notification_minimum_cards_due_values"
-            android:key="minimumCardsDueForNotification"
-            android:title="@string/notification_pref_title" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="widgetVibrate"
-            android:title="@string/notification_minimum_cards_due_vibrate" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="widgetBlink"
-            android:title="@string/notification_minimum_cards_due_blink" />
-    </PreferenceCategory>
+            android:key="@string/error_reporting_mode_key"
+            android:title="@string/error_reporting_choice"
+            app:useSimpleSummaryProvider="true"/>
 </PreferenceScreen>

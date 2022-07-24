@@ -31,6 +31,7 @@ import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.HashUtil;
 import com.ichi2.utils.JSONArray;
 import com.ichi2.utils.JSONObject;
+import com.ichi2.utils.KotlinCleanup;
 
 import net.ankiweb.rsdroid.RustCleanup;
 
@@ -116,7 +117,32 @@ public class Finder {
     }
 
 
+    /**
+     *
+     * @param query the query as in browser search langage.
+     * @return card id (at most one by note) of cards satisfying the query.
+     */
+    @KotlinCleanup("Remove in V16.") // Not in libAnki
+    public List<Long> findOneCardByNote(String query) {
+        return findNotes(query, true);
+    }
+    /**
+     *
+     * @param query the query as in browser search langage.
+     * @return note of notes satisfying the query.
+     */
     public List<Long> findNotes(String query) {
+        return findNotes(query, false);
+    }
+
+    /**
+     *
+     * @param query the query as in browser search langage.
+     * @param returnCid if true, return a single cid of existing card by note. Otherwise return note id.
+     * @return note or card id (at most one by note) of notes satisfying the query.
+     */
+    @KotlinCleanup("Remove 'returnCid' in V16.") // returnCid Not in libAnki
+    public List<Long> findNotes(String query, boolean returnCid) {
         String[] tokens = _tokenize(query);
         Pair<String, String[]> res1 = _where(tokens);
         String preds = res1.first;
@@ -130,7 +156,12 @@ public class Finder {
         } else {
             preds = "(" + preds + ")";
         }
-        String sql = "select distinct(n.id) from cards c, notes n where c.nid=n.id and " + preds;
+        String sql;
+        if (returnCid) {
+            sql = "select min(c.id) from cards c, notes n where c.nid=n.id and " + preds + " group by n.id";
+        } else {
+            sql = "select distinct(n.id) from cards c, notes n where c.nid=n.id and " + preds;
+        }
         try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
             while (cur.moveToNext()) {
                 res.add(cur.getLong(0));
