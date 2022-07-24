@@ -41,7 +41,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.*
-import com.ichi2.preferences.ControlPreference.Companion.addAllControlPreferencesToCategory
 import com.ichi2.themes.Themes.setThemeLegacy
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
@@ -192,17 +191,6 @@ class Preferences : AnkiActivity() {
     // ----------------------------------------------------------------------------
     // Inner classes
     // ----------------------------------------------------------------------------
-
-    class ControlsSettingsFragment : SettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_controls
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.controls"
-
-        override fun initSubscreen() {
-            addAllControlPreferencesToCategory(requirePreference(R.string.controls_command_mapping_cat_key))
-        }
-    }
 
     /**
      * Fragment exclusive to DEBUG builds which can be used
