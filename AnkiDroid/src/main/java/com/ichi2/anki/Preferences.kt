@@ -52,7 +52,6 @@ import com.ichi2.anki.preferences.setOnPreferenceChangeListener
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
-import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
@@ -219,69 +218,6 @@ class Preferences : AnkiActivity() {
     // ----------------------------------------------------------------------------
     // Inner classes
     // ----------------------------------------------------------------------------
-
-    /**
-     * Fragment with preferences related to syncing
-     */
-    class SyncSettingsFragment : SettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_sync
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.sync"
-
-        override fun initSubscreen() {
-            // AnkiWeb Account
-            updateSyncAccountSummary()
-
-            // Configure force full sync option
-            requirePreference<Preference>(R.string.force_full_sync_key).setOnPreferenceClickListener {
-                MaterialDialog(requireContext()).show {
-                    title(R.string.force_full_sync_title)
-                    message(R.string.force_full_sync_summary)
-                    positiveButton(R.string.dialog_ok) {
-                        if (col == null) {
-                            showThemedToast(
-                                requireContext(),
-                                R.string.directory_inaccessible,
-                                false
-                            )
-                            return@positiveButton
-                        }
-                        col!!.modSchemaNoCheck()
-                        showThemedToast(
-                            requireContext(),
-                            R.string.force_full_sync_confirmation,
-                            true
-                        )
-                    }
-                    negativeButton(R.string.dialog_cancel)
-                }
-                true
-            }
-            // Custom sync server
-            requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
-                val preferences = AnkiDroidApp.getSharedPrefs(requireContext())
-                if (!CustomSyncServer.isEnabled(preferences)) {
-                    getString(R.string.disabled)
-                } else {
-                    CustomSyncServer.getSyncBaseUrlOrDefault(preferences, "")
-                }
-            }
-        }
-
-        private fun updateSyncAccountSummary() {
-            requirePreference<Preference>(R.string.sync_account_key)
-                .summary = preferenceManager.sharedPreferences!!.getString("username", "")!!
-                .ifEmpty { getString(R.string.sync_account_summ_logged_out) }
-        }
-
-        // TODO trigger the summary change from MyAccount.kt once it is migrated to a fragment
-        override fun onResume() {
-            // Trigger a summary update in case the user logged in/out on MyAccount activity
-            updateSyncAccountSummary()
-            super.onResume()
-        }
-    }
 
     class AppearanceSettingsFragment : SettingsFragment() {
         private var mBackgroundImage: SwitchPreference? = null
