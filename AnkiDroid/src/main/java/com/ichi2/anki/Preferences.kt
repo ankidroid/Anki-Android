@@ -19,11 +19,9 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.app.AlertDialog
 import android.content.*
 import android.os.Bundle
 import android.view.MenuItem
-import android.webkit.URLUtil
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.edit
@@ -39,7 +37,6 @@ import com.ichi2.anki.preferences.HeaderFragment
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.setOnPreferenceChangeListener
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
-import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
@@ -195,47 +192,6 @@ class Preferences : AnkiActivity() {
     // ----------------------------------------------------------------------------
     // Inner classes
     // ----------------------------------------------------------------------------
-
-    class CustomSyncServerSettingsFragment : SettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_custom_sync_server
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.custom_sync_server"
-
-        override fun initSubscreen() {
-            // Use custom sync server
-            requirePreference<SwitchPreference>(R.string.custom_sync_server_enable_key).setOnPreferenceChangeListener { _ ->
-                handleSyncServerPreferenceChange(requireContext())
-            }
-            // Sync url
-            requirePreference<Preference>(R.string.custom_sync_server_base_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
-                val newUrl = newValue.toString()
-                if (!URLUtil.isValidUrl(newUrl)) {
-                    AlertDialog.Builder(requireContext())
-                        .setTitle(R.string.custom_sync_server_base_url_invalid)
-                        .setPositiveButton(R.string.dialog_ok, null)
-                        .show()
-
-                    return@setOnPreferenceChangeListener false
-                }
-                handleSyncServerPreferenceChange(requireContext())
-                true
-            }
-            // Media url
-            requirePreference<Preference>(R.string.custom_sync_server_media_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
-                val newUrl = newValue.toString()
-                if (!URLUtil.isValidUrl(newUrl)) {
-                    AlertDialog.Builder(requireContext())
-                        .setTitle(R.string.custom_sync_server_media_url_invalid)
-                        .setPositiveButton(R.string.dialog_ok, null)
-                        .show()
-                    return@setOnPreferenceChangeListener false
-                }
-                handleSyncServerPreferenceChange(requireContext())
-                true
-            }
-        }
-    }
 
     class ControlsSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
