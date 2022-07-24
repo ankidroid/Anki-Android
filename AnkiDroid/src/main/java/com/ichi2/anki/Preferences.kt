@@ -21,8 +21,6 @@ package com.ichi2.anki
 
 import android.app.AlertDialog
 import android.content.*
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.webkit.URLUtil
@@ -34,21 +32,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.preference.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.contextmenu.AnkiCardContextMenu
-import com.ichi2.anki.contextmenu.CardBrowserContextMenu
-import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.preferences.AboutFragment
 import com.ichi2.anki.preferences.HeaderFragment
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.setOnPreferenceChangeListener
-import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
@@ -205,185 +196,6 @@ class Preferences : AnkiActivity() {
     // ----------------------------------------------------------------------------
     // Inner classes
     // ----------------------------------------------------------------------------
-
-    class AdvancedSettingsFragment : SettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_advanced
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.advanced"
-
-        @Suppress("Deprecation") // Material dialog neutral button deprecation
-        override fun initSubscreen() {
-            val screen = preferenceScreen
-            // Check that input is valid before committing change in the collection path
-            requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
-                setOnPreferenceChangeListener { _, newValue: Any? ->
-                    val newPath = newValue as String?
-                    try {
-                        CollectionHelper.initializeAnkiDroidDirectory(newPath)
-                        true
-                    } catch (e: StorageAccessException) {
-                        Timber.e(e, "Could not initialize directory: %s", newPath)
-                        MaterialDialog(requireContext()).show {
-                            title(R.string.dialog_collection_path_not_dir)
-                            positiveButton(R.string.dialog_ok) {
-                                dismiss()
-                            }
-                            negativeButton(R.string.reset_custom_buttons) {
-                                text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext())
-                            }
-                        }
-                        false
-                    }
-                }
-            }
-            // Card browser context menu
-            requirePreference<SwitchPreference>(R.string.card_browser_external_context_menu_key).apply {
-                title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.card_browser_context_menu))
-                summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.card_browser_context_menu))
-                setOnPreferenceChangeListener { newValue ->
-                    CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)
-                }
-            }
-            // Anki card context menu
-            requirePreference<SwitchPreference>(R.string.anki_card_external_context_menu_key).apply {
-                title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.context_menu_anki_card_label))
-                summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.context_menu_anki_card_label))
-                setOnPreferenceChangeListener { newValue ->
-                    AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)
-                }
-            }
-
-            if (col != null && col!!.schedVer() == 1) {
-                Timber.i("Displaying V1-to-V2 scheduler preference")
-                val schedVerPreference = SwitchPreference(requireContext())
-                schedVerPreference.setTitle(R.string.sched_v2)
-                schedVerPreference.setSummary(R.string.sched_v2_summ)
-                schedVerPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
-                    MaterialDialog(requireContext()).show {
-                        // Going to V2
-                        title(R.string.sched_ver_toggle_title)
-                            .message(R.string.sched_ver_1to2)
-                            .positiveButton(R.string.dialog_ok) {
-                                col!!.modSchemaNoCheck()
-                                try {
-                                    col!!.changeSchedulerVer(2)
-                                    screen.removePreference(schedVerPreference)
-                                } catch (e2: ConfirmModSchemaException) {
-                                    // This should never be reached as we explicitly called modSchemaNoCheck()
-                                    throw RuntimeException(e2)
-                                }
-                            }
-                            .neutralButton(R.string.help) {
-                                // call v2 scheduler documentation website
-                                val uri = Uri.parse(getString(R.string.link_anki_2_scheduler))
-                                val intent = Intent(Intent.ACTION_VIEW, uri)
-                                startActivity(intent)
-                            }
-                            .negativeButton(R.string.dialog_cancel) {
-                                schedVerPreference.isChecked = false
-                            }
-                    }
-                    false
-                }
-                // meaning of order here is the position of Preference in xml layout.
-                schedVerPreference.order = 5
-                screen.addPreference(schedVerPreference)
-            }
-            // Adding change logs in both debug and release builds
-            Timber.i("Adding open changelog")
-            val changelogPreference = Preference(requireContext())
-            changelogPreference.setTitle(R.string.open_changelog)
-            val infoIntent = Intent(requireContext(), Info::class.java)
-            infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
-            changelogPreference.intent = infoIntent
-            screen.addPreference(changelogPreference)
-            // Workaround preferences
-            removeUnnecessaryAdvancedPrefs()
-            addThirdPartyAppsListener()
-
-            // Configure "Reset languages" preference
-            requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
-                AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.reset_languages)
-                    .setIcon(R.drawable.ic_warning_black)
-                    .setMessage(R.string.reset_languages_question)
-                    .setPositiveButton(R.string.dialog_ok) { _, _ ->
-                        if (MetaDB.resetLanguages(requireContext())) {
-                            showThemedToast(requireContext(), R.string.reset_confirmation, true)
-                        }
-                    }
-                    .setNegativeButton(R.string.dialog_cancel, null)
-                    .show()
-                true
-            }
-            // Advanced statistics
-            requirePreference<Preference>(R.string.pref_advanced_statistics_key).setSummaryProvider {
-                if (AnkiDroidApp.getSharedPrefs(requireContext()).getBoolean("advanced_statistics_enabled", false)) {
-                    getString(R.string.enabled)
-                } else {
-                    getString(R.string.disabled)
-                }
-            }
-
-            // Enable API
-            requirePreference<SwitchPreference>(R.string.enable_api_key).setOnPreferenceChangeListener { newValue ->
-                val providerName = ComponentName(requireContext(), CardContentProvider::class.java.name)
-                val state = if (newValue == true) {
-                    Timber.i("AnkiDroid ContentProvider enabled by user")
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                } else {
-                    Timber.i("AnkiDroid ContentProvider disabled by user")
-                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                }
-                requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
-            }
-        }
-
-        private fun removeUnnecessaryAdvancedPrefs() {
-            val plugins = findPreference<PreferenceCategory>("category_plugins")
-            // Disable the emoji/kana buttons to scroll preference if those keys don't exist
-            if (!CompatHelper.hasKanaAndEmojiKeys()) {
-                val emojiScrolling = findPreference<SwitchPreference>("scrolling_buttons")
-                if (emojiScrolling != null && plugins != null) {
-                    plugins.removePreference(emojiScrolling)
-                }
-            }
-            // Disable the double scroll preference if no scrolling keys
-            if (!CompatHelper.hasScrollKeys() && !CompatHelper.hasKanaAndEmojiKeys()) {
-                val doubleScrolling = findPreference<SwitchPreference>("double_scrolling")
-                if (doubleScrolling != null && plugins != null) {
-                    plugins.removePreference(doubleScrolling)
-                }
-            }
-        }
-
-        private fun addThirdPartyAppsListener() {
-            // #5864 - some people don't have a browser so we can't use <intent>
-            // and need to handle the keypress ourself.
-            val showThirdParty = requirePreference<Preference>("thirdpartyapps_link")
-            val githubThirdPartyAppsUrl = "https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps"
-            showThirdParty.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                try {
-                    val openThirdPartyAppsIntent = Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl))
-                    super.startActivity(openThirdPartyAppsIntent)
-                } catch (e: ActivityNotFoundException) {
-                    Timber.w(e)
-                    // We use a different message here. We have limited space in the snackbar
-                    val error = getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl)
-                    showSimpleSnackbar(requireActivity(), error, false)
-                }
-                true
-            }
-        }
-
-        companion object {
-            @JvmStatic
-            fun getSubscreenIntent(context: Context?): Intent {
-                return getSubscreenIntent(context, AdvancedSettingsFragment::class.java.name)
-            }
-        }
-    }
 
     class CustomButtonsSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
