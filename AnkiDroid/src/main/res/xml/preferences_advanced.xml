@@ -151,7 +151,7 @@
             <Preference
                 android:key="@string/pref_advanced_statistics_key"
                 android:title="@string/advanced_statistics_title"
-                android:fragment="com.ichi2.anki.Preferences$AdvancedStatisticsSettingsFragment" />
+                android:fragment="com.ichi2.anki.preferences.AdvancedStatisticsSettingsFragment" />
             <SwitchPreference
                 android:defaultValue="false"
                 android:key="@string/html_javascript_debugging_key"

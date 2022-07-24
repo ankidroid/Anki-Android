@@ -196,19 +196,6 @@ class Preferences : AnkiActivity() {
     // Inner classes
     // ----------------------------------------------------------------------------
 
-    class AdvancedStatisticsSettingsFragment : SettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_advanced_statistics
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.advanced_statistics"
-
-        override fun initSubscreen() {
-            // Precision of computation
-            requirePreference<SeekBarPreferenceCompat>(R.string.pref_computation_precision_key)
-                .setFormattedSummary(R.string.pref_summary_percentage)
-        }
-    }
-
     class CustomSyncServerSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
             get() = R.xml.preferences_custom_sync_server
