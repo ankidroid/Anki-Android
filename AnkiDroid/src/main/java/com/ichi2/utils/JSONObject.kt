@@ -127,7 +127,7 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
         }
     }
 
-    constructor(source: String?) : this(JSONTokener(source))
+    constructor(source: String) : this(JSONTokener(source))
     constructor(copyFrom: JSONObject) : this() {
         copyFrom.keys()
             .forEach { put(it, copyFrom[it]) }

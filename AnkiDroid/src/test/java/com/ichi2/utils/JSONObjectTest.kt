@@ -646,13 +646,6 @@ class JSONObjectTest {
     }
 
     @Test
-    fun testStringConstructorNull() {
-        assertThrows<NullPointerException> {
-            JSONObject(null as String?)
-        }
-    }
-
-    @Test
     fun testStringonstructorParseFail() {
         assertThrows<JSONException> {
             JSONObject("{")

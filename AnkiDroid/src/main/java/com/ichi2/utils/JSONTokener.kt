@@ -45,7 +45,7 @@ import org.json.JSONException
 import org.json.JSONTokener
 import kotlin.Throws
 
-class JSONTokener(s: String?) : JSONTokener(s) {
+class JSONTokener(s: String) : JSONTokener(s) {
     @Throws(JSONException::class)
     override fun nextValue(): Any {
         val c = nextClean()

@@ -55,7 +55,7 @@ class Model : JSONObject {
      * Creates a model object form json string
      */
     @KotlinCleanup("non-null")
-    constructor(json: String?) : super(json) {}
+    constructor(json: String?) : super(json!!) {}
 
     @CheckResult
     override fun deepClone(): Model {
