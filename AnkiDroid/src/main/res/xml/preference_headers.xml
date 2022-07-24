@@ -89,7 +89,7 @@
         android:key="@string/pref_dev_options_screen_key"
         android:title="@string/pref_cat_dev_options"
         android:icon="@drawable/ic_code"
-        android:fragment="com.ichi2.anki.Preferences$DevOptionsFragment"
+        android:fragment="com.ichi2.anki.preferences.DevOptionsFragment"
         app:isPreferenceVisible="false">
     </Preference>
     <!-- About -->

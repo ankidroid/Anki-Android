@@ -68,7 +68,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
             findPreference<Preference>("pref_screen_advanced")!!.isVisible = false
         }
 
-        if (Preferences.DevOptionsFragment.isEnabled(requireContext())) {
+        if (DevOptionsFragment.isEnabled(requireContext())) {
             setDevOptionsVisibility(true)
         }
 

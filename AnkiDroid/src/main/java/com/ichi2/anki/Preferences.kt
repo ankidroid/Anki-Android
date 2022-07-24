@@ -24,25 +24,17 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBar
-import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.preference.*
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.preferences.AboutFragment
 import com.ichi2.anki.preferences.HeaderFragment
 import com.ichi2.anki.preferences.SettingsFragment
-import com.ichi2.anki.preferences.setOnPreferenceChangeListener
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.preferences.*
 import com.ichi2.themes.Themes.setThemeLegacy
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.*
 
@@ -185,123 +177,6 @@ class Preferences : AnkiActivity() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
         if (col != null && !col.dbClosed) {
             col.save()
-        }
-    }
-
-    // ----------------------------------------------------------------------------
-    // Inner classes
-    // ----------------------------------------------------------------------------
-
-    /**
-     * Fragment exclusive to DEBUG builds which can be used
-     * to add options useful for developers or WIP features.
-     */
-    class DevOptionsFragment : SettingsFragment() {
-        override val preferenceResource: Int
-            get() = R.xml.preferences_dev_options
-        override val analyticsScreenNameConstant: String
-            get() = "prefs.dev_options"
-
-        override fun initSubscreen() {
-            val enableDevOptionsPref = requirePreference<SwitchPreference>(R.string.dev_options_enabled_by_user_key)
-            // If it is a DEBUG build, hide the preference to disable developer options
-            // If it is a RELEASE build, configure the preference to disable dev options
-            if (BuildConfig.DEBUG) {
-                enableDevOptionsPref.isVisible = false
-            } else {
-                enableDevOptionsPref.setOnPreferenceChangeListener { _, _ ->
-                    showDisableDevOptionsDialog()
-                    false
-                }
-            }
-            // Make it possible to test crash reporting
-            requirePreference<Preference>(getString(R.string.pref_trigger_crash_key)).setOnPreferenceClickListener {
-                Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
-                throw RuntimeException("This is a test crash")
-            }
-            // Make it possible to test analytics
-            requirePreference<Preference>(getString(R.string.pref_analytics_debug_key)).setOnPreferenceClickListener {
-                if (UsageAnalytics.isEnabled) {
-                    showThemedToast(requireContext(), "Analytics set to dev mode", true)
-                } else {
-                    showThemedToast(requireContext(), "Done! Enable Analytics in 'General' settings to use.", true)
-                }
-                UsageAnalytics.setDevMode()
-                true
-            }
-            // Lock database
-            requirePreference<Preference>(getString(R.string.pref_lock_database_key)).setOnPreferenceClickListener {
-                val c = CollectionHelper.getInstance().getCol(requireContext())!!
-                Timber.w("Toggling database lock")
-                c.db.database.beginTransaction()
-                true
-            }
-            // Reset onboarding
-            requirePreference<Preference>(getString(R.string.pref_reset_onboarding_key)).setOnPreferenceClickListener {
-                OnboardingUtils.reset(requireContext())
-                true
-            }
-            // Use V16 Backend
-            requirePreference<Preference>(getString(R.string.pref_rust_backend_key)).apply {
-                setDefaultValue(!BackendFactory.defaultLegacySchema)
-                setOnPreferenceClickListener {
-                    BackendFactory.defaultLegacySchema = false
-                    (requireActivity() as Preferences).restartWithNewDeckPicker()
-                    true
-                }
-            }
-            // Use scoped storage
-            requirePreference<Preference>(getString(R.string.pref_scoped_storage_key)).apply {
-                setDefaultValue(AnkiDroidApp.TESTING_SCOPED_STORAGE)
-                setOnPreferenceClickListener {
-                    AnkiDroidApp.TESTING_SCOPED_STORAGE = true
-                    (requireActivity() as Preferences).restartWithNewDeckPicker()
-                    true
-                }
-            }
-        }
-
-        /**
-         * Shows dialog to confirm if developer options should be disabled
-         */
-        private fun showDisableDevOptionsDialog() {
-            MaterialDialog(requireContext()).show {
-                title(R.string.disable_dev_options)
-                positiveButton(R.string.dialog_ok) {
-                    disableDevOptions()
-                }
-                negativeButton(R.string.dialog_cancel)
-            }
-        }
-
-        /**
-         * Destroys the fragment and hides developer options on [HeaderFragment]
-         */
-        private fun disableDevOptions() {
-            val fragment = parentFragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
-            if (fragment is HeaderFragment) {
-                fragment.setDevOptionsVisibility(false)
-            }
-            parentFragmentManager.popBackStack()
-            setDevOptionsEnabledByUser(requireContext(), false)
-        }
-
-        companion object {
-            /**
-             * @return whether developer options should be shown to the user.
-             * True in case [BuildConfig.DEBUG] is true
-             * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
-             */
-            fun isEnabled(context: Context): Boolean {
-                return BuildConfig.DEBUG || AnkiDroidApp.getSharedPrefs(context)
-                    .getBoolean(context.getString(R.string.dev_options_enabled_by_user_key), false)
-            }
-
-            fun setDevOptionsEnabledByUser(context: Context, isEnabled: Boolean) {
-                AnkiDroidApp.getSharedPrefs(context).edit {
-                    putBoolean(context.getString(R.string.dev_options_enabled_by_user_key), isEnabled)
-                }
-            }
         }
     }
 
