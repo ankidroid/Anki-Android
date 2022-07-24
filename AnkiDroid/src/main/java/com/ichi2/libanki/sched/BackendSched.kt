@@ -55,3 +55,10 @@ fun CollectionV16.deckTreeLegacy(includeCounts: Boolean): List<TreeNode<DeckDueT
     }
     return toLegacyNode(deckTree(includeCounts), "").children
 }
+
+fun CollectionV16.upgradeScheduler() {
+    modSchema()
+    clearUndo()
+    backend.upgradeScheduler()
+    _loadScheduler()
+}

@@ -248,7 +248,7 @@ open class Collection(
     }
 
     // Note: Additional members in the class duplicate this
-    private fun _loadScheduler() {
+    fun _loadScheduler() {
         val ver = schedVer()
         if (ver == 1) {
             sched = Sched(this)
