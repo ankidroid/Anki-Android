@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Sinchronizuojant, automatiškai parsiųsti trūkstamas laikmenas</string>
     <string name="sync_account" maxLength="41">„AnkiWeb“ paskyra</string>
     <string name="sync_account_summ_logged_out">Esate neprisijungę</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Automatinis sinchronizavimas</string>
     <string name="automatic_sync_choice_summ">Sinchronizuoti automatiškai įjungiant/išjungiant programą, jei paskutinis sinchronizavimas vyko prieš daugiau nei 10
         minučių.</string>

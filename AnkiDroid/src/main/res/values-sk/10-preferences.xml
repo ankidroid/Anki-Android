@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Automaticky prevziať chýbajúce multimédiá počas synchronizácie</string>
     <string name="sync_account" maxLength="41">AnkiWeb účet</string>
     <string name="sync_account_summ_logged_out">Neprihlásený</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Automatická synchronizácia</string>
     <string name="automatic_sync_choice_summ">Synchronizovať automaticky pri štarte/ukončení aplikácie, ak posledná synchronizácia bola pred viac než 10
         minútami.</string>

@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Awtomatikong makuha ang nawawalang media kapag naka-sync</string>
     <string name="sync_account" maxLength="41">AnkiWeb account</string>
     <string name="sync_account_summ_logged_out">Hindi naka-log in</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Awtomatikong pag-synchronize</string>
     <string name="automatic_sync_choice_summ">Awtomatikong i-sync sa start / exit ng app kung ang huling pag-sync ay higit sa 10
         minuto ang nakalipas.</string>

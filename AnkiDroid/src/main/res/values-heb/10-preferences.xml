@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">הורדה אוטומטית של קבצי מדיה בזמן הסנכרון</string>
     <string name="sync_account" maxLength="41">חשבון AnkiWeb</string>
     <string name="sync_account_summ_logged_out">לא התחברת לחשבון</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">סנכרון אוטומטי</string>
     <string name="automatic_sync_choice_summ">סנכרון אוטומטי עם התחלה/יציאה של האפליקציה אם הסנכרון האחרון היה יותר מלפני-10
        דקות.</string>

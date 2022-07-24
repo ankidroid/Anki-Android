@@ -100,8 +100,8 @@
         <item>Poznámka upravena</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Použít</string>
+    <string name="filter_by_flags">Příznaky</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Upravit dnešní limit nových karet</string>
     <string name="custom_study_increase_review_limit">Upravit dnešní limit opakování</string>
@@ -387,7 +387,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaše domovská obrazovka neumožňuje AnkiDroidu přidávat zástupce</string>
     <string name="create_shortcut_error">Chyba při přidávání zástupce: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Velká počáteční písmena</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Posunout nástrojovou lištu</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Posouvat nástrojovou lištu</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>

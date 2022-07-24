@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Автоматично сваляне на липсващите медии, при синхронизиране.</string>
     <string name="sync_account" maxLength="41">AnkiWeb профил</string>
     <string name="sync_account_summ_logged_out">Не сте влезнали в профила</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматична синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронизиране пи стариране/изход от приложението, ако последното синхронизиране е от повече от 10        минути.</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>

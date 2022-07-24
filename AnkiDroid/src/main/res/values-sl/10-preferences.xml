@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Samodejno pridobi manjkajočo predstavnost ob sinhronizaciji</string>
     <string name="sync_account" maxLength="41">Račun AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Niste prijavljeni</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Samodejna sinhronizacija</string>
     <string name="automatic_sync_choice_summ">Samodejni sinhroniziraj ob zagonu/zapiranju programa, če je bila
         zadnja sinhronizacija pred več kot 10-mi minutami.</string>

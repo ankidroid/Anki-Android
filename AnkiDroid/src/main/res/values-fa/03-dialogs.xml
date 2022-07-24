@@ -88,8 +88,8 @@
         <item quantity="one">%d کارت زمان‌بندی مجدد شد</item>
         <item quantity="other">%d کارت زمان‌بندی مجدد شدند</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
+    <string name="reschedule_card_dialog_new_card_warning">یک کارت جدید در حال زمان‌بندی مجدد است. زمان‌بندی مجدد، کارت های جدید را هم به کارت های مروری تبدیل میکند. برای این که مکان این کارت جدید را در ترتیب کارت ها تغییر دهید، گزینه ی \'تغییر مکان کارت\' را انتخاب کنید</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">زمان‌بندی مجدد طوری که برنامه‌ریز با کارت در آینده رفتار میکند را هم مجددا تنظیم می‌کند (سادگی به %d%% تنظیم خواهد شد)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">دسته را در نرم افزار مدیریت فایل خود انتخاب کنید یا برای وارد کردن آن به صفحۀ about:downloads مراجعه کنید</string>
     <string name="answering_error_title">خطای پایگاه داده</string>
     <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>
@@ -216,7 +216,7 @@
     <string name="boot_service_too_many_notifications">یادآورهای زیادی تنظیم شده‌اند. بعضی از آنها نمایش داده نخواهند شد</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">انتخاب زبان کیبرد</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_summary">بعضی کیبورد‌های چند‌زبانه مثل GBoard توانایی این را دارند که هنگام تغییر نوشته زبانتان را تغییر دهند\n\nلطفا ویژگی “setImeHintLocales” را از سازنده‌ی کیبورد خود درخواست کنید اگر کیبوردتان توانایی تغییر زبان ندارد.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">استفاده از AnkiDroid</string>
     <string name="help_item_ankidroid_manual">دفترچه راهنما AnkiDroid</string>
@@ -249,11 +249,11 @@
     </plurals>
     <string name="deck_picker_new">تعداد کارت های جدیدی که امروز در این دسته خواهید دید.</string>
     <string name="deck_picker_rev">تعداد کارت های تا مهلت امروز در این دسته</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_lrn">تعداد کارت های در حال یاد‌گیری در این دسته.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">صفحه ی مرور دسته کارت را که شامل تعداد کارت هایی که امروز باید ببینید را باز کن.</string>
     <string name="import_deck_package">بسته ی دسته کارت (.apkg)</string>
     <string name="import_collection_package">بسته ی مجموعه (.colpkg)</string>
 </resources>

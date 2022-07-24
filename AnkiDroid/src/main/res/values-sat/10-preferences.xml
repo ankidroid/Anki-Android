@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱭ-ᱢᱤ. ᱡᱷᱚᱜ ᱟᱫ ᱠᱚ ᱢᱮᱰ.ᱤᱭᱟ ᱟᱹᱜᱩᱭᱼᱟ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ᱠᱷᱟᱛᱟ</string>
     <string name="sync_account_summ_logged_out">ᱵᱟᱝ ᱵᱚᱞᱚᱣᱟᱠ</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="automatic_sync_choice_summ">ᱟᱭᱩᱨ ᱢᱤᱫ ᱢᱮ ᱡᱚᱫᱤ ᱑᱐ ᱴᱤᱡ ᱠᱷᱚᱱ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤᱮᱫ ᱠᱷᱟᱱ ᱮᱯ ᱮᱛᱚᱦᱚ ᱟᱨ ᱵᱚᱸᱫ ᱢᱟᱲᱟᱝ ᱨᱮ</string>
     <string name="sync_status_badge" maxLength="41">ᱥᱭᱸᱠᱨᱚᱱᱟᱭᱡᱮᱥᱚᱱ ᱥᱴᱟᱴᱟᱹᱥ ᱫᱮᱠᱷᱟᱣ</string>

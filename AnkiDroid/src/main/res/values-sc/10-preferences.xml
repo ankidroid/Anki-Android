@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Recùpera in manera automàtica sos elementos multimediales chi mancant in su mentres chi ses sincronizende</string>
     <string name="sync_account" maxLength="41">Contu de AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Non ses intradu</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronizatzione automàtica</string>
     <string name="automatic_sync_choice_summ">Sincroniza in manera automàtica a s\'allughidura/serrada de s\'aplicatzione si s\'ùrtima sincronizatzione est prus betza de 10 minutos.</string>
     <string name="sync_status_badge" maxLength="41">Ammustra s\'istadu de sincronizatzione</string>

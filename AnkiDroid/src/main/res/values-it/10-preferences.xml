@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Recupera automaticamente i contenuti multimediali durante la sincronizzazione.</string>
     <string name="sync_account" maxLength="41">Account AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Non connesso</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronizzazione automatica</string>
     <string name="automatic_sync_choice_summ">Sincronizza automaticamente all\'avvio/uscita se l\'ultima sincronizzazione è stata più di 10 minuti fa.</string>
     <string name="sync_status_badge" maxLength="41">Visualizza stato di sincronizzazione</string>

@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Hämta automatiskt saknade media vid synkning.</string>
     <string name="sync_account" maxLength="41">AnkiWeb-konto</string>
     <string name="sync_account_summ_logged_out">Ej inloggad</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Automatisk synkronering</string>
     <string name="automatic_sync_choice_summ">Synka automatiskt på app start/avstängning om den senaste synkningen var mer än 10        minuter sedan.</string>
     <string name="sync_status_badge" maxLength="41">Visa synkroniseringsstatus</string>

@@ -128,7 +128,6 @@
     <string name="sync_fetch_missing_media_summ">Mediadaten automatisch beziehen, wenn synchronisiert wird.</string>
     <string name="sync_account" maxLength="41">AnkiWeb-Konto</string>
     <string name="sync_account_summ_logged_out">Nicht eingeloggt</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Automatische Synchronisierung</string>
     <string name="automatic_sync_choice_summ">Bei Programmstart/-ende automatisch synchronisieren, falls die letzte Synchronisation mehr als 10 Minuten zurückliegt.</string>
     <string name="sync_status_badge" maxLength="41">Status der Synchronisation anzeigen</string>
@@ -207,7 +206,7 @@
     <string name="html_javascript_debugging_summ">Remote-WebView-Verbindungen aktivieren und Karten-HTML ins AnkiDroid-Verzeichnis speichern</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">Bedienungshilfen</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Zwischenablage-Bilder als PNG einfügen</string>
     <string name="paste_as_png_summary">Standardmäßig fügt Anki Bilder in der Zwischenablage als JPG-Dateien ein, um Speicherplatz zu sparen. Sie können diese Option verwenden, um stattdessen PNG-Bilder einzufügen.</string>
@@ -323,9 +322,9 @@
     <!-- About -->
     <string name="open_changelog">Änderungsprotokoll öffnen</string>
     <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
+    <string name="contributors_title">Mitwirkende</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
+    <string name="license">Lizenz</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
@@ -346,9 +345,9 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s ’ entfernen</string>
     <string name="bindings_already_bound">Bereits an %s gebunden</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
+    <string name="pref_cat_dev_options" maxLength="41">Entwickleroptionen</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Entwickleroptionen aktivieren</string>
+    <string name="disable_dev_options">Entwicklermodus deaktivieren</string>
     <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
     </string>
 </resources>
