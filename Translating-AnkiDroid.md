@@ -1,5 +1,14 @@
 Even if you prefer to use AnkiDroid in English, other people in your country might prefer to use it in their own language. Translating AnkiDroid to your native language means your country's AnkiDroid will grow much faster, leading to better shared decks in your language.
 
+# Translation systems
+
+AnkiDroid has translations defined in two separate areas. 
+
+1) We use "crowdin.com" for **Android-specific** strings - this is where most of the translations are currently
+2) The whole Anki ecosystem (AnkiWeb, AnkiMobile, Anki Desktop, and AnkiDroid) share some translations using the "Pontoon" system, with more instructions at https://translating.ankiweb.net/
+
+# AnkiDroid specific translations on Crowdin:
+
 Translating is easy and fun:
   * Go to http://crowdin.net/project/ankidroid
   * Register, if you don't have an account yet
