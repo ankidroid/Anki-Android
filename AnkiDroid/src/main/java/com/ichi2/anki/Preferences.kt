@@ -19,7 +19,6 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.app.AlarmManager
 import android.app.AlertDialog
 import android.content.*
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
@@ -55,7 +54,6 @@ import com.ichi2.anki.preferences.AboutFragment
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
-import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.CustomSyncServer.handleSyncServerPreferenceChange
 import com.ichi2.compat.CompatHelper
@@ -198,66 +196,6 @@ class Preferences : AnkiActivity() {
     // Class methods
     // ----------------------------------------------------------------------------
 
-    /**
-     * Loop over every preference in the list and set the summary text
-     */
-    private fun initAllPreferences(screen: PreferenceScreen) {
-        for (i in 0 until screen.preferenceCount) {
-            val preference = screen.getPreference(i)
-            if (preference is PreferenceGroup) {
-                for (j in 0 until preference.preferenceCount) {
-                    val nestedPreference = preference.getPreference(j)
-                    if (nestedPreference is PreferenceGroup) {
-                        for (k in 0 until nestedPreference.preferenceCount) {
-                            initPreference(nestedPreference.getPreference(k))
-                        }
-                    } else {
-                        initPreference(preference.getPreference(j))
-                    }
-                }
-            } else {
-                initPreference(preference)
-            }
-        }
-    }
-
-    private fun initPreference(pref: Preference) {
-        // Load stored values from Preferences which are stored in the Collection
-        if (sCollectionPreferences.contains(pref.key)) {
-            val col = col
-            if (col != null) {
-                try {
-                    when (pref.key) {
-                        SHOW_ESTIMATE -> (pref as SwitchPreference).isChecked = col.get_config_boolean("estTimes")
-                        SHOW_PROGRESS -> (pref as SwitchPreference).isChecked = col.get_config_boolean("dueCounts")
-                        LEARN_CUTOFF -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("collapseTime") / 60)
-                        TIME_LIMIT -> (pref as NumberRangePreferenceCompat).setValue(col.get_config_int("timeLim") / 60)
-                        USE_CURRENT -> (pref as ListPreference).setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
-                        AUTOMATIC_ANSWER_ACTION -> (pref as ListPreference).setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
-                        NEW_SPREAD -> (pref as ListPreference).setValueIndex(col.get_config_int("newSpread"))
-                        DAY_OFFSET -> (pref as SeekBarPreferenceCompat).value = getDayOffset(col)
-                        PASTE_PNG -> (pref as SwitchPreference).isChecked = col.get_config("pastePNG", false)!!
-                        NEW_TIMEZONE_HANDLING -> {
-                            val switch = pref as SwitchPreference
-                            switch.isChecked = col.sched._new_timezone_enabled()
-                            if (col.schedVer() <= 1) {
-                                Timber.d("Disabled 'newTimezoneHandling' box")
-                                switch.isEnabled = false
-                            }
-                        }
-                    }
-                } catch (e: NumberFormatException) {
-                    throw RuntimeException(e)
-                }
-            } else {
-                // Disable Col preferences if Collection closed
-                pref.isEnabled = false
-            }
-        } else if (MINIMUM_CARDS_DUE_FOR_NOTIFICATION == pref.key) {
-            updateNotificationPreference(pref as ListPreference)
-        }
-    }
-
     /** Sets the hour that the collection rolls over to the next day  */
     @VisibleForTesting
     fun setDayOffset(hours: Int) {
@@ -274,19 +212,6 @@ class Preferences : AnkiActivity() {
             }
         }
         scheduleNotification(TimeManager.time, this)
-    }
-
-    fun updateNotificationPreference(listPreference: ListPreference) {
-        val entries = listPreference.entries
-        val values = listPreference.entryValues
-        for (i in entries.indices) {
-            val value = values[i].toString().toInt()
-            if (entries[i].toString().contains("%d")) {
-                entries[i] = String.format(entries[i].toString(), value)
-            }
-        }
-        listPreference.entries = entries
-        listPreference.summary = listPreference.entry.toString()
     }
 
     private fun closePreferences() {
@@ -363,7 +288,6 @@ class Preferences : AnkiActivity() {
             val screenName = analyticsScreenNameConstant
             UsageAnalytics.sendAnalyticsScreenView(screenName)
             initSubscreen()
-            (activity as Preferences?)!!.initAllPreferences(preferenceScreen)
         }
 
         /** Obtains a non-null reference to the preference defined by the key, or throws  */
@@ -452,58 +376,6 @@ class Preferences : AnkiActivity() {
                         keepScreenOn!!.isChecked = (pref as SwitchPreference).isChecked
                     }
                     LANGUAGE -> preferencesActivity.closePreferences()
-                    SHOW_PROGRESS -> {
-                        preferencesActivity.col.set_config("dueCounts", (pref as SwitchPreference).isChecked)
-                        preferencesActivity.col.setMod()
-                    }
-                    SHOW_ESTIMATE -> {
-                        preferencesActivity.col.set_config("estTimes", (pref as SwitchPreference).isChecked)
-                        preferencesActivity.col.setMod()
-                    }
-                    NEW_SPREAD -> {
-                        preferencesActivity.col.set_config("newSpread", (pref as ListPreference).value.toInt())
-                        preferencesActivity.col.setMod()
-                    }
-                    TIME_LIMIT -> {
-                        preferencesActivity.col.set_config("timeLim", (pref as NumberRangePreferenceCompat).getValue() * 60)
-                        preferencesActivity.col.setMod()
-                    }
-                    LEARN_CUTOFF -> {
-                        preferencesActivity.col.set_config("collapseTime", (pref as NumberRangePreferenceCompat).getValue() * 60)
-                        preferencesActivity.col.setMod()
-                    }
-                    USE_CURRENT -> {
-                        preferencesActivity.col.set_config("addToCur", "0" == (pref as ListPreference).value)
-                        preferencesActivity.col.setMod()
-                    }
-                    AUTOMATIC_ANSWER_ACTION -> {
-                        preferencesActivity.col.set_config(AutomaticAnswerAction.CONFIG_KEY, (pref as ListPreference).value.toInt())
-                        preferencesActivity.col.setMod()
-                    }
-                    DAY_OFFSET -> {
-                        preferencesActivity.setDayOffset((pref as SeekBarPreferenceCompat).value)
-                    }
-                    PASTE_PNG -> {
-
-                        preferencesActivity.col.set_config("pastePNG", (pref as SwitchPreference).isChecked)
-                        preferencesActivity.col.setMod()
-                    }
-                    MINIMUM_CARDS_DUE_FOR_NOTIFICATION -> {
-                        val listPreference = screen.findPreference<ListPreference>(MINIMUM_CARDS_DUE_FOR_NOTIFICATION)
-                        if (listPreference != null) {
-                            preferencesActivity.updateNotificationPreference(listPreference)
-                            if (listPreference.value.toInt() < PENDING_NOTIFICATIONS_ONLY) {
-                                scheduleNotification(TimeManager.time, preferencesActivity)
-                            } else {
-                                val intent = CompatHelper.compat.getImmutableBroadcastIntent(
-                                    preferencesActivity, 0,
-                                    Intent(preferencesActivity, NotificationService::class.java), 0
-                                )
-                                val alarmManager = preferencesActivity.getSystemService(ALARM_SERVICE) as AlarmManager
-                                alarmManager.cancel(intent)
-                            }
-                        }
-                    }
                     CrashReportService.FEEDBACK_REPORT_KEY -> {
                         val value = prefs!!.getString(CrashReportService.FEEDBACK_REPORT_KEY, "")
                         CrashReportService.onPreferenceChanged(preferencesActivity, value!!)
@@ -532,24 +404,6 @@ class Preferences : AnkiActivity() {
                             Timber.i("AnkiDroid ContentProvider disabled by user")
                         }
                         pm.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
-                    }
-                    NEW_TIMEZONE_HANDLING -> {
-                        if (preferencesActivity.col.schedVer() != 1) {
-                            val sched = preferencesActivity.col.sched
-                            val wasEnabled = sched._new_timezone_enabled()
-                            val isEnabled = (pref as SwitchPreference).isChecked
-                            if (wasEnabled != isEnabled) {
-                                if (isEnabled) {
-                                    try {
-                                        sched.set_creation_offset()
-                                    } catch (e: BackendNotSupportedException) {
-                                        throw e.alreadyUsingRustBackend()
-                                    }
-                                } else {
-                                    sched.clear_creation_offset()
-                                }
-                            }
-                        }
                     }
                     CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY -> CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
                     AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY -> AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(preferencesActivity)
@@ -624,6 +478,7 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_general)
+            val col = col!!
             val screen = preferenceScreen
             if (isRestrictedLearningDevice) {
                 val switchPrefVibrate = requirePreference<SwitchPreference>("widgetVibrate")
@@ -634,6 +489,28 @@ class Preferences : AnkiActivity() {
             }
             // Build languages
             initializeLanguageDialog(screen)
+
+            // Deck for new cards
+            // Represents in the collections pref "addToCur": i.e.
+            // if true, then add note to current decks, otherwise let the note type's configuration decide
+            // Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
+            requirePreference<ListPreference>(R.string.deck_for_new_cards_key).apply {
+                setValueIndex(if (col.get_config("addToCur", true)!!) 0 else 1)
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("addToCur", "0" == newValue)
+                    true
+                }
+            }
+            // Paste PNG
+            // Represents in the collection's pref "pastePNG" , i.e.
+            // whether to convert clipboard uri to png format or not.
+            requirePreference<SwitchPreference>(R.string.paste_png_key).apply {
+                isChecked = col.get_config("pastePNG", false)!!
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("pastePNG", newValue)
+                    true
+                }
+            }
         }
 
         private fun initializeLanguageDialog(screen: PreferenceScreen) {
@@ -668,22 +545,93 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_reviewing)
+            val col = col!!
+
+            // New cards position
+            // Represents the collections pref "newSpread": i.e.
+            // whether the new cards are added at the end of the queue or randomly in it.
+            requirePreference<ListPreference>(R.string.new_spread_preference).apply {
+                setValueIndex(col.get_config_int("newSpread"))
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("newSpread", ((newValue as String).toInt()))
+                    true
+                }
+            }
 
             // Learn ahead limit
-            requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference)
-                .setFormattedSummary(R.string.pref_summary_minutes)
+            // Represents the collections pref "collapseTime": i.e.
+            // if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
+            // Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
+            requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
+                setValue(col.get_config_int("collapseTime") / 60)
+                setFormattedSummary(R.string.pref_summary_minutes)
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("collapseTime", ((newValue as String).toInt() * 60))
+                    true
+                }
+            }
             // Timebox time limit
-            requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference)
-                .setFormattedSummary(R.string.pref_summary_minutes)
+            // Represents in Android preferences the collections configuration "timeLim": i.e.
+            // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
+            // Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
+            requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
+                setValue(col.get_config_int("timeLim") / 60)
+                setFormattedSummary(R.string.pref_summary_minutes)
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("timeLim", ((newValue as String).toInt() * 60))
+                    true
+                }
+            }
             // Start of next day
-            requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference)
-                .setFormattedSummary(R.string.day_offset_summary)
+            // Represents the collection pref "rollover"
+            // in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
+            requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference).apply {
+                value = getDayOffset(col)
+                setFormattedSummary(R.string.day_offset_summary)
+                setOnPreferenceChangeListener { _, newValue ->
+                    (requireActivity() as Preferences).setDayOffset(newValue as Int)
+                    true
+                }
+            }
+            /**
+             * Timeout answer
+             * An integer representing the action when "Automatic Answer" flips a card from answer to question
+             * 0 represents "bury", 1-4 represents the named buttons
+             * @see com.ichi2.anki.reviewer.AutomaticAnswerAction
+             * We use the same key in the collection config
+             * @see com.ichi2.anki.reviewer.AutomaticAnswerAction.CONFIG_KEY
+             * */
+            requirePreference<ListPreference>(R.string.automatic_answer_action_preference).apply {
+                setValueIndex(col.get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!!)
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config(AutomaticAnswerAction.CONFIG_KEY, (newValue as String).toInt())
+                    true
+                }
+            }
             // Time to show answer
             requirePreference<SeekBarPreferenceCompat>(R.string.timeout_answer_seconds_preference)
                 .setFormattedSummary(R.string.pref_summary_seconds)
             // Time to show question
             requirePreference<SeekBarPreferenceCompat>(R.string.timeout_question_seconds_preference)
                 .setFormattedSummary(R.string.pref_summary_seconds)
+
+            // New timezone handling
+            requirePreference<SwitchPreference>(R.string.new_timezone_handling_preference).apply {
+                isChecked = col.sched._new_timezone_enabled()
+                isEnabled = col.schedVer() > 1
+                setOnPreferenceChangeListener { _, newValue ->
+                    if (newValue == true) {
+                        try {
+                            col.sched.set_creation_offset()
+                        } catch (e: BackendNotSupportedException) {
+                            throw e.alreadyUsingRustBackend()
+                        }
+                    } else {
+                        col.sched.clear_creation_offset()
+                    }
+                    true
+                }
+            }
         }
     }
 
@@ -714,7 +662,6 @@ class Preferences : AnkiActivity() {
                             return@positiveButton
                         }
                         col!!.modSchemaNoCheck()
-                        col!!.setMod()
                         showThemedToast(
                             requireContext(),
                             R.string.force_full_sync_confirmation,
@@ -746,6 +693,7 @@ class Preferences : AnkiActivity() {
 
         override fun initSubscreen() {
             addPreferencesFromResource(R.xml.preferences_appearance)
+            val col = col!!
             // Card browser font scaling
             requirePreference<SeekBarPreferenceCompat>(R.string.pref_card_browser_font_scale_key)
                 .setFormattedSummary(R.string.pref_summary_percentage)
@@ -853,6 +801,27 @@ class Preferences : AnkiActivity() {
                 true
             }
             initializeCustomFontsDialog()
+
+            // Show estimate time
+            // Represents the collection pref "estTime": i.e.
+            // whether the buttons should indicate the duration of the interval if we click on them.
+            requirePreference<SwitchPreference>(R.string.show_estimates_preference).apply {
+                isChecked = col.get_config_boolean("estTimes")
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("estTimes", newValue)
+                    true
+                }
+            }
+            // Show progress
+            // Represents the collection pref "dueCounts": i.e.
+            // whether the remaining number of cards should be shown.
+            requirePreference<SwitchPreference>(R.string.show_progress_preference).apply {
+                isChecked = col.get_config_boolean("dueCounts")
+                setOnPreferenceChangeListener { _, newValue ->
+                    col.set_config("dueCounts", newValue)
+                    true
+                }
+            }
         }
 
         /** Initializes the list of custom fonts shown in the preferences.  */
@@ -963,7 +932,7 @@ class Preferences : AnkiActivity() {
             }
             setupContextMenuPreference(CardBrowserContextMenu.CARD_BROWSER_CONTEXT_MENU_PREF_KEY, R.string.card_browser_context_menu)
             setupContextMenuPreference(AnkiCardContextMenu.ANKI_CARD_CONTEXT_MENU_PREF_KEY, R.string.context_menu_anki_card_label)
-            if (col!!.schedVer() == 1) {
+            if (col != null && col!!.schedVer() == 1) {
                 Timber.i("Displaying V1-to-V2 scheduler preference")
                 val schedVerPreference = SwitchPreference(requireContext())
                 schedVerPreference.setTitle(R.string.sched_v2)
@@ -1344,83 +1313,10 @@ class Preferences : AnkiActivity() {
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
         /**
-         * Represents in Android preferences the collections configuration "estTime": i.e. whether the buttons should indicate the duration of the interval if we click on them.
-         */
-        private const val SHOW_ESTIMATE = "showEstimates"
-
-        /**
-         * Represents in Android preferences the collections configuration "dueCounts": i.e.
-         * whether the remaining number of cards should be shown.
-         */
-        private const val SHOW_PROGRESS = "showProgress"
-
-        /**
-         * Represents in Android preferences the collections configuration "collapseTime": i.e.
-         * if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
-         * Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
-         */
-        private const val LEARN_CUTOFF = "learnCutoff"
-
-        /**
-         * Represents in Android preferences the collections configuration "timeLim": i.e.
-         * the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
-         * Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
-         */
-        private const val TIME_LIMIT = "timeLimit"
-
-        /**
-         * Represents in Android preferences the collections configuration "addToCur": i.e.
-         * if true, then add note to current decks, otherwise let the note type's configuration decide
-         * Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
-         */
-        private const val USE_CURRENT = "useCurrent"
-
-        /**
-         * Represents in Android preferences the collections configuration "newSpread": i.e.
-         * whether the new cards are added at the end of the queue or randomly in it.
-         */
-        private const val NEW_SPREAD = "newSpread"
-
-        /**
-         * Represents in Android preference the collection's configuration "rollover"
-         * in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
-         */
-        private const val DAY_OFFSET = "dayOffset"
-
-        /**
-         * Represents in Android preference the collection's configuration "pastePNG" , i.e.
-         * whether to convert clipboard uri to png format or not.
-         * TODO: convert to png if a image file has transparency, or at least if it supports it.
-         */
-        private const val PASTE_PNG = "pastePNG"
-
-        /**
-         * Represents in Android preferences the collection's "Automatic Answer" action.
-         *
-         * An integer representing the action when "Automatic Answer" flips a card from answer to question
-         *
-         * 0 represents "bury", 1-4 represents the named buttons
-         *
-         * @see com.ichi2.anki.reviewer.AutomaticAnswerAction
-         *
-         * Although AnkiMobile and AnkiDroid have the feature, this config key is currently AnkiDroid only
-         *
-         * We use the same key in the collection config
-         *
-         *
-         * @see com.ichi2.anki.reviewer.AutomaticAnswerAction.CONFIG_KEY
-         */
-        private const val AUTOMATIC_ANSWER_ACTION = "automaticAnswerAction"
-
-        /**
          * The number of cards that should be due today in a deck to justify adding a notification.
          */
         const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
-        private const val NEW_TIMEZONE_HANDLING = "newTimezoneHandling"
-        private val sCollectionPreferences = arrayOf(
-            SHOW_ESTIMATE, SHOW_PROGRESS,
-            LEARN_CUTOFF, TIME_LIMIT, USE_CURRENT, NEW_SPREAD, DAY_OFFSET, NEW_TIMEZONE_HANDLING, AUTOMATIC_ANSWER_ACTION
-        )
+
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
 
         /** Returns the hour that the collection rolls over to the next day  */
