@@ -55,7 +55,7 @@ import com.ichi2.utils.JSON.toString
 @KotlinCleanup("Simplify null comparison, !! -> ?.")
 open class JSONObject : org.json.JSONObject, Iterable<String?> {
     constructor() : super()
-    constructor(copyFrom: Map<Any?, Any?>) : super(copyFrom)
+    constructor(copyFrom: Map<out String, Any?>) : super(copyFrom)
 
     /**
      * Creates a new [JSONObject] by copying mappings for the listed names
