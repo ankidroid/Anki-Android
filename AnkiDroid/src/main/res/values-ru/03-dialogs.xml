@@ -273,4 +273,6 @@
     <string name="deck_picker_counts">Откройте страницу предварительного просмотра колоды, содержащую количество карточек для просмотра сегодня.</string>
     <string name="import_deck_package">Пакет колоды (.apkg)</string>
     <string name="import_collection_package">Пакет коллекции (.colpkg)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

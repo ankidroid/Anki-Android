@@ -254,4 +254,6 @@
     <string name="deck_picker_counts">Aprire la pagina panoramica del mazzo contenente il numero di carte da vedere oggi.</string>
     <string name="import_deck_package">Pacchetto mazzo (.apkg)</string>
     <string name="import_collection_package">Pacchetto di raccolta (.colpkg)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

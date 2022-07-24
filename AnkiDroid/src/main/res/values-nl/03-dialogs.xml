@@ -254,4 +254,6 @@
     <string name="deck_picker_counts">Open de leerset overzichtspagina, die het aantal kaarten die u vandaag ziet bevat</string>
     <string name="import_deck_package">Leerset pakket (.apkg)</string>
     <string name="import_collection_package">Verzamelingspakket (.colpkg)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>
