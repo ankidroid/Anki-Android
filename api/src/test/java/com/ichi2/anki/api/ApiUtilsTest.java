@@ -80,11 +80,6 @@ public class ApiUtilsTest {
     }
 
     @Test
-    public void splitTagsShouldReturnNullWhenStringIsNull() {
-        assertNull(Utils.splitTags(null));
-    }
-
-    @Test
     public void shouldGenerateProperCheckSum() {
         assertEquals(3533307532L, Utils.fieldChecksum("AnkiDroid"));
     }
