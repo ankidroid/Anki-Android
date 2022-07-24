@@ -203,7 +203,7 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
     // It must be copied, otherwise it adds a org.json.JSONArray instead of a JSONArray
     // in the object
     override fun accumulate(name: String, value: Any?): JSONObject {
-        val current = opt(checkName(name))
+        val current = opt(name)
             ?: return put(name, value!!)
 
         // check in accumulate, since array.put(Object) doesn't do any checking
@@ -351,15 +351,6 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
          */
         @JvmStatic
         fun objectToObject(obj: org.json.JSONObject?): JSONObject = obj as JSONObject
-
-        // Copied from upstream
-        @KotlinCleanup("remove, always called with non-null")
-        private fun checkName(name: String?): String {
-            if (name == null) {
-                throw JSONException("Names must be non-null")
-            }
-            return name
-        }
 
         @CheckResult
         @KotlinCleanup("make number non-null")
