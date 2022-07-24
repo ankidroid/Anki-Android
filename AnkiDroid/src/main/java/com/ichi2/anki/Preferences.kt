@@ -29,9 +29,7 @@ import android.provider.MediaStore
 import android.view.MenuItem
 import android.webkit.URLUtil
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
@@ -49,6 +47,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.preferences.AboutFragment
 import com.ichi2.anki.preferences.HeaderFragment
+import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.setOnPreferenceChangeListener
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
@@ -224,81 +223,6 @@ class Preferences : AnkiActivity() {
     // ----------------------------------------------------------------------------
     // Inner classes
     // ----------------------------------------------------------------------------
-
-    abstract class SettingsFragment : PreferenceFragmentCompat() {
-        /** @return The XML file which defines the preferences displayed by this PreferenceFragment
-         */
-        @get:XmlRes
-        abstract val preferenceResource: Int
-
-        /**
-         * Refreshes all values on the screen
-         * Call if a large number of values are changed from one preference.
-         */
-        protected fun refreshScreen() {
-            preferenceScreen.removeAll()
-            addPreferencesFromResource(preferenceResource)
-            initSubscreen()
-        }
-
-        protected val col: Collection?
-            get() = CollectionHelper.getInstance().getCol(requireContext())
-
-        abstract fun initSubscreen()
-
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            UsageAnalytics.sendAnalyticsScreenView(analyticsScreenNameConstant)
-            addPreferencesFromResource(preferenceResource)
-            initSubscreen()
-        }
-
-        /** Obtains a non-null reference to the preference defined by the key, or throws  */
-        @Suppress("UNCHECKED_CAST")
-        protected fun <T : Preference?> requirePreference(key: String): T {
-            val preference = findPreference<Preference>(key)
-                ?: throw IllegalStateException("missing preference: '$key'")
-            return preference as T
-        }
-
-        @Suppress("UNCHECKED_CAST")
-        /**
-         * Obtains a non-null reference to the preference whose
-         * key is defined with given [resId] or throws
-         * e.g. `requirePreference(R.string.day_theme_key)` returns
-         * the preference whose key is `@string/day_theme_key`
-         * The resource IDs with preferences keys can be found on `res/values/preferences.xml`
-         */
-        protected fun <T : Preference?> requirePreference(@StringRes resId: Int): T {
-            return requirePreference(getString(resId)) as T
-        }
-
-        protected abstract val analyticsScreenNameConstant: String
-
-        @Suppress("deprecation") // setTargetFragment
-        override fun onDisplayPreferenceDialog(preference: Preference) {
-            val dialogFragment = when (preference) {
-                is IncrementerNumberRangePreferenceCompat -> IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
-                is NumberRangePreferenceCompat -> NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat.newInstance(preference.getKey())
-                is SeekBarPreferenceCompat -> SeekBarPreferenceCompat.SeekBarDialogFragmentCompat.newInstance(preference.getKey())
-                else -> null
-            }
-
-            if (dialogFragment != null) {
-                dialogFragment.setTargetFragment(this, 0)
-                dialogFragment.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
-            } else {
-                super.onDisplayPreferenceDialog(preference)
-            }
-        }
-
-        companion object {
-            @JvmStatic
-            protected fun getSubscreenIntent(context: Context?, javaClassName: String): Intent {
-                return Intent(context, Preferences::class.java)
-                    .putExtra(INITIAL_FRAGMENT_EXTRA, javaClassName)
-            }
-        }
-    }
 
     class GeneralSettingsFragment : SettingsFragment() {
         override val preferenceResource: Int
