@@ -290,4 +290,6 @@
     <string name="deck_picker_counts">افتح صفحة مراجعة الرزمة،  والتي تحتوي عدد البطاقات التي تراها اليوم.</string>
     <string name="import_deck_package">حزمة رزمة (.apkg)</string>
     <string name="import_collection_package">حزمة مجموعة (.colpkg)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

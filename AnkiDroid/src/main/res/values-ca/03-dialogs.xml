@@ -254,4 +254,6 @@
     <string name="deck_picker_counts">Obriu la pàgina de descripció general del paquet que conté el nombre de cartes que podeu veure avui.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>
