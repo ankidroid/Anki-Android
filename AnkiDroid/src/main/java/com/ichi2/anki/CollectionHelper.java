@@ -162,7 +162,7 @@ public class CollectionHelper {
      * dev preferences, or if the active language changes. The collection should be closed before calling
      * this.
      */
-    synchronized void discardBackend() {
+    public synchronized void discardBackend() {
         if (mBackend != null) {
             mBackend.close();
             mBackend = null;
