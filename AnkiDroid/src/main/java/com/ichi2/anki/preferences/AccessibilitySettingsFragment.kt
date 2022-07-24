@@ -24,7 +24,7 @@ import com.ichi2.preferences.SeekBarPreferenceCompat
  */
 class AccessibilitySettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
-        get() = R.xml.preferences_acessibility
+        get() = R.xml.preferences_accessibility
     override val analyticsScreenNameConstant: String
         get() = "prefs.accessibility"
 
