@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.preferences
 
-import com.ichi2.anki.Preferences.SettingsFragment
 import com.ichi2.anki.R
 import com.ichi2.preferences.SeekBarPreferenceCompat
 
