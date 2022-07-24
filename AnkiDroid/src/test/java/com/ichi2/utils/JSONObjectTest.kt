@@ -620,13 +620,6 @@ class JSONObjectTest {
     }
 
     @Test
-    fun testTokenerConstructorNull() {
-        assertThrows<NullPointerException> {
-            JSONObject(null as JSONTokener?)
-        }
-    }
-
-    @Test
     fun testTokenerConstructorParseFail() {
         assertThrows<JSONException> {
             JSONObject(JSONTokener("{"))

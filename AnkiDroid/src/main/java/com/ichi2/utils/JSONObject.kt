@@ -77,12 +77,11 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
 
     // original code from https://github.com/stleary/JSON-java/blob/master/JSONObject.java
     // super() must be first instruction, thus it can't be in a try, and the exception can't be caught
-    @KotlinCleanup("make JSONTokener non-null")
-    constructor(x: JSONTokener?) : this() {
+    constructor(x: JSONTokener) : this() {
         try {
             var c: Char
             var key: String
-            if (x!!.nextClean() != '{') {
+            if (x.nextClean() != '{') {
                 throw x.syntaxError("A JSONObject text must begin with '{'")
             }
             while (true) {
