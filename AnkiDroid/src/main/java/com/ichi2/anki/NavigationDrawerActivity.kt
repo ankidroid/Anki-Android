@@ -299,13 +299,20 @@ abstract class NavigationDrawerActivity :
                 }
                 R.id.nav_settings -> {
                     Timber.i("Navigating to settings")
-                    launchActivityForResultWithAnimation(Intent(this@NavigationDrawerActivity, Preferences::class.java), mPreferencesLauncher, FADE)
+                    launchActivityForResultWithAnimation(
+                        Intent(
+                            this@NavigationDrawerActivity,
+                            Preferences::class.java
+                        ),
+                        mPreferencesLauncher,
+                        FADE
+                    )
                     // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
                     (this as? Statistics)?.finishWithAnimation(FADE)
                 }
                 R.id.nav_help -> {
                     Timber.i("Navigating to help")
-                    showDialogFragment(HelpDialog.createInstance(this))
+                    showDialogFragment(HelpDialog.createInstance())
                 }
                 R.id.support_ankidroid -> {
                     Timber.i("Navigating to support AnkiDroid")
@@ -313,7 +320,6 @@ abstract class NavigationDrawerActivity :
                 }
             }
         }
-
         closeDrawer()
         return true
     }
