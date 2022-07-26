@@ -102,24 +102,27 @@ abstract class NavigationDrawerActivity :
     }
 
     // Navigation drawer initialisation
-    @KotlinCleanup("use .apply on enableToolbar")
     protected fun initNavigationDrawer(mainView: View) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
-        mDrawerLayout = mainView.findViewById(R.id.drawer_layout)
-        // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout!!.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
+        mDrawerLayout = mainView.findViewById<DrawerLayout?>(R.id.drawer_layout)?.apply {
+            // set a custom shadow that overlays the main content when the drawer opens
+            setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
+            setStatusBarBackgroundColor(Themes.getColorFromAttr(this@NavigationDrawerActivity, R.attr.colorPrimaryDark))
+        }
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
         window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
-        mDrawerLayout!!.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimaryDark))
         // Setup toolbar and hamburger
-        mNavigationView = mDrawerLayout!!.findViewById(R.id.navdrawer_items_container)
-        mNavigationView!!.setNavigationItemSelectedListener(this)
+        mNavigationView = mDrawerLayout!!.findViewById<NavigationView?>(R.id.navdrawer_items_container)?.apply {
+            setNavigationItemSelectedListener(this@NavigationDrawerActivity)
+        }
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
             // enable ActionBar app icon to behave as action to toggle nav drawer
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.setHomeButtonEnabled(true)
+            supportActionBar!!.apply {
+                setDisplayHomeAsUpEnabled(true)
+                setHomeButtonEnabled(true)
+            }
 
             // Decide which action to take when the navigation button is tapped.
             toolbar.setNavigationOnClickListener { onNavigationPressed() }
