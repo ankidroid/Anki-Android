@@ -126,6 +126,7 @@
     <string name="dialog_ok">ଠିକ୍ ଅଛି</string>
     <string name="dialog_no">ନା</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="dialog_positive_delete">ବିଲୋପ କରନ୍ତୁ</string>
     <!-- Currently unsued, should be useful in the future -->

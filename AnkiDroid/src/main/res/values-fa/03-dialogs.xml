@@ -128,6 +128,7 @@
     <string name="dialog_ok">تایید</string>
     <string name="dialog_no">خیر</string>
     <string name="dialog_continue">ادامه</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ایجاد</string>
     <string name="dialog_positive_delete">حذف</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -196,7 +197,7 @@
     <string name="database_locked_title">دیتابیس قفل است</string>
     <string name="database_locked_summary">نرم‌افزاری دیگر در حال استفاده از دیتابیس آنکی‌دروید است. لطفاً نرم افزار دیگر را ببندید سپس آنکی‌دروید را باز کنید.</string>
     <string name="incompatible_database_version_title">نسخه پایگاه داده ناسازگار است</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_summary">نسخه ی پایگاه داده پیشرفته‌تر از نسخه ای است که AnkiDroid توانایی کار کردن با آن را دارد. یا AnkiDroid را ارتقاء دهید یا درجه پایگاه داده را پایین آورید\n\nنسخه های همایت شده: %1$d\nنسخه پایگاه داده: %2$d\n\nگزینه های بازگرداندن زیر مجموعه شما را بازنویسی میکنند، ممکن تر با نسخه پایگاه داده سازگار:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">تصویر پس‌زمینه اعمال شد</string>
     <string name="background_image_removed">تصویر پس‌زمینه حذف شد</string>
@@ -257,5 +258,5 @@
     <string name="import_deck_package">بسته ی دسته کارت (.apkg)</string>
     <string name="import_collection_package">بسته ی مجموعه (.colpkg)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">شما نمیتوانید برای همه دسته ها یک زیردسته درست کنید</string>
 </resources>

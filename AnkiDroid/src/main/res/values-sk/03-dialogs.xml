@@ -140,6 +140,7 @@
     <string name="dialog_ok">Ok</string>
     <string name="dialog_no">Nie</string>
     <string name="dialog_continue">Pokračovať</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvoriť</string>
     <string name="dialog_positive_delete">Vymazať</string>
     <!-- Currently unsued, should be useful in the future -->
