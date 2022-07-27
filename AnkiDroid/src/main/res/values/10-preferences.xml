@@ -40,7 +40,6 @@
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">Advanced</string>
     <string name="pref_cat_advanced_summ">Optimization and experimental features</string>
-    <string name="pref_cat_performance" maxLength="41">Performance</string>
     <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
 
