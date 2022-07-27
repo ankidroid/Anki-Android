@@ -152,11 +152,6 @@
                 android:key="@string/pref_advanced_statistics_key"
                 android:title="@string/advanced_statistics_title"
                 android:fragment="com.ichi2.anki.preferences.AdvancedStatisticsSettingsFragment" />
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/html_javascript_debugging_key"
-                android:summary="@string/html_javascript_debugging_summ"
-                android:title="@string/html_javascript_debugging"/>
             <!-- Title and summary are variable, handled in string:
             card_browser_enable_external_context_menu -->
             <SwitchPreference

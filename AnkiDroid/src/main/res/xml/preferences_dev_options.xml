@@ -20,6 +20,11 @@
         android:title="@string/dev_options_enabled_pref"
         android:key="@string/dev_options_enabled_by_user_key"
         android:defaultValue="true"/>
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/html_javascript_debugging_key"
+        android:summary="@string/html_javascript_debugging_summ"
+        android:title="@string/html_javascript_debugging"/>
     <Preference
         android:title="Trigger test crash"
         android:summary="Touch here for an immediate test crash"
