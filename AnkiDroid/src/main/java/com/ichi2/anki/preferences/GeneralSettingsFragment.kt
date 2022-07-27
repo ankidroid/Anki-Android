@@ -22,6 +22,8 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.Preferences
 import com.ichi2.anki.R
+import com.ichi2.anki.contextmenu.AnkiCardContextMenu
+import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
 import com.ichi2.utils.LanguageUtil
 import java.util.*
@@ -66,6 +68,22 @@ class GeneralSettingsFragment : SettingsFragment() {
         // Error reporting mode
         requirePreference<ListPreference>(R.string.error_reporting_mode_key).setOnPreferenceChangeListener { newValue ->
             CrashReportService.onPreferenceChanged(requireContext(), newValue as String)
+        }
+        // Anki card context menu
+        requirePreference<SwitchPreference>(R.string.anki_card_external_context_menu_key).apply {
+            title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.context_menu_anki_card_label))
+            summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.context_menu_anki_card_label))
+            setOnPreferenceChangeListener { newValue ->
+                AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)
+            }
+        }
+        // Card browser context menu
+        requirePreference<SwitchPreference>(R.string.card_browser_external_context_menu_key).apply {
+            title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.card_browser_context_menu))
+            summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.card_browser_context_menu))
+            setOnPreferenceChangeListener { newValue ->
+                CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)
+            }
         }
     }
 

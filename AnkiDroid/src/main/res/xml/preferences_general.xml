@@ -56,4 +56,14 @@
             android:key="@string/error_reporting_mode_key"
             android:title="@string/error_reporting_choice"
             app:useSimpleSummaryProvider="true"/>
+        <!-- Title and summary are variable, handled in string:
+            card_browser_enable_external_context_menu -->
+        <SwitchPreference
+            android:id="@+id/anki_card_external_context_menu"
+            android:defaultValue="true"
+            android:key="@string/anki_card_external_context_menu_key"/>
+        <SwitchPreference
+            android:id="@+id/card_browser_external_context_menu"
+            android:defaultValue="false"
+            android:key="@string/card_browser_external_context_menu_key"/>
 </PreferenceScreen>
