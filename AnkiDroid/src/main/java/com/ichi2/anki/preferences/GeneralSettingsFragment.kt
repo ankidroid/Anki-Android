@@ -16,7 +16,6 @@
 package com.ichi2.anki.preferences
 
 import androidx.preference.ListPreference
-import androidx.preference.PreferenceCategory
 import androidx.preference.SwitchPreference
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
@@ -24,7 +23,6 @@ import com.ichi2.anki.Preferences
 import com.ichi2.anki.R
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
-import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
 import com.ichi2.utils.LanguageUtil
 import java.util.*
 
@@ -36,13 +34,6 @@ class GeneralSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         val col = col!!
-        if (isRestrictedLearningDevice) {
-            val switchPrefVibrate = requirePreference<SwitchPreference>("widgetVibrate")
-            val switchPrefBlink = requirePreference<SwitchPreference>("widgetBlink")
-            val category = requirePreference<PreferenceCategory>("category_general_notification_pref")
-            category.removePreference(switchPrefVibrate)
-            category.removePreference(switchPrefBlink)
-        }
         // Build languages
         initializeLanguageDialog()
 
