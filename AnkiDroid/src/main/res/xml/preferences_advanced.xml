@@ -90,11 +90,6 @@
                 android:summary="@string/type_in_answer_focus_summ"
                 android:dependency="@string/use_input_tag_key"
                 android:title="@string/type_in_answer_focus" />
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/exit_via_double_tap_back_key"
-                android:summary="@string/exit_via_double_tap_back_summ"
-                android:title="@string/exit_via_double_tap_back" />
             <!-- #9639 - allow all files in media selection dialog - .opus is application/octet-stream
             in older versions of Android (fixed between API 26 and API 30)
              We don't want to allow this by default, but we want an override -->
