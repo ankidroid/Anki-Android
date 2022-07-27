@@ -16,6 +16,7 @@
 package com.ichi2.anki.preferences
 
 import android.os.Bundle
+import androidx.annotation.StringRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.ichi2.anki.Preferences
@@ -29,39 +30,39 @@ class HeaderFragment : PreferenceFragmentCompat() {
 
         // Reviewing preferences summary
         findPreference<Preference>(getString(R.string.pref_reviewing_screen_key))!!
-            .summary = Preferences.buildCategorySummary(
-            getString(R.string.pref_cat_scheduling),
-            getString(R.string.timeout_answer_text)
+            .summary = buildCategorySummary(
+            R.string.pref_cat_scheduling,
+            R.string.timeout_answer_text
         )
 
         // Sync preferences summary
         findPreference<Preference>(getString(R.string.pref_sync_screen_key))!!
-            .summary = Preferences.buildCategorySummary(
-            getString(R.string.sync_account),
-            getString(R.string.automatic_sync_choice)
+            .summary = buildCategorySummary(
+            R.string.sync_account,
+            R.string.automatic_sync_choice
         )
 
         // Notifications preferences summary
         findPreference<Preference>(getString(R.string.pref_notifications_screen_key))!!
-            .summary = Preferences.buildCategorySummary(
-            getString(R.string.notification_pref_title),
-            getString(R.string.notification_minimum_cards_due_vibrate),
-            getString(R.string.notification_minimum_cards_due_blink),
+            .summary = buildCategorySummary(
+            R.string.notification_pref_title,
+            R.string.notification_minimum_cards_due_vibrate,
+            R.string.notification_minimum_cards_due_blink,
         )
 
         // Accessibility preferences summary
         findPreference<Preference>(getString(R.string.pref_accessibility_screen_key))!!
-            .summary = Preferences.buildCategorySummary(
-            getString(R.string.card_zoom),
-            getString(R.string.button_size),
+            .summary = buildCategorySummary(
+            R.string.card_zoom,
+            R.string.button_size,
         )
 
         // Controls preferences summary
         findPreference<Preference>(getString(R.string.pref_controls_screen_key))!!
-            .summary = Preferences.buildCategorySummary(
-            getString(R.string.pref_cat_gestures),
-            getString(R.string.keyboard),
-            getString(R.string.bluetooth)
+            .summary = buildCategorySummary(
+            R.string.pref_cat_gestures,
+            R.string.keyboard,
+            R.string.bluetooth
         )
 
         if (AdaptionUtil.isRestrictedLearningDevice) {
@@ -81,5 +82,17 @@ class HeaderFragment : PreferenceFragmentCompat() {
 
     fun setDevOptionsVisibility(isVisible: Boolean) {
         findPreference<Preference>(getString(R.string.pref_dev_options_screen_key))!!.isVisible = isVisible
+    }
+
+    /**
+     * Join the strings defined by [resIds]
+     * with ` • ` as separator to build a summary string for preferences categories.
+     * e.g. if `R.string.appName` and `R.string.msg` are given as arguments,
+     * and they correspond respectively to the strings `AnkiDroid` and `Message`,
+     * those strings are joined and return `AnkiDroid • Message`
+     */
+    private fun buildCategorySummary(@StringRes vararg resIds: Int): String {
+        val strings = resIds.map { getString(it) }
+        return Preferences.buildCategorySummary(*strings.toTypedArray())
     }
 }
