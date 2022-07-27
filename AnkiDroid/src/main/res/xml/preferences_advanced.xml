@@ -25,7 +25,6 @@
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_advanced"
-    android:summary="@string/pref_cat_advanced_summ"
     android:key="@string/pref_advanced_screen_key">
         <EditTextPreference
             android:defaultValue="/sdcard/AnkiDroid"

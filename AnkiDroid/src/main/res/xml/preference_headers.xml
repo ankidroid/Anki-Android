@@ -22,7 +22,6 @@
     <!--  General Preferences -->
     <Preference
         android:fragment="com.ichi2.anki.preferences.GeneralSettingsFragment"
-        android:summary="@string/pref_cat_general_summ"
         android:title="@string/pref_cat_general"
         android:icon="@drawable/ic_settings_black"
         android:key="@string/pref_general_screen_key">
@@ -56,7 +55,6 @@
     <Preference
         android:fragment="com.ichi2.anki.preferences.AppearanceSettingsFragment"
         android:key="@string/pref_appearance_screen_key"
-        android:summary="@string/pref_cat_appearance_summ"
         android:title="@string/pref_cat_appearance"
         android:icon="@drawable/ic_color_lens_white_24dp">
     </Preference>
@@ -81,7 +79,6 @@
     <Preference
         android:fragment="com.ichi2.anki.preferences.AdvancedSettingsFragment"
         android:key="@string/pref_advanced_screen_key"
-        android:summary="@string/pref_cat_advanced_summ"
         android:title="@string/pref_cat_advanced"
         android:icon="@drawable/ic_tune_white">
     </Preference>

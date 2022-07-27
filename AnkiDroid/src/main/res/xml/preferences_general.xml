@@ -25,7 +25,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:title="@string/pref_cat_general"
-    android:summary="@string/pref_cat_general_summ"
     android:key="@string/pref_general_screen_key">
         <ListPreference
             android:defaultValue="@string/empty_string"

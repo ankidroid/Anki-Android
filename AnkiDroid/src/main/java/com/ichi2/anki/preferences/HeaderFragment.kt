@@ -28,6 +28,14 @@ class HeaderFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
+        // General category summary
+        findPreference<Preference>(getString(R.string.pref_general_screen_key))!!
+            .summary = buildCategorySummary(
+            R.string.language,
+            R.string.pref_cat_studying,
+            R.string.pref_cat_system_wide
+        )
+
         // Reviewing preferences summary
         findPreference<Preference>(getString(R.string.pref_reviewing_screen_key))!!
             .summary = buildCategorySummary(
@@ -50,6 +58,14 @@ class HeaderFragment : PreferenceFragmentCompat() {
             R.string.notification_minimum_cards_due_blink,
         )
 
+        // Appearance category summary
+        findPreference<Preference>(getString(R.string.pref_appearance_screen_key))!!
+            .summary = buildCategorySummary(
+            R.string.pref_cat_themes,
+            R.string.pref_cat_fonts,
+            R.string.pref_cat_reviewer
+        )
+
         // Accessibility preferences summary
         findPreference<Preference>(getString(R.string.pref_accessibility_screen_key))!!
             .summary = buildCategorySummary(
@@ -63,6 +79,13 @@ class HeaderFragment : PreferenceFragmentCompat() {
             R.string.pref_cat_gestures,
             R.string.keyboard,
             R.string.bluetooth
+        )
+
+        // Advanced category summary
+        findPreference<Preference>(getString(R.string.pref_advanced_screen_key))!!
+            .summary = buildCategorySummary(
+            R.string.pref_cat_workarounds,
+            R.string.pref_cat_plugins
         )
 
         if (AdaptionUtil.isRestrictedLearningDevice) {

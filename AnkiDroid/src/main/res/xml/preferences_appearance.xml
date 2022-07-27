@@ -25,8 +25,7 @@
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
         android:title="@string/pref_cat_appearance"
-        android:key="@string/pref_appearance_screen_key"
-        android:summary="@string/pref_cat_appearance_summ">
+        android:key="@string/pref_appearance_screen_key">
     <PreferenceCategory android:title="@string/pref_cat_themes" >
         <ListPreference
             android:defaultValue="0"
