@@ -29,7 +29,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
         // General category summary
-        findPreference<Preference>(getString(R.string.pref_general_screen_key))!!
+        requirePreference<Preference>(R.string.pref_general_screen_key)
             .summary = buildCategorySummary(
             R.string.language,
             R.string.pref_cat_studying,
@@ -37,21 +37,21 @@ class HeaderFragment : PreferenceFragmentCompat() {
         )
 
         // Reviewing preferences summary
-        findPreference<Preference>(getString(R.string.pref_reviewing_screen_key))!!
+        requirePreference<Preference>(R.string.pref_reviewing_screen_key)
             .summary = buildCategorySummary(
             R.string.pref_cat_scheduling,
             R.string.timeout_answer_text
         )
 
         // Sync preferences summary
-        findPreference<Preference>(getString(R.string.pref_sync_screen_key))!!
+        requirePreference<Preference>(R.string.pref_sync_screen_key)
             .summary = buildCategorySummary(
             R.string.sync_account,
             R.string.automatic_sync_choice
         )
 
         // Notifications preferences summary
-        findPreference<Preference>(getString(R.string.pref_notifications_screen_key))!!
+        requirePreference<Preference>(R.string.pref_notifications_screen_key)
             .summary = buildCategorySummary(
             R.string.notification_pref_title,
             R.string.notification_minimum_cards_due_vibrate,
@@ -59,7 +59,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
         )
 
         // Appearance category summary
-        findPreference<Preference>(getString(R.string.pref_appearance_screen_key))!!
+        requirePreference<Preference>(R.string.pref_appearance_screen_key)
             .summary = buildCategorySummary(
             R.string.pref_cat_themes,
             R.string.pref_cat_fonts,
@@ -67,14 +67,14 @@ class HeaderFragment : PreferenceFragmentCompat() {
         )
 
         // Accessibility preferences summary
-        findPreference<Preference>(getString(R.string.pref_accessibility_screen_key))!!
+        requirePreference<Preference>(R.string.pref_accessibility_screen_key)
             .summary = buildCategorySummary(
             R.string.card_zoom,
             R.string.button_size,
         )
 
         // Controls preferences summary
-        findPreference<Preference>(getString(R.string.pref_controls_screen_key))!!
+        requirePreference<Preference>(R.string.pref_controls_screen_key)
             .summary = buildCategorySummary(
             R.string.pref_cat_gestures,
             R.string.keyboard,
@@ -82,7 +82,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
         )
 
         // Advanced category summary
-        findPreference<Preference>(getString(R.string.pref_advanced_screen_key))!!
+        requirePreference<Preference>(R.string.pref_advanced_screen_key)
             .summary = buildCategorySummary(
             R.string.pref_cat_workarounds,
             R.string.pref_cat_plugins
@@ -104,7 +104,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
     }
 
     fun setDevOptionsVisibility(isVisible: Boolean) {
-        findPreference<Preference>(getString(R.string.pref_dev_options_screen_key))!!.isVisible = isVisible
+        requirePreference<Preference>(R.string.pref_dev_options_screen_key).isVisible = isVisible
     }
 
     /**
