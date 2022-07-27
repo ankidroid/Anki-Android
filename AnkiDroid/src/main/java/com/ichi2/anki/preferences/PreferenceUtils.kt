@@ -15,7 +15,9 @@
  */
 package com.ichi2.anki.preferences
 
+import androidx.annotation.StringRes
 import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 
 /**
  * Sets the callback to be invoked when this preference is changed by the user
@@ -28,4 +30,25 @@ fun Preference.setOnPreferenceChangeListener(onPreferenceChangeListener: (newVal
         onPreferenceChangeListener(newValue)
         true
     }
+}
+
+/** Obtains a non-null reference to the preference defined by the key, or throws  */
+@Suppress("UNCHECKED_CAST")
+fun <T : Preference> PreferenceFragmentCompat.requirePreference(key: String): T {
+    val preference = findPreference<Preference>(key)
+        ?: throw IllegalStateException("missing preference: '$key'")
+    return preference as T
+}
+
+/**
+ * Obtains a non-null reference to the preference whose
+ * key is defined with given [resId] or throws
+ * e.g. `requirePreference(R.string.day_theme_key)` returns
+ * the preference whose key is `@string/day_theme_key`
+ * The resource IDs with preferences keys can be found on `res/values/preferences.xml`
+ */
+@Suppress("UNCHECKED_CAST")
+fun <T : Preference> PreferenceFragmentCompat.requirePreference(@StringRes resId: Int): T {
+    val key = getString(resId)
+    return requirePreference(key)
 }
