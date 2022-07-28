@@ -92,6 +92,7 @@ import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendFactory
@@ -550,7 +551,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         when (keyCode) {
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER -> if (event.isCtrlPressed) {
-                saveNote()
+                catchingLifecycleScope(this) { saveNote() }
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
@@ -718,7 +719,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     @VisibleForTesting
-    fun saveNote() {
+    suspend fun saveNote(
+        mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+        bgDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    ) {
         val res = resources
         if (mSelectedTags == null) {
             mSelectedTags = ArrayList(0)
@@ -749,9 +753,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             col.models.current()!!.put("tags", tags)
             col.models.setChanged()
             mReloadRequired = true
-            catchingLifecycleScope(this) {
-                saveNoteTask(mEditorNote!!).execute(emptyArray(), bgDispatcher = Dispatchers.IO)
-            }
+            saveNoteTask(mEditorNote!!).execute(emptyArray(), bgDispatcher, mainDispatcher)
             updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
@@ -911,7 +913,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
-                saveNote()
+                catchingLifecycleScope(this) { saveNote() }
                 return true
             }
             R.id.action_add_note_from_note_editor -> {

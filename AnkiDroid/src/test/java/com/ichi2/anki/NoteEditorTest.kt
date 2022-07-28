@@ -34,6 +34,10 @@ import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
@@ -49,7 +53,11 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("IDE lint")
+@OptIn(ExperimentalCoroutinesApi::class)
 class NoteEditorTest : RobolectricTest() {
+
+    private val dispatcher = StandardTestDispatcher()
+
     @Test
     @Config(qualifiers = "en")
     fun verifyCardsList() {
@@ -154,34 +162,37 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    fun clozeNoteWithNoClozeDeletionsDoesNotSave() {
+    fun clozeNoteWithNoClozeDeletionsDoesNotSave() = runTest(dispatcher) {
         val initialCards = cardCount
         val editor = getNoteEditorAdding(NoteType.CLOZE)
             .withFirstField("no cloze deletions")
             .build()
         saveNote(editor)
+        advanceUntilIdle()
         assertThat(cardCount, equalTo(initialCards))
     }
 
     @Test
-    fun clozeNoteWithClozeDeletionsDoesSave() {
+    fun clozeNoteWithClozeDeletionsDoesSave() = runTest {
         val initialCards = cardCount
         val editor = getNoteEditorAdding(NoteType.CLOZE)
             .withFirstField("{{c1::AnkiDroid}} is fantastic")
             .build()
         saveNote(editor)
+        advanceUntilIdle()
         assertThat(cardCount, equalTo(initialCards + 1))
     }
 
     @Test
     @Ignore("Not yet implemented")
-    fun clozeNoteWithClozeInWrongFieldDoesNotSave() {
+    fun clozeNoteWithClozeInWrongFieldDoesNotSave() = runTest(dispatcher) {
         // Anki Desktop blocks with "Continue?", we should just block to match the above test
         val initialCards = cardCount
         val editor = getNoteEditorAdding(NoteType.CLOZE)
             .withSecondField("{{c1::AnkiDroid}} is fantastic")
             .build()
         saveNote(editor)
+        advanceUntilIdle()
         assertThat(cardCount, equalTo(initialCards))
     }
 
@@ -216,7 +227,7 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    fun stickyFieldsAreUnchangedAfterAdd() {
+    fun stickyFieldsAreUnchangedAfterAdd() = runTest(dispatcher) {
         // #6795 - newlines were converted to <br>
         val basic = makeNoteForType(NoteType.BASIC)
 
@@ -234,7 +245,7 @@ class NoteEditorTest : RobolectricTest() {
         assertThat(editor.currentFieldStrings.toList(), contains(newFirstField, initSecondField))
 
         saveNote(editor)
-        waitForAsyncTasksToComplete()
+        advanceUntilIdle()
         val actual = editor.currentFieldStrings.toList()
 
         assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""))
@@ -434,9 +445,8 @@ class NoteEditorTest : RobolectricTest() {
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i)
     }
 
-    private fun saveNote(editor: NoteEditor) {
-        editor.saveNote()
-        advanceRobolectricLooperWithSleep()
+    private suspend fun saveNote(editor: NoteEditor) {
+        editor.saveNote(dispatcher, dispatcher)
     }
 
     private enum class FromScreen {
