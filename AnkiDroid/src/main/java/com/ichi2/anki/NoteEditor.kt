@@ -78,9 +78,8 @@ import com.ichi2.anki.ui.NoteTypeSpinnerUtils
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.anki.widgets.PopupMenuWithIcons
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.CollectionTask.AddNote
-import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.async.TaskManager
+import com.ichi2.async.catchingLifecycleScope
+import com.ichi2.async.coroutines.CollectionJob
 import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.*
@@ -93,11 +92,12 @@ import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.*
 import java.util.function.Consumer
-import kotlin.collections.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -168,9 +168,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     private var mToggleStickyText: HashMap<Int, String?>? = HashMap()
     private val mOnboarding = Onboarding.NoteEditor(this)
-    private fun saveNoteHandler(): SaveNoteHandler {
-        return SaveNoteHandler(this)
-    }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
@@ -188,60 +185,52 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         SAME_NUMBER, INCREMENT_NUMBER
     }
 
-    private class SaveNoteHandler(noteEditor: NoteEditor) :
-        TaskListenerWithContext<NoteEditor, Int, Boolean?>(noteEditor) {
+    private fun saveNoteTask(note: Note) = object : CollectionJob.AddNote<NoteEditor>(col, note, this@NoteEditor) {
         private var mCloseAfter = false
         private var mIntent: Intent? = null
-        override fun actualOnPreExecute(context: NoteEditor) {
-            val res = context.resources
-            context.mProgressDialog =
-                StyledProgressDialog.show(context, null, res.getString(R.string.saving_facts), false)
-        }
-
-        override fun actualOnProgressUpdate(context: NoteEditor, value: Int) {
-            if (value > 0) {
-                context.mChanged = true
-                context.mSourceText = null
-                context.refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
-                UIUtils.showThemedToast(
-                    context,
-                    context.resources.getQuantityString(
-                        R.plurals.factadder_cards_added,
-                        value,
-                        value
-                    ),
-                    true
-                )
-            } else {
-                context.displayErrorSavingNote()
-            }
-            if (!context.mAddNote || context.mCaller == CALLER_NOTEEDITOR || context.mAedictIntent) {
-                context.mChanged = true
-                mCloseAfter = true
-            } else if (context.mCaller == CALLER_NOTEEDITOR_INTENT_ADD) {
-                if (value > 0) {
+        override suspend fun actualOnProgressUpdate(progress: Int, context: NoteEditor) {
+            // It would be good to move this context switch to the base class
+            withContext(Dispatchers.Main) {
+                if (progress > 0) {
                     context.mChanged = true
+                    context.mSourceText = null
+                    context.refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
+                    UIUtils.showThemedToast(
+                        context,
+                        context.resources.getQuantityString(
+                            R.plurals.factadder_cards_added,
+                            progress,
+                            progress
+                        ),
+                        true
+                    )
+                } else {
+                    context.displayErrorSavingNote()
                 }
-                mCloseAfter = true
-                mIntent = Intent()
-                mIntent!!.putExtra(EXTRA_ID, context.intent.getStringExtra(EXTRA_ID))
-            } else if (!context.mEditFields!!.isEmpty()) {
-                context.mEditFields!!.first!!.focusWithKeyboard()
-            }
-            if (!mCloseAfter && context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                try {
-                    context.mProgressDialog!!.dismiss()
-                } catch (e: IllegalArgumentException) {
-                    Timber.e(e, "Note Editor: Error on dismissing progress dialog")
+                if (!context.mAddNote || context.mCaller == CALLER_NOTEEDITOR || context.mAedictIntent) {
+                    context.mChanged = true
+                    mCloseAfter = true
+                } else if (context.mCaller == CALLER_NOTEEDITOR_INTENT_ADD) {
+                    if (progress > 0) {
+                        context.mChanged = true
+                    }
+                    mCloseAfter = true
+                    mIntent = Intent()
+                    mIntent!!.putExtra(EXTRA_ID, context.intent.getStringExtra(EXTRA_ID))
+                } else if (!context.mEditFields!!.isEmpty()) {
+                    context.mEditFields!!.first!!.focusWithKeyboard()
+                }
+                if (!mCloseAfter && context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
+                    try {
+                        context.mProgressDialog!!.dismiss()
+                    } catch (e: IllegalArgumentException) {
+                        Timber.e(e, "Note Editor: Error on dismissing progress dialog")
+                    }
                 }
             }
         }
 
-        /**
-         * @param result noException
-         */
-        @KotlinCleanup("invert if")
-        override fun actualOnPostExecute(context: NoteEditor, result: Boolean?) {
+        override suspend fun actualOnPostExecute(result: Boolean?, context: NoteEditor) {
             if (result!!) {
                 if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
                     try {
@@ -261,6 +250,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // RuntimeException occurred on adding note
                 context.closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null)
             }
+        }
+
+        override suspend fun actualOnPreExecute(context: NoteEditor) {
+            val res = context.resources
+            context.mProgressDialog =
+                StyledProgressDialog.show(context, null, res.getString(R.string.saving_facts), false)
         }
     }
 
@@ -754,7 +749,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             col.models.current()!!.put("tags", tags)
             col.models.setChanged()
             mReloadRequired = true
-            TaskManager.launchCollectionTask(AddNote(mEditorNote!!), saveNoteHandler())
+            catchingLifecycleScope(this) {
+                saveNoteTask(mEditorNote!!).execute(emptyArray(), bgDispatcher = Dispatchers.IO)
+            }
             updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
