@@ -58,6 +58,8 @@ import org.junit.Test
 import org.junit.platform.commons.util.CollectionUtils
 import org.junit.runner.RunWith
 import java.lang.Exception
+import java.time.Instant
+import java.time.ZoneOffset
 import java.util.*
 import kotlin.Throws
 import kotlin.math.roundToLong
@@ -447,6 +449,11 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_learnV2() {
+        if (v3 && Instant.now().atZone(ZoneOffset.UTC).getHour().let { it >= 2 && it < 4 }) {
+            // The backend shifts the current time around rollover, and expects the frontend to
+            // do so as well. This could potentially be done with TimeManager in the future.
+            assumeThat(v3, equalTo(false))
+        }
         TimeManager.reset()
         val col = colV2
         // add a note
