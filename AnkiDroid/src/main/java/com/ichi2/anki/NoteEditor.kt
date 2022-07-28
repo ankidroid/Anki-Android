@@ -52,6 +52,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -192,77 +193,82 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         override suspend fun actualOnProgressUpdate(progress: Int, context: NoteEditor) {
             // It would be good to move this context switch to the base class
             withContext(Dispatchers.Main) {
-                if (progress > 0) {
-                    context.mChanged = true
-                    context.mSourceText = null
-                    context.refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
-                    UIUtils.showThemedToast(
-                        context,
-                        context.resources.getQuantityString(
-                            R.plurals.factadder_cards_added,
-                            progress,
-                            progress
-                        ),
-                        true
-                    )
-                } else {
-                    context.displayErrorSavingNote()
-                }
-                if (!context.mAddNote || context.mCaller == CALLER_NOTEEDITOR || context.mAedictIntent) {
-                    context.mChanged = true
-                    mCloseAfter = true
-                } else if (context.mCaller == CALLER_NOTEEDITOR_INTENT_ADD) {
+                context.apply {
                     if (progress > 0) {
-                        context.mChanged = true
+                        mChanged = true
+                        mSourceText = null
+                        refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
+                        showThemedToast(
+                            this,
+                            resources.getQuantityString(
+                                R.plurals.factadder_cards_added, progress, progress
+                            ),
+                            false
+                        )
+                    } else {
+                        displayErrorSavingNote()
                     }
-                    mCloseAfter = true
-                    mIntent = Intent()
-                    mIntent!!.putExtra(EXTRA_ID, context.intent.getStringExtra(EXTRA_ID))
-                } else if (!context.mEditFields!!.isEmpty()) {
-                    context.mEditFields!!.first!!.focusWithKeyboard()
-                }
-                if (!mCloseAfter && context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                    try {
-                        context.mProgressDialog!!.dismiss()
-                    } catch (e: IllegalArgumentException) {
-                        Timber.e(e, "Note Editor: Error on dismissing progress dialog")
+                    if (!mAddNote || mCaller == CALLER_NOTEEDITOR || mAedictIntent) {
+                        mChanged = true
+                        mCloseAfter = true
+                    } else if (mCaller == CALLER_NOTEEDITOR_INTENT_ADD) {
+                        if (progress > 0) {
+                            mChanged = true
+                        }
+                        mCloseAfter = true
+                        mIntent = Intent()
+                        mIntent!!.putExtra(EXTRA_ID, intent.getStringExtra(EXTRA_ID))
+                    } else if (!mEditFields!!.isEmpty()) {
+                        mEditFields!!.first!!.focusWithKeyboard()
+                    }
+                    if (!mCloseAfter && mProgressDialog != null && mProgressDialog!!.isShowing) {
+                        try {
+                            mProgressDialog!!.dismiss()
+                        } catch (e: IllegalArgumentException) {
+                            Timber.e(e, "Note Editor: Error on dismissing progress dialog")
+                        }
                     }
                 }
             }
         }
 
-        override suspend fun actualOnPostExecute(result: Boolean?, context: NoteEditor) {
-            if (result!!) {
-                if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                    try {
-                        context.mProgressDialog!!.dismiss()
-                    } catch (e: IllegalArgumentException) {
-                        Timber.e(e, "Note Editor: Error on dismissing progress dialog")
+        override suspend fun actualOnPostExecute(result: Boolean, context: NoteEditor) {
+            context.apply {
+                if (result) {
+                    if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+                        try {
+                            mProgressDialog!!.dismiss()
+                        } catch (e: IllegalArgumentException) {
+                            Timber.e(e, "Note Editor: Error on dismissing progress dialog")
+                        }
                     }
-                }
-                if (mCloseAfter) {
-                    context.closeNoteEditor(mIntent ?: Intent())
+                    if (mCloseAfter) {
+                        closeNoteEditor(mIntent ?: Intent())
+                    } else {
+                        // Reset check for changes to fields
+                        mFieldEdited = false
+                        mTagsEdited = false
+                    }
                 } else {
-                    // Reset check for changes to fields
-                    context.mFieldEdited = false
-                    context.mTagsEdited = false
+                    // RuntimeException occurred on adding note
+                    closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null)
                 }
-            } else {
-                // RuntimeException occurred on adding note
-                context.closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null)
             }
         }
 
         override suspend fun actualOnPreExecute(context: NoteEditor) {
-            val res = context.resources
-            context.mProgressDialog =
-                StyledProgressDialog.show(context, null, res.getString(R.string.saving_facts), false)
+            context.apply {
+                mProgressDialog = StyledProgressDialog.show(
+                    context, null,
+                    resources.getString(R.string.saving_facts), false
+                )
+            }
         }
     }
 
     private fun displayErrorSavingNote() {
         val errorMessageId = addNoteErrorResource
-        UIUtils.showThemedToast(this, resources.getString(errorMessageId), false)
+        showThemedToast(this, resources.getString(errorMessageId), false)
     }
     // COULD_BE_BETTER: We currently don't perform edits inside this class (wat), so we only handle adds.
 
@@ -673,7 +679,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                             return false
                         }
                     }
-                    UIUtils.showThemedToast(
+                    showThemedToast(
                         this@NoteEditor,
                         resources.getString(R.string.intent_aedict_empty),
                         false
@@ -682,7 +688,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
             }
         }
-        UIUtils.showThemedToast(
+        showThemedToast(
             this@NoteEditor,
             resources.getString(R.string.intent_aedict_category),
             false
@@ -1217,7 +1223,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                              * type was changed without moving this
                              * card to another type. */
                         Timber.d("onActivityResult() template edit return - current card is gone, close note editor")
-                        UIUtils.showThemedToast(
+                        showThemedToast(
                             this,
                             getString(R.string.template_for_current_card_deleted),
                             false

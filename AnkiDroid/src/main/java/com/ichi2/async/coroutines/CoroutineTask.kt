@@ -40,10 +40,10 @@ abstract class CoroutineTask<Params, Progress, Result>(private val taskName: Str
 
     var status: Status = Status.PENDING
     private var preJob: Job? = null
-    private var bgJob: Deferred<Result?>? = null
-    abstract suspend fun doInBackground(params: Array<Params>): Result?
+    private var bgJob: Deferred<Result>? = null
+    abstract suspend fun doInBackground(params: Array<Params>): Result
     open suspend fun onProgressUpdate(progress: Progress) {}
-    open suspend fun onPostExecute(result: Result?) {}
+    open suspend fun onPostExecute(result: Result) {}
     open suspend fun onPreExecute() {}
     open fun onCancelled() {}
     protected var isCancelled = false

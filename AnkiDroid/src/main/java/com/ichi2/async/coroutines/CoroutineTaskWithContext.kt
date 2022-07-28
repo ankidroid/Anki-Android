@@ -27,7 +27,7 @@ abstract class CoroutineTaskWithContext<CTX : Context, Params, Progress, Result>
     private val mContext = WeakReference(context)
 
     abstract suspend fun actualOnProgressUpdate(progress: Progress, context: CTX)
-    abstract suspend fun actualOnPostExecute(result: Result?, context: CTX)
+    abstract suspend fun actualOnPostExecute(result: Result, context: CTX)
     abstract suspend fun actualOnPreExecute(context: CTX)
 
     override suspend fun onProgressUpdate(progress: Progress) {
@@ -35,7 +35,7 @@ abstract class CoroutineTaskWithContext<CTX : Context, Params, Progress, Result>
         mContext.get()?.let { actualOnProgressUpdate(progress, it) }
     }
 
-    override suspend fun onPostExecute(result: Result?) {
+    override suspend fun onPostExecute(result: Result) {
         super.onPostExecute(result)
         mContext.get()?.let { actualOnPostExecute(result, it) }
     }
