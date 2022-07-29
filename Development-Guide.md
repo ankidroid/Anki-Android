@@ -131,7 +131,7 @@ Git can be a bit complicated to use in the beginning. This section describes the
 ### Initial setup (one time)
 First let's set up our local repository
 
-```
+```bash
 git clone git@github.com:GITHUB_USERNAME/Anki-Android.git AnkiDroid
 cd AnkiDroid
 git remote add upstream https://github.com/ankidroid/Anki-Android.git
@@ -140,7 +140,7 @@ git remote add upstream https://github.com/ankidroid/Anki-Android.git
 ### Making a new pull request
 Now if want to make a new change to the code base, we create a new 'feature branch' based off the latest version of the main branch:
 
-```
+```bash
 git checkout main
 git pull upstream main
 git checkout -b my-feature-branch 
@@ -153,7 +153,7 @@ On navigating to the [main AnkiDroid repository](https://github.com/ankidroid/An
 ### Dealing with merge conflicts
 If changes are made to the AnkiDroid repository that conflict with the changes in your pull request in-between creating the feature branch and your changes getting merged into the main repository, it may be necessary to rebase your code:
 
-```
+```bash
 git checkout main
 git pull upstream main
 git checkout my-feature-branch # or just "git checkout -" to save typing
@@ -165,7 +165,7 @@ git push origin HEAD -f
 
 ## Running automated tests
 There are two kinds of test in AnkiDroid. Unit test and on-device integration test. The second one needs a connected device or an emulated device. You can run both test set simultaneously from the command line with
-```
+```bash
 ./gradlew jacocoTestReport
 ```
 #### Note for Apple Silicon Users
@@ -173,12 +173,13 @@ You need to do one more additional step to run tests on your machine
 - Download the latest release of arm64 dylib file [Anki-Android-Backend](https://github.com/ankidroid/Anki-Android-Backend/releases/)
 - Place it on your system somewhere accessible [I made a .anki folder in $HOME and placed it there]
 - Add these two environment variables, run the command
-```
+```bash
 echo 'export ANKIDROID_BACKEND_PATH={Path to the dylib file}' >> ~/.zshenv
 echo 'export ANKIDROID_BACKEND_VERSION={Latest release version}' >> ~/.zshenv
 ```
 - By default mac uses `zsh` shell. But if you have changed your default shell to fish, bash, etc, you need to change it back to zsh and then add the env variables.
-- You might get a permission denied error when running tests for first time, click on the right top `?` icon ([ref](https://user-images.githubusercontent.com/69595691/172110983-fb345535-86b9-4ebd-a14e-3f29b3156bd4.jpg)) and follow the steps in order to run .dylib file 
+- You might get a permission denied error when running tests for first time, click on the right top `?` icon ([ref](https://user-images.githubusercontent.com/69595691/172110983-fb345535-86b9-4ebd-a14e-3f29b3156bd4.jpg)) and follow the steps in order to run .dylib file
+- If you get `java.io.FileNotFoundException`, try using full path. Eg: `'/Users/<username>/<path to dylib file>'`
 
 ### Unit tests
 There are unit tests defined in the `AnkiDroid/src/test` directory, with [an extendable test superclass available using the Robolectric framework](https://github.com/ankidroid/Anki-Android/blob/main/AnkiDroid/src/test/java/com/ichi2/anki/RobolectricTest.java) to make standard Android services available, including sqlite so you can operate on Anki Collections in your tests - each Collection created on the fly prior to each test method and deleted afterwards for isolation. You can run these tests by selecting them directly from AndroidStudio for individual tests or all tests from one file, or you can run them from the command line and generate a coverage report to verify the effect of your testing from the command line using:
@@ -190,7 +191,7 @@ Afterwards you should find the coverage report in `%AnkiDroidRoot%/AnkiDroid/bui
 
 #### Run single unit test
 Change `com.ichi2.anki.NoteEditorTest` with test class name.
-```
+```bash
 ./gradlew AnkiDroid:testPlayDebugUnitTest --tests com.ichi2.anki.NoteEditorTest
 ```
 
@@ -198,7 +199,7 @@ Afterwards you should find the coverage report in `%AnkiDroidRoot%/AnkiDroid/bui
 
 ### On-device integration tests
 In addition to the unit tests, several integration tests are defined in the `AnkiDroid/src/androidTest` folder. You can run the tests from within Android Studio by simply right clicking on the test and running it against the chosen connected Android device (be sure to choose the icon with the Android symbol if there are multiple options shown), or from the command line against all connected devices at once using
-```
+```bash
 ./gradlew jacocoAndroidTestReport
 ```
 After this you should find a coverage report that integrates unit and integration test execution in `%AnkiDroidRoot%/AnkiDroid/build/reports/jacoco/jacocoTestReport/html/index.html`
@@ -211,7 +212,7 @@ AnkiDroid defines custom lint rules to enforce code conventions and ensure that 
 
 To run these manually, open a terminal (either in Android Studio, or in `%AnkiDroidRoot%`) and execute:
 
-```
+```bash
 ./gradlew lintRelease
 ```
 
@@ -221,13 +222,13 @@ AnkiDroid uses Ktlint for ensuring coding style and standard for Kotlin files. E
 
 To run it manually, open a terminal (either in Android Studio, or in `%AnkiDroidRoot%`) and execute:
 
-```
+```bash
 ./gradlew ktlintCheck
 ```
 
 To format Kotlin files, run the following command in the terminal:
 
-```
+```bash
 ./gradlew ktlintFormat
 ```
 
@@ -242,12 +243,12 @@ If on-device tests are slow or fail, it maybe because of conflict with your anki
 If you have the Android SDK installed, you should be able to compile from the command line even without installing Android Studio.
 
 **Windows:** Open a command prompt in `%AnkiDroidRoot%` and type:
-```
+```bash
 gradlew.bat assembleDebug
 ```
 
 **Linux & Mac:** Open a terminal in `%AnkiDroidRoot%` and type:
-```
+```bash
 ./gradlew assembleDebug
 ```
 
@@ -341,7 +342,7 @@ Coverage can also be generated on your computer. This is mostly useful if you wa
 
 ## SQLite browser
 A tool like "SQLite Database Browser" is very useful to understand how your "collection.anki2" file is made, and to test SQL queries. To install it on Ubuntu:
-```
+```bash
 sudo apt-add-repository ppa:linuxgndu/sqlitebrowser
 sudo apt-get update
 sudo apt-get install sqlitebrowser
@@ -392,7 +393,7 @@ https://github.com/liriliri/eruda
 
 This can be used inside the AnkiDroid to view console log like Chrome dev tools.
 * Add following lines to Front/Back of card templates
-```
+```html
 <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
 <script>eruda.init();</script>
 ```
