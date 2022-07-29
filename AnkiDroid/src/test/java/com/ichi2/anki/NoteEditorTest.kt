@@ -174,7 +174,7 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    fun clozeNoteWithClozeDeletionsDoesSave() = runTest {
+    fun clozeNoteWithClozeDeletionsDoesSave() = runTest(dispatcher) {
         val initialCards = cardCount
         val editor = getNoteEditorAdding(NoteType.CLOZE)
             .withFirstField("{{c1::AnkiDroid}} is fantastic")

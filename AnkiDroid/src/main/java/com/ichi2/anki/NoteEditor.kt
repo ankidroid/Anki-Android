@@ -187,12 +187,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         SAME_NUMBER, INCREMENT_NUMBER
     }
 
-    private fun saveNoteTask(note: Note) = object : CollectionJob.AddNote<NoteEditor>(col, note, this@NoteEditor) {
+    private fun saveNoteTask(note: Note, mainDispatcher: CoroutineDispatcher) = object : CollectionJob.AddNote<NoteEditor>(col, note, this@NoteEditor) {
         private var mCloseAfter = false
         private var mIntent: Intent? = null
         override suspend fun actualOnProgressUpdate(progress: Int, context: NoteEditor) {
             // It would be good to move this context switch to the base class
-            withContext(Dispatchers.Main) {
+            withContext(mainDispatcher) {
                 context.apply {
                     if (progress > 0) {
                         mChanged = true
@@ -759,7 +759,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             col.models.current()!!.put("tags", tags)
             col.models.setChanged()
             mReloadRequired = true
-            saveNoteTask(mEditorNote!!).execute(emptyArray(), bgDispatcher, mainDispatcher)
+            saveNoteTask(mEditorNote!!, mainDispatcher).execute(emptyArray(), bgDispatcher, mainDispatcher)
             updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
