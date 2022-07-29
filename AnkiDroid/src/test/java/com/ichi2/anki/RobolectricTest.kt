@@ -551,22 +551,25 @@ open class RobolectricTest : CollectionGetter {
         // Allow an override for the testing library (allowing Robolectric to access the Rust backend)
         // This allows M1 macs to access a .dylib built for arm64, despite it not existing in the .jar
         val backendPath = System.getenv("ANKIDROID_BACKEND_PATH")
+        val backendVersion = System.getenv("ANKIDROID_BACKEND_VERSION")
         if (backendPath != null) {
-            if (BuildConfig.BACKEND_VERSION != System.getenv("ANKIDROID_BACKEND_VERSION")) {
+            if (BuildConfig.BACKEND_VERSION != backendVersion) {
                 throw java.lang.IllegalStateException(
                     "AnkiDroid backend testing library requires an update.\n" +
-                        "Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v ${
-                        System.getenv(
-                            "ANKIDROID_BACKEND_VERSION"
-                        )
-                        })\n" +
+                        "Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v $backendVersion)\n" +
                         "And then set \$ANKIDROID_BACKEND_VERSION to ${BuildConfig.BACKEND_VERSION}\n" +
-                        "Error: \$ANKIDROID_BACKEND_VERSION: expected '${BuildConfig.BACKEND_VERSION}', got '${
-                        System.getenv(
-                            "ANKIDROID_BACKEND_VERSION"
-                        )
-                        }'"
+                        "Error: \$ANKIDROID_BACKEND_VERSION: expected '${BuildConfig.BACKEND_VERSION}', got '$backendVersion'"
                 )
+            }
+            // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
+            try {
+                RustBackendLoader.ensureSetup(backendPath)
+            } catch (e: RuntimeException) {
+                if (e.message.toString().contains("FileNotFoundException")) {
+                    val message = "Try using full path, '/Users/<username>/<path to dylib file>' instead of '~/<path to dylib file>'"
+                    throw java.lang.IllegalStateException(message, e)
+                }
+                throw e
             }
             // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
             RustBackendLoader.ensureSetup(backendPath)
