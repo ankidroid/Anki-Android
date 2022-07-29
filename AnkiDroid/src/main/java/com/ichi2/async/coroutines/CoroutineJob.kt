@@ -30,7 +30,7 @@ import timber.log.Timber
 /** This class is equivalent to AsyncTask, it keeps the functionality while using Kotlin-Coroutines beneath */
 
 // It would be good to remove this class completely and migrated the codebase to more coroutine-based-style
-abstract class CoroutineTask<Params, Progress, Result>(private val taskName: String) {
+abstract class CoroutineJob<Params, Progress, Result>(private val taskName: String) {
 
     companion object {
         enum class Status {

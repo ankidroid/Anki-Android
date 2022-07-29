@@ -37,7 +37,6 @@ import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
@@ -168,8 +167,7 @@ class NoteEditorTest : RobolectricTest() {
         val editor = getNoteEditorAdding(NoteType.CLOZE)
             .withFirstField("no cloze deletions")
             .build()
-        launch(dispatcher) { saveNote(editor) }
-        advanceUntilIdle()
+        saveNote(editor)
         assertThat(cardCount, equalTo(initialCards))
     }
 
@@ -179,8 +177,7 @@ class NoteEditorTest : RobolectricTest() {
         val editor = getNoteEditorAdding(NoteType.CLOZE)
             .withFirstField("{{c1::AnkiDroid}} is fantastic")
             .build()
-        launch(dispatcher) { saveNote(editor) }
-        advanceUntilIdle()
+        saveNote(editor)
         assertThat(cardCount, equalTo(initialCards + 1))
     }
 
@@ -192,8 +189,7 @@ class NoteEditorTest : RobolectricTest() {
         val editor = getNoteEditorAdding(NoteType.CLOZE)
             .withSecondField("{{c1::AnkiDroid}} is fantastic")
             .build()
-        launch(dispatcher) { saveNote(editor) }
-        advanceUntilIdle()
+        saveNote(editor)
         assertThat(cardCount, equalTo(initialCards))
     }
 
@@ -245,8 +241,7 @@ class NoteEditorTest : RobolectricTest() {
         editor.setFieldValueFromUi(0, newFirstField)
         assertThat(editor.currentFieldStrings.toList(), contains(newFirstField, initSecondField))
 
-        launch(dispatcher) { saveNote(editor) }
-        advanceUntilIdle()
+        saveNote(editor)
         val actual = editor.currentFieldStrings.toList()
 
         assertThat("newlines should be preserved, second field should be blanked", actual, contains(newFirstField, ""))

@@ -19,10 +19,10 @@ package com.ichi2.async.coroutines
 import android.content.Context
 import java.lang.ref.WeakReference
 
-abstract class CoroutineTaskWithContext<CTX : Context, Params, Progress, Result>(
+abstract class CoroutineJobWithContext<CTX : Context, Params, Progress, Result>(
     taskName: String,
     context: CTX?
-) : CoroutineTask<Params, Progress, Result>(taskName) {
+) : CoroutineJob<Params, Progress, Result>(taskName) {
 
     private val mContext = WeakReference(context)
 
