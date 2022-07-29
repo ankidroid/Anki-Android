@@ -164,7 +164,7 @@
     <string name="vertical_centering_summ">تراز کردن محتوای کارت‌ها بصورت عمودی در وسط</string>
     <string name="pref_backup_max" maxLength="41">حداکثر تعداد پشتیبان‌ها</string>
     <string name="pref_double_tap_time_interval" maxLength="41">فاصله زمانی دو بار زدن (میلی ثانیه)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_double_tap_time_interval_summary">ضربه دوم به دکمه های پاسخ صرف نظر می شود اگر این مدت زمان سپری نشده باشد. این عمل از دوبار ضربه های تصادفی جلوگیری میکند</string>
     <string name="show_estimates" maxLength="41">نمایش  دکمه زمان</string>
     <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
     <string name="show_large_answer_buttons" maxLength="41">دکمه های بزرگ جواب نشان بده</string>
@@ -318,7 +318,7 @@
     <string name="no_code_formatting" maxLength="41">قالب‌بندی پاسخ تایپ شده ی ساده</string>
     <string name="no_code_formatting_summ">مشکل پدید آمدن ‘􏿾’ در نتایج جواب تایپ شده را درست میکند</string>
     <string name="type_in_answer_focus" maxLength="41">روی ‘تایپ کردن در جای جواب’ تمرکز کن</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="type_in_answer_focus_summ">به صورت خودکار روی فیلد \'تایپ کردن در جای جواب\' در مرورگر تمرکز میکند</string>
     <!-- About -->
     <string name="open_changelog">Changelog را باز کن</string>
     <string name="pref_cat_about_title" maxLength="41">درباره ما</string>

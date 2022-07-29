@@ -85,6 +85,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.sched.AbstractSched
+import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
@@ -634,8 +635,8 @@ abstract class AbstractFlashcardViewer :
         super.onDestroy()
         // Tells the scheduler there is no more current cards. 0 is
         // not a valid id.
-        if (sched != null) {
-            sched!!.discardCurrentCard()
+        if (sched != null && sched is SchedV2) {
+            (sched!! as SchedV2).discardCurrentCard()
         }
         Timber.d("onDestroy()")
         mTTS.releaseTts(this)
@@ -2582,7 +2583,7 @@ abstract class AbstractFlashcardViewer :
     override fun opExecuted(changes: OpChanges, handler: Any?) {
         if ((changes.studyQueues || changes.noteText || changes.card) && handler !== this) {
             // executing this only for the refresh side effects; there may be a better way
-            Undo().runWithHandler(
+            GetCard().runWithHandler(
                 answerCardHandler(false)
             )
         }

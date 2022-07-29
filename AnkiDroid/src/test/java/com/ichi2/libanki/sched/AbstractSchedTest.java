@@ -177,7 +177,6 @@ public class AbstractSchedTest extends RobolectricTest {
         for (int i = 0; i < nbNote; i++) {
             Card card = sched.getCard();
             Counts counts = sched.counts(card);
-            sched.setCurrentCard(card); // imitate what the reviewer does
             assertThat(counts.getNew(), is(greaterThan(nbNote - i))); // Actual number of new card.
             assertThat(counts.getNew(), is(lessThanOrEqualTo(nbNote * 2 - i))); // Maximal number potentially shown,
             // because decrementing does not consider burying sibling
@@ -410,11 +409,9 @@ mw.col.sched.extendLimits(1, 0)
         addNoteUsingBasicModel("plop", "foo");
         col.reset();
         Card card = sched.getCard();
-        sched.setCurrentCard(card);
         sched.preloadNextCard();
         sched.answerCard(card, Consts.BUTTON_THREE);
         card = sched.getCard();
-        sched.setCurrentCard(card);
         AnkiAssert.assertDoesNotThrow(sched::preloadNextCard);
     }
 

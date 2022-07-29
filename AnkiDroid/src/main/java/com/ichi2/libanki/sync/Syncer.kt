@@ -27,13 +27,8 @@ import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsEvent
 import com.ichi2.anki.exception.UnknownHttpResponseException
 import com.ichi2.async.Connection
 import com.ichi2.async.Connection.Companion.isCancelled
+import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
-import com.ichi2.libanki.DB
-import com.ichi2.libanki.Deck
-import com.ichi2.libanki.DeckConfig
-import com.ichi2.libanki.Model
-import com.ichi2.libanki.Utils
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
 import com.ichi2.libanki.utils.TimeManager.time
@@ -44,9 +39,7 @@ import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.IOException
-import java.util.Arrays
-import java.util.LinkedList
-import kotlin.collections.ArrayList
+import java.util.*
 
 @KotlinCleanup("IDE-lint")
 class Syncer(
@@ -105,7 +98,6 @@ class Syncer(
     fun sync(con: Connection): Pair<ConnectionResultType, Any?>? {
         syncMsg = ""
         // if the deck has any pending changes, flush them first and bump mod time
-        col.sched._updateCutoff()
         col.save()
         // step 1: login & metadata
         val ret = remoteServer.meta()
@@ -405,11 +397,8 @@ class Syncer(
             val check = JSONArray()
             val counts = JSONArray()
 
-            // #5666 - not in libAnki
-            // We modified mReportLimit inside the scheduler, and this causes issues syncing dynamic decks.
-            val syncScheduler = col.createScheduler(SYNC_SCHEDULER_REPORT_LIMIT)
-            syncScheduler!!.resetCounts()
-            val counts_ = syncScheduler.counts()
+            col.sched.resetCounts()
+            val counts_ = col.sched.counts()
             @KotlinCleanup("apply{}")
             counts.put(counts_.new)
             counts.put(counts_.lrn)
@@ -862,8 +851,5 @@ class Syncer(
         const val TYPE_FLOAT = 2
         const val TYPE_STRING = 3
         const val TYPE_BLOB = 4
-
-        /** The libAnki value of `sched.mReportLimit`  */
-        private const val SYNC_SCHEDULER_REPORT_LIMIT = 1000
     }
 }

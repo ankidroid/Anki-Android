@@ -424,8 +424,13 @@ class Preferences : AnkiActivity() {
             // It's only possible to change the language by recreating the activity,
             // so do it if the language has changed.
             // TODO recreate the activity and keep its previous state instead of just closing it
-            languageSelection.setOnPreferenceChangeListener { _ ->
+            languageSelection.setOnPreferenceChangeListener { _, newValue ->
+                LanguageUtil.setDefaultBackendLanguages(newValue as String)
+                val helper = CollectionHelper.getInstance()
+                helper.closeCollection(true, "language change")
+                helper.discardBackend()
                 (requireActivity() as Preferences).closePreferences()
+                true
             }
         }
     }

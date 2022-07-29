@@ -104,7 +104,7 @@ abstract class NavigationDrawerActivity :
     // Navigation drawer initialisation
     protected fun initNavigationDrawer(mainView: View) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
-        mDrawerLayout = mainView.findViewById<DrawerLayout?>(R.id.drawer_layout)?.apply {
+        mDrawerLayout = mainView.findViewById<DrawerLayout>(R.id.drawer_layout)?.apply {
             // set a custom shadow that overlays the main content when the drawer opens
             setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
             setStatusBarBackgroundColor(Themes.getColorFromAttr(this@NavigationDrawerActivity, R.attr.colorPrimaryDark))
@@ -112,7 +112,7 @@ abstract class NavigationDrawerActivity :
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
         window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
         // Setup toolbar and hamburger
-        mNavigationView = mDrawerLayout!!.findViewById<NavigationView?>(R.id.navdrawer_items_container)?.apply {
+        mNavigationView = mDrawerLayout!!.findViewById<NavigationView>(R.id.navdrawer_items_container)?.apply {
             setNavigationItemSelectedListener(this@NavigationDrawerActivity)
         }
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
@@ -411,10 +411,11 @@ abstract class NavigationDrawerActivity :
             val shortcutManager = context.getSystemService(ShortcutManager::class.java)
 
             // Review Cards Shortcut
-            val intentReviewCards = Intent(context, Reviewer::class.java)
-            intentReviewCards.action = Intent.ACTION_VIEW
-            intentReviewCards.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intentReviewCards.putExtra(EXTRA_STARTED_WITH_SHORTCUT, true)
+            val intentReviewCards = Intent(context, Reviewer::class.java).apply {
+                action = Intent.ACTION_VIEW
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                putExtra(EXTRA_STARTED_WITH_SHORTCUT, true)
+            }
             val reviewCardsShortcut = ShortcutInfo.Builder(context, "reviewCardsShortcutId")
                 .setShortLabel(context.getString(R.string.studyoptions_start))
                 .setLongLabel(context.getString(R.string.studyoptions_start))
@@ -423,10 +424,11 @@ abstract class NavigationDrawerActivity :
                 .build()
 
             // Add Note Shortcut
-            val intentAddNote = Intent(context, NoteEditor::class.java)
-            intentAddNote.action = Intent.ACTION_VIEW
-            intentAddNote.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intentAddNote.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            val intentAddNote = Intent(context, NoteEditor::class.java).apply {
+                action = Intent.ACTION_VIEW
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            }
             val NoteEditorShortcut = ShortcutInfo.Builder(context, "noteEditorShortcutId")
                 .setShortLabel(context.getString(R.string.menu_add_note))
                 .setLongLabel(context.getString(R.string.menu_add_note))
@@ -435,9 +437,10 @@ abstract class NavigationDrawerActivity :
                 .build()
 
             // CardBrowser Shortcut
-            val intentCardBrowser = Intent(context, CardBrowser::class.java)
-            intentCardBrowser.action = Intent.ACTION_VIEW
-            intentCardBrowser.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            val intentCardBrowser = Intent(context, CardBrowser::class.java).apply {
+                action = Intent.ACTION_VIEW
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
             val cardBrowserShortcut = ShortcutInfo.Builder(context, "cardBrowserShortcutId")
                 .setShortLabel(context.getString(R.string.card_browser))
                 .setLongLabel(context.getString(R.string.card_browser))

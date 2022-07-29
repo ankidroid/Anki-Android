@@ -21,6 +21,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionV16
 import com.ichi2.themes.StyledProgressDialog
 import kotlinx.coroutines.*
@@ -28,6 +29,8 @@ import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import timber.log.Timber
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * Launch a job that catches any uncaught errors and reports them to the user.
@@ -127,7 +130,7 @@ suspend fun <T> AnkiActivity.runInBackgroundWithProgress(
  * window with the provided message.
  */
 suspend fun <T> AnkiActivity.runInBackgroundWithProgress(
-    message: String = "",
+    message: String = resources.getString(R.string.dialog_processing),
     op: suspend () -> T
 ): T = withProgressDialog(
     context = this@runInBackgroundWithProgress,
@@ -204,4 +207,28 @@ private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
     } ?: ""
     @Suppress("Deprecation") // ProgressDialog deprecation
     dialog.setMessage(text + progressText)
+}
+
+/**
+ * If a full sync is not already required, confirm the user wishes to proceed.
+ * If the user agrees, the schema is bumped and the routine will return true.
+ * On false, calling routine should abort.
+ */
+suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
+    if (col.schemaChanged()) {
+        return true
+    }
+    return suspendCoroutine { coroutine ->
+        AlertDialog.Builder(this)
+            // generic message
+            .setMessage(col.tr.deckConfigWillRequireFullSync())
+            .setPositiveButton(R.string.dialog_ok) { _, _ ->
+                col.modSchemaNoCheck()
+                coroutine.resume(true)
+            }
+            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                coroutine.resume(false)
+            }
+            .show()
+    }
 }
