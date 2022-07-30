@@ -64,6 +64,7 @@ import java.util.concurrent.LinkedBlockingDeque
 import java.util.function.Consumer
 import java.util.regex.Pattern
 import kotlin.math.max
+import kotlin.random.Random
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -1009,8 +1010,6 @@ open class Collection(
         return card
     }
 
-    @KotlinCleanup("scope function for random")
-    @KotlinCleanup("use Kotlin's random library instead of Java's")
     fun _dueForDid(did: Long, due: Int): Int {
         val conf = decks.confForDid(did)
         // in order due?
@@ -1021,8 +1020,7 @@ open class Collection(
         } else {
             // random mode; seed with note ts so all cards of this note get
             // the same random number
-            val r = Random()
-            r.setSeed(due.toLong())
+            val r = Random(due.toLong())
             r.nextInt(max(due, 1000) - 1) + 1
         }
     }
