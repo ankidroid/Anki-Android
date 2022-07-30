@@ -63,6 +63,8 @@ import java.util.*
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.function.Consumer
 import java.util.regex.Pattern
+import kotlin.math.max
+import kotlin.random.Random
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -1008,8 +1010,6 @@ open class Collection(
         return card
     }
 
-    @KotlinCleanup("scope function for random")
-    @KotlinCleanup("use Kotlin's random library instead of Java's")
     fun _dueForDid(did: Long, due: Int): Int {
         val conf = decks.confForDid(did)
         // in order due?
@@ -1020,9 +1020,8 @@ open class Collection(
         } else {
             // random mode; seed with note ts so all cards of this note get
             // the same random number
-            val r = Random()
-            r.setSeed(due.toLong())
-            r.nextInt(Math.max(due, 1000) - 1) + 1
+            val r = Random(due.toLong())
+            r.nextInt(max(due, 1000) - 1) + 1
         }
     }
 
@@ -1201,8 +1200,7 @@ open class Collection(
         val baseName = Decks.basename(fields["Deck"])
         fields["Subdeck"] = baseName
         fields["CardFlag"] = _flagNameFromCardFlags(flags)
-        val template: JSONObject
-        template = if (model.isStd) {
+        val template: JSONObject = if (model.isStd) {
             model.getJSONArray("tmpls").getJSONObject(ord)
         } else {
             model.getJSONArray("tmpls").getJSONObject(0)
@@ -1488,14 +1486,12 @@ open class Collection(
         val f = c.note(reload)
         val m = c.model()
         val t = c.template()
-        val did: Long
-        did = if (c.isInDynamicDeck) {
+        val did: Long = if (c.isInDynamicDeck) {
             c.oDid
         } else {
             c.did
         }
-        val qa: HashMap<String, String>
-        qa = if (browser) {
+        val qa: HashMap<String, String> = if (browser) {
             val bqfmt = t.getString("bqfmt")
             val bafmt = t.getString("bafmt")
             _renderQA(
