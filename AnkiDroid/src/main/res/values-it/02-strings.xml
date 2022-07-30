@@ -329,7 +329,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore nel contenuto della carta: impossibile caricare «%s»</string>
     <string name="card_viewer_media_relative_protocol">Errore del Contenuto della Carta: Richiesto aggiornamento multimediale</string>
-    <string name="cannot_load_http_resource">Il caricamento delle risorse http non è più supportato</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossibile caricare il mazzo «%s»</string>
     <string name="search_decks">Cerca mazzi</string>

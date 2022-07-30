@@ -357,7 +357,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Błąd zawartości karty, nie udało się załadować: %s</string>
     <string name="card_viewer_media_relative_protocol">Błąd zawartości karty: Wymagana aktualizacja mediów</string>
-    <string name="cannot_load_http_resource">Ładowanie zasobów http nie jest już obsługiwane</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nie udało się załadować talii: %s</string>
     <string name="search_decks">Przeszukaj talie</string>

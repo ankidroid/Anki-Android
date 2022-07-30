@@ -329,7 +329,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contenido de la tarjeta: Error al cargar ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Error de contenido de la tarjeta: es necesario actualizar medios</string>
-    <string name="cannot_load_http_resource">La carga de recursos http ya no está soportada</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Error al cargar el mazo ‘%s’</string>
     <string name="search_decks">Buscar mazos</string>

@@ -327,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">خطا در محتویات کارت:‌ بارگیری \'%s\' ناموفق بود</string>
     <string name="card_viewer_media_relative_protocol">خطا در محتویات کارت:‌ نیازمند به‌روز‌رسانی رسانه‌ها</string>
-    <string name="cannot_load_http_resource">بارگذاری منابع http دیگر حمایت نمی شود</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">خطا در بارگیری دسته \'%s\'</string>
     <string name="search_decks">جستجو در تمام دسته‌ها</string>

@@ -329,7 +329,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contingut de la carta: Error al carregar \'%s\'</string>
     <string name="card_viewer_media_relative_protocol">Error de contingut a la carta: Cal actualitzar el medi</string>
-    <string name="cannot_load_http_resource">La càrrega de recursos per http ja no és suportada</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Error al carregar paquet \'%s\'</string>
     <string name="search_decks">Cerca de paquets</string>

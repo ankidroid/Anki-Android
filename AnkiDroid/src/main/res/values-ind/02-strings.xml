@@ -315,7 +315,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Isi Kartu Gagal: Gagal memuat \'%s\'</string>
     <string name="card_viewer_media_relative_protocol">Isi Kartu Gagal: Pembaruan media diperlukan</string>
-    <string name="cannot_load_http_resource">Memuat sumber daya http sudah tidak didukung lagi</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Gagal memuat dek \'%s\'</string>
     <string name="search_decks">Cari dek</string>

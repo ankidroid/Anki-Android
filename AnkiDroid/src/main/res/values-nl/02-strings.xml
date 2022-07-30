@@ -329,7 +329,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Fout met de kaartinhoud: Laden van ‘%s ’ is mislukt</string>
     <string name="card_viewer_media_relative_protocol">Fout met de kaartinhoud: Media-update vereist</string>
-    <string name="cannot_load_http_resource">Het laden van http bronnen wordt niet langer ondersteund</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Laden van set ‘%s ’ mislukt</string>
     <string name="search_decks">Sets doorzoeken</string>

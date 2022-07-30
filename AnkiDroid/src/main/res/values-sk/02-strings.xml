@@ -357,7 +357,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu kartičky: Nepodarilo sa načítať ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Chyba obsahu kartičky: Vyžaduje sa update médií</string>
-    <string name="cannot_load_http_resource">Nahrávanie http zdrojov už viac nie je podporované</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nepodarilo sa načítať balíček ‘%s’</string>
     <string name="search_decks">Prehľadať balíčky</string>

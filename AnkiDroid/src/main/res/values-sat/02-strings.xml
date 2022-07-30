@@ -329,7 +329,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="card_viewer_media_relative_protocol">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞᱺ ᱢᱮᱰᱤᱭᱟ ᱟᱹᱯᱰᱮᱴ ᱫᱚᱨᱠᱟᱨ</string>
-    <string name="cannot_load_http_resource">https ᱥᱟᱸᱯᱫᱟ ᱞᱳᱰᱤᱝ ᱟᱫᱚ ᱵᱟᱝ ᱜᱟᱱᱚᱜ-ᱟ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ᱰᱮᱠ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ ‘%s’</string>
     <string name="search_decks">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>

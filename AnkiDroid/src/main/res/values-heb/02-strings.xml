@@ -359,7 +359,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">תקלה בתוכן הקלף: נכשל בטעינת %s</string>
     <string name="card_viewer_media_relative_protocol">תקלה בתוכן הקלף: נדרש עדכון מדיה</string>
-    <string name="cannot_load_http_resource">טעינת משאבי http אינה נתמכת עוד</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">טעינת החפיסה %s נכשלה</string>
     <string name="search_decks">חיפוש בחפיסות</string>

@@ -329,7 +329,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kortet innehållsfel: Det gick inte att läsa in ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Kort innehållsfel: Medierapportering krävs</string>
-    <string name="cannot_load_http_resource">Laddning av http-resurser stöds inte längre</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Det gick inte att läsa in kortleken ‘%s’</string>
     <string name="search_decks">Sök kortlekar</string>
