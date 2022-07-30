@@ -119,7 +119,7 @@
     <string name="dialog_ok">确定</string>
     <string name="dialog_no">否</string>
     <string name="dialog_continue">继续</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">处理中...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">创建</string>
     <string name="dialog_positive_delete">删除</string>
     <!-- Currently unsued, should be useful in the future -->
