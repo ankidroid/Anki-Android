@@ -315,7 +315,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Lỗi hiện thị nội dung thẻ: Không thể mở ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Lỗi hiện thị nội dung thẻ: Cần cập nhật media</string>
-    <string name="cannot_load_http_resource">Tải tài nguyên http không còn được hỗ trợ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Không thể mở bộ thẻ ‘%s’</string>
     <string name="search_decks">Tìm kiếm bộ thẻ</string>

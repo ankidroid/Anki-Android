@@ -329,7 +329,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kart İçeriği Hatası: \"%s\" yüklenemedi</string>
     <string name="card_viewer_media_relative_protocol">Kart İçeriği Hatası: Medya güncellemesi gerekli</string>
-    <string name="cannot_load_http_resource">Yüklenen HTTP kaynakları artık desteklenmiyor</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\' destesinin yüklenmesi başarısız</string>
     <string name="search_decks">Deste ara</string>

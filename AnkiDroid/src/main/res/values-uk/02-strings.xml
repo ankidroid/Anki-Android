@@ -357,7 +357,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
     <string name="card_viewer_media_relative_protocol">Помилка вмісту картки: необхідне оновлення медіа</string>
-    <string name="cannot_load_http_resource">Завантаження ресурсів http більше не підтримується</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не вдалося завантажити колоду «%s»</string>
     <string name="search_decks">Шукати колоди</string>

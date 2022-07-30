@@ -357,7 +357,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Памылка змесціва карткі: немагчыма загрузіць ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Памылка змесціва карткі: неабходна абнаўленне медыяфайлаў</string>
-    <string name="cannot_load_http_resource">Загрузка рэсурсаў http больш не падтрымліваецца</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Памылка загрузкі калоды ‘%s’</string>
     <string name="search_decks">Пошук калод</string>

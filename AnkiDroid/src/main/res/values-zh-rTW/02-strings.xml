@@ -315,7 +315,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">卡片內容錯誤：載入 ‘%s’ 失敗</string>
     <string name="card_viewer_media_relative_protocol">卡片內容錯誤：需要更新媒體</string>
-    <string name="cannot_load_http_resource">已不再支援載入 http 資源</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">載入牌組 ‘%s’ 失敗</string>
     <string name="search_decks">搜尋牌組</string>

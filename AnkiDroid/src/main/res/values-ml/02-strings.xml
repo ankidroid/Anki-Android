@@ -329,7 +329,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">കാർഡ് ഉള്ളടക്ക പിശക്: ‘%s’ ലോഡുചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="card_viewer_media_relative_protocol">കാർഡ് ഉള്ളടക്ക പിശക്: മീഡിയ അപ്‌ഡേറ്റ് ആവശ്യമാണ്</string>
-    <string name="cannot_load_http_resource">Http ഉറവിടങ്ങൾ ലോഡുചെയ്യുന്നത് മേലിൽ പിന്തുണയ്‌ക്കില്ല</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ഡെക്ക് ‘%s’ ലോഡുചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="search_decks">തിരയൽ ഡെക്കുകൾ</string>

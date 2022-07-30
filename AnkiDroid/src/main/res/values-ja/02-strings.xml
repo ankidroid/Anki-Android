@@ -315,7 +315,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">カードのエラー: 読み込み失敗 ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">カードコンテンツエラー: メディアの更新が必要です</string>
-    <string name="cannot_load_http_resource">HTTPリソースの読み込みはサポートされなくなりました</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\'デッキの読み込みに失敗しました</string>
     <string name="search_decks">デッキ名を検索</string>
