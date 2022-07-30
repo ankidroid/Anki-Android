@@ -63,6 +63,7 @@ import java.util.*
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.function.Consumer
 import java.util.regex.Pattern
+import kotlin.math.max
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -1022,7 +1023,7 @@ open class Collection(
             // the same random number
             val r = Random()
             r.setSeed(due.toLong())
-            r.nextInt(Math.max(due, 1000) - 1) + 1
+            r.nextInt(max(due, 1000) - 1) + 1
         }
     }
 
