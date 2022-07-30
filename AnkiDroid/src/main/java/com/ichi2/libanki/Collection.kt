@@ -1488,14 +1488,12 @@ open class Collection(
         val f = c.note(reload)
         val m = c.model()
         val t = c.template()
-        val did: Long
-        did = if (c.isInDynamicDeck) {
+        val did: Long = if (c.isInDynamicDeck) {
             c.oDid
         } else {
             c.did
         }
-        val qa: HashMap<String, String>
-        qa = if (browser) {
+        val qa: HashMap<String, String> = if (browser) {
             val bqfmt = t.getString("bqfmt")
             val bafmt = t.getString("bafmt")
             _renderQA(
