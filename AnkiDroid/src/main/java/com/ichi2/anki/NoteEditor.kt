@@ -232,9 +232,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
         }
 
-        override suspend fun actualOnPostExecute(result: Boolean, context: NoteEditor) {
+        override suspend fun actualOnPostExecute(result: Boolean?, context: NoteEditor) {
             context.apply {
-                if (result) {
+                if (result != null && result) {
                     if (mProgressDialog != null && mProgressDialog!!.isShowing) {
                         try {
                             mProgressDialog!!.dismiss()
