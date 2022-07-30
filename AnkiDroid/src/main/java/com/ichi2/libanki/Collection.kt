@@ -1201,8 +1201,7 @@ open class Collection(
         val baseName = Decks.basename(fields["Deck"])
         fields["Subdeck"] = baseName
         fields["CardFlag"] = _flagNameFromCardFlags(flags)
-        val template: JSONObject
-        template = if (model.isStd) {
+        val template: JSONObject = if (model.isStd) {
             model.getJSONArray("tmpls").getJSONObject(ord)
         } else {
             model.getJSONArray("tmpls").getJSONObject(0)
