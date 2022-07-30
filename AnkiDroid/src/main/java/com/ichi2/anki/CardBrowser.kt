@@ -1848,8 +1848,7 @@ open class CardBrowser :
             if (mShouldRestoreScroll) {
                 mShouldRestoreScroll = false
                 val newPosition = newPositionOfSelectedCard
-                val isRestorePossible = newPosition != CARD_NOT_AVAILABLE
-                if (isRestorePossible) {
+                if (newPosition != CARD_NOT_AVAILABLE) {
                     autoScrollTo(newPosition)
                 }
             }
@@ -1926,10 +1925,10 @@ open class CardBrowser :
      */
     val selectedDeckNameForUi: String
         get() = try {
-            when (val lastDeckId = lastDeckId) {
+            when (lastDeckId) {
                 null -> getString(R.string.card_browser_unknown_deck_name)
                 ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
-                else -> col.decks.name(lastDeckId)
+                else -> col.decks.name(lastDeckId!!)
             }
         } catch (e: Exception) {
             Timber.w(e, "Unable to get selected deck name")
@@ -1949,9 +1948,7 @@ open class CardBrowser :
         }
 
         override fun actualOnPostExecute(context: CardBrowser, result: Pair<CardCollection<CardCache>, List<Long>>?) {
-            if (result == null) {
-                return
-            }
+            result ?: return
             val cardsIdsToHide = result.second
             if (cardsIdsToHide != null) {
                 try {
@@ -1989,28 +1986,19 @@ open class CardBrowser :
         }
 
         private fun setMenuIcons(browser: Context, hasUnsuspended: Boolean, hasUnmarked: Boolean, actionBarMenu: Menu) {
-            var title: Int
-            var icon: Int
-            if (hasUnsuspended) {
-                title = R.string.card_browser_suspend_card
-                icon = R.drawable.ic_pause_circle_outline
-            } else {
-                title = R.string.card_browser_unsuspend_card
-                icon = R.drawable.ic_pause_circle_filled
+            val suspendTitle = if (hasUnsuspended) R.string.card_browser_suspend_card else R.string.card_browser_unsuspend_card
+            val suspendIcon = if (hasUnsuspended) R.drawable.ic_pause_circle_outline else R.drawable.ic_pause_circle_filled
+            actionBarMenu.findItem(R.id.action_suspend_card).apply {
+                title = browser.getString(suspendTitle)
+                setIcon(suspendIcon)
             }
-            val suspendItem = actionBarMenu.findItem(R.id.action_suspend_card)
-            suspendItem.title = browser.getString(title)
-            suspendItem.setIcon(icon)
-            if (hasUnmarked) {
-                title = R.string.card_browser_mark_card
-                icon = R.drawable.ic_star_border_white
-            } else {
-                title = R.string.card_browser_unmark_card
-                icon = R.drawable.ic_star_white
+
+            val markTitle = if (hasUnmarked) R.string.card_browser_mark_card else R.string.card_browser_unmark_card
+            val markIcon = if (hasUnmarked) R.drawable.ic_star_border_white else R.drawable.ic_star_white
+            actionBarMenu.findItem(R.id.action_mark_card).apply {
+                title = browser.getString(markTitle)
+                setIcon(markIcon)
             }
-            val markItem = actionBarMenu.findItem(R.id.action_mark_card)
-            markItem.title = browser.getString(title)
-            markItem.setIcon(icon)
         }
 
         override fun actualOnCancelled(context: CardBrowser) {
