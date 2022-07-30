@@ -79,7 +79,10 @@ abstract class SettingsFragment : PreferenceFragmentCompat() {
 
     protected abstract val analyticsScreenNameConstant: String
 
-    @Suppress("deprecation") // setTargetFragment
+    @Suppress("deprecation") // setTargetFragment #9452
+    // androidx.preference.PreferenceDialogFragmentCompat uses the deprecated method
+    // `getTargetFragment()`, which throws if `setTargetFragment()` isn't used before.
+    // While this isn't fixed on upstream, suppress the deprecation warning
     override fun onDisplayPreferenceDialog(preference: Preference) {
         val dialogFragment = when (preference) {
             is IncrementerNumberRangePreferenceCompat -> IncrementerNumberRangePreferenceCompat.IncrementerNumberRangeDialogFragmentCompat.newInstance(preference.getKey())
