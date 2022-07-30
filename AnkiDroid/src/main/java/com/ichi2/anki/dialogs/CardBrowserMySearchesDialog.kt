@@ -30,7 +30,6 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
         fun onSaveSearch(searchName: String?, searchTerms: String?)
     }
 
-    @Suppress("UNCHECKED_CAST")
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)

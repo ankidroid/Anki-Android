@@ -2091,7 +2091,7 @@ open class DeckPicker :
                 context.showCollectionErrorDialog()
                 return
             }
-            context.mDueTree = result.map { x -> x.unsafeCastToType(AbstractDeckTreeNode::class.java) }
+            context.mDueTree = result.map { x -> x.unsafeCastToType() }
             context.renderPage()
             // Update the mini statistics bar as well
             deckPicker?.launchCatchingTask {
