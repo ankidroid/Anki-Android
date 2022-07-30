@@ -31,17 +31,14 @@ abstract class CoroutineJobWithContext<CTX : Context, Params, Progress, Result>(
     abstract suspend fun actualOnPreExecute(context: CTX)
 
     override suspend fun onProgressUpdate(progress: Progress) {
-        super.onProgressUpdate(progress)
         mContext.get()?.let { actualOnProgressUpdate(progress, it) }
     }
 
     override suspend fun onPostExecute(result: Result) {
-        super.onPostExecute(result)
         mContext.get()?.let { actualOnPostExecute(result, it) }
     }
 
     override suspend fun onPreExecute() {
-        super.onPreExecute()
         mContext.get()?.let { actualOnPreExecute(it) }
     }
 }
