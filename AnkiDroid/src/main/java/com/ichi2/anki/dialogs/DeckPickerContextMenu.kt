@@ -28,6 +28,7 @@ import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.requireLong
 import com.ichi2.utils.ExtendedFragmentFactory
 import com.ichi2.utils.FragmentFactoryUtils
@@ -36,7 +37,7 @@ import java.util.function.Supplier
 
 class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialogFragment() {
 
-    fun withArguments(did: Long): DeckPickerContextMenu {
+    fun withArguments(did: DeckId): DeckPickerContextMenu {
         val args = this.arguments ?: Bundle()
         args.putLong("did", did)
         this.arguments = args

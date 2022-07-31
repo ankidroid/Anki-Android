@@ -24,6 +24,7 @@ import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.displayKeyboard
@@ -79,7 +80,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         mShownDialog?.dismiss()
     }
 
-    fun createSubDeck(did: Long, deckName: String?) {
+    fun createSubDeck(did: DeckId, deckName: String?) {
         val deckNameWithParentName = CollectionHelper.getInstance().getCol(context).decks.getSubdeckName(did, deckName)
         createDeck(deckNameWithParentName!!)
     }

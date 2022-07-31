@@ -49,6 +49,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
 import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.JSONArray
@@ -66,7 +67,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     }
 
     @JvmOverloads
-    fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: Long, jumpToReviewer: Boolean = false): CustomStudyDialog {
+    fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
         var args = this.arguments
         if (args == null) {
             args = Bundle()

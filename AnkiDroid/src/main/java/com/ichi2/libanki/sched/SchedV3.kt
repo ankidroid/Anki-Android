@@ -21,6 +21,7 @@ import anki.scheduler.*
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CollectionV16
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.TimeManager.time
 import java.lang.ref.WeakReference
 
@@ -130,7 +131,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
 
     override val goodNewButton: Int = 3
 
-    override fun haveBuried(did: Long): Boolean {
+    override fun haveBuried(did: DeckId): Boolean {
         // Backend does not support checking bury status of an arbitrary deck. This is
         // only used to decide whether to show an "unbury" option on a long press of a
         // deck.

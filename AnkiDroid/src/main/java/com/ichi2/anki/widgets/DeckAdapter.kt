@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.DeckService.defaultDeckHasCards
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.TreeNode
@@ -138,7 +139,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         getFilter().filter(filter)
     }
 
-    fun getNodeByDid(did: Long): TreeNode<AbstractDeckTreeNode> {
+    fun getNodeByDid(did: DeckId): TreeNode<AbstractDeckTreeNode> {
         val pos = findDeckPosition(did)
         return deckList[pos]
     }
@@ -310,7 +311,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
      *
      * An invalid deck ID will return position 0.
      */
-    fun findDeckPosition(did: Long): Int {
+    fun findDeckPosition(did: DeckId): Int {
         for (i in mCurrentDeckList.indices) {
             if (mCurrentDeckList[i].value.did == did) {
                 return i

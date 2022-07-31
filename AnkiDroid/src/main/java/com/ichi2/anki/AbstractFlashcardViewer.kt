@@ -798,7 +798,7 @@ abstract class AbstractFlashcardViewer :
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
     // Get the did of the parent deck (ignoring any subdecks)
-    protected val parentDid: Long
+    protected val parentDid: DeckId
         get() = col.decks.selected()
 
     private fun redrawCard() {

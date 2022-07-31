@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets
 
 class TextNoteExporter(
     col: Collection,
-    did: Long?,
+    did: DeckId?,
     val includeID: Boolean,
     val includedTags: Boolean,
     includeHTML: Boolean

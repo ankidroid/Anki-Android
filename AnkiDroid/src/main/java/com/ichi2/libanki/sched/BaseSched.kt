@@ -115,7 +115,7 @@ abstract class BaseSched(val col: Collection) {
      * Unbury cards.
      * @param type Which kind of cards should be unburied.
      */
-    open fun unburyCardsForDeck(did: Long, type: UnburyType = UnburyType.ALL) {
+    open fun unburyCardsForDeck(did: DeckId, type: UnburyType = UnburyType.ALL) {
         val mode = when (type) {
             UnburyType.ALL -> UnburyDeckRequest.Mode.ALL
             UnburyType.MANUAL -> UnburyDeckRequest.Mode.USER_ONLY
@@ -218,7 +218,7 @@ abstract class BaseSched(val col: Collection) {
      * Randomize the cards of did
      * @param did Id of a deck
      */
-    open fun randomizeCards(did: Long) {
+    open fun randomizeCards(did: DeckId) {
         col.newBackend.backend.sortDeck(deckId = did, randomize = true)
     }
 
@@ -226,7 +226,7 @@ abstract class BaseSched(val col: Collection) {
      * Sort the cards of deck `id` by creation date of the note
      * @param did Id of a deck
      */
-    open fun orderCards(did: Long) {
+    open fun orderCards(did: DeckId) {
         col.newBackend.backend.sortDeck(deckId = did, randomize = false)
     }
 
@@ -245,7 +245,7 @@ abstract class BaseSched(val col: Collection) {
     /** Rebuild a dynamic deck.
      * @param did The deck to rebuild. 0 means current deck.
      */
-    open fun rebuildDyn(did: Long) {
+    open fun rebuildDyn(did: DeckId) {
         col.newBackend.backend.rebuildFilteredDeck(did)
     }
 
@@ -256,7 +256,7 @@ abstract class BaseSched(val col: Collection) {
     /** Remove all cards from a dynamic deck
      * @param did The deck to empty. 0 means current deck.
      */
-    open fun emptyDyn(did: Long) {
+    open fun emptyDyn(did: DeckId) {
         col.newBackend.backend.emptyFilteredDeck(did)
     }
 
@@ -413,7 +413,7 @@ abstract class BaseSched(val col: Collection) {
      * for post-import
      */
     @RustCleanup("remove after removing old apkg importer")
-    fun maybeRandomizeDeck(did: Long) {
+    fun maybeRandomizeDeck(did: DeckId) {
         val conf = col.decks.confForDid(did)
         // in order due?
         if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {

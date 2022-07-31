@@ -170,7 +170,7 @@ open class CardBrowser :
     private var mColumn2Index = 0
     // DEFECT: Doesn't need to be a local
     /** The next deck for the "Change Deck" operation  */
-    private var mNewDid: Long = 0
+    private var mNewDid: DeckId = 0
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
@@ -440,7 +440,7 @@ open class CardBrowser :
      * @param did Id of the deck
      */
     @VisibleForTesting
-    fun moveSelectedCardsToDeck(did: Long) {
+    fun moveSelectedCardsToDeck(did: DeckId) {
         val selectedDeck = col.decks.get(did)
         try {
             // #5932 - can't be dynamic
@@ -2592,7 +2592,7 @@ open class CardBrowser :
 
     // should only be called from changeDeck()
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun executeChangeCollectionTask(ids: List<Long>, newDid: Long) {
+    fun executeChangeCollectionTask(ids: List<Long>, newDid: DeckId) {
         mNewDid = newDid // line required for unit tests, not necessary, but a noop in regular call.
         TaskManager.launchCollectionTask(
             ChangeDeckMulti(ids, newDid),

@@ -760,7 +760,7 @@ class DecksV16(private val col: CollectionV16) :
         return actv
     }
 
-    override fun childDids(did: Long, childMap: Decks.Node): List<Long> {
+    override fun childDids(did: DeckId, childMap: Decks.Node): List<Long> {
         return childDids(did, childMapNode(childMap))
     }
 
@@ -829,7 +829,7 @@ class DecksV16(private val col: CollectionV16) :
         return ret
     }
 
-    override fun parents(did: Long): List<Deck> {
+    override fun parents(did: DeckId): List<Deck> {
         return parents(did, Optional.empty())
     }
 

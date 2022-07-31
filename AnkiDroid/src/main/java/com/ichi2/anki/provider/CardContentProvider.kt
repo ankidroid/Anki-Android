@@ -1233,7 +1233,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun selectDeckWithCheck(col: Collection, did: Long): Boolean {
+    private fun selectDeckWithCheck(col: Collection, did: DeckId): Boolean {
         return if (col.decks.get(did, false) != null) {
             col.decks.select(did)
             true

@@ -68,7 +68,7 @@ class TagsV16(val col: CollectionV16) : TagManager() {
     }
 
     @RustCleanup("remove after migrating to backend custom study code")
-    override fun byDeck(did: Long, children: Boolean): List<String> {
+    override fun byDeck(did: DeckId, children: Boolean): List<String> {
         val basequery = "select n.tags from cards c, notes n WHERE c.nid = n.id"
         val query: String
         val res: List<String>
