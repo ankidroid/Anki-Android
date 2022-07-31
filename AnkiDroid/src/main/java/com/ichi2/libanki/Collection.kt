@@ -894,7 +894,7 @@ open class Collection(
                     val doHave = have.containsKey(nid) && have[nid]!!.containsKey(tord)
                     if (!doHave) {
                         // check deck is not a cram deck
-                        var ndid: Long
+                        var ndid: DeckId
                         try {
                             ndid = t.optLong("did", 0)
                             if (ndid != 0L) {
@@ -942,7 +942,7 @@ open class Collection(
     }
 
     @KotlinCleanup("remove - unused")
-    private fun _newCard(note: Note, template: JSONObject, due: Int, did: Long): Card {
+    private fun _newCard(note: Note, template: JSONObject, due: Int, did: DeckId): Card {
         val flush = true
         return _newCard(note, template, due, did, flush)
     }
@@ -957,7 +957,7 @@ open class Collection(
         note: Note,
         template: JSONObject,
         due: Int,
-        parameterDid: Long,
+        parameterDid: DeckId,
         flush: Boolean
     ): Card {
         val card = Card(this)
@@ -975,7 +975,7 @@ open class Collection(
         note: Note,
         template: JSONObject,
         due: Int,
-        parameterDid: Long,
+        parameterDid: DeckId,
         flush: Boolean
     ): Card {
         val nid = note.id
@@ -1010,7 +1010,7 @@ open class Collection(
         return card
     }
 
-    fun _dueForDid(did: Long, due: Int): Int {
+    fun _dueForDid(did: DeckId, due: Int): Int {
         val conf = decks.confForDid(did)
         // in order due?
         return if (conf.getJSONObject("new")
@@ -1161,7 +1161,7 @@ open class Collection(
     fun _renderQA(
         cid: Long,
         model: Model,
-        did: Long,
+        did: DeckId,
         ord: Int,
         tags: String,
         flist: Array<String?>,
@@ -1174,7 +1174,7 @@ open class Collection(
     fun _renderQA(
         cid: Long,
         model: Model,
-        did: Long,
+        did: DeckId,
         ord: Int,
         tags: String,
         flist: Array<String?>,
@@ -1486,7 +1486,7 @@ open class Collection(
         val f = c.note(reload)
         val m = c.model()
         val t = c.template()
-        val did: Long = if (c.isInDynamicDeck) {
+        val did: DeckId = if (c.isInDynamicDeck) {
             c.oDid
         } else {
             c.did

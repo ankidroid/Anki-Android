@@ -505,7 +505,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ChangeDeckMulti(cardIds: List<Long>, private val newDid: Long) : DismissNotes<Void?>(cardIds) {
+    class ChangeDeckMulti(cardIds: List<Long>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
             Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
             val deckData = col.decks.get(newDid)
@@ -799,7 +799,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class DeleteDeck(private val did: Long) : TaskDelegate<Void, IntArray?>() {
+    class DeleteDeck(private val did: DeckId) : TaskDelegate<Void, IntArray?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): IntArray? {
             Timber.d("doInBackgroundDeleteDeck")
             col.decks.rem(did, true)
@@ -980,7 +980,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ExportApkg(private val apkgPath: String, private val did: Long?, private val includeSched: Boolean, private val includeMedia: Boolean) : TaskDelegate<Void, Pair<Boolean, String?>>() {
+    class ExportApkg(private val apkgPath: String, private val did: DeckId?, private val includeSched: Boolean, private val includeMedia: Boolean) : TaskDelegate<Void, Pair<Boolean, String?>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Pair<Boolean, String?> {
             Timber.d("doInBackgroundExportApkg")
             try {

@@ -154,7 +154,7 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
      * @param did An id of a deck
      * @return Whether there is any buried cards in the deck
      */
-    abstract fun haveBuried(did: Long): Boolean
+    abstract fun haveBuried(did: DeckId): Boolean
 
     /**
      * @return Name of the scheduler. std or std2 currently.

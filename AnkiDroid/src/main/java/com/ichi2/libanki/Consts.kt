@@ -152,3 +152,5 @@ object Consts {
     /** Time duration for toast **/
     const val SHORT_TOAST_DURATION: Long = 2000
 }
+
+typealias DeckId = Long

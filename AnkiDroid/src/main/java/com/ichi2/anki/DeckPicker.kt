@@ -986,7 +986,7 @@ open class DeckPicker :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun toggleDeckExpand(did: Long) {
+    fun toggleDeckExpand(did: DeckId) {
         if (!col.decks.children(did).isEmpty()) {
             col.decks.collapse(did)
             renderPage()
@@ -1978,7 +1978,7 @@ open class DeckPicker :
         builder.show()
     }
 
-    private fun handleDeckSelection(did: Long, selectionType: DeckSelectionType) {
+    private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
         // Clear the undo history when selecting a new deck
         if (col.decks.selected() != did) {
             col.clearUndo()
@@ -2062,7 +2062,7 @@ open class DeckPicker :
      *
      * @param did The deck ID of the deck to select.
      */
-    private fun scrollDecklistToDeck(did: Long) {
+    private fun scrollDecklistToDeck(did: DeckId) {
         val position = mDeckListAdapter.findDeckPosition(did)
         mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, mRecyclerView.height / 2)
     }
@@ -2208,7 +2208,7 @@ open class DeckPicker :
     }
 
     // Callback to show study options for currently selected deck
-    fun showContextMenuDeckOptions(did: Long) {
+    fun showContextMenuDeckOptions(did: DeckId) {
         // open deck options
         if (col.decks.isDyn(did)) {
             // open cram options if filtered deck
@@ -2223,12 +2223,12 @@ open class DeckPicker :
         }
     }
 
-    fun exportDeck(did: Long) {
+    fun exportDeck(did: DeckId) {
         val msg = resources.getString(R.string.confirm_apkg_export_deck, col.decks.get(did).getString("name"))
         mExportingDelegate.showExportDialog(msg, did)
     }
 
-    fun createIcon(context: Context, did: Long) {
+    fun createIcon(context: Context, did: DeckId) {
         // This code should not be reachable with lower versions
         val shortcut = ShortcutInfoCompat.Builder(this, did.toString())
             .setIntent(
@@ -2256,7 +2256,7 @@ open class DeckPicker :
         }
     }
 
-    fun renameDeckDialog(did: Long) {
+    fun renameDeckDialog(did: DeckId) {
         val currentName = col.decks.name(did)
         val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
         createDeckDialog.deckName = currentName
@@ -2271,7 +2271,7 @@ open class DeckPicker :
         createDeckDialog.showDialog()
     }
 
-    fun confirmDeckDeletion(did: Long): Job? {
+    fun confirmDeckDeletion(did: DeckId): Job? {
         if (!BackendFactory.defaultLegacySchema) {
             dismissAllDialogFragments()
             // No confirmation required, as undoable
@@ -2324,15 +2324,15 @@ open class DeckPicker :
      * Use [.confirmDeckDeletion] for a confirmation dialog
      * @param did the deck to delete
      */
-    fun deleteDeck(did: Long) {
+    fun deleteDeck(did: DeckId) {
         TaskManager.launchCollectionTask(DeleteDeck(did), deleteDeckListener(did))
     }
 
-    private fun deleteDeckListener(did: Long): DeleteDeckListener {
+    private fun deleteDeckListener(did: DeckId): DeleteDeckListener {
         return DeleteDeckListener(did, this)
     }
 
-    private class DeleteDeckListener(private val did: Long, deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, IntArray?>(deckPicker) {
+    private class DeleteDeckListener(private val did: DeckId, deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, Void, IntArray?>(deckPicker) {
         // Flag to indicate if the deck being deleted is the current deck.
         private var mRemovingCurrent = false
         override fun actualOnPreExecute(context: DeckPicker) {
@@ -2389,12 +2389,12 @@ open class DeckPicker :
         }
     }
 
-    fun rebuildFiltered(did: Long) {
+    fun rebuildFiltered(did: DeckId) {
         col.decks.select(did)
         TaskManager.launchCollectionTask(RebuildCram(), simpleProgressListener())
     }
 
-    fun emptyFiltered(did: Long) {
+    fun emptyFiltered(did: DeckId) {
         col.decks.select(did)
         TaskManager.launchCollectionTask(EmptyCram(), simpleProgressListener())
     }
@@ -2522,7 +2522,7 @@ open class DeckPicker :
         }
     }
 
-    fun createSubDeckDialog(did: Long) {
+    fun createSubDeckDialog(did: DeckId) {
         val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, did)
         createDeckDialog.setOnNewDeckCreated {
             // a deck was created

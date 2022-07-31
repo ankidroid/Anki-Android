@@ -33,7 +33,7 @@ import timber.log.Timber
 import java.io.*
 
 @KotlinCleanup("lots in this file")
-open class Exporter(@JvmField protected val col: Collection, protected val did: Long?) {
+open class Exporter(@JvmField protected val col: Collection, protected val did: DeckId?) {
 
     /**
      * If set exporter will export only this deck, otherwise will export all cards
@@ -108,7 +108,7 @@ open class Exporter(@JvmField protected val col: Collection, protected val did: 
     }
 }
 
-open class AnkiExporter(col: Collection, did: Long?, val includeSched: Boolean, val includeMedia: Boolean) : Exporter(col, did) {
+open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean, val includeMedia: Boolean) : Exporter(col, did) {
     var mediaDir: String? = null
 
     // Actual capacity will be set when known, if media are imported.
@@ -348,7 +348,7 @@ class AnkiPackageExporter : AnkiExporter {
      * @param includeSched should include scheduling
      * @param includeMedia should include media
      */
-    constructor(col: Collection, did: Long, includeSched: Boolean, includeMedia: Boolean) : super(col, did, includeSched, includeMedia) {}
+    constructor(col: Collection, did: DeckId, includeSched: Boolean, includeMedia: Boolean) : super(col, did, includeSched, includeMedia) {}
 
     @Throws(IOException::class, JSONException::class, ImportExportException::class)
     override fun exportInto(path: String, context: Context) {

@@ -24,6 +24,7 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.utils.HandlerUtils
 import timber.log.Timber
 
@@ -249,7 +250,7 @@ class AutomaticAnswerSettings(
         fun queryDeckSpecificOptions(
             action: AutomaticAnswerAction,
             col: Collection,
-            selectedDid: Long
+            selectedDid: DeckId
         ): AutomaticAnswerSettings? {
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck

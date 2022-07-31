@@ -31,6 +31,7 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 import org.hamcrest.MatcherAssert.assertThat
@@ -301,7 +302,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         MetaDB.storeWhiteboardPenColor(targetContext, Consts.DEFAULT_DECK_ID, false, value)
     }
 
-    private fun storeLightModeColor(value: Int, did: Long?) {
+    private fun storeLightModeColor(value: Int, did: DeckId?) {
         MetaDB.storeWhiteboardPenColor(targetContext, did!!, false, value)
     }
 

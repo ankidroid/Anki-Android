@@ -80,7 +80,7 @@ open class Card : Cloneable {
     @set:VisibleForTesting
     var id: Long
     var nid: Long = 0
-    var did: Long = 0
+    var did: DeckId = 0
     var ord = 0
     var mod: Long = 0
     var usn = 0
@@ -100,7 +100,7 @@ open class Card : Cloneable {
     var lapses = 0
     var left = 0
     var oDue: Long = 0
-    var oDid: Long = 0
+    var oDid: DeckId = 0
     private var flags = 0
     private var data: String? = null
 

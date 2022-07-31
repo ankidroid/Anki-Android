@@ -16,6 +16,7 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
@@ -38,7 +39,7 @@ import kotlin.math.min
 @RustCleanup("after migration, consider dropping this and using backend tree structure directly")
 class DeckDueTreeNode(
     name: String,
-    did: Long,
+    did: DeckId,
     override var revCount: Int,
     override var lrnCount: Int,
     override var newCount: Int,

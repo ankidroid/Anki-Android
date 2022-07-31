@@ -16,10 +16,11 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import net.ankiweb.rsdroid.RustCleanup
 
 @RustCleanup("processChildren() can be removed after migrating to backend implementation")
-class DeckTreeNode(name: String, did: Long) : AbstractDeckTreeNode(name, did) {
+class DeckTreeNode(name: String, did: DeckId) : AbstractDeckTreeNode(name, did) {
     override fun processChildren(col: Collection, children: List<AbstractDeckTreeNode>, addRev: Boolean) {
         // intentionally blank
     }

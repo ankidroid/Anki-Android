@@ -16,6 +16,7 @@
 package com.ichi2.anki
 
 import com.ichi2.anki.widgets.DeckAdapter
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.DeckTreeNode
 import com.ichi2.libanki.sched.TreeNode
@@ -82,7 +83,7 @@ class DeckAdapterFilterTest {
             return deckList
         }
 
-    private fun List<TreeNode<AbstractDeckTreeNode>>.getByDid(did: Long): TreeNode<AbstractDeckTreeNode> {
+    private fun List<TreeNode<AbstractDeckTreeNode>>.getByDid(did: DeckId): TreeNode<AbstractDeckTreeNode> {
         return this.first { it.value.did == did }
     }
 

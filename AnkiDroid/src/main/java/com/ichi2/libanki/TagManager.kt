@@ -67,7 +67,7 @@ abstract class TagManager {
      * @param children whether to include the deck's children
      * @return a list of the tags
      */
-    abstract fun byDeck(did: Long, children: Boolean = false): List<String>
+    abstract fun byDeck(did: DeckId, children: Boolean = false): List<String>
 
     /*
     * Bulk addition/removal from notes

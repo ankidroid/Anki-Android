@@ -28,6 +28,7 @@ import com.afollestad.materialdialogs.list.listItems
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.TTSTag
 import com.ichi2.themes.Themes.getResFromAttr
@@ -47,7 +48,7 @@ object ReadText {
     var textToSpeak: String? = null
         private set
     private lateinit var flashCardViewer: WeakReference<Context>
-    private var mDid: Long = 0
+    private var mDid: DeckId = 0
     private var mOrd = 0
     var questionAnswer: SoundSide? = null
         private set
@@ -76,7 +77,7 @@ object ReadText {
         }
     }
 
-    private fun getLanguage(did: Long, ord: Int, qa: SoundSide): String {
+    private fun getLanguage(did: DeckId, ord: Int, qa: SoundSide): String {
         return MetaDB.getLanguage(flashCardViewer.get()!!, did, ord, qa)
     }
 
@@ -89,7 +90,7 @@ object ReadText {
      * @param qa   The card question or card answer
      */
     @SuppressLint("CheckResult")
-    fun selectTts(text: String?, did: Long, ord: Int, qa: SoundSide?, context: Context) {
+    fun selectTts(text: String?, did: DeckId, ord: Int, qa: SoundSide?, context: Context) {
         // TODO: Consolidate with ReadText.readCardSide
         textToSpeak = text
         questionAnswer = qa
@@ -152,7 +153,7 @@ object ReadText {
      * @param did              Index of the deck containing the card.
      * @param ord              The card template ordinal.
      */
-    fun readCardSide(textsToRead: List<TTSTag>, cardSide: SoundSide, did: Long, ord: Int, context: Context) {
+    fun readCardSide(textsToRead: List<TTSTag>, cardSide: SoundSide, did: DeckId, ord: Int, context: Context) {
         var isFirstText = true
         var playedSound = false
         for (textToRead in textsToRead) {
@@ -195,7 +196,7 @@ object ReadText {
      * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
      * @return false if a sound was not played
      */
-    private fun textToSpeech(tag: TTSTag, did: Long, ord: Int, qa: SoundSide, queueMode: Int, context: Context): Boolean {
+    private fun textToSpeech(tag: TTSTag, did: DeckId, ord: Int, qa: SoundSide, queueMode: Int, context: Context): Boolean {
         textToSpeak = tag.fieldText
         questionAnswer = qa
         mDid = did

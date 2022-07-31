@@ -37,6 +37,7 @@ import com.ichi2.async.CollectionTask.ExportApkg
 import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeUtils
 import net.ankiweb.rsdroid.BackendFactory
@@ -63,11 +64,11 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg))
     }
 
-    fun showExportDialog(msg: String, did: Long) {
+    fun showExportDialog(msg: String, did: DeckId) {
         activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg, did))
     }
 
-    override fun exportApkg(path: String?, did: Long?, includeSched: Boolean, includeMedia: Boolean) {
+    override fun exportApkg(path: String?, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
         val exportDir = File(activity.externalCacheDir, "export")
         exportDir.mkdirs()
         val exportPath: File
