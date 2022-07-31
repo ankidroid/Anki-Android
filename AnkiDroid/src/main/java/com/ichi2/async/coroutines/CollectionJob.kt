@@ -30,7 +30,7 @@ object CollectionJob {
         private val note: Note,
         context: CTX?
     ) : CoroutineJobWithContext<CTX, Void, Int, Boolean>(AddNote::class.java.simpleName, context) {
-        override suspend fun doInBackground(params: Array<Void>): Boolean {
+        override suspend fun doInBackground(vararg params: Void): Boolean {
             Timber.d("doInBackgroundAddNote")
             try {
                 val db = col.db

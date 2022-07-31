@@ -41,8 +41,8 @@ abstract class CoroutineJob<Params, Progress, Result>(private val taskName: Stri
     var status: Status = Status.PENDING
     private var preJob: Job? = null
     private var bgJob: Deferred<Result?>? = null
-    abstract suspend fun doInBackground(params: Array<Params>): Result?
-    open suspend fun onProgressUpdate(progress: Progress) {}
+    abstract suspend fun doInBackground(vararg params: Params): Result?
+    open suspend fun onProgressUpdate(vararg progress: Progress?) {}
     open suspend fun onPostExecute(result: Result?) {}
     open suspend fun onPreExecute() {}
     open fun onCancelled() {}
@@ -53,7 +53,7 @@ abstract class CoroutineJob<Params, Progress, Result>(private val taskName: Stri
      * default thread pool,
      */
     suspend fun execute(
-        params: Array<Params>,
+        vararg params: Params,
         bgDispatcher: CoroutineDispatcher = Dispatchers.Default,
         mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     ) {
@@ -80,7 +80,7 @@ abstract class CoroutineJob<Params, Progress, Result>(private val taskName: Stri
                 Timber.d("$taskName onPreExecute finished")
                 bgJob = async(bgDispatcher) {
                     Timber.d("$taskName doInBackground started")
-                    doInBackground(params)
+                    doInBackground(*params)
                 }
             }
             preJob!!.join()

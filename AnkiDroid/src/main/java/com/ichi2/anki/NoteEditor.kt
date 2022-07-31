@@ -190,18 +190,18 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun saveNoteTask(note: Note, mainDispatcher: CoroutineDispatcher) = object : CollectionJob.AddNote<NoteEditor>(col, note, this@NoteEditor) {
         private var mCloseAfter = false
         private var mIntent: Intent? = null
-        override suspend fun actualOnProgressUpdate(progress: Int, context: NoteEditor) {
+        override suspend fun actualOnProgressUpdate(context: NoteEditor, vararg progress: Int?) {
             // It would be good to move this context switch to the base class
             withContext(mainDispatcher) {
                 context.apply {
-                    if (progress > 0) {
+                    if (progress[0]!! > 0) {
                         mChanged = true
                         mSourceText = null
                         refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
                         showThemedToast(
                             this,
                             resources.getQuantityString(
-                                R.plurals.factadder_cards_added, progress, progress
+                                R.plurals.factadder_cards_added, progress[0]!!, progress
                             ),
                             false
                         )
@@ -212,7 +212,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                         mChanged = true
                         mCloseAfter = true
                     } else if (mCaller == CALLER_NOTEEDITOR_INTENT_ADD) {
-                        if (progress > 0) {
+                        if (progress[0]!! > 0) {
                             mChanged = true
                         }
                         mCloseAfter = true
@@ -759,7 +759,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             col.models.current()!!.put("tags", tags)
             col.models.setChanged()
             mReloadRequired = true
-            saveNoteTask(mEditorNote!!, mainDispatcher).execute(emptyArray(), bgDispatcher, mainDispatcher)
+            saveNoteTask(mEditorNote!!, mainDispatcher).execute(bgDispatcher = bgDispatcher, mainDispatcher = mainDispatcher)
             updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
