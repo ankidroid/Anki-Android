@@ -24,7 +24,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
 import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
@@ -114,19 +113,18 @@ class AdvancedSettingsFragment : SettingsFragment() {
     }
 
     private fun removeUnnecessaryAdvancedPrefs() {
-        val plugins = findPreference<PreferenceCategory>("category_plugins")
         // Disable the emoji/kana buttons to scroll preference if those keys don't exist
         if (!CompatHelper.hasKanaAndEmojiKeys()) {
             val emojiScrolling = findPreference<SwitchPreference>("scrolling_buttons")
-            if (emojiScrolling != null && plugins != null) {
-                plugins.removePreference(emojiScrolling)
+            if (emojiScrolling != null) {
+                preferenceScreen.removePreference(emojiScrolling)
             }
         }
         // Disable the double scroll preference if no scrolling keys
         if (!CompatHelper.hasScrollKeys() && !CompatHelper.hasKanaAndEmojiKeys()) {
             val doubleScrolling = findPreference<SwitchPreference>("double_scrolling")
-            if (doubleScrolling != null && plugins != null) {
-                plugins.removePreference(doubleScrolling)
+            if (doubleScrolling != null) {
+                preferenceScreen.removePreference(doubleScrolling)
             }
         }
     }

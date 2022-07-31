@@ -38,6 +38,30 @@
             app1:useSimpleSummaryProvider="true"
             app:min="0"
             app:max="99" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/tts_key"
+            android:summary="@string/tts_summ"
+            android:title="@string/tts" />
+        <Preference
+            android:summary="@string/reset_languages_summ"
+            android:title="@string/reset_languages"
+            android:key="@string/pref_reset_languages_key" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/convert_fen_text_key"
+            android:summary="@string/convert_fen_text_summ"
+            android:title="@string/convert_fen_text" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/more_scrolling_buttons_key"
+            android:summary="@string/more_scrolling_buttons_summ"
+            android:title="@string/more_scrolling_buttons" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/double_scrolling_gap_key"
+            android:summary="@string/double_scrolling_gap_summ"
+            android:title="@string/double_scrolling_gap" />
         <PreferenceCategory android:title="@string/statistics">
             <ListPreference
                 android:entries="@array/stats_default_deck_labels"
@@ -122,29 +146,5 @@
                 android:summary="@string/thirdparty_apps_summary"
                 android:title="@string/thirdparty_apps_title">
             </Preference>
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/tts_key"
-                android:summary="@string/tts_summ"
-                android:title="@string/tts" />
-            <Preference
-                android:summary="@string/reset_languages_summ"
-                android:title="@string/reset_languages"
-                android:key="@string/pref_reset_languages_key" />
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/convert_fen_text_key"
-                android:summary="@string/convert_fen_text_summ"
-                android:title="@string/convert_fen_text" />
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/more_scrolling_buttons_key"
-                android:summary="@string/more_scrolling_buttons_summ"
-                android:title="@string/more_scrolling_buttons" />
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/double_scrolling_gap_key"
-                android:summary="@string/double_scrolling_gap_summ"
-                android:title="@string/double_scrolling_gap" />
         </PreferenceCategory>
 </PreferenceScreen>
