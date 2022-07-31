@@ -84,6 +84,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
         // Advanced category
         requirePreference<Preference>(R.string.pref_advanced_screen_key).apply {
             summary = buildCategorySummary(
+                R.string.statistics,
                 R.string.pref_cat_workarounds,
                 R.string.pref_cat_plugins
             )
