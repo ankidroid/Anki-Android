@@ -22,7 +22,6 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
     private var buttonItemAdapter: ButtonItemAdapter? = null
     private var savedFilters: HashMap<String, String>? = null
     private var savedFilterKeys: ArrayList<String>? = null
-    private var currentSearchTerms: String? = null
 
     interface MySearchesDialogListener {
         fun onSelection(searchName: String?)
@@ -64,7 +63,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                     .customListAdapter(this, null)
             }
         } else if (type == CARD_BROWSER_MY_SEARCHES_TYPE_SAVE) {
-            currentSearchTerms = requireArguments().getString("currentSearchTerms")
+            val currentSearchTerms = requireArguments().getString("currentSearchTerms")
             dialog.title(text = getString(R.string.card_browser_list_my_searches_save))
                 .positiveButton(android.R.string.ok)
                 .negativeButton(R.string.dialog_cancel)
