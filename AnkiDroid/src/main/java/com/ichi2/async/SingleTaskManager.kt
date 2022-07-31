@@ -115,7 +115,7 @@ class SingleTaskManager : TaskManager() {
                     mLatestInstance!!.task.javaClass
                 )
                 if (timeoutSeconds != null) {
-                    mLatestInstance!![timeoutSeconds.toLong(), TimeUnit.SECONDS]
+                    mLatestInstance!!.get(timeoutSeconds.toLong(), TimeUnit.SECONDS)
                 } else {
                     mLatestInstance!!.get()
                 }
