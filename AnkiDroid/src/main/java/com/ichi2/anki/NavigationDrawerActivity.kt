@@ -279,31 +279,37 @@ abstract class NavigationDrawerActivity :
         mPendingRunnable = Runnable {
             // Take action if a different item selected
             val itemId = item.itemId
-            @KotlinCleanup("Use when")
-            if (itemId == R.id.nav_decks) {
-                Timber.i("Navigating to decks")
-                val deckPicker = Intent(this@NavigationDrawerActivity, DeckPicker::class.java)
-                // opening DeckPicker should use the instance on the back stack & clear back history
-                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                startActivityWithAnimation(deckPicker, END)
-            } else if (itemId == R.id.nav_browser) {
-                Timber.i("Navigating to card browser")
-                openCardBrowser()
-            } else if (itemId == R.id.nav_stats) {
-                Timber.i("Navigating to stats")
-                val intent = Intent(this@NavigationDrawerActivity, Statistics::class.java)
-                startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START)
-            } else if (itemId == R.id.nav_settings) {
-                Timber.i("Navigating to settings")
-                launchActivityForResultWithAnimation(Intent(this@NavigationDrawerActivity, Preferences::class.java), mPreferencesLauncher, FADE)
-                // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
-                (this as? Statistics)?.finishWithAnimation(FADE)
-            } else if (itemId == R.id.nav_help) {
-                Timber.i("Navigating to help")
-                showDialogFragment(HelpDialog.createInstance(this))
-            } else if (itemId == R.id.support_ankidroid) {
-                Timber.i("Navigating to support AnkiDroid")
-                showDialogFragment(HelpDialog.createInstanceForSupportAnkiDroid(this))
+            when (itemId) {
+                R.id.nav_decks -> {
+                    Timber.i("Navigating to decks")
+                    val deckPicker = Intent(this@NavigationDrawerActivity, DeckPicker::class.java)
+                    // opening DeckPicker should use the instance on the back stack & clear back history
+                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    startActivityWithAnimation(deckPicker, END)
+                }
+                R.id.nav_browser -> {
+                    Timber.i("Navigating to card browser")
+                    openCardBrowser()
+                }
+                R.id.nav_stats -> {
+                    Timber.i("Navigating to stats")
+                    val intent = Intent(this@NavigationDrawerActivity, Statistics::class.java)
+                    startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START)
+                }
+                R.id.nav_settings -> {
+                    Timber.i("Navigating to settings")
+                    launchActivityForResultWithAnimation(Intent(this@NavigationDrawerActivity, Preferences::class.java), mPreferencesLauncher, FADE)
+                    // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
+                    (this as? Statistics)?.finishWithAnimation(FADE)
+                }
+                R.id.nav_help -> {
+                    Timber.i("Navigating to help")
+                    showDialogFragment(HelpDialog.createInstance(this))
+                }
+                R.id.support_ankidroid -> {
+                    Timber.i("Navigating to support AnkiDroid")
+                    showDialogFragment(HelpDialog.createInstanceForSupportAnkiDroid(this))
+                }
             }
         }
 
