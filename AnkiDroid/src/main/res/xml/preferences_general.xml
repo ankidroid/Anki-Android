@@ -23,6 +23,7 @@
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:title="@string/pref_cat_general"
     android:summary="@string/pref_cat_general_summ"
     android:key="@string/pref_general_screen_key">
@@ -69,10 +70,14 @@
             <SwitchPreference
                 android:id="@+id/anki_card_external_context_menu"
                 android:defaultValue="true"
-                android:key="@string/anki_card_external_context_menu_key"/>
+                android:key="@string/anki_card_external_context_menu_key"
+                tools:title="‘Anki Card’ Menu"
+                tools:summary="Enables the ‘Anki Card’ context menu globally"/>
             <SwitchPreference
                 android:id="@+id/card_browser_external_context_menu"
                 android:defaultValue="false"
-                android:key="@string/card_browser_external_context_menu_key"/>
+                android:key="@string/card_browser_external_context_menu_key"
+                tools:title="‘Card Browser’ Menu"
+                tools:summary="Enables the ‘Card Browser’ context menu globally"/>
         </PreferenceCategory>
 </PreferenceScreen>
