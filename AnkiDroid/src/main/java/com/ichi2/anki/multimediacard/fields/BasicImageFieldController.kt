@@ -71,6 +71,8 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 @KotlinCleanup("IDE-lint")
 class BasicImageFieldController : FieldControllerBase(), IFieldController {
@@ -93,7 +95,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             val height = metrics.heightPixels
             val width = metrics.widthPixels
 
-            return Math.min(height * 0.4, width * 0.6).toInt()
+            return min(height * 0.4, width * 0.6).toInt()
         }
     private lateinit var cropImageRequest: ActivityResultLauncher<CropImageContractOptions>
     @VisibleForTesting
@@ -315,11 +317,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         mImagePreview!!.scaleType = ImageView.ScaleType.CENTER_INSIDE
         mImagePreview!!.adjustViewBounds = true
 
-        mImagePreview!!.maxHeight = Math.round(height * 0.4).toInt()
-        mImagePreview!!.maxWidth = Math.round(width * 0.6).toInt()
+        mImagePreview!!.maxHeight = (height * 0.4).roundToInt()
+        mImagePreview!!.maxWidth = (width * 0.6).roundToInt()
 
         mImageFileSize = FixedEditText(context)
-        mImageFileSize!!.setMaxWidth(Math.round(width * 0.6).toInt())
+        mImageFileSize!!.setMaxWidth((width * 0.6).roundToInt())
         mImageFileSize!!.setEnabled(false)
         mImageFileSize!!.setGravity(Gravity.CENTER_HORIZONTAL)
         mImageFileSize!!.setBackground(null)
@@ -328,7 +330,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         // #5513 - Image compression failed, but we'll confuse most users if we tell them that. Instead, just imply that
         // there's an action that they can take.
         mImageFileSizeWarning = FixedEditText(context)
-        mImageFileSizeWarning!!.setMaxWidth(Math.round(width * 0.6).toInt())
+        mImageFileSizeWarning!!.setMaxWidth((width * 0.6).roundToInt())
         mImageFileSizeWarning!!.setEnabled(false)
         mImageFileSizeWarning!!.setTextColor(Color.parseColor("#FF4500")) // Orange-Red
         mImageFileSizeWarning!!.setGravity(Gravity.CENTER_HORIZONTAL)
