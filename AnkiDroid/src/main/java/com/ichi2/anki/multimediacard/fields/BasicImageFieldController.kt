@@ -321,21 +321,21 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         mImagePreview!!.maxWidth = (width * 0.6).roundToInt()
 
         mImageFileSize = FixedEditText(context)
-        mImageFileSize!!.setMaxWidth((width * 0.6).roundToInt())
-        mImageFileSize!!.setEnabled(false)
-        mImageFileSize!!.setGravity(Gravity.CENTER_HORIZONTAL)
-        mImageFileSize!!.setBackground(null)
-        mImageFileSize!!.setVisibility(View.GONE)
+        mImageFileSize!!.maxWidth = (width * 0.6).roundToInt()
+        mImageFileSize!!.isEnabled = false
+        mImageFileSize!!.gravity = Gravity.CENTER_HORIZONTAL
+        mImageFileSize!!.background = null
+        mImageFileSize!!.visibility = View.GONE
 
         // #5513 - Image compression failed, but we'll confuse most users if we tell them that. Instead, just imply that
         // there's an action that they can take.
         mImageFileSizeWarning = FixedEditText(context)
-        mImageFileSizeWarning!!.setMaxWidth((width * 0.6).roundToInt())
-        mImageFileSizeWarning!!.setEnabled(false)
+        mImageFileSizeWarning!!.maxWidth = (width * 0.6).roundToInt()
+        mImageFileSizeWarning!!.isEnabled = false
         mImageFileSizeWarning!!.setTextColor(Color.parseColor("#FF4500")) // Orange-Red
-        mImageFileSizeWarning!!.setGravity(Gravity.CENTER_HORIZONTAL)
-        mImageFileSizeWarning!!.setVisibility(View.GONE)
-        mImageFileSize!!.setBackground(null)
+        mImageFileSizeWarning!!.gravity = Gravity.CENTER_HORIZONTAL
+        mImageFileSizeWarning!!.visibility = View.GONE
+        mImageFileSize!!.background = null
         mImageFileSizeWarning!!.setText(R.string.multimedia_editor_image_compression_failed)
     }
 
@@ -410,11 +410,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     private fun showSomethingWentWrong() {
-        UIUtils.showThemedToast(mActivity, mActivity.getResources().getString(R.string.multimedia_editor_something_wrong), false)
+        UIUtils.showThemedToast(mActivity, mActivity.resources.getString(R.string.multimedia_editor_something_wrong), false)
     }
 
     private fun showSVGPreviewToast() {
-        UIUtils.showThemedToast(mActivity, mActivity.getResources().getString(R.string.multimedia_editor_svg_preview), false)
+        UIUtils.showThemedToast(mActivity, mActivity.resources.getString(R.string.multimedia_editor_svg_preview), false)
     }
 
     private fun handleSelectImageIntent(data: Intent?) {
@@ -486,7 +486,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             return null
         }
         return try {
-            val returnFile = FileUtil.internalizeUri(uri, internalFile, mActivity.getContentResolver())
+            val returnFile = FileUtil.internalizeUri(uri, internalFile, mActivity.contentResolver)
             Timber.d("internalizeUri successful. Returning internalFile.")
             returnFile
         } catch (e: Exception) {
