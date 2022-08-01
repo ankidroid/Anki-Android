@@ -300,12 +300,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     @Throws(IOException::class)
-    @KotlinCleanup("Scope function")
-    private fun createCachedFile(filename: String): File {
-        val file = File(mAnkiCacheDirectory, filename)
-        file.deleteOnExit()
-        return file
-    }
+    private fun createCachedFile(filename: String): File =
+        File(mAnkiCacheDirectory, filename).apply {
+            deleteOnExit()
+        }
 
     private fun drawUIComponents(context: Context) {
         val metrics = displayMetrics
