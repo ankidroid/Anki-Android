@@ -232,7 +232,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         @KotlinCleanup(".isNotEmpty()")
         try {
             if (cameraManager != null) {
-                return cameraManager.cameraIdList.size > 0
+                return cameraManager.cameraIdList.isNotEmpty()
             }
         } catch (e: CameraAccessException) {
             Timber.e(e, "Unable to enumerate cameras")
