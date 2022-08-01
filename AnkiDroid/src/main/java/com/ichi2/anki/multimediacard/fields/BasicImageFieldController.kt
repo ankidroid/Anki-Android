@@ -377,26 +377,30 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
 
         mImageFileSizeWarning!!.visibility = View.GONE
-        @KotlinCleanup("use when")
-        if (requestCode == ACTIVITY_SELECT_IMAGE) {
-            try {
-                handleSelectImageIntent(data)
-                mImageFileSizeWarning!!.visibility = View.GONE
-            } catch (e: Exception) {
-                CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent")
-                Timber.e(e, "Failed to select image")
-                showSomethingWentWrong()
+        when (requestCode) {
+            ACTIVITY_SELECT_IMAGE -> {
+                try {
+                    handleSelectImageIntent(data)
+                    mImageFileSizeWarning!!.visibility = View.GONE
+                } catch (e: Exception) {
+                    CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent")
+                    Timber.e(e, "Failed to select image")
+                    showSomethingWentWrong()
+                    return
+                }
+            }
+            ACTIVITY_TAKE_PICTURE -> {
+                handleTakePictureResult()
+            }
+            ACTIVITY_DRAWING -> {
+                // receive image from drawing activity
+                val savedImagePath = data!!.extras!![DrawingActivity.EXTRA_RESULT_WHITEBOARD] as Uri?
+                handleDrawingResult(savedImagePath)
+            }
+            else -> {
+                Timber.w("Unhandled request code: %d", requestCode)
                 return
             }
-        } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
-            handleTakePictureResult()
-        } else if (requestCode == ACTIVITY_DRAWING) {
-            // receive image from drawing activity
-            val savedImagePath = data!!.extras!![DrawingActivity.EXTRA_RESULT_WHITEBOARD] as Uri?
-            handleDrawingResult(savedImagePath)
-        } else {
-            Timber.w("Unhandled request code: %d", requestCode)
-            return
         }
         setPreviewImage(mViewModel.imagePath, maxImageSize)
     }
