@@ -15,7 +15,10 @@
  */
 package com.ichi2.anki.preferences
 
+import androidx.preference.PreferenceCategory
 import com.ichi2.anki.R
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.preferences.ControlPreference
 
 class ControlsSettingsFragment : SettingsFragment() {
@@ -25,6 +28,19 @@ class ControlsSettingsFragment : SettingsFragment() {
         get() = "prefs.controls"
 
     override fun initSubscreen() {
-        ControlPreference.addAllControlPreferencesToCategory(requirePreference(R.string.controls_command_mapping_cat_key))
+        val commandMappingCategory = requirePreference<PreferenceCategory>(R.string.controls_command_mapping_cat_key)
+        addAllControlPreferencesToCategory(commandMappingCategory)
+    }
+
+    /** Attaches all possible [ControlPreference] elements to a given [PreferenceCategory] */
+    fun addAllControlPreferencesToCategory(category: PreferenceCategory) {
+        for (command in ViewerCommand.values()) {
+            val preference = ControlPreference(category.context).apply {
+                setTitle(command.resourceId)
+                key = command.preferenceKey
+                setDefaultValue(command.defaultValue.toPreferenceString())
+            }
+            category.addPreference(preference)
+        }
     }
 }
