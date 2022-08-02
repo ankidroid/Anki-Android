@@ -26,7 +26,7 @@ import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.AdaptionUtil.isRestrictedLearningDevice
+import com.ichi2.utils.AdaptionUtil
 
 /**
  * Fragment with preferences related to notifications
@@ -38,7 +38,7 @@ class NotificationsSettingsFragment : SettingsFragment() {
         get() = "prefs.notifications"
 
     override fun initSubscreen() {
-        if (isRestrictedLearningDevice) {
+        if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
             preferenceScreen.removePreference(requirePreference<SwitchPreference>(R.string.pref_notifications_vibrate_key))
             preferenceScreen.removePreference(requirePreference<SwitchPreference>(R.string.pref_notifications_blink_key))
         }
