@@ -16,8 +16,20 @@
 
 package com.ichi2.testutils
 
+import java.lang.reflect.Field
 import kotlin.reflect.KCallable
 import kotlin.reflect.full.createType
 
 /** For use when checking to see if a KType is equal to another type */
 inline fun <reified T> KCallable<*>.isType() = returnType == T::class.createType()
+
+/**
+ * @param clazz Java class to get the field
+ * @param fieldName name of the field
+ * @return a [Field] object with `isAccessible` set to true
+ */
+fun getJavaFieldAsAccessible(clazz: Class<*>, fieldName: String): Field {
+    return clazz.getDeclaredField(fieldName).apply {
+        isAccessible = true
+    }
+}
