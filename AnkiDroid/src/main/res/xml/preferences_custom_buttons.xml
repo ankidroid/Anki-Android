@@ -27,7 +27,8 @@ TODO: Add a unit test
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:title="@string/custom_buttons">
+    android:title="@string/custom_buttons"
+    android:key="@string/pref_app_bar_buttons_screen_key">
     <Preference
         android:key="@string/reset_custom_buttons_key"
         android:title="@string/reset_custom_buttons" />

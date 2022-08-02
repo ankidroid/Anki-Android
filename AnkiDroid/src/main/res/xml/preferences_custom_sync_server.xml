@@ -3,7 +3,8 @@
 
 <!-- Advanced Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/custom_sync_server_title">
+    android:title="@string/custom_sync_server_title"
+    android:key="@string/pref_custom_sync_server_screen_key">
     <SwitchPreference
         android:key="@string/custom_sync_server_enable_key"
         android:title="@string/custom_sync_server_enable_title"

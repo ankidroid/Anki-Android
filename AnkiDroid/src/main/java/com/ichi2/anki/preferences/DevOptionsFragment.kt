@@ -36,8 +36,12 @@ class DevOptionsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         val enableDevOptionsPref = requirePreference<SwitchPreference>(R.string.dev_options_enabled_by_user_key)
-        // If it is a DEBUG build, hide the preference to disable developer options
-        // If it is a RELEASE build, configure the preference to disable dev options
+        /**
+         * If it is a DEBUG build, hide the preference to disable developer options
+         * If it is a RELEASE build, configure the preference to disable dev options
+         * Ensure that the preference is searchable or not
+         * based on the same condition at [HeaderFragment.configureSearchBar]
+         */
         if (BuildConfig.DEBUG) {
             enableDevOptionsPref.isVisible = false
         } else {

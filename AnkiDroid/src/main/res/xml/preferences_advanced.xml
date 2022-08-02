@@ -24,6 +24,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     android:title="@string/pref_cat_advanced"
     android:key="@string/pref_advanced_screen_key">
         <EditTextPreference
@@ -73,7 +74,8 @@
             <Preference
                 android:key="@string/pref_advanced_statistics_key"
                 android:title="@string/advanced_statistics_title"
-                android:fragment="com.ichi2.anki.preferences.AdvancedStatisticsSettingsFragment" />
+                android:fragment="com.ichi2.anki.preferences.AdvancedStatisticsSettingsFragment"
+                search:ignore="true"/>
         </PreferenceCategory>
         <PreferenceCategory
             android:key="@string/pref_cat_workarounds_key"
