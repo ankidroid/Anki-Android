@@ -1418,7 +1418,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     }
                     false
                 }
-                if (AdaptionUtil.isRestrictedLearningDevice) {
+                if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
                     popup.menu.findItem(R.id.menu_multimedia_photo).isVisible = false
                     popup.menu.findItem(R.id.menu_multimedia_text).isVisible = false
                 }

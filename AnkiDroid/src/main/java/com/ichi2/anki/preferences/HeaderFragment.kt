@@ -27,7 +27,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
         requirePreference<Preference>(R.string.pref_advanced_screen_key).apply {
-            if (AdaptionUtil.isRestrictedLearningDevice) {
+            if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
                 isVisible = false
             }
         }
