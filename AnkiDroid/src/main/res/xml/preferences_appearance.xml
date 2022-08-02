@@ -24,6 +24,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
         android:title="@string/pref_cat_appearance"
         android:key="@string/pref_appearance_screen_key">
     <PreferenceCategory android:title="@string/pref_cat_themes" >
@@ -41,7 +42,8 @@
             android:key="@string/day_theme_key"
             android:shouldDisableView="true"
             android:title="@string/day_theme"
-            app1:useSimpleSummaryProvider="true"/>
+            app1:useSimpleSummaryProvider="true"
+            search:ignore="true"/>
         <ListPreference
             android:defaultValue="3"
             android:entries="@array/night_theme_labels"
@@ -49,7 +51,8 @@
             android:key="@string/night_theme_key"
             android:shouldDisableView="true"
             android:title="@string/night_theme"
-            app1:useSimpleSummaryProvider="true"/>
+            app1:useSimpleSummaryProvider="true"
+            search:ignore="true"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/background_image_title" >
         <SwitchPreference
@@ -64,7 +67,8 @@
             android:summary="@string/custom_buttons_summary"
             android:title="@string/custom_buttons"
             android:key="@string/custom_buttons_link_preference"
-            android:fragment="com.ichi2.anki.preferences.CustomButtonsSettingsFragment" />
+            android:fragment="com.ichi2.anki.preferences.CustomButtonsSettingsFragment"
+            search:ignore="true"/>
         <ListPreference
             android:defaultValue="0"
             android:key="@string/fullscreen_mode_preference"

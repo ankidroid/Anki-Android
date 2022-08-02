@@ -19,7 +19,8 @@
 ~ at developers, who are assumed to speak English.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/pref_cat_dev_options">
+    android:title="@string/pref_cat_dev_options"
+    android:key="@string/pref_dev_options_screen_key">
     <SwitchPreference
         android:title="@string/dev_options_enabled_pref"
         android:key="@string/dev_options_enabled_by_user_key"
