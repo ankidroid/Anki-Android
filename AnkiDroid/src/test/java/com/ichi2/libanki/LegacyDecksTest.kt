@@ -18,7 +18,7 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.Time
 import com.ichi2.testutils.assertThrows
 import com.ichi2.utils.JSONObject
 import net.ankiweb.rsdroid.RustCleanup
@@ -109,7 +109,7 @@ class LegacyDecksTest : RobolectricTest() {
             defaultDeck.put("id", 1)
             defaultDeck.put("name", "Default")
             defaultDeck.put("conf", 1)
-            defaultDeck.put("mod", TimeManager.time.intTime())
+            defaultDeck.put("mod", Time.s)
 
             val allDecks = JSONObject()
             allDecks.put("1", defaultDeck)

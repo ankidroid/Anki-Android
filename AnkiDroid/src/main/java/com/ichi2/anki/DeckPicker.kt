@@ -105,6 +105,7 @@ import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
+import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.BadgeDrawableBuilder
@@ -924,7 +925,7 @@ open class DeckPicker :
         val hkey = preferences.getString("hkey", "")
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
         if (hkey!!.isNotEmpty() && preferences.getBoolean("automaticSyncMode", false) &&
-            Connection.isOnline && TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
+            Connection.isOnline && Time.ms - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
         ) {
             Timber.i("Triggering Automatic Sync")
             sync()
@@ -1605,7 +1606,7 @@ open class DeckPicker :
         override fun onPreExecute() {
             mCountUp = 0
             mCountDown = 0
-            val syncStartTime = TimeManager.time.intTimeMS()
+            val syncStartTime = Time.ms
             if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
                 try {
                     mProgressDialog = StyledProgressDialog.show(
@@ -1634,7 +1635,7 @@ open class DeckPicker :
                         !Connection.isCancelled
                     ) {
                         // If less than 2s has elapsed since sync started then don't ask for confirmation
-                        if (TimeManager.time.intTimeMS() - syncStartTime < 2000) {
+                        if (Time.ms - syncStartTime < 2000) {
                             Connection.cancel()
                             @Suppress("Deprecation")
                             mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))

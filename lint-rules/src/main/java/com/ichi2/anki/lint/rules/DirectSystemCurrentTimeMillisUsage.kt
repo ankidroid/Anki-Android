@@ -19,9 +19,9 @@ class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
         const val ID = "DirectSystemCurrentTimeMillisUsage"
 
         @VisibleForTesting
-        const val DESCRIPTION = "Use the collection's getTime() method instead of System.currentTimeMillis()"
+        const val DESCRIPTION = "Use Time.ms instead of System.currentTimeMillis()"
         private const val EXPLANATION = "Using time directly means time values cannot be controlled during testing. " +
-            "Time values like System.currentTimeMillis() must be obtained through the Time obtained from a Collection"
+            "Time values like `System.currentTimeMillis()` must be obtained through `com.ichi2.libanki.utils.Time`'s static method."
         private val implementation = Implementation(DirectSystemCurrentTimeMillisUsage::class.java, Scope.JAVA_FILE_SCOPE)
         @JvmField
         val ISSUE: Issue = Issue.create(

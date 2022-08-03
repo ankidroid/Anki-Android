@@ -52,25 +52,6 @@ abstract class Time {
         return cal
     }
 
-    /** Return a non-conflicting timestamp for table.  */
-    fun timestampID(db: DB, table: String): Long {
-        // be careful not to create multiple objects without flushing them, or they
-        // may share an ID.
-        var t = intTimeMS()
-        while (db.queryScalar("SELECT id FROM $table WHERE id = ?", t) != 0) {
-            t += 1
-        }
-        return t
-    }
-
-    /** Return the first safe ID to use.  */
-    fun maxID(db: DB): Long {
-        var now = intTimeMS()
-        now = max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"))
-        now = max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"))
-        return now + 1
-    }
-
     /**
      * Returns the effective date of the present moment.
      * If the time is prior the cut-off time (9:00am by default as of 11/02/10) return yesterday,
@@ -113,6 +94,50 @@ abstract class Time {
             val cal = Calendar.getInstance()
             // 4am
             return (4 * 60 * 60 - (cal[Calendar.ZONE_OFFSET] + cal[Calendar.DST_OFFSET]) / 1000).toDouble()
+        }
+
+        /**
+         * Return current time in milliseconds according to [TimeManager.time].
+         * In production, it's system time.
+         * During test, it may be simulated time.
+         */
+        val ms: Long
+            get() = TimeManager.time.intTimeMS()
+
+        /**
+         * Return current time in seconds according to [TimeManager.time].
+         * In production, it's system time.
+         * During test, it may be simulated time.
+         */
+        val s: Long
+            get() = TimeManager.time.intTime()
+
+        /**
+         * Return current time's calendar according to [TimeManager.time].
+         * In production, it's system time.
+         * During test, it may be simulated time.
+         */
+        val calendar: Calendar
+            get() = TimeManager.time.calendar()
+
+        /** Return a non-conflicting timestamp for table.  */
+        @JvmStatic
+        fun timestampID(db: DB, table: String): Long {
+            // be careful not to create multiple objects without flushing them, or they
+            // may share an ID.
+            var t = ms
+            while (db.queryScalar("SELECT id FROM $table WHERE id = ?", t) != 0) {
+                t += 1
+            }
+            return t
+        }
+
+        /** Return the first safe ID to use.  */
+        fun maxID(db: DB): Long {
+            var now = ms
+            now = max(now, db.queryLongScalar("SELECT MAX(id) FROM cards"))
+            now = max(now, db.queryLongScalar("SELECT MAX(id) FROM notes"))
+            return now + 1
         }
     }
 }

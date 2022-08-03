@@ -10,8 +10,12 @@ import com.ichi2.anki.R
 import com.ichi2.libanki.*
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.utils.StringUtils
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.*
+import com.ichi2.utils.Assert
+import com.ichi2.utils.HashUtil
+import com.ichi2.utils.HtmlUtils
+import com.ichi2.utils.JSONObject
 
 // Ported from https://github.com/ankitects/anki/blob/50fdf9b03dec33c99a501f332306f378db5eb4ea/pylib/anki/importing/noteimp.py
 // Aside from 9f676dbe0b2ad9b87a3bf89d7735b4253abd440e, which allows empty notes.
@@ -113,7 +117,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
         val fld0index =
             mMapping!!.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"))
         mFMap = Models.fieldMap(mModel)
-        mNextId = TimeManager.time.timestampID(mCol.db, "notes")
+        mNextId = Time.timestampID(mCol.db, "notes")
         // loop through the notes
         val updates: MutableList<Array<Any>> = ArrayList(notes.size)
         val updateLog: MutableList<String> = ArrayList(notes.size)
@@ -248,7 +252,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
             id,
             Utils.guid64(),
             mModel!!.getLong("id"),
-            TimeManager.time.intTime(),
+            Time.s,
             mCol.usn(),
             mCol.tags.join(n.mTags),
             n.fieldsStr,
@@ -273,7 +277,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
             mTagsMapped -> {
                 tags = mCol.tags.join(n.mTags)
                 arrayOf(
-                    TimeManager.time.intTime(),
+                    Time.s,
                     mCol.usn(),
                     n.fieldsStr,
                     tags,
@@ -287,11 +291,11 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
                 val tagList = mCol.tags.split(tags)
                 tagList.addAll(StringUtils.splitOnWhitespace(mTagModified))
                 tags = mCol.tags.join(tagList)
-                arrayOf(TimeManager.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr)
+                arrayOf(Time.s, mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr)
             }
             else -> {
                 // This looks inconsistent but is fine, see: addUpdates
-                arrayOf(TimeManager.time.intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr)
+                arrayOf(Time.s, mCol.usn(), n.fieldsStr, id, n.fieldsStr)
             }
         }
     }

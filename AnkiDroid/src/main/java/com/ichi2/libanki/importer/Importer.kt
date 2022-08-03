@@ -21,7 +21,7 @@ import android.content.res.Resources
 import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.utils.TimeManager.time
+import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.KotlinCleanup
 import java.io.File
 
@@ -53,7 +53,7 @@ abstract class Importer(col: Collection, protected var file: String) {
      * need to make sure our starting point is safe.
      */
     protected fun _prepareTS() {
-        mTs = time.maxID(dst.db)
+        mTs = Time.maxID(dst.db)
     }
 
     protected fun ts(): Long {

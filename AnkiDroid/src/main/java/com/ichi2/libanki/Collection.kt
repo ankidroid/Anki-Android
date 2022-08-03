@@ -380,7 +380,7 @@ open class Collection(
     @JvmOverloads
     open fun flush(mod: Long = 0) {
         Timber.i("flush - Saving information to DB...")
-        this.mod = if (mod == 0L) TimeManager.time.intTimeMS() else mod
+        this.mod = if (mod == 0L) Time.ms else mod
         val values = ContentValues()
         values.put("crt", this.crt)
         values.put("mod", this.mod)
@@ -496,7 +496,7 @@ open class Collection(
      * thrown when in fact it is never thrown.
      */
     open fun modSchemaNoCheck() {
-        scm = TimeManager.time.intTimeMS()
+        scm = Time.ms
         setMod()
     }
 
@@ -862,8 +862,8 @@ open class Collection(
         val data = ArrayList<Array<Any>>()
 
         @Suppress("UNUSED_VARIABLE")
-        var ts = TimeManager.time.maxID(db)
-        val now = TimeManager.time.intTime()
+        var ts = Time.maxID(db)
+        val now = Time.s
         val rem =
             ArrayList<Long>(db.queryScalar("SELECT count() FROM notes where id in $snids"))
         val usn = usn()
@@ -1402,7 +1402,7 @@ open class Collection(
         }
 
     fun startTimebox() {
-        mStartTime = TimeManager.time.intTime()
+        mStartTime = Time.s
         mStartReps = sched.reps
     }
 
@@ -1412,7 +1412,7 @@ open class Collection(
             // timeboxing disabled
             return null
         }
-        val elapsed = TimeManager.time.intTime() - mStartTime
+        val elapsed = Time.s - mStartTime
         return if (elapsed > get_config_long("timeLim")) {
             Pair(
                 get_config_int("timeLim"),
@@ -1864,7 +1864,7 @@ open class Collection(
                 Utils.ids2str(dynDeckIds) +
                 "and odid in " +
                 Utils.ids2str(dynIdsAndZero),
-            nextDeckId, TimeManager.time.intTime(), usn()
+            nextDeckId, Time.s, usn()
         )
         result.cardsWithFixedHomeDeckCount = cardIds.size
         val message = String.format(Locale.US, "Fixed %d cards with no home deck", cardIds.size)
@@ -1936,7 +1936,7 @@ open class Collection(
                 "UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(
                     ids
                 ),
-                sched.today, TimeManager.time.intTime(), usn()
+                sched.today, Time.s, usn()
             )
         }
         return problems
@@ -1960,7 +1960,7 @@ open class Collection(
         notifyProgress.run()
         db.execute(
             "UPDATE cards SET due = 1000000, mod = ?, usn = ? WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW,
-            TimeManager.time.intTime(),
+            Time.s,
             usn()
         )
         return emptyList<String>()
@@ -2250,7 +2250,7 @@ open class Collection(
             }
         }
         val s = String.format(
-            "[%s] %s:%s(): %s", TimeManager.time.intTime(), trace.fileName, trace.methodName,
+            "[%s] %s:%s(): %s", Time.s, trace.fileName, trace.methodName,
             TextUtils.join(",  ", args)
         )
         writeLog(s)
@@ -2304,7 +2304,7 @@ open class Collection(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
                 cids
             ),
-            7, flag, usn(), TimeManager.time.intTime()
+            7, flag, usn(), Time.s
         )
     }
 

@@ -22,7 +22,7 @@ import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.Time
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
@@ -186,8 +186,8 @@ class CollectionV16(
     override fun modSchemaNoCheck() {
         db.execute(
             "update col set scm=?, mod=?",
-            TimeManager.time.intTimeMS(),
-            TimeManager.time.intTimeMS()
+            Time.ms,
+            Time.ms
         )
     }
 

@@ -33,7 +33,8 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Storage.collection
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.Utils
+import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -386,7 +387,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                 // copy it over
                 val model = srcModel.deepClone()
                 model.put("id", mid)
-                model.put("mod", TimeManager.time.intTime())
+                model.put("mod", Time.s)
                 model.put("usn", mCol.usn())
                 dst.models.update(model)
                 break
@@ -398,7 +399,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                 // they do; we can reuse this mid
                 val model = srcModel.deepClone()
                 model.put("id", mid)
-                model.put("mod", TimeManager.time.intTime())
+                model.put("mod", Time.s)
                 model.put("usn", mCol.usn())
                 dst.models.update(model)
                 break
@@ -567,7 +568,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     // update cid, nid, etc
                     val nid = mNotes!![guid]!!.nid
                     did = _did(did)
-                    val mod = TimeManager.time.intTime()
+                    val mod = Time.s
                     // review cards have a due date relative to collection
                     if (queue == QUEUE_TYPE_REV || queue == QUEUE_TYPE_DAY_LEARN_RELEARN || type == CARD_TYPE_REV) {
                         due -= aheadBy

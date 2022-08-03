@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.util.Pair;
 
 import com.ichi2.anki.AnkiDroidApp;
+import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.JSONObject;
 
@@ -69,7 +70,7 @@ public class Note implements Cloneable {
 
     public Note(@NonNull Collection col, @NonNull Model model) {
         mCol = col;
-        mId = TimeManager.INSTANCE.getTime().timestampID(mCol.getDb(), "notes");
+        mId = Time.timestampID(mCol.getDb(), "notes");
         mGuId = Utils.guid64();
         mModel = model;
         mMid = model.getLong("id");

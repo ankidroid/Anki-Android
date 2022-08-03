@@ -123,7 +123,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
         // legacy code expects preserve_usn=false behaviour, but that
         // causes a backup entry to be created, which invalidates the
         // v2 review history. So we manually update the usn/mtime here
-        m.put("mod", TimeManager.time.intTime())
+        m.put("mod", Time.s)
         m.put("usn", col.usn())
         update(m, preserve_usn_and_mtime = true)
     }
@@ -318,7 +318,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
         existingId?.let {
             if (it != m.id) {
                 // Python uses a float time, but it doesn't really matter, the goal is just a random id.
-                m.name += "-" + checksum(TimeManager.time.intTimeMS().toString()).substring(0, 5)
+                m.name += "-" + checksum(Time.ms.toString()).substring(0, 5)
             }
         }
     }

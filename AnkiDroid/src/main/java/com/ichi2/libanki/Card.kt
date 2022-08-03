@@ -29,7 +29,7 @@ import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.template.TemplateError
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.Assert
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.LanguageUtil
@@ -122,7 +122,7 @@ open class Card : Cloneable {
         render_output = null
         note = null
         // to flush, set nid, ord, and due
-        this.id = TimeManager.time.timestampID(this.col.db, "cards")
+        this.id = Time.timestampID(this.col.db, "cards")
         did = 1
         this.type = Consts.CARD_TYPE_NEW
         queue = Consts.QUEUE_TYPE_NEW
@@ -177,7 +177,7 @@ open class Card : Cloneable {
     @JvmOverloads
     fun flush(changeModUsn: Boolean = true) {
         if (changeModUsn) {
-            mod = TimeManager.time.intTime()
+            mod = Time.s
             usn = col.usn()
         }
         assert(due < "4294967296".toLong())
@@ -207,7 +207,7 @@ open class Card : Cloneable {
     }
 
     fun flushSched() {
-        mod = TimeManager.time.intTime()
+        mod = Time.s
         usn = col.usn()
         assert(due < "4294967296".toLong())
         val values = ContentValues()
@@ -289,7 +289,7 @@ open class Card : Cloneable {
     }
 
     fun startTimer() {
-        timerStarted = TimeManager.time.intTimeMS()
+        timerStarted = Time.ms
     }
 
     /**
@@ -305,7 +305,7 @@ open class Card : Cloneable {
      */
     fun timeTaken(): Int {
         // Indeed an int. Difference between two big numbers is still small.
-        val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
+        val total = (Time.ms - timerStarted).toInt()
         return Math.min(total, timeLimit())
     }
 
@@ -348,7 +348,7 @@ open class Card : Cloneable {
      * method when the session resumes to start counting review time again.
      */
     fun stopTimer() {
-        elapsedTime = TimeManager.time.intTimeMS() - timerStarted
+        elapsedTime = Time.ms - timerStarted
     }
 
     /**
@@ -360,7 +360,7 @@ open class Card : Cloneable {
      * or the result of timeTaken() will be wrong.
      */
     fun resumeTimer() {
-        timerStarted = TimeManager.time.intTimeMS() - elapsedTime
+        timerStarted = Time.ms - elapsedTime
     }
 
     @VisibleForTesting
@@ -453,7 +453,7 @@ open class Card : Cloneable {
         } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {
             return java.lang.Long.valueOf(due).toString()
         } else if (queue == Consts.QUEUE_TYPE_REV || queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || type == Consts.CARD_TYPE_REV && queue < 0) {
-            val time = TimeManager.time.intTime()
+            val time = Time.s
             val nbDaySinceCreation = due - col.sched.today
             time + nbDaySinceCreation * Stats.SECONDS_PER_DAY
         } else {

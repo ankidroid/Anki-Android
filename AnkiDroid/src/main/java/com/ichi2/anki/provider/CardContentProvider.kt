@@ -39,7 +39,7 @@ import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sched.findInDeckTree
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONException
@@ -1133,7 +1133,7 @@ class CardContentProvider : ContentProvider() {
             try {
                 if (cardToAnswer != null) {
                     if (timeTaken != -1L) {
-                        cardToAnswer.timerStarted = TimeManager.time.intTimeMS() - timeTaken
+                        cardToAnswer.timerStarted = Time.ms - timeTaken
                     }
                     sched.answerCard(cardToAnswer, ease)
                 }

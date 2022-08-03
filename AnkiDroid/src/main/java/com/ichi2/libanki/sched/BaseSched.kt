@@ -34,7 +34,7 @@ import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING
 import com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
 import com.ichi2.libanki.stats.Stats
-import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
 
@@ -283,7 +283,7 @@ abstract class BaseSched(val col: Collection) {
 
     /** Return the deck tree, in the native backend format. */
     fun deckTree(includeCounts: Boolean): DeckTreeNode {
-        return col.newBackend.backend.deckTree(now = if (includeCounts) TimeManager.time.intTime() else 0)
+        return col.newBackend.backend.deckTree(now = if (includeCounts) Time.s else 0)
     }
 
     /**

@@ -630,7 +630,7 @@ class DecksV16(private val col: CollectionV16) :
             "update cards set did=?,usn=?,mod=? where id in " + ids2str(cids),
             did,
             this.col.usn(),
-            TimeManager.time.intTime(),
+            Time.s,
         )
     }
 

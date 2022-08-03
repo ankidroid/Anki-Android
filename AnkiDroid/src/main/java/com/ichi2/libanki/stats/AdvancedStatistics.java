@@ -1067,7 +1067,7 @@ public class AdvancedStatistics {
         public int getToday(long collectionCreatedTime) {
             Timber.d("Collection creation timestamp: %d", collectionCreatedTime);
 
-            long currentTime = TimeManager.INSTANCE.getTime().intTime();
+            long currentTime = Time.Companion.getS();
             Timber.d("Now: %d", currentTime);
             return (int) ((currentTime - collectionCreatedTime) / SECONDS_PER_DAY);
         }
