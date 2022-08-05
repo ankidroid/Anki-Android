@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import androidx.annotation.StringRes
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
@@ -30,6 +31,7 @@ import com.ichi2.anki.*
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.compat.CompatHelper
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 class AdvancedSettingsFragment : SettingsFragment() {
@@ -109,6 +111,44 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED
             }
             requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
+        }
+        // Use V16 backend
+        requirePreference<SwitchPreference>(R.string.pref_rust_backend_key).apply {
+            if (!BuildConfig.LEGACY_SCHEMA) {
+                title = "New schema already enabled on local.properties"
+                isEnabled = false
+            }
+            setOnPreferenceChangeListener { newValue ->
+                if (newValue == true) {
+                    confirmExperimentalChange(
+                        R.string.use_rust_backend_title, R.string.use_rust_backend_summary,
+                        onCancel = { isChecked = false },
+                        onConfirm = {
+                            BackendFactory.defaultLegacySchema = false
+                            (requireActivity() as Preferences).restartWithNewDeckPicker()
+                        }
+                    )
+                } else {
+                    BackendFactory.defaultLegacySchema = true
+                    (requireActivity() as Preferences).restartWithNewDeckPicker()
+                }
+            }
+        }
+    }
+
+    /**
+     * Shows a dialog to confirm if the user wants to enable an experimental preference
+     */
+    private fun confirmExperimentalChange(@StringRes prefTitle: Int, @StringRes message: Int? = null, onCancel: () -> Unit, onConfirm: () -> Unit) {
+        val prefTitleString = getString(prefTitle)
+        val dialogTitle = getString(R.string.experimental_pref_confirmation, prefTitleString)
+
+        MaterialDialog(requireContext()).show {
+            title(text = dialogTitle)
+            message(message)
+            positiveButton(R.string.dialog_ok) { onConfirm() }
+            negativeButton(R.string.dialog_cancel) { onCancel() }
+            cancelOnTouchOutside(false) // to avoid `onCancel` not being triggered on outside cancels
         }
     }
 
