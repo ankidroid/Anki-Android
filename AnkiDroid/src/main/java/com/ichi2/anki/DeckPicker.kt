@@ -638,6 +638,11 @@ open class DeckPicker :
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * Show [searchDecksIcon] if there are more than 10 decks.
+     * Otherwise, hide it if there are less than 10 decks
+     * or if a exception is thrown while getting the decks count (e.g. corrupt collection)
+     */
     private fun updateSearchDecksIconVisibility() {
         searchDecksIcon?.isVisible = try {
             col.decks.count() >= 10
