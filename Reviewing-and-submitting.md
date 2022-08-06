@@ -41,6 +41,22 @@ If a reviewer believes that their judgement is enough, it is perfectly fine to m
 
 The author of the PR and the reviewer who merged it into the codebase are both responsible for any bug that the PR introduced. While nobody is ever forced to do anything for AnkiDroid, we usually expect either the code author or the reviewer who merged the code to take the time to correct any bug or build failure their code introduced.
 
+# String / Translation Changes
+
+If the PR includes any changes in strings that require translation, some extra steps are required, and a couple other steps are helpful.
+
+1. Add the "strings" label to the PR as soon as you notice the PR has changes in the "values" folder, requiring translation
+2. To make things easier, if possible, after all approvals are made on the PR *do not merge it yet*, mark it pending merge then:
+  - run the "Sync Translations" github actions workflow
+  - create a new / separate PR based on the i18n_sync branch (which should have fresh translations from the "Sync Translations" workflow, and work it through successful Unit / Emulator test workflows in CI along with reviewing the strings for anything odd.
+  - merge that new "Sync Translations" PR
+  - Now you have a clean basis for the PR you are reviewing to make translations changes!
+3. Merge the PR you are reviewing, which means there are now new strings added or removed
+4. Run the "Sync Translations" github actions workflow, if you followed step 2, this translation PR will be easy to review! A huge bonus. Otherwise it will be a mix of real fresh translations (possibly with errors) *and* a big batch of add/remove string changes from the PR
+5. Create a new translations PR based on the i18n_sync branch which the "Sync Translations" branch just updated
+6. Make sure the translations PR passes CI etc (making changes in crowdin for any errors, and re-running the "Sync Translations" github action no earlier than 30 minutes after the last run since crowdin throttles our free tier plan from building new bundles too often)
+7. Merge that translations PR
+
 ## How to become a reviewer
 
 If you make good contributions to AnkiDroid codebase and review PR written by other contributors in a polite and constructive way, current reviewers will probably notice you and offer to join. It is perfectly acceptable to contact current reviewers yourself to offer to join their team, however this did not have to occur since early 2020. 
@@ -48,3 +64,11 @@ If you make good contributions to AnkiDroid codebase and review PR written by ot
 Becoming a reviewer comes with no obligation, you can stop reviewing anytime you want.
 
 When you become a reviewer, you may get access to some private discussions, such as the administration of Google Summer of Code and change to our Open Collective policy. You do not have to participate, but you are welcome to become a GSoC mentor for the next summer.
+
+
+## Updating Dependencies
+
+- review and merge the dependabot PRs, this queues updates into the "dependencies" branch
+- every once in a while, pull / update the dependencies branch locally, rebase it to main and force push it back out to github
+- after the updated dependencies branch passes CI, squash-merge it to main
+- after merging dependencies branch to main, rebase the dependencies branch from main and force-push that back to github so it's ready for dependabot tracking again
