@@ -1159,7 +1159,7 @@ open class Collection(
      * Returns hash of id, question, answer.
      */
     fun _renderQA(
-        cid: Long,
+        cid: CardId,
         model: Model,
         did: DeckId,
         ord: Int,
@@ -1172,7 +1172,7 @@ open class Collection(
 
     @RustCleanup("#8951 - Remove FrontSide added to the front")
     fun _renderQA(
-        cid: Long,
+        cid: CardId,
         model: Model,
         did: DeckId,
         ord: Int,

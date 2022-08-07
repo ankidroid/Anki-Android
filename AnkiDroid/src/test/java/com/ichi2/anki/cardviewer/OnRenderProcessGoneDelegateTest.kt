@@ -23,6 +23,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.StrictMock.Companion.strictMock
 import org.hamcrest.MatcherAssert.assertThat
@@ -185,7 +186,7 @@ class OnRenderProcessGoneDelegateTest {
             displayedToast = true
         }
 
-        override fun displayRenderLoopDialog(currentCardId: Long, detail: RenderProcessGoneDetail) {
+        override fun displayRenderLoopDialog(currentCardId: CardId, detail: RenderProcessGoneDetail) {
             displayedDialog = true
             onCloseRenderLoopDialog()
         }

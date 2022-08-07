@@ -43,6 +43,7 @@ import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.navigation.NavigationView
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.dialogs.HelpDialog
+import com.ichi2.libanki.CardId
 import com.ichi2.themes.Themes
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.KotlinCleanup
@@ -328,7 +329,7 @@ abstract class NavigationDrawerActivity :
     }
 
     // Override this to specify a specific card id
-    protected open val currentCardId: Long?
+    protected open val currentCardId: CardId?
         get() = null
 
     protected fun showBackIcon() {

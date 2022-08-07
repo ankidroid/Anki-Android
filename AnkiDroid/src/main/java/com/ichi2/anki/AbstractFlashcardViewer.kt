@@ -672,7 +672,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     @KotlinCleanup("Use ?:")
-    public override val currentCardId: Long?
+    public override val currentCardId: CardId?
         get() = if (mCurrentCard == null) {
             null
         } else mCurrentCard!!.id
