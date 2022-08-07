@@ -15,6 +15,8 @@
  */
 package com.ichi2.libanki.exception
 
+import com.ichi2.libanki.DeckId
+
 /**
  * A deck was accessed which did not exist.
  *
@@ -22,5 +24,5 @@ package com.ichi2.libanki.exception
  */
 class NoSuchDeckException(
     /** The ID of the accessed deck  */
-    val deckId: Long
+    val deckId: DeckId
 ) : Exception()

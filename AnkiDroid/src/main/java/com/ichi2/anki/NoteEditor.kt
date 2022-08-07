@@ -141,7 +141,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private var mSelectedTags: ArrayList<String>? = null
 
     @get:VisibleForTesting
-    var deckId: Long = 0
+    var deckId: DeckId = 0
         private set
     private var mAllModelIds: ArrayList<Long>? = null
     @KotlinCleanup("this ideally should be Int, Int?")

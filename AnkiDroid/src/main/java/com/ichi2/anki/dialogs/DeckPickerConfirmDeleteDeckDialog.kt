@@ -22,6 +22,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.libanki.DeckId
 import com.ichi2.themes.Themes
 import com.ichi2.utils.BundleUtils.requireLong
 
@@ -47,7 +48,7 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(dialogMessage: String?, deckId: Long): DeckPickerConfirmDeleteDeckDialog {
+        fun newInstance(dialogMessage: String?, deckId: DeckId): DeckPickerConfirmDeleteDeckDialog {
             val f = DeckPickerConfirmDeleteDeckDialog()
             val args = Bundle()
             args.putString("dialogMessage", dialogMessage)

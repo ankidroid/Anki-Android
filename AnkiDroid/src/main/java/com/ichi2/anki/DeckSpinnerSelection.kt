@@ -153,7 +153,7 @@ class DeckSpinnerSelection(
      * Timber if [deckId] is not an id of a known deck.
      * @param deckId The ID of the deck to select
      */
-    fun updateDeckPosition(deckId: Long) {
+    fun updateDeckPosition(deckId: DeckId) {
         val position = mAllDeckIds.indexOf(deckId)
         if (position != -1) {
             spinner.setSelection(position)
@@ -183,7 +183,7 @@ class DeckSpinnerSelection(
      * the current deck id of Collection.
      * @return True if selection succeeded.
      */
-    fun selectDeckById(deckId: Long, setAsCurrentDeck: Boolean): Boolean {
+    fun selectDeckById(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
         return if (deckId == ALL_DECKS_ID) {
             selectAllDecks()
         } else selectDeck(deckId, setAsCurrentDeck)
@@ -195,7 +195,7 @@ class DeckSpinnerSelection(
      * @param setAsCurrentDeck whether this deck should be selected in the collection (if it exists)
      * @return whether it was found
      */
-    private fun selectDeck(deckId: Long, setAsCurrentDeck: Boolean): Boolean {
+    private fun selectDeck(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
         for (dropDownDeckIdx in mAllDeckIds.indices) {
             if (mAllDeckIds[dropDownDeckIdx] == deckId) {
                 val position = if (showAllDecks) dropDownDeckIdx + 1 else dropDownDeckIdx

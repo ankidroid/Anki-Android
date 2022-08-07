@@ -55,7 +55,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     private val mExpandImage: Drawable?
     private val mCollapseImage: Drawable?
     private val mNoExpander: Drawable = ColorDrawable(Color.TRANSPARENT)
-    private var currentDeckId: Long = 0
+    private var currentDeckId: DeckId = 0
 
     // Listeners
     private var mDeckClickListener: View.OnClickListener? = null

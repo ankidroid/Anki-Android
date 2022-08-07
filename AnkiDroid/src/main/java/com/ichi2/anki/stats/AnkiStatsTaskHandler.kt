@@ -21,6 +21,7 @@ import android.webkit.WebView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
@@ -42,8 +43,8 @@ class AnkiStatsTaskHandler private constructor(
 ) {
     var standardTextSize = 10f
     var statType = AxisType.TYPE_MONTH
-    private var mDeckId: Long = 0
-    fun setDeckId(deckId: Long) {
+    private var mDeckId: DeckId = 0
+    fun setDeckId(deckId: DeckId) {
         mDeckId = deckId
     }
 

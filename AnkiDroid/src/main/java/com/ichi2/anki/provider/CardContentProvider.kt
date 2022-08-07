@@ -740,7 +740,7 @@ class CardContentProvider : ContentProvider() {
     /**
      * This implementation optimizes for when the notes are grouped according to model.
      */
-    private fun bulkInsertNotes(valuesArr: Array<ContentValues>?, deckId: Long): Int {
+    private fun bulkInsertNotes(valuesArr: Array<ContentValues>?, deckId: DeckId): Int {
         if (valuesArr == null || valuesArr.size == 0) {
             return 0
         }
