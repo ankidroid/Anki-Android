@@ -79,7 +79,7 @@ open class Card : Cloneable {
     // BEGIN SQL table entries
     @set:VisibleForTesting
     var id: Long
-    var nid: Long = 0
+    var nid: NoteId = 0
     var did: DeckId = 0
     var ord = 0
     var mod: Long = 0

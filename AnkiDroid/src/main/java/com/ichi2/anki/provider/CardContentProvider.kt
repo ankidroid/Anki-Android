@@ -1253,7 +1253,7 @@ class CardContentProvider : ContentProvider() {
         return getCard(noteId, ord, col)
     }
 
-    private fun getCard(noteId: Long, ord: Int, col: Collection): Card {
+    private fun getCard(noteId: NoteId, ord: Int, col: Collection): Card {
         val currentNote = col.getNote(noteId)
         var currentCard: Card? = null
         for (card in currentNote.cards()) {

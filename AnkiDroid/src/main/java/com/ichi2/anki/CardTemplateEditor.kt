@@ -73,7 +73,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private set
     private var mFieldNames: List<String>? = null
     private var mModelId: Long = 0
-    private var mNoteId: Long = 0
+    private var mNoteId: NoteId = 0
 
     // the position of the cursor in the editor view
     private var tabToCursorPosition: HashMap<Int, Int?>? = null
@@ -952,7 +952,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         companion object {
             fun newInstance(
                 cardIndex: Int,
-                noteId: Long,
+                noteId: NoteId,
                 cursorPosition: Int,
                 viewId: Int
             ): CardTemplateFragment {
