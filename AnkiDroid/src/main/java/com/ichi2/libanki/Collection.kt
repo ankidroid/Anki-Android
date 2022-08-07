@@ -1512,8 +1512,8 @@ open class Collection(
         return TemplateRenderOutput(
             qa["q"]!!,
             qa["a"]!!,
-            null,
-            null,
+            listOf(),
+            listOf(),
             c.model().getString("css")
         )
     }

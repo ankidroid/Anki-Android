@@ -24,6 +24,8 @@
 
 package com.ichi2.libanki
 
+import com.ichi2.anki.CollectionManager.withCol
+
 /**
  * Records information about a text to speech tag.
  */
@@ -52,5 +54,36 @@ open class AvTag
 /* Methods */
 
 val AV_REF_RE = Regex("\\[anki:(play:(.):(\\d+))]")
+val AV_PLAYLINK_RE = Regex("playsound:(.):(\\d+)")
 
 fun strip_av_refs(text: str) = AV_REF_RE.replace("", text)
+
+fun addPlayIcons(content: String): String {
+    return AV_REF_RE.replace(content) { match ->
+        val groups = match.groupValues
+        val side = groups[2]
+        val index = groups[3]
+        val playsound = "playsound:$side:$index"
+        """<a class='replay-button replaybutton' href="$playsound"><span>
+                    <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill = "lightgrey"/>
+                    <path d="M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z" fill=black />Replay</svg>
+                    </span></a>"""
+    }
+}
+
+/** Extract av tag from playsound:q:x link */
+suspend fun getAvTag(card: Card, url: String): AvTag? {
+    return AV_PLAYLINK_RE.matchEntire(url)?.let {
+        val values = it.groupValues
+        val questionSide = values[1] == "q"
+        val index = values[2].toInt()
+        val tags = withCol {
+            if (questionSide) { card.questionAvTags() } else { card.answerAvTags() }
+        }
+        if (index < tags.size) {
+            tags[index]
+        } else {
+            null
+        }
+    }
+}

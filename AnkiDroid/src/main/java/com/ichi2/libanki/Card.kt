@@ -243,6 +243,14 @@ open class Card : Cloneable {
         return "<style>${render_output().css}</style>"
     }
 
+    fun questionAvTags(): List<AvTag> {
+        return render_output().question_av_tags
+    }
+
+    fun answerAvTags(): List<AvTag> {
+        return render_output().answer_av_tags
+    }
+
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
      */

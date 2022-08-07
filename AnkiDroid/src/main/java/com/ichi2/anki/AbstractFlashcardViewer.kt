@@ -92,6 +92,7 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.AdaptionUtil.hasWebBrowser
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.AssetHelper.guessMimeType
+import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.ClipboardUtil.getText
 import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
@@ -2257,7 +2258,9 @@ abstract class AbstractFlashcardViewer :
         // We play sounds through these links when a user taps the sound icon.
         fun filterUrl(url: String): Boolean {
             if (url.startsWith("playsound:")) {
-                controlSound(url)
+                launchCatchingTask {
+                    controlSound(url)
+                }
                 return true
             }
             if (url.startsWith("file") || url.startsWith("data:")) {
@@ -2450,8 +2453,22 @@ abstract class AbstractFlashcardViewer :
          * Also, Check if the user clicked on the running audio icon
          * @param url
          */
-        private fun controlSound(url: String) {
-            val replacedUrl = url.replaceFirst("playsound:".toRegex(), "")
+        @BlocksSchemaUpgrade("handle TTS tags")
+        private suspend fun controlSound(url: String) {
+            val replacedUrl = if (BackendFactory.defaultLegacySchema) {
+                url.replaceFirst("playsound:".toRegex(), "")
+            } else {
+                val tag = currentCard?.let { getAvTag(it, url) }
+                val filename = when (tag) {
+                    is SoundOrVideoTag -> tag.filename
+                    // not currently supported
+                    is TTSTag -> null
+                    else -> null
+                }
+                filename?.let {
+                    Sound.getSoundPath(mBaseUrl, it)
+                } ?: return
+            }
             if (replacedUrl != mSoundPlayer.currentAudioUri || mSoundPlayer.isCurrentAudioFinished) {
                 onCurrentAudioChanged(replacedUrl)
             } else {
