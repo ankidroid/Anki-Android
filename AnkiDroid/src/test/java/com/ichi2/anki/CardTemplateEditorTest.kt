@@ -520,13 +520,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         intent.putExtra("modelId", model.getLong("id"))
         val editor = super.startActivityNormallyOpenCollectionWithIntent(CardTemplateEditor::class.java, intent)
         val template = editor.tempModel?.getTemplate(0)
-        MatcherAssert.assertThat("Deck ID element should exist", template?.has("did"), Matchers.`is`(true))
-        MatcherAssert.assertThat("Deck ID element should be null", template?.get("did"), Matchers.`is`(JSONObject.NULL))
+        MatcherAssert.assertThat("Deck ID element should exist", template?.has("did"), Matchers.equalTo(true))
+        MatcherAssert.assertThat("Deck ID element should be null", template?.get("did"), Matchers.equalTo(JSONObject.NULL))
         editor.onDeckSelected(SelectableDeck(1, "hello"))
-        MatcherAssert.assertThat("Deck ID element should be changed", template?.get("did"), Matchers.`is`(1L))
+        MatcherAssert.assertThat("Deck ID element should be changed", template?.get("did"), Matchers.equalTo(1L))
         editor.onDeckSelected(null)
-        MatcherAssert.assertThat("Deck ID element should exist", template!!.has("did"), Matchers.`is`(true))
-        MatcherAssert.assertThat("Deck ID element should be null", template["did"], Matchers.`is`(JSONObject.NULL))
+        MatcherAssert.assertThat("Deck ID element should exist", template!!.has("did"), Matchers.equalTo(true))
+        MatcherAssert.assertThat("Deck ID element should be null", template["did"], Matchers.equalTo(JSONObject.NULL))
     }
 
     @Test
@@ -555,7 +555,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         cardTemplateFragment.setCurrentEditorView(R.id.front_edit, tempModel.getTemplate(0).getString("qfmt"), R.string.card_template_editor_front)
 
         // check if current content is updated or not
-        assumeThat(templateEditText.text.toString(), Matchers.`is`(updatedFrontContent))
+        assumeThat(templateEditText.text.toString(), Matchers.equalTo(updatedFrontContent))
     }
 
     @Test
@@ -577,15 +577,15 @@ class CardTemplateEditorTest : RobolectricTest() {
         val tempModel = testEditor.tempModel
 
         // check if current view is front(default) view
-        assumeThat(templateEditText.text.toString(), Matchers.`is`(tempModel!!.getTemplate(0).getString("qfmt")))
-        assumeThat(cardTemplateFragment!!.currentEditorViewId, Matchers.`is`(R.id.front_edit))
+        assumeThat(templateEditText.text.toString(), Matchers.equalTo(tempModel!!.getTemplate(0).getString("qfmt")))
+        assumeThat(cardTemplateFragment!!.currentEditorViewId, Matchers.equalTo(R.id.front_edit))
 
         // set Bottom Navigation View to Style
         cardTemplateFragment.setCurrentEditorView(R.id.styling_edit, tempModel.css, R.string.card_template_editor_styling)
 
         // check if current view is changed or not
-        assumeThat(templateEditText.text.toString(), Matchers.`is`(tempModel.css))
-        assumeThat(cardTemplateFragment.currentEditorViewId, Matchers.`is`(R.id.styling_edit))
+        assumeThat(templateEditText.text.toString(), Matchers.equalTo(tempModel.css))
+        assumeThat(cardTemplateFragment.currentEditorViewId, Matchers.equalTo(R.id.styling_edit))
     }
 
     private fun addCardType(testEditor: CardTemplateEditor, shadowTestEditor: ShadowActivity) {

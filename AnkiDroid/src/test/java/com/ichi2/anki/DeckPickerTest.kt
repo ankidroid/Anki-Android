@@ -37,7 +37,6 @@ import kotlin.test.assertNull
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @KotlinCleanup("fix IDE lint issues")
 @KotlinCleanup("replace `when` usages")
-@KotlinCleanup("`is` => equalTo")
 class DeckPickerTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
     @JvmField
@@ -204,13 +203,13 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun confirmDeckDeletionDeletesEmptyDeck() {
         val did = addDeck("Hello World")
-        assertThat("Deck was added", col.decks.count(), `is`(2))
+        assertThat("Deck was added", col.decks.count(), equalTo(2))
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )
         awaitJob(deckPicker.confirmDeckDeletion(did))
         advanceRobolectricLooperWithSleep()
-        assertThat("deck was deleted", col.decks.count(), `is`(1))
+        assertThat("deck was deleted", col.decks.count(), equalTo(1))
     }
 
     @Test
@@ -240,7 +239,7 @@ class DeckPickerTest : RobolectricTest() {
         deckPicker.handleStartupFailure(InitialActivity.StartupFailure.DATABASE_LOCKED)
         assertThat(
             deckPicker.databaseErrorDialog,
-            `is`(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+            equalTo(DatabaseErrorDialog.DIALOG_DB_LOCKED)
         )
     }
 
@@ -256,12 +255,12 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "A specific dialog for a conflict should be shown",
                 d.databaseErrorDialog,
-                `is`(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+                equalTo(DatabaseErrorDialog.DIALOG_DB_LOCKED)
             )
             assertThat(
                 "No exception reports should be thrown",
                 AnkiDroidApp.sSentExceptionReportHack,
-                `is`(false)
+                equalTo(false)
             )
         } finally {
             BackendEmulatingOpenConflict.disable()
@@ -286,7 +285,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "A specific dialog for a conflict should be shown",
                 d.databaseErrorDialog,
-                `is`(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+                equalTo(DatabaseErrorDialog.DIALOG_DB_LOCKED)
             )
         } finally {
             BackendEmulatingOpenConflict.disable()
@@ -309,7 +308,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "Analytics opt-in should be displayed",
                 d.displayedAnalyticsOptIn,
-                `is`(true)
+                equalTo(true)
             )
         } finally {
             InitialActivityWithConflictTest.revokeWritePermissions()
@@ -328,7 +327,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "Options menu not displayed when collection is inaccessible",
                 d.prepareOptionsMenu,
-                `is`(false)
+                equalTo(false)
             )
         } finally {
             disableNullCollection()
@@ -345,7 +344,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "Options menu is displayed when collection is accessible",
                 d.prepareOptionsMenu,
-                `is`(true)
+                equalTo(true)
             )
         } finally {
             InitialActivityWithConflictTest.revokeWritePermissions()
@@ -363,7 +362,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "Sync badge is not displayed when collection is inaccessible",
                 d.displaySyncBadge,
-                `is`(false)
+                equalTo(false)
             )
         } finally {
             disableNullCollection()
@@ -380,7 +379,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "Sync badge is displayed when collection is accessible",
                 d.displaySyncBadge,
-                `is`(true)
+                equalTo(true)
             )
         } finally {
             InitialActivityWithConflictTest.revokeWritePermissions()
@@ -401,9 +400,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "Lazy Collection initialization CollectionTask.LoadCollectionComplete fails",
                 d.col,
-                `is`(
-                    nullValue()
-                )
+                nullValue()
             )
         } finally {
             disableNullCollection()
@@ -420,15 +417,11 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "Collection initialization ensured by CollectionTask.LoadCollectionComplete",
                 d.col,
-                `is`(
-                    notNullValue()
-                )
+                notNullValue()
             )
             assertThat(
                 "Collection Models Loaded", d.col.models,
-                `is`(
-                    notNullValue()
-                )
+                notNullValue()
             )
         } finally {
             InitialActivityWithConflictTest.revokeWritePermissions()
@@ -457,12 +450,12 @@ class DeckPickerTest : RobolectricTest() {
                 CollectionType.SCHEMA_V_16.isCollection(
                     col
                 ),
-                `is`(true)
+                equalTo(true)
             )
             assertThat(
                 "Decks should be visible",
                 deckPicker.visibleDeckCount,
-                `is`(1)
+                equalTo(1)
             )
         } finally {
             InitialActivityWithConflictTest.setupForDefault()
@@ -488,7 +481,7 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "An error dialog should be displayed",
                 deckPicker.databaseErrorDialog,
-                `is`(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
+                equalTo(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
             )
         } finally {
             InitialActivityWithConflictTest.setupForDefault()
@@ -511,14 +504,14 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(
                 "An error dialog should be displayed",
                 deckPicker.databaseErrorDialog,
-                `is`(DatabaseErrorDialog.INCOMPATIBLE_DB_VERSION)
+                equalTo(DatabaseErrorDialog.INCOMPATIBLE_DB_VERSION)
             )
             assertThat(
                 CollectionHelper.getDatabaseVersion(targetContext),
-                `is`(250)
+                equalTo(250)
             )
         } catch (e: UnknownDatabaseVersionException) {
-            assertThat("no exception should be thrown", false, `is`(true))
+            assertThat("no exception should be thrown", false, equalTo(true))
         } finally {
             InitialActivityWithConflictTest.setupForDefault()
         }
@@ -543,14 +536,14 @@ class DeckPickerTest : RobolectricTest() {
     fun checkIfReturnsTrueWhenAtLeastOneDeckIsDisplayed() {
         addDeck("Hello World")
         // Reason for using 2 as the number of decks -> This deck + Default deck
-        assertThat("Deck added", col.decks.count(), `is`(2))
+        assertThat("Deck added", col.decks.count(), equalTo(2))
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )
         assertThat(
             "Deck is being displayed",
             deckPicker.hasAtLeastOneDeckBeingDisplayed(),
-            `is`(true)
+            equalTo(true)
         )
     }
 
@@ -558,14 +551,14 @@ class DeckPickerTest : RobolectricTest() {
     fun checkIfReturnsFalseWhenNoDeckIsDisplayed() {
         // Only default deck would be there in the count, hence using the value as 1.
         // Default deck does not get displayed in the DeckPicker if the default deck is empty.
-        assertThat("Contains only default deck", col.decks.count(), `is`(1))
+        assertThat("Contains only default deck", col.decks.count(), equalTo(1))
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )
         assertThat(
             "No deck is being displayed",
             deckPicker.hasAtLeastOneDeckBeingDisplayed(),
-            `is`(false)
+            equalTo(false)
         )
     }
 
@@ -573,7 +566,7 @@ class DeckPickerTest : RobolectricTest() {
         // load asset into temp
         val path = ResourceLoader.getTempCollection(targetContext, collectionType.assetFile)
         val p = File(path)
-        assertThat(p.isFile, `is`(true))
+        assertThat(p.isFile, equalTo(true))
         val collectionDirectory = p.parent
 
         // set collection path
@@ -586,7 +579,7 @@ class DeckPickerTest : RobolectricTest() {
         assertThat(
             "collection should not be loaded",
             CollectionHelper.getInstance().colIsOpen(),
-            `is`(false)
+            equalTo(false)
         )
     }
 

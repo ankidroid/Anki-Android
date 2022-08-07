@@ -252,7 +252,7 @@ open class StorageTest : RobolectricTest() {
             }
             val actual = actualJson.toOrderedString()
             val expected = expectedJson.toOrderedString()
-            MatcherAssert.assertThat(actual, Matchers.`is`(expected))
+            MatcherAssert.assertThat(actual, Matchers.equalTo(expected))
         }
 
         /** A req over a singleton can either be "any" or "all". Remove singletons which match  */
@@ -296,7 +296,7 @@ open class StorageTest : RobolectricTest() {
             remove(actualJson, expectedJson, "localOffset")
             val actual = actualJson.toOrderedString()
             val expected = expectedJson.toOrderedString()
-            MatcherAssert.assertThat(actual, Matchers.`is`(expected))
+            MatcherAssert.assertThat(actual, Matchers.equalTo(expected))
 
             // regression: curModel
         }

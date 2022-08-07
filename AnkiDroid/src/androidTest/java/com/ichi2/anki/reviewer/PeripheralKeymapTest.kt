@@ -20,13 +20,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.testutil.MockReviewerUi
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
-import org.hamcrest.Matchers.`is`
 import org.junit.Test
 import org.junit.runner.RunWith
-@KotlinCleanup("is -> equalTo")
 @RunWith(AndroidJUnit4::class)
 class PeripheralKeymapTest {
     @Test
@@ -49,7 +47,7 @@ class PeripheralKeymapTest {
         assertThat<List<ViewerCommand>>(processed, hasSize(1))
         assertThat(
             processed[0],
-            `is`(ViewerCommand.FLIP_OR_ANSWER_EASE1)
+            equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1)
         )
     }
 
