@@ -17,6 +17,7 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.KotlinCleanup
 import java.util.*
@@ -38,7 +39,7 @@ internal abstract class CardQueue<T : Card.Cache?>( // We need to store mSched a
         return queue.remove()!!.card
     }
 
-    fun remove(cid: Long): Boolean {
+    fun remove(cid: CardId): Boolean {
         // CardCache and LrnCache with the same id will be considered as equal so it's a valid implementation.
         return queue.remove(col?.let { Card.Cache(it, cid) })
     }

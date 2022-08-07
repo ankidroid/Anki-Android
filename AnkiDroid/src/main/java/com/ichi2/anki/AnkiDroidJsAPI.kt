@@ -37,6 +37,7 @@ import com.ichi2.async.CollectionTask.SearchCards
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
@@ -395,7 +396,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     @JavascriptInterface
     fun ankiSearchCard(query: String?) {
         val intent = Intent(context, CardBrowser::class.java)
-        val currentCardId: Long = currentCard.id
+        val currentCardId: CardId = currentCard.id
         intent.putExtra("currentCard", currentCardId)
         intent.putExtra("search_query", query)
         activity.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)

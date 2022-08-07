@@ -162,7 +162,7 @@ open class CardBrowser :
     private var mUndoSnackbar: Snackbar? = null
 
     // card that was clicked (not marked)
-    private var mCurrentCardId: Long = 0
+    private var mCurrentCardId: CardId = 0
     private var mOrder = 0
     private var mOrderAsc = false
     private var mColumn1Index = 0
@@ -245,7 +245,7 @@ open class CardBrowser :
     private val mCheckedCards = Collections.synchronizedSet(LinkedHashSet<CardCache>())
     private var mLastSelectedPosition = 0
     private var mActionBarMenu: Menu? = null
-    private var mOldCardId: Long = 0
+    private var mOldCardId: CardId = 0
     private var mOldCardTopOffset = 0
     private var mShouldRestoreScroll = false
     private var mPostAutoScroll = false
@@ -773,7 +773,7 @@ open class CardBrowser :
 
     /** Opens the note editor for a card.
      * We use the Card ID to specify the preview target  */
-    private fun openNoteEditorForCard(cardId: Long) {
+    private fun openNoteEditorForCard(cardId: CardId) {
         mCurrentCardId = cardId
         sCardBrowserCard = col.getCard(mCurrentCardId)
         // start note editor using the card we just loaded
@@ -1390,7 +1390,7 @@ open class CardBrowser :
         TaskManager.cancelCurrentlyExecutingTask()
     }
 
-    private val reviewerCardId: Long
+    private val reviewerCardId: CardId
         get() = intent.getLongExtra("currentCard", -1)
 
     private fun showEditTagsDialog() {
@@ -1399,7 +1399,7 @@ open class CardBrowser :
         }
         val allTags = col.tags.all()
         val selectedNotes = selectedCardIds
-            .map { cardId: Long? -> col.getCard(cardId!!).note() }
+            .map { cardId: CardId? -> col.getCard(cardId!!).note() }
             .distinct()
         val checkedTags = selectedNotes
             .flatMap { note: Note -> note.tags }
@@ -1555,7 +1555,7 @@ open class CardBrowser :
 
     private fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) {
         val selectedNotes = selectedCardIds
-            .map { cardId: Long? -> col.getCard(cardId!!).note() }
+            .map { cardId: CardId? -> col.getCard(cardId!!).note() }
             .distinct()
         for (note in selectedNotes) {
             val previousTags: List<String> = note.tags
@@ -2578,7 +2578,7 @@ open class CardBrowser :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun getPropertiesForCardId(cardId: Long): CardCache {
+    fun getPropertiesForCardId(cardId: CardId): CardCache {
         return mCards.find { c -> c.id == cardId } ?: throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
     }
 
