@@ -107,7 +107,7 @@ fun CollectionV16.exportAnkiPackage(
     outPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
-    deckId: Long?,
+    deckId: DeckId?,
     legacy: Boolean = true,
 ) {
     val limit = exportLimit {

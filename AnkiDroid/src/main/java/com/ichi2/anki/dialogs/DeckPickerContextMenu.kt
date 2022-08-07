@@ -180,7 +180,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         private fun newDeckPickerContextMenu(): DeckPickerContextMenu =
             DeckPickerContextMenu(collectionSupplier.get())
 
-        fun newDeckPickerContextMenu(deckId: Long): DeckPickerContextMenu =
+        fun newDeckPickerContextMenu(deckId: DeckId): DeckPickerContextMenu =
             DeckPickerContextMenu(collectionSupplier.get()).withArguments(deckId)
     }
 }

@@ -467,7 +467,7 @@ open class CardBrowser :
     }
 
     @get:VisibleForTesting
-    val lastDeckId: Long?
+    val lastDeckId: DeckId?
         get() = getSharedPreferences(PERSISTENT_STATE_FILE, 0)
             .getLong(LAST_DECK_ID_KEY, Decks.NOT_FOUND_DECK_ID)
             .takeUnless { it == Decks.NOT_FOUND_DECK_ID }
@@ -688,7 +688,7 @@ open class CardBrowser :
         }
     }
 
-    fun selectDeckAndSave(deckId: Long) {
+    fun selectDeckAndSave(deckId: DeckId) {
         mDeckSpinnerSelection!!.selectDeckById(deckId, true)
         mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""

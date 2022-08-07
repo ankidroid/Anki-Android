@@ -20,6 +20,7 @@ import android.webkit.WebView
 import com.ichi2.anki.R.string.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
@@ -31,7 +32,7 @@ import kotlin.math.roundToLong
 /**
  * @param webView for resources access
  */
-class OverviewStatsBuilder(private val webView: WebView, private val col: Collection, private val deckId: Long, private val type: AxisType) {
+class OverviewStatsBuilder(private val webView: WebView, private val col: Collection, private val deckId: DeckId, private val type: AxisType) {
     class OverviewStats {
         var forecastTotalReviews = 0
         var forecastAverageReviews = 0.0

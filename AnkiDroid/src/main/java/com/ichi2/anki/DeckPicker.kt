@@ -236,7 +236,7 @@ open class DeckPicker :
         }
     }
 
-    private fun displayFailedToOpenDeck(deckId: Long) {
+    private fun displayFailedToOpenDeck(deckId: DeckId) {
         // #6208 - if the click is accepted before the sync completes, we get a failure.
         // We use the Deck ID as the deck likely doesn't exist any more.
         val message = getString(R.string.deck_picker_failed_deck_load, deckId.toString())

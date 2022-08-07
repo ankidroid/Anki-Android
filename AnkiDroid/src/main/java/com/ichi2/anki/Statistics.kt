@@ -46,6 +46,7 @@ import com.ichi2.anki.stats.ChartView
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.async.catchingLifecycleScope
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
@@ -62,7 +63,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private set
     private lateinit var taskHandler: AnkiStatsTaskHandler
     private lateinit var mDeckSpinnerSelection: DeckSpinnerSelection
-    private var mStatsDeckId: Long = 0
+    private var mStatsDeckId: DeckId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -218,7 +219,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
     abstract class StatisticFragment : Fragment() {
         // track current settings for each individual fragment
-        protected var deckId: Long = 0
+        protected var deckId: DeckId = 0
 
         protected lateinit var statisticsJob: Job
         private lateinit var statisticsOverviewJob: Job

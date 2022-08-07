@@ -19,6 +19,7 @@
 package com.ichi2.anki
 
 import anki.import_export.ImportResponse
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.importAnkiPackage
 import com.ichi2.libanki.undoableOp
@@ -67,7 +68,7 @@ fun DeckPicker.exportApkg(
     apkgPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
-    deckId: Long?
+    deckId: DeckId?
 ) {
     launchCatchingCollectionTask { col ->
         runInBackgroundWithProgress(

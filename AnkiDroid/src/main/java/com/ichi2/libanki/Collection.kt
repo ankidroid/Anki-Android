@@ -2004,17 +2004,17 @@ open class Collection(
     }
 
     @Throws(NoSuchDeckException::class)
-    private fun getDeckOrFail(deckId: Long): Deck {
+    private fun getDeckOrFail(deckId: DeckId): Deck {
         return decks.get(deckId, false) ?: throw NoSuchDeckException(deckId)
     }
 
     @Throws(NoSuchDeckException::class)
-    private fun hasDeckOptions(deckId: Long): Boolean {
+    private fun hasDeckOptions(deckId: DeckId): Boolean {
         return getDeckOrFail(deckId).has("conf")
     }
 
     @Throws(NoSuchDeckException::class)
-    private fun removeDeckOptions(deckId: Long) {
+    private fun removeDeckOptions(deckId: DeckId) {
         getDeckOrFail(deckId).remove("conf")
     }
 

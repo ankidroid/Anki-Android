@@ -56,7 +56,7 @@ import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
 import java.util.*
 
-data class DeckNameId(val name: String, val id: did)
+data class DeckNameId(val name: String, val id: DeckId)
 
 data class DeckTreeNode(
     val deck_id: Long,
@@ -102,7 +102,7 @@ open class DeckV16 private constructor(private val deck: JSONObject) {
             deck.put("collapsed", value)
         }
 
-    var id: did
+    var id: DeckId
         get() = deck.getLong("id")
         set(value) {
             deck.put("id", value)
@@ -189,7 +189,7 @@ abstract class DeckConfigV16 private constructor(val config: JSONObject) {
 /** New/lrn/rev conf, from deck config */
 private typealias QueueConfig = Dict<str, Any>
 
-private typealias childMapNode = Dict<did, Any>
+private typealias childMapNode = Dict<DeckId, Any>
 // Change to Dict[int, "DeckManager.childMapNode"] when MyPy allow recursive type
 
 // TODO: col was a weakref
@@ -260,7 +260,7 @@ class DecksV16(private val col: CollectionV16) :
 
     /* Deck save/load */
     @RustCleanup("only for java interface: newDyn was used for filtered decks")
-    override fun id(name: str): did {
+    override fun id(name: str): DeckId {
         // use newDyn for now
         return id(name, true, 0).get()
     }
@@ -273,7 +273,7 @@ class DecksV16(private val col: CollectionV16) :
 
     /** "Add a deck with NAME. Reuse deck if already exists. Return id as int." */
     @Throws(DeckRenameException::class)
-    fun id(name: str, create: bool = true, type: Int = 0): Optional<did> {
+    fun id(name: str, create: bool = true, type: Int = 0): Optional<DeckId> {
         val id = this.id_for_name(name)
         if (id != null) {
             return Optional.of(id)
@@ -296,7 +296,7 @@ class DecksV16(private val col: CollectionV16) :
     }
 
     /** Remove the deck. If cardsToo, delete any cards inside. */
-    override fun rem(did: did, cardsToo: bool, childrenToo: bool) {
+    override fun rem(did: DeckId, cardsToo: bool, childrenToo: bool) {
         assert(cardsToo && childrenToo)
         col.backend.removeDecks(listOf(did))
     }
@@ -321,7 +321,7 @@ class DecksV16(private val col: CollectionV16) :
         }
     }
 
-    override fun id_for_name(name: str): did? {
+    override fun id_for_name(name: str): DeckId? {
         try {
             return col.backend.getDeckIdByName(name)
         } catch (ex: BackendNotFoundException) {
@@ -329,11 +329,11 @@ class DecksV16(private val col: CollectionV16) :
         }
     }
 
-    fun get_legacy(did: did): Deck? {
+    fun get_legacy(did: DeckId): Deck? {
         return get_deck_legacy(did)?.let { x -> Deck(x.getJsonObject()) }
     }
 
-    private fun get_deck_legacy(did: did): DeckV16? {
+    private fun get_deck_legacy(did: DeckId): DeckV16? {
         try {
             val jsonObject = BackendUtils.from_json_bytes(col.backend.getDeckLegacy(did))
             val ret = if (Decks.isDynamic(Deck(jsonObject))) {
@@ -380,7 +380,7 @@ class DecksV16(private val col: CollectionV16) :
     }
 
     @Deprecated("decks.allIds() is deprecated, use .all_names_and_ids()")
-    override fun allIds(): Set<did> {
+    override fun allIds(): Set<DeckId> {
         return this.all_names_and_ids().map { x -> x.id }.toSet()
     }
 
@@ -393,13 +393,13 @@ class DecksV16(private val col: CollectionV16) :
         }.toMutableList()
     }
 
-    override fun collapse(did: did) {
+    override fun collapse(did: DeckId) {
         val deck = this.get(did).toV16()
         deck.collapsed = !deck.collapsed
         this.save(deck)
     }
 
-    fun collapseBrowser(did: did) {
+    fun collapseBrowser(did: DeckId) {
         val deck = this.get(did).toV16()
         val collapsed = deck.browserCollapsed
         deck.browserCollapsed = !collapsed
@@ -410,7 +410,7 @@ class DecksV16(private val col: CollectionV16) :
         return len(this.all_names_and_ids())
     }
 
-    override fun get(did: did, _default: bool): Deck? {
+    override fun get(did: DeckId, _default: bool): Deck? {
         val deck = this.get_legacy(did)
         return when {
             deck != null -> deck
@@ -472,7 +472,7 @@ class DecksV16(private val col: CollectionV16) :
     }
 
     @RustCleanup("Return v16 config - we return a typed object here")
-    override fun confForDid(did: did): DeckConfig {
+    override fun confForDid(did: DeckId): DeckConfig {
         val deck = this.get(did, _default = false).toV16Optional()
         assert(deck.isPresent)
         val deckValue = deck.get()
@@ -563,8 +563,8 @@ class DecksV16(private val col: CollectionV16) :
         this.save(grp)
     }
 
-    fun didsForConf(conf: DeckConfigV16): MutableList<did> {
-        val dids = mutableListOf<did>()
+    fun didsForConf(conf: DeckConfigV16): MutableList<DeckId> {
+        val dids = mutableListOf<DeckId>()
         for (deck in this.all()) {
             if (deck.has("conf") && deck.conf == conf.id) {
                 dids.append(deck.id)
@@ -609,7 +609,7 @@ class DecksV16(private val col: CollectionV16) :
 
     /* Deck utils */
 
-    override fun name(did: did, _default: bool): str {
+    override fun name(did: DeckId, _default: bool): str {
         val deck = this.get(did, _default = _default).toV16Optional()
         if (deck.isPresent) {
             return deck.name
@@ -618,7 +618,7 @@ class DecksV16(private val col: CollectionV16) :
         return "[no deck]"
     }
 
-    fun nameOrNone(did: did): Optional<str> {
+    fun nameOrNone(did: DeckId): Optional<str> {
         val deck = this.get(did, _default = false).toV16Optional()
         if (deck.isPresent) {
             return Optional.of(deck.name)
@@ -626,7 +626,7 @@ class DecksV16(private val col: CollectionV16) :
         return Optional.empty()
     }
 
-    fun setDeck(cids: LongArray, did: did) {
+    fun setDeck(cids: LongArray, did: DeckId) {
         this.col.db.execute(
             "update cards set did=?,usn=?,mod=? where id in " + ids2str(cids),
             did,
@@ -635,7 +635,7 @@ class DecksV16(private val col: CollectionV16) :
         )
     }
 
-    override fun cids(did: did, children: bool): MutableList<Long> {
+    override fun cids(did: DeckId, children: bool): MutableList<Long> {
         if (!children) {
             return this.col.db.queryLongList("select id from cards where did=?", did)
         }
@@ -651,7 +651,7 @@ class DecksV16(private val col: CollectionV16) :
         // I believe this is now handled in libAnki
     }
 
-    fun for_card_ids(cids: List<Long>): List<did> {
+    fun for_card_ids(cids: List<Long>): List<DeckId> {
         return this.col.db.queryLongList("select did from cards where id in ${ids2str(cids)}")
     }
 
@@ -659,7 +659,7 @@ class DecksV16(private val col: CollectionV16) :
 
     /** The currently active dids. */
     @RustCleanup("Probably better as a queue")
-    override fun active(): LinkedList<did> {
+    override fun active(): LinkedList<DeckId> {
         val activeDecks: JSONArray = col.get_config_array(ACTIVE_DECKS)
         val result = LinkedList<Long>()
         CollectionUtils.addAll(result, activeDecks.longIterable())
@@ -667,7 +667,7 @@ class DecksV16(private val col: CollectionV16) :
     }
 
     /** The currently selected did. */
-    override fun selected(): did {
+    override fun selected(): DeckId {
         return this.col.get_config_long(CURRENT_DECK)
     }
 
@@ -676,7 +676,7 @@ class DecksV16(private val col: CollectionV16) :
     }
 
     /** Select a new branch. */
-    override fun select(did: did) {
+    override fun select(did: DeckId) {
         // make sure arg is an int
         // did = int(did) - code removed, logically impossible
         col.backend.setCurrentDeck(did)
@@ -698,7 +698,7 @@ class DecksV16(private val col: CollectionV16) :
         @JvmStatic
         fun find_deck_in_tree(
             node: anki.decks.DeckTreeNode,
-            deck_id: did
+            deck_id: DeckId
         ): Optional<anki.decks.DeckTreeNode> {
             if (node.deckId == deck_id) {
                 return Optional.of(node)
@@ -749,9 +749,9 @@ class DecksV16(private val col: CollectionV16) :
     }
 
     /** All children of did, as (name, id). */
-    override fun children(did: did): TreeMap<str, did> {
+    override fun children(did: DeckId): TreeMap<str, DeckId> {
         val name: str = this.get(did).toV16().name
-        val actv = TreeMap<str, did>()
+        val actv = TreeMap<str, DeckId>()
         for (g in this.all_names_and_ids()) {
             if (g.name.startsWith(name + "::")) {
                 actv.put(g.name, g.id)
@@ -764,7 +764,7 @@ class DecksV16(private val col: CollectionV16) :
         return childDids(did, childMapNode(childMap))
     }
 
-    fun child_ids(parent_name: str): Iterable<did> {
+    fun child_ids(parent_name: str): Iterable<DeckId> {
         val prefix = parent_name + "::"
         return all_names_and_ids().filter { x ->
             x.name.startsWith(prefix)
@@ -773,7 +773,7 @@ class DecksV16(private val col: CollectionV16) :
         }.toMutableList()
     }
 
-    fun deck_and_child_ids(deck_id: did): MutableList<did> {
+    fun deck_and_child_ids(deck_id: DeckId): MutableList<DeckId> {
         val parent_name = this.get_legacy(deck_id)!!.toV16().name
         val out = mutableListOf(deck_id)
         out.extend(this.child_ids(parent_name))
@@ -781,15 +781,15 @@ class DecksV16(private val col: CollectionV16) :
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun childDids(did: did, childMap: childMapNode): MutableList<did> {
-        fun gather(node: childMapNode, arr: MutableList<did>) {
+    fun childDids(did: DeckId, childMap: childMapNode): MutableList<DeckId> {
+        fun gather(node: childMapNode, arr: MutableList<DeckId>) {
             for ((itemDid, child) in node.items()) {
                 arr.append(itemDid)
                 gather(child as childMapNode, arr)
             }
         }
 
-        val arr = mutableListOf<did>()
+        val arr = mutableListOf<DeckId>()
         gather(childMap[did] as childMapNode, arr)
         return arr
     }
@@ -802,7 +802,7 @@ class DecksV16(private val col: CollectionV16) :
 
         // go through all decks, sorted by name
         for (deck in sorted(this.all())) {
-            val node = Dict<did, Any>()
+            val node = Dict<DeckId, Any>()
             childMap[deck.id] = node
 
             // add note to immediate parent
@@ -844,7 +844,7 @@ class DecksV16(private val col: CollectionV16) :
 
     /** All parents of did. */
     fun parents(
-        did: did,
+        did: DeckId,
         nameMap: Optional<Dict<str, Deck>> = Optional.empty()
     ): List<Deck> {
         // get parent and grandparent names
@@ -899,14 +899,14 @@ class DecksV16(private val col: CollectionV16) :
      */
 
     /** Return a new dynamic deck and set it as the current deck. */
-    override fun newDyn(name: str): did {
+    override fun newDyn(name: str): DeckId {
         val did = this.id(name, type = 1).get()
         this.select(did)
         return did
     }
 
     // 1 for dyn, 0 for standard
-    override fun isDyn(did: did): Boolean {
+    override fun isDyn(did: DeckId): Boolean {
         return this.get(did).toV16().dyn != 0
     }
 
@@ -921,7 +921,7 @@ class DecksV16(private val col: CollectionV16) :
         return DeckV16.Generic(this)
     }
 
-    val Deck.id: did get() = this.getLong("id")
+    val Deck.id: DeckId get() = this.getLong("id")
     val Deck.name: str get() = this.getString("name")
     val Deck.conf: Long get() = this.getLong("conf")
 }

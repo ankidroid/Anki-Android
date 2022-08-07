@@ -28,6 +28,7 @@ import com.ichi2.anki.NotificationChannels
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.utils.JSONObject
 import timber.log.Timber
@@ -174,7 +175,7 @@ class ReminderService : BroadcastReceiver() {
         const val EXTRA_DECK_ID = "EXTRA_DECK_ID"
 
         @JvmStatic
-        fun getReviewDeckIntent(context: Context, deckId: Long): Intent {
+        fun getReviewDeckIntent(context: Context, deckId: DeckId): Intent {
             return Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
         }
     }
