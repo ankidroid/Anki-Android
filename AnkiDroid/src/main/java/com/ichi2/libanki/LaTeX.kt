@@ -19,7 +19,6 @@ package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.utils.HtmlUtils.escape
-import com.ichi2.utils.KotlinCleanup
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -37,20 +36,19 @@ import java.util.regex.Pattern
  * Unlike the original python implementation of this class, the AnkiDroid version does not support
  * the generation of LaTeX images.
  */
-@KotlinCleanup("fix IDE lint issues")
 object LaTeX {
     /**
      * Patterns used to identify LaTeX tags
      */
-    val STANDARD_PATTERN = Pattern.compile(
+    private val STANDARD_PATTERN = Pattern.compile(
         "\\[latex](.+?)\\[/latex]",
         Pattern.DOTALL or Pattern.CASE_INSENSITIVE
     )
-    val EXPRESSION_PATTERN = Pattern.compile(
+    private val EXPRESSION_PATTERN = Pattern.compile(
         "\\[\\$](.+?)\\[/\\$]",
         Pattern.DOTALL or Pattern.CASE_INSENSITIVE
     )
-    val MATH_PATTERN = Pattern.compile(
+    private val MATH_PATTERN = Pattern.compile(
         "\\[\\$\\$](.+?)\\[/\\$\\$]",
         Pattern.DOTALL or Pattern.CASE_INSENSITIVE
     )
@@ -64,35 +62,51 @@ object LaTeX {
         return mungeQA(html, col.media, model)
     }
 
+    @JvmStatic
+    private fun matchHTML(html: String, media: Media, model: Model): StringBuffer {
+        val stringBuffer = StringBuffer()
+        STANDARD_PATTERN.matcher(html).run {
+            while (find()) {
+                appendReplacement(stringBuffer, imgLink(group(1)!!, model, media))
+            }
+            appendTail(stringBuffer)
+        }
+        return stringBuffer
+    }
+
+    @JvmStatic
+    private fun matchExpression(previousBuffer: StringBuffer, media: Media, model: Model): StringBuffer {
+        val stringBuffer = StringBuffer()
+        EXPRESSION_PATTERN.matcher(previousBuffer.toString()).run {
+            while (find()) {
+                appendReplacement(stringBuffer, imgLink("$" + group(1) + "$", model, media))
+            }
+            appendTail(stringBuffer)
+        }
+        return stringBuffer
+    }
+
+    @JvmStatic
+    private fun matchMath(previousBuffer: StringBuffer, media: Media, model: Model): StringBuffer {
+        val stringBuffer = StringBuffer()
+        MATH_PATTERN.matcher(previousBuffer.toString()).run {
+            while (find()) {
+                appendReplacement(
+                    stringBuffer,
+                    imgLink("\\begin{displaymath}" + group(1) + "\\end{displaymath}", model, media)
+                )
+            }
+            appendTail(stringBuffer)
+        }
+        return stringBuffer
+    }
+
     // It's only goal is to allow testing with a different media manager.
     @VisibleForTesting
     @JvmStatic
-    @KotlinCleanup("refactor each matcher/sb code group into a standalone function")
     fun mungeQA(html: String, m: Media, model: Model): String {
-        @KotlinCleanup("declare val variables for sb and matcher for each instantiation instead of using a single var variable")
-        var sb = StringBuffer()
-        @KotlinCleanup("use a scope function like run/with to have matcher in scope to simplify its usage")
-        var matcher = STANDARD_PATTERN.matcher(html)
-        while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink(matcher.group(1)!!, model, m))
-        }
-        matcher.appendTail(sb)
-        matcher = EXPRESSION_PATTERN.matcher(sb.toString())
-        sb = StringBuffer()
-        while (matcher.find()) {
-            matcher.appendReplacement(sb, _imgLink("$" + matcher.group(1) + "$", model, m))
-        }
-        matcher.appendTail(sb)
-        matcher = MATH_PATTERN.matcher(sb.toString())
-        sb = StringBuffer()
-        while (matcher.find()) {
-            matcher.appendReplacement(
-                sb,
-                _imgLink("\\begin{displaymath}" + matcher.group(1) + "\\end{displaymath}", model, m)
-            )
-        }
-        matcher.appendTail(sb)
-        return sb.toString()
+        val buffer = matchMath(matchExpression(matchHTML(html, m, model), m, model), m, model)
+        return buffer.toString()
     }
 
     /**
@@ -100,13 +114,9 @@ object LaTeX {
      */
     @VisibleForTesting
     @JvmStatic
-    internal fun _imgLink(latex: String, model: Model, m: Media): String {
-        val txt = _latexFromHtml(latex)
-        @KotlinCleanup("use an if expression to determine extension type and make ext a val")
-        var ext = "png"
-        if (model.optBoolean("latexsvg", false)) {
-            ext = "svg"
-        }
+    internal fun imgLink(latex: String, model: Model, m: Media): String {
+        val txt = latexFromHtml(latex)
+        val ext = if (model.optBoolean("latexsvg", false)) "svg" else "png"
         val fname = "latex-" + Utils.checksum(txt) + "." + ext
         return if (m.have(fname)) {
             Matcher.quoteReplacement("<img class=latex alt=\"" + escape(latex) + "\" src=\"" + fname + "\">")
@@ -119,10 +129,5 @@ object LaTeX {
      * Convert entities and fix newlines.
      */
     @JvmStatic
-    @KotlinCleanup("remove the intermediary var, reduce function body to single line by inlining the method calls")
-    private fun _latexFromHtml(latex: String): String {
-        var l = latex.replace("<br( /)?>|<div>".toRegex(), "\n")
-        l = Utils.stripHTML(l)
-        return l
-    }
+    private fun latexFromHtml(latex: String): String = Utils.stripHTML(latex.replace("<br( /)?>|<div>".toRegex(), "\n"))
 }

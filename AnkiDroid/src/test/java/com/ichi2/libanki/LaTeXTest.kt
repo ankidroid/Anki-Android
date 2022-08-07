@@ -42,13 +42,13 @@ class LaTeXTest : RobolectricTest() {
         // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
         //  Test with media access
         assertThat(
-            LaTeX._imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, m),
+            LaTeX.imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, m),
             equalTo("<img class=latex alt=\"\\$\\\\sqrt[3]{2} + \\\\text{&quot;var&quot;}\\$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">")
         )
 
         // Test without access to media
         assertThat(
-            LaTeX._imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, col.media),
+            LaTeX.imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, col.media),
             equalTo("\\$\\\\sqrt[3]{2} + \\\\text{\"var\"}\\$")
         )
     }
