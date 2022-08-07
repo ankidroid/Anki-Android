@@ -27,8 +27,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.DeckManager
 import com.ichi2.libanki.backend.exception.DeckRenameException
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
-import org.hamcrest.core.Is
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -62,13 +62,13 @@ class CreateDeckDialogTest : RobolectricTest() {
                 try {
                     isCreated.set(true)
                     val decks: DeckManager = activity.col!!.decks
-                    MatcherAssert.assertThat(id, Is.`is`(decks.id(deckName)))
+                    MatcherAssert.assertThat(id, equalTo(decks.id(deckName)))
                 } catch (filteredAncestor: DeckRenameException) {
                     throw RuntimeException(filteredAncestor)
                 }
             }
             createDeckDialog.createFilteredDeck(deckName)
-            MatcherAssert.assertThat(isCreated.get(), Is.`is`(true))
+            MatcherAssert.assertThat(isCreated.get() as Boolean, equalTo(true))
         }
     }
 
@@ -86,13 +86,13 @@ class CreateDeckDialogTest : RobolectricTest() {
                     isCreated.set(true)
                     val decks: DeckManager = activity.col!!.decks
                     val deckNameWithParentName = decks.getSubdeckName(deckParentId, deckName)
-                    MatcherAssert.assertThat(id, Is.`is`(decks.id(deckNameWithParentName!!)))
+                    MatcherAssert.assertThat(id, equalTo(decks.id(deckNameWithParentName!!)))
                 } catch (filteredAncestor: DeckRenameException) {
                     throw RuntimeException(filteredAncestor)
                 }
             }
             createDeckDialog.createSubDeck(deckParentId, deckName)
-            MatcherAssert.assertThat(isCreated.get(), Is.`is`(true))
+            MatcherAssert.assertThat(isCreated.get(), equalTo(true))
         }
     }
 
@@ -107,10 +107,10 @@ class CreateDeckDialogTest : RobolectricTest() {
                 // a deck was created
                 isCreated.set(true)
                 val decks: DeckManager? = activity.col?.decks
-                MatcherAssert.assertThat(id, Is.`is`(decks?.byName(deckName)!!.getLong("id")))
+                MatcherAssert.assertThat(id, equalTo(decks?.byName(deckName)!!.getLong("id")))
             }
             createDeckDialog.createDeck(deckName)
-            MatcherAssert.assertThat(isCreated.get(), Is.`is`(true))
+            MatcherAssert.assertThat(isCreated.get(), equalTo(true))
         }
     }
 
@@ -127,10 +127,10 @@ class CreateDeckDialogTest : RobolectricTest() {
                 // a deck name was renamed
                 isCreated.set(true)
                 val decks: DeckManager = activity.col!!.decks
-                MatcherAssert.assertThat(deckNewName, Is.`is`(decks.name(id!!)))
+                MatcherAssert.assertThat(deckNewName, equalTo(decks.name(id!!)))
             }
             createDeckDialog.renameDeck(deckNewName)
-            MatcherAssert.assertThat(isCreated.get(), Is.`is`(true))
+            MatcherAssert.assertThat(isCreated.get(), equalTo(true))
         }
     }
 
@@ -140,10 +140,10 @@ class CreateDeckDialogTest : RobolectricTest() {
             val createDeckDialog = CreateDeckDialog(activity!!, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
             val materialDialog = createDeckDialog.showDialog()
             val actionButton = materialDialog.getActionButton(WhichButton.POSITIVE)
-            MatcherAssert.assertThat("Ok is disabled if zero length input", actionButton.isEnabled, Is.`is`(false))
+            MatcherAssert.assertThat("Ok is disabled if zero length input", actionButton.isEnabled, equalTo(false))
             val editText: EditText? = Objects.requireNonNull(materialDialog.getInputField())
             editText?.setText("NotEmpty")
-            MatcherAssert.assertThat("Ok is enabled if not zero length input", actionButton.isEnabled, Is.`is`(true))
+            MatcherAssert.assertThat("Ok is enabled if not zero length input", actionButton.isEnabled, equalTo(true))
         }
     }
 

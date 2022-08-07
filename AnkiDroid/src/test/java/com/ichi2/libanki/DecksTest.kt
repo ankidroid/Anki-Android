@@ -25,7 +25,7 @@ import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
 import com.ichi2.utils.KotlinCleanup
 import org.apache.http.util.Asserts
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,7 +34,6 @@ import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("fix lint issues")
-@KotlinCleanup("is -> equalTo")
 class DecksTest : RobolectricTest() {
     @Test
     fun ensureDeckList() {
@@ -59,9 +58,9 @@ class DecksTest : RobolectricTest() {
 
     @Test
     fun trim() {
-        assertThat(Decks.strip("A\nB C\t D"), `is`("A\nB C\t D"))
-        assertThat(Decks.strip("\n A\n\t"), `is`("A"))
-        assertThat(Decks.strip("Z::\n A\n\t::Y"), `is`("Z::A::Y"))
+        assertThat(Decks.strip("A\nB C\t D"), equalTo("A\nB C\t D"))
+        assertThat(Decks.strip("\n A\n\t"), equalTo("A"))
+        assertThat(Decks.strip("Z::\n A\n\t::Y"), equalTo("Z::A::Y"))
     }
 
     /******************
@@ -252,17 +251,17 @@ class DecksTest : RobolectricTest() {
         val filtered = decks.get(filteredId)
         val deckId = addDeck("deck")
         val deck = decks.get(deckId)
-        assertThat(deck.isStd, `is`(true))
-        assertThat(deck.isDyn, `is`(false))
-        assertThat(filtered.isStd, `is`(false))
-        assertThat(filtered.isDyn, `is`(true))
+        assertThat(deck.isStd, equalTo(true))
+        assertThat(deck.isDyn, equalTo(false))
+        assertThat(filtered.isStd, equalTo(false))
+        assertThat(filtered.isDyn, equalTo(true))
 
         val filtered_config = decks.confForDid(filteredId)
         val deck_config = decks.confForDid(deckId)
-        assertThat(deck_config.isStd, `is`((true)))
-        assertThat(deck_config.isDyn, `is`((false)))
-        assertThat(filtered_config.isStd, `is`((false)))
-        assertThat(filtered_config.isDyn, `is`((true)))
+        assertThat(deck_config.isStd, equalTo((true)))
+        assertThat(deck_config.isDyn, equalTo((false)))
+        assertThat(filtered_config.isStd, equalTo((false)))
+        assertThat(filtered_config.isDyn, equalTo((true)))
     }
 
     @Test
@@ -278,7 +277,7 @@ class DecksTest : RobolectricTest() {
         assertThat(
             "If a config is not found, return the default",
             config.getLong("id"),
-            `is`(1L)
+            equalTo(1L)
         )
     }
 

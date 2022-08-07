@@ -18,12 +18,11 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.atomic.AtomicReference
 
-@KotlinCleanup("is -> equalTo")
 @KotlinCleanup("use scope function")
 @RunWith(AndroidJUnit4::class)
 class FieldEditLineTest : NoteEditorTest() {
@@ -35,9 +34,9 @@ class FieldEditLineTest : NoteEditorTest() {
         line.name = "Name"
         line.setOrd(5)
         val text = line.editText
-        assertThat(text!!.ord, `is`(5))
-        assertThat(text.text.toString(), `is`("Hello"))
-        assertThat(line.name, `is`("Name"))
+        assertThat(text!!.ord, equalTo(5))
+        assertThat(text.text.toString(), equalTo("Hello"))
+        assertThat(line.name, equalTo("Name"))
     }
 
     @Test
@@ -54,9 +53,9 @@ class FieldEditLineTest : NoteEditorTest() {
         restored.onRestoreInstanceState(b!!)
 
         val text = restored.editText
-        assertThat(text!!.ord, `is`(5))
-        assertThat(text.text.toString(), `is`("Hello"))
-        assertThat(toSave.name, `is`("Name"))
+        assertThat(text!!.ord, equalTo(5))
+        assertThat(text.text.toString(), equalTo("Hello"))
+        assertThat(toSave.name, equalTo("Name"))
     }
 
     private fun fieldEditLine(): FieldEditLine {

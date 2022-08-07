@@ -95,7 +95,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             "\"timeToday\":[0,0]," +
             "\"usn\":-1" +
             "}"
-        MatcherAssert.assertThat(customStudy.toOrderedString(), Matchers.`is`(expected))
+        MatcherAssert.assertThat(customStudy.toOrderedString(), Matchers.equalTo(expected))
     }
 
     @Test

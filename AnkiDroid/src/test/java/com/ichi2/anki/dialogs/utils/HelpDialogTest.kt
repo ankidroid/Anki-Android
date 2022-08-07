@@ -36,7 +36,7 @@ class HelpDialogTest : RobolectricTest() {
         val dialog = createInstance(targetContext) as RecursivePictureMenu
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
-        MatcherAssert.assertThat(v.childCount, Matchers.`is`(4))
+        MatcherAssert.assertThat(v.childCount, Matchers.equalTo(4))
     }
 
     @Test
@@ -45,7 +45,7 @@ class HelpDialogTest : RobolectricTest() {
         val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
-        MatcherAssert.assertThat(v.childCount, Matchers.`is`(5))
+        MatcherAssert.assertThat(v.childCount, Matchers.equalTo(5))
     }
 
     @SuppressLint("CheckResult") // openDialogFragmentUsingActivity

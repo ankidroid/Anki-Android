@@ -20,12 +20,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@KotlinCleanup("`is` => equalTo")
 @RunWith(AndroidJUnit4::class)
 class HttpSyncerTest {
 
@@ -33,14 +32,14 @@ class HttpSyncerTest {
     fun defaultMediaUrlWithNoHostNum() {
         val underTest = getServerWithHostNum(null)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, `is`(sDefaultUrlNoHostNum))
+        assertThat(syncUrl, equalTo(sDefaultUrlNoHostNum))
     }
 
     @Test
     fun defaultMediaUrlWithHostNum() {
         val underTest = getServerWithHostNum(1)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, `is`(sDefaultUrlWithHostNum))
+        assertThat(syncUrl, equalTo(sDefaultUrlWithHostNum))
     }
 
     @Ignore("Not yet supported")
@@ -49,7 +48,7 @@ class HttpSyncerTest {
         val underTest = getServerWithHostNum(null)
         setCustomServer(sCustomServerWithFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, `is`("https://sync.example.com/sync/"))
+        assertThat(syncUrl, equalTo("https://sync.example.com/sync/"))
     }
 
     @Ignore("Not yet supported")
@@ -58,7 +57,7 @@ class HttpSyncerTest {
         val underTest = getServerWithHostNum(1)
         setCustomServer(sCustomServerWithFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, `is`("https://sync1.example.com/sync/"))
+        assertThat(syncUrl, equalTo("https://sync1.example.com/sync/"))
     }
 
     @Test
@@ -66,7 +65,7 @@ class HttpSyncerTest {
         val underTest = getServerWithHostNum(null)
         setCustomServer(sCustomServerWithNoFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, `is`("https://sync.example.com/sync/"))
+        assertThat(syncUrl, equalTo("https://sync.example.com/sync/"))
     }
 
     @Test
@@ -74,7 +73,7 @@ class HttpSyncerTest {
         val underTest = getServerWithHostNum(1)
         setCustomServer(sCustomServerWithNoFormatting)
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, `is`("https://sync.example.com/sync/"))
+        assertThat(syncUrl, equalTo("https://sync.example.com/sync/"))
     }
 
     @Test
@@ -82,7 +81,7 @@ class HttpSyncerTest {
         val underTest = getServerWithHostNum(null)
         setCustomServerWithNoUrl()
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, `is`(sDefaultUrlNoHostNum))
+        assertThat(syncUrl, equalTo(sDefaultUrlNoHostNum))
     }
 
     @Test
@@ -90,7 +89,7 @@ class HttpSyncerTest {
         val underTest = getServerWithHostNum(1)
         setCustomServerWithNoUrl()
         val syncUrl = underTest.syncURL()
-        assertThat(syncUrl, `is`(sDefaultUrlWithHostNum))
+        assertThat(syncUrl, equalTo(sDefaultUrlWithHostNum))
     }
 
     @KotlinCleanup("use edit{} extension function")

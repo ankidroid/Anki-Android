@@ -501,8 +501,8 @@ internal class ZipFile(path: String?) {
     @Throws(IOException::class)
     fun writeStr(entry: String?, value: String) {
         // TODO: Does this work with abnormal characters?
-        val `is`: InputStream = ByteArrayInputStream(value.toByteArray())
-        val bis = BufferedInputStream(`is`, BUFFER_SIZE)
+        val inputStream: InputStream = ByteArrayInputStream(value.toByteArray())
+        val bis = BufferedInputStream(inputStream, BUFFER_SIZE)
         val ze = ZipArchiveEntry(entry)
         writeEntry(bis, ze)
     }

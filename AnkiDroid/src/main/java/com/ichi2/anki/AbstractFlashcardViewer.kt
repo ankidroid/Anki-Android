@@ -581,11 +581,11 @@ abstract class AbstractFlashcardViewer :
             .addPathHandler("/") { path: String ->
                 try {
                     val file = File(mediaDir, path)
-                    val `is` = FileInputStream(file)
+                    val inputStream = FileInputStream(file)
                     val mimeType = guessMimeType(path)
                     val headers = HashMap<String, String>()
                     headers["Access-Control-Allow-Origin"] = "*"
-                    val response = WebResourceResponse(mimeType, null, `is`)
+                    val response = WebResourceResponse(mimeType, null, inputStream)
                     response.responseHeaders = headers
                     return@addPathHandler response
                 } catch (e: Exception) {

@@ -509,7 +509,7 @@ open class RobolectricTest : CollectionGetter {
     }
 
     fun equalFirstField(expected: Card, obtained: Card) {
-        MatcherAssert.assertThat(obtained.note().fields[0], Matchers.`is`(expected.note().fields[0]))
+        MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
     }
 
     @NonNull

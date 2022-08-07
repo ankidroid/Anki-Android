@@ -821,16 +821,15 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
      * Return the contents of the given input stream, limited to Anki2Importer.MEDIAPICKLIMIT bytes This is only used
      * for comparison of media files with the limited resources of mobile devices
      */
-    @KotlinCleanup("rename `is` ")
-    private fun _mediaPick(`is`: BufferedInputStream): ByteArray? {
+    private fun _mediaPick(inputStream: BufferedInputStream): ByteArray? {
         return try {
             val baos = ByteArrayOutputStream(MEDIAPICKLIMIT * 2)
             val buf = ByteArray(MEDIAPICKLIMIT)
             var readLen: Int
             var readSoFar = 0
-            `is`.mark(MEDIAPICKLIMIT * 2)
+            inputStream.mark(MEDIAPICKLIMIT * 2)
             while (true) {
-                readLen = `is`.read(buf)
+                readLen = inputStream.read(buf)
                 baos.write(buf)
                 if (readLen == -1) {
                     break
@@ -840,7 +839,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     break
                 }
             }
-            `is`.reset()
+            inputStream.reset()
             val result = ByteArray(MEDIAPICKLIMIT)
             System.arraycopy(
                 baos.toByteArray(),
