@@ -72,7 +72,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     var tempModel: TemporaryModel? = null
         private set
     private var mFieldNames: List<String>? = null
-    private var mModelId: Long = 0
+    private var mModelId: NoteTypeId = 0
     private var mNoteId: NoteId = 0
 
     // the position of the cursor in the editor view

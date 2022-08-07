@@ -769,7 +769,7 @@ open class Collection(
         return genCards(Utils.collection2Array(nids), model, task)
     }
 
-    fun genCards(nids: kotlin.collections.Collection<Long?>?, mid: Long): ArrayList<Long>? {
+    fun genCards(nids: kotlin.collections.Collection<Long?>?, mid: NoteTypeId): ArrayList<Long>? {
         return genCards(nids, models.get(mid)!!)
     }
 
