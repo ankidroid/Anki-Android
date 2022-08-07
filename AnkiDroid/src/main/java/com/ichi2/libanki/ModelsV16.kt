@@ -562,7 +562,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
 
     override fun change(
         m: NoteType,
-        nid: Long,
+        nid: NoteId,
         newModel: NoteType,
         fmap: Map<Int, Int?>?,
         cmap: Map<Int, Int?>?

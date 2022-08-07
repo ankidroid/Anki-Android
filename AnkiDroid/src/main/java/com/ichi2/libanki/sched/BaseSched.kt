@@ -103,7 +103,7 @@ abstract class BaseSched(val col: Collection) {
      * Bury all cards for note until next session.
      * @param nid The id of the targeted note.
      */
-    open fun buryNote(nid: Long) {
+    open fun buryNote(nid: NoteId) {
         col.newBackend.backend.buryOrSuspendCards(
             cardIds = listOf(),
             noteIds = listOf(nid),

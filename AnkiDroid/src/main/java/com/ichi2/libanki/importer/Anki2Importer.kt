@@ -55,7 +55,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     private val mAllowUpdate: Boolean
     private var mDupeOnSchemaChange: Boolean
 
-    private class NoteTriple(val nid: Long, val mod: Long, val mid: Long)
+    private class NoteTriple(val nid: NoteId, val mod: Long, val mid: Long)
 
     private var mNotes: MutableMap<String, NoteTriple>? = null
     private var mDecks: MutableMap<Long, Long>? = null

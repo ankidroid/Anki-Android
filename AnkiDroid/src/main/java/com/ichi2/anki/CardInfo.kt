@@ -219,7 +219,7 @@ class CardInfo : AnkiActivity() {
         val cardType: String?,
         val noteType: String,
         val deckName: String,
-        val noteId: Long,
+        val noteId: NoteId,
         val entries: List<RevLogEntry>
     ) {
         val due: String

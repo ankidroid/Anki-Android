@@ -399,7 +399,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
         val mLapses = 0
     }
 
-    private class Triple(val nid: Long, val ord: Int, val card: ForeignCard)
+    private class Triple(val nid: NoteId, val ord: Int, val card: ForeignCard)
     companion object {
         /** A magic string used in [this.mMapping] when a csv field should be mapped to the tags of a note  */
         const val TAGS_IDENTIFIER = "_tags"

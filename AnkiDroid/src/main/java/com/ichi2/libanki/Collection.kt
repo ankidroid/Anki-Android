@@ -775,7 +775,7 @@ open class Collection(
 
     @JvmOverloads
     fun <T> genCards(
-        nid: Long,
+        nid: NoteId,
         model: Model,
         task: T? = null
     ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
