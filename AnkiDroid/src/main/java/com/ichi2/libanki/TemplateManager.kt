@@ -265,10 +265,8 @@ class TemplateManager {
             @get:JvmName("getAnswerText")
             @set:JvmName("setAnswerText")
             var answer_text: str,
-            @RustCleanup("make non-null")
-            val question_av_tags: List<AvTag>?,
-            @RustCleanup("make non-null")
-            val answer_av_tags: List<AvTag>?,
+            val question_av_tags: List<AvTag>,
+            val answer_av_tags: List<AvTag>,
             val css: str = ""
         ) {
 
