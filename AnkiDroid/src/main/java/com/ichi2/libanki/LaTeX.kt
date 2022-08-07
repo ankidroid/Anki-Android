@@ -63,7 +63,7 @@ object LaTeX {
     }
 
     @JvmStatic
-    private fun matchHTML(html: String, media: Media, model: Model): StringBuffer {
+    fun matchHTML(html: String, media: Media, model: Model): StringBuffer {
         val stringBuffer = StringBuffer()
         STANDARD_PATTERN.matcher(html).run {
             while (find()) {
@@ -75,9 +75,9 @@ object LaTeX {
     }
 
     @JvmStatic
-    private fun matchExpression(previousBuffer: StringBuffer, media: Media, model: Model): StringBuffer {
+    fun matchExpression(inputBuffer: StringBuffer, media: Media, model: Model): StringBuffer {
         val stringBuffer = StringBuffer()
-        EXPRESSION_PATTERN.matcher(previousBuffer.toString()).run {
+        EXPRESSION_PATTERN.matcher(inputBuffer.toString()).run {
             while (find()) {
                 appendReplacement(stringBuffer, imgLink("$" + group(1) + "$", model, media))
             }
@@ -87,9 +87,9 @@ object LaTeX {
     }
 
     @JvmStatic
-    private fun matchMath(previousBuffer: StringBuffer, media: Media, model: Model): StringBuffer {
+    fun matchMath(inputBuffer: StringBuffer, media: Media, model: Model): StringBuffer {
         val stringBuffer = StringBuffer()
-        MATH_PATTERN.matcher(previousBuffer.toString()).run {
+        MATH_PATTERN.matcher(inputBuffer.toString()).run {
             while (find()) {
                 appendReplacement(
                     stringBuffer,
