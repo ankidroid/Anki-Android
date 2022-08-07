@@ -42,6 +42,8 @@ fun AnkiActivity.launchCatchingTask(
     return lifecycle.coroutineScope.launch {
         try {
             block()
+        } catch (exc: CancellationException) {
+            // do nothing
         } catch (exc: BackendInterruptedException) {
             Timber.e("caught: %s", exc)
             showSimpleSnackbar(this@launchCatchingTask, exc.localizedMessage, false)
