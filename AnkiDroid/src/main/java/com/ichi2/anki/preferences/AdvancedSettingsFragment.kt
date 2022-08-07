@@ -24,13 +24,9 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
 import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
-import com.ichi2.anki.contextmenu.AnkiCardContextMenu
-import com.ichi2.anki.contextmenu.CardBrowserContextMenu
-import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.compat.CompatHelper
@@ -42,7 +38,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
     override val analyticsScreenNameConstant: String
         get() = "prefs.advanced"
 
-    @Suppress("Deprecation") // Material dialog neutral button deprecation
     override fun initSubscreen() {
         val screen = preferenceScreen
         // Check that input is valid before committing change in the collection path
@@ -66,59 +61,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
                     false
                 }
             }
-        }
-        // Card browser context menu
-        requirePreference<SwitchPreference>(R.string.card_browser_external_context_menu_key).apply {
-            title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.card_browser_context_menu))
-            summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.card_browser_context_menu))
-            setOnPreferenceChangeListener { newValue ->
-                CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)
-            }
-        }
-        // Anki card context menu
-        requirePreference<SwitchPreference>(R.string.anki_card_external_context_menu_key).apply {
-            title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.context_menu_anki_card_label))
-            summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.context_menu_anki_card_label))
-            setOnPreferenceChangeListener { newValue ->
-                AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)
-            }
-        }
-
-        if (col != null && col!!.schedVer() == 1) {
-            Timber.i("Displaying V1-to-V2 scheduler preference")
-            val schedVerPreference = SwitchPreference(requireContext())
-            schedVerPreference.setTitle(R.string.sched_v2)
-            schedVerPreference.setSummary(R.string.sched_v2_summ)
-            schedVerPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
-                MaterialDialog(requireContext()).show {
-                    // Going to V2
-                    title(R.string.sched_ver_toggle_title)
-                        .message(R.string.sched_ver_1to2)
-                        .positiveButton(R.string.dialog_ok) {
-                            col!!.modSchemaNoCheck()
-                            try {
-                                col!!.changeSchedulerVer(2)
-                                screen.removePreference(schedVerPreference)
-                            } catch (e2: ConfirmModSchemaException) {
-                                // This should never be reached as we explicitly called modSchemaNoCheck()
-                                throw RuntimeException(e2)
-                            }
-                        }
-                        .neutralButton(R.string.help) {
-                            // call v2 scheduler documentation website
-                            val uri = Uri.parse(getString(R.string.link_anki_2_scheduler))
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            startActivity(intent)
-                        }
-                        .negativeButton(R.string.dialog_cancel) {
-                            schedVerPreference.isChecked = false
-                        }
-                }
-                false
-            }
-            // meaning of order here is the position of Preference in xml layout.
-            schedVerPreference.order = 5
-            screen.addPreference(schedVerPreference)
         }
         // Adding change logs in both debug and release builds
         Timber.i("Adding open changelog")
@@ -171,19 +113,18 @@ class AdvancedSettingsFragment : SettingsFragment() {
     }
 
     private fun removeUnnecessaryAdvancedPrefs() {
-        val plugins = findPreference<PreferenceCategory>("category_plugins")
         // Disable the emoji/kana buttons to scroll preference if those keys don't exist
         if (!CompatHelper.hasKanaAndEmojiKeys()) {
             val emojiScrolling = findPreference<SwitchPreference>("scrolling_buttons")
-            if (emojiScrolling != null && plugins != null) {
-                plugins.removePreference(emojiScrolling)
+            if (emojiScrolling != null) {
+                preferenceScreen.removePreference(emojiScrolling)
             }
         }
         // Disable the double scroll preference if no scrolling keys
         if (!CompatHelper.hasScrollKeys() && !CompatHelper.hasKanaAndEmojiKeys()) {
             val doubleScrolling = findPreference<SwitchPreference>("double_scrolling")
-            if (doubleScrolling != null && plugins != null) {
-                plugins.removePreference(doubleScrolling)
+            if (doubleScrolling != null) {
+                preferenceScreen.removePreference(doubleScrolling)
             }
         }
     }

@@ -28,7 +28,6 @@ import com.ichi2.anki.UIUtils
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.libanki.Utils
-import com.ichi2.preferences.SeekBarPreferenceCompat
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
 import timber.log.Timber
@@ -45,10 +44,6 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         val col = col!!
-        // Card browser font scaling
-        requirePreference<SeekBarPreferenceCompat>(R.string.pref_card_browser_font_scale_key)
-            .setFormattedSummary(R.string.pref_summary_percentage)
-
         // Show error toast if the user tries to disable answer button without gestures on
         requirePreference<Preference>(R.string.answer_buttons_position_preference).setOnPreferenceChangeListener() { _, newValue: Any ->
             val prefs = AnkiDroidApp.getSharedPrefs(requireContext())

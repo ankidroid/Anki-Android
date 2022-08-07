@@ -14,12 +14,21 @@
   ~  You should have received a copy of the GNU General Public License along with
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<!--
+~ Some strings aren't translated because these preferences are aimed
+~ at developers, who are assumed to speak English.
+-->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/pref_cat_dev_options">
     <SwitchPreference
         android:title="@string/dev_options_enabled_pref"
         android:key="@string/dev_options_enabled_by_user_key"
         android:defaultValue="true"/>
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/html_javascript_debugging_key"
+        android:summary="@string/html_javascript_debugging_summ"
+        android:title="@string/html_javascript_debugging"/>
     <Preference
         android:title="Trigger test crash"
         android:summary="Touch here for an immediate test crash"

@@ -37,5 +37,8 @@ class AccessibilitySettingsFragment : SettingsFragment() {
         // Answer button size
         requirePreference<SeekBarPreferenceCompat>(R.string.answer_button_size_preference)
             .setFormattedSummary(R.string.pref_summary_percentage)
+        // Card browser font scaling
+        requirePreference<SeekBarPreferenceCompat>(R.string.pref_card_browser_font_scale_key)
+            .setFormattedSummary(R.string.pref_summary_percentage)
     }
 }

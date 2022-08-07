@@ -18,7 +18,6 @@ package com.ichi2.anki.preferences
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.annotation.XmlRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -55,26 +54,6 @@ abstract class SettingsFragment : PreferenceFragmentCompat() {
         UsageAnalytics.sendAnalyticsScreenView(analyticsScreenNameConstant)
         addPreferencesFromResource(preferenceResource)
         initSubscreen()
-    }
-
-    /** Obtains a non-null reference to the preference defined by the key, or throws  */
-    @Suppress("UNCHECKED_CAST")
-    protected fun <T : Preference?> requirePreference(key: String): T {
-        val preference = findPreference<Preference>(key)
-            ?: throw IllegalStateException("missing preference: '$key'")
-        return preference as T
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    /**
-     * Obtains a non-null reference to the preference whose
-     * key is defined with given [resId] or throws
-     * e.g. `requirePreference(R.string.day_theme_key)` returns
-     * the preference whose key is `@string/day_theme_key`
-     * The resource IDs with preferences keys can be found on `res/values/preferences.xml`
-     */
-    protected fun <T : Preference?> requirePreference(@StringRes resId: Int): T {
-        return requirePreference(getString(resId)) as T
     }
 
     protected abstract val analyticsScreenNameConstant: String

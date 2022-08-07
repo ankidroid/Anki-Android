@@ -25,21 +25,55 @@
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_advanced"
-    android:summary="@string/pref_cat_advanced_summ"
     android:key="@string/pref_advanced_screen_key">
         <EditTextPreference
             android:defaultValue="/sdcard/AnkiDroid"
             android:key="@string/pref_ankidroid_directory_key"
             android:title="@string/col_path"
             app1:useSimpleSummaryProvider="true"/>
-        <PreferenceCategory android:title="@string/pref_cat_performance" >
-            <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
-                android:defaultValue="8"
-                android:key="@string/pref_backup_max_key"
-                android:title="@string/pref_backup_max"
-                app1:useSimpleSummaryProvider="true"
-                app:min="0"
-                app:max="99" />
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:defaultValue="8"
+            android:key="@string/pref_backup_max_key"
+            android:title="@string/pref_backup_max"
+            app1:useSimpleSummaryProvider="true"
+            app:min="0"
+            app:max="99" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/tts_key"
+            android:summary="@string/tts_summ"
+            android:title="@string/tts" />
+        <Preference
+            android:summary="@string/reset_languages_summ"
+            android:title="@string/reset_languages"
+            android:key="@string/pref_reset_languages_key" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/convert_fen_text_key"
+            android:summary="@string/convert_fen_text_summ"
+            android:title="@string/convert_fen_text" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/more_scrolling_buttons_key"
+            android:summary="@string/more_scrolling_buttons_summ"
+            android:title="@string/more_scrolling_buttons" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/double_scrolling_gap_key"
+            android:summary="@string/double_scrolling_gap_summ"
+            android:title="@string/double_scrolling_gap" />
+        <PreferenceCategory android:title="@string/statistics">
+            <ListPreference
+                android:entries="@array/stats_default_deck_labels"
+                android:entryValues="@array/stats_default_deck_values"
+                android:key="@string/stats_default_deck_key"
+                android:title="@string/stats_default_deck_title"
+                android:defaultValue="current"
+                app1:useSimpleSummaryProvider="true"/>
+            <Preference
+                android:key="@string/pref_advanced_statistics_key"
+                android:title="@string/advanced_statistics_title"
+                android:fragment="com.ichi2.anki.preferences.AdvancedStatisticsSettingsFragment" />
         </PreferenceCategory>
         <PreferenceCategory
             android:key="@string/pref_cat_workarounds_key"
@@ -90,11 +124,6 @@
                 android:summary="@string/type_in_answer_focus_summ"
                 android:dependency="@string/use_input_tag_key"
                 android:title="@string/type_in_answer_focus" />
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/exit_via_double_tap_back_key"
-                android:summary="@string/exit_via_double_tap_back_summ"
-                android:title="@string/exit_via_double_tap_back" />
             <!-- #9639 - allow all files in media selection dialog - .opus is application/octet-stream
             in older versions of Android (fixed between API 26 and API 30)
              We don't want to allow this by default, but we want an override -->
@@ -117,55 +146,5 @@
                 android:summary="@string/thirdparty_apps_summary"
                 android:title="@string/thirdparty_apps_title">
             </Preference>
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/tts_key"
-                android:summary="@string/tts_summ"
-                android:title="@string/tts" />
-            <Preference
-                android:summary="@string/reset_languages_summ"
-                android:title="@string/reset_languages"
-                android:key="@string/pref_reset_languages_key" />
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/convert_fen_text_key"
-                android:summary="@string/convert_fen_text_summ"
-                android:title="@string/convert_fen_text" />
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/more_scrolling_buttons_key"
-                android:summary="@string/more_scrolling_buttons_summ"
-                android:title="@string/more_scrolling_buttons" />
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/double_scrolling_gap_key"
-                android:summary="@string/double_scrolling_gap_summ"
-                android:title="@string/double_scrolling_gap" />
-            <ListPreference
-                android:entries="@array/stats_default_deck_labels"
-                android:entryValues="@array/stats_default_deck_values"
-                android:key="@string/stats_default_deck_key"
-                android:title="@string/stats_default_deck_title"
-                android:defaultValue="current"
-                app1:useSimpleSummaryProvider="true"/>
-            <Preference
-                android:key="@string/pref_advanced_statistics_key"
-                android:title="@string/advanced_statistics_title"
-                android:fragment="com.ichi2.anki.preferences.AdvancedStatisticsSettingsFragment" />
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/html_javascript_debugging_key"
-                android:summary="@string/html_javascript_debugging_summ"
-                android:title="@string/html_javascript_debugging"/>
-            <!-- Title and summary are variable, handled in string:
-            card_browser_enable_external_context_menu -->
-            <SwitchPreference
-                android:id="@+id/card_browser_external_context_menu"
-                android:defaultValue="false"
-                android:key="@string/card_browser_external_context_menu_key"/>
-            <SwitchPreference
-                android:id="@+id/anki_card_external_context_menu"
-                android:defaultValue="true"
-                android:key="@string/anki_card_external_context_menu_key"/>
         </PreferenceCategory>
 </PreferenceScreen>
