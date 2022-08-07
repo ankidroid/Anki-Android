@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Otevřít menu</string>
     <string name="drawer_close">Zavřít menu</string>
@@ -101,6 +99,9 @@
         <item>Vytvořeno</item>
         <item>Poznámka upravena</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Použít</string>
+    <string name="filter_by_flags">Příznaky</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Upravit dnešní limit nových karet</string>
     <string name="custom_study_increase_review_limit">Upravit dnešní limit opakování</string>
@@ -169,13 +170,13 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Přidat</string>
     <string name="import_message_replace_confirm">To odstraní vaši stávající kolekci a nahradí ji daty ze souboru %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">Přidat „%s“ do kolekce? To může trvat dlouhou dobu</item>
+        <item quantity="few">Chcete importovat následující soubory:\n%s\nTo může trvat dlouhou dobu</item>
+        <item quantity="many">Chcete importovat následující soubory:\n%s\nTo může trvat dlouhou dobu</item>
+        <item quantity="other">Chcete importovat následující soubory:\n%s\nTo může trvat dlouhou dobu</item>
     </plurals>
     <string name="import_log_no_apkg">Toto není platný Anki balíček</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Chyba</string>
     <string name="import_log_failed_unzip">Nepodařilo se rozbalit apkg: %s</string>
     <string name="import_log_failed_copy_to">Nepodařilo se zkopírovat apkg do %s</string>
     <string name="import_log_failed_validate">Selhalo ověření apkg </string>
@@ -190,9 +191,9 @@
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() selhalo (asi nedostatek místa v úložišti)</string>
     <string name="import_error_unhandled_scheme">Nezpracovaný import z: „%s“</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_multiple_colpkg">Bylo vybráno více colpkg souborů.</string>
+    <string name="import_error_colpkg_apkg">Soubory apkg &amp; colpkg byly vybrány najednou.</string>
+    <string name="import_stats_error">Došlo k chybám při importu následujících souborů:\n%s</string>
     <string name="import_replacing">Nahrazuje se kolekce&#8230;</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_include_schedule">Zahrnout plánování</string>
@@ -356,7 +357,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
     <string name="card_viewer_media_relative_protocol">Chyba obsahu karty: Je vyžadována aktualizace multimédií</string>
-    <string name="cannot_load_http_resource">Načítání http zdrojů již není podporováno</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nepodařilo se načíst balíček „%s“</string>
     <string name="search_decks">Hledat balíčky</string>
@@ -378,7 +378,7 @@
     <string name="after_text">HTML za výběrem</string>
     <string name="add_toolbar_item">Vytvořit položku nástrojové lišty</string>
     <string name="edit_toolbar_item">Upravit položku nástrojové lišty</string>
-    <string name="toolbar_item_explain_edit_or_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ho upravili nebo odstranili</string>
+    <string name="toolbar_item_explain_edit_or_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ji upravili nebo odstranili</string>
     <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
     <string name="note_editor_paste_too_large">Obrázek je příliš velký, nelze ho vložit; vložte prosím obrázek ručně</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Probíhá zálohování Androidu. Zkuste to prosím znovu</string>
@@ -386,7 +386,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaše domovská obrazovka neumožňuje AnkiDroidu přidávat zástupce</string>
     <string name="create_shortcut_error">Chyba při přidávání zástupce: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Velká počáteční písmena</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Posunout nástrojovou lištu</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Posouvat nástrojovou lištu</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -443,4 +443,6 @@
     <string name="file_extract_exceeds_storage_space">Rozbalený soubor je větší, než úložiště</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Rozbalit štítek „%s“</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Přístup ke kolekci se nezdařil. Zkuste to prosím znovu!</string>
 </resources>

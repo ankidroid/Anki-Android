@@ -26,6 +26,8 @@ import com.ichi2.libanki.Media;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.exception.EmptyMediaException;
 
+import net.ankiweb.rsdroid.BackendFactory;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -47,6 +49,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 
 
 /**
@@ -221,6 +224,8 @@ public class MediaTest extends InstrumentedTest {
 
     @Test
     public void testChanges() throws IOException, EmptyMediaException {
+        // legacy code, not used by backend
+        assumeThat(BackendFactory.getDefaultLegacySchema(), is(true));
         assertNotNull(mTestCol.getMedia()._changed());
         assertEquals(0, added(mTestCol).size());
         assertEquals(0, removed(mTestCol).size());

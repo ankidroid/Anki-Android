@@ -1,5 +1,13 @@
+<!--
+NOTE: tools:ignore="MergeRootFrame" was added preemptively to temporarily quiet lint when
+MergeRootFrame is enabled later(until LoadPronunciationActivity is refactored and the views which
+it manually creates in its onCreate are moved to this layout(the root layout will then need to
+change from a FrameLayout and render this MergeRootFrame issue irrelevant))
+ -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    tools:ignore="MergeRootFrame"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -7,6 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
 
         <com.ichi2.ui.FixedTextView
             android:id="@+id/textViewPoweredBy"

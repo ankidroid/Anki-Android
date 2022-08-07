@@ -26,16 +26,21 @@ import androidx.annotation.StringRes
 import androidx.core.app.ShareCompat.IntentBuilder
 import androidx.core.content.FileProvider
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
+import com.ichi2.anki.exportApkg
 import com.ichi2.async.CollectionTask.ExportApkg
 import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeUtils
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -59,15 +64,18 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg))
     }
 
-    fun showExportDialog(msg: String, did: Long) {
+    fun showExportDialog(msg: String, did: DeckId) {
         activity.showDialogFragment(mDialogsFactory.newExportDialog().withArguments(msg, did))
     }
 
-    override fun exportApkg(path: String?, did: Long?, includeSched: Boolean, includeMedia: Boolean) {
+    override fun exportApkg(path: String?, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
         val exportDir = File(activity.externalCacheDir, "export")
         exportDir.mkdirs()
         val exportPath: File
-        val timeStampSuffix = "-" + TimeUtils.getTimestamp(collectionSupplier.get().time)
+        val timeStampSuffix = "-" + run {
+            collectionSupplier.get()
+            TimeUtils.getTimestamp(TimeManager.time)
+        }
         exportPath = if (path != null) {
             // filename has been explicitly specified
             File(exportDir, path)
@@ -84,7 +92,23 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             File(exportDir, newFileName)
         }
         val exportListener = ExportListener(activity, mDialogsFactory)
-        TaskManager.launchCollectionTask(ExportApkg(exportPath.path, did, includeSched, includeMedia), exportListener)
+        if (BackendFactory.defaultLegacySchema) {
+            TaskManager.launchCollectionTask(
+                ExportApkg(
+                    exportPath.path,
+                    did,
+                    includeSched,
+                    includeMedia
+                ),
+                exportListener
+            )
+        } else {
+            // TODO: this code needs reworking so that the post-export dialogs can be
+            // shown correctly
+            (activity as DeckPicker).exportApkg(exportPath.path, includeSched, includeMedia, did)
+            // exportListener.actualOnPreExecute(activity)
+            // exportListener.actualOnPostExecute(activity, android.util.Pair(false, exportPath.path))
+        }
     }
 
     override fun dismissAllDialogFragments() {

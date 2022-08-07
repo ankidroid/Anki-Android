@@ -89,14 +89,12 @@
     <string name="html_size_code_x_large">x-बड़ा</string>
     <string name="html_size_code_xx_large">xx-बड़ा</string>
     <!-- gestures_labels -->
-    <string name="gesture_no_action">कोई क्रिया नहीं</string>
     <string name="gesture_answer_1">उत्तर बटन १</string>
     <string name="gesture_answer_2">उत्तर बटन २</string>
     <string name="gesture_answer_3">उत्तर बटन ३</string>
     <string name="gesture_answer_4">उत्तर बटन ४</string>
     <string name="gesture_answer_green">सुझाया गया उत्तर (हरा)</string>
     <string name="gesture_answer_better_recommended">उत्तर सुझाव से बेहतर</string>
-    <string name="gesture_tag_note">नोट को एक टैग दें</string>
     <string name="gesture_play">मीडिया चलाएं</string>
     <string name="gesture_abort_learning">सीखना रोक दें</string>
     <string name="gesture_flag_red">लाल ध्वज टॉगल करें</string>

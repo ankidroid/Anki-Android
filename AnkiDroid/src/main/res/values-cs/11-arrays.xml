@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">Když není určeno žádné písmo pro kartičky</string>
     <string name="override_font_always">Vždy</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Systémové</string>
+    <string name="theme_follow_system">Systémový</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Světlý</string>
     <string name="day_theme_plain">Klasický</string>
@@ -89,14 +89,12 @@
     <string name="html_size_code_x_large">x-velké</string>
     <string name="html_size_code_xx_large">xx-velké</string>
     <!-- gestures_labels -->
-    <string name="gesture_no_action">Žádná akce</string>
     <string name="gesture_answer_1">Tlačítko odpovědi 1</string>
     <string name="gesture_answer_2">Tlačítko odpovědi 2</string>
     <string name="gesture_answer_3">Tlačítko odpovědi 3</string>
     <string name="gesture_answer_4">Tlačítko odpovědi 4</string>
     <string name="gesture_answer_green">Doporučená odpověď (zelená)</string>
     <string name="gesture_answer_better_recommended">Odpovědět lépe, než bylo doporučeno</string>
-    <string name="gesture_tag_note">Štítek k poznámce</string>
     <string name="gesture_play">Přehrát multimédia</string>
     <string name="gesture_abort_learning">Přerušit učení</string>
     <string name="gesture_flag_red">Přepnout červený příznak</string>

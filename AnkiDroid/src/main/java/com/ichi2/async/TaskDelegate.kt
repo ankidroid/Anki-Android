@@ -20,7 +20,7 @@ import com.ichi2.libanki.Collection
 
 /** @see [TaskDelegate] */
 abstract class TaskDelegateBase<Progress, Result> {
-    abstract fun execTask(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
+    abstract fun execTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
     abstract fun requiresOpenCollection(): Boolean
 }
 
@@ -46,8 +46,8 @@ abstract class TaskDelegateBase<Progress, Result> {
  * @param <Result>   The type of result returned by the task at the end. E.g. the tree of decks, counts for a particular deck
  */
 abstract class TaskDelegate<Progress, Result> : TaskDelegateBase<Progress, Result>() {
-    final override fun execTask(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result =
-        task(col!!, collectionTask)
+    final override fun execTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Result =
+        task(col, collectionTask)
     protected abstract fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
     final override fun requiresOpenCollection(): Boolean = true
 }
@@ -60,8 +60,8 @@ abstract class TaskDelegate<Progress, Result> : TaskDelegateBase<Progress, Resul
  * @see [TaskDelegate]
  */
 abstract class UnsafeTaskDelegate<Progress, Result> : TaskDelegateBase<Progress, Result>() {
-    final override fun execTask(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result =
+    final override fun execTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Result =
         task(col, collectionTask)
-    protected abstract fun task(col: Collection?, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
+    protected abstract fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>): Result
     final override fun requiresOpenCollection(): Boolean = false
 }

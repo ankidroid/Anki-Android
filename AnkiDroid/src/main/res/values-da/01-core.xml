@@ -103,7 +103,7 @@
     <string name="rename_deck">Omdøb kortsæt</string>
     <string name="create_shortcut">Opret genvej</string>
     <string name="browse_cards">Gennemse kort</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Tilføj</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Tilføj</string>
     <string name="menu_add_note">Tilføj note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkroniseringskonto</string>
     <string name="menu_dismiss_note">Skjul / slet</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">Ingen kort i kø </string>
     <string name="sd_card_not_mounted">Enhedslagring er ikke monteret</string>
     <string name="empty_cloze_warning">Rediger denne note og tilføj nogle huller i teksten. (%1$s)</string>
-    <string name="button_sync">Synkroniser</string>
+    <string name="button_sync" comment="Text of the sync button">Synkroniser</string>
     <string name="cancel_sync_confirm">Vil du annullere synkroniseringen? </string>
     <string name="continue_sync">Fortsæt synkronisering</string>
     <string name="sync_cancelled">Synkronisering annulleret</string>

@@ -116,6 +116,15 @@
     <attr name="dialogErrorIcon" format="integer"/>
     <attr name="dialogSyncErrorIcon" format="integer"/>
     <attr name="dialogSendIcon" format="integer"/>
+
+    <!-- Filter Bottom Sheet -->
+    <attr name="filterSheetBackground" format="color"/>
+    <attr name="filterItemBackground" format="color"/>
+    <attr name="filterItemBackgroundSelected" format="color"/>
+    <attr name="filterItemTextColor" format="color"/>
+    <attr name="filterItemTextColorSelected" format="color"/>
+    <attr name="filterHeaderDivider" format="color"/>
+
     <!-- FAB -->
     <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->
     <attr name="fab_pressed" format="color"/>
@@ -125,6 +134,7 @@
     <attr name="customTabNavBarColor" format="color"/>
     <!-- Popup menus' background color -->
     <attr name="popupBackgroundColor" format="reference"/>
+    <attr name="iconColor" format="color"/>
 
     <attr name="editTextDisabled" format="color"/>
 

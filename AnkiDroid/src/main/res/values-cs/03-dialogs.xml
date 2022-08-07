@@ -62,13 +62,6 @@
     <string name="initializing_tts">Inicializuje se TTS&#8230;</string>
     <string name="tts_no_tts">Nemluv</string>
     <string name="unused_strings">\n\nNepoužité soubory:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Kartičky pro Android</h2>AnkiDroid je kartičková aplikace plně kompatibilní s desktopovou verzí <a href=\"%2$s\">Anki</a>. Můžete vytvářet, stahovat a učit se materiály jak v AnkiDroid tak Anki Desktop a velmi snadno je synchronizovat i s AnkiWeb.]]></item>
-        <item><![CDATA[Chcete-li nám pomoci vylepšit AnkiDroid prosím ohlaste chyby ve <a href=\"%1$s\">sledovači chyb</a>; nové myšlenky na funkce jsou také velmi vítány. Mnoho odpovědí naleznete ve <a href=\"%2$s\">wiki</a> nebo začněte diskutovat na <a href=\"%3$s\">foru</a>.]]></item>
-        <item><![CDATA[AnkiDroid je <a href=\"%1$s\">open source software<a/>, takže každý se může <a href=\"%2$s\">stát přispěvatelem</a> :-)]]></item>
-        <item><![CDATA[Nejenom vývojáři mohou pomoci. Například můžete <a href=\"%1$s\">pomoc s překladem</a> AnkiDroid, aktualizovat wiki, poskytnout náhledy obrazovky nebo blogovat o AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid je vydán pod <a href=\"%1$s\">GNU-GPL v3 licencí</a> a zdrojový kód je dostupný <a href=\"%2$s\">na GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Náhled</string>
     <string name="reposition_card_dialog_title">Změnit pořadí nové karty</string>
     <string name="reposition_card_dialog_message">Počáteční pozice:</string>
@@ -113,9 +106,9 @@
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
-    <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři \'%s\'.</string>
-    <string name="intent_aedict_empty">Kategorie \'výchozí\' je prázdná</string>
-    <string name="intent_aedict_category">Chcete-li přidat AnkiDroid karty, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem \'default\'</string>
+    <string name="repair_deck_dialog">Opravdu se chcete pokusit opravit databázi?\n\nPřed obnovou bude vytvořena kopie v podadresáři „%s“.</string>
+    <string name="intent_aedict_empty">Kategorie „výchozí“ je prázdná</string>
+    <string name="intent_aedict_category">Chcete-li přidat karty do AnkiDroid, odstraňte všechny kategorie Poznámkového bloku nebo přidejte jednu s názvem „default“</string>
     <string name="custom_study_new_total_new">Nové karty v balíčku: %d</string>
     <string name="custom_study_rev_total_rev">K opakování v balíčku: %d</string>
     <string name="custom_study_new_extend">Zvýšit/snížit („-3“) dnešní limit nových karet o</string>
@@ -131,10 +124,10 @@
     <string name="import_update_details">Aktualizováno %1$d z %2$d existujících poznámek.</string>
     <string name="import_update_ignored">Některé aktualizace byly ignorovány, protože se změnil typ poznámky</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Importováno karet: %2$d</item>
+        <item quantity="few">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
+        <item quantity="many">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
+        <item quantity="other">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">SD karta je plná</string>
     <string name="sd_card_almost_full_title">SD karta téměř plná</string>
@@ -147,6 +140,7 @@
     <string name="dialog_ok">Ok</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_continue">Pokračovat</string>
+    <string name="dialog_processing">Zpracovává se...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvořit</string>
     <string name="dialog_positive_delete">Odstranit</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -242,7 +236,7 @@
     <string name="help_title_using_ankidroid">Používání AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Příručka AnkiDroid</string>
     <string name="help_item_anki_manual">Příručka Anki</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_item_ankidroid_faq">Časté dotazy AnkiDroid</string>
     <string name="help_title_get_help">Získat pomoc</string>
     <string name="help_item_mailing_list">Seznam adresátů</string>
     <string name="help_item_reddit">Reddit</string>
@@ -254,7 +248,7 @@
     <string name="help_item_support_other_ankidroid">Ostatní</string>
     <string name="help_title_community">Komunita</string>
     <string name="help_item_anki_forums">Fóra Anki</string>
-    <string name="help_item_discord">Spor</string>
+    <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Soukromí</string>
@@ -279,4 +273,6 @@
     <string name="deck_picker_counts">Otevřete stránku s přehledem balíčku, která obsahuje počet karet dnes k učení.</string>
     <string name="import_deck_package">Balíček (.apkg)</string>
     <string name="import_collection_package">Kolekce (.colpkg)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

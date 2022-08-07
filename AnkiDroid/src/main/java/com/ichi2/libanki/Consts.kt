@@ -16,7 +16,6 @@
 package com.ichi2.libanki
 
 import androidx.annotation.IntDef
-import net.ankiweb.rsdroid.RustCleanup
 import kotlin.annotation.Retention
 
 object Consts {
@@ -105,21 +104,18 @@ object Consts {
     const val STARTING_FACTOR = 2500
 
     // deck schema & syncing vars
-    @JvmField
-    var SCHEMA_VERSION = 11
+    const val LEGACY_SCHEMA_VERSION = 11
+    /** Only used by the dialog shown to user */
+    const val BACKEND_SCHEMA_VERSION = 18
 
     /** The database schema version that we can downgrade from  */
-    const val SCHEMA_DOWNGRADE_SUPPORTED_VERSION = 16
     const val SYNC_MAX_BYTES = (2.5 * 1024 * 1024).toInt()
     const val SYNC_MAX_FILES = 25
     const val SYNC_BASE = "https://sync%s.ankiweb.net/"
     @JvmField
     val DEFAULT_HOST_NUM: Int? = null
 
-    /* Note: 10 if using Rust backend, 9 if using Java. Set in BackendFactory.getInstance */
-    @JvmField
-    @RustCleanup("Use 10")
-    var SYNC_VER = 9
+    const val SYNC_VER = 10
 
     // Leech actions
     const val LEECH_SUSPEND = 0
@@ -156,3 +152,5 @@ object Consts {
     /** Time duration for toast **/
     const val SHORT_TOAST_DURATION: Long = 2000
 }
+
+typealias DeckId = Long

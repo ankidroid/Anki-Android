@@ -113,7 +113,7 @@
     <string name="rename_deck">Zmień nazwę talii</string>
     <string name="create_shortcut">Utwórz skrót</string>
     <string name="browse_cards">Przeglądaj karty</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Dodaj</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Dodaj</string>
     <string name="menu_add_note">Dodaj notatkę</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizacja konta</string>
     <string name="menu_dismiss_note">Ukryj / Usuń</string>
@@ -186,7 +186,7 @@
     <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
     <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>
     <string name="empty_cloze_warning">Edytuj notatkę i dodaj luki w tekście. (%1$s)</string>
-    <string name="button_sync">Synchronizuj</string>
+    <string name="button_sync" comment="Text of the sync button">Synchronizuj</string>
     <string name="cancel_sync_confirm">Chcesz przerwać synchronizację?</string>
     <string name="continue_sync">Kontynuuj synchronizację</string>
     <string name="sync_cancelled">Synchronizacja przerwana</string>

@@ -89,14 +89,12 @@
     <string name="html_size_code_x_large">x-μεγάλο</string>
     <string name="html_size_code_xx_large">xx-μεγάλο</string>
     <!-- gestures_labels -->
-    <string name="gesture_no_action">Καμία ενέργεια</string>
     <string name="gesture_answer_1">Κουμπί απάντησης 1</string>
     <string name="gesture_answer_2">Κουμπί απάντησης 2</string>
     <string name="gesture_answer_3">Κουμπί απάντησης 3</string>
     <string name="gesture_answer_4">Κουμπί απάντησης 4</string>
     <string name="gesture_answer_green">Προτεινόμεμη απάντηση (πράσινη)</string>
     <string name="gesture_answer_better_recommended">Απάντηση καλύτερη από την προτεινόμενη</string>
-    <string name="gesture_tag_note">Σημείωση ετικέτας</string>
     <string name="gesture_play">Αναπαραγωγή πολυμέσων</string>
     <string name="gesture_abort_learning">Ματαίωση εκμάθησης</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

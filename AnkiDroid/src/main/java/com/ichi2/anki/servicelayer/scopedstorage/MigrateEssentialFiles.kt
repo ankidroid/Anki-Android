@@ -32,6 +32,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
+import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.io.FileUtils
 import timber.log.Timber
 import java.io.Closeable
@@ -67,13 +68,13 @@ internal constructor(
     /**
      * Copies (not moves) the [essential files][PRIORITY_FILES] to [destinationDirectory]
      *
-     * Then opens a collection at the new location, and updates [CollectionHelper.PREF_DECK_PATH] there.
+     * Then opens a collection at the new location, and updates [CollectionHelper.PREF_COLLECTION_PATH] there.
      *
      * After:
      *
      * [PREF_MIGRATION_SOURCE] contains the [AnkiDroidDirectory] with the remaining items to move ([sourceDirectory])
      * [PREF_MIGRATION_DESTINATION] contains an [AnkiDroidDirectory] with the copied collection.anki2/media ([destinationDirectory])
-     * [CollectionHelper.PREF_DECK_PATH] now points to the new location of the collection in private storage
+     * [CollectionHelper.PREF_COLLECTION_PATH] now points to the new location of the collection in private storage
      * [ScopedStorageService.UserDataMigrationPreferences.migrationInProgress] returns `true`
      *
      * @throws IllegalStateException Migration in progress
@@ -126,6 +127,13 @@ internal constructor(
         // set the preferences to the new deck path + checks CollectionHelper
         // sets migration variables (migrationIsInProgress will be true)
         updatePreferences(destinationPath)
+
+        // updatePreferences() opened the collection in the new location, which will have created
+        // a -wal file if the new backend code is active. Close it again, so that tests don't
+        // fail due to the presence of a -wal file in the destination folder.
+        if (!BackendFactory.defaultLegacySchema) {
+            closeCollection()
+        }
     }
 
     /**
@@ -387,6 +395,9 @@ internal constructor(
         fun spaceRequired(sourceDirectory: String): NumberOfBytes {
             return getEssentialFiles(sourceDirectory).sumOf { it.length() }
         }
+
+        /** The list of filenames we would move (if they exist) */
+        abstract val potentialFileNames: List<String>
     }
 
     /**
@@ -405,6 +416,8 @@ internal constructor(
 
         // guaranteed to be + "-journal": https://www.sqlite.org/tempfiles.html
         private val journalName = "$fileName-journal"
+
+        override val potentialFileNames get() = listOf(fileName, journalName)
     }
 
     /**
@@ -422,6 +435,8 @@ internal constructor(
                 listOf(file)
             }
         }
+
+        override val potentialFileNames get() = listOf(fileName)
     }
 
     /**
@@ -472,7 +487,12 @@ internal constructor(
          */
         val PRIORITY_FILES = listOf(
             SQLiteDBFiles("collection.anki2"), // Anki collection
-            SQLiteDBFiles("collection.media.ad.db2"), // media database + journal
+            if (BackendFactory.defaultLegacySchema) {
+                SQLiteDBFiles("collection.media.ad.db2")
+            } else {
+                // this is created on demand in the new backend
+                OptionalFile("collection.media.db")
+            }, // media database + journal
             OptionalFile(".nomedia"), // written immediately
             OptionalFile("collection.log") // written immediately and conflicts
         )

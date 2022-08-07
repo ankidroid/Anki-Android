@@ -98,7 +98,7 @@
     <string name="rename_deck">このデッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
     <string name="browse_cards">カードをブラウザで表示</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ノートを追加</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ノートを追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
     <string name="menu_dismiss_note">延期、保留、削除</string>
@@ -124,7 +124,7 @@
     <string name="menu_search">%1$s で検索</string>
     <string name="menu_mark_note">ノートにマークを付ける</string>
     <string name="menu_unmark_note">ノートのマークをはずす</string>
-    <string name="menu_toggle_mic_tool_bar">発音を確認</string>
+    <string name="menu_toggle_mic_tool_bar">自分の発音を確認</string>
     <string name="new_deck">デッキを新規作成</string>
     <string name="new_dynamic_deck">フィルターデッキを作成</string>
     <string name="directory_inaccessible">AnkiDroid ディレクトリにアクセスできません</string>
@@ -171,7 +171,7 @@
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
-    <string name="button_sync">同期</string>
+    <string name="button_sync" comment="Text of the sync button">同期</string>
     <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
     <string name="continue_sync">同期を続行</string>
     <string name="sync_cancelled">同期がキャンセルされました</string>

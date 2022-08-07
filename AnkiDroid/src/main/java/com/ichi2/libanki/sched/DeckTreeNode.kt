@@ -16,11 +16,12 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.libanki.DeckId
+import net.ankiweb.rsdroid.RustCleanup
 
-@KotlinCleanup("confusing nullability for col, verify real nullability after code related to scheduling is fully migrated to kotlin")
-class DeckTreeNode(col: Collection?, name: String, did: Long) : AbstractDeckTreeNode(col!!, name, did) {
-    override fun processChildren(children: List<AbstractDeckTreeNode>, addRev: Boolean) {
+@RustCleanup("processChildren() can be removed after migrating to backend implementation")
+class DeckTreeNode(name: String, did: DeckId) : AbstractDeckTreeNode(name, did) {
+    override fun processChildren(col: Collection, children: List<AbstractDeckTreeNode>, addRev: Boolean) {
         // intentionally blank
     }
 }

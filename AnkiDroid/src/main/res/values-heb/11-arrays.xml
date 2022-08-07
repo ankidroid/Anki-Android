@@ -48,32 +48,32 @@
     <string name="error_reporting_choice_ask_user">לשאול אותי</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tag only</string>
+    <string name="leech_action_tag_only">רק תג</string>
     <!-- new_order_labels -->
     <string name="new_order_random">קלפים חדשים בסדר אקראי</string>
     <string name="new_order_order_added">קלפים חדשים בסדר הוספתם</string>
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">הישן ביותר קודם</string>
     <string name="cram_deck_conf_order_random">אקראי</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_increasing_intervals">הגדל מרווח עלייה</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">הקטן מרווח עלייה</string>
+    <string name="cram_deck_conf_order_most_lapsed">רובם נפלו</string>
+    <string name="cram_deck_conf_order_order_added">הזמנה נוספה</string>
+    <string name="cram_deck_conf_order_order_due">מועד ההזמנה</string>
+    <string name="cram_deck_conf_order_latest_added_first">האחרון שנוסף ראשון</string>
+    <string name="cram_deck_conf_order_relative_overdueness">איחור יחסי</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_use_current_deck">השתמש בחפיסה נוכחית</string>
+    <string name="add_to_deck_decide_by_note_type">קבע לפי סוג פתק</string>
     <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Mix new cards and reviews</string>
-    <string name="new_spread_new_after_review">New cards after reviews</string>
-    <string name="new_spread_new_before_review">New cards before reviews</string>
+    <string name="new_spread_mix_new_and_review">ערבב כרטיסים וסקירות חדשות</string>
+    <string name="new_spread_new_after_review">כרטיסים חדשים לאחר ביקורות</string>
+    <string name="new_spread_new_before_review">כרטיסים חדשים לפני ביקורות</string>
     <!-- override_font_labels -->
-    <string name="override_font_if_missing">When no font specified on flashcards</string>
+    <string name="override_font_if_missing">כאשר לא צוין גופן בכרטיסי הבזק</string>
     <string name="override_font_always">תמיד</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">בהתאם למערכת</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">בהיר</string>
     <string name="day_theme_plain">פשוט</string>
@@ -81,40 +81,38 @@
     <string name="night_theme_black">שחור</string>
     <string name="night_theme_dark">כהה</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_xx_small">אקסטרא-אקסטרא-קטן</string>
+    <string name="html_size_code_x_small">אקסטרא-קטן</string>
+    <string name="html_size_code_small">קטן</string>
+    <string name="html_size_code_medium">בינוני</string>
+    <string name="html_size_code_large">גדול</string>
+    <string name="html_size_code_x_large">אקסטרא-גדול</string>
+    <string name="html_size_code_xx_large">אקסטרא-אקסטרא-גדול</string>
     <!-- gestures_labels -->
-    <string name="gesture_no_action">ללא פעולה</string>
     <string name="gesture_answer_1">כפתור תשובה 1</string>
     <string name="gesture_answer_2">כפתור תשובה 2</string>
     <string name="gesture_answer_3">כפתור תשובה 3</string>
     <string name="gesture_answer_4">כפתור תשובה 4</string>
-    <string name="gesture_answer_green">Answer recommended (green)</string>
-    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
-    <string name="gesture_tag_note">Tag note</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_answer_green">תשובה מומלצת (ירוק)</string>
+    <string name="gesture_answer_better_recommended">ענה יותר טוב מהמומלץ</string>
+    <string name="gesture_play">נגן מדיה</string>
+    <string name="gesture_abort_learning">אודות הלימוד</string>
+    <string name="gesture_flag_red">החלף את הדגל האדום</string>
+    <string name="gesture_flag_orange">החלף את הדגל הכתום</string>
+    <string name="gesture_flag_green">החלף את הדגל הירוק</string>
+    <string name="gesture_flag_blue">החלף את הדגל הכחול</string>
+    <string name="gesture_flag_pink">החלף את הדגל הורוד</string>
+    <string name="gesture_flag_turquoise">החלף את דגל הטורקיז</string>
+    <string name="gesture_flag_purple">החלף את הדגל הסגול</string>
+    <string name="gesture_flag_remove">הסר דגל</string>
+    <string name="gesture_page_up">דף למעלה</string>
+    <string name="gesture_page_down">דף למטה</string>
+    <string name="gesture_abort_sync">בטל את הלמידה והסנכרון</string>
+    <string name="gesture_toggle_whiteboard">החלף לוח ציור</string>
+    <string name="gesture_show_hint">הצג רמז</string>
+    <string name="gesture_show_all_hints">הצג את כל הרמזים</string>
     <string name="record_voice">הקלטת קול</string>
     <string name="replay_voice">ניגון קול שוב</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="automatic_answer_option_2">קשה (טוב אם לא זמין)</string>
+    <string name="automatic_answer_option_4">קל (טוב אם לא זמין)</string>
 </resources>

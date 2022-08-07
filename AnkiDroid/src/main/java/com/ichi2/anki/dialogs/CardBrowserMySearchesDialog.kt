@@ -1,12 +1,15 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.list.customListAdapter
+import com.afollestad.materialdialogs.list.getRecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.ui.ButtonItemAdapter
@@ -19,7 +22,6 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
     private var buttonItemAdapter: ButtonItemAdapter? = null
     private var savedFilters: HashMap<String, String>? = null
     private var savedFilterKeys: ArrayList<String>? = null
-    private var currentSearchTerms: String? = null
 
     interface MySearchesDialogListener {
         fun onSelection(searchName: String?)
@@ -28,9 +30,10 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
     }
 
     @Suppress("UNCHECKED_CAST")
+    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val builder = MaterialDialog.Builder(requireActivity())
+        val dialog = MaterialDialog(requireActivity())
         val type = requireArguments().getInt("type")
         if (type == CARD_BROWSER_MY_SEARCHES_TYPE_LIST) {
             savedFilters = requireArguments().getSerializableWithCast<HashMap<String, String>>("savedFilters")
@@ -46,7 +49,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                         override fun onItemClicked(searchName: String) {
                             Timber.d("item clicked: %s", searchName)
                             mySearchesDialogListener!!.onSelection(searchName)
-                            dialog?.dismiss()
+                            dialog.dismiss()
                         }
                     },
                     object : ButtonItemAdapter.ButtonCallback {
@@ -56,37 +59,32 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                         }
                     }
                 )
-                builder.title(resources.getString(R.string.card_browser_list_my_searches_title))
-                    .adapter(this, null)
+                dialog.title(text = resources.getString(R.string.card_browser_list_my_searches_title))
+                    .customListAdapter(this, null)
             }
         } else if (type == CARD_BROWSER_MY_SEARCHES_TYPE_SAVE) {
-            currentSearchTerms = requireArguments().getString("currentSearchTerms")
-            builder.title(getString(R.string.card_browser_list_my_searches_save))
-                .positiveText(getString(android.R.string.ok))
-                .negativeText(getString(R.string.dialog_cancel))
-                .input(R.string.card_browser_list_my_searches_new_name, R.string.empty_string) { _: MaterialDialog?, text: CharSequence ->
+            val currentSearchTerms = requireArguments().getString("currentSearchTerms")
+            dialog.title(text = getString(R.string.card_browser_list_my_searches_save))
+                .positiveButton(android.R.string.ok)
+                .negativeButton(R.string.dialog_cancel)
+                .input(hintRes = R.string.card_browser_list_my_searches_new_name) { _: MaterialDialog?, text: CharSequence ->
                     Timber.d("Saving search with title/terms: %s/%s", text, currentSearchTerms)
                     mySearchesDialogListener!!.onSaveSearch(text.toString(), currentSearchTerms)
                 }
         }
-        val dialog = builder.build()
-        if (dialog.recyclerView != null) {
-            val layoutManager = dialog.recyclerView.layoutManager as LinearLayoutManager
-            val dividerItemDecoration = DividerItemDecoration(dialog.recyclerView.context, layoutManager.orientation)
-            val scale = resources.displayMetrics.density
-            val dpAsPixels = (5 * scale + 0.5f).toInt()
-            dialog.view.setPadding(dpAsPixels, 0, dpAsPixels, dpAsPixels)
-            dialog.recyclerView.addItemDecoration(dividerItemDecoration)
-        }
+        val layoutManager = dialog.getRecyclerView().layoutManager as LinearLayoutManager
+        val dividerItemDecoration = DividerItemDecoration(dialog.getRecyclerView().context, layoutManager.orientation)
+        val scale = resources.displayMetrics.density
+        val dpAsPixels = (5 * scale + 0.5f).toInt()
+        dialog.view.setPadding(dpAsPixels, 0, dpAsPixels, dpAsPixels)
+        dialog.getRecyclerView().addItemDecoration(dividerItemDecoration)
         return dialog
     }
 
     private fun removeSearch(searchName: String) {
-        MaterialDialog.Builder(requireActivity())
-            .content(resources.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
-            .positiveText(android.R.string.ok)
-            .negativeText(R.string.dialog_cancel)
-            .onPositive { dialog: MaterialDialog, _: DialogAction? ->
+        MaterialDialog(requireActivity()).show {
+            message(text = resources.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
+            positiveButton(android.R.string.ok) {
                 mySearchesDialogListener!!.onRemoveSearch(searchName)
                 savedFilters!!.remove(searchName)
                 savedFilterKeys!!.remove(searchName)
@@ -94,11 +92,13 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                     remove(searchName)
                     notifyAdapterDataSetChanged()
                 }
-                dialog.dismiss()
+                dialog?.dismiss() // Dismiss the root dialog
                 if (savedFilters!!.isEmpty()) {
-                    getDialog()!!.dismiss()
+                    dialog!!.dismiss()
                 }
-            }.show()
+            }
+            negativeButton(R.string.dialog_cancel)
+        }
     }
 
     companion object {

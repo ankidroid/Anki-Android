@@ -29,6 +29,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -58,7 +59,6 @@ abstract class NavigationDrawerActivity :
      */
     protected var fragmented = false
     private var mNavButtonGoesBack = false
-    private var mOldTheme: String? = null
     // Navigation drawer list item entries
     private var mDrawerLayout: DrawerLayout? = null
     private var mNavigationView: NavigationView? = null
@@ -229,26 +229,18 @@ abstract class NavigationDrawerActivity :
         }
     }
 
-    @Suppress("deprecation") // onActivityResult()
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    private val mPreferencesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val preferences = preferences
-        Timber.i("Handling Activity Result: %d. Result: %d", requestCode, resultCode)
+        Timber.i("Handling Activity Result: %d. Result: %d", REQUEST_PREFERENCES_UPDATE, result.resultCode)
         NotificationChannels.setup(applicationContext)
         // Restart the activity on preference change
-        if (requestCode == REQUEST_PREFERENCES_UPDATE) {
-            // collection path hasn't been changed so just restart the current activity
-            if (this is Reviewer && preferences.getBoolean("tts", false)) {
-                // Workaround to kick user back to StudyOptions after opening settings from Reviewer
-                // because onDestroy() of old Activity interferes with TTS in new Activity
-                finishWithoutAnimation()
-            } else if (mOldTheme !== Themes.getCurrentTheme(applicationContext)) {
-                // The current theme was changed, so need to reload the stack with the new theme
-                restartActivityInvalidateBackstack(this)
-            } else {
-                restartActivity()
-            }
+        // collection path hasn't been changed so just restart the current activity
+        if (this is Reviewer && preferences.getBoolean("tts", false)) {
+            // Workaround to kick user back to StudyOptions after opening settings from Reviewer
+            // because onDestroy() of old Activity interferes with TTS in new Activity
+            finishWithoutAnimation()
         } else {
-            super.onActivityResult(requestCode, resultCode, data)
+            restartActivity()
         }
     }
 
@@ -287,33 +279,37 @@ abstract class NavigationDrawerActivity :
         mPendingRunnable = Runnable {
             // Take action if a different item selected
             val itemId = item.itemId
-            @KotlinCleanup("Use when")
-            if (itemId == R.id.nav_decks) {
-                Timber.i("Navigating to decks")
-                val deckPicker = Intent(this@NavigationDrawerActivity, DeckPicker::class.java)
-                // opening DeckPicker should use the instance on the back stack & clear back history
-                deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                startActivityWithAnimation(deckPicker, END)
-            } else if (itemId == R.id.nav_browser) {
-                Timber.i("Navigating to card browser")
-                openCardBrowser()
-            } else if (itemId == R.id.nav_stats) {
-                Timber.i("Navigating to stats")
-                val intent = Intent(this@NavigationDrawerActivity, Statistics::class.java)
-                startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START)
-            } else if (itemId == R.id.nav_settings) {
-                Timber.i("Navigating to settings")
-                // Remember the theme we started with so we can restart the Activity if it changes
-                mOldTheme = Themes.getCurrentTheme(applicationContext)
-                startActivityForResultWithAnimation(Intent(this@NavigationDrawerActivity, Preferences::class.java), REQUEST_PREFERENCES_UPDATE, FADE)
-                // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
-                (this as? Statistics)?.finishWithAnimation(FADE)
-            } else if (itemId == R.id.nav_help) {
-                Timber.i("Navigating to help")
-                showDialogFragment(HelpDialog.createInstance(this))
-            } else if (itemId == R.id.support_ankidroid) {
-                Timber.i("Navigating to support AnkiDroid")
-                showDialogFragment(HelpDialog.createInstanceForSupportAnkiDroid(this))
+            when (itemId) {
+                R.id.nav_decks -> {
+                    Timber.i("Navigating to decks")
+                    val deckPicker = Intent(this@NavigationDrawerActivity, DeckPicker::class.java)
+                    // opening DeckPicker should use the instance on the back stack & clear back history
+                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    startActivityWithAnimation(deckPicker, END)
+                }
+                R.id.nav_browser -> {
+                    Timber.i("Navigating to card browser")
+                    openCardBrowser()
+                }
+                R.id.nav_stats -> {
+                    Timber.i("Navigating to stats")
+                    val intent = Intent(this@NavigationDrawerActivity, Statistics::class.java)
+                    startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START)
+                }
+                R.id.nav_settings -> {
+                    Timber.i("Navigating to settings")
+                    launchActivityForResultWithAnimation(Intent(this@NavigationDrawerActivity, Preferences::class.java), mPreferencesLauncher, FADE)
+                    // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
+                    (this as? Statistics)?.finishWithAnimation(FADE)
+                }
+                R.id.nav_help -> {
+                    Timber.i("Navigating to help")
+                    showDialogFragment(HelpDialog.createInstance(this))
+                }
+                R.id.support_ankidroid -> {
+                    Timber.i("Navigating to support AnkiDroid")
+                    showDialogFragment(HelpDialog.createInstanceForSupportAnkiDroid(this))
+                }
             }
         }
 
@@ -404,6 +400,8 @@ abstract class NavigationDrawerActivity :
         const val REQUEST_STATISTICS = 102
         const val FULL_SCREEN_NAVIGATION_DRAWER = "gestureFullScreenNavigationDrawer"
 
+        const val EXTRA_STARTED_WITH_SHORTCUT = "com.ichi2.anki.StartedWithShortcut"
+
         @TargetApi(Build.VERSION_CODES.N_MR1)
         fun enablePostShortcut(context: Context) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
@@ -415,6 +413,7 @@ abstract class NavigationDrawerActivity :
             val intentReviewCards = Intent(context, Reviewer::class.java)
             intentReviewCards.action = Intent.ACTION_VIEW
             intentReviewCards.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intentReviewCards.putExtra(EXTRA_STARTED_WITH_SHORTCUT, true)
             val reviewCardsShortcut = ShortcutInfo.Builder(context, "reviewCardsShortcutId")
                 .setShortLabel(context.getString(R.string.studyoptions_start))
                 .setLongLabel(context.getString(R.string.studyoptions_start))

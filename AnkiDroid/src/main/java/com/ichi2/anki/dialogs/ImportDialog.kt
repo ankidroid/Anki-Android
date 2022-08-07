@@ -17,7 +17,6 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import timber.log.Timber
@@ -33,35 +32,34 @@ class ImportDialog : AsyncDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
         val type = requireArguments().getInt("dialogType")
-        val res = resources
-        val builder = MaterialDialog.Builder(requireActivity())
-        builder.cancelable(true)
+        val dialog = MaterialDialog(requireActivity())
+        dialog.cancelable(true)
         val dialogMessageList = requireArguments().getStringArrayList("dialogMessage")!!
         // Iterate over dialog message list & create display filename
         val displayFileName = dialogMessageList.joinToString("\n") { filenameFromPath(convertToDisplayName(it)) }
 
         return when (type) {
             DIALOG_IMPORT_ADD_CONFIRM -> {
-                builder.title(res.getString(R.string.import_title))
-                    .content(res.getQuantityString(R.plurals.import_files_message_add_confirm, dialogMessageList.size, displayFileName))
-                    .positiveText(R.string.import_message_add)
-                    .negativeText(R.string.dialog_cancel)
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                dialog.show {
+                    title(R.string.import_title)
+                    message(text = resources.getQuantityString(R.plurals.import_files_message_add_confirm, dialogMessageList.size, displayFileName))
+                    positiveButton(R.string.import_message_add) {
                         (activity as ImportDialogListener?)!!.importAdd(dialogMessageList)
                         dismissAllDialogFragments()
                     }
-                    .show()
+                    negativeButton(R.string.dialog_cancel)
+                }
             }
             DIALOG_IMPORT_REPLACE_CONFIRM -> {
-                builder.title(res.getString(R.string.import_title))
-                    .content(res.getString(R.string.import_message_replace_confirm, displayFileName))
-                    .positiveText(R.string.dialog_positive_replace)
-                    .negativeText(R.string.dialog_cancel)
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                dialog.show {
+                    title(R.string.import_title)
+                    message(text = resources.getString(R.string.import_message_replace_confirm, displayFileName))
+                    positiveButton(R.string.dialog_positive_replace) {
                         (activity as ImportDialogListener?)!!.importReplace(dialogMessageList)
                         dismissAllDialogFragments()
                     }
-                    .show()
+                    negativeButton(R.string.dialog_cancel)
+                }
             }
             else -> null!!
         }

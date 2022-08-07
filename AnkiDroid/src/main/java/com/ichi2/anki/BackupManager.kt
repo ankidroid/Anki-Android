@@ -18,12 +18,12 @@ package com.ichi2.anki
 
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.exception.OutOfSpaceException
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.Time.Companion.utcOffset
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.getFreeDiskSpace
 import timber.log.Timber
 import java.io.BufferedOutputStream
@@ -37,23 +37,6 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 open class BackupManager {
-    @Throws(OutOfSpaceException::class)
-    fun performDowngradeBackupInForeground(path: String): Boolean {
-        val colFile = File(path)
-        if (!hasFreeDiscSpace(colFile)) {
-            Timber.w("Could not backup: no free disc space")
-            throw OutOfSpaceException()
-        }
-        val backupFile = getBackupFile(colFile, "ankiDroidv16.colpkg")
-        return try {
-            performBackup(colFile, backupFile)
-        } catch (e: Exception) {
-            Timber.w(e)
-            CrashReportService.sendExceptionReport(e, "performBackupInForeground")
-            false
-        }
-    }
-
     /**
      * Attempts to create a backup in a background thread. Returns `true` if the process is started.
      *
@@ -135,12 +118,12 @@ open class BackupManager {
 
     /**
      * @return last date in parsable file names or null if all names can't be parsed
+     * Expects a sorted array of backups, as returned by getBackups()
      */
     fun getLastBackupDate(files: Array<File>): Date? {
-        for (file in files.sortedDescending()) {
-            getBackupDate(file.name)?.let { return it }
+        return files.lastOrNull()?.let {
+            getBackupDate(it.name)
         }
-        return null
     }
 
     fun getBackupFile(colFile: File, backupFilename: String): File {
@@ -203,11 +186,14 @@ open class BackupManager {
         private const val MIN_BACKUP_COL_SIZE = 10000 // threshold in bytes to backup a col file
         private const val BACKUP_SUFFIX = "backup"
         const val BROKEN_DECKS_SUFFIX = "broken"
-        private val backupNameRegex = Regex("collection-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})-(\\d{2})).colpkg")
+        private val backupNameRegex: Regex by lazy {
+            Regex("(?:collection|backup)-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})[.-](\\d{2}))(?:\\.\\d{2})?.colpkg")
+        }
 
         /** Number of hours after which a backup new backup is created  */
         private const val BACKUP_INTERVAL = 5
-        val df = SimpleDateFormat("yyyy-MM-dd-HH-mm")
+        private val legacyDateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm")
+        private val newDateFormat = SimpleDateFormat("yyyy-MM-dd-HH.mm")
         val isActivated: Boolean
             get() = true
 
@@ -218,6 +204,10 @@ open class BackupManager {
                 Timber.w("getBackupDirectory() mkdirs on %s failed", ankidroidDir)
             }
             return directory
+        }
+
+        fun getBackupDirectoryFromCollection(colPath: String): String {
+            return getBackupDirectory(File(colPath).parentFile!!).absolutePath
         }
 
         private fun getBrokenDirectory(ankidroidDir: File): File {
@@ -269,7 +259,7 @@ open class BackupManager {
         fun repairCollection(col: Collection): Boolean {
             val deckPath = col.path
             val deckFile = File(deckPath)
-            val time = col.time
+            val time = TimeManager.time
             Timber.i("BackupManager - RepairCollection - Closing Collection")
             col.close()
 
@@ -357,9 +347,13 @@ open class BackupManager {
         @JvmStatic
         fun parseBackupTimeString(timeString: String): Date? {
             return try {
-                df.parse(timeString)
+                legacyDateFormat.parse(timeString)
             } catch (e: ParseException) {
-                null
+                try {
+                    newDateFormat.parse(timeString)
+                } catch (e: ParseException) {
+                    null
+                }
             }
         }
 
@@ -380,7 +374,7 @@ open class BackupManager {
              * [getBackupTimeString] and [com.ichi2.anki.dialogs.DatabaseErrorDialog.onCreateDialog] */
             val cal: Calendar = time.gregorianCalendar()
             val backupFilename: String = try {
-                String.format(Utils.ENGLISH_LOCALE, "collection-%s.colpkg", df.format(cal.time))
+                String.format(Utils.ENGLISH_LOCALE, "collection-%s.colpkg", legacyDateFormat.format(cal.time))
             } catch (e: UnknownFormatConversionException) {
                 Timber.w(e, "performBackup: error on creating backup filename")
                 return null
@@ -390,19 +384,19 @@ open class BackupManager {
 
         @JvmStatic
         /**
-         * @return Array of files with names which matches the backup name pattern
+         * @return Array of files with names which matches the backup name pattern,
+         * in order of creation.
          */
         fun getBackups(colFile: File): Array<File> {
-            var files = getBackupDirectory(colFile.parentFile!!).listFiles()
-            if (files == null) {
-                files = arrayOf<File>()
-            }
-            val backups = mutableListOf<File>()
-            for (aktFile in files) {
-                if (backupNameRegex.matchEntire(aktFile.name) != null) {
-                    backups.add(aktFile)
+            val files = getBackupDirectory(colFile.parentFile!!).listFiles() ?: arrayOf()
+            val backups = files
+                .mapNotNull { file ->
+                    getBackupTimeString(file.name)?.let { time ->
+                        Pair(time, file)
+                    }
                 }
-            }
+                .sortedBy { it.first }
+                .map { it.second }
             return backups.toTypedArray()
         }
 
@@ -412,7 +406,7 @@ open class BackupManager {
          * @return the most recent backup, or null if no backups exist
          */
         @JvmStatic
-        fun getLatestBackup(colFile: File): File? = getBackups(colFile).sortedArray().lastOrNull()
+        fun getLatestBackup(colFile: File): File? = getBackups(colFile).lastOrNull()
 
         /**
          * Deletes the first files until only the given number of files remain
@@ -421,7 +415,7 @@ open class BackupManager {
          */
         @JvmStatic
         fun deleteDeckBackups(colPath: String, keepNumber: Int): Boolean {
-            return deleteDeckBackups(getBackups(File(colPath)).sortedArray(), keepNumber)
+            return deleteDeckBackups(getBackups(File(colPath)), keepNumber)
         }
 
         private fun deleteDeckBackups(backups: Array<File>, keepNumber: Int): Boolean {

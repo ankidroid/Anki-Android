@@ -73,6 +73,9 @@ abstract class ModelManager(protected val col: Collection) {
     /** get all models  */
     abstract fun all(): List<Model>
 
+    /** get the names of all models */
+    abstract fun allNames(): List<String>
+
     /** get model with NAME.  */
     abstract fun byName(name: String): Model?
 

@@ -44,7 +44,7 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.webkit.WebViewAssetLoader
-import com.afollestad.materialdialogs.DialogAction
+import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
@@ -54,7 +54,6 @@ import com.ichi2.anki.UIUtils.getSnackbar
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
-import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
 import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
 import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
 import com.ichi2.anki.cardviewer.SoundPlayer.CardSoundConfig
@@ -86,6 +85,8 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.sched.AbstractSched
+import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.AdaptionUtil.hasWebBrowser
@@ -97,8 +98,9 @@ import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.MaxExecFunction
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
+import kotlinx.coroutines.Job
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.*
@@ -121,7 +123,8 @@ abstract class AbstractFlashcardViewer :
     TagsDialogListener,
     WhiteboardMultiTouchMethods,
     AutomaticallyAnswered,
-    OnPageFinishedCallback {
+    OnPageFinishedCallback,
+    ChangeManager.Subscriber {
     private var mTtsInitialized = false
     private var mReplayOnTtsInit = false
     private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
@@ -278,6 +281,10 @@ abstract class AbstractFlashcardViewer :
         displayCardAnswer()
     }
 
+    init {
+        ChangeManager.subscribe(this)
+    }
+
     // Event handler for eases (answer buttons)
     inner class SelectEaseHandler : View.OnClickListener, OnTouchListener {
         private var mPrevCard: Card? = null
@@ -388,7 +395,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private val mUpdateCardHandler: TaskListener<Card, Computation<*>> = object : TaskListener<Card, Computation<*>>() {
+    private val mUpdateCardHandler: TaskListener<Card, Computation<*>?> = object : TaskListener<Card, Computation<*>?>() {
         private var mNoMoreCards = false
         override fun onPreExecute() {
             showProgressBar()
@@ -423,8 +430,8 @@ abstract class AbstractFlashcardViewer :
             hideProgressBar()
         }
 
-        override fun onPostExecute(result: Computation<*>) {
-            if (!result.succeeded()) {
+        override fun onPostExecute(result: Computation<*>?) {
+            if (!result!!.succeeded()) {
                 // RuntimeException occurred on update cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
                 return
@@ -446,7 +453,7 @@ abstract class AbstractFlashcardViewer :
         // intentionally blank
     }
 
-    internal inner class NextCardHandler<Result : Computation<NextCard<*>>> :
+    internal inner class NextCardHandler<Result : Computation<NextCard<*>>?> :
         TaskListener<Unit, Result>() {
         override fun onPreExecute() {
             dealWithTimeBox()
@@ -461,16 +468,18 @@ abstract class AbstractFlashcardViewer :
                 val nMins = elapsed.first / 60
                 val mins = res.getQuantityString(R.plurals.in_minutes, nMins, nMins)
                 val timeboxMessage = res.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
-                MaterialDialog.Builder(this@AbstractFlashcardViewer)
-                    .title(res.getString(R.string.timebox_reached_title))
-                    .content(timeboxMessage)
-                    .positiveText(R.string.dialog_continue)
-                    .negativeText(R.string.close)
-                    .cancelable(true)
-                    .onNegative { _: MaterialDialog?, _: DialogAction? -> finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
-                    .onPositive { _: MaterialDialog?, _: DialogAction? -> col.startTimebox() }
-                    .cancelListener { col.startTimebox() }
-                    .show()
+                MaterialDialog(this@AbstractFlashcardViewer).show {
+                    title(R.string.timebox_reached_title)
+                    message(text = timeboxMessage)
+                    positiveButton(R.string.dialog_continue) {
+                        col.startTimebox()
+                    }
+                    negativeButton(R.string.close) {
+                        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+                    }
+                    cancelable(true)
+                    setOnCancelListener { col.startTimebox() }
+                }
             }
         }
 
@@ -480,7 +489,7 @@ abstract class AbstractFlashcardViewer :
                 finishWithoutAnimation()
                 return
             }
-            val displaySuccess = result.succeeded()
+            val displaySuccess = result!!.succeeded()
             if (!displaySuccess) {
                 // RuntimeException occurred on answering cards
                 closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
@@ -489,6 +498,11 @@ abstract class AbstractFlashcardViewer :
             val nextCardAndResult = result.value
             if (nextCardAndResult.hasNoMoreCards()) {
                 closeReviewer(RESULT_NO_MORE_CARDS, true)
+
+                // When launched with a shortcut, we want to display a message when finishing
+                if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
+                    showThemedToast(baseContext, R.string.studyoptions_congrats_finished, false)
+                }
                 return
             }
             currentCard = nextCardAndResult.nextScheduledCard()
@@ -513,8 +527,8 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    protected fun answerCardHandler(quick: Boolean): TaskListenerBuilder<Unit, Computation<NextCard<*>>> {
-        return nextCardHandler<Computation<NextCard<*>>>()
+    protected fun answerCardHandler(quick: Boolean): TaskListenerBuilder<Unit, Computation<NextCard<*>>?> {
+        return nextCardHandler<Computation<NextCard<*>>?>()
             .alsoExecuteBefore { blockControls(quick) }
     }
 
@@ -620,8 +634,8 @@ abstract class AbstractFlashcardViewer :
         super.onDestroy()
         // Tells the scheduler there is no more current cards. 0 is
         // not a valid id.
-        if (sched != null) {
-            sched!!.discardCurrentCard()
+        if (sched != null && sched is SchedV2) {
+            (sched!! as SchedV2).discardCurrentCard()
         }
         Timber.d("onDestroy()")
         mTTS.releaseTts(this)
@@ -740,7 +754,8 @@ abstract class AbstractFlashcardViewer :
         /* Reset the schedule and reload the latest card off the top of the stack if required.
            The card could have been rescheduled, the deck could have changed, or a change of
            note type could have lead to the card being deleted */
-        if (data != null && data.hasExtra("reloadRequired")) {
+        val reloadRequired = data?.getBooleanExtra("reloadRequired", false) == true
+        if (reloadRequired) {
             performReload()
         }
         if (requestCode == EDIT_CURRENT_CARD) {
@@ -752,7 +767,7 @@ abstract class AbstractFlashcardViewer :
                     mUpdateCardHandler
                 )
                 onEditedNoteChanged()
-            } else if (resultCode == RESULT_CANCELED && !(data != null && data.hasExtra("reloadRequired"))) {
+            } else if (resultCode == RESULT_CANCELED && !reloadRequired) {
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard()
             }
@@ -783,7 +798,7 @@ abstract class AbstractFlashcardViewer :
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
     // Get the did of the parent deck (ignoring any subdecks)
-    protected val parentDid: Long
+    protected val parentDid: DeckId
         get() = col.decks.selected()
 
     private fun redrawCard() {
@@ -819,21 +834,33 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    open fun undo() {
+    open fun undo(): Job? {
         if (isUndoAvailable) {
             val res = resources
             val undoName = col.undoName(res)
-            Undo().runWithHandler(
-                answerCardHandler(false)
-                    .alsoExecuteAfter {
-                        showThemedToast(
-                            this@AbstractFlashcardViewer,
-                            res.getString(R.string.undo_succeeded, undoName),
-                            true
-                        )
+            fun legacyUndo() {
+                Undo().runWithHandler(
+                    answerCardHandler(false)
+                        .alsoExecuteAfter {
+                            showThemedToast(
+                                this@AbstractFlashcardViewer,
+                                res.getString(R.string.undo_succeeded, undoName),
+                                true
+                            )
+                        }
+                )
+            }
+            if (BackendFactory.defaultLegacySchema) {
+                legacyUndo()
+            } else {
+                return launchCatchingCollectionTask { col ->
+                    if (!backendUndoAndShowPopup(col)) {
+                        legacyUndo()
                     }
-            )
+                }
+            }
         }
+        return null
     }
 
     private fun finishNoStorageAvailable() {
@@ -864,23 +891,25 @@ abstract class AbstractFlashcardViewer :
     @KotlinCleanup("remove _ variables")
     protected fun showDeleteNoteDialog() {
         val res = resources
-        MaterialDialog.Builder(this)
-            .title(res.getString(R.string.delete_card_title))
-            .iconAttr(R.attr.dialogErrorIcon)
-            .content(
-                res.getString(
+        MaterialDialog(this).show {
+            title(R.string.delete_card_title)
+            icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+            message(
+                text = res.getString(
                     R.string.delete_note_message,
                     Utils.stripHTML(mCurrentCard!!.q(true))
                 )
             )
-            .positiveText(R.string.dialog_positive_delete)
-            .negativeText(R.string.dialog_cancel)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                Timber.i("AbstractFlashcardViewer:: OK button pressed to delete note %d", mCurrentCard!!.nid)
+            positiveButton(R.string.dialog_positive_delete) {
+                Timber.i(
+                    "AbstractFlashcardViewer:: OK button pressed to delete note %d",
+                    mCurrentCard!!.nid
+                )
                 mSoundPlayer.stopSounds()
                 deleteNoteWithoutConfirmation()
             }
-            .build().show()
+            negativeButton(R.string.dialog_cancel)
+        }
     }
 
     /** Consumers should use [.showDeleteNoteDialog]   */
@@ -923,7 +952,6 @@ abstract class AbstractFlashcardViewer :
     // Set the content view to the one provided and initialize accessors.
     @KotlinCleanup("Move a lot of these to onCreate()")
     protected open fun initLayout() {
-        val cardContainer = findViewById<FrameLayout>(R.id.flashcard_frame)
         mTopBarLayout = findViewById(R.id.top_bar)
         mCardFrame = findViewById(R.id.flashcard)
         mCardFrameParent = mCardFrame!!.parent as ViewGroup
@@ -979,26 +1007,36 @@ abstract class AbstractFlashcardViewer :
         )
         val answerArea = findViewById<LinearLayout>(R.id.bottom_area_layout)
         val answerAreaParams = answerArea.layoutParams as RelativeLayout.LayoutParams
-        val cardContainerParams = cardContainer.layoutParams as RelativeLayout.LayoutParams
+        val whiteboardContainer = findViewById<FrameLayout>(R.id.whiteboard)
+        val whiteboardContainerParams = whiteboardContainer.layoutParams as RelativeLayout.LayoutParams
+        val flashcardContainerParams = mCardFrame!!.layoutParams as RelativeLayout.LayoutParams
+        val touchLayerContainerParams = mTouchLayer!!.layoutParams as RelativeLayout.LayoutParams
         when (answerButtonsPosition) {
             "top" -> {
-                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
+                whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
+                flashcardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
+                touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
                 answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 answerArea.removeView(mAnswerField)
                 answerArea.addView(mAnswerField, 1)
-                answerArea.visibility = View.VISIBLE
             }
-            "bottom" -> {
-                cardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
-                cardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
+            "bottom",
+            "none" -> {
+                whiteboardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
+                flashcardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                flashcardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
+                touchLayerContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
+                touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                answerArea.visibility = View.VISIBLE
             }
-            "none" -> answerArea.visibility = View.GONE
             else -> Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition)
         }
+        answerArea.visibility = if (answerButtonsPosition == "none") View.GONE else View.VISIBLE
         answerArea.layoutParams = answerAreaParams
-        cardContainer.layoutParams = cardContainerParams
+        whiteboardContainer.layoutParams = whiteboardContainerParams
+        mCardFrame!!.layoutParams = flashcardContainerParams
+        mTouchLayer!!.layoutParams = touchLayerContainerParams
     }
 
     @SuppressLint("SetJavaScriptEnabled") // they request we review carefully because of XSS security, we have
@@ -1411,7 +1449,7 @@ abstract class AbstractFlashcardViewer :
 
     @KotlinCleanup("internal for AnkiDroidJsApi")
     internal val isInNightMode: Boolean
-        get() = isInNightMode(AnkiDroidApp.getSharedPrefs(this))
+        get() = Themes.currentTheme.isNightMode
 
     private fun updateCard(content: CardHtml) {
         Timber.d("updateCard()")
@@ -1494,7 +1532,7 @@ abstract class AbstractFlashcardViewer :
     private fun readCardTts(soundSide: SoundSide) {
         val tags = legacyGetTtsTags(mCurrentCard!!, soundSide, this)
         if (tags != null) {
-            mTTS.readCardText(tags, mCurrentCard!!, soundSide)
+            mTTS.readCardText(tags, mCurrentCard!!, soundSide, baseContext)
         }
     }
 
@@ -1621,101 +1659,100 @@ abstract class AbstractFlashcardViewer :
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
-        return if (isControlBlocked() && which !== ViewerCommand.COMMAND_EXIT) {
+        return if (isControlBlocked() && which !== ViewerCommand.EXIT) {
             false
         } else when (which) {
-            ViewerCommand.COMMAND_NOTHING -> true
-            ViewerCommand.COMMAND_SHOW_ANSWER -> {
+            ViewerCommand.SHOW_ANSWER -> {
                 if (sDisplayAnswer) {
                     return false
                 }
                 displayCardAnswer()
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE1 -> {
+            ViewerCommand.FLIP_OR_ANSWER_EASE1 -> {
                 flipOrAnswerCard(EASE_1)
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE2 -> {
+            ViewerCommand.FLIP_OR_ANSWER_EASE2 -> {
                 flipOrAnswerCard(EASE_2)
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE3 -> {
+            ViewerCommand.FLIP_OR_ANSWER_EASE3 -> {
                 flipOrAnswerCard(EASE_3)
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_EASE4 -> {
+            ViewerCommand.FLIP_OR_ANSWER_EASE4 -> {
                 flipOrAnswerCard(EASE_4)
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_RECOMMENDED -> {
+            ViewerCommand.FLIP_OR_ANSWER_RECOMMENDED -> {
                 flipOrAnswerCard(getRecommendedEase(false))
                 true
             }
-            ViewerCommand.COMMAND_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED -> {
+            ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED -> {
                 flipOrAnswerCard(getRecommendedEase(true))
                 true
             }
-            ViewerCommand.COMMAND_EXIT -> {
+            ViewerCommand.EXIT -> {
                 closeReviewer(RESULT_DEFAULT, false)
                 true
             }
-            ViewerCommand.COMMAND_UNDO -> {
+            ViewerCommand.UNDO -> {
                 if (!isUndoAvailable) {
                     return false
                 }
                 undo()
                 true
             }
-            ViewerCommand.COMMAND_EDIT -> {
+            ViewerCommand.EDIT -> {
                 editCard(fromGesture)
                 true
             }
-            ViewerCommand.COMMAND_TAG -> {
+            ViewerCommand.TAG -> {
                 showTagsDialog()
                 true
             }
-            ViewerCommand.COMMAND_BURY_CARD -> buryCard()
-            ViewerCommand.COMMAND_BURY_NOTE -> buryNote()
-            ViewerCommand.COMMAND_SUSPEND_CARD -> suspendCard()
-            ViewerCommand.COMMAND_SUSPEND_NOTE -> suspendNote()
-            ViewerCommand.COMMAND_DELETE -> {
+            ViewerCommand.BURY_CARD -> buryCard()
+            ViewerCommand.BURY_NOTE -> buryNote()
+            ViewerCommand.SUSPEND_CARD -> suspendCard()
+            ViewerCommand.SUSPEND_NOTE -> suspendNote()
+            ViewerCommand.DELETE -> {
                 showDeleteNoteDialog()
                 true
             }
-            ViewerCommand.COMMAND_PLAY_MEDIA -> {
+            ViewerCommand.PLAY_MEDIA -> {
                 playSounds(true)
                 true
             }
-            ViewerCommand.COMMAND_PAGE_UP -> {
+            ViewerCommand.PAGE_UP -> {
                 onPageUp()
                 true
             }
-            ViewerCommand.COMMAND_PAGE_DOWN -> {
+            ViewerCommand.PAGE_DOWN -> {
                 onPageDown()
                 true
             }
-            ViewerCommand.COMMAND_ABORT_AND_SYNC -> {
+            ViewerCommand.ABORT_AND_SYNC -> {
                 abortAndSync()
                 true
             }
-            ViewerCommand.COMMAND_RECORD_VOICE -> {
+            ViewerCommand.RECORD_VOICE -> {
                 recordVoice()
                 true
             }
-            ViewerCommand.COMMAND_REPLAY_VOICE -> {
+            ViewerCommand.REPLAY_VOICE -> {
                 replayVoice()
                 true
             }
-            ViewerCommand.COMMAND_TOGGLE_WHITEBOARD -> {
+            ViewerCommand.TOGGLE_WHITEBOARD -> {
                 toggleWhiteboard()
                 true
             }
-            ViewerCommand.COMMAND_SHOW_HINT -> {
+            ViewerCommand.SHOW_HINT -> {
                 loadUrlInViewer("javascript: showHint();")
                 true
             }
-            ViewerCommand.COMMAND_SHOW_ALL_HINTS -> {
+            ViewerCommand.SHOW_ALL_HINTS -> {
                 loadUrlInViewer("javascript: showAllHints();")
                 true
             }
@@ -2068,7 +2105,7 @@ abstract class AbstractFlashcardViewer :
         return isMarked(mCurrentCard!!.note())
     }
 
-    protected fun <TResult : Computation<NextCard<*>>> nextCardHandler(): TaskListenerBuilder<Unit, TResult> {
+    protected fun <TResult : Computation<NextCard<*>>?> nextCardHandler(): TaskListenerBuilder<Unit, TResult> {
         return TaskListenerBuilder(NextCardHandler())
     }
 
@@ -2078,7 +2115,7 @@ abstract class AbstractFlashcardViewer :
      */
     protected open fun dismiss(dismiss: AnkiMethod<Computation<NextCard<*>>>, executeAfter: Runnable): Boolean {
         blockControls(false)
-        dismiss.runWithHandler(nextCardHandler<Computation<NextCard<*>>>().alsoExecuteAfter { executeAfter.run() })
+        dismiss.runWithHandler(nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { executeAfter.run() })
         return true
     }
 
@@ -2173,10 +2210,6 @@ abstract class AbstractFlashcardViewer :
             if (isLoadedFromProtocolRelativeUrl(url)) {
                 mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
             }
-            if (isLoadedFromHttpUrl(url)) {
-                // shouldInterceptRequest is not running on the UI thread.
-                runOnUiThread { mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard!!) }
-            }
             return null
         }
 
@@ -2197,19 +2230,7 @@ abstract class AbstractFlashcardViewer :
             if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
                 mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
             }
-            if (isLoadedFromHttpUrl(url)) {
-                // shouldInterceptRequest is not running on the UI thread.
-                runOnUiThread { mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard!!) }
-            }
             return null
-        }
-
-        private fun isLoadedFromHttpUrl(url: String): Boolean {
-            return url.trim { it <= ' ' }.lowercase(Locale.ROOT).startsWith("http")
-        }
-
-        private fun isLoadedFromHttpUrl(uri: Uri): Boolean {
-            return uri.scheme.equals("http", ignoreCase = true)
         }
 
         private fun isLoadedFromProtocolRelativeUrl(url: String): Boolean {
@@ -2286,7 +2307,7 @@ abstract class AbstractFlashcardViewer :
                 if (!mAnkiDroidJsAPI!!.isInit(AnkiDroidJsAPIConstants.MARK_CARD, AnkiDroidJsAPIConstants.ankiJsErrorCodeMarkCard)) {
                     return true
                 }
-                executeCommand(ViewerCommand.COMMAND_MARK)
+                executeCommand(ViewerCommand.MARK)
                 return true
             }
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
@@ -2296,23 +2317,23 @@ abstract class AbstractFlashcardViewer :
                 }
                 return when (url.replaceFirst("signal:flag_".toRegex(), "")) {
                     "none" -> {
-                        executeCommand(ViewerCommand.COMMAND_UNSET_FLAG)
+                        executeCommand(ViewerCommand.UNSET_FLAG)
                         true
                     }
                     "red" -> {
-                        executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_RED)
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_RED)
                         true
                     }
                     "orange" -> {
-                        executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_ORANGE)
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_ORANGE)
                         true
                     }
                     "green" -> {
-                        executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_GREEN)
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_GREEN)
                         true
                     }
                     "blue" -> {
-                        executeCommand(ViewerCommand.COMMAND_TOGGLE_FLAG_BLUE)
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_BLUE)
                         true
                     }
                     else -> {
@@ -2472,11 +2493,6 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private val mDisplayMediaLoadedFromHttpWarningSnackbar = MaxExecFunction(3) {
-        val onClickListener = View.OnClickListener { openUrl(Uri.parse(getString(R.string.link_faq_external_http_content))) }
-        showSnackbar(getString(R.string.cannot_load_http_resource), R.string.help, onClickListener)
-    }
-
     private fun displayCouldNotFindMediaSnackbar(filename: String?) {
         val onClickListener = View.OnClickListener { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename), R.string.help, onClickListener)
@@ -2539,6 +2555,15 @@ abstract class AbstractFlashcardViewer :
 
     open fun javaScriptFunction(): AnkiDroidJsAPI? {
         return AnkiDroidJsAPI(this)
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if ((changes.studyQueues || changes.noteText || changes.card) && handler !== this) {
+            // executing this only for the refresh side effects; there may be a better way
+            GetCard().runWithHandler(
+                answerCardHandler(false)
+            )
+        }
     }
 
     companion object {

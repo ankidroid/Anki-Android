@@ -22,7 +22,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -33,8 +32,9 @@ import android.os.LocaleList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.lifecycle.MutableLiveData;
 
+import android.system.Os;
 import android.util.Log;
 import android.webkit.CookieManager;
 
@@ -44,13 +44,17 @@ import com.ichi2.anki.exception.StorageAccessException;
 import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
+import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
 import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.utils.Permissions;
 
+import net.ankiweb.rsdroid.BackendFactory;
+
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -79,16 +83,6 @@ public class AnkiDroidApp extends Application {
      */
     public static boolean TESTING_SCOPED_STORAGE = false;
 
-    /**
-     * Toggles opening the collection using schema 16 via the Rust backend
-     * and using the V16 versions of the major 'col' classes: models, decks, dconf, conf, tags
-     *
-     * UNSTABLE: DO NOT USE THIS ON A COLLECTION YOU CARE ABOUT.
-     *
-     * Set this and {@link com.ichi2.libanki.Consts#SCHEMA_VERSION} to 16.
-     */
-    public static boolean TESTING_USE_V16_BACKEND = false;
-
     public static final String XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki";
 
     // Tag for logging messages.
@@ -113,6 +107,7 @@ public class AnkiDroidApp extends Application {
     /** HACK: Whether an exception report has been thrown - TODO: Rewrite an ACRA Listener to do this */
     @VisibleForTesting
     public static boolean sSentExceptionReportHack;
+    private final MutableLiveData<Void> mNotifications = new MutableLiveData<>();
 
     @NonNull
     public static InputStream getResourceAsStream(@NonNull String name) {
@@ -147,6 +142,23 @@ public class AnkiDroidApp extends Application {
      */
     @Override
     public void onCreate() {
+        BackendFactory.setDefaultLegacySchema(BuildConfig.LEGACY_SCHEMA);
+        try {
+            // enable debug logging of sync actions
+            if (BuildConfig.DEBUG) {
+                Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug", false);
+            }
+        } catch (Exception exc) {
+        }
+        // Uncomment the following lines to see a log of all SQL statements
+        // executed by the backend. The log may be delayed by 100ms, so you should not
+        // assume than a given SQL statement has run after a Timber.* line just
+        // because the SQL statement appeared later.
+        //        try {
+        //            Os.setenv("TRACESQL", "1", false);
+        //        } catch (Exception exc) {
+        //
+        //        }
         super.onCreate();
         if (sInstance != null) {
             Timber.i("onCreate() called multiple times");
@@ -195,9 +207,9 @@ public class AnkiDroidApp extends Application {
         if (BuildConfig.DEBUG && !AdaptionUtil.isRunningAsUnitTest()) {
             preferences.edit().putBoolean("html_javascript_debugging", true).apply();
         }
-        
-        CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
-        AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
+
+        CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(this, preferences.getBoolean(getString(R.string.card_browser_external_context_menu_key), false));
+        AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(this, preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true));
         NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.
@@ -207,6 +219,8 @@ public class AnkiDroidApp extends Application {
 
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId();
+
+        LanguageUtil.setDefaultBackendLanguages();
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
         if (Permissions.hasStorageAccessPermission(this)) {
@@ -226,10 +240,15 @@ public class AnkiDroidApp extends Application {
         Timber.i("AnkiDroidApp: Starting Services");
         new BootService().onReceive(this, new Intent(this, BootService.class));
 
-        // Register BroadcastReceiver NotificationService
-        NotificationService ns = new NotificationService();
-        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
-        lbm.registerReceiver(ns, new IntentFilter(NotificationService.INTENT_ACTION));
+        // Register for notifications
+        mNotifications.observeForever(unused -> NotificationService.triggerNotificationFor(this));
+
+        Themes.systemIsInNightMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        Themes.updateCurrentTheme();
+    }
+
+    public void scheduleNotification() {
+        mNotifications.postValue(null);
     }
 
     @SuppressWarnings("deprecation") // 7109: setAcceptFileSchemeCookies

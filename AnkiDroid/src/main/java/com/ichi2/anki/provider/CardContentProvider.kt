@@ -37,6 +37,8 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.sched.TreeNode
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONException
@@ -374,28 +376,44 @@ class CardContentProvider : ContentProvider() {
                 rv
             }
             DECKS -> {
-                val allDecks = col.sched.deckDueList()
                 val columns = projection ?: FlashCardsContract.Deck.DEFAULT_PROJECTION
-                val rv = MatrixCursor(columns, allDecks.size)
-                for (deck: DeckDueTreeNode? in allDecks) {
-                    val id = deck!!.did
-                    val name = deck.fullDeckName
-                    addDeckToCursor(id, name, getDeckCountsFromDueTreeNode(deck), rv, col, columns)
+                val allDecks = col.sched.deckDueTree()
+                val rv = MatrixCursor(columns, 1)
+                fun forEach(nodeList: List<TreeNode<DeckDueTreeNode>>, fn: (DeckDueTreeNode) -> Unit) {
+                    for (node in nodeList) {
+                        fn(node.value)
+                        forEach(node.children, fn)
+                    }
+                }
+                forEach(allDecks) {
+                    addDeckToCursor(
+                        it.did,
+                        it.fullDeckName,
+                        getDeckCountsFromDueTreeNode(it),
+                        rv,
+                        col,
+                        columns
+                    )
                 }
                 rv
             }
             DECKS_ID -> {
-
                 /* Direct access deck */
                 val columns = projection ?: FlashCardsContract.Deck.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                val allDecks = col.sched.deckDueList()
-                val deckId = uri.pathSegments[1].toLong()
-                for (deck: DeckDueTreeNode? in allDecks) {
-                    if (deck!!.did == deckId) {
-                        addDeckToCursor(deckId, deck.fullDeckName, getDeckCountsFromDueTreeNode(deck), rv, col, columns)
-                        return rv
+                val allDecks = col.sched.deckDueTree()
+                val desiredDeckId = uri.pathSegments[1].toLong()
+                fun find(nodeList: List<TreeNode<DeckDueTreeNode>>, id: Long): DeckDueTreeNode? {
+                    for (node in nodeList) {
+                        if (node.value.did == id) {
+                            return node.value
+                        }
+                        return find(node.children, id)
                     }
+                    return null
+                }
+                find(allDecks, desiredDeckId)?.let {
+                    addDeckToCursor(it.did, it.fullDeckName, getDeckCountsFromDueTreeNode(it), rv, col, columns)
                 }
                 rv
             }
@@ -412,10 +430,9 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun getDeckCountsFromDueTreeNode(deck: DeckDueTreeNode?): JSONArray {
-        @KotlinCleanup("use a scope function")
+    private fun getDeckCountsFromDueTreeNode(deck: DeckDueTreeNode): JSONArray {
         val deckCounts = JSONArray()
-        deckCounts.put(deck!!.lrnCount)
+        deckCounts.put(deck.lrnCount)
         deckCounts.put(deck.revCount)
         deckCounts.put(deck.newCount)
         return deckCounts
@@ -1137,7 +1154,7 @@ class CardContentProvider : ContentProvider() {
             try {
                 if (cardToAnswer != null) {
                     if (timeTaken != -1L) {
-                        cardToAnswer.timerStarted = col.time.intTimeMS() - timeTaken
+                        cardToAnswer.timerStarted = TimeManager.time.intTimeMS() - timeTaken
                     }
                     sched.answerCard(cardToAnswer, ease)
                 }
@@ -1216,7 +1233,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun selectDeckWithCheck(col: Collection, did: Long): Boolean {
+    private fun selectDeckWithCheck(col: Collection, did: DeckId): Boolean {
         return if (col.decks.get(did, false) != null) {
             col.decks.select(did)
             true

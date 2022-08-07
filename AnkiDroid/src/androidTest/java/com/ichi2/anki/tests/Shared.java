@@ -43,7 +43,7 @@ public class Shared {
         // if the file already exists (it assumes it's an existing DB).
         String path = f.getAbsolutePath();
         assertTrue(f.delete());
-        return Storage.Collection(context, path);
+        return Storage.collection(context, path);
     }
 
 

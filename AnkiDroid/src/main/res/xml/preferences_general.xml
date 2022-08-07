@@ -22,48 +22,26 @@
 
 <!--  General Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/app_name"
-    android:summary="@string/pref_cat_general_summ">
-    <PreferenceCategory android:title="@string/button_sync" >
-        <Preference
-            android:dialogTitle="@string/sync_account"
-            android:key="syncAccount"
-            android:summary="@string/sync_account_summ_logged_out"
-            android:title="@string/sync_account" >
-            <intent
-                android:targetClass="com.ichi2.anki.MyAccount"
-                android:targetPackage="com.ichi2.anki" />
-        </Preference>
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="syncFetchesMedia"
-            android:summary="@string/sync_fetch_missing_media_summ"
-            android:title="@string/sync_fetch_missing_media" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="automaticSyncMode"
-            android:summary="@string/automatic_sync_choice_summ"
-            android:title="@string/automatic_sync_choice" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="showSyncStatusBadge"
-            android:summary="@string/sync_status_badge_summ"
-            android:title="@string/sync_status_badge" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/app_name">
-        <ListPreference
-            android:entries="@array/add_to_cur_labels"
-            android:entryValues="@array/add_to_cur_values"
-            android:key="useCurrent"
-            android:title="@string/use_current" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:title="@string/pref_cat_general"
+    android:key="@string/pref_general_screen_key">
         <ListPreference
             android:defaultValue="@string/empty_string"
-            android:key="language"
+            android:key="@string/pref_language_key"
             android:icon="@drawable/ic_language_black_24dp"
-            android:title="@string/language" />
+            android:title="@string/language"
+            app:useSimpleSummaryProvider="true"/>
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/error_reporting_choice_labels"
+            android:entryValues="@array/error_reporting_choice_values"
+            android:key="@string/error_reporting_mode_key"
+            android:title="@string/error_reporting_choice"
+            app:useSimpleSummaryProvider="true"/>
         <SwitchPreference
             android:defaultValue="false"
-            android:key="analyticsOptIn"
+            android:key="@string/analytics_opt_in_key"
             android:summary="@string/analytics_summ"
             android:title="@string/analytics_title" />
         <SwitchPreference
@@ -71,29 +49,34 @@
             android:title="@string/paste_as_png"
             android:summary="@string/paste_as_png_summary"
             android:maxLength="41"
-            android:key="pastePNG"/>
-        <ListPreference
-            android:defaultValue="2"
-            android:entries="@array/error_reporting_choice_labels"
-            android:entryValues="@array/error_reporting_choice_values"
-            android:key="reportErrorMode"
-            android:title="@string/error_reporting_choice" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/notification_pref"
-        android:key="category_general_notification_pref">
-        <ListPreference
-            android:defaultValue="1000000"
-            android:entries="@array/notification_minimum_cards_due_labels"
-            android:entryValues="@array/notification_minimum_cards_due_values"
-            android:key="minimumCardsDueForNotification"
-            android:title="@string/notification_pref_title" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="widgetVibrate"
-            android:title="@string/notification_minimum_cards_due_vibrate" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="widgetBlink"
-            android:title="@string/notification_minimum_cards_due_blink" />
-    </PreferenceCategory>
+            android:key="@string/paste_png_key"/>
+        <PreferenceCategory android:title="@string/pref_cat_studying">
+            <ListPreference
+                android:entries="@array/add_to_cur_labels"
+                android:entryValues="@array/add_to_cur_values"
+                android:key="@string/deck_for_new_cards_key"
+                android:title="@string/use_current"
+                app:useSimpleSummaryProvider="true"/>
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/exit_via_double_tap_back_key"
+                android:summary="@string/exit_via_double_tap_back_summ"
+                android:title="@string/exit_via_double_tap_back" />
+        </PreferenceCategory>
+        <!-- Title and summary are variable, handled in string:
+            card_browser_enable_external_context_menu -->
+        <PreferenceCategory android:title="@string/pref_cat_system_wide">
+            <SwitchPreference
+                android:id="@+id/anki_card_external_context_menu"
+                android:defaultValue="true"
+                android:key="@string/anki_card_external_context_menu_key"
+                tools:title="‘Anki Card’ Menu"
+                tools:summary="Enables the ‘Anki Card’ context menu globally"/>
+            <SwitchPreference
+                android:id="@+id/card_browser_external_context_menu"
+                android:defaultValue="false"
+                android:key="@string/card_browser_external_context_menu_key"
+                tools:title="‘Card Browser’ Menu"
+                tools:summary="Enables the ‘Card Browser’ context menu globally"/>
+        </PreferenceCategory>
 </PreferenceScreen>

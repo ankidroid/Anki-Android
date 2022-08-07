@@ -10,8 +10,8 @@ import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.R
 import java.util.*
 
@@ -26,24 +26,23 @@ class MediaCheckDialog : AsyncDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val builder = MaterialDialog.Builder(requireActivity())
-        builder.title(notificationTitle)
+        val dialog = MaterialDialog(requireActivity())
+        dialog.title(text = notificationTitle)
         return when (requireArguments().getInt("dialogType")) {
             DIALOG_CONFIRM_MEDIA_CHECK -> {
-                builder.content(notificationMessage)
-                    .positiveText(res().getString(R.string.dialog_ok))
-                    .negativeText(res().getString(R.string.dialog_cancel))
-                    .cancelable(true)
-                    .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                dialog.show {
+                    message(text = notificationMessage)
+                    positiveButton(R.string.dialog_ok) {
                         (activity as MediaCheckDialogListener?)!!.mediaCheck()
                         (activity as MediaCheckDialogListener?)
                             ?.dismissAllDialogFragments()
                     }
-                    .onNegative { _: MaterialDialog?, _: DialogAction? ->
+                    negativeButton(R.string.dialog_cancel) {
                         (activity as MediaCheckDialogListener?)
                             ?.dismissAllDialogFragments()
                     }
-                    .show()
+                    cancelable(true)
+                }
             }
             DIALOG_MEDIA_CHECK_RESULTS -> {
                 val nohave = requireArguments().getStringArrayList("nohave")
@@ -86,25 +85,24 @@ class MediaCheckDialog : AsyncDialogFragment() {
                     fileListTextView.append(TextUtils.join("\n", unused))
                     fileListTextView.isScrollbarFadingEnabled = unused.size <= fileListTextView.maxLines
                     fileListTextView.movementMethod = ScrollingMovementMethod.getInstance()
-                    builder.negativeText(res().getString(R.string.dialog_cancel))
-                        .positiveText(res().getString(R.string.check_media_delete_unused))
-                        .onNegative { _: MaterialDialog?, _: DialogAction? ->
+                    dialog.positiveButton(R.string.check_media_delete_unused) {
+                        (activity as MediaCheckDialogListener?)!!.deleteUnused(unused)
+                        dismissAllDialogFragments()
+                    }
+                        .negativeButton(R.string.dialog_cancel) {
                             (activity as MediaCheckDialogListener?)
                                 ?.dismissAllDialogFragments()
                         }
-                        .onPositive { _: MaterialDialog?, _: DialogAction? ->
-                            (activity as MediaCheckDialogListener?)!!.deleteUnused(unused)
-                            dismissAllDialogFragments()
-                        }
                 } else {
                     fileListTextView.visibility = View.GONE
-                    builder.negativeText(res().getString(R.string.dialog_ok))
-                        .onNegative { _: MaterialDialog?, _: DialogAction? -> (activity as MediaCheckDialogListener?)!!.dismissAllDialogFragments() }
+                    dialog.negativeButton(R.string.dialog_ok) {
+                        (activity as MediaCheckDialogListener?)!!.dismissAllDialogFragments()
+                    }
                 }
-                builder
-                    .customView(dialogBody, false)
-                    .cancelable(false)
-                    .show()
+                dialog.show {
+                    customView(view = dialogBody)
+                    cancelable(false)
+                }
             }
             else -> null!!
         }

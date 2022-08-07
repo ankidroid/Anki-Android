@@ -29,6 +29,7 @@ import com.ichi2.libanki.Model;
 import com.ichi2.libanki.ModelManager;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.testutils.AnkiAssert;
 import com.ichi2.utils.JSONArray;
 
@@ -176,7 +177,6 @@ public class AbstractSchedTest extends RobolectricTest {
         for (int i = 0; i < nbNote; i++) {
             Card card = sched.getCard();
             Counts counts = sched.counts(card);
-            sched.setCurrentCard(card); // imitate what the reviewer does
             assertThat(counts.getNew(), is(greaterThan(nbNote - i))); // Actual number of new card.
             assertThat(counts.getNew(), is(lessThanOrEqualTo(nbNote * 2 - i))); // Maximal number potentially shown,
             // because decrementing does not consider burying sibling
@@ -203,7 +203,7 @@ public class AbstractSchedTest extends RobolectricTest {
         addDeckWithExactName(child);
 
         getCol().getDecks().checkIntegrity();
-        assertDoesNotThrow(() -> getCol().getSched().deckDueList());
+        assertDoesNotThrow(() -> getCol().getSched().deckDueTree());
     }
 
 
@@ -409,11 +409,9 @@ mw.col.sched.extendLimits(1, 0)
         addNoteUsingBasicModel("plop", "foo");
         col.reset();
         Card card = sched.getCard();
-        sched.setCurrentCard(card);
         sched.preloadNextCard();
         sched.answerCard(card, Consts.BUTTON_THREE);
         card = sched.getCard();
-        sched.setCurrentCard(card);
         AnkiAssert.assertDoesNotThrow(sched::preloadNextCard);
     }
 
@@ -421,7 +419,7 @@ mw.col.sched.extendLimits(1, 0)
     public void regression_7984() {
         Collection col = getCol();
         SchedV2 sched = (SchedV2) col.getSched();
-        Time time = getCol().getTime();
+        Time time = TimeManager.INSTANCE.getTime();
         Card[] cards = new Card[2];
         for (int i = 0; i < 2; i++) {
             cards[i] = addNoteUsingBasicModel(Integer.toString(i), "").cards().get(0);

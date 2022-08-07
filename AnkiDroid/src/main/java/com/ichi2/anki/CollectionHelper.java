@@ -31,10 +31,13 @@ import com.ichi2.libanki.Storage;
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException;
 import com.ichi2.libanki.utils.SystemTime;
 import com.ichi2.libanki.utils.Time;
+import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.preferences.PreferenceExtensions;
 import com.ichi2.utils.FileUtil;
 
+import net.ankiweb.rsdroid.Backend;
 import net.ankiweb.rsdroid.BackendException;
+import net.ankiweb.rsdroid.BackendFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,8 +45,7 @@ import java.io.IOException;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
-import static com.ichi2.libanki.Consts.SCHEMA_VERSION;
-import static com.ichi2.libanki.Consts.SCHEMA_DOWNGRADE_SUPPORTED_VERSION;
+import static com.ichi2.libanki.BackendImportExportKt.importCollectionPackage;
 
 /**
  * Singleton which opens, stores, and closes the reference to the Collection.
@@ -54,6 +56,9 @@ public class CollectionHelper {
     private Collection mCollection;
     // Name of anki2 file
     public static final String COLLECTION_FILENAME = "collection.anki2";
+
+    // A backend instance is reused after collection close.
+    private @Nullable Backend mBackend;
 
     /**
      * The preference key for the path to the current AnkiDroid directory
@@ -74,6 +79,14 @@ public class CollectionHelper {
      * <p>Accessed only from synchronized methods.
      */
     private boolean mCollectionLocked;
+
+    /**
+     * If the last call to getColSafe() failed, this stores the error type. This only exists
+     * to enable better error reporting during startup; in the future it would be better if
+     * callers check the exception themselves via a helper routine, instead of relying on a null
+     * return.
+     */
+    private static @Nullable CollectionOpenFailure mLastOpenFailure;
 
     @Nullable
     public static Long getCollectionSize(Context context) {
@@ -100,6 +113,14 @@ public class CollectionHelper {
 
 
     /**
+     * If the last call to getColSafe() failed, this contains the error type.
+     */
+    @Nullable
+    public static CollectionOpenFailure getLastOpenFailure() {
+        return mLastOpenFailure;
+    }
+
+    /**
      * Lazy initialization holder class idiom. High performance and thread safe way to create singleton.
      */
     @VisibleForTesting
@@ -115,34 +136,47 @@ public class CollectionHelper {
         return LazyHolder.INSTANCE;
     }
 
-
-    /**
-     * Get the single instance of the {@link Collection}, creating it if necessary  (lazy initialization).
-     * @param context context which can be used to get the setting for the path to the Collection
-     * @return instance of the Collection
-     */
-    public synchronized Collection getCol(Context context) {
-        if (colIsOpen()) {
-            return mCollection;
-        }
-        return getCol(context, new SystemTime());
-    }
-
     /**
      * Opens the collection without checking to see if the directory exists.
      *
      * path should be tested with File.exists() and File.canWrite() before this is called
      */
-    private Collection openCollection(Context context, @NonNull Time time, String path) {
+    private Collection openCollection(Context context, String path) {
         Timber.i("Begin openCollection: %s", path);
-        Collection collection = Storage.Collection(context, path, false, true, time);
+        Backend backend = getOrCreateBackend(context);
+        Collection collection = Storage.collection(context, path, false, true, backend);
         Timber.i("End openCollection: %s", path);
         return collection;
     }
 
-    @VisibleForTesting
-    public synchronized Collection getCol(Context context, @NonNull Time time) {
+    synchronized @NonNull Backend getOrCreateBackend(Context context) {
+        if (mBackend == null) {
+            mBackend = BackendFactory.getBackend(context);
+        }
+        return mBackend;
+    }
+
+
+    /**
+     * Close the currently cached backend and discard it. Useful when enabling the V16 scheduler in the
+     * dev preferences, or if the active language changes. The collection should be closed before calling
+     * this.
+     */
+    public synchronized void discardBackend() {
+        if (mBackend != null) {
+            mBackend.close();
+            mBackend = null;
+        }
+    }
+
+    /**
+     * Get the single instance of the {@link Collection}, creating it if necessary  (lazy initialization).
+     * @param _context is no longer used, as the global AnkidroidApp instance is used instead
+     * @return instance of the Collection
+     */
+    public synchronized Collection getCol(Context _context) {
         // Open collection
+        Context context = AnkiDroidApp.getInstance();
         if (!colIsOpen()) {
             String path = getCollectionPath(context);
             // Check that the directory has been created and initialized
@@ -154,7 +188,7 @@ public class CollectionHelper {
                 return null;
             }
             // Open the database
-            mCollection = openCollection(context, time, path);
+            mCollection = openCollection(context, path);
         }
         return mCollection;
     }
@@ -181,13 +215,13 @@ public class CollectionHelper {
             throw new StorageAccessException(path + " is not writable");
         }
 
-        return openCollection(context, new SystemTime(), path);
+        return openCollection(context, path);
     }
 
     /** Collection time if possible, otherwise real time.*/
     public synchronized Time getTimeSafe(Context context) {
         try {
-            return getCol(context).getTime();
+            return TimeManager.INSTANCE.getTime();
         } catch (Exception e) {
             Timber.w(e);
             return new SystemTime();
@@ -201,12 +235,19 @@ public class CollectionHelper {
      * @return
      */
     public synchronized Collection getColSafe(Context context) {
+        mLastOpenFailure = null;
         try {
             return getCol(context);
         } catch (BackendException.BackendDbException.BackendDbLockedException e) {
+            mLastOpenFailure = CollectionOpenFailure.LOCKED;
+            Timber.w(e);
+            return null;
+        } catch (BackendException.BackendDbException.BackendDbFileTooNewException e) {
+            mLastOpenFailure = CollectionOpenFailure.FILE_TOO_NEW;
             Timber.w(e);
             return null;
         } catch (Exception e) {
+            mLastOpenFailure = CollectionOpenFailure.CORRUPT;
             Timber.w(e);
             CrashReportService.sendExceptionReport(e, "CollectionHelper.getColSafe");
             return null;
@@ -225,11 +266,23 @@ public class CollectionHelper {
     }
 
     /**
+     * Replace the collection with the provided colpkg file if it is valid.
+     */
+    public synchronized void importColpkg(Context context, String colpkgPath) {
+        Backend backend = getOrCreateBackend(context);
+        if (mCollection != null) {
+            mCollection.close(true);
+        }
+        String colPath = getCollectionPath(context);
+        importCollectionPackage(backend, colPath, colpkgPath);
+        getCol(context);
+    }
+
+    /**
      * @return Whether or not {@link Collection} and its child database are open.
      */
     public boolean colIsOpen() {
-        return mCollection != null && !mCollection.isDbClosed() &&
-                mCollection.getDb().getDatabase() != null && mCollection.getDb().getDatabase().isOpen();
+        return mCollection != null && !mCollection.isDbClosed();
     }
 
     /**
@@ -413,7 +466,6 @@ public class CollectionHelper {
         return new File(getCurrentAnkiDroidDirectory(context), COLLECTION_FILENAME).getAbsolutePath();
     }
 
-
     /**
      * @return the absolute path to the AnkiDroid directory.
      */
@@ -550,39 +602,32 @@ public class CollectionHelper {
         col.getModels();
     }
 
-    public static DatabaseVersion isFutureAnkiDroidVersion(Context context) throws UnknownDatabaseVersionException {
-        int databaseVersion = getDatabaseVersion(context);
-
-        if (databaseVersion > SCHEMA_VERSION && databaseVersion != SCHEMA_DOWNGRADE_SUPPORTED_VERSION) {
-            return DatabaseVersion.FUTURE_NOT_DOWNGRADABLE;
-        } else if (databaseVersion == SCHEMA_DOWNGRADE_SUPPORTED_VERSION) {
-            return DatabaseVersion.FUTURE_DOWNGRADABLE;
-        } else {
-            return DatabaseVersion.USABLE;
-        }
-    }
-
-
     public static int getDatabaseVersion(Context context) throws UnknownDatabaseVersionException {
-        try {
-            Collection col = getInstance().mCollection;
-            return col.queryVer();
-        } catch (Exception e) {
-            Timber.w(e, "Failed to query version");
-            // fallback to a pure DB implementation
-            return Storage.getDatabaseVersion(getCollectionPath(context));
-        }
+        // backend can't open a schema version outside range, so fall back to a pure DB implementation
+        return Storage.getDatabaseVersion(context, getCollectionPath(context));
     }
 
     public enum DatabaseVersion {
         USABLE,
-        FUTURE_DOWNGRADABLE,
         FUTURE_NOT_DOWNGRADABLE,
         UNKNOWN
     }
 
+    public enum CollectionOpenFailure {
+        FILE_TOO_NEW,
+        CORRUPT,
+        LOCKED
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public void setColForTests(Collection col) {
+        if (col == null) {
+            try {
+                mCollection.close();
+            } catch (Exception exc) {
+                // may not be open
+            }
+        }
         this.mCollection = col;
     }
 }

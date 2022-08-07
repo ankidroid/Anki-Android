@@ -17,23 +17,34 @@
 package com.ichi2.utils
 
 import android.content.DialogInterface
+import android.widget.EditText
 import com.afollestad.materialdialogs.MaterialDialog
 
-// Extension methods for MaterialDialog.Builder workarounds in Kotlin
+// Extension methods for MaterialDialog workarounds in Kotlin
 // Previously the methods accepted null into a @NonNull parameter,
 // and fixing this would break the fluent interface
 
-fun MaterialDialog.Builder.titleNullable(title: CharSequence?): MaterialDialog.Builder {
-    title?.let { this.title(it) }
+fun MaterialDialog.titleNullable(title: String?): MaterialDialog {
+    title?.let { this.title(text = it) }
     return this
 }
 
-fun MaterialDialog.Builder.contentNullable(content: CharSequence?): MaterialDialog.Builder {
-    content?.let { this.content(it) }
+fun MaterialDialog.contentNullable(message: CharSequence?): MaterialDialog {
+    message?.let { this.message(text = it) }
     return this
 }
 
-fun MaterialDialog.Builder.cancelListenerNullable(cancelListener: DialogInterface.OnCancelListener?): MaterialDialog.Builder {
-    cancelListener?.let { this.cancelListener(it) }
+fun MaterialDialog.cancelListenerNullable(cancelListener: DialogInterface.OnCancelListener?): MaterialDialog {
+    cancelListener?.let { this.setOnCancelListener(it) }
     return this
+}
+
+/**
+ * Method to display keyboard when dialog is shown.
+ *
+ * @param editText EditText present in the dialog.
+ * @param materialDialog Dialog which contains the EditText and needs the keyboard to be displayed.
+ */
+fun MaterialDialog.displayKeyboard(editText: EditText) {
+    AndroidUiUtils.setFocusAndOpenKeyboard(editText, window!!)
 }

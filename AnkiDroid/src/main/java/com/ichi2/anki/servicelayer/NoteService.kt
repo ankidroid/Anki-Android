@@ -68,7 +68,7 @@ object NoteService {
     }
 
     @JvmStatic
-    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection?, fields: Array<String>, modelId: Long, mmNote: MultimediaEditableNote) {
+    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: Long, mmNote: MultimediaEditableNote) {
         for (i in fields.indices) {
             val value = fields[i]
             var field: IField?

@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Otwórz menu boczne</string>
     <string name="drawer_close">Zamknij menu boczne</string>
@@ -101,6 +99,9 @@
         <item>Stworzona</item>
         <item>Zmodyfikowano notatkę</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Zmień dzisiejszy limit nowych kart</string>
     <string name="custom_study_increase_review_limit">Zmień dzisiejszy limit przeglądanych kart</string>
@@ -356,7 +357,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Błąd zawartości karty, nie udało się załadować: %s</string>
     <string name="card_viewer_media_relative_protocol">Błąd zawartości karty: Wymagana aktualizacja mediów</string>
-    <string name="cannot_load_http_resource">Ładowanie zasobów http nie jest już obsługiwane</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nie udało się załadować talii: %s</string>
     <string name="search_decks">Przeszukaj talie</string>
@@ -443,4 +443,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

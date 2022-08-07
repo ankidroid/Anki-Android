@@ -71,12 +71,12 @@
         <item quantity="other">%d dakika kaldı</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d saat %2$d kaldı</item>
+        <item quantity="other">%1$d saat %2$d kaldı</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d gün %2$d kaldı</item>
+        <item quantity="other">%1$d gün %2$d kaldı</item>
     </plurals>
     <string name="no_cards_placeholder_title">Bu koleksiyon boş</string>
     <string name="no_cards_placeholder_description">+ ikonuna tıklayarak kart eklemeye başlayın.</string>
@@ -103,7 +103,7 @@
     <string name="rename_deck">Destenin adını değiştir</string>
     <string name="create_shortcut">Kısayol oluştur</string>
     <string name="browse_cards">Turkcha</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ekle</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Ekle</string>
     <string name="menu_add_note">Not ekle</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Senkronizasyon hesabı</string>
     <string name="menu_dismiss_note">Gizle / Sil</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">Henüz sırası gelmiş kart yok</string>
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
     <string name="empty_cloze_warning">Bu notu düzenleyip doldurulacak boşluklar ekleyin. (%1$s)</string>
-    <string name="button_sync">Senkronize et</string>
+    <string name="button_sync" comment="Text of the sync button">Senkronize et</string>
     <string name="cancel_sync_confirm">Senkronizasyonu iptâl etmek istiyor musunuz?</string>
     <string name="continue_sync">Senkronizasyona devam et</string>
     <string name="sync_cancelled">Senkronizasyon iptâl edildi</string>

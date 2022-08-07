@@ -24,6 +24,7 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.AnswerButtons.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.utils.HandlerUtils
 import timber.log.Timber
 
@@ -249,7 +250,7 @@ class AutomaticAnswerSettings(
         fun queryDeckSpecificOptions(
             action: AutomaticAnswerAction,
             col: Collection,
-            selectedDid: Long
+            selectedDid: DeckId
         ): AutomaticAnswerSettings? {
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck
@@ -330,7 +331,7 @@ enum class AutomaticAnswerAction(private val preferenceValue: Int) {
     /** Convert to a [ViewerCommand] */
     private fun toCommand(numberOfButtons: Int): ViewerCommand {
         return when (this) {
-            BURY_CARD -> ViewerCommand.COMMAND_BURY_CARD
+            BURY_CARD -> ViewerCommand.BURY_CARD
             ANSWER_AGAIN -> AGAIN.toViewerCommand(numberOfButtons)
             ANSWER_HARD -> HARD.toViewerCommand(numberOfButtons)
             ANSWER_GOOD -> GOOD.toViewerCommand(numberOfButtons)

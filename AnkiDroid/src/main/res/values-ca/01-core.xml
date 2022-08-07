@@ -103,7 +103,7 @@
     <string name="rename_deck">Canvia el nom del paquet</string>
     <string name="create_shortcut">Crear drecera</string>
     <string name="browse_cards">Examinar cartes</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Afegir</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Afegir</string>
     <string name="menu_add_note">Afegir nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de sincronització</string>
     <string name="menu_dismiss_note">Amagar / eliminar</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">No hi ha cartes per fer.</string>
     <string name="sd_card_not_mounted">La tarjeta SD no funciona correctament</string>
     <string name="empty_cloze_warning">Editeu aquesta nota i afegiu-hi algunes eliminacions. (%1$s)</string>
-    <string name="button_sync">Sincronització</string>
+    <string name="button_sync" comment="Text of the sync button">Sincronització</string>
     <string name="cancel_sync_confirm">Voleu cancel·lar la sincronització?</string>
     <string name="continue_sync">Continua la sincronització</string>
     <string name="sync_cancelled">Sincronització cancel·lada</string>

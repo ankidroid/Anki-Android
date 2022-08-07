@@ -19,23 +19,12 @@ import android.annotation.SuppressLint
 import com.ichi2.libanki.utils.Time
 import com.ichi2.utils.KotlinCleanup
 import java.util.*
-import kotlin.jvm.JvmOverloads
 
-@KotlinCleanup("IDE lint")
-open class MockTime : Time {
-    /** Number of milliseconds between each call.  */
-    private val mStep: Int
-
-    /** Time since epoch in MS.  */
-    protected var time: Long
+/** @param [step] Number of milliseconds between each call.
+ * @param [time]: Time since epoch in MS. */
+open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
+    protected var time = initTime
         private set
-    /** A clock at time Time, each call advance by step ms. */
-    /** A clock at time Time, only changed explicitly */
-    @JvmOverloads
-    constructor(time: Long, step: Int = 0) {
-        this.time = time
-        mStep = step
-    }
 
     /** create a mock time whose initial value is this date. Month is 0-based, in order to stay close to calendar. MS are 0. */
     constructor(
@@ -47,15 +36,14 @@ open class MockTime : Time {
         second: Int,
         milliseconds: Int,
         step: Int
-    ) {
-        time = timeStamp(year, month, date, hourOfDay, minute, second, milliseconds)
-        mStep = step
-    }
+    ) : this(
+        timeStamp(year, month, date, hourOfDay, minute, second, milliseconds), step
+    )
 
     /** Time in millisecond since epoch.  */
     override fun intTimeMS(): Long {
         val time = time
-        this.time += mStep.toLong()
+        this.time += step.toLong()
         return time
     }
 

@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">開啟側欄</string>
     <string name="drawer_close">關閉側欄</string>
@@ -101,6 +99,9 @@
         <item>已建立 </item>
         <item>已修改筆記</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今日新卡片上限</string>
     <string name="custom_study_increase_review_limit">修改今日複習卡片上限</string>
@@ -163,7 +164,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">這不是有效的 Anki 套件檔案</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">錯誤</string>
     <string name="import_log_failed_unzip">解壓縮 Apkg 失敗：%s</string>
     <string name="import_log_failed_copy_to">複製 Apkg 至 %s 失敗</string>
     <string name="import_log_failed_validate">Apkg 驗證失敗</string>
@@ -178,7 +179,7 @@
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() 失敗（可能是儲存空間溢出）</string>
     <string name="import_error_unhandled_scheme">無法處理來自“%s”的匯入</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_multiple_colpkg">已選擇多個 colpkg 檔案。</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">正在匯入牌組集合&#8230;&#8230;</string>
@@ -314,7 +315,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">卡片內容錯誤：載入 ‘%s’ 失敗</string>
     <string name="card_viewer_media_relative_protocol">卡片內容錯誤：需要更新媒體</string>
-    <string name="cannot_load_http_resource">已不再支援載入 http 資源</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">載入牌組 ‘%s’ 失敗</string>
     <string name="search_decks">搜尋牌組</string>
@@ -392,13 +392,15 @@
     <string name="scoped_storage_learn_more">瞭解更多</string>
     <string name="scoped_storage_postpone">延後</string>
     <string name="scoped_storage_migrate">遷移</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="search_card_js_api_no_results">搜尋沒有任何結果</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="not_valid_js_addon">%s 不是一個有效的 JavaScript addon package</string>
+    <string name="could_not_create_dir">無法建立目錄 %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

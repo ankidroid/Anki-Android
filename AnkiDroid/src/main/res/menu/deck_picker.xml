@@ -12,7 +12,7 @@
     -->
     <item
         android:id="@+id/action_sync"
-        android:icon="@drawable/ic_sync_white"
+        android:icon="@drawable/ic_sync"
         android:title="@string/button_sync"
         ankidroid:showAsAction="always"/>
     <item

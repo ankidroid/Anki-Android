@@ -110,7 +110,7 @@ class ButtonItemAdapter(private val items: kotlin.collections.ArrayList<String>)
      * the saved searches in any way, prior to displaying them again
      */
     fun notifyAdapterDataSetChanged() {
-        Collections.sort(items) { obj: String, str: String? -> obj.compareTo(str!!, ignoreCase = true) }
+        items.sortWith { obj: String, str: String -> obj.compareTo(str, ignoreCase = true) }
         super.notifyDataSetChanged()
     }
 }

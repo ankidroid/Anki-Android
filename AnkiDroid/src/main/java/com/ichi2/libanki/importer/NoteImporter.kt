@@ -10,6 +10,7 @@ import com.ichi2.anki.R
 import com.ichi2.libanki.*
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.utils.StringUtils
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.HtmlUtils
@@ -18,8 +19,8 @@ import com.ichi2.utils.JSONObject
 // Ported from https://github.com/ankitects/anki/blob/50fdf9b03dec33c99a501f332306f378db5eb4ea/pylib/anki/importing/noteimp.py
 // Aside from 9f676dbe0b2ad9b87a3bf89d7735b4253abd440e, which allows empty notes.
 open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Importer(col, file) {
-    private val mNeedMapper = true
-    private val mNeedDelimiter = false
+    override var needMapper = true
+    override var needDelimiter = false
     private var mAllowHTML = false
     private var mImportMode = ImportMode.UPDATE_MODE
 
@@ -111,9 +112,10 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
             }
         }
         val firsts = HashUtil.HashSetInit<String>(notes.size)
-        val fld0index = mMapping!!.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"))
+        val fld0index =
+            mMapping!!.indexOf(mModel.getJSONArray("flds").getJSONObject(0).getString("name"))
         mFMap = Models.fieldMap(mModel)
-        mNextId = mCol.time.timestampID(mCol.db, "notes")
+        mNextId = TimeManager.time.timestampID(mCol.db, "notes")
         // loop through the notes
         val updates: MutableList<Array<Any>> = ArrayList(notes.size)
         val updateLog: MutableList<String> = ArrayList(notes.size)
@@ -137,7 +139,12 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
             val csum = Utils.fieldChecksum(fld0)
             // first field must exist
             if (fld0 == null || fld0.isEmpty()) {
-                log.add(getString(R.string.note_importer_error_empty_first_field, TextUtils.join(" ", n.mFields)))
+                log.add(
+                    getString(
+                        R.string.note_importer_error_empty_first_field,
+                        TextUtils.join(" ", n.mFields)
+                    )
+                )
                 continue
             }
             // earlier in import?
@@ -161,7 +168,12 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
                             val data = updateData(n, id, sflds)
                             if (data != null && data.isNotEmpty()) {
                                 updates.add(data)
-                                updateLog.add(getString(R.string.note_importer_error_first_field_matched, fld0))
+                                updateLog.add(
+                                    getString(
+                                        R.string.note_importer_error_first_field_matched,
+                                        fld0
+                                    )
+                                )
                                 dupeCount += 1
                                 found = true
                             }
@@ -172,7 +184,12 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
                             if (!dupes.contains(fld0)) {
                                 // only show message once, no matter how many
                                 // duplicates are in the collection already
-                                updateLog.add(getString(R.string.note_importer_error_added_duplicate_first_field, fld0))
+                                updateLog.add(
+                                    getString(
+                                        R.string.note_importer_error_added_duplicate_first_field,
+                                        fld0
+                                    )
+                                )
                                 dupes.add(fld0)
                             }
                             found = false
@@ -215,12 +232,12 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
             else -> 0
         }
         val part3 = getQuantityString(R.plurals.note_importer_notes_unchanged, unchanged)
-        mLog.add(String.format("%s, %s, %s.", part1, part2, part3))
-        mLog.addAll(updateLog)
+        log.add(String.format("%s, %s, %s.", part1, part2, part3))
+        log.addAll(updateLog)
         if (mEmptyNotes) {
-            mLog.add(getString(R.string.note_importer_error_empty_notes))
+            log.add(getString(R.string.note_importer_error_empty_notes))
         }
-        mTotal = mIds!!.size
+        _total = mIds!!.size
     }
 
     private fun newData(n: ForeignNote): Array<Any>? {
@@ -233,7 +250,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
             id,
             Utils.guid64(),
             mModel!!.getLong("id"),
-            mCol.time.intTime(),
+            TimeManager.time.intTime(),
             mCol.usn(),
             mCol.tags.join(n.mTags),
             n.fieldsStr,
@@ -257,18 +274,26 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
         return when {
             mTagsMapped -> {
                 tags = mCol.tags.join(n.mTags)
-                arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr, tags)
+                arrayOf(
+                    TimeManager.time.intTime(),
+                    mCol.usn(),
+                    n.fieldsStr,
+                    tags,
+                    id,
+                    n.fieldsStr,
+                    tags
+                )
             }
             mTagModified != null -> {
                 tags = mCol.db.queryString("select tags from notes where id = ?", id)
                 val tagList = mCol.tags.split(tags)
                 tagList.addAll(StringUtils.splitOnWhitespace(mTagModified))
                 tags = mCol.tags.join(tagList)
-                arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr)
+                arrayOf(TimeManager.time.intTime(), mCol.usn(), n.fieldsStr, tags, id, n.fieldsStr)
             }
             else -> {
                 // This looks inconsistent but is fine, see: addUpdates
-                arrayOf(mCol.time.intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr)
+                arrayOf(TimeManager.time.intTime(), mCol.usn(), n.fieldsStr, id, n.fieldsStr)
             }
         }
     }
@@ -295,7 +320,8 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
             )
         }
         val changes2 = mCol.db.queryScalar("select total_changes()")
-        mUpdateCount = changes2 - changes
+        // if any changes are made, col.mod is also bumped
+        mUpdateCount = Math.max(0, changes2 - changes - 1)
     }
 
     private fun processFields(note: ForeignNote, fields: Array<String>? = null): Boolean {
@@ -321,7 +347,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
     }
 
     val total: Int
-        get() = mTotal
+        get() = _total
 
     fun setImportMode(mode: ImportMode) {
         mImportMode = mode

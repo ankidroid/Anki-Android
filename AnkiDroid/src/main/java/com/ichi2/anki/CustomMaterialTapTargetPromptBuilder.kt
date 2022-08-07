@@ -20,6 +20,7 @@ package com.ichi2.anki
 import android.app.Activity
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.PromptBackgroundAdapter.Companion.toPromptBackground
+import com.ichi2.themes.Themes
 import com.ichi2.utils.DimmedPromptBackgroundDecorator
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.CirclePromptBackground
@@ -28,10 +29,6 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.focals.CirclePromptFocal
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 
 class CustomMaterialTapTargetPromptBuilder<T>(val activity: Activity, val featureIdentifier: T) : MaterialTapTargetPrompt.Builder(activity) where T : Enum<T>, T : OnboardingFlag {
-
-    companion object {
-        private const val NIGHT_MODE_PREFERENCE = "invertedColors"
-    }
 
     fun createRectangle(): CustomMaterialTapTargetPromptBuilder<T> {
         promptFocal = RectanglePromptFocal()
@@ -80,7 +77,7 @@ class CustomMaterialTapTargetPromptBuilder<T>(val activity: Activity, val featur
     override fun show(): MaterialTapTargetPrompt? {
         /* Keep the focal colour as transparent for night mode
            so that the contents being highlighted are visible properly */
-        if (AnkiDroidApp.getSharedPrefs(activity).getBoolean(NIGHT_MODE_PREFERENCE, false)) {
+        if (Themes.currentTheme.isNightMode) {
             setFocalColourResource(R.color.transparent)
         }
 

@@ -10,6 +10,7 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import timber.log.Timber
 import java.util.Calendar
@@ -33,7 +34,7 @@ class BootService : BroadcastReceiver() {
         }
         Timber.i("Executing Boot Service")
         catchAlarmManagerErrors(context) { scheduleDeckReminder(context) }
-        catchAlarmManagerErrors(context) { scheduleNotification(col.time, context) }
+        catchAlarmManagerErrors(context) { scheduleNotification(TimeManager.time, context) }
         mFailedToShowNotifications = false
         sWasRun = true
     }
@@ -73,7 +74,6 @@ class BootService : BroadcastReceiver() {
     private fun scheduleDeckReminder(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         for (deckConfiguration in CollectionHelper.getInstance().getCol(context).decks.allConf()) {
-            val col = CollectionHelper.getInstance().getCol(context)
             if (deckConfiguration.has("reminder")) {
                 val reminder = deckConfiguration.getJSONObject("reminder")
                 if (reminder.getBoolean("enabled")) {
@@ -86,7 +86,7 @@ class BootService : BroadcastReceiver() {
                         ),
                         0
                     )
-                    val calendar = DeckOptions.reminderToCalendar(col.time, reminder)
+                    val calendar = DeckOptions.reminderToCalendar(TimeManager.time, reminder)
                     alarmManager.setRepeating(
                         AlarmManager.RTC_WAKEUP,
                         calendar.timeInMillis,

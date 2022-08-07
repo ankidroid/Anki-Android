@@ -16,6 +16,7 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import java.lang.UnsupportedOperationException
 import java.util.*
@@ -32,12 +33,14 @@ import java.util.*
  * [processChildren] should be called if the children of this node are modified.
  */
 abstract class AbstractDeckTreeNode(
-    val col: Collection,
     /**
      * @return The full deck name, e.g. "A::B::C"
      */
     val fullDeckName: String,
-    val did: Long
+    val did: DeckId,
+    // only set when new backend active
+    open var collapsed: Boolean = false,
+    open var filtered: Boolean = false
 ) : Comparable<AbstractDeckTreeNode> {
     private val mNameComponents: Array<String>
 
@@ -68,7 +71,7 @@ abstract class AbstractDeckTreeNode(
         )
     }
 
-    abstract fun processChildren(children: List<AbstractDeckTreeNode>, addRev: Boolean)
+    abstract fun processChildren(col: Collection, children: List<AbstractDeckTreeNode>, addRev: Boolean)
 
     override fun toString(): String {
         val buf = StringBuffer()

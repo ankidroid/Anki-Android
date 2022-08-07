@@ -37,9 +37,15 @@
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
     <Button
+        android:id="@+id/pen_color_custom"
+        android:background="@drawable/ic_palette"
+        android:foreground="?selectableItemBackground"
+        style="@style/reviewer_whiteboard_editor_button_style"/>
+
+    <Button
         android:id="@+id/stroke_width"
         android:background="@drawable/ic_mode_edit_white"
-        android:backgroundTint="@color/black"
+        android:foreground="?selectableItemBackground"
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
 </LinearLayout>

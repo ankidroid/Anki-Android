@@ -32,7 +32,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.UIUtils.showSnackbar
@@ -60,7 +59,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private var mCurrentContentView = CONTENT_STUDY_OPTIONS
 
     /** Alerts to inform the user about different situations  */
-    private var mProgressDialog: MaterialDialog? = null
+    @Suppress("Deprecation")
+    private var mProgressDialog: android.app.ProgressDialog? = null
 
     /** Whether we are closing in order to go to the reviewer. If it's the case, UPDATE_VALUES_FROM_DECK should not be
      * cancelled as the counts will be used in review.  */
@@ -244,9 +244,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         parent.addView(newView)
     }
 
-    private val mUndoListener: TaskListener<Unit, ComputeResult> = object : TaskListener<Unit, ComputeResult>() {
+    private val mUndoListener: TaskListener<Unit, ComputeResult?> = object : TaskListener<Unit, ComputeResult?>() {
         override fun onPreExecute() {}
-        override fun onPostExecute(result: ComputeResult) {
+        override fun onPostExecute(result: ComputeResult?) {
             openReviewer()
         }
     }

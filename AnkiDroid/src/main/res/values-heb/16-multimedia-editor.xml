@@ -41,33 +41,20 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">הוספת תמונה</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_audio_clip">הוסף קליפ שמע</string>
+    <string name="multimedia_editor_popup_video_clip">הוסף קליפ וידאו</string>
     <string name="multimedia_editor_popup_audio">הקלטת שמע</string>
     <string name="multimedia_editor_popup_text">עורך מתקדם</string>
-    <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
+    <string name="multimedia_editor_popup_cloze">זיהוי cloze</string>
     <string name="multimedia_editor_popup_clear_field">פינוי השדה</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">אפשרות זו משתמשת ב־globse.com</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">מ־</string>
-    <string name="multimedia_editor_trans_to">אל</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">תרגום</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">תרגום מקוון</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">בחירת תרגום</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">בחירת מילון</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">יש להתקין את ColorDict תחילה</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">טעינה</string>
     <string name="multimedia_editor_pron_looking_up">בדיקת היגוי</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">ההיגוי נכשל</string>
+    <string name="multimedia_editor_only_one_word">רק מילה אחת בכל פעם נתמכת</string>
     <string name="multimedia_editor_word_search_try_lower_case">נסו להשתמש באותיות קטנות</string>
     <string name="multimedia_editor_poweredbeolingus">אפשרות זו משתמשת ב־Beolingus</string>
     <!-- Field editing general -->
@@ -79,16 +66,13 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">בוצע</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">חיפוש אחר:</string>
     <string name="multimedia_editor_text_field_editing_say">הגיה</string>
     <string name="multimedia_editor_text_field_editing_clear">ניקוי</string>
     <string name="multimedia_editor_text_field_editing_clone">שכפול מ־</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">תרגום</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">יש להזין טקסט תחילה</string>
-    <string name="multimedia_editor_text_field_editing_many_words">המילון מצפה בדרך כלל למילה אחת</string>
     <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
+    <string name="multimedia_editor_text_field_editing_clone_source">קח מ-</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -96,8 +80,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">גלריה</string>
     <string name="multimedia_editor_image_field_editing_photo">מצלמה</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">שמע</string>
+    <string name="multimedia_editor_import_video">וידאו</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">הורדה</string>
@@ -106,14 +90,13 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">המילה לא נמצאה</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">קבלת התרגום נכשלה</string>
     <string name="multimedia_editor_searching_word">חיפוש המילה</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">המתנה</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">משהו השתבש</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_svg_preview">קבצי SVG אינם זמינים לתצוגה מקדימה</string>
+    <string name="multimedia_editor_png_paste_error">שגיאה בהמרת תמונת הלוח ל-png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">צרף קובץ מולטימדיה לשדה %1$s</string>
     <string name="multimedia_editor_attach_media">הוספת מדיה</string>
     <!-- Audio view -->
@@ -123,14 +106,13 @@
     <string name="multimedia_editor_audio_view_create_failed">לא ניתן ליצור סרגל כלים של הקלטה</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">עריכת שדה</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">תרגום</string>
     <!-- Network failure -->
     <string name="network_no_connection">אין חיבור לרשת</string>
     <!-- Crop function-->
     <string name="crop_image">לחתוך את התמונה הזאת?</string>
     <string name="crop_button">חיתוך תמונה</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="save_dialog_content">גודל התמונה הנוכחי הוא %sMB. מגבלת ברירת המחדל של גודל התמונה היא 1MB. האם ברצונך לחתוך אותו?</string>
+    <string name="select_image_failed">"בחירת התמונה נכשלה, אנא נסה שוב"</string>
+    <string name="activity_result_unexpected">האפליקציה החזירה ערך לא צפוי. ייתכן שתצטרך להשתמש באפליקציה אחרת</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">תוכן השדה</string>
 </resources>

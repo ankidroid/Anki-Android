@@ -59,13 +59,6 @@
     <string name="initializing_tts">Đang khởi chạy TTS&#8230;</string>
     <string name="tts_no_tts">Đừng phát âm</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Thẻ ghi nhớ cho Android</h2>AnkiDroid là ứng dụng thẻ ghi nhớ hoàn toàn tương thích với phần mềm cho máy bàn <a href=\"%2$s\">Anki</a>. Bạn có thể tạo, tải xuống và học các tài liệu trên cả AnkiDroid hoặc Anki cho máy bàn và dễ dàng đồng bộ chúng với AnkiWeb.]]></item>
-        <item><![CDATA[Để giúp chúng tôi hoàn thiện AnkiDroid, xin báo cáo lỗi đến <a href=\"%1$s\">trình theo dõi lỗi</a>; các ý tưởng tính năng mới đều được hoan nghênh. Hãy tìm câu trả lời trên <a href=\"%2$s\">wiki</a> hoặc mở đầu cuộc thảo luận trên <a href=\"%3$s\">diễn đàn</a>.]]></item>
-        <item><![CDATA[AnkiDroid là <a href=\"%1$s\">phần mềm nguồn mở<a/>, do đó mọi người đều được khuyến khích <a href=\"%2$s\">trở thành người cộng tác</a> :-)]]></item>
-        <item><![CDATA[Những người không phải là nhà phát triển cũng có thể trợ giúp. Ví dụ: bạn có thể <a href=\"%1$s\"> giúp dịch </a> AnkiDroid, cập nhật wiki, cung cấp ảnh chụp màn hình hoặc viết blog về AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid được phát hành theo <a href=\"%1$s\">Giấy phép GNU-GPL v3</a> và mã nguồn có <a href=\"%2$s\">trên GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Xem trước</string>
     <string name="reposition_card_dialog_title">Đặt lại vị trí thẻ mới</string>
     <string name="reposition_card_dialog_message">Vị trí bắt đầu:</string>
@@ -80,7 +73,7 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="other">Lên lịch lại thẻ %d</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="other">Khoảng thời gian hiện tại: %d ngày</item>
@@ -113,7 +106,7 @@
     <string name="import_update_details">Đã cập nhật %1$d trên %2$d ghi chú hiện hữu.</string>
     <string name="import_update_ignored">Đã bỏ qua một số cập nhật vì loại ghi chú đã thay đổi</string>
     <plurals name="import_complete_message">
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">Thẻ đã được nhập: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">Thẻ SD đã đầy</string>
     <string name="sd_card_almost_full_title">Thẻ SD gần đầy</string>
@@ -121,11 +114,12 @@
     <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Khôi phục sao lưu?</string>
     <string name="restore_backup">Bộ sưu tập sẽ được thay bằng bản sao cũ hơn. Bất kỳ tiến trình nào chưa lưu sẽ bị mất.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Chọn cái khác </string>
     <string name="dialog_cancel">Huỷ</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Không</string>
     <string name="dialog_continue">Tiếp tục</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Tạo</string>
     <string name="dialog_positive_delete">Xoá</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -186,7 +180,7 @@
     <string name="card_browser_deck_change_error">Không thể thay đổi bộ thẻ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Lỗi giải mã dữ liệu từ thẻ</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">Hoàn tác \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Không xử lý được các tùy chọn bộ thẻ: %s</string>
     <!-- Database Errors-->
@@ -252,4 +246,6 @@
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

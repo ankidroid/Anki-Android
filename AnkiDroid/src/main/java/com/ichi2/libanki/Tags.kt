@@ -20,6 +20,7 @@ package com.ichi2.libanki
 import android.content.ContentValues
 import android.text.TextUtils
 import com.ichi2.libanki.backend.model.TagUsnTuple
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.JSONObject
 import java.util.*
 import java.util.regex.Pattern
@@ -119,7 +120,7 @@ class Tags
     }
 
     /** {@inheritDoc}  */
-    override fun byDeck(did: Long, children: Boolean): ArrayList<String> {
+    override fun byDeck(did: DeckId, children: Boolean): ArrayList<String> {
         val tags: List<String?> = if (children) {
             val values: kotlin.collections.Collection<Long> = col.decks.children(did).values
             val dids = ArrayList<Long>(values.size)
@@ -184,7 +185,7 @@ class Tags
                         res.add(
                             arrayOf(
                                 addToStr(tags, cur.getString(1)),
-                                col.time.intTime(),
+                                TimeManager.time.intTime(),
                                 col.usn(),
                                 cur.getLong(0)
                             )
@@ -194,7 +195,9 @@ class Tags
                     while (cur.moveToNext()) {
                         res.add(
                             arrayOf(
-                                remFromStr(tags, cur.getString(1)), col.time.intTime(), col.usn(),
+                                remFromStr(tags, cur.getString(1)),
+                                TimeManager.time.intTime(),
+                                col.usn(),
                                 cur.getLong(0)
                             )
                         )

@@ -23,6 +23,7 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
+import com.ichi2.libanki.utils.TimeManager
 import timber.log.Timber
 import java.io.FileNotFoundException
 
@@ -74,7 +75,7 @@ class DrawingActivity : AnkiActivity() {
 
     private fun finishWithSuccess() {
         try {
-            val savedWhiteboardFileName = mWhiteboard.saveWhiteboard(col.time)
+            val savedWhiteboardFileName = mWhiteboard.saveWhiteboard(TimeManager.time)
             val resultData = Intent()
             resultData.putExtra(EXTRA_RESULT_WHITEBOARD, savedWhiteboardFileName)
             setResult(RESULT_OK, resultData)

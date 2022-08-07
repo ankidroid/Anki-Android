@@ -225,9 +225,9 @@ class DeckSpinnerSelection(
     /**
      * Displays a [DeckSelectionDialog]
      */
-    fun displayDeckSelectionDialog(col: Collection?) {
-        val nonDynamic = FunctionalInterfaces.Filter { d: Deck? -> !Decks.isDynamic(d) }
-        val decks = fromCollection(col!!, nonDynamic).toMutableList()
+    fun displayDeckSelectionDialog(col: Collection) {
+        val nonDynamic = FunctionalInterfaces.Filter { d: Deck -> !Decks.isDynamic(d) }
+        val decks = fromCollection(col, nonDynamic).toMutableList()
         if (showAllDecks) {
             decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
         }
@@ -246,6 +246,6 @@ class DeckSpinnerSelection(
     }
 
     companion object {
-        private const val ALL_DECKS_ID = 0L
+        const val ALL_DECKS_ID = 0L
     }
 }

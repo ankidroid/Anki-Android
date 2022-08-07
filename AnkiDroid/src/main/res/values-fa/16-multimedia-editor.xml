@@ -42,32 +42,19 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">افزودن تصویر</string>
     <string name="multimedia_editor_popup_audio_clip">افزودن صدا</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">افزودن ویدیو</string>
     <string name="multimedia_editor_popup_audio">ضبط صدا</string>
     <string name="multimedia_editor_popup_text">ویرایش‌گر پیشرفته</string>
     <string name="multimedia_editor_popup_cloze">انصراف از پاک کردن</string>
     <string name="multimedia_editor_popup_clear_field">پاک کردن فیلد</string>
-    <!-- Translation activity (Glosbe) -->
-    <string name="multimedia_editor_trans_poweredglosbe">قدرت گرفته از glosbe.com</string>
-    <!-- these are like translate f r o m  and t o  some othe languages -->
-    <string name="multimedia_editor_trans_from">از</string>
-    <string name="multimedia_editor_trans_to">به</string>
-    <!-- imperative for the button title -->
+    <!-- TODO this string should be in dialogs.xml with the other help_item_support_* strings -->
     <string name="multimedia_editor_trans_translate">ترجمه</string>
-    <!-- waiting message -->
-    <string name="multimedia_editor_trans_translating_online">در حال ترجمه آنلاین</string>
-    <!-- pick the right translation imperative -->
-    <string name="multimedia_editor_trans_pick_translation">گزینش ترجمه</string>
-    <!-- from controller -->
-    <!-- dialog title to ask for translation source -->
-    <string name="multimedia_editor_trans_pick_translation_source">گزینش واژه‌نامه</string>
-    <!-- dialog asking to install ColorDict -->
-    <string name="multimedia_editor_trans_install_color_dict">ابتدا ColorDict را نصب کنید</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">بارگذاری</string>
     <string name="multimedia_editor_pron_looking_up">در حال پیدا کردن تلفظ</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">تلفظ انجام نشد</string>
+    <string name="multimedia_editor_only_one_word">فقط یک کلمه در جا میتوانید استفاده کنید</string>
     <string name="multimedia_editor_word_search_try_lower_case">سعی کنید فقط از حروف کوچک استفاده کنید</string>
     <string name="multimedia_editor_poweredbeolingus">طراحی شده توسط Beolingus</string>
     <!-- Field editing general -->
@@ -79,14 +66,11 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">انجام شد</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_search_label">جستجو برای:</string>
     <string name="multimedia_editor_text_field_editing_say">تلفظ</string>
     <string name="multimedia_editor_text_field_editing_clear">پاکسازی</string>
     <string name="multimedia_editor_text_field_editing_clone">کپی از</string>
-    <string name="multimedia_editor_text_field_editing_translate" comment="Label of a button opening the translation activity">ترجمه</string>
     <!-- message to user, when there is no text or many words, but the user tries something -->
     <string name="multimedia_editor_text_field_editing_no_text">ابتدا کمی متن وارد کنید</string>
-    <string name="multimedia_editor_text_field_editing_many_words">واژه‌نامه معمولا یک کلمه را می‌پذیرد</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">کپی از</string>
     <!-- Multimedia card editor activity -->
@@ -96,8 +80,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">گالری</string>
     <string name="multimedia_editor_image_field_editing_photo">دوربین</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">صدا</string>
+    <string name="multimedia_editor_import_video">ویدیو</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">در حال دریافت</string>
@@ -106,14 +90,13 @@
     <!-- General word search and failures -->
     <string name="multimedia_editor_error_word_not_found">واژه یافت نشد</string>
     <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_trans_getting_failure">دریافت ترجمه به مشکل خورد</string>
     <string name="multimedia_editor_searching_word">در حال جستجوی واژه</string>
     <!-- General -->
     <string name="multimedia_editor_progress_wait_title">صبر کنید</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">متأسفیم، مشکلی به وجود آمد</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_svg_preview">SVGها برای از قبل دیدن در دسترس نیستند</string>
+    <string name="multimedia_editor_png_paste_error">خطا در تبدیل عکس های کلیپ برد به png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">ضمیمه کردن محتوای چند رسانه ای به زمینه %1$s</string>
     <string name="multimedia_editor_attach_media">ضمیمه رسانه</string>
     <!-- Audio view -->
@@ -123,7 +106,6 @@
     <string name="multimedia_editor_audio_view_create_failed">تولید نوار ابزار ضبط ممکن نیست</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">ویرایش فیلد</string>
-    <string name="title_activity_translation" comment="Name of the window allowing to translate. This text can not be seen in AnkiDroid directly.">ترجمه</string>
     <!-- Network failure -->
     <string name="network_no_connection">اتصال برقرار نیست</string>
     <!-- Crop function-->
@@ -132,5 +114,5 @@
     <string name="save_dialog_content">حجم فعلی تصویر %s مگابایت است. حداکثر حجم پیش‌فرض تصویر یک مگابایت است. آیا می‌خواهید تصویر را برش دهید؟</string>
     <string name="select_image_failed">"انتخاب تصویر انجام نشد، لطفاً دوباره تلاش کنید"</string>
     <string name="activity_result_unexpected">نرم‌افزار مقداری نامعتبر را وارد کرد. احتمالاً باید از نرم‌افزار دیگری استفاده کنید</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">محتوای قسمت</string>
 </resources>

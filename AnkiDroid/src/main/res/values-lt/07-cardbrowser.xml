@@ -90,7 +90,7 @@
     </string-array>
     <string name="card_browser_select_all">Viską pažymėti</string>
     <string name="card_browser_select_none">Nieko nežymėti</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nauja)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(learning)</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
@@ -121,10 +121,10 @@
     <string name="card_info_revlog_time">Laikas</string>
     <string name="card_info_revlog_date">Data</string>
     <string name="card_info_revlog_rating">Reitingas</string>
-    <string name="card_info_revlog_type">Type</string>
+    <string name="card_info_revlog_type">Tipas</string>
     <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
     <string name="card_info_revlog_review">Review</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
     <string name="card_info_revlog_filtered">Filtered</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
+    <string name="card_info_ease_not_applicable">Nėra</string>
 </resources>

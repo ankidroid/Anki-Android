@@ -16,13 +16,16 @@
 
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
-import com.ichi2.anki.MaterialEditTextDialog.Companion.displayKeyboard
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.utils.contentNullable
+import com.ichi2.utils.displayKeyboard
 import java.util.function.Consumer
 
 open class IntegerDialog : AnalyticsDialogFragment() {
@@ -44,18 +47,20 @@ open class IntegerDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        val show = MaterialDialog.Builder(requireActivity())
-            .title(requireArguments().getString("title")!!)
-            .positiveText(resources.getString(R.string.dialog_ok))
-            .negativeText(R.string.dialog_cancel)
-            .inputType(InputType.TYPE_CLASS_NUMBER)
-            .inputRange(1, requireArguments().getInt("digits"))
-            .input(
-                requireArguments().getString("prompt"), ""
+        @SuppressLint("CheckResult")
+        val show = MaterialDialog(requireActivity()).show {
+            title(text = requireArguments().getString("title")!!)
+            positiveButton(R.string.dialog_ok)
+            negativeButton(R.string.dialog_cancel)
+            input(
+                hint = requireArguments().getString("prompt"),
+                inputType = InputType.TYPE_CLASS_NUMBER,
+                maxLength = requireArguments().getInt("digits")
             ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.accept(text.toString().toInt()) }
-            .contentNullable(requireArguments().getString("content"))
-            .show()
-        displayKeyboard(show.inputEditText!!, show)
+            contentNullable(requireArguments().getString("content"))
+            displayKeyboard(getInputField())
+        }
+
         return show
     }
 }

@@ -3,8 +3,13 @@ name: Sync Translations
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   sync_translations:
+    permissions:
+      contents: write  # for Git to git push
     name: 'Sync Translations with Crowdin'
     timeout-minutes: 20
     runs-on: macos-latest
@@ -20,7 +25,7 @@ jobs:
         shell: bash
 
       - name: Setup Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 

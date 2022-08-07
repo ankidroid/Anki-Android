@@ -89,14 +89,12 @@
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="gesture_no_action">చర్య తీసుకోలేదు</string>
     <string name="gesture_answer_1">జవాబు బటన్ 1</string>
     <string name="gesture_answer_2">జవాబు బటన్ 2</string>
     <string name="gesture_answer_3">జవాబు బటన్ 3</string>
     <string name="gesture_answer_4">జవాబు బటన్ 4</string>
     <string name="gesture_answer_green">సిఫార్సు చేసిన సమాధానం (ఆకుపచ్చ)</string>
     <string name="gesture_answer_better_recommended">సిఫార్సులు కంటే మెరుగైన సమాధానం ఇవ్వండి</string>
-    <string name="gesture_tag_note">Tag note</string>
     <string name="gesture_play">Play media</string>
     <string name="gesture_abort_learning">Abort learning</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

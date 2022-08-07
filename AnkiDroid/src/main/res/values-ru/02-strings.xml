@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Открыть панель</string>
     <string name="drawer_close">Закрыть панель</string>
@@ -79,7 +77,7 @@
     <string name="webview_crash_nonfatal">Ошибка WebView. Причина: %s</string>
     <string name="webview_crash_fatal">Критическая ошибка: WebView завершился. Причина: %s</string>
     <string name="webview_crash_loop_dialog_title">Сбой системного WebView</string>
-    <string name="webview_crash_loop_dialog_content">Системному WebView не удалось отрисовать карточку \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_loop_dialog_content">Системному WebView не удалось отрисовать карточку «%1$s».\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Вопрос</item>
@@ -101,6 +99,9 @@
         <item>Создано</item>
         <item>Запись изменена</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Увеличить лимит новых</string>
     <string name="custom_study_increase_review_limit">Увеличить лимит повторяемых</string>
@@ -124,7 +125,7 @@
     <string name="select">Выбрать</string>
     <string name="saving_changes">Изменения сохраняются&#8230;</string>
     <string name="reordering_cards">Карточки перемешиваются&#8230;</string>
-    <string name="field_remapping">%1$s (из \'%2$s\')</string>
+    <string name="field_remapping">%1$s (из «%2$s»)</string>
     <string name="confirm_map_cards_to_nothing">Несопоставленные карты будут удалены. Записи, оставшиеся без карт, будут утеряны. Продолжить?</string>
     <string name="timebox_reached_title">Достигнут лимит учебного блока</string>
     <plurals name="timebox_reached">
@@ -160,7 +161,7 @@
     <string name="check_media">Проверить медиафайлы</string>
     <string name="empty_cards">Пустые карточки</string>
     <string name="check_db_message">База данных проверяется&#8230;</string>
-    <string name="empty_card_warning">Эта карточка пуста. Используйте опцию \"Пустые карточки\" из меню списка колод.</string>
+    <string name="empty_card_warning">Эта карточка пуста. Используйте опцию «Пустые карточки» из меню списка колод.</string>
     <string name="unknown_type_field_warning">Неизвестный тип поля: %s</string>
     <string name="delete_deck">Колода удаляется&#8230;</string>
     <string name="show_hint">Показать %s</string>
@@ -169,17 +170,17 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="one">Добавить «%s» в коллекцию? Это может занять много времени</item>
         <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
         <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Вы хотите импортировать следующие файлы:\n%s?\nЭто может занять много времени</item>
     </plurals>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Ошибка</string>
     <string name="import_log_failed_unzip">Не удалось распаковать apkg: %s</string>
     <string name="import_log_failed_copy_to">Не удалось скопировать apkg в %s</string>
     <string name="import_log_failed_validate">Не удалось проверить apkg</string>
-    <string name="import_log_insufficient_space_error">Недостаточно места для импорта пакета.\nНужно %1$s \nДоступно %2$s.\n\nЧто-то не работает? Попытайтесь освободить место на телефоне. Или попробуйте синхронизацию, для которой нужно меньше места, чем для импорта. Вы можете импортировать пакет на устройстве с большим объемом памяти (например, Anki Desktop) и синхронизировать его с этим устройством.</string>
+    <string name="import_log_insufficient_space_error">Недостаточно места для импорта пакета.\nНужно %1$s \nДоступно %2$s.\n\nЧто-то не получается? Попытайтесь освободить место на телефоне. Или попробуйте синхронизацию, для которой нужно меньше места, чем для импорта. Вы можете импортировать пакет на устройстве с большим объемом памяти (например, Anki на компьютере) и синхронизировать его с этим устройством.</string>
     <string name="import_log_file_cache_cleared">Ошибка при импорте файла: скорее всего, был очищен кеш. Попробуйте снова</string>
     <string name="import_succeeded_but_check_database">Импорт данных удался, но очистка — нет. Выполните проверку базы данных. Главная причина: %s</string>
     <string name="import_error_unhandled_request">Не удаётся обработать запрос на импорт</string>
@@ -191,8 +192,8 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() не удалось. Возможно недостаточно места</string>
     <string name="import_error_unhandled_scheme">Необработанный импорт из «%s»</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_colpkg_apkg">Были выбраны одновременно файлы apkg и colpkg</string>
+    <string name="import_stats_error">При импорте этих файлов произошла ошибка:\n%s</string>
     <string name="import_replacing">Коллекция заменяется&#8230;</string>
     <string name="import_interrupted">Импорт прерван</string>
     <string name="export_include_schedule">Вместе с расписанием</string>
@@ -226,10 +227,10 @@
     <string name="steps_error">Шаги должны быть больше 0</string>
     <string name="steps_min_error">Требуется хотя бы один шаг</string>
     <string name="sched_end">(конец)</string>
-    <string name="sched_unbury_action">Чтобы просмотреть их сейчас, выберите \"Вернуть\" в меню.</string>
+    <string name="sched_unbury_action">Чтобы просмотреть их сейчас, выберите «Вернуть» в меню.</string>
     <string name="sched_has_buried">Некоторые связанные или отложенные карточки были перенесены на завтра.</string>
     <string name="tag_editor_add_feedback">Выберите “%2$s” чтобы подтвердить добавление “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">Выбрана существующая метка \"%1$s\"</string>
+    <string name="tag_editor_add_feedback_existing">Выбрана существующая метка «%1$s»</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
         <item quantity="one">%s секунда</item>
@@ -356,7 +357,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
     <string name="card_viewer_media_relative_protocol">Ошибка в содержимом карточки: требуется обновление медиафайлов</string>
-    <string name="cannot_load_http_resource">Загрузка http ресурсов больше не поддерживается</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
     <string name="search_decks">Найти колоду</string>
@@ -386,7 +386,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
     <string name="create_shortcut_error">Ошибка при добавлении ярлыка: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Предложение с заглавной буквы</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели инструментов</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -408,17 +408,17 @@
     <string name="deck_download_progress_message">Вы можете использовать другие приложения во время загрузки</string>
     <string name="check_network">Проверьте подключение к Интернету</string>
     <string name="search_using_deck_name">Искать по названию колоды</string>
-    <string name="home">Домой</string>
+    <string name="home">Главная</string>
     <!-- Importing -->
     <string name="import_mapped_to_field">Сопоставлено с %s</string>
     <string name="import_mapped_to_tags">Сопоставлено с метками</string>
     <string name="import_mapped_to_nothing">Проигнорировано</string>
     <!-- Reviewer actions -->
-    <string name="buried_card">Скрытая карта</string>
-    <string name="buried_note">Скрытая запись</string>
-    <string name="deleted_note">Удалённая запись</string>
-    <string name="suspended_card">Исключённая карточка</string>
-    <string name="suspended_note">Исключённая запись</string>
+    <string name="buried_card">Карточка отложена</string>
+    <string name="buried_note">Запись отложена</string>
+    <string name="deleted_note">Запись удалена</string>
+    <string name="suspended_card">Карточка исключена</string>
+    <string name="suspended_note">Запись исключена</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Сделать поле %s липким</string>
     <!-- Scoped Storage Migration -->
@@ -442,5 +442,7 @@
     <string name="malicious_archive_exceeds_limit">Вредоносный архив. Размер превышает %1$s или содержит более %2$d файлов</string>
     <string name="file_extract_exceeds_storage_space">Размер файла превышает объём памяти</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Развернуть метку «%s»</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Не удалось получить доступ к коллекции. Попробуйте еще раз!</string>
 </resources>

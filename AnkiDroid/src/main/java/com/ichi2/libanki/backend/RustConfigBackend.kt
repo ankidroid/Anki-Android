@@ -16,25 +16,22 @@
 
 package com.ichi2.libanki.backend
 
-import BackendProto.Backend
 import com.ichi2.libanki.backend.BackendUtils.from_json_bytes
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.str
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
-import net.ankiweb.rsdroid.BackendV1
+import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 
-class RustConfigBackend(private val backend: BackendV1) {
+class RustConfigBackend(private val backend: Backend) {
 
     fun getJson(): Any {
-        return from_json_bytes(backend.allConfig)
+        return from_json_bytes(backend.getAllConfig())
     }
 
-    fun setJson(value: JSONObject) {
-        val builder = Backend.Json.newBuilder()
-        builder.json = to_json_bytes(value)
-        backend.allConfig = builder.build()
+    fun setJson(@Suppress("UNUSED_PARAMETER") value: JSONObject) {
+        TODO("not implemented, use backend syncing")
     }
 
     fun get_string(key: str): String {
@@ -61,8 +58,8 @@ class RustConfigBackend(private val backend: BackendV1) {
         }
     }
 
-    fun set(key: str, value: Any) {
-        backend.setConfigJson(key, to_json_bytes(value))
+    fun set(key: str, value: Any?) {
+        backend.setConfigJson(key, to_json_bytes(value), false)
     }
 
     fun remove(key: str) {

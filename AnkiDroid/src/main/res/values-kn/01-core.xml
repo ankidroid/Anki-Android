@@ -103,7 +103,7 @@
     <string name="rename_deck">ಸಂಗ್ರಹಣೆಗೆ ಮರುಹೆಸರಿಸಿ</string>
     <string name="create_shortcut">ಕಿರುದಾರಿ ರಚಿಸಿ</string>
     <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">ಸೇರಿಸಿ </string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ಸೇರಿಸಿ </string>
     <string name="menu_add_note">ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ಖಾತೆಯನ್ನು ಸಿಂಕ್ ಮಾಡಿ</string>
     <string name="menu_dismiss_note">ಮರೆಮಾಡು / ಅಳಿಸಿ</string>
@@ -176,7 +176,7 @@
     <string name="studyoptions_no_cards_due">ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳು ಇನ್ನೂ ಬಾಕಿ ಉಳಿದಿಲ್ಲ</string>
     <string name="sd_card_not_mounted">ಸಾಧನ ಸಂಗ್ರಹಣೆಯನ್ನು ಆರೋಹಿಸಲಾಗಿಲ್ಲ</string>
     <string name="empty_cloze_warning">ಈ ಟಿಪ್ಪಣಿಯನ್ನು ಸಂಪಾದಿಸಿ ಮತ್ತು ಕೆಲವು ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಗಳನ್ನು ಸೇರಿಸಿ. (%1$s)</string>
-    <string name="button_sync">ಸಿಂಕ್</string>
+    <string name="button_sync" comment="Text of the sync button">ಸಿಂಕ್</string>
     <string name="cancel_sync_confirm">ಸಿಂಕ್ ಅನ್ನು ರದ್ದುಗೊಳಿಸಲು ನೀವು ಬಯಸುವಿರಾ?</string>
     <string name="continue_sync">ಸಿಂಕ್ ಮುಂದುವರಿಸಿ</string>
     <string name="sync_cancelled">ಸಿಂಕ್ ರದ್ದುಗೊಂಡಿದೆ</string>

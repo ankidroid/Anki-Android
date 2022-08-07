@@ -46,7 +46,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
 
         assertThat(sounds.q(), hasSize(1))
 
-        sounds.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
+        sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
         assertThat(sounds.q(), hasSize(1))
         assertThat(sounds.a(), nullValue())
@@ -59,7 +59,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
 
         assertThat(sounds.q(), nullValue())
 
-        sounds.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
+        sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
         assertThat(sounds.q(), nullValue())
         assertThat(sounds.a(), hasSize(1))
@@ -72,7 +72,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
 
         assertThat(sounds.q(), hasSize(1))
 
-        sounds.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
+        sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
         assertThat(sounds.q(), hasSize(1))
         assertThat(sounds.a(), hasSize(1))
@@ -85,7 +85,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
 
         assertThat(sounds.q(), hasSize(1))
 
-        sounds.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
+        sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
         assertThat(sounds.q(), hasSize(1))
         assertThat(sounds.a(), hasSize(1))
@@ -98,7 +98,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
 
         assertThat(sounds.q(), hasSize(2))
 
-        sounds.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
+        sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
         assertThat(sounds.q(), hasSize(2))
         assertThat(sounds.a(), hasSize(1))
@@ -111,7 +111,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
 
         assertThat(sounds.q(), hasSize(1))
 
-        sounds.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
+        sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
         assertThat(sounds.q(), hasSize(1))
         assertThat(sounds.a(), hasSize(1))
@@ -124,7 +124,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
 
         assertThat(sounds.q(), hasSize(1))
 
-        sounds.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
+        sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
         assertThat(sounds.q(), hasSize(1))
         assertThat(sounds.a(), hasSize(1))
@@ -137,7 +137,7 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
 
         assertThat(sounds.q(), nullValue())
 
-        sounds.executeCommand(ViewerCommand.COMMAND_SHOW_ANSWER)
+        sounds.executeCommand(ViewerCommand.SHOW_ANSWER)
 
         assertThat(sounds.q(), nullValue())
         assertThat(sounds.a(), hasSize(1))

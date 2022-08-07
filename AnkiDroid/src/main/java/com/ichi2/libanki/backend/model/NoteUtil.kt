@@ -16,12 +16,11 @@
 
 package com.ichi2.libanki.backend.model
 
-import BackendProto.Backend
 import com.ichi2.libanki.Note
 
-fun Note.to_backend_note(): Backend.Note {
+fun Note.to_backend_note(): anki.notes.Note {
 
-    return Backend.Note.newBuilder()
+    return anki.notes.Note.newBuilder()
         .setId(this.id)
         .setGuid(this.guId)
         .setNotetypeId(this.mid)
@@ -32,14 +31,14 @@ fun Note.to_backend_note(): Backend.Note {
         .build()
 }
 
-private fun Backend.Note.Builder.setFieldList(fields: Array<String>): Backend.Note.Builder {
+private fun anki.notes.Note.Builder.setFieldList(fields: Array<String>): anki.notes.Note.Builder {
     for (t in fields.withIndex()) {
         this.setFields(t.index, t.value)
     }
     return this
 }
 
-private fun Backend.Note.Builder.setTagsList(tags: ArrayList<String>): Backend.Note.Builder {
+private fun anki.notes.Note.Builder.setTagsList(tags: ArrayList<String>): anki.notes.Note.Builder {
     for (t in tags.withIndex()) {
         this.setTags(t.index, t.value)
     }

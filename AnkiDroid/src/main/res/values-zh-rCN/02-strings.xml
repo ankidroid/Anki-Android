@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">打开侧栏</string>
     <string name="drawer_close">关闭侧栏</string>
@@ -101,6 +99,9 @@
         <item>已创建</item>
         <item>已修改笔记</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">应用</string>
+    <string name="filter_by_flags">标志</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>
     <string name="custom_study_increase_review_limit">修改今天的复习卡片数量限制</string>
@@ -160,10 +161,10 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">添加</string>
     <string name="import_message_replace_confirm">这将删除你当前的所有记忆库，并用文件%s中的内容加以替换。你确定吗？</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">您想要导入以下文件吗？\n%s\n 这可能需要很长的时间</item>
     </plurals>
     <string name="import_log_no_apkg">这不是一个有效的 Anki 包文件</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">错误</string>
     <string name="import_log_failed_unzip">无法解压 apkg：%s</string>
     <string name="import_log_failed_copy_to">无法将 apkg 复制到 %s</string>
     <string name="import_log_failed_validate">apkg 验证失败</string>
@@ -178,9 +179,9 @@
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() 失败（可能存储空间不足）</string>
     <string name="import_error_unhandled_scheme">未处理的导入来自：“%s”</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_multiple_colpkg">选择了多个 colpkg 文件。</string>
+    <string name="import_error_colpkg_apkg">同时选择了 apkg &amp; colpkg 文件。</string>
+    <string name="import_stats_error">导入以下文件时发生了一些错误：\n%s</string>
     <string name="import_replacing">正在导入牌组集合&#8230;</string>
     <string name="import_interrupted">导入中断</string>
     <string name="export_include_schedule">包括学习进度</string>
@@ -314,7 +315,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">加载“%s”失败</string>
     <string name="card_viewer_media_relative_protocol">卡片内容错误：需要更新媒体</string>
-    <string name="cannot_load_http_resource">不再支持加载 http 资源</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">加载牌组“%s”失败</string>
     <string name="search_decks">搜索牌组</string>
@@ -401,4 +401,6 @@
     <string name="file_extract_exceeds_storage_space">文件提取超出存储空间</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">展开标签 \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">访问牌组集合失败。请重试！</string>
 </resources>

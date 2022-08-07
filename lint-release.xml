@@ -23,6 +23,7 @@
     <issue id="NewApi" severity="fatal" />
     <issue id="HardcodedText" severity="fatal" />
     <issue id="InlinedApi" severity="fatal" />
+    <issue id="MissingSuperCall" severity="fatal" />
     <issue id="StringFormatCount" severity="fatal" />
     <issue id="StringFormatMatches" severity="fatal" />
     <issue id="StringFormatInvalid" severity="fatal" />
@@ -48,16 +49,19 @@
     <issue id="UselessParent" severity="fatal" />
     <issue id="ObsoleteLayoutParam" severity="fatal" />
     <issue id="ObsoleteSdkInt" severity="fatal" />
+    <issue id="MergeRootFrame" severity="fatal" />
 
     <!--           RTL Rules               -->
     <issue id="RtlCompat" severity="fatal" />
     <issue id="RtlEnabled" severity="fatal" />
     <issue id="RtlHardcoded" severity="fatal" />
 
+    <issue id="CheckResult" severity="fatal" />
     <issue id="RedundantNamespace" severity="fatal" />
     <issue id="TextFields" severity="fatal" />
     <issue id="LogConditional" severity="fatal" />
     <issue id="ImplicitSamInstance" severity="fatal" />
+    <issue id="DrawAllocation" severity="fatal" />
 
     <!-- this is new with AGP7.1+, does not appear to create value -->
     <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
@@ -121,7 +125,6 @@
     <issue id="ButtonOrder" severity="ignore" />
     <issue id="ButtonStyle" severity="ignore" />
     <issue id="ByteOrderMark" severity="ignore" />
-    <issue id="MissingSuperCall" severity="ignore" />
     <issue id="AdapterViewChildren" severity="ignore" />
     <issue id="ScrollViewCount" severity="ignore" />
     <issue id="PermissionImpliesUnsupportedChromeOsHardware" severity="ignore" />
@@ -211,7 +214,6 @@
     <issue id="TrustAllX509TrustManager" severity="ignore" />
     <issue id="InvalidImeActionId" severity="ignore" />
     <issue id="InvalidPackage" severity="ignore" />
-    <issue id="DrawAllocation" severity="ignore" />
     <issue id="UseSparseArrays" severity="ignore" />
     <issue id="UseValueOf" severity="ignore" />
     <issue id="JavascriptInterface" severity="ignore" />
@@ -250,7 +252,6 @@
     <issue id="ManifestResource" severity="ignore" />
     <issue id="ManifestTypo" severity="ignore" />
     <issue id="MergeMarker" severity="ignore" />
-    <issue id="MergeRootFrame" severity="ignore" />
     <issue id="IncompatibleMediaBrowserServiceCompatVersion" severity="ignore" />
     <issue id="InnerclassSeparator" severity="ignore" />
     <issue id="Instantiatable" severity="ignore" />
@@ -322,7 +323,6 @@
     <issue id="AuthLeak" severity="ignore" />
     <issue id="PluralsCandidate" severity="ignore" />
     <issue id="UseCheckPermission" severity="ignore" />
-    <issue id="CheckResult" severity="ignore" />
     <issue id="ResourceAsColor" severity="ignore" />
     <issue id="MissingPermission" severity="ignore" />
     <issue id="Range" severity="ignore" />
@@ -331,7 +331,6 @@
     <issue id="WrongThread" severity="ignore" />
     <issue id="VisibleForTests" severity="ignore" />
     <issue id="ProtectedPermissions" severity="ignore" />
-    <issue id="TextFields" severity="ignore" />
     <issue id="TextViewEdits" severity="ignore" />
     <issue id="SelectableText" severity="ignore" />
     <issue id="MenuTitle" severity="ignore" />

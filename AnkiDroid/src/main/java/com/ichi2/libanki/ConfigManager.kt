@@ -43,6 +43,7 @@ abstract class ConfigManager {
     abstract fun put(key: String, value: String)
     abstract fun put(key: String, value: JSONArray)
     abstract fun put(key: String, value: JSONObject)
+    abstract fun put(key: String, value: Any?)
 
     abstract fun remove(key: String)
 

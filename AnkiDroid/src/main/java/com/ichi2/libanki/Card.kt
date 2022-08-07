@@ -29,6 +29,7 @@ import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.template.TemplateError
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.LanguageUtil
@@ -79,7 +80,7 @@ open class Card : Cloneable {
     @set:VisibleForTesting
     var id: Long
     var nid: Long = 0
-    var did: Long = 0
+    var did: DeckId = 0
     var ord = 0
     var mod: Long = 0
     var usn = 0
@@ -99,7 +100,7 @@ open class Card : Cloneable {
     var lapses = 0
     var left = 0
     var oDue: Long = 0
-    var oDid: Long = 0
+    var oDid: DeckId = 0
     private var flags = 0
     private var data: String? = null
 
@@ -121,7 +122,7 @@ open class Card : Cloneable {
         render_output = null
         note = null
         // to flush, set nid, ord, and due
-        this.id = this.col.time.timestampID(this.col.db, "cards")
+        this.id = TimeManager.time.timestampID(this.col.db, "cards")
         did = 1
         this.type = Consts.CARD_TYPE_NEW
         queue = Consts.QUEUE_TYPE_NEW
@@ -176,7 +177,7 @@ open class Card : Cloneable {
     @JvmOverloads
     fun flush(changeModUsn: Boolean = true) {
         if (changeModUsn) {
-            mod = col.time.intTime()
+            mod = TimeManager.time.intTime()
             usn = col.usn()
         }
         assert(due < "4294967296".toLong())
@@ -206,7 +207,7 @@ open class Card : Cloneable {
     }
 
     fun flushSched() {
-        mod = col.time.intTime()
+        mod = TimeManager.time.intTime()
         usn = col.usn()
         assert(due < "4294967296".toLong())
         val values = ContentValues()
@@ -280,7 +281,7 @@ open class Card : Cloneable {
     }
 
     fun startTimer() {
-        timerStarted = col.time.intTimeMS()
+        timerStarted = TimeManager.time.intTimeMS()
     }
 
     /**
@@ -296,7 +297,7 @@ open class Card : Cloneable {
      */
     fun timeTaken(): Int {
         // Indeed an int. Difference between two big numbers is still small.
-        val total = (col.time.intTimeMS() - timerStarted).toInt()
+        val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
         return Math.min(total, timeLimit())
     }
 
@@ -323,11 +324,13 @@ open class Card : Cloneable {
     val pureAnswer: String
         get() {
             val s = render_output(false).answer_text
-            val target = "<hr id=answer>"
-            val pos = s.indexOf(target)
-            return if (pos == -1) {
-                s
-            } else s.substring(pos + target.length).trim { it <= ' ' }
+            for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+                val pos = s.indexOf(target)
+                if (pos == -1) continue
+                return s.substring(pos + target.length).trim { it <= ' ' }
+            }
+            // neither found
+            return s
         }
 
     /**
@@ -337,7 +340,7 @@ open class Card : Cloneable {
      * method when the session resumes to start counting review time again.
      */
     fun stopTimer() {
-        elapsedTime = col.time.intTimeMS() - timerStarted
+        elapsedTime = TimeManager.time.intTimeMS() - timerStarted
     }
 
     /**
@@ -349,7 +352,7 @@ open class Card : Cloneable {
      * or the result of timeTaken() will be wrong.
      */
     fun resumeTimer() {
-        timerStarted = col.time.intTimeMS() - elapsedTime
+        timerStarted = TimeManager.time.intTimeMS() - elapsedTime
     }
 
     @VisibleForTesting
@@ -442,7 +445,7 @@ open class Card : Cloneable {
         } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {
             return java.lang.Long.valueOf(due).toString()
         } else if (queue == Consts.QUEUE_TYPE_REV || queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || type == Consts.CARD_TYPE_REV && queue < 0) {
-            val time = col.time.intTime()
+            val time = TimeManager.time.intTime()
             val nbDaySinceCreation = due - col.sched.today
             time + nbDaySinceCreation * Stats.SECONDS_PER_DAY
         } else {

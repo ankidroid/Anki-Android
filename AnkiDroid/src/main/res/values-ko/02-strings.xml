@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">메뉴 열기</string>
     <string name="drawer_close">메뉴 닫기</string>
@@ -102,6 +100,9 @@
         <item>작성한 날짜</item>
         <item>노트 편집일</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>
     <string name="custom_study_increase_review_limit">오늘의 복습 카드 학습량 늘리기</string>
@@ -315,7 +316,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">카드 내용 오류: \'%s\' 읽기 실패</string>
     <string name="card_viewer_media_relative_protocol">카드 내용 오류: 미디어 업데이트 요청</string>
-    <string name="cannot_load_http_resource">http 자료 불러오기는 더 이상 지원되지 않습니다.</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\' 뭉치를 가져오는데 실패했습니다.</string>
     <string name="search_decks">덱 검색</string>
@@ -402,4 +402,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

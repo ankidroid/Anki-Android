@@ -27,6 +27,7 @@ import android.text.TextUtils
 import android.util.Pair
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import anki.search.SearchNode
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
@@ -39,28 +40,31 @@ import com.ichi2.async.CollectionTask.PartialSearch
 import com.ichi2.async.ProgressSender
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.backend.DroidBackend
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.exception.NoSuchDeckException
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.libanki.hooks.ChessFilter
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.libanki.sched.SchedV3
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
+import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.io.*
-import java.lang.NullPointerException
 import java.util.*
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.function.Consumer
 import java.util.regex.Pattern
+import kotlin.math.max
+import kotlin.random.Random
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -72,36 +76,60 @@ import java.util.regex.Pattern
 @KotlinCleanup("TextUtils -> Kotlin isNotEmpty()")
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
 @KotlinCleanup("ids.size != 0")
-open class Collection @VisibleForTesting constructor(
+open class Collection(
     /**
      * @return The context that created this Collection.
      */
     val context: Context,
-    db: DB,
     val path: String,
     var server: Boolean,
     private var debugLog: Boolean, // Not in libAnki.
-    val time: Time,
-    protected val droidBackend: DroidBackend
+    /**
+     * Outside of libanki, you should not access the backend directly for collection operations.
+     * Operations that work on a closed collection (eg importing), or do not require a collection
+     * at all (eg translations) are the exception.
+     */
+    val backend: Backend
 ) : CollectionGetter {
+    /** Access backend translations */
+    val tr = backend.tr
 
     @get:JvmName("isDbClosed")
-    var dbClosed = false
-        private set
-
-    /** Allows a mock db to be inserted for testing  */
-    @set:VisibleForTesting
-    var db: DB = db
+    val dbClosed: Boolean
         get() {
-            if (dbClosed) {
-                throw NullPointerException("DB Closed")
-            }
-            return field
+            return dbInternal == null
         }
-        set(value) {
-            dbClosed = false
-            field = value
+
+    open val newBackend: CollectionV16
+        get() = throw Exception("invalid call to newBackend on old backend")
+
+    open val newMedia: BackendMedia
+        get() = throw Exception("invalid call to newMedia on old backend")
+
+    open val newTags: TagsV16
+        get() = throw Exception("invalid call to newTags on old backend")
+
+    open val newModels: ModelsV16
+        get() = throw Exception("invalid call to newModels on old backend")
+
+    open val newDecks: DecksV16
+        get() = throw Exception("invalid call to newDecks on old backend")
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun debugEnsureNoOpenPointers() {
+        val result = backend.getActiveSequenceNumbers()
+        if (result.isNotEmpty()) {
+            val numbers = result.toString()
+            throw IllegalStateException("Contained unclosed sequence numbers: $numbers")
         }
+    }
+
+    // a lot of legacy code does not check for nullability
+    val db: DB
+        get() = dbInternal!!
+
+    var dbInternal: DB? = null
+
     /**
      * Getters/Setters ********************************************************** *************************************
      */
@@ -120,7 +148,7 @@ open class Collection @VisibleForTesting constructor(
         "move accessor methods here, maybe reconsider return type." +
             "See variable: conf"
     )
-    private var _config: ConfigManager? = null
+    protected var _config: ConfigManager? = null
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
     lateinit var sched: AbstractSched
@@ -130,9 +158,10 @@ open class Collection @VisibleForTesting constructor(
     private var mStartReps: Int
 
     // BEGIN: SQL table columns
-    var crt: Long = 0
-    var mod: Long = 0
-    var scm: Long = 0
+    open var crt: Long = 0
+    open var mod: Long = 0
+    open var scm: Long = 0
+    @RustCleanup("remove")
     var dirty: Boolean = false
     private var mUsn = 0
     private var mLs: Long = 0
@@ -149,15 +178,15 @@ open class Collection @VisibleForTesting constructor(
     private var mLogHnd: PrintWriter? = null
 
     init {
-        _openLog()
+        media = initMedia()
+        val created = reopen()
         log(path, VersionUtils.pkgVersionName)
         // mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
         clearUndo()
-        media = Media(this, server)
         tags = initTags()
         load()
         if (crt == 0L) {
-            crt = UIUtils.getDayStart(time) / 1000
+            crt = UIUtils.getDayStart(TimeManager.time) / 1000
         }
         mStartReps = 0
         mStartTime = 0
@@ -165,6 +194,15 @@ open class Collection @VisibleForTesting constructor(
         if (!get_config("newBury", false)!!) {
             set_config("newBury", true)
         }
+        if (created) {
+            Storage.addNoteTypes(col, backend)
+            col.onCreate()
+            col.save()
+        }
+    }
+
+    protected open fun initMedia(): Media {
+        return Media(this, server)
     }
 
     @KotlinCleanup("remove :DeckManager, remove ? on return value")
@@ -213,18 +251,18 @@ open class Collection @VisibleForTesting constructor(
     }
 
     // Note: Additional members in the class duplicate this
-    private fun _loadScheduler() {
+    fun _loadScheduler() {
         val ver = schedVer()
         if (ver == 1) {
             sched = Sched(this)
         } else if (ver == 2) {
-            sched = SchedV2(this)
-            if (!server && isUsingRustBackend) {
-                try {
-                    set_config("localOffset", sched._current_timezone_offset())
-                } catch (e: BackendNotSupportedException) {
-                    throw e.alreadyUsingRustBackend()
-                }
+            if (!BackendFactory.defaultLegacySchema && newBackend.v3Enabled) {
+                sched = SchedV3(this.newBackend)
+            } else {
+                sched = SchedV2(this)
+            }
+            if (!server) {
+                set_config("localOffset", sched._current_timezone_offset())
             }
         }
     }
@@ -254,7 +292,7 @@ open class Collection @VisibleForTesting constructor(
      * DB-related *************************************************************** ********************************
      */
     @KotlinCleanup("Cleanup: make cursor a val + move cursor and cursor.close() to the try block")
-    fun load() {
+    open fun load() {
         var cursor: Cursor? = null
         var deckConf: String?
         try {
@@ -338,9 +376,9 @@ open class Collection @VisibleForTesting constructor(
      */
     @KotlinCleanup("scope function")
     @JvmOverloads
-    fun flush(mod: Long = 0) {
+    open fun flush(mod: Long = 0) {
         Timber.i("flush - Saving information to DB...")
-        this.mod = if (mod == 0L) time.intTimeMS() else mod
+        this.mod = if (mod == 0L) TimeManager.time.intTimeMS() else mod
         val values = ContentValues()
         values.put("crt", this.crt)
         values.put("mod", this.mod)
@@ -409,9 +447,9 @@ open class Collection @VisibleForTesting constructor(
     }
 
     @Synchronized
-    @KotlinCleanup("JvmOverloads")
     @KotlinCleanup("remove/rename val db")
-    fun close(save: Boolean, downgrade: Boolean) {
+    @JvmOverloads
+    fun close(save: Boolean, downgrade: Boolean, forFullSync: Boolean = false) {
         if (!dbClosed) {
             try {
                 val db = db.database
@@ -424,23 +462,28 @@ open class Collection @VisibleForTesting constructor(
                 Timber.w(e)
                 CrashReportService.sendExceptionReport(e, "closeDB")
             }
-            if (!server) {
-                db.database.disableWriteAheadLogging()
+            if (!forFullSync) {
+                backend.closeCollection(downgrade)
             }
-            droidBackend.closeCollection(db, downgrade)
-            dbClosed = true
+            dbInternal = null
             media.close()
             _closeLog()
             Timber.i("Collection closed")
         }
     }
 
-    fun reopen() {
-        Timber.i("Reopening Database")
+    /** True if DB was created */
+    @JvmOverloads
+    fun reopen(afterFullSync: Boolean = false): Boolean {
+        Timber.i("(Re)opening Database: %s", path)
         if (dbClosed) {
-            db = droidBackend.openCollectionDatabase(path)
+            val (db_, created) = Storage.openDB(path, backend, afterFullSync)
+            dbInternal = db_
             media.connect()
             _openLog()
+            return created
+        } else {
+            return false
         }
     }
 
@@ -450,8 +493,8 @@ open class Collection @VisibleForTesting constructor(
      * is used so that the type does not states that an exception is
      * thrown when in fact it is never thrown.
      */
-    fun modSchemaNoCheck() {
-        scm = time.intTimeMS()
+    open fun modSchemaNoCheck() {
+        scm = TimeManager.time.intTimeMS()
         setMod()
     }
 
@@ -475,12 +518,12 @@ open class Collection @VisibleForTesting constructor(
     }
 
     /** True if schema changed since last sync.  */
-    fun schemaChanged(): Boolean {
+    open fun schemaChanged(): Boolean {
         return scm > mLs
     }
 
     @KotlinCleanup("maybe change to getter")
-    fun usn(): Int {
+    open fun usn(): Int {
         return if (server) {
             mUsn
         } else {
@@ -815,9 +858,10 @@ open class Collection @VisibleForTesting constructor(
             }
         // build cards for each note
         val data = ArrayList<Array<Any>>()
+
         @Suppress("UNUSED_VARIABLE")
-        var ts = time.maxID(db)
-        val now = time.intTime()
+        var ts = TimeManager.time.maxID(db)
+        val now = TimeManager.time.intTime()
         val rem =
             ArrayList<Long>(db.queryScalar("SELECT count() FROM notes where id in $snids"))
         val usn = usn()
@@ -829,7 +873,8 @@ open class Collection @VisibleForTesting constructor(
                 }
                 val nid = cur.getLong(0)
                 val flds = cur.getString(1)
-                val avail = Models.availOrds(model, Utils.splitFields(flds), nodes, Models.AllowEmpty.TRUE)
+                val avail =
+                    Models.availOrds(model, Utils.splitFields(flds), nodes, Models.AllowEmpty.TRUE)
                 task?.doProgress(avail.size)
                 var did = dids[nid]
                 // use sibling due if there is one, else use a new id
@@ -849,7 +894,7 @@ open class Collection @VisibleForTesting constructor(
                     val doHave = have.containsKey(nid) && have[nid]!!.containsKey(tord)
                     if (!doHave) {
                         // check deck is not a cram deck
-                        var ndid: Long
+                        var ndid: DeckId
                         try {
                             ndid = t.optLong("did", 0)
                             if (ndid != 0L) {
@@ -897,7 +942,7 @@ open class Collection @VisibleForTesting constructor(
     }
 
     @KotlinCleanup("remove - unused")
-    private fun _newCard(note: Note, template: JSONObject, due: Int, did: Long): Card {
+    private fun _newCard(note: Note, template: JSONObject, due: Int, did: DeckId): Card {
         val flush = true
         return _newCard(note, template, due, did, flush)
     }
@@ -912,7 +957,7 @@ open class Collection @VisibleForTesting constructor(
         note: Note,
         template: JSONObject,
         due: Int,
-        parameterDid: Long,
+        parameterDid: DeckId,
         flush: Boolean
     ): Card {
         val card = Card(this)
@@ -930,7 +975,7 @@ open class Collection @VisibleForTesting constructor(
         note: Note,
         template: JSONObject,
         due: Int,
-        parameterDid: Long,
+        parameterDid: DeckId,
         flush: Boolean
     ): Card {
         val nid = note.id
@@ -965,9 +1010,7 @@ open class Collection @VisibleForTesting constructor(
         return card
     }
 
-    @KotlinCleanup("scope function for random")
-    @KotlinCleanup("use Kotlin's random library instead of Java's")
-    fun _dueForDid(did: Long, due: Int): Int {
+    fun _dueForDid(did: DeckId, due: Int): Int {
         val conf = decks.confForDid(did)
         // in order due?
         return if (conf.getJSONObject("new")
@@ -977,9 +1020,8 @@ open class Collection @VisibleForTesting constructor(
         } else {
             // random mode; seed with note ts so all cards of this note get
             // the same random number
-            val r = Random()
-            r.setSeed(due.toLong())
-            r.nextInt(Math.max(due, 1000) - 1) + 1
+            val r = Random(due.toLong())
+            r.nextInt(max(due, 1000) - 1) + 1
         }
     }
 
@@ -1119,7 +1161,7 @@ open class Collection @VisibleForTesting constructor(
     fun _renderQA(
         cid: Long,
         model: Model,
-        did: Long,
+        did: DeckId,
         ord: Int,
         tags: String,
         flist: Array<String?>,
@@ -1132,7 +1174,7 @@ open class Collection @VisibleForTesting constructor(
     fun _renderQA(
         cid: Long,
         model: Model,
-        did: Long,
+        did: DeckId,
         ord: Int,
         tags: String,
         flist: Array<String?>,
@@ -1158,8 +1200,7 @@ open class Collection @VisibleForTesting constructor(
         val baseName = Decks.basename(fields["Deck"])
         fields["Subdeck"] = baseName
         fields["CardFlag"] = _flagNameFromCardFlags(flags)
-        val template: JSONObject
-        template = if (model.isStd) {
+        val template: JSONObject = if (model.isStd) {
             model.getJSONArray("tmpls").getJSONObject(ord)
         } else {
             model.getJSONArray("tmpls").getJSONObject(0)
@@ -1251,9 +1292,37 @@ open class Collection @VisibleForTesting constructor(
     /*
       Finding cards ************************************************************ ***********************************
      */
+
+    /**
+     * Construct a search string from the provided search nodes. For example:
+     * */
+    /*
+            import anki.search.searchNode
+            import anki.search.SearchNode
+            import anki.search.SearchNodeKt.group
+
+            val node = searchNode {
+                group = SearchNodeKt.group {
+                    joiner = SearchNode.Group.Joiner.AND
+                    nodes += searchNode { deck = "a **test** deck" }
+                    nodes += searchNode {
+                        negated = searchNode {
+                            tag = "foo"
+                        }
+                    }
+                    nodes += searchNode { flag = SearchNode.Flag.FLAG_GREEN }
+                }
+            }
+            // yields "deck:a \*\*test\*\* deck" -tag:foo flag:3
+            val text = col.buildSearchString(node)
+        }
+    */
+    fun buildSearchString(node: SearchNode): String {
+        return backend.buildSearchString(node)
+    }
     /** Return a list of card ids  */
     @KotlinCleanup("set reasonable defaults")
-    fun findCards(search: String?): List<Long> {
+    fun findCards(search: String): List<Long> {
         return findCards(search, SortOrder.NoOrdering())
     }
 
@@ -1261,7 +1330,7 @@ open class Collection @VisibleForTesting constructor(
      * @return A list of card ids
      * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
      */
-    fun findCards(search: String?, order: SortOrder): List<Long> {
+    fun findCards(search: String, order: SortOrder): List<Long> {
         return Finder(this).findCards(search, order)
     }
 
@@ -1269,9 +1338,14 @@ open class Collection @VisibleForTesting constructor(
      * @return A list of card ids
      * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
      */
-    @KotlinCleanup("non-null")
-    open fun findCards(search: String?, order: SortOrder, task: PartialSearch?): List<Long?>? {
+    open fun findCards(search: String, order: SortOrder, task: PartialSearch?): List<Long?>? {
         return Finder(this).findCards(search, order, task)
+    }
+
+    /** Return a list of card ids  */
+    @KotlinCleanup("Remove in V16.") // Not in libAnki
+    fun findOneCardByNote(query: String?): List<Long> {
+        return Finder(this).findOneCardByNote(query)
     }
 
     /** Return a list of note ids  */
@@ -1330,7 +1404,7 @@ open class Collection @VisibleForTesting constructor(
         }
 
     fun startTimebox() {
-        mStartTime = time.intTime()
+        mStartTime = TimeManager.time.intTime()
         mStartReps = sched.reps
     }
 
@@ -1340,7 +1414,7 @@ open class Collection @VisibleForTesting constructor(
             // timeboxing disabled
             return null
         }
-        val elapsed = time.intTime() - mStartTime
+        val elapsed = TimeManager.time.intTime() - mStartTime
         return if (elapsed > get_config_long("timeLim")) {
             Pair(
                 get_config_int("timeLim"),
@@ -1371,17 +1445,17 @@ open class Collection @VisibleForTesting constructor(
         } else null
     }
 
-    fun undoName(res: Resources?): String {
+    open fun undoName(res: Resources): String {
         val type = undoType()
-        return type?.name(res!!) ?: ""
+        return type?.name(res) ?: ""
     }
 
-    fun undoAvailable(): Boolean {
+    open fun undoAvailable(): Boolean {
         Timber.d("undoAvailable() undo size: %s", undo.size)
         return !undo.isEmpty()
     }
 
-    fun undo(): Card? {
+    open fun undo(): Card? {
         val lastUndo: UndoAction = undo.removeLast()
         Timber.d("undo() of type %s", lastUndo.javaClass)
         return lastUndo.undo(this)
@@ -1396,7 +1470,7 @@ open class Collection @VisibleForTesting constructor(
     }
 
     open fun onCreate() {
-        droidBackend.useNewTimezoneCode(this)
+        sched.useNewTimezoneCode()
         set_config("schedVer", 2)
         // we need to reload the scheduler: this was previously loaded as V1
         _loadScheduler()
@@ -1412,14 +1486,12 @@ open class Collection @VisibleForTesting constructor(
         val f = c.note(reload)
         val m = c.model()
         val t = c.template()
-        val did: Long
-        did = if (c.isInDynamicDeck) {
+        val did: DeckId = if (c.isInDynamicDeck) {
             c.oDid
         } else {
             c.did
         }
-        val qa: HashMap<String, String>
-        qa = if (browser) {
+        val qa: HashMap<String, String> = if (browser) {
             val bqfmt = t.getString("bqfmt")
             val bafmt = t.getString("bafmt")
             _renderQA(
@@ -1787,7 +1859,7 @@ open class Collection @VisibleForTesting constructor(
                 Utils.ids2str(dynDeckIds) +
                 "and odid in " +
                 Utils.ids2str(dynIdsAndZero),
-            nextDeckId, time.intTime(), usn()
+            nextDeckId, TimeManager.time.intTime(), usn()
         )
         result.cardsWithFixedHomeDeckCount = cardIds.size
         val message = String.format(Locale.US, "Fixed %d cards with no home deck", cardIds.size)
@@ -1859,7 +1931,7 @@ open class Collection @VisibleForTesting constructor(
                 "UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(
                     ids
                 ),
-                sched.today, time.intTime(), usn()
+                sched.today, TimeManager.time.intTime(), usn()
             )
         }
         return problems
@@ -1883,7 +1955,7 @@ open class Collection @VisibleForTesting constructor(
         notifyProgress.run()
         db.execute(
             "UPDATE cards SET due = 1000000, mod = ?, usn = ? WHERE due > 1000000 AND type = " + Consts.CARD_TYPE_NEW,
-            time.intTime(),
+            TimeManager.time.intTime(),
             usn()
         )
         return emptyList<String>()
@@ -2180,7 +2252,7 @@ open class Collection @VisibleForTesting constructor(
             }
         }
         val s = String.format(
-            "[%s] %s:%s(): %s", time.intTime(), trace.fileName, trace.methodName,
+            "[%s] %s:%s(): %s", TimeManager.time.intTime(), trace.fileName, trace.methodName,
             TextUtils.join(",  ", args)
         )
         writeLog(s)
@@ -2238,7 +2310,7 @@ open class Collection @VisibleForTesting constructor(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
                 cids
             ),
-            7, flag, usn(), time.intTime()
+            7, flag, usn(), TimeManager.time.intTime()
         )
     }
 
@@ -2439,6 +2511,11 @@ open class Collection @VisibleForTesting constructor(
         _config!!.put(key, value!!)
     }
 
+    fun set_config(key: String, value: Any?) {
+        setMod()
+        _config!!.put(key, value)
+    }
+
     fun remove_config(key: String) {
         setMod()
         _config!!.remove(key)
@@ -2477,23 +2554,6 @@ open class Collection @VisibleForTesting constructor(
             throw UnknownDatabaseVersionException(e)
         }
     }
-
-    // This duplicates _loadScheduler (but returns the value and sets the report limit).
-    fun createScheduler(reportLimit: Int): AbstractSched? {
-        val ver = schedVer()
-        if (ver == 1) {
-            sched = Sched(this)
-        } else if (ver == 2) {
-            sched = SchedV2(this)
-        }
-        sched.setReportLimit(reportLimit)
-        return sched
-    }
-
-    val isUsingRustBackend: Boolean
-        get() = droidBackend.isUsingRustBackend()
-    open val backend: DroidBackend
-        get() = droidBackend
 
     class CheckDatabaseResult(private val oldSize: Long) {
         private val mProblems: MutableList<String?> = ArrayList()

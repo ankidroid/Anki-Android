@@ -1,11 +1,13 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.ModelBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -13,17 +15,17 @@ import timber.log.Timber
 
 class ModelBrowserContextMenu : AnalyticsDialogFragment() {
 
+    @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val items = ModelBrowserContextMenuAction.values().sortedBy { it.order }
-        return MaterialDialog.Builder(requireActivity())
-            .title(requireArguments().getString(KEY_LABEL)!!)
-            .items(items.map { resources.getString(it.actionTextResId) })
-            .itemsCallback { _, _, position, _ ->
-                (requireActivity() as? ModelBrowser)?.run { handleAction(items[position]) }
+        return MaterialDialog(requireActivity()).show {
+            title(text = requireArguments().getString(KEY_LABEL)!!)
+            listItems(items = items.map { resources.getString(it.actionTextResId) }) { _: MaterialDialog, index: Int, _: CharSequence ->
+                (requireActivity() as? ModelBrowser)?.run { handleAction(items[index]) }
                     ?: Timber.e("ContextMenu used from outside of its target activity!")
             }
-            .build()
+        }
     }
 
     companion object {

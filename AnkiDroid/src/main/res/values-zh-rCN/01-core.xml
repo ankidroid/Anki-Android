@@ -98,7 +98,7 @@
     <string name="rename_deck">重命名</string>
     <string name="create_shortcut">创建快捷方式</string>
     <string name="browse_cards">浏览卡片</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">添加</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">添加</string>
     <string name="menu_add_note">添加笔记</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帐户</string>
     <string name="menu_dismiss_note">隐藏/删除</string>
@@ -171,7 +171,7 @@
     <string name="studyoptions_no_cards_due">没有卡片待复习。</string>
     <string name="sd_card_not_mounted">未挂载储存设备</string>
     <string name="empty_cloze_warning">编辑此卡牌记录并添加一些创建填空。(%1$s)</string>
-    <string name="button_sync">同步</string>
+    <string name="button_sync" comment="Text of the sync button">同步</string>
     <string name="cancel_sync_confirm">你想要取消同步吗？</string>
     <string name="continue_sync">继续同步</string>
     <string name="sync_cancelled">同步已取消</string>

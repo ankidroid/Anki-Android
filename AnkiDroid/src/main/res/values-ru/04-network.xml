@@ -68,7 +68,6 @@
     <string name="reset_password">Сбросить пароль</string>
     <string name="lost_mail_instructions">Забыли адрес почты?</string>
     <!-- AndroidManifest.xml -->
-    <string name="preferences_title">Настройки</string>
     <string name="deckpreferences_title">Параметры XXX</string>
     <string name="sync_prepare_syncing">Подготавливается 
 синхронизация&#8230;</string>
@@ -113,13 +112,14 @@
     <string name="sync_media_sanity_failed">Синхронизация медиафайлов завершена, но количество файлов не совпадает. В следующей раз будет произведена полная синхронизация.</string>
     <string name="sync_media_db_error">Не удалось синхронизировать медиафайлы, потому что текущая база данных повреждена. Запустите проверку медиафайлов.</string>
     <string name="sync_media_error">Ошибка при синхронизации медиафайлов</string>
-    <string name="sync_media_error_check">Ошибка при синхронизации медиафайлов. Выберите \"Проверку медиафайлов\".</string>
+    <string name="sync_media_error_check">Ошибка при синхронизации медиафайлов. Попробуйте проверить медиафайлы.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_basic_check_failed">Запустите «%s» перед синхронизацией</string>
     <string name="sync_sanity_local">Локальную</string>
     <string name="sync_sanity_remote">Удалённую</string>
     <string name="force_full_sync_title">Выполнить полную синхронизацию</string>
     <string name="force_full_sync_summary">Перезапишет изменения в одном направлении при следующей синхронизации</string>
+    <string name="force_full_sync_confirmation">Принудительная синхронизация</string>
     <string name="full_sync_confirmation">Последние изменения требуют полную выгрузку базы данных при следующей синхронизации. Если на другом вашем устройстве есть изменения, они будут утеряны. Продолжить?</string>
     <string name="full_sync_confirmation_upgrade">Из-за ошибке в прошлой версии AnkiDroid рекомендуем полную синхронизацию.</string>
     <string name="sync_error_407_proxy_required">Требуется проверка подлинности прокси.</string>
