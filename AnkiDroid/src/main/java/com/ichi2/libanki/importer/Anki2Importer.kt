@@ -55,7 +55,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     private val mAllowUpdate: Boolean
     private var mDupeOnSchemaChange: Boolean
 
-    private class NoteTriple(val nid: NoteId, val mod: Long, val mid: Long)
+    private class NoteTriple(val nid: NoteId, val mod: Long, val mid: NoteTypeId)
 
     private var mNotes: MutableMap<String, NoteTriple>? = null
     private var mDecks: MutableMap<Long, Long>? = null
@@ -740,7 +740,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     }
 
     // running splitFields() on every note is fairly expensive and actually not necessary
-    private fun _mungeMedia(mid: Long, fields: String): String {
+    private fun _mungeMedia(mid: NoteTypeId, fields: String): String {
         var _fields = fields
         for (p in Media.REGEXPS) {
             val m = p.matcher(_fields)

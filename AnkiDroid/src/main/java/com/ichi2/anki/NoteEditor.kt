@@ -2149,7 +2149,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun setCurrentlySelectedModel(mid: Long) {
+    fun setCurrentlySelectedModel(mid: NoteTypeId) {
         val position = mAllModelIds!!.indexOf(mid)
         check(position != -1) { "$mid not found" }
         mNoteTypeSpinner!!.setSelection(position)

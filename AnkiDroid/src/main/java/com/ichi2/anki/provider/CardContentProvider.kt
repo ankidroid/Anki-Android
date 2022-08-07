@@ -264,7 +264,7 @@ class CardContentProvider : ContentProvider() {
                 val models = col.models
                 val columns = projection ?: FlashCardsContract.Model.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                for (modelId: Long in models.getModels().keys) {
+                for (modelId: NoteTypeId in models.getModels().keys) {
                     addModelToCursor(modelId, models, rv, columns)
                 }
                 rv
@@ -904,7 +904,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_TEMPLATES -> {
                 run {
                     val models: ModelManager = col.models
-                    val mid: Long = getModelIdFromUri(uri, col)
+                    val mid: NoteTypeId = getModelIdFromUri(uri, col)
                     val existingModel: Model? = models.get(mid)
                     if (existingModel == null) {
                         throw IllegalArgumentException("model missing: " + mid)
@@ -935,7 +935,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_FIELDS -> {
                 run {
                     val models: ModelManager = col.models
-                    val mid: Long = getModelIdFromUri(uri, col)
+                    val mid: NoteTypeId = getModelIdFromUri(uri, col)
                     val existingModel: Model? = models.get(mid)
                     if (existingModel == null) {
                         throw IllegalArgumentException("model missing: " + mid)
@@ -1050,7 +1050,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addModelToCursor(modelId: Long, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
+    private fun addModelToCursor(modelId: NoteTypeId, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
         val jsonObject = models.get(modelId)
         val rb = rv.newRow()
         try {
