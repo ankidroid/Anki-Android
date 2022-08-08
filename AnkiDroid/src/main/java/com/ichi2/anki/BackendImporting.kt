@@ -19,6 +19,7 @@
 package com.ichi2.anki
 
 import anki.import_export.ImportResponse
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.importAnkiPackage
@@ -26,10 +27,9 @@ import com.ichi2.libanki.undoableOp
 import net.ankiweb.rsdroid.Translations
 
 fun DeckPicker.importApkgs(apkgPaths: List<String>) {
-    launchCatchingCollectionTask { col ->
+    launchCatchingTask {
         for (apkgPath in apkgPaths) {
-            val report = runInBackgroundWithProgress(
-                col.backend,
+            val report = withProgress(
                 extractProgress = {
                     if (progress.hasImporting()) {
                         text = progress.importing
@@ -37,7 +37,7 @@ fun DeckPicker.importApkgs(apkgPaths: List<String>) {
                 },
             ) {
                 undoableOp {
-                    col.importAnkiPackage(apkgPath)
+                    importAnkiPackage(apkgPath)
                 }
             }
             showSimpleMessageDialog(summarizeReport(col.tr, report))
@@ -70,16 +70,17 @@ fun DeckPicker.exportApkg(
     withMedia: Boolean,
     deckId: DeckId?
 ) {
-    launchCatchingCollectionTask { col ->
-        runInBackgroundWithProgress(
-            col.backend,
+    launchCatchingTask {
+        withProgress(
             extractProgress = {
                 if (progress.hasExporting()) {
                     text = progress.exporting
                 }
             },
         ) {
-            col.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
+            withCol {
+                newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
+            }
         }
     }
 }

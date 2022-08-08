@@ -60,6 +60,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.StartupFailure.*
 import com.ichi2.anki.StudyOptionsFragment.DeckStudyData
@@ -202,6 +204,10 @@ open class DeckPicker :
     private var mToolbarSearchView: SearchView? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
+
+    // stored for testing purposes
+    @VisibleForTesting
+    var createMenuJob: Job? = null
 
     init {
         ChangeManager.subscribe(this)
@@ -570,92 +576,101 @@ open class DeckPicker :
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        // Null check to prevent crash when col inaccessible
-        // #9081: sync leaves the collection closed, thus colIsOpen() is insufficient, carefully open the collection if possible
-        return if (CollectionHelper.getInstance().getColSafe(this) == null) {
-            false
-        } else super.onPrepareOptionsMenu(menu)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        Timber.d("onCreateOptionsMenu()")
-        mFloatingActionMenu.closeFloatingActionMenu()
-        menuInflater.inflate(R.menu.deck_picker, menu)
-        val sdCardAvailable = AnkiDroidApp.isSdCardMounted()
-        menu.findItem(R.id.action_sync).isEnabled = sdCardAvailable
-        menu.findItem(R.id.action_new_filtered_deck).isEnabled = sdCardAvailable
-        menu.findItem(R.id.action_check_database).isEnabled = sdCardAvailable
-        menu.findItem(R.id.action_check_media).isEnabled = sdCardAvailable
-        menu.findItem(R.id.action_empty_cards).isEnabled = sdCardAvailable
-
-        searchDecksIcon = menu.findItem(R.id.deck_picker_action_filter)
-        updateSearchDecksIconVisibility()
-        searchDecksIcon!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            // When SearchItem is expanded
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                Timber.i("DeckPicker:: SearchItem opened")
-                // Hide the floating action button if it is visible
-                mFloatingActionMenu.hideFloatingActionButton()
-                return true
+        // Store the job so that tests can easily await it. In the future
+        // this may be better done by injecting a custom test scheduler
+        // into CollectionManager, and awaiting that.
+        createMenuJob = launchCatchingTask {
+            val haveCol = withOpenColOrNull { true } ?: false
+            if (!haveCol) {
+                // avoid showing the menu if the collection is not open
+                return@launchCatchingTask
             }
 
-            // When SearchItem is collapsed
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                Timber.i("DeckPicker:: SearchItem closed")
-                // Show the floating action button if it is hidden
-                mFloatingActionMenu.showFloatingActionButton()
-                return true
-            }
-        })
+            Timber.d("onCreateOptionsMenu()")
+            mFloatingActionMenu.closeFloatingActionMenu()
+            menuInflater.inflate(R.menu.deck_picker, menu)
+            val sdCardAvailable = AnkiDroidApp.isSdCardMounted()
+            menu.findItem(R.id.action_sync).isEnabled = sdCardAvailable
+            menu.findItem(R.id.action_new_filtered_deck).isEnabled = sdCardAvailable
+            menu.findItem(R.id.action_check_database).isEnabled = sdCardAvailable
+            menu.findItem(R.id.action_check_media).isEnabled = sdCardAvailable
+            menu.findItem(R.id.action_empty_cards).isEnabled = sdCardAvailable
 
-        mToolbarSearchView = searchDecksIcon!!.actionView as SearchView
-        mToolbarSearchView!!.queryHint = getString(R.string.search_decks)
-        mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                mToolbarSearchView!!.clearFocus()
-                return true
-            }
+            searchDecksIcon = menu.findItem(R.id.deck_picker_action_filter)
+            updateSearchDecksIconVisibility()
+            searchDecksIcon!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+                // When SearchItem is expanded
+                override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                    Timber.i("DeckPicker:: SearchItem opened")
+                    // Hide the floating action button if it is visible
+                    mFloatingActionMenu.hideFloatingActionButton()
+                    return true
+                }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                val adapter = mRecyclerView.adapter as Filterable?
-                adapter!!.filter.filter(newText)
-                return true
-            }
-        })
-        if (colIsOpen() && !CollectionHelper.getInstance().isCollectionLocked) {
+                // When SearchItem is collapsed
+                override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                    Timber.i("DeckPicker:: SearchItem closed")
+                    // Show the floating action button if it is hidden
+                    mFloatingActionMenu.showFloatingActionButton()
+                    return true
+                }
+            })
+
+            mToolbarSearchView = searchDecksIcon!!.actionView as SearchView
+            mToolbarSearchView!!.queryHint = getString(R.string.search_decks)
+            mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    mToolbarSearchView!!.clearFocus()
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    val adapter = mRecyclerView.adapter as Filterable?
+                    adapter!!.filter.filter(newText)
+                    return true
+                }
+            })
+
             displaySyncBadge(menu)
 
             // Show / hide undo
-            if (fragmented || !col.undoAvailable()) {
+            val undoName = withOpenColOrNull {
+                if (fragmented || !undoAvailable()) {
+                    null
+                } else {
+                    undoName(resources)
+                }
+            }
+
+            if (undoName == null) {
                 menu.findItem(R.id.action_undo).isVisible = false
             } else {
                 val res = resources
                 menu.findItem(R.id.action_undo).isVisible = true
-                val undo = res.getString(R.string.studyoptions_congrats_undo, col.undoName(res))
+                val undo = res.getString(R.string.studyoptions_congrats_undo, undoName)
                 menu.findItem(R.id.action_undo).title = undo
             }
+
+            updateSearchDecksIconVisibility()
         }
         return super.onCreateOptionsMenu(menu)
     }
 
-    /**
-     * Show [searchDecksIcon] if there are more than 10 decks.
-     * Otherwise, hide it if there are less than 10 decks
-     * or if a exception is thrown while getting the decks count (e.g. corrupt collection)
-     */
-    private fun updateSearchDecksIconVisibility() {
-        searchDecksIcon?.isVisible = try {
-            col.decks.count() >= 10
-        } catch (e: Exception) {
-            false
-        }
+    @VisibleForTesting
+    suspend fun updateSearchDecksIconVisibility() {
+        val visible = withOpenColOrNull { decks.count() >= 10 } ?: false
+        searchDecksIcon?.isVisible = visible
     }
 
     @VisibleForTesting
-    protected open fun displaySyncBadge(menu: Menu) {
+    protected open suspend fun displaySyncBadge(menu: Menu) {
+        val syncStatus = withOpenColOrNull { SyncStatus.getSyncStatus(this) }
+        if (syncStatus == null) {
+            return
+        }
         val syncMenu = menu.findItem(R.id.action_sync)
-        when (val syncStatus = SyncStatus.getSyncStatus { col }) {
+        when (syncStatus) {
             SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.INCONCLUSIVE -> {
                 BadgeDrawableBuilder.removeBadge(syncMenu)
                 syncMenu.setTitle(R.string.button_sync)
@@ -1240,8 +1255,8 @@ open class DeckPicker :
         if (BackendFactory.defaultLegacySchema) {
             legacyUndo()
         } else {
-            launchCatchingCollectionTask { col ->
-                if (!backendUndoAndShowPopup(col)) {
+            launchCatchingTask {
+                if (!backendUndoAndShowPopup()) {
                     legacyUndo()
                 }
             }
@@ -1970,8 +1985,8 @@ open class DeckPicker :
                     if (!userAcceptsSchemaChange(col)) {
                         return@launchCatchingTask
                     }
-                    runInBackgroundWithProgress {
-                        CollectionHelper.getInstance().updateScheduler(this@DeckPicker)
+                    withProgress {
+                        CollectionManager.updateScheduler()
                     }
                     showThemedToast(this@DeckPicker, col.tr.schedulingUpdateDone(), false)
                     refreshState()
@@ -2214,7 +2229,9 @@ open class DeckPicker :
             mFocusedDeck = current
         }
 
-        updateSearchDecksIconVisibility()
+        launchCatchingTask {
+            updateSearchDecksIconVisibility()
+        }
     }
 
     // Callback to show study options for currently selected deck
@@ -2285,15 +2302,15 @@ open class DeckPicker :
         if (!BackendFactory.defaultLegacySchema) {
             dismissAllDialogFragments()
             // No confirmation required, as undoable
-            return launchCatchingCollectionTask { col ->
-                val changes = runInBackgroundWithProgress {
+            return launchCatchingTask {
+                val changes = withProgress {
                     undoableOp {
-                        col.newDecks.removeDecks(listOf(did))
+                        newDecks.removeDecks(listOf(did))
                     }
                 }
                 showSimpleSnackbar(
                     this@DeckPicker,
-                    col.tr.browsingCardsDeleted(changes.count),
+                    TR.browsingCardsDeleted(changes.count),
                     false
                 )
             }
@@ -2695,34 +2712,5 @@ open class DeckPicker :
             invalidateOptionsMenu()
             updateDeckList()
         }
-    }
-}
-
-/** Upgrade from v1 to v2 scheduler.
- * Caller must have confirmed schema modification already.
- */
-@KotlinCleanup("move into CollectionHelper once it's converted to Kotlin")
-@Synchronized
-fun CollectionHelper.updateScheduler(context: Context) {
-    if (BackendFactory.defaultLegacySchema) {
-        // We'll need to temporarily update to the latest schema.
-        closeCollection(true, "sched upgrade")
-        discardBackend()
-        BackendFactory.defaultLegacySchema = false
-        // Ensure collection closed if upgrade fails, and schema reverted
-        // even if close fails.
-        try {
-            try {
-                getCol(context).sched.upgradeToV2()
-            } finally {
-                closeCollection(true, "sched upgrade")
-            }
-        } finally {
-            BackendFactory.defaultLegacySchema = true
-            discardBackend()
-        }
-    } else {
-        // Can upgrade directly
-        getCol(context).sched.upgradeToV2()
     }
 }

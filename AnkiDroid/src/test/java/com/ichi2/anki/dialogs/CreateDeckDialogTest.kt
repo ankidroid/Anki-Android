@@ -27,6 +27,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.DeckManager
 import com.ichi2.libanki.backend.exception.DeckRenameException
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.junit.Test
@@ -149,6 +150,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
     @Test
     fun searchDecksIconVisibilityDeckCreationTest() {
+        skipWindows()
         mActivityScenario!!.onActivity { deckPicker ->
             val decks = deckPicker.col.decks
             val deckCounter = AtomicInteger(1)
@@ -159,7 +161,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
                     assertEquals(deckCounter.get(), decks.count())
 
-                    deckPicker.updateDeckList()
+                    updateSearchDecksIcon(deckPicker)
                     assertEquals(deckPicker.searchDecksIcon!!.isVisible, decks.count() >= 10)
 
                     // After the last deck was created, delete a deck
@@ -169,7 +171,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
                         assertEquals(deckCounter.get(), decks.count())
 
-                        deckPicker.updateDeckList()
+                        updateSearchDecksIcon(deckPicker)
                         assertFalse(deckPicker.searchDecksIcon!!.isVisible)
                     }
                 }
@@ -178,20 +180,31 @@ class CreateDeckDialogTest : RobolectricTest() {
         }
     }
 
+    private fun updateSearchDecksIcon(deckPicker: DeckPicker) {
+        deckPicker.updateDeckList()
+        // the icon normally is updated in the background usually; force it to update
+        // immediately so that the test can continue
+        runBlocking {
+            deckPicker.createMenuJob?.join()
+            deckPicker.updateSearchDecksIconVisibility()
+        }
+    }
+
     @Test
     fun searchDecksIconVisibilitySubdeckCreationTest() {
+        skipWindows()
         mActivityScenario!!.onActivity { deckPicker ->
             var createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
             val decks = deckPicker.col.decks
             createDeckDialog.setOnNewDeckCreated {
                 assertEquals(10, decks.count())
-                deckPicker.updateDeckList()
+                updateSearchDecksIcon(deckPicker)
                 assertTrue(deckPicker.searchDecksIcon!!.isVisible)
 
                 awaitJob(deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1")))
 
                 assertEquals(2, decks.count())
-                deckPicker.updateDeckList()
+                updateSearchDecksIcon(deckPicker)
                 assertFalse(deckPicker.searchDecksIcon!!.isVisible)
             }
             createDeckDialog.createDeck(deckTreeName(0, 8, "Deck"))
@@ -199,13 +212,13 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
             createDeckDialog.setOnNewDeckCreated {
                 assertEquals(12, decks.count())
-                deckPicker.updateDeckList()
+                updateSearchDecksIcon(deckPicker)
                 assertTrue(deckPicker.searchDecksIcon!!.isVisible)
 
                 awaitJob(deckPicker.confirmDeckDeletion(decks.id("Deck0::Deck1")))
 
                 assertEquals(2, decks.count())
-                deckPicker.updateDeckList()
+                updateSearchDecksIcon(deckPicker)
                 assertFalse(deckPicker.searchDecksIcon!!.isVisible)
             }
             createDeckDialog.createDeck(deckTreeName(0, 10, "Deck"))
@@ -213,7 +226,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
             createDeckDialog.setOnNewDeckCreated {
                 assertEquals(6, decks.count())
-                deckPicker.updateDeckList()
+                updateSearchDecksIcon(deckPicker)
                 assertFalse(deckPicker.searchDecksIcon!!.isVisible)
             }
             createDeckDialog.createDeck(deckTreeName(0, 4, "Deck"))
@@ -221,7 +234,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
             createDeckDialog.setOnNewDeckCreated {
                 assertEquals(12, decks.count())
-                deckPicker.updateDeckList()
+                updateSearchDecksIcon(deckPicker)
                 assertTrue(deckPicker.searchDecksIcon!!.isVisible)
             }
             createDeckDialog.createDeck(deckTreeName(6, 11, "Deck"))

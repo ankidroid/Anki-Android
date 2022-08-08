@@ -31,10 +31,11 @@ import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.async.Connection
-import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.sync.*
 import net.ankiweb.rsdroid.Backend
@@ -51,12 +52,12 @@ fun DeckPicker.handleNewSync(
         this.hostNumber = hostNum
     }
     val deckPicker = this
-    launchCatchingCollectionTask { col ->
+    launchCatchingTask {
         try {
             when (conflict) {
-                Connection.ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, col, auth)
-                Connection.ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, col, auth)
-                null -> handleNormalSync(deckPicker, col, auth)
+                Connection.ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth)
+                Connection.ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth)
+                null -> handleNormalSync(deckPicker, auth)
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
             // auth failed; log out
@@ -68,10 +69,12 @@ fun DeckPicker.handleNewSync(
 }
 
 fun MyAccount.handleNewLogin(username: String, password: String) {
-    launchCatchingCollectionTask { col ->
+    launchCatchingTask {
         val auth = try {
-            runInBackgroundWithProgress(col.backend, {}, onCancel = ::cancelSync) {
-                col.syncLogin(username, password)
+            withProgress({}, onCancel = ::cancelSync) {
+                withCol {
+                    newBackend.syncLogin(username, password)
+                }
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
             // auth failed; clear out login details
@@ -98,11 +101,9 @@ private fun cancelSync(backend: Backend) {
 
 private suspend fun handleNormalSync(
     deckPicker: DeckPicker,
-    col: CollectionV16,
     auth: SyncAuth
 ) {
-    val output = deckPicker.runInBackgroundWithProgress(
-        col.backend,
+    val output = deckPicker.withProgress(
         extractProgress = {
             if (progress.hasNormalSync()) {
                 text = progress.normalSync.run { "$added\n$removed" }
@@ -110,7 +111,7 @@ private suspend fun handleNormalSync(
         },
         onCancel = ::cancelSync
     ) {
-        col.syncCollection(auth)
+        withCol { newBackend.syncCollection(auth) }
     }
 
     // Save current host number
@@ -122,17 +123,17 @@ private suspend fun handleNormalSync(
             deckPicker.showSyncLogMessage(R.string.sync_database_acknowledge, output.serverMessage)
             // kick off media sync - future implementations may want to run this in the
             // background instead
-            handleMediaSync(deckPicker, col, auth)
+            handleMediaSync(deckPicker, auth)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> {
-            handleDownload(deckPicker, col, auth)
-            handleMediaSync(deckPicker, col, auth)
+            handleDownload(deckPicker, auth)
+            handleMediaSync(deckPicker, auth)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> {
-            handleUpload(deckPicker, col, auth)
-            handleMediaSync(deckPicker, col, auth)
+            handleUpload(deckPicker, auth)
+            handleMediaSync(deckPicker, auth)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
@@ -158,27 +159,24 @@ private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit {
 
 private suspend fun handleDownload(
     deckPicker: DeckPicker,
-    col: CollectionV16,
     auth: SyncAuth
 ) {
-    deckPicker.runInBackgroundWithProgress(
-        col.backend,
-        extractProgress = fullDownloadProgress(col.tr.syncDownloadingFromAnkiweb()),
+    deckPicker.withProgress(
+        extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
         onCancel = ::cancelSync
     ) {
-        val helper = CollectionHelper.getInstance()
-        helper.lockCollection()
-        try {
-            col.createBackup(
-                BackupManager.getBackupDirectoryFromCollection(col.path),
-                force = true,
-                waitForCompletion = true
-            )
-            col.close(save = true, downgrade = false, forFullSync = true)
-            col.fullDownload(auth)
-        } finally {
-            col.reopen(afterFullSync = true)
-            helper.unlockCollection()
+        withCol {
+            try {
+                newBackend.createBackup(
+                    BackupManager.getBackupDirectoryFromCollection(path),
+                    force = true,
+                    waitForCompletion = true
+                )
+                close(save = true, downgrade = false, forFullSync = true)
+                newBackend.fullDownload(auth)
+            } finally {
+                reopen(afterFullSync = true)
+            }
         }
     }
 
@@ -188,22 +186,19 @@ private suspend fun handleDownload(
 
 private suspend fun handleUpload(
     deckPicker: DeckPicker,
-    col: CollectionV16,
     auth: SyncAuth
 ) {
-    deckPicker.runInBackgroundWithProgress(
-        col.backend,
-        extractProgress = fullDownloadProgress(col.tr.syncUploadingToAnkiweb()),
+    deckPicker.withProgress(
+        extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
         onCancel = ::cancelSync
     ) {
-        val helper = CollectionHelper.getInstance()
-        helper.lockCollection()
-        col.close(save = true, downgrade = false, forFullSync = true)
-        try {
-            col.fullUpload(auth)
-        } finally {
-            col.reopen(afterFullSync = true)
-            helper.unlockCollection()
+        withCol {
+            close(save = true, downgrade = false, forFullSync = true)
+            try {
+                newBackend.fullUpload(auth)
+            } finally {
+                reopen(afterFullSync = true)
+            }
         }
     }
     Timber.i("Full Upload Completed")
@@ -220,19 +215,18 @@ private fun cancelMediaSync(backend: Backend) {
 
 private suspend fun handleMediaSync(
     deckPicker: DeckPicker,
-    col: CollectionV16,
     auth: SyncAuth
 ) {
     // TODO: show this in a way that is clear it can be continued in background,
     // but also warn user that media files will not be available until it completes.
     // TODO: provide a way for users to abort later, and see it's still going
     val dialog = AlertDialog.Builder(deckPicker)
-        .setTitle(col.tr.syncMediaLogTitle())
+        .setTitle(TR.syncMediaLogTitle())
         .setMessage("")
         .setPositiveButton("Background") { _, _ -> }
         .show()
     try {
-        col.backend.withProgress(
+        CollectionManager.getBackend().withProgress(
             extractProgress = {
                 if (progress.hasMediaSync()) {
                     text =
@@ -243,8 +237,8 @@ private suspend fun handleMediaSync(
                 dialog.setMessage(text)
             },
         ) {
-            runInBackground {
-                col.syncMedia(auth)
+            withCol {
+                newBackend.syncMedia(auth)
             }
         }
     } finally {

@@ -29,11 +29,13 @@
 
 package com.ichi2.libanki
 
+import androidx.annotation.VisibleForTesting
 import anki.collection.OpChanges
 import anki.collection.OpChangesAfterUndo
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import anki.import_export.ImportResponse
+import com.ichi2.anki.CollectionManager.withCol
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
@@ -69,7 +71,12 @@ object ChangeManager {
         }
     }
 
-    internal fun<T> notifySubscribers(changes: T, initiator: Any?) {
+    @VisibleForTesting
+    fun clearSubscribers() {
+        subscribers.clear()
+    }
+
+    internal fun <T> notifySubscribers(changes: T, initiator: Any?) {
         val opChanges = when (changes) {
             is OpChanges -> changes
             is OpChangesWithCount -> changes.changes
@@ -84,8 +91,10 @@ object ChangeManager {
 
 /** Wrap a routine that returns OpChanges* or similar undo info with this
  * to notify change subscribers of the changes. */
-suspend fun<T> undoableOp(handler: Any? = null, block: () -> T): T {
-    return block().also {
+suspend fun <T> undoableOp(handler: Any? = null, block: CollectionV16.() -> T): T {
+    return withCol {
+        this.newBackend.block()
+    }.also {
         withContext(Dispatchers.Main) {
             ChangeManager.notifySubscribers(it, handler)
         }

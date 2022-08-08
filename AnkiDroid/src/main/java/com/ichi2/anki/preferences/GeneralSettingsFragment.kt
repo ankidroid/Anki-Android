@@ -17,12 +17,13 @@ package com.ichi2.anki.preferences
 
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreference
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.*
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.utils.LanguageUtil
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class GeneralSettingsFragment : SettingsFragment() {
@@ -102,10 +103,7 @@ class GeneralSettingsFragment : SettingsFragment() {
         // so do it if the language has changed.
         languageSelection.setOnPreferenceChangeListener { newValue ->
             LanguageUtil.setDefaultBackendLanguages(newValue as String)
-
-            val helper = CollectionHelper.getInstance()
-            helper.closeCollection(true, "language change")
-            helper.discardBackend()
+            runBlocking { CollectionManager.discardBackend() }
 
             requireActivity().recreate()
         }

@@ -22,7 +22,6 @@ import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.CollectionV16
 import com.ichi2.themes.StyledProgressDialog
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
@@ -64,22 +63,7 @@ private fun showError(context: Context, msg: String) {
         .show()
 }
 
-/** Launch a catching task that requires a collection with the new schema enabled. */
-fun AnkiActivity.launchCatchingCollectionTask(block: suspend CoroutineScope.(col: CollectionV16) -> Unit): Job {
-    val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
-    return launchCatchingTask {
-        block(col)
-    }
-}
-
-/** Run a blocking call in a background thread pool. */
-suspend fun <T> runInBackground(block: suspend CoroutineScope.() -> T): T {
-    return withContext(Dispatchers.IO) {
-        block()
-    }
-}
-
-/** In most cases, you'll want [AnkiActivity.runInBackgroundWithProgress]
+/** In most cases, you'll want [AnkiActivity.withProgress]
  * instead. This lower-level routine can be used to integrate your own
  * progress UI.
  */
@@ -101,46 +85,46 @@ suspend fun <T> Backend.withProgress(
 }
 
 /**
- * Run the provided operation in the background, showing a progress
- * window. Progress info is polled from the backend.
+ * Run the provided operation, showing a progress window until it completes.
+ * Progress info is polled from the backend.
  */
-suspend fun <T> AnkiActivity.runInBackgroundWithProgress(
-    backend: Backend,
+suspend fun <T> AnkiActivity.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
     op: suspend () -> T
-): T = withProgressDialog(
-    context = this@runInBackgroundWithProgress,
-    onCancel = if (onCancel != null) {
-        fun() { onCancel(backend) }
-    } else {
-        null
-    }
-) { dialog ->
-    backend.withProgress(
-        extractProgress = extractProgress,
-        updateUi = { updateDialog(dialog) }
-    ) {
-        runInBackground { op() }
+): T {
+    val backend = CollectionManager.getBackend()
+    return withProgressDialog(
+        context = this@withProgress,
+        onCancel = if (onCancel != null) {
+            fun() { onCancel(backend) }
+        } else {
+            null
+        }
+    ) { dialog ->
+        backend.withProgress(
+            extractProgress = extractProgress,
+            updateUi = { updateDialog(dialog) }
+        ) {
+            op()
+        }
     }
 }
 
 /**
- * Run the provided operation in the background, showing a progress
- * window with the provided message.
+ * Run the provided operation, showing a progress window with the provided
+ * message until the operation completes.
  */
-suspend fun <T> AnkiActivity.runInBackgroundWithProgress(
+suspend fun <T> AnkiActivity.withProgress(
     message: String = resources.getString(R.string.dialog_processing),
     op: suspend () -> T
 ): T = withProgressDialog(
-    context = this@runInBackgroundWithProgress,
+    context = this@withProgress,
     onCancel = null
 ) { dialog ->
     @Suppress("Deprecation") // ProgressDialog deprecation
     dialog.setMessage(message)
-    runInBackground {
-        op()
-    }
+    op()
 }
 
 private suspend fun <T> withProgressDialog(
