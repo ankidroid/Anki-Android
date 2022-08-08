@@ -14,7 +14,6 @@ package com.ichi2.libanki
 
 import android.text.TextUtils
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.StringUtil.strip
 import java.io.BufferedWriter
 import java.io.FileOutputStream
 import java.io.IOException
@@ -61,7 +60,7 @@ class TextNoteExporter(
                     row.add(processText(field!!))
                 }
                 if (includedTags) {
-                    row.add(strip(tags))
+                    row.add(tags.trim())
                 }
                 @KotlinCleanup("use kotlin joinToString function")
                 data.add(TextUtils.join("\t", row))

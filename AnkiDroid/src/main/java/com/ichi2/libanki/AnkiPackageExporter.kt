@@ -26,7 +26,6 @@ import com.ichi2.utils.CollectionUtils.addAll
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.StringUtil.strip
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
 import timber.log.Timber
@@ -103,7 +102,7 @@ open class Exporter(@JvmField protected val col: Collection, protected val did: 
         s = s.replace("\\[sound:[^]]+\\]".toRegex(), "")
         s = Utils.stripHTML(s)
         s = s.replace("[ \\n\\t]+".toRegex(), " ")
-        s = strip(s)!!
+        s = s.trim()
         return s
     }
 }
