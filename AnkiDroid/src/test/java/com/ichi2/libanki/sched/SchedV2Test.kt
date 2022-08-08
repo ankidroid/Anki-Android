@@ -296,28 +296,6 @@ open class SchedV2Test : RobolectricTest() {
             col.has_config("localOffset"),
             Matchers.`is`(true)
         )
-        val sched = col.sched
-        MatcherAssert.assertThat(
-            "new timezone should be enabled by default",
-            sched._new_timezone_enabled(),
-            Matchers.`is`(true)
-        )
-
-        // a second call should be fine
-        sched.set_creation_offset()
-        MatcherAssert.assertThat(
-            "new timezone should still be enabled",
-            sched._new_timezone_enabled(),
-            Matchers.`is`(true)
-        )
-        // we can obtain the offset from "crt" without an issue - do not test the return as it depends on the local timezone
-        sched._current_timezone_offset()
-        sched.clear_creation_offset()
-        MatcherAssert.assertThat(
-            "new timezone should be disabled after clear",
-            sched._new_timezone_enabled(),
-            Matchers.`is`(false)
-        )
     }
 
     @get:Throws(Exception::class)

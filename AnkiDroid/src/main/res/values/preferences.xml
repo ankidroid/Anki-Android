@@ -18,7 +18,6 @@
     <string name="timeout_answer_seconds_preference">timeoutAnswerSeconds</string>
     <string name="timeout_question_seconds_preference">timeoutQuestionSeconds</string>
     <string name="keep_screen_on_preference">keepScreenOn</string>
-    <string name="new_timezone_handling_preference">newTimezoneHandling</string>
     <string name="double_tap_time_interval_preference">doubleTapTimeInterval</string>
     <!-- Sync -->
     <string name="pref_sync_screen_key">syncScreen</string>

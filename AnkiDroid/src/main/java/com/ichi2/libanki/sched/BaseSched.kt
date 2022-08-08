@@ -531,16 +531,8 @@ abstract class BaseSched(val col: Collection) {
     // New timezone handling
     // ////////////////////////////////////////////////////////////////////////
 
-    fun _new_timezone_enabled(): Boolean {
-        return col.has_config_not_null("creationOffset")
-    }
-
     fun useNewTimezoneCode() {
         set_creation_offset()
-    }
-
-    fun clear_creation_offset() {
-        col.remove_config("creationOffset")
     }
 
     /** true if there are any rev cards due.  */

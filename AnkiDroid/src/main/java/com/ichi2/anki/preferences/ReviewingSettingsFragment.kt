@@ -20,7 +20,6 @@ import androidx.preference.SwitchPreference
 import com.ichi2.anki.Preferences
 import com.ichi2.anki.R
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SeekBarPreferenceCompat
 
@@ -103,22 +102,5 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // Time to show question
         requirePreference<SeekBarPreferenceCompat>(R.string.timeout_question_seconds_preference)
             .setFormattedSummary(R.string.pref_summary_seconds)
-
-        // New timezone handling
-        requirePreference<SwitchPreference>(R.string.new_timezone_handling_preference).apply {
-            isChecked = col.sched._new_timezone_enabled()
-            isEnabled = col.schedVer() > 1
-            setOnPreferenceChangeListener { newValue ->
-                if (newValue == true) {
-                    try {
-                        col.sched.set_creation_offset()
-                    } catch (e: BackendNotSupportedException) {
-                        throw e.alreadyUsingRustBackend()
-                    }
-                } else {
-                    col.sched.clear_creation_offset()
-                }
-            }
-        }
     }
 }
