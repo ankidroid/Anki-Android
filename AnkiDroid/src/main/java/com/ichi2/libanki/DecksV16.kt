@@ -40,7 +40,6 @@ import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import com.google.protobuf.ByteString
 import com.ichi2.libanki.Decks.ACTIVE_DECKS
-import com.ichi2.libanki.Decks.CURRENT_DECK
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.exception.DeckRenameException
@@ -668,7 +667,7 @@ class DecksV16(private val col: CollectionV16) :
 
     /** The currently selected did. */
     override fun selected(): DeckId {
-        return this.col.get_config_long(CURRENT_DECK)
+        return this.col.backend.getCurrentDeck().id
     }
 
     override fun current(): Deck {
