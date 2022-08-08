@@ -63,7 +63,7 @@ object LaTeX {
     }
 
     @JvmStatic
-    fun matchHTML(html: String, media: Media, model: Model): StringBuffer {
+    fun convertHTML(html: String, media: Media, model: Model): String {
         val stringBuffer = StringBuffer()
         STANDARD_PATTERN.matcher(html).run {
             while (find()) {
@@ -71,25 +71,25 @@ object LaTeX {
             }
             appendTail(stringBuffer)
         }
-        return stringBuffer
+        return stringBuffer.toString()
     }
 
     @JvmStatic
-    fun matchExpression(inputBuffer: StringBuffer, media: Media, model: Model): StringBuffer {
+    fun convertExpression(input: String, media: Media, model: Model): String {
         val stringBuffer = StringBuffer()
-        EXPRESSION_PATTERN.matcher(inputBuffer.toString()).run {
+        EXPRESSION_PATTERN.matcher(input).run {
             while (find()) {
                 appendReplacement(stringBuffer, imgLink("$" + group(1) + "$", model, media))
             }
             appendTail(stringBuffer)
         }
-        return stringBuffer
+        return stringBuffer.toString()
     }
 
     @JvmStatic
-    fun matchMath(inputBuffer: StringBuffer, media: Media, model: Model): StringBuffer {
+    fun convertMath(input: String, media: Media, model: Model): String {
         val stringBuffer = StringBuffer()
-        MATH_PATTERN.matcher(inputBuffer.toString()).run {
+        MATH_PATTERN.matcher(input).run {
             while (find()) {
                 appendReplacement(
                     stringBuffer,
@@ -98,16 +98,16 @@ object LaTeX {
             }
             appendTail(stringBuffer)
         }
-        return stringBuffer
+        return stringBuffer.toString()
     }
 
     // It's only goal is to allow testing with a different media manager.
     @VisibleForTesting
     @JvmStatic
-    fun mungeQA(html: String, m: Media, model: Model): String {
-        val buffer = matchMath(matchExpression(matchHTML(html, m, model), m, model), m, model)
-        return buffer.toString()
-    }
+    fun mungeQA(html: String, m: Media, model: Model): String =
+        arrayOf(::convertHTML, ::convertExpression, ::convertMath).fold(html) { input, transformer ->
+            transformer(input, m, model)
+        }
 
     /**
      * Return an img link for LATEX.
