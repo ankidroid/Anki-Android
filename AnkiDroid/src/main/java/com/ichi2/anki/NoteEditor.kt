@@ -43,7 +43,6 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.res.ResourcesCompat
@@ -93,7 +92,6 @@ import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.*
 import java.util.function.Consumer
@@ -1136,11 +1134,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun showCardTemplateEditor() {
-        if (!BackendFactory.defaultLegacySchema) {
-            // this screen needs rewriting for the new backend
-            AlertDialog.Builder(this).setTitle("Not yet supported on new backend").show()
-            return
-        }
         val intent = Intent(this, CardTemplateEditor::class.java)
         // Pass the model ID
         intent.putExtra("modelId", currentlySelectedModel!!.getLong("id"))
