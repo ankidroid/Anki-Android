@@ -215,13 +215,12 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
     }
 
     fun restartWithNewDeckPicker() {
-        // PERF: DB access on foreground thread
-        val helper = CollectionHelper.getInstance()
-        helper.closeCollection(true, "Preference Modification: collection path changed")
-        helper.discardBackend()
-        val deckPicker = Intent(this, DeckPicker::class.java)
-        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.DEFAULT)
+        launchCatchingTask {
+            CollectionManager.discardBackend()
+            val deckPicker = Intent(this@Preferences, DeckPicker::class.java)
+            deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.DEFAULT)
+        }
     }
 
     // ----------------------------------------------------------------------------

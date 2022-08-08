@@ -17,17 +17,16 @@
 package com.ichi2.anki
 
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
-import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.undoNew
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BlocksSchemaUpgrade
 import net.ankiweb.rsdroid.BackendException
 
-suspend fun AnkiActivity.backendUndoAndShowPopup(col: CollectionV16): Boolean {
+suspend fun AnkiActivity.backendUndoAndShowPopup(): Boolean {
     return try {
-        val changes = runInBackgroundWithProgress() {
+        val changes = withProgress() {
             undoableOp {
-                col.undoNew()
+                undoNew()
             }
         }
         showSimpleSnackbar(

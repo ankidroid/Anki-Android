@@ -853,8 +853,8 @@ abstract class AbstractFlashcardViewer :
             if (BackendFactory.defaultLegacySchema) {
                 legacyUndo()
             } else {
-                return launchCatchingCollectionTask { col ->
-                    if (!backendUndoAndShowPopup(col)) {
+                return launchCatchingTask {
+                    if (!backendUndoAndShowPopup()) {
                         legacyUndo()
                     }
                 }

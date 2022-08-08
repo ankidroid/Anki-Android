@@ -51,14 +51,8 @@ import static com.ichi2.libanki.BackendImportExportKt.importCollectionPackage;
  * Singleton which opens, stores, and closes the reference to the Collection.
  */
 public class CollectionHelper {
-
-    // Collection instance belonging to sInstance
-    private Collection mCollection;
     // Name of anki2 file
     public static final String COLLECTION_FILENAME = "collection.anki2";
-
-    // A backend instance is reused after collection close.
-    private @Nullable Backend mBackend;
 
     /**
      * The preference key for the path to the current AnkiDroid directory
@@ -143,30 +137,10 @@ public class CollectionHelper {
      */
     private Collection openCollection(Context context, String path) {
         Timber.i("Begin openCollection: %s", path);
-        Backend backend = getOrCreateBackend(context);
+        Backend backend = BackendFactory.getBackend(context);
         Collection collection = Storage.collection(context, path, false, true, backend);
         Timber.i("End openCollection: %s", path);
         return collection;
-    }
-
-    synchronized @NonNull Backend getOrCreateBackend(Context context) {
-        if (mBackend == null) {
-            mBackend = BackendFactory.getBackend(context);
-        }
-        return mBackend;
-    }
-
-
-    /**
-     * Close the currently cached backend and discard it. Useful when enabling the V16 scheduler in the
-     * dev preferences, or if the active language changes. The collection should be closed before calling
-     * this.
-     */
-    public synchronized void discardBackend() {
-        if (mBackend != null) {
-            mBackend.close();
-            mBackend = null;
-        }
     }
 
     /**
@@ -174,23 +148,8 @@ public class CollectionHelper {
      * @param _context is no longer used, as the global AnkidroidApp instance is used instead
      * @return instance of the Collection
      */
-    public synchronized Collection getCol(Context _context) {
-        // Open collection
-        Context context = AnkiDroidApp.getInstance();
-        if (!colIsOpen()) {
-            String path = getCollectionPath(context);
-            // Check that the directory has been created and initialized
-            try {
-                initializeAnkiDroidDirectory(getParentDirectory(path));
-                // Path to collection, cached for the reopenCollection() method
-            } catch (StorageAccessException e) {
-                Timber.e(e, "Could not initialize AnkiDroid directory");
-                return null;
-            }
-            // Open the database
-            mCollection = openCollection(context, path);
-        }
-        return mCollection;
+    public synchronized Collection getCol(Context context) {
+        return CollectionManager.getColUnsafe();
     }
 
     /**
@@ -260,29 +219,15 @@ public class CollectionHelper {
      */
     public synchronized void closeCollection(boolean save, String reason) {
         Timber.i("closeCollection: %s", reason);
-        if (mCollection != null) {
-            mCollection.close(save);
-        }
+        CollectionManager.closeCollectionBlocking(save);
     }
 
-    /**
-     * Replace the collection with the provided colpkg file if it is valid.
-     */
-    public synchronized void importColpkg(Context context, String colpkgPath) {
-        Backend backend = getOrCreateBackend(context);
-        if (mCollection != null) {
-            mCollection.close(true);
-        }
-        String colPath = getCollectionPath(context);
-        importCollectionPackage(backend, colPath, colpkgPath);
-        getCol(context);
-    }
 
     /**
      * @return Whether or not {@link Collection} and its child database are open.
      */
     public boolean colIsOpen() {
-        return mCollection != null && !mCollection.isDbClosed();
+        return CollectionManager.isOpenUnsafe();
     }
 
     /**
@@ -621,13 +566,6 @@ public class CollectionHelper {
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public void setColForTests(Collection col) {
-        if (col == null) {
-            try {
-                mCollection.close();
-            } catch (Exception exc) {
-                // may not be open
-            }
-        }
-        this.mCollection = col;
+        CollectionManager.setColForTests(col);
     }
 }

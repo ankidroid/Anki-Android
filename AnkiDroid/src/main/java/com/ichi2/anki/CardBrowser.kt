@@ -1262,8 +1262,8 @@ open class CardBrowser :
             if (BackendFactory.defaultLegacySchema) {
                 Undo().runWithHandler(mUndoHandler)
             } else {
-                launchCatchingCollectionTask { col ->
-                    if (!backendUndoAndShowPopup(col)) {
+                launchCatchingTask {
+                    if (!backendUndoAndShowPopup()) {
                         Undo().runWithHandler(mUndoHandler)
                     }
                 }

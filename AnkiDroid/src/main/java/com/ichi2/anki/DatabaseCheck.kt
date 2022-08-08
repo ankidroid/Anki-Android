@@ -16,10 +16,12 @@
 
 package com.ichi2.anki
 
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
+
 fun DeckPicker.handleDatabaseCheck() {
-    launchCatchingCollectionTask { col ->
-        val problems = runInBackgroundWithProgress(
-            col.backend,
+    launchCatchingTask {
+        val problems = withProgress(
             extractProgress = {
                 if (progress.hasDatabaseCheck()) {
                     progress.databaseCheck.let {
@@ -34,12 +36,14 @@ fun DeckPicker.handleDatabaseCheck() {
             },
             onCancel = null,
         ) {
-            col.fixIntegrity()
+            withCol {
+                newBackend.fixIntegrity()
+            }
         }
         val message = if (problems.isNotEmpty()) {
             problems.joinToString("\n")
         } else {
-            col.tr.databaseCheckRebuilt()
+            TR.databaseCheckRebuilt()
         }
         showSimpleMessageDialog(message)
     }

@@ -17,6 +17,7 @@ import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.DbUtils
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
+import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.*
@@ -319,14 +320,16 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     @RunInBackground
     fun doNotShowOptionsMenuWhenCollectionInaccessible() {
+        skipWindows()
         try {
             enableNullCollection()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java, Intent()
             )
+            runBlocking { d.createMenuJob?.join() }
             assertThat(
                 "Options menu not displayed when collection is inaccessible",
-                d.prepareOptionsMenu,
+                d.optionsMenu?.hasVisibleItems(),
                 equalTo(false)
             )
         } finally {
@@ -336,14 +339,16 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     fun showOptionsMenuWhenCollectionAccessible() {
+        skipWindows()
         try {
             InitialActivityWithConflictTest.grantWritePermissions()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java, Intent()
             )
+            runBlocking { d.createMenuJob?.join() }
             assertThat(
-                "Options menu is displayed when collection is accessible",
-                d.prepareOptionsMenu,
+                "Options menu displayed when collection is accessible",
+                d.optionsMenu?.hasVisibleItems(),
                 equalTo(true)
             )
         } finally {
@@ -354,11 +359,14 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     @RunInBackground
     fun doNotShowSyncBadgeWhenCollectionInaccessible() {
+        skipWindows()
         try {
             enableNullCollection()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java, Intent()
             )
+            waitForAsyncTasksToComplete()
+            runBlocking { d.createMenuJob?.join() }
             assertThat(
                 "Sync badge is not displayed when collection is inaccessible",
                 d.displaySyncBadge,
@@ -371,11 +379,14 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     fun showSyncBadgeWhenCollectionAccessible() {
+        skipWindows()
         try {
             InitialActivityWithConflictTest.grantWritePermissions()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java, Intent()
             )
+            waitForAsyncTasksToComplete()
+            runBlocking { d.createMenuJob?.join() }
             assertThat(
                 "Sync badge is displayed when collection is accessible",
                 d.displaySyncBadge,
@@ -607,7 +618,7 @@ class DeckPickerTest : RobolectricTest() {
     private class DeckPickerEx : DeckPicker() {
         var databaseErrorDialog = 0
         var displayedAnalyticsOptIn = false
-        var prepareOptionsMenu = false
+        var optionsMenu: Menu? = null
         var displaySyncBadge = false
 
         override fun showDatabaseErrorDialog(id: Int) {
@@ -628,11 +639,11 @@ class DeckPickerTest : RobolectricTest() {
         }
 
         override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-            prepareOptionsMenu = super.onPrepareOptionsMenu(menu)
-            return prepareOptionsMenu
+            optionsMenu = menu
+            return super.onPrepareOptionsMenu(menu)
         }
 
-        override fun displaySyncBadge(menu: Menu) {
+        override suspend fun displaySyncBadge(menu: Menu) {
             displaySyncBadge = true
             super.displaySyncBadge(menu)
         }

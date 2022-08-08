@@ -55,6 +55,7 @@ import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
+import org.hamcrest.Matchers.equalTo
 import org.junit.*
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
@@ -89,6 +90,8 @@ open class RobolectricTest : CollectionGetter {
     @CallSuper
     open fun setUp() {
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
+
+        ChangeManager.clearSubscribers()
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionHelper.getInstance().setColForTests(null)
@@ -168,6 +171,7 @@ open class RobolectricTest : CollectionGetter {
 
             TimeManager.reset()
         }
+        runBlocking { CollectionManager.discardBackend() }
     }
 
     /**
@@ -312,6 +316,7 @@ open class RobolectricTest : CollectionGetter {
 
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {
+        CollectionManager.closeCollectionBlocking()
         CollectionHelper.LazyHolder.INSTANCE = object : CollectionHelper() {
             override fun getCol(context: Context): Collection? {
                 return null
@@ -419,6 +424,12 @@ open class RobolectricTest : CollectionGetter {
         // HACK: We perform this to ensure that onCollectionLoaded is performed synchronously when startLoadingCollection
         // is called.
         col
+    }
+
+    /** The coroutine implemention on Windows/Robolectric seems to inexplicably hang sometimes */
+    fun skipWindows() {
+        val name = System.getProperty("os.name") ?: ""
+        assumeThat(name.startsWith("Windows"), equalTo(false))
     }
 
     @Throws(ConfirmModSchemaException::class)
