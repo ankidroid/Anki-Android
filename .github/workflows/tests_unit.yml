@@ -56,10 +56,10 @@ jobs:
         with:
           fetch-depth: 50
 
-      - name: Configure JDK 1.11
+      - name: Configure JDK
         uses: actions/setup-java@v3
         with:
-          distribution: "adopt"
+          distribution: "temurin"
           java-version: "11" # ubuntu-latest is about to default to 11, force it everywhere
 
       - name: Verify JDK11
