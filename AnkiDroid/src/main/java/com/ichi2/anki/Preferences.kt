@@ -19,8 +19,11 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.content.*
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
@@ -28,15 +31,22 @@ import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.preference.PreferenceFragmentCompat
+import com.bytehamster.lib.preferencesearch.SearchConfiguration
+import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.preferences.*
+import com.ichi2.anki.preferences.PreferencesSearchView
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
+import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes.setThemeLegacy
+import com.ichi2.utils.AdaptionUtil
 import timber.log.Timber
 import java.util.*
 
@@ -46,6 +56,8 @@ import java.util.*
 class Preferences : AnkiActivity(), SearchPreferenceResultListener {
     /** The collection path when Preferences was opened   */
     private var mOldCollectionPath: String? = null
+
+    lateinit var searchView: PreferencesSearchView
 
     private val mOnBackStackChangedListener: FragmentManager.OnBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
         updateActionBarTitle(supportFragmentManager, supportActionBar)
@@ -104,8 +116,100 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         supportFragmentManager.removeOnBackStackChangedListener(mOnBackStackChangedListener)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.preferences, menu)
+
+        val searchIcon = menu!!.findItem(R.id.preferences_search)
+        searchView = searchIcon.actionView as PreferencesSearchView
+        searchView.setActivity(this)
+
+        configureSearchBar(searchView.searchConfiguration)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    /**
+     * Configures [searchConfig] for AnkiDroid's settings search bar and return it back
+     */
+    fun configureSearchBar(searchConfig: SearchConfiguration): SearchConfiguration {
+        searchConfig.apply {
+            setFragmentContainerViewId(R.id.settings_container)
+            setBreadcrumbsEnabled(true)
+            setFuzzySearchEnabled(false)
+            setHistoryEnabled(false)
+            textNoResults = getString(R.string.pref_search_no_results)
+
+            index(R.xml.preferences_general)
+            index(R.xml.preferences_reviewing)
+            index(R.xml.preferences_sync)
+            index(R.xml.preferences_custom_sync_server)
+                .addBreadcrumb(R.string.pref_cat_sync)
+            index(R.xml.preferences_notifications)
+            index(R.xml.preferences_appearance)
+            index(R.xml.preferences_custom_buttons)
+                .addBreadcrumb(R.string.pref_cat_appearance)
+            index(R.xml.preferences_controls)
+            index(R.xml.preferences_accessibility)
+        }
+
+        /**
+         * The command bindings preferences are created programmatically
+         * on [ControlsSettingsFragment.addAllControlPreferencesToCategory],
+         * so they should be added programmatically to the search index as well.
+         */
+        for (command in ViewerCommand.values()) {
+            searchConfig.indexItem()
+                .withTitle(getString(command.resourceId))
+                .withKey(command.preferenceKey)
+                .withResId(R.xml.preferences_controls)
+                .addBreadcrumb(getString(R.string.pref_cat_controls))
+                .addBreadcrumb(getString(R.string.controls_main_category))
+        }
+
+        // Some preferences and categories are only shown conditionally,
+        // so they should be searchable based on the same conditions
+
+        /** From [HeaderFragment.onCreatePreferences] */
+        if (DevOptionsFragment.isEnabled(this)) {
+            searchConfig.index(R.xml.preferences_dev_options)
+            /** From [DevOptionsFragment.initSubscreen] */
+            if (BuildConfig.DEBUG) {
+                searchConfig.ignorePreference(getString(R.string.dev_options_enabled_by_user_key))
+            }
+        }
+
+        /** From [HeaderFragment.onCreatePreferences] */
+        if (!AdaptionUtil.isXiaomiRestrictedLearningDevice) {
+            searchConfig.index(R.xml.preferences_advanced)
+            // Advanced statistics is a subscreen of Advanced, so it should be indexed along with it
+            searchConfig.index(R.xml.preferences_advanced_statistics)
+                .addBreadcrumb(R.string.pref_cat_advanced)
+                .addBreadcrumb(R.string.statistics)
+        }
+
+        /** From [NotificationsSettingsFragment.initSubscreen] */
+        if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
+            searchConfig.ignorePreference(getString(R.string.pref_notifications_vibrate_key))
+            searchConfig.ignorePreference(getString(R.string.pref_notifications_blink_key))
+        }
+
+        /** From [AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs] */
+        if (!CompatHelper.hasKanaAndEmojiKeys()) {
+            searchConfig.ignorePreference(getString(R.string.more_scrolling_buttons_key))
+        }
+        /** From [AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs] */
+        if (!CompatHelper.hasScrollKeys()) {
+            searchConfig.ignorePreference(getString(R.string.double_scrolling_gap_key))
+        }
+        return searchConfig
+    }
+
     private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
         val fragment = fragmentManager.findFragmentById(R.id.settings_container)
+
+        if (fragment is SearchPreferenceFragment) {
+            return
+        }
 
         actionBar?.title = when (fragment) {
             is SettingsFragment -> fragment.preferenceScreen.title
@@ -182,18 +286,30 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
     }
 
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
-        val fragment = getFragmentFromXmlRes(result.resourceFile)
+        val resultFragment = getFragmentFromXmlRes(result.resourceFile)
             ?: return
 
-        result.closeSearchPage(this)
+        val fragments = supportFragmentManager.fragments
+        // The last opened fragment is going to be
+        // the search fragment, so get the one before it
+        val currentFragment = fragments[fragments.lastIndex - 1]
+        // then clear the search fragment from the backstack
+        supportFragmentManager.popBackStack()
 
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.settings_container, fragment, fragment::class.java.name)
-            .addToBackStack(null)
-            .commit()
+        // If the clicked result is on the currently opened fragment,
+        // it isn't necessary to create it again
+        val fragmentToHighlight = if (currentFragment::class != resultFragment::class) {
+            supportFragmentManager.commit {
+                replace(R.id.settings_container, resultFragment, resultFragment.javaClass.name)
+                addToBackStack(resultFragment.javaClass.name)
+            }
+            resultFragment
+        } else {
+            currentFragment
+        }
 
-        result.highlight(fragment)
+        Timber.i("Highlighting key '%s' on %s", result.key, fragmentToHighlight)
+        result.highlight(fragmentToHighlight as PreferenceFragmentCompat)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
