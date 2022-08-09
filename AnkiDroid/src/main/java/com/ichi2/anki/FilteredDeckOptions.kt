@@ -467,7 +467,9 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         newOrderPref.value = pref.getString("order", "0")
         newOrderPrefSecond.setEntries(R.array.cram_deck_conf_order_labels)
         newOrderPrefSecond.setEntryValues(R.array.cram_deck_conf_order_values)
-        newOrderPrefSecond.value = pref.getString("order_2", "5")
+        if (pref.secondFilter) {
+            newOrderPrefSecond.value = pref.getString("order_2", "5")
+        }
     }
 
     /**
