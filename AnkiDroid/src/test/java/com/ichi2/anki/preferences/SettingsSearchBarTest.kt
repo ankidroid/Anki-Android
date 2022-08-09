@@ -18,9 +18,7 @@ package com.ichi2.anki.preferences
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bytehamster.lib.preferencesearch.PreferenceItem
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
-import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.Preferences
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.getJavaFieldAsAccessible
 import org.hamcrest.MatcherAssert.assertThat
@@ -37,9 +35,7 @@ class SettingsSearchBarTest : RobolectricTest() {
     @Suppress("UNCHECKED_CAST")
     fun `All indexed XML resIDs lead to the correct fragments on getFragmentFromXmlRes`() {
         val preferencesActivity = getPreferencesActivity()
-        val headerFragment = preferencesActivity.supportFragmentManager.fragments[0] as HeaderFragment
-        val searchConfig = headerFragment.requirePreference<SearchPreference>(R.string.pref_search_key)
-            .searchConfiguration
+        val searchConfig = preferencesActivity.configureSearchBar(SearchConfiguration(preferencesActivity))
 
         // Use reflection to access some private fields
         val filesToIndexField = getJavaFieldAsAccessible(SearchConfiguration::class.java, "filesToIndex")

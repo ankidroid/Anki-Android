@@ -18,15 +18,7 @@
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch">
-
-    <!-- Search bar -->
-    <com.bytehamster.lib.preferencesearch.SearchPreference
-        android:key="@string/pref_search_key"
-        search:textHint="@string/pref_search_hint"
-        search:textNoResults="@string/pref_search_no_results"
-        search:textClearHistory="@string/pref_search_clear_history"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--  General Preferences -->
     <com.ichi2.preferences.HeaderPreference

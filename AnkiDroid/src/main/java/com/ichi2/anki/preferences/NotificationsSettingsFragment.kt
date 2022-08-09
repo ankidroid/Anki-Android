@@ -40,7 +40,7 @@ class NotificationsSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
             /** These preferences should be searchable or not based
-             * on this same condition at [HeaderFragment.configureSearchBar] */
+             * on this same condition at [Preferences.configureSearchBar] */
             preferenceScreen.removePreference(requirePreference<SwitchPreference>(R.string.pref_notifications_vibrate_key))
             preferenceScreen.removePreference(requirePreference<SwitchPreference>(R.string.pref_notifications_blink_key))
         }
