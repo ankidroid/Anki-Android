@@ -2181,9 +2181,8 @@ open class CardBrowser :
         }
 
         init {
-            @KotlinCleanup("isNotEmpty")
-            if ("" != customFont) {
-                mCustomTypeface = getTypeface(context!!, customFont!!)
+            if (customFont!!.isNotEmpty()) {
+                mCustomTypeface = getTypeface(context!!, customFont)
             }
             mInflater = LayoutInflater.from(context)
         }
