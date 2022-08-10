@@ -1257,7 +1257,7 @@ open class CardBrowser :
         } else {
             isTruncated = true
             mCardsAdapter!!.notifyDataSetChanged()
-            truncate.setChecked(true)
+            truncate.isChecked = true
         }
     }
 
