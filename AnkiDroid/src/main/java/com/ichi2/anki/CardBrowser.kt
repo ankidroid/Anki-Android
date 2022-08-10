@@ -1018,15 +1018,15 @@ open class CardBrowser :
         filterByFlag()
     }
 
-    @KotlinCleanup("cleanup the when")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true
+        when {
+            drawerToggle.onOptionsItemSelected(item) -> return true
+
+            // dismiss undo-snackbar if shown to avoid race condition
+            // (when another operation will be performed on the model, it will undo the latest operation)
+            mUndoSnackbar != null && mUndoSnackbar!!.isShown -> mUndoSnackbar!!.dismiss()
         }
 
-        // dismiss undo-snackbar if shown to avoid race condition
-        // (when another operation will be performed on the model, it will undo the latest operation)
-        if (mUndoSnackbar != null && mUndoSnackbar!!.isShown) mUndoSnackbar!!.dismiss()
         when (item.itemId) {
             android.R.id.home -> {
                 endMultiSelectMode()
