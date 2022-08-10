@@ -38,6 +38,7 @@ import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
+import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.JSONArray
@@ -390,16 +391,7 @@ class CardContentProvider : ContentProvider() {
                 val rv = MatrixCursor(columns, 1)
                 val allDecks = col.sched.deckDueTree()
                 val desiredDeckId = uri.pathSegments[1].toLong()
-                fun find(nodeList: List<TreeNode<DeckDueTreeNode>>, id: Long): DeckDueTreeNode? {
-                    for (node in nodeList) {
-                        if (node.value.did == id) {
-                            return node.value
-                        }
-                        return find(node.children, id)
-                    }
-                    return null
-                }
-                find(allDecks, desiredDeckId)?.let {
+                findInDeckTree(allDecks, desiredDeckId)?.let {
                     addDeckToCursor(it.did, it.fullDeckName, getDeckCountsFromDueTreeNode(it), rv, col, columns)
                 }
                 rv

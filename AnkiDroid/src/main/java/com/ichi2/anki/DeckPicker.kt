@@ -99,7 +99,9 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
+import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
+import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.sync.CustomSyncServerUrlException
 import com.ichi2.libanki.sync.Syncer.ConnectionResultType
 import com.ichi2.libanki.utils.TimeManager
@@ -1016,9 +1018,16 @@ open class DeckPicker :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @RustCleanup("make mDueTree a concrete DeckDueTreeNode")
+    @Suppress("UNCHECKED_CAST")
     fun toggleDeckExpand(did: DeckId) {
         if (!col.decks.children(did).isEmpty()) {
+            // update DB
             col.decks.collapse(did)
+            // update stored state
+            findInDeckTree(mDueTree!! as List<TreeNode<DeckDueTreeNode>>, did)?.run {
+                collapsed = !collapsed
+            }
             renderPage()
             dismissAllDialogFragments()
         }

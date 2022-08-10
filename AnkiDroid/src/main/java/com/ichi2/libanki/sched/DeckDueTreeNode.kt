@@ -117,3 +117,18 @@ class DeckDueTreeNode(
         return revCount > 0 || newCount > 0 || lrnCount > 0
     }
 }
+
+/** Locate node with a given deck ID in a list of nodes.
+ *
+ * This could be converted into a method if AnkiDroid returned a top-level
+ * node instead of a list of nodes.
+ */
+fun findInDeckTree(nodes: List<TreeNode<DeckDueTreeNode>>, deckId: Long): DeckDueTreeNode? {
+    for (node in nodes) {
+        if (node.value.did == deckId) {
+            return node.value
+        }
+        return findInDeckTree(node.children, deckId) ?: continue
+    }
+    return null
+}
