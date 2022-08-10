@@ -879,7 +879,7 @@ open class CardBrowser :
                     if (mSearchView!!.shouldIgnoreValueChange()) {
                         return true
                     }
-                    mSaveSearchItem!!.isVisible = !TextUtils.isEmpty(newText)
+                    mSaveSearchItem!!.isVisible = newText.isNotEmpty()
                     mTempSearchQuery = newText
                     return true
                 }
@@ -892,9 +892,9 @@ open class CardBrowser :
             })
             // Fixes #6500 - keep the search consistent if coming back from note editor
             // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu (mTempSearchQuery)
-            if (!TextUtils.isEmpty(mTempSearchQuery) || !TextUtils.isEmpty(mSearchTerms)) {
+            if (!mTempSearchQuery.isNullOrEmpty() || mSearchTerms.isNotEmpty()) {
                 mSearchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
-                val toUse = if (!TextUtils.isEmpty(mTempSearchQuery)) mTempSearchQuery else mSearchTerms
+                val toUse = if (!mTempSearchQuery.isNullOrEmpty()) mTempSearchQuery else mSearchTerms
                 mSearchView!!.setQuery(toUse!!, false)
             }
             mSearchView!!.setOnSearchClickListener {
