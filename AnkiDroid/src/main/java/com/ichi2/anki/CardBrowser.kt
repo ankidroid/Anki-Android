@@ -116,15 +116,13 @@ open class CardBrowser :
     DeckSelectionListener,
     TagsDialogListener,
     ChangeManager.Subscriber {
-    @KotlinCleanup("using ?. and let keyword would be good here")
     override fun onDeckSelected(deck: SelectableDeck?) {
-        if (deck == null) {
-            return
+        deck?.let {
+            val deckId = deck.deckId
+            mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
+            mDeckSpinnerSelection!!.selectDeckById(deckId, true)
+            selectDeckAndSave(deckId)
         }
-        val deckId = deck.deckId
-        mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-        mDeckSpinnerSelection!!.selectDeckById(deckId, true)
-        selectDeckAndSave(deckId)
     }
 
     enum class Column {
