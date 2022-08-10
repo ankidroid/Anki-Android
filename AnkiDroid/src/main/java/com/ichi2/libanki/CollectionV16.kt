@@ -157,20 +157,20 @@ class CollectionV16(
     }
 
     override fun findNotes(
-        query: String?,
+        query: String,
         order: SortOrder,
     ): List<Long> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
                 get_config("noteSortType", null as String?) ?: "noteFld",
-                get_config("sortBackwards", false) ?: false,
+                get_config("browserNoteSortBackwards", false) ?: false,
             )
         } else {
             order
         }
         val noteIDsList = try {
-            backend.searchNotes(query!!, adjustedOrder.toProtoBuf())
+            backend.searchNotes(query, adjustedOrder.toProtoBuf())
         } catch (e: BackendInvalidInputException) {
             throw InvalidSearchException(e)
         }

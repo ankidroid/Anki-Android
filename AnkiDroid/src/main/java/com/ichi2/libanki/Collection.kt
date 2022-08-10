@@ -1353,7 +1353,7 @@ open class Collection(
      * @param order only used in overridden V16 findNotes() method
      * */
     @JvmOverloads
-    open fun findNotes(query: String?, order: SortOrder = SortOrder.NoOrdering()): List<Long> {
+    open fun findNotes(query: String, order: SortOrder = SortOrder.NoOrdering()): List<Long> {
         return Finder(this).findNotes(query)
     }
 
