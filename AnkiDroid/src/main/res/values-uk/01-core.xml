@@ -169,8 +169,8 @@
     <string name="empty_cram_label">Спорожнити</string>
     <string name="create_subdeck">Створити підколоду</string>
     <string name="empty_filtered_deck">Очищення фільтрованої колоди&#8230;</string>
-    <string name="custom_study_deck_name">Додаткове навчання</string>
-    <string name="custom_study_deck_exists">Спочатку перейменуйте колоду додаткового навчання</string>
+    <string name="custom_study_deck_name">Сесія індивідуального навчання</string>
+    <string name="custom_study_deck_exists">Спочатку перейменуйте колоду індивідуального навчання</string>
     <string name="empty_deck">Ця колода порожня</string>
     <string name="search_deck" comment="Deck search for selecting it">Пошук колоди</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук колоди</string>
@@ -182,7 +182,7 @@
     <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
     <string name="studyoptions_congrats_more_rev">Досягнуто добового ліміту, але ще залишилися картки для повторення. Ви можете збільшити щоденний ліміт у налаштуваннях.</string>
     <string name="studyoptions_congrats_more_new">Досягнуто добового ліміту карток, але ще залишилися нові карточки. Ви можете збільшити ліміт в налаштуваннях, але тоді збільшиться кількість повторень в майбутньому.</string>
-    <string name="studyoptions_congrats_custom">Для додаткового навчання натисніть кнопку «Додаткове навчання»</string>
+    <string name="studyoptions_congrats_custom">Для навчання за межами звичайного графіку натисніть кнопку «Індивідуальне навчання»</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
     <string name="empty_cloze_warning">Будь ласка, відредагуйте цей запис та додайте пропуски. (%1$s)</string>

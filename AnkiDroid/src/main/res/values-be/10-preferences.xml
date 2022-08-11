@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Агульныя</string>
-    <string name="pref_cat_general_summ">Агульныя налады</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Паўтарэнне</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Сінхранізацыя</string>
     <string name="pref_cat_scheduling" maxLength="41">Расклад</string>
     <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
     <string name="pref_cat_appearance" maxLength="41">Знешні выгляд</string>
-    <string name="pref_cat_appearance_summ">Змена тэмы і стандартны шрыфт</string>
     <string name="pref_cat_themes" maxLength="41">Тэмы</string>
     <string name="pref_cat_fonts" maxLength="41">Шрыфты</string>
     <string name="pref_cat_gestures" maxLength="41">Жэсты</string>
     <string name="pref_cat_controls" maxLength="41">Кіраванне</string>
     <string name="pref_cat_advanced" maxLength="41">Дадаткова</string>
-    <string name="pref_cat_advanced_summ">Аптымізацыя і эксперыментальныя магчымасці</string>
-    <string name="pref_cat_performance" maxLength="41">Прадукцыйнасць</string>
     <string name="pref_cat_workarounds" maxLength="41">Абходныя шляхі</string>
     <string name="pref_cat_plugins" maxLength="41">Плагiны</string>
     <!-- preferences.xml entries-->
@@ -185,10 +183,6 @@
     <string name="day_offset_summary">%s гадз. пасля поўначы</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Поўнач</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">2-ая версія планіроўшчыка</string>
-    <string name="sched_v2_summ">Уключыць новы планіроўшчык. Падчас наступнай сінхранізацыі змены будуць запісаныя ў адным напрамку.</string>
-    <string name="sched_ver_toggle_title">Пацвердзіць</string>
-    <string name="sched_ver_1to2">Эксперыментальны планіроўшчык можа стаць прычынаю памылковага планавання. Пераканайцеся, што вы азнаёміліся з дакументацыяй. Працягнуць?</string>
     <string name="pref_keep_screen_on" maxLength="41">Не выключаць экран</string>
     <string name="pref_keep_screen_on_summ">Адключыць час чакання экрана</string>
     <string name="convert_fen_text" maxLength="41">Падтрымка шахматнай натацыі</string>
@@ -326,7 +320,7 @@
     <string name="type_in_answer_focus_summ">Падчас паўтарэння аўтаматычна пераключацца на поле \"Увесці адказ\"</string>
     <!-- About -->
     <string name="open_changelog">Адкрыць спіс змен</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="pref_cat_about_title" maxLength="41">Аб праграме</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">License</string>

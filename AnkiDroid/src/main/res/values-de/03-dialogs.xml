@@ -112,8 +112,8 @@
     <string name="import_update_details">%1$d von %2$d bestehenden Notizen aktualisiert.</string>
     <string name="import_update_ignored">Manche Aktualisierungen wurden ignoriert, da der Notiztyp verändert wurde</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Karten importiert: %2$d</item>
+        <item quantity="other">Dateien importiert: %1$d\nKarten insgesamt importiert: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">SD-Karte voll</string>
     <string name="sd_card_almost_full_title">SD-Karte fast voll</string>
@@ -126,7 +126,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nein</string>
     <string name="dialog_continue">Weiter</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Wird verarbeitet …</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Erstellen</string>
     <string name="dialog_positive_delete">Löschen</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -256,5 +256,5 @@
     <string name="import_deck_package">Stapel-Paket (.apkg)</string>
     <string name="import_collection_package">Sammlungs-Paket (.colpkg)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Sie können kein Unterdeck für alle Stapel erstellen</string>
 </resources>

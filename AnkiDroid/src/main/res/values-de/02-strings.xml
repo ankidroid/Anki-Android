@@ -100,8 +100,8 @@
         <item>Notiz geändert</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Anwenden</string>
+    <string name="filter_by_flags">Flaggen</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Heutiges Limit für neue Karten ändern</string>
     <string name="custom_study_increase_review_limit">Heutiges Limit für Karten-Wiederholungen ändern</string>
@@ -164,8 +164,8 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">\"%s\" zu Ihrer Sammlung hinzufügen? Das könnte etwas Zeit beanspruchen.</item>
+        <item quantity="other">Möchten Sie die folgenden Dateien importieren:\n%s\nDies kann lange dauern</item>
     </plurals>
     <string name="import_log_no_apkg">Dies ist keine gültige Anki-Paketdatei</string>
     <string name="import_title_error" comment="Title of error dialog">Fehler</string>
@@ -184,8 +184,8 @@
     <string name="import_error_copy_file_to_cache">copyFileToCache() konnte nicht durchführt werden (evtl. mangelnder Speicherplatz)</string>
     <string name="import_error_unhandled_scheme">Unbehandelter Import von: »%s«</string>
     <string name="import_error_multiple_colpkg">Mehrere KOLPKG-Dateien wurden ausgewählt.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_colpkg_apkg">Beide apkg &amp; colpkg Dateien wurden auf einmal ausgewählt.</string>
+    <string name="import_stats_error">Beim Importieren der folgenden Dateien sind einige Fehler aufgetreten:\n%s</string>
     <string name="import_replacing">Sammlung wird ersetzt &#8230;</string>
     <string name="import_interrupted">Import unterbrochen</string>
     <string name="export_include_schedule">Zeitabstände einbeziehen</string>
@@ -350,7 +350,7 @@
     <string name="after_text">HTML nach Auswahl</string>
     <string name="add_toolbar_item">Werkzeugleiste-Element erstellen</string>
     <string name="edit_toolbar_item">Toolbar Element bearbeiten</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">Geben Sie den HTML-Code ein, der vor und nach dem ausgewählten Text eingefügt werden soll\n\nDrücken Sie lange auf ein Symbol in der Symbolleiste, um es zu entfernen</string>
     <string name="remove_toolbar_item">Element der Werkzeugleiste entfernen?</string>
     <string name="note_editor_paste_too_large">Das Bild ist zu groß zum Einfügen, bitte fügen Sie das Bild manuell ein</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android-Sicherung im Gange. Bitte versuchen Sie es erneut</string>
@@ -414,7 +414,7 @@
     <string name="malicious_archive_exceeds_limit">Schädliches Archiv. Größe überschreitet %1$s oder enthält mehr als %2$d Dateien</string>
     <string name="file_extract_exceeds_storage_space">Datei-Extrahierung überschreitet Speicherplatz</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Tag \'%s\' erweitern</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Zugriff auf die Sammlung fehlgeschlagen. Bitte versuchen Sie es erneut!</string>
 </resources>

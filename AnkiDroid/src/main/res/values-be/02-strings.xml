@@ -100,8 +100,8 @@
         <item>Запіс зменены</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Ужыць</string>
+    <string name="filter_by_flags">Сцягі</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змяніць абмежаванні новых картак на сёння</string>
     <string name="custom_study_increase_review_limit">Змяніць абмежаванні паўтарэння картак на сёння</string>

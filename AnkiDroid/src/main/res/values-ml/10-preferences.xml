@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_general_summ">പൊതുവായ ക്രമീകരണങ്ങൾ</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">അവലോകനം ചെയ്യുന്നു</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">വൈറ്റ്ബോർഡ്</string>
     <string name="pref_cat_appearance" maxLength="41">രൂപം</string>
-    <string name="pref_cat_appearance_summ">തീമുകളും സ്ഥിരസ്ഥിതി ഫോണ്ടും മാറ്റുക</string>
     <string name="pref_cat_themes" maxLength="41">തീമുകൾ</string>
     <string name="pref_cat_fonts" maxLength="41">ഫോണ്ട്</string>
     <string name="pref_cat_gestures" maxLength="41">ആംഗ്യങ്ങൾ</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">സംഗീർണതയുള്ളവ</string>
-    <string name="pref_cat_advanced_summ">ഒപ്റ്റിമൈസേഷനും പരീക്ഷണാത്മക സവിശേഷതകളും</string>
-    <string name="pref_cat_performance" maxLength="41">പ്രകടനം</string>
     <string name="pref_cat_workarounds" maxLength="41">പരിഹാരങ്ങൾ</string>
     <string name="pref_cat_plugins" maxLength="41">പ്ലഗിൻ</string>
     <!-- preferences.xml entries-->
@@ -184,10 +182,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">അർദ്ധരാത്രി</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11pm</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">നിജപ്പെടുത്തുക</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on" maxLength="41">സ്ക്രീൻ ഓണാക്കി വയ്ക്കുക</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
     <string name="convert_fen_text" maxLength="41">Chess notation support</string>

@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Geral</string>
-    <string name="pref_cat_general_summ">Configurações gerais</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Revisando</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronização</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Quadro</string>
     <string name="pref_cat_appearance" maxLength="41">Aparência</string>
-    <string name="pref_cat_appearance_summ">Alterar temas e fonte padrão</string>
     <string name="pref_cat_themes" maxLength="41">Temas</string>
     <string name="pref_cat_fonts" maxLength="41">Fontes</string>
     <string name="pref_cat_gestures" maxLength="41">Gestos</string>
     <string name="pref_cat_controls" maxLength="41">Controles</string>
     <string name="pref_cat_advanced" maxLength="41">Avançado</string>
-    <string name="pref_cat_advanced_summ">Otimização e funcionalidades experimentais</string>
-    <string name="pref_cat_performance" maxLength="41">Desempenho</string>
     <string name="pref_cat_workarounds" maxLength="41">Soluções alternativas</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
     <!-- preferences.xml entries-->
@@ -184,10 +182,6 @@
     <string name="day_offset_summary">%s horas depois da meia-noite</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Meia-noite</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">Planejador V2</string>
-    <string name="sched_v2_summ">Habilite o novo agendamento. Força as mudanças em uma direção na próxima sincronização</string>
-    <string name="sched_ver_toggle_title">Confirmar</string>
-    <string name="sched_ver_1to2">O agendador experimental pode causar agendamento incorreto. Por favor, certifique-se que você leu a documentação primeiro. Continuar?</string>
     <string name="pref_keep_screen_on" maxLength="41">Manter tela ligada</string>
     <string name="pref_keep_screen_on_summ">Desativar tempo limite da tela</string>
     <string name="convert_fen_text" maxLength="41">Suporte para notação de xadrez</string>

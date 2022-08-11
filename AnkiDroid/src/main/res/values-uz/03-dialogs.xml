@@ -45,15 +45,15 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">This may take a long time</string>
-    <string name="check_db_acknowledge">Database checked</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-    <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
-    <string name="delete_deck_title">Delete deck?</string>
+    <string name="check_db_warning">Bu jarayon biroz vaqt talab qilishi mumkin</string>
+    <string name="check_db_acknowledge">Maʼlumotlar bazasi tekshirildi</string>
+    <string name="check_db_acknowledge_shrunk">Maʼlumotlar bazasi tekshirildi va optimizatsiyalandi. \n %d MB gacha zichlashtirildi.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Toʻplamni oʻchirish</string>
+    <string name="delete_deck_default_deck">Birlamchi toʻplamni oʻchirib boʻlmaydi</string>
+    <string name="delete_deck_title">Toʻplam oʻchirilsinmi?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+        <item quantity="one">%1$s dagi barcha kartalar oʻchirilsinmi? Toʻplam %2$d kartadan iborat.</item>
+        <item quantity="other">%1$s dagi barcha lavhalar oʻchirilsinmi? Toʻplam %2$d lavhadan iborat.</item>
     </plurals>
     <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
     <string name="no_tts_available_message">No text-to-speech language available</string>

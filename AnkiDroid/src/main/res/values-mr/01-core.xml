@@ -51,7 +51,7 @@
     <string name="statistics">सांख्यिकी</string>
     <string name="settings">सेटिंग्ज</string>
     <string name="help">सहायता</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">चित्र कथा</string>
     <string name="send_feedback">अभिप्राय पाठवा</string>
     <string name="studyoptions_due_today">आज शेवटचा दिवस:</string>
     <string name="studyoptions_new_total">एकुण नविन कार्ड:</string>
@@ -71,12 +71,12 @@
         <item quantity="other">%d मिनिटे शिल्लक आहेत</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d तास %2$d शिल्लक</item>
+        <item quantity="other">%1$d तास %2$d शिल्लक</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d दिवस %2$d शिल्लक</item>
     </plurals>
     <string name="no_cards_placeholder_title">संग्रह रिक्त आहे</string>
     <string name="no_cards_placeholder_description">कार्ड जोडण्यास प्रारंभ करण्यासाठी + चिन्हाचा उपयोग करा.</string>
@@ -121,9 +121,9 @@
     <string name="menu_flag_card_two">केशरी ध्वज</string>
     <string name="menu_flag_card_three">हिरवा झेंडा</string>
     <string name="menu_flag_card_four">निळा ध्वज</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">गुलाबी रंगाची पट्टी</string>
+    <string name="menu_flag_card_six">हिरव्या रंगाची पट्टी</string>
+    <string name="menu_flag_card_seven">जांभळ्या रंगाची पट्टी</string>
     <string name="menu_edit_tags">टॅग संपादित करा</string>
     <string name="delete_note_message">खरोखर ही टीप आणि त्याची सर्व कार्ड हटवायची?\n%s</string>
     <string name="menu_search">%1$s मध्ये पहा</string>

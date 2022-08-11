@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">عمومی</string>
-    <string name="pref_cat_general_summ">تنظیمات عمومی</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">مرور</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">همگام سازی</string>
     <string name="pref_cat_scheduling" maxLength="41">زمان‌بندی</string>
     <string name="pref_cat_whiteboard" maxLength="41">تخته سفید</string>
     <string name="pref_cat_appearance" maxLength="41">ظاهر</string>
-    <string name="pref_cat_appearance_summ">تغییر پس زمینه و خط پیش فرض</string>
     <string name="pref_cat_themes" maxLength="41">پوسته ها</string>
     <string name="pref_cat_fonts" maxLength="41">نوع خط</string>
     <string name="pref_cat_gestures" maxLength="41">حرکات دست</string>
     <string name="pref_cat_controls" maxLength="41">کنترل ها</string>
     <string name="pref_cat_advanced" maxLength="41">پیشرفته</string>
-    <string name="pref_cat_advanced_summ">بهینه سازی و قابلیت های آزمایشی</string>
-    <string name="pref_cat_performance" maxLength="41">کارآیی</string>
     <string name="pref_cat_workarounds" maxLength="41">راه‌حل‌ها</string>
     <string name="pref_cat_plugins" maxLength="41">افزونه‌ها</string>
     <!-- preferences.xml entries-->
@@ -184,10 +182,6 @@
     <string name="day_offset_summary">%s ساعت پس از نیمه شب</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">نیمه‌شب</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11 شب</string>
-    <string name="sched_v2" maxLength="41">زمانبندی V2</string>
-    <string name="sched_v2_summ">زمانبندی جدید را فعالسازی کن. در همگام سازی بعد، تغییرات را در یک جهت اجبار میکند</string>
-    <string name="sched_ver_toggle_title">تایید</string>
-    <string name="sched_ver_1to2">سیستم زمانبندی آزمایشی ممکن است کارت‌ها را اشتباه زمانبندی کند. لطفاً قبل از اعمال تغییرات راهنما را بخوانید. اعمال تغییرات؟</string>
     <string name="pref_keep_screen_on" maxLength="41">روشن نگه‌داشتن صفحه</string>
     <string name="pref_keep_screen_on_summ">غیرفعال کردن زمان خاموش شدن صفحه نمایش</string>
     <string name="convert_fen_text" maxLength="41">پشتیبانی از ثبت حرکات شطرنج</string>

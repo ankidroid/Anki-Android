@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_general_summ">Pengaturan umum</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Mengulas</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
     <string name="pref_cat_appearance" maxLength="41">Tampilan</string>
-    <string name="pref_cat_appearance_summ">Ubah tema dan fon dasar</string>
     <string name="pref_cat_themes" maxLength="41">Tema</string>
     <string name="pref_cat_fonts" maxLength="41">Fon</string>
     <string name="pref_cat_gestures" maxLength="41">Gestur</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">Tingkat lanjut</string>
-    <string name="pref_cat_advanced_summ">Optimisasi dan fitur percobaan</string>
-    <string name="pref_cat_performance" maxLength="41">Performa</string>
     <string name="pref_cat_workarounds" maxLength="41">Solusi</string>
     <string name="pref_cat_plugins" maxLength="41">Pengaya</string>
     <!-- preferences.xml entries-->
@@ -185,10 +183,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Tengah malam</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">Jam 11 Malam</string>
-    <string name="sched_v2" maxLength="41">Penjadwal V2</string>
-    <string name="sched_v2_summ">Perbolehkan penjadwal baru. Paksakan pengubahan satu arah pada sinkronisasi selanjutnya</string>
-    <string name="sched_ver_toggle_title">Konfirmasi</string>
-    <string name="sched_ver_1to2">Penjadwalan eksperimental dapat mengakibatkan jadwal yang salah. Harap pastikan kamu telah membaca dokumentasi terlebih dulu. Lanjutkan?</string>
     <string name="pref_keep_screen_on" maxLength="41">Layar tetap menyala</string>
     <string name="pref_keep_screen_on_summ">Nonaktifkan batas waktu layar mati</string>
     <string name="convert_fen_text" maxLength="41">Dukungan notasi catur</string>
