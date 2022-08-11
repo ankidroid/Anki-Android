@@ -16,7 +16,6 @@
 package com.ichi2.anki.preferences
 
 import com.ichi2.anki.R
-import com.ichi2.preferences.SeekBarPreferenceCompat
 
 class AdvancedStatisticsSettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
@@ -25,8 +24,5 @@ class AdvancedStatisticsSettingsFragment : SettingsFragment() {
         get() = "prefs.advanced_statistics"
 
     override fun initSubscreen() {
-        // Precision of computation
-        requirePreference<SeekBarPreferenceCompat>(R.string.pref_computation_precision_key)
-            .setFormattedSummary(R.string.pref_summary_percentage)
     }
 }

@@ -4,8 +4,10 @@
 <!-- Advanced Statistics Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/advanced_statistics_title">
-
+    <!-- For some unknown reason, getAttributeResourceValue only works for the custom namespace
+    if "http://schemas.android.com/apk/res-auto" is set as namespace too -->
     <SwitchPreference
         android:defaultValue="false"
         android:key="@string/pref_advanced_statistics_enabled_key"
@@ -18,7 +20,8 @@
         android:max="30"
         android:title="@string/advanced_forecast_stats_compute_n_days_title"
         app:interval="1"
-        app:min="0" />
+        app:min="0"
+        app:useSimpleSummaryProvider="true"/>
     <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="90"
         android:dependency="@string/pref_advanced_statistics_enabled_key"
@@ -28,7 +31,7 @@
         android:title="@string/advanced_forecast_stats_compute_precision_title"
         app:interval="1"
         app:min="0"
-        app:useSimpleSummaryProvider="true"/>
+        app:formattedSummary="@string/pref_summary_percentage"/>
     <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="1"
         android:dependency="@string/pref_advanced_statistics_enabled_key"
