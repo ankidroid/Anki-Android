@@ -50,6 +50,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -1889,9 +1890,9 @@ open class DeckPicker :
      */
     private fun loadStudyOptionsFragment(withDeckOptions: Boolean) {
         val details = StudyOptionsFragment.newInstance(withDeckOptions)
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.studyoptions_fragment, details)
-        ft.commit()
+        supportFragmentManager.commit {
+            replace(R.id.studyoptions_fragment, details)
+        }
     }
 
     val fragment: StudyOptionsFragment?

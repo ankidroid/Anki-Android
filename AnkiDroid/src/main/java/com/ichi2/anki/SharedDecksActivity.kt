@@ -27,6 +27,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
 import timber.log.Timber
 import java.io.Serializable
 
@@ -100,9 +101,9 @@ class SharedDecksActivity : AnkiActivity() {
             val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
             sharedDecksDownloadFragment.arguments = bundleOf(DOWNLOAD_FILE to DownloadFile(url, userAgent, contentDisposition, mimetype))
 
-            supportFragmentManager.beginTransaction()
-                .add(R.id.shared_decks_fragment_container, sharedDecksDownloadFragment, SHARED_DECKS_DOWNLOAD_FRAGMENT)
-                .commit()
+            supportFragmentManager.commit {
+                add(R.id.shared_decks_fragment_container, sharedDecksDownloadFragment, SHARED_DECKS_DOWNLOAD_FRAGMENT)
+            }
         }
 
         mWebView.webViewClient = mWebViewClient
@@ -126,7 +127,9 @@ class SharedDecksActivity : AnkiActivity() {
                     } else {
                         Timber.i("Back pressed when download is not in progress but download screen is open, close fragment")
                         // Remove fragment
-                        supportFragmentManager.beginTransaction().remove(it).commit()
+                        supportFragmentManager.commit {
+                            remove(it)
+                        }
                     }
                 }
                 supportFragmentManager.popBackStackImmediate()

@@ -26,6 +26,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.preferences.AboutFragment
 import com.ichi2.anki.preferences.HeaderFragment
@@ -92,10 +93,9 @@ class Preferences : AnkiActivity() {
                 throw RuntimeException("Failed to load $fragmentClassName", e)
             }
         }
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
-            .commit()
+        supportFragmentManager.commit {
+            replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
+        }
     }
 
     override fun onDestroy() {
