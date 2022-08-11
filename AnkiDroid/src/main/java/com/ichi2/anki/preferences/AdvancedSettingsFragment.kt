@@ -121,7 +121,8 @@ class AdvancedSettingsFragment : SettingsFragment() {
             setOnPreferenceChangeListener { newValue ->
                 if (newValue == true) {
                     confirmExperimentalChange(
-                        R.string.use_rust_backend_title, R.string.use_rust_backend_summary,
+                        R.string.use_rust_backend_title,
+                        R.string.use_rust_backend_warning,
                         onCancel = { isChecked = false },
                         onConfirm = {
                             BackendFactory.defaultLegacySchema = false
