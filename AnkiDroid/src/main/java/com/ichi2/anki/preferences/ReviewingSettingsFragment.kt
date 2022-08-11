@@ -49,7 +49,6 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
         requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
             setValue(col.get_config_int("collapseTime") / 60)
-            setFormattedSummary(R.string.pref_summary_minutes)
             setOnPreferenceChangeListener { newValue ->
                 col.set_config("collapseTime", ((newValue as String).toInt() * 60))
             }
@@ -60,7 +59,6 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
         requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
             setValue(col.get_config_int("timeLim") / 60)
-            setFormattedSummary(R.string.pref_summary_minutes)
             setOnPreferenceChangeListener { newValue ->
                 col.set_config("timeLim", ((newValue as String).toInt() * 60))
             }
@@ -70,7 +68,6 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
         requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference).apply {
             value = Preferences.getDayOffset(col)
-            setFormattedSummary(R.string.day_offset_summary)
             setOnPreferenceChangeListener { newValue ->
                 (requireActivity() as Preferences).setDayOffset(newValue as Int)
             }
@@ -97,13 +94,6 @@ class ReviewingSettingsFragment : SettingsFragment() {
                 col.set_config(AutomaticAnswerAction.CONFIG_KEY, (newValue as String).toInt())
             }
         }
-        // Time to show answer
-        requirePreference<SeekBarPreferenceCompat>(R.string.timeout_answer_seconds_preference)
-            .setFormattedSummary(R.string.pref_summary_seconds)
-        // Time to show question
-        requirePreference<SeekBarPreferenceCompat>(R.string.timeout_question_seconds_preference)
-            .setFormattedSummary(R.string.pref_summary_seconds)
-
         // New timezone handling
         requirePreference<SwitchPreference>(R.string.new_timezone_handling_preference).apply {
             isChecked = col.sched._new_timezone_enabled()
