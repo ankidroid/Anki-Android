@@ -157,7 +157,7 @@
     <string name="rebuild_filtered_deck">Filtreli deste yeniden oluşturuluyor...</string>
     <string name="rebuild_cram_label">Yeniden Oluştur</string>
     <string name="empty_cram_label">Boş</string>
-    <string name="create_subdeck">Alt deste oluştur</string>
+    <string name="create_subdeck">Altdeste oluştur</string>
     <string name="empty_filtered_deck">Filtreli deste boşaltılıyor...</string>
     <string name="custom_study_deck_name">Kişiselleştirilmiş çalışma oturumu</string>
     <string name="custom_study_deck_exists">Lütfen mevcut özelleştirilmiş çalışma destesini yeniden adlandırın.</string>

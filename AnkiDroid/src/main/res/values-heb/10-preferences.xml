@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">כללי</string>
-    <string name="pref_cat_general_summ">אפשרויות כלליות</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">שינון</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">סנכרון</string>
     <string name="pref_cat_scheduling" maxLength="41">תיזמון</string>
     <string name="pref_cat_whiteboard" maxLength="41">לוח</string>
     <string name="pref_cat_appearance" maxLength="41">מראה</string>
-    <string name="pref_cat_appearance_summ">שינוי ערכת הנושא וגופן ברירת המחדל</string>
     <string name="pref_cat_themes" maxLength="41">ערכות עיצוב</string>
     <string name="pref_cat_fonts" maxLength="41">גופנים</string>
     <string name="pref_cat_gestures" maxLength="41">מחוות</string>
     <string name="pref_cat_controls" maxLength="41">פקדים</string>
     <string name="pref_cat_advanced" maxLength="41">מתקדם</string>
-    <string name="pref_cat_advanced_summ">מיטוב ותכונות נסיוניות</string>
-    <string name="pref_cat_performance" maxLength="41">ביצועים</string>
     <string name="pref_cat_workarounds" maxLength="41">מעקפים</string>
     <string name="pref_cat_plugins" maxLength="41">תוספים</string>
     <!-- preferences.xml entries-->
@@ -185,10 +183,6 @@
     <string name="day_offset_summary">%s שעות אחרי חצות</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">חצות</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11 בלילה</string>
-    <string name="sched_v2" maxLength="41">מתזמן. גירסא 2</string>
-    <string name="sched_v2_summ">הפעל את המתזמן החדש. מאלץ שינויים בכיוון אחד בסנכרון הבא</string>
-    <string name="sched_ver_toggle_title">אשר</string>
-    <string name="sched_ver_1to2">המתזמן הניסיוני עלול לגרום לתזמון שגוי. אנא ודא שקראת תחילה את התיעוד. להמשיך?</string>
     <string name="pref_keep_screen_on" maxLength="41">להשאיר את המסך דולק</string>
     <string name="pref_keep_screen_on_summ">השבת כיבוי מסך</string>
     <string name="convert_fen_text" maxLength="41">תמיכה בסימון שחמט</string>

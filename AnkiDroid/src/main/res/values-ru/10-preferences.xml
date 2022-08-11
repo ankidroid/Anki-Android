@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Общие</string>
-    <string name="pref_cat_general_summ">Общие настройки</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Учёба</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронизация</string>
     <string name="pref_cat_scheduling" maxLength="41">Расписание</string>
     <string name="pref_cat_whiteboard" maxLength="41">Доска</string>
     <string name="pref_cat_appearance" maxLength="41">Внешний вид</string>
-    <string name="pref_cat_appearance_summ">Выбор темы и шрифтов</string>
     <string name="pref_cat_themes" maxLength="41">Темы</string>
     <string name="pref_cat_fonts" maxLength="41">Шрифты</string>
     <string name="pref_cat_gestures" maxLength="41">Жесты</string>
     <string name="pref_cat_controls" maxLength="41">Управление</string>
     <string name="pref_cat_advanced" maxLength="41">Расширенные</string>
-    <string name="pref_cat_advanced_summ">Оптимизация и экспериментальные функции</string>
-    <string name="pref_cat_performance" maxLength="41">Производительность</string>
     <string name="pref_cat_workarounds" maxLength="41">Костыли и велосипеды</string>
     <string name="pref_cat_plugins" maxLength="41">Плагины</string>
     <!-- preferences.xml entries-->
@@ -184,10 +182,6 @@
     <string name="day_offset_summary">%s ч. после полуночи</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Полночь</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">Планировщик V2</string>
-    <string name="sched_v2_summ">Включает новый планировщик. При синхронизации изменения будут перезаписаны в одну сторону</string>
-    <string name="sched_ver_toggle_title">Подтвердить</string>
-    <string name="sched_ver_1to2">Экспериментальный планировщик может ошибаться. Сначала прочтите документацию. Продолжить?</string>
     <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>
     <string name="convert_fen_text" maxLength="41">Поддержка шахматной нотации</string>
@@ -325,12 +319,12 @@
     <string name="type_in_answer_focus_summ">Во время учёбы автоматически переходит к полю «Ввести ответ»</string>
     <!-- About -->
     <string name="open_changelog">Показать список изменений</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="pref_cat_about_title" maxLength="41">О программе</string>
+    <string name="contributors_title">Участники</string>
+    <string name="about_contributors_description"><![CDATA[Это наши потрясающие <a href=\"%1$s\">участники</a>. Вы также можете помочь AnkiDroid программируя, делая переводы, пожертвования <a href=\"%2$s\">и другое</a>!]]></string>
+    <string name="license">Лицензия</string>
+    <string name="license_description"><![CDATA[AnkiDroid выпущен на условиях лицензий <a href=\"%1$s\">GPL-3.0</a> и <a href=\"%2$s\">AGPL-3.0</a> с исходным кодом <a href=\"%3$s\">на GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[Вы можете поддержать развитие AnkiDroid, <a href=\"%1$s\">пожертвованием</a>. Любая сумма сильно поможет.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Добавить жест</string>
     <string name="binding_replace_gesture">Заменить жест</string>
@@ -349,9 +343,9 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Удалить «%s»</string>
     <string name="bindings_already_bound">Уже назначено на «%s»</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="pref_cat_dev_options" maxLength="41">Настройки разработчика</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Включить параметры для разработчиков</string>
+    <string name="disable_dev_options">Отключить настройки разработчика</string>
+    <string name="dev_options_warning">        Пожалуйста, убедитесь, что вы знаете что делаете перед включением опций разработчика. Эти параметры являются опасными и могут нарушить приложение или повредить вашу коллекцию.\n\nОбратите внимание, что эти опции не подходят для большинства пользователей и поэтому не переводятся, поэтому они находятся на английском языке.
     </string>
 </resources>

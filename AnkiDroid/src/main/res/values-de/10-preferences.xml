@@ -48,24 +48,22 @@
     <string name="disabled">Deaktiviert</string>
     <string name="enabled">Aktiviert</string>
     <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_minutes">%s Min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Allgemein</string>
-    <string name="pref_cat_general_summ">Allgemeine Einstellungen</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Lernen</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronisieren</string>
+    <string name="pref_cat_scheduling" maxLength="41">Planen</string>
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
     <string name="pref_cat_appearance" maxLength="41">Erscheinungsbild</string>
-    <string name="pref_cat_appearance_summ">Themes und Standardschriftart ändern</string>
     <string name="pref_cat_themes" maxLength="41">Designs</string>
     <string name="pref_cat_fonts" maxLength="41">Schriftarten</string>
     <string name="pref_cat_gestures" maxLength="41">Gesten</string>
     <string name="pref_cat_controls" maxLength="41">Steuerung</string>
     <string name="pref_cat_advanced" maxLength="41">Erweitert</string>
-    <string name="pref_cat_advanced_summ">Optimierung und experimentelle Funktionen</string>
-    <string name="pref_cat_performance" maxLength="41">Leistung</string>
     <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
     <string name="pref_cat_plugins" maxLength="41">Plug-Ins</string>
     <!-- preferences.xml entries-->
@@ -181,13 +179,9 @@
     <string name="time_limit" maxLength="41">Zeitlimitwert</string>
     <string name="new_timezone" maxLength="41">Umgang mit neuer Zeitzone</string>
     <string name="day_offset_with_description" maxLength="41">Start des nächsten Tages (0 ist Mitternacht, 23 ist 23 Uhr)</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s Stunden nach Mitternacht</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Mitternacht</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23 Uhr</string>
-    <string name="sched_v2" maxLength="41">V2-Zeitplaner</string>
-    <string name="sched_v2_summ">Aktiviert den neuen Zeitplaner. Erzwingt Änderungen in eine Richtung bei der nächsten Synchronisation</string>
-    <string name="sched_ver_toggle_title">Bestätigen</string>
-    <string name="sched_ver_1to2">Der experimentelle Zeitplaner könnte eine falsche Zeitplanung verursachen. Bitte lesen Sie zuerst die Dokumentation. Möchten Sie fortfahren?</string>
     <string name="pref_keep_screen_on" maxLength="41">Bildschirm eingeschaltet lassen</string>
     <string name="pref_keep_screen_on_summ">Bildschirm-Timeout deaktivieren</string>
     <string name="convert_fen_text" maxLength="41">Unterstützung für Schach-Notation</string>
@@ -205,7 +199,7 @@
     <string name="html_javascript_debugging" maxLength="41">HTML/Javascript-Debugging</string>
     <string name="html_javascript_debugging_summ">Remote-WebView-Verbindungen aktivieren und Karten-HTML ins AnkiDroid-Verzeichnis speichern</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">Feedback-Geber</string>
     <string name="accessibility" maxLength="41">Bedienungshilfen</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Zwischenablage-Bilder als PNG einfügen</string>
@@ -321,17 +315,17 @@
     <string name="type_in_answer_focus_summ">Automatisch im Übungsbildschirm auf »Antwort eingeben« fokussieren</string>
     <!-- About -->
     <string name="open_changelog">Änderungsprotokoll öffnen</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="pref_cat_about_title" maxLength="41">Über</string>
     <string name="contributors_title">Mitwirkende</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description"><![CDATA[Dies sind unsere tollen <a href=\"%1$s\">Mitwirkenden</a>. Sie können AnkiDroid auch durch programmieren, übersetzen, spenden und <a href=\"%2$s\">mehr</a> helfen!]]></string>
     <string name="license">Lizenz</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid wird unter den <a href=\"%1$s\">GPL-3.0</a> und <a href=\"%2$s\">AGPL-3.0</a> Lizenzen veröffentlicht, wobei der Quellcode <a href=\"%3$s\">auf GitHub</a> verfügbar ist]]></string>
+    <string name="donate_description"><![CDATA[Sie können AnkiDroid\s Entwicklung mit <a href=\"%1$s\">unterstützen</a>. Jede Spende schätzen wir zutiefst.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Geste hinzufügen</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Geste ersetzen</string>
     <string name="binding_add_key">Schlüssel hinzufügen</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Schlüssel ersetzen</string>
     <string name="key_picker_default_press_key">Eine Taste drücken</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartenseite auswählen</string>
@@ -348,6 +342,5 @@
     <string name="pref_cat_dev_options" maxLength="41">Entwickleroptionen</string>
     <string name="dev_options_enabled_pref" maxLength="41">Entwickleroptionen aktivieren</string>
     <string name="disable_dev_options">Entwicklermodus deaktivieren</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
-    </string>
+    <string name="dev_options_warning">Bevor Sie die Entwickleroptionen aktivieren, beachten Sie bitte, dass Sie damit die App oder Ihre Sammlung beschädigen können. /n/nBeachten Sie außerdem, dass diese Optionen für die meisten Benutzer nicht geeignet sind und deshalb nicht übersetzt werden und sind daher nur auf Englisch verfügbar sind.</string>
 </resources>

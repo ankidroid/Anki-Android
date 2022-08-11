@@ -100,16 +100,16 @@
         <item>Запис змінено</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Застосувати</string>
+    <string name="filter_by_flags">Прапори</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>
     <string name="custom_study_increase_review_limit">Змінити сьогоднішній ліміт на повторення карток</string>
     <string name="custom_study_review_forgotten">Повторити забуті картки</string>
     <string name="custom_study_review_ahead">Повторити наперед</string>
     <string name="custom_study_random_selection">Вивчати випадковий набір карток</string>
-    <string name="custom_study_preview_new">Попередній перегляд нових карток</string>
-    <string name="custom_study_limit_tags">Обмежитися визначеними позначками</string>
+    <string name="custom_study_preview_new">Переглянути нові картки</string>
+    <string name="custom_study_limit_tags">Обмежити конкретними тегами</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Редагувати запис</string>
     <string name="discard_unsaved_changes">Закрити і втратити поточну інформацію?</string>
@@ -219,7 +219,7 @@
     <string name="export_unsuccessful">Помилка експорту apkg файлу</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Налаштування</string>
     <string name="menu__deck_options">Параметри колоди</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Навчальні налаштування</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Налаштування навчання</string>
     <string name="select_tts">Обрати TTS мову</string>
     <string name="custom_study">Додаткове навчання</string>
     <string name="more_options">Ще</string>

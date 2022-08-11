@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_general_summ">Všeobecné nastavenia</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Opakovanie</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tabuľa</string>
     <string name="pref_cat_appearance" maxLength="41">Vzhľad</string>
-    <string name="pref_cat_appearance_summ">Zmena motivu a východzieho písma</string>
     <string name="pref_cat_themes" maxLength="41">Motívy</string>
     <string name="pref_cat_fonts" maxLength="41">Písma</string>
     <string name="pref_cat_gestures" maxLength="41">Gestá</string>
     <string name="pref_cat_controls" maxLength="41">Ovládacie prvky</string>
     <string name="pref_cat_advanced" maxLength="41">Pokročilé</string>
-    <string name="pref_cat_advanced_summ">Optimalizácia a experimentálne funkcie</string>
-    <string name="pref_cat_performance" maxLength="41">Výkon</string>
     <string name="pref_cat_workarounds" maxLength="41">Možné riešenia</string>
     <string name="pref_cat_plugins" maxLength="41">Rozšírenia</string>
     <!-- preferences.xml entries-->
@@ -185,10 +183,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Polnoc</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">2300</string>
-    <string name="sched_v2" maxLength="41">V2 plánovač</string>
-    <string name="sched_v2_summ">Povoliť nový plánovač. Vyžaduje si zmeny v jednom smere pri syncrhonizácii.</string>
-    <string name="sched_ver_toggle_title">Potvrdiť</string>
-    <string name="sched_ver_1to2">Experimentálny plánovač by mohol spôsobiť nesprávne plánovanie. Prosím, uistite sa, že ste si prv prečítali dokumentáciu. Pokračovať?</string>
     <string name="pref_keep_screen_on" maxLength="41">Nevypínať obrazovku</string>
     <string name="pref_keep_screen_on_summ">Zakázať vypínanie obrazovky</string>
     <string name="convert_fen_text" maxLength="41">Podpora šachového zápisu</string>

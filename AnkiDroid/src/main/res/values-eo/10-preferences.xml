@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_general_summ">Ĝeneralaj agordoj</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetado</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Skribtabulo</string>
     <string name="pref_cat_appearance" maxLength="41">Aspekto</string>
-    <string name="pref_cat_appearance_summ">Ŝanĝi etoson kaj implicitan tiparon</string>
     <string name="pref_cat_themes" maxLength="41">Etoso</string>
     <string name="pref_cat_fonts" maxLength="41">Tiparoj</string>
     <string name="pref_cat_gestures" maxLength="41">Gestoj</string>
     <string name="pref_cat_controls" maxLength="41">Stiriloj</string>
     <string name="pref_cat_advanced" maxLength="41">Altnivelaj</string>
-    <string name="pref_cat_advanced_summ">Plejbonigado kaj spertulaj eblaĵoj</string>
-    <string name="pref_cat_performance" maxLength="41">Rendimento</string>
     <string name="pref_cat_workarounds" maxLength="41">Provizoraĵoj</string>
     <string name="pref_cat_plugins" maxLength="41">Kromaĵoj</string>
     <!-- preferences.xml entries-->
@@ -184,10 +182,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">00:00</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
-    <string name="sched_v2" maxLength="41">Planilo V2</string>
-    <string name="sched_v2_summ">Aktivigi la novan planilon V2. Devigas ŝanĝojn en unu direkto je la sekva samtempigo</string>
-    <string name="sched_ver_toggle_title">Konfirmi</string>
-    <string name="sched_ver_1to2">La eksperimenta planilo povus kaŭzi malĝustan planadon. Bonvolu nepre legi la dokumentaron unue. Daŭrigi?</string>
     <string name="pref_keep_screen_on" maxLength="41">Teni ekranon ŝaltita</string>
     <string name="pref_keep_screen_on_summ">Ne malŝalti ekranon</string>
     <string name="convert_fen_text" maxLength="41">Subteno por ŝaka skribsistemo</string>

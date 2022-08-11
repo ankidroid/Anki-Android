@@ -100,7 +100,7 @@
         <item>Nota modificada</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
+    <string name="apply_filter">Aplicar</string>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Cambiar el límite de tarjetas nuevas para hoy</string>

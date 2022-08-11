@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">全般</string>
-    <string name="pref_cat_general_summ">一般設定</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">カードの学習</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同期</string>
     <string name="pref_cat_scheduling" maxLength="41">スケジュール</string>
     <string name="pref_cat_whiteboard" maxLength="41">ホワイトボード機能</string>
     <string name="pref_cat_appearance" maxLength="41">デザイン</string>
-    <string name="pref_cat_appearance_summ">テーマと標準フォントの変更</string>
     <string name="pref_cat_themes" maxLength="41">テーマ</string>
     <string name="pref_cat_fonts" maxLength="41">フォント</string>
     <string name="pref_cat_gestures" maxLength="41">ジェスチャー</string>
-    <string name="pref_cat_controls" maxLength="41">コントローラー</string>
+    <string name="pref_cat_controls" maxLength="41">操作</string>
     <string name="pref_cat_advanced" maxLength="41">その他</string>
-    <string name="pref_cat_advanced_summ">高度な最適化設定、実験的機能、AnkiDroidについて</string>
-    <string name="pref_cat_performance" maxLength="41">パフォーマンス</string>
     <string name="pref_cat_workarounds" maxLength="41">不具合回避策</string>
     <string name="pref_cat_plugins" maxLength="41">プラグイン</string>
     <!-- preferences.xml entries-->
@@ -181,13 +179,9 @@
     <string name="time_limit" maxLength="41">タイムボックスの時間枠</string>
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s時</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">午前 0 時</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">午後11時</string>
-    <string name="sched_v2" maxLength="41">V2スケジューラー</string>
-    <string name="sched_v2_summ">新型のスケジューラーを有効にします。次に同期する際は、一方向の変更を強制実行します</string>
-    <string name="sched_ver_toggle_title">確認</string>
-    <string name="sched_ver_1to2">実験的なスケジューラは間違ったスケジューリングを引き起こす可能性があります。最初に関係するドキュメントを読んで確認してください。続行しますか？</string>
     <string name="pref_keep_screen_on" maxLength="41">スクリーンをオンのままにする</string>
     <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
     <string name="convert_fen_text" maxLength="41">チェス表記のサポート</string>
@@ -319,12 +313,12 @@
     <string name="type_in_answer_focus_summ">答えをキーボード入力する欄がカード内にある場合、自動的にカーソルを入れて、すぐに文字を入力できる状態にします</string>
     <!-- About -->
     <string name="open_changelog">変更履歴を開く</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="pref_cat_about_title" maxLength="41">О программе</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">ライセンス</string>
-    <string name="license_description"><![CDATA[AnkiDroid は、 <a href=\"%1$s\">GPL-3.0</a> および <a href=\"%2$s\">AGPL-3.0</a> ライセンスの下でリリースされています。GitHub に <a href=\"%3$s\">利用可能なソースコードがあります</a>]]></string>
-    <string name="donate_description"><![CDATA[AnkiDroidの開発を <a href=\"%1$s\">寄付</a>することでサポートしていただけます。]]></string>
+    <string name="license_description"><![CDATA[AnkiDroidは<a href=\"%1$s\">GPL-3.0</a>および<a href=\"%2$s\">AGPL-3.0</a>のライセンスの下でリリースされています。 <a href=\"%3$s\">ソースコード</a>はGitHubで公開されています]]></string>
+    <string name="donate_description"><![CDATA[<a href=\"%1$s\">寄付</a>することでAnkiDroidの開発を支援することができます。]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ジェスチャーを追加</string>
     <string name="binding_replace_gesture">ジェスチャーを置き換える</string>

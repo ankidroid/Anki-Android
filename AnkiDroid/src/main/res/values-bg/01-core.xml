@@ -71,12 +71,12 @@
         <item quantity="other">%d минути остава</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d час %2$d остава</item>
+        <item quantity="other">%1$d часа %2$d остават</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d ден %2$d остава</item>
+        <item quantity="other">%1$d дни %2$d остават</item>
     </plurals>
     <string name="no_cards_placeholder_title">Колекцията е празна</string>
     <string name="no_cards_placeholder_description">Започнете да добавяте карти\nкато използвате иконата +.</string>
@@ -115,7 +115,7 @@
     <string name="menu_suspend">Спиране</string>
     <string name="menu_delete_note">Изтрий бележка</string>
     <string name="menu_flag">Флаг</string>
-    <string name="menu_flag_card">Flag card</string>
+    <string name="menu_flag_card">Маркиране на карта</string>
     <string name="menu_flag_card_zero">Без флаг</string>
     <string name="menu_flag_card_one">Червен флаг</string>
     <string name="menu_flag_card_two">Оранжев флаг</string>
@@ -191,7 +191,7 @@
     <string name="card_template_editor_back">Шаблон обратна страна</string>
     <string name="card_template_editor_styling">Оформление</string>
     <string name="card_template_editor_menu_card_browser_appearance">Външен вид на браузъра на карти</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
+    <string name="card_template_editor_deck_override">Предефениране на тестето</string>
     <string name="card_template_editor_insert_field">Добави поле</string>
     <string name="card_template_editor_select_field">Избери поле</string>
     <string name="card_template_editor_cant_delete">Трябва да има поне една карта</string>
@@ -233,10 +233,10 @@
     <string name="sync_conflict_remote_confirm_new">Да се замести ли колекцията Ви от AnkiDroid с тази от AnkiWeb?</string>
     <string name="sync_conflict_local_confirm_new">Да се замести ли колекцията Ви от AnkiWeb с тази от AnkDroid?</string>
     <string name="sync_conflict_title_new">Изберете коя колекция да запазите</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_replace_title">Замяна на колекция</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d карти (0 за преглеждане)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s копирай</string>
 </resources>

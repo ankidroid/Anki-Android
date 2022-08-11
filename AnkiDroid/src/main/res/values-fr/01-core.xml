@@ -155,7 +155,7 @@
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Reconstruction du paquet filtré&#8230;</string>
-    <string name="rebuild_cram_label">Réparer</string>
+    <string name="rebuild_cram_label">Reconstruire</string>
     <string name="empty_cram_label">Vide</string>
     <string name="create_subdeck">Créer un sous-paquet</string>
     <string name="empty_filtered_deck">Vidage du paquet filtré&#8230;</string>

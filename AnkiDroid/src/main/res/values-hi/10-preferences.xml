@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_general_summ">सामान्य सेटिंग</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">समीक्षा</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">श्वेतपट्ट</string>
     <string name="pref_cat_appearance" maxLength="41">दिखावट</string>
-    <string name="pref_cat_appearance_summ">थीम और डिफ़ॉल्ट फ़ॉन्ट बदलें</string>
     <string name="pref_cat_themes" maxLength="41">थीम</string>
     <string name="pref_cat_fonts" maxLength="41">फ़ॉन्ट</string>
     <string name="pref_cat_gestures" maxLength="41">इशारे</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">उन्नत</string>
-    <string name="pref_cat_advanced_summ">अनुकूलन और प्रायोगिक सुविधाएँ</string>
-    <string name="pref_cat_performance" maxLength="41">निष्पादन</string>
     <string name="pref_cat_workarounds" maxLength="41">वैकल्पिक हल</string>
     <string name="pref_cat_plugins" maxLength="41">प्लगइन</string>
     <!-- preferences.xml entries-->
@@ -184,10 +182,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">मध्यरात्रि</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 अनुसूचक</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">पुष्टि करें</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on" maxLength="41">स्क्रीन चालू रखें</string>
     <string name="pref_keep_screen_on_summ">स्क्रीन टाइमआउट अक्षम करें</string>
     <string name="convert_fen_text" maxLength="41">शतरंज संकेतन समर्थन</string>

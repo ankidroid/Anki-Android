@@ -52,20 +52,18 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_general_summ">సాధారణ సెట్టింగులు</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">సమీక్షిస్తోంది</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">వైట్‌బోర్డ్</string>
     <string name="pref_cat_appearance" maxLength="41">స్వరూపం</string>
-    <string name="pref_cat_appearance_summ">థీమ్లను మరియు డిఫాల్ట్ ఫాంట్ను మార్చండి</string>
     <string name="pref_cat_themes" maxLength="41">థీమ్లు</string>
     <string name="pref_cat_fonts" maxLength="41">ఫాంట్లు</string>
     <string name="pref_cat_gestures" maxLength="41">సైగలు</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">ఉన్నతస్థాయి</string>
-    <string name="pref_cat_advanced_summ">ఆప్టిమైజేషన్ మరియు ప్రయోగాత్మక లక్షణాలు</string>
-    <string name="pref_cat_performance" maxLength="41">ప్రదర్శన</string>
     <string name="pref_cat_workarounds" maxLength="41">పరిష్కారాలను</string>
     <string name="pref_cat_plugins" maxLength="41">ప్లగ్ఇన్</string>
     <!-- preferences.xml entries-->
@@ -185,10 +183,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 scheduler</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">Confirm</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on" maxLength="41">స్క్రీన్పై ఉంచండి</string>
     <string name="pref_keep_screen_on_summ">స్క్రీన్ గడువు ముగియడాన్ని నిలిపివేయి</string>
     <string name="convert_fen_text" maxLength="41">చదరంగం సంకేత మద్దతు</string>
