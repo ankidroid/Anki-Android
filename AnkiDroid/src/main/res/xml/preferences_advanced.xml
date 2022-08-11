@@ -147,4 +147,12 @@
                 android:title="@string/thirdparty_apps_title">
             </Preference>
         </PreferenceCategory>
+        <PreferenceCategory
+            android:title="@string/pref_cat_experimental">
+            <SwitchPreference
+                android:key="@string/pref_rust_backend_key"
+                android:title="@string/use_rust_backend_title"
+                android:summary="@string/use_rust_backend_summary"
+                android:defaultValue="false"/>
+        </PreferenceCategory>
 </PreferenceScreen>

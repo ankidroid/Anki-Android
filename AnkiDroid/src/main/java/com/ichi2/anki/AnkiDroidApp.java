@@ -173,6 +173,15 @@ public class AnkiDroidApp extends Application {
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
 
+        // TODO remove the following if-block once AnkiDroid uses the new schema by default
+        if (BuildConfig.LEGACY_SCHEMA) {
+            boolean isNewSchemaEnabledByPref = preferences.getBoolean(getString(R.string.pref_rust_backend_key), false);
+            if (isNewSchemaEnabledByPref) {
+                Timber.i("New schema enabled by preference");
+                BackendFactory.setDefaultLegacySchema(false);
+            }
+        }
+
         CrashReportService.initialize(this);
 
         if (BuildConfig.DEBUG) {

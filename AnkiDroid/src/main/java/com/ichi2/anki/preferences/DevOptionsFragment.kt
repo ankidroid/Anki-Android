@@ -22,7 +22,6 @@ import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 /**
@@ -73,15 +72,6 @@ class DevOptionsFragment : SettingsFragment() {
         requirePreference<Preference>(getString(R.string.pref_reset_onboarding_key)).setOnPreferenceClickListener {
             OnboardingUtils.reset(requireContext())
             true
-        }
-        // Use V16 Backend
-        requirePreference<Preference>(getString(R.string.pref_rust_backend_key)).apply {
-            setDefaultValue(!BackendFactory.defaultLegacySchema)
-            setOnPreferenceClickListener {
-                BackendFactory.defaultLegacySchema = false
-                (requireActivity() as Preferences).restartWithNewDeckPicker()
-                true
-            }
         }
         // Use scoped storage
         requirePreference<Preference>(getString(R.string.pref_scoped_storage_key)).apply {
