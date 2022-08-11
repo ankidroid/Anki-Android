@@ -33,25 +33,30 @@ import timber.log.Timber
 
 open class NumberRangePreferenceCompat : EditTextPreference {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        min = getMinFromAttributes(attrs)
-        max = getMaxFromAttributes(attrs)
-        defaultValue = getDefaultValueFromAttributes(attrs)
+        setup(attrs)
     }
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        min = getMinFromAttributes(attrs)
-        max = getMaxFromAttributes(attrs)
-        defaultValue = getDefaultValueFromAttributes(attrs)
+        setup(attrs)
     }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        setup(attrs)
+    }
+    constructor(context: Context) : super(context)
+
+    fun setup(attrs: AttributeSet?) {
         min = getMinFromAttributes(attrs)
         max = getMaxFromAttributes(attrs)
         defaultValue = getDefaultValueFromAttributes(attrs)
-    }
-    constructor(context: Context) : super(context) {
-        defaultValue = null
+
+        val formattedSummary = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "formattedSummary", -1)
+        if (formattedSummary != null && formattedSummary != -1) {
+            setSummaryProvider {
+                context.getString(formattedSummary, text)
+            }
+        }
     }
 
-    val defaultValue: String?
+    var defaultValue: String? = null
 
     var min = 0
         protected set
