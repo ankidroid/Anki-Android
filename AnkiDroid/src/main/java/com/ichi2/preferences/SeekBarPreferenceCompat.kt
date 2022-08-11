@@ -106,10 +106,6 @@ class SeekBarPreferenceCompat : DialogPreference {
         }
     }
 
-    fun setFormattedSummary(@StringRes resId: Int) {
-        setSummaryProvider { context.getString(resId, value) }
-    }
-
     var value: Int
         get() = if (mValue == 0) {
             getPersistedInt(mDefault)
