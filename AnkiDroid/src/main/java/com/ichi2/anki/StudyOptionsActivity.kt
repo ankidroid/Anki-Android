@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.fragment.app.commit
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
@@ -49,7 +50,9 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
             withDeckOptions = intent.extras!!.getBoolean("withDeckOptions")
         }
         val currentFragment = StudyOptionsFragment.newInstance(withDeckOptions)
-        supportFragmentManager.beginTransaction().replace(R.id.studyoptions_frame, currentFragment).commit()
+        supportFragmentManager.commit {
+            replace(R.id.studyoptions_frame, currentFragment)
+        }
     }
 
     private val currentFragment: StudyOptionsFragment?
