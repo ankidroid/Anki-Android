@@ -60,20 +60,20 @@ class SeekBarPreferenceCompat : DialogPreference {
     private var mYLabel = 0
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        setupVariables(attrs)
+        setupVariables(context, attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        setupVariables(attrs)
+        setupVariables(context, attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        setupVariables(attrs)
+        setupVariables(context, attrs)
     }
 
     constructor(context: Context) : super(context)
 
-    private fun setupVariables(attrs: AttributeSet?) {
+    private fun setupVariables(context: Context, attrs: AttributeSet?) {
         mSuffix = attrs?.getAttributeValue(androidns, "text")
         mDefault = attrs?.getAttributeIntValue(androidns, "defaultValue", 0) ?: 0
         mMax = attrs?.getAttributeIntValue(androidns, "max", 100) ?: 100
@@ -84,6 +84,13 @@ class SeekBarPreferenceCompat : DialogPreference {
         val useSimpleSummaryProvider = attrs?.getAttributeBooleanValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "useSimpleSummaryProvider", false) ?: false
         if (useSimpleSummaryProvider) {
             setSummaryProvider { value.toString() }
+        }
+
+        val formattedSummary = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "formattedSummary", -1)
+        if (formattedSummary != null && formattedSummary != -1) {
+            setSummaryProvider {
+                context.getString(formattedSummary, value)
+            }
         }
     }
 
