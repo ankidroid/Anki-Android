@@ -55,7 +55,6 @@ import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
-import org.hamcrest.Matchers.equalTo
 import org.junit.*
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
@@ -424,12 +423,6 @@ open class RobolectricTest : CollectionGetter {
         // HACK: We perform this to ensure that onCollectionLoaded is performed synchronously when startLoadingCollection
         // is called.
         col
-    }
-
-    /** The coroutine implemention on Windows/Robolectric seems to inexplicably hang sometimes */
-    fun skipWindows() {
-        val name = System.getProperty("os.name") ?: ""
-        assumeThat(name.startsWith("Windows"), equalTo(false))
     }
 
     @Throws(ConfirmModSchemaException::class)

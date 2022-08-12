@@ -96,6 +96,7 @@ import com.ichi2.async.Connection.CancellableTaskListener
 import com.ichi2.async.Connection.ConflictResolution
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
@@ -181,6 +182,10 @@ open class DeckPicker :
     // Flag to keep track of startup error
     private var mStartupError = false
     private var mEmptyCardTask: Cancellable? = null
+
+    /** See [OptionsMenuState]. */
+    @VisibleForTesting
+    var optionsMenuState: OptionsMenuState? = null
 
     @JvmField
     @VisibleForTesting
@@ -579,51 +584,47 @@ open class DeckPicker :
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        Timber.d("onCreateOptionsMenu()")
+        mFloatingActionMenu.closeFloatingActionMenu()
+        menuInflater.inflate(R.menu.deck_picker, menu)
+        setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
+        // redraw menu synchronously to avoid flicker
+        updateMenuFromState(menu)
+        // ...then launch a task to possibly update the visible icons.
         // Store the job so that tests can easily await it. In the future
         // this may be better done by injecting a custom test scheduler
         // into CollectionManager, and awaiting that.
         createMenuJob = launchCatchingTask {
-            val haveCol = withOpenColOrNull { true } ?: false
-            if (!haveCol) {
-                // avoid showing the menu if the collection is not open
-                return@launchCatchingTask
+            updateMenuState()
+            updateMenuFromState(menu)
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setupSearchIcon(menuItem: MenuItem) {
+        menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            // When SearchItem is expanded
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                Timber.i("DeckPicker:: SearchItem opened")
+                // Hide the floating action button if it is visible
+                mFloatingActionMenu.hideFloatingActionButton()
+                return true
             }
 
-            Timber.d("onCreateOptionsMenu()")
-            mFloatingActionMenu.closeFloatingActionMenu()
-            menuInflater.inflate(R.menu.deck_picker, menu)
-            val sdCardAvailable = AnkiDroidApp.isSdCardMounted()
-            menu.findItem(R.id.action_sync).isEnabled = sdCardAvailable
-            menu.findItem(R.id.action_new_filtered_deck).isEnabled = sdCardAvailable
-            menu.findItem(R.id.action_check_database).isEnabled = sdCardAvailable
-            menu.findItem(R.id.action_check_media).isEnabled = sdCardAvailable
-            menu.findItem(R.id.action_empty_cards).isEnabled = sdCardAvailable
+            // When SearchItem is collapsed
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                Timber.i("DeckPicker:: SearchItem closed")
+                // Show the floating action button if it is hidden
+                mFloatingActionMenu.showFloatingActionButton()
+                return true
+            }
+        })
 
-            searchDecksIcon = menu.findItem(R.id.deck_picker_action_filter)
-            updateSearchDecksIconVisibility()
-            searchDecksIcon!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-                // When SearchItem is expanded
-                override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-                    Timber.i("DeckPicker:: SearchItem opened")
-                    // Hide the floating action button if it is visible
-                    mFloatingActionMenu.hideFloatingActionButton()
-                    return true
-                }
-
-                // When SearchItem is collapsed
-                override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                    Timber.i("DeckPicker:: SearchItem closed")
-                    // Show the floating action button if it is hidden
-                    mFloatingActionMenu.showFloatingActionButton()
-                    return true
-                }
-            })
-
-            mToolbarSearchView = searchDecksIcon!!.actionView as SearchView
-            mToolbarSearchView!!.queryHint = getString(R.string.search_decks)
-            mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        (menuItem.actionView as SearchView).run {
+            queryHint = getString(R.string.search_decks)
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    mToolbarSearchView!!.clearFocus()
+                    clearFocus()
                     return true
                 }
 
@@ -633,74 +634,84 @@ open class DeckPicker :
                     return true
                 }
             })
+        }
+        searchDecksIcon = menuItem
+    }
 
-            displaySyncBadge(menu)
+    private fun updateMenuFromState(menu: Menu) {
+        menu.setGroupVisible(R.id.allItems, optionsMenuState != null)
+        optionsMenuState?.run {
+            menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
+            updateUndoIconFromState(menu.findItem(R.id.action_undo), undoIcon)
+            updateSyncIconFromState(menu.findItem(R.id.action_sync), syncIcon)
+        }
+    }
 
-            // Show / hide undo
-            val undoName = withOpenColOrNull {
-                if (fragmented || !undoAvailable()) {
-                    null
-                } else {
-                    undoName(resources)
-                }
-            }
-
-            if (undoName == null) {
-                menu.findItem(R.id.action_undo).isVisible = false
+    private fun updateUndoIconFromState(menuItem: MenuItem, undoTitle: String?) {
+        menuItem.run {
+            if (undoTitle != null) {
+                isVisible = true
+                title = resources.getString(R.string.studyoptions_congrats_undo, undoTitle)
             } else {
-                val res = resources
-                menu.findItem(R.id.action_undo).isVisible = true
-                val undo = res.getString(R.string.studyoptions_congrats_undo, undoName)
-                menu.findItem(R.id.action_undo).title = undo
+                isVisible = false
             }
-
-            updateSearchDecksIconVisibility()
         }
-        return super.onCreateOptionsMenu(menu)
     }
 
-    @VisibleForTesting
-    suspend fun updateSearchDecksIconVisibility() {
-        val visible = withOpenColOrNull { decks.count() >= 10 } ?: false
-        searchDecksIcon?.isVisible = visible
-    }
-
-    @VisibleForTesting
-    protected open suspend fun displaySyncBadge(menu: Menu) {
-        val auth = syncAuth()
-        val syncStatus = withOpenColOrNull {
-            SyncStatus.getSyncStatus(this, auth)
-        }
-        if (syncStatus == null) {
-            return
-        }
-        val syncMenu = menu.findItem(R.id.action_sync)
-        when (syncStatus) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.INCONCLUSIVE -> {
-                syncMenu?.let {
-                    BadgeDrawableBuilder.removeBadge(it)
-                    it.setTitle(R.string.button_sync)
-                }
+    private fun updateSyncIconFromState(menuItem: MenuItem, syncIcon: SyncIconState) {
+        when (syncIcon) {
+            SyncIconState.Normal -> {
+                BadgeDrawableBuilder.removeBadge(menuItem)
+                menuItem.setTitle(R.string.button_sync)
             }
-            SyncStatus.HAS_CHANGES -> {
-                // Light orange icon
+            SyncIconState.PendingChanges -> {
                 BadgeDrawableBuilder(resources)
-                    .withColor(ContextCompat.getColor(this, R.color.badge_warning))
-                    .replaceBadge(syncMenu)
-                syncMenu.setTitle(R.string.button_sync)
+                    .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_warning))
+                    .replaceBadge(menuItem)
+                menuItem.setTitle(R.string.button_sync)
             }
-            SyncStatus.NO_ACCOUNT, SyncStatus.FULL_SYNC -> {
-                if (syncStatus === SyncStatus.NO_ACCOUNT) {
-                    syncMenu.setTitle(R.string.sync_menu_title_no_account)
-                } else if (syncStatus === SyncStatus.FULL_SYNC) {
-                    syncMenu.setTitle(R.string.sync_menu_title_full_sync)
-                }
-                // Orange-red icon with exclamation mark
+            SyncIconState.FullSync, SyncIconState.NotLoggedIn -> {
                 BadgeDrawableBuilder(resources)
                     .withText('!')
-                    .withColor(ContextCompat.getColor(this, R.color.badge_error))
-                    .replaceBadge(syncMenu)
+                    .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_error))
+                    .replaceBadge(menuItem)
+                if (syncIcon == SyncIconState.FullSync) {
+                    menuItem.setTitle(R.string.sync_menu_title_full_sync)
+                } else {
+                    menuItem.setTitle(R.string.sync_menu_title_no_account)
+                }
             }
+        }
+    }
+
+    @VisibleForTesting
+    suspend fun updateMenuState() {
+        optionsMenuState = withOpenColOrNull {
+            val searchIcon = decks.count() >= 10
+            val undoIcon = undoName(resources).let {
+                if (it.isEmpty()) {
+                    null
+                } else {
+                    it
+                }
+            }
+            val syncIcon = fetchSyncStatus(col)
+            OptionsMenuState(searchIcon, undoIcon, syncIcon)
+        }
+    }
+
+    private fun fetchSyncStatus(col: Collection): SyncIconState {
+        val auth = syncAuth()
+        val syncStatus = SyncStatus.getSyncStatus(col, auth)
+        return when (syncStatus) {
+            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.INCONCLUSIVE -> {
+                SyncIconState.Normal
+            }
+            SyncStatus.HAS_CHANGES -> {
+                SyncIconState.PendingChanges
+            }
+            SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
+            SyncStatus.FULL_SYNC -> SyncIconState.FullSync
         }
     }
 
@@ -2152,6 +2163,7 @@ open class DeckPicker :
 
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     private fun updateDeckList(quick: Boolean) {
+        invalidateOptionsMenu()
         if (!BackendFactory.defaultLegacySchema) {
             // uses user's desktop settings to determine whether a backup
             // actually happens
@@ -2240,10 +2252,6 @@ open class DeckPicker :
         if (mFocusedDeck != current) {
             scrollDecklistToDeck(current)
             mFocusedDeck = current
-        }
-
-        launchCatchingTask {
-            updateSearchDecksIconVisibility()
         }
     }
 
@@ -2726,4 +2734,24 @@ open class DeckPicker :
             updateDeckList()
         }
     }
+}
+
+/** Android's onCreateOptionsMenu does not play well with coroutines, as
+ * it expects the menu to have been fully configured by the time the routine
+ * returns. This results in flicker, as the menu gets blanked out, and then
+ * configured a moment later when the coroutine runs. To work around this,
+ * the current state is stored in the deck picker so that we can redraw the
+ * menu immediately. */
+data class OptionsMenuState(
+    var searchIcon: Boolean,
+    /** If undo is available, a string describing the action. */
+    var undoIcon: String?,
+    var syncIcon: SyncIconState
+)
+
+enum class SyncIconState {
+    Normal,
+    PendingChanges,
+    FullSync,
+    NotLoggedIn
 }

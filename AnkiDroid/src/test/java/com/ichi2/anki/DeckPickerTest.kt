@@ -17,7 +17,8 @@ import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.DbUtils
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.*
@@ -35,6 +36,7 @@ import java.util.*
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @KotlinCleanup("fix IDE lint issues")
 @KotlinCleanup("replace `when` usages")
@@ -319,18 +321,17 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     @RunInBackground
-    fun doNotShowOptionsMenuWhenCollectionInaccessible() {
-        skipWindows()
+    fun doNotShowOptionsMenuWhenCollectionInaccessible() = runTest {
         try {
             enableNullCollection()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java, Intent()
             )
-            runBlocking { d.createMenuJob?.join() }
+            d.updateMenuState()
             assertThat(
                 "Options menu not displayed when collection is inaccessible",
-                d.optionsMenu?.hasVisibleItems(),
-                equalTo(false)
+                d.optionsMenuState,
+                equalTo(null)
             )
         } finally {
             disableNullCollection()
@@ -338,59 +339,17 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    fun showOptionsMenuWhenCollectionAccessible() {
-        skipWindows()
+    fun showOptionsMenuWhenCollectionAccessible() = runTest {
         try {
             InitialActivityWithConflictTest.grantWritePermissions()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java, Intent()
             )
-            runBlocking { d.createMenuJob?.join() }
+            d.updateMenuState()
             assertThat(
                 "Options menu displayed when collection is accessible",
-                d.optionsMenu?.hasVisibleItems(),
-                equalTo(true)
-            )
-        } finally {
-            InitialActivityWithConflictTest.revokeWritePermissions()
-        }
-    }
-
-    @Test
-    @RunInBackground
-    fun doNotShowSyncBadgeWhenCollectionInaccessible() {
-        skipWindows()
-        try {
-            enableNullCollection()
-            val d = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
-            )
-            waitForAsyncTasksToComplete()
-            runBlocking { d.createMenuJob?.join() }
-            assertThat(
-                "Sync badge is not displayed when collection is inaccessible",
-                d.displaySyncBadge,
-                equalTo(false)
-            )
-        } finally {
-            disableNullCollection()
-        }
-    }
-
-    @Test
-    fun showSyncBadgeWhenCollectionAccessible() {
-        skipWindows()
-        try {
-            InitialActivityWithConflictTest.grantWritePermissions()
-            val d = super.startActivityNormallyOpenCollectionWithIntent(
-                DeckPickerEx::class.java, Intent()
-            )
-            waitForAsyncTasksToComplete()
-            runBlocking { d.createMenuJob?.join() }
-            assertThat(
-                "Sync badge is displayed when collection is accessible",
-                d.displaySyncBadge,
-                equalTo(true)
+                d.optionsMenuState,
+                `is`(notNullValue())
             )
         } finally {
             InitialActivityWithConflictTest.revokeWritePermissions()
@@ -619,7 +578,6 @@ class DeckPickerTest : RobolectricTest() {
         var databaseErrorDialog = 0
         var displayedAnalyticsOptIn = false
         var optionsMenu: Menu? = null
-        var displaySyncBadge = false
 
         override fun showDatabaseErrorDialog(id: Int) {
             databaseErrorDialog = id
@@ -641,11 +599,6 @@ class DeckPickerTest : RobolectricTest() {
         override fun onPrepareOptionsMenu(menu: Menu): Boolean {
             optionsMenu = menu
             return super.onPrepareOptionsMenu(menu)
-        }
-
-        override suspend fun displaySyncBadge(menu: Menu) {
-            displaySyncBadge = true
-            super.displaySyncBadge(menu)
         }
     }
 }
