@@ -18,8 +18,6 @@
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/accessibility">
-    <!-- For some unknown reason, getAttributeResourceValue only works for the custom namespace
-    if "http://schemas.android.com/apk/res-auto" is set as namespace too -->
     <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="100"
         android:key="@string/card_zoom_preference"
@@ -28,7 +26,7 @@
         android:title="@string/card_zoom"
         app:interval="10"
         app:min="10"
-        app:formattedSummary="@string/pref_summary_percentage"/>
+        app1:summaryFormat="@string/pref_summary_percentage"/>
     <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="100"
         android:key="@string/image_zoom_preference"
@@ -37,7 +35,7 @@
         android:title="@string/image_zoom"
         app:interval="10"
         app:min="50"
-        app:formattedSummary="@string/pref_summary_percentage"/>
+        app1:summaryFormat="@string/pref_summary_percentage"/>
     <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="100"
         android:key="@string/answer_button_size_preference"
@@ -46,7 +44,7 @@
         android:title="@string/button_size"
         app:interval="10"
         app:min="10"
-        app:formattedSummary="@string/pref_summary_percentage"/>
+        app1:summaryFormat="@string/pref_summary_percentage"/>
     <SwitchPreference
         android:key="@string/show_large_answer_buttons_preference"
         android:defaultValue="false"
@@ -60,5 +58,5 @@
         android:title="@string/card_browser_font_size"
         app:interval="10"
         app:min="10"
-        app:formattedSummary="@string/pref_summary_percentage"/>
+        app1:summaryFormat="@string/pref_summary_percentage"/>
 </PreferenceScreen>

@@ -32,6 +32,16 @@
         <attr name="interval" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="CustomPreference">
+        <!-- Whether the preference should automatically set its summary to the value saved for the
+             preference, and update the summary when the value is changed. Defaults to false -->
+        <attr name="useSimpleSummaryProvider" format="boolean"/>
+        <!-- Format string to be used as template to build the preference summary.
+             The placeholder is replaced by the preference value, and it must be only one placeholder.
+             If the preference value is updated, the summary is automatically updated as well. -->
+        <attr name="summaryFormat" format="string"/>
+    </declare-styleable>
+
     <declare-styleable name="HeaderPreference">
         <!-- String array of entries to join in order to build the preference summary -->
         <attr name="summaryEntries" format="reference"/>
