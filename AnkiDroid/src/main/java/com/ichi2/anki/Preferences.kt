@@ -59,9 +59,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
 
     lateinit var searchView: PreferencesSearchView
 
-    private val mOnBackStackChangedListener: FragmentManager.OnBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
-        updateActionBarTitle(supportFragmentManager, supportActionBar)
-    }
     // ----------------------------------------------------------------------------
     // Overridden methods
     // ----------------------------------------------------------------------------
@@ -86,7 +83,9 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
             loadInitialFragment()
         }
         updateActionBarTitle(supportFragmentManager, actionBar)
-        supportFragmentManager.addOnBackStackChangedListener(mOnBackStackChangedListener)
+        supportFragmentManager.addOnBackStackChangedListener {
+            updateActionBarTitle(supportFragmentManager, supportActionBar)
+        }
     }
 
     /**
@@ -109,11 +108,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         supportFragmentManager.commit {
             replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        supportFragmentManager.removeOnBackStackChangedListener(mOnBackStackChangedListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
