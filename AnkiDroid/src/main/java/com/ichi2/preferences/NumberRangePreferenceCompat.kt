@@ -25,35 +25,19 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
+import androidx.core.content.withStyledAttributes
 import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
 import timber.log.Timber
 
-open class NumberRangePreferenceCompat : EditTextPreference {
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        setup(attrs)
-    }
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        setup(attrs)
-    }
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        setup(attrs)
-    }
-    constructor(context: Context) : super(context)
-
-    fun setup(attrs: AttributeSet?) {
-        min = getMinFromAttributes(attrs)
-        max = getMaxFromAttributes(attrs)
-        defaultValue = getDefaultValueFromAttributes(attrs)
-
-        val formattedSummary = attrs?.getAttributeResourceValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "formattedSummary", -1)
-        if (formattedSummary != null && formattedSummary != -1) {
-            setSummaryProvider {
-                context.getString(formattedSummary, text)
-            }
-        }
-    }
+open class NumberRangePreferenceCompat @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.editTextPreferenceStyle,
+    defStyleRes: Int = R.style.Preference_DialogPreference_EditTextPreference
+) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes) {
 
     var defaultValue: String? = null
 
@@ -61,6 +45,21 @@ open class NumberRangePreferenceCompat : EditTextPreference {
         protected set
     var max = 0
         private set
+
+    init {
+        min = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
+        max = attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max", Int.MAX_VALUE) ?: Int.MAX_VALUE
+        defaultValue = attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "defaultValue")
+
+        context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
+            val summaryFormat = this.getString(R.styleable.CustomPreference_summaryFormat)
+            if (summaryFormat != null) {
+                setSummaryProvider {
+                    String.format(summaryFormat, text)
+                }
+            }
+        }
+    }
 
     /** The maximum available number of digits */
     val maxDigits: Int get() = max.toString().length
@@ -112,36 +111,6 @@ open class NumberRangePreferenceCompat : EditTextPreference {
                 min
             }
         }
-    }
-
-    /**
-     * Returns the value of the min attribute, or its default value if not specified
-     *
-     *
-     * This method should only be called once from the constructor.
-     */
-    private fun getMinFromAttributes(attrs: AttributeSet?): Int {
-        return attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "min", 0) ?: 0
-    }
-
-    /**
-     * Returns the value of the max attribute, or its default value if not specified
-     *
-     *
-     * This method should only be called once from the constructor.
-     */
-    private fun getMaxFromAttributes(attrs: AttributeSet?): Int {
-        return attrs?.getAttributeIntValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "max", Int.MAX_VALUE)
-            ?: Int.MAX_VALUE
-    }
-
-    /**
-     * Returns the default Value, or null if not specified
-     *
-     * This method should only be called once from the constructor.
-     */
-    private fun getDefaultValueFromAttributes(attrs: AttributeSet?): String? {
-        return attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "defaultValue")
     }
 
     /**

@@ -18,6 +18,7 @@
 <!-- Key com.ichi2.ui.BindingPreferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_controls"
     android:key="@string/pref_controls_screen_key">
 
@@ -49,7 +50,7 @@
         android:title="@string/swipe_sensitivity"
         app:interval="1"
         app:min="20"
-        app:useSimpleSummaryProvider="true"/>
+        app1:useSimpleSummaryProvider="true"/>
     <!-- This category is expanded in BindingPreference.setup -->
     <PreferenceCategory android:title="@string/controls_main_category" android:key="@string/controls_command_mapping_cat_key" />
 </PreferenceScreen>
