@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.preferences
 
-import android.app.AlertDialog
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -80,17 +79,17 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
         // Configure "Reset languages" preference
         requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle(R.string.reset_languages)
-                .setIcon(R.drawable.ic_warning_black)
-                .setMessage(R.string.reset_languages_question)
-                .setPositiveButton(R.string.dialog_ok) { _, _ ->
+            MaterialDialog(requireContext()).show {
+                title(R.string.reset_languages)
+                icon(R.drawable.ic_warning_black)
+                message(R.string.reset_languages_question)
+                positiveButton(R.string.dialog_ok) {
                     if (MetaDB.resetLanguages(requireContext())) {
                         UIUtils.showThemedToast(requireContext(), R.string.reset_confirmation, true)
                     }
                 }
-                .setNegativeButton(R.string.dialog_cancel, null)
-                .show()
+                negativeButton(R.string.dialog_cancel)
+            }
             true
         }
         // Advanced statistics
