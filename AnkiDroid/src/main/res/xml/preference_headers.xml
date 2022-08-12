@@ -20,68 +20,76 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <!--  General Preferences -->
-    <Preference
+    <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.GeneralSettingsFragment"
         android:title="@string/pref_cat_general"
         android:icon="@drawable/ic_settings_black"
-        android:key="@string/pref_general_screen_key">
-    </Preference>
+        android:key="@string/pref_general_screen_key"
+        app:summaryEntries="@array/general_summary_entries">
+    </com.ichi2.preferences.HeaderPreference>
 
     <!-- Reviewing Preferences -->
-    <Preference
+    <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.ReviewingSettingsFragment"
         android:key="@string/pref_reviewing_screen_key"
         android:title="@string/pref_cat_reviewing"
-        android:icon="@drawable/ic_flashcard_black">
-    </Preference>
+        android:icon="@drawable/ic_flashcard_black"
+        app:summaryEntries="@array/reviewing_summary_entries">
+    </com.ichi2.preferences.HeaderPreference>
 
     <!-- Sync Preferences -->
-    <Preference
+    <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.SyncSettingsFragment"
         android:key="@string/pref_sync_screen_key"
         android:title="@string/pref_cat_sync"
-        android:icon="@drawable/ic_sync">
-    </Preference>
+        android:icon="@drawable/ic_sync"
+        app:summaryEntries="@array/sync_summary_entries">
+    </com.ichi2.preferences.HeaderPreference>
 
     <!-- Notifications -->
-    <Preference
+    <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.NotificationsSettingsFragment"
         android:key="@string/pref_notifications_screen_key"
         android:title="@string/notification_pref"
-        android:icon="@drawable/ic_notifications">
-    </Preference>
+        android:icon="@drawable/ic_notifications"
+        app:summaryEntries="@array/notifications_summary_entries">
+    </com.ichi2.preferences.HeaderPreference>
 
     <!-- Appearance Preferences  -->
-    <Preference
+    <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.AppearanceSettingsFragment"
         android:key="@string/pref_appearance_screen_key"
         android:title="@string/pref_cat_appearance"
-        android:icon="@drawable/ic_color_lens_white_24dp">
-    </Preference>
+        android:icon="@drawable/ic_color_lens_white_24dp"
+        app:summaryEntries="@array/appearance_summary_entries">
+    </com.ichi2.preferences.HeaderPreference>
 
     <!-- Keybinding preferences -->
-    <Preference
+    <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.ControlsSettingsFragment"
         android:key="@string/pref_controls_screen_key"
         android:title="@string/pref_cat_controls"
-        android:icon="@drawable/ic_touch">
-    </Preference>
+        android:icon="@drawable/ic_touch"
+        app:summaryEntries="@array/controls_summary_entries">
+    </com.ichi2.preferences.HeaderPreference>
 
     <!-- Accessibility -->
-    <Preference
+    <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.AccessibilitySettingsFragment"
         android:key="@string/pref_accessibility_screen_key"
         android:title="@string/accessibility"
-        android:icon="@drawable/ic_accessibility_24">
-    </Preference>
+        android:icon="@drawable/ic_accessibility_24"
+        app:summaryEntries="@array/accessibility_summary_entries">
+    </com.ichi2.preferences.HeaderPreference>
 
     <!-- Advanced Preferences -->
-    <Preference
+    <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.AdvancedSettingsFragment"
         android:key="@string/pref_advanced_screen_key"
         android:title="@string/pref_cat_advanced"
-        android:icon="@drawable/ic_tune_white">
-    </Preference>
+        android:icon="@drawable/ic_tune_white"
+        app:summaryEntries="@array/advanced_summary_entries">
+    </com.ichi2.preferences.HeaderPreference>
     <Preference
         android:key="@string/pref_dev_options_screen_key"
         android:title="@string/pref_cat_dev_options"

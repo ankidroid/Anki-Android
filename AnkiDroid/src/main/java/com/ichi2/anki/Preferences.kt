@@ -217,19 +217,6 @@ class Preferences : AnkiActivity() {
             return ver
         }
 
-        /**
-         * Join [strings] with ` • ` as separator
-         * to build a summary string for some preferences categories
-         * e.g. `foo`, `bar`, `hi` ->  `foo • bar • hi`
-         */
-        fun buildCategorySummary(vararg strings: String): String {
-            return if (!LanguageUtils.appLanguageIsRTL()) {
-                strings.joinToString(separator = " • ")
-            } else {
-                strings.reversed().joinToString(separator = " • ")
-            }
-        }
-
         /** Whether the user is logged on to AnkiWeb  */
         fun hasAnkiWebAccount(preferences: SharedPreferences): Boolean =
             preferences.getString("username", "")!!.isNotEmpty()

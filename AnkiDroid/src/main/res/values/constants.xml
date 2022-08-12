@@ -248,6 +248,53 @@
         <item>4</item>
     </string-array>
 
+    <!-- Preferences headers summaries -->
+    <string-array name="general_summary_entries">
+        <item>@string/language</item>
+        <item>@string/pref_cat_studying</item>
+        <item>@string/pref_cat_system_wide</item>
+    </string-array>
+
+    <string-array name="reviewing_summary_entries">
+        <item>@string/pref_cat_scheduling</item>
+        <item>@string/timeout_answer_text</item>
+    </string-array>
+
+    <string-array name="sync_summary_entries">
+        <item>@string/sync_account</item>
+        <item>@string/automatic_sync_choice</item>
+    </string-array>
+
+    <string-array name="notifications_summary_entries">
+        <item>@string/notification_pref_title</item>
+        <item>@string/notification_minimum_cards_due_vibrate</item>
+        <item>@string/notification_minimum_cards_due_blink</item>
+    </string-array>
+
+    <string-array name="appearance_summary_entries">
+        <item>@string/pref_cat_themes</item>
+        <item>@string/pref_cat_fonts</item>
+        <item>@string/pref_cat_reviewer</item>
+    </string-array>
+
+    <string-array name="accessibility_summary_entries">
+        <item>@string/card_zoom</item>
+        <item>@string/button_size</item>
+    </string-array>
+
+    <string-array name="controls_summary_entries">
+        <item>@string/pref_cat_gestures</item>
+        <item>@string/keyboard</item>
+        <item>@string/bluetooth</item>
+    </string-array>
+
+    <string-array name="advanced_summary_entries">
+        <item>@string/statistics</item>
+        <item>@string/pref_cat_workarounds</item>
+        <item>@string/pref_cat_plugins</item>
+    </string-array>
+
+
     <string name="answer_buttons_position_preference" translatable="false">answerButtonPosition</string>
     <string-array name="answer_buttons_position" translatable="false">
         <item>top</item>
