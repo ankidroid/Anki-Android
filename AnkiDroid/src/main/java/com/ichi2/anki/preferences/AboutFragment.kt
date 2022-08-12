@@ -30,7 +30,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
 import com.ichi2.anki.servicelayer.DebugInfoService
@@ -51,7 +50,7 @@ class AboutFragment : Fragment() {
 
         // Logo secret
         layoutView.findViewById<ImageView>(R.id.about_app_logo)
-            .setOnClickListener(DevOptionsSecretClickListener(parentFragmentManager))
+            .setOnClickListener(DevOptionsSecretClickListener(requireActivity() as Preferences))
 
         // Contributors text
         val contributorsLink = getString(R.string.link_contributors)
@@ -116,7 +115,7 @@ class AboutFragment : Fragment() {
      * Click listener which enables developer options on release builds
      * if the user clicks it a minimum number of times
      */
-    private class DevOptionsSecretClickListener(val fragmentManager: FragmentManager) : View.OnClickListener {
+    private class DevOptionsSecretClickListener(val preferencesActivity: Preferences) : View.OnClickListener {
         private var clickCount = 0
         private val clickLimit = 6
 
@@ -150,16 +149,9 @@ class AboutFragment : Fragment() {
          * Enables developer options for the user and shows it on [HeaderFragment]
          */
         fun enableDevOptions(context: Context) {
-            DevOptionsFragment.setDevOptionsEnabledByUser(context, true)
-
             val message = context.getString(R.string.dev_options_enabled_msg)
             UIUtils.showThemedToast(context, message, true)
-
-            // Make developer options visible on headers fragment if it is open
-            val headersFragment = fragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
-            if (headersFragment is HeaderFragment) {
-                headersFragment.setDevOptionsVisibility(true)
-            }
+            preferencesActivity.setDevOptionsEnabled(true)
         }
     }
 }
