@@ -16,7 +16,6 @@
 package com.ichi2.anki.preferences
 
 import android.content.Context
-import androidx.core.content.edit
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
@@ -105,12 +104,8 @@ class DevOptionsFragment : SettingsFragment() {
      * Destroys the fragment and hides developer options on [HeaderFragment]
      */
     private fun disableDevOptions() {
-        val fragment = parentFragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
-        if (fragment is HeaderFragment) {
-            fragment.setDevOptionsVisibility(false)
-        }
+        (requireActivity() as Preferences).setDevOptionsEnabled(false)
         parentFragmentManager.popBackStack()
-        setDevOptionsEnabledByUser(requireContext(), false)
     }
 
     companion object {
@@ -122,12 +117,6 @@ class DevOptionsFragment : SettingsFragment() {
         fun isEnabled(context: Context): Boolean {
             return BuildConfig.DEBUG || AnkiDroidApp.getSharedPrefs(context)
                 .getBoolean(context.getString(R.string.dev_options_enabled_by_user_key), false)
-        }
-
-        fun setDevOptionsEnabledByUser(context: Context, isEnabled: Boolean) {
-            AnkiDroidApp.getSharedPrefs(context).edit {
-                putBoolean(context.getString(R.string.dev_options_enabled_by_user_key), isEnabled)
-            }
         }
     }
 }

@@ -28,6 +28,7 @@ import android.view.MenuItem
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.ActionBar
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -226,6 +227,21 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
     // ----------------------------------------------------------------------------
     // Class methods
     // ----------------------------------------------------------------------------
+
+    /**
+     * Enables and sets the visibility of the "Developer options" header on [HeaderFragment]
+     */
+    fun setDevOptionsEnabled(isEnabled: Boolean) {
+        // Update the "devOptionsEnabledByUser" pref value
+        AnkiDroidApp.getSharedPrefs(this).edit {
+            putBoolean(getString(R.string.dev_options_enabled_by_user_key), isEnabled)
+        }
+        // Show/hide the header
+        val headerFragment = supportFragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
+        if (headerFragment is HeaderFragment) {
+            headerFragment.setDevOptionsVisibility(isEnabled)
+        }
+    }
 
     /** Sets the hour that the collection rolls over to the next day  */
     @VisibleForTesting
