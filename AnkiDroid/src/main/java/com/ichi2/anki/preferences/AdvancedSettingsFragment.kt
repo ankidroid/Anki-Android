@@ -63,14 +63,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 }
             }
         }
-        // Adding change logs in both debug and release builds
-        Timber.i("Adding open changelog")
-        val changelogPreference = Preference(requireContext())
-        changelogPreference.setTitle(R.string.open_changelog)
-        val infoIntent = Intent(requireContext(), Info::class.java)
-        infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
-        changelogPreference.intent = infoIntent
-        preferenceScreen.addPreference(changelogPreference)
 
         // Third party apps
         requirePreference<Preference>(R.string.thirdparty_apps_key).setOnPreferenceClickListener {
