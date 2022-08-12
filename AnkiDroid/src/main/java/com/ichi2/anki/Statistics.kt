@@ -376,7 +376,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private fun createChart() {
             val statisticsActivity = requireActivity() as Statistics
             val taskHandler = statisticsActivity.taskHandler
-            statisticsJob = viewLifecycleOwner.catchingLifecycleScope(requireActivity()) {
+            statisticsJob = catchingLifecycleScope {
                 taskHandler.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
             }
         }
@@ -451,7 +451,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         private fun createStatisticOverview() {
             val handler = (requireActivity() as Statistics).taskHandler
-            statisticsJob = catchingLifecycleScope(requireActivity(), "createStatisticOverview failed with error") {
+            statisticsJob = catchingLifecycleScope("createStatisticOverview failed with error") {
                 handler.createStatisticsOverview(mWebView, mProgressBar)
             }
         }
