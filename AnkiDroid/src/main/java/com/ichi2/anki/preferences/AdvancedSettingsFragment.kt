@@ -16,12 +16,10 @@
 package com.ichi2.anki.preferences
 
 import android.app.AlertDialog
-import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
@@ -41,7 +39,8 @@ class AdvancedSettingsFragment : SettingsFragment() {
         get() = "prefs.advanced"
 
     override fun initSubscreen() {
-        val screen = preferenceScreen
+        removeUnnecessaryAdvancedPrefs()
+
         // Check that input is valid before committing change in the collection path
         requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
             setOnPreferenceChangeListener { _, newValue: Any? ->
@@ -71,10 +70,13 @@ class AdvancedSettingsFragment : SettingsFragment() {
         val infoIntent = Intent(requireContext(), Info::class.java)
         infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
         changelogPreference.intent = infoIntent
-        screen.addPreference(changelogPreference)
-        // Workaround preferences
-        removeUnnecessaryAdvancedPrefs()
-        addThirdPartyAppsListener()
+        preferenceScreen.addPreference(changelogPreference)
+
+        // Third party apps
+        requirePreference<Preference>(R.string.thirdparty_apps_key).setOnPreferenceClickListener {
+            (requireActivity() as AnkiActivity).openUrl(R.string.link_third_party_api_apps)
+            true
+        }
 
         // Configure "Reset languages" preference
         requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
@@ -169,25 +171,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
             if (doubleScrolling != null) {
                 preferenceScreen.removePreference(doubleScrolling)
             }
-        }
-    }
-
-    private fun addThirdPartyAppsListener() {
-        // #5864 - some people don't have a browser so we can't use <intent>
-        // and need to handle the keypress ourself.
-        val showThirdParty = requirePreference<Preference>("thirdpartyapps_link")
-        val githubThirdPartyAppsUrl = "https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps"
-        showThirdParty.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            try {
-                val openThirdPartyAppsIntent = Intent(Intent.ACTION_VIEW, Uri.parse(githubThirdPartyAppsUrl))
-                super.startActivity(openThirdPartyAppsIntent)
-            } catch (e: ActivityNotFoundException) {
-                Timber.w(e)
-                // We use a different message here. We have limited space in the snackbar
-                val error = getString(R.string.activity_start_failed_load_url, githubThirdPartyAppsUrl)
-                UIUtils.showSimpleSnackbar(requireActivity(), error, false)
-            }
-            true
         }
     }
 

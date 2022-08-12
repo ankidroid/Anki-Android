@@ -19,6 +19,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -487,6 +488,14 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         CustomTabsIntent customTabsIntent = builder.build();
         CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
         CustomTabActivityHelper.openCustomTab(this, customTabsIntent, url, new CustomTabsFallback());
+    }
+
+    public void openUrl(@NonNull String urlString) {
+        openUrl(Uri.parse(urlString));
+    }
+
+    public void openUrl(@StringRes int url) {
+        openUrl(getString(url));
     }
 
 
