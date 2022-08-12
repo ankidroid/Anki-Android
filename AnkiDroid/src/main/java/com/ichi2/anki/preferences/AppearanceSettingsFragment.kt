@@ -155,7 +155,17 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 requireActivity().recreate()
             }
         }
-        initializeCustomFontsDialog()
+
+        // Default font
+        requirePreference<ListPreference>(R.string.pref_default_font_key).apply {
+            entries = getCustomFonts("System default")
+            entryValues = getCustomFonts("")
+        }
+        // Browser and Note editor font
+        requirePreference<ListPreference>(R.string.pref_browser_and_editor_font_key).apply {
+            entries = getCustomFonts("System default")
+            entryValues = getCustomFonts("", useFullPath = true)
+        }
 
         // Show estimate time
         // Represents the collection pref "estTime": i.e.
@@ -177,22 +187,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
         }
     }
 
-    /** Initializes the list of custom fonts shown in the preferences.  */
-    private fun initializeCustomFontsDialog() {
-        val defaultFontPreference = requirePreference<ListPreference>("defaultFont")
-        defaultFontPreference.entries = getCustomFonts("System default")
-        defaultFontPreference.entryValues = getCustomFonts("")
-        val browserEditorCustomFontsPreference = requirePreference<ListPreference>("browserEditorFont")
-        browserEditorCustomFontsPreference.entries = getCustomFonts("System default")
-        browserEditorCustomFontsPreference.entryValues = getCustomFonts("", true)
-    }
-
-    /** Returns a list of the names of the installed custom fonts.  */
-    private fun getCustomFonts(defaultValue: String): Array<String?> {
-        return getCustomFonts(defaultValue, false)
-    }
-
-    private fun getCustomFonts(defaultValue: String, useFullPath: Boolean): Array<String?> {
+    /** Returns a list of the names of the installed custom fonts */
+    private fun getCustomFonts(defaultValue: String, useFullPath: Boolean = false): Array<String?> {
         val fonts = Utils.getCustomFonts(requireContext())
         val count = fonts.size
         Timber.d("There are %d custom fonts", count)
