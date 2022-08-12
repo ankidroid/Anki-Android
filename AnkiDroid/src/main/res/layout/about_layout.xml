@@ -116,11 +116,11 @@
             android:text="@string/info_rate"
             android:textColor="?attr/colorAccent" />
         <Button
-            android:id="@+id/about_send_feedback"
+            android:id="@+id/about_open_changelog"
             android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/send_feedback"
+            android:text="@string/open_changelog"
             android:textColor="?attr/colorAccent"/>
     <Button
         android:id="@+id/about_copy_debug"

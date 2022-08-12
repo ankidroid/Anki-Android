@@ -19,6 +19,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -32,7 +33,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
-import com.ichi2.anki.dialogs.HelpDialog
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.VersionUtils.appName
@@ -82,9 +82,12 @@ class AboutFragment : Fragment() {
             IntentUtil.tryOpenIntent((requireActivity() as AnkiActivity), AnkiDroidApp.getMarketIntent(requireContext()))
         }
 
-        // Send feedback button
-        layoutView.findViewById<Button>(R.id.about_send_feedback).setOnClickListener {
-            HelpDialog.openFeedback((requireActivity() as AnkiActivity))
+        // Open changelog button
+        layoutView.findViewById<Button>(R.id.about_open_changelog).setOnClickListener {
+            val openChangelogIntent = Intent(requireContext(), Info::class.java).apply {
+                putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
+            }
+            startActivity(openChangelogIntent)
         }
 
         // Copy debug info button
