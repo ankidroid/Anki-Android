@@ -25,6 +25,7 @@ import androidx.preference.Preference
 import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.snackbar.showSnackbar
@@ -127,11 +128,28 @@ class AdvancedSettingsFragment : SettingsFragment() {
             }
             requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
         }
+
+        // v3 scheduler
+        @RustCleanup("move this to Reviewing > Scheduling once the new backend is the default")
+        val v3schedPref = requirePreference<SwitchPreference>(R.string.enable_v3_sched_key).apply {
+            launchCatchingTask { withCol { isChecked = v3Enabled } }
+            // if new backend was enabled on local.properties, remove the pref dependency
+            if (!BuildConfig.LEGACY_SCHEMA) {
+                dependency = null
+                isEnabled = true
+            }
+            setOnPreferenceChangeListener { newValue: Any ->
+                Timber.d("v3 scheduler set to $newValue")
+                launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
+            }
+        }
+
         // Use V16 backend
         requirePreference<SwitchPreference>(R.string.pref_rust_backend_key).apply {
             if (!BuildConfig.LEGACY_SCHEMA) {
                 title = "New schema already enabled on local.properties"
                 isEnabled = false
+                isChecked = true
             }
             setOnPreferenceChangeListener { newValue ->
                 if (newValue == true) {
@@ -146,6 +164,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                     )
                 } else {
                     BackendFactory.defaultLegacySchema = true
+                    v3schedPref.isChecked = false
                     (requireActivity() as Preferences).restartWithNewDeckPicker()
                 }
             }
