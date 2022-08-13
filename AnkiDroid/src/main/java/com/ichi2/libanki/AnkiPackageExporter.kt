@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteDatabase
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ImportExportException
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.CollectionUtils.addAll
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
@@ -157,18 +158,15 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
         Timber.d("Copy notes")
         val strnids = Utils.ids2str(uniqueNids)
         col.db.database.execSQL("INSERT INTO DST_DB.notes select * from notes where id in $strnids")
-        // remove system tags if not exporting scheduling info
+        // remove system tags ("marked" and "leech") if not exporting scheduling info
         if (!includeSched) {
             Timber.d("Stripping system tags from list")
             val srcTags = col.db.queryStringList(
                 "select tags from notes where id in $strnids"
             )
-            val args = ArrayList<Array<Any?>>(srcTags.size)
-            val arg = arrayOfNulls<Any>(2)
-            for (row in srcTags.indices) {
-                arg[0] = removeSystemTags(srcTags[row])
-                arg[1] = uniqueNids[row]
-                args.add(row, arg)
+            val args = srcTags.indices.map { row ->
+                @NeedsTest("Test that the tags are removed")
+                arrayOf(removeSystemTags(srcTags[row]), uniqueNids[row])
             }
             col.db.executeMany("UPDATE DST_DB.notes set tags=? where id=?", args)
         }
