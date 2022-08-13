@@ -1171,7 +1171,7 @@ class CardContentProvider : ContentProvider() {
     private fun buryOrSuspendCard(col: Collection, sched: AbstractSched, card: Card?, bury: Boolean) {
         try {
             @KotlinCleanup("move lambda outside parentheses")
-            col.db.executeInTransaction({
+            col.db.executeInTransaction {
                 if (card != null) {
                     if (bury) {
                         // bury
@@ -1181,7 +1181,7 @@ class CardContentProvider : ContentProvider() {
                         sched.suspendCards(longArrayOf(card.id))
                     }
                 }
-            })
+            }
         } catch (e: RuntimeException) {
             Timber.e(e, "buryOrSuspendCard - RuntimeException on burying or suspending card")
             CrashReportService.sendExceptionReport(e, "doInBackgroundBurySuspendCard")

@@ -454,7 +454,7 @@ open class Collection(
             try {
                 val db = db.database
                 if (save) {
-                    this.db.executeInTransaction({ this.save() })
+                    this.db.executeInTransaction { this.save() }
                 } else {
                     DB.safeEndInTransaction(db)
                 }
