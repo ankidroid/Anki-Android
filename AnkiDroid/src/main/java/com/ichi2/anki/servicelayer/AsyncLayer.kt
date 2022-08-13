@@ -20,8 +20,6 @@ import com.ichi2.async.CancelListener
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.DB
-import timber.log.Timber
 
 /*
     Async Layer on top of the legacy CollectionTask layer
@@ -75,26 +73,4 @@ interface TaskExecutionContext<T> {
     fun isCancelled(): Boolean
     fun doProgress(progress: T)
     val col: Collection
-}
-
-/** Extension which allows a return value from a transaction */
-fun <T> DB.executeInTransactionReturn(task: () -> T): T {
-    // Ported from code which started the transaction outside the try..finally
-    database.beginTransaction()
-    try {
-        val ret = task()
-        if (database.inTransaction()) {
-            try {
-                database.setTransactionSuccessful()
-            } catch (e: Exception) {
-                // Unsure if this can happen - copied the structure from endTransaction()
-                Timber.w(e)
-            }
-        } else {
-            Timber.w("Not in a transaction. Cannot mark transaction successful.")
-        }
-        return ret
-    } finally {
-        DB.safeEndInTransaction(database)
-    }
 }

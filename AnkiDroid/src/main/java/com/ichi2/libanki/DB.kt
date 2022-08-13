@@ -258,12 +258,11 @@ class DB(db: SupportSQLiteDatabase) {
     val path: String
         get() = database.path ?: ":memory:"
 
-    @KotlinCleanup("Take a block returning a value")
-    fun executeInTransaction(r: Runnable) {
+    fun <T> executeInTransaction(r: () -> T): T {
         // Ported from code which started the transaction outside the try..finally
         database.beginTransaction()
         try {
-            r.run()
+            val result = r()
             if (database.inTransaction()) {
                 try {
                     database.setTransactionSuccessful()
@@ -274,6 +273,7 @@ class DB(db: SupportSQLiteDatabase) {
             } else {
                 Timber.w("Not in a transaction. Cannot mark transaction successful.")
             }
+            return result
         } finally {
             safeEndInTransaction(database)
         }
