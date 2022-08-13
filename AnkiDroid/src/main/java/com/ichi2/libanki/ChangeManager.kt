@@ -93,7 +93,12 @@ object ChangeManager {
  * to notify change subscribers of the changes. */
 suspend fun <T> undoableOp(handler: Any? = null, block: CollectionV16.() -> T): T {
     return withCol {
-        this.newBackend.block()
+        val result = newBackend.block()
+        // any backend operation clears legacy undo and resets study queues if it
+        // succeeds
+        clearUndo()
+        reset()
+        result
     }.also {
         withContext(Dispatchers.Main) {
             ChangeManager.notifySubscribers(it, handler)
