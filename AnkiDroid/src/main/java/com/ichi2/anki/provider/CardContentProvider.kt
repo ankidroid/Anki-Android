@@ -204,18 +204,6 @@ class CardContentProvider : ContentProvider() {
         return isMarshmallow || !WHITELIST.contains(sUriMatcher.match(uri)) || knownRogueClient()
     }
 
-    /**
-     * Helper function to handle calling a java function with vararags from kotlin code
-     */
-    @KotlinCleanup("After migrating DB.java to kotlin see if this function is still needed")
-    private fun DB.queryWithNullSelection(sql: String, selectionArgs: Array<String>?): Cursor? {
-        return if (selectionArgs == null) {
-            this.query(sql)
-        } else {
-            this.query(sql, *selectionArgs)
-        }
-    }
-
     override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?, order: String?): Cursor? {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("query", uri)
@@ -228,11 +216,10 @@ class CardContentProvider : ContentProvider() {
         val match = sUriMatcher.match(uri)
         return when (match) {
             NOTES_V2 -> {
-
                 /* Search for notes using direct SQL query */
                 val proj = sanitizeNoteProjection(projection)
                 val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null)
-                col.db.queryWithNullSelection(sql, selectionArgs)
+                col.db.query(sql, *(selectionArgs ?: arrayOf()))
             }
             NOTES -> {
 
