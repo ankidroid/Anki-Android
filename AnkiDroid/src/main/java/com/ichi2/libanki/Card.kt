@@ -102,7 +102,7 @@ open class Card : Cloneable {
     var oDue: Long = 0
     var oDid: DeckId = 0
     private var flags = 0
-    private var data: String? = null
+    private lateinit var data: String
 
     // END SQL table entries
     @set:JvmName("setRenderOutput")
