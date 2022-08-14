@@ -50,6 +50,7 @@ import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
@@ -255,7 +256,17 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         when (item.itemId) {
             R.id.action_undo -> {
                 Timber.i("StudyOptionsFragment:: Undo button pressed")
-                Undo().runWithHandler(mUndoListener)
+                if (BackendFactory.defaultLegacySchema) {
+                    Undo().runWithHandler(mUndoListener)
+                } else {
+                    launchCatchingTask {
+                        if (requireActivity().backendUndoAndShowPopup()) {
+                            openReviewer()
+                        } else {
+                            Undo().runWithHandler(mUndoListener)
+                        }
+                    }
+                }
                 return true
             }
             R.id.action_deck_or_study_options -> {

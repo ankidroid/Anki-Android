@@ -16,13 +16,15 @@
 
 package com.ichi2.anki
 
+import androidx.fragment.app.FragmentActivity
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.libanki.undoNew
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BlocksSchemaUpgrade
 import net.ankiweb.rsdroid.BackendException
 
-suspend fun AnkiActivity.backendUndoAndShowPopup(): Boolean {
+suspend fun FragmentActivity.backendUndoAndShowPopup(): Boolean {
     return try {
         val changes = withProgress() {
             undoableOp {
@@ -31,7 +33,7 @@ suspend fun AnkiActivity.backendUndoAndShowPopup(): Boolean {
         }
         showSimpleSnackbar(
             this,
-            col.tr.undoActionUndone(changes.operation),
+            TR.undoActionUndone(changes.operation),
             false
         )
         true
