@@ -2615,8 +2615,7 @@ open class CardBrowser :
                 changes.card
             ) && handler !== this
         ) {
-            // executing this only for the refresh side effects; there may be a better way
-            Undo().runWithHandler(mUndoHandler)
+            mUndoHandler.actualOnPostExecute(this@CardBrowser, Computation.ok(NextCard.withNoResult(null)))
         }
     }
 
