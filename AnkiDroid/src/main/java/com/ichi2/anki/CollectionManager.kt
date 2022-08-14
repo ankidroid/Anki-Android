@@ -17,18 +17,17 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.os.Looper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.Storage.collection
 import com.ichi2.libanki.importCollectionPackage
+import com.ichi2.utils.Threads
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 import java.io.File
-import java.lang.RuntimeException
 
 object CollectionManager {
     /**
@@ -224,21 +223,6 @@ object CollectionManager {
         return logUIHangs { runBlocking { withCol { this } } }
     }
 
-    private fun isMainThread(): Boolean {
-        return try {
-            Looper.getMainLooper().thread == Thread.currentThread()
-        } catch (exc: RuntimeException) {
-            if (exc.message?.contains("Looper not mocked") == true) {
-                // When unit tests are run outside of Robolectric, the call to getMainLooper()
-                // will fail. We swallow the exception in this case, and assume the call was
-                // not made on the main thread.
-                false
-            } else {
-                throw exc
-            }
-        }
-    }
-
     /**
      Execute [block]. If it takes more than 100ms of real time, Timber an error like:
      > Blocked main thread for 2424ms: com.ichi2.anki.DeckPicker.onCreateOptionsMenu(DeckPicker.kt:624)
@@ -250,7 +234,7 @@ object CollectionManager {
         val start = System.currentTimeMillis()
         return block().also {
             val elapsed = System.currentTimeMillis() - start
-            if (isMainThread() && elapsed > 100) {
+            if (Threads.isOnMainThread && elapsed > 100) {
                 val stackTraceElements = Thread.currentThread().stackTrace
                 // locate the probable calling file/line in the stack trace, by filtering
                 // out our own code, and standard dalvik/java.lang stack frames
