@@ -61,6 +61,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.StartupFailure.*
@@ -1465,7 +1466,14 @@ open class DeckPicker :
 
     override fun mediaCheck() {
         if (hasStorageAccessPermission(this)) {
-            TaskManager.launchCollectionTask(CheckMedia(), mediaCheckListener())
+            if (!BackendFactory.defaultLegacySchema) {
+                launchCatchingTask {
+                    val result = withProgress { withCol { media.check() } }
+                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
+                }
+            } else {
+                TaskManager.launchCollectionTask(CheckMedia(), mediaCheckListener())
+            }
         } else {
             requestStoragePermission()
         }
