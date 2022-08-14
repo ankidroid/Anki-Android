@@ -52,13 +52,13 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s \%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Obecné</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Studium</string>
+    <string name="pref_cat_system_wide" maxLength="41">Celosystémový</string>
     <string name="pref_cat_reviewing" maxLength="41">Opakování</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronizace</string>
     <string name="pref_cat_scheduling" maxLength="41">Plánování</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tabule</string>
-    <string name="pref_cat_appearance" maxLength="41">Nastavení vzhledu</string>
+    <string name="pref_cat_appearance" maxLength="41">Vzhled</string>
     <string name="pref_cat_themes" maxLength="41">Motivy vzhledu</string>
     <string name="pref_cat_fonts" maxLength="41">Písmo</string>
     <string name="pref_cat_gestures" maxLength="41">Gesta</string>
@@ -343,11 +343,11 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Odstranit „%s“</string>
     <string name="bindings_already_bound">Již přiřazeno k %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="pref_cat_experimental" maxLength="41">Experimentální</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Povolit „%s“</string>
+    <string name="use_rust_backend_title" maxLength="41">Použít nový backend</string>
+    <string name="use_rust_backend_summary">Povolí novější funkce Anki, jako je v3 plánovač\nNESTABILNÍ. Nepoužívejte s kolekcí, která je pro vás důležitá. Toto nastavení ZŮSTÁVÁ i po ukončení aplikace</string>
+    <string name="use_rust_backend_warning">Existuje možnost, že by se mohla zcela poškodit vaše instalace, což by vyžadovalo odinstalaci aplikace a smazání složky AnkiDroid, a je zde možnost, že se poškození rozšíří přes synchronizaci na AnkiWeb.\n\nUvítáme testování, ale ujistěte se prosím, že máte platnou zálohu mimo AnkiWeb.</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Možnosti pro vývojáře</string>
     <string name="dev_options_enabled_pref" maxLength="41">Povolit možnosti pro vývojáře</string>
