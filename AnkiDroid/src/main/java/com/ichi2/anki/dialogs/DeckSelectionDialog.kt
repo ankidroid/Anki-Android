@@ -94,6 +94,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val adapter = DecksArrayAdapter(decks)
         recyclerView.adapter = adapter
         adjustToolbar(dialogView, adapter)
+        val args = requireArguments()
+        if (args.containsKey("currentDeckId")) {
+            val did = args.getLong("currentDeckId")
+            recyclerView.scrollToPosition(getPositionOfDeck(did, decks))
+        }
         mDialog = MaterialDialog(requireActivity())
             .neutralButton(R.string.dialog_cancel) // Shouldn't it be negative button?
             .customView(view = dialogView, noVerticalPadding = true)
@@ -103,6 +108,19 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             }
         }
         return mDialog!!
+    }
+
+    private fun getPositionOfDeck(did: Long, decks: List<SelectableDeck>): Int {
+        var i = 0
+        var pos = 0
+        for (item in decks.sorted()) {
+            if (did == item.deckId) {
+                pos = i
+                break
+            }
+            i++
+        }
+        return pos
     }
 
     private fun getSummaryMessage(arguments: Bundle): String? {
