@@ -2171,7 +2171,6 @@ open class DeckPicker :
 
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     private fun updateDeckList(quick: Boolean) {
-        invalidateOptionsMenu()
         if (!BackendFactory.defaultLegacySchema) {
             // uses user's desktop settings to determine whether a backup
             // actually happens
