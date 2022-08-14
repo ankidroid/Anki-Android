@@ -45,25 +45,25 @@
 -->
 <resources>
     <!-- generic strings -->
-    <string name="disabled">Disabled</string>
-    <string name="enabled">Enabled</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="disabled">გამორთულია</string>
+    <string name="enabled">ჩართულია</string>
+    <string name="pref_summary_seconds">%s წმ</string>
+    <string name="pref_summary_minutes">%s წთ</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">ზოგადი</string>
+    <string name="pref_cat_studying" maxLength="41">სწავლა</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
-    <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">სინქრონიზაცია</string>
+    <string name="pref_cat_scheduling" maxLength="41">სწავლის განრიგი</string>
+    <string name="pref_cat_whiteboard" maxLength="41">დაფა</string>
     <string name="pref_cat_appearance" maxLength="41">Appearance</string>
     <string name="pref_cat_themes" maxLength="41">Themes</string>
-    <string name="pref_cat_fonts" maxLength="41">Fonts</string>
-    <string name="pref_cat_gestures" maxLength="41">Gestures</string>
+    <string name="pref_cat_fonts" maxLength="41">შრიფტები</string>
+    <string name="pref_cat_gestures" maxLength="41">ჟესტები</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
-    <string name="pref_cat_advanced" maxLength="41">Advanced</string>
+    <string name="pref_cat_advanced" maxLength="41">დამატებითი</string>
     <string name="pref_cat_workarounds" maxLength="41">Workarounds</string>
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
     <!-- preferences.xml entries-->
@@ -82,7 +82,7 @@
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
     <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
-    <string name="full_screen_off">Off</string>
+    <string name="full_screen_off">გამორთულია</string>
     <string name="full_screen_system">Hide the system bars</string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
     <string name="full_screen_error_gestures">You must enable gestures to hide the answer buttons</string>
@@ -113,18 +113,18 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
+    <string name="more_scrolling_buttons" maxLength="41">ელ-წამკითხველი</string>
     <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Double scrolling</string>
     <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
     <string name="swipe_sensitivity" maxLength="41">Swipe sensitivity</string>
-    <string name="tts" maxLength="41">Text to speech</string>
+    <string name="tts" maxLength="41">ტექსტის გახმოვანება</string>
     <string name="tts_summ">Reads out question and answer if no sound file is included</string>
     <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
     <string name="sync_fetch_missing_media_summ">Automatically fetch missing media when syncing</string>
-    <string name="sync_account" maxLength="41">AnkiWeb account</string>
+    <string name="sync_account" maxLength="41">AnkiWeb ანგარიში</string>
     <string name="sync_account_summ_logged_out">Not logged in</string>
     <string name="automatic_sync_choice" maxLength="41">Automatic synchronization</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
@@ -134,11 +134,11 @@
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Day theme</string>
     <string name="night_theme" maxLength="41">Night theme</string>
-    <string name="default_font" maxLength="41">Default font</string>
+    <string name="default_font" maxLength="41">ნაგულისხმევი შრიფტი</string>
     <string name="override_font" maxLength="41">Default font applicability</string>
-    <string name="language" maxLength="41">Language</string>
-    <string name="language_system">System language</string>
-    <string name="notification_pref" maxLength="41">Notifications</string>
+    <string name="language" maxLength="41">ენა</string>
+    <string name="language_system">სისტემის ენა</string>
+    <string name="notification_pref" maxLength="41">შეტყობინებები</string>
     <string name="notification_pref_title" maxLength="41">Notify when</string>
     <string name="never_notify">Never notify</string>
     <string name="notify_when_pending">Pending messages available</string>
@@ -151,7 +151,7 @@
     <string name="timeout_answer_seconds" maxLength="41">Time to show answer</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Time to show next question</string>
-    <string name="select_locale_title">Select language</string>
+    <string name="select_locale_title">ენის არჩევა</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display" maxLength="41">Safe display mode</string>
@@ -181,9 +181,9 @@
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
+    <string name="xlabel_dayoffset_seekbar" maxLength="41">შუაღამე</string>
+    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="pref_keep_screen_on" maxLength="41">ეკრანი ჩართული დარჩეს</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
     <string name="convert_fen_text" maxLength="41">Chess notation support</string>
     <string name="convert_fen_text_summ">Draw chessboard from Forsyth–Edwards Notation. The notation must be enclosed in [fen][/fen] tags.</string>
@@ -201,7 +201,7 @@
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">მარტივი წვდომა</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
@@ -225,7 +225,7 @@
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
     <string name="custom_sync_server_enable_title" maxLength="41">Use custom sync server</string>
     <string name="custom_sync_server_enable_summary">If you don\'t want to use the proprietary AnkiWeb service you can specify an alternative server here</string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">სინქრონიზაციის URL</string>
     <string name="custom_sync_server_base_url_invalid">Sync url invalid</string>
     <string name="custom_sync_server_media_url_title" maxLength="41">Media sync url</string>
     <string name="custom_sync_server_media_url_invalid">Media sync url invalid</string>
@@ -272,7 +272,7 @@
     <string name="deck_conf_fails">XXX lapse(s)</string>
     <string name="deck_conf_leech_action" maxLength="41">Leech action</string>
     <string name="deck_conf_max_time" maxLength="41">Maximal answer time</string>
-    <string name="deck_conf_seconds">XXX seconds</string>
+    <string name="deck_conf_seconds">XXX წამი</string>
     <string name="deck_conf_timer" maxLength="41">Show answer timer</string>
     <string name="deck_conf_autoplay" maxLength="41">Automatically play audio</string>
     <string name="deck_conf_replayq" maxLength="41">Replay question</string>
@@ -280,10 +280,10 @@
     <string name="deck_conf_manage" maxLength="41">Group management</string>
     <string name="deck_conf_manage_summ">Add and change options groups</string>
     <string name="deck_conf_current_group" maxLength="41">Current group</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Rename</string>
-    <string name="deck_conf_reset" maxLength="41">Restore defaults</string>
+    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">გადარქმევა</string>
+    <string name="deck_conf_reset" maxLength="41">ნაგულისხმევის აღდგენა</string>
     <string name="deck_conf_reset_message">Restore current options group to default values?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Add</string>
+    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">კონფიგურაციის დამატება</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
     <string name="deck_conf_remove_message">Remove current options group?</string>
     <string name="deck_conf_set_subdecks" maxLength="41">Set for all subdecks</string>
@@ -294,7 +294,7 @@
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font" maxLength="41">Browser and editor font</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
-    <string name="deck_conf_cram_search" maxLength="41">Search</string>
+    <string name="deck_conf_cram_search" maxLength="41">ძებნა</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>
     <string name="deck_conf_cram_order" maxLength="41">cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
@@ -333,14 +333,14 @@
     <string name="card_side_question">Question</string>
     <string name="card_side_answer">Answer</string>
     <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">კ: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">პ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41">ექსპერიმენტალური</string>
     <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
     <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>

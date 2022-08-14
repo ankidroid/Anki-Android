@@ -55,12 +55,12 @@
     <string name="statistics_cram">დაზუთხული</string>
     <string name="stats_cards">ბარათები</string>
     <string name="stats_cards_intervals">ბარათი მოცემული შუალედით</string>
-    <string name="stats_cumulative_cards">Cumulative cards</string>
-    <string name="stats_cumulative_answers">Cumulative answers</string>
-    <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
-    <string name="stats_cumulative_time_hours">Cumulative hours</string>
-    <string name="stats_cumulative">Cumulative</string>
-    <string name="stats_cumulative_percentage">Cumulative percentage</string>
+    <string name="stats_cumulative_cards">ბარათი საერთო ჯამში</string>
+    <string name="stats_cumulative_answers">პასუხი საერთო ჯამში</string>
+    <string name="stats_cumulative_time_minutes">წუთი საერთო ჯამში</string>
+    <string name="stats_cumulative_time_hours">საათი საერთო ჯამში</string>
+    <string name="stats_cumulative">საერთო ჯამში</string>
+    <string name="stats_cumulative_percentage">პროცენტი საერთო ჯამში</string>
     <string formatted="false" name="stats_cumulative_correct_percentage">ჯამში სწორი (პროცენტებში)</string>
     <string name="stats_answers">პასუხი</string>
     <string name="stats_minutes">წუთი</string>
@@ -119,8 +119,8 @@
     <string name="stats_review_time">Review time</string>
     <string name="stats_added" comment="Label of the number of added card">დამატებული</string>
     <string name="stats_review_intervals">შუალედები</string>
-    <string name="stats_breakdown">Hourly breakdown</string>
-    <string name="stats_weekly_breakdown">Weekly breakdown</string>
+    <string name="stats_breakdown">დეტალური დაშლა (საათი)</string>
+    <string name="stats_weekly_breakdown">დეტალური დაშლა (კვირის დღე)</string>
     <string name="stats_answer_buttons">პასუხების ღილაკები</string>
     <string-array name="stats_day_time_strings">
         <item>04:00</item>

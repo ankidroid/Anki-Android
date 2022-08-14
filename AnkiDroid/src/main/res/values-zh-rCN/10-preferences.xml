@@ -52,8 +52,8 @@
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">常规</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">学习中</string>
+    <string name="pref_cat_system_wide" maxLength="41">系统范围</string>
     <string name="pref_cat_reviewing" maxLength="41">复习</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同步</string>
     <string name="pref_cat_scheduling" maxLength="41">计划任务</string>
@@ -337,11 +337,11 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">移除“%s”</string>
     <string name="bindings_already_bound">已绑定到 %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="pref_cat_experimental" maxLength="41">实验性功能</string>
+    <string name="experimental_pref_confirmation" maxLength="41">启用 \'%s\'</string>
+    <string name="use_rust_backend_title" maxLength="41">使用新后端</string>
+    <string name="use_rust_backend_summary">启用较新的 Anki 功能，例如 v3 版调度程序\n不稳定。不要用在你在意的牌组上。应用关闭时不会还原。</string>
+    <string name="use_rust_backend_warning">此操作可能彻底损坏您的安装。 要求应用卸载和删除 AnkiDroid 文件夹，并可能通过同步将损坏传播到 AnkiWeb。\n\n 我们欢迎测试，但请确保您有一个有效的非 AnkiWeb 备份。</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">开发者选项</string>
     <string name="dev_options_enabled_pref" maxLength="41">启用开发者选项</string>
