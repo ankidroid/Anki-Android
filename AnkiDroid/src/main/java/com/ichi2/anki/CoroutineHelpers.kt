@@ -18,6 +18,8 @@ package com.ichi2.anki
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
@@ -36,26 +38,34 @@ import kotlin.coroutines.suspendCoroutine
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
  */
-fun AnkiActivity.launchCatchingTask(
+fun FragmentActivity.launchCatchingTask(
+    errorMessage: String? = null,
     block: suspend CoroutineScope.() -> Unit
 ): Job {
+    val extraInfo = errorMessage ?: ""
     return lifecycle.coroutineScope.launch {
         try {
             block()
         } catch (exc: CancellationException) {
             // do nothing
         } catch (exc: BackendInterruptedException) {
-            Timber.e("caught: %s", exc)
+            Timber.e("caught: %s %s", exc, extraInfo)
             showSimpleSnackbar(this@launchCatchingTask, exc.localizedMessage, false)
         } catch (exc: BackendException) {
-            Timber.e("caught: %s", exc)
+            Timber.e("caught: %s %s", exc, extraInfo)
             showError(this@launchCatchingTask, exc.localizedMessage!!)
         } catch (exc: Exception) {
-            Timber.e("caught: %s", exc)
+            Timber.e("caught: %s %s", exc, extraInfo)
             showError(this@launchCatchingTask, exc.toString())
         }
     }
 }
+
+/** See [FragmentActivity.launchCatchingTask] */
+fun Fragment.launchCatchingTask(
+    errorMessage: String? = null,
+    block: suspend CoroutineScope.() -> Unit
+): Job = requireActivity().launchCatchingTask(errorMessage, block)
 
 private fun showError(context: Context, msg: String) {
     AlertDialog.Builder(context)
@@ -90,7 +100,7 @@ suspend fun <T> Backend.withProgress(
  * Run the provided operation, showing a progress window until it completes.
  * Progress info is polled from the backend.
  */
-suspend fun <T> AnkiActivity.withProgress(
+suspend fun <T> FragmentActivity.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
     op: suspend () -> T
@@ -117,7 +127,7 @@ suspend fun <T> AnkiActivity.withProgress(
  * Run the provided operation, showing a progress window with the provided
  * message until the operation completes.
  */
-suspend fun <T> AnkiActivity.withProgress(
+suspend fun <T> FragmentActivity.withProgress(
     message: String = resources.getString(R.string.dialog_processing),
     op: suspend () -> T
 ): T = withProgressDialog(
@@ -130,7 +140,7 @@ suspend fun <T> AnkiActivity.withProgress(
 }
 
 private suspend fun <T> withProgressDialog(
-    context: AnkiActivity,
+    context: FragmentActivity,
     onCancel: (() -> Unit)?,
     @Suppress("Deprecation") // ProgressDialog deprecation
     op: suspend (android.app.ProgressDialog) -> T
