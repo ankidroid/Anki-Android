@@ -70,6 +70,9 @@
         <item name="filterHeaderDivider">@color/black</item>
 
         <item name="snackbarButtonTextColor">#96bdce</item>
+
+        <!-- Introduction -->
+        <item name="introductionLogoTransparent">#99FFFFFF</item>
     </style>
 
     <!-- Preferences screens -->
