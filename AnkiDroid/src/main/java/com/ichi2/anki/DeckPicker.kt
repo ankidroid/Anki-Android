@@ -1568,15 +1568,17 @@ open class DeckPicker :
             mPullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
         } else {
+            val syncMedia = preferences.getBoolean("syncFetchesMedia", true)
+
             if (!BackendFactory.defaultLegacySchema) {
-                handleNewSync(conflict)
+                handleNewSync(conflict, syncMedia)
             } else {
                 Connection.sync(
                     mSyncListener,
                     Connection.Payload(
                         arrayOf(
                             hkey,
-                            preferences.getBoolean("syncFetchesMedia", true),
+                            syncMedia,
                             conflict,
                             HostNumFactory.getInstance(baseContext)
                         )

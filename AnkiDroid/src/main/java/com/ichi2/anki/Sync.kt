@@ -55,16 +55,17 @@ fun DeckPicker.syncAuth(): SyncAuth? {
 }
 
 fun DeckPicker.handleNewSync(
-    conflict: Connection.ConflictResolution?
+    conflict: Connection.ConflictResolution?,
+    syncMedia: Boolean,
 ) {
     val auth = this.syncAuth() ?: return
     val deckPicker = this
     launchCatchingTask {
         try {
             when (conflict) {
-                Connection.ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth)
-                Connection.ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth)
-                null -> handleNormalSync(deckPicker, auth)
+                Connection.ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, syncMedia)
+                Connection.ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, syncMedia)
+                null -> handleNormalSync(deckPicker, auth, syncMedia)
             }
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
             // auth failed; log out
@@ -108,7 +109,8 @@ private fun cancelSync(backend: Backend) {
 
 private suspend fun handleNormalSync(
     deckPicker: DeckPicker,
-    auth: SyncAuth
+    auth: SyncAuth,
+    syncMedia: Boolean,
 ) {
     val output = deckPicker.withProgress(
         extractProgress = {
@@ -131,15 +133,15 @@ private suspend fun handleNormalSync(
             deckPicker.refreshState()
             // kick off media sync - future implementations may want to run this in the
             // background instead
-            handleMediaSync(deckPicker, auth)
+            if (syncMedia) handleMediaSync(deckPicker, auth)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> {
-            handleDownload(deckPicker, auth)
+            handleDownload(deckPicker, auth, syncMedia)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> {
-            handleUpload(deckPicker, auth)
+            handleUpload(deckPicker, auth, syncMedia)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
@@ -165,7 +167,8 @@ private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit {
 
 private suspend fun handleDownload(
     deckPicker: DeckPicker,
-    auth: SyncAuth
+    auth: SyncAuth,
+    syncMedia: Boolean,
 ) {
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
@@ -185,7 +188,7 @@ private suspend fun handleDownload(
             }
         }
         deckPicker.refreshState()
-        handleMediaSync(deckPicker, auth)
+        if (syncMedia) handleMediaSync(deckPicker, auth)
     }
 
     Timber.i("Full Download Completed")
@@ -194,7 +197,8 @@ private suspend fun handleDownload(
 
 private suspend fun handleUpload(
     deckPicker: DeckPicker,
-    auth: SyncAuth
+    auth: SyncAuth,
+    syncMedia: Boolean,
 ) {
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
@@ -209,7 +213,7 @@ private suspend fun handleUpload(
             }
         }
         deckPicker.refreshState()
-        handleMediaSync(deckPicker, auth)
+        if (syncMedia) handleMediaSync(deckPicker, auth)
     }
     Timber.i("Full Upload Completed")
     deckPicker.showSyncLogMessage(R.string.sync_log_uploading_message, "")
