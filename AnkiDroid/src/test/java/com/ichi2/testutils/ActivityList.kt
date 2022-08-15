@@ -72,7 +72,8 @@ object ActivityList {
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },
             get(SharedDecksActivity::class.java),
-            get(PagesActivity::class.java)
+            get(PagesActivity::class.java),
+            get(LoginActivity::class.java),
         )
     }
 

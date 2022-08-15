@@ -392,6 +392,12 @@
             android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
             android:label="@string/download_deck"
             android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+        <activity
+            android:name="com.ichi2.anki.LoginActivity"
+            android:label="@string/menu_my_account"
+            android:exported="false"
+            android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
+            />
 
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />

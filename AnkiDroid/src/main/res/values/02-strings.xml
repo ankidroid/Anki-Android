@@ -414,4 +414,7 @@
 
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+
+    <!-- App Intro -->
+    <string name="already_logged_in">Already logged in</string>
 </resources>
