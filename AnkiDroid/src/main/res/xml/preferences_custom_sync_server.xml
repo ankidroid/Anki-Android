@@ -11,11 +11,11 @@
         android:summary="@string/custom_sync_server_enable_summary"
         android:defaultValue="false"/>
     <EditTextPreference
-        android:dependency="useCustomSyncServer"
+        android:dependency="@string/custom_sync_server_enable_key"
         android:key="@string/custom_sync_server_base_url_key"
         android:title="@string/custom_sync_server_base_url_title" />
     <EditTextPreference
-        android:dependency="useCustomSyncServer"
+        android:dependency="@string/custom_sync_server_enable_key"
         android:key="@string/custom_sync_server_media_url_key"
         android:title="@string/custom_sync_server_media_url_title" />
 </PreferenceScreen>
