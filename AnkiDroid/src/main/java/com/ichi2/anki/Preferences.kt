@@ -272,13 +272,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         scheduleNotification(TimeManager.time, this)
     }
 
-    fun closePreferences() {
-        finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
-        if (col != null && !col.dbClosed) {
-            col.save()
-        }
-    }
-
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
         val resultFragment = getFragmentFromXmlRes(result.resourceFile)
             ?: return
