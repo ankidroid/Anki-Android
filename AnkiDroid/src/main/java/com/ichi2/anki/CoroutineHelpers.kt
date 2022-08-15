@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -24,7 +25,6 @@ import androidx.lifecycle.coroutineScope
 import anki.collection.Progress
 import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.libanki.Collection
-import com.ichi2.themes.StyledProgressDialog
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
@@ -139,23 +139,31 @@ suspend fun <T> FragmentActivity.withProgress(
     op()
 }
 
+@Suppress("Deprecation") // ProgressDialog deprecation
 private suspend fun <T> withProgressDialog(
     context: FragmentActivity,
     onCancel: (() -> Unit)?,
-    @Suppress("Deprecation") // ProgressDialog deprecation
     op: suspend (android.app.ProgressDialog) -> T
-): T {
-    val dialog = StyledProgressDialog.show(
-        context, null,
-        null, onCancel != null
-    )
-    onCancel?.let {
-        dialog.setOnCancelListener { it() }
+): T = coroutineScope {
+    val dialog = android.app.ProgressDialog(context).apply {
+        setCancelable(onCancel != null)
+        onCancel?.let {
+            setOnCancelListener { it() }
+        }
     }
-    return try {
+    // disable taps immediately
+    context.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    // reveal the dialog after 600ms
+    val dialogJob = launch {
+        delay(600)
+        dialog.show()
+    }
+    try {
         op(dialog)
     } finally {
+        dialogJob.cancel()
         dialog.dismiss()
+        context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 }
 
