@@ -36,7 +36,7 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
         // Sync url
         requirePreference<Preference>(R.string.custom_sync_server_collection_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
             val newUrl = newValue.toString()
-            if (!URLUtil.isValidUrl(newUrl)) {
+            if (newUrl.isNotEmpty() && !URLUtil.isValidUrl(newUrl)) {
                 AlertDialog.Builder(requireContext())
                     .setTitle(R.string.custom_sync_server_base_url_invalid)
                     .setPositiveButton(R.string.dialog_ok, null)
@@ -49,7 +49,7 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
         // Media url
         requirePreference<Preference>(R.string.custom_sync_server_media_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
             val newUrl = newValue.toString()
-            if (!URLUtil.isValidUrl(newUrl)) {
+            if (newUrl.isNotEmpty() && !URLUtil.isValidUrl(newUrl)) {
                 AlertDialog.Builder(requireContext())
                     .setTitle(R.string.custom_sync_server_media_url_invalid)
                     .setPositiveButton(R.string.dialog_ok, null)
