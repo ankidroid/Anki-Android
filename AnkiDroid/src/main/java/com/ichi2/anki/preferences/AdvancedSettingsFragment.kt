@@ -46,6 +46,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 val newPath = newValue as String?
                 try {
                     CollectionHelper.initializeAnkiDroidDirectory(newPath)
+                    (requireActivity() as Preferences).restartWithNewDeckPicker()
                     true
                 } catch (e: StorageAccessException) {
                     Timber.e(e, "Could not initialize directory: %s", newPath)
