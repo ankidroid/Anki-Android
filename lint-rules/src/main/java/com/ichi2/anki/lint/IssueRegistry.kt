@@ -17,6 +17,7 @@ import com.ichi2.anki.lint.rules.DirectToastMakeTextUsage
 import com.ichi2.anki.lint.rules.DuplicateCrowdInStrings
 import com.ichi2.anki.lint.rules.DuplicateTextInPreferencesXml
 import com.ichi2.anki.lint.rules.FixedPreferencesTitleLength
+import com.ichi2.anki.lint.rules.HardcodedPreferenceKey
 import com.ichi2.anki.lint.rules.InconsistentAnnotationUsage
 import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
@@ -44,6 +45,7 @@ class IssueRegistry : IssueRegistry() {
                 DirectToastMakeTextUsage.ISSUE,
                 DuplicateCrowdInStrings.ISSUE,
                 DuplicateTextInPreferencesXml.ISSUE,
+                HardcodedPreferenceKey.ISSUE,
                 InconsistentAnnotationUsage.ISSUE,
                 JUnitNullAssertionDetector.ISSUE,
                 KotlinMigrationBrokenEmails.ISSUE,
