@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fab_tutorial_title">Get started</string>
+    <string name="fab_tutorial_title" comment="Tooltip for the floating action bar">Get started</string>
     <string name="fab_tutorial_desc">Create a deck, download a pre-made deck or add a note</string>
     <string name="start_studying">Click on a deck to start studying</string>
     <string name="start_studying_desc">Long press on a deck to get more options related to it</string>
