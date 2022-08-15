@@ -19,7 +19,6 @@ import androidx.preference.ListPreference
 import androidx.preference.SwitchPreference
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.Preferences
 import com.ichi2.anki.R
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
@@ -101,14 +100,14 @@ class GeneralSettingsFragment : SettingsFragment() {
 
         // It's only possible to change the language by recreating the activity,
         // so do it if the language has changed.
-        // TODO recreate the activity and keep its previous state instead of just closing it
-        languageSelection.setOnPreferenceChangeListener { _, newValue ->
+        languageSelection.setOnPreferenceChangeListener { newValue ->
             LanguageUtil.setDefaultBackendLanguages(newValue as String)
+
             val helper = CollectionHelper.getInstance()
             helper.closeCollection(true, "language change")
             helper.discardBackend()
-            (requireActivity() as Preferences).closePreferences()
-            true
+
+            requireActivity().recreate()
         }
     }
 }
