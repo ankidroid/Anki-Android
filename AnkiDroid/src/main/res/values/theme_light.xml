@@ -160,6 +160,10 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="snackbarButtonStyle">@style/SnackbarButtonStyle</item>
         <item name="snackbarBackgroundTintColor">@color/material_grey_800</item>
         <item name="snackbarButtonTextColor">@color/material_light_blue_300</item>
+
+        <!-- Introduction -->
+        <item name="introductionLogoTransparent">#99FFFFFF</item>
+
     </style>
 
     <!-- Preferences screens -->

@@ -131,6 +131,10 @@
         <item name="snackbarTextViewStyle">@style/SnackbarTextStyleBlack</item>
         <item name="snackbarBackgroundTintColor">#ff303030</item>
         <item name="snackbarButtonTextColor">@color/material_light_blue_300</item>
+
+        <!-- Introduction -->
+        <item name="introductionLogoTransparent">#55111111</item>
+
     </style>
 
     <!-- Preferences screens -->
