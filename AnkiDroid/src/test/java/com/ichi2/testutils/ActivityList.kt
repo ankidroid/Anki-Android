@@ -74,6 +74,7 @@ object ActivityList {
             get(SharedDecksActivity::class.java),
             get(PagesActivity::class.java),
             get(LoginActivity::class.java),
+            get(IntroductionActivity::class.java),
         )
     }
 
