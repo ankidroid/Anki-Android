@@ -43,7 +43,6 @@ import com.ichi2.anki.preferences.PreferencesSearchView
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes.setThemeLegacy
 import com.ichi2.utils.AdaptionUtil
@@ -54,9 +53,6 @@ import java.util.*
  * Preferences dialog.
  */
 class Preferences : AnkiActivity(), SearchPreferenceResultListener {
-    /** The collection path when Preferences was opened   */
-    private var mOldCollectionPath: String? = null
-
     lateinit var searchView: PreferencesSearchView
 
     // ----------------------------------------------------------------------------
@@ -71,9 +67,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
         }
-
-        // onRestoreInstanceState takes priority, this is only set on init.
-        mOldCollectionPath = CollectionHelper.getCollectionPath(this)
 
         // Load initial fragment if activity is being first created.
         // If activity is being recreated (i.e. savedInstanceState != null),
@@ -220,16 +213,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         return false
     }
 
-    override fun onBackPressed() {
-        // If the collection path has changed, we want to move back to the deck picker immediately
-        // This performs the move when back is pressed on the "Advanced" screen
-        if (!Utils.equals(CollectionHelper.getCollectionPath(this), mOldCollectionPath)) {
-            restartWithNewDeckPicker()
-        } else {
-            super.onBackPressed()
-        }
-    }
-
     fun restartWithNewDeckPicker() {
         // PERF: DB access on foreground thread
         val helper = CollectionHelper.getInstance()
@@ -238,16 +221,6 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.DEFAULT)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("mOldCollectionPath", mOldCollectionPath)
-    }
-
-    override fun onRestoreInstanceState(state: Bundle) {
-        super.onRestoreInstanceState(state)
-        mOldCollectionPath = state.getString("mOldCollectionPath")
     }
 
     // ----------------------------------------------------------------------------
