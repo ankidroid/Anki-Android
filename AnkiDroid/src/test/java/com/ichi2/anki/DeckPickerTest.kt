@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.view.Menu
+import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
@@ -54,6 +55,7 @@ class DeckPickerTest : RobolectricTest() {
     @Before
     fun before() {
         RuntimeEnvironment.setQualifiers(mQualifiers)
+        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
     }
 
     @Test
