@@ -149,6 +149,9 @@ import kotlin.math.roundToLong
  * * A custom image as a background can be added: [applyDeckPickerBackground]
  */
 @KotlinCleanup("lots to do")
+@NeedsTest("On a new startup, the App Intro is displayed")
+@NeedsTest("If the collection has been created, the app intro is not displayed")
+@NeedsTest("If the user selects 'Sync Profile' in the app intro, a sync starts immediately")
 open class DeckPicker :
     NavigationDrawerActivity(),
     StudyOptionsListener,
@@ -382,6 +385,19 @@ open class DeckPicker :
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)
+
+        // handle the first load: display the app introduction
+        if (!hasShownAppIntro()) {
+            val appIntro = Intent(this, IntroductionActivity::class.java)
+            appIntro.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivityWithoutAnimation(appIntro)
+            finish() // calls onDestroy() immediately
+            return
+        }
+        if (intent.hasExtra(INTENT_SYNC_FROM_LOGIN)) {
+            mSyncOnResume = true
+        }
+
         setContentView(R.layout.homescreen)
         handleStartup()
         val mainView = findViewById<View>(android.R.id.content)
@@ -461,6 +477,23 @@ open class DeckPicker :
         mShortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
         Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate()
+    }
+
+    private fun hasShownAppIntro(): Boolean {
+        val prefs = AnkiDroidApp.getSharedPrefs(this)
+
+        // if moving from 2.15 to 2.16 then we do not want to show the intro
+        // remove this after ~2.17 and default to 'false' if the pref is not set
+        if (!prefs.contains(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN)) {
+            return if (!InitialActivity.wasFreshInstall(prefs)) {
+                prefs.edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+                true
+            } else {
+                false
+            }
+        }
+
+        return prefs.getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
     }
 
     /**
@@ -861,7 +894,8 @@ open class DeckPicker :
 
     fun refreshState() {
         mActivityPaused = false
-        if (mSyncOnResume) {
+        // Due to the App Introduction, this may be called before permission has been granted.
+        if (mSyncOnResume && hasStorageAccessPermission(this)) {
             Timber.i("Performing Sync on Resume")
             sync()
             mSyncOnResume = false
@@ -2683,6 +2717,14 @@ open class DeckPicker :
         const val RESULT_MEDIA_EJECTED = 202
         const val RESULT_DB_ERROR = 203
         const val UPGRADE_VERSION_KEY = "lastUpgradeVersion"
+
+        /**
+         * If passed into the intent, the user should have been logged in and DeckPicker
+         * should sync immediately.
+         *
+         * This is for the 'download existing collection from AnkiWeb' use case
+         */
+        const val INTENT_SYNC_FROM_LOGIN = "syncFromLogin"
 
         /**
          * Available options performed by other activities (request codes for onActivityResult())

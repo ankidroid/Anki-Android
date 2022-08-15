@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs
 
 import android.widget.EditText
+import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import com.afollestad.materialdialogs.WhichButton
@@ -24,6 +25,7 @@ import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.input.getInputField
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.DeckManager
@@ -51,6 +53,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     private var mActivityScenario: ActivityScenario<DeckPicker>? = null
     override fun setUp() {
         super.setUp()
+        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
         ensureCollectionLoadIsSynchronous()
         mActivityScenario = ActivityScenario.launch(DeckPicker::class.java)
         val activityScenario: ActivityScenario<DeckPicker>? = mActivityScenario
