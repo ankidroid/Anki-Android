@@ -181,7 +181,7 @@ open class NumberRangePreferenceCompat @JvmOverloads constructor(
             if (!positiveResult || editText.text.isEmpty()) {
                 return
             }
-            val newValue = editText.text.toString()
+            val newValue = editText.text.toString().toInt()
             if (numberRangePreference.callChangeListener(newValue)) {
                 numberRangePreference.setValue(newValue)
             }
