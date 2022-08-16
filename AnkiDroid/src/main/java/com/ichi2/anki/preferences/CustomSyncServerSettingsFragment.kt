@@ -34,7 +34,7 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
             CustomSyncServer.handleSyncServerPreferenceChange(requireContext())
         }
         // Sync url
-        requirePreference<Preference>(R.string.custom_sync_server_base_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
+        requirePreference<Preference>(R.string.custom_sync_server_collection_url_key).setOnPreferenceChangeListener { _, newValue: Any ->
             val newUrl = newValue.toString()
             if (!URLUtil.isValidUrl(newUrl)) {
                 AlertDialog.Builder(requireContext())

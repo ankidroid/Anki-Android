@@ -85,7 +85,7 @@
     <!-- Custom sync server -->
     <string name="pref_custom_sync_server_screen_key">customSyncServerScreen</string>
     <string name="custom_sync_server_enable_key">useCustomSyncServer</string>
-    <string name="custom_sync_server_base_url_key">syncBaseUrl</string>
+    <string name="custom_sync_server_collection_url_key">customCollectionSyncUrl</string>
     <string name="custom_sync_server_media_url_key">syncMediaUrl</string>
     <!-- Advanced -->
     <string name="pref_advanced_screen_key">pref_screen_advanced</string>

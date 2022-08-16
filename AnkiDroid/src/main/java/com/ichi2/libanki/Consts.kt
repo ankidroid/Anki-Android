@@ -111,7 +111,7 @@ object Consts {
     /** The database schema version that we can downgrade from  */
     const val SYNC_MAX_BYTES = (2.5 * 1024 * 1024).toInt()
     const val SYNC_MAX_FILES = 25
-    const val SYNC_BASE = "https://sync%s.ankiweb.net/"
+
     @JvmField
     val DEFAULT_HOST_NUM: Int? = null
 

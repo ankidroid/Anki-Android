@@ -16,8 +16,10 @@
 
 package com.ichi2.libanki.sync
 
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -92,19 +94,19 @@ class HttpSyncerTest {
         assertThat(syncUrl, equalTo(sDefaultUrlWithHostNum))
     }
 
-    @KotlinCleanup("use edit{} extension function")
     private fun setCustomServerWithNoUrl() {
         val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
-        userPreferences.edit().putBoolean("useCustomSyncServer", true).apply()
+        userPreferences.edit {
+            putBoolean(CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, true)
+        }
     }
 
-    @KotlinCleanup("use edit{} extension function")
     private fun setCustomServer(s: String) {
         val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
-        val e = userPreferences.edit()
-        e.putBoolean("useCustomSyncServer", true)
-        e.putString("syncBaseUrl", s)
-        e.apply()
+        userPreferences.edit {
+            putBoolean(CustomSyncServer.PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, true)
+            putString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, s)
+        }
     }
 
     private fun getServerWithHostNum(hostNum: Int?): HttpSyncer {
@@ -113,8 +115,8 @@ class HttpSyncerTest {
 
     @KotlinCleanup("rename all")
     companion object {
-        private const val sCustomServerWithNoFormatting = "https://sync.example.com/"
-        private const val sCustomServerWithFormatting = "https://sync%s.example.com/"
+        private const val sCustomServerWithNoFormatting = "https://sync.example.com/sync/"
+        private const val sCustomServerWithFormatting = "https://sync%s.example.com/sync/"
         private const val sDefaultUrlNoHostNum = "https://sync.ankiweb.net/sync/"
         private const val sDefaultUrlWithHostNum = "https://sync1.ankiweb.net/sync/"
     }
