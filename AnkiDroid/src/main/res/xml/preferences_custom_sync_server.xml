@@ -12,7 +12,7 @@
         android:defaultValue="false"/>
     <EditTextPreference
         android:dependency="@string/custom_sync_server_enable_key"
-        android:key="@string/custom_sync_server_base_url_key"
+        android:key="@string/custom_sync_server_collection_url_key"
         android:title="@string/custom_sync_server_base_url_title" />
     <EditTextPreference
         android:dependency="@string/custom_sync_server_enable_key"

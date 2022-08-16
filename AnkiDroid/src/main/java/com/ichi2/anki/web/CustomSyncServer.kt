@@ -21,31 +21,34 @@ import android.content.SharedPreferences
 import timber.log.Timber
 
 object CustomSyncServer {
-    const val PREFERENCE_CUSTOM_SYNC_BASE = "syncBaseUrl"
+    const val PREFERENCE_CUSTOM_COLLECTION_SYNC_URL = "customCollectionSyncUrl"
     const val PREFERENCE_CUSTOM_MEDIA_SYNC_URL = "syncMediaUrl"
     const val PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER = "useCustomSyncServer"
 
-    @JvmStatic
+    fun getCollectionSyncUrl(preferences: SharedPreferences): String? {
+        return preferences.getString(PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, null)
+    }
+
     fun getMediaSyncUrl(preferences: SharedPreferences): String? {
         return preferences.getString(PREFERENCE_CUSTOM_MEDIA_SYNC_URL, null)
     }
 
-    @JvmStatic
-    fun getSyncBaseUrl(preferences: SharedPreferences): String? {
-        return getSyncBaseUrlOrDefault(preferences, null)
+    fun getCollectionSyncUrlIfSetAndEnabledOrNull(preferences: SharedPreferences): String? {
+        if (!isEnabled(preferences)) return null
+        val collectionSyncUrl = getCollectionSyncUrl(preferences)
+        return if (collectionSyncUrl.isNullOrEmpty()) null else collectionSyncUrl
     }
 
-    @JvmStatic
-    fun getSyncBaseUrlOrDefault(userPreferences: SharedPreferences, defaultValue: String?): String? {
-        return userPreferences.getString(PREFERENCE_CUSTOM_SYNC_BASE, defaultValue)
+    fun getMediaSyncUrlIfSetAndEnabledOrNull(preferences: SharedPreferences): String? {
+        if (!isEnabled(preferences)) return null
+        val mediaSyncUrl = getMediaSyncUrl(preferences)
+        return if (mediaSyncUrl.isNullOrEmpty()) null else mediaSyncUrl
     }
 
-    @JvmStatic
     fun isEnabled(userPreferences: SharedPreferences): Boolean {
         return userPreferences.getBoolean(PREFERENCE_ENABLE_CUSTOM_SYNC_SERVER, false)
     }
 
-    @JvmStatic
     fun handleSyncServerPreferenceChange(context: Context?) {
         Timber.i("Sync Server Preferences updated.")
         // #4921 - if any of the preferences change, we should reset the HostNum.
