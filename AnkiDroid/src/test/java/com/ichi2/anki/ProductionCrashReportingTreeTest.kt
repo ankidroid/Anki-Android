@@ -13,99 +13,113 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki
 
-package com.ichi2.anki;
+import android.annotation.SuppressLint
+import android.util.Log
+import com.ichi2.testutils.AnkiAssert
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
+import org.junit.After
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import org.mockito.MockedStatic
+import org.mockito.Mockito.*
+import timber.log.Timber
+import java.lang.Exception
+import java.lang.RuntimeException
 
-import android.annotation.SuppressLint;
-import android.util.Log;
-
-import com.ichi2.testutils.AnkiAssert;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.MockedStatic;
-
-import timber.log.Timber;
-
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
-
-@SuppressLint( {"LogNotTimber", "LogConditional"})
-public class ProductionCrashReportingTreeTest {
-
-
+@SuppressLint("LogNotTimber", "LogConditional")
+@KotlinCleanup("fix 'when'")
+class ProductionCrashReportingTreeTest {
     @Before
-    public void setUp() {
+    fun setUp() {
 
         // setup - simply instrument the class and do same log init as production
-        Timber.plant(new AnkiDroidApp.ProductionCrashReportingTree());
+        Timber.plant(AnkiDroidApp.ProductionCrashReportingTree())
     }
-
 
     @After
-    public void tearDown() {
-        Timber.uprootAll();
+    fun tearDown() {
+        Timber.uprootAll()
     }
-
 
     /**
      * The Production logger ignores verbose and debug logs on purpose
      * Make sure these ignored log levels are not passed to the platform logger
      */
     @Test
-    public void testProductionDebugVerboseIgnored() {
-
-        try (MockedStatic<Log> ignored = mockStatic(Log.class)) {
+    fun testProductionDebugVerboseIgnored() {
+        mockStatic(Log::class.java).use {
             // set up the platform log so that if anyone calls these 2 methods at all, it throws
-            when(Log.v(anyString(), anyString(), any()))
-                    .thenThrow(new RuntimeException("Verbose logging should have been ignored"));
-            when(Log.d(anyString(), anyString(), any()))
-                    .thenThrow(new RuntimeException("Debug logging should be ignored"));
-            when(Log.i(anyString(), anyString(), any()))
-                    .thenThrow(new RuntimeException("Info logging should throw!"));
+            `when`(Log.v(anyString(), anyString(), any()))
+                .thenThrow(RuntimeException("Verbose logging should have been ignored"))
+            `when`(Log.d(anyString(), anyString(), any()))
+                .thenThrow(RuntimeException("Debug logging should be ignored"))
+            `when`(
+                Log.i(anyString(), anyString(), any())
+            )
+                .thenThrow(RuntimeException("Info logging should throw!"))
 
             // now call our wrapper - if it hits the platform logger it will throw
-            AnkiAssert.assertDoesNotThrow(() -> Timber.v("verbose"));
-            AnkiAssert.assertDoesNotThrow(() -> Timber.d("debug"));
-
+            AnkiAssert.assertDoesNotThrow { Timber.v("verbose") }
+            AnkiAssert.assertDoesNotThrow { Timber.d("debug") }
             try {
-                Timber.i("info");
-                Assert.fail("we should have gone to Log.i and thrown but did not? Testing mechanism failure.");
-            } catch (Exception e) {
+                Timber.i("info")
+                Assert.fail("we should have gone to Log.i and thrown but did not? Testing mechanism failure.")
+            } catch (e: Exception) {
                 // this means everything worked, we were counting on an exception
             }
         }
     }
 
-
     /**
      * The levels that are fully logged have special "tag" behavior per-level
-     * <p>
-     * Info: always {@link AnkiDroidApp#TAG} as the logging tag
+     *
+     *
+     * Info: always [AnkiDroidApp.TAG] as the logging tag
      * Warn/Error: tag is LoggingClass.className()'s most specific dot-separated String subsection
      */
     @Test
-    @SuppressWarnings("PMD.JUnitTestsShoudIncludAssert")
-    public void testProductionLogTag() {
+    fun testProductionLogTag() {
 
-        try (MockedStatic<Log> autoClosed = mockStatic(Log.class)) {
+        var testWithProperClassNameCalled = false
+        // this is required to ensure 'NativeMethodAccessorImpl' isn't the class name
+        fun testWithProperClassName(autoClosed: MockedStatic<Log>) {
 
             // Now let's run through our API calls...
-            Timber.i("info level message");
-            Timber.w("warn level message");
-            Timber.e("error level message");
+            Timber.i("info level message")
+            Timber.w("warn level message")
+            Timber.e("error level message")
 
             // ...and make sure they hit the logger class post-processed correctly
-            AnkiAssert.assertDoesNotThrow(() ->
-                    autoClosed.verify(() -> Log.i(AnkiDroidApp.TAG, "info level message", null)));
-            AnkiAssert.assertDoesNotThrow(() ->
-                    autoClosed.verify(() -> Log.w(AnkiDroidApp.TAG, this.getClass().getSimpleName() + "/ " + "warn level message", null)));
-            AnkiAssert.assertDoesNotThrow(() ->
-                    autoClosed.verify(() -> Log.e(AnkiDroidApp.TAG, this.getClass().getSimpleName() + "/ " + "error level message", null)));
+            autoClosed.verify {
+                Log.i(AnkiDroidApp.TAG, "info level message", null)
+            }
+
+            autoClosed.verify {
+                Log.w(
+                    AnkiDroidApp.TAG,
+                    this.javaClass.simpleName + "/ " + "warn level message",
+                    null
+                )
+            }
+            autoClosed.verify {
+                Log.e(
+                    AnkiDroidApp.TAG,
+                    this.javaClass.simpleName + "/ " + "error level message",
+                    null
+                )
+            }
+            testWithProperClassNameCalled = true
         }
+
+        mockStatic(Log::class.java).use {
+            testWithProperClassName(it)
+        }
+
+        assertThat(testWithProperClassNameCalled, equalTo(true))
     }
 }
