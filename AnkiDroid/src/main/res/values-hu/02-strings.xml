@@ -268,8 +268,6 @@
     <string name="apk_share_error">Hiba történt az apkg fájl megosztásakor</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">A fájlhoz egy újabb Anki verzió szükséges.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' betöltése sikertelen.</string>
     <string name="activity_start_failed">Nincsen letöltve olyan alkalmazás, ami végre tudná hajtani ezt a műveletet.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[A kamera képei lehet túl nagyok. Lehet, hogy tömörítenie vagy újra kéne méreteznie őket a média mappájában.]]></string>
     <string name="no_browser_notification">Nem találtunk böngészőt, kérjük látogasson meg egy weblapot PC-n vagy mobilon: </string>

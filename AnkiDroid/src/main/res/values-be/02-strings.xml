@@ -290,8 +290,6 @@
     <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Дадзены файл патрабуе больш новую версію праграмы.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Памылка загрузкі \'%s\'.</string>
     <string name="activity_start_failed">У сістэме адсутнічае ўсталяваная праграма, якая можа выканаць гэта дзеянне.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Відарысы камеры могуць быць надта вялікімі. Магчыма, што вы захочаце сціснуць або змяніць іх памер у адпаведным каталогу]]></string>
     <string name="no_browser_notification">Браўзер не знойдзены. Вы можаце наведаць вэб-старонку з камп\'ютара або мабільнай прылады: </string>

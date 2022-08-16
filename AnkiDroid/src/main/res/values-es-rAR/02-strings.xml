@@ -268,8 +268,6 @@
     <string name="apk_share_error">Error al compartir archivo apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Este archivo requiere una versión más reciente de Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Error al cargar \'%s\'.</string>
     <string name="activity_start_failed">El sistema no tiene una aplicación instalada que pueda realizar esta acción.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Las imágenes de la cámara pueden ser grandes. Puede que desee comprimir y cambiar el tamaño de las imágenes en el directorio de medios]]></string>
     <string name="no_browser_notification">No hay ningún browser, por favor visite la página web por PC o móvil: </string>

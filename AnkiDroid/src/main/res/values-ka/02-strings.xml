@@ -268,8 +268,6 @@
     <string name="apk_share_error">შეცდომა APKG ფაილის გაზიარებისას</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">ეს ფაილი მოითხოვს Anki-ს უფრო ახალ ვერსიას.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">„%s“ ვერ ჩაიტვირთა.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[კამერის სურათები შეიძლება დიდი იყოს.  სურათების შეკუმშვას და ზომის შეცვლას ფაილების დირექტორიაში შეძლებთ]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>

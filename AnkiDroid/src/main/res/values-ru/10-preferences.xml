@@ -50,6 +50,7 @@
     <string name="pref_summary_seconds">%s с</string>
     <string name="pref_summary_minutes">%s мин.</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_search_no_results">No results</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Общие</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>

@@ -161,7 +161,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">下記のファイルの内容を追加しますか？\n時間がかかる場合があります\n%s</item>
+        <item quantity="other">%s\nの内容をコレクションに追加しますか？　時間がかかる場合があります</item>
     </plurals>
     <string name="import_log_no_apkg">これは読み込み可能なAnkiパッケージファイル（*.apkg）ではありません</string>
     <string name="import_title_error" comment="Title of error dialog">エラー</string>
@@ -257,8 +257,6 @@
     <string name="apk_share_error">Anki用ファイル（*.apkg）の送信がキャンセルされました</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">このファイルはAnkiの新しいバーショーンが必要です。</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' の読み込みに失敗しました。</string>
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[画像が大きい可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
     <string name="no_browser_notification">ブラウザが見つかりません。PCまたはモバイルでWebページにアクセスしてください： </string>

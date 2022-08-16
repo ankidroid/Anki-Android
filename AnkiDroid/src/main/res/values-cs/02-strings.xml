@@ -290,8 +290,6 @@
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Tento soubor vyžaduje novější verzi Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Načítání \'%s\' selhalo.</string>
     <string name="activity_start_failed">V systému není nainstalována aplikace, která může provést tuto akci.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky kamery mohou být velké. Můžete komprimovat a změnit velikost obrázků v adresáři media]]></string>
     <string name="no_browser_notification">Nebyl nalezen žádný prohlížeč, prosím navštivte webovou stránku pomocí pc nebo mobilu: </string>

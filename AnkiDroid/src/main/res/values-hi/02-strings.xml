@@ -268,8 +268,6 @@
     <string name="apk_share_error">Apkg फ़ाइल साझा करने में त्रुटि</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">इस फ़ाइल को Anki के नए संस्करण की आवश्यकता है।</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url"> \'%s\'  लोड करना असफल रहा</string>
     <string name="activity_start_failed">सिस्टम में कोई ऐप इंस्टॉल नहीं है जो इस क्रिया को कर सके।</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[कैमरे के चित्र बड़े हो सकते हैं। आप मीडिया फ़ोल्डर में छवियों को संपीड़ित और आकार देना चाह सकते हैं]]></string>
     <string name="no_browser_notification">कोई ब्राउज़र नहीं मिला, कृपया कंप्यूटर या मोबाइल द्वारा वेब पेज पर जाएँ:</string>

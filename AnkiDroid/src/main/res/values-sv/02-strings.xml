@@ -268,8 +268,6 @@
     <string name="apk_share_error">Fel vid delning av apkg-fil</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Denna fil kräver en nyare version av Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Misslyckades med att ladda \'%s\'</string>
     <string name="activity_start_failed">Systemet saknar en installerad app som kan utföra denna handling.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerbilder kan ta upp mycket lagringsutrymme. Du kan vilja komprimera & ändra storleken på bilderna i media-mappen.]]></string>
     <string name="no_browser_notification">Ingen webbläsare funnen, var god vänlig och besök webbsidan med dator eller mobil: </string>

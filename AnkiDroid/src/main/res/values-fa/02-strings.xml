@@ -266,8 +266,6 @@
     <string name="apk_share_error">اشتراک گذاری فایل apkg با خطا مواجه شد</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">این فایل نیازمند نسخۀ جدیدتری از آنکی است.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">بارگذاری \'%s\' ناموفق.</string>
     <string name="activity_start_failed">دستگاه شما نرم افزار قادر به انجام این عمل را ندارد.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[تصاویر دوربین ممکن است بزرگ باشند. در صورت لزوم تغییر اندازۀ تصویر یا کاهش حجم آن از مسیر رسانه استفاده کنید]]></string>
     <string name="no_browser_notification">مرورگر یافت نشد، لطفاً صفحۀ مربوطه را در سیستم دیگری باز کنید: </string>

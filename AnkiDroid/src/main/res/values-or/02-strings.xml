@@ -268,8 +268,6 @@
     <string name="apk_share_error">apkg ଫାଇଲ୍ ଅଂଶୀଦାର କରିବାରେ ତ୍ରୁଟି</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">ଏହି ଫାଇଲ୍ Anki ର ଏକ ନୂତନ ସଂସ୍କରଣ ଆବଶ୍ୟକ କରେ।</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' ଧାରଣ କରିବା ବିଫଳ ହୋଇଛି।</string>
     <string name="activity_start_failed">ଏହି ସିଷ୍ଟମରେ ଏହି କାମ କରିବାଯୋଗ୍ୟ ଆପ୍ ସଂସ୍ଥାପିତ ହେଇନାହିଁ।</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[କ୍ୟାମେରା ପ୍ରତିଛବିଗୁଡ଼ିକ ବଡ଼ ହେଇପାରେ। ମିଡ଼ିଆ ଡିରେକ୍ଟୋରୀରେ ଆପଣ ପ୍ରତିଛବିଗୁଡ଼ିକର ସଙ୍କୋଚନ ଏବଂ ଆକାର ପରିବର୍ତ୍ତନ କରିପାରିବେ]]></string>
     <string name="no_browser_notification">କୌଣସି ବ୍ରାଉଜର୍ ମିଳିଲା ନାହିଁ, ଦୟାକରି PC କିମ୍ୱା ମୋବାଇଲ୍ ଦ୍ୱାରା ୱେବ୍ ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ: </string>
