@@ -32,7 +32,6 @@ import com.ichi2.anki.TestUtils.*
 import com.ichi2.anki.tests.InstrumentedTest.Companion.isEmulator
 import com.ichi2.anki.testutil.ThreadUtils.sleep
 import org.hamcrest.Matchers.instanceOf
-import org.junit.Assert
 import org.junit.Assume.assumeFalse
 import org.junit.Assume.assumeTrue
 import org.junit.Ignore
@@ -73,7 +72,7 @@ class DeckPickerTest {
         sleep(1000)
 
         // Check if currently open Activity is StudyOptionsActivity
-        Assert.assertThat(
+        assertThat(
             getActivityInstance(),
             instanceOf(StudyOptionsActivity::class.java)
         )

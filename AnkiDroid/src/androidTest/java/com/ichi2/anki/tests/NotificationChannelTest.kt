@@ -13,88 +13,87 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.tests
 
-package com.ichi2.anki.tests;
+import android.Manifest
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.test.annotation.UiThreadTest
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.NotificationChannels
+import com.ichi2.anki.NotificationChannels.getId
+import com.ichi2.compat.CompatHelper.Companion.sdkVersion
+import com.ichi2.utils.KotlinCleanup
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import timber.log.Timber
+import kotlin.test.junit.JUnitAsserter.assertNotNull
 
-import android.Manifest;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-import androidx.test.annotation.UiThreadTest;
-import androidx.test.rule.GrantPermissionRule;
-
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.NotificationChannels;
-import com.ichi2.compat.CompatHelper;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.List;
-
-import timber.log.Timber;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
+@RunWith(AndroidJUnit4::class)
 @RequiresApi(Build.VERSION_CODES.O) // getNotificationChannels, NotificationChannel.getId
-public class NotificationChannelTest extends InstrumentedTest {
-
-    @Rule
-    public GrantPermissionRule mRuntimePermissionRule =
-            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-    private int mCurrentAPI = -1;
-    private int mTargetAPI = -1;
-    private NotificationManager mManager = null;
-
+@KotlinCleanup("IDE Lint")
+@KotlinCleanup("Enable JUnit 5 in androidTest and use JUnit5Asserter to match the standard tests")
+class NotificationChannelTest : InstrumentedTest() {
+    @get:Rule
+    var runtimePermissionRule =
+        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private var mCurrentAPI = -1
+    private var mTargetAPI = -1
+    @KotlinCleanup("lateinit")
+    private var mManager: NotificationManager? = null
     @Before
     @UiThreadTest
-    public void setUp() {
-        Context targetContext = getTestContext();
-        ((AnkiDroidApp)targetContext.getApplicationContext()).onCreate();
-        mCurrentAPI = CompatHelper.getSdkVersion();
-        mTargetAPI = targetContext.getApplicationInfo().targetSdkVersion;
-        mManager = (NotificationManager)targetContext.getSystemService(Context.NOTIFICATION_SERVICE);
+    fun setUp() {
+        val targetContext = testContext
+        (targetContext.applicationContext as AnkiDroidApp).onCreate()
+        mCurrentAPI = sdkVersion
+        mTargetAPI = targetContext.applicationInfo.targetSdkVersion
+        mManager =
+            targetContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    private boolean channelsInAPI() {
-        return mCurrentAPI >= 26;
+    private fun channelsInAPI(): Boolean {
+        return mCurrentAPI >= 26
     }
 
     @Test
-    public void testChannelCreation() {
-        if (!channelsInAPI()) return;
+    fun testChannelCreation() {
+        if (!channelsInAPI()) return
 
         // onCreate was called in setUp(), so we should have channels now
-        List<NotificationChannel> channels = mManager.getNotificationChannels();
-        for (int i = 0; i < channels.size(); i++) {
-            Timber.d("Found channel with id %s", channels.get(i).getId());
+        val channels = mManager!!.notificationChannels
+        for (i in channels.indices) {
+            Timber.d("Found channel with id %s", channels[i].id)
         }
-
-        int expectedChannels = NotificationChannels.Channel.values().length;
+        var expectedChannels = NotificationChannels.Channel.values().size
         // If we have channels but have *targeted* pre-26, there is a "miscellaneous" channel auto-defined
         if (mTargetAPI < 26) {
-            expectedChannels += 1;
+            expectedChannels += 1
         }
 
         // Any channels we see that are for "LeakCanary" are okay. They are auto-created on test devices.
-        for (NotificationChannel channel : channels) {
-            if (channel.getName().toString().contains("LeakCanary")) {
-                expectedChannels += 1;
+        for (channel in channels) {
+            if (channel.name.toString().contains("LeakCanary")) {
+                expectedChannels += 1
             }
         }
-        assertEquals("Incorrect channel count", expectedChannels, channels.size());
-
-        for (NotificationChannels.Channel channel : NotificationChannels.Channel.values()) {
-            assertNotNull("There should be a reminder channel",
-                    mManager.getNotificationChannel(NotificationChannels.getId(channel)));
+        assertEquals(
+            "Incorrect channel count",
+            expectedChannels,
+            channels.size
+        )
+        for (channel in NotificationChannels.Channel.values()) {
+            assertNotNull(
+                "There should be a reminder channel",
+                mManager!!.getNotificationChannel(getId(channel))
+            )
         }
     }
 }
