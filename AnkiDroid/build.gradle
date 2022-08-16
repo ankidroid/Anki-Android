@@ -240,7 +240,7 @@ dependencies {
 
     lintChecks project(":lint-rules")
 
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.6'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.0'
     compileOnly 'org.jetbrains:annotations:23.0.0'
     compileOnly "com.google.auto.service:auto-service-annotations:1.0.1"
     annotationProcessor "com.google.auto.service:auto-service:1.0.1"
