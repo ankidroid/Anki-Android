@@ -290,8 +290,6 @@
     <string name="apk_share_error">Błąd udostępniania pliku apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Ten plik wymaga nowszej wersji Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Ładowanie \'%s\' nie powiodło się.</string>
     <string name="activity_start_failed">System nie ma zainstalowanej aplikacji, która może wykonać tę czynność.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Zdjęcia z kamery mogą mieć duży rozmiar. Możesz skompresować oraz zmienić rozmiar obrazów w katalogu mediów]]></string>
     <string name="no_browser_notification">Nie znaleziono przeglądarki, odwiedź stronę przez komputer lub telefon komórkowy: </string>

@@ -258,8 +258,6 @@
     <string name="apk_share_error">Apkg 파일 공유 오류</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">이 파일을 열기 위해서는 앱을 업데이트 해야 합니다.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">%s을(를) 로드 실패</string>
     <string name="activity_start_failed">시스템에 설치된 이 액션을 실행할 수 있는 앱이 없습니다.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[카메라 사진은 클 수 있습니다. 미디어 디렉토리에 있는 이미지를 압축하거나 크기를 조장할 수 있습니다.]]></string>
     <string name="no_browser_notification">브라우저를 찾을 수 없습니다. 컴퓨터 또는 모바일로 웹 페이지를 방문하세요:</string>

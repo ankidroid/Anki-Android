@@ -292,8 +292,6 @@
     <string name="apk_share_error">שגיאה בשיתוף קובץ apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">קובץ זה דורש גרסה חדשה יותר של Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">הטעינה של ‚%s’ נכשלה.</string>
     <string name="activity_start_failed">במערכת לא מותקן יישומון שיכול לבצע את הפעולה הזאת.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[תמונות המצלמה גדולות מדי. אולי עדיף לך לדחוס ולשנות את גודל התמונות בתיקיית המדיה]]></string>
     <string name="no_browser_notification">לא נמצא דפדפן, נא לבקר באתר במחשב או בנייד: </string>

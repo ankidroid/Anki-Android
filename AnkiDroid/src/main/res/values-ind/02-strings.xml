@@ -257,8 +257,6 @@
     <string name="apk_share_error">Galat membagikan berkas apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Berkas ini memerlukan versi terbaru dari Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Memuat \'%s\' gagal.</string>
     <string name="activity_start_failed">Sistem tidak mempunyai aplikasi terinstal yang dapat melakukan aksi ini.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Diharap untuk memampatkan & merubah ukuran gambar di direktori media]]></string>
     <string name="no_browser_notification">Tidak ada peramban yang ditemukan, harap kunjungi halaman web lewat PC atau HP</string>

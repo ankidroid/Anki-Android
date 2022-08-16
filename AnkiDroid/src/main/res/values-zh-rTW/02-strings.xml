@@ -257,8 +257,6 @@
     <string name="apk_share_error">分享 Apkg 檔案時出錯</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">此檔案需要更新版本的 Anki。</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">載入 ‘%s’ 失敗。</string>
     <string name="activity_start_failed">此系統不包含能執行此操作的應用程式。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相機圖像可能很龐大。你可能希望壓縮和重設媒體資料夾中的圖像大小]]></string>
     <string name="no_browser_notification">無瀏覽器已找到，請使用PC或行動裝置訪問網頁： </string>

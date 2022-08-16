@@ -290,8 +290,6 @@
     <string name="apk_share_error">Ошибка при отправке файла apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Этот файл требует новой версии Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Не удалось загрузить «%s».</string>
     <string name="activity_start_failed">В системе нет приложения, которое может выполнить это действие.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Фотографии могут быть большими. Возможно, вы захотите сжать или изменить размер изображений в папке медиаданных]]></string>
     <string name="no_browser_notification">Браузер не найден. Посетите сайт с компьютера или телефона: </string>

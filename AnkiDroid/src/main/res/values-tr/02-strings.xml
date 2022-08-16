@@ -268,8 +268,6 @@
     <string name="apk_share_error">Apkg dosyasını paylaşırken hata</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Bu dosya için Anki\'nin daha yeni bir sürümü gerekli.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' Yüklemesi başarısız oldu.</string>
     <string name="activity_start_failed">Sistemde bu eylemi gerçekleştirebilecek bir uygulama yüklü değil.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Fotoğraf dosyaları büyük olabilir. Resimleri medya dizininde sıkıştırmak ve boyutlarını değiştirmek isteyebilirsiniz.]]></string>
     <string name="no_browser_notification">Tarayıcı bulunmadı, lütfen web sayfasına pcden veya mobilden girin: </string>
