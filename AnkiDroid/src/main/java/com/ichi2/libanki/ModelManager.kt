@@ -260,7 +260,7 @@ abstract class ModelManager(protected val col: Collection) {
      */
     open fun getCardIdsForModel(modelId: NotetypeId, ords: IntArray): List<Long>? {
         val cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords)
-        val cids: List<Long> = col.db.queryLongList(cardIdsToDeleteSql, modelId)
+        val cids: List<CardId> = col.db.queryLongList(cardIdsToDeleteSql, modelId)
         // Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size, modelId, Utils.ids2str(ords))
 

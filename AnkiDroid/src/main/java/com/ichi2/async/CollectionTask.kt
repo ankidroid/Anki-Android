@@ -223,8 +223,8 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         override fun undo(col: Collection): Card? {
             Timber.i("Undo: Suspend multiple cards")
             val nbOfCards = cards.size
-            val toSuspendIds: MutableList<Long> = ArrayList(nbOfCards)
-            val toUnsuspendIds: MutableList<Long> = ArrayList(nbOfCards)
+            val toSuspendIds: MutableList<CardId> = ArrayList(nbOfCards)
+            val toUnsuspendIds: MutableList<CardId> = ArrayList(nbOfCards)
             for (i in 0 until nbOfCards) {
                 val card = cards[i]
                 if (originalSuspended[i]) {
@@ -296,7 +296,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    abstract class DismissNotes<Progress>(protected val cardIds: List<Long>) : TaskDelegate<Progress, Computation<Array<Card>>>() {
+    abstract class DismissNotes<Progress>(protected val cardIds: List<CardId>) : TaskDelegate<Progress, Computation<Array<Card>>>() {
         /**
          * @param col
          * @param collectionTask Represents the background tasks.
@@ -339,7 +339,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         protected abstract fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Progress>, cards: Array<Card>): Boolean
     }
 
-    class SuspendCardMulti(cardIds: List<Long>) : DismissNotes<Void?>(cardIds) {
+    class SuspendCardMulti(cardIds: List<CardId>) : DismissNotes<Void?>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
             val sched = col.sched
             // collect undo information
@@ -377,7 +377,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class Flag(cardIds: List<Long>, private val flag: Int) : DismissNotes<Void?>(cardIds) {
+    class Flag(cardIds: List<CardId>, private val flag: Int) : DismissNotes<Void?>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
             col.setUserFlag(flag, cardIds)
             for (c in cards) {
@@ -387,7 +387,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class MarkNoteMulti(cardIds: List<Long>) : DismissNotes<Void>(cardIds) {
+    class MarkNoteMulti(cardIds: List<CardId>) : DismissNotes<Void>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>, cards: Array<Card>): Boolean {
             val notes = CardUtils.getNotes(Arrays.asList(*cards))
             // collect undo information
@@ -410,7 +410,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class DeleteNoteMulti(cardIds: List<Long>) : DismissNotes<Array<Card>>(cardIds) {
+    class DeleteNoteMulti(cardIds: List<CardId>) : DismissNotes<Array<Card>>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Array<Card>>, cards: Array<Card>): Boolean {
             val sched = col.sched
             // list of all ids to pass to remNotes method.
@@ -434,7 +434,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class ChangeDeckMulti(cardIds: List<Long>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
+    class ChangeDeckMulti(cardIds: List<CardId>, private val newDid: DeckId) : DismissNotes<Void?>(cardIds) {
         override fun actualTask(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void?>, cards: Array<Card>): Boolean {
             Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
             val deckData = col.decks.get(newDid)
@@ -540,7 +540,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     class RenderBrowserQA(private val cards: CardCollection<CardCache>, private val startPos: Int, private val n: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<Int, Pair<CardCollection<CardCache>, List<Long>>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): Pair<CardCollection<CardCache>, List<Long>>? {
             Timber.d("doInBackgroundRenderBrowserQA")
-            val invalidCardIds: MutableList<Long> = ArrayList()
+            val invalidCardIds: MutableList<CardId> = ArrayList()
             // for each specified card in the browser list
             for (i in startPos until startPos + n) {
                 // Stop if cancelled

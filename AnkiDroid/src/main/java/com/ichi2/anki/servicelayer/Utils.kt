@@ -18,6 +18,7 @@ package com.ichi2.anki.servicelayer
 
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.DB
 import com.ichi2.utils.Computation
 import timber.log.Timber
@@ -26,7 +27,7 @@ import timber.log.Timber
  * @return whether the task succeeded, and the array of cards affected.
  */
 // This was converted from CollectionTask, we want a better name, but keep it until DismissNotes is removed
-fun <TTaskResult : Any, TProgress, TResult> AnkiTask<TProgress, TResult>.dismissNotes(cardIds: List<Long>, task: (Array<Card>) -> Computation<TTaskResult>): Computation<Pair<TTaskResult, Array<Card>>> {
+fun <TTaskResult : Any, TProgress, TResult> AnkiTask<TProgress, TResult>.dismissNotes(cardIds: List<CardId>, task: (Array<Card>) -> Computation<TTaskResult>): Computation<Pair<TTaskResult, Array<Card>>> {
     // query cards
     val cards = cardIds.map { cid -> col.getCard(cid) }.toTypedArray()
     try {

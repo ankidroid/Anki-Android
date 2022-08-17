@@ -639,7 +639,7 @@ class DecksV16(private val col: CollectionV16) :
         // I believe this is now handled in libAnki
     }
 
-    fun for_card_ids(cids: List<Long>): List<DeckId> {
+    fun for_card_ids(cids: List<CardId>): List<DeckId> {
         return this.col.db.queryLongList("select did from cards where id in ${ids2str(cids)}")
     }
 

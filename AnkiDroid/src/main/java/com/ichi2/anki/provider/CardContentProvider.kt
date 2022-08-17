@@ -660,7 +660,7 @@ class CardContentProvider : ContentProvider() {
             }
             MODELS_ID_EMPTY_CARDS -> {
                 val model = col.models.get(getModelIdFromUri(uri, col)) ?: return -1
-                val cids: List<Long> = col.genCards(col.models.nids(model), model)!!
+                val cids: List<CardId> = col.genCards(col.models.nids(model), model)!!
                 col.remCards(cids)
                 cids.size
             }

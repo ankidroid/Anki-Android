@@ -136,7 +136,7 @@ class SchedulerService {
         }
     }
 
-    class RepositionCards(private val cardIds: List<Long>, private val startPosition: Int) : RepositionOrReset() {
+    class RepositionCards(private val cardIds: List<CardId>, private val startPosition: Int) : RepositionOrReset() {
         override fun execute(): RepositionResetResult {
             val inputCards = dismissNotes(cardIds) { cards ->
                 return@dismissNotes rescheduleRepositionReset(cards, R.string.card_editor_reposition_card) {
@@ -147,7 +147,7 @@ class SchedulerService {
         }
     }
 
-    class RescheduleCards(val cardIds: List<Long>, private val interval: Int) : RepositionOrReset() {
+    class RescheduleCards(val cardIds: List<CardId>, private val interval: Int) : RepositionOrReset() {
         override fun execute(): RepositionResetResult {
             val inputCards = dismissNotes(cardIds) { cards ->
                 return@dismissNotes rescheduleRepositionReset(cards, R.string.card_editor_reschedule_card) {
@@ -158,7 +158,7 @@ class SchedulerService {
         }
     }
 
-    class ResetCards(val cardIds: List<Long>) : RepositionOrReset() {
+    class ResetCards(val cardIds: List<CardId>) : RepositionOrReset() {
         override fun execute(): RepositionResetResult {
             val inputCards = dismissNotes(cardIds) { cards ->
                 return@dismissNotes rescheduleRepositionReset(cards, R.string.card_editor_reset_card) {

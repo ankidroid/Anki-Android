@@ -55,7 +55,7 @@ open class Exporter(@JvmField protected val col: Collection, protected val did: 
      * @return list of card ids
      */
     fun cardIds(): Array<Long> {
-        val cids: Array<Long>
+        val cids: Array<CardId>
         cids = if (did == null) {
             Utils.list2ObjectArray(col.db.queryLongList("select id from cards"))
         } else {
@@ -139,7 +139,7 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
         File(path).delete()
         val dst = Storage.collection(context, path)
         // find cards
-        val cids: Array<Long> = cardIds()
+        val cids: Array<CardId> = cardIds()
         // attach dst to src so we can copy data between them. This isn't done in original libanki as Python more
         // flexible
         dst.close()

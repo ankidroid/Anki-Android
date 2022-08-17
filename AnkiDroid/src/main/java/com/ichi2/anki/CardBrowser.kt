@@ -417,7 +417,7 @@ open class CardBrowser :
         searchCards()
     }
 
-    private val selectedCardIds: List<Long>
+    private val selectedCardIds: List<CardId>
         get() = mCheckedCards.map { c -> c.id }
 
     private fun canPerformCardInfo(): Boolean {
@@ -1311,12 +1311,12 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun resetProgressNoConfirm(cardIds: List<Long>?) {
+    fun resetProgressNoConfirm(cardIds: List<CardId>?) {
         TaskManager.launchCollectionTask(ResetCards(cardIds!!).toDelegate(), resetProgressCardHandler())
     }
 
     @VisibleForTesting
-    fun repositionCardsNoValidation(cardIds: List<Long>?, position: Int?) {
+    fun repositionCardsNoValidation(cardIds: List<CardId>?, position: Int?) {
         TaskManager.launchCollectionTask(
             RepositionCards(cardIds!!, position!!).toDelegate(),
             repositionCardHandler()
@@ -1360,7 +1360,7 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun rescheduleWithoutValidation(selectedCardIds: List<Long>?, newDays: Int?) {
+    fun rescheduleWithoutValidation(selectedCardIds: List<CardId>?, newDays: Int?) {
         TaskManager.launchCollectionTask(
             RescheduleCards(selectedCardIds!!, newDays!!).toDelegate(),
             rescheduleCardHandler()
@@ -1765,7 +1765,7 @@ open class CardBrowser :
      * Removes cards from view. Doesn't delete them in model (database).
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
-    private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
+    private fun removeNotesView(cardsIds: Collection<CardId>, reorderCards: Boolean) {
         val idToPos = getPositionMap(mCards)
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
         mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
@@ -2228,7 +2228,7 @@ open class CardBrowser :
     protected fun reloadCards(cards: Array<Card>?) {
         if (cards.isNullOrEmpty()) return
 
-        val cardIds: MutableSet<Long> = HashSet()
+        val cardIds: MutableSet<CardId> = HashSet()
         for (c in cards) {
             cardIds.add(c.id)
         }
@@ -2564,12 +2564,12 @@ open class CardBrowser :
     }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val checkedCardIds: List<Long>
+    val checkedCardIds: List<CardId>
         get() = mCheckedCards.map { c -> c.id }
 
     // should only be called from changeDeck()
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun executeChangeCollectionTask(ids: List<Long>, newDid: DeckId) {
+    fun executeChangeCollectionTask(ids: List<CardId>, newDid: DeckId) {
         mNewDid = newDid // line required for unit tests, not necessary, but a noop in regular call.
         TaskManager.launchCollectionTask(
             ChangeDeckMulti(ids, newDid),
