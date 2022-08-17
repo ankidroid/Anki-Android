@@ -388,7 +388,7 @@ abstract class BaseSched(val col: Collection) {
             "end)"
     }
 
-    fun remFromDyn(cids: Iterable<Long>?) {
+    fun remFromDyn(cids: Iterable<Long>) {
         emptyDyn("id IN " + Utils.ids2str(cids) + " AND odid")
     }
 
