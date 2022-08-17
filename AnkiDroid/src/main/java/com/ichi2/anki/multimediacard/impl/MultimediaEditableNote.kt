@@ -21,7 +21,7 @@ package com.ichi2.anki.multimediacard.impl
 
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
-import com.ichi2.libanki.NoteTypeId
+import com.ichi2.libanki.NotetypeId
 import org.acra.util.IOUtils
 import java.util.*
 
@@ -34,7 +34,7 @@ class MultimediaEditableNote : IMultimediaEditableNote {
     override var isModified = false
         private set
     private var mFields: ArrayList<IField?>? = null
-    var modelId: NoteTypeId = 0
+    var modelId: NotetypeId = 0
 
     /**
      * Field values in the note editor, before any editing has taken place

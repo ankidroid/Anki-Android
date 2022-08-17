@@ -246,7 +246,7 @@ class CardContentProvider : ContentProvider() {
                 val models = col.models
                 val columns = projection ?: FlashCardsContract.Model.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                for (modelId: NoteTypeId in models.getModels().keys) {
+                for (modelId: NotetypeId in models.getModels().keys) {
                     addModelToCursor(modelId, models, rv, columns)
                 }
                 rv
@@ -887,7 +887,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_TEMPLATES -> {
                 run {
                     val models: ModelManager = col.models
-                    val mid: NoteTypeId = getModelIdFromUri(uri, col)
+                    val mid: NotetypeId = getModelIdFromUri(uri, col)
                     val existingModel: Model = models.get(mid)
                         ?: throw IllegalArgumentException("model missing: $mid")
                     val name: String = values!!.getAsString(FlashCardsContract.CardTemplate.NAME)
@@ -916,7 +916,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_FIELDS -> {
                 run {
                     val models: ModelManager = col.models
-                    val mid: NoteTypeId = getModelIdFromUri(uri, col)
+                    val mid: NotetypeId = getModelIdFromUri(uri, col)
                     val existingModel: Model = models.get(mid)
                         ?: throw IllegalArgumentException("model missing: $mid")
                     val name: String = values!!.getAsString(FlashCardsContract.Model.FIELD_NAME)
@@ -1027,7 +1027,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addModelToCursor(modelId: NoteTypeId, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
+    private fun addModelToCursor(modelId: NotetypeId, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
         val jsonObject = models.get(modelId)
         val rb = rv.newRow()
         try {
@@ -1228,9 +1228,9 @@ class CardContentProvider : ContentProvider() {
         return col.getNote(noteId)
     }
 
-    private fun getModelIdFromUri(uri: Uri, col: Collection): Long {
+    private fun getModelIdFromUri(uri: Uri, col: Collection): NotetypeId {
         val modelIdSegment = uri.pathSegments[1]
-        val id: Long = if (modelIdSegment == FlashCardsContract.Model.CURRENT_MODEL_ID) {
+        val id: NotetypeId = if (modelIdSegment == FlashCardsContract.Model.CURRENT_MODEL_ID) {
             col.models.current()!!.optLong("id", -1)
         } else {
             try {

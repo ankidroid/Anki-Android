@@ -29,7 +29,7 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.libanki.Note
-import com.ichi2.libanki.NoteTypeId
+import com.ichi2.libanki.NotetypeId
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
@@ -69,7 +69,7 @@ object NoteService {
         return null
     }
 
-    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
+    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: NotetypeId, mmNote: MultimediaEditableNote) {
         for (i in fields.indices) {
             val value = fields[i]
             var field: IField?

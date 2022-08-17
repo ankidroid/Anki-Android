@@ -55,7 +55,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     private val mAllowUpdate: Boolean
     private var mDupeOnSchemaChange: Boolean
 
-    private class NoteTriple(val nid: NoteId, val mod: Long, val mid: NoteTypeId)
+    private class NoteTriple(val nid: NoteId, val mod: Long, val mid: NotetypeId)
 
     private var mNotes: MutableMap<String, NoteTriple>? = null
     private var mDecks: MutableMap<Long, Long>? = null
@@ -343,7 +343,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
 
     // determine if note is a duplicate, and adjust mid and/or guid as required
     // returns true if note should be added and its mid
-    private fun _uniquifyNote(origGuid: String, srcMid: Long): Pair<Boolean, Long> {
+    private fun _uniquifyNote(origGuid: String, srcMid: NotetypeId): Pair<Boolean, Long> {
         val dstMid = _mid(srcMid)
         // duplicate Schemas?
         if (srcMid == dstMid) {
@@ -372,7 +372,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
 
     /** Return local id for remote MID.  */
     @KotlinCleanup("use scope function apply")
-    private fun _mid(srcMid: Long): Long {
+    private fun _mid(srcMid: NotetypeId): Long {
         // already processed this mid?
         if (mModelMap!!.containsKey(srcMid)) {
             return mModelMap!![srcMid]!!
@@ -740,7 +740,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     }
 
     // running splitFields() on every note is fairly expensive and actually not necessary
-    private fun _mungeMedia(mid: NoteTypeId, fields: String): String {
+    private fun _mungeMedia(mid: NotetypeId, fields: String): String {
         var _fields = fields
         for (p in Media.REGEXPS) {
             val m = p.matcher(_fields)

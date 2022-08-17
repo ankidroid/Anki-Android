@@ -40,10 +40,9 @@ import com.ichi2.async.CollectionTask.CountModels
 import com.ichi2.async.CollectionTask.DeleteModel
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
+import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Model
-import com.ichi2.libanki.StdModels
-import com.ichi2.libanki.Utils
+import com.ichi2.libanki.NotetypeId
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
@@ -60,7 +59,7 @@ class ModelBrowser : AnkiActivity() {
     private var mModelListView: ListView? = null
 
     // Of the currently selected model
-    private var mCurrentID: Long = 0
+    private var mCurrentID: NotetypeId = 0
     private var mModelListPosition = 0
 
     // Used exclusively to display model name

@@ -38,8 +38,8 @@ import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
 
-class NoteTypeNameID(val name: String, val id: NoteTypeId)
-class NoteTypeNameIDUseCount(val id: Long, val name: String, val useCount: UInt)
+class NoteTypeNameID(val name: String, val id: NotetypeId)
+class NoteTypeNameIDUseCount(val id: NotetypeId, val name: String, val useCount: UInt)
 class BackendNote(val fields: MutableList<String>)
 
 private typealias int = Long

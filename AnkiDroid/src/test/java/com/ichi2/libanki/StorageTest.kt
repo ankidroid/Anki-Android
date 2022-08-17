@@ -301,7 +301,7 @@ open class StorageTest : RobolectricTest() {
             // regression: curModel
         }
 
-        private fun assertModelIdsEqual(actualMid: Long, expectedMid: Long, expectedData: CollectionData) {
+        private fun assertModelIdsEqual(actualMid: NotetypeId, expectedMid: NotetypeId, expectedData: CollectionData) {
             val actual = JSONObject(models).getJSONObject(actualMid.toString()).getString("name")
             val expected = JSONObject(expectedData.models).getJSONObject(expectedMid.toString()).getString("name")
             MatcherAssert.assertThat("current model", actual, Matchers.equalTo(expected))
