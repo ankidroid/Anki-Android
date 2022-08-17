@@ -56,7 +56,7 @@ import java.util.*
 data class DeckNameId(val name: String, val id: DeckId)
 
 data class DeckTreeNode(
-    val deck_id: Long,
+    val deck_id: DeckId,
     val name: String,
     val children: List<DeckTreeNode>,
     val level: UInt,

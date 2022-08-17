@@ -123,7 +123,7 @@ class DeckDueTreeNode(
  * This could be converted into a method if AnkiDroid returned a top-level
  * node instead of a list of nodes.
  */
-fun findInDeckTree(nodes: List<TreeNode<DeckDueTreeNode>>, deckId: Long): DeckDueTreeNode? {
+fun findInDeckTree(nodes: List<TreeNode<DeckDueTreeNode>>, deckId: DeckId): DeckDueTreeNode? {
     for (node in nodes) {
         if (node.value.did == deckId) {
             return node.value

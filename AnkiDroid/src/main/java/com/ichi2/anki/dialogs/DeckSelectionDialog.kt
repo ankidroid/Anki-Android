@@ -155,7 +155,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             // create subdeck
             val parentId = decks.id(parentDeckPath)
             val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
-            createDeckDialog.setOnNewDeckCreated { id: Long? ->
+            createDeckDialog.setOnNewDeckCreated { id: DeckId? ->
                 // a sub deck was created
                 selectDeckWithDeckName(decks.name(id!!))
             }
@@ -169,7 +169,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
         // todo
         // setOnNewDeckCreated parameter to be made non null
-        createDeckDialog.setOnNewDeckCreated { id: Long? ->
+        createDeckDialog.setOnNewDeckCreated { id: DeckId? ->
             // a deck was created
             selectDeckWithDeckName(decks.name(id!!))
         }
@@ -236,7 +236,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
         inner class ViewHolder(val deckTextView: TextView) : RecyclerView.ViewHolder(deckTextView) {
             var deckName: String = ""
-            var deckID: Long = -1L
+            var deckID: DeckId = -1L
 
             fun setDeck(deck: SelectableDeck) {
                 deckName = deck.name

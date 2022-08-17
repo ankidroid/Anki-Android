@@ -1169,7 +1169,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addDeckToCursor(id: Long, name: String, deckCounts: JSONArray, rv: MatrixCursor, col: Collection, columns: Array<String>) {
+    private fun addDeckToCursor(id: DeckId, name: String, deckCounts: JSONArray, rv: MatrixCursor, col: Collection, columns: Array<String>) {
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {

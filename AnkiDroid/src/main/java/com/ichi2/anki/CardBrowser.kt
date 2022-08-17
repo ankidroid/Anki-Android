@@ -473,7 +473,7 @@ open class CardBrowser :
             .getLong(LAST_DECK_ID_KEY, Decks.NOT_FOUND_DECK_ID)
             .takeUnless { it == Decks.NOT_FOUND_DECK_ID }
 
-    private fun saveLastDeckId(id: Long?) {
+    private fun saveLastDeckId(id: DeckId?) {
         if (id == null) {
             clearLastDeckId()
             return

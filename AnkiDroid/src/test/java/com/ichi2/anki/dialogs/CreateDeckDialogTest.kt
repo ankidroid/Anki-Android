@@ -29,6 +29,7 @@ import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.dialogs.utils.positiveButton
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.DeckManager
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.equalTo
@@ -60,7 +61,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     fun testCreateFilteredDeckFunction() {
         val deckName = "filteredDeck"
         ensureExecutionOfScenario(DeckDialogType.FILTERED_DECK) { createDeckDialog, assertionCalled ->
-            createDeckDialog.setOnNewDeckCreated { id: Long ->
+            createDeckDialog.setOnNewDeckCreated { id: DeckId ->
                 // a deck was created
                 assertThat(id, equalTo(col.decks.id(deckName)))
                 assertionCalled()
@@ -75,7 +76,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         val deckParentId = col.decks.id("Deck Name")
         val deckName = "filteredDeck"
         ensureExecutionOfScenario(DeckDialogType.SUB_DECK, deckParentId) { createDeckDialog, assertionCalled ->
-            createDeckDialog.setOnNewDeckCreated { id: Long ->
+            createDeckDialog.setOnNewDeckCreated { id: DeckId ->
                 val deckNameWithParentName = col.decks.getSubdeckName(deckParentId, deckName)
                 assertThat(id, equalTo(col.decks.id(deckNameWithParentName!!)))
                 assertionCalled()
@@ -88,7 +89,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     fun testCreateDeckFunction() {
         val deckName = "Deck Name"
         ensureExecutionOfScenario(DeckDialogType.DECK) { createDeckDialog, assertionCalled ->
-            createDeckDialog.setOnNewDeckCreated { id: Long ->
+            createDeckDialog.setOnNewDeckCreated { id: DeckId ->
                 // a deck was created
                 assertThat(id, equalTo(col.decks.byName(deckName)!!.getLong("id")))
                 assertionCalled()
@@ -103,7 +104,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         val deckNewName = "New Deck Name"
         ensureExecutionOfScenario(DeckDialogType.RENAME_DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.deckName = deckName
-            createDeckDialog.setOnNewDeckCreated { id: Long? ->
+            createDeckDialog.setOnNewDeckCreated { id: DeckId? ->
                 // a deck name was renamed
                 assertThat(deckNewName, equalTo(col.decks.name(id!!)))
                 assertionCalled()
