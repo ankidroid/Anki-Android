@@ -267,7 +267,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    private class UndoChangeDeckMulti(private val cards: Array<Card>, private val originalDids: LongArray) : UndoAction(R.string.undo_action_change_deck_multi) {
+    private class UndoChangeDeckMulti(private val cards: Array<Card>, private val originalDids: DeckIds) : UndoAction(R.string.undo_action_change_deck_multi) {
         override fun undo(col: Collection): Card? {
             Timber.i("Undo: Change Decks")
             // move cards to original deck
