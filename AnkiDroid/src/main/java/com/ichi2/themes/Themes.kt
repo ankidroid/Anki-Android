@@ -19,17 +19,15 @@
 package com.ichi2.themes
 
 import android.content.Context
+import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 
 /**
- * Handles the user selectable themes
- * The user can choose one of the app themes or "Follow system" option
- * If one of the themes is selected, it will always be the theme used by the app
- * If "Follow system" is selected, the theme will be what is selected
- * on "Day" or "Night" theme categories, following the current system mode.
+ * Helper methods to configure things related to AnkiDroid's themes
  */
 object Themes {
     const val ALPHA_ICON_ENABLED_LIGHT = 255 // 100%
@@ -121,6 +119,14 @@ object Themes {
         }
         ta.recycle()
         return attrs
+    }
+
+    /**
+     * @return required color depending on the theme from the given attribute
+     */
+    @ColorInt
+    fun Fragment.getColorFromAttr(@AttrRes attribute: Int): Int {
+        return getColorFromAttr(requireContext(), attribute)
     }
 
     /**
