@@ -524,11 +524,6 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_modelChange() {
-
-        if (!BackendFactory.defaultLegacySchema) {
-            // backend provides different API with TypeScript frontend
-            return
-        }
         val col = col
         val cloze = col.models.byName("Cloze")
         // enable second template and add a note
@@ -545,9 +540,10 @@ class ModelTest : RobolectricTest() {
         col.addNote(note)
         // switch fields
         var map: MutableMap<Int, Int?> = HashMap()
+        val noOp = mapOf<Int, Int?>(0 to 0, 1 to 1)
         map[0] = 1
         map[1] = 0
-        col.models.change(basic, note.id, basic, map, null)
+        col.models.change(basic, note.id, basic, map, noOp)
         note.load()
         assertEquals("b123", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
@@ -558,7 +554,7 @@ class ModelTest : RobolectricTest() {
         assertThat(c1.q(), containsString("note"))
         assertEquals(0, c0.ord)
         assertEquals(1, c1.ord)
-        col.models.change(basic, note.id, basic, null, map)
+        col.models.change(basic, note.id, basic, noOp, map)
         note.load()
         c0.load()
         c1.load()
@@ -576,7 +572,7 @@ class ModelTest : RobolectricTest() {
         //     // The low precision timer on Windows reveals a race condition
         //     time.sleep(0.05);
         // }
-        col.models.change(basic, note.id, basic, null, map)
+        col.models.change(basic, note.id, basic, noOp, map)
         note.load()
         c0.load()
         // the card was deleted
@@ -585,7 +581,7 @@ class ModelTest : RobolectricTest() {
         // an unmapped field becomes blank
         assertEquals("b123", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
-        col.models.change(basic, note.id, basic, map, null)
+        col.models.change(basic, note.id, basic, map, noOp)
         note.load()
         assertEquals("", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
