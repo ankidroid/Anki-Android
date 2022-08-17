@@ -152,7 +152,7 @@ abstract class DeckConfigV16 private constructor(val config: JSONObject) {
             config.put("conf", value)
         }
 
-    var id: dcid
+    var id: DeckConfigId
         get() = config.getLong("id")
         set(value) {
             config.put("id", value)
@@ -484,7 +484,7 @@ class DecksV16(private val col: CollectionV16) :
     }
 
     /* Backend will return default config if provided id doesn't exist. */
-    fun get_config(conf_id: dcid): DeckConfigV16 {
+    fun get_config(conf_id: DeckConfigId): DeckConfigV16 {
         val jsonObject = BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(conf_id))
         val config = DeckConfigV16.Config(jsonObject)
         return config
@@ -525,10 +525,10 @@ class DecksV16(private val col: CollectionV16) :
     fun add_config_returning_id(
         name: str,
         clone_from: Optional<DeckConfigV16> = Optional.empty()
-    ): dcid = this.add_config(name, clone_from).id
+    ): DeckConfigId = this.add_config(name, clone_from).id
 
     /** Remove a configuration and update all decks using it. */
-    fun remove_config(id: dcid) {
+    fun remove_config(id: DeckConfigId) {
         this.col.modSchema() // TODO: True was passed in as an arg
         for (g in this.all()) {
             // ignore cram decks
@@ -543,11 +543,11 @@ class DecksV16(private val col: CollectionV16) :
         col.backend.removeDeckConfig(dcid = id)
     }
 
-    override fun setConf(grp: Deck, id: Long) {
+    override fun setConf(grp: Deck, id: DeckConfigId) {
         setConf(DeckV16.Generic(grp), id)
     }
 
-    override fun didsForConf(conf: DeckConfig): List<Long> =
+    override fun didsForConf(conf: DeckConfig): List<DeckId> =
         didsForConf(DeckConfigV16.from(conf))
 
     override fun restoreToDefault(conf: DeckConfig) {
@@ -555,7 +555,7 @@ class DecksV16(private val col: CollectionV16) :
     }
 
     @RustCleanup("maybe an issue here - grp was deckConfig in V16")
-    fun setConf(grp: DeckV16, id: dcid) {
+    fun setConf(grp: DeckV16, id: DeckConfigId) {
         grp.conf = id
         this.save(grp)
     }
@@ -587,7 +587,7 @@ class DecksV16(private val col: CollectionV16) :
         all_config().map { x -> DeckConfig(x.config, x.source) }.toMutableList()
 
     /* Reverts to default if provided id missing */
-    override fun getConf(confId: dcid): DeckConfig =
+    override fun getConf(confId: DeckConfigId): DeckConfig =
         get_config(confId).let { x -> DeckConfig(x.config, x.source) }
 
     override fun confId(name: String, cloneFrom: String): Long {
@@ -600,7 +600,7 @@ class DecksV16(private val col: CollectionV16) :
     fun updateConf(conf: DeckConfigV16, preserve_usn: bool = false) =
         update_config(conf, preserve_usn)
 
-    override fun remConf(id: dcid) = remove_config(id)
+    override fun remConf(id: DeckConfigId) = remove_config(id)
     fun confId(name: str, clone_from: Optional<DeckConfigV16> = Optional.empty()) =
         add_config_returning_id(name, clone_from)
 

@@ -142,10 +142,10 @@ object Consts {
     annotation class REVLOG_TYPE
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
-    const val DEFAULT_DECK_ID: Long = 1
+    const val DEFAULT_DECK_ID: DeckId = 1
 
     /** Default dconf - can't be removed  */
-    const val DEFAULT_DECK_CONFIG_ID: Long = 1
+    const val DEFAULT_DECK_CONFIG_ID: DeckConfigId = 1
     @JvmField
     val FIELD_SEPARATOR = Character.toString('\u001f')
 

@@ -110,7 +110,7 @@ abstract class DeckManager {
     /** * A list of all deck config. */
     abstract fun allConf(): List<DeckConfig>
     abstract fun confForDid(did: DeckId): DeckConfig
-    abstract fun getConf(confId: Long): DeckConfig?
+    abstract fun getConf(confId: DeckConfigId): DeckConfig?
     abstract fun updateConf(g: DeckConfig)
 
     fun confId(name: String): Long = confId(name, Decks.DEFAULT_CONF)
@@ -121,8 +121,8 @@ abstract class DeckManager {
      * @throws ConfirmModSchemaException
      */
     @Throws(ConfirmModSchemaException::class)
-    abstract fun remConf(id: Long)
-    abstract fun setConf(grp: Deck, id: Long)
+    abstract fun remConf(id: DeckConfigId)
+    abstract fun setConf(grp: Deck, id: DeckConfigId)
 
     abstract fun didsForConf(conf: DeckConfig): List<Long>
     abstract fun restoreToDefault(conf: DeckConfig)

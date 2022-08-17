@@ -28,6 +28,7 @@ import com.ichi2.anki.NotificationChannels
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckConfigId
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.utils.JSONObject
@@ -133,7 +134,7 @@ class ReminderService : BroadcastReceiver() {
     }
 
     // getDeckOptionDue information, will recur one time to workaround collection close if recur is true
-    private fun getDeckOptionDue(col: Collection, dConfId: Long, recur: Boolean): List<DeckDueTreeNode>? {
+    private fun getDeckOptionDue(col: Collection, dConfId: DeckConfigId, recur: Boolean): List<DeckDueTreeNode>? {
 
         // Avoid crashes if the deck option group is deleted while we
         // are working

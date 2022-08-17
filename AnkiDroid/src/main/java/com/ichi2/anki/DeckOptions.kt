@@ -40,6 +40,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckConfig
+import com.ichi2.libanki.DeckConfigId
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.NumberRangePreference
@@ -208,7 +209,7 @@ class DeckOptions :
                             "newSteps" -> mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((value as String)))
                             "lapSteps" -> mOptions.getJSONObject("lapse").put("delays", StepsPreference.convertToJSON((value as String)))
                             "deckConf" -> {
-                                val newConfId: Long = (value as String).toLong()
+                                val newConfId: DeckConfigId = (value as String).toLong()
                                 mOptions = col.decks.getConf(newConfId)!!
                                 TaskManager.launchCollectionTask(CollectionTask.ConfChange(mDeck, mOptions), confChangeHandler())
                             }
