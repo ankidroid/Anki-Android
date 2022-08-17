@@ -1013,7 +1013,7 @@ open class Collection(
     }
 
     /** Returned data from [_fieldData] */
-    private data class FieldData(val nid: NoteId, val modelId: NoteTypeId, val flds: String)
+    private data class FieldData(val nid: NoteId, val modelId: NotetypeId, val flds: String)
 
     /**
      * Field checksums and sorting fields ***************************************
