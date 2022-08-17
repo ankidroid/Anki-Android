@@ -13,25 +13,21 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import com.ichi2.anki.RobolectricTest;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-@RunWith(AndroidJUnit4.class)
-public class ImportingTest extends RobolectricTest {
+@RunWith(AndroidJUnit4::class)
+class ImportingTest : RobolectricTest() {
     @Test
-    public void empty_test() {
+    fun empty_test() {
         // A test should occurs in the file, otherwise travis rejects. This remains here until we can uncomment the real tests.
     }
-
     /****************
-     Importing    *
+     * Importing    *
      */
     /*
       private void clear_tempfile(tf) {
@@ -240,7 +236,7 @@ public class ImportingTest extends RobolectricTest {
       n.setItem("Top", "3");
       n.addTag("four");
       col.addNote(n);
-      
+
       // https://stackoverflow.com/questions/23212435/permission-denied-to-write-to-my-temporary-file
       with NamedTemporaryFile(mode="w", delete=false) as tf:
       tf.write("1\tb\tc\n");
@@ -250,7 +246,7 @@ public class ImportingTest extends RobolectricTest {
       i.tagModified = "boom";
       i.run();
       clear_tempfile(tf);
-      
+
       n.load();
       assertTrue(n.setItem("Front",= "1"));
       assertTrue(n.setItem("Back",= "b"));
@@ -259,10 +255,10 @@ public class ImportingTest extends RobolectricTest {
       assertThat(n.getTags(), containsString("boom"));
       assertEquals(2, n.getTags().size());
       assertEquals(1, i.updateCount);
-      
+
       col.close();
       }
-      
+
       @Test
       public void test_tsv_tag_multiple_tags(){
       Collection col = getCol();
@@ -278,7 +274,7 @@ public class ImportingTest extends RobolectricTest {
       n.addTag("four");
       n.addTag("five");
       col.addNote(n);
-      
+
       // https://stackoverflow.com/questions/23212435/permission-denied-to-write-to-my-temporary-file
       with NamedTemporaryFile(mode="w", delete=false) as tf:
       tf.write("1\tb\tc\n");
@@ -288,13 +284,13 @@ public class ImportingTest extends RobolectricTest {
       i.tagModified = "five six";
       i.run();
       clear_tempfile(tf);
-      
+
       n.load();
       assertTrue(n.setItem("Front",= "1"));
       assertTrue(n.setItem("Back",= "b"));
       assertTrue(n.setItem("Top",= "c"));
       assertEquals(list(sorted(new String [] {"four", "five", "six"}, list(sorted(n.getTags())))));
-      
+
       col.close();
       }
 
@@ -311,7 +307,7 @@ public class ImportingTest extends RobolectricTest {
       n.setItem("Back", "2");
       n.setItem("Left", "3");
       col.addNote(n);
-      
+
       // https://stackoverflow.com/questions/23212435/permission-denied-to-write-to-my-temporary-file
       with NamedTemporaryFile(mode="w", delete=false) as tf:
       tf.write("1,2,3\n");
@@ -321,11 +317,11 @@ public class ImportingTest extends RobolectricTest {
       i.tagModified = "right";
       i.run();
       clear_tempfile(tf);
-      
+
       n.load();
       assertEqualsArrayList(new String [] {}, n.tags);
       assertEquals(0, i.updateCount);
-      
+
       col.close();
       }
 
