@@ -13,28 +13,21 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils.libanki
 
-package com.ichi2.testutils.libanki;
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.backend.exception.DeckRenameException
 
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.DeckConfig;
-import com.ichi2.libanki.backend.exception.DeckRenameException;
-
-public class FilteredDeckUtil {
-    public static long createFilteredDeck(Collection col, String name, String search) {
-        long filteredDid = 0;
-        try {
-            filteredDid = col.getDecks().newDyn(name);
-        } catch (DeckRenameException filteredAncestor) {
-            throw new RuntimeException(filteredAncestor);
+object FilteredDeckUtil {
+    fun createFilteredDeck(col: Collection, name: String?, search: String?): Long {
+        val filteredDid: Long = try {
+            col.decks.newDyn(name!!)
+        } catch (filteredAncestor: DeckRenameException) {
+            throw RuntimeException(filteredAncestor)
         }
-
-        DeckConfig conf = col.getDecks().confForDid(filteredDid);
-
-        conf.getJSONArray("terms").getJSONArray(0).put(0, search);
-
-        col.getDecks().save(conf);
-
-        return filteredDid;
+        val conf = col.decks.confForDid(filteredDid)
+        conf.getJSONArray("terms").getJSONArray(0).put(0, search)
+        col.decks.save(conf)
+        return filteredDid
     }
 }
