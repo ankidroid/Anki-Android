@@ -27,7 +27,7 @@ object ThemeUtils {
      * Convenience method to get the required color depending on the theme from the given attribute
      */
     @ColorInt
-    fun Context.getThemedColor(@AttrRes attribute: Int): Int {
+    fun Context.getColorFromAttr(@AttrRes attribute: Int): Int {
         return getColorFromAttr(
             this,
             attribute
@@ -35,6 +35,6 @@ object ThemeUtils {
     }
 
     @ColorInt
-    fun Fragment.getThemedColor(@AttrRes attribute: Int) =
-        this.requireActivity().getThemedColor(attribute)
+    fun Fragment.getColorFromAttr(@AttrRes attribute: Int) =
+        this.requireActivity().getColorFromAttr(attribute)
 }
