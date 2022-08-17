@@ -33,13 +33,12 @@ import java.util.concurrent.atomic.AtomicReference
 @KotlinCleanup("Use ?.let{throw it}")
 @RunWith(AndroidJUnit4::class)
 class NoteEditorTabOrderTest : NoteEditorTest() {
-    override fun getInvalidSdks(): List<Int> {
+    override val invalidSdks: List<Int>
         /*
-        java.lang.AssertionError:
-        Expected: is "a"
+            java.lang.AssertionError:
+            Expected: is "a"
          */
-        return listOf(30)
-    }
+        get() = listOf(30)
 
     @Test
     @Ignore(
@@ -52,7 +51,7 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
     @Throws(Throwable::class)
     fun testTabOrder() {
         ensureCollectionLoaded()
-        val scenario = mActivityRule.scenario
+        val scenario = activityRule!!.scenario
         scenario.moveToState(Lifecycle.State.RESUMED)
 
         onActivity(scenario) { editor: NoteEditor ->
