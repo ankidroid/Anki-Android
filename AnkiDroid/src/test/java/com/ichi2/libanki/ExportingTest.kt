@@ -13,45 +13,43 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.utils.KotlinCleanup
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import com.ichi2.anki.RobolectricTest;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-@RunWith(AndroidJUnit4.class)
-public class ExportingTest extends RobolectricTest {
-    private Collection mCol;
+@RunWith(AndroidJUnit4::class)
+@KotlinCleanup("IDE lint")
+class ExportingTest : RobolectricTest() {
+    @KotlinCleanup("lateinit")
+    private var mCol: Collection? = null
 
     /*****************
-     ** Exporting    *
-     *****************/
-    private void setup() {
-        mCol = getCol();
-        Note note = mCol.newNote();
-        note.setItem("Front", "foo");
-        note.setItem("Back", "bar<br>");
-        note.setTagsFromStr("tag, tag2");
-        mCol.addNote(note);
+     * Exporting    *
+     */
+    private fun setup() {
+        mCol = col
+        var note = mCol!!.newNote()
+        note.setItem("Front", "foo")
+        note.setItem("Back", "bar<br>")
+        note.setTagsFromStr("tag, tag2")
+        mCol!!.addNote(note)
         // with a different col
-        note = mCol.newNote();
-        note.setItem("Front", "baz");
-        note.setItem("Back", "qux");
-        note.model().put("did", addDeck("new col"));
-        mCol.addNote(note);
+        note = mCol!!.newNote()
+        note.setItem("Front", "baz")
+        note.setItem("Back", "qux")
+        note.model().put("did", addDeck("new col"))
+        mCol!!.addNote(note)
     }
-
 
     /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
     @Test
-    public void empty_test() {
+    fun empty_test() {
         // A test should occurs in the file, otherwise travis rejects. This remains here until we can uncomment the real tests.
     }
-
 
     /* TODO
        @Test
