@@ -13,116 +13,107 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.tests
 
-package com.ichi2.anki.tests;
+import android.os.Handler
+import android.os.Looper
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import com.ichi2.themes.Themes.setTheme
+import com.ichi2.utils.KotlinCleanup
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
+import java.lang.reflect.Constructor
+import java.lang.reflect.InvocationTargetException
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicReference
 
-import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-
-import com.ichi2.anki.R;
-import com.ichi2.themes.Themes;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
-
-import androidx.annotation.NonNull;
-
-@RunWith(Parameterized.class)
-public class LayoutValidationTest extends InstrumentedTest {
-
+@RunWith(Parameterized::class)
+@KotlinCleanup("variable names")
+@KotlinCleanup("IDE Lint")
+class LayoutValidationTest : InstrumentedTest() {
+    @JvmField
     @Parameterized.Parameter
-    public int mResourceId;
+    var mResourceId = 0
 
+    @JvmField
     @Parameterized.Parameter(1)
-    public String mName;
-
-    @Parameterized.Parameters(name = "{1}")
-    public static java.util.Collection<Object[]> initParameters() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor<?> ctor = com.ichi2.anki.R.layout.class.getDeclaredConstructors()[0];
-        ctor.setAccessible(true); // Required for at least API 16, maybe later.
-        Object layout = ctor.newInstance();
-
-        // There are hidden public fields: abc_list_menu_item_layout for example
-        HashSet<String> nonAnkiFieldNames = new HashSet<>();
-        nonAnkiFieldNames.addAll(getFieldNames(com.google.android.material.R.layout.class));
-        nonAnkiFieldNames.addAll(getFieldNames(com.afollestad.materialdialogs.R.layout.class));
-        nonAnkiFieldNames.addAll(getFieldNames(androidx.preference.R.layout.class)); // preference_category_material
-
-        List<Object[]> layouts = new ArrayList<>();
-        for (Field f : R.layout.class.getFields()) {
-            if (nonAnkiFieldNames.contains(f.getName())) {
-                continue;
-            }
-            layouts.add(new Object[] {f.getInt(layout), f.getName() });
-        }
-
-        return layouts;
-    }
-
+    var mName: String? = null
     @Test
-    public void ensureLayout() throws Exception {
+    @Throws(Exception::class)
+    fun ensureLayout() {
         // This should be fine to run on a device - but WebViews may be instantiated.
         // TODO: GestureDisplay.kt - why was mSwipeView.drawable null
-
-        Context targetContext = getTestContext();
-        Themes.setTheme(targetContext);
-        LayoutInflater li = LayoutInflater.from(targetContext);
-        ViewGroup root = new LinearLayout(targetContext);
-
-        ensureNoCrashOnUiThread(() -> li.inflate(mResourceId, root, true));
+        val targetContext = testContext
+        setTheme(targetContext)
+        val li = LayoutInflater.from(targetContext)
+        val root: ViewGroup = LinearLayout(targetContext)
+        ensureNoCrashOnUiThread { li.inflate(mResourceId, root, true) }
     }
 
-    /** Crashing on the UI thread takes down the process */
-    private void ensureNoCrashOnUiThread(Runnable runnable) throws Exception {
-        AtomicReference<Exception> failed = new AtomicReference<>();
-        AtomicBoolean hasRun = new AtomicBoolean(false);
-        runOnUiThread(() -> {
+    /** Crashing on the UI thread takes down the process  */
+    @Throws(Exception::class)
+    private fun ensureNoCrashOnUiThread(runnable: Runnable) {
+        val failed = AtomicReference<Exception?>()
+        val hasRun = AtomicBoolean(false)
+        runOnUiThread {
             try {
-                runnable.run();
-            } catch (Exception e) {
-                failed.set(e);
+                runnable.run()
+            } catch (e: Exception) {
+                failed.set(e)
             } finally {
-                hasRun.set(true);
+                hasRun.set(true)
             }
-        });
-
-        //noinspection StatementWithEmptyBody
+        }
         while (!hasRun.get()) {
             // spin
         }
-
         if (failed.get() != null) {
-            throw failed.get();
+            throw failed.get()!!
         }
     }
 
-
-    @NonNull
-    private static <T> HashSet<String> getFieldNames(Class<T> clazz) {
-        Field[] badFields = clazz.getFields();
-        HashSet<String> badFieldNames = new HashSet<>();
-        for (Field f : badFields) {
-            badFieldNames.add(f.getName());
-        }
-        return badFieldNames;
+    private fun runOnUiThread(runnable: Runnable) {
+        Handler(Looper.getMainLooper()).post(runnable)
     }
 
+    companion object {
+        @Parameterized.Parameters(name = "{1}")
+        @Throws(
+            IllegalAccessException::class,
+            InvocationTargetException::class,
+            InstantiationException::class
+        )
+        @JvmStatic
+        fun initParameters(): Collection<Array<Any>> {
+            val ctor: Constructor<*> = com.ichi2.anki.R.layout::class.java.declaredConstructors[0]
+            ctor.isAccessible = true // Required for at least API 16, maybe later.
+            val layout = ctor.newInstance()
 
-    private void runOnUiThread(Runnable runnable) {
-        new Handler(Looper.getMainLooper()).post(runnable);
+            // There are hidden public fields: abc_list_menu_item_layout for example
+            val nonAnkiFieldNames = HashSet<String>()
+            nonAnkiFieldNames.addAll(getFieldNames(com.google.android.material.R.layout::class.java))
+            nonAnkiFieldNames.addAll(getFieldNames(com.afollestad.materialdialogs.R.layout::class.java))
+            nonAnkiFieldNames.addAll(getFieldNames(androidx.preference.R.layout::class.java)) // preference_category_material
+            val layouts: MutableList<Array<Any>> = ArrayList()
+            for (f in layout::class.java.fields) {
+                if (nonAnkiFieldNames.contains(f.name)) {
+                    continue
+                }
+                layouts.add(arrayOf(f.getInt(layout), f.name))
+            }
+            return layouts
+        }
+
+        private fun <T> getFieldNames(clazz: Class<T>): HashSet<String> {
+            val badFields = clazz.fields
+            val badFieldNames = HashSet<String>()
+            for (f in badFields) {
+                badFieldNames.add(f.name)
+            }
+            return badFieldNames
+        }
     }
 }
