@@ -72,12 +72,14 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                     mySearchesDialogListener!!.onSaveSearch(text.toString(), currentSearchTerms)
                 }
         }
-        val layoutManager = dialog.getRecyclerView().layoutManager as LinearLayoutManager
-        val dividerItemDecoration = DividerItemDecoration(dialog.getRecyclerView().context, layoutManager.orientation)
-        val scale = resources.displayMetrics.density
-        val dpAsPixels = (5 * scale + 0.5f).toInt()
-        dialog.view.setPadding(dpAsPixels, 0, dpAsPixels, dpAsPixels)
-        dialog.getRecyclerView().addItemDecoration(dividerItemDecoration)
+        runCatching { dialog.getRecyclerView() }.onSuccess { recyclerView ->
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val dividerItemDecoration = DividerItemDecoration(recyclerView.context, layoutManager.orientation)
+            val scale = resources.displayMetrics.density
+            val dpAsPixels = (5 * scale + 0.5f).toInt()
+            dialog.view.setPadding(dpAsPixels, 0, dpAsPixels, dpAsPixels)
+            recyclerView.addItemDecoration(dividerItemDecoration)
+        }
         return dialog
     }
 
