@@ -298,7 +298,7 @@ class DecksV16(private val col: CollectionV16) :
         col.backend.removeDecks(listOf(did))
     }
 
-    fun removeDecks(deckIds: Iterable<Long>): OpChangesWithCount {
+    fun removeDecks(deckIds: Iterable<DeckId>): OpChangesWithCount {
         return col.backend.removeDecks(dids = deckIds)
     }
 

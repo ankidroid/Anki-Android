@@ -62,7 +62,7 @@ class DeckSpinnerSelection(
     /**
      * All of the decks shown to the user.
      */
-    private lateinit var mAllDeckIds: ArrayList<Long>
+    private lateinit var mAllDeckIds: ArrayList<DeckId>
 
     private val mFragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()
 

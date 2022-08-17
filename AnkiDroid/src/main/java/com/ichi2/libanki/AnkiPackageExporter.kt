@@ -199,7 +199,7 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
         }
         // decks
         Timber.d("Copy decks")
-        var dids: MutableCollection<Long?>? = null
+        var dids: MutableCollection<DeckId?>? = null
         if (did != null) {
             dids = HashSet(col.decks.children(did).values)
             dids.add(did)
