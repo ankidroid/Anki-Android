@@ -29,6 +29,7 @@ internal typealias str = String
 internal typealias DeckId = Long
 internal typealias DeckIds = LongArray
 internal typealias CardId = Long
+internal typealias CardIds = LongArray
 internal typealias DeckConfigId = Long
 internal typealias NoteId = Long
 internal typealias NotetypeId = Long

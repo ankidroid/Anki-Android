@@ -57,14 +57,14 @@ abstract class BaseSched(val col: Collection) {
     /**
      * @param cids Ids of cards to bury
      */
-    fun buryCards(cids: LongArray) {
+    fun buryCards(cids: CardIds) {
         buryCards(cids, manual = true)
     }
 
     /**
      * @param ids Id of cards to suspend
      */
-    open fun suspendCards(ids: LongArray) {
+    open fun suspendCards(ids: CardIds) {
         col.newBackend.backend.buryOrSuspendCards(
             cardIds = ids.toList(),
             noteIds = listOf(),
@@ -75,7 +75,7 @@ abstract class BaseSched(val col: Collection) {
     /**
      * @param ids Id of cards to unsuspend
      */
-    open fun unsuspendCards(ids: LongArray) {
+    open fun unsuspendCards(ids: CardIds) {
         col.newBackend.backend.restoreBuriedAndSuspendedCards(
             cids = ids.toList()
         )
@@ -86,7 +86,7 @@ abstract class BaseSched(val col: Collection) {
      * @param manual Whether bury is made manually or not. Only useful for sched v2.
      */
     @VisibleForTesting
-    open fun buryCards(cids: LongArray, manual: Boolean) {
+    open fun buryCards(cids: CardIds, manual: Boolean) {
         val mode = if (manual) {
             BuryOrSuspendCardsRequest.Mode.BURY_USER
         } else {
@@ -391,7 +391,7 @@ abstract class BaseSched(val col: Collection) {
         emptyDyn("id IN " + Utils.ids2str(cids) + " AND odid")
     }
 
-    fun remFromDyn(cids: LongArray) {
+    fun remFromDyn(cids: CardIds) {
         remFromDyn(cids.toList())
     }
 

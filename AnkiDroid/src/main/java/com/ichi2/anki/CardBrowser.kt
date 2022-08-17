@@ -1339,7 +1339,7 @@ open class CardBrowser :
             getPreviewIntent(startIndex, allCardIds)
         }
 
-    private fun getPreviewIntent(index: Int, selectedCardIds: LongArray): Intent {
+    private fun getPreviewIntent(index: Int, selectedCardIds: CardIds): Intent {
         return Previewer.getPreviewIntent(this@CardBrowser, index, selectedCardIds)
     }
 
@@ -2240,7 +2240,7 @@ open class CardBrowser :
         mCardsAdapter!!.notifyDataSetChanged()
     }
 
-    private val allCardIds: LongArray
+    private val allCardIds: CardIds
         get() = mCards.map { c -> c.id }.toLongArray()
     // This could be better: use a wrapper class PositionAware<T> to store the position so it's
     // no longer a responsibility of CardCache and we can guarantee it's consistent just by using this collection
@@ -2537,10 +2537,10 @@ open class CardBrowser :
     }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    val cardIds: LongArray
+    val cardIds: CardIds
         get() {
             val cardsCopy = mCards.wrapped.toTypedArray()
-            val ret = LongArray(cardsCopy.size)
+            val ret = CardIds(cardsCopy.size)
             for (i in cardsCopy.indices) {
                 ret[i] = cardsCopy[i].id
             }
