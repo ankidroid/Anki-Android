@@ -587,7 +587,7 @@ class CardContentProvider : ContentProvider() {
             SCHEDULE -> {
                 val valueSet = values!!.valueSet()
                 var cardOrd = -1
-                var noteID: Long = -1
+                var noteID: NoteId = -1
                 var ease = -1
                 var timeTaken: Long = -1
                 var bury = -1

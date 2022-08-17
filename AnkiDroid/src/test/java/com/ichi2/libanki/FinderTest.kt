@@ -496,7 +496,7 @@ class FinderTest : RobolectricTest() {
         note4.setItem("Front", "quuux")
         note4.setItem("Back", "nope")
         col.addNote(note4)
-        var r: List<Pair<String, List<Long>>> = col.findDupes("Back")
+        var r: List<Pair<String, List<NoteId>>> = col.findDupes("Back")
         var r0 = r[0]
         assertEquals("bar", r0.first)
         assertEquals(3, r0.second.size)

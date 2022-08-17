@@ -1258,7 +1258,7 @@ open class Collection(
         return Finder.findReplace(this, nids, src, dst, regex, field, fold)
     }
 
-    fun findDupes(fieldName: String?, search: String? = ""): List<Pair<String, List<Long>>> {
+    fun findDupes(fieldName: String?, search: String? = ""): List<Pair<String, List<NoteId>>> {
         return Finder.findDupes(this, fieldName, search)
     }
 
