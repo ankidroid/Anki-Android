@@ -87,7 +87,7 @@ class DeckAdapterFilterTest {
         return this.first { it.value.did == did }
     }
 
-    private fun List<TreeNode<AbstractDeckTreeNode>>.getByDids(vararg dids: Long): List<TreeNode<AbstractDeckTreeNode>> {
+    private fun List<TreeNode<AbstractDeckTreeNode>>.getByDids(vararg dids: DeckId): List<TreeNode<AbstractDeckTreeNode>> {
         return this.filter { it.value.did in dids }
     }
 }

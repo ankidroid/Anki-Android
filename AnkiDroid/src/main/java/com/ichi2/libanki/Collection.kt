@@ -968,11 +968,11 @@ open class Collection(
     }
 
     // NOT IN LIBANKI //
-    fun cardCount(vararg dids: Long): Int {
+    fun cardCount(vararg dids: DeckId): Int {
         return db.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids))
     }
 
-    fun isEmptyDeck(vararg dids: Long): Boolean {
+    fun isEmptyDeck(vararg dids: DeckId): Boolean {
         return cardCount(*dids) == 0
     }
 
