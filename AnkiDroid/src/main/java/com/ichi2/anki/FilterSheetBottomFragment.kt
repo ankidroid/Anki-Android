@@ -39,7 +39,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.libanki.bool
-import com.ichi2.themes.ThemeUtils.getColorFromAttr
+import com.ichi2.themes.Themes.getColorFromAttr
 
 /**
  * This class handles the Filter Bottom Sheet present in the Card Browser
