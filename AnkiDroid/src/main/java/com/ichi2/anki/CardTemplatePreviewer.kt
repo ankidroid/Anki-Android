@@ -24,6 +24,7 @@ import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.PreviewLayout.Companion.createAndDisplay
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
@@ -367,7 +368,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             mNote = note
         }
 
-        constructor(col: Collection, id: Long) : super(col, id) {
+        constructor(col: Collection, id: CardId) : super(col, id) {
             mNote = null
         }
 

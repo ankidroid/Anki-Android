@@ -537,11 +537,11 @@ open class Collection(
      * Object creation helpers **************************************************
      * *********************************************
      */
-    fun getCard(id: Long): Card {
+    fun getCard(id: CardId): Card {
         return Card(this, id)
     }
 
-    fun getNote(id: Long): Note {
+    fun getNote(id: NoteId): Note {
         return Note(this, id)
     }
 

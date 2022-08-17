@@ -370,7 +370,7 @@ class CardInfo : AnkiActivity() {
     }
 
     companion object {
-        private const val INVALID_CARD_ID: Long = -1
+        private const val INVALID_CARD_ID: CardId = -1
         private val sDateFormat = DateFormat.getDateInstance()
         private val sDateTimeFormat = DateFormat.getDateTimeInstance()
     }

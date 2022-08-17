@@ -78,7 +78,7 @@ open class Card : Cloneable {
 
     // BEGIN SQL table entries
     @set:VisibleForTesting
-    var id: Long
+    var id: CardId
     var nid: NoteId = 0
     var did: DeckId = 0
     var ord = 0
@@ -137,7 +137,7 @@ open class Card : Cloneable {
         data = ""
     }
 
-    constructor(col: Collection, id: Long) {
+    constructor(col: Collection, id: CardId) {
         this.col = col
         timerStarted = 0L
         render_output = null
@@ -497,10 +497,10 @@ open class Card : Cloneable {
      */
     open class Cache : Cloneable {
         val col: Collection
-        val id: Long
+        val id: CardId
         private var mCard: Card? = null
 
-        constructor(col: Collection, id: Long) {
+        constructor(col: Collection, id: CardId) {
             this.col = col
             this.id = id
         }

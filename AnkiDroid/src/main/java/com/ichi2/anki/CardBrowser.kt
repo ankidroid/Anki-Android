@@ -2289,7 +2289,7 @@ open class CardBrowser :
         private var mQa: Pair<String, String>? = null
         override var position: Int
 
-        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int) : super(col, id) {
+        constructor(id: CardId, col: com.ichi2.libanki.Collection, position: Int) : super(col, id) {
             this.position = position
         }
 
