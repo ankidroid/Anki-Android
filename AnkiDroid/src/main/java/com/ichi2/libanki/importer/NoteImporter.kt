@@ -11,10 +11,7 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.utils.StringUtils
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.Assert
-import com.ichi2.utils.HashUtil
-import com.ichi2.utils.HtmlUtils
-import com.ichi2.utils.JSONObject
+import com.ichi2.utils.*
 
 // Ported from https://github.com/ankitects/anki/blob/50fdf9b03dec33c99a501f332306f378db5eb4ea/pylib/anki/importing/noteimp.py
 // Aside from 9f676dbe0b2ad9b87a3bf89d7735b4253abd440e, which allows empty notes.
@@ -37,6 +34,7 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
 
     /** _nextID in python  */
     private var mNextId: Long = 0
+    @KotlinCleanup("maybe lateinit/nonnull")
     private var mIds: ArrayList<Long>? = null
     private var mEmptyNotes = false
     private var mUpdateCount = 0
@@ -210,9 +208,9 @@ open class NoteImporter(col: com.ichi2.libanki.Collection, file: String) : Impor
         addNew(_new)
         addUpdates(updates)
         // make sure to update sflds, etc
-        mCol.updateFieldCache(mIds)
+        mCol.updateFieldCache(mIds!!)
         // generate cards
-        if (mCol.genCards(mIds, mModel)!!.isNotEmpty()) {
+        if (mCol.genCards(mIds!!, mModel)!!.isNotEmpty()) {
             this.log.add(0, getString(R.string.note_importer_empty_cards_found))
         }
 

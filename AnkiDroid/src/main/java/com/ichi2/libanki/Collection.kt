@@ -757,19 +757,19 @@ open class Collection(
      */
     @KotlinCleanup("Check CollectionTask<Int?, Int> - should be fine")
     @KotlinCleanup("change to ArrayList!")
-    fun genCards(nids: kotlin.collections.Collection<Long?>?, model: Model): ArrayList<Long>? {
+    fun genCards(nids: kotlin.collections.Collection<Long>, model: Model): ArrayList<Long>? {
         return genCards<CollectionTask<Int?, Int>>(Utils.collection2Array(nids), model)
     }
 
     fun <T> genCards(
-        nids: kotlin.collections.Collection<Long?>?,
+        nids: kotlin.collections.Collection<Long>,
         model: Model,
         task: T?
     ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
         return genCards(Utils.collection2Array(nids), model, task)
     }
 
-    fun genCards(nids: kotlin.collections.Collection<Long?>?, mid: NoteTypeId): ArrayList<Long>? {
+    fun genCards(nids: kotlin.collections.Collection<Long>, mid: NoteTypeId): ArrayList<Long>? {
         return genCards(nids, models.get(mid)!!)
     }
 
@@ -789,7 +789,7 @@ open class Collection(
      */
     @JvmOverloads
     fun <T> genCards(
-        nids: LongArray?,
+        nids: LongArray,
         model: Model,
         task: T? = null
     ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
@@ -1036,11 +1036,11 @@ open class Collection(
     }
 
     // NOT IN LIBANKI //
-    fun cardCount(vararg dids: Long?): Int {
+    fun cardCount(vararg dids: Long): Int {
         return db.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids))
     }
 
-    fun isEmptyDeck(vararg dids: Long?): Boolean {
+    fun isEmptyDeck(vararg dids: Long): Boolean {
         return cardCount(*dids) == 0
     }
 
@@ -1080,7 +1080,7 @@ open class Collection(
         return rem
     }
 
-    fun emptyCardReport(cids: List<Long>?): String {
+    fun emptyCardReport(cids: List<Long>): String {
         val rep = StringBuilder()
         db.query(
             "select group_concat(ord+1), count(), flds from cards c, notes n " +
@@ -1122,7 +1122,7 @@ open class Collection(
     /** Update field checksums and sort cache, after find&replace, etc.
      * @param nids
      */
-    fun updateFieldCache(nids: kotlin.collections.Collection<Long>?) {
+    fun updateFieldCache(nids: kotlin.collections.Collection<Long>) {
         val snids = Utils.ids2str(nids)
         updateFieldCache(snids)
     }
@@ -1130,7 +1130,7 @@ open class Collection(
     /** Update field checksums and sort cache, after find&replace, etc.
      * @param nids
      */
-    fun updateFieldCache(nids: LongArray?) {
+    fun updateFieldCache(nids: LongArray) {
         val snids = Utils.ids2str(nids)
         updateFieldCache(snids)
     }
@@ -2304,7 +2304,7 @@ open class Collection(
     /**
      * Card Flags *****************************************************************************************************
      */
-    fun setUserFlag(flag: Int, cids: List<Long>?) {
+    fun setUserFlag(flag: Int, cids: List<Long>) {
         assert(0 <= flag && flag <= 7)
         db.execute(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
