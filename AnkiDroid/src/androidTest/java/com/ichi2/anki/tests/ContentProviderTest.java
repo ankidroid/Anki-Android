@@ -921,7 +921,7 @@ public class ContentProviderTest extends InstrumentedTest {
         values.put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken);
         int updateCount = cr.update(reviewInfoUri, values, null, null);
         assertEquals("Check if update returns 1", 1, updateCount);
-        try { Thread.currentThread().wait(500); } catch (Exception e) {/* do nothing */}
+        try { Thread.currentThread().join(500); } catch (Exception e) {/* do nothing */}
         col.reset();
         Card newCard = col.getSched().getCard();
         if(newCard != null){
