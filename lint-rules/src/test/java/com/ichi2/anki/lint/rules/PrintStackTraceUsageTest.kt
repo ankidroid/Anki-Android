@@ -13,67 +13,63 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.lint.rules
 
-package com.ichi2.anki.lint.rules;
+import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.*
+import com.android.tools.lint.checks.infrastructure.TestLintTask.*
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import org.intellij.lang.annotations.Language
+import org.junit.Assert.*
+import org.junit.Test
 
-import org.intellij.lang.annotations.Language;
-import org.junit.Test;
+@KotlinCleanup("IDE Lint")
+class PrintStackTraceUsageTest {
+    companion object {
+        @Language("JAVA")
+        private val printStackTraceUsage = """import java.io.IOException;          
+public class Test {                  
+    public Test() {                  
+        try {                        
+        } catch (IOException ex) {   
+            ex.printStackTrace();    
+        }                            
+    }                                
+}"""
 
-import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
-import static com.android.tools.lint.checks.infrastructure.TestLintTask.lint;
-import static org.junit.Assert.assertTrue;
-
-public class PrintStackTraceUsageTest {
-
-    @Language("JAVA")
-    private static final String printStackTraceUsage =
-            "import java.io.IOException;          \n" +
-            "public class Test {                  \n" +
-            "    public Test() {                  \n" +
-            "        try {                        \n" +
-            "        } catch (IOException ex) {   \n" +
-            "            ex.printStackTrace();    \n" +
-            "        }                            \n" +
-            "    }                                \n" +
-            "}";
-
-    @Language("JAVA")
-    private static final String printStackTraceWithMethodArgument =
-            "import java.io.IOException;                            \n" +
-            "import java.io.PrintWriter;                            \n" +
-            "public class Test {                                    \n" +
-            "    public Test() {                                    \n" +
-            "        try {                                          \n" +
-            "        } catch (IOException ex) {                     \n" +
-            "            ex.printStackTrace(new PrintWriter(sw));   \n" +
-            "        }                                              \n" +
-            "    }                                                  \n" +
-            "}";
-
-
-
-    @Test
-    public void showsErrorForUsageWithNoParam() {
-        lint()
-                .allowMissingSdk()
-                .files(create(printStackTraceUsage))
-                .issues(PrintStackTraceUsage.ISSUE)
-                .run()
-                .expectErrorCount(1)
-                .check(output -> {
-                    assertTrue(output.contains(PrintStackTraceUsage.ID));
-                });
+        @Language("JAVA")
+        private val printStackTraceWithMethodArgument =
+            """import java.io.IOException;                            
+import java.io.PrintWriter;                            
+public class Test {                                    
+    public Test() {                                    
+        try {                                          
+        } catch (IOException ex) {                     
+            ex.printStackTrace(new PrintWriter(sw));   
+        }                                              
+    }                                                  
+}"""
     }
 
     @Test
-    public void noErrorIfParamUsage() {
+    fun showsErrorForUsageWithNoParam() {
+        lint()
+            .allowMissingSdk()
+            .files(create(printStackTraceUsage))
+            .issues(PrintStackTraceUsage.ISSUE)
+            .run()
+            .expectErrorCount(1)
+            .check({ output: String -> assertTrue(output.contains(PrintStackTraceUsage.ID)) })
+    }
+
+    @Test
+    fun noErrorIfParamUsage() {
         // .check() is not required for the code to execute
         // If we have a parameter, we're not writing to stdout, so it's OK
         lint()
-                .allowMissingSdk()
-                .files(create(printStackTraceWithMethodArgument))
-                .issues(PrintStackTraceUsage.ISSUE)
-                .run()
-                .expectErrorCount(0);
+            .allowMissingSdk()
+            .files(create(printStackTraceWithMethodArgument))
+            .issues(PrintStackTraceUsage.ISSUE)
+            .run()
+            .expectErrorCount(0)
     }
 }
