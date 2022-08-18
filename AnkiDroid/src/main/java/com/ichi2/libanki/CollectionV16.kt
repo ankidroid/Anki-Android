@@ -157,6 +157,27 @@ class CollectionV16(
         return cardIdsList
     }
 
+    override fun findNotes(
+        query: String,
+        order: SortOrder,
+    ): List<Long> {
+        val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
+            @Suppress("DEPRECATION")
+            SortOrder.BuiltinSortKind(
+                get_config("noteSortType", null as String?) ?: "noteFld",
+                get_config("browserNoteSortBackwards", false) ?: false,
+            )
+        } else {
+            order
+        }
+        val noteIDsList = try {
+            backend.searchNotes(query, adjustedOrder.toProtoBuf())
+        } catch (e: BackendInvalidInputException) {
+            throw InvalidSearchException(e)
+        }
+        return noteIDsList
+    }
+
     /** Takes raw input from TypeScript frontend and returns suitable translations. */
     fun i18nResourcesRaw(input: ByteArray): ByteArray {
         return backend.i18nResourcesRaw(input = input)
