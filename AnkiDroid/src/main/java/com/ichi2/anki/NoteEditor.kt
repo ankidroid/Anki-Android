@@ -187,59 +187,61 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private class SaveNoteHandler(noteEditor: NoteEditor) :
-        TaskListenerWithContext<NoteEditor, Int, Boolean?>(noteEditor) {
-        private var closeEditorAfterSave = false
-        private var closeIntent: Intent? = null
+        TaskListenerWithContext<NoteEditor, Void, Int?>(noteEditor) {
         override fun actualOnPreExecute(context: NoteEditor) {
             val res = context.resources
             context.progressDialog =
                 StyledProgressDialog.show(context, null, res.getString(R.string.saving_facts), false)
         }
 
-        override fun actualOnProgressUpdate(context: NoteEditor, value: Int) {
-            if (value > 0) {
-                context.changed = true
-                context.sourceText = null
-                context.refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
-                UIUtils.showThemedToast(
-                    context,
-                    context.resources.getQuantityString(
-                        R.plurals.factadder_cards_added,
-                        value,
-                        value
-                    ),
-                    true
-                )
-            } else {
-                context.displayErrorSavingNote()
-            }
-            if (!context.addNote || context.caller == CALLER_NOTEEDITOR || context.aedictIntent) {
-                context.changed = true
-                closeEditorAfterSave = true
-            } else if (context.caller == CALLER_NOTEEDITOR_INTENT_ADD) {
-                if (value > 0) {
-                    context.changed = true
-                }
-                closeEditorAfterSave = true
-                closeIntent = Intent().apply { putExtra(EXTRA_ID, context.intent.getStringExtra(EXTRA_ID)) }
-            } else if (!context.mEditFields!!.isEmpty()) {
-                context.mEditFields!!.first!!.focusWithKeyboard()
-            }
-            if (!closeEditorAfterSave && context.progressDialog != null && context.progressDialog!!.isShowing) {
-                try {
-                    context.progressDialog!!.dismiss()
-                } catch (e: IllegalArgumentException) {
-                    Timber.e(e, "Note Editor: Error on dismissing progress dialog")
-                }
-            }
-        }
-
         /**
-         * @param result noException
+         * @param result noOfSavedCards, null if any exception occurred internally
          */
         @KotlinCleanup("invert if")
-        override fun actualOnPostExecute(context: NoteEditor, result: Boolean?) {
-            if (result!!) {
+        override fun actualOnPostExecute(context: NoteEditor, result: Int?) {
+            var closeEditorAfterSave = false
+            var closeIntent: Intent? = null
+            if (result != null) {
+                // if task executed without any exception
+                if (result > 0) {
+                    context.changed = true
+                    context.sourceText = null
+                    context.refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
+                    UIUtils.showThemedToast(
+                        context,
+                        context.resources.getQuantityString(
+                            R.plurals.factadder_cards_added,
+                            result,
+                            result
+                        ),
+                        true
+                    )
+                } else {
+                    context.displayErrorSavingNote()
+                }
+
+                if (!context.addNote || context.caller == CALLER_NOTEEDITOR || context.aedictIntent) {
+                    context.changed = true
+                    closeEditorAfterSave = true
+                } else if (context.caller == CALLER_NOTEEDITOR_INTENT_ADD) {
+                    if (result > 0) {
+                        context.changed = true
+                    }
+                    closeEditorAfterSave = true
+                    closeIntent = Intent().apply { putExtra(EXTRA_ID, context.intent.getStringExtra(EXTRA_ID)) }
+                } else if (!context.mEditFields!!.isEmpty()) {
+                    context.mEditFields!!.first!!.focusWithKeyboard()
+                }
+
+                // TODO: Below two conditions can be combined
+                if (!closeEditorAfterSave && context.progressDialog != null && context.progressDialog!!.isShowing) {
+                    try {
+                        context.progressDialog!!.dismiss()
+                    } catch (e: IllegalArgumentException) {
+                        Timber.e(e, "Note Editor: Error on dismissing progress dialog")
+                    }
+                }
+
                 if (context.progressDialog != null && context.progressDialog!!.isShowing) {
                     try {
                         context.progressDialog!!.dismiss()
@@ -247,6 +249,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                         Timber.e(e, "Note Editor: Error on dismissing progress dialog")
                     }
                 }
+
                 if (closeEditorAfterSave) {
                     context.closeNoteEditor(closeIntent ?: Intent())
                 } else {
