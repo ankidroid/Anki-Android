@@ -78,9 +78,6 @@ import com.ichi2.anki.ui.NoteTypeSpinnerUtils
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.anki.widgets.PopupMenuWithIcons
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.CollectionTask.AddNote
-import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.async.TaskManager
 import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.*
@@ -89,14 +86,12 @@ import com.ichi2.libanki.Decks.CURRENT_DECK
 import com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Note.DupeOrEmpty
-import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 import java.util.*
 import java.util.function.Consumer
-import kotlin.collections.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -112,8 +107,6 @@ import kotlin.math.roundToInt
 @KotlinCleanup("see if we can lateinit")
 class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, TagsDialogListener {
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
-    // TODO: Remove variable context, this is introduced just to make SaveNoteHandler callback extraction without requiring a context argument
-    private val context = this
     private var changed = false
     private var isTagsEdited = false
     private var isFieldEdited = false
@@ -169,9 +162,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     private var mToggleStickyText: HashMap<Int, String?>? = HashMap()
     private val mOnboarding = Onboarding.NoteEditor(this)
-    private fun addNoteHandler(): AddNoteHandler {
-        return AddNoteHandler(this)
-    }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
@@ -187,16 +177,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private enum class AddClozeType {
         SAME_NUMBER, INCREMENT_NUMBER
-    }
-
-    private class AddNoteHandler(noteEditor: NoteEditor) :
-        TaskListenerWithContext<NoteEditor, Void, Int?>(noteEditor) {
-        override fun actualOnPreExecute(context: NoteEditor) = context.preAddNote()
-        /**
-         * @param result noOfSavedCards, null if any exception occurred internally
-         */
-        @KotlinCleanup("return early and simplify if possible")
-        override fun actualOnPostExecute(context: NoteEditor, result: Int?) = context.onNoteAdded(result)
     }
 
     private fun displayErrorSavingNote() {
@@ -491,7 +471,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         when (keyCode) {
             KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER -> if (event.isCtrlPressed) {
-                saveNote()
+                launchCatchingTask { saveNote() }
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
@@ -658,24 +638,22 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // SAVE NOTE METHODS
     // ----------------------------------------------------------------------------
 
-    private fun preAddNote() {
-        val res = context.resources
-        context.progressDialog =
-            StyledProgressDialog.show(context, null, res.getString(R.string.saving_facts), false)
-    }
-
+    /**
+     * @param noOfAddedCards null if any exception occurred internally
+     */
+    @KotlinCleanup("return early and simplify if possible")
     private fun onNoteAdded(noOfAddedCards: Int?) {
         var closeEditorAfterSave = false
         var closeIntent: Intent? = null
         if (noOfAddedCards != null) {
             // if task executed without any exception
             if (noOfAddedCards > 0) {
-                context.changed = true
-                context.sourceText = null
-                context.refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
+                changed = true
+                sourceText = null
+                refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
                 UIUtils.showThemedToast(
-                    context,
-                    context.resources.getQuantityString(
+                    this,
+                    resources.getQuantityString(
                         R.plurals.factadder_cards_added,
                         noOfAddedCards,
                         noOfAddedCards
@@ -683,45 +661,66 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     true
                 )
             } else {
-                context.displayErrorSavingNote()
+                displayErrorSavingNote()
             }
 
-            if (!context.addNote || context.caller == CALLER_NOTEEDITOR || context.aedictIntent) {
-                context.changed = true
+            if (!addNote || caller == CALLER_NOTEEDITOR || aedictIntent) {
+                changed = true
                 closeEditorAfterSave = true
-            } else if (context.caller == CALLER_NOTEEDITOR_INTENT_ADD) {
+            } else if (caller == CALLER_NOTEEDITOR_INTENT_ADD) {
                 if (noOfAddedCards > 0) {
-                    context.changed = true
+                    changed = true
                 }
                 closeEditorAfterSave = true
-                closeIntent = Intent().apply { putExtra(EXTRA_ID, context.intent.getStringExtra(EXTRA_ID)) }
-            } else if (!context.mEditFields!!.isEmpty()) {
-                context.mEditFields!!.first!!.focusWithKeyboard()
+                closeIntent = Intent().apply { putExtra(EXTRA_ID, intent.getStringExtra(EXTRA_ID)) }
+            } else if (!mEditFields!!.isEmpty()) {
+                mEditFields!!.first!!.focusWithKeyboard()
             }
 
-            if (context.progressDialog != null && context.progressDialog!!.isShowing) {
+            if (progressDialog != null && progressDialog!!.isShowing) {
                 try {
-                    context.progressDialog!!.dismiss()
+                    progressDialog!!.dismiss()
                 } catch (e: IllegalArgumentException) {
                     Timber.e(e, "Note Editor: Error on dismissing progress dialog")
                 }
             }
 
             if (closeEditorAfterSave) {
-                context.closeNoteEditor(closeIntent ?: Intent())
+                closeNoteEditor(closeIntent ?: Intent())
             } else {
                 // Reset check for changes to fields
-                context.isFieldEdited = false
-                context.isTagsEdited = false
+                isFieldEdited = false
+                isTagsEdited = false
             }
         } else {
             // RuntimeException occurred on adding note
-            context.closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null)
+            closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null)
+        }
+    }
+
+    /**
+     * Saves the [Note] to given [Collection]. Should be called from an IO thread/dispatcher
+     * @param col  Collection instance to which note is to be saved
+     * @param note Note instance to be saved
+     * @return Number of saved notes, null when any failure occurs
+     * */
+    private fun doInBackgroundAddNote(col: Collection, note: Note): Int? {
+        return try {
+            Timber.d("doInBackgroundAddNote - Started")
+            val noOfAddedCards = col.db.executeInTransaction {
+                col.addNote(note, Models.AllowEmpty.ONLY_CLOZE)
+            }
+            Timber.d("doInBackgroundAddNote - Cards Added $noOfAddedCards")
+            noOfAddedCards
+        } catch (e: RuntimeException) {
+            Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note")
+            CrashReportService.sendExceptionReport(e, "doInBackgroundAddNote")
+            null
         }
     }
 
     @VisibleForTesting
-    fun saveNote() {
+    suspend fun saveNote() {
         val res = resources
         if (mSelectedTags == null) {
             mSelectedTags = ArrayList(0)
@@ -749,10 +748,19 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             for (t in mSelectedTags!!) {
                 tags.put(t)
             }
-            col.models.current()!!.put("tags", tags)
-            col.models.setChanged()
+
             mReloadRequired = true
-            TaskManager.launchCollectionTask(AddNote(mEditorNote!!), addNoteHandler())
+            withProgress(resources.getString(R.string.saving_facts)) {
+                // prepare UI: no need because it is already handled by withProgress
+                val noOfAddedCards = CollectionManager.withCol {
+                    models.current()!!.put("tags", tags)
+                    models.setChanged()
+                    // add note in background, withCol itself performs operation on IO dispatcher
+                    doInBackgroundAddNote(this, mEditorNote!!)
+                }
+                // update UI based on the result from doInBackgroundAddNote
+                onNoteAdded(noOfAddedCards)
+            }
             updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
@@ -912,7 +920,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             R.id.action_save -> {
                 Timber.i("NoteEditor:: Save note button pressed")
-                saveNote()
+                launchCatchingTask { saveNote() }
                 return true
             }
             R.id.action_add_note_from_note_editor -> {
