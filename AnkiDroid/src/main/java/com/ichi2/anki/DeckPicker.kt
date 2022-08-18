@@ -823,6 +823,9 @@ open class DeckPicker :
             if (!importResult.isSuccess) {
                 ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, false)
             }
+        } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
+            ImportUtils.getFileCachedCopy(this, data!!) ?: return
+            showThemedToast(this, "CSV importer is not implemented yet", true)
         }
     }
 
@@ -2691,6 +2694,7 @@ open class DeckPicker :
         const val SHOW_STUDYOPTIONS = 11
         private const val ADD_NOTE = 12
         const val PICK_APKG_FILE = 13
+        const val PICK_CSV_FILE = 14
 
         // For automatic syncing
         // 10 minutes in milliseconds.

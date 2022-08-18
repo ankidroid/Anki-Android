@@ -24,6 +24,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.HelpDialog.FunctionItem
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 @NeedsTest("Selecting APKG allows multiple files")
@@ -57,6 +58,16 @@ class ImportFileSelectionFragment {
                     OpenFilePicker(DeckPicker.PICK_APKG_FILE)
                 ),
             )
+            if (!BackendFactory.defaultLegacySchema) {
+                importItems.add(
+                    FunctionItem(
+                        R.string.import_csv,
+                        R.drawable.ic_baseline_description_24,
+                        UsageAnalytics.Actions.IMPORT_CSV_FILE,
+                        OpenFilePicker(DeckPicker.PICK_CSV_FILE, multiple = false, mimeType = "text/plain")
+                    )
+                )
+            }
             return RecursivePictureMenu.createInstance(ArrayList(importItems), R.string.menu_import)
         }
 

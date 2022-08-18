@@ -64,6 +64,13 @@ object ImportUtils {
         return FileImporter().handleFileImport(context, intent)
     }
 
+    /**
+     * Makes a cached copy of the file selected on [intent] and returns its path
+     */
+    fun getFileCachedCopy(context: Context, intent: Intent): String? {
+        return FileImporter().getFileCachedCopy(context, intent)
+    }
+
     @JvmStatic
     fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
         FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
@@ -123,6 +130,20 @@ object ImportUtils {
                 handleContentProviderFile(context, intent, dataList)
             } else {
                 ImportResult.fromErrorString(context.getString(R.string.import_error_handle_exception))
+            }
+        }
+
+        /**
+         * Makes a cached copy of the file selected on [intent] and returns its path
+         */
+        fun getFileCachedCopy(context: Context, intent: Intent): String? {
+            val uri = getUris(intent)?.get(0) ?: return null
+            val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
+            val tempPath = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
+            return if (copyFileToCache(context, uri, tempPath)) {
+                tempPath
+            } else {
+                null
             }
         }
 
