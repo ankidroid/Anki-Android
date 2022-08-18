@@ -112,7 +112,7 @@ object ImportUtils {
             } catch (e: Exception) {
                 CrashReportService.sendExceptionReport(e, "handleFileImport")
                 Timber.e(e, "failed to handle import intent")
-                ImportResult.fromErrorString(context.getString(R.string.import_error_exception, e.localizedMessage))
+                ImportResult.fromErrorString(context.getString(R.string.import_error_handle_exception, e.localizedMessage))
             }
         }
 
