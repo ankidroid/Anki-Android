@@ -46,6 +46,7 @@ import java.net.URLEncoder
 import java.util.*
 import java.util.zip.ZipException
 import java.util.zip.ZipInputStream
+import kotlin.collections.ArrayList
 
 object ImportUtils {
     /* A filename should be shortened if over this threshold */
@@ -117,30 +118,11 @@ object ImportUtils {
         }
 
         private fun handleFileImportInternal(context: Context, intent: Intent): ImportResult {
-            if (intent.data == null) {
-                Timber.i("No intent data. Attempting to read clip data.")
-                if (intent.clipData == null ||
-                    intent.clipData!!.itemCount == 0
-                ) {
-                    return ImportResult.fromErrorString(context.getString(R.string.import_error_unhandled_request))
-                }
-                val clipUriList: ArrayList<Uri> = ArrayList()
-                // Iterate over clipUri & create clipUriList
-                // Pass clipUri list.
-                for (i in 0 until intent.clipData!!.itemCount) {
-                    intent.clipData?.getItemAt(i)?.let { clipUriList.add(it.uri) }
-                }
-                return handleContentProviderFile(context, intent, clipUriList)
-            }
-
-            // If Uri is of scheme which is supported by ContentResolver, read the contents
-            val intentUriScheme = intent.data!!.scheme
-            return if (intentUriScheme == ContentResolver.SCHEME_CONTENT || intentUriScheme == ContentResolver.SCHEME_FILE || intentUriScheme == ContentResolver.SCHEME_ANDROID_RESOURCE) {
-                Timber.i("Attempting to read content from intent.")
-                val intentDataList: ArrayList<Uri> = arrayListOf(intent.data!!)
-                handleContentProviderFile(context, intent, intentDataList)
+            val dataList = getUris(intent)
+            return if (dataList != null) {
+                handleContentProviderFile(context, intent, dataList)
             } else {
-                ImportResult.fromErrorString(context.resources.getString(R.string.import_error_unhandled_scheme, intent.data))
+                ImportResult.fromErrorString(context.getString(R.string.import_error_handle_exception))
             }
         }
 
@@ -340,6 +322,31 @@ object ImportUtils {
         }
 
         companion object {
+            fun getUris(intent: Intent): ArrayList<Uri>? {
+                if (intent.data == null) {
+                    Timber.i("No intent data. Attempting to read clip data.")
+                    if (intent.clipData == null || intent.clipData!!.itemCount == 0) {
+                        return null
+                    }
+                    val clipUriList: ArrayList<Uri> = ArrayList()
+                    // Iterate over clipUri & create clipUriList
+                    // Pass clipUri list.
+                    for (i in 0 until intent.clipData!!.itemCount) {
+                        intent.clipData?.getItemAt(i)?.let { clipUriList.add(it.uri) }
+                    }
+                    return clipUriList
+                }
+
+                // If Uri is of scheme which is supported by ContentResolver, read the contents
+                val intentUriScheme = intent.data!!.scheme
+                return if (intentUriScheme == ContentResolver.SCHEME_CONTENT || intentUriScheme == ContentResolver.SCHEME_FILE || intentUriScheme == ContentResolver.SCHEME_ANDROID_RESOURCE) {
+                    Timber.i("Attempting to read content from intent.")
+                    arrayListOf(intent.data!!)
+                } else {
+                    null
+                }
+            }
+
             /**
              * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
              * @param pathList list of path(s) to apkg file which will be imported
