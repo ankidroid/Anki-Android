@@ -128,7 +128,7 @@ object Storage {
         }
         // add in reverse order so basic is default
         for (i in StdModels.STD_MODELS.indices.reversed()) {
-            StdModels.STD_MODELS[i].add(col)
+            StdModels.STD_MODELS[i].add(col!!)
         }
     }
 
