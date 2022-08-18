@@ -86,11 +86,15 @@ class ConfigV16(val backend: RustConfigBackend) : ConfigManager() {
         backend.set(key, value)
     }
 
+    override fun put(key: String, value: Any?) {
+        backend.set(key, value)
+    }
+
     override fun remove(key: String) {
         backend.remove(key)
     }
 
     override var json: JSONObject
         get() = backend.getJson() as JSONObject
-        set(value) { backend.setJson(value) }
+        set(@Suppress("UNUSED_PARAMETER") value) { TODO("not implemented; use backend syncing") }
 }

@@ -105,7 +105,7 @@
     <string name="sync_media_partial_updated">Medya senkronizasyonu kısmen tamamlandı:\n%1$d medya dosyası indirildi.\n%2$d medya dosyası yüklendi.</string>
     <string name="sync_media_changes_count">%d ortam yüklenmek için değiştirildi</string>
     <string name="sync_media_downloaded_count">%d ortam dosyası indirildi</string>
-    <string name="sync_sanity_failed">Eşitlemeden sonra, koleksiyon tutarsız bir durumdaydı. Bu sorunu düzeltmek için, AnkiDroid bir tam eşitleme gerektirecek. Lütfen hangi tarafı korumak istediğinizi seçin, veya sonra eşitlemeyi tercih ediyorsanız iptâl edin.</string>
+    <string name="sync_sanity_failed">Senkronizasyondan sonra, koleksiyon tutarsız bir durumdaydı. Bu sorunu düzeltmek için, AnkiDroid bir tam senkronizasyon zorlayacak. Hangi tarafı tutmak istediğinizi seçin.</string>
     <string name="sync_media_sanity_failed">Medya eşitlemesi tamamlandı, ama medya sayısı sunucuyla uyuşmuyor. Bir sonraki medya eşitlemesi hataları düzeltmek için tam yapılacak.</string>
     <string name="sync_media_db_error">Mevcut veritabanı bozuk olduğundan medya senkronizasyonu başarısız oldu. Medya kontrolü yapılması önerilir. </string>
     <string name="sync_media_error">Medya veri senkronizasyonu hatası.</string>
@@ -114,8 +114,9 @@
     <string name="sync_basic_check_failed">\'%s\' senkronizasyondan önce çalıştırılmalı. </string>
     <string name="sync_sanity_local">Yerel</string>
     <string name="sync_sanity_remote">Sunucu</string>
-    <string name="force_full_sync_title">Zorunlu tam senkronizasyon</string>
-    <string name="force_full_sync_summary">Bir sonraki eşitlemede, değişiklikleri tek yönde yapın</string>
+    <string name="force_full_sync_title">Tam senkronizasyon zorla</string>
+    <string name="force_full_sync_summary">Sonraki senkronizasyonda, değişiklikleri tek yönde zorla</string>
+    <string name="force_full_sync_confirmation">Tam senkronizasyon zorlama</string>
     <string name="full_sync_confirmation">İstenen değişiklik koleksiyonunuzu bir sonraki senkronize edişinizde veritabanının toptan karşıya yüklenmesini gerektirecek. Başka bir cihazda bekleyen, burada henüz senkronize edilmemiş çalışmalarınız veya başka değişiklikleriniz varsa kaybolacaklar. Devam edilsin mi?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid\'in daha önce yüklü sürümündeki bir hata nedeniyle, bir tam senkronizasyon zorlamanız tavsiye edilir.</string>
     <string name="sync_error_407_proxy_required">Vekil kimlik doğrulaması gerekiyor.</string>

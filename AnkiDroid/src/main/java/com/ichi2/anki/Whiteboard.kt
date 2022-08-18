@@ -31,11 +31,11 @@ import android.widget.LinearLayout
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
-import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeUtils
+import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions
 import com.ichi2.utils.KotlinCleanup
 import com.mrudultora.colorpicker.ColorPickerPopUp
@@ -519,8 +519,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         private var mWhiteboardMultiTouchMethods: WhiteboardMultiTouchMethods? = null
         @JvmStatic
         fun createInstance(context: AnkiActivity, handleMultiTouch: Boolean, whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?): Whiteboard {
-            val sharedPrefs = AnkiDroidApp.getSharedPrefs(context)
-            val whiteboard = Whiteboard(context, handleMultiTouch, isInNightMode(sharedPrefs))
+            val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isNightMode)
             mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods
             val lp2 = FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
@@ -548,14 +547,15 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             whitePenColorButton.setOnClickListener { view: View -> onClick(view) }
             foregroundColor = Color.WHITE
         }
-        mPaint = Paint()
-        mPaint.isAntiAlias = true
-        mPaint.isDither = true
-        mPaint.color = foregroundColor
-        mPaint.style = Paint.Style.STROKE
-        mPaint.strokeJoin = Paint.Join.ROUND
-        mPaint.strokeCap = Paint.Cap.ROUND
-        mPaint.strokeWidth = currentStrokeWidth.toFloat()
+        mPaint = Paint().apply {
+            isAntiAlias = true
+            isDither = true
+            color = foregroundColor
+            style = Paint.Style.STROKE
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            strokeWidth = currentStrokeWidth.toFloat()
+        }
         createBitmap()
         mPath = Path()
         mBitmapPaint = Paint(Paint.DITHER_FLAG)

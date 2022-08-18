@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Öppna panel</string>
     <string name="drawer_close">Stäng panel</string>
@@ -101,6 +99,9 @@
         <item>Skapad</item>
         <item>Anteckning ändrad</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ändra dagens gräns för nya kort</string>
     <string name="custom_study_increase_review_limit">Modifiera dagens dagens gräns för kortrepetitioner</string>
@@ -267,8 +268,6 @@
     <string name="apk_share_error">Fel vid delning av apkg-fil</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Denna fil kräver en nyare version av Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Misslyckades med att ladda \'%s\'</string>
     <string name="activity_start_failed">Systemet saknar en installerad app som kan utföra denna handling.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerbilder kan ta upp mycket lagringsutrymme. Du kan vilja komprimera & ändra storleken på bilderna i media-mappen.]]></string>
     <string name="no_browser_notification">Ingen webbläsare funnen, var god vänlig och besök webbsidan med dator eller mobil: </string>
@@ -328,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kortet innehållsfel: Det gick inte att läsa in ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Kort innehållsfel: Medierapportering krävs</string>
-    <string name="cannot_load_http_resource">Laddning av http-resurser stöds inte längre</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Det gick inte att läsa in kortleken ‘%s’</string>
     <string name="search_decks">Sök kortlekar</string>
@@ -415,4 +413,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

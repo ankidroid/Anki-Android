@@ -274,6 +274,18 @@ public class Models extends ModelManager {
     }
 
     /** {@inheritDoc} */
+    @NonNull
+    @Override
+    public ArrayList<String> allNames() {
+        ArrayList nameList = new ArrayList();
+        for (Model m : mModels.values()) {
+            nameList.add(m.getString("name"));
+        }
+
+        return nameList;
+    }
+
+    /** {@inheritDoc} */
     @Nullable
     @Override
     public Model byName(@NonNull String name) {
@@ -777,15 +789,10 @@ public class Models extends ModelManager {
 
     /** {@inheritDoc} */
     @Override
-    public void change(Model m, long nid, Model newModel, @Nullable Map<Integer, Integer> fmap, @Nullable Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
+    public void change(Model m, long nid, Model newModel, @NonNull Map<Integer, Integer> fmap, @NonNull Map<Integer, Integer> cmap) throws ConfirmModSchemaException {
         mCol.modSchema();
-        assert (newModel.getLong("id") == m.getLong("id")) || (fmap != null && cmap != null);
-        if (fmap != null) {
-            _changeNote(nid, newModel, fmap);
-        }
-        if (cmap != null) {
-            _changeCards(nid, m, newModel, cmap);
-        }
+        _changeNote(nid, newModel, fmap);
+        _changeCards(nid, m, newModel, cmap);
         mCol.genCards(nid, newModel);
     }
 

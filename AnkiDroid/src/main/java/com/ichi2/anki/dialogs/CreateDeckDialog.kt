@@ -16,12 +16,15 @@
 
 package com.ichi2.anki.dialogs
 
+import android.annotation.SuppressLint
 import android.content.Context
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.displayKeyboard
@@ -52,30 +55,32 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
 
     /** Used for rename  */
     var deckName: String
-        get() = mShownDialog!!.inputEditText!!.text.toString()
+        get() = mShownDialog!!.getInputField().text.toString()
         set(deckName) {
             mPreviousDeckName = deckName
             mInitialDeckName = deckName
         }
 
     fun showDialog(): MaterialDialog {
-        val show = MaterialDialog.Builder(context).title(title)
-            .positiveText(R.string.dialog_ok)
-            .negativeText(R.string.dialog_cancel)
-            .input(null, mInitialDeckName) { _: MaterialDialog?, _: CharSequence? -> }
-            .inputRange(1, -1)
-            .onPositive { _: MaterialDialog?, _: DialogAction? -> onPositiveButtonClicked() }
-            .show()
-        displayKeyboard(show.inputEditText!!, show)
-        mShownDialog = show
-        return show
+        @SuppressLint("CheckResult")
+        val dialog = MaterialDialog(context).show {
+            title(title)
+            positiveButton(R.string.dialog_ok) {
+                onPositiveButtonClicked()
+            }
+            negativeButton(R.string.dialog_cancel)
+            input(prefill = mInitialDeckName)
+            displayKeyboard(getInputField())
+        }
+        mShownDialog = dialog
+        return dialog
     }
 
     fun closeDialog() {
         mShownDialog?.dismiss()
     }
 
-    fun createSubDeck(did: Long, deckName: String?) {
+    fun createSubDeck(did: DeckId, deckName: String?) {
         val deckNameWithParentName = CollectionHelper.getInstance().getCol(context).decks.getSubdeckName(did, deckName)
         createDeck(deckNameWithParentName!!)
     }

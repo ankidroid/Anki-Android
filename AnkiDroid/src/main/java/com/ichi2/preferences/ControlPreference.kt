@@ -16,32 +16,27 @@
 
 package com.ichi2.preferences
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Bundle
-import android.text.TextUtils
 import android.util.AttributeSet
-import android.view.KeyEvent.KEYCODE_VOLUME_DOWN
-import android.view.KeyEvent.KEYCODE_VOLUME_UP
 import androidx.preference.ListPreference
-import androidx.preference.ListPreferenceDialogFragmentCompat
-import androidx.preference.PreferenceCategory
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.CardSideSelectionDialog
-import com.ichi2.anki.dialogs.GestureSelectionDialogBuilder
-import com.ichi2.anki.dialogs.KeySelectionDialogBuilder
-import com.ichi2.anki.reviewer.Binding
+import com.ichi2.anki.dialogs.GestureSelectionDialogUtils
+import com.ichi2.anki.dialogs.GestureSelectionDialogUtils.onGestureChanged
+import com.ichi2.anki.dialogs.KeySelectionDialogUtils
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromGesture
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import timber.log.Timber
+import com.ichi2.ui.KeyPicker
 import java.util.*
-import java.util.stream.Collectors
 
 /**
  * A preference which allows mapping of inputs to actions (example: keys -> commands)
@@ -79,75 +74,74 @@ class ControlPreference : ListPreference {
         entryValues = entryIndices.map { it.toString() }.toTypedArray()
     }
 
-    class View : ListPreferenceDialogFragmentCompat() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            // must be called before super
-            refreshPreferenceEntities()
-            super.onCreate(savedInstanceState)
-        }
-
-        private fun refreshPreferenceEntities() {
-            Timber.d("refreshPreferenceEntities()")
-            val pref = this.preference as ControlPreference
-            pref.refreshEntries()
-        }
-
-        companion object {
-            @JvmStatic
-            fun newInstance(key: String): View {
-                val fragment = View()
-                val b = Bundle(1)
-                b.putString(ARG_KEY, key)
-                fragment.arguments = b
-                return fragment
-            }
-        }
+    override fun onClick() {
+        refreshEntries()
+        super.onClick()
     }
 
     /** The summary that appears on the preference */
-    override fun getSummary(): CharSequence =
-        TextUtils.join(", ", MappableBinding.fromPreferenceString(value).map { it.toDisplayString(context) })
+    override fun getSummary(): CharSequence = MappableBinding.fromPreferenceString(value)
+        .joinToString(", ") { it.toDisplayString(context) }
 
     /** Called when an element is selected in the ListView */
+    @SuppressLint("CheckResult")
     override fun callChangeListener(newValue: Any?): Boolean {
         when (val index: Int = (newValue as String).toInt()) {
             ADD_GESTURE_INDEX -> {
-                GestureSelectionDialogBuilder(context).apply {
-                    onGestureChanged { gesture ->
-                        showToastIfBindingIsUsed(fromGesture(gesture))
-                    }
-                    onPositive { dialog, _ ->
-                        val gesture = mGesturePicker.getGesture() ?: return@onPositive
+                MaterialDialog(context).show {
+                    title(R.string.binding_add_gesture)
+
+                    val gesturePicker = GestureSelectionDialogUtils.getGesturePicker(context)
+
+                    positiveButton(R.string.dialog_ok) { materialDialog ->
+                        val gesture = gesturePicker.getGesture() ?: return@positiveButton
                         val mappableBinding = fromGesture(gesture)
                         if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
-                            showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_gesture), dialog)
+                            showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_gesture), materialDialog)
                         } else {
                             addBinding(mappableBinding)
-                            dialog.dismiss()
+                            dismiss()
                         }
                     }
-                    autoDismiss(false)
-                }.show()
+                    negativeButton(R.string.dialog_cancel) { dismiss() }
+                    customView(view = gesturePicker)
+
+                    gesturePicker.onGestureChanged { gesture ->
+                        showToastIfBindingIsUsed(fromGesture(gesture))
+                    }
+
+                    noAutoDismiss()
+                }
             }
             ADD_KEY_INDEX -> {
-                KeySelectionDialogBuilder(context).apply {
-                    onBindingChanged { binding -> showToastIfBindingIsUsed(MappableBinding(binding, MappableBinding.Screen.Reviewer(CardSide.BOTH))) }
-                    onPositive { dialog, _ ->
-                        val binding = mKeyPicker.getBinding() ?: return@onPositive
+                MaterialDialog(context).show {
+                    val keyPicker: KeyPicker = KeyPicker.inflate(context)
+                    customView(view = keyPicker.rootLayout)
+                    title(R.string.binding_add_key)
+
+                    // When the user presses a key
+                    keyPicker.setBindingChangedListener { binding ->
+                        showToastIfBindingIsUsed(MappableBinding(binding, MappableBinding.Screen.Reviewer(CardSide.BOTH)))
+                    }
+
+                    positiveButton(R.string.dialog_ok) {
+                        val binding = keyPicker.getBinding() ?: return@positiveButton
                         // Use CardSide.BOTH as placeholder just to check if binding exists
                         CardSideSelectionDialog.displayInstance(context) { side ->
                             val mappableBinding = MappableBinding(binding, MappableBinding.Screen.Reviewer(side))
                             if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
-                                showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), dialog)
+                                showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_key), it)
                             } else {
                                 addBinding(mappableBinding)
-                                dialog.dismiss()
+                                dismiss()
                             }
                         }
                     }
-                    autoDismiss(false)
-                    disallowModifierKeys()
-                }.show()
+                    negativeButton(R.string.dialog_cancel) { dismiss() }
+
+                    keyPicker.setKeycodeValidation(KeySelectionDialogUtils.disallowModifierKeyCodes())
+                    noAutoDismiss()
+                }
             }
             else -> {
                 val bindings: MutableList<MappableBinding> = MappableBinding.fromPreferenceString(value)
@@ -157,13 +151,6 @@ class ControlPreference : ListPreference {
         }
         // don't persist the value
         return false
-    }
-
-    /** Volume keys shouldn't be mapped until we remove the 'Volume' gestures */
-    fun isVolumeKey(binding: Binding): Boolean {
-        if (!binding.isKeyCode) return false
-        val keycode = binding.keycode
-        return keycode == KEYCODE_VOLUME_DOWN || keycode == KEYCODE_VOLUME_UP
     }
 
     /**
@@ -219,36 +206,20 @@ class ControlPreference : ListPreference {
     private fun showDialogToReplaceBinding(binding: MappableBinding, title: String, parentDialog: MaterialDialog) {
         val commandName = context.getString(getCommandWithBindingExceptThis(binding)!!.resourceId)
 
-        MaterialDialog.Builder(context)
-            .title(title)
-            .content(context.getString(R.string.bindings_already_bound, commandName))
-            .onPositive { _, _ ->
+        MaterialDialog(context).show {
+            title(text = title)
+            message(text = context.getString(R.string.bindings_already_bound, commandName))
+            positiveButton(R.string.dialog_positive_replace) {
                 clearBinding(binding)
                 addBinding(binding)
                 parentDialog.dismiss()
             }
-            .positiveText(context.getString(R.string.dialog_positive_replace))
-            .negativeText(R.string.dialog_cancel)
-            .build()
-            .show()
+            negativeButton(R.string.dialog_cancel)
+        }
     }
 
     companion object {
         private const val ADD_KEY_INDEX = -2
         private const val ADD_GESTURE_INDEX = -1
-
-        /** Attaches all possible [ControlPreference] elements to a given [PreferenceCategory] */
-        @JvmStatic
-        fun setup(cat: PreferenceCategory) {
-            val commands = Arrays.stream(ViewerCommand.values()).collect(Collectors.toList())
-            val context = cat.context
-            for (c in commands) {
-                val p = ControlPreference(context)
-                p.setTitle(c.resourceId)
-                p.key = c.preferenceKey
-                p.setDefaultValue(c.defaultValue.toPreferenceString())
-                cat.addPreference(p)
-            }
-        }
     }
 }

@@ -53,7 +53,7 @@ internal class PieChartTestParametersBuilder(
 
     init {
         require(values.isNotEmpty()) { "Empty array of values" }
-        require(mSum != 0.0) { String.format("All %d values are zero", values.size) }
+        require(mSum != 0.0) { "All ${values.size} values are zero" }
         calcArcLengths()
         calcStartAngles()
         fillColors()

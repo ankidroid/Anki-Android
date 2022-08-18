@@ -18,6 +18,7 @@ package com.ichi2.anki
  ****************************************************************************************/
 
 import android.content.*
+import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.*
 import android.view.KeyEvent
@@ -31,7 +32,10 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
 import com.ichi2.preferences.StepsPreference.Companion.convertToJSON
+import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.setThemeLegacy
+import com.ichi2.themes.Themes.themeFollowsSystem
+import com.ichi2.themes.Themes.updateCurrentTheme
 import com.ichi2.ui.AppCompatPreferenceActivity
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONException
@@ -102,53 +106,66 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
                     Timber.i("Change value for key '%s': %s", key, value)
                     val ar = mDeck!!.getJSONArray("terms")
                     if (pref.secondFilter) {
-                        if ("search_2" == key) {
-                            ar.getJSONArray(1).put(0, value)
-                        } else if ("limit_2" == key) {
-                            ar.getJSONArray(1).put(1, value)
-                        } else if ("order_2" == key) {
-                            ar.getJSONArray(1).put(2, (value as String).toInt())
+                        when (key) {
+                            "search_2" -> {
+                                ar.getJSONArray(1).put(0, value)
+                            }
+                            "limit_2" -> {
+                                ar.getJSONArray(1).put(1, value)
+                            }
+                            "order_2" -> {
+                                ar.getJSONArray(1).put(2, (value as String).toInt())
+                            }
                         }
                     }
-                    if ("search" == key) {
-                        ar.getJSONArray(0).put(0, value)
-                    } else if ("limit" == key) {
-                        ar.getJSONArray(0).put(1, value)
-                    } else if ("order" == key) {
-                        ar.getJSONArray(0).put(2, (value as String).toInt())
-                    } else if ("resched" == key) {
-                        mDeck!!.put("resched", value)
-                    } else if ("stepsOn" == key) {
-                        val on = value as Boolean
-                        if (on) {
-                            val steps = convertToJSON(mValues["steps"]!!)
-                            if (steps!!.length() > 0) {
-                                mDeck!!.put("delays", steps)
-                            }
-                        } else {
-                            mDeck!!.put("delays", JSONObject.NULL)
+                    when (key) {
+                        "search" -> {
+                            ar.getJSONArray(0).put(0, value)
                         }
-                    } else if ("steps" == key) {
-                        mDeck!!.put("delays", convertToJSON((value as String)))
-                    } else if ("preset" == key) {
-                        val i: Int = (value as String).toInt()
-                        if (i > 0) {
-                            val presetValues = JSONObject(mDynExamples[i])
-                            val arr = presetValues.names() ?: continue
-                            for (name in arr.stringIterable()) {
-                                if ("steps" == name) {
-                                    mUpdate.put("stepsOn", true)
+
+                        "limit" -> {
+                            ar.getJSONArray(0).put(1, value)
+                        }
+                        "order" -> {
+                            ar.getJSONArray(0).put(2, (value as String).toInt())
+                        }
+                        "resched" -> {
+                            mDeck!!.put("resched", value)
+                        }
+                        "stepsOn" -> {
+                            val on = value as Boolean
+                            if (on) {
+                                val steps = convertToJSON(mValues["steps"]!!)
+                                if (steps!!.length() > 0) {
+                                    mDeck!!.put("delays", steps)
                                 }
-                                if ("resched" == name) {
-                                    mUpdate.put(name, presetValues.getBoolean(name))
-                                    mValues[name] = java.lang.Boolean.toString(presetValues.getBoolean(name))
-                                } else {
-                                    mUpdate.put(name, presetValues.getString(name))
-                                    mValues[name] = presetValues.getString(name)
-                                }
+                            } else {
+                                mDeck!!.put("delays", JSONObject.NULL)
                             }
-                            mUpdate.put("preset", "0")
-                            commit()
+                        }
+                        "steps" -> {
+                            mDeck!!.put("delays", convertToJSON((value as String)))
+                        }
+                        "preset" -> {
+                            val i: Int = (value as String).toInt()
+                            if (i > 0) {
+                                val presetValues = JSONObject(mDynExamples[i])
+                                val arr = presetValues.names() ?: continue
+                                for (name in arr.stringIterable()) {
+                                    if ("steps" == name) {
+                                        mUpdate.put("stepsOn", true)
+                                    }
+                                    if ("resched" == name) {
+                                        mUpdate.put(name, presetValues.getBoolean(name))
+                                        mValues[name] = java.lang.Boolean.toString(presetValues.getBoolean(name))
+                                    } else {
+                                        mUpdate.put(name, presetValues.getString(name))
+                                        mValues[name] = presetValues.getString(name)
+                                    }
+                                }
+                                mUpdate.put("preset", "0")
+                                commit()
+                            }
                         }
                     }
                 }
@@ -324,6 +341,20 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    @KotlinCleanup("Remove this once FilteredDeckOptions is an AnkiActivity")
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val newNightModeStatus = newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+        // Check if theme should change
+        if (Themes.systemIsInNightMode != newNightModeStatus) {
+            Themes.systemIsInNightMode = newNightModeStatus
+            if (themeFollowsSystem()) {
+                updateCurrentTheme()
+                recreate()
+            }
+        }
+    }
+
     @Suppress("deprecation") // Tracked as #5019 on github: addPreferencesFromResource
     private fun addPreferences(col: Collection) {
         addPreferencesFromResource(R.xml.cram_deck_options)
@@ -436,7 +467,9 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         newOrderPref.value = pref.getString("order", "0")
         newOrderPrefSecond.setEntries(R.array.cram_deck_conf_order_labels)
         newOrderPrefSecond.setEntryValues(R.array.cram_deck_conf_order_values)
-        newOrderPrefSecond.value = pref.getString("order_2", "5")
+        if (pref.secondFilter) {
+            newOrderPrefSecond.value = pref.getString("order_2", "5")
+        }
     }
 
     /**

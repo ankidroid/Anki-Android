@@ -31,6 +31,7 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.libanki.Consts
+import com.ichi2.themes.Themes
 import com.ichi2.utils.HashUtil.HashSetInit
 import timber.log.Timber
 
@@ -84,6 +85,7 @@ object PreferenceUpgradeService {
                 yield(RemoveLegacyMediaSyncUrl())
                 yield(UpdateNoteEditorToolbarPrefs())
                 yield(UpgradeGesturesToControls())
+                yield(UpgradeDayAndNightThemes())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -135,7 +137,7 @@ object PreferenceUpgradeService {
                 // clear all prefs if super old version to prevent any errors
                 if (previousVersionCode < 20300130) {
                     Timber.i("Old version of Anki - Clearing preferences")
-                    preferences.edit().clear().apply()
+                    preferences.edit { clear() }
                 }
                 // when upgrading from before 2.5alpha35
                 if (previousVersionCode < 20500135) {
@@ -143,13 +145,17 @@ object PreferenceUpgradeService {
                     // Card zooming behaviour was changed the preferences renamed
                     val oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100)
                     val oldImageZoom = preferences.getInt("relativeImageSize", 100)
-                    preferences.edit().putInt("cardZoom", oldCardZoom).apply()
-                    preferences.edit().putInt("imageZoom", oldImageZoom).apply()
-                    if (!preferences.getBoolean("useBackup", true)) {
-                        preferences.edit().putInt("backupMax", 0).apply()
+                    preferences.edit {
+                        putInt("cardZoom", oldCardZoom)
+                        putInt("imageZoom", oldImageZoom)
                     }
-                    preferences.edit().remove("useBackup").apply()
-                    preferences.edit().remove("intentAdditionInstantAdd").apply()
+                    if (!preferences.getBoolean("useBackup", true)) {
+                        preferences.edit { putInt("backupMax", 0) }
+                    }
+                    preferences.edit {
+                        remove("useBackup")
+                        remove("intentAdditionInstantAdd")
+                    }
                 }
                 FullScreenMode.upgradeFromLegacyPreference(preferences)
             }
@@ -337,6 +343,29 @@ object PreferenceUpgradeService {
                 // add to the binding_COMMANDNAME preference
                 val mappableBinding = MappableBinding(binding, MappableBinding.Screen.Reviewer(CardSide.BOTH))
                 command.addBindingAtEnd(preferences, mappableBinding)
+            }
+        }
+        internal class UpgradeDayAndNightThemes : PreferenceUpgrade(6) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val dayTheme = preferences.getString("dayTheme", "0")
+                val nightTheme = preferences.getString("nightTheme", "0")
+
+                preferences.edit {
+                    if (dayTheme == "1") { // plain
+                        putString("dayTheme", "2")
+                    } else { // light
+                        putString("dayTheme", "1")
+                    }
+                    if (nightTheme == "1") { // dark
+                        putString("nightTheme", "4")
+                    } else { // black
+                        putString("nightTheme", "3")
+                    }
+                    remove("invertedColors")
+                }
+                if (AnkiDroidApp.isInitialized()) {
+                    Themes.updateCurrentTheme()
+                }
             }
         }
     }

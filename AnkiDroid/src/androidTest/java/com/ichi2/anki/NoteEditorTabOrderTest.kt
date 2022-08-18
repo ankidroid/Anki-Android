@@ -24,13 +24,12 @@ import androidx.test.core.app.ActivityScenario.ActivityAction
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.atomic.AtomicReference
 
-@KotlinCleanup("is -> equalTo")
 @KotlinCleanup("Use ?.let{throw it}")
 @RunWith(AndroidJUnit4::class)
 class NoteEditorTabOrderTest : NoteEditorTest() {
@@ -65,19 +64,19 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
 
         onActivity(scenario) { editor: NoteEditor ->
             val currentFieldStrings = editor.currentFieldStrings
-            assertThat(currentFieldStrings[0], `is`("a"))
-            assertThat(currentFieldStrings[1], `is`("b"))
+            assertThat(currentFieldStrings[0], equalTo("a"))
+            assertThat(currentFieldStrings[1], equalTo("b"))
         }
     }
 
-    protected fun sendKeyDownUp(activity: Activity, keyCode: Int) {
+    private fun sendKeyDownUp(activity: Activity, keyCode: Int) {
         val inputConnection = BaseInputConnection(activity.currentFocus, true)
         inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
         inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, keyCode))
     }
 
     @Throws(Throwable::class)
-    protected fun onActivity(
+    private fun onActivity(
         scenario: ActivityScenario<NoteEditor>,
         noteEditorActivityAction: ActivityAction<NoteEditor>
     ) {

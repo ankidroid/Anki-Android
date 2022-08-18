@@ -15,7 +15,6 @@
  */
 package com.ichi2.utils
 
-import com.ichi2.utils.StringUtil.strip
 import com.ichi2.utils.StringUtil.toTitleCase
 import com.ichi2.utils.StringUtil.trimRight
 import org.hamcrest.MatcherAssert.assertThat
@@ -23,8 +22,6 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
-import kotlin.test.assertEquals
-import kotlin.test.junit5.JUnit5Asserter.assertNull
 
 class StringUtilTest {
     @Test
@@ -46,41 +43,6 @@ class StringUtilTest {
     fun trimRightDoesNothingOnTrimmedString() {
         val input = " foo"
         assertThat(trimRight(input), sameInstance(input))
-    }
-
-    @Test
-    fun strip_on_null_return_null() {
-        assertNull("", strip(null))
-    }
-
-    @Test
-    fun strip_on_empty_return_empty() {
-        assertEquals("", strip(""))
-    }
-
-    @Test
-    fun string_on_nonempty_full_of_whitespace_return_empty() {
-        assertEquals("", strip(" \u0020\u2001  "))
-    }
-
-    @Test
-    fun strip_leading_spaces() {
-        assertEquals("Hello", strip("   \t\n Hello"))
-    }
-
-    @Test
-    fun strip_trailing_spaces() {
-        assertEquals("MyNameIs", strip("MyNameIs\n\u2009\u205F\t   \u3000 "))
-    }
-
-    @Test
-    fun strip_trailing_and_leading_spaces() {
-        assertEquals("Tarek", strip("\n\u2006 \r\n\t\u000CTarek   \u0009"))
-    }
-
-    @Test
-    fun strip_does_nothing_on_stripped_string() {
-        assertEquals("Java", strip("Java"))
     }
 
     @Test

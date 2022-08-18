@@ -21,6 +21,7 @@ import android.webkit.WebView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
@@ -42,8 +43,8 @@ class AnkiStatsTaskHandler private constructor(
 ) {
     var standardTextSize = 10f
     var statType = AxisType.TYPE_MONTH
-    private var mDeckId: Long = 0
-    fun setDeckId(deckId: Long) {
+    private var mDeckId: DeckId = 0
+    fun setDeckId(deckId: DeckId) {
         mDeckId = deckId
     }
 
@@ -119,11 +120,11 @@ class AnkiStatsTaskHandler private constructor(
             collection: Collection,
             mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
             defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
-        ): AnkiStatsTaskHandler? {
+        ): AnkiStatsTaskHandler {
             if (instance == null || instance!!.collectionData !== collection) {
                 instance = AnkiStatsTaskHandler(collection, mainDispatcher, defaultDispatcher)
             }
-            return instance
+            return instance!!
         }
 
         @JvmStatic
@@ -131,7 +132,7 @@ class AnkiStatsTaskHandler private constructor(
             col: Collection,
             view: TextView,
             mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
-            defaultDispatcher: CoroutineDispatcher = Dispatchers.Main
+            defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
         ): Unit = mutex.withLock {
             withContext(defaultDispatcher) {
                 val todayStatString = if (!isActive || col.dbClosed) {

@@ -19,19 +19,35 @@
 */
 package com.ichi2.async
 
-import androidx.lifecycle.LifecycleCoroutineScope
-import kotlinx.coroutines.CoroutineExceptionHandler
+import android.app.Activity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.coroutineScope
+import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.snackbar.showSnackbar
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /*
- * Launch a job that catches any uncaught errors and prints it to Log.
+ * Launch a job that catches any uncaught errors, informs the user and prints it to Log.
+ * Errors from the backend contain localized text that is often suitable to show to the user as-is.
+ * Other errors should ideally be handled in the block.
  */
-fun LifecycleCoroutineScope.launchCatching(block: suspend () -> Unit) =
-    this.launch(
-        CoroutineExceptionHandler { _, throwable ->
-            Timber.w(throwable)
-        }
-    ) {
+fun LifecycleOwner.catchingLifecycleScope(
+    activity: Activity,
+    errorMessage: String? = null,
+    block: suspend CoroutineScope.() -> Unit
+): Job = lifecycle.coroutineScope.launch {
+    try {
         block()
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        // TODO: localize
+        Timber.w(e, errorMessage)
+        activity.showSnackbar("An error occurred: $e")
+        CrashReportService.sendExceptionReport(e, activity::class.java.simpleName)
     }
+}

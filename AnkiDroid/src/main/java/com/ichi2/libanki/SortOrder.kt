@@ -16,8 +16,6 @@
 
 package com.ichi2.libanki
 
-import BackendProto.Backend
-import com.ichi2.libanki.utils.EnumMirror
 import net.ankiweb.rsdroid.RustCleanup
 
 /** Helper class, libAnki uses a union
@@ -33,25 +31,5 @@ abstract class SortOrder {
     class AfterSqlOrderBy(val customOrdering: String) : SortOrder()
     @Deprecated("Not yet usable - unhandled in Java backend")
     @RustCleanup("remove @Deprecated once Java backend is gone")
-    class BuiltinSortKind(val value: BuiltIn, val reverse: Boolean) : SortOrder() {
-
-        // inner class to improve API: all inner classes of SortOrder are value
-        @EnumMirror(Backend.BuiltinSearchOrder.BuiltinSortKind::class)
-        enum class BuiltIn {
-            NOTE_CREATION,
-            NOTE_MOD,
-            NOTE_FIELD,
-            NOTE_TAGS,
-            NOTE_TYPE,
-            CARD_MOD,
-            CARD_REPS,
-            CARD_DUE,
-            CARD_EASE,
-            CARD_LAPSES,
-            CARD_INTERVAL,
-            CARD_DECK,
-            CARD_TEMPLATE,
-            UNRECOGNIZED;
-        }
-    }
+    class BuiltinSortKind(val value: String, val reverse: Boolean) : SortOrder()
 }

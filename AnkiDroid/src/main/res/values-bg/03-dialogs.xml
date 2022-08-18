@@ -47,7 +47,7 @@
     <string name="check_db_title">Да се провери ли базата данни?</string>
     <string name="check_db_warning">Това може да отнеме дълго време</string>
     <string name="check_db_acknowledge">Базата данни проверена</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">Базата данни е проверена и оптимизирана.\nЕ компресирана на %d Мб.</string>
     <string name="contextmenu_deckpicker_delete_deck">Изтрий колода</string>
     <string name="delete_deck_default_deck">Основното тесте не може да бъде изтрито</string>
     <string name="delete_deck_title">Изтрий колода</string>
@@ -59,16 +59,9 @@
     <string name="no_tts_available_message">Няма наличен синтез за език</string>
     <string name="initializing_tts">Зареждане на ситезиран говор&#8230;</string>
     <string name="tts_no_tts">Не говори</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s:<br/>Флашкарти за Андроид</h2>AnkiDroid е приложение за флашкарти, което е напълно съвместимо с настолният софтуер <a href=\"%2$s\">Anki</a>. Вие можете да създадете, свалите и учите материали на AnkiDroid или Anki Desktop, и да ги синхронизирате лесно с AnkiWeb.]]></item>
-        <item><![CDATA[За да помогнете да направим AnkiDroid по-добър, моля докладвайте за бъговете към <a href=\"%1$s\">нашия въпросник</a>; идеи да нови функции са добре дошли. Намерете отговори на въпросите си в <a href=\"%2$s\"> уикито ни</a> или започнете дискусия във <a href=\"%3$s\"> форума ни</a>.]]></item>
-        <item><![CDATA[AnkiDroid е <a href=\"%1$s\">софтуер с отворен код<a/>, така че всеки е окуражен да <a href=\"%2$s\"> стане сътрудник</a> :-)]]></item>
-        <item><![CDATA[Ако не сте програмисти, също можете да помогнете. Можете <a href=\"%1$s\">да помогнете в превода</a> на AnkiDroid, да обновите уикито или да пишете в блога си за AnkiDroid.]]></item>
-        <item><![CDATA[AnkiDroid се разпространява под <a href=\"%1$s\">GNU GPL v3 лиценз</a> и изходният код е наличен <a href=\"%2$s\">на GitHub</a>.]]></item>
-    </string-array>
+    <string name="unused_strings">\n\nНеизползвани файли:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Преглед</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
+    <string name="reposition_card_dialog_title">Преместване на нова карта</string>
     <string name="reposition_card_dialog_message">Начална позиция:</string>
     <string name="reposition_card_not_new_error">Само нови карти могат да бъдат премествани</string>
     <plurals name="reposition_card_dialog_acknowledge">
@@ -79,40 +72,40 @@
     <string name="reset_card_dialog_message">Тази карта ще бъде поставен в края на опашката на новите карти</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
-        <item quantity="other">%d cards reset</item>
+        <item quantity="other">%d карти са нулирани</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
+        <item quantity="one">Препланиране на %d карта</item>
         <item quantity="other">Reschedule %d cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Current interval: %d day</item>
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="one">Текущия интервал: %d ден</item>
+        <item quantity="other">Текущия интервал: %d дни</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Повторно планиране за преглед след x дни:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="one">%d карта е препланирана</item>
+        <item quantity="other">%d карти са препланирани</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
+    <string name="reschedule_card_dialog_new_card_warning">Планира се нова карта. Препланиране също променя нови карти на повторяющи се. Използвайте опцията \'преместване на карта\' за да промените позиция на нова карта в опашката</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Препланиране също определя как планировчикът ще третира картата (лекота ще бъди %d%%)</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">За да импортирате тестето, изберете го във файловия мениджър или посетете страницата about:downloads</string>
     <string name="answering_error_title">Грешка в базата данни</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Писането в колекцията е неуспешна. Базата данни може да е повредена или може да няма свободно пространство на диска.\n\nАко това се случва по-често, опитайте да проверите базата данни, да поправите колекцията или да възстановите я от резервно копия. Докоснете \"Опции\" за това.\n\Това може да е грешка в AnkiDroid; Моля, съобщете за тази грешка, да можем да я проверим.</string>
     <string name="answering_error_report">Доклад грешки</string>
     <string name="repair_deck_dialog">Наистина ли искате да опитате да поправите базата данни? \n\nПреди да започнете, копие ще бъде създадено в папка \"%s\".</string>
     <string name="intent_aedict_empty">Категория \"по подразбиране\" е празна</string>
     <string name="intent_aedict_category">За да добавите карти за AnkiDroid, премахнете всички категории на Notepad или добавите такава с име \'default\'</string>
     <string name="custom_study_new_total_new">Нови карти в тестето: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_rev_total_rev">Карти за повторение: %d</string>
+    <string name="custom_study_new_extend">Увеличаване/намаляване (\"-3\") днешен лимитът на нови карти</string>
+    <string name="custom_study_rev_extend">Увеличаване/намаляване (\"-3\") днешен лимитът на повтарящи се карти</string>
     <string name="custom_study_forgotten">Повтаряне на забравени карти през последните x дни:</string>
     <string name="custom_study_ahead">Преглед за следващите x дни:</string>
     <string name="custom_study_random">Избор на x случайни карти от тестето:</string>
     <string name="custom_study_preview">Преглед на нови карти, добавени през последните x дни:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">Не се получи да реконструира тестето за персонализирано обучение</string>
     <string name="importing_collection">Изнасяне на колекция&#8230;</string>
     <string name="import_media_count">Изнасяне на медийни файлове %1$d%%&#8230;</string>
     <string name="import_progress">• Импортирани бележки: %1$d%%\n• Импортирани карти: %2$d%%\n• Обработени: %3$d%%</string>
@@ -120,19 +113,20 @@
     <string name="import_update_ignored">Някои актуализации са игнорирани, защото е променен типа на бележките</string>
     <plurals name="import_complete_message">
         <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">Импортирано файли: %1$d\nОбщо импортирани карти: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">SD картата е пълна</string>
     <string name="sd_card_almost_full_title">SD картата е почти пълна</string>
-    <string name="no_space_to_downgrade_title">No space</string>
-    <string name="no_space_to_downgrade_content">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title">Няма място</string>
+    <string name="no_space_to_downgrade_content">AnkiDroid трябва %s свободно пространство за да продължи. Моля, освободете малко място</string>
     <string name="restore_backup_title">Възстановяване от архив?</string>
     <string name="restore_backup">Вашата колекция ще бъде заменена с по-старо копие. Всякакъв незаписан напредък, ще бъде загубен.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">Изберете друго</string>
     <string name="dialog_cancel">Отказ</string>
     <string name="dialog_ok">Да</string>
     <string name="dialog_no">Не</string>
     <string name="dialog_continue">Продължи</string>
+    <string name="dialog_processing">Обработване...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Създай</string>
     <string name="dialog_positive_delete">Изтрий</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -156,8 +150,8 @@
     <string name="check_media_no_unused_missing">Няма намерени неизползвани или липсващи файлове</string>
     <string name="check_media_db_updated">Медийната база данни е възстановена</string>
     <string name="check_media_delete_unused">Изтрий неизползваните</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="delete_media_message">Изтриване на медийни файлове&#8230;</string>
+    <string name="delete_media_result_title">Резултат за изтриване</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">%d файла е изтрит</item>
         <item quantity="other">%d файловете са изтрити</item>
@@ -173,14 +167,14 @@
     <string name="empty_cards_count">Карти за изтриване: %d</string>
     <string name="empty_cards_deleted">Изтрити карти: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">Разрешението за микрофон не е получено.</string>
+    <string name="multimedia_editor_camera_permission_refused">Разрешението за камера не е получено. Функцията е деактивирана.</string>
+    <string name="multimedia_editor_failed">Не може да отвори редактор на мультимедия</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">Разрешението за аудиозапис е отменено</string>
     <!-- Initial collection load -->
     <string name="collection_load_welcome_request_permissions_title">Добре дошли в AnkiDroid!</string>
-    <string name="collection_load_welcome_request_permissions_details">AnkiDroid requires storage permission, which we use exclusively to store your AnkiDroid collection, flashcard media and backups. Our code is open-source, written by volunteers, and trusted by millions.\n\nIf you have any questions, please access our in-app manual or visit our support forums.\n\nThank you for trying AnkiDroid!\n—AnkiDroid Development Team</string>
+    <string name="collection_load_welcome_request_permissions_details">AnkiDroid трябва разрешението за достъп до хранилището, което ми исползваме само за съхраняване AnkiDroid коллекция ви, медийни файлове и резервни копии. Нашият код е отворен за всички и го написаха доброволци, на които доверяват милиони хора.\n\nАко имате въпроси, моля, погледайте вградено ръководство или посетете нашите форуми за поддържане.\n\nБлагодаря ви за изпробване AnkiDroid!\n–Разработчици на AnkiDroid</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid е обновен</string>
@@ -261,4 +255,6 @@
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

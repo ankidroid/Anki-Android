@@ -16,7 +16,6 @@
 package com.ichi2.anki.export
 
 import android.util.Pair
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -24,8 +23,9 @@ import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.themes.StyledProgressDialog
 import timber.log.Timber
 
-internal class ExportListener(activity: AnkiActivity?, private val dialogsFactory: ExportDialogsFactory) : TaskListenerWithContext<AnkiActivity, Void, Pair<Boolean, String?>>(activity) {
-    private var mProgressDialog: MaterialDialog? = null
+internal class ExportListener(activity: AnkiActivity?, private val dialogsFactory: ExportDialogsFactory) : TaskListenerWithContext<AnkiActivity, Void, Pair<Boolean, String?>?>(activity) {
+    @Suppress("Deprecation")
+    private var mProgressDialog: android.app.ProgressDialog? = null
     override fun actualOnPreExecute(context: AnkiActivity) {
         mProgressDialog = StyledProgressDialog.show(
             context, "",
@@ -33,14 +33,14 @@ internal class ExportListener(activity: AnkiActivity?, private val dialogsFactor
         )
     }
 
-    override fun actualOnPostExecute(context: AnkiActivity, result: Pair<Boolean, String?>) {
+    override fun actualOnPostExecute(context: AnkiActivity, result: Pair<Boolean, String?>?) {
         if (mProgressDialog != null && mProgressDialog!!.isShowing) {
             mProgressDialog!!.dismiss()
         }
 
         // If boolean and string are both set, we are signalling an error message
         // instead of a successful result.
-        if (result.first == true && result.second != null) {
+        if (result!!.first == true && result.second != null) {
             Timber.w("Export Failed: %s", result.second)
             context.showSimpleMessageDialog(result.second)
         } else {

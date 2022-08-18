@@ -27,7 +27,6 @@ import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
@@ -295,16 +294,15 @@ object ImportUtils {
         fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
             Timber.e("showImportUnsuccessfulDialog() message %s", errorMessage)
             val title = activity.resources.getString(R.string.import_title_error)
-            MaterialDialog.Builder(activity)
-                .title(title)
-                .content(errorMessage!!)
-                .positiveText(activity.resources.getString(R.string.dialog_ok))
-                .onPositive { _: MaterialDialog?, _: DialogAction? ->
+            MaterialDialog(activity).show {
+                title(text = title)
+                message(text = errorMessage!!)
+                positiveButton(R.string.dialog_ok) {
                     if (exitActivity) {
                         AnkiActivity.finishActivityWithFade(activity)
                     }
                 }
-                .build().show()
+            }
         }
 
         /**

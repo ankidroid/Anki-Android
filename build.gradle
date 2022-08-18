@@ -6,13 +6,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
 buildscript {
     // The version for the Kotlin plugin and dependencies
-    ext.kotlin_version = '1.7.0'
-    ext.lint_version = '30.2.1'
+    ext.kotlin_version = '1.7.10'
+    ext.lint_version = '30.2.2'
     ext.acra_version = '5.7.0'
-    ext.ankidroid_backend_version = '0.1.11'
+    ext.ankidroid_backend_version = '0.1.15-anki2.1.54'
     ext.hamcrest_version = '2.2'
-    ext.junit_version = '5.8.2'
-    ext.coroutines_version = '1.6.2'
+    ext.junit_version = '5.9.0'
+    ext.coroutines_version = '1.6.4'
+    ext.fragments_version = "1.5.2"
 
     repositories {
         google()
@@ -21,7 +22,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'com.android.tools.build:gradle:7.2.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "app.brant:amazonappstorepublisher:0.1.0"
@@ -39,6 +40,12 @@ allprojects {
     apply plugin: "org.jlleitschuh.gradle.ktlint"
 }
 
+Properties localProperties = new Properties()
+if (project.rootProject.file('local.properties').exists()) {
+    localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+Boolean fatalWarnings = !(localProperties['fatal_warnings'] == "false")
+
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
     afterEvaluate { project ->
@@ -48,6 +55,9 @@ subprojects {
                 includeAndroidResources = true
             }
             project.android.testOptions.unitTests.all {
+                // tell backend to avoid rollover time, and disable interval fuzzing
+                environment "ANKI_TEST_MODE", "1"
+
                 useJUnitPlatform()
                 testLogging {
                     events "failed", "skipped"
@@ -92,7 +102,7 @@ subprojects {
         */
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
             kotlinOptions {
-                allWarningsAsErrors = true
+                allWarningsAsErrors = fatalWarnings
                 freeCompilerArgs = ['-Xjvm-default=all']
             }
         }

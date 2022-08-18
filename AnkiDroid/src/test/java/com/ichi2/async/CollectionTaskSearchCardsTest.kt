@@ -22,6 +22,7 @@ import com.ichi2.anki.servicelayer.SearchService.SearchCardsResult
 import com.ichi2.async.CollectionTask.SearchCards
 import com.ichi2.libanki.SortOrder.NoOrdering
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.junit.Test
@@ -30,12 +31,17 @@ import org.mockito.Mockito.*
 import org.mockito.kotlin.argumentCaptor
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("is -> equalTo")
 @KotlinCleanup("scope functions for argument matchers")
 class CollectionTaskSearchCardsTest : AbstractCollectionTaskTest() {
     @Test
     @RunInBackground
     fun searchCardsNumberOfResultCount() {
+        if (!BackendFactory.defaultLegacySchema) {
+            // PartialCards works via an onProgress call inside _findCards. This doesn't
+            // work with the new backend findCards(), which fetches all the ids in one go.
+            return
+        }
+
         addNoteUsingBasicModel("Hello", "World")
         addNoteUsingBasicModel("One", "Two")
 
@@ -44,17 +50,17 @@ class CollectionTaskSearchCardsTest : AbstractCollectionTaskTest() {
 
         val task = SearchCards("", NoOrdering(), cardsToRender, 0, 0)
         @Suppress("UNCHECKED_CAST")
-        val listener: TaskListener<List<CardCache>, SearchCardsResult> = mock(TaskListener::class.java) as TaskListener<List<CardCache>, SearchCardsResult>
+        val listener: TaskListener<List<CardCache>, SearchCardsResult?> = mock(TaskListener::class.java) as TaskListener<List<CardCache>, SearchCardsResult?>
 
         waitForTask(task, listener)
 
         verify(listener, times(1)).onPreExecute()
         val argumentCaptor = argumentCaptor<List<CardCache>>()
         verify(listener, times(1)).onProgressUpdate(argumentCaptor.capture())
-        assertThat("OnProgress sends the provided number of cards to render", argumentCaptor.firstValue.size, `is`(cardsToRender))
+        assertThat("OnProgress sends the provided number of cards to render", argumentCaptor.firstValue.size, equalTo(cardsToRender))
 
         val argumentCaptor2 = argumentCaptor<SearchCardsResult>()
         verify(listener, times(1)).onPostExecute(argumentCaptor2.capture())
-        assertThat("All cards should be provided on Post Execute", argumentCaptor2.firstValue.size(), `is`(numberOfCards))
+        assertThat("All cards should be provided on Post Execute", argumentCaptor2.firstValue.size(), equalTo(numberOfCards))
     }
 }

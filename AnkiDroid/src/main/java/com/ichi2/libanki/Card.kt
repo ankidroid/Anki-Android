@@ -79,8 +79,8 @@ open class Card : Cloneable {
     // BEGIN SQL table entries
     @set:VisibleForTesting
     var id: Long
-    var nid: Long = 0
-    var did: Long = 0
+    var nid: NoteId = 0
+    var did: DeckId = 0
     var ord = 0
     var mod: Long = 0
     var usn = 0
@@ -100,9 +100,9 @@ open class Card : Cloneable {
     var lapses = 0
     var left = 0
     var oDue: Long = 0
-    var oDid: Long = 0
+    var oDid: DeckId = 0
     private var flags = 0
-    private var data: String? = null
+    private lateinit var data: String
 
     // END SQL table entries
     @set:JvmName("setRenderOutput")
@@ -243,6 +243,14 @@ open class Card : Cloneable {
         return "<style>${render_output().css}</style>"
     }
 
+    fun questionAvTags(): List<AvTag> {
+        return render_output().question_av_tags
+    }
+
+    fun answerAvTags(): List<AvTag> {
+        return render_output().answer_av_tags
+    }
+
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
      */
@@ -324,11 +332,13 @@ open class Card : Cloneable {
     val pureAnswer: String
         get() {
             val s = render_output(false).answer_text
-            val target = "<hr id=answer>"
-            val pos = s.indexOf(target)
-            return if (pos == -1) {
-                s
-            } else s.substring(pos + target.length).trim { it <= ' ' }
+            for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+                val pos = s.indexOf(target)
+                if (pos == -1) continue
+                return s.substring(pos + target.length).trim { it <= ' ' }
+            }
+            // neither found
+            return s
         }
 
     /**

@@ -50,7 +50,7 @@ class UniqueArrayList<E>
  * @param list  the list to decorate, must not be null
  * @throws NullPointerException if set or list is null
  */
-protected constructor(
+private constructor(
     /**
      * Internal list used in [SetUniqueList] implementation.
      *
@@ -70,7 +70,7 @@ protected constructor(
     /**
      * Constructs a new empty [UniqueArrayList]
      */
-    constructor() : this(ArrayList<E>(), HashSet<E>()) {}
+    constructor() : this(ArrayList<E>(), HashSet<E>())
 
     /**
      * Sorts the list into ascending order, according to the
@@ -150,8 +150,7 @@ protected constructor(
         @JvmStatic
         @JvmOverloads
         fun <E> from(source: List<E>, comparator: Comparator<in E>? = null): UniqueArrayList<E> {
-            val set: Set<E>
-            set = if (comparator == null) {
+            val set: Set<E> = if (comparator == null) {
                 HashSet()
             } else {
                 TreeSet(comparator)

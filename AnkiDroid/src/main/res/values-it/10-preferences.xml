@@ -47,28 +47,26 @@
     <!-- generic strings -->
     <string name="disabled">Disabilitato</string>
     <string name="enabled">Abilitato</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_search_no_results">No results</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_general_summ">Impostazioni generali</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetizioni</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_reviewing_summ">Impostazioni di ripetizione non specifiche per il mazzo</string>
-    <string name="pref_cat_reviewer_behaviour" maxLength="41">Comportamento</string>
-    <string name="pref_cat_flashcard" maxLength="41">Visualizzazione</string>
+    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Lavagna</string>
     <string name="pref_cat_appearance" maxLength="41">Aspetto</string>
-    <string name="pref_cat_appearance_summ">Cambia temi e tipo di carattere predefinito</string>
     <string name="pref_cat_themes" maxLength="41">Temi</string>
     <string name="pref_cat_fonts" maxLength="41">Caratteri</string>
     <string name="pref_cat_gestures" maxLength="41">Gesti</string>
     <string name="pref_cat_controls" maxLength="41">Controlli</string>
     <string name="pref_cat_advanced" maxLength="41">Avanzate</string>
-    <string name="pref_cat_advanced_summ">Ottimizzazione e funzionalità sperimentali</string>
-    <string name="pref_cat_performance" maxLength="41">Prestazioni</string>
     <string name="pref_cat_workarounds" maxLength="41">Soluzioni alternative</string>
     <string name="pref_cat_plugins" maxLength="41">Plugin</string>
-    <string name="about_title" maxLength="41">Informazioni su AnkiDroid</string>
-    <string name="about_version">Versione: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Spessore tratto</string>
     <string name="use_input_tag" maxLength="41">Digita la risposta nella carta</string>
@@ -129,7 +127,6 @@
     <string name="sync_fetch_missing_media_summ">Recupera automaticamente i contenuti multimediali durante la sincronizzazione.</string>
     <string name="sync_account" maxLength="41">Account AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Non connesso</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronizzazione automatica</string>
     <string name="automatic_sync_choice_summ">Sincronizza automaticamente all\'avvio/uscita se l\'ultima sincronizzazione è stata più di 10 minuti fa.</string>
     <string name="sync_status_badge" maxLength="41">Visualizza stato di sincronizzazione</string>
@@ -181,16 +178,11 @@
     <string name="new_spread" maxLength="41">Posizione carte nuove</string>
     <string name="learn_cutoff" maxLength="41">Impara oltre il limite</string>
     <string name="time_limit" maxLength="41">Limite di tempo per sessione</string>
-    <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone" maxLength="41">Nuova gestione fuso orario</string>
     <string name="day_offset_with_description" maxLength="41">Inizio del giorno successivo (0 è mezzanotte, 23 è 23 ore)</string>
-    <string name="day_offset_summ">XXX ore dopo mezzanotte</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Mezzanotte</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">Ore 23:00</string>
-    <string name="sched_v2" maxLength="41">Pianificatore V2</string>
-    <string name="sched_v2_summ">Abilita il nuovo pianificatore. Forza i cambiamenti in una direzione alla prossima sincronizzazione</string>
-    <string name="sched_ver_toggle_title">Conferma</string>
-    <string name="sched_ver_1to2">Il pianificatore sperimentale potrebbe causare una pianificazione non corretta. Assicurati di aver prima letto la documentazione. Procedere?</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantieni schermo acceso</string>
     <string name="pref_keep_screen_on_summ">Disabilita il timeout dello schermo</string>
     <string name="convert_fen_text" maxLength="41">Supporto per la notazione scacchistica</string>
@@ -207,6 +199,9 @@
     <string name="thirdparty_apps_summary">Vedi un elenco di applicazioni che utilizzano l\'API AnkiDroid come dizionari, utilities.</string>
     <string name="html_javascript_debugging" maxLength="41">Debug HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Abilita connessioni WebView remote e salva l\'HTML della carta nella cartella AnkiDroid</string>
+    <!-- Appearance settings -->
+    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Incolla le immagini degli appunti in PNG</string>
     <string name="paste_as_png_summary">Di default Anki incolla le immagini sugli appunti come file JPG per salvare lo spazio su disco. Puoi usare quest\'opzione per incollare invece come immagini PNG.</string>
@@ -319,8 +314,15 @@
     <string name="no_code_formatting_summ">Correzioni ‘􏿾’ che appaiono nei risultati delle risposte digitate</string>
     <string name="type_in_answer_focus" maxLength="41">Focalizza «digita la risposta»</string>
     <string name="type_in_answer_focus_summ">Focalizza automaticamente il campo «digita la risposta» nel revisore</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">Apri il registro dei cambiamenti</string>
+    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="license">License</string>
+    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">Aggiungi un gesto</string>
     <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Aggiungi un tasto</string>
@@ -337,4 +339,16 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Rimuovi «%s»</string>
     <string name="bindings_already_bound">Già associato a %s</string>
+    <!-- Advanced -->
+    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
+    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
+    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
+    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
+    <string name="disable_dev_options">Disable developer options</string>
+    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    </string>
 </resources>

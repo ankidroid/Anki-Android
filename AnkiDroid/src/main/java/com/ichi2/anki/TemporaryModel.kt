@@ -24,6 +24,7 @@ import com.ichi2.async.CollectionTask.SaveModel
 import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Model
+import com.ichi2.libanki.NoteTypeId
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -72,7 +73,7 @@ class TemporaryModel(model: Model) {
     val templateCount: Int
         get() = model.getJSONArray("tmpls").length()
 
-    val modelId: Long
+    val modelId: NoteTypeId
         get() = model.getLong("id")
 
     fun updateCss(css: String?) {
@@ -100,7 +101,7 @@ class TemporaryModel(model: Model) {
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempModelFiles()
-        TaskManager.launchCollectionTask<Void, Pair<Boolean, String?>>(
+        TaskManager.launchCollectionTask<Void, Pair<Boolean, String?>?>(
             SaveModel(
                 model, adjustedTemplateChanges
             ),

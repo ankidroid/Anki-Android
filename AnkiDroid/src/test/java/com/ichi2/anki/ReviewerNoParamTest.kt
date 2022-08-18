@@ -31,6 +31,9 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
+import com.ichi2.themes.Theme
+import com.ichi2.themes.Themes.currentTheme
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Before
@@ -152,7 +155,8 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val hideCount = reviewer.delayedHideCount
 
-        reviewer.executeCommand(ViewerCommand.UNDO)
+        awaitJob(reviewer.undo())
+
         advanceRobolectricLooperWithSleep()
 
         assertThat("Hide should be called after answering a card", reviewer.delayedHideCount, greaterThan(hideCount))
@@ -298,16 +302,12 @@ class ReviewerNoParamTest : RobolectricTest() {
         MetaDB.storeWhiteboardPenColor(targetContext, Consts.DEFAULT_DECK_ID, false, value)
     }
 
-    private fun storeLightModeColor(value: Int, did: Long?) {
+    private fun storeLightModeColor(value: Int, did: DeckId?) {
         MetaDB.storeWhiteboardPenColor(targetContext, did!!, false, value)
     }
 
     private fun storeLightModeColor(value: Int) {
         MetaDB.storeWhiteboardPenColor(targetContext, Consts.DEFAULT_DECK_ID, true, value)
-    }
-
-    private fun enableDarkMode() {
-        AnkiDroidApp.getSharedPrefs(targetContext).edit().putBoolean("invertedColors", true).apply()
     }
 
     private val penColor: WhiteboardPenColor
@@ -331,7 +331,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         addNoteUsingBasicModel("Hello", "World")
 
         val reviewer = startReviewer()
-        enableDarkMode()
+        currentTheme = Theme.DARK
         reviewer.toggleWhiteboard()
 
         return reviewer.whiteboard

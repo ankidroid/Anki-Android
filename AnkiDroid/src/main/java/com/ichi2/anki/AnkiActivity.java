@@ -8,6 +8,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -19,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -45,6 +47,7 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
+import com.ichi2.anki.snackbar.SnackbarsKt;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
@@ -52,6 +55,7 @@ import com.ichi2.compat.customtabs.CustomTabsFallback;
 import com.ichi2.compat.customtabs.CustomTabsHelper;
 import com.ichi2.libanki.Collection;
 import com.ichi2.libanki.CollectionGetter;
+import com.ichi2.themes.Theme;
 import com.ichi2.themes.Themes;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.AndroidUiUtils;
@@ -80,6 +84,8 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
 
     private final DialogHandler mHandler = new DialogHandler(this);
 
+    private Theme mPreviousTheme = null;
+
     // custom tabs
     private CustomTabActivityHelper mCustomTabActivityHelper;
 
@@ -102,6 +108,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         // Set the theme
         Themes.setTheme(this);
         Themes.disableXiaomiForceDarkMode(this);
+        mPreviousTheme = Themes.currentTheme;
         super.onCreate(savedInstanceState);
         // Disable the notifications bar if running under the test monkey.
         if (AdaptionUtil.isUserATestClient()) {
@@ -123,6 +130,10 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Timber.i("AnkiActivity::onStart - %s", mActivityName);
         super.onStart();
         mCustomTabActivityHelper.bindCustomTabsService(this);
+        // Reload theme in case it was changed on another activity
+        if (mPreviousTheme != Themes.currentTheme) {
+            recreate();
+        }
     }
 
     @Override
@@ -130,6 +141,20 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         Timber.i("AnkiActivity::onStop - %s", mActivityName);
         super.onStop();
         mCustomTabActivityHelper.unbindCustomTabsService(this);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        boolean newNightModeStatus = (newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        // Check if theme should change
+        if (Themes.systemIsInNightMode != newNightModeStatus) {
+            Themes.systemIsInNightMode = newNightModeStatus;
+            if (Themes.themeFollowsSystem()) {
+                Themes.updateCurrentTheme();
+                recreate();
+            }
+        }
     }
 
 
@@ -280,7 +305,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             super.startActivityForResult(intent, requestCode);
         } catch (ActivityNotFoundException e) {
             Timber.w(e);
-            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed,true);
+            SnackbarsKt.showSnackbar(this, R.string.activity_start_failed);
         }
     }
 
@@ -304,7 +329,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             launcher.launch(intent, ActivityTransitionAnimation.getAnimationOptions(this, animation));
         } catch (ActivityNotFoundException e) {
             Timber.w(e);
-            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed, true);
+            SnackbarsKt.showSnackbar(this, R.string.activity_start_failed);
         }
     }
 
@@ -321,10 +346,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
     }
 
 
-    @Deprecated
     @Override
     public void finish() {
-        super.finish();
+        finishWithAnimation(Direction.DEFAULT);
     }
 
 
@@ -471,12 +495,19 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         CustomTabActivityHelper.openCustomTab(this, customTabsIntent, url, new CustomTabsFallback());
     }
 
+    public void openUrl(@NonNull String urlString) {
+        openUrl(Uri.parse(urlString));
+    }
+
+    public void openUrl(@StringRes int url) {
+        openUrl(getString(url));
+    }
+
 
     private int getColorScheme() {
-        SharedPreferences prefs = AnkiDroidApp.getSharedPrefs(this);
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
             return COLOR_SCHEME_SYSTEM;
-        } else if (prefs.getBoolean("invertedColors", false)) {
+        } else if (Themes.currentTheme.isNightMode()) {
             return COLOR_SCHEME_DARK;
         } else {
             return COLOR_SCHEME_LIGHT;

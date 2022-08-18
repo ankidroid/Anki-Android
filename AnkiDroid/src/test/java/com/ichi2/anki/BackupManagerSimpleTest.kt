@@ -44,11 +44,14 @@ class BackupManagerSimpleTest {
     fun getBackupTimeStringTest() {
         val ts = BackupManager.getBackupTimeString("collection-1999-12-31-23-59.colpkg")
         assertEquals("1999-12-31-23-59", ts)
+        val ts2 = BackupManager.getBackupTimeString("backup-1999-12-31-23.59.05.colpkg")
+        assertEquals("1999-12-31-23.59", ts2)
     }
 
     @Test
     fun parseBackupTimeStringTest() {
         assertNotNull(BackupManager.parseBackupTimeString("1970-01-02-00-46"))
+        assertNotNull(BackupManager.parseBackupTimeString("1970-01-02-00.46.03"))
         assertNull(BackupManager.parseBackupTimeString("123456"))
     }
 
@@ -86,23 +89,13 @@ class BackupManagerSimpleTest {
             File("collection-2000-12-31-23-04.colpkg"),
             File("collection-2010-01-02-03-04.colpkg"),
             File("collection-1999-12-31-23-59.colpkg")
-        )
-        val backups2 = arrayOf(
-            File("collection-2000-12-31-23-04.colpkg"),
-            File("foo.colpkg")
-        )
-        val backups3 = arrayOf(
-            File("foo.colpkg"),
-            File("bar.colpkg")
-        )
+        ).sortedBy { it.name }.toTypedArray()
         val expected = BackupManager.parseBackupTimeString("2010-01-02-03-04")
-        val expected2 = BackupManager.parseBackupTimeString("2000-12-31-23-04")
 
         assertNull(bm.getLastBackupDate(arrayOf()))
         assertNotNull(bm.getLastBackupDate(backups))
         assertEquals(expected, bm.getLastBackupDate(backups))
-        assertEquals("getLastBackupDate() should return the last valid date", expected2, bm.getLastBackupDate(backups2))
-        assertNull("getLastBackupDate() should return null when all files aren't parsable", bm.getLastBackupDate(backups3))
+        assertNull("getLastBackupDate() should return null when all files aren't parsable", bm.getLastBackupDate(arrayOf()))
     }
 
     @Test
@@ -115,14 +108,16 @@ class BackupManagerSimpleTest {
         val f1 = File(backupDir, "collection-2000-12-31-23-04.colpkg")
         val f2 = File(backupDir, "foo")
         val f3 = File(backupDir, "collection-2010-12-06-13-04.colpkg")
+        val f4 = File(backupDir, "backup-2010-12-06-13.04.05.colpkg")
         f1.createNewFile()
         f2.createNewFile()
         f3.createNewFile()
+        f4.createNewFile()
         val backups = BackupManager.getBackups(colFile)
 
         assertNotNull(backups)
-        assertEquals("Only the valid backup names should have been kept", 2, backups.size)
-        assertThat(backups, arrayContainingInAnyOrder(f1, f3))
+        assertEquals("Only the valid backup names should have been kept", 3, backups.size)
+        assertThat(backups, arrayContainingInAnyOrder(f1, f3, f4))
     }
 
     @Test

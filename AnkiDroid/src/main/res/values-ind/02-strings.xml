@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Buka menu</string>
     <string name="drawer_close">Tutup menu</string>
@@ -101,6 +99,9 @@
         <item>Dibuat</item>
         <item>Catatan diubah</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ubah batas kartu baru hari ini</string>
     <string name="custom_study_increase_review_limit">Ubah batas ulasan kartu hari ini</string>
@@ -256,8 +257,6 @@
     <string name="apk_share_error">Galat membagikan berkas apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Berkas ini memerlukan versi terbaru dari Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Memuat \'%s\' gagal.</string>
     <string name="activity_start_failed">Sistem tidak mempunyai aplikasi terinstal yang dapat melakukan aksi ini.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Diharap untuk memampatkan & merubah ukuran gambar di direktori media]]></string>
     <string name="no_browser_notification">Tidak ada peramban yang ditemukan, harap kunjungi halaman web lewat PC atau HP</string>
@@ -314,7 +313,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Isi Kartu Gagal: Gagal memuat \'%s\'</string>
     <string name="card_viewer_media_relative_protocol">Isi Kartu Gagal: Pembaruan media diperlukan</string>
-    <string name="cannot_load_http_resource">Memuat sumber daya http sudah tidak didukung lagi</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Gagal memuat dek \'%s\'</string>
     <string name="search_decks">Cari dek</string>
@@ -401,4 +399,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

@@ -45,7 +45,7 @@ class SingleTaskManager : TaskManager() {
      * The most recently started [CollectionTask] instance.
      */
     private var mLatestInstance: CollectionTask<*, *>? = null
-    override fun setLatestInstanceConcrete(task: CollectionTask<*, *>?) {
+    override fun setLatestInstanceConcrete(task: CollectionTask<*, *>) {
         mLatestInstance = task
     }
 
@@ -106,18 +106,19 @@ class SingleTaskManager : TaskManager() {
      */
     // #7108: AsyncTask
     @Suppress("DEPRECATION")
-    @KotlinCleanup("Simplify null checks with ?.")
     override fun waitToFinishConcrete(timeoutSeconds: Int?): Boolean {
         return try {
-            if (mLatestInstance != null && mLatestInstance!!.status != android.os.AsyncTask.Status.FINISHED) {
-                Timber.d(
-                    "CollectionTask: waiting for task %s to finish...",
-                    mLatestInstance!!.task.javaClass
-                )
-                if (timeoutSeconds != null) {
-                    mLatestInstance!![timeoutSeconds.toLong(), TimeUnit.SECONDS]
-                } else {
-                    mLatestInstance!!.get()
+            mLatestInstance?.apply {
+                if (status != android.os.AsyncTask.Status.FINISHED) {
+                    Timber.d(
+                        "CollectionTask: waiting for task %s to finish...",
+                        task.javaClass
+                    )
+                    if (timeoutSeconds != null) {
+                        get(timeoutSeconds.toLong(), TimeUnit.SECONDS)
+                    } else {
+                        get()
+                    }
                 }
             }
             true

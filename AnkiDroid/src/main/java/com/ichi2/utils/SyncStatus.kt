@@ -16,10 +16,11 @@
 
 package com.ichi2.utils
 
+import anki.sync.SyncAuth
+import anki.sync.SyncStatusResponse
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.libanki.Collection
-import timber.log.Timber
-import java.util.function.Supplier
+import net.ankiweb.rsdroid.BackendFactory
 
 enum class SyncStatus {
     INCONCLUSIVE, NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED;
@@ -29,24 +30,15 @@ enum class SyncStatus {
         private var sMarkedInMemory = false
 
         @JvmStatic
-        fun getSyncStatus(getCol: Supplier<Collection>): SyncStatus {
-            val col: Collection
-            col = try {
-                getCol.get()
-            } catch (e: Exception) {
-                Timber.w(e)
-                return INCONCLUSIVE
-            }
-            return getSyncStatus(col)
-        }
-
-        @JvmStatic
-        fun getSyncStatus(col: Collection): SyncStatus {
+        fun getSyncStatus(col: Collection, auth: SyncAuth?): SyncStatus {
             if (isDisabled) {
                 return BADGE_DISABLED
             }
-            if (!isLoggedIn) {
+            if (auth == null) {
                 return NO_ACCOUNT
+            }
+            if (!BackendFactory.defaultLegacySchema) {
+                return syncStatusFromRequired(col.newBackend.backend.syncStatus(auth).required)
             }
             if (col.schemaChanged()) {
                 return FULL_SYNC
@@ -55,6 +47,15 @@ enum class SyncStatus {
                 HAS_CHANGES
             } else {
                 NO_CHANGES
+            }
+        }
+
+        private fun syncStatusFromRequired(required: SyncStatusResponse.Required?): SyncStatus {
+            return when (required) {
+                SyncStatusResponse.Required.NO_CHANGES -> NO_CHANGES
+                SyncStatusResponse.Required.NORMAL_SYNC -> HAS_CHANGES
+                SyncStatusResponse.Required.FULL_SYNC -> FULL_SYNC
+                SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
             }
         }
 

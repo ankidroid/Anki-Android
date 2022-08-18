@@ -44,7 +44,7 @@ object HelpDialog {
         ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getManualUrl()))
     }
 
-    private fun openFeedback(ankiActivity: AnkiActivity) {
+    fun openFeedback(ankiActivity: AnkiActivity) {
         ankiActivity.openUrl(Uri.parse(AnkiDroidApp.getFeedbackUrl()))
     }
 
@@ -265,7 +265,7 @@ object HelpDialog {
 
         companion object {
 
-            val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
+            @JvmField val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
                 override fun createFromParcel(`in`: Parcel): ExceptionReportItem {
                     return ExceptionReportItem(`in`)
                 }

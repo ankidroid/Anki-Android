@@ -22,8 +22,6 @@
     -->
     <!-- App name -->
     <string name="app_name" comment="The name of the app">AnkiDroid</string>
-    <!-- Text to be shown in preference summary -->
-    <string name="preference_summary_literal">XXX</string>
     <!-- Used in deck preferences -->
     <string-array name="custom_button_labels">
         <item>@string/custom_buttons_setting_always_show</item>
@@ -124,19 +122,17 @@
         <item>@string/html_size_code_xx_large</item>
     </string-array>
 
-    <string name="link_anki">https://ankisrs.net</string>
     <string name="link_anki_manual">https://docs.ankiweb.net/#/</string>
     <string name="link_anki_forum">https://forums.ankiweb.net/</string>
     <string name="link_forum">http://groups.google.com/group/anki-android</string>
-    <string name="link_wiki">https://github.com/ankidroid/Anki-Android/wiki</string>
-    <string name="link_issue_tracker">https://github.com/ankidroid/Anki-Android/issues</string>
     <string name="licence_wiki">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="link_agpl_wiki">https://www.gnu.org/licenses/agpl-3.0.html</string>
     <string name="link_source">https://github.com/ankidroid/Anki-Android</string>
     <string name="link_market">market://details?id=com.ichi2.anki</string>
     <string name="link_market_kindle">http://www.amazon.com/gp/mas/dl/android?p=com.ichi2.anki</string>
     <string name="link_translation">https://crowdin.net/project/ankidroid</string>
-    <string name="link_wikipedia_open_source">http://en.wikipedia.org/wiki/Open_source_software</string>
     <string name="link_contribution">https://github.com/ankidroid/Anki-Android/wiki/Contributing</string>
+    <string name="link_contributors">https://github.com/ankidroid/Anki-Android#credits</string>
     <string name="link_help">https://docs.ankidroid.org/help.html</string>
     <string name="link_manual">https://docs.ankidroid.org/manual.html</string>
     <string name="link_help_ja">https://docs.ankidroid.org/help-ja.html</string>
@@ -148,8 +144,8 @@
     <string name="link_manual_note_format_toolbar">https://docs.ankidroid.org/manual.html#noteFormattingToolbar</string>
     <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
     <string name="link_faq_missing_media" tools:ignore="Typos">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid</string>
+    <string name="link_third_party_api_apps">https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps</string>
     <string name="link_faq_invalid_protocol_relative">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-do-my-images-need-a-protocol</string>
-    <string name="link_faq_external_http_content">https://github.com/ankidroid/Anki-Android/wiki/FAQ#external-content</string>
     <string name="shared_decks_url">https://ankiweb.net/shared/decks/</string>
     <string name="repair_deck">https://docs.ankiweb.net/#/files?id=corrupt-collections</string>
     <string name="resetpw_url">https://ankiweb.net/account/resetpw</string>
@@ -165,7 +161,6 @@
     <string name="link_ankidroid_development_guide">https://github.com/ankidroid/Anki-Android/wiki/Development-Guide</string>
     <string name="link_ankidroid_faq">https://github.com/ankidroid/Anki-Android/wiki/FAQ</string>
     <string name="link_opencollective_donate">https://opencollective.com/ankidroid/contribute</string>
-    <string name="link_anki_2_scheduler">https://faqs.ankiweb.net/the-anki-2.1-scheduler.html</string>
     <string name="link_ankiweb_docs_cloze_deletion">https://docs.ankiweb.net/editing.html#cloze-deletion</string>
     <string name="link_distributions">https://apps.ankiweb.net/#download</string>
     <string name="link_ankiweb_lost_email_instructions">https://github.com/ankidroid/Anki-Android/wiki/FAQ#forgotten-ankiweb-email-instructions</string>
@@ -244,14 +239,62 @@
         <item>3</item> <!-- Black -->
         <item>4</item> <!-- Dark -->
     </string-array>
+    <!-- Day and night values should be the same as their App theme equivalent -->
     <string-array name="day_theme_values">
-        <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
     <string-array name="night_theme_values">
-        <item>0</item>
-        <item>1</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
+
+    <!-- Preferences headers summaries -->
+    <string-array name="general_summary_entries">
+        <item>@string/language</item>
+        <item>@string/pref_cat_studying</item>
+        <item>@string/pref_cat_system_wide</item>
+    </string-array>
+
+    <string-array name="reviewing_summary_entries">
+        <item>@string/pref_cat_scheduling</item>
+        <item>@string/timeout_answer_text</item>
+    </string-array>
+
+    <string-array name="sync_summary_entries">
+        <item>@string/sync_account</item>
+        <item>@string/automatic_sync_choice</item>
+    </string-array>
+
+    <string-array name="notifications_summary_entries">
+        <item>@string/notification_pref_title</item>
+        <item>@string/notification_minimum_cards_due_vibrate</item>
+        <item>@string/notification_minimum_cards_due_blink</item>
+    </string-array>
+
+    <string-array name="appearance_summary_entries">
+        <item>@string/pref_cat_themes</item>
+        <item>@string/pref_cat_fonts</item>
+        <item>@string/pref_cat_reviewer</item>
+    </string-array>
+
+    <string-array name="accessibility_summary_entries">
+        <item>@string/card_zoom</item>
+        <item>@string/button_size</item>
+    </string-array>
+
+    <string-array name="controls_summary_entries">
+        <item>@string/pref_cat_gestures</item>
+        <item>@string/keyboard</item>
+        <item>@string/bluetooth</item>
+    </string-array>
+
+    <string-array name="advanced_summary_entries">
+        <item>@string/statistics</item>
+        <item>@string/pref_cat_workarounds</item>
+        <item>@string/pref_cat_plugins</item>
+    </string-array>
+
 
     <string name="answer_buttons_position_preference" translatable="false">answerButtonPosition</string>
     <string-array name="answer_buttons_position" translatable="false">

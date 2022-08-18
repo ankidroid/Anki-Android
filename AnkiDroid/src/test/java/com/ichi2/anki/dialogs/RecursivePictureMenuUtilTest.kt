@@ -47,7 +47,7 @@ open class RecursivePictureMenuUtilTest : RobolectricTest() {
     fun getHeaderWithSubItems(count: Int): RecursivePictureMenu.ItemHeader {
         val items = arrayOfNulls<RecursivePictureMenu.Item>(count)
         for (i in 0 until count) {
-            items[i] = getItemLinkingTo(R.string.link_anki)
+            items[i] = getItemLinkingTo(R.string.link_manual)
         }
         return RecursivePictureMenu.ItemHeader(R.string.help_item_ankidroid_manual, R.drawable.ic_manual_black_24dp, UsageAnalytics.Actions.OPENED_ANKIDROID_MANUAL, *items)
     }

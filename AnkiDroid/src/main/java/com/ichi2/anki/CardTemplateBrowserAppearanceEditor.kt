@@ -92,19 +92,17 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private fun showDiscardChangesDialog() {
-        DiscardChangesDialog
-            .getDefault(this)
-            .onPositive { _, _ -> discardChangesAndClose() }
-            .show()
+        DiscardChangesDialog.showDialog(this, ::discardChangesAndClose)
     }
 
     private fun showRestoreDefaultDialog() {
-        MaterialDialog.Builder(this)
-            .positiveText(R.string.dialog_ok)
-            .negativeText(R.string.dialog_cancel)
-            .content(R.string.card_template_browser_appearance_restore_default_dialog)
-            .onPositive { _, _ -> restoreDefaultAndClose() }
-            .show()
+        MaterialDialog(this).show {
+            positiveButton(R.string.dialog_ok) {
+                restoreDefaultAndClose()
+            }
+            negativeButton(R.string.dialog_cancel)
+            message(R.string.card_template_browser_appearance_restore_default_dialog)
+        }
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
@@ -158,14 +156,15 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
     private fun saveAndExit() {
         Timber.i("Save and Exit")
-        val data = Intent()
-        data.putExtra(INTENT_QUESTION_FORMAT, questionFormat)
-        data.putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+        val data = Intent().apply {
+            putExtra(INTENT_QUESTION_FORMAT, questionFormat)
+            putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+        }
         setResult(RESULT_OK, data)
         finishActivityWithFade(this)
     }
 
-    fun hasChanges(): Boolean {
+    private fun hasChanges(): Boolean {
         return try {
             questionHasChanged(intent) || answerHasChanged(intent)
         } catch (e: Exception) {
@@ -217,10 +216,10 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
         @CheckResult
         fun getIntent(context: Context, questionFormat: String, answerFormat: String): Intent {
-            val intent = Intent(context, CardTemplateBrowserAppearanceEditor::class.java)
-            intent.putExtra(INTENT_QUESTION_FORMAT, questionFormat)
-            intent.putExtra(INTENT_ANSWER_FORMAT, answerFormat)
-            return intent
+            return Intent(context, CardTemplateBrowserAppearanceEditor::class.java).apply {
+                putExtra(INTENT_QUESTION_FORMAT, questionFormat)
+                putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+            }
         }
     }
 }

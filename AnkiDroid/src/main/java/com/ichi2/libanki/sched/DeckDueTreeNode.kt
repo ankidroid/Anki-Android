@@ -16,8 +16,10 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -34,7 +36,17 @@ import kotlin.math.min
  */
 @KotlinCleanup("maybe possible to remove gettres for revCount/lrnCount")
 @KotlinCleanup("rename name -> fullDeckName")
-class DeckDueTreeNode(col: Collection, name: String, did: Long, override var revCount: Int, override var lrnCount: Int, override var newCount: Int) : AbstractDeckTreeNode(col, name, did) {
+@RustCleanup("after migration, consider dropping this and using backend tree structure directly")
+class DeckDueTreeNode(
+    name: String,
+    did: DeckId,
+    override var revCount: Int,
+    override var lrnCount: Int,
+    override var newCount: Int,
+    // only set when defaultLegacySchema is false
+    override var collapsed: Boolean = false,
+    override var filtered: Boolean = false
+) : AbstractDeckTreeNode(name, did, collapsed, filtered) {
     override fun toString(): String {
         return String.format(
             Locale.US, "%s, %d, %d, %d, %d",
@@ -50,7 +62,7 @@ class DeckDueTreeNode(col: Collection, name: String, did: Long, override var rev
         newCount = max(0, min(newCount, limit))
     }
 
-    override fun processChildren(children: List<AbstractDeckTreeNode>, addRev: Boolean) {
+    override fun processChildren(col: Collection, children: List<AbstractDeckTreeNode>, addRev: Boolean) {
         // tally up children counts
         for (ch in children) {
             lrnCount += ch.lrnCount
@@ -104,4 +116,19 @@ class DeckDueTreeNode(col: Collection, name: String, did: Long, override var rev
     override fun knownToHaveRep(): Boolean {
         return revCount > 0 || newCount > 0 || lrnCount > 0
     }
+}
+
+/** Locate node with a given deck ID in a list of nodes.
+ *
+ * This could be converted into a method if AnkiDroid returned a top-level
+ * node instead of a list of nodes.
+ */
+fun findInDeckTree(nodes: List<TreeNode<DeckDueTreeNode>>, deckId: Long): DeckDueTreeNode? {
+    for (node in nodes) {
+        if (node.value.did == deckId) {
+            return node.value
+        }
+        return findInDeckTree(node.children, deckId) ?: continue
+    }
+    return null
 }

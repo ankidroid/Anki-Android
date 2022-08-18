@@ -89,7 +89,6 @@ class UndoTest : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     @KotlinCleanup("maybe use a scope function(with?) for col property")
-    @KotlinCleanup("Change `is`() to equalTo()")
     // TODO why is this test ignored if it doesn't have @Ignore(happens for both java and kotlin versions)
     fun test_review() {
         val col = colV2
@@ -139,10 +138,10 @@ class UndoTest : RobolectricTest() {
         // performing a normal op will clear the review queue
         c = col.sched.card
         col.sched.answerCard(c!!, Consts.BUTTON_THREE)
-        MatcherAssert.assertThat(col.undoType(), Matchers.`is`(Matchers.instanceOf(UndoReview::class.java)))
+        MatcherAssert.assertThat(col.undoType(), Matchers.instanceOf(UndoReview::class.java))
         col.save("foo")
         // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid
-        assumeThat(col.undoName(targetContext.resources), Matchers.`is`("foo"))
+        assumeThat(col.undoName(targetContext.resources), Matchers.equalTo("foo"))
         col.undo()
     }
 }

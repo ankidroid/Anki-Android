@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">פתיחת מגירה</string>
     <string name="drawer_close">סגירת מגירה</string>
@@ -89,7 +87,7 @@
         <item>תשובה</item>
         <item>קלף</item>
         <item>חפיסה</item>
-        <item>הערה</item>
+        <item>פתק</item>
         <item>שאלה</item>
         <item>תגים</item>
         <item>מעידות</item>
@@ -101,6 +99,9 @@
         <item>נוצר</item>
         <item>רשומה השתנתה</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">שינוי מגבלת קלפים חדשים להיום</string>
     <string name="custom_study_increase_review_limit">שינוי מגבלת קלפים לחזרה להיום</string>
@@ -110,14 +111,14 @@
     <string name="custom_study_preview_new">מעבר מקדים על כרטסיות חדשות</string>
     <string name="custom_study_limit_tags">הגבל לתיוג ספציפי</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">ערוך הערה</string>
+    <string name="cardeditor_title_edit_card">ערוך רשומה</string>
     <string name="discard_unsaved_changes">סגור ולאבד קלט הנוכחי?</string>
     <string name="note_editor_no_cards_created">לא נוצרו קלפים. יש למלא יותר שדות</string>
     <string name="note_editor_no_first_field">השדה הראשון ריק</string>
     <string name="note_editor_no_cloze_delations">סוג הרשומה חייב לכלול \'השלם את החסר\'</string>
     <string name="note_editor_no_cards_created_all_fields">לסוג הרשומה הנוכחי אין כרטיסים. \n אנא בחר סוג רשומה אחר, או הקש על \'כרטיסים\' והוסף חלופת שדה</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">השלמת החסר פועלת רק בכרטיסים מסוג \'השלם את החסר\'</string>
-    <string name="saving_facts">שמירת הערה</string>
+    <string name="saving_facts">שמירת רשומה</string>
     <string name="saving_model">שומר סוג רשומה</string>
     <string name="save">שמירה</string>
     <string name="close">סגירה</string>
@@ -126,7 +127,7 @@
     <string name="reordering_cards">מסדר מחדש את הקלפים&#8230;</string>
     <string name="field_remapping">%1$s (מתוך \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">קלף שממופה לכלום ימחק. אם לרשימה אין קלפים נותרים, היא תימחק. להמשיך?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="timebox_reached_title">קופסת הזמן הגיעה</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d כרטסיה נלמדו ב%2$s</item>
         <item quantity="two">%1$d כרטסיות נלמדו ב%2$s</item>
@@ -146,7 +147,7 @@
     <string name="card_editor_reset_card">איפוס התקדמות</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">תזמן מחדש</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">תצוגה מקדימה</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d מ-%2$d</string>
     <string name="error_insufficient_memory">הפעולה אינה אפשרית עקב מחסור בזיכרון בהתקן</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">שינוי שם</string>
     <string name="default_conf_delete_error">לא ניתן להסיר את קבוצת האפשרויות \'ברירת מחדל\'</string>
@@ -169,13 +170,13 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">הוספה</string>
     <string name="import_message_replace_confirm">אפשרות זאת תמחק את האוסף הנוכחי שלך ותחליפו במידע מקובץ %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="two">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">האם להוסיף \"%s\" לאוסף? זה עשוי להימשך זמן רב</item>
+        <item quantity="two">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
+        <item quantity="many">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
+        <item quantity="other">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
     </plurals>
     <string name="import_log_no_apkg">קובץ זה אינו קובץ חבילה תקין</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">שגיאה</string>
     <string name="import_log_failed_unzip">נכשל בפריסת החבילה: %s</string>
     <string name="import_log_failed_copy_to">נכשל בהעתקת החבילה ל%s</string>
     <string name="import_log_failed_validate">נכשל אימות החבילה</string>
@@ -188,13 +189,13 @@
     <string name="import_error_corrupt_zip">קובץ ה־apkg פגום. נא למחוק ולהוריד אותו מחדש.\n\nגורם: %s</string>
     <string name="import_error_exception">ייבוא החבילה נכשל\n\n%s</string>
     <string name="import_error_not_apkg_extension">לשם הקובץ „%s” אין סיומת ‎.apkg או ‎.colpkg</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
+    <string name="import_error_load_imported_database">עדיין אין תמיכה בהחלפות של Anki Database (.anki2). אנא עיין במדריך להוראות החלפה.</string>
     <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache()‎ נכשלה (כנראה שנגמר המקום)</string>
     <string name="import_error_unhandled_scheme">ייבוא שלא טופל מאת: „%s”</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_multiple_colpkg">נבחרו קבצי colpkg מרובים.</string>
+    <string name="import_error_colpkg_apkg">הן apkg &amp; וקבצי colpkg נבחרו בבת אחת.</string>
+    <string name="import_stats_error">ארעו כמה שגיאות במהלך ייבוא הקבצים הבאים:\n%s</string>
     <string name="import_replacing">האוסף מוחלף&#8230;</string>
     <string name="import_interrupted">הייבוא נפסק: AnkiDroid נסגר</string>
     <string name="export_include_schedule">כולל תזמון</string>
@@ -210,13 +211,13 @@
     <string name="export_save_apkg_unsuccessful">שמירת חבילת Anki נכשלה</string>
     <string name="export_successful">הקובץ %s יוּצא. לשלוח אותו בעזרת אפליקציה אחרת?</string>
     <string name="export_email_subject">קלפי AnkiDroid שיוצאו: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
-        <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
-        [1] %1$s<br/>
-        [2] %2$s
-        ]]></string>
+    <string name="export_email_text"><![CDATA[         היי!
+         <br/><br/>
+         זוהי חפיסת כרטיסי פלאש של Anki שנשלחה מ-AnkiDroid[1].
+         נסה לפתוח אותו באמצעות אחת מההפצות הזמינות של Anki[2] ותיהנה מלמידה קלה ויעילה!<br/><br/>
+         [1] %1$s<br/>
+         [2] %2$s
+         ]]></string>
     <string name="export_unsuccessful">שגיאה בייצוא קובץ apkg</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">אפשרויות</string>
     <string name="menu__deck_options">אפשרויות חפיסה</string>
@@ -282,17 +283,15 @@
     <string name="filtered_deck_name">חפיסה מסוננת</string>
     <string name="reminder_title">לא לשכוח ללמוד היום!</string>
     <plurals name="reminder_text">
-        <item quantity="one">קלף אחד לשינון בעוד</item>
-        <item quantity="two">%2$d cards to review in %1$s</item>
-        <item quantity="many">%2$d כרטיסים לשינון ב־%1$s</item>
+        <item quantity="one">קלף אחד לשינון בעוד %1$s</item>
+        <item quantity="two">%2$d קלפים לשינון בעוד %1$s</item>
+        <item quantity="many">%2$d קלפים לשינון בעוד %1$s</item>
         <item quantity="other">%2$d קלפים לשינון בעוד %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">שגיאה בשיתוף קובץ apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">קובץ זה דורש גרסה חדשה יותר של Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">הטעינה של ‚%s’ נכשלה.</string>
     <string name="activity_start_failed">במערכת לא מותקן יישומון שיכול לבצע את הפעולה הזאת.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[תמונות המצלמה גדולות מדי. אולי עדיף לך לדחוס ולשנות את גודל התמונות בתיקיית המדיה]]></string>
     <string name="no_browser_notification">לא נמצא דפדפן, נא לבקר באתר במחשב או בנייד: </string>
@@ -305,7 +304,7 @@
     <string name="choose_an_image">נא לבחור תמונה</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">שחזור בררת המחדל</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
+    <string name="cloze_sample_text">זוהי  {{%1$s::דוגמא}} של זיהוי cloze.</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">דודמא</string>
     <string name="basic_answer_sample_text">דוגמה</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ריק</string>
@@ -323,27 +322,27 @@
     <string name="note_importer_error_first_field_matched">שדה ראשון תואם: %s</string>
     <string name="note_importer_error_added_duplicate_first_field">נוספה עם כפילות בשדה הראשון: %s</string>
     <string name="note_importer_error_appeared_twice">מופיע פעמיים בקובץ: %s</string>
-    <string name="note_importer_error_empty_notes">הערה אחת או יותר לא הובאו מאחר והן לא יצרו שום קלף. זה קורה כאשר יש שדות ריקים או כאשר לא בוצע מיפוי של התוכן בקובץ טקסט לשדות המתאימים. </string>
+    <string name="note_importer_error_empty_notes">רשומה אחת או יותר לא הובאו מאחר והן לא יצרו שום קלף. זה קורה כאשר יש שדות ריקים או כאשר לא בוצע מיפוי של התוכן בקובץ טקסט לשדות המתאימים. </string>
     <string name="csv_importer_error_invalid_field_count">ל %1$s יש %2$d שדות, צריך %3$d</string>
     <string name="csv_importer_error_exception">בוטל: %s</string>
     <string name="user_is_a_robot">זוהה אוטומציה ממוחשבת, אם אתה אנושי, צור קשר עם תמיכת AnkiDroid</string>
     <plurals name="note_importer_notes_added">
-        <item quantity="one">%d הערה נוספה</item>
-        <item quantity="two">%d notes added</item>
+        <item quantity="one">%d רשומה נוספה</item>
+        <item quantity="two">%d רשומות נוספו</item>
         <item quantity="many">%d הערות נוספו</item>
-        <item quantity="other">%d notes added</item>
+        <item quantity="other">%d רשומות נוספו</item>
     </plurals>
     <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d הערה עודכנה</item>
-        <item quantity="two">%d notes updated</item>
-        <item quantity="many">%d הערות עודכנו</item>
-        <item quantity="other">%d notes updated</item>
+        <item quantity="one">%d רשומה עודכנה</item>
+        <item quantity="two">%d רשומות עודכנו</item>
+        <item quantity="many">%d רשומות עודכנו</item>
+        <item quantity="other">%d רשומות עודכנו</item>
     </plurals>
     <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d הערה ללא שינוי</item>
-        <item quantity="two">%d notes unchanged</item>
-        <item quantity="many">%d הערות ללא שינוי</item>
-        <item quantity="other">%d notes unchanged</item>
+        <item quantity="one">%d רשומה ללא שינוי</item>
+        <item quantity="two">%d רשומות ללא שינוי</item>
+        <item quantity="many">%d רשומות ללא שינוי</item>
+        <item quantity="other">%d רשומות ללא שינוי</item>
     </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">קלף זה משתמש באפשרויות שאינן נתמכות בAnkiDroid. צור קשר עם המפתח %1$s, או קרא בויקי. %2$s</string>
@@ -358,7 +357,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">תקלה בתוכן הקלף: נכשל בטעינת %s</string>
     <string name="card_viewer_media_relative_protocol">תקלה בתוכן הקלף: נדרש עדכון מדיה</string>
-    <string name="cannot_load_http_resource">טעינת משאבי http אינה נתמכת עוד</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">טעינת החפיסה %s נכשלה</string>
     <string name="search_decks">חיפוש בחפיסות</string>
@@ -374,7 +372,7 @@
     <string name="insert_heading">הוספת כותרת</string>
     <string name="format_font_size">שינוי גודל הגופן</string>
     <string name="insert_mathjax">הוספת משוואת MathJax</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="insert_cloze">הכנס זיהוי Cloze</string>
     <string name="note_editor_toolbar_icon">טקסט הלחצן</string>
     <string name="before_text">HTML לפני הבחירה</string>
     <string name="after_text">HTML אחרי הבחירה</string>
@@ -414,24 +412,24 @@
     <!-- Importing -->
     <string name="import_mapped_to_field">מופה ל%s</string>
     <string name="import_mapped_to_tags">מופה לתגיות</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
+    <string name="import_mapped_to_nothing">התעלמו</string>
     <!-- Reviewer actions -->
     <string name="buried_card">קלף נקבר</string>
-    <string name="buried_note">הערה נקברה</string>
-    <string name="deleted_note">הערה נמחקה </string>
+    <string name="buried_note">רשומה נקברה</string>
+    <string name="deleted_note">רשומה נמחקה</string>
     <string name="suspended_card">קלף הוקפא</string>
     <string name="suspended_note">רשומה הוקפאה</string>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">הפוך שדה %s לדביק</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
+    <string name="scoped_storage_title">העברת אחסון</string>
+    <string name="scoped_storage_initial_message">AnkiDroid חייבת להעביר את הנתונים שלה כדי לעמוד בכללי הפרטיות החדשים של אנדרואיד
+\n\nאם תסיר את ההתקנה של AnkiDroid לפני ההעברה, הנתונים שלך יאבדו
+\n\nאנא בצע את ההעברה בהקדם האפשרי</string>
+    <string name="scoped_storage_terms_message">העברת הנתונים תתרחש ברקע. לא תוכל לסנכרן בזמן ההעברה\n\nמשך זמן משוער: %s</string>
     <string name="scoped_storage_term_1">גיביתי את המידע</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
+    <string name="scoped_storage_term_1_ankiweb">הסתנכרנתי עם AnkiWeb לאחרונה</string>
+    <string name="scoped_storage_term_2">אני לא אסיר את ההתקנה של האפליקציה בזמן העברת הנתונים</string>
     <string name="scoped_storage_select_all_terms">נא לאשר הכול על מנת למשיך</string>
     <string name="scoped_storage_learn_more">מידע נוסף</string>
     <string name="scoped_storage_postpone">לדחות</string>
@@ -440,9 +438,11 @@
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s אינו תוסף JS תקין</string>
     <string name="could_not_create_dir">לא ניתן ליצור תיקיה %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
+    <string name="malicious_archive_entry_outside">ארכיון זדוני. מכיל ערך מחוץ לתיקיית היעד: %s</string>
+    <string name="malicious_archive_exceeds_limit">ארכיון זדוני. הגודל עולה על %1$s או מכיל יותר מ-%2$d קבצים</string>
     <string name="file_extract_exceeds_storage_space">פריסת הקובץ חורג מנפח הזיכרון הקיים</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">הרחב את התג \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">הגישה לאוסף נכשלה. בבקשה נסה שוב!</string>
 </resources>

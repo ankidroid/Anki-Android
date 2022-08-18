@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Otevřít menu</string>
     <string name="drawer_close">Zavřít menu</string>
@@ -101,6 +99,9 @@
         <item>Vytvořeno</item>
         <item>Poznámka upravena</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Použít</string>
+    <string name="filter_by_flags">Příznaky</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Upravit dnešní limit nových karet</string>
     <string name="custom_study_increase_review_limit">Upravit dnešní limit opakování</string>
@@ -289,8 +290,6 @@
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Tento soubor vyžaduje novější verzi Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Načítání \'%s\' selhalo.</string>
     <string name="activity_start_failed">V systému není nainstalována aplikace, která může provést tuto akci.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky kamery mohou být velké. Můžete komprimovat a změnit velikost obrázků v adresáři media]]></string>
     <string name="no_browser_notification">Nebyl nalezen žádný prohlížeč, prosím navštivte webovou stránku pomocí pc nebo mobilu: </string>
@@ -356,7 +355,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
     <string name="card_viewer_media_relative_protocol">Chyba obsahu karty: Je vyžadována aktualizace multimédií</string>
-    <string name="cannot_load_http_resource">Načítání http zdrojů již není podporováno</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nepodařilo se načíst balíček „%s“</string>
     <string name="search_decks">Hledat balíčky</string>
@@ -378,7 +376,7 @@
     <string name="after_text">HTML za výběrem</string>
     <string name="add_toolbar_item">Vytvořit položku nástrojové lišty</string>
     <string name="edit_toolbar_item">Upravit položku nástrojové lišty</string>
-    <string name="toolbar_item_explain_edit_or_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ho upravili nebo odstranili</string>
+    <string name="toolbar_item_explain_edit_or_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ji upravili nebo odstranili</string>
     <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
     <string name="note_editor_paste_too_large">Obrázek je příliš velký, nelze ho vložit; vložte prosím obrázek ručně</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Probíhá zálohování Androidu. Zkuste to prosím znovu</string>
@@ -386,7 +384,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaše domovská obrazovka neumožňuje AnkiDroidu přidávat zástupce</string>
     <string name="create_shortcut_error">Chyba při přidávání zástupce: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Velká počáteční písmena</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Posunout nástrojovou lištu</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Posouvat nástrojovou lištu</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -443,4 +441,6 @@
     <string name="file_extract_exceeds_storage_space">Rozbalený soubor je větší, než úložiště</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Rozbalit štítek „%s“</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Přístup ke kolekci se nezdařil. Zkuste to prosím znovu!</string>
 </resources>

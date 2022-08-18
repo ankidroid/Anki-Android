@@ -83,6 +83,13 @@ public class NotificationChannelTest extends InstrumentedTest {
         if (mTargetAPI < 26) {
             expectedChannels += 1;
         }
+
+        // Any channels we see that are for "LeakCanary" are okay. They are auto-created on test devices.
+        for (NotificationChannel channel : channels) {
+            if (channel.getName().toString().contains("LeakCanary")) {
+                expectedChannels += 1;
+            }
+        }
         assertEquals("Incorrect channel count", expectedChannels, channels.size());
 
         for (NotificationChannels.Channel channel : NotificationChannels.Channel.values()) {

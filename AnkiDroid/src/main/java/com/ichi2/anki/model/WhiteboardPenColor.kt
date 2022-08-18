@@ -16,14 +16,12 @@
 
 package com.ichi2.anki.model
 
-import android.content.SharedPreferences
 import androidx.annotation.CheckResult
-import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
+import com.ichi2.themes.Themes.currentTheme
 
 class WhiteboardPenColor(val lightPenColor: Int?, val darkPenColor: Int?) {
-    fun fromPreferences(sharedPrefs: SharedPreferences): Int? {
-        val isInNightMode = isInNightMode(sharedPrefs)
-        return if (isInNightMode) {
+    fun fromPreferences(): Int? {
+        return if (currentTheme.isNightMode) {
             darkPenColor
         } else {
             lightPenColor

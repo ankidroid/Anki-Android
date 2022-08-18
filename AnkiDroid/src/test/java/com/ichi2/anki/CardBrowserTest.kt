@@ -30,6 +30,7 @@ import com.google.errorprone.annotations.CheckReturnValue
 import com.ichi2.anki.CardBrowser.CardCache
 import com.ichi2.async.CollectionTask.SearchCards
 import com.ichi2.async.TaskManager
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.SortOrder.NoOrdering
@@ -307,7 +308,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(
             "All cards should be flagged",
             stream(cardBrowser.cardIds)
-                .map { cardId: Long -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId).toLong() }
+                .map { cardId: CardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId).toLong() }
                 .noneMatch { flag1: Long -> flag1 != flagForAll.toLong() }
         )
     }
@@ -326,7 +327,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("The card flag value should be reflected in the UI", actualFlag, equalTo(1))
     }
 
-    private fun getCardFlagAfterFlagChangeDone(cardBrowser: CardBrowser, cardId: Long): Int {
+    private fun getCardFlagAfterFlagChangeDone(cardBrowser: CardBrowser, cardId: CardId): Int {
         return cardBrowser.getPropertiesForCardId(cardId).card.userFlag()
     }
 
@@ -750,7 +751,7 @@ class CardBrowserTest : RobolectricTest() {
         return multimediaController.get()
     }
 
-    private fun removeCardFromCollection(cardId: Long) {
+    private fun removeCardFromCollection(cardId: CardId) {
         col.remCards(listOf(cardId))
     }
 

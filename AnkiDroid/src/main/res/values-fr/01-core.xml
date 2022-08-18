@@ -103,7 +103,7 @@
     <string name="rename_deck">Renommer le paquet</string>
     <string name="create_shortcut">Créer un raccourci</string>
     <string name="browse_cards">Parcourir les cartes</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Ajouter</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Ajouter</string>
     <string name="menu_add_note">Ajouter une note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Compte de synchronisation</string>
     <string name="menu_dismiss_note">Masquer / Supprimer</string>
@@ -155,7 +155,7 @@
     <string name="time_quantity_years">%.1f a</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Reconstruction du paquet filtré&#8230;</string>
-    <string name="rebuild_cram_label">Réparer</string>
+    <string name="rebuild_cram_label">Reconstruire</string>
     <string name="empty_cram_label">Vide</string>
     <string name="create_subdeck">Créer un sous-paquet</string>
     <string name="empty_filtered_deck">Vidage du paquet filtré&#8230;</string>

@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Ḍrŏvara ughaḍā</string>
     <string name="drawer_close">Ḍrŏvara banda karā</string>
@@ -101,6 +99,9 @@
         <item>तयार केले</item>
         <item>टीप सुधारित</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">आजची नवीन कार्ड मर्यादा सुधारित करा</string>
     <string name="custom_study_increase_review_limit">आजची पुनरावलोकन कार्ड मर्यादा सुधारित करा</string>
@@ -267,8 +268,6 @@
     <string name="apk_share_error">Error sharing apkg file</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Loading \'%s\' failed.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
@@ -328,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">कार्ड सामग्री त्रुटी: ‘%s’ लोड करण्यात अयशस्वी</string>
     <string name="card_viewer_media_relative_protocol">कार्ड सामग्री त्रुटी: मीडिया अद्यतन आवश्यक</string>
-    <string name="cannot_load_http_resource">Http स्त्रोत लोड करणे यापुढे समर्थित नाही</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">डेक ‘%s’ लोड करण्यात अयशस्वी</string>
     <string name="search_decks">शोध डेक</string>
@@ -415,4 +413,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

@@ -22,11 +22,14 @@ import com.ichi2.anki.R
 class DiscardChangesDialog {
     companion object {
         @JvmStatic
-        fun getDefault(context: Context?): MaterialDialog.Builder {
-            return MaterialDialog.Builder(context!!)
-                .content(R.string.discard_unsaved_changes)
-                .positiveText(R.string.dialog_ok)
-                .negativeText(R.string.dialog_cancel)
+        fun showDialog(context: Context?, positiveMethod: () -> Unit): MaterialDialog {
+            return MaterialDialog(context!!).show {
+                message(R.string.discard_unsaved_changes)
+                positiveButton(R.string.dialog_ok) {
+                    positiveMethod()
+                }
+                negativeButton(R.string.dialog_cancel)
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.afollestad.materialdialogs.DialogAction
+import com.afollestad.materialdialogs.WhichButton
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.libanki.Model
 import com.ichi2.testutils.assertFalse
@@ -79,14 +79,14 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(android.R.id.home))
         advanceRobolectricLooperWithSleep()
         assertEquals("Wrong dialog shown?", getDialogText(true), getResourceString(R.string.discard_unsaved_changes))
-        clickDialogButton(DialogAction.NEGATIVE, true)
+        clickDialogButton(WhichButton.NEGATIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("model change not preserved despite canceling back button?", testEditor.modelHasChanged())
 
         // Make sure we things are cleared out after a cancel
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(android.R.id.home))
         assertEquals("Wrong dialog shown?", getDialogText(true), getResourceString(R.string.discard_unsaved_changes))
-        clickDialogButton(DialogAction.POSITIVE, true)
+        clickDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertFalse("model change not cleared despite discarding changes?", testEditor.modelHasChanged())
 
@@ -142,7 +142,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
         advanceRobolectricLooperWithSleep()
         assertEquals("Wrong dialog shown?", "Delete the “Card 1” card type, and its 0 cards?", getDialogText(true))
-        clickDialogButton(DialogAction.POSITIVE, true)
+        clickDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model should have changed", testEditor.modelHasChanged())
         assertEquals("Model should have 1 template now", 1, testEditor.tempModel?.templateCount)
@@ -185,7 +185,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         addCardType(testEditor, shadowTestEditor)
         // if AnkiDroid moves to match AnkiDesktop it will pop a dialog to confirm card create
         // Assert.assertEquals("Wrong dialog shown?", "This will create NN cards. Proceed?", getDialogText());
-        // clickDialogButton(DialogAction.POSITIVE);
+        // clickDialogButton(WhichButton.POSITIVE);
         assertTrue("Model should have changed", testEditor.modelHasChanged())
         assertEquals("Change not pending add?", 1, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 0))
         assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
@@ -250,7 +250,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertTrue("Unable to click?", shadowTestEditor.clickMenuItem(R.id.action_delete))
         advanceRobolectricLooperWithSleep()
         assertEquals("Wrong dialog shown?", "Delete the “Card 1” card type, and its 0 cards?", getDialogText(true))
-        clickDialogButton(DialogAction.NEGATIVE, true)
+        clickDialogButton(WhichButton.NEGATIVE, true)
         advanceRobolectricLooperWithSleep()
         assertFalse("Model should not have changed", testEditor.modelHasChanged())
 
@@ -273,7 +273,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             getResourceString(R.string.card_template_editor_would_delete_note),
             getDialogText(true)
         )
-        clickDialogButton(DialogAction.POSITIVE, true)
+        clickDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertNull("Can delete used template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
         assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
@@ -343,7 +343,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
             getDialogText(true)
         )
-        clickDialogButton(DialogAction.NEGATIVE, true)
+        clickDialogButton(WhichButton.NEGATIVE, true)
         advanceRobolectricLooperWithSleep()
         assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
         assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
@@ -397,7 +397,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
             getDialogText(true)
         )
-        clickDialogButton(DialogAction.POSITIVE, true)
+        clickDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         advanceRobolectricLooperWithSleep()
         testEditor.viewPager.currentItem = 0
@@ -408,7 +408,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
             getDialogText(true)
         )
-        clickDialogButton(DialogAction.POSITIVE, true)
+        clickDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
 
         // - assert can delete any 1 or 2 Card templates but not all
@@ -470,7 +470,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
             getDialogText(true)
         )
-        clickDialogButton(DialogAction.POSITIVE, true)
+        clickDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model should have changed", testEditor.modelHasChanged())
         assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
@@ -496,7 +496,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             getQuantityString(R.plurals.card_template_editor_confirm_delete, 0, 0, "Card 2"),
             getDialogText(true)
         )
-        clickDialogButton(DialogAction.POSITIVE, true)
+        clickDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model should have changed", testEditor.modelHasChanged())
         assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
@@ -520,13 +520,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         intent.putExtra("modelId", model.getLong("id"))
         val editor = super.startActivityNormallyOpenCollectionWithIntent(CardTemplateEditor::class.java, intent)
         val template = editor.tempModel?.getTemplate(0)
-        MatcherAssert.assertThat("Deck ID element should exist", template?.has("did"), Matchers.`is`(true))
-        MatcherAssert.assertThat("Deck ID element should be null", template?.get("did"), Matchers.`is`(JSONObject.NULL))
+        MatcherAssert.assertThat("Deck ID element should exist", template?.has("did"), Matchers.equalTo(true))
+        MatcherAssert.assertThat("Deck ID element should be null", template?.get("did"), Matchers.equalTo(JSONObject.NULL))
         editor.onDeckSelected(SelectableDeck(1, "hello"))
-        MatcherAssert.assertThat("Deck ID element should be changed", template?.get("did"), Matchers.`is`(1L))
+        MatcherAssert.assertThat("Deck ID element should be changed", template?.get("did"), Matchers.equalTo(1L))
         editor.onDeckSelected(null)
-        MatcherAssert.assertThat("Deck ID element should exist", template!!.has("did"), Matchers.`is`(true))
-        MatcherAssert.assertThat("Deck ID element should be null", template["did"], Matchers.`is`(JSONObject.NULL))
+        MatcherAssert.assertThat("Deck ID element should exist", template!!.has("did"), Matchers.equalTo(true))
+        MatcherAssert.assertThat("Deck ID element should be null", template["did"], Matchers.equalTo(JSONObject.NULL))
     }
 
     @Test
@@ -555,7 +555,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         cardTemplateFragment.setCurrentEditorView(R.id.front_edit, tempModel.getTemplate(0).getString("qfmt"), R.string.card_template_editor_front)
 
         // check if current content is updated or not
-        assumeThat(templateEditText.text.toString(), Matchers.`is`(updatedFrontContent))
+        assumeThat(templateEditText.text.toString(), Matchers.equalTo(updatedFrontContent))
     }
 
     @Test
@@ -577,15 +577,15 @@ class CardTemplateEditorTest : RobolectricTest() {
         val tempModel = testEditor.tempModel
 
         // check if current view is front(default) view
-        assumeThat(templateEditText.text.toString(), Matchers.`is`(tempModel!!.getTemplate(0).getString("qfmt")))
-        assumeThat(cardTemplateFragment!!.currentEditorViewId, Matchers.`is`(R.id.front_edit))
+        assumeThat(templateEditText.text.toString(), Matchers.equalTo(tempModel!!.getTemplate(0).getString("qfmt")))
+        assumeThat(cardTemplateFragment!!.currentEditorViewId, Matchers.equalTo(R.id.front_edit))
 
         // set Bottom Navigation View to Style
         cardTemplateFragment.setCurrentEditorView(R.id.styling_edit, tempModel.css, R.string.card_template_editor_styling)
 
         // check if current view is changed or not
-        assumeThat(templateEditText.text.toString(), Matchers.`is`(tempModel.css))
-        assumeThat(cardTemplateFragment.currentEditorViewId, Matchers.`is`(R.id.styling_edit))
+        assumeThat(templateEditText.text.toString(), Matchers.equalTo(tempModel.css))
+        assumeThat(cardTemplateFragment.currentEditorViewId, Matchers.equalTo(R.id.styling_edit))
     }
 
     private fun addCardType(testEditor: CardTemplateEditor, shadowTestEditor: ShadowActivity) {
@@ -601,7 +601,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             getQuantityString(R.plurals.card_template_editor_confirm_add, numAffectedCards, numAffectedCards),
             getDialogText(true)
         )
-        clickDialogButton(DialogAction.POSITIVE, true)
+        clickDialogButton(WhichButton.POSITIVE, true)
     }
 
     private fun getModelCardCount(model: Model): Int {

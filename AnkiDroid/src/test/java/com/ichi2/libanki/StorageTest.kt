@@ -38,7 +38,6 @@ open class StorageTest : RobolectricTest() {
     }
 
     override fun setUp() {
-        Storage.setUseBackend(false)
         super.setUp()
     }
 
@@ -51,7 +50,6 @@ open class StorageTest : RobolectricTest() {
 
         // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
         disableNullCollection()
-        Storage.setUseBackend(true)
         val actual = results
         actual.assertEqualTo(expected)
     }
@@ -254,7 +252,7 @@ open class StorageTest : RobolectricTest() {
             }
             val actual = actualJson.toOrderedString()
             val expected = expectedJson.toOrderedString()
-            MatcherAssert.assertThat(actual, Matchers.`is`(expected))
+            MatcherAssert.assertThat(actual, Matchers.equalTo(expected))
         }
 
         /** A req over a singleton can either be "any" or "all". Remove singletons which match  */
@@ -298,7 +296,7 @@ open class StorageTest : RobolectricTest() {
             remove(actualJson, expectedJson, "localOffset")
             val actual = actualJson.toOrderedString()
             val expected = expectedJson.toOrderedString()
-            MatcherAssert.assertThat(actual, Matchers.`is`(expected))
+            MatcherAssert.assertThat(actual, Matchers.equalTo(expected))
 
             // regression: curModel
         }

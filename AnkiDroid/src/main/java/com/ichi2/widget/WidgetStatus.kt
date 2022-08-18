@@ -101,8 +101,6 @@ object WidgetStatus {
         private fun updateCounts(context: Context) {
             val total = Counts()
             val col = CollectionHelper.getInstance().getCol(context)
-            // Ensure queues are reset if we cross over to the next day.
-            col.sched._checkDay()
 
             // Only count the top-level decks in the total
             val nodes = col.sched.deckDueTree().map { it.value }

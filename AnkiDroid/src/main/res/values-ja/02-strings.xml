@@ -44,10 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">引き出しメニューを開く</string>
+    <string name="drawer_open">ナビゲーションドロワーを開く</string>
     <string name="drawer_close">引き出しメニューを閉じる</string>
     <string name="CardEditorCardDeck">デッキ:</string>
     <string name="CardEditorNoteDeck">デッキ:</string>
@@ -101,6 +99,9 @@
         <item>作成日</item>
         <item>ノート編集日</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">適用する</string>
+    <string name="filter_by_flags">フラグ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
     <string name="custom_study_increase_review_limit">今日の復習カード上限を変更</string>
@@ -160,7 +161,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションは全て削除され、ファイル\"%s\" のデータによって上書きされます。よろしいですか？</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">%s\nをインポートしますか？\n時間がかかる場合があります</item>
+        <item quantity="other">%s\nの内容をコレクションに追加しますか？　時間がかかる場合があります</item>
     </plurals>
     <string name="import_log_no_apkg">これは読み込み可能なAnkiパッケージファイル（*.apkg）ではありません</string>
     <string name="import_title_error" comment="Title of error dialog">エラー</string>
@@ -180,7 +181,7 @@
     <string name="import_error_unhandled_scheme">未処理のインポート: “%s”</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">apkgファイルとcolpkgファイルが選択されました。それらを一度にインポートすることはできません。</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_stats_error">下記のファイルをインポートする際にエラーが発生しました:\n%s</string>
     <string name="import_replacing">コレクションを置き換えています...</string>
     <string name="import_interrupted">インポートが中断されました</string>
     <string name="export_include_schedule">スケジュール情報を含める</string>
@@ -196,10 +197,10 @@
     <string name="export_save_apkg_unsuccessful">Ankiパッケージの保存に失敗しました</string>
     <string name="export_successful">Ankiパッケージファイル “%s” を作成しました。他のアプリに送信しますか？　それともこの端末や自分のGoogleドライブに保存しますか？</string>
     <string name="export_email_subject">[AnkiDroid] %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        こんにちは！
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        このメールには、AnkiDroid[1] から送信された、カードデッキのファイルが添付されています。
+        Anki公式サイトで紹介されているソフトウェア・アプリケーション[2]のいずれかを使ってこのデッキを開き、簡単で効率的な学習をお楽しみください！<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
@@ -256,8 +257,6 @@
     <string name="apk_share_error">Anki用ファイル（*.apkg）の送信がキャンセルされました</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">このファイルはAnkiの新しいバーショーンが必要です。</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' の読み込みに失敗しました。</string>
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[画像が大きい可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
     <string name="no_browser_notification">ブラウザが見つかりません。PCまたはモバイルでWebページにアクセスしてください： </string>
@@ -314,7 +313,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">カードのエラー: 読み込み失敗 ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">カードコンテンツエラー: メディアの更新が必要です</string>
-    <string name="cannot_load_http_resource">HTTPリソースの読み込みはサポートされなくなりました</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\'デッキの読み込みに失敗しました</string>
     <string name="search_decks">デッキ名を検索</string>
@@ -399,4 +397,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">タグ \'%s \' を展開</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

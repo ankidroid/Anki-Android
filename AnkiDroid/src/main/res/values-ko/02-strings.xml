@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">메뉴 열기</string>
     <string name="drawer_close">메뉴 닫기</string>
@@ -102,6 +100,9 @@
         <item>작성한 날짜</item>
         <item>노트 편집일</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>
     <string name="custom_study_increase_review_limit">오늘의 복습 카드 학습량 늘리기</string>
@@ -257,8 +258,6 @@
     <string name="apk_share_error">Apkg 파일 공유 오류</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">이 파일을 열기 위해서는 앱을 업데이트 해야 합니다.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">%s을(를) 로드 실패</string>
     <string name="activity_start_failed">시스템에 설치된 이 액션을 실행할 수 있는 앱이 없습니다.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[카메라 사진은 클 수 있습니다. 미디어 디렉토리에 있는 이미지를 압축하거나 크기를 조장할 수 있습니다.]]></string>
     <string name="no_browser_notification">브라우저를 찾을 수 없습니다. 컴퓨터 또는 모바일로 웹 페이지를 방문하세요:</string>
@@ -315,7 +314,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">카드 내용 오류: \'%s\' 읽기 실패</string>
     <string name="card_viewer_media_relative_protocol">카드 내용 오류: 미디어 업데이트 요청</string>
-    <string name="cannot_load_http_resource">http 자료 불러오기는 더 이상 지원되지 않습니다.</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\' 뭉치를 가져오는데 실패했습니다.</string>
     <string name="search_decks">덱 검색</string>
@@ -402,4 +400,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

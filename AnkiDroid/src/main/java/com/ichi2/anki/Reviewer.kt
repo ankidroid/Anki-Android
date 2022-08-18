@@ -57,7 +57,6 @@ import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
-import com.ichi2.anki.cardviewer.CardAppearance.Companion.isInNightMode
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -82,6 +81,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
+import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.Computation
@@ -146,11 +146,11 @@ open class Reviewer : AbstractFlashcardViewer() {
     @VisibleForTesting
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
-    protected fun <T : Computation<NextCard<Array<Card>>>> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
-        return nextCardHandler<Computation<NextCard<*>>>().alsoExecuteAfter { result: T ->
+    protected fun <T : Computation<NextCard<Array<Card>>>?> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
+        return nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { result: T ->
             // BUG: If the method crashes, this will crash
             invalidateOptionsMenu()
-            val cardCount: Int = result.value.result.size
+            val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 this,
                 resources.getQuantityString(toastResourceId, cardCount, cardCount), true
@@ -1075,7 +1075,6 @@ open class Reviewer : AbstractFlashcardViewer() {
             Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
             Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
             Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
-            else -> Timber.w("Unknown card type %s", sched!!.countIdx(mCurrentCard!!))
         }
         mTextBarNew.text = mNewCount
         mTextBarLearn.text = mLrnCount
@@ -1335,18 +1334,17 @@ open class Reviewer : AbstractFlashcardViewer() {
     }
 
     private fun createWhiteboard() {
-        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
         whiteboard = createInstance(this, true, this)
 
         // We use the pen color of the selected deck at the time the whiteboard is enabled.
         // This is how all other whiteboard settings are
-        val whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, parentDid).fromPreferences(sharedPrefs)
+        val whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, parentDid).fromPreferences()
         if (whiteboardPenColor != null) {
             whiteboard!!.penColor = whiteboardPenColor
         }
         whiteboard!!.setOnPaintColorChangeListener(object : OnPaintColorChangeListener {
             override fun onPaintColorChange(color: Int?) {
-                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !isInNightMode(sharedPrefs), color)
+                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
             }
         })
         whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
@@ -1388,7 +1386,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override val currentCardId: Long?
+    override val currentCardId: CardId?
         get() = mCurrentCard!!.id
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

@@ -31,10 +31,10 @@ class RecursivePictureMenuAndroidTest : RecursivePictureMenuUtilTest() {
     @Test
     @RunInBackground
     fun testNormalStartupSelectingItem() {
-        val linkedItem = getItemLinkingTo(R.string.link_anki)
+        val linkedItem = getItemLinkingTo(R.string.link_manual)
         val v = getRecyclerViewFor(linkedItem)
         clickChildAtIndex(v, 0)
-        MatcherAssert.assertThat(activity!!.lastUrlOpened, Matchers.`is`(getResourceString(R.string.link_anki)))
+        MatcherAssert.assertThat(activity!!.lastUrlOpened, Matchers.equalTo(getResourceString(R.string.link_manual)))
     }
 
     @Test
@@ -46,7 +46,7 @@ class RecursivePictureMenuAndroidTest : RecursivePictureMenuUtilTest() {
         clickChildAtIndex(v, 0)
         val currentMenu = activity!!.lastShownDialogFragment as RecursivePictureMenu
         val rv = RecursivePictureMenuUtil.getRecyclerViewFor(currentMenu)
-        MatcherAssert.assertThat("Unexpected number of items - check the adapter", rv.childCount, Matchers.`is`(numberOfChildItems))
+        MatcherAssert.assertThat("Unexpected number of items - check the adapter", rv.childCount, Matchers.equalTo(numberOfChildItems))
     }
 
     @Test

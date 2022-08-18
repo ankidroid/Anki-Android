@@ -36,6 +36,7 @@ import com.ichi2.utils.JSONObject;
 import com.ichi2.utils.SyncStatus;
 
 import net.ankiweb.rsdroid.RustCleanup;
+import net.ankiweb.rsdroid.RustV1Cleanup;
 
 import org.intellij.lang.annotations.Language;
 
@@ -858,9 +859,10 @@ public class Decks extends DeckManager {
 
 
     @Override
+    @RustCleanup("use backend method")
     public void restoreToDefault(@NonNull DeckConfig conf) {
         int oldOrder = conf.getJSONObject("new").getInt("order");
-        DeckConfig _new = mCol.getBackend().new_deck_config_legacy();
+        DeckConfig _new = new DeckConfig(Decks.DEFAULT_CONF, DeckConfig.Source.DECK_CONFIG);
         _new.put("id", conf.getLong("id"));
         _new.put("name", conf.getString("name"));
 

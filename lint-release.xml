@@ -56,10 +56,12 @@
     <issue id="RtlEnabled" severity="fatal" />
     <issue id="RtlHardcoded" severity="fatal" />
 
+    <issue id="CheckResult" severity="fatal" />
     <issue id="RedundantNamespace" severity="fatal" />
     <issue id="TextFields" severity="fatal" />
     <issue id="LogConditional" severity="fatal" />
     <issue id="ImplicitSamInstance" severity="fatal" />
+    <issue id="DrawAllocation" severity="fatal" />
 
     <!-- this is new with AGP7.1+, does not appear to create value -->
     <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
@@ -212,7 +214,6 @@
     <issue id="TrustAllX509TrustManager" severity="ignore" />
     <issue id="InvalidImeActionId" severity="ignore" />
     <issue id="InvalidPackage" severity="ignore" />
-    <issue id="DrawAllocation" severity="ignore" />
     <issue id="UseSparseArrays" severity="ignore" />
     <issue id="UseValueOf" severity="ignore" />
     <issue id="JavascriptInterface" severity="ignore" />
@@ -322,7 +323,6 @@
     <issue id="AuthLeak" severity="ignore" />
     <issue id="PluralsCandidate" severity="ignore" />
     <issue id="UseCheckPermission" severity="ignore" />
-    <issue id="CheckResult" severity="ignore" />
     <issue id="ResourceAsColor" severity="ignore" />
     <issue id="MissingPermission" severity="ignore" />
     <issue id="Range" severity="ignore" />
@@ -331,7 +331,6 @@
     <issue id="WrongThread" severity="ignore" />
     <issue id="VisibleForTests" severity="ignore" />
     <issue id="ProtectedPermissions" severity="ignore" />
-    <issue id="TextFields" severity="ignore" />
     <issue id="TextViewEdits" severity="ignore" />
     <issue id="SelectableText" severity="ignore" />
     <issue id="MenuTitle" severity="ignore" />

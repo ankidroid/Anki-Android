@@ -19,9 +19,11 @@ import android.content.ContentValues
 import android.database.SQLException
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteStatement
+import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
 
 /** Detects any database modifications and notifies the sync status of the application  */
+@RustCleanup("After migrating to new backend, can use backend call instead of this class.")
 class DatabaseChangeDecorator(val wrapped: SupportSQLiteDatabase) : SupportSQLiteDatabase by wrapped {
     private fun markDataAsChanged() {
         SyncStatus.markDataAsChanged()

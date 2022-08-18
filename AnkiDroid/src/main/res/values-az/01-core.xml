@@ -44,14 +44,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="yes">yes</string>
+    <string name="yes">Bəli</string>
     <!-- Navigation drawer items-->
     <string name="decks">Dəstələr</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kart səyyahı</string>
     <string name="statistics">Statistikalar</string>
     <string name="settings">Tənzimləmələr</string>
     <string name="help">Kömək</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Rəsm</string>
     <string name="send_feedback">Çətinliyi bildir</string>
     <string name="studyoptions_due_today">Bugün vaxtı bitir:</string>
     <string name="studyoptions_new_total">Ümumi yeni kart:</string>
@@ -78,8 +78,8 @@
         <item quantity="one">%1$d day %2$d left</item>
         <item quantity="other">%1$d days %2$d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_title">Dəstə boşdur</string>
+    <string name="no_cards_placeholder_description">+ işarəsindən istifadə edərək kart əlavə etməyə başlayın</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Studied %1$d card in %2$s today</item>
@@ -88,7 +88,7 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Cavabı yazın</string>
     <string name="show_answer">Cavabı göstər</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">Cavabı gizlədin</string>
     <string name="ease_button_again">Təkrar</string>
     <string name="ease_button_hard">Çətin</string>
     <string name="ease_button_good">Yaxşı</string>
@@ -98,12 +98,12 @@
     <string name="undo">Geri qaytar</string>
     <string name="undo_action_review">son nəzərdən keçirmə</string>
     <string name="undo_action_change_deck_multi">dəstələri dəyişdir</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="move_all_to_deck">Hamısın dəstəyə köçürün</string>
     <string name="unbury">Görünən et</string>
     <string name="rename_deck">Dəstəni yenidən adlandır</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Əlavə et</string>
+    <string name="create_shortcut">Qısayol yarat</string>
+    <string name="browse_cards">Kartları gözdən keçirin</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Əlavə et</string>
     <string name="menu_add_note">Qeyd əlavə et</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Hesabı sinxron et</string>
     <string name="menu_dismiss_note">Gizlə / sil</string>
@@ -114,22 +114,22 @@
     <string name="menu_bury">Gizlət</string>
     <string name="menu_suspend">Dayandır</string>
     <string name="menu_delete_note">Qeydi sil</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag">İşarələ</string>
+    <string name="menu_flag_card">İşarələnmiş kart</string>
+    <string name="menu_flag_card_zero">İşarə yoxdur</string>
+    <string name="menu_flag_card_one">Qırmızı işarə</string>
+    <string name="menu_flag_card_two">Narıncı işarə</string>
+    <string name="menu_flag_card_three">Yaşıl işarə</string>
+    <string name="menu_flag_card_four">Mavi işarə</string>
+    <string name="menu_flag_card_five">Çəhrayı işarə</string>
+    <string name="menu_flag_card_six">Firuzəyi işarə</string>
+    <string name="menu_flag_card_seven">Bənövşəyi işarə</string>
+    <string name="menu_edit_tags">Etiketlərə düzəliş et</string>
     <string name="delete_note_message">Bu qeyd və bütün kartlar həqiqətən də silinsin?\n%s</string>
     <string name="menu_search">%1$s içində axtar</string>
     <string name="menu_mark_note">Qeydi işarələ</string>
     <string name="menu_unmark_note">İşarəni götür</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Səsi yoxlayın</string>
     <string name="new_deck">Dəstə yarat</string>
     <string name="new_dynamic_deck">Filtrli dəstə yarat</string>
     <string name="directory_inaccessible">AnkiDroid kataloqu əlçatmazdır</string>
@@ -137,7 +137,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">İrəliləmək üçün AnkiDroid-ə \"Yaddaş\" icazəsi verin</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -154,24 +154,24 @@
     <string name="time_quantity_months">%.1f ay</string>
     <string name="time_quantity_years">%.1f il</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">filtrlənmiş dəstənin yenidən qurulması</string>
     <string name="rebuild_cram_label">Yenidən düzəlt</string>
     <string name="empty_cram_label">Boş</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="create_subdeck">Alt dəstə yarat</string>
+    <string name="empty_filtered_deck">filtrlənmiş dəstənin boşaldılması</string>
     <string name="custom_study_deck_name">Şəxsi öyrənmə sessiyası</string>
-    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-    <string name="empty_deck">This deck is empty</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="empty_deck_add_note">Add card</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="custom_study_deck_exists">Əvvəlcə mövcud fərdi tədqiqat dəstəsinin adını dəyişin</string>
+    <string name="empty_deck">Bu dəstə boşdur</string>
+    <string name="search_deck" comment="Deck search for selecting it">Dəstə axtar</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Dəstə axtar</string>
+    <string name="empty_deck_add_note">Kart əlavə edin</string>
+    <string name="invalid_deck_name">Etibarsız kart adı</string>
+    <string name="studyoptions_empty">Bu dəstə boşdur. Yeni məzmun əlavə etmək üçün + düyməsinə basın.</string>
+    <string name="studyoptions_limit_reached">Gündəlik öyrənmə limitinə çatıldı</string>
+    <string name="studyoptions_empty_schedule">Öyrənmək üçün planlaşdırılmış kart yoxdur</string>
     <string name="studyoptions_congrats_finished">Təbriklər! Hələlik bitirdiniz.</string>
-    <string name="studyoptions_congrats_more_rev">Today’s limit has been reached, but there are still cards to review. You can increase the limit in the options.</string>
-    <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
+    <string name="studyoptions_congrats_more_rev">Bugünkü limitə çatıldı, lakin hələ də nəzərdən keçirilməli kartlar var.  Seçimlərdən limiti artıra bilərsiniz.</string>
+    <string name="studyoptions_congrats_more_new">Bugünkü limitə çatıldı.  Daha çox yeni kartlar mövcuddur;  seçimlərdə limiti artıra bilərsiniz, lakin bu, qısamüddətli baxış  yükünüzü artıracaq.</string>
     <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
     <string name="sd_card_not_mounted">Cihaz yaddaşı bağlı deyil</string>

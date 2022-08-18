@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">തുറക്കുക ഡ്രോയർ</string>
     <string name="drawer_close">ഡ്രോയർ അടയ്‌ക്കുക</string>
@@ -101,6 +99,9 @@
         <item>സൃഷ്ടിച്ചു</item>
         <item>കുറിപ്പ് പരിഷ്‌ക്കരിച്ചു</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ഇന്നത്തെ പുതിയ കാർഡ് പരിധി പരിഷ്‌ക്കരിക്കുക</string>
     <string name="custom_study_increase_review_limit">ഇന്നത്തെ അവലോകന കാർഡ് പരിധി പരിഷ്‌ക്കരിക്കുക</string>
@@ -267,8 +268,6 @@
     <string name="apk_share_error">apkg ഫയൽ പങ്കിടുന്നതിൽ പിശക്</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">ഈ Anki അങ്കിയുടെ ഏറ്റവും പുതിയ പതിപ്പ് ആവശ്യമാണ്</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' ലോഡുചെയ്യുന്നത് പരാജയപ്പെട്ടു.</string>
     <string name="activity_start_failed">ഈ പ്രവർത്തനം നടത്താൻ കഴിയുന്ന ഒരു അപ്ലിക്കേഷൻ സിസ്റ്റത്തിൽ ഇൻസ്റ്റാളുചെയ്‌തിട്ടില്ല.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ക്യാമറ ഇമേജുകൾ വലുതായിരിക്കാം. മീഡിയ ഡയറക്ടറിയിലെ ഇമേജുകൾ കം‌പ്രസ്സുചെയ്യാനും വലുപ്പം മാറ്റാനും നിങ്ങൾ ആഗ്രഹിച്ചേക്കാം]]></string>
     <string name="no_browser_notification">browser സറൊന്നും കണ്ടെത്തിയില്ല p ദയവായി പിസി അല്ലെങ്കിൽ മൊബൈൽ വഴി വെബ് പേജ് സന്ദർശിക്കുക:</string>
@@ -328,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">കാർഡ് ഉള്ളടക്ക പിശക്: ‘%s’ ലോഡുചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="card_viewer_media_relative_protocol">കാർഡ് ഉള്ളടക്ക പിശക്: മീഡിയ അപ്‌ഡേറ്റ് ആവശ്യമാണ്</string>
-    <string name="cannot_load_http_resource">Http ഉറവിടങ്ങൾ ലോഡുചെയ്യുന്നത് മേലിൽ പിന്തുണയ്‌ക്കില്ല</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ഡെക്ക് ‘%s’ ലോഡുചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="search_decks">തിരയൽ ഡെക്കുകൾ</string>
@@ -415,4 +413,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>

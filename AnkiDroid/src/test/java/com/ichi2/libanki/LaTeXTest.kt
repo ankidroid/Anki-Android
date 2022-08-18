@@ -40,16 +40,54 @@ class LaTeXTest : RobolectricTest() {
         val m: Media = MockMedia(col)
         val model = col.models.byName("Basic")!!
         // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
-        //  Test with media access
+        // Test with media access
         assertThat(
-            LaTeX._imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, m),
+            LaTeX.imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, m),
             equalTo("<img class=latex alt=\"\\$\\\\sqrt[3]{2} + \\\\text{&quot;var&quot;}\\$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">")
         )
 
         // Test without access to media
         assertThat(
-            LaTeX._imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, col.media),
+            LaTeX.imgLink("$\\sqrt[3]{2} + \\text{\"var\"}$", model, col.media),
             equalTo("\\$\\\\sqrt[3]{2} + \\\\text{\"var\"}\\$")
+        )
+    }
+
+    @Test
+    fun htmlMatchTest() {
+        val col = col
+        val media: Media = MockMedia(col)
+        val model = col.models.byName("Basic")!!
+        // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
+        // Test with media access
+        assertThat(
+            LaTeX.convertHTML("""[latex]\sqrt[3]{2} + \text{"var"}[/latex]""", media, model),
+            equalTo("""<img class=latex alt="\sqrt[3]{2} + \text{&quot;var&quot;}" src="latex-def68dc5a5ada07529f673b6493464e94f88c3df.png">""")
+        )
+
+        // Test without access to media
+        assertThat(
+            LaTeX.convertHTML("""[latex]\sqrt[3]{2} + \text{"var"}[/latex]""", col.media, model),
+            equalTo("""\sqrt[3]{2} + \text{"var"}""")
+        )
+    }
+
+    @Test
+    fun mathMatchTest() {
+        val col = col
+        val media: Media = MockMedia(col)
+        val model = col.models.byName("Basic")!!
+        // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
+        // Test with media access
+        assertThat(
+            LaTeX.convertMath("""[$$]\sqrt[3]{2} + \text{"var"}[/$$]""", media, model),
+            equalTo("""<img class=latex alt="\begin{displaymath}\sqrt[3]{2} + \text{&quot;var&quot;}\end{displaymath}" src="latex-ac92a31b0e2dc842ac2b3542a68f81d89438793a.png">""")
+        )
+
+        // Test without access to media
+        assertThat(
+            LaTeX.convertMath("""[$$]\sqrt[3]{2} + \text{"var"}[/$$]""", col.media, model),
+            equalTo("""\begin{displaymath}\sqrt[3]{2} + \text{"var"}\end{displaymath}""")
         )
     }
 
@@ -59,7 +97,7 @@ class LaTeXTest : RobolectricTest() {
         val m: Media = MockMedia(col)
         val model = col.models.byName("Basic")!!
 
-        //  Test with media access
+        // Test with media access
         assertThat(
             LaTeX.mungeQA("[$]\\sqrt[3]{2} + \\text{\"var\"}[/$]", m, model),
             equalTo("<img class=latex alt=\"$\\sqrt[3]{2} + \\text{&quot;var&quot;}$\" src=\"latex-dd84e5d506179a137f7924d0960609a8c89d491e.png\">")

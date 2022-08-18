@@ -19,14 +19,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.annotation.CheckResult
-import com.ichi2.anki.AnkiDroidApp
 import timber.log.Timber
 import java.lang.Exception
 
 abstract class SystemContextMenu(private val context: Context) {
-    protected abstract val defaultEnabledStatus: Boolean
-    protected abstract val preferenceKey: String
-
     /** We use an activity alias as the name so we can disable the context menu without disabling the activity  */
     protected abstract val activityName: String
     fun setSystemMenuEnabled(enabled: Boolean) {
@@ -38,17 +34,13 @@ abstract class SystemContextMenu(private val context: Context) {
         }
     }
 
-    fun ensureConsistentStateWithSharedPreferences() {
-        val preferenceStatus = preferenceStatus
+    fun ensureConsistentStateWithPreferenceStatus(preferenceStatus: Boolean) {
         val actualStatus = systemMenuStatus
         if (actualStatus == null || actualStatus != preferenceStatus) {
             Timber.d("Modifying Context Menu Status: Preference was %b", preferenceStatus)
             setSystemMenuEnabled(preferenceStatus)
         }
     }
-
-    protected val preferenceStatus: Boolean
-        get() = AnkiDroidApp.getSharedPrefs(context).getBoolean(preferenceKey, defaultEnabledStatus)
 
     @get:CheckResult
     private val systemMenuStatus: Boolean?

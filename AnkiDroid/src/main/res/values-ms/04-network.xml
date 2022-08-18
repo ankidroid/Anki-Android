@@ -116,6 +116,7 @@
     <string name="sync_sanity_remote">Remote</string>
     <string name="force_full_sync_title">Force full sync</string>
     <string name="force_full_sync_summary">Di depan sync, memaksa perubahan dalam satu arah</string>
+    <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Yang diminta mengubah akan memerlukan penuh naik pangkalan data apabila anda akan datang menyelaraskan koleksi anda. Jika anda mempunyai yang sah atau perubahan lain menunggu lagi yang belum serentak di sini lagi, mereka akan hilang. Terus?</string>
     <string name="full_sync_confirmation_upgrade">Kerana bug dalam versi yang dipasang sebelum ini apa yang anda perlu lakukan, itu disarankan untuk daya penuh sync.</string>
     <string name="sync_error_407_proxy_required">Proxy authentication required.</string>

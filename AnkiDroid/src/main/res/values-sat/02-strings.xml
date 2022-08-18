@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ᱰᱨᱚᱣᱟᱹᱨ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ </string>
     <string name="drawer_close">ᱰᱨᱚᱣᱟᱹᱨ ᱵᱚᱸᱫᱚᱭ ᱢᱮ </string>
@@ -101,6 +99,9 @@
         <item>ᱛᱮᱭᱟᱨ ᱮᱱᱟ</item>
         <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱫᱚᱞᱮᱱᱟ</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="custom_study_increase_review_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱧᱮᱧᱮᱞ  ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
@@ -267,8 +268,6 @@
     <string name="apk_share_error">apkg ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱵᱷᱩᱞ</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">ᱱᱚᱶᱟ ᱨᱮᱫ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ Anki ᱨᱮᱭᱟᱜ ᱱᱟᱶᱟ ᱵᱷᱚᱨᱥᱚᱱ ᱫᱚᱨᱠᱟᱨ ᱾</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' ᱞᱚᱰ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ ᱾</string>
     <string name="activity_start_failed">ᱱᱚᱶᱟ ᱥᱮᱤᱴᱚᱢ ᱴᱷᱮᱱ ᱠᱟᱹᱢᱤ ᱠᱚᱨᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱮᱯᱯ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ᱠᱮᱢᱨᱟ ᱪᱤᱛᱟᱨ ᱢᱟᱨᱟᱝ ᱜᱮ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ ᱾ ᱢᱮᱰᱤᱭᱟ ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱪᱤᱛᱟᱨ ᱠᱚᱥᱚᱴ ᱢᱮ]]></string>
     <string name="no_browser_notification">ᱵᱨᱚᱩᱡᱚᱨ ᱵᱟᱭ ᱧᱟᱢ ᱞᱮᱱᱟ，ᱣᱮᱵᱯᱮᱡ ᱥᱟᱦᱴᱟ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱚᱢᱯᱩᱴᱚᱨ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱢᱚᱵᱚᱤᱞ ᱛᱮ ᱪᱟᱞᱟᱜ ᱢᱮ:</string>
@@ -328,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="card_viewer_media_relative_protocol">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞᱺ ᱢᱮᱰᱤᱭᱟ ᱟᱹᱯᱰᱮᱴ ᱫᱚᱨᱠᱟᱨ</string>
-    <string name="cannot_load_http_resource">https ᱥᱟᱸᱯᱫᱟ ᱞᱳᱰᱤᱝ ᱟᱫᱚ ᱵᱟᱝ ᱜᱟᱱᱚᱜ-ᱟ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ᱰᱮᱠ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ ‘%s’</string>
     <string name="search_decks">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
@@ -415,4 +413,6 @@
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expand tag \'%s\'</string>
+    <!-- Manage note types -->
+    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
 </resources>
