@@ -197,7 +197,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         /**
          * @param result noOfSavedCards, null if any exception occurred internally
          */
-        @KotlinCleanup("invert if")
+        @KotlinCleanup("return early and simplify if possible")
         override fun actualOnPostExecute(context: NoteEditor, result: Int?) {
             var closeEditorAfterSave = false
             var closeIntent: Intent? = null
@@ -231,15 +231,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     closeIntent = Intent().apply { putExtra(EXTRA_ID, context.intent.getStringExtra(EXTRA_ID)) }
                 } else if (!context.mEditFields!!.isEmpty()) {
                     context.mEditFields!!.first!!.focusWithKeyboard()
-                }
-
-                // TODO: Below two conditions can be combined
-                if (!closeEditorAfterSave && context.progressDialog != null && context.progressDialog!!.isShowing) {
-                    try {
-                        context.progressDialog!!.dismiss()
-                    } catch (e: IllegalArgumentException) {
-                        Timber.e(e, "Note Editor: Error on dismissing progress dialog")
-                    }
                 }
 
                 if (context.progressDialog != null && context.progressDialog!!.isShowing) {
