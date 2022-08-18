@@ -280,9 +280,9 @@ object ImportUtils {
             return MimeTypeMap.getFileExtensionFromUrl(file.toString())
         }
 
-        protected open fun getFileNameFromContentProvider(context: Context, data: Uri?): String? {
+        protected open fun getFileNameFromContentProvider(context: Context, data: Uri): String? {
             var filename: String? = null
-            context.contentResolver.query(data!!, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null).use { cursor ->
+            context.contentResolver.query(data, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null).use { cursor ->
                 if (cursor != null && cursor.moveToFirst()) {
                     filename = cursor.getString(0)
                     Timber.d("handleFileImport() Importing from content provider: %s", filename)
