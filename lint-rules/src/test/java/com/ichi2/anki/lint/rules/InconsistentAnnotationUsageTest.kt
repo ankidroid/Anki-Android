@@ -13,77 +13,77 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.lint.rules
 
-package com.ichi2.anki.lint.rules;
+import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile
+import com.android.tools.lint.checks.infrastructure.TestLintTask
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import org.intellij.lang.annotations.Language
+import org.junit.Assert
+import org.junit.Test
 
-import org.intellij.lang.annotations.Language;
-import org.junit.Test;
-
-import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
-import static com.android.tools.lint.checks.infrastructure.TestLintTask.lint;
-import static org.junit.Assert.assertTrue;
-
-public class InconsistentAnnotationUsageTest {
+@KotlinCleanup("IDE Lint")
+class InconsistentAnnotationUsageTest {
+    @Language("JAVA")
+    private val mNotNullUsage = """                                  
+package java.util;                                             
+                                                               
+import org.jetbrains.annotations.NotNull;                      
+"""
 
     @Language("JAVA")
-    private final String mNotNullUsage = "                                  \n" +
-            "package java.util;                                             \n" +
-            "                                                               \n" +
-            "import org.jetbrains.annotations.NotNull;                      \n";
-
-    @Language("JAVA")
-    private final String mNullable = "                                      \n" +
-            "package java.util;                                             \n" +
-            "                                                               \n" +
-            "import org.jetbrains.annotations.Nullable;                     \n";
+    private val mNullable = """                                      
+package java.util;                                             
+                                                               
+import org.jetbrains.annotations.Nullable;                     
+"""
 
     // Should be OK
     @Language("JAVA")
-    private final String mContract = "                                      \n" +
-            "package java.util;                                             \n" +
-            "                                                               \n" +
-            "import org.jetbrains.annotations.Contract;                     \n";
-
-
+    private val mContract = """                                      
+package java.util;                                             
+                                                               
+import org.jetbrains.annotations.Contract;                     
+"""
 
     @Test
-    public void showsErrorForNotNull() {
-        lint()
-                .allowMissingSdk()
-                .allowCompilationErrors()
-                .files(create(mNotNullUsage))
-                .issues(InconsistentAnnotationUsage.ISSUE)
-                .run()
-                .expectErrorCount(1)
-                .check(output -> {
-                    assertTrue(output.contains(InconsistentAnnotationUsage.ID));
-                    assertTrue(output.contains(InconsistentAnnotationUsage.DESCRIPTION));
-                });
+    fun showsErrorForNotNull() {
+        TestLintTask.lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(JavaTestFile.create(mNotNullUsage))
+            .issues(InconsistentAnnotationUsage.ISSUE)
+            .run()
+            .expectErrorCount(1)
+            .check({ output: String ->
+                Assert.assertTrue(output.contains(InconsistentAnnotationUsage.ID))
+                Assert.assertTrue(output.contains(InconsistentAnnotationUsage.DESCRIPTION))
+            })
     }
 
     @Test
-    public void showsErrorForNullable() {
-        lint()
-                .allowMissingSdk()
-                .allowCompilationErrors()
-                .files(create(mNullable))
-                .issues(InconsistentAnnotationUsage.ISSUE)
-                .run()
-                .expectErrorCount(1)
-                .check(output -> {
-                    assertTrue(output.contains(InconsistentAnnotationUsage.ID));
-                    assertTrue(output.contains(InconsistentAnnotationUsage.DESCRIPTION));
-                });
+    fun showsErrorForNullable() {
+        TestLintTask.lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(JavaTestFile.create(mNullable))
+            .issues(InconsistentAnnotationUsage.ISSUE)
+            .run()
+            .expectErrorCount(1)
+            .check({ output: String ->
+                Assert.assertTrue(output.contains(InconsistentAnnotationUsage.ID))
+                Assert.assertTrue(output.contains(InconsistentAnnotationUsage.DESCRIPTION))
+            })
     }
 
     @Test
-    public void noErrorForContract() {
-        lint()
-                .allowMissingSdk()
-                .allowCompilationErrors()
-                .files(create(mContract))
-                .issues(InconsistentAnnotationUsage.ISSUE)
-                .run()
-                .expectErrorCount(0);
+    fun noErrorForContract() {
+        TestLintTask.lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(JavaTestFile.create(mContract))
+            .issues(InconsistentAnnotationUsage.ISSUE)
+            .run()
+            .expectErrorCount(0)
     }
 }
