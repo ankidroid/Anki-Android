@@ -114,15 +114,13 @@ open class CardBrowser :
     DeckSelectionListener,
     TagsDialogListener,
     ChangeManager.Subscriber {
-    @KotlinCleanup("using ?. and let keyword would be good here")
     override fun onDeckSelected(deck: SelectableDeck?) {
-        if (deck == null) {
-            return
+        deck?.let {
+            val deckId = deck.deckId
+            mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
+            mDeckSpinnerSelection!!.selectDeckById(deckId, true)
+            selectDeckAndSave(deckId)
         }
-        val deckId = deck.deckId
-        mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
-        mDeckSpinnerSelection!!.selectDeckById(deckId, true)
-        selectDeckAndSave(deckId)
     }
 
     enum class Column {
@@ -1004,15 +1002,15 @@ open class CardBrowser :
         filterByFlag()
     }
 
-    @KotlinCleanup("cleanup the when")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true
+        when {
+            drawerToggle.onOptionsItemSelected(item) -> return true
+
+            // dismiss undo-snackbar if shown to avoid race condition
+            // (when another operation will be performed on the model, it will undo the latest operation)
+            mUndoSnackbar != null && mUndoSnackbar!!.isShown -> mUndoSnackbar!!.dismiss()
         }
 
-        // dismiss undo-snackbar if shown to avoid race condition
-        // (when another operation will be performed on the model, it will undo the latest operation)
-        if (mUndoSnackbar != null && mUndoSnackbar!!.isShown) mUndoSnackbar!!.dismiss()
         when (item.itemId) {
             android.R.id.home -> {
                 endMultiSelectMode()
@@ -1239,7 +1237,7 @@ open class CardBrowser :
         } else {
             isTruncated = true
             mCardsAdapter!!.notifyDataSetChanged()
-            truncate.setChecked(true)
+            truncate.isChecked = true
         }
     }
 
@@ -2156,9 +2154,8 @@ open class CardBrowser :
         }
 
         init {
-            @KotlinCleanup("isNotEmpty")
-            if ("" != customFont) {
-                mCustomTypeface = getTypeface(context!!, customFont!!)
+            if (customFont!!.isNotEmpty()) {
+                mCustomTypeface = getTypeface(context!!, customFont)
             }
             mInflater = LayoutInflater.from(context)
         }
