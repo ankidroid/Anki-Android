@@ -135,6 +135,11 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>
         <item name="popupBackgroundColor">@android:color/white</item>
         <item name="iconColor">?android:attr/textColor</item>
+        <!-- StatusBar -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <!-- Navbar -->
+        <item name="android:navigationBarColor">@color/semi_transparent_black</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="editTextDisabled">@color/material_grey_500</item>
 
         <!-- Filter Bottom sheet -->
