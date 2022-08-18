@@ -13,18 +13,17 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils.libanki
 
-package com.ichi2.testutils.libanki;
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
+import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.Is.*
 
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Consts;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
-
-public class CollectionAssert {
-    public static void assertSuspended(Collection collection, long cardId) {
-        assertThat("Card should be suspended", collection.getCard(cardId).getQueue(), is(Consts.QUEUE_TYPE_SUSPENDED));
+@KotlinCleanup("fix 'is'")
+object CollectionAssert {
+    fun assertSuspended(collection: Collection, cardId: Long) {
+        assertThat("Card should be suspended", collection.getCard(cardId).queue, `is`(Consts.QUEUE_TYPE_SUSPENDED))
     }
 }
