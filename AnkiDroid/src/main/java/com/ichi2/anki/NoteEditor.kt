@@ -169,8 +169,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     private var mToggleStickyText: HashMap<Int, String?>? = HashMap()
     private val mOnboarding = Onboarding.NoteEditor(this)
-    private fun saveNoteHandler(): SaveNoteHandler {
-        return SaveNoteHandler(this)
+    private fun addNoteHandler(): AddNoteHandler {
+        return AddNoteHandler(this)
     }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
@@ -189,14 +189,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         SAME_NUMBER, INCREMENT_NUMBER
     }
 
-    private class SaveNoteHandler(noteEditor: NoteEditor) :
+    private class AddNoteHandler(noteEditor: NoteEditor) :
         TaskListenerWithContext<NoteEditor, Void, Int?>(noteEditor) {
-        override fun actualOnPreExecute(context: NoteEditor) = context.preSaveNote()
+        override fun actualOnPreExecute(context: NoteEditor) = context.preAddNote()
         /**
          * @param result noOfSavedCards, null if any exception occurred internally
          */
         @KotlinCleanup("return early and simplify if possible")
-        override fun actualOnPostExecute(context: NoteEditor, result: Int?) = context.onNoteSaved(result)
+        override fun actualOnPostExecute(context: NoteEditor, result: Int?) = context.onNoteAdded(result)
     }
 
     private fun displayErrorSavingNote() {
@@ -658,18 +658,18 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // SAVE NOTE METHODS
     // ----------------------------------------------------------------------------
 
-    private fun preSaveNote() {
+    private fun preAddNote() {
         val res = context.resources
         context.progressDialog =
             StyledProgressDialog.show(context, null, res.getString(R.string.saving_facts), false)
     }
 
-    private fun onNoteSaved(result: Int?) {
+    private fun onNoteAdded(noOfAddedCards: Int?) {
         var closeEditorAfterSave = false
         var closeIntent: Intent? = null
-        if (result != null) {
+        if (noOfAddedCards != null) {
             // if task executed without any exception
-            if (result > 0) {
+            if (noOfAddedCards > 0) {
                 context.changed = true
                 context.sourceText = null
                 context.refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
@@ -677,8 +677,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     context,
                     context.resources.getQuantityString(
                         R.plurals.factadder_cards_added,
-                        result,
-                        result
+                        noOfAddedCards,
+                        noOfAddedCards
                     ),
                     true
                 )
@@ -690,7 +690,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 context.changed = true
                 closeEditorAfterSave = true
             } else if (context.caller == CALLER_NOTEEDITOR_INTENT_ADD) {
-                if (result > 0) {
+                if (noOfAddedCards > 0) {
                     context.changed = true
                 }
                 closeEditorAfterSave = true
@@ -752,7 +752,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             col.models.current()!!.put("tags", tags)
             col.models.setChanged()
             mReloadRequired = true
-            TaskManager.launchCollectionTask(AddNote(mEditorNote!!), saveNoteHandler())
+            TaskManager.launchCollectionTask(AddNote(mEditorNote!!), addNoteHandler())
             updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
