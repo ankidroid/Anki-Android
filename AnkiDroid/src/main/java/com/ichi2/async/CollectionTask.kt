@@ -162,21 +162,16 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     @KotlinCleanup("non-null return")
-    class AddNote(private val note: Note) : TaskDelegate<Int, Boolean?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): Boolean {
+    class AddNote(private val note: Note) : TaskDelegate<Void, Int?>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>) = try {
             Timber.d("doInBackgroundAddNote")
-            try {
-                val db = col.db
-                db.executeInTransaction {
-                    val value = col.addNote(note, Models.AllowEmpty.ONLY_CLOZE)
-                    collectionTask.doProgress(value)
-                }
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundAddNote")
-                return false
+            col.db.executeInTransaction {
+                col.addNote(note, Models.AllowEmpty.ONLY_CLOZE)
             }
-            return true
+        } catch (e: RuntimeException) {
+            Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note")
+            CrashReportService.sendExceptionReport(e, "doInBackgroundAddNote")
+            null
         }
     }
 
