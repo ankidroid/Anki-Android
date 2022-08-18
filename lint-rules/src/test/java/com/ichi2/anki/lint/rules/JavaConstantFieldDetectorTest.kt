@@ -13,21 +13,21 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.anki.lint.rules
 
-package com.ichi2.anki.lint.rules;
+import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile
+import com.android.tools.lint.checks.infrastructure.TestLintTask.*
+import com.ichi2.anki.lint.utils.KotlinCleanup
+import org.hamcrest.MatcherAssert.*
+import org.hamcrest.Matchers.*
+import org.intellij.lang.annotations.Language
+import org.junit.Test
 
-import org.intellij.lang.annotations.Language;
-import org.junit.Test;
-
-import static com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create;
-import static com.android.tools.lint.checks.infrastructure.TestLintTask.lint;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-
-public class JavaConstantFieldDetectorTest {
-
-    @Language("JAVA")
-    private static final String BADLY_NAMED_VARIABLE = "public class Xx { " +
+@KotlinCleanup("IDE Lint")
+class JavaConstantFieldDetectorTest {
+    companion object {
+        @Language("JAVA")
+        private val BADLY_NAMED_VARIABLE = "public class Xx { " +
             "/**" +
             "*/" +
             "public static final int withCommentShows;" +
@@ -35,25 +35,25 @@ public class JavaConstantFieldDetectorTest {
             "public static final int mUsingMPrefix;" +
             "public static final int startsWithS;" +
             "public static final int maWithMStart;" +
-            "}";
-
-    @Test
-    public void showsErrorForBadlyNamedConstant() {
-        lint()
-                .allowMissingSdk()
-                .allowCompilationErrors()
-                .files(create(BADLY_NAMED_VARIABLE))
-                .issues(ConstantJavaFieldDetector.ISSUE)
-                .run()
-                .expectErrorCount(5)
-                .check(output -> {
-                    // check the suggestion is accurate
-                    assertThat(output, containsString("'WITH_COMMENT_SHOWS'"));
-                    assertThat(output, containsString("'THIS_HAS_PREFIX'"));
-                    assertThat(output, containsString("'USING_M_PREFIX'"));
-                    assertThat("s prefix is not stripped if in word", output, containsString("'STARTS_WITH_S'"));
-                    assertThat("m prefix is not stripped if in word", output, containsString("'MA_WITH_M_START'"));
-                });
+            "}"
     }
 
+    @Test
+    fun showsErrorForBadlyNamedConstant() {
+        lint()
+            .allowMissingSdk()
+            .allowCompilationErrors()
+            .files(JavaTestFile.create(BADLY_NAMED_VARIABLE))
+            .issues(ConstantJavaFieldDetector.ISSUE)
+            .run()
+            .expectErrorCount(5)
+            .check({ output: String ->
+                // check the suggestion is accurate
+                assertThat(output, containsString("'WITH_COMMENT_SHOWS'"))
+                assertThat(output, containsString("'THIS_HAS_PREFIX'"))
+                assertThat(output, containsString("'USING_M_PREFIX'"))
+                assertThat("s prefix is not stripped if in word", output, containsString("'STARTS_WITH_S'"))
+                assertThat("m prefix is not stripped if in word", output, containsString("'MA_WITH_M_START'"))
+            })
+    }
 }
