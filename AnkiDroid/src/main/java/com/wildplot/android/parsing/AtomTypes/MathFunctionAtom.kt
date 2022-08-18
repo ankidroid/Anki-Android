@@ -13,150 +13,100 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.parsing.AtomTypes;
+@file:Suppress("PackageName") // AtomTypes: copied from wildplot library
+package com.wildplot.android.parsing.AtomTypes
 
-import android.annotation.SuppressLint;
-
-import com.wildplot.android.parsing.Expression;
-import com.wildplot.android.parsing.ExpressionFormatException;
-import com.wildplot.android.parsing.TopLevelParser;
-import com.wildplot.android.parsing.TreeElement;
-
+import android.annotation.SuppressLint
+import com.ichi2.utils.KotlinCleanup
+import com.wildplot.android.parsing.AtomTypes.MathFunctionAtom.MathType
+import com.wildplot.android.parsing.Expression
+import com.wildplot.android.parsing.ExpressionFormatException
+import com.wildplot.android.parsing.TopLevelParser
+import com.wildplot.android.parsing.TreeElement
+import kotlin.Throws
 
 @SuppressLint("NonPublicNonStaticFieldName")
-public class MathFunctionAtom implements TreeElement {
-
-    private final TopLevelParser parser;
-
-    public enum MathType {SIN, COS, TAN, SQRT, ACOS, ASIN, ATAN, SINH, COSH, LOG, LN, INVALID}
-
-    private MathType mathType = MathType.INVALID;
-    private Expression expression;
-    private boolean hasSavedValue = false;
-    private double savedValue = 0;
-
-
-    public MathFunctionAtom(String funcString, TopLevelParser parser) {
-        this.parser = parser;
-        boolean isValid = init(funcString);
-        if (!isValid) {
-            this.mathType = MathType.INVALID;
-        }
-        if (isValid && !isVariable()) {
-            savedValue = getValue();
-            hasSavedValue = true;
-        }
+@KotlinCleanup("IDE Lint")
+class MathFunctionAtom(funcString: String, private val parser: TopLevelParser) : TreeElement {
+    enum class MathType {
+        SIN, COS, TAN, SQRT, ACOS, ASIN, ATAN, SINH, COSH, LOG, LN, INVALID
     }
 
-
-    private boolean init(String funcString) {
-        int leftBracket = funcString.indexOf("(");
-        int rightBracket = funcString.lastIndexOf(")");
+    var mathType = MathType.INVALID
+        private set
+    private var expression: Expression? = null
+    private var hasSavedValue = false
+    private var savedValue = 0.0
+    private fun init(funcString: String): Boolean {
+        val leftBracket = funcString.indexOf("(")
+        val rightBracket = funcString.lastIndexOf(")")
         if (leftBracket > 1 && rightBracket > leftBracket + 1) {
-            String funcName = funcString.substring(0, leftBracket);
-            String expressionString = funcString.substring(leftBracket + 1, rightBracket);
-            Expression expressionInBrackets = new Expression(expressionString, parser);
-            boolean isValidExpression = expressionInBrackets.getExpressionType() != Expression.ExpressionType.INVALID;
+            val funcName = funcString.substring(0, leftBracket)
+            val expressionString = funcString.substring(leftBracket + 1, rightBracket)
+            val expressionInBrackets = Expression(expressionString, parser)
+            val isValidExpression =
+                expressionInBrackets.expressionType != Expression.ExpressionType.INVALID
             if (isValidExpression) {
-                switch (funcName) {
-                    case "sin":
-                        this.mathType = MathType.SIN;
-                        break;
-                    case "cos":
-                        this.mathType = MathType.COS;
-                        break;
-                    case "tan":
-                        this.mathType = MathType.TAN;
-                        break;
-                    case "sqrt":
-                        this.mathType = MathType.SQRT;
-                        break;
-                    case "acos":
-                        this.mathType = MathType.ACOS;
-                        break;
-                    case "asin":
-                        this.mathType = MathType.ASIN;
-                        break;
-                    case "atan":
-                        this.mathType = MathType.ATAN;
-                        break;
-                    case "sinh":
-                        this.mathType = MathType.SINH;
-                        break;
-                    case "cosh":
-                        this.mathType = MathType.COSH;
-                        break;
-                    case "log":
-                    case "lg":
-                        this.mathType = MathType.LOG;
-                        break;
-                    case "ln":
-                        this.mathType = MathType.LN;
-                        break;
-                    default:
-                        this.mathType = MathType.INVALID;
-                        return false;
+                when (funcName) {
+                    "sin" -> mathType = MathType.SIN
+                    "cos" -> mathType = MathType.COS
+                    "tan" -> mathType = MathType.TAN
+                    "sqrt" -> mathType = MathType.SQRT
+                    "acos" -> mathType = MathType.ACOS
+                    "asin" -> mathType = MathType.ASIN
+                    "atan" -> mathType = MathType.ATAN
+                    "sinh" -> mathType = MathType.SINH
+                    "cosh" -> mathType = MathType.COSH
+                    "log", "lg" -> mathType = MathType.LOG
+                    "ln" -> mathType = MathType.LN
+                    else -> {
+                        mathType = MathType.INVALID
+                        return false
+                    }
                 }
-                this.expression = expressionInBrackets;
-                return true;
-
-
+                expression = expressionInBrackets
+                return true
             }
-
         }
-
-        return false;
+        return false
     }
 
-
-    @Override
-    public double getValue() throws ExpressionFormatException {
-        if (hasSavedValue) {
-            return savedValue;
-        }
-
-        switch (mathType) {
-            case SIN:
-                return Math.sin(expression.getValue());
-            case COS:
-                return Math.cos(expression.getValue());
-            case TAN:
-                return Math.tan(expression.getValue());
-            case SQRT:
-                return Math.sqrt(expression.getValue());
-            case ACOS:
-                return Math.acos(expression.getValue());
-            case ASIN:
-                return Math.asin(expression.getValue());
-            case ATAN:
-                return Math.atan(expression.getValue());
-            case SINH:
-                return Math.sinh(expression.getValue());
-            case COSH:
-                return Math.cosh(expression.getValue());
-            case LOG:
-                return Math.log10(expression.getValue());
-            case LN:
-                return Math.log(expression.getValue());
-            case INVALID:
-            default:
-                throw new ExpressionFormatException("Number is Invalid, cannot parse");
+    @Throws(ExpressionFormatException::class)
+    override fun getValue(): Double {
+        return if (hasSavedValue) {
+            savedValue
+        } else when (mathType) {
+            MathType.SIN -> Math.sin(expression!!.value)
+            MathType.COS -> Math.cos(expression!!.value)
+            MathType.TAN -> Math.tan(expression!!.value)
+            MathType.SQRT -> Math.sqrt(expression!!.value)
+            MathType.ACOS -> Math.acos(expression!!.value)
+            MathType.ASIN -> Math.asin(expression!!.value)
+            MathType.ATAN -> Math.atan(expression!!.value)
+            MathType.SINH -> Math.sinh(expression!!.value)
+            MathType.COSH -> Math.cosh(expression!!.value)
+            MathType.LOG -> Math.log10(expression!!.value)
+            MathType.LN -> Math.log(expression!!.value)
+            MathType.INVALID -> throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
     }
 
-
-    @Override
-    public boolean isVariable() {
-        if (mathType != MathType.INVALID) {
-
-            return expression.isVariable();
+    override fun isVariable(): Boolean {
+        return if (mathType != MathType.INVALID) {
+            expression!!.isVariable
         } else {
-            throw new ExpressionFormatException("Number is Invalid, cannot parse");
+            throw ExpressionFormatException("Number is Invalid, cannot parse")
         }
     }
 
-
-    public MathType getMathType() {
-        return mathType;
+    init {
+        val isValid = init(funcString)
+        if (!isValid) {
+            mathType = MathType.INVALID
+        }
+        if (isValid && !isVariable) {
+            savedValue = value
+            hasSavedValue = true
+        }
     }
 }
