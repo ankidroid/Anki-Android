@@ -1066,7 +1066,8 @@ class CardContentProvider : ContentProvider() {
                             allFlds[idx] = flds.getJSONObject(idx).optString("name", "")
                             idx++
                         }
-                        rb.add(Utils.joinFields(allFlds))
+                        @KotlinCleanup("remove requireNoNulls")
+                        rb.add(Utils.joinFields(allFlds.requireNoNulls()))
                     }
                     FlashCardsContract.Model.NUM_CARDS -> rb.add(jsonObject!!.getJSONArray("tmpls").length())
                     FlashCardsContract.Model.CSS -> rb.add(jsonObject!!.getString("css"))

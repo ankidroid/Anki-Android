@@ -1560,7 +1560,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun setEditFieldTexts(contents: String?) {
-        var fields: Array<String?>? = null
+        var fields: Array<String>? = null
         val len: Int
         if (contents == null) {
             len = 0
@@ -1595,13 +1595,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mEditorNote!!.values()[0] = oldValue
     }
 
+    @KotlinCleanup("remove 'requireNoNulls'")
     private val fieldsText: String
         get() {
             val fields = arrayOfNulls<String>(mEditFields!!.size)
             for (i in mEditFields!!.indices) {
                 fields[i] = getCurrentFieldText(i)
             }
-            return Utils.joinFields(fields)
+            return Utils.joinFields(fields.requireNoNulls())
         }
 
     /** Returns the value of the field at the given index  */

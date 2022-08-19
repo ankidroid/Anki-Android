@@ -712,7 +712,7 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
     /**
      * Intervals ***********************************************************************************************
      */
-    fun calculateIntervals(context: Context?, type: AxisType): Boolean {
+    fun calculateIntervals(context: Context, type: AxisType): Boolean {
         mDynamicAxis = true
         mType = type
         var all: Double
