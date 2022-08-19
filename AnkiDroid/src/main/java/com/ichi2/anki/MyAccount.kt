@@ -27,11 +27,9 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.edit
-import com.afollestad.materialdialogs.MaterialDialog
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.UIUtils.showSimpleSnackbar
-import com.ichi2.anki.UIUtils.showSnackbar
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.web.HostNumFactory.getInstance
 import com.ichi2.async.Connection
 import com.ichi2.libanki.sync.CustomSyncServerUrlException
@@ -49,7 +47,8 @@ class MyAccount : AnkiActivity() {
     private lateinit var mUsername: EditText
     private lateinit var mPassword: TextInputEditField
     private lateinit var mUsernameLoggedIn: TextView
-    private var mProgressDialog: MaterialDialog? = null
+    @Suppress("Deprecation")
+    private var mProgressDialog: android.app.ProgressDialog? = null
     var toolbar: Toolbar? = null
     private lateinit var mPasswordLayout: TextInputLayout
     private lateinit var mAnkidroidLogo: ImageView
@@ -233,13 +232,14 @@ class MyAccount : AnkiActivity() {
             if (loginMessage.isNullOrEmpty()) {
                 if (messageResource == R.string.youre_offline && !Connection.allowLoginSyncOnNoConnection) {
                     // #6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
-                    // val root = this.findViewById<View>(R.id.root_layout)
-                    showSnackbar(this, messageResource, false, R.string.sync_even_if_offline, {
-                        Connection.allowLoginSyncOnNoConnection = true
-                        login()
-                    }, null)
+                    showSnackbar(messageResource) {
+                        setAction(R.string.sync_even_if_offline) {
+                            Connection.allowLoginSyncOnNoConnection = true
+                            login()
+                        }
+                    }
                 } else {
-                    showSimpleSnackbar(this, messageResource, false)
+                    showSnackbar(messageResource)
                 }
             } else {
                 val res = AnkiDroidApp.getAppResources()
@@ -285,14 +285,14 @@ class MyAccount : AnkiActivity() {
             } else {
                 Timber.e("Login failed, error code %d", data.returnType)
                 if (data.returnType == 403) {
-                    showSimpleSnackbar(this@MyAccount, R.string.invalid_username_password, true)
+                    showSnackbar(R.string.invalid_username_password)
                 } else {
                     val message = resources.getString(R.string.connection_error_message)
                     val result = data.result
                     if (!result.isNullOrEmpty() && result[0] is Exception) {
                         showSimpleMessageDialog(message, getHumanReadableLoginErrorMessage(result[0] as Exception), false)
                     } else {
-                        showSimpleSnackbar(this@MyAccount, message, false)
+                        showSnackbar(message)
                     }
                 }
             }

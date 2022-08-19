@@ -60,13 +60,13 @@ class RemoteMediaServer(
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
     fun begin(): JSONObject {
         return try {
-            mPostVars = HashMapInit(2)
-            mPostVars["k"] = mHKey
-            mPostVars["v"] = String.format(Locale.US, "ankidroid,%s,%s", pkgVersionName, Utils.platDesc())
-            val resp = super.req("begin", getInputStream(Utils.jsonToString(JSONObject())))
+            postVars = HashMapInit(2)
+            postVars["k"] = hKey
+            postVars["v"] = String.format(Locale.US, "ankidroid,%s,%s", pkgVersionName, Utils.platDesc())
+            val resp = req("begin", getInputStream(Utils.jsonToString(JSONObject())))
             val jresp = JSONObject(resp.body!!.string())
             val ret = dataOnly(jresp, JSONObject::class.java)
-            mSKey = ret.getString("sk")
+            checksumKey = ret.getString("sk")
             ret
         } catch (e: IOException) {
             throw RuntimeException(e)
@@ -77,9 +77,9 @@ class RemoteMediaServer(
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
     fun mediaChanges(lastUsn: Int): JSONArray {
         return try {
-            mPostVars = HashMapInit(1)
-            mPostVars["sk"] = mSKey
-            val resp = super.req(
+            postVars = HashMapInit(1)
+            postVars["sk"] = checksumKey
+            val resp = req(
                 "mediaChanges",
                 getInputStream(Utils.jsonToString(JSONObject().put("lastUsn", lastUsn)))
             )
@@ -99,7 +99,7 @@ class RemoteMediaServer(
     fun downloadFiles(top: List<String?>?): ZipFile {
         var resp: Response? = null
         return try {
-            resp = super.req(
+            resp = req(
                 "downloadFiles",
                 getInputStream(Utils.jsonToString(JSONObject().put("files", JSONArray(top))))
             )
@@ -136,7 +136,7 @@ class RemoteMediaServer(
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
     fun mediaSanity(lcnt: Int): String {
         return try {
-            val resp = super.req(
+            val resp = req(
                 "mediaSanity",
                 getInputStream(Utils.jsonToString(JSONObject().put("local", lcnt)))
             )

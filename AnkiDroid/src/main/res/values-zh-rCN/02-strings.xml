@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">打开侧栏</string>
     <string name="drawer_close">关闭侧栏</string>
@@ -101,6 +99,9 @@
         <item>已创建</item>
         <item>已修改笔记</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">应用</string>
+    <string name="filter_by_flags">标志</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>
     <string name="custom_study_increase_review_limit">修改今天的复习卡片数量限制</string>
@@ -256,8 +257,6 @@
     <string name="apk_share_error">共享 apkg 文件时出错</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">此文件需要更新版本的 Anki。</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">加载 “%s” 失败。</string>
     <string name="activity_start_failed">系统中没有安装可以执行此操作的应用程序。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相机图像可能偏大。您可能希望在媒体目录中压缩并调整图像大小]]></string>
     <string name="no_browser_notification">未找到浏览器，请通过 PC 或移动设备访问网页： </string>
@@ -314,7 +313,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">加载“%s”失败</string>
     <string name="card_viewer_media_relative_protocol">卡片内容错误：需要更新媒体</string>
-    <string name="cannot_load_http_resource">不再支持加载 http 资源</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">加载牌组“%s”失败</string>
     <string name="search_decks">搜索牌组</string>

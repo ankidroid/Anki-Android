@@ -23,6 +23,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.customListAdapter
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.R
 import java.util.*
@@ -59,11 +60,10 @@ class InsertFieldDialog : DialogFragment() {
                 return mFieldList.size
             }
         }
-        mDialog = MaterialDialog.Builder(requireContext())
+        mDialog = MaterialDialog(requireContext())
             .title(R.string.card_template_editor_select_field)
-            .negativeText(R.string.dialog_cancel)
-            .adapter(adapter, null)
-            .build()
+            .negativeButton(R.string.dialog_cancel)
+            .customListAdapter(adapter)
         return mDialog
     }
 

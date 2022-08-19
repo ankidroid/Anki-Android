@@ -59,7 +59,7 @@ class RustConfigBackend(private val backend: Backend) {
     }
 
     fun set(key: str, value: Any?) {
-        backend.setConfigJson(key, to_json_bytes(value), true)
+        backend.setConfigJson(key, to_json_bytes(value), false)
     }
 
     fun remove(key: str) {

@@ -16,12 +16,6 @@
 package com.ichi2.utils
 
 object CollectionUtils {
-    /** Throws IndexOutOfBoundsException on empty list */
-    @JvmStatic
-    @KotlinCleanup("Replace with List<T>.last() Kotlin extension")
-    fun <T> getLastListElement(l: List<T>): T {
-        return l[l.size - 1]
-    }
 
     /**
      * @param c A collection in which to add elements of it

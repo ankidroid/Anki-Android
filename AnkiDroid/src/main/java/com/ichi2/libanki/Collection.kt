@@ -40,13 +40,13 @@ import com.ichi2.async.CollectionTask.PartialSearch
 import com.ichi2.async.ProgressSender
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException
 import com.ichi2.libanki.exception.NoSuchDeckException
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.libanki.hooks.ChessFilter
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.libanki.sched.SchedV3
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
@@ -54,6 +54,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
@@ -62,6 +63,8 @@ import java.util.*
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.function.Consumer
 import java.util.regex.Pattern
+import kotlin.math.max
+import kotlin.random.Random
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -99,8 +102,18 @@ open class Collection(
 
     open val newBackend: CollectionV16
         get() = throw Exception("invalid call to newBackend on old backend")
+
     open val newMedia: BackendMedia
         get() = throw Exception("invalid call to newMedia on old backend")
+
+    open val newTags: TagsV16
+        get() = throw Exception("invalid call to newTags on old backend")
+
+    open val newModels: ModelsV16
+        get() = throw Exception("invalid call to newModels on old backend")
+
+    open val newDecks: DecksV16
+        get() = throw Exception("invalid call to newDecks on old backend")
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun debugEnsureNoOpenPointers() {
@@ -135,7 +148,7 @@ open class Collection(
         "move accessor methods here, maybe reconsider return type." +
             "See variable: conf"
     )
-    private var _config: ConfigManager? = null
+    protected var _config: ConfigManager? = null
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
     lateinit var sched: AbstractSched
@@ -147,7 +160,8 @@ open class Collection(
     // BEGIN: SQL table columns
     open var crt: Long = 0
     open var mod: Long = 0
-    var scm: Long = 0
+    open var scm: Long = 0
+    @RustCleanup("remove")
     var dirty: Boolean = false
     private var mUsn = 0
     private var mLs: Long = 0
@@ -237,18 +251,18 @@ open class Collection(
     }
 
     // Note: Additional members in the class duplicate this
-    private fun _loadScheduler() {
+    fun _loadScheduler() {
         val ver = schedVer()
         if (ver == 1) {
             sched = Sched(this)
         } else if (ver == 2) {
-            sched = SchedV2(this)
+            if (!BackendFactory.defaultLegacySchema && newBackend.v3Enabled) {
+                sched = SchedV3(this.newBackend)
+            } else {
+                sched = SchedV2(this)
+            }
             if (!server) {
-                try {
-                    set_config("localOffset", sched._current_timezone_offset())
-                } catch (e: BackendNotSupportedException) {
-                    throw e.alreadyUsingRustBackend()
-                }
+                set_config("localOffset", sched._current_timezone_offset())
             }
         }
     }
@@ -278,7 +292,7 @@ open class Collection(
      * DB-related *************************************************************** ********************************
      */
     @KotlinCleanup("Cleanup: make cursor a val + move cursor and cursor.close() to the try block")
-    fun load() {
+    open fun load() {
         var cursor: Cursor? = null
         var deckConf: String?
         try {
@@ -440,7 +454,7 @@ open class Collection(
             try {
                 val db = db.database
                 if (save) {
-                    this.db.executeInTransaction({ this.save() })
+                    this.db.executeInTransaction { this.save() }
                 } else {
                     DB.safeEndInTransaction(db)
                 }
@@ -479,7 +493,7 @@ open class Collection(
      * is used so that the type does not states that an exception is
      * thrown when in fact it is never thrown.
      */
-    fun modSchemaNoCheck() {
+    open fun modSchemaNoCheck() {
         scm = TimeManager.time.intTimeMS()
         setMod()
     }
@@ -504,12 +518,12 @@ open class Collection(
     }
 
     /** True if schema changed since last sync.  */
-    fun schemaChanged(): Boolean {
+    open fun schemaChanged(): Boolean {
         return scm > mLs
     }
 
     @KotlinCleanup("maybe change to getter")
-    fun usn(): Int {
+    open fun usn(): Int {
         return if (server) {
             mUsn
         } else {
@@ -755,13 +769,13 @@ open class Collection(
         return genCards(Utils.collection2Array(nids), model, task)
     }
 
-    fun genCards(nids: kotlin.collections.Collection<Long?>?, mid: Long): ArrayList<Long>? {
+    fun genCards(nids: kotlin.collections.Collection<Long?>?, mid: NoteTypeId): ArrayList<Long>? {
         return genCards(nids, models.get(mid)!!)
     }
 
     @JvmOverloads
     fun <T> genCards(
-        nid: Long,
+        nid: NoteId,
         model: Model,
         task: T? = null
     ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
@@ -880,7 +894,7 @@ open class Collection(
                     val doHave = have.containsKey(nid) && have[nid]!!.containsKey(tord)
                     if (!doHave) {
                         // check deck is not a cram deck
-                        var ndid: Long
+                        var ndid: DeckId
                         try {
                             ndid = t.optLong("did", 0)
                             if (ndid != 0L) {
@@ -928,7 +942,7 @@ open class Collection(
     }
 
     @KotlinCleanup("remove - unused")
-    private fun _newCard(note: Note, template: JSONObject, due: Int, did: Long): Card {
+    private fun _newCard(note: Note, template: JSONObject, due: Int, did: DeckId): Card {
         val flush = true
         return _newCard(note, template, due, did, flush)
     }
@@ -943,7 +957,7 @@ open class Collection(
         note: Note,
         template: JSONObject,
         due: Int,
-        parameterDid: Long,
+        parameterDid: DeckId,
         flush: Boolean
     ): Card {
         val card = Card(this)
@@ -961,7 +975,7 @@ open class Collection(
         note: Note,
         template: JSONObject,
         due: Int,
-        parameterDid: Long,
+        parameterDid: DeckId,
         flush: Boolean
     ): Card {
         val nid = note.id
@@ -996,9 +1010,7 @@ open class Collection(
         return card
     }
 
-    @KotlinCleanup("scope function for random")
-    @KotlinCleanup("use Kotlin's random library instead of Java's")
-    fun _dueForDid(did: Long, due: Int): Int {
+    fun _dueForDid(did: DeckId, due: Int): Int {
         val conf = decks.confForDid(did)
         // in order due?
         return if (conf.getJSONObject("new")
@@ -1008,9 +1020,8 @@ open class Collection(
         } else {
             // random mode; seed with note ts so all cards of this note get
             // the same random number
-            val r = Random()
-            r.setSeed(due.toLong())
-            r.nextInt(Math.max(due, 1000) - 1) + 1
+            val r = Random(due.toLong())
+            r.nextInt(max(due, 1000) - 1) + 1
         }
     }
 
@@ -1148,9 +1159,9 @@ open class Collection(
      * Returns hash of id, question, answer.
      */
     fun _renderQA(
-        cid: Long,
+        cid: CardId,
         model: Model,
-        did: Long,
+        did: DeckId,
         ord: Int,
         tags: String,
         flist: Array<String?>,
@@ -1161,9 +1172,9 @@ open class Collection(
 
     @RustCleanup("#8951 - Remove FrontSide added to the front")
     fun _renderQA(
-        cid: Long,
+        cid: CardId,
         model: Model,
-        did: Long,
+        did: DeckId,
         ord: Int,
         tags: String,
         flist: Array<String?>,
@@ -1189,8 +1200,7 @@ open class Collection(
         val baseName = Decks.basename(fields["Deck"])
         fields["Subdeck"] = baseName
         fields["CardFlag"] = _flagNameFromCardFlags(flags)
-        val template: JSONObject
-        template = if (model.isStd) {
+        val template: JSONObject = if (model.isStd) {
             model.getJSONArray("tmpls").getJSONObject(ord)
         } else {
             model.getJSONArray("tmpls").getJSONObject(0)
@@ -1332,8 +1342,17 @@ open class Collection(
         return Finder(this).findCards(search, order, task)
     }
 
-    /** Return a list of note ids  */
-    fun findNotes(query: String?): List<Long> {
+    /** Return a list of card ids  */
+    @KotlinCleanup("Remove in V16.") // Not in libAnki
+    fun findOneCardByNote(query: String?): List<Long> {
+        return Finder(this).findOneCardByNote(query)
+    }
+
+    /** Return a list of note ids
+     * @param order only used in overridden V16 findNotes() method
+     * */
+    @JvmOverloads
+    open fun findNotes(query: String, order: SortOrder = SortOrder.NoOrdering()): List<Long> {
         return Finder(this).findNotes(query)
     }
 
@@ -1429,17 +1448,17 @@ open class Collection(
         } else null
     }
 
-    fun undoName(res: Resources?): String {
+    open fun undoName(res: Resources): String {
         val type = undoType()
-        return type?.name(res!!) ?: ""
+        return type?.name(res) ?: ""
     }
 
-    fun undoAvailable(): Boolean {
+    open fun undoAvailable(): Boolean {
         Timber.d("undoAvailable() undo size: %s", undo.size)
         return !undo.isEmpty()
     }
 
-    fun undo(): Card? {
+    open fun undo(): Card? {
         val lastUndo: UndoAction = undo.removeLast()
         Timber.d("undo() of type %s", lastUndo.javaClass)
         return lastUndo.undo(this)
@@ -1470,14 +1489,12 @@ open class Collection(
         val f = c.note(reload)
         val m = c.model()
         val t = c.template()
-        val did: Long
-        did = if (c.isInDynamicDeck) {
+        val did: DeckId = if (c.isInDynamicDeck) {
             c.oDid
         } else {
             c.did
         }
-        val qa: HashMap<String, String>
-        qa = if (browser) {
+        val qa: HashMap<String, String> = if (browser) {
             val bqfmt = t.getString("bqfmt")
             val bafmt = t.getString("bafmt")
             _renderQA(
@@ -1498,8 +1515,8 @@ open class Collection(
         return TemplateRenderOutput(
             qa["q"]!!,
             qa["a"]!!,
-            null,
-            null,
+            listOf(),
+            listOf(),
             c.model().getString("css")
         )
     }
@@ -1990,17 +2007,17 @@ open class Collection(
     }
 
     @Throws(NoSuchDeckException::class)
-    private fun getDeckOrFail(deckId: Long): Deck {
+    private fun getDeckOrFail(deckId: DeckId): Deck {
         return decks.get(deckId, false) ?: throw NoSuchDeckException(deckId)
     }
 
     @Throws(NoSuchDeckException::class)
-    private fun hasDeckOptions(deckId: Long): Boolean {
+    private fun hasDeckOptions(deckId: DeckId): Boolean {
         return getDeckOrFail(deckId).has("conf")
     }
 
     @Throws(NoSuchDeckException::class)
-    private fun removeDeckOptions(deckId: Long) {
+    private fun removeDeckOptions(deckId: DeckId) {
         getDeckOrFail(deckId).remove("conf")
     }
 
@@ -2539,18 +2556,6 @@ open class Collection(
         } catch (e: Exception) {
             throw UnknownDatabaseVersionException(e)
         }
-    }
-
-    // This duplicates _loadScheduler (but returns the value and sets the report limit).
-    fun createScheduler(reportLimit: Int): AbstractSched? {
-        val ver = schedVer()
-        if (ver == 1) {
-            sched = Sched(this)
-        } else if (ver == 2) {
-            sched = SchedV2(this)
-        }
-        sched.setReportLimit(reportLimit)
-        return sched
     }
 
     class CheckDatabaseResult(private val oldSize: Long) {

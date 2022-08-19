@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 
@@ -52,13 +51,15 @@ class ConfirmationDialog : DialogFragment() {
         super.onCreate(savedInstanceState)
         val res = requireActivity().resources
         val title = requireArguments().getString("title")
-        return MaterialDialog.Builder(requireActivity())
-            .title((if ("" == title) res.getString(R.string.app_name) else title)!!)
-            .content(requireArguments().getString("message")!!)
-            .positiveText(R.string.dialog_ok)
-            .negativeText(R.string.dialog_cancel)
-            .onPositive { _: MaterialDialog?, _: DialogAction? -> mConfirm.run() }
-            .onNegative { _: MaterialDialog?, _: DialogAction? -> mCancel.run() }
-            .show()
+        return MaterialDialog(requireActivity()).show {
+            title(text = (if ("" == title) res.getString(R.string.app_name) else title)!!)
+            message(text = requireArguments().getString("message")!!)
+            positiveButton(R.string.dialog_ok) {
+                mConfirm.run()
+            }
+            negativeButton(R.string.dialog_cancel) {
+                mCancel.run()
+            }
+        }
     }
 }

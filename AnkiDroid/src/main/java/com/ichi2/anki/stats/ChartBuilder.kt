@@ -18,6 +18,7 @@ package com.ichi2.anki.stats
 import android.R
 import android.graphics.Paint
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
@@ -28,7 +29,7 @@ import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
 import timber.log.Timber
 import kotlin.math.*
 
-class ChartBuilder(private val chartView: ChartView, private val collectionData: Collection, private val deckId: Long, private val chartType: ChartType) {
+class ChartBuilder(private val chartView: ChartView, private val collectionData: Collection, private val deckId: DeckId, private val chartType: ChartType) {
     private var mMaxCards = 0
     private var mBackwards = false
     private lateinit var mValueLabels: IntArray
@@ -80,7 +81,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             return null
         }
         val rect = RectangleWrap(width, height)
-        val textSize = (AnkiStatsTaskHandler.getInstance(collectionData)?.standardTextSize ?: 10f) * 0.85f
+        val textSize = (AnkiStatsTaskHandler.getInstance(collectionData).standardTextSize) * 0.85f
         paint.textSize = textSize
         val fontHeight = paint.textSize
         val desiredPixelDistanceBetweenTicks = (paint.measureText("100000") * 2.6f).roundToInt()

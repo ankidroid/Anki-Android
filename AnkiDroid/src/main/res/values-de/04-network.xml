@@ -116,7 +116,7 @@
     <string name="sync_sanity_remote">Remote</string>
     <string name="force_full_sync_title">Vollsynchronisation erzwingen</string>
     <string name="force_full_sync_summary">Bei der nächsten Synchronisierung Änderungen in eine Richtung erzwingen</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Volle Synchronisation erzwingen</string>
     <string name="full_sync_confirmation">Diese Änderung erfordert das Hochladen der gesamten Datenbank beim nächsten Synchronisieren Ihrer Sammlung. Lernfortschritte und andere noch nicht synchronisierte Änderungen auf anderen Geräten werden dabei verloren gehen. Fortfahren?</string>
     <string name="full_sync_confirmation_upgrade">Wegen eines Fehlers in einer früheren Version von AnkiDroid sollten Sie eine Vollsynchronisation erzwingen.</string>
     <string name="sync_error_407_proxy_required">Proxy-Authentifizierung erforderlich.</string>

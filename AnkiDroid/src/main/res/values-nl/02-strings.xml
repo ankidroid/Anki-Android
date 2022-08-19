@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Zijmenu openen</string>
     <string name="drawer_close">Zijmenu sluiten</string>
@@ -101,6 +99,9 @@
         <item>Gemaakt</item>
         <item>Memo gewijzigd</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Nieuwe kaartenlimiet voor vandaag wijzigen</string>
     <string name="custom_study_increase_review_limit">Limiet te overhoren kaarten voor vandaag wijzigen</string>
@@ -267,8 +268,6 @@
     <string name="apk_share_error">Fout met het delen van de apkg bestand</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Dit bestand vereist een nieuwere versie van Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Laden \'%s\' mislukt.</string>
     <string name="activity_start_failed">Het systeem heeft geen app geïnstalleerd die deze actie kan uitvoeren.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera-afbeeldingen kunnen groot zijn. Het kan zijn dat u afbeeldingen wilt comprimeren & het formaat wilt wijzigen in de mediamap.]]></string>
     <string name="no_browser_notification">Geen browser gevonden, bezoek de webpagina alstublieft via PC of mobiel:</string>
@@ -328,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Fout met de kaartinhoud: Laden van ‘%s ’ is mislukt</string>
     <string name="card_viewer_media_relative_protocol">Fout met de kaartinhoud: Media-update vereist</string>
-    <string name="cannot_load_http_resource">Het laden van http bronnen wordt niet langer ondersteund</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Laden van set ‘%s ’ mislukt</string>
     <string name="search_decks">Sets doorzoeken</string>

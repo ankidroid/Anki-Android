@@ -50,7 +50,6 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContentResolverCompat
 import androidx.core.content.FileProvider
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.canhub.cropper.*
 import com.ichi2.anki.AnkiDroidApp
@@ -656,22 +655,21 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     @KotlinCleanup("content non-null")
-    fun showCropDialog(content: String?, negativeCallBack: MaterialDialog.SingleButtonCallback?) {
+    fun showCropDialog(content: String?, negativeCallback: (() -> Unit)?) {
         if (!mViewModel.isValid) {
             Timber.w("showCropDialog called with null URI or Path")
             return
         }
-        val builder = MaterialDialog.Builder(mActivity)
-            .content(content!!)
-            .positiveText(R.string.dialog_ok)
-            .negativeText(R.string.dialog_no)
-            .onPositive { _: MaterialDialog?, _: DialogAction? -> mViewModel = requestCrop(mViewModel) }
+        val dialog = MaterialDialog(mActivity)
+            .message(text = content)
+            .positiveButton(R.string.dialog_ok) {
+                mViewModel = requestCrop(mViewModel)
+            }
+            .negativeButton(R.string.dialog_no) {
+                negativeCallback?.invoke() // Using invoke since negativeCallback is nullable
+            }
 
-        if (negativeCallBack != null) {
-            builder.onNegative(negativeCallBack)
-        }
-
-        builder.build().show()
+        dialog.show()
     }
 
     private fun handleCropResult(result: CropImageView.CropResult) {

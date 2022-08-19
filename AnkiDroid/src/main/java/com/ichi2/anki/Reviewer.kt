@@ -146,11 +146,11 @@ open class Reviewer : AbstractFlashcardViewer() {
     @VisibleForTesting
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
-    protected fun <T : Computation<NextCard<Array<Card>>>> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
-        return nextCardHandler<Computation<NextCard<*>>>().alsoExecuteAfter { result: T ->
+    protected fun <T : Computation<NextCard<Array<Card>>>?> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
+        return nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { result: T ->
             // BUG: If the method crashes, this will crash
             invalidateOptionsMenu()
-            val cardCount: Int = result.value.result.size
+            val cardCount: Int = result!!.value.result.size
             showThemedToast(
                 this,
                 resources.getQuantityString(toastResourceId, cardCount, cardCount), true
@@ -1075,7 +1075,6 @@ open class Reviewer : AbstractFlashcardViewer() {
             Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
             Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
             Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
-            else -> Timber.w("Unknown card type %s", sched!!.countIdx(mCurrentCard!!))
         }
         mTextBarNew.text = mNewCount
         mTextBarLearn.text = mLrnCount
@@ -1283,7 +1282,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         // Show / hide the Action bar together with the status bar
         val prefs = AnkiDroidApp.getSharedPrefs(a)
         val fullscreenMode = fromPreference(prefs)
-        a.window.statusBarColor = getColorFromAttr(a, R.attr.colorPrimaryDark)
+        a.window.statusBarColor = getColorFromAttr(a, R.attr.colorPrimary)
         val decorView = a.window.decorView
         decorView.setOnSystemUiVisibilityChangeListener { flags: Int ->
             val toolbar = a.findViewById<View>(R.id.toolbar)
@@ -1387,7 +1386,7 @@ open class Reviewer : AbstractFlashcardViewer() {
         }
     }
 
-    override val currentCardId: Long?
+    override val currentCardId: CardId?
         get() = mCurrentCard!!.id
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

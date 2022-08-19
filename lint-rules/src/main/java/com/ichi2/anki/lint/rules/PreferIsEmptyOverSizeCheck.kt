@@ -129,7 +129,7 @@ class PreferIsEmptyOverSizeCheck : Detector(), UastScanner {
             if (rightOperand.value !is Number) {
                 return
             }
-            val rightValue = (rightOperand.value as Number?)!!.toDouble()
+            val rightValue = (rightOperand.value as Number).toDouble()
             if (UastBinaryOperator.IDENTITY_EQUALS == node.operator && rightValue == 0.0 || UastBinaryOperator.LESS == node.operator && rightValue == 1.0 || UastBinaryOperator.LESS_OR_EQUALS == node.operator && rightValue == 0.0) {
                 // Memoize the node to check later and provide the fix also.
                 parentNode = node

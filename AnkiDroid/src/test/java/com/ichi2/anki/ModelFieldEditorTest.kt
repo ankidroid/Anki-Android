@@ -18,8 +18,9 @@ package com.ichi2.anki
 
 import android.content.Intent
 import android.widget.EditText
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Model
 import org.hamcrest.MatcherAssert
@@ -77,7 +78,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
 
         // set field name to forbidden string and click confirm
         fieldNameInput.setText(fieldName)
-        dialog.getActionButton(DialogAction.POSITIVE)
+        dialog.getActionButton(WhichButton.POSITIVE)
             .performClick()
         advanceRobolectricLooperWithSleep()
         return fieldName
@@ -92,8 +93,8 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
      */
     @Throws(RuntimeException::class)
     private fun buildAddEditFieldDialog(fieldNameInput: EditText, fieldOperationType: FieldOperationType): MaterialDialog {
-        return MaterialDialog.Builder(targetContext)
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+        return MaterialDialog(targetContext)
+            .positiveButton {
                 try {
                     val modelName = "Basic"
 
@@ -106,13 +107,14 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
                     )
                     when (fieldOperationType) {
                         FieldOperationType.ADD_FIELD -> modelFieldEditor.addField(fieldNameInput)
-                        FieldOperationType.RENAME_FIELD -> modelFieldEditor.renameField(fieldNameInput)
+                        FieldOperationType.RENAME_FIELD -> modelFieldEditor.renameField(
+                            fieldNameInput
+                        )
                     }
                 } catch (exception: ConfirmModSchemaException) {
                     throw RuntimeException(exception)
                 }
             }
-            .build()
     }
 
     /**

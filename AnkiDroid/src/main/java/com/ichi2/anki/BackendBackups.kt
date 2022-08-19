@@ -18,49 +18,45 @@
 
 package com.ichi2.anki
 
-import com.ichi2.libanki.CollectionV16
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.awaitBackupCompletion
 import com.ichi2.libanki.createBackup
 import kotlinx.coroutines.*
-import timber.log.Timber
 
 fun DeckPicker.performBackupInBackground() {
-    val col = CollectionHelper.getInstance().getCol(baseContext).newBackend
-    catchingLifecycleScope(this) {
+    launchCatchingTask {
         // Wait a second to allow the deck list to finish loading first, or it
         // will hang until the first stage of the backup completes.
         delay(1000)
-        createBackup(col, false)
+        createBackup(force = false)
     }
 }
 
 fun DeckPicker.importColpkg(colpkgPath: String) {
-    val deckPicker = this
-    catchingLifecycleScope(this) {
-        runInBackground {
-            val helper = CollectionHelper.getInstance()
-            val backend = helper.getOrCreateBackend(baseContext)
-            backend.withProgress({
-                if (it.hasImporting()) {
-                    // TODO: show progress in GUI
-                    Timber.i("%s", it.importing)
+    launchCatchingTask {
+        withProgress(
+            extractProgress = {
+                if (progress.hasImporting()) {
+                    text = progress.importing
                 }
-            }) {
-                helper.importColpkg(baseContext, colpkgPath)
-            }
+            },
+        ) {
+            CollectionManager.importColpkg(colpkgPath)
         }
-        deckPicker.updateDeckList()
+
+        invalidateOptionsMenu()
+        updateDeckList()
     }
 }
 
-private suspend fun createBackup(col: CollectionV16, force: Boolean) {
-    runInBackground {
+private suspend fun createBackup(force: Boolean) {
+    withCol {
         // this two-step approach releases the backend lock after the initial copy
-        col.createBackup(
-            BackupManager.getBackupDirectoryFromCollection(col.path),
+        newBackend.createBackup(
+            BackupManager.getBackupDirectoryFromCollection(this.path),
             force,
             waitForCompletion = false
         )
-        col.awaitBackupCompletion()
+        newBackend.awaitBackupCompletion()
     }
 }

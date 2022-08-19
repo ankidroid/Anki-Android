@@ -108,7 +108,7 @@
     <string name="rename_deck">Pārdēvēt klāju</string>
     <string name="create_shortcut">Izveidot saīsni</string>
     <string name="browse_cards">Parādīt sarakstu</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Pievienot</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Pievienot</string>
     <string name="menu_add_note">Pievienot piezīmi</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinhronizēt kontu</string>
     <string name="menu_dismiss_note">Paslēpt / dzēst</string>

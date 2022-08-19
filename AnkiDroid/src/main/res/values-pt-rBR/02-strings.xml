@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir gaveta</string>
     <string name="drawer_close">Fechar gaveta</string>
@@ -101,6 +99,9 @@
         <item>Criado</item>
         <item>Nota modificada</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Aplicar</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modificar o limite de novos cards para hoje</string>
     <string name="custom_study_increase_review_limit">Modificar o limite de revisões de hoje.</string>
@@ -163,11 +164,11 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
     <string name="import_message_replace_confirm">Isto irá excluir sua coleção atual e substituí-la pelo conteúdo do arquivo %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">Adicionar \"%s\" à coleção? Isso pode demorar</item>
+        <item quantity="other">Você quer importar os seguintes arquivos: \n%s\n? Isso pode demorar</item>
     </plurals>
     <string name="import_log_no_apkg">Este não é um arquivo válido para o Anki</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Erro</string>
     <string name="import_log_failed_unzip">Falha ao descompactar apkg: %s</string>
     <string name="import_log_failed_copy_to">Falha ao copiar apkg para %s</string>
     <string name="import_log_failed_validate">falha na validação do apkg</string>
@@ -182,9 +183,9 @@
     <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos anki: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() falhou (possivelmente sem espaço de armazenamento)</string>
     <string name="import_error_unhandled_scheme">Importação não tratada de: “%s”</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_multiple_colpkg">Vários arquivos colpkg foram selecionados.</string>
+    <string name="import_error_colpkg_apkg">Tanto arquivos apkg &amp; colpkg foram selecionados de uma vez.</string>
+    <string name="import_stats_error">Ocorreram alguns erros ao importar os seguintes arquivos:\n%s</string>
     <string name="import_replacing">Substituindo coleção&#8230;</string>
     <string name="import_interrupted">Importação interrompida: AnkiDroid foi fechado</string>
     <string name="export_include_schedule">Incluir agendamento</string>
@@ -267,8 +268,6 @@
     <string name="apk_share_error">Erro ao compartilhar arquivo apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Este arquivo requer uma versão mais recente do Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">O carregamento \'%s\' falhou.</string>
     <string name="activity_start_failed">O sistema não tem um aplicativo instalado que possa executar esta ação.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[As imagens da câmera podem ser grandes. Você pode querer comprimir e redimensionar as imagens na pasta de mídia.]]></string>
     <string name="no_browser_notification">Nenhum navegador encontrado, por favor visite a página através de um computador ou celular.</string>
@@ -328,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Erro de Conteúdo do Card: Falha ao carregar ‘%s\'</string>
     <string name="card_viewer_media_relative_protocol">Erro de conteúdo do card: Atualização de mídia necessária</string>
-    <string name="cannot_load_http_resource">Http não está disponível no momento</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Falha ao carregar o baralho ‘%s\'</string>
     <string name="search_decks">Pesquisar baralhos</string>
@@ -410,11 +408,11 @@
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s Não é um pacote de addon javascript válido</string>
     <string name="could_not_create_dir">Não foi possível criar a pasta %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
+    <string name="malicious_archive_entry_outside">Arquivo malicioso. Contém entrada fora da pasta alvo: %s</string>
+    <string name="malicious_archive_exceeds_limit">Arquivo malicioso. O tamanho excede %1$s ou contém mais de %2$d arquivos</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expandir tag \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Não foi possível acessar a coleção. Tente novamente!</string>
 </resources>

@@ -15,6 +15,8 @@
  */
 package com.ichi2.libanki.backend.model
 
+// Keep method names for consistency with Anki desktop names
+@Suppress("FunctionName")
 interface SchedTimingToday {
     /** The number of days that have passed since the collection was created.
      *

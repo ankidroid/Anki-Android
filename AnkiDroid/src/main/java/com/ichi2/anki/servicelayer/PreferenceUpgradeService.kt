@@ -137,7 +137,7 @@ object PreferenceUpgradeService {
                 // clear all prefs if super old version to prevent any errors
                 if (previousVersionCode < 20300130) {
                     Timber.i("Old version of Anki - Clearing preferences")
-                    preferences.edit().clear().apply()
+                    preferences.edit { clear() }
                 }
                 // when upgrading from before 2.5alpha35
                 if (previousVersionCode < 20500135) {
@@ -145,13 +145,17 @@ object PreferenceUpgradeService {
                     // Card zooming behaviour was changed the preferences renamed
                     val oldCardZoom = preferences.getInt("relativeDisplayFontSize", 100)
                     val oldImageZoom = preferences.getInt("relativeImageSize", 100)
-                    preferences.edit().putInt("cardZoom", oldCardZoom).apply()
-                    preferences.edit().putInt("imageZoom", oldImageZoom).apply()
-                    if (!preferences.getBoolean("useBackup", true)) {
-                        preferences.edit().putInt("backupMax", 0).apply()
+                    preferences.edit {
+                        putInt("cardZoom", oldCardZoom)
+                        putInt("imageZoom", oldImageZoom)
                     }
-                    preferences.edit().remove("useBackup").apply()
-                    preferences.edit().remove("intentAdditionInstantAdd").apply()
+                    if (!preferences.getBoolean("useBackup", true)) {
+                        preferences.edit { putInt("backupMax", 0) }
+                    }
+                    preferences.edit {
+                        remove("useBackup")
+                        remove("intentAdditionInstantAdd")
+                    }
                 }
                 FullScreenMode.upgradeFromLegacyPreference(preferences)
             }

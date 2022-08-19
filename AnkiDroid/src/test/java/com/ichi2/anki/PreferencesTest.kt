@@ -18,6 +18,7 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Preferences.Companion.getDayOffset
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.preferences.HeaderPreference
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
@@ -56,8 +57,8 @@ class PreferencesTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "ar")
-    fun buildCategorySummary_RTL_Test() {
-        assertThat(Preferences.buildCategorySummary("حساب أنكي ويب", "مزامنة تلقائية"), equalTo("مزامنة تلقائية • حساب أنكي ويب"))
+    fun buildHeaderSummary_RTL_Test() {
+        assertThat(HeaderPreference.buildHeaderSummary("حساب أنكي ويب", "مزامنة تلقائية"), equalTo("مزامنة تلقائية • حساب أنكي ويب"))
     }
 
     @Test

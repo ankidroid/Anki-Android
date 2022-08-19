@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException
 import android.util.Pair
 import com.ichi2.anki.model.WhiteboardPenColor
 import com.ichi2.anki.model.WhiteboardPenColor.Companion.default
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -218,7 +219,7 @@ object MetaDB {
      * [.LANGUAGES_QA_ANSWER], or [.LANGUAGES_QA_UNDEFINED]
      * @param language the language to associate, as a two-characters, lowercase string
      */
-    fun storeLanguage(context: Context, did: Long, ord: Int, qa: SoundSide, language: String) {
+    fun storeLanguage(context: Context, did: DeckId, ord: Int, qa: SoundSide, language: String) {
         openDBIfClosed(context)
         try {
             if ("" == getLanguage(context, did, ord, qa)) {
@@ -250,7 +251,7 @@ object MetaDB {
      * [.LANGUAGES_QA_ANSWER], or [.LANGUAGES_QA_UNDEFINED] return the language associate with
      * the type, as a two-characters, lowercase string, or the empty string if no association is defined
      */
-    fun getLanguage(context: Context, did: Long, ord: Int, qa: SoundSide): String {
+    fun getLanguage(context: Context, did: DeckId, ord: Int, qa: SoundSide): String {
         openDBIfClosed(context)
         var language = ""
         val query = "SELECT language FROM languages WHERE did = ? AND ord = ? AND qa = ? LIMIT 1"
@@ -279,7 +280,7 @@ object MetaDB {
      *
      * @return whether an error occurred while resetting the language for the deck
      */
-    fun resetDeckLanguages(context: Context, did: Long): Boolean {
+    fun resetDeckLanguages(context: Context, did: DeckId): Boolean {
         openDBIfClosed(context)
         try {
             mMetaDb!!.execSQL("DELETE FROM languages WHERE did = ?;", arrayOf(did))
@@ -296,7 +297,7 @@ object MetaDB {
      *
      * @return 1 if the whiteboard should be shown, 0 otherwise
      */
-    fun getWhiteboardState(context: Context, did: Long): Boolean {
+    fun getWhiteboardState(context: Context, did: DeckId): Boolean {
         openDBIfClosed(context)
         try {
             mMetaDb!!.rawQuery(
@@ -315,7 +316,7 @@ object MetaDB {
      * @param did deck id to store whiteboard state for
      * @param whiteboardState 1 if the whiteboard should be shown, 0 otherwise
      */
-    fun storeWhiteboardState(context: Context, did: Long, whiteboardState: Boolean) {
+    fun storeWhiteboardState(context: Context, did: DeckId, whiteboardState: Boolean) {
         val state = if (whiteboardState) 1 else 0
         openDBIfClosed(context)
         try {
@@ -348,7 +349,7 @@ object MetaDB {
      *
      * @return 1 if the whiteboard should be shown, 0 otherwise
      */
-    fun getWhiteboardVisibility(context: Context, did: Long): Boolean {
+    fun getWhiteboardVisibility(context: Context, did: DeckId): Boolean {
         openDBIfClosed(context)
         try {
             mMetaDb!!.rawQuery(
@@ -367,7 +368,7 @@ object MetaDB {
      * @param did deck id to store whiteboard state for
      * @param isVisible 1 if the whiteboard should be shown, 0 otherwise
      */
-    fun storeWhiteboardVisibility(context: Context, did: Long, isVisible: Boolean) {
+    fun storeWhiteboardVisibility(context: Context, did: DeckId, isVisible: Boolean) {
         val isVisibleState = if (isVisible) 1 else 0
         openDBIfClosed(context)
         try {
@@ -398,7 +399,7 @@ object MetaDB {
     /**
      * Returns the pen color of the whiteboard for the given deck.
      */
-    fun getWhiteboardPenColor(context: Context, did: Long): WhiteboardPenColor {
+    fun getWhiteboardPenColor(context: Context, did: DeckId): WhiteboardPenColor {
         openDBIfClosed(context)
         try {
             mMetaDb!!.rawQuery(
@@ -423,7 +424,7 @@ object MetaDB {
      * @param isLight if dark mode is disabled
      * @param value The new color code to store
      */
-    fun storeWhiteboardPenColor(context: Context, did: Long, isLight: Boolean, value: Int?) {
+    fun storeWhiteboardPenColor(context: Context, did: DeckId, isLight: Boolean, value: Int?) {
         openDBIfClosed(context)
         val columnName = if (isLight) "lightpencolor" else "darkpencolor"
         try {

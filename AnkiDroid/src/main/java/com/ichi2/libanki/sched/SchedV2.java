@@ -21,18 +21,12 @@ package com.ichi2.libanki.sched;
 
 import android.app.Activity;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
-import android.graphics.Typeface;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.StyleSpan;
 import android.util.Pair;
 
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
 import com.ichi2.async.CancelListener;
 import com.ichi2.async.CollectionTask;
 import com.ichi2.async.TaskManager;
@@ -46,9 +40,6 @@ import com.ichi2.libanki.Utils;
 import com.ichi2.libanki.Deck;
 import com.ichi2.libanki.DeckConfig;
 
-import com.ichi2.libanki.backend.exception.BackendNotSupportedException;
-import com.ichi2.libanki.backend.model.SchedTimingToday;
-import com.ichi2.libanki.backend.model.SchedTimingTodayProto;
 import com.ichi2.libanki.utils.Time;
 import com.ichi2.libanki.utils.TimeManager;
 import com.ichi2.utils.Assert;
@@ -60,7 +51,6 @@ import com.ichi2.utils.SyncStatus;
 
 import net.ankiweb.rsdroid.BackendFactory;
 import net.ankiweb.rsdroid.RustCleanup;
-import net.ankiweb.rsdroid.RustV1Cleanup;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -77,12 +67,11 @@ import java.util.stream.Collectors;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import anki.scheduler.SchedTimingTodayResponse;
 import timber.log.Timber;
 
-import static com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING;
-import static com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN;
 import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.libanki.sched.AbstractSched.UnburyType.*;
+import static com.ichi2.libanki.sched.BaseSched.UnburyType.*;
 import static com.ichi2.libanki.sched.Counts.Queue.*;
 import static com.ichi2.libanki.sched.Counts.Queue;
 import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
@@ -113,9 +102,6 @@ public class SchedV2 extends AbstractSched {
 
     private int mNewCardModulus;
 
-    // The content change, not the array
-    protected final @NonNull double[] mEtaCache = new double[] { -1, -1, -1, -1, -1, -1 };
-
     // Queues
     protected final @NonNull SimpleCardQueue mNewQueue = new SimpleCardQueue(this);
 
@@ -130,6 +116,18 @@ public class SchedV2 extends AbstractSched {
 
     // Not in libanki
     protected @Nullable WeakReference<Activity> mContextReference;
+
+    interface LimitMethod {
+        int operation(Deck g);
+    }
+
+    /** Given a deck, compute the number of cards to see today, taking its pre-computed limit into consideration.  It
+     * considers either review or new cards. Used by WalkingCount to consider all subdecks and parents of a specific
+     * decks. */
+    
+    interface CountMethod {
+        int operation(long did, int lim);
+    }
 
     /**
      * The card currently being reviewed.
@@ -209,17 +207,15 @@ public class SchedV2 extends AbstractSched {
     }
 
     /** Ensures that reset is executed before the next card is selected */
-    public void deferReset(@NonNull Card card){
+    public void deferReset(@Nullable Card card){
         mHaveQueues = false;
         mHaveCounts = false;
-        setCurrentCard(card);
-    }
-
-    public void deferReset() {
-        mHaveQueues = false;
-        mHaveCounts = false;
-        discardCurrentCard();
-        getCol().getDecks().update_active();
+        if (card != null) {
+            setCurrentCard(card);
+        } else {
+            discardCurrentCard();
+            getCol().getDecks().update_active();
+        }
     }
 
     public void reset() {
@@ -228,9 +224,8 @@ public class SchedV2 extends AbstractSched {
         resetCounts(false);
         resetQueues(false);
     }
-
-    @Override
-    public void resetCounts(@NonNull CancelListener cancelListener) {
+    
+    public void resetCounts(@Nullable CancelListener cancelListener) {
         resetCounts(cancelListener, true);
     }
 
@@ -360,9 +355,6 @@ public class SchedV2 extends AbstractSched {
 
 
     /** new count, lrn count, rev count.  */
-    public @NonNull Counts counts() {
-        return counts((CancelListener) null);
-    }
     public @NonNull Counts counts(@Nullable CancelListener cancelListener) {
         if (!mHaveCounts) {
             resetCounts(cancelListener);
@@ -382,16 +374,6 @@ public class SchedV2 extends AbstractSched {
         counts.changeCount(idx, 1);
         return counts;
     }
-
-
-    /**
-     * Return counts over next DAYS. Includes today.
-     */
-    public int dueForecast(int days) {
-        // TODO:...
-        return 0;
-    }
-
 
     /**
      * Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.
@@ -449,6 +431,11 @@ public class SchedV2 extends AbstractSched {
 
 
     public void extendLimits(int newc, int rev) {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.extendLimits(newc, rev);
+            return;
+        }
+
         Deck cur = getCol().getDecks().current();
         List<Deck> decks = getCol().getDecks().parents(cur.getLong("id"));
         decks.add(cur);
@@ -580,8 +567,9 @@ public class SchedV2 extends AbstractSched {
     public @NonNull
     List<? extends TreeNode<? extends AbstractDeckTreeNode>> quickDeckDueTree() {
         if (!BackendFactory.getDefaultLegacySchema()) {
-            return BackendSchedKt.deckTreeLegacy(getCol().getNewBackend(), false);
+            return super.quickDeckDueTree();
         }
+
         // Similar to deckDueList
         ArrayList<DeckTreeNode> allDecksSorted = new ArrayList<>();
         for (JSONObject deck : getCol().getDecks().allSorted()) {
@@ -597,14 +585,15 @@ public class SchedV2 extends AbstractSched {
     @RustCleanup("once defaultLegacySchema is removed, cancelListener can be removed")
     public List<TreeNode<DeckDueTreeNode>> deckDueTree(@Nullable CancelListener cancelListener) {
         if (!BackendFactory.getDefaultLegacySchema()) {
-            return BackendSchedKt.deckTreeLegacy(getCol().getNewBackend(), true);
-        } else {
-            List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
-            if (allDecksSorted == null) {
-                return null;
-            }
-            return _groupChildren(allDecksSorted, true);
+            return super.deckDueTree(null);
         }
+
+        _checkDay();
+        List<DeckDueTreeNode> allDecksSorted = deckDueList(cancelListener);
+        if (allDecksSorted == null) {
+            return null;
+        }
+        return _groupChildren(allDecksSorted, true);
     }
 
     /**
@@ -1018,11 +1007,6 @@ public class SchedV2 extends AbstractSched {
             lim--;
         }
         return lim;
-    }
-
-    public int totalNewForCurrentDeck() {
-        return getCol().getDb().queryScalar("SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
-                                        mReportLimit);
     }
 
     /**
@@ -1462,12 +1446,6 @@ public class SchedV2 extends AbstractSched {
         log(card.getId(), getCol().usn(), ease, ivl, lastIvl, card.getFactor(), card.timeTaken(), type);
     }
 
-    @Override
-    public int logCount() {
-        return getCol().getDb().queryScalar("SELECT count() FROM revlog");
-    }
-
-
     protected void log(long id, int usn, @Consts.BUTTON_TYPE int ease, int ivl, int lastIvl, int factor, int timeTaken, @Consts.REVLOG_TYPE int type) {
         try {
             getCol().getDb().execute("INSERT INTO revlog VALUES (?,?,?,?,?,?,?,?,?)",
@@ -1662,13 +1640,6 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public int totalRevForCurrentDeck() {
-        return getCol().getDb().queryScalar(
-                "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
-                mToday, mReportLimit);
-    }
-
-
     /**
      * Answering a review card **************************************************
      * *********************************************
@@ -1784,7 +1755,7 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public @NonNull Pair<Integer, Integer> _fuzzIvlRange(int ivl) {
+    public static @NonNull Pair<Integer, Integer> _fuzzIvlRange(int ivl) {
         int fuzz;
         if (ivl < 2) {
             return new Pair<>(1, 1);
@@ -1882,17 +1853,13 @@ public class SchedV2 extends AbstractSched {
       *****************************
      */
 
-    /** Rebuild a dynamic deck. */
-    protected void rebuildDyn() {
-        rebuildDyn(0);
-    }
-
-
-    // Overridden, because upstream implements exactly the same method in two different way for unknown reason
+    @Override
     public void rebuildDyn(long did) {
-        if (did == 0) {
-            did = getCol().getDecks().selected();
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.rebuildDyn(did);
+            return;
         }
+
         Deck deck = getCol().getDecks().get(did);
         if (deck.isStd()) {
             Timber.e("error: deck is not a filtered deck");
@@ -1942,32 +1909,13 @@ public class SchedV2 extends AbstractSched {
 
 
     public void emptyDyn(long did) {
-        emptyDyn(did, null);
-    }
-
-
-    // Overridden: other queue in V1
-    public void emptyDyn(long did, String lim) {
-        if (lim == null) {
-            lim = "did = " + did;
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.emptyDyn(did);
+            return;
         }
-        getCol().log(getCol().getDb().queryLongList("select id from cards where " + lim));
 
-        getCol().getDb().execute(
-                "update cards set did = odid, " + _restoreQueueWhenEmptyingSnippet() +
-                ", due = (case when odue>0 then odue else due end), odue = 0, odid = 0, usn = ? where " + lim,
-                getCol().usn());
+        emptyDyn("did = " + did);
     }
-
-
-    public void remFromDyn(long[] cids) {
-        emptyDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
-    }
-
-    public void remFromDyn(List<Long> cids) {
-        emptyDyn(0, "id IN " + Utils.ids2str(cids) + " AND odid");
-    }
-
 
     /**
      * Generates the required SQL for order by and limit clauses, for dynamic decks.
@@ -2105,11 +2053,6 @@ public class SchedV2 extends AbstractSched {
      * Tools ******************************************************************** ***************************
      */
 
-    public @NonNull DeckConfig _cardConf(@NonNull Card card) {
-        return getCol().getDecks().confForDid(card.getDid());
-    }
-
-
     // Overridden: different delays for filtered cards.
     protected @NonNull JSONObject _newConf(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
@@ -2162,17 +2105,11 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    public @NonNull String _deckLimit() {
-        return Utils.ids2str(getCol().getDecks().active());
-    }
-
-
     private boolean _previewingCard(@NonNull Card card) {
         DeckConfig conf = _cardConf(card);
 
         return conf.isDyn() && !conf.getBoolean("resched");
     }
-
 
     private int _previewDelay(@NonNull Card card) {
         return _cardConf(card).optInt("previewDelay", 10) * 60;
@@ -2185,22 +2122,13 @@ public class SchedV2 extends AbstractSched {
      */
 
     /* Overridden: other way to count time*/
-    @RustCleanup("remove timing == null check once JavaBackend is removed")
     public void _updateCutoff() {
         int oldToday = mToday == null ? 0 : mToday;
 
-        SchedTimingToday timing = _timingToday();
+        SchedTimingTodayResponse timing = _timingToday();
 
-        if (timing == null) {
-            mToday = _daysSinceCreation();
-            mDayCutoff = _dayCutoff();
-        } else if (_new_timezone_enabled()) {
-            mToday = timing.days_elapsed();
-            mDayCutoff = timing.next_day_at();
-        } else {
-            mToday = _daysSinceCreation();
-            mDayCutoff = _dayCutoff();
-        }
+        mToday = timing.getDaysElapsed();
+        mDayCutoff = timing.getNextDayAt();
 
         if (oldToday != mToday) {
             getCol().log(mToday, mDayCutoff);
@@ -2216,116 +2144,6 @@ public class SchedV2 extends AbstractSched {
             SyncStatus.ignoreDatabaseModification(this::unburyCards);
             getCol().set_config("lastUnburied", mToday);
         }
-    }
-
-
-    private long _dayCutoff() {
-        int rolloverTime = getCol().get_config("rollover", 4);
-        if (rolloverTime < 0) {
-            rolloverTime = 24 + rolloverTime;
-        }
-        Calendar date = getTime().calendar();
-        date.set(Calendar.HOUR_OF_DAY, rolloverTime);
-        date.set(Calendar.MINUTE, 0);
-        date.set(Calendar.SECOND, 0);
-        date.set(Calendar.MILLISECOND, 0);
-        Calendar today = getTime().calendar();
-        if (date.before(today)) {
-            date.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
-        return date.getTimeInMillis() / 1000;
-    }
-
-
-    private int _daysSinceCreation() {
-        Calendar c = getCol().crtCalendar();
-        c.set(Calendar.HOUR, _rolloverHour());
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
-
-        return (int) (((getTime().intTimeMS() - c.getTimeInMillis()) / 1000) / SECONDS_PER_DAY);
-    }
-
-    private int _rolloverHour() {
-        return getCol().get_config("rollover", 4);
-    }
-
-    // New timezone handling
-    //////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public boolean _new_timezone_enabled() {
-        return getCol().has_config_not_null("creationOffset");
-    }
-
-    @Nullable
-    @RustV1Cleanup("switch to non-legacy backend method")
-    private SchedTimingToday _timingToday() {
-        /*
-         * Obtains Timing information for the current day.
-         *
-         * @param createdSecs A UNIX timestamp of the collection creation time
-         * @param createdMinsWest The offset west of UTC at the time of creation (eg UTC+10 hours is -600)
-         * @param nowSecs timestamp of the current time
-         * @param nowMinsWest The current offset west of UTC
-         * @param rolloverHour The hour of the day the rollover happens (eg 4 for 4am)
-         * @return Timing information for the current day. See [SchedTimingToday].
-         */
-        try {
-            return new SchedTimingTodayProto(getCol().getBackend().schedTimingTodayLegacy(
-                    getCol().getCrt(),
-                    _creation_timezone_offset(),
-                    getTime().intTime(),
-                    _current_timezone_offset(),
-                    _rolloverHour()));
-        } catch (BackendNotSupportedException e) {
-            Timber.w(e);
-            return null;
-        }
-    }
-
-    @Override
-    public int _current_timezone_offset() throws BackendNotSupportedException {
-        if (getCol().getServer()) {
-            return getCol().get_config("localOffset", 0);
-        } else {
-            return localMinutesWest(getTime().intTime());
-        }
-    }
-
-    /**
-     * For the given timestamp, return minutes west of UTC in the local timezone.
-     *
-     * eg, Australia at +10 hours is -600.<br>
-     * Includes the daylight savings offset if applicable.
-     *
-     * @param timestampSeconds The timestamp in seconds
-     * @return minutes west of UTC in the local timezone
-     */
-    private int localMinutesWest(long timestampSeconds) {
-        return getCol().getBackend().localMinutesWestLegacy(timestampSeconds);
-
-    }
-
-    private int _creation_timezone_offset() {
-        return getCol().get_config("creationOffset", 0);
-    }
-    
-    public void useNewTimezoneCode() {
-       set_creation_offset();
-    }
-
-    @Override
-    public void set_creation_offset() {
-        int minsWest = localMinutesWest(getCol().getCrt());
-        getCol().set_config("creationOffset", minsWest);
-    }
-
-    @Override
-    public void clear_creation_offset() {
-        getCol().remove_config("creationOffset");
     }
 
     protected void update(@NonNull Deck g) {
@@ -2347,57 +2165,6 @@ public class SchedV2 extends AbstractSched {
         }
     }
 
-
-    /**
-     * Deck finished state ******************************************************
-     * *****************************************
-     */
-
-    public @NonNull CharSequence finishedMsg(@NonNull Context context) {
-        SpannableStringBuilder sb = new SpannableStringBuilder();
-        sb.append(context.getString(R.string.studyoptions_congrats_finished));
-        StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
-        sb.setSpan(boldSpan, 0, sb.length(), 0);
-        sb.append(_nextDueMsg(context));
-        // sb.append("\n\n");
-        // sb.append(_tomorrowDueMsg(context));
-        return sb;
-    }
-
-
-    public @NonNull String _nextDueMsg(@NonNull Context context) {
-        StringBuilder sb = new StringBuilder();
-        if (revDue()) {
-            sb.append("\n\n");
-            sb.append(context.getString(R.string.studyoptions_congrats_more_rev));
-        }
-        if (newDue()) {
-            sb.append("\n\n");
-            sb.append(context.getString(R.string.studyoptions_congrats_more_new));
-        }
-        if (haveBuried()) {
-            String now = " " + context.getString(R.string.sched_unbury_action);
-            sb.append("\n\n");
-            sb.append("").append(context.getString(R.string.sched_has_buried)).append(now);
-        }
-        if (getCol().getDecks().current().isStd()) {
-            sb.append("\n\n");
-            sb.append(context.getString(R.string.studyoptions_congrats_custom));
-        }
-        return sb.toString();
-    }
-
-
-    /** true if there are any rev cards due. */
-    public boolean revDue() {
-        return getCol().getDb()
-                .queryScalar(
-                        "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?"
-                                + " LIMIT 1",
-                        mToday) != 0;
-    }
-
-
     /** true if there are cards in learning, with review due the same
      * day, in the selected decks. */
     /* not in upstream anki. As revDue and newDue, it's used to check
@@ -2406,15 +2173,13 @@ public class SchedV2 extends AbstractSched {
      * immediately. It answers whether cards will be due later in the
      * same deck. */
     public boolean hasCardsTodayAfterStudyAheadLimit() {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            return super.hasCardsTodayAfterStudyAheadLimit();
+        }
+
         return getCol().getDb().queryScalar(
                 "SELECT 1 FROM cards WHERE did IN " + _deckLimit()
                 + " AND queue = " + Consts.QUEUE_TYPE_LRN + " LIMIT 1") != 0;
-    }
-
-
-    /** true if there are any new cards due. */
-    public boolean newDue() {
-        return getCol().getDb().queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0;
     }
 
 
@@ -2447,6 +2212,10 @@ public class SchedV2 extends AbstractSched {
 
 
     public boolean haveBuried() {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            return super.haveBuried();
+        }
+
         return haveManuallyBuried() || haveBuriedSiblings();
     }
 
@@ -2457,35 +2226,10 @@ public class SchedV2 extends AbstractSched {
      */
 
     /**
-     * Return the next interval for a card and ease as a string.
-     *
-     * For a given card and ease, this returns a string that shows when the card will be shown again when the
-     * specific ease button (AGAIN, GOOD etc.) is touched. This uses unit symbols like “s” rather than names
-     * (“second”), like Anki desktop.
-     *
-     * @param context The app context, used for localization
-     * @param card The card being reviewed
-     * @param ease The button number (easy, good etc.)
-     * @return A string like “1 min” or “1.7 mo”
-     */
-    public @NonNull String nextIvlStr(@NonNull Context context, @NonNull Card card, @Consts.BUTTON_TYPE int ease) {
-        long ivl = nextIvl(card, ease);
-        if (ivl == 0) {
-            return context.getString(R.string.sched_end);
-        }
-        String s = Utils.timeQuantityNextIvl(context, ivl);
-        if (ivl < getCol().get_config_int("collapseTime")) {
-            s = context.getString(R.string.less_than_time, s);
-        }
-        return s;
-    }
-
-
-    /**
      * Return the next interval for CARD, in seconds.
      */
     // Overridden
-    protected long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
+    public long nextIvl(@NonNull Card card, @Consts.BUTTON_TYPE int ease) {
         // preview mode?
         if (_previewingCard(card)) {
             if (ease == Consts.BUTTON_ONE) {
@@ -2561,21 +2305,6 @@ public class SchedV2 extends AbstractSched {
     }
 
     /**
-     * ugly fix for suspended cards being unsuspended when filtered deck emptied
-     * https://github.com/ankitects/anki/commit/fe493e31c4d73ae2bbd0c4d8c6b835974c0e290c
-     */
-    @NonNull
-    protected String _restoreQueueWhenEmptyingSnippet() {
-        return "queue = (case when queue < 0 then queue" +
-                "    when type in (1," + CARD_TYPE_RELEARNING + ") then " +
-                "(case when (case when odue then odue else due end) > 1000000000 then 1 else " +
-                "    " + QUEUE_TYPE_DAY_LEARN_RELEARN + " end) " +
-                "else " +
-                "    type " +
-                "end)";
-    }
-
-    /**
      * Overridden: in V1 only sibling buried exits.*/
     protected @NonNull String queueIsBuriedSnippet() {
         return " queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ") ";
@@ -2587,6 +2316,11 @@ public class SchedV2 extends AbstractSched {
      * Overridden: in V1 remove from dyn and lrn
      */
     public void suspendCards(@NonNull long[] ids) {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.suspendCards(ids);
+            return;
+        }
+
         getCol().log(ids);
         getCol().getDb().execute(
                 "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN "
@@ -2599,6 +2333,11 @@ public class SchedV2 extends AbstractSched {
      * Unsuspend cards
      */
     public void unsuspendCards(@NonNull long[] ids) {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.unsuspendCards(ids);
+            return;
+        }
+
         getCol().log(ids);
         getCol().getDb().execute(
                 "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = ?, usn = ?"
@@ -2606,40 +2345,31 @@ public class SchedV2 extends AbstractSched {
                 getTime().intTime(), getCol().usn());
     }
 
-    // Overridden. manual is false by default in V1
-    public void buryCards(@NonNull long[] cids) {
-        buryCards(cids, true);
-    }
-
     @Override
     // Overridden: V1 also remove from dyns and lrn
     @VisibleForTesting
     public void buryCards(@NonNull long[] cids, boolean manual) {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.buryCards(cids, manual);
+            return;
+        }
+
         int queue = manual ? Consts.QUEUE_TYPE_MANUALLY_BURIED : Consts.QUEUE_TYPE_SIBLING_BURIED;
         getCol().log(cids);
         getCol().getDb().execute("update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
                 queue, getTime().intTime(), getCol().usn());
     }
 
+    @Override
+    public void unburyCardsForDeck(long did, @NonNull UnburyType type) {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.unburyCardsForDeck(did, type);
+            return;
+        }
 
-    /**
-     * Unbury all buried cards in all decks
-     * Overridden: V1 change lastUnburied
-     */
-    public void unburyCards() {
-        getCol().log(getCol().getDb().queryLongList("select id from cards where " + queueIsBuriedSnippet()));
-        getCol().getDb().execute("update cards set " + _restoreQueueSnippet() + " where " + queueIsBuriedSnippet());
-    }
-
-
-    // Overridden
-    public void unburyCardsForDeck() {
-        unburyCardsForDeck(ALL);
-    }
-
-
-    public void unburyCardsForDeck(@NonNull UnburyType type) {
-        unburyCardsForDeck(type, null);
+        List<Long> dids = getCol().getDecks().childDids(did, getCol().getDecks().childMap());
+        dids.add(did);
+        unburyCardsForDeck(type, dids);
     }
 
     public void unburyCardsForDeck(@NonNull UnburyType type, @Nullable List<Long> allDecks) {
@@ -2671,6 +2401,11 @@ public class SchedV2 extends AbstractSched {
      * @param nid The id of the targeted note.
      */
     public void buryNote(long nid) {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.buryNote(nid);
+            return;
+        }
+
         long[] cids = Utils.collection2Array(getCol().getDb().queryLongList(
                 "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW, nid));
         buryCards(cids);
@@ -2724,6 +2459,13 @@ public class SchedV2 extends AbstractSched {
 
     /** Put cards at the end of the new queue. */
     public void forgetCards(@NonNull List<Long> ids) {
+        // Currently disabled, as this causes a breakage in some tests due to
+        // the AnkiDroid implementation not using nextPos to determine next position.
+        //        if (!BackendFactory.getDefaultLegacySchema()) {
+        //            super.forgetCards(ids);
+        //            return;
+        //        }
+
         remFromDyn(ids);
         getCol().getDb().execute("update cards set type=" + Consts.CARD_TYPE_NEW + ",queue=" + Consts.QUEUE_TYPE_NEW + ",ivl=0,due=0,odue=0,factor="+Consts.STARTING_FACTOR +
                 " where id in " + Utils.ids2str(ids));
@@ -2742,6 +2484,13 @@ public class SchedV2 extends AbstractSched {
      * @param imax The maximum interval (inclusive)
      */
     public void reschedCards(@NonNull List<Long> ids, int imin, int imax) {
+        // Currently disabled, as this causes a breakage in the V2 tests due to
+        // the use of a mocked time.
+        //        if (!BackendFactory.getDefaultLegacySchema()) {
+        //            super.reschedCards(ids, imin, imax);
+        //            return;
+        //        }
+
         ArrayList<Object[]> d = new ArrayList<>(ids.size());
         int t = mToday;
         long mod = getTime().intTime();
@@ -2757,31 +2506,17 @@ public class SchedV2 extends AbstractSched {
         getCol().log(ids);
     }
 
-
-    /**
-     * Completely reset cards for export.
-     */
-    public void resetCards(@NonNull Long[] ids) {
-        List<Long> nonNew = getCol().getDb().queryLongList(
-                "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")");
-        getCol().getDb().execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew));
-        forgetCards(nonNew);
-        //noinspection RedundantCast
-        getCol().log((Object[]) ids); // Cast useful to indicate to indicate how to interpret varargs
-    }
-
-
     /**
      * Repositioning new cards **************************************************
      * *********************************************
      */
 
-    public void sortCards(@NonNull List<Long> cids, int start) {
-        sortCards(cids, start, 1, false, false);
-    }
-
-
     public void sortCards(@NonNull List<Long> cids, int start, int step, boolean shuffle, boolean shift) {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.sortCards(cids, start, step, shuffle, shift);
+            return;
+        }
+
         String scids = Utils.ids2str(cids);
         long now = getTime().intTime();
         ArrayList<Long> nids = new ArrayList<>(cids.size());
@@ -2832,45 +2567,24 @@ public class SchedV2 extends AbstractSched {
 
 
     public void randomizeCards(long did) {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.randomizeCards(did);
+            return;
+        }
+
         List<Long> cids = getCol().getDb().queryLongList("select id from cards where type = " + Consts.CARD_TYPE_NEW + " and did = ?", did);
         sortCards(cids, 1, 1, true, false);
     }
 
 
     public void orderCards(long did) {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            super.orderCards(did);
+            return;
+        }
+
         List<Long> cids = getCol().getDb().queryLongList("SELECT id FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND did = ? ORDER BY nid", did);
         sortCards(cids, 1, 1, false, false);
-    }
-
-
-    public void resortConf(@NonNull DeckConfig conf) {
-        List<Long> dids = getCol().getDecks().didsForConf(conf);
-        for (long did : dids) {
-            if (conf.getJSONObject("new").getLong("order") == 0) {
-                randomizeCards(did);
-            } else {
-                orderCards(did);
-            }
-        }
-    }
-
-
-    /**
-     * for post-import
-     */
-    public void maybeRandomizeDeck() {
-        maybeRandomizeDeck(null);
-    }
-
-    public void maybeRandomizeDeck(@Nullable Long did) {
-        if (did == null) {
-            did = getCol().getDecks().selected();
-        }
-        DeckConfig conf = getCol().getDecks().confForDid(did);
-        // in order due?
-        if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {
-            randomizeCards(did);
-        }
     }
 
 
@@ -2994,132 +2708,6 @@ public class SchedV2 extends AbstractSched {
         mReps--;
     }
 
-
-    /**
-     * Counts
-     */
-
-    public int cardCount() {
-        String dids = _deckLimit();
-        return getCol().getDb().queryScalar("SELECT count() FROM cards WHERE did IN " + dids);
-    }
-
-
-    public int eta(Counts counts) {
-        return eta(counts, true);
-    }
-
-
-    /**
-     * Return an estimate, in minutes, for how long it will take to complete all the reps in {@code counts}.
-     *
-     * The estimator builds rates for each queue type by looking at 10 days of history from the revlog table. For
-     * efficiency, and to maintain the same rates for a review session, the rates are cached and reused until a
-     * reload is forced.
-     *
-     * Notes:
-     * - Because the revlog table does not record deck IDs, the rates cannot be reduced to a single deck and thus cover
-     * the whole collection which may be inaccurate for some decks.
-     * - There is no efficient way to determine how many lrn cards are generated by each new card. This estimator
-     * assumes 1 card is generated as a compromise.
-     * - If there is no revlog data to work with, reasonable defaults are chosen as a compromise to predicting 0 minutes.
-     *
-     * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
-     * @param reload Force rebuild of estimator rates using the revlog.
-     */
-    // Overridden because of the different queues in SchedV1 and V2
-    public int eta(Counts counts, boolean reload) {
-        double newRate;
-        double newTime;
-        double revRate;
-        double revTime;
-        double relrnRate;
-        double relrnTime;
-
-        if (reload || mEtaCache[0] == -1) {
-            try (Cursor cur = getCol()
-                        .getDb()
-                        .query("select "
-                                + "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, "
-                                + "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then time else null end) as revTime, "
-                                + "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime "
-                                + "from revlog where id > "
-                                + "?",
-                               (getCol().getSched().getDayCutoff() - (10 * SECONDS_PER_DAY)) * 1000)) {
-                if (!cur.moveToFirst()) {
-                    return -1;
-                }
-
-                newRate = cur.getDouble(0);
-                newTime = cur.getDouble(1);
-                revRate = cur.getDouble(2);
-                revTime = cur.getDouble(3);
-                relrnRate = cur.getDouble(4);
-                relrnTime = cur.getDouble(5);
-
-                if (!cur.isClosed()) {
-                    cur.close();
-                }
-
-            }
-
-            // If the collection has no revlog data to work with, assume a 20 second average rep for that type
-            newTime = newTime == 0 ? 20000 : newTime;
-            revTime = revTime == 0 ? 20000 : revTime;
-            relrnTime = relrnTime == 0 ? 20000 : relrnTime;
-            // And a 100% success rate
-            newRate = newRate == 0 ? 1 : newRate;
-            revRate = revRate == 0 ? 1 : revRate;
-            relrnRate = relrnRate == 0 ? 1 : relrnRate;
-
-            mEtaCache[0] = newRate;
-            mEtaCache[1] = newTime;
-            mEtaCache[2] = revRate;
-            mEtaCache[3] = revTime;
-            mEtaCache[4] = relrnRate;
-            mEtaCache[5] = relrnTime;
-
-        } else {
-            newRate = mEtaCache[0];
-            newTime = mEtaCache[1];
-            revRate= mEtaCache[2];
-            revTime = mEtaCache[3];
-            relrnRate = mEtaCache[4];
-            relrnTime = mEtaCache[5];
-        }
-
-        // Calculate the total time for each queue based on the historical average duration per rep
-        double newTotal = newTime * counts.getNew();
-        double relrnTotal = relrnTime * counts.getLrn();
-        double revTotal = revTime * counts.getRev();
-
-        // Now we have to predict how many additional relrn cards are going to be generated while reviewing the above
-        // queues, and how many relrn cards *those* reps will generate (and so on, until 0).
-
-        // Every queue has a failure rate, and each failure will become a relrn
-        int toRelrn = counts.getNew(); // Assume every new card becomes 1 relrn
-        toRelrn += Math.ceil((1 - relrnRate) * counts.getLrn());
-        toRelrn += Math.ceil((1 - revRate) * counts.getRev());
-
-        // Use the accuracy rate of the relrn queue to estimate how many reps we will end up with if the cards
-        // currently in relrn continue to fail at that rate. Loop through the failures of the failures until we end up
-        // with no predicted failures left.
-
-        // Cap the lower end of the success rate to ensure the loop ends (it could be 0 if no revlog history, or
-        // negative for other reasons). 5% seems reasonable to ensure the loop doesn't iterate too much.
-        relrnRate = Math.max(relrnRate, 0.05);
-        int futureReps = 0;
-        do {
-            // Truncation ensures the failure rate always decreases
-            int failures = (int) ((1 - relrnRate) * toRelrn);
-            futureReps += failures;
-            toRelrn = failures;
-        } while (toRelrn > 1);
-        double futureRelrnTotal = relrnTime * futureReps;
-
-        return (int) Math.round((newTotal + relrnTotal + revTotal + futureRelrnTotal) / 60000);
-    }
-
     /**
      * Change the counts to reflect that `card` should not be counted anymore. In practice, it means that the card has
      * been sent to the reviewer. Either through `getCard()` or through `undo`. Assumes that card's queue has not yet
@@ -3176,12 +2764,6 @@ public class SchedV2 extends AbstractSched {
         mContextReference = contextReference;
     }
 
-    /** not in libAnki. Added due to #5666: inconsistent selected deck card counts on sync */
-    @Override
-    public void setReportLimit(int reportLimit) {
-        this.mReportLimit = reportLimit;
-    }
-
     @Override
     public void undoReview(@NonNull Card oldCardData, boolean wasLeech) {
         // remove leech tag if it didn't have it before
@@ -3215,7 +2797,8 @@ public class SchedV2 extends AbstractSched {
     }
 
 
-    /** End #5666 */
+    /** Notifies the scheduler that there is no more current card. This is the case when a card is answered, when the
+     * scheduler is reset... #5666 */
     public void discardCurrentCard() {
         mCurrentCard = null;
         mCurrentCardParentsDid = null;
@@ -3257,5 +2840,4 @@ public class SchedV2 extends AbstractSched {
     public @Consts.BUTTON_TYPE int getGoodNewButton() {
         return Consts.BUTTON_THREE;
     }
-
 }

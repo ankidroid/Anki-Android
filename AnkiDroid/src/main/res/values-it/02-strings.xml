@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX%</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Apri barra di navigazione</string>
     <string name="drawer_close">Chiudi barra di navigazione</string>
@@ -101,6 +99,9 @@
         <item>Creato</item>
         <item>Nota modificata</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifica il limite odierno di nuove carte</string>
     <string name="custom_study_increase_review_limit">Modifica il limite odierno di revisioni</string>
@@ -267,8 +268,6 @@
     <string name="apk_share_error">Errore nella condivisione del file apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Questo file richiede una versione più recente di Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Caricamento di %s fallito.</string>
     <string name="activity_start_failed">Il sistema non ha un\'applicazione installata che può eseguire questa azione.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Le immagini della fotocamera possono essere grandi. Dovrai forse comprimere e ridimensionare le immagini nella directory multimediale]]></string>
     <string name="no_browser_notification">Nessun browser trovato, visita la pagina web tramite pc o cellulare: </string>
@@ -328,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore nel contenuto della carta: impossibile caricare «%s»</string>
     <string name="card_viewer_media_relative_protocol">Errore del Contenuto della Carta: Richiesto aggiornamento multimediale</string>
-    <string name="cannot_load_http_resource">Il caricamento delle risorse http non è più supportato</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossibile caricare il mazzo «%s»</string>
     <string name="search_decks">Cerca mazzi</string>

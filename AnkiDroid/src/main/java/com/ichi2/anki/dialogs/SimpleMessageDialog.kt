@@ -17,7 +17,6 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
@@ -32,11 +31,10 @@ class SimpleMessageDialog : AsyncDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         // FIXME this should be super.onCreateDialog(Bundle), no?
         super.onCreate(savedInstanceState)
-        return MaterialDialog.Builder(requireActivity())
-            .titleNullable(notificationTitle)
-            .contentNullable(notificationMessage)
-            .positiveText(res().getString(R.string.dialog_ok))
-            .onPositive { _: MaterialDialog?, _: DialogAction? ->
+        return MaterialDialog(requireActivity()).show {
+            titleNullable(notificationTitle)
+            contentNullable(notificationMessage)
+            positiveButton(R.string.dialog_ok) {
                 (activity as SimpleMessageDialogListener?)
                     ?.dismissSimpleMessageDialog(
                         requireArguments().getBoolean(
@@ -44,7 +42,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
                         )
                     )
             }
-            .show()
+        }
     }
 
     override val notificationTitle: String?

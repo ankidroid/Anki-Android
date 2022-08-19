@@ -47,11 +47,6 @@ public class ApiUtilsTest {
     }
 
     @Test
-    public void splitFieldsShouldReturnNullWhenStringIsNull() {
-        assertNull(Utils.splitFields(null));
-    }
-
-    @Test
     public void joinTagsShouldReturnEmptyStringWhenSetIsValid() {
         Set<String> set = new HashSet<>();
         set.add("A");
@@ -80,12 +75,7 @@ public class ApiUtilsTest {
     }
 
     @Test
-    public void splitTagsShouldReturnNullWhenStringIsNull() {
-        assertNull(Utils.splitTags(null));
-    }
-
-    @Test
     public void shouldGenerateProperCheckSum() {
-        assertEquals(Long.valueOf(3533307532L), Utils.fieldChecksum("AnkiDroid"));
+        assertEquals(3533307532L, Utils.fieldChecksum("AnkiDroid"));
     }
 }

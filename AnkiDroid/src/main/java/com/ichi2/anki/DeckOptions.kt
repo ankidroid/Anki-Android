@@ -29,12 +29,10 @@ import android.preference.PreferenceScreen
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.MenuItem
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask
@@ -66,13 +64,13 @@ class DeckOptions :
     AppCompatPreferenceActivity() {
     private lateinit var mOptions: DeckConfig
     private lateinit var mDeck: Deck
-    private var mUnmountReceiver: BroadcastReceiver? = null
     private lateinit var mPref: DeckPreferenceHack
 
     inner class DeckPreferenceHack : SharedPreferences {
         val mValues: MutableMap<String, String> = HashUtil.HashMapInit(30) // At most as many as in cacheValues
         val mSummaries: MutableMap<String, String?> = HashMap()
-        lateinit var progressDialog: MaterialDialog
+        @Suppress("Deprecation")
+        lateinit var progressDialog: android.app.ProgressDialog
         private val mListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
         val deckOptions: DeckOptions
@@ -263,11 +261,9 @@ class DeckOptions :
                                     e.log()
                                     // Libanki determined that a full sync will be required, so confirm with the user before proceeding
                                     // TODO : Use ConfirmationDialog DialogFragment -- not compatible with PreferenceActivity
-                                    MaterialDialog.Builder(this@DeckOptions)
-                                        .content(R.string.full_sync_confirmation)
-                                        .positiveText(R.string.dialog_ok)
-                                        .negativeText(R.string.dialog_cancel)
-                                        .onPositive { _: MaterialDialog?, _: DialogAction? ->
+                                    MaterialDialog(this@DeckOptions).show {
+                                        message(R.string.full_sync_confirmation)
+                                        positiveButton(R.string.dialog_ok) {
                                             col.modSchemaNoCheck()
                                             try {
                                                 remConf()
@@ -276,7 +272,8 @@ class DeckOptions :
                                                 throw RuntimeException(cmse)
                                             }
                                         }
-                                        .build().show()
+                                        negativeButton(R.string.dialog_cancel)
+                                    }
                                 }
                             }
                             "confSetSubdecks" -> if (value as Boolean) {
@@ -630,14 +627,6 @@ class DeckOptions :
         ActivityTransitionAnimation.slide(this, FADE)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onDestroy() {
-        super.onDestroy()
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver)
-        }
-    }
-
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     @KotlinCleanup("remove reduntant val res = resources")
     override fun updateSummaries() {
@@ -773,24 +762,6 @@ class DeckOptions :
             }
             return count
         }
-
-    /**
-     * Call exactly once, during creation
-     * to ensure that if the SD card is ejected
-     * this activity finish.
-     */
-    private fun registerExternalStorageListener() {
-        mUnmountReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (SdCardReceiver.MEDIA_EJECT == intent.action) {
-                    finish()
-                }
-            }
-        }
-        val iFilter = IntentFilter()
-        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-        registerReceiver(mUnmountReceiver, iFilter)
-    }
 
     private fun restartActivity() {
         recreate()

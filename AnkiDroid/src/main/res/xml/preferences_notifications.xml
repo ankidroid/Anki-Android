@@ -16,13 +16,15 @@
   -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/notification_pref"
-    android:key="@string/pref_notifications_screen_key">
+    android:key="@string/pref_notifications_screen_key"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ListPreference
         android:defaultValue="1000000"
         android:entries="@array/notification_minimum_cards_due_labels"
         android:entryValues="@array/notification_minimum_cards_due_values"
         android:key="@string/pref_notifications_minimum_cards_due_key"
-        android:title="@string/notification_pref_title" />
+        android:title="@string/notification_pref_title"
+        app:useSimpleSummaryProvider="true"/>
     <SwitchPreference
         android:defaultValue="false"
         android:key="@string/pref_notifications_vibrate_key"

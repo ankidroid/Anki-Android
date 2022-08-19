@@ -22,18 +22,18 @@ import android.database.sqlite.SQLiteDatabase
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ImportExportException
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.CollectionUtils.addAll
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.StringUtil.strip
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
 import timber.log.Timber
 import java.io.*
 
 @KotlinCleanup("lots in this file")
-open class Exporter(@JvmField protected val col: Collection, protected val did: Long?) {
+open class Exporter(@JvmField protected val col: Collection, protected val did: DeckId?) {
 
     /**
      * If set exporter will export only this deck, otherwise will export all cards
@@ -103,12 +103,12 @@ open class Exporter(@JvmField protected val col: Collection, protected val did: 
         s = s.replace("\\[sound:[^]]+\\]".toRegex(), "")
         s = Utils.stripHTML(s)
         s = s.replace("[ \\n\\t]+".toRegex(), " ")
-        s = strip(s)!!
+        s = s.trim()
         return s
     }
 }
 
-open class AnkiExporter(col: Collection, did: Long?, val includeSched: Boolean, val includeMedia: Boolean) : Exporter(col, did) {
+open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean, val includeMedia: Boolean) : Exporter(col, did) {
     var mediaDir: String? = null
 
     // Actual capacity will be set when known, if media are imported.
@@ -158,18 +158,15 @@ open class AnkiExporter(col: Collection, did: Long?, val includeSched: Boolean, 
         Timber.d("Copy notes")
         val strnids = Utils.ids2str(uniqueNids)
         col.db.database.execSQL("INSERT INTO DST_DB.notes select * from notes where id in $strnids")
-        // remove system tags if not exporting scheduling info
+        // remove system tags ("marked" and "leech") if not exporting scheduling info
         if (!includeSched) {
             Timber.d("Stripping system tags from list")
             val srcTags = col.db.queryStringList(
                 "select tags from notes where id in $strnids"
             )
-            val args = ArrayList<Array<Any?>>(srcTags.size)
-            val arg = arrayOfNulls<Any>(2)
-            for (row in srcTags.indices) {
-                arg[0] = removeSystemTags(srcTags[row])
-                arg[1] = uniqueNids[row]
-                args.add(row, arg)
+            val args = srcTags.indices.map { row ->
+                @NeedsTest("Test that the tags are removed")
+                arrayOf(removeSystemTags(srcTags[row]), uniqueNids[row])
             }
             col.db.executeMany("UPDATE DST_DB.notes set tags=? where id=?", args)
         }
@@ -348,7 +345,7 @@ class AnkiPackageExporter : AnkiExporter {
      * @param includeSched should include scheduling
      * @param includeMedia should include media
      */
-    constructor(col: Collection, did: Long, includeSched: Boolean, includeMedia: Boolean) : super(col, did, includeSched, includeMedia) {}
+    constructor(col: Collection, did: DeckId, includeSched: Boolean, includeMedia: Boolean) : super(col, did, includeSched, includeMedia) {}
 
     @Throws(IOException::class, JSONException::class, ImportExportException::class)
     override fun exportInto(path: String, context: Context) {
@@ -502,8 +499,8 @@ internal class ZipFile(path: String?) {
     @Throws(IOException::class)
     fun writeStr(entry: String?, value: String) {
         // TODO: Does this work with abnormal characters?
-        val `is`: InputStream = ByteArrayInputStream(value.toByteArray())
-        val bis = BufferedInputStream(`is`, BUFFER_SIZE)
+        val inputStream: InputStream = ByteArrayInputStream(value.toByteArray())
+        val bis = BufferedInputStream(inputStream, BUFFER_SIZE)
         val ze = ZipArchiveEntry(entry)
         writeEntry(bis, ze)
     }

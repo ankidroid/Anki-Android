@@ -18,8 +18,8 @@ package com.ichi2.anki.servicelayer
 
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.did
 import java.util.*
 
 object DeckService {
@@ -28,7 +28,7 @@ object DeckService {
         defaultDeckHasCards(col) || hasChildren(col, Consts.DEFAULT_DECK_ID)
 
     @Suppress("SameParameterValue")
-    private fun hasChildren(col: Collection, did: did) =
+    private fun hasChildren(col: Collection, did: DeckId) =
         col.decks.children(did).size > 0
 
     @JvmStatic
@@ -45,7 +45,7 @@ object DeckService {
      * @return the number of cards in the supplied deck and child decks
      */
     @JvmStatic
-    fun countCardsInDeckTree(col: Collection, did: did): Int {
+    fun countCardsInDeckTree(col: Collection, did: DeckId): Int {
         val children: TreeMap<String, Long> = col.decks.children(did)
         val dids = LongArray(children.size + 1)
         dids[0] = did

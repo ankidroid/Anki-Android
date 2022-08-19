@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Looper
+import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.annotation.CheckResult
 import androidx.annotation.NonNull
@@ -28,8 +29,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.exception.ConfirmModSchemaException
@@ -46,6 +48,8 @@ import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import com.ichi2.utils.JSONException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
@@ -57,6 +61,7 @@ import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
+import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
@@ -84,6 +89,8 @@ open class RobolectricTest : CollectionGetter {
     @CallSuper
     open fun setUp() {
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
+
+        ChangeManager.clearSubscribers()
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionHelper.getInstance().setColForTests(null)
@@ -163,6 +170,7 @@ open class RobolectricTest : CollectionGetter {
 
             TimeManager.reset()
         }
+        runBlocking { CollectionManager.discardBackend() }
     }
 
     /**
@@ -182,7 +190,7 @@ open class RobolectricTest : CollectionGetter {
         mBackground = true
     }
 
-    protected fun clickDialogButton(button: DialogAction?, checkDismissed: Boolean) {
+    protected fun clickDialogButton(button: WhichButton?, checkDismissed: Boolean) {
         val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
         dialog.getActionButton(button!!).performClick()
         if (checkDismissed) {
@@ -196,15 +204,23 @@ open class RobolectricTest : CollectionGetter {
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      */
     protected fun getDialogText(checkDismissed: Boolean): String? {
-        val dialog: MaterialDialog? = ShadowDialog.getLatestDialog() as MaterialDialog
-        if (dialog == null || dialog.contentView == null) {
-            return null
-        }
+        val dialog: MaterialDialog = ShadowDialog.getLatestDialog() as MaterialDialog
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
             return null
         }
-        return dialog.contentView!!.text.toString()
+        return dialog.view.contentLayout.findViewById<TextView>(R.id.md_text_message).text.toString()
+    }
+
+    fun awaitJob(job: Job?) {
+        job?.let {
+            runBlocking {
+                while (!job.isCompleted) {
+                    waitForAsyncTasksToComplete()
+                    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+                }
+            }
+        }
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
@@ -299,6 +315,7 @@ open class RobolectricTest : CollectionGetter {
 
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {
+        CollectionManager.closeCollectionBlocking()
         CollectionHelper.LazyHolder.INSTANCE = object : CollectionHelper() {
             override fun getCol(context: Context): Collection? {
                 return null
@@ -421,9 +438,9 @@ open class RobolectricTest : CollectionGetter {
     @Throws(InterruptedException::class)
     protected fun <Progress, Result : Computation<*>?> waitForTask(task: TaskDelegateBase<Progress, Result>, timeoutMs: Int) {
         val completed = booleanArrayOf(false)
-        val listener: TaskListener<Progress, Result> = object : TaskListener<Progress, Result>() {
+        val listener: TaskListener<Progress, Result?> = object : TaskListener<Progress, Result?>() {
             override fun onPreExecute() {}
-            override fun onPostExecute(result: Result) {
+            override fun onPostExecute(result: Result?) {
                 require(!(result == null || !result.succeeded())) { "Task failed" }
                 completed[0] = true
                 val RobolectricTest = ReentrantLock()
@@ -496,7 +513,7 @@ open class RobolectricTest : CollectionGetter {
     }
 
     fun equalFirstField(expected: Card, obtained: Card) {
-        MatcherAssert.assertThat(obtained.note().fields[0], Matchers.`is`(expected.note().fields[0]))
+        MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
     }
 
     @NonNull

@@ -47,26 +47,26 @@
     <!-- generic strings -->
     <string name="disabled">अक्षम</string>
     <string name="enabled">सक्षम</string>
+    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_minutes">%s min</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_search_no_results">No results</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_general_summ">सामान्य सेटिंग</string>
+    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">समीक्षा</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">श्वेतपट्ट</string>
     <string name="pref_cat_appearance" maxLength="41">दिखावट</string>
-    <string name="pref_cat_appearance_summ">थीम और डिफ़ॉल्ट फ़ॉन्ट बदलें</string>
     <string name="pref_cat_themes" maxLength="41">थीम</string>
     <string name="pref_cat_fonts" maxLength="41">फ़ॉन्ट</string>
     <string name="pref_cat_gestures" maxLength="41">इशारे</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
     <string name="pref_cat_advanced" maxLength="41">उन्नत</string>
-    <string name="pref_cat_advanced_summ">अनुकूलन और प्रायोगिक सुविधाएँ</string>
-    <string name="pref_cat_performance" maxLength="41">निष्पादन</string>
     <string name="pref_cat_workarounds" maxLength="41">वैकल्पिक हल</string>
     <string name="pref_cat_plugins" maxLength="41">प्लगइन</string>
-    <string name="about_title" maxLength="41">AnkiDroid के बारे में</string>
-    <string name="about_version">संस्करण: </string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">अंकन की चौड़ाई</string>
     <string name="use_input_tag" maxLength="41">पत्ता में उत्तर दर्ज करें</string>
@@ -127,7 +127,6 @@
     <string name="sync_fetch_missing_media_summ">सिंक्रनाइज़ करते समय गुम मीडिया स्वचालित रूप से लाएं</string>
     <string name="sync_account" maxLength="41">AnkiWeb खाता</string>
     <string name="sync_account_summ_logged_out">लॉगिन नहीं हैं</string>
-    <string name="sync_account_summ_logged_in" comment="The summary for the account setting when logged in. Parameter is the username (email)">%s</string>
     <string name="automatic_sync_choice" maxLength="41">स्वचालित सिंक्रनाइज़ेशन</string>
     <string name="automatic_sync_choice_summ">यदि अंतिम सिंक्रनाइज़ेशन 10 मिनट पहले से अधिक था, तो अनुप्रयोग प्रारंभ/निकास पर स्वचालित रूप से सिंक्रनाइज़ करें ।</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
@@ -179,16 +178,11 @@
     <string name="new_spread" maxLength="41">नए कार्ड की स्थिति</string>
     <string name="learn_cutoff" maxLength="41">आगे की सीमा जानें</string>
     <string name="time_limit" maxLength="41">Timebox समय सीमा</string>
-    <string name="time_limit_summ">XXX min</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">अगले दिन की शुरुआत (0 आधी रात है, 23 11PM है)</string>
-    <string name="day_offset_summ">मध्यरात्रि से XXX घंटे</string>
+    <string name="day_offset_summary">%s hours past midnight</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">मध्यरात्रि</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="sched_v2" maxLength="41">V2 अनुसूचक</string>
-    <string name="sched_v2_summ">Enable the new scheduler. Forces changes in one direction on next sync</string>
-    <string name="sched_ver_toggle_title">पुष्टि करें</string>
-    <string name="sched_ver_1to2">The experimental scheduler could cause incorrect scheduling. Please ensure you have read the documentation first. Proceed?</string>
     <string name="pref_keep_screen_on" maxLength="41">स्क्रीन चालू रखें</string>
     <string name="pref_keep_screen_on_summ">स्क्रीन टाइमआउट अक्षम करें</string>
     <string name="convert_fen_text" maxLength="41">शतरंज संकेतन समर्थन</string>
@@ -320,8 +314,15 @@
     <string name="no_code_formatting_summ">टाइप किए गए उत्तर परिणामों में प्रदर्शित होने वाले ‘􏿾’ को ठीक करता है</string>
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
-    <!-- Open Changelog-->
+    <!-- About -->
     <string name="open_changelog">परिवर्तन लॉग खोलें</string>
+    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="contributors_title">Contributors</string>
+    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="license">License</string>
+    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <!-- Controls -->
     <string name="binding_add_gesture">इशारा जोड़ें</string>
     <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Add key</string>
@@ -338,4 +339,16 @@
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <!-- Advanced -->
+    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
+    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
+    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
+    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <!-- Developer options -->
+    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
+    <string name="disable_dev_options">Disable developer options</string>
+    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    </string>
 </resources>

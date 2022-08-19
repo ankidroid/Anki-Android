@@ -323,7 +323,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         val decimalFormat = DecimalFormat(".00")
         val size = decimalFormat.format(length.toDouble())
         val content = getString(R.string.save_dialog_content, size)
-        imageFieldController!!.showCropDialog(content) { _, _ -> saveAndExit() }
+        imageFieldController!!.showCropDialog(content) { saveAndExit() }
     }
 
     @KotlinCleanup("scope function")

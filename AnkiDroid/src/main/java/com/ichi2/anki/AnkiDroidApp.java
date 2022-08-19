@@ -45,7 +45,6 @@ import com.ichi2.anki.services.BootService;
 import com.ichi2.anki.services.NotificationService;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.themes.Themes;
-import com.ichi2.libanki.Consts;
 import com.ichi2.utils.AdaptionUtil;
 import com.ichi2.utils.ExceptionUtil;
 import com.ichi2.utils.LanguageUtil;
@@ -55,7 +54,6 @@ import com.ichi2.utils.Permissions;
 import net.ankiweb.rsdroid.BackendFactory;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -175,6 +173,15 @@ public class AnkiDroidApp extends Application {
         // Get preferences
         SharedPreferences preferences = getSharedPrefs(this);
 
+        // TODO remove the following if-block once AnkiDroid uses the new schema by default
+        if (BuildConfig.LEGACY_SCHEMA) {
+            boolean isNewSchemaEnabledByPref = preferences.getBoolean(getString(R.string.pref_rust_backend_key), false);
+            if (isNewSchemaEnabledByPref) {
+                Timber.i("New schema enabled by preference");
+                BackendFactory.setDefaultLegacySchema(false);
+            }
+        }
+
         CrashReportService.initialize(this);
 
         if (BuildConfig.DEBUG) {
@@ -209,9 +216,9 @@ public class AnkiDroidApp extends Application {
         if (BuildConfig.DEBUG && !AdaptionUtil.isRunningAsUnitTest()) {
             preferences.edit().putBoolean("html_javascript_debugging", true).apply();
         }
-        
-        CardBrowserContextMenu.ensureConsistentStateWithSharedPreferences(this);
-        AnkiCardContextMenu.ensureConsistentStateWithSharedPreferences(this);
+
+        CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(this, preferences.getBoolean(getString(R.string.card_browser_external_context_menu_key), false));
+        AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(this, preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true));
         NotificationChannels.setup(getApplicationContext());
 
         // Configure WebView to allow file scheme pages to access cookies.
@@ -221,6 +228,8 @@ public class AnkiDroidApp extends Application {
 
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId();
+
+        LanguageUtil.setDefaultBackendLanguages();
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
         if (Permissions.hasStorageAccessPermission(this)) {
@@ -319,8 +328,6 @@ public class AnkiDroidApp extends Application {
                 preferences = getSharedPrefs(remoteContext);
             }
             Configuration langConfig = getLanguageConfig(remoteContext.getResources().getConfiguration(), preferences);
-            // TODO: support fallback languages (backend already automatically adds English to the end)
-            BackendFactory.INSTANCE.setDefaultLanguagesFromLocales(Arrays.asList(langConfig.locale));
             return remoteContext.createConfigurationContext(langConfig);
         } catch (Exception e) {
             Timber.e(e, "failed to update context with new language");

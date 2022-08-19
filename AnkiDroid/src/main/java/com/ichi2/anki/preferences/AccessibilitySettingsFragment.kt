@@ -15,19 +15,17 @@
  */
 package com.ichi2.anki.preferences
 
-import com.ichi2.anki.Preferences.SpecificSettingsFragment
 import com.ichi2.anki.R
 
 /**
  * Fragment with preferences related to notifications
  */
-class AccessibilitySettingsFragment : SpecificSettingsFragment() {
+class AccessibilitySettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
-        get() = R.xml.preferences_acessibility
+        get() = R.xml.preferences_accessibility
     override val analyticsScreenNameConstant: String
         get() = "prefs.accessibility"
 
     override fun initSubscreen() {
-        addPreferencesFromResource(preferenceResource)
     }
 }

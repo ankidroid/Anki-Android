@@ -29,11 +29,11 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.hasSize
-import org.hamcrest.core.Is
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,7 +42,6 @@ import timber.log.Timber
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("is -> equalTo")
 class FinderTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
@@ -90,17 +89,16 @@ class FinderTest : RobolectricTest() {
     private fun burySiblings(sched: SchedV2, toManuallyBury: Card): Card {
         sched.answerCard(toManuallyBury, Consts.BUTTON_ONE)
         val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
-        assertThat(siblingBuried.queue, Is.`is`(Consts.QUEUE_TYPE_SIBLING_BURIED))
+        assertThat(siblingBuried.queue, equalTo(Consts.QUEUE_TYPE_SIBLING_BURIED))
         return siblingBuried
     }
 
-    @KotlinCleanup("Replace with equalTo")
     private fun buryManually(sched: SchedV2, id: Long): Card {
         sched.buryCards(longArrayOf(id), true)
         val manuallyBuriedCard = Card(col, id)
         assertThat(
             manuallyBuriedCard.queue,
-            Is.`is`(Consts.QUEUE_TYPE_MANUALLY_BURIED)
+            equalTo(Consts.QUEUE_TYPE_MANUALLY_BURIED)
         )
         return manuallyBuriedCard
     }
@@ -165,7 +163,7 @@ class FinderTest : RobolectricTest() {
         col.tags.bulkAdd(col.db.queryLongList("select id from notes"), "foo bar")
         assertEquals(5, col.findCards("tag:foo").size)
         assertEquals(5, col.findCards("tag:bar").size)
-        col.tags.bulkRem(col.db.queryLongList("select id from notes"), "foo")
+        col.tags.bulkAdd(col.db.queryLongList("select id from notes"), "foo", add = false)
         assertEquals(0, col.findCards("tag:foo").size)
         assertEquals(5, col.findCards("tag:bar").size)
         // text searches

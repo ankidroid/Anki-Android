@@ -178,7 +178,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                 try {
                     val response = JSONObject(ret.body!!.string())
                     hostkey = response.getString("key")
-                    valid = hostkey != null && hostkey.length > 0
+                    valid = hostkey.isNotEmpty()
                 } catch (e: JSONException) {
                     Timber.w(e)
                     valid = false
@@ -240,6 +240,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
     @KotlinCleanup("Scoped function")
     private fun doInBackgroundSync(data: Payload): Payload {
         isCancellable = true
+        Companion.isCancelled = false
         Timber.d("doInBackgroundSync()")
         // Block execution until any previous background task finishes, or timeout after 5s
         val ok = TaskManager.waitToFinish(5)

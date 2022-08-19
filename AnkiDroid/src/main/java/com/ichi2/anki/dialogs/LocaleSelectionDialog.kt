@@ -30,8 +30,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleListAdapter.TextViewHolder
@@ -72,12 +72,15 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         val adapter = LocaleListAdapter(Locale.getAvailableLocales())
         setupRecyclerView(activity, tagsDialogView, adapter)
         inflateMenu(tagsDialogView, adapter)
+
         // Only show a negative button, use the RecyclerView for positive actions
-        val builder = MaterialDialog.Builder(activity)
-            .negativeText(getString(R.string.dialog_cancel))
-            .customView(tagsDialogView, false)
-            .onNegative { _: MaterialDialog?, _: DialogAction? -> mDialogHandler!!.onLocaleSelectionCancelled() }
-        val dialog: Dialog = builder.build()
+        val dialog = MaterialDialog(activity).show {
+            customView(view = tagsDialogView, noVerticalPadding = true)
+            negativeButton(text = getString(R.string.dialog_cancel)) {
+                mDialogHandler!!.onLocaleSelectionCancelled()
+            }
+        }
+
         val window = dialog.window
         if (window != null) {
             resizeWhenSoftInputShown(window)

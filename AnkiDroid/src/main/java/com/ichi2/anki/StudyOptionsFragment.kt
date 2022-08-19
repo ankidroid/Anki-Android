@@ -32,13 +32,12 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
-import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.servicelayer.ComputeResult
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.*
 import com.ichi2.async.TaskListener
@@ -51,6 +50,7 @@ import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
@@ -60,7 +60,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private var mCurrentContentView = CONTENT_STUDY_OPTIONS
 
     /** Alerts to inform the user about different situations  */
-    private var mProgressDialog: MaterialDialog? = null
+    @Suppress("Deprecation")
+    private var mProgressDialog: android.app.ProgressDialog? = null
 
     /** Whether we are closing in order to go to the reviewer. If it's the case, UPDATE_VALUES_FROM_DECK should not be
      * cancelled as the counts will be used in review.  */
@@ -244,9 +245,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         parent.addView(newView)
     }
 
-    private val mUndoListener: TaskListener<Unit, ComputeResult> = object : TaskListener<Unit, ComputeResult>() {
+    private val mUndoListener: TaskListener<Unit, ComputeResult?> = object : TaskListener<Unit, ComputeResult?>() {
         override fun onPreExecute() {}
-        override fun onPostExecute(result: ComputeResult) {
+        override fun onPostExecute(result: ComputeResult?) {
             openReviewer()
         }
     }
@@ -255,7 +256,17 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         when (item.itemId) {
             R.id.action_undo -> {
                 Timber.i("StudyOptionsFragment:: Undo button pressed")
-                Undo().runWithHandler(mUndoListener)
+                if (BackendFactory.defaultLegacySchema) {
+                    Undo().runWithHandler(mUndoListener)
+                } else {
+                    launchCatchingTask {
+                        if (requireActivity().backendUndoAndShowPopup()) {
+                            openReviewer()
+                        } else {
+                            Undo().runWithHandler(mUndoListener)
+                        }
+                    }
+                }
                 return true
             }
             R.id.action_deck_or_study_options -> {
@@ -301,15 +312,15 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 return true
             }
             R.id.action_rename -> {
-                (activity as DeckPicker?)!!.renameDeckDialog(col!!.decks.selected())
+                (activity as DeckPicker).renameDeckDialog(col!!.decks.selected())
                 return true
             }
             R.id.action_delete -> {
-                (activity as DeckPicker?)!!.confirmDeckDeletion(col!!.decks.selected())
+                (activity as DeckPicker).confirmDeckDeletion(col!!.decks.selected())
                 return true
             }
             R.id.action_export -> {
-                (activity as DeckPicker?)!!.exportDeck(col!!.decks.selected())
+                (activity as DeckPicker).exportDeck(col!!.decks.selected())
                 return true
             }
             else -> return false
@@ -369,7 +380,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)
                 icon!!.isAutoMirrored = true
                 mToolbar!!.navigationIcon = icon
-                mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity?)!!.finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
+                mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity).finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
             }
         } catch (e: IllegalStateException) {
             if (!CollectionHelper.getInstance().colIsOpen()) {
@@ -391,6 +402,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     var onRequestReviewActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         Timber.i("StudyOptionsFragment::mOnRequestReviewActivityResult")
+        Timber.d("Handling onActivityResult for StudyOptionsFragment (openReview, resultCode = %d)", result.resultCode)
         if (mToolbar != null) {
             configureToolbar() // FIXME we were crashing here because mToolbar is null #8913
         } else {
@@ -403,13 +415,14 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
             if (col!!.sched.count() > 0 && mStudyOptionsView != null) {
-                val rootLayout = mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
-                showSnackbar(requireActivity(), R.string.studyoptions_no_cards_due, false, 0, null, rootLayout)
+                mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
+                    .showSnackbar(R.string.studyoptions_no_cards_due)
             }
         }
     }
     private var onDeckOptionsActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         Timber.i("StudyOptionsFragment::mOnDeckOptionsActivityResult")
+        Timber.d("Handling onActivityResult for StudyOptionsFragment (deckOptions/filteredDeckOptions, resultCode = %d)", result.resultCode)
         configureToolbar()
         if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             closeStudyOptions(result.resultCode)

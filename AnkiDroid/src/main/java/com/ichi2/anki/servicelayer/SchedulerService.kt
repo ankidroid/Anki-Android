@@ -217,13 +217,13 @@ class SchedulerService {
     companion object {
         fun <T> ActionAndNextCardV<T>.computeThenGetNextCardInTransaction(task: (AnkiCollection) -> T): Computation<NextCard<T>> {
             return try {
-                val maybeNextCard = col.db.executeInTransactionReturn {
+                val maybeNextCard = col.db.executeInTransaction {
                     col.sched.deferReset()
                     val result = task(col)
                     // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
                     val maybeNextCard = col.sched.card
 
-                    return@executeInTransactionReturn NextCard(maybeNextCard, result)
+                    return@executeInTransaction NextCard(maybeNextCard, result)
                 }
                 Computation.ok(maybeNextCard)
             } catch (e: RuntimeException) {

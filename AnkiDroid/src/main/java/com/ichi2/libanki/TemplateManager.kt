@@ -28,7 +28,6 @@ import com.ichi2.libanki.backend.model.to_backend_note
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.StringUtil
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 import timber.log.Timber
@@ -168,7 +167,7 @@ class TemplateManager {
                 val fields = _note.items().map { Pair(it[0], it[1]) }.toMap().toMutableMap()
 
                 // add (most) special fields
-                fields["Tags"] = StringUtil.strip(_note.stringTags())
+                fields["Tags"] = _note.stringTags().trim()
                 fields["Type"] = _note_type.name
                 fields["Deck"] = _col.decks.name(_card.oDid or _card.did)
                 fields["Subdeck"] = Decks.basename(fields["Deck"])
@@ -247,7 +246,7 @@ class TemplateManager {
                     backend.renderUncommittedCardLegacy(
                         _note.to_backend_note(),
                         _card.ord,
-                        BackendUtils.to_json_bytes(JSONObject(_template)),
+                        BackendUtils.to_json_bytes(JSONObject(_template!!.toMap())),
                         _fill_empty,
                     )
                 } else {
@@ -266,10 +265,8 @@ class TemplateManager {
             @get:JvmName("getAnswerText")
             @set:JvmName("setAnswerText")
             var answer_text: str,
-            @RustCleanup("make non-null")
-            val question_av_tags: List<AvTag>?,
-            @RustCleanup("make non-null")
-            val answer_av_tags: List<AvTag>?,
+            val question_av_tags: List<AvTag>,
+            val answer_av_tags: List<AvTag>,
             val css: str = ""
         ) {
 
@@ -291,7 +288,7 @@ class TemplateManager {
             q = q ?: template.getString("qfmt")
             a = a ?: template.getString("afmt")
 
-            return Pair(q!!, a!!)
+            return Pair(q, a)
         }
 
         /** Complete rendering by applying any pending custom filters. */

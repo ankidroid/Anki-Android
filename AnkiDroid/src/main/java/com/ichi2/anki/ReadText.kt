@@ -15,20 +15,22 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
-import android.view.View
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.VisibleForTesting
 import com.afollestad.materialdialogs.MaterialDialog
-import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.UIUtils.showSnackbar
+import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.TTSTag
+import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import timber.log.Timber
 import java.lang.ref.WeakReference
@@ -45,7 +47,7 @@ object ReadText {
     var textToSpeak: String? = null
         private set
     private lateinit var flashCardViewer: WeakReference<Context>
-    private var mDid: Long = 0
+    private var mDid: DeckId = 0
     private var mOrd = 0
     var questionAnswer: SoundSide? = null
         private set
@@ -74,7 +76,7 @@ object ReadText {
         }
     }
 
-    private fun getLanguage(did: Long, ord: Int, qa: SoundSide): String {
+    private fun getLanguage(did: DeckId, ord: Int, qa: SoundSide): String {
         return MetaDB.getLanguage(flashCardViewer.get()!!, did, ord, qa)
     }
 
@@ -86,23 +88,24 @@ object ReadText {
      * @param ord  The card template ordinal
      * @param qa   The card question or card answer
      */
-    fun selectTts(text: String?, did: Long, ord: Int, qa: SoundSide?) {
+    @SuppressLint("CheckResult")
+    fun selectTts(text: String?, did: DeckId, ord: Int, qa: SoundSide?, context: Context) {
         // TODO: Consolidate with ReadText.readCardSide
         textToSpeak = text
         questionAnswer = qa
         mDid = did
         mOrd = ord
         val res = flashCardViewer.get()!!.resources
-        val builder = MaterialDialog.Builder(flashCardViewer.get()!!)
+        val dialog = MaterialDialog(flashCardViewer.get()!!)
         // Build the language list if it's empty
         if (availableTtsLocales.isEmpty()) {
             buildAvailableLanguages()
         }
         if (availableTtsLocales.isEmpty()) {
             Timber.w("ReadText.textToSpeech() no TTS languages available")
-            builder.content(res.getString(R.string.no_tts_available_message))
-                .iconAttr(R.attr.dialogErrorIcon)
-                .positiveText(R.string.dialog_ok)
+            dialog.message(R.string.no_tts_available_message)
+                .icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                .positiveButton(R.string.dialog_ok)
         } else {
             val dialogItems = ArrayList<CharSequence>(availableTtsLocales.size)
             val dialogIds = ArrayList<String>(availableTtsLocales.size)
@@ -115,10 +118,9 @@ object ReadText {
             }
             val items = arrayOfNulls<String>(dialogItems.size)
             dialogItems.toArray(items)
-            builder.title(res.getString(R.string.select_locale_title))
-                .items(*items)
-                .itemsCallback { _: MaterialDialog?, _: View?, which: Int, _: CharSequence? ->
-                    val locale = dialogIds[which]
+            dialog.title(R.string.select_locale_title)
+                .listItems(items = items.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
+                    val locale = dialogIds[index]
                     Timber.d("ReadText.selectTts() user chose locale '%s'", locale)
                     MetaDB.storeLanguage(flashCardViewer.get()!!, mDid, mOrd, questionAnswer!!, locale)
                     if (locale != NO_TTS) {
@@ -129,13 +131,13 @@ object ReadText {
                 }
         }
         // Show the dialog after short delay so that user gets a chance to preview the card
-        showDialogAfterDelay(builder, 500)
+        showDialogAfterDelay(dialog, 500)
     }
 
-    internal fun showDialogAfterDelay(builder: MaterialDialog.Builder, delayMillis: Int) {
+    internal fun showDialogAfterDelay(dialog: MaterialDialog, delayMillis: Int) {
         postDelayedOnNewHandler({
             try {
-                builder.build().show()
+                dialog.show()
             } catch (e: BadTokenException) {
                 Timber.w(e, "Activity invalidated before TTS language dialog could display")
             }
@@ -150,7 +152,7 @@ object ReadText {
      * @param did              Index of the deck containing the card.
      * @param ord              The card template ordinal.
      */
-    fun readCardSide(textsToRead: List<TTSTag>, cardSide: SoundSide, did: Long, ord: Int) {
+    fun readCardSide(textsToRead: List<TTSTag>, cardSide: SoundSide, did: DeckId, ord: Int, context: Context) {
         var isFirstText = true
         var playedSound = false
         for (textToRead in textsToRead) {
@@ -158,8 +160,12 @@ object ReadText {
                 continue
             }
             playedSound = playedSound or textToSpeech(
-                textToRead, did, ord, cardSide,
-                if (isFirstText) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD
+                textToRead,
+                did,
+                ord,
+                cardSide,
+                if (isFirstText) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD,
+                context
             )
             isFirstText = false
         }
@@ -189,7 +195,7 @@ object ReadText {
      * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
      * @return false if a sound was not played
      */
-    private fun textToSpeech(tag: TTSTag, did: Long, ord: Int, qa: SoundSide, queueMode: Int): Boolean {
+    private fun textToSpeech(tag: TTSTag, did: DeckId, ord: Int, qa: SoundSide, queueMode: Int, context: Context): Boolean {
         textToSpeak = tag.fieldText
         questionAnswer = qa
         mDid = did
@@ -227,7 +233,7 @@ object ReadText {
                 false
             )
         }
-        selectTts(textToSpeak, mDid, mOrd, questionAnswer)
+        selectTts(textToSpeak, mDid, mOrd, questionAnswer, context)
         return true
     }
 
@@ -253,7 +259,7 @@ object ReadText {
                 if (!availableTtsLocales.isEmpty()) {
                     // notify the reviewer that TTS has been initialized
                     Timber.d("TTS initialized and available languages found")
-                    (context as AbstractFlashcardViewer?)!!.ttsInitialized()
+                    (context as AbstractFlashcardViewer).ttsInitialized()
                 } else {
                     showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
                     Timber.w("TTS initialized but no available languages found")
@@ -267,13 +273,11 @@ object ReadText {
                     override fun onError(utteranceId: String) {
                         Timber.v("Android TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.")
                         val helpUrl = Uri.parse(context.getString(R.string.link_faq_tts))
-                        val ankiActivity = context as AnkiActivity?
-                        ankiActivity!!.mayOpenUrl(helpUrl)
-                        showSnackbar(
-                            ankiActivity, R.string.no_tts_available_message, false, R.string.help,
-                            { openTtsHelpUrl(helpUrl) }, ankiActivity.findViewById(R.id.root_layout),
-                            Snackbar.Callback()
-                        )
+                        val ankiActivity = context as AnkiActivity
+                        ankiActivity.mayOpenUrl(helpUrl)
+                        ankiActivity.showSnackbar(R.string.no_tts_available_message) {
+                            setAction(R.string.help) { openTtsHelpUrl(helpUrl) }
+                        }
                     }
 
                     override fun onStart(arg0: String) {

@@ -13,12 +13,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -45,6 +47,7 @@ import com.ichi2.anki.analytics.UsageAnalytics;
 import com.ichi2.anki.dialogs.AsyncDialogFragment;
 import com.ichi2.anki.dialogs.DialogHandler;
 import com.ichi2.anki.dialogs.SimpleMessageDialog;
+import com.ichi2.anki.snackbar.SnackbarsKt;
 import com.ichi2.async.CollectionLoader;
 import com.ichi2.compat.CompatHelper;
 import com.ichi2.compat.customtabs.CustomTabActivityHelper;
@@ -112,6 +115,9 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         mCustomTabActivityHelper = new CustomTabActivityHelper();
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.transparent));
+        }
     }
 
     @Override
@@ -299,7 +305,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             super.startActivityForResult(intent, requestCode);
         } catch (ActivityNotFoundException e) {
             Timber.w(e);
-            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed,true);
+            SnackbarsKt.showSnackbar(this, R.string.activity_start_failed);
         }
     }
 
@@ -323,7 +329,7 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
             launcher.launch(intent, ActivityTransitionAnimation.getAnimationOptions(this, animation));
         } catch (ActivityNotFoundException e) {
             Timber.w(e);
-            UIUtils.showSimpleSnackbar(this, R.string.activity_start_failed, true);
+            SnackbarsKt.showSnackbar(this, R.string.activity_start_failed);
         }
     }
 
@@ -487,6 +493,14 @@ public class AnkiActivity extends AppCompatActivity implements SimpleMessageDial
         CustomTabsIntent customTabsIntent = builder.build();
         CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent);
         CustomTabActivityHelper.openCustomTab(this, customTabsIntent, url, new CustomTabsFallback());
+    }
+
+    public void openUrl(@NonNull String urlString) {
+        openUrl(Uri.parse(urlString));
+    }
+
+    public void openUrl(@StringRes int url) {
+        openUrl(getString(url));
     }
 
 

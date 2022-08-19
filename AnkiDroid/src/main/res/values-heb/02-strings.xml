@@ -44,8 +44,6 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- How to format a percentage shown in the summary field of a preference -->
-    <string name="preference_summary_percentage">XXX %</string>
     <!-- Navigation drawer strings -->
     <string name="drawer_open">פתיחת מגירה</string>
     <string name="drawer_close">סגירת מגירה</string>
@@ -101,6 +99,9 @@
         <item>נוצר</item>
         <item>רשומה השתנתה</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">שינוי מגבלת קלפים חדשים להיום</string>
     <string name="custom_study_increase_review_limit">שינוי מגבלת קלפים לחזרה להיום</string>
@@ -291,8 +292,6 @@
     <string name="apk_share_error">שגיאה בשיתוף קובץ apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">קובץ זה דורש גרסה חדשה יותר של Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">הטעינה של ‚%s’ נכשלה.</string>
     <string name="activity_start_failed">במערכת לא מותקן יישומון שיכול לבצע את הפעולה הזאת.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[תמונות המצלמה גדולות מדי. אולי עדיף לך לדחוס ולשנות את גודל התמונות בתיקיית המדיה]]></string>
     <string name="no_browser_notification">לא נמצא דפדפן, נא לבקר באתר במחשב או בנייד: </string>
@@ -358,7 +357,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">תקלה בתוכן הקלף: נכשל בטעינת %s</string>
     <string name="card_viewer_media_relative_protocol">תקלה בתוכן הקלף: נדרש עדכון מדיה</string>
-    <string name="cannot_load_http_resource">טעינת משאבי http אינה נתמכת עוד</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">טעינת החפיסה %s נכשלה</string>
     <string name="search_decks">חיפוש בחפיסות</string>

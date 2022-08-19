@@ -54,6 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">उच्चारण खोजा जा रहा है</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">उच्चारण विफल</string>
+    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
     <string name="multimedia_editor_word_search_try_lower_case">केवल छोटे अक्षरों को उपयोग करने का प्रयास करें</string>
     <string name="multimedia_editor_poweredbeolingus">Beolingus द्वारा संचालित</string>
     <!-- Field editing general -->

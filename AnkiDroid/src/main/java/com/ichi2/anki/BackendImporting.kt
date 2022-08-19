@@ -19,24 +19,30 @@
 package com.ichi2.anki
 
 import anki.import_export.ImportResponse
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.exportAnkiPackage
+import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
+import com.ichi2.libanki.undoableOp
 import net.ankiweb.rsdroid.Translations
-import timber.log.Timber
 
-fun DeckPicker.importApkg(apkgPath: String) {
-    val deckPicker = this
-    val col = CollectionHelper.getInstance().getCol(deckPicker.baseContext).newBackend
-    catchingLifecycleScope(this) {
-        val report = col.opWithProgress({
-            if (it.hasImporting()) {
-                // TODO: show progress in GUI
-                Timber.i("%s", it.importing)
+fun DeckPicker.importApkgs(apkgPaths: List<String>) {
+    launchCatchingTask {
+        for (apkgPath in apkgPaths) {
+            val report = withProgress(
+                extractProgress = {
+                    if (progress.hasImporting()) {
+                        text = progress.importing
+                    }
+                },
+            ) {
+                undoableOp {
+                    importAnkiPackage(apkgPath)
+                }
             }
-        }) {
-            importAnkiPackage(apkgPath)
+            showSimpleMessageDialog(summarizeReport(col.tr, report))
         }
-        showSimpleMessageDialog(summarizeReport(col.tr, report))
     }
 }
 
@@ -59,22 +65,38 @@ private fun summarizeReport(tr: Translations, output: ImportResponse): String {
     return msgs.joinToString("\n")
 }
 
-fun DeckPicker.exportApkg(
+suspend fun AnkiActivity.exportApkg(
     apkgPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
-    deckId: Long?
+    deckId: DeckId?
 ) {
-    val deckPicker = this
-    val col = CollectionHelper.getInstance().getCol(deckPicker.baseContext).newBackend
-    catchingLifecycleScope(this) {
-        runInBackgroundWithProgress(col, {
-            if (it.hasExporting()) {
-                // TODO: show progress in GUI
-                Timber.i("%s", it.exporting)
+    withProgress(
+        extractProgress = {
+            if (progress.hasExporting()) {
+                text = progress.exporting
             }
-        }) {
-            col.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
+        },
+    ) {
+        withCol {
+            newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, deckId)
+        }
+    }
+}
+
+suspend fun AnkiActivity.exportColpkg(
+    colpkgPath: String,
+    withMedia: Boolean,
+) {
+    withProgress(
+        extractProgress = {
+            if (progress.hasExporting()) {
+                text = progress.exporting
+            }
+        },
+    ) {
+        withCol {
+            newBackend.exportCollectionPackage(colpkgPath, withMedia, true)
         }
     }
 }

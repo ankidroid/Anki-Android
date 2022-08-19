@@ -23,6 +23,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
+import com.ichi2.testutils.items
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.junit.Test
@@ -35,7 +37,7 @@ class DeckPickerContextMenuAndroidTest : RobolectricTest() {
         // "Delete deck" was previously close to "Custom study" which caused misclicks.
         // This is less likely at the bottom of the list
         testDialog(Consts.DEFAULT_DECK_ID) { dialog ->
-            val lastItem = dialog.items!!.last()
+            val lastItem = dialog.items.last()
             MatcherAssert.assertThat(
                 "'Delete deck' should be last item in the menu",
                 lastItem,
@@ -50,7 +52,7 @@ class DeckPickerContextMenuAndroidTest : RobolectricTest() {
      * @param deckId The deck ID to test
      * @param execAssertions the assertions to perform on the [MaterialDialog] under test
      */
-    private fun testDialog(@Suppress("SameParameterValue") deckId: Long, execAssertions: (MaterialDialog) -> Unit) {
+    private fun testDialog(@Suppress("SameParameterValue") deckId: DeckId, execAssertions: (MaterialDialog) -> Unit) {
         val args = DeckPickerContextMenu(col)
             .withArguments(deckId)
             .arguments

@@ -112,7 +112,7 @@
     <string name="sync_media_sanity_failed">Синхронизация медиафайлов завершена, но количество файлов не совпадает. В следующей раз будет произведена полная синхронизация.</string>
     <string name="sync_media_db_error">Не удалось синхронизировать медиафайлы, потому что текущая база данных повреждена. Запустите проверку медиафайлов.</string>
     <string name="sync_media_error">Ошибка при синхронизации медиафайлов</string>
-    <string name="sync_media_error_check">Ошибка при синхронизации медиафайлов. Выберите \"Проверку медиафайлов\".</string>
+    <string name="sync_media_error_check">Ошибка при синхронизации медиафайлов. Попробуйте проверить медиафайлы.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_basic_check_failed">Запустите «%s» перед синхронизацией</string>
     <string name="sync_sanity_local">Локальную</string>

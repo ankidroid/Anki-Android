@@ -47,7 +47,7 @@ class CardInfo : AnkiActivity() {
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var model: CardInfoModel? = null
         private set
-    private var mCardId: Long = 0
+    private var mCardId: CardId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -206,7 +206,7 @@ class CardInfo : AnkiActivity() {
     }
 
     class CardInfoModel(
-        val cardId: Long,
+        val cardId: CardId,
         val firstReviewDate: Long?,
         val latestReviewDate: Long?,
         val dues: String,
@@ -219,7 +219,7 @@ class CardInfo : AnkiActivity() {
         val cardType: String?,
         val noteType: String,
         val deckName: String,
-        val noteId: Long,
+        val noteId: NoteId,
         val entries: List<RevLogEntry>
     ) {
         val due: String

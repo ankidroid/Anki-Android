@@ -79,7 +79,7 @@ class LegacyDecksTest : RobolectricTest() {
         decks.checkIntegrity()
         val deckA: JSONObject? = decks.byName("A")
         assertNotNull(deckA, "A deck with name \"A\" should still exists")
-        assertThat("A deck with name \"A\" should have name \"A\"", deckA.getString("name"), Matchers.`is`("A"))
+        assertThat("A deck with name \"A\" should have name \"A\"", deckA.getString("name"), Matchers.equalTo("A"))
         val deckAPlus: JSONObject? = decks.byName("A+")
         assertNotNull(deckAPlus, "A deck with name \"A+\" should still exists")
     }

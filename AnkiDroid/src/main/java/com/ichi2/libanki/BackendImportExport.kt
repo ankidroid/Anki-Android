@@ -74,9 +74,8 @@ fun importCollectionPackage(
 }
 
 /**
- * Export the collection into a .colpkg file. This closes the collection (since it may need to
- * downgrade the schema for a legacy export), and col.reopen() must be called afterwards.
- * * If legacy=false, a file targeting Anki 2.1.50+ is created. It compresses better and is faster to
+ * Export the collection into a .colpkg file.
+ * If legacy=false, a file targeting Anki 2.1.50+ is created. It compresses better and is faster to
  * create, but older clients can not read it.
  */
 fun CollectionV16.exportCollectionPackage(
@@ -84,11 +83,13 @@ fun CollectionV16.exportCollectionPackage(
     includeMedia: Boolean,
     legacy: Boolean = true
 ) {
+    close(save = true, downgrade = false, forFullSync = true)
     backend.exportCollectionPackage(
         outPath = outPath,
         includeMedia = includeMedia,
         legacy = legacy
     )
+    reopen(afterFullSync = false)
 }
 
 /**
@@ -107,7 +108,7 @@ fun CollectionV16.exportAnkiPackage(
     outPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
-    deckId: Long?,
+    deckId: DeckId?,
     legacy: Boolean = true,
 ) {
     val limit = exportLimit {
