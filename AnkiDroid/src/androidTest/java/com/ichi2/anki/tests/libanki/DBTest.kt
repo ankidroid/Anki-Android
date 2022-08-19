@@ -25,7 +25,6 @@ import androidx.test.rule.GrantPermissionRule
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.libanki.DB
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import org.junit.Assert
 import org.junit.Rule
@@ -35,11 +34,10 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.*
 
-@KotlinCleanup("IDE Lint")
 @RunWith(AndroidJUnit4::class)
 class DBTest : InstrumentedTest() {
     @get:Rule
-    var runtimePermissionRule =
+    var runtimePermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     @Test

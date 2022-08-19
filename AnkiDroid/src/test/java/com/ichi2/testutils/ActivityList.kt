@@ -30,16 +30,14 @@ import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
 import com.ichi2.utils.KotlinCleanup
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
-import java.util.Arrays
 import java.util.function.Function
 
 object ActivityList {
     // TODO: This needs a test to ensure that all activities are valid with the given intents
     // Otherwise, ActivityStartupUnderBackup and other classes could be flaky
-    @KotlinCleanup("asList -> listOf()")
     @CheckResult
     fun allActivitiesAndIntents(): List<ActivityLaunchParam> {
-        return Arrays.asList(
+        return listOf(
             get(DeckPicker::class.java),
             // IntentHandler has unhandled intents
             get(IntentHandler::class.java) { ctx: Context ->
@@ -95,12 +93,10 @@ object ActivityList {
         return intent
     }
 
-    @KotlinCleanup("IDE lint for variable 'intentBuilder' ")
-    @KotlinCleanup("make constructor private")
     @KotlinCleanup("simplify expression by removing `get()`")
     class ActivityLaunchParam(
         var activity: Class<out Activity>,
-        var intentBuilder: Function<Context, Intent>
+        private var intentBuilder: Function<Context, Intent>
     ) {
         val simpleName: String
             get() = activity.simpleName

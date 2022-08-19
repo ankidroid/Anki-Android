@@ -30,14 +30,12 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
-import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 // Note: These tests can't be run individually but can from the class-level
 // gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.sched.AbstractSchedTest.*"
-@KotlinCleanup("IDE Lint")
 @KotlinCleanup("is -> equalTo")
 @KotlinCleanup("reduce newlines in asserts")
 @KotlinCleanup("improve increaseAndAssertNewCountsIs")
@@ -355,7 +353,7 @@ mw.col.sched.extendLimits(1, 0)
         IncreaseToday().test()
     }
 
-    protected fun undoAndRedo(preload: Boolean) {
+    private fun undoAndRedo(preload: Boolean) {
         val col = col
         val conf = col.decks.confForDid(1)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 3.0, 5.0, 10.0)))
@@ -468,7 +466,7 @@ mw.col.sched.extendLimits(1, 0)
         addNoteUsingBasicAndReversedModel("foo", "bar")
         addNoteUsingBasicModel("plop", "foo")
         col.reset()
-        var card = sched.card
+        val card = sched.card
         sched.preloadNextCard()
         sched.answerCard(card!!, Consts.BUTTON_THREE)
         @Suppress("UNUSED_VARIABLE")
@@ -485,7 +483,7 @@ mw.col.sched.extendLimits(1, 0)
         val time = time
         val cards = arrayOfNulls<Card>(2)
         for (i in 0..1) {
-            cards[i] = addNoteUsingBasicModel(Integer.toString(i), "").cards()[0]
+            cards[i] = addNoteUsingBasicModel(i.toString(), "").cards()[0]
             cards[i]!!.queue = Consts.QUEUE_TYPE_LRN
             cards[i]!!.type = Consts.CARD_TYPE_LRN
             cards[i]!!.due = time.intTime() - 20 * 60 + i
@@ -521,12 +519,13 @@ mw.col.sched.extendLimits(1, 0)
     }
 
     companion object {
+        @Suppress("unused")
         @ParameterizedRobolectricTestRunner.Parameters(name = "SchedV{0}")
         @JvmStatic
         @KotlinCleanup("fix array init")
         fun initParameters(): Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2
-            return Arrays.asList(*arrayOf(arrayOf(1), arrayOf(2)))
+            return listOf(arrayOf(1), arrayOf(2))
         }
     }
 }

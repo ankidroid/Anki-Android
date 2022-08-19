@@ -21,7 +21,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.ichi2.themes.Themes.setTheme
-import com.ichi2.utils.KotlinCleanup
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
@@ -31,16 +30,14 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(Parameterized::class)
-@KotlinCleanup("variable names")
-@KotlinCleanup("IDE Lint")
 class LayoutValidationTest : InstrumentedTest() {
     @JvmField
     @Parameterized.Parameter
-    var mResourceId = 0
+    var resourceId = 0
 
     @JvmField
     @Parameterized.Parameter(1)
-    var mName: String? = null
+    var name: String? = null
     @Test
     @Throws(Exception::class)
     fun ensureLayout() {
@@ -50,7 +47,7 @@ class LayoutValidationTest : InstrumentedTest() {
         setTheme(targetContext)
         val li = LayoutInflater.from(targetContext)
         val root: ViewGroup = LinearLayout(targetContext)
-        ensureNoCrashOnUiThread { li.inflate(mResourceId, root, true) }
+        ensureNoCrashOnUiThread { li.inflate(resourceId, root, true) }
     }
 
     /** Crashing on the UI thread takes down the process  */

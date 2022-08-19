@@ -23,7 +23,6 @@ import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Media
 import com.ichi2.libanki.exception.EmptyMediaException
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -33,19 +32,17 @@ import org.junit.runner.RunWith
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
 import kotlin.test.assertNotNull
 
 /**
  * Unit tests for [Media].
  */
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("IDE Lint")
 class MediaTest : InstrumentedTest() {
     private var mTestCol: Collection? = null
 
     @get:Rule
-    var runtimePermissionRule =
+    var runtimePermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     @Before
@@ -102,6 +99,7 @@ class MediaTest : InstrumentedTest() {
     }
 
     @Test
+    @Suppress("SpellCheckingInspection")
     fun testStrings() {
         val mid = mTestCol!!.models.getModels().entries.iterator().next().key
 
@@ -115,7 +113,7 @@ class MediaTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
-        expected = Arrays.asList("foo.jpg", "bar.jpg")
+        expected = listOf("foo.jpg", "bar.jpg")
         actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao")
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
@@ -125,7 +123,7 @@ class MediaTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
-        expected = Arrays.asList("one", "two")
+        expected = listOf("one", "two")
         actual = mTestCol!!.media.filesInStr(mid, "<img src=one><img src=two>")
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
@@ -135,7 +133,7 @@ class MediaTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
-        expected = Arrays.asList("foo.jpg", "fo")
+        expected = listOf("foo.jpg", "fo")
         actual =
             mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao")
         actual.retainAll(expected)
@@ -195,6 +193,7 @@ class MediaTest : InstrumentedTest() {
     }
 
     @Test
+    @Suppress("SpellCheckingInspection")
     fun testAudioTags() {
         assertEquals("aoeu", mTestCol!!.media.strip("a<audio src=yo>oeu"))
         assertEquals("aoeu", mTestCol!!.media.strip("a<audio src='yo'>oeu"))
@@ -202,6 +201,7 @@ class MediaTest : InstrumentedTest() {
     }
 
     @Test
+    @Suppress("SpellCheckingInspection")
     fun testObjectTags() {
         assertEquals("aoeu", mTestCol!!.media.strip("a<object data=yo>oeu"))
         assertEquals("aoeu", mTestCol!!.media.strip("a<object data='yo'>oeu"))
@@ -257,23 +257,24 @@ class MediaTest : InstrumentedTest() {
     }
 
     @Test
+    @Suppress("SpellCheckingInspection")
     fun testIllegal() {
         val aString = "a:b|cd\\e/f\u0000g*h\\[i\\]j"
         val good = "abcdefghij"
         assertEquals(good, mTestCol!!.media.stripIllegal(aString))
-        for (i in 0 until aString.length) {
-            val c = aString[i]
-            val bad = mTestCol!!.media.hasIllegal("something" + c + "morestring")
+        for (element in aString) {
+            val bad = mTestCol!!.media.hasIllegal("""something${element}morestring""")
             if (bad) {
-                assertEquals(-1, good.indexOf(c))
+                assertEquals(-1, good.indexOf(element))
             } else {
-                assertNotEquals(-1, good.indexOf(c))
+                assertNotEquals(-1, good.indexOf(element))
             }
         }
     }
 
+    @Suppress("SpellCheckingInspection")
     @Throws(IOException::class)
-    protected fun createNonEmptyFile(fileName: String): File {
+    private fun createNonEmptyFile(@Suppress("SameParameterValue") fileName: String): File {
         val file = File(testDir, fileName)
         FileOutputStream(file, false).use { os -> os.write("a".toByteArray()) }
         return file

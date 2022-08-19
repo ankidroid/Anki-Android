@@ -19,7 +19,6 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.TestUtils
 import com.ichi2.utils.FileOperation.Companion.getFileResource
-import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -30,7 +29,7 @@ import java.io.IOException
 import java.lang.Exception
 import java.util.*
 import kotlin.Throws
-@KotlinCleanup("IDE Lint")
+
 @RunWith(AndroidJUnit4::class)
 class UtilsTest {
     @Test
@@ -95,7 +94,7 @@ class UtilsTest {
         val m: MutableMap<String, String> = HashMap()
         val s: MutableSet<String> = HashSet()
         assertEquals(s, Utils.nonEmptyFields(m))
-        m["miam"] = ""
+        m["baz"] = ""
         assertEquals(s, Utils.nonEmptyFields(m))
         m["foo"] = "   "
         assertEquals(s, Utils.nonEmptyFields(m))
@@ -106,10 +105,10 @@ class UtilsTest {
 
     @Test
     fun test_stripHTML_will_remove_tags() {
-        val strings = Arrays.asList(
+        val strings = listOf(
             "<>",
             "<1>",
-            "<asdasd>",
+            "<foo>",
             "<\n>",
             "<\\qwq>",
             "<aa\nsd\nas\n?\n>"
@@ -124,7 +123,7 @@ class UtilsTest {
 
     @Test
     fun test_stripHTML_will_remove_comments() {
-        val strings = Arrays.asList(
+        val strings = listOf(
             "<!---->",
             "<!--dd-->",
             "<!--asd asd asd-->",
