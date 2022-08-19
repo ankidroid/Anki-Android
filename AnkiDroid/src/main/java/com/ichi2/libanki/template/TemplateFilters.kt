@@ -14,160 +14,147 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.template;
+package com.ichi2.libanki.template
 
-import android.content.res.Resources;
-import android.text.TextUtils;
-
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.R;
-import com.ichi2.libanki.Utils;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
+import android.text.TextUtils
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
+import com.ichi2.libanki.Utils
+import com.ichi2.libanki.template.FuriganaFilters.furiganaFilter
+import com.ichi2.libanki.template.FuriganaFilters.kanaFilter
+import com.ichi2.libanki.template.FuriganaFilters.kanjiFilter
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
+import java.lang.Exception
+import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 /**
  * Port template_filters.rs
  */
-public class TemplateFilters {
-
-    public static final String CLOZE_DELETION_REPLACEMENT = "[...]";
-    private static final Pattern fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$");
-    public static final String CLOZE_REG = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}";
-
+@KotlinCleanup("IDE Lint")
+object TemplateFilters {
+    const val CLOZE_DELETION_REPLACEMENT = "[...]"
+    private val fHookFieldMod = Pattern.compile("^(.*?)(?:\\((.*)\\))?$")
+    const val CLOZE_REG = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}"
 
     /**
-     * @param txt The content of the field field_name
+     * @param txtInput The content of the field field_name
      * @param filters a list of filter to apply to this text
      * @param field_name A name of a field
      * @param tag The entire part between {{ and }}
      * @return The result of applying each filter successively to txt
      */
-    public static @NonNull String apply_filters(@NonNull String txt, @NonNull List<String> filters, @NonNull String field_name, @NonNull String tag) {
-        for (String filter : filters) {
-            txt = TemplateFilters.apply_filter(txt, filter, field_name, tag);
-            if (txt == null) {
-                txt = "";
-            }
+    fun apply_filters(txtInput: String, filters: List<String>, field_name: String, tag: String): String {
+        var txt = txtInput
+        for (filter in filters) {
+            txt = apply_filter(txt, filter, field_name, tag)
         }
-        return txt;
+        return txt
     }
 
-
     /**
-     * @param txt The current text the filter may change. It may be changed by multiple filter.
-     * @param filter The name of the filter to apply.
+     * @param txtInput The current text the filter may change. It may be changed by multiple filter.
+     * @param filterInput The name of the filter to apply.
      * @param field_name The name of the field whose text is shown
      * @param tag The entire content of the tag.
      * @return Result of filter on current txt.
      */
-    protected static @Nullable String apply_filter(@NonNull String txt, @NonNull String filter, @NonNull String field_name, @NonNull String tag) {
-        //Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
+    @JvmStatic
+    @KotlinCleanup("maybe change var to val")
+    fun apply_filter(txtInput: String, filterInput: String, field_name: String, tag: String): String {
+        // Timber.d("Models.get():: Processing field: modifier=%s, extra=%s, tag=%s, txt=%s", mod, extra, tag, txt);
         // built-in modifiers
-        if ("text".equals(filter)) {
+        val txt = txtInput
+        var filter = filterInput
+        return if ("text" == filter) {
             // strip html
             if (!TextUtils.isEmpty(txt)) {
-                return Utils.stripHTML(txt);
+                Utils.stripHTML(txt)
             } else {
-                return "";
+                ""
             }
-        } else if ("type".equals(filter)) {
+        } else if ("type" == filter) {
             // type answer field; convert it to [[type:...]] for the gui code
             // to process
-            return String.format(Locale.US, "[[%s]]", tag);
+            String.format(Locale.US, "[[%s]]", tag)
         } else if (filter.startsWith("cq-") || filter.startsWith("ca-")) {
             // cloze deletion
-            String[] split = filter.split("-");
-            filter = split[0];
-            String extra = split[1];
+            val split = filter.split("-").toTypedArray()
+            filter = split[0]
+            val extra = split[1]
             if (!TextUtils.isEmpty(txt) && !TextUtils.isEmpty(extra)) {
-                return clozeText(txt != null ? txt : "", extra, filter.charAt(1));
+                clozeText(txt, extra, filter[1])
             } else {
-                return "";
+                ""
             }
         } else {
             // hook-based field modifier
-            Matcher m = fHookFieldMod.matcher(filter);
+            val m = fHookFieldMod.matcher(filter)
             if (m.matches()) {
-                filter = m.group(1);
-                String extra = m.group(2);
-            }
-
-            if (txt == null) {
-                txt = "";
+                filter = m.group(1)!!
+                @Suppress("UNUSED_VARIABLE")
+                val extra = m.group(2)
             }
             try {
-                switch (filter) {
-                    case "hint":
-                        return runHint(txt, field_name);
-                    case "kanji":
-                        return FuriganaFilters.kanjiFilter(txt);
-                    case "kana":
-                        return FuriganaFilters.kanaFilter(txt);
-                    case "furigana":
-                        return FuriganaFilters.furiganaFilter(txt);
-                    default:
-                        return txt;
+                when (filter) {
+                    "hint" -> runHint(txt, field_name)
+                    "kanji" -> kanjiFilter(txt)
+                    "kana" -> kanaFilter(txt)
+                    "furigana" -> furiganaFilter(txt)
+                    else -> txt
                 }
-            } catch (Exception e) {
-                Timber.e(e, "Exception while running hook %s", filter);
-                return AnkiDroidApp.getAppResources().getString(R.string.filter_error, filter);
+            } catch (e: Exception) {
+                Timber.e(e, "Exception while running hook %s", filter)
+                AnkiDroidApp.getAppResources().getString(R.string.filter_error, filter)
             }
         }
     }
 
-
-    private static String runHint(String txt, String tag) {
-        if (txt.trim().length() == 0) {
-            return "";
+    private fun runHint(txt: String, tag: String): String {
+        if (txt.trim { it <= ' ' }.length == 0) {
+            return ""
         }
-        Resources res = AnkiDroidApp.getAppResources();
+        val res = AnkiDroidApp.getAppResources()
         // random id
-        String domId = "hint" + txt.hashCode();
+        val domId = "hint" + txt.hashCode()
         return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
-                domId + "').style.display='block';_relinquishFocus();return false;\">" +
-                res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
-                domId + "\" class=hint style=\"display: none\">" + txt + "</div>";
+            domId + "').style.display='block';_relinquishFocus();return false;\">" +
+            res.getString(R.string.show_hint, tag) + "</a><div id=\"" +
+            domId + "\" class=hint style=\"display: none\">" + txt + "</div>"
     }
 
-
-    private static @NonNull String clozeText(@NonNull String txt, @NonNull String ord, char type) {
+    @KotlinCleanup("see if we can remove the var")
+    private fun clozeText(txtInput: String, ord: String, type: Char): String {
+        var txt = txtInput
         if (!Pattern.compile(String.format(Locale.US, CLOZE_REG, ord)).matcher(txt).find()) {
-            return "";
+            return ""
         }
-
-        txt = removeFormattingFromMathjax(txt, ord);
-        Matcher m = Pattern.compile(String.format(Locale.US, CLOZE_REG, ord)).matcher(txt);
-
-        StringBuffer repl = new StringBuffer();
+        txt = removeFormattingFromMathjax(txt, ord)
+        val m = Pattern.compile(String.format(Locale.US, CLOZE_REG, ord)).matcher(txt)
+        val repl = StringBuffer()
         while (m.find()) {
             // replace chosen cloze with type
-            String buf;
-            if (type == 'q') {
+            @KotlinCleanup("maybe make non-null")
+            var buf: String?
+            buf = if (type == 'q') {
                 if (!TextUtils.isEmpty(m.group(4))) {
-                    buf = "[" + m.group(4) + "]";
+                    "[" + m.group(4) + "]"
                 } else {
-                    buf = CLOZE_DELETION_REPLACEMENT;
+                    CLOZE_DELETION_REPLACEMENT
                 }
             } else {
-                buf = m.group(2);
+                m.group(2)
             }
-
-            if ("c".equals(m.group(1))) {
-                buf = String.format("<span class=cloze>%s</span>", buf);
+            if ("c" == m.group(1)) {
+                buf = String.format("<span class=cloze>%s</span>", buf)
             }
-
-            m.appendReplacement(repl, Matcher.quoteReplacement(buf));
+            m.appendReplacement(repl, Matcher.quoteReplacement(buf!!))
         }
-        txt = m.appendTail(repl).toString();
+        txt = m.appendTail(repl).toString()
         // and display other clozes normally
-        return txt.replaceAll(String.format(Locale.US, CLOZE_REG, "\\d+"), "$2");
+        return txt.replace(String.format(Locale.US, CLOZE_REG, "\\d+").toRegex(), "$2")
     }
 
     /**
@@ -179,9 +166,9 @@ public class TemplateFilters {
      * or display formulas, and replaces their opening '{{c123' with a '{{C123'.
      * The clozeText method interprets the upper-case C as "don't wrap this
      * Cloze in a <span>".
-     */
-    public static @NonNull String removeFormattingFromMathjax(@NonNull String txt, @NonNull String ord) {
-        String creg = CLOZE_REG.replace("(?si)", "");
+     </span></span> */
+    fun removeFormattingFromMathjax(txt: String, ord: String): String {
+        val creg = CLOZE_REG.replace("(?si)", "")
         // Scan the string left to right.
         // After a MathJax opening - \( or \[ - flip in_mathjax to True.
         // After a MathJax closing - \) or \] - flip in_mathjax to False.
@@ -191,47 +178,46 @@ public class TemplateFilters {
         // TODO: Report mismatching opens/closes - e.g. '\(\]'
         // TODO: Report errors in this method better than printing to stdout.
         // flags in middle of expression deprecated
-        boolean in_mathjax = false;
+        var in_mathjax = false
 
         // The following regex matches one of 3 things, noted below:
-        String regex = "(?si)" +
-                "(\\\\[(\\[])|" +  // group 1, MathJax opening
-                "(\\\\[])])|" +  // group 2, MathJax close
-                "(" +              // group 3, Cloze deletion number `ord`
-                String.format(Locale.US, creg, ord) +
-                ")";
-
-        Matcher m = Pattern.compile(regex).matcher(txt);
-
-        StringBuffer replacement = new StringBuffer();
+        val regex = "(?si)" +
+            "(\\\\[(\\[])|" + // group 1, MathJax opening
+            "(\\\\[])])|" + // group 2, MathJax close
+            "(" + String.format(Locale.US, creg, ord) +
+            ")"
+        val m = Pattern.compile(regex).matcher(txt)
+        val replacement = StringBuffer()
         while (m.find()) {
             if (m.group(1) != null) {
                 if (in_mathjax) {
-                    Timber.d("MathJax opening found while already in MathJax");
+                    Timber.d("MathJax opening found while already in MathJax")
                 }
-                in_mathjax = true;
+                in_mathjax = true
             } else if (m.group(2) != null) {
                 if (!in_mathjax) {
-                    Timber.d("MathJax close found while not in MathJax");
+                    Timber.d("MathJax close found while not in MathJax")
                 }
-                in_mathjax = false;
+                in_mathjax = false
             } else if (m.group(3) != null) {
                 if (in_mathjax) {
                     // appendReplacement has an issue with backslashes, so...
                     m.appendReplacement(
-                            replacement,
-                            Matcher.quoteReplacement(
-                                    m.group(0).replace(
-                                            "{{c" + ord + "::", "{{C" + ord + "::")));
-                    continue;
+                        replacement,
+                        Matcher.quoteReplacement(
+                            m.group(0)!!.replace(
+                                "{{c$ord::", "{{C$ord::"
+                            )
+                        )
+                    )
+                    continue
                 }
             } else {
-                Timber.d("Unexpected: no expected capture group is present");
+                Timber.d("Unexpected: no expected capture group is present")
             }
             // appendReplacement has an issue with backslashes, so...
-            m.appendReplacement(replacement, Matcher.quoteReplacement(m.group(0)));
+            m.appendReplacement(replacement, Matcher.quoteReplacement(m.group(0)!!))
         }
-        return m.appendTail(replacement).toString();
+        return m.appendTail(replacement).toString()
     }
-
 }
