@@ -18,6 +18,7 @@ package com.ichi2.anki.cardviewer
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
+import com.ichi2.anki.settings.settings
 import com.ichi2.libanki.Card
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
@@ -81,7 +82,7 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
         fun create(customFonts: ReviewerCustomFonts, preferences: SharedPreferences): CardAppearance {
             val cardZoom = preferences.getInt("cardZoom", 100)
             val imageZoom = preferences.getInt("imageZoom", 100)
-            val centerVertically = preferences.getBoolean("centerVertically", false)
+            val centerVertically = settings.centerCardContentsVertically
             return CardAppearance(customFonts, cardZoom, imageZoom, centerVertically)
         }
 

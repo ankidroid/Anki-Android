@@ -73,6 +73,8 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.settings.Settings
+import com.ichi2.anki.settings.settings
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
@@ -149,7 +151,6 @@ abstract class AbstractFlashcardViewer :
     private var mScrollingButtons = false
     private var mGesturesEnabled = false
     private var mLargeAnswerButtons = false
-    private var mAnswerButtonsPosition: String? = "bottom"
     private var mDoubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL
 
     // Android WebView
@@ -1009,20 +1010,14 @@ abstract class AbstractFlashcardViewer :
         mAnswerField = findViewById(R.id.answer_field)
         initControls()
 
-        // Position answer buttons
-        val answerButtonsPosition = AnkiDroidApp.getSharedPrefs(this).getString(
-            getString(R.string.answer_buttons_position_preference),
-            "bottom"
-        )
-        mAnswerButtonsPosition = answerButtonsPosition
         val answerArea = findViewById<LinearLayout>(R.id.bottom_area_layout)
         val answerAreaParams = answerArea.layoutParams as RelativeLayout.LayoutParams
         val whiteboardContainer = findViewById<FrameLayout>(R.id.whiteboard)
         val whiteboardContainerParams = whiteboardContainer.layoutParams as RelativeLayout.LayoutParams
         val flashcardContainerParams = mCardFrame!!.layoutParams as RelativeLayout.LayoutParams
         val touchLayerContainerParams = mTouchLayer!!.layoutParams as RelativeLayout.LayoutParams
-        when (answerButtonsPosition) {
-            "top" -> {
+        when (settings.answerButtonsPosition) {
+            Settings.AnswerButtonsPosition.Top -> {
                 whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
                 flashcardContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
                 touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.bottom_area_layout)
@@ -1030,8 +1025,8 @@ abstract class AbstractFlashcardViewer :
                 answerArea.removeView(mAnswerField)
                 answerArea.addView(mAnswerField, 1)
             }
-            "bottom",
-            "none" -> {
+            Settings.AnswerButtonsPosition.Bottom,
+            Settings.AnswerButtonsPosition.None -> {
                 whiteboardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
                 whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 flashcardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
@@ -1040,9 +1035,8 @@ abstract class AbstractFlashcardViewer :
                 touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
             }
-            else -> Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition)
         }
-        answerArea.visibility = if (answerButtonsPosition == "none") View.GONE else View.VISIBLE
+        answerArea.visibility = if (settings.answerButtonsPosition == Settings.AnswerButtonsPosition.None) View.GONE else View.VISIBLE
         answerArea.layoutParams = answerAreaParams
         whiteboardContainer.layoutParams = whiteboardContainerParams
         mCardFrame!!.layoutParams = flashcardContainerParams
@@ -1811,7 +1805,7 @@ abstract class AbstractFlashcardViewer :
         showSnackbar(text, duration) {
             snackbarBuilder?.let { it() }
 
-            if (mAnswerButtonsPosition == "bottom") {
+            if (settings.answerButtonsPosition == Settings.AnswerButtonsPosition.Bottom) {
                 val easeButtons = findViewById<View>(R.id.answer_options_layout)
                 val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
                 anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
