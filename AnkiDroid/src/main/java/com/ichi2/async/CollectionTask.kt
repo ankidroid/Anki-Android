@@ -73,7 +73,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     /** Cancel the current task.
      * @return whether cancelling did occur.
      */
-    @Suppress("deprecation") // #7108: AsyncTask test
+    @Suppress("deprecation") // #7108: AsyncTask
     override fun safeCancel(): Boolean {
         try {
             if (status != Status.FINISHED) {
