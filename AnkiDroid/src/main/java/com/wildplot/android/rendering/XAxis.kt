@@ -13,237 +13,233 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
+package com.wildplot.android.rendering
 
-
-import android.annotation.SuppressLint;
-
-import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
-import com.wildplot.android.rendering.interfaces.Drawable;
-
-import java.text.DecimalFormat;
+import android.annotation.SuppressLint
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
+import com.wildplot.android.rendering.interfaces.Drawable
+import java.text.DecimalFormat
 
 /**
  * This Class represents a Drawable x-axis
  */
 @SuppressLint("NonPublicNonStaticFieldName")
-public class XAxis implements Drawable {
-
-    private boolean isIntegerNumbering = false;
+class XAxis
+/**
+ * Constructor for an X-axis object
+ *
+ * @param plotSheet the sheet the axis will be drawn onto
+ * @param ticStart  the start of the axis markers used for relative alignment of other markers
+ * @param tic       the space between two markers
+ */(
+    /**
+     * the PlotSheet object the x-axis is drawn onto
+     */
+    private val plotSheet: PlotSheet,
+    /**
+     * the start of x-axis marker, used for relative alignment of further marks
+     */
+    private val ticStart: Double,
+    /**
+     * the space between two marks
+     */
+    private val tic: Double,
+    /**
+     * the space between two minor marks
+     */
+    private val minorTic: Double
+) : Drawable {
+    private var isIntegerNumbering = false
 
     /**
      * believe it or not, this axis can be placed higher or lower than y=0
      */
-    private double yOffset = 0;
+    private var yOffset = 0.0
 
     /**
      * Name of axis
      */
-    private String name = "X";
-
-    private boolean mHasName = false;
+    private var name = "X"
+    private var mHasName = false
 
     /**
      * Format that is used to print numbers under markers
      */
-    private final DecimalFormat df = new DecimalFormat("##0.0#");
+    private val df = DecimalFormat("##0.0#")
 
     /**
      * format for very big or small values
      */
-    private final DecimalFormat dfScience = new DecimalFormat("0.0##E0");
-    private final DecimalFormat dfInteger = new DecimalFormat("#.#");
+    private val dfScience = DecimalFormat("0.0##E0")
+    private val dfInteger = DecimalFormat("#.#")
+
     /**
      * is set to true if scientific format (e.g. 1E-3) should be used
      */
-    private boolean isScientific = false;
-
-    /**
-     * the PlotSheet object the x-axis is drawn onto
-     */
-    private final PlotSheet plotSheet;
-
-    /**
-     * the start of x-axis marker, used for relative alignment of further marks
-     */
-    private final double ticStart;
-
-    /**
-     * the space between two marks
-     */
-    private final double tic;
-
-    /**
-     * the space between two minor marks
-     */
-    private final double minorTic;
+    private var isScientific = false
 
     /**
      * the estimated size between two major tics in auto tic mode
      */
-    private float pixelDistance = 25;
+    private var pixelDistance = 25f
 
     /**
      * start of drawn x-axis
      */
-    private double start = 0;
+    private var start = 0.0
 
     /**
      * end of drawn x-axis
      */
-    private double end = 100;
+    private var end = 100.0
 
     /**
      * true if the marker should be drawn into the direction above the axis
      */
-    private final boolean markOnUpside = true;
+    private val markOnUpside = true
 
     /**
      * true if the marker should be drawn into the direction under the axis
      */
-    private boolean markOnDownside = true;
+    private var markOnDownside = true
 
     /**
      * length of a marker in pixel, length is only for one side
      */
-    private final float markerLength = 5;
+    private val markerLength = 5f
 
     /**
      * true if this  axis is drawn onto the frame
      */
-    private boolean isOnFrame = false;
-
-    private String[] mTickNameList = null;
-    private double[] mTickPositions = null;
-
-
-    /**
-     * Constructor for an X-axis object
-     *
-     * @param plotSheet the sheet the axis will be drawn onto
-     * @param ticStart  the start of the axis markers used for relative alignment of other markers
-     * @param tic       the space between two markers
-     */
-    public XAxis(PlotSheet plotSheet, double ticStart, double tic, double minorTic) {
-        this.plotSheet = plotSheet;
-        this.ticStart = ticStart;
-        this.tic = tic;
-        this.minorTic = minorTic;
-    }
-
-
-    public void paint(GraphicsWrap g) {
-        RectangleWrap field = g.getClipBounds();
-
-        start = plotSheet.getxRange()[0];
-        end = plotSheet.getxRange()[1];
-
-        if (this.isOnFrame) {
-            yOffset = plotSheet.getyRange()[0];
+    private var isOnFrame = false
+    private var mTickNameList: Array<String>? = null
+    private var mTickPositions: DoubleArray? = null
+    override fun paint(g: GraphicsWrap) {
+        val field = g.clipBounds
+        start = plotSheet.getxRange()[0]
+        end = plotSheet.getxRange()[1]
+        if (isOnFrame) {
+            yOffset = plotSheet.getyRange()[0]
         }
-
-        this.pixelDistance = Math.abs(plotSheet.xToGraphic(0, field) - plotSheet.xToGraphic(tic, field));
-        if (this.tic < 1e-2 || this.tic > 1e2) {
-            this.isScientific = true;
+        pixelDistance = Math.abs(
+            plotSheet.xToGraphic(0.0, field) - plotSheet.xToGraphic(
+                tic, field
+            )
+        )
+        if (tic < 1e-2 || tic > 1e2) {
+            isScientific = true
         }
-
-        float[] coordStart = plotSheet.toGraphicPoint(start, yOffset, field);
-        float[] coordEnd = plotSheet.toGraphicPoint(end, yOffset, field);
-
-        if (!this.isOnFrame) {
-            g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
+        val coordStart = plotSheet.toGraphicPoint(start, yOffset, field)
+        val coordEnd = plotSheet.toGraphicPoint(end, yOffset, field)
+        if (!isOnFrame) {
+            g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1])
         }
-
-        drawMarkers(g);
+        drawMarkers(g)
         if (mTickPositions == null) {
-            drawMinorMarkers(g);
+            drawMinorMarkers(g)
         }
     }
-
 
     /**
      * draw markers on the axis
      *
      * @param g graphic object used for drawing
      */
-    private void drawMarkers(GraphicsWrap g) {
-        RectangleWrap field = g.getClipBounds();
-
-
+    private fun drawMarkers(g: GraphicsWrap) {
+        val field = g.clipBounds
         if (mTickPositions == null) {
-            drawImplicitMarker(g);
+            drawImplicitMarker(g)
         } else {
-            drawExplicitMarkers(g);
+            drawExplicitMarkers(g)
         }
 
-
-        //arrow
-        float[] arrowheadPos = {plotSheet.xToGraphic(Math.min(plotSheet.getxRange()[1], this.end), field), plotSheet.yToGraphic(yOffset, field)};
-
-        FontMetricsWrap fm = g.getFontMetrics();
-        float fontHeight = fm.getHeight();
-        float width = fm.stringWidth(this.name);
-        if (!this.isOnFrame) {
-            g.drawLine(arrowheadPos[0] - 1, arrowheadPos[1] - 1, arrowheadPos[0] - 6, arrowheadPos[1] - 3);
-            g.drawLine(arrowheadPos[0] - 1, arrowheadPos[1] + 1, arrowheadPos[0] - 6, arrowheadPos[1] + 3);
+        // arrow
+        val arrowheadPos = floatArrayOf(
+            plotSheet.xToGraphic(
+                Math.min(
+                    plotSheet.getxRange()[1], end
+                ),
+                field
+            ),
+            plotSheet.yToGraphic(yOffset, field)
+        )
+        val fm = g.fontMetrics
+        val fontHeight = fm.height
+        val width = fm.stringWidth(name)
+        if (!isOnFrame) {
+            g.drawLine(
+                arrowheadPos[0] - 1,
+                arrowheadPos[1] - 1,
+                arrowheadPos[0] - 6,
+                arrowheadPos[1] - 3
+            )
+            g.drawLine(
+                arrowheadPos[0] - 1,
+                arrowheadPos[1] + 1,
+                arrowheadPos[0] - 6,
+                arrowheadPos[1] + 3
+            )
             if (mHasName) {
-                g.drawString(this.name, arrowheadPos[0] - 14 - width, arrowheadPos[1] + 12);
+                g.drawString(name, arrowheadPos[0] - 14 - width, arrowheadPos[1] + 12)
             }
         } else {
-            float[] middlePosition = {plotSheet.xToGraphic(0, field), plotSheet.yToGraphic(yOffset, field)};
+            val middlePosition =
+                floatArrayOf(plotSheet.xToGraphic(0.0, field), plotSheet.yToGraphic(yOffset, field))
             if (mHasName) {
-                g.drawString(this.name, field.width / 2 - width / 2, Math.round(middlePosition[1] + fontHeight * 2.5f));
+                g.drawString(
+                    name, field.width / 2 - width / 2,
+                    Math.round(
+                        middlePosition[1] + fontHeight * 2.5f
+                    ).toFloat()
+                )
             }
         }
     }
 
-
-    private void drawImplicitMarker(GraphicsWrap g) {
-        RectangleWrap field = g.getClipBounds();
-        int tics = (int) ((this.ticStart - this.start) / tic);
-        double currentX = this.ticStart - this.tic * tics;
-
-        while (currentX <= this.end) {
-            if ((!this.isOnFrame && plotSheet.xToGraphic(currentX, field) <= plotSheet.xToGraphic(this.end, field) - 45
-                    && plotSheet.xToGraphic(currentX, field) <= field.x + field.width - 45) ||
-                    (this.isOnFrame && currentX <= this.plotSheet.getxRange()[1] &&
-                            currentX >= this.plotSheet.getxRange()[0])) {
-
-                if (this.markOnDownside) {
-                    drawDownwardsMarker(g, field, currentX);
+    private fun drawImplicitMarker(g: GraphicsWrap) {
+        val field = g.clipBounds
+        val tics = ((ticStart - start) / tic).toInt()
+        var currentX = ticStart - tic * tics
+        while (currentX <= end) {
+            if (!isOnFrame && plotSheet.xToGraphic(currentX, field) <= plotSheet.xToGraphic(
+                    end,
+                    field
+                ) - 45 && plotSheet.xToGraphic(currentX, field) <= field.x + field.width - 45 ||
+                isOnFrame && currentX <= plotSheet.getxRange()[1] && currentX >= plotSheet.getxRange()[0]
+            ) {
+                if (markOnDownside) {
+                    drawDownwardsMarker(g, field, currentX)
                 }
-                if (this.markOnUpside) {
-                    drawUpwardsMarker(g, field, currentX);
+                if (markOnUpside) {
+                    drawUpwardsMarker(g, field, currentX)
                 }
-                drawNumbering(g, field, currentX, -1);
+                drawNumbering(g, field, currentX, -1)
             }
-            currentX += this.tic;
+            currentX += tic
         }
     }
 
-
-    private void drawExplicitMarkers(GraphicsWrap g) {
-        RectangleWrap field = g.getClipBounds();
-        for (int i = 0; i < mTickPositions.length; i++) {
-            double currentX = mTickPositions[i];
-            if ((!this.isOnFrame && plotSheet.xToGraphic(currentX, field) <= plotSheet.xToGraphic(this.end, field) - 45
-                    && plotSheet.xToGraphic(currentX, field) <= field.x + field.width - 45) ||
-                    (this.isOnFrame && currentX <= this.plotSheet.getxRange()[1] &&
-                            currentX >= this.plotSheet.getxRange()[0])) {
-
-                if (this.markOnDownside) {
-                    drawDownwardsMarker(g, field, currentX);
+    private fun drawExplicitMarkers(g: GraphicsWrap) {
+        val field = g.clipBounds
+        for (i in mTickPositions!!.indices) {
+            val currentX = mTickPositions!![i]
+            if (!isOnFrame && plotSheet.xToGraphic(currentX, field) <= plotSheet.xToGraphic(
+                    end,
+                    field
+                ) - 45 && plotSheet.xToGraphic(currentX, field) <= field.x + field.width - 45 ||
+                isOnFrame && currentX <= plotSheet.getxRange()[1] && currentX >= plotSheet.getxRange()[0]
+            ) {
+                if (markOnDownside) {
+                    drawDownwardsMarker(g, field, currentX)
                 }
-                if (this.markOnUpside) {
-                    drawUpwardsMarker(g, field, currentX);
+                if (markOnUpside) {
+                    drawUpwardsMarker(g, field, currentX)
                 }
-                drawNumbering(g, field, currentX, i);
+                drawNumbering(g, field, currentX, i)
             }
         }
     }
-
 
     /**
      * draw number under a marker
@@ -252,37 +248,48 @@ public class XAxis implements Drawable {
      * @param field bounds of plot
      * @param x     position of number
      */
-    private void drawNumbering(GraphicsWrap g, RectangleWrap field, double x, int index) {
-
-        double position = x;
-        if (this.tic < 1 && Math.abs(ticStart - position) < this.tic * this.tic) {
-            position = ticStart;
+    private fun drawNumbering(g: GraphicsWrap, field: RectangleWrap, x: Double, index: Int) {
+        var position = x
+        if (tic < 1 && Math.abs(ticStart - position) < tic * tic) {
+            position = ticStart
         }
-
-        FontMetricsWrap fm = g.getFontMetrics();
-        float fontHeight = fm.getHeight();
-        float[] coordStart = plotSheet.toGraphicPoint(position, yOffset, field);
-        if (Math.abs(position) - Math.abs(0) < 0.001 && !this.isOnFrame) {
-            coordStart[0] += 10;
-            coordStart[1] -= 10;
+        val fm = g.fontMetrics
+        val fontHeight = fm.height
+        val coordStart = plotSheet.toGraphicPoint(position, yOffset, field)
+        if (Math.abs(position) - Math.abs(0) < 0.001 && !isOnFrame) {
+            coordStart[0] += 10f
+            coordStart[1] -= 10f
         }
-
-        String text = (mTickNameList == null) ? df.format(position) : mTickNameList[index];
-        float width = fm.stringWidth(text);
-        if (this.isScientific || (width > this.pixelDistance)) {
-            text = (mTickNameList == null) ? dfScience.format(position) : mTickNameList[index];
-            width = fm.stringWidth(text);
-            g.drawString(text, coordStart[0] - width / 2, Math.round(coordStart[1] + ((this.isOnFrame) ? Math.round(fontHeight * 1.5) : 20)));
+        var text = if (mTickNameList == null) df.format(position) else mTickNameList!![index]
+        var width = fm.stringWidth(text)
+        if (isScientific || width > pixelDistance) {
+            text = if (mTickNameList == null) dfScience.format(position) else mTickNameList!![index]
+            width = fm.stringWidth(text)
+            g.drawString(
+                text,
+                coordStart[0] - width / 2,
+                Math.round(coordStart[1] + if (isOnFrame) Math.round(fontHeight * 1.5) else 20)
+                    .toFloat()
+            )
         } else if (isIntegerNumbering) {
-            text = (mTickNameList == null) ? dfInteger.format(position) : mTickNameList[index];
-            width = fm.stringWidth(text);
-            g.drawString(text, coordStart[0] - width / 2, Math.round(coordStart[1] + ((this.isOnFrame) ? Math.round(fontHeight * 1.5) : 20)));
+            text = if (mTickNameList == null) dfInteger.format(position) else mTickNameList!![index]
+            width = fm.stringWidth(text)
+            g.drawString(
+                text,
+                coordStart[0] - width / 2,
+                Math.round(coordStart[1] + if (isOnFrame) Math.round(fontHeight * 1.5) else 20)
+                    .toFloat()
+            )
         } else {
-            width = fm.stringWidth(text);
-            g.drawString(text, coordStart[0] - width / 2, Math.round(coordStart[1] + ((this.isOnFrame) ? Math.round(fontHeight * 1.5) : 20)));
+            width = fm.stringWidth(text)
+            g.drawString(
+                text,
+                coordStart[0] - width / 2,
+                Math.round(coordStart[1] + if (isOnFrame) Math.round(fontHeight * 1.5) else 20)
+                    .toFloat()
+            )
         }
     }
-
 
     /**
      * draws an upwards marker
@@ -291,14 +298,11 @@ public class XAxis implements Drawable {
      * @param field bounds of plot
      * @param x     position of marker
      */
-    private void drawUpwardsMarker(GraphicsWrap g, RectangleWrap field, double x) {
-
-        float[] coordStart = plotSheet.toGraphicPoint(x, yOffset, field);
-        float[] coordEnd = {coordStart[0], coordStart[1] - this.markerLength};
-        g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
-
+    private fun drawUpwardsMarker(g: GraphicsWrap, field: RectangleWrap, x: Double) {
+        val coordStart = plotSheet.toGraphicPoint(x, yOffset, field)
+        val coordEnd = floatArrayOf(coordStart[0], coordStart[1] - markerLength)
+        g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1])
     }
-
 
     /**
      * draws an downwards marker
@@ -307,69 +311,61 @@ public class XAxis implements Drawable {
      * @param field bounds of plot
      * @param x     position of marker
      */
-    private void drawDownwardsMarker(GraphicsWrap g, RectangleWrap field, double x) {
-        float[] coordStart = plotSheet.toGraphicPoint(x, yOffset, field);
-        float[] coordEnd = {coordStart[0], coordStart[1] + this.markerLength};
-        g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
-
+    private fun drawDownwardsMarker(g: GraphicsWrap, field: RectangleWrap, x: Double) {
+        val coordStart = plotSheet.toGraphicPoint(x, yOffset, field)
+        val coordEnd = floatArrayOf(coordStart[0], coordStart[1] + markerLength)
+        g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1])
     }
-
 
     /**
      * set the axis to draw on the border between outer frame and plot
      */
-    public void setOnFrame() {
-        this.isOnFrame = true;
-        yOffset = plotSheet.getyRange()[0];
-        markOnDownside = false;
+    fun setOnFrame() {
+        isOnFrame = true
+        yOffset = plotSheet.getyRange()[0]
+        markOnDownside = false
     }
 
-
-    public boolean isOnFrame() {
-        return isOnFrame;
+    override fun isOnFrame(): Boolean {
+        return isOnFrame
     }
-
 
     /**
      * set name description of axis
      *
      * @param name of axis
      */
-    public void setName(String name) {
-        this.name = name;
-        mHasName = !"".equals(name);
+    fun setName(name: String) {
+        this.name = name
+        mHasName = "" != name
     }
-
 
     /**
      * draw minor markers on the axis
      *
      * @param g graphic object used for drawing
      */
-    private void drawMinorMarkers(GraphicsWrap g) {
-        RectangleWrap field = g.getClipBounds();
-
-        int tics = (int) ((this.ticStart - this.start) / tic);
-        double currentX = this.ticStart - this.tic * tics;
-
-        while (currentX <= this.end) {
-            if ((!this.isOnFrame && plotSheet.xToGraphic(currentX, field) <= plotSheet.xToGraphic(this.end, field) - 45
-                    && plotSheet.xToGraphic(currentX, field) <= field.x + field.width - 45) ||
-                    (this.isOnFrame && currentX <= this.plotSheet.getxRange()[1] &&
-                            currentX >= this.plotSheet.getxRange()[0])) {
-
-                if (this.markOnDownside) {
-                    drawDownwardsMinorMarker(g, field, currentX);
+    private fun drawMinorMarkers(g: GraphicsWrap) {
+        val field = g.clipBounds
+        val tics = ((ticStart - start) / tic).toInt()
+        var currentX = ticStart - tic * tics
+        while (currentX <= end) {
+            if (!isOnFrame && plotSheet.xToGraphic(currentX, field) <= plotSheet.xToGraphic(
+                    end,
+                    field
+                ) - 45 && plotSheet.xToGraphic(currentX, field) <= field.x + field.width - 45 ||
+                isOnFrame && currentX <= plotSheet.getxRange()[1] && currentX >= plotSheet.getxRange()[0]
+            ) {
+                if (markOnDownside) {
+                    drawDownwardsMinorMarker(g, field, currentX)
                 }
-                if (this.markOnUpside) {
-                    drawUpwardsMinorMarker(g, field, currentX);
+                if (markOnUpside) {
+                    drawUpwardsMinorMarker(g, field, currentX)
                 }
             }
-            currentX += minorTic;
+            currentX += minorTic
         }
-
     }
-
 
     /**
      * draws an upwards minor marker
@@ -378,14 +374,12 @@ public class XAxis implements Drawable {
      * @param field bounds of plot
      * @param x     position of marker
      */
-    private void drawUpwardsMinorMarker(GraphicsWrap g, RectangleWrap field, double x) {
-
-        float[] coordStart = plotSheet.toGraphicPoint(x, yOffset, field);
-        float[] coordEnd = {coordStart[0], (int) (coordStart[1] - 0.5 * this.markerLength)};
-        g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
-
+    private fun drawUpwardsMinorMarker(g: GraphicsWrap, field: RectangleWrap, x: Double) {
+        val coordStart = plotSheet.toGraphicPoint(x, yOffset, field)
+        val coordEnd =
+            floatArrayOf(coordStart[0], (coordStart[1] - 0.5 * markerLength).toInt().toFloat())
+        g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1])
     }
-
 
     /**
      * draws an downwards minor marker
@@ -394,33 +388,27 @@ public class XAxis implements Drawable {
      * @param field bounds of plot
      * @param x     position of marker
      */
-    private void drawDownwardsMinorMarker(GraphicsWrap g, RectangleWrap field, double x) {
-        float[] coordStart = plotSheet.toGraphicPoint(x, yOffset, field);
-        float[] coordEnd = {coordStart[0], (int) (coordStart[1] + 0.5 * this.markerLength)};
-        g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1]);
-
+    private fun drawDownwardsMinorMarker(g: GraphicsWrap, field: RectangleWrap, x: Double) {
+        val coordStart = plotSheet.toGraphicPoint(x, yOffset, field)
+        val coordEnd =
+            floatArrayOf(coordStart[0], (coordStart[1] + 0.5 * markerLength).toInt().toFloat())
+        g.drawLine(coordStart[0], coordStart[1], coordEnd[0], coordEnd[1])
     }
 
-
-    public void setIntegerNumbering(boolean isIntegerNumbering) {
-        this.isIntegerNumbering = isIntegerNumbering;
+    fun setIntegerNumbering(isIntegerNumbering: Boolean) {
+        this.isIntegerNumbering = isIntegerNumbering
     }
 
-
-    @Override
-    public boolean isClusterable() {
-        return true;
+    override fun isClusterable(): Boolean {
+        return true
     }
 
-
-    @Override
-    public boolean isCritical() {
-        return true;
+    override fun isCritical(): Boolean {
+        return true
     }
 
-
-    public void setExplicitTicks(double[] tickPositions, String[] tickNameList) {
-        mTickPositions = tickPositions;
-        mTickNameList = tickNameList;
+    fun setExplicitTicks(tickPositions: DoubleArray?, tickNameList: Array<String>?) {
+        mTickPositions = tickPositions
+        mTickNameList = tickNameList
     }
 }
