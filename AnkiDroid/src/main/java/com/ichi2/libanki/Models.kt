@@ -322,11 +322,12 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     internal class TransformFieldAdd : TransformFieldVisitor {
-        override fun transform(fields: Array<String?>): Array<String?> {
+        @KotlinCleanup("remove arratOfNulls")
+        override fun transform(fields: Array<String>): Array<String> {
             val f = arrayOfNulls<String>(fields.size + 1)
             System.arraycopy(fields, 0, f, 0, fields.size)
             f[fields.size] = ""
-            return f
+            return f.requireNoNulls()
         }
     }
 
@@ -359,7 +360,7 @@ class Models(col: Collection) : ModelManager(col) {
 
     internal class TransformFieldDelete(private val idx: Int) : TransformFieldVisitor {
         @KotlinCleanup("simplify fun with array.toMutableList().filterIndexed")
-        override fun transform(fields: Array<String?>): Array<String?> {
+        override fun transform(fields: Array<String>): Array<String> {
             val fl = ArrayList(Arrays.asList(*fields))
             fl.removeAt(idx)
             return fl.toTypedArray()
@@ -403,7 +404,7 @@ class Models(col: Collection) : ModelManager(col) {
     internal class TransformFieldMove(private val idx: Int, private val oldidx: Int) :
         TransformFieldVisitor {
         @KotlinCleanup("simplify with array.toMutableList and maybe scope function")
-        override fun transform(fields: Array<String?>): Array<String?> {
+        override fun transform(fields: Array<String>): Array<String> {
             val `val` = fields[oldidx]
             val fl = ArrayList(Arrays.asList(*fields))
             fl.removeAt(oldidx)
@@ -453,7 +454,7 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     interface TransformFieldVisitor {
-        fun transform(fields: Array<String?>): Array<String?>
+        fun transform(fields: Array<String>): Array<String>
     }
 
     fun _transformFields(m: Model, fn: TransformFieldVisitor) {
@@ -615,10 +616,11 @@ class Models(col: Collection) : ModelManager(col) {
         for ((key, value) in map) {
             newflds[value] = flds[key]
         }
-        val flds2: MutableList<String?> = ArrayList(nfields)
+        val flds2: MutableList<String> = ArrayList(nfields)
         for (c in 0 until nfields) {
+            @KotlinCleanup("getKeyOrDefault")
             if (newflds.containsKey(c)) {
-                flds2.add(newflds[c])
+                flds2.add(newflds[c]!!)
             } else {
                 flds2.add("")
             }
