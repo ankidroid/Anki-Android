@@ -19,11 +19,15 @@
 package com.ichi2.anki
 
 import anki.import_export.ImportResponse
+import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.pages.PagesActivity
+import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
+import com.ichi2.libanki.importer.importCsvRaw
 import com.ichi2.libanki.undoableOp
 import net.ankiweb.rsdroid.Translations
 
@@ -44,6 +48,22 @@ fun DeckPicker.importApkgs(apkgPaths: List<String>) {
             showSimpleMessageDialog(summarizeReport(col.tr, report))
         }
     }
+}
+
+fun PagesActivity.importCsvRaw(input: ByteArray): ByteArray? {
+    launchCatchingTask {
+        val output = withProgress(
+            extractProgress = { if (progress.hasImporting()) { text = progress.importing } },
+            op = { withCol { (this as CollectionV16).importCsvRaw(input) } }
+        )
+        MaterialDialog(this@importCsvRaw).show {
+            message(text = summarizeReport(col.tr, ImportResponse.parseFrom(output)))
+            positiveButton(R.string.dialog_ok) {
+                this@importCsvRaw.finish()
+            }
+        }
+    }
+    return null
 }
 
 private fun summarizeReport(tr: Translations, output: ImportResponse): String {
