@@ -52,7 +52,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Models.NOT_FOUND_NOTE_TYPE
+import com.ichi2.libanki.Models.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView

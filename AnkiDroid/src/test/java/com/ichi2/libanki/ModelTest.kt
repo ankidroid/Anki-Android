@@ -19,8 +19,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.MODEL_CLOZE
-import com.ichi2.libanki.Models.REQ_ALL
-import com.ichi2.libanki.Models.REQ_ANY
+import com.ichi2.libanki.Models.Companion.REQ_ALL
+import com.ichi2.libanki.Models.Companion.REQ_ANY
 import com.ichi2.libanki.Utils.stripHTML
 import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.utils.JSONArray
@@ -738,8 +738,8 @@ class ModelTest : RobolectricTest() {
     fun avail_standard_order_test() {
         val col = col
         val mm = col.models
-        val basic = mm.byName("Basic")
-        val reverse = mm.byName("Basic (and reversed card)")
+        val basic = mm.byName("Basic")!!
+        val reverse = mm.byName("Basic (and reversed card)")!!
 
         assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "")))
         assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "Back")))
@@ -815,8 +815,8 @@ class ModelTest : RobolectricTest() {
     fun avail_ords_test() {
         val col = col
         val mm = col.models
-        val basic = mm.byName("Basic")
-        val reverse = mm.byName("Basic (and reversed card)")
+        val basic = mm.byName("Basic")!!
+        val reverse = mm.byName("Basic (and reversed card)")!!
 
         assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "")))
         assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "Back")))
