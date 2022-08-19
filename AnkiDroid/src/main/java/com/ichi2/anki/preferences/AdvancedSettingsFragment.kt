@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.provider.CardContentProvider
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
@@ -78,7 +79,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 message(R.string.reset_languages_question)
                 positiveButton(R.string.dialog_ok) {
                     if (MetaDB.resetLanguages(requireContext())) {
-                        UIUtils.showThemedToast(requireContext(), R.string.reset_confirmation, true)
+                        showSnackbar(R.string.reset_confirmation)
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
