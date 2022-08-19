@@ -99,6 +99,9 @@
         <item>Đã tạo</item>
         <item>Ghi chú đã sửa đổi</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Hi</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Sửa đổi giới hạn thẻ mới của ngày hôm nay</string>
     <string name="custom_study_increase_review_limit">Sửa đổi giới hạn thẻ ôn tập của ngày hôm nay</string>
@@ -254,8 +257,6 @@
     <string name="apk_share_error">Lỗi chia sẻ tệp tin apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Tệp tin này yêu cầu phiên bản Anki mới hơn.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Tải \'%s\' không thành công.</string>
     <string name="activity_start_failed">Hệ thống chưa cài đặt ứng dụng có thể thực hiện tác vụ này.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Hình ảnh máy ảnh có thể lớn. Bạn có thể muốn nén và thay đổi kích thước hình ảnh trong thư mục media]]></string>
     <string name="no_browser_notification">Không tìm thấy trình duyệt, vui lòng truy cập trang web bằng máy tính hoặc điện thoại di động:</string>
@@ -312,7 +313,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Lỗi hiện thị nội dung thẻ: Không thể mở ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Lỗi hiện thị nội dung thẻ: Cần cập nhật media</string>
-    <string name="cannot_load_http_resource">Tải tài nguyên http không còn được hỗ trợ</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Không thể mở bộ thẻ ‘%s’</string>
     <string name="search_decks">Tìm kiếm bộ thẻ</string>

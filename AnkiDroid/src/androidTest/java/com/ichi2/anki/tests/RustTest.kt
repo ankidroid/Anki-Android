@@ -17,8 +17,10 @@ package com.ichi2.anki.tests
 
 import com.ichi2.libanki.Storage
 import net.ankiweb.rsdroid.BackendException
+import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers.equalTo
+import org.junit.Assume.assumeThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.Timeout
@@ -35,6 +37,7 @@ class RustTest : InstrumentedTest() {
     @Test
     @Throws(BackendException::class, IOException::class)
     fun collectionIsVersion11AfterOpen() {
+        assumeThat(BackendFactory.defaultLegacySchema, equalTo(true))
         // This test will be decommissioned, but before we get an upgrade strategy, we need to ensure we're not upgrading the database.
         val path = Shared.getTestFilePath(testContext, "initial_version_2_12_1.anki2")
         val collection = Storage.collection(testContext, path)

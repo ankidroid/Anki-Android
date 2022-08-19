@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki
 
+import com.ichi2.preferences.HeaderPreference
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.params.ParameterizedTest
@@ -28,8 +29,8 @@ import java.util.stream.Stream
 class PreferencesSimpleTest {
     @ParameterizedTest
     @MethodSource("buildCategorySummary_LTR_Test_args")
-    fun buildCategorySummary_LTR_Test(strings: Array<String>, expected_summary: String) {
-        assertThat(Preferences.buildCategorySummary(*strings), equalTo(expected_summary))
+    fun buildCategorySummary_LTR_Test(entries: Array<String>, expected_summary: String) {
+        assertThat(HeaderPreference.buildHeaderSummary(*entries), equalTo(expected_summary))
     }
 
     companion object {

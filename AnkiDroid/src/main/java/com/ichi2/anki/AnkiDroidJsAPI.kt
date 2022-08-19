@@ -24,19 +24,20 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.text.TextUtils
-import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
-import android.widget.TextView
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.servicelayer.SearchService
+import com.ichi2.anki.snackbar.setMaxLines
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.CollectionTask.SearchCards
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
@@ -106,20 +107,14 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      */
     fun showDeveloperContact(errorCode: Int) {
         val errorMsg: String = context.getString(R.string.anki_js_error_code, errorCode)
-        val parentLayout: View = activity.findViewById(android.R.id.content)
         val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, cardSuppliedDeveloperContact, errorMsg)
-        val snackbar: Snackbar? = UIUtils.showSnackbar(
-            activity,
-            snackbarMsg,
-            false,
-            R.string.reviewer_invalid_api_version_visit_documentation,
-            { activity.openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki")) },
-            parentLayout,
-            null
-        )
-        val snackbarTextView = snackbar!!.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-        snackbarTextView.maxLines = 3
-        snackbar.show()
+
+        activity.showSnackbar(snackbarMsg, Snackbar.LENGTH_INDEFINITE) {
+            setMaxLines(3)
+            setAction(R.string.reviewer_invalid_api_version_visit_documentation) {
+                activity.openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki"))
+            }
+        }
     }
 
     /**
@@ -395,7 +390,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     @JavascriptInterface
     fun ankiSearchCard(query: String?) {
         val intent = Intent(context, CardBrowser::class.java)
-        val currentCardId: Long = currentCard.id
+        val currentCardId: CardId = currentCard.id
         intent.putExtra("currentCard", currentCardId)
         intent.putExtra("search_query", query)
         activity.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)

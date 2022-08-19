@@ -63,31 +63,30 @@
     <string name="collapse">Toraytirish</string>
     <string name="study_more">Ko\'proq o\'rganish</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d karta lozim (%2$s)
-%1$d kartalar lozim (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="one">%1$d karta lozim (%2$s)</item>
+        <item quantity="other">%1$d kartalar lozim (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minut qoldi</item>
         <item quantity="other">%d minutes left</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d soat %2$d qoldi</item>
+        <item quantity="other">%1$d soatlar %2$d qoldi</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d kun %2$d qoldi</item>
+        <item quantity="other">%1$d kunlar %2$d qoldi</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Collection is empty</string>
+    <string name="no_cards_placeholder_title">To\'plam bo\'sh</string>
     <string name="no_cards_placeholder_description">Kartalar qo\'shishni\n+ belgisi orqali boshlang</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
+        <item quantity="one">Bugun %2$s da %1$d karta o\'rganildi</item>
+        <item quantity="other">Bugun %2$s da %1$d kartalar o\'rganildi</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Javobingizni yozing</string>
+    <string name="type_answer_hint">Javobingizni yozish</string>
     <string name="show_answer">Javobni ko\'rsatish</string>
     <string name="hide_answer">Javobni yashirish</string>
     <string name="ease_button_again">Yana</string>
@@ -99,12 +98,12 @@
     <string name="undo">Bekor qilish</string>
     <string name="undo_action_review">oxirgi takrorlash</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="move_all_to_deck">Hammasini to\'plamga ko\'chirish</string>
     <string name="unbury">Tiklash</string>
     <string name="rename_deck">To\'plamni qayta nomlash</string>
     <string name="create_shortcut">Yorliq yaratish</string>
     <string name="browse_cards">Kartalarni ko\'rib chiqish</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Qo\'shish</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Qo\'shish</string>
     <string name="menu_add_note">Qayd qo\'shish</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Akkauntni sinxronlashtirish</string>
     <string name="menu_dismiss_note">Yashirish / O\'chirish</string>
@@ -127,7 +126,7 @@
     <string name="menu_flag_card_seven">Siyohrang bayroq</string>
     <string name="menu_edit_tags">Teglarni tahrirlash</string>
     <string name="delete_note_message">Rostdan ham bu qayd va uning barcha kartalarini o\'chirish?\n%s</string>
-    <string name="menu_search">%1$s dan izlab k\'ring</string>
+    <string name="menu_search">%1$s dan izlab ko\'rish</string>
     <string name="menu_mark_note">Qaydni belgilash</string>
     <string name="menu_unmark_note">Qayddan belgini olib tashlash</string>
     <string name="menu_toggle_mic_tool_bar">Talaffuzni tekshirish</string>
@@ -161,37 +160,37 @@
     <string name="create_subdeck">Palubani o‘rnini bosuvchi narsa yaratish</string>
     <string name="empty_filtered_deck">I</string>
     <string name="custom_study_deck_name">Qo\'shimcha shug\'ullanish</string>
-    <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-    <string name="empty_deck">This deck is empty</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="custom_study_deck_exists">Avval qo\'shimcha shug\'ullanish to\'plamini qayta nomlang</string>
+    <string name="empty_deck">Bu to\'plam bo\'sh</string>
+    <string name="search_deck" comment="Deck search for selecting it">To\'plam qidirish</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">To\'plam qidirish</string>
     <string name="empty_deck_add_note">Karta qo\'shish</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
+    <string name="invalid_deck_name">To\'plamning nomi yaroqsiz</string>
+    <string name="studyoptions_empty">Bu to\'plam bo\'sh. Yangi karta qo\'shish uchun + tugmasini bosing.</string>
     <string name="studyoptions_limit_reached">Kunlik o\'rganish limitiga yetdingiz</string>
     <string name="studyoptions_empty_schedule">O\'rganilishi rejalashtirilgan karta yo\'q</string>
     <string name="studyoptions_congrats_finished">Tabriklaymiz! Siz hozircha tugatdingiz</string>
     <string name="studyoptions_congrats_more_rev">Bugungi limitga yetdingiz, lekin hali ham takrorlash uchun kartalar bor. Limitni sozlamalar qismidan oshirishingiz mumkin.</string>
-    <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
-    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
-    <string name="button_sync" comment="Text of the sync button">Sync</string>
-    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-    <string name="continue_sync">Continue sync</string>
-    <string name="sync_cancelled">Sync cancelled</string>
-    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+    <string name="studyoptions_congrats_more_new">Bugungi chegaraga yetdingiz, lekin hali ham takrorlash uchun kartalar bor. Chegarani sozlamalar qismidan oshirishingiz mumkin, lekin bu sizning qisqa vaqtdagi ko\'rib chiqish yukingizni oshiradi.</string>
+    <string name="studyoptions_congrats_custom">Odatiy jadvaldan tashqari ko\'proq o\'qish uchun, \'Qo\'shimcha shug\'ullanish\' tugmasini bosing</string>
+    <string name="studyoptions_no_cards_due">Tugashi lozim kartalar halicha yo\'q</string>
+    <string name="sd_card_not_mounted">Qurilma xotirasi o\'rnatilmagan</string>
+    <string name="empty_cloze_warning">Bu kartani o\'zgartirish va bir nechta yopilma o\'chirishlar qo\'shish (%1$s)</string>
+    <string name="button_sync" comment="Text of the sync button">Sinxronlash</string>
+    <string name="cancel_sync_confirm">Sinxronlashni bekor qilishni istaysizmi?</string>
+    <string name="continue_sync">Sinxronlashni davom ettirish</string>
+    <string name="sync_cancelled">Sinxronlash bekor qilindi</string>
+    <string name="sync_cancel_message">Bekor qilinyapti...\n Bu biroz vaqt olishi mumkin</string>
     <string name="export">Eksport qilish</string>
     <string name="export_collection">Jamlanmani eksport qilish</string>
-    <string name="export_deck">Export deck</string>
-    <string name="nothing">Nothing</string>
+    <string name="export_deck">To\'plamni eksport qilish</string>
+    <string name="nothing">Hechnima</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Card types</string>
-    <string name="card_template_editor_front">Front template</string>
-    <string name="card_template_editor_back">Back template</string>
-    <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="title_activity_template_editor">Karta turlari</string>
+    <string name="card_template_editor_front">Old shablon</string>
+    <string name="card_template_editor_back">Ort shablon</string>
+    <string name="card_template_editor_styling">Ko\'rinish</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Karta Qidiruvchisi Ko\'rinishi</string>
     <string name="card_template_editor_deck_override">Deck override</string>
     <string name="card_template_editor_insert_field">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>
@@ -228,13 +227,13 @@
     <string name="wrong_tag_closed">\'{{/%1$s}}\' topildi, ammo \'{{/%2$s}}\' kutilgan edi</string>
     <string name="filter_error">%s filtrda xatolik</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">Jamlanmalarni birlashtirib bo\'lmaydi.\n Qaysi jamlanmani saqlab qolmoqchisiz?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_replace_title">Jamlanmani almashtirish</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d karta (0 lozim)
 %1$d kartalar (0 lozim)</item>

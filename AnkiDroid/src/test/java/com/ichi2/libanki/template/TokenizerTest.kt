@@ -30,42 +30,40 @@ import com.ichi2.libanki.template.Tokenizer.new_handlebar_token
 import com.ichi2.libanki.template.Tokenizer.new_to_legacy
 import com.ichi2.libanki.template.Tokenizer.next_token
 import com.ichi2.libanki.template.Tokenizer.text_token
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("is -> equalTo")
 class TokenizerTest : RobolectricTest() {
     private fun test_text_token_is_null(template: String) {
         assertThat(
             text_token(template, false),
-            `is`(nullValue())
+            nullValue()
         )
         assertThat(
             text_token(template, true),
-            `is`(nullValue())
+            nullValue()
         )
         val legacy_template = new_to_legacy(template)
         assertThat(
             text_token(legacy_template, true),
-            `is`(nullValue())
+            nullValue()
         )
         // No test for legacy_template without legacy interpretation.
     }
 
     private fun test_text_token(template: String, expected: Tokenizer.IResult) {
-        assertThat(text_token(template, false), `is`(expected))
-        assertThat(text_token(template, true), `is`(expected))
+        assertThat(text_token(template, false), equalTo(expected))
+        assertThat(text_token(template, true), equalTo(expected))
         val legacy_template = new_to_legacy(template)
         val legacy_expected = expected.new_to_legacy()
         assertThat(
             text_token(legacy_template, true),
-            `is`(legacy_expected)
+            equalTo(legacy_expected)
         )
         // No test for legacy_template without legacy interpretation.
     }
@@ -94,7 +92,7 @@ class TokenizerTest : RobolectricTest() {
     fun legacy_in_test_new_and_legacytext_token() {
         assertThat(
             text_token("foo<%bar%>{{plop}}", true),
-            `is`(
+            equalTo(
                 Tokenizer.IResult(
                     Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo"),
                     "<%bar%>{{plop}}"
@@ -103,7 +101,7 @@ class TokenizerTest : RobolectricTest() {
         )
         assertThat(
             text_token("foo{{bar}}<%plop%>", true),
-            `is`(
+            equalTo(
                 Tokenizer.IResult(
                     Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo"),
                     "{{bar}}<%plop%>"
@@ -112,7 +110,7 @@ class TokenizerTest : RobolectricTest() {
         )
         assertThat(
             text_token("foo<%bar%>{{plop}}", false),
-            `is`(
+            equalTo(
                 Tokenizer.IResult(
                     Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo<%bar%>"),
                     "{{plop}}"
@@ -121,7 +119,7 @@ class TokenizerTest : RobolectricTest() {
         )
         assertThat(
             text_token("foo{{bar}}<%plop%>", false),
-            `is`(
+            equalTo(
                 Tokenizer.IResult(
                     Tokenizer.Token(Tokenizer.TokenKind.TEXT, "foo"),
                     "{{bar}}<%plop%>"
@@ -137,7 +135,7 @@ class TokenizerTest : RobolectricTest() {
     ) {
         assertThat(
             classify_handle(template),
-            `is`(Tokenizer.Token(token, remaining))
+            equalTo(Tokenizer.Token(token, remaining))
         )
     }
 
@@ -163,21 +161,21 @@ class TokenizerTest : RobolectricTest() {
             Tokenizer.Token(token, field_name),
             remaining
         )
-        assertThat(new_handlebar_token(template), `is`(expected))
-        assertThat(handlebar_token(template, true), `is`(expected))
+        assertThat(new_handlebar_token(template), equalTo(expected))
+        assertThat(handlebar_token(template, true), equalTo(expected))
         assertThat(
             handlebar_token(template, false),
-            `is`(expected)
+            equalTo(expected)
         )
         val legacy_template = new_to_legacy(template)
         val legacy_expected = expected.new_to_legacy()
         assertThat(
             legacy_handlebar_token(legacy_template),
-            `is`(legacy_expected)
+            equalTo(legacy_expected)
         )
         assertThat(
             handlebar_token(legacy_template, true),
-            `is`(legacy_expected)
+            equalTo(legacy_expected)
         )
         assertThat(
             handlebar_token(legacy_template, false),
@@ -272,17 +270,17 @@ class TokenizerTest : RobolectricTest() {
         )
         assertThat(
             next_token(template, true),
-            `is`(expected)
+            equalTo(expected)
         )
         assertThat(
             next_token(template, false),
-            `is`(expected)
+            equalTo(expected)
         )
         val legacy_expected = expected.new_to_legacy()
         val legacy_template = new_to_legacy(template)
         assertThat(
             next_token(legacy_template, true),
-            `is`(legacy_expected)
+            equalTo(legacy_expected)
         )
     }
 
@@ -319,73 +317,73 @@ class TokenizerTest : RobolectricTest() {
 
         assertThat(
             tokenizer.next(),
-            `is`(Tokenizer.Token(Tokenizer.TokenKind.TEXT, "Foo "))
+            equalTo(Tokenizer.Token(Tokenizer.TokenKind.TEXT, "Foo "))
         )
         assertThat(
             legacy_tokenizer.next(),
-            `is`(Tokenizer.Token(Tokenizer.TokenKind.TEXT, "Foo "))
+            equalTo(Tokenizer.Token(Tokenizer.TokenKind.TEXT, "Foo "))
         )
         assertThat(
             tokenizer.next(),
-            `is`(Tokenizer.Token(REPLACEMENT, "Test"))
+            equalTo(Tokenizer.Token(REPLACEMENT, "Test"))
         )
         assertThat(
             legacy_tokenizer.next(),
-            `is`(Tokenizer.Token(REPLACEMENT, "Test"))
+            equalTo(Tokenizer.Token(REPLACEMENT, "Test"))
         )
         assertThat(
             tokenizer.next(),
-            `is`(Tokenizer.Token(Tokenizer.TokenKind.TEXT, " "))
+            equalTo(Tokenizer.Token(Tokenizer.TokenKind.TEXT, " "))
         )
         assertThat(
             legacy_tokenizer.next(),
-            `is`(Tokenizer.Token(Tokenizer.TokenKind.TEXT, " "))
+            equalTo(Tokenizer.Token(Tokenizer.TokenKind.TEXT, " "))
         )
         assertThat(
             tokenizer.next(),
-            `is`(Tokenizer.Token(OPEN_CONDITIONAL, "Bar"))
+            equalTo(Tokenizer.Token(OPEN_CONDITIONAL, "Bar"))
         )
         assertThat(
             legacy_tokenizer.next(),
-            `is`(Tokenizer.Token(OPEN_CONDITIONAL, "Bar"))
+            equalTo(Tokenizer.Token(OPEN_CONDITIONAL, "Bar"))
         )
         assertThat(
             tokenizer.next(),
-            `is`(Tokenizer.Token(Tokenizer.TokenKind.TEXT, " "))
+            equalTo(Tokenizer.Token(Tokenizer.TokenKind.TEXT, " "))
         )
         assertThat(
             legacy_tokenizer.next(),
-            `is`(Tokenizer.Token(Tokenizer.TokenKind.TEXT, " "))
+            equalTo(Tokenizer.Token(Tokenizer.TokenKind.TEXT, " "))
         )
         assertThat(
             tokenizer.next(),
-            `is`(Tokenizer.Token(CLOSE_CONDITIONAL, "Plop"))
+            equalTo(Tokenizer.Token(CLOSE_CONDITIONAL, "Plop"))
         )
         assertThat(
             legacy_tokenizer.next(),
-            `is`(Tokenizer.Token(CLOSE_CONDITIONAL, "Plop"))
+            equalTo(Tokenizer.Token(CLOSE_CONDITIONAL, "Plop"))
         )
         assertThat(
             tokenizer.next(),
-            `is`(Tokenizer.Token(Tokenizer.TokenKind.TEXT, "iee "))
+            equalTo(Tokenizer.Token(Tokenizer.TokenKind.TEXT, "iee "))
         )
         assertThat(
             legacy_tokenizer.next(),
-            `is`(Tokenizer.Token(Tokenizer.TokenKind.TEXT, "iee "))
+            equalTo(Tokenizer.Token(Tokenizer.TokenKind.TEXT, "iee "))
         )
         try {
             tokenizer.next()
             fail()
         } catch (exc: NoClosingBrackets) {
-            assertThat(exc.remaining, `is`("{{!ien nnr"))
+            assertThat(exc.remaining, equalTo("{{!ien nnr"))
         }
         try {
             legacy_tokenizer.next()
             fail()
         } catch (exc: NoClosingBrackets) {
-            assertThat(exc.remaining, `is`("<%!ien nnr"))
+            assertThat(exc.remaining, equalTo("<%!ien nnr"))
         }
-        assertThat(tokenizer.hasNext(), `is`(false))
+        assertThat(tokenizer.hasNext(), equalTo(false))
     }
 
     companion object {

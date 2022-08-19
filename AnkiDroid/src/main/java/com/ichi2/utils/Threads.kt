@@ -20,6 +20,7 @@ import android.os.Looper
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
 import timber.log.Timber
+import java.lang.RuntimeException
 
 /**
  * Helper class for checking for programming errors while using threads.
@@ -29,8 +30,20 @@ object Threads {
     /**
      * @return true if called from the application main thread
      */
-    private val isOnMainThread: Boolean
-        get() = Looper.getMainLooper() == Looper.myLooper()
+    val isOnMainThread: Boolean
+        get() =
+            try {
+                Looper.getMainLooper().thread == Thread.currentThread()
+            } catch (exc: RuntimeException) {
+                if (exc.message?.contains("Looper not mocked") == true) {
+                    // When unit tests are run outside of Robolectric, the call to getMainLooper()
+                    // will fail. We swallow the exception in this case, and assume the call was
+                    // not made on the main thread.
+                    false
+                } else {
+                    throw exc
+                }
+            }
 
     /**
      * Checks that it is called from the main thread and fails if it is called from another thread.

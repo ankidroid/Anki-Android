@@ -71,8 +71,8 @@
         <item quantity="other">%d دقیقه باقیمانده</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d ساعت %2$d مانده</item>
+        <item quantity="other">%1$d ساعت %2$d مانده</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>
@@ -103,7 +103,7 @@
     <string name="rename_deck">تغییر نام دسته</string>
     <string name="create_shortcut">ایجاد میانبر</string>
     <string name="browse_cards">جستجوی کارت‌ها</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">افزودن</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">افزودن</string>
     <string name="menu_add_note">افزودن یادداشت</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">همگام سازی حساب</string>
     <string name="menu_dismiss_note">پنهان/حذف کردن</string>

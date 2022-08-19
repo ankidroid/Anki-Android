@@ -39,7 +39,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.libanki.bool
-import com.ichi2.themes.Themes
+import com.ichi2.themes.Themes.getColorFromAttr
 
 /**
  * This class handles the Filter Bottom Sheet present in the Card Browser
@@ -59,7 +59,7 @@ class FilterSheetBottomFragment :
 
     // flagName is displayed in filter sheet as the name of the filter
     enum class Flags(@StringRes private val flagNameRes: Int, val flagNode: SearchNode.Flag, @DrawableRes val flagIcon: Int) {
-        NO_FLAG(R.string.menu_flag_card_zero, SearchNode.Flag.FLAG_NONE, R.drawable.ic_flag_transparent),
+        NO_FLAG(R.string.menu_flag_card_zero, SearchNode.Flag.FLAG_NONE, R.drawable.label_icon_flags),
         RED(R.string.menu_flag_card_one, SearchNode.Flag.FLAG_RED, R.drawable.ic_flag_red),
         ORANGE(R.string.menu_flag_card_two, SearchNode.Flag.FLAG_ORANGE, R.drawable.ic_flag_orange),
         GREEN(R.string.menu_flag_card_three, SearchNode.Flag.FLAG_GREEN, R.drawable.ic_flag_green),
@@ -80,7 +80,9 @@ class FilterSheetBottomFragment :
         applyButton.setOnClickListener {
             val filterQuery = createQuery(flagSearchItems)
 
-            (activity as CardBrowser).searchWithFilterQuery(filterQuery)
+            if (filterQuery != "") {
+                (activity as CardBrowser).searchWithFilterQuery(filterQuery)
+            }
             dismiss()
         }
 
@@ -152,6 +154,10 @@ class FilterSheetBottomFragment :
         flagList: MutableList<SearchNode.Flag>
     ): String {
 
+        if (flagList.isEmpty()) {
+            return ""
+        }
+
         val node = searchNode {
             group = group {
                 joiner = SearchNode.Group.Joiner.OR
@@ -189,35 +195,13 @@ class FilterSheetBottomFragment :
         val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
         if (!isSelected(item, flagSearchItems)) {
-            flagRecyclerView[position].setBackgroundColor(
-                Themes.getColorFromAttr(
-                    activity,
-                    R.attr.filterItemBackgroundSelected
-                )
-            )
-
-            itemTextView.setTextColor(
-                Themes.getColorFromAttr(
-                    activity,
-                    R.attr.filterItemTextColorSelected
-                )
-            )
+            flagRecyclerView[position].setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
+            itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
 
             flagSearchItems.add(item.flagNode)
         } else {
-            flagRecyclerView[position].setBackgroundColor(
-                Themes.getColorFromAttr(
-                    activity,
-                    R.attr.filterItemBackground
-                )
-            )
-
-            itemTextView.setTextColor(
-                Themes.getColorFromAttr(
-                    activity,
-                    R.attr.filterItemTextColor
-                )
-            )
+            flagRecyclerView[position].setBackgroundColor(getColorFromAttr(R.attr.filterItemBackground))
+            itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColor))
 
             flagSearchItems.remove(item.flagNode)
         }

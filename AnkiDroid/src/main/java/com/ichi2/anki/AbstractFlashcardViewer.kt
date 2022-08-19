@@ -42,14 +42,13 @@ import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
 import androidx.webkit.WebViewAssetLoader
+import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
 import com.drakeet.drawer.FullDraggableContainer
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
-import com.ichi2.anki.UIUtils.getSnackbar
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
@@ -73,6 +72,7 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.PreloadNextCard
 import com.ichi2.async.CollectionTask.UpdateNote
@@ -84,20 +84,23 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.sched.AbstractSched
+import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.AdaptionUtil.hasWebBrowser
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.AssetHelper.guessMimeType
+import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.ClipboardUtil.getText
 import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.MaxExecFunction
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
+import kotlinx.coroutines.Job
+import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.*
@@ -120,7 +123,8 @@ abstract class AbstractFlashcardViewer :
     TagsDialogListener,
     WhiteboardMultiTouchMethods,
     AutomaticallyAnswered,
-    OnPageFinishedCallback {
+    OnPageFinishedCallback,
+    ChangeManager.Subscriber {
     private var mTtsInitialized = false
     private var mReplayOnTtsInit = false
     private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
@@ -143,6 +147,7 @@ abstract class AbstractFlashcardViewer :
     private var mScrollingButtons = false
     private var mGesturesEnabled = false
     private var mLargeAnswerButtons = false
+    private var mAnswerButtonsPosition: String? = "bottom"
     private var mDoubleTapTimeInterval = DEFAULT_DOUBLE_TAP_TIME_INTERVAL
 
     // Android WebView
@@ -275,6 +280,10 @@ abstract class AbstractFlashcardViewer :
         mLastClickTime = elapsedRealTime
         mAutomaticAnswer.onShowAnswer()
         displayCardAnswer()
+    }
+
+    init {
+        ChangeManager.subscribe(this)
     }
 
     // Event handler for eases (answer buttons)
@@ -573,11 +582,11 @@ abstract class AbstractFlashcardViewer :
             .addPathHandler("/") { path: String ->
                 try {
                     val file = File(mediaDir, path)
-                    val `is` = FileInputStream(file)
+                    val inputStream = FileInputStream(file)
                     val mimeType = guessMimeType(path)
                     val headers = HashMap<String, String>()
                     headers["Access-Control-Allow-Origin"] = "*"
-                    val response = WebResourceResponse(mimeType, null, `is`)
+                    val response = WebResourceResponse(mimeType, null, inputStream)
                     response.responseHeaders = headers
                     return@addPathHandler response
                 } catch (e: Exception) {
@@ -626,8 +635,8 @@ abstract class AbstractFlashcardViewer :
         super.onDestroy()
         // Tells the scheduler there is no more current cards. 0 is
         // not a valid id.
-        if (sched != null) {
-            sched!!.discardCurrentCard()
+        if (sched != null && sched is SchedV2) {
+            (sched!! as SchedV2).discardCurrentCard()
         }
         Timber.d("onDestroy()")
         mTTS.releaseTts(this)
@@ -664,7 +673,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     @KotlinCleanup("Use ?:")
-    public override val currentCardId: Long?
+    public override val currentCardId: CardId?
         get() = if (mCurrentCard == null) {
             null
         } else mCurrentCard!!.id
@@ -790,7 +799,7 @@ abstract class AbstractFlashcardViewer :
     // CUSTOM METHODS
     // ----------------------------------------------------------------------------
     // Get the did of the parent deck (ignoring any subdecks)
-    protected val parentDid: Long
+    protected val parentDid: DeckId
         get() = col.decks.selected()
 
     private fun redrawCard() {
@@ -826,21 +835,33 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    open fun undo() {
+    open fun undo(): Job? {
         if (isUndoAvailable) {
             val res = resources
             val undoName = col.undoName(res)
-            Undo().runWithHandler(
-                answerCardHandler(false)
-                    .alsoExecuteAfter {
-                        showThemedToast(
-                            this@AbstractFlashcardViewer,
-                            res.getString(R.string.undo_succeeded, undoName),
-                            true
-                        )
+            fun legacyUndo() {
+                Undo().runWithHandler(
+                    answerCardHandler(false)
+                        .alsoExecuteAfter {
+                            showThemedToast(
+                                this@AbstractFlashcardViewer,
+                                res.getString(R.string.undo_succeeded, undoName),
+                                true
+                            )
+                        }
+                )
+            }
+            if (BackendFactory.defaultLegacySchema) {
+                legacyUndo()
+            } else {
+                return launchCatchingTask {
+                    if (!backendUndoAndShowPopup()) {
+                        legacyUndo()
                     }
-            )
+                }
+            }
         }
+        return null
     }
 
     private fun finishNoStorageAvailable() {
@@ -985,6 +1006,7 @@ abstract class AbstractFlashcardViewer :
             getString(R.string.answer_buttons_position_preference),
             "bottom"
         )
+        mAnswerButtonsPosition = answerButtonsPosition
         val answerArea = findViewById<LinearLayout>(R.id.bottom_area_layout)
         val answerAreaParams = answerArea.layoutParams as RelativeLayout.LayoutParams
         val whiteboardContainer = findViewById<FrameLayout>(R.id.whiteboard)
@@ -999,9 +1021,9 @@ abstract class AbstractFlashcardViewer :
                 answerAreaParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 answerArea.removeView(mAnswerField)
                 answerArea.addView(mAnswerField, 1)
-                answerArea.visibility = View.VISIBLE
             }
-            "bottom" -> {
+            "bottom",
+            "none" -> {
                 whiteboardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
                 whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 flashcardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
@@ -1009,11 +1031,10 @@ abstract class AbstractFlashcardViewer :
                 touchLayerContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
                 touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                answerArea.visibility = View.VISIBLE
             }
-            "none" -> answerArea.visibility = View.GONE
             else -> Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition)
         }
+        answerArea.visibility = if (answerButtonsPosition == "none") View.GONE else View.VISIBLE
         answerArea.layoutParams = answerAreaParams
         whiteboardContainer.layoutParams = whiteboardContainerParams
         mCardFrame!!.layoutParams = flashcardContainerParams
@@ -1765,24 +1786,17 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** Displays a snackbar which does not obscure the answer buttons  */
-    private fun showSnackbar(mainText: String?, @StringRes buttonText: Int, onClickListener: View.OnClickListener?) {
+    private fun showSnackbarAboveAnswerButtons(text: String, @StringRes buttonTextResource: Int, onClickListener: View.OnClickListener) {
         // BUG: Moving from full screen to non-full screen obscures the buttons
-        val sb = getSnackbar(this, mainText, Snackbar.LENGTH_LONG, buttonText, onClickListener, webView!!, null)
-        val easeButtons = findViewById<View>(R.id.answer_options_layout)
-        val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
-        val upperView = if (previewButtons != null && previewButtons.visibility != View.GONE) previewButtons else easeButtons
+        showSnackbar(text) {
+            setAction(buttonTextResource, onClickListener)
 
-        // we need to check for View.GONE as setting the anchor does not seem to respect this property
-        // (there's a gap even if the view is invisible)
-        if (upperView != null && upperView.visibility != View.GONE) {
-            val sbView = sb.view
-            val layoutParams = sbView.layoutParams as CoordinatorLayout.LayoutParams
-            layoutParams.anchorId = upperView.id
-            layoutParams.anchorGravity = Gravity.TOP
-            layoutParams.gravity = Gravity.TOP
-            sbView.layoutParams = layoutParams
+            if (mAnswerButtonsPosition == "bottom") {
+                val easeButtons = findViewById<View>(R.id.answer_options_layout)
+                val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
+                anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
+            }
         }
-        sb.show()
     }
 
     private fun onPageUp() {
@@ -2191,10 +2205,6 @@ abstract class AbstractFlashcardViewer :
             if (isLoadedFromProtocolRelativeUrl(url)) {
                 mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
             }
-            if (isLoadedFromHttpUrl(url)) {
-                // shouldInterceptRequest is not running on the UI thread.
-                runOnUiThread { mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard!!) }
-            }
             return null
         }
 
@@ -2215,19 +2225,7 @@ abstract class AbstractFlashcardViewer :
             if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
                 mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
             }
-            if (isLoadedFromHttpUrl(url)) {
-                // shouldInterceptRequest is not running on the UI thread.
-                runOnUiThread { mDisplayMediaLoadedFromHttpWarningSnackbar.execOnceForReference(mCurrentCard!!) }
-            }
             return null
-        }
-
-        private fun isLoadedFromHttpUrl(url: String): Boolean {
-            return url.trim { it <= ' ' }.lowercase(Locale.ROOT).startsWith("http")
-        }
-
-        private fun isLoadedFromHttpUrl(uri: Uri): Boolean {
-            return uri.scheme.equals("http", ignoreCase = true)
         }
 
         private fun isLoadedFromProtocolRelativeUrl(url: String): Boolean {
@@ -2254,7 +2252,9 @@ abstract class AbstractFlashcardViewer :
         // We play sounds through these links when a user taps the sound icon.
         fun filterUrl(url: String): Boolean {
             if (url.startsWith("playsound:")) {
-                controlSound(url)
+                launchCatchingTask {
+                    controlSound(url)
+                }
                 return true
             }
             if (url.startsWith("file") || url.startsWith("data:")) {
@@ -2447,8 +2447,22 @@ abstract class AbstractFlashcardViewer :
          * Also, Check if the user clicked on the running audio icon
          * @param url
          */
-        private fun controlSound(url: String) {
-            val replacedUrl = url.replaceFirst("playsound:".toRegex(), "")
+        @BlocksSchemaUpgrade("handle TTS tags")
+        private suspend fun controlSound(url: String) {
+            val replacedUrl = if (BackendFactory.defaultLegacySchema) {
+                url.replaceFirst("playsound:".toRegex(), "")
+            } else {
+                val tag = currentCard?.let { getAvTag(it, url) }
+                val filename = when (tag) {
+                    is SoundOrVideoTag -> tag.filename
+                    // not currently supported
+                    is TTSTag -> null
+                    else -> null
+                }
+                filename?.let {
+                    Sound.getSoundPath(mBaseUrl, it)
+                } ?: return
+            }
             if (replacedUrl != mSoundPlayer.currentAudioUri || mSoundPlayer.isCurrentAudioFinished) {
                 onCurrentAudioChanged(replacedUrl)
             } else {
@@ -2490,19 +2504,14 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private val mDisplayMediaLoadedFromHttpWarningSnackbar = MaxExecFunction(3) {
-        val onClickListener = View.OnClickListener { openUrl(Uri.parse(getString(R.string.link_faq_external_http_content))) }
-        showSnackbar(getString(R.string.cannot_load_http_resource), R.string.help, onClickListener)
-    }
-
     private fun displayCouldNotFindMediaSnackbar(filename: String?) {
         val onClickListener = View.OnClickListener { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
-        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename), R.string.help, onClickListener)
+        showSnackbarAboveAnswerButtons(getString(R.string.card_viewer_could_not_find_image, filename), R.string.help, onClickListener)
     }
 
     private fun displayMediaUpgradeRequiredSnackbar() {
         val onClickListener = View.OnClickListener { openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative))) }
-        showSnackbar(getString(R.string.card_viewer_media_relative_protocol), R.string.help, onClickListener)
+        showSnackbarAboveAnswerButtons(getString(R.string.card_viewer_media_relative_protocol), R.string.help, onClickListener)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -2557,6 +2566,15 @@ abstract class AbstractFlashcardViewer :
 
     open fun javaScriptFunction(): AnkiDroidJsAPI? {
         return AnkiDroidJsAPI(this)
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if ((changes.studyQueues || changes.noteText || changes.card) && handler !== this) {
+            // executing this only for the refresh side effects; there may be a better way
+            GetCard().runWithHandler(
+                answerCardHandler(false)
+            )
+        }
     }
 
     companion object {

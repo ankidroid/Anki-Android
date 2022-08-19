@@ -38,6 +38,7 @@ import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
+import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.JSONArray
@@ -204,18 +205,6 @@ class CardContentProvider : ContentProvider() {
         return isMarshmallow || !WHITELIST.contains(sUriMatcher.match(uri)) || knownRogueClient()
     }
 
-    /**
-     * Helper function to handle calling a java function with vararags from kotlin code
-     */
-    @KotlinCleanup("After migrating DB.java to kotlin see if this function is still needed")
-    private fun DB.queryWithNullSelection(sql: String, selectionArgs: Array<String>?): Cursor? {
-        return if (selectionArgs == null) {
-            this.query(sql)
-        } else {
-            this.query(sql, *selectionArgs)
-        }
-    }
-
     override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?, order: String?): Cursor? {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("query", uri)
@@ -228,11 +217,10 @@ class CardContentProvider : ContentProvider() {
         val match = sUriMatcher.match(uri)
         return when (match) {
             NOTES_V2 -> {
-
                 /* Search for notes using direct SQL query */
                 val proj = sanitizeNoteProjection(projection)
                 val sql = SQLiteQueryBuilder.buildQueryString(false, "notes", proj, selection, null, null, order, null)
-                col.db.queryWithNullSelection(sql, selectionArgs)
+                col.db.query(sql, *(selectionArgs ?: arrayOf()))
             }
             NOTES -> {
 
@@ -276,7 +264,7 @@ class CardContentProvider : ContentProvider() {
                 val models = col.models
                 val columns = projection ?: FlashCardsContract.Model.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                for (modelId: Long in models.getModels().keys) {
+                for (modelId: NoteTypeId in models.getModels().keys) {
                     addModelToCursor(modelId, models, rv, columns)
                 }
                 rv
@@ -403,16 +391,7 @@ class CardContentProvider : ContentProvider() {
                 val rv = MatrixCursor(columns, 1)
                 val allDecks = col.sched.deckDueTree()
                 val desiredDeckId = uri.pathSegments[1].toLong()
-                fun find(nodeList: List<TreeNode<DeckDueTreeNode>>, id: Long): DeckDueTreeNode? {
-                    for (node in nodeList) {
-                        if (node.value.did == id) {
-                            return node.value
-                        }
-                        return find(node.children, id)
-                    }
-                    return null
-                }
-                find(allDecks, desiredDeckId)?.let {
+                findInDeckTree(allDecks, desiredDeckId)?.let {
                     addDeckToCursor(it.did, it.fullDeckName, getDeckCountsFromDueTreeNode(it), rv, col, columns)
                 }
                 rv
@@ -740,7 +719,7 @@ class CardContentProvider : ContentProvider() {
     /**
      * This implementation optimizes for when the notes are grouped according to model.
      */
-    private fun bulkInsertNotes(valuesArr: Array<ContentValues>?, deckId: Long): Int {
+    private fun bulkInsertNotes(valuesArr: Array<ContentValues>?, deckId: DeckId): Int {
         if (valuesArr == null || valuesArr.size == 0) {
             return 0
         }
@@ -925,7 +904,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_TEMPLATES -> {
                 run {
                     val models: ModelManager = col.models
-                    val mid: Long = getModelIdFromUri(uri, col)
+                    val mid: NoteTypeId = getModelIdFromUri(uri, col)
                     val existingModel: Model? = models.get(mid)
                     if (existingModel == null) {
                         throw IllegalArgumentException("model missing: " + mid)
@@ -956,7 +935,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_FIELDS -> {
                 run {
                     val models: ModelManager = col.models
-                    val mid: Long = getModelIdFromUri(uri, col)
+                    val mid: NoteTypeId = getModelIdFromUri(uri, col)
                     val existingModel: Model? = models.get(mid)
                     if (existingModel == null) {
                         throw IllegalArgumentException("model missing: " + mid)
@@ -1071,7 +1050,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addModelToCursor(modelId: Long, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
+    private fun addModelToCursor(modelId: NoteTypeId, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
         val jsonObject = models.get(modelId)
         val rb = rv.newRow()
         try {
@@ -1171,7 +1150,7 @@ class CardContentProvider : ContentProvider() {
     private fun buryOrSuspendCard(col: Collection, sched: AbstractSched, card: Card?, bury: Boolean) {
         try {
             @KotlinCleanup("move lambda outside parentheses")
-            col.db.executeInTransaction({
+            col.db.executeInTransaction {
                 if (card != null) {
                     if (bury) {
                         // bury
@@ -1181,7 +1160,7 @@ class CardContentProvider : ContentProvider() {
                         sched.suspendCards(longArrayOf(card.id))
                     }
                 }
-            })
+            }
         } catch (e: RuntimeException) {
             Timber.e(e, "buryOrSuspendCard - RuntimeException on burying or suspending card")
             CrashReportService.sendExceptionReport(e, "doInBackgroundBurySuspendCard")
@@ -1233,7 +1212,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun selectDeckWithCheck(col: Collection, did: Long): Boolean {
+    private fun selectDeckWithCheck(col: Collection, did: DeckId): Boolean {
         return if (col.decks.get(did, false) != null) {
             col.decks.select(did)
             true
@@ -1253,7 +1232,7 @@ class CardContentProvider : ContentProvider() {
         return getCard(noteId, ord, col)
     }
 
-    private fun getCard(noteId: Long, ord: Int, col: Collection): Card {
+    private fun getCard(noteId: NoteId, ord: Int, col: Collection): Card {
         val currentNote = col.getNote(noteId)
         var currentCard: Card? = null
         for (card in currentNote.cards()) {

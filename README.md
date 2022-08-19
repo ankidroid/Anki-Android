@@ -85,7 +85,8 @@ Join Us On
 <a href="https://twitter.com/ankidroid"><img src="docs/graphics/logos/twitter_logo_color.png" height="50px"/></a>
 
 ## Credits
-
+<!--- Do not rename this section. AnkiDroid contains a deep link to the section
+header - see https://github.com/ankidroid/Anki-Android/pull/11803 --->
 
 ### Code Contributors
 
@@ -121,6 +122,10 @@ Thanks to these awesome code contributors who keep this project going
 Thank you to all our backers! 🙏
 
 <a href="https://opencollective.com/ankidroid#backers" target="_blank"><img src="https://opencollective.com/ankidroid/backers.svg?width=890"></a>
+
+### [Translators](https://crowdin.com/project/ankidroid/activity-stream)
+
+Thanks to our 1400 translators, for allowing us to be available, partially or totally, in 99 languages as of July 2022.
 
 License
 -------

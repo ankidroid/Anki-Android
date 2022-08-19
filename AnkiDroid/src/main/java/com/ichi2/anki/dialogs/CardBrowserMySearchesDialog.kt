@@ -22,7 +22,6 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
     private var buttonItemAdapter: ButtonItemAdapter? = null
     private var savedFilters: HashMap<String, String>? = null
     private var savedFilterKeys: ArrayList<String>? = null
-    private var currentSearchTerms: String? = null
 
     interface MySearchesDialogListener {
         fun onSelection(searchName: String?)
@@ -30,7 +29,6 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
         fun onSaveSearch(searchName: String?, searchTerms: String?)
     }
 
-    @Suppress("UNCHECKED_CAST")
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
@@ -64,7 +62,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                     .customListAdapter(this, null)
             }
         } else if (type == CARD_BROWSER_MY_SEARCHES_TYPE_SAVE) {
-            currentSearchTerms = requireArguments().getString("currentSearchTerms")
+            val currentSearchTerms = requireArguments().getString("currentSearchTerms")
             dialog.title(text = getString(R.string.card_browser_list_my_searches_save))
                 .positiveButton(android.R.string.ok)
                 .negativeButton(R.string.dialog_cancel)
@@ -73,12 +71,14 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                     mySearchesDialogListener!!.onSaveSearch(text.toString(), currentSearchTerms)
                 }
         }
-        val layoutManager = dialog.getRecyclerView().layoutManager as LinearLayoutManager
-        val dividerItemDecoration = DividerItemDecoration(dialog.getRecyclerView().context, layoutManager.orientation)
-        val scale = resources.displayMetrics.density
-        val dpAsPixels = (5 * scale + 0.5f).toInt()
-        dialog.view.setPadding(dpAsPixels, 0, dpAsPixels, dpAsPixels)
-        dialog.getRecyclerView().addItemDecoration(dividerItemDecoration)
+        runCatching { dialog.getRecyclerView() }.onSuccess { recyclerView ->
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val dividerItemDecoration = DividerItemDecoration(recyclerView.context, layoutManager.orientation)
+            val scale = resources.displayMetrics.density
+            val dpAsPixels = (5 * scale + 0.5f).toInt()
+            dialog.view.setPadding(dpAsPixels, 0, dpAsPixels, dpAsPixels)
+            recyclerView.addItemDecoration(dividerItemDecoration)
+        }
         return dialog
     }
 
@@ -108,7 +108,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
         private var mySearchesDialogListener: MySearchesDialogListener? = null
         @JvmStatic
         fun newInstance(
-            savedFilters: HashMap<String?, String?>?,
+            savedFilters: HashMap<String, String>?,
             mySearchesDialogListener: MySearchesDialogListener?,
             currentSearchTerms: String?,
             type: Int

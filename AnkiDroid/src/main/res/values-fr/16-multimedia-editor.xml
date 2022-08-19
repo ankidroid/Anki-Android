@@ -54,7 +54,7 @@
     <string name="multimedia_editor_pron_looking_up">Recherche de la prononciation</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Échec de la prononciation</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
+    <string name="multimedia_editor_only_one_word">Un seul mot à la fois est supporté</string>
     <string name="multimedia_editor_word_search_try_lower_case">Essayez en utilisant uniquement des minuscules</string>
     <string name="multimedia_editor_poweredbeolingus">Propulsé par Beolingus</string>
     <!-- Field editing general -->

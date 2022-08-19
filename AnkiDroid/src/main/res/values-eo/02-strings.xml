@@ -99,6 +99,9 @@
         <item>Kreita</item>
         <item>Modifis noton</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifi hodiaŭan limigon de novaj kartoj</string>
     <string name="custom_study_increase_review_limit">Modifi hodiaŭan limigon de kartoj por ripeti</string>
@@ -265,8 +268,6 @@
     <string name="apk_share_error">Eraro dum kunhavigado de apkg-dosiero</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Ĉi tiu dosiero postulas pli novan version de Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Fiaskis enlegi “%s”.</string>
     <string name="activity_start_failed">Mankas instalita aplikaĵo por plenumi tiun ĉi agon.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Bildoj el la fotilo povas esti grandaj. Konsideru densigi bildojn kaj malpliigi iliajn dimensiojn]]></string>
     <string name="no_browser_notification">Ne trovis retumilon, vizitu la retpaĝon per via komputilo: </string>
@@ -326,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Eraro pri enhavo de karto, fiaskis enlegi “%s”</string>
     <string name="card_viewer_media_relative_protocol">Eraro pri enhavo de karto: necesas ĝisdatigi plurmedion</string>
-    <string name="cannot_load_http_resource">Ne plu eblas enlegi enhavon http</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Fiaskis enlegi la kartaron “%s”</string>
     <string name="search_decks">Serĉi en kartaroj</string>

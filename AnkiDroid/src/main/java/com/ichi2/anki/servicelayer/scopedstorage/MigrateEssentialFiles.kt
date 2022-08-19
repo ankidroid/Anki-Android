@@ -21,6 +21,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.exception.RetryableException
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.*
@@ -32,6 +33,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
+import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.io.FileUtils
 import timber.log.Timber
@@ -239,10 +241,7 @@ internal constructor(
      * This will temporarily open the collection during the operation if it was already closed
      */
     private fun closeCollection() {
-        val instance = CollectionHelper.getInstance()
-        // this opens col if it wasn't closed
-        val col = instance.getCol(context)
-        col.close()
+        runBlocking { CollectionManager.ensureClosed() }
     }
 
     /** Converts the current AnkiDroid collection path to an [AnkiDroidDirectory] instance */

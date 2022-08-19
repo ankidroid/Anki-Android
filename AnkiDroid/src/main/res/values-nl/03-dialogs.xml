@@ -60,13 +60,6 @@
     <string name="initializing_tts">TTS initialiseren&#8230;</string>
     <string name="tts_no_tts">Niet spreken</string>
     <string name="unused_strings">\n\nOngebruikte bestanden:\n</string>
-    <string-array name="about_content">
-        <item><![CDATA[<h2>%1$s: <br/> Flashcards voor Android</h2>AnkiDroid is een flashcard-app die volledig compatibel met de desktopsoftware <a href=\"%2$s\"> Anki</a>. Zowel in AnkiDroid als in Anki voor desktop kunt u kaarten maken, downloaden en leren en deze gemakkelijk synchroniseren met AnkiWeb.]]></item>
-        <item><![CDATA[Om AnkiDroid beter te helpen maken, gelieve de bugs te rapporteren in <a href=\"%1$s\"> de issue tracker</a>; nieuwe ideeën voor functionaliteiten zijn ook zeer welkom. U kunt ook antwoorden vinden op <a href=\"%2$s\"> de wiki</a> of een discussie starten op <a href=\"%3$s\"> het forum</a>.]]></item>
-        <item><![CDATA[AnkiDroid is <a href=\"%1$s\"> open bronsoftware<a/>, zodat iedereen wordt aangemoedigd om <a href=\"%2$s\"> bij te dragen</a> :-)]]></item>
-        <item><![CDATA[Non-ontwikkelaars kunnen ook helpen. U kunt bijvoorbeeld <a href=\"%1$s\"> helpen met het vertalen</a> van AnkiDroid, de wiki bijwerken, screenshots sturen, of over AnkiDroid bloggen.]]></item>
-        <item><![CDATA[AnkiDroid is vrijgegeven onder de <a href=\"%1$s\"> GNU-GPL v3 licentie</a> en de broncode is beschikbaar <a href=\"%2$s\"> op GitHub</a>.]]></item>
-    </string-array>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Voorbeeld</string>
     <string name="reposition_card_dialog_title">Nieuwe kaart verplaatsen</string>
     <string name="reposition_card_dialog_message">Startpositie:</string>
@@ -133,6 +126,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nee</string>
     <string name="dialog_continue">Doorgaan</string>
+    <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Maak</string>
     <string name="dialog_positive_delete">Verwijder</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -261,4 +255,6 @@
     <string name="deck_picker_counts">Open de leerset overzichtspagina, die het aantal kaarten die u vandaag ziet bevat</string>
     <string name="import_deck_package">Leerset pakket (.apkg)</string>
     <string name="import_collection_package">Verzamelingspakket (.colpkg)</string>
+    <!-- Deck selection dialog -->
+    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

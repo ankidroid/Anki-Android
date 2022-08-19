@@ -17,6 +17,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -29,7 +30,9 @@
         android:layout_alignParentTop="true"
         android:theme="@style/ActionBarStyle"
         android:background="?attr/colorPrimary"
-        app:popupTheme="@style/ActionBar.Popup">
+        app:popupTheme="@style/ActionBar.Popup"
+        tools:title="@string/search_deck"
+        tools:menu="@menu/deck_picker_dialog_menu">
     </androidx.appcompat.widget.Toolbar>
 
     <com.ichi2.ui.FixedTextView android:id="@+id/deck_picker_dialog_summary"
@@ -40,11 +43,14 @@
         android:padding="8dp"
         android:gravity="center"
         android:textIsSelectable="false"
-        android:layout_below="@id/deck_picker_dialog_toolbar"/>
+        android:layout_below="@id/deck_picker_dialog_toolbar"
+        tools:text="optional summary for 'deck override' picker"/>
 
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/deck_picker_dialog_list"
-                                               android:scrollbars="vertical"
-                                               android:layout_width="match_parent"
-                                               android:layout_height="wrap_content"
-                                               android:layout_below="@id/deck_picker_dialog_summary"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/deck_picker_dialog_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/deck_picker_dialog_summary"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/deck_picker_dialog_list_item" />
 </RelativeLayout>

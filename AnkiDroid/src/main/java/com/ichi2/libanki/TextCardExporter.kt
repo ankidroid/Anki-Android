@@ -20,7 +20,7 @@ import java.io.OutputStreamWriter
 import java.nio.charset.StandardCharsets
 import java.util.*
 
-class TextCardExporter(col: Collection, did: Long?, includeHTML: Boolean) : Exporter(col, did) {
+class TextCardExporter(col: Collection, did: DeckId?, includeHTML: Boolean) : Exporter(col, did) {
     init {
         mIncludeHTML = includeHTML
     }

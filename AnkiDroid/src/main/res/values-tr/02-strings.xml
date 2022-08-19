@@ -99,6 +99,9 @@
         <item>Oluşturulma</item>
         <item>Değiştirilmiş notlar</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Uygula</string>
+    <string name="filter_by_flags">Bayraklar</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
     <string name="custom_study_increase_review_limit">Bugünün tekrar edilecek kart sınırını düzenle</string>
@@ -265,8 +268,6 @@
     <string name="apk_share_error">Apkg dosyasını paylaşırken hata</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Bu dosya için Anki\'nin daha yeni bir sürümü gerekli.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">\'%s\' Yüklemesi başarısız oldu.</string>
     <string name="activity_start_failed">Sistemde bu eylemi gerçekleştirebilecek bir uygulama yüklü değil.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Fotoğraf dosyaları büyük olabilir. Resimleri medya dizininde sıkıştırmak ve boyutlarını değiştirmek isteyebilirsiniz.]]></string>
     <string name="no_browser_notification">Tarayıcı bulunmadı, lütfen web sayfasına pcden veya mobilden girin: </string>
@@ -326,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kart İçeriği Hatası: \"%s\" yüklenemedi</string>
     <string name="card_viewer_media_relative_protocol">Kart İçeriği Hatası: Medya güncellemesi gerekli</string>
-    <string name="cannot_load_http_resource">Yüklenen HTTP kaynakları artık desteklenmiyor</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\' destesinin yüklenmesi başarısız</string>
     <string name="search_decks">Deste ara</string>
@@ -414,5 +414,5 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">\"%s\" etiketini genişlet</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Koleksiyona erişilemedi. Lütfen tekrar deneyin!</string>
 </resources>

@@ -47,33 +47,33 @@
 <resources>
     <string name="youre_offline">You are offline</string>
     <string name="sync_even_if_offline">Try Anyway</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
-    <string name="retry">Retry</string>
-    <string name="menu_get_shared_decks">Get shared decks</string>
-    <string name="connection_error_message">A network error has occurred</string>
+    <string name="sync_error">შეცდომა სინქრონიზაციისას</string>
+    <string name="vague_error" comment="Network error dialog title">შეცდომა</string>
+    <string name="retry">ხელახლა ცდა</string>
+    <string name="menu_get_shared_decks">გაზიარებული დასტების დამატება</string>
+    <string name="connection_error_message">ქსელის შეცდომა მოხდა</string>
     <string name="not_logged_in_title">Log in to AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.kt -->
-    <string name="username">Email address</string>
-    <string name="password">Password</string>
-    <string name="log_in">Log in</string>
+    <string name="username">ელ-ფოსტა</string>
+    <string name="password">პაროლი</string>
+    <string name="log_in">ავტორიზაცია</string>
     <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-    <string name="sign_up">Sign up</string>
-    <string name="logged_as">Logged in as</string>
-    <string name="log_out">Log out</string>
-    <string name="alert_logging_message">Logging in&#8230;</string>
+    <string name="sign_up">რეგისტრაცია</string>
+    <string name="logged_as">შესული ხართ როგორც</string>
+    <string name="log_out">გასვლა</string>
+    <string name="alert_logging_message">შესვლა...</string>
     <string name="invalid_username_password">Invalid email address or password</string>
     <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">ელ-ფოსტა დაგავიწყდათ?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_prepare_syncing">Preparing syncing&#8230;</string>
     <string name="sync_preparing_full_sync_message">Preparing full sync&#8230;</string>
     <string name="sync_uploading_message">Uploading&#8230;</string>
     <string name="sync_downloading_message">Downloading&#8230;</string>
-    <string name="sync_title">Synchronization</string>
+    <string name="sync_title">სინქრონიზაცია</string>
     <string name="sync_log_uploading_message">Full sync from local</string>
     <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
@@ -112,7 +112,7 @@
     <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
-    <string name="sync_sanity_local">Local</string>
+    <string name="sync_sanity_local">ლოკალური</string>
     <string name="sync_sanity_remote">Remote</string>
     <string name="force_full_sync_title">Force full sync</string>
     <string name="force_full_sync_summary">On next sync, force changes in one direction</string>

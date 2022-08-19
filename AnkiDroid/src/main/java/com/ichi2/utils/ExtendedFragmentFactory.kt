@@ -62,8 +62,7 @@ abstract class ExtendedFragmentFactory : FragmentFactory {
      * Attaches the factory to an activity by setting the current activity fragment factory as the base factory
      * and updating the activity with the extended factory
      */
-    fun <F : ExtendedFragmentFactory?> attachToActivity(activity: AppCompatActivity): F {
-        @Suppress("UNCHECKED_CAST")
+    inline fun <reified F : ExtendedFragmentFactory?> attachToActivity(activity: AppCompatActivity): F {
         return attachToFragmentManager<ExtendedFragmentFactory>(activity.supportFragmentManager) as F
     }
 

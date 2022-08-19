@@ -54,12 +54,12 @@ public class TestJavaClass {
 """
 
     @Language("JAVA")
-    private val javaFileWithUIUtils = """                            
+    private val javaFileWithSnackbarsKt = """                            
 package com.ichi2.anki.lint.rules;                             
                                                                
 import com.google.android.material.snackbar.Snackbar;          
                                                                
-public class UIUtils {                                         
+public class SnackbarsKt {                                         
                                                                
     public static void main(String[] args) {                   
         Snackbar snackbar = Snackbar.make();                   
@@ -84,11 +84,11 @@ public class UIUtils {
     }
 
     @Test
-    fun allowsUsageForUIUtils() {
+    fun allowsUsageForSnackbarsKt() {
         TestLintTask.lint()
             .allowMissingSdk()
             .allowCompilationErrors()
-            .files(JavaTestFile.create(stubSnackbar), JavaTestFile.create(javaFileWithUIUtils))
+            .files(JavaTestFile.create(stubSnackbar), JavaTestFile.create(javaFileWithSnackbarsKt))
             .issues(DirectSnackbarMakeUsage.ISSUE)
             .run()
             .expectClean()

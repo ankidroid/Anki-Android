@@ -18,6 +18,7 @@ package com.ichi2.libanki.sync
 
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
+import anki.sync.SyncStatusResponse
 import com.ichi2.libanki.CollectionV16
 
 fun CollectionV16.syncLogin(username: String, password: String): SyncAuth {
@@ -38,4 +39,8 @@ fun CollectionV16.fullDownload(auth: SyncAuth) {
 
 fun CollectionV16.syncMedia(auth: SyncAuth) {
     return backend.syncMedia(input = auth)
+}
+
+fun CollectionV16.syncStatus(auth: SyncAuth): SyncStatusResponse {
+    return backend.syncStatus(input = auth)
 }

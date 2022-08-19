@@ -42,20 +42,19 @@ import java.util.*
  */
 @KotlinCleanup("fix the dependency to work under any Java version")
 @RequiresApi(api = Build.VERSION_CODES.O) // CsvSniffer & sniff
-@KotlinCleanup("is->equalTo")
 class CsvProcessIntegrationTest {
     @Test
     fun quotedDelimiterTest() {
         val input = "\"John \"\"Da Man\"\"\",Rep,120 Fake St.,Falsey, NJ,00000"
         val dialect = CsvSniffer().sniff(input, null)
 
-        assertThat("doublequote", dialect.mDoublequote, `is`(true))
-        assertThat("skipinitialspace", dialect.mSkipInitialSpace, `is`(false))
-        assertThat("quoting", dialect.mQuoting, `is`(Quoting.QUOTE_MINIMAL))
-        assertThat("delimiter", dialect.mDelimiter, `is`(','))
-        assertThat("quotechar", dialect.mQuotechar, `is`('"'))
-        assertThat("escapechar", dialect.mEscapechar, `is`('\u0000'))
-        assertThat("lineterminator", dialect.mLineTerminator, `is`("\r\n"))
+        assertThat("doublequote", dialect.mDoublequote, equalTo(true))
+        assertThat("skipinitialspace", dialect.mSkipInitialSpace, equalTo(false))
+        assertThat("quoting", dialect.mQuoting, equalTo(Quoting.QUOTE_MINIMAL))
+        assertThat("delimiter", dialect.mDelimiter, equalTo(','))
+        assertThat("quotechar", dialect.mQuotechar, equalTo('"'))
+        assertThat("escapechar", dialect.mEscapechar, equalTo('\u0000'))
+        assertThat("lineterminator", dialect.mLineTerminator, equalTo("\r\n"))
 
         assertThat(getFields(dialect, input), contains("John \"Da Man\"", "Rep", "120 Fake St.", "Falsey", " NJ", "00000"))
     }

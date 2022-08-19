@@ -99,6 +99,9 @@
         <item>Создано</item>
         <item>Запись изменена</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Применить</string>
+    <string name="filter_by_flags">Флаги</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Увеличить лимит новых</string>
     <string name="custom_study_increase_review_limit">Увеличить лимит повторяемых</string>
@@ -188,7 +191,7 @@
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() не удалось. Возможно недостаточно места</string>
     <string name="import_error_unhandled_scheme">Необработанный импорт из «%s»</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_multiple_colpkg">Было выбрано несколько файлов colpkg.</string>
     <string name="import_error_colpkg_apkg">Были выбраны одновременно файлы apkg и colpkg</string>
     <string name="import_stats_error">При импорте этих файлов произошла ошибка:\n%s</string>
     <string name="import_replacing">Коллекция заменяется&#8230;</string>
@@ -287,8 +290,6 @@
     <string name="apk_share_error">Ошибка при отправке файла apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Этот файл требует новой версии Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Не удалось загрузить «%s».</string>
     <string name="activity_start_failed">В системе нет приложения, которое может выполнить это действие.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Фотографии могут быть большими. Возможно, вы захотите сжать или изменить размер изображений в папке медиаданных]]></string>
     <string name="no_browser_notification">Браузер не найден. Посетите сайт с компьютера или телефона: </string>
@@ -354,7 +355,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
     <string name="card_viewer_media_relative_protocol">Ошибка в содержимом карточки: требуется обновление медиафайлов</string>
-    <string name="cannot_load_http_resource">Загрузка http ресурсов больше не поддерживается</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
     <string name="search_decks">Найти колоду</string>
@@ -376,7 +376,7 @@
     <string name="after_text">HTML после выделения</string>
     <string name="add_toolbar_item">Создать элемент панели инструментов</string>
     <string name="edit_toolbar_item">Изменить элемент панели</string>
-    <string name="toolbar_item_explain_edit_or_remove">Введите HTML, который будет вставлен до и после выделенного текста.\n\nНажмите и держите элемент панели инструментов, чтобы изменить или удалить его.</string>
+    <string name="toolbar_item_explain_edit_or_remove">Введите HTML, который будет вставлен до и после выделенного текста.\n\nНажмите и удерживайте элемент панели инструментов, чтобы изменить или удалить его.</string>
     <string name="remove_toolbar_item">Удалить элемент панели инструментов?</string>
     <string name="note_editor_paste_too_large">Изображение слишком велико для вставки, пожалуйста, вставьте изображение вручную</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Выполняется резервное копирование Android. Попробуйте еще раз</string>
@@ -384,7 +384,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>
     <string name="create_shortcut_error">Ошибка при добавлении ярлыка: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Предложение с заглавной буквы</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Прокрутка панели инструментов</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -396,7 +396,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Скачать колоду</string>
-    <string name="try_again">Попробовать снова</string>
+    <string name="try_again">Попробуйте ещё раз</string>
     <string name="cancel_download">Отменить загрузку</string>
     <string name="cancel_download_question_title">Отменить загрузку?</string>
     <string name="downloading_file">Загружается %s</string>

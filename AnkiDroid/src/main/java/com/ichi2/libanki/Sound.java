@@ -39,6 +39,8 @@ import com.ichi2.compat.CompatHelper;
 import com.ichi2.utils.DisplayUtils;
 import com.ichi2.utils.StringUtil;
 
+import net.ankiweb.rsdroid.BackendFactory;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +55,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
+
+import static com.ichi2.libanki.SoundKt.addPlayIcons;
 
 
 //NICE_TO_HAVE: Abstract, then add tests fir #6111
@@ -230,6 +234,9 @@ public class Sound {
      */
     @NonNull
     public static String expandSounds(String soundDir, String content) {
+        if (!BackendFactory.getDefaultLegacySchema()) {
+            return addPlayIcons(content);
+        }
         StringBuilder stringBuilder = new StringBuilder();
         String contentLeft = content;
 
@@ -570,7 +577,7 @@ public class Sound {
      * @param sound -- path to the sound file from the card content.
      * @return absolute URI to the sound file.
      */
-    private static String getSoundPath(String soundDir, String sound) {
+    public static String getSoundPath(String soundDir, String sound) {
         String trimmedSound = sound.trim();
         if (hasURIScheme(trimmedSound)) {
             return trimmedSound;

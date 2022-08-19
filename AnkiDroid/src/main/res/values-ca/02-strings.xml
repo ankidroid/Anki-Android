@@ -99,6 +99,9 @@
         <item>Creada</item>
         <item>Nota modificada</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Apply</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Canviar el límit de cartes noves d\'avui</string>
     <string name="custom_study_increase_review_limit">Modificar el límit de revisions de carta d\'avui</string>
@@ -265,8 +268,6 @@
     <string name="apk_share_error">Error en compartir l\'arxiu apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Aquest arxiu requereix una versió més recent d\'Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">La càrrega de \'%s\' ha fallat.</string>
     <string name="activity_start_failed">El sistema no té instal·lada cap aplicació que pugui realitzar aquesta acció.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Les imatges de la càmera poden ser grans. És possible que vulgueu comprimir i canviar la mida de les imatges al directori multimèdia]]></string>
     <string name="no_browser_notification">No s\'ha trobat cap navegador, visiteu la pàgina web amb un ordinador o un mòbil:</string>
@@ -326,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contingut de la carta: Error al carregar \'%s\'</string>
     <string name="card_viewer_media_relative_protocol">Error de contingut a la carta: Cal actualitzar el medi</string>
-    <string name="cannot_load_http_resource">La càrrega de recursos per http ja no és suportada</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Error al carregar paquet \'%s\'</string>
     <string name="search_decks">Cerca de paquets</string>

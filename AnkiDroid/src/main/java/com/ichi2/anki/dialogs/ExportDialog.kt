@@ -22,12 +22,13 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.getNullableLong
 import com.ichi2.utils.contentNullable
 
 class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialogFragment() {
     interface ExportDialogListener {
-        fun exportApkg(path: String?, did: Long?, includeSched: Boolean, includeMedia: Boolean)
+        fun exportApkg(path: String?, did: DeckId?, includeSched: Boolean, includeMedia: Boolean)
         fun dismissAllDialogFragments()
     }
 
@@ -42,7 +43,7 @@ class ExportDialog(private val listener: ExportDialogListener) : AnalyticsDialog
      * @param dialogMessage A string which can be used to show a custom message or specify import path
      */
     @JvmOverloads
-    fun withArguments(dialogMessage: String, did: Long? = null): ExportDialog {
+    fun withArguments(dialogMessage: String, did: DeckId? = null): ExportDialog {
         val args = this.arguments ?: Bundle()
         if (did != null) {
             args.putLong("did", did)

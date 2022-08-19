@@ -46,6 +46,7 @@ import com.ichi2.anki.stats.ChartView
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.async.catchingLifecycleScope
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
@@ -62,7 +63,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private set
     private lateinit var taskHandler: AnkiStatsTaskHandler
     private lateinit var mDeckSpinnerSelection: DeckSpinnerSelection
-    private var mStatsDeckId: Long = 0
+    private var mStatsDeckId: DeckId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -115,7 +116,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         }
         mDeckSpinnerSelection = DeckSpinnerSelection(
             this, col,
-            findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true
+            findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true, showFilteredDecks = true
         )
         mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
         mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false)
@@ -218,13 +219,12 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
     abstract class StatisticFragment : Fragment() {
         // track current settings for each individual fragment
-        protected var deckId: Long = 0
+        protected var deckId: DeckId = 0
 
         protected lateinit var statisticsJob: Job
         private lateinit var statisticsOverviewJob: Job
 
         private lateinit var mActivityPager: ViewPager2
-        private lateinit var mSlidingTabLayout: TabLayout
         private lateinit var mTabLayoutMediator: TabLayoutMediator
         private val mDataObserver: AdapterDataObserver = object : AdapterDataObserver() {
             override fun onChanged() {
@@ -278,16 +278,15 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             if (mActivityPager.adapter != null) {
                 mActivityPager.adapter!!.registerAdapterDataObserver(mDataObserver)
             }
-            mSlidingTabLayout = (requireActivity() as Statistics).slidingTabLayout
-            initTabLayoutMediator()
+            initTabLayoutMediator((requireActivity() as Statistics).slidingTabLayout)
         }
 
-        private fun initTabLayoutMediator() {
+        private fun initTabLayoutMediator(slidingTabLayout: TabLayout) {
             if (this::mTabLayoutMediator.isInitialized) {
                 mTabLayoutMediator.detach()
             }
             mTabLayoutMediator = TabLayoutMediator(
-                mSlidingTabLayout, mActivityPager
+                slidingTabLayout, mActivityPager
             ) { tab: TabLayout.Tab, position: Int -> tab.text = getTabTitle(position) }
             mTabLayoutMediator.attach()
         }

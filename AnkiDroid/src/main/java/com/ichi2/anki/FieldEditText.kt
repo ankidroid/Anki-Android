@@ -207,7 +207,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             }
             return pastePlainText()
         }
-        return false
+        return super.onTextContextMenuItem(id)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

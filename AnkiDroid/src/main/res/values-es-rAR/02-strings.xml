@@ -99,6 +99,9 @@
         <item>Creado</item>
         <item>Nota modificada</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Aplicar</string>
+    <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Cambiar el límite de tarjetas nuevas para hoy</string>
     <string name="custom_study_increase_review_limit">Aumentar el límite de repasos para hoy</string>
@@ -265,8 +268,6 @@
     <string name="apk_share_error">Error al compartir archivo apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Este archivo requiere una versión más reciente de Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Error al cargar \'%s\'.</string>
     <string name="activity_start_failed">El sistema no tiene una aplicación instalada que pueda realizar esta acción.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Las imágenes de la cámara pueden ser grandes. Puede que desee comprimir y cambiar el tamaño de las imágenes en el directorio de medios]]></string>
     <string name="no_browser_notification">No hay ningún browser, por favor visite la página web por PC o móvil: </string>
@@ -326,7 +327,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contenido de la tarjeta: Error al cargar ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Error de contenido de la tarjeta: es necesario actualizar medios</string>
-    <string name="cannot_load_http_resource">La carga de recursos http ya no está soportada</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Error al cargar el mazo ‘%s’</string>
     <string name="search_decks">Buscar mazos</string>

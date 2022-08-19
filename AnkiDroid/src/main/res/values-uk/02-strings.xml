@@ -99,14 +99,17 @@
         <item>Створено</item>
         <item>Запис змінено</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">Застосувати</string>
+    <string name="filter_by_flags">Прапори</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>
     <string name="custom_study_increase_review_limit">Змінити сьогоднішній ліміт на повторення карток</string>
     <string name="custom_study_review_forgotten">Повторити забуті картки</string>
     <string name="custom_study_review_ahead">Повторити наперед</string>
     <string name="custom_study_random_selection">Вивчати випадковий набір карток</string>
-    <string name="custom_study_preview_new">Попередній перегляд нових карток</string>
-    <string name="custom_study_limit_tags">Обмежитися визначеними позначками</string>
+    <string name="custom_study_preview_new">Переглянути нові картки</string>
+    <string name="custom_study_limit_tags">Обмежити конкретними тегами</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Редагувати запис</string>
     <string name="discard_unsaved_changes">Закрити і втратити поточну інформацію?</string>
@@ -216,7 +219,7 @@
     <string name="export_unsuccessful">Помилка експорту apkg файлу</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Налаштування</string>
     <string name="menu__deck_options">Параметри колоди</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Навчальні налаштування</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Налаштування навчання</string>
     <string name="select_tts">Обрати TTS мову</string>
     <string name="custom_study">Додаткове навчання</string>
     <string name="more_options">Ще</string>
@@ -287,8 +290,6 @@
     <string name="apk_share_error">Помилка поширення файлу apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">Цей файл потребує новішої версії Anki.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">Не вдалося завантажити \'%s\'.</string>
     <string name="activity_start_failed">Система не має встановленого додатку, який може це виконати.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Зображення можуть бути завеликими. Можливо вам треба буде стиснути або змінити розмір зображень в медіатеці]]></string>
     <string name="no_browser_notification">Браузер не знайдено, будь ласка, відвідайте веб-сторінку з компʼютера чи з мобільного телефону: </string>
@@ -354,7 +355,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
     <string name="card_viewer_media_relative_protocol">Помилка вмісту картки: необхідне оновлення медіа</string>
-    <string name="cannot_load_http_resource">Завантаження ресурсів http більше не підтримується</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не вдалося завантажити колоду «%s»</string>
     <string name="search_decks">Шукати колоди</string>

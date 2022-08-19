@@ -30,9 +30,9 @@ import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
-import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
@@ -41,6 +41,7 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu.Companion.newInstance
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.CollectionTask.AddField
 import com.ichi2.async.CollectionTask.ChangeSortField
 import com.ichi2.async.CollectionTask.DeleteField
@@ -500,7 +501,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private fun addFieldLocaleHint(selectedLocale: Locale) {
         setLanguageHintForField(col.models, mModel, currentPos, selectedLocale)
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
-        showSimpleSnackbar(this, format, true)
+        showSnackbar(format, Snackbar.LENGTH_SHORT)
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

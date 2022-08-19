@@ -54,7 +54,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     icon(getResFromAttr(context, R.attr.dialogSyncErrorIcon))
                     positiveButton(R.string.log_in) {
-                        (activity as SyncErrorDialogListener?)!!.loginToSyncServer()
+                        (activity as SyncErrorDialogListener).loginToSyncServer()
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -65,7 +65,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     icon(getResFromAttr(context, R.attr.dialogSyncErrorIcon))
                     positiveButton(R.string.retry) {
-                        (activity as SyncErrorDialogListener?)!!.sync()
+                        (activity as SyncErrorDialogListener).sync()
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel) {
@@ -137,7 +137,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 // Confirmation before pushing local collection to server after sanity check error
                 dialog.show {
                     positiveButton(R.string.dialog_positive_replace) {
-                        (activity as SyncErrorDialogListener?)!!.sync(ConflictResolution.FULL_UPLOAD)
+                        (activity as SyncErrorDialogListener).sync(ConflictResolution.FULL_UPLOAD)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -148,7 +148,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 // Confirmation before overwriting local collection with server collection after sanity check error
                 dialog.show {
                     positiveButton(R.string.dialog_positive_replace) {
-                        (activity as SyncErrorDialogListener?)!!.sync(ConflictResolution.FULL_DOWNLOAD)
+                        (activity as SyncErrorDialogListener).sync(ConflictResolution.FULL_DOWNLOAD)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -157,7 +157,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
             DIALOG_MEDIA_SYNC_ERROR -> {
                 dialog.show {
                     positiveButton(R.string.check_media) {
-                        (activity as SyncErrorDialogListener?)!!.mediaCheck()
+                        (activity as SyncErrorDialogListener).mediaCheck()
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -176,7 +176,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
             DIALOG_SYNC_BASIC_CHECK_ERROR -> {
                 dialog.show {
                     positiveButton(R.string.check_db) {
-                        (activity as SyncErrorDialogListener?)!!.integrityCheck()
+                        (activity as SyncErrorDialogListener).integrityCheck()
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -246,7 +246,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
         }
 
     fun dismissAllDialogFragments() {
-        (activity as SyncErrorDialogListener?)!!.dismissAllDialogFragments()
+        (activity as SyncErrorDialogListener).dismissAllDialogFragments()
     }
 
     companion object {

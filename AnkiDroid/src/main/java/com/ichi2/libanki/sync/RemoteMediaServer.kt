@@ -164,10 +164,9 @@ class RemoteMediaServer(
      * @return The "data" element from the HTTP response from the server. The type of object returned is determined by
      * returnType.
      */
-    @Suppress("UNCHECKED_CAST")
     @Throws(MediaSyncException::class)
     // NOTE: the original name of the method was _dataOnly which followed upstream naming
-    private fun <T> dataOnly(resp: JSONObject, returnType: Class<T>): T {
+    private inline fun <reified T> dataOnly(resp: JSONObject, returnType: Class<T>): T {
         if (!TextUtils.isEmpty(resp.optString("err"))) {
             val err = resp.getString("err")
             col?.log("error returned: $err")

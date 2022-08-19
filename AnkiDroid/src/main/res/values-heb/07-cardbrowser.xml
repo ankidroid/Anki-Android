@@ -80,7 +80,7 @@
         <item>ללא מיון (מהיר יותר)</item>
         <item>לפי שדה המיון</item>
         <item>לפי זמן היצירה</item>
-        <item>לפי זמן שינוי ההערה</item>
+        <item>לפי זמן שינוי הפתק</item>
         <item>לפי זמן שינוי הקלף</item>
         <item>לפי תאריך יעד</item>
         <item>לפי מרווח</item>
@@ -114,7 +114,7 @@
     <string name="card_info_average_time">זמן ממוצע</string>
     <string name="card_info_total_time">סה\"כ זמן</string>
     <string name="card_info_card_type">סוג קלף</string>
-    <string name="card_info_note_type">סוג הערה</string>
+    <string name="card_info_note_type">סוג הפתק</string>
     <string name="card_info_deck_name">שם חפיסה</string>
     <string name="card_info_card_id">מזהה קלף</string>
     <string name="card_info_note_id">מזהה פתק</string>

@@ -72,8 +72,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     var tempModel: TemporaryModel? = null
         private set
     private var mFieldNames: List<String>? = null
-    private var mModelId: Long = 0
-    private var mNoteId: Long = 0
+    private var mModelId: NoteTypeId = 0
+    private var mNoteId: NoteId = 0
 
     // the position of the cursor in the editor view
     private var tabToCursorPosition: HashMap<Int, Int?>? = null
@@ -713,7 +713,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }
                 TemporaryModel.clearTempModelFiles()
                 // Make sure the fragments reinitialize, otherwise there is staleness on return
-                (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter?)!!.ordinalShift()
+                (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
                 mTemplateEditor.viewPager.adapter!!.notifyDataSetChanged()
             }
 
@@ -858,7 +858,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             model.put("tmpls", newTemplates)
             Models._updateTemplOrds(model)
             // Make sure the fragments reinitialize, otherwise the reused ordinal causes staleness
-            (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter?)!!.ordinalShift()
+            (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
             mTemplateEditor.viewPager.adapter!!.notifyDataSetChanged()
             mTemplateEditor.viewPager.setCurrentItem(newTemplates.length() - 1, mTemplateEditor.animationDisabled())
         }
@@ -929,7 +929,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         companion object {
             fun newInstance(
                 cardIndex: Int,
-                noteId: Long,
+                noteId: NoteId,
                 cursorPosition: Int,
                 viewId: Int
             ): CardTemplateFragment {

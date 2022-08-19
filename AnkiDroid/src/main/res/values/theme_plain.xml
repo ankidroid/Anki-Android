@@ -47,6 +47,11 @@
         <item name="fab_pressed">#c8607d8b</item> <!-- 55 less opacity than fab_normal -->
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_500</item>
+        <!-- StatusBar -->
+        <item name="android:statusBarColor">@color/theme_plain_primary</item>
+        <!-- Navbar -->
+        <item name="android:navigationBarColor">@color/semi_transparent_black</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
 
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="iconColor">?attr/colorPrimary</item>
@@ -62,6 +67,8 @@
         <item name="filterItemTextColor">@color/theme_light_drawer_item</item>
         <item name="filterItemTextColorSelected">@color/material_light_blue_500</item>
         <item name="filterHeaderDivider">@color/black</item>
+
+        <item name="snackbarButtonTextColor">#96bdce</item>
     </style>
 
     <!-- Preferences screens -->
@@ -70,7 +77,7 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
         <item name="android:textColor">@color/prefs_item_light</item>
-        <item name="android:textColorSecondary">@color/prefs_item_light</item>
+        <item name="android:textColorSecondary">@color/prefs_item_light_secondary</item>
     </style>
 
     <!-- Filter Sheet Style -->

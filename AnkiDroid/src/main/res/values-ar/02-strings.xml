@@ -99,6 +99,9 @@
         <item>تاريخ الإنشاء</item>
         <item>تاريخ تعديل الملحوظة</item>
     </string-array>
+    <!-- Filter Sheet -->
+    <string name="apply_filter">تطبيق</string>
+    <string name="filter_by_flags">مؤشرات</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعديل الحد اليومي للبطاقات الجديدة</string>
     <string name="custom_study_increase_review_limit">تعديل الحد اليومي لبطاقات المراجعة</string>
@@ -309,8 +312,6 @@
     <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف apkg</string>
     <!-- Import and export v2 feedback -->
     <string name="export_v2_dummy_note">يتطلب هذا الملف إصدارًا أحدث من أنكي.</string>
-    <!-- Placed in a snackbar with a long URL. Limit the length and move the URL to the start of the string -->
-    <string name="activity_start_failed_load_url">فشل تحميل \'%s\'.</string>
     <string name="activity_start_failed">ليس للنظام تطبيق منصب يمكنه إجراء هذا.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
     <string name="no_browser_notification">تعذر العثور على متصفح، الرجاء زيارة صفحة الويب بواسطة حاسوب شخصي أو هاتف محمول: </string>
@@ -382,7 +383,6 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">خطأ في محتوى البطاقة: تحديث الوسائط مطلوب</string>
-    <string name="cannot_load_http_resource">تحميل موارد http لم يعد مدعومًا</string>
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
     <string name="search_decks">بحث في الرزم</string>
@@ -468,5 +468,5 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">إسدال الوسم \"%s\"</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">فشل الوصول إلى المجموعة. يرجى المحاولة مجددًا!</string>
 </resources>

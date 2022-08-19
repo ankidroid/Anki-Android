@@ -54,28 +54,28 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
     @Test
     fun nonExistingFileDoesNotDisplayPreview() {
         val controller = validControllerNoImage
-        assertThat(controller.isShowingPreview, `is`(false))
+        assertThat(controller.isShowingPreview, equalTo(false))
         val f = mock(File::class.java)
         whenever(f.exists()).thenReturn(false)
         controller.setImagePreview(f, 100)
         assertThat(
             "A non existing file should not display a preview",
             controller.isShowingPreview,
-            `is`(false)
+            equalTo(false)
         )
     }
 
     @Test
     fun erroringFileDoesNotDisplayPreview() {
         val controller = validControllerNoImage
-        assertThat(controller.isShowingPreview, `is`(false))
+        assertThat(controller.isShowingPreview, equalTo(false))
         val f = mock(File::class.java)
         whenever(f.exists()).thenReturn(true) // true, but it'll throw due to being a mock.
         controller.setImagePreview(f, 100)
         assertThat(
             "A broken existing file should not display a preview",
             controller.isShowingPreview,
-            `is`(false)
+            equalTo(false)
         )
     }
 
@@ -88,7 +88,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
             "A SVG image file can't be previewed", ShadowToast.getTextOfLatestToast(),
             equalTo(getResourceString(R.string.multimedia_editor_svg_preview))
         )
-        assertThat("A SVG image file can't be previewed", controller.isShowingPreview, `is`(false))
+        assertThat("A SVG image file can't be previewed", controller.isShowingPreview, equalTo(false))
     }
 
     @Test

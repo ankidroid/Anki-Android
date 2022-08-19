@@ -34,6 +34,7 @@ import com.ichi2.anki.servicelayer.SchedulerService.SuspendNote
 import com.ichi2.libanki.Card
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -368,8 +369,9 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             handleKeyPress(buttonCode, '\u0000')
         }
 
-        override fun undo() {
+        override fun undo(): Job? {
             undoCalled = true
+            return null
         }
 
         val suspendNoteCalled: Boolean

@@ -98,7 +98,7 @@
     <string name="rename_deck">Namakan semula dek</string>
     <string name="create_shortcut">Cipta pintasan</string>
     <string name="browse_cards">Cari kad</string>
-    <string name="menu_add" comment="A generic add button - Main Deck Picker and card templates. Please inform us if you need more specific strings">Tambah</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Tambah</string>
     <string name="menu_add_note">Tambah nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Selaraskan akaun</string>
     <string name="menu_dismiss_note">Sorok / padam</string>

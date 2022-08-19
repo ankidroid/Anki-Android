@@ -23,7 +23,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/settings_container"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -48,6 +48,8 @@ import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import com.ichi2.utils.JSONException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
@@ -59,6 +61,7 @@ import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
+import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
@@ -86,6 +89,8 @@ open class RobolectricTest : CollectionGetter {
     @CallSuper
     open fun setUp() {
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
+
+        ChangeManager.clearSubscribers()
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionHelper.getInstance().setColForTests(null)
@@ -165,6 +170,7 @@ open class RobolectricTest : CollectionGetter {
 
             TimeManager.reset()
         }
+        runBlocking { CollectionManager.discardBackend() }
     }
 
     /**
@@ -204,6 +210,17 @@ open class RobolectricTest : CollectionGetter {
             return null
         }
         return dialog.view.contentLayout.findViewById<TextView>(R.id.md_text_message).text.toString()
+    }
+
+    fun awaitJob(job: Job?) {
+        job?.let {
+            runBlocking {
+                while (!job.isCompleted) {
+                    waitForAsyncTasksToComplete()
+                    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+                }
+            }
+        }
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
@@ -298,6 +315,7 @@ open class RobolectricTest : CollectionGetter {
 
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {
+        CollectionManager.closeCollectionBlocking()
         CollectionHelper.LazyHolder.INSTANCE = object : CollectionHelper() {
             override fun getCol(context: Context): Collection? {
                 return null
@@ -495,7 +513,7 @@ open class RobolectricTest : CollectionGetter {
     }
 
     fun equalFirstField(expected: Card, obtained: Card) {
-        MatcherAssert.assertThat(obtained.note().fields[0], Matchers.`is`(expected.note().fields[0]))
+        MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
     }
 
     @NonNull

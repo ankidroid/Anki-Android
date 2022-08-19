@@ -16,6 +16,7 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import java.lang.UnsupportedOperationException
 import java.util.*
@@ -36,7 +37,7 @@ abstract class AbstractDeckTreeNode(
      * @return The full deck name, e.g. "A::B::C"
      */
     val fullDeckName: String,
-    val did: Long,
+    val did: DeckId,
     // only set when new backend active
     open var collapsed: Boolean = false,
     open var filtered: Boolean = false

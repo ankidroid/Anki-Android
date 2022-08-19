@@ -66,7 +66,7 @@
     <string name="alert_logging_message">Sedang Login&#8230;</string>
     <string name="invalid_username_password">Alamat surel atau kata sandi tidak valid.</string>
     <string name="reset_password">Reset kata sandi</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">Lupa tentang surel elektronik?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opsi untuk XXX</string>
     <string name="sync_prepare_syncing">Menyiapkan sinkronisasi&#8230;</string>

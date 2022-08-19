@@ -45,7 +45,7 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">ପତ୍ର ବାକି</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">ବଳକା କାର୍ଡ</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%dଟେ AnkiDroid ପତ୍ର ବାକି ଅଛି</item>
         <item quantity="other">%dଟି AnkiDroid ପତ୍ର ବାକି ଅଛି</item>
