@@ -91,6 +91,7 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.widget.WidgetStatus.update
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.lang.ref.WeakReference
@@ -688,9 +689,13 @@ open class Reviewer : AbstractFlashcardViewer() {
             showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
             return
         }
-        val intent = Intent(this, CardInfo::class.java)
+        val intent = if (BackendFactory.defaultLegacySchema) {
+            Intent(this, CardInfo::class.java)
+            intent.putExtra("cardId", mCurrentCard!!.id)
+        } else {
+            com.ichi2.anki.pages.CardInfo.getIntent(this, mCurrentCard!!.id)
+        }
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra("cardId", mCurrentCard!!.id)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         startActivityWithAnimation(intent, animation)
     }

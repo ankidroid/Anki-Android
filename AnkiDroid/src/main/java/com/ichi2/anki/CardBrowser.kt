@@ -1217,8 +1217,14 @@ open class CardBrowser :
             R.id.action_view_card_info -> {
                 val selectedCardIds = selectedCardIds
                 if (selectedCardIds.isNotEmpty()) {
-                    val intent = Intent(this, CardInfo::class.java)
-                    intent.putExtra("cardId", selectedCardIds[0])
+                    val cardId = selectedCardIds[0]
+                    val intent = if (BackendFactory.defaultLegacySchema) {
+                        Intent(this, CardInfo::class.java).apply {
+                            putExtra("cardId", cardId)
+                        }
+                    } else {
+                        com.ichi2.anki.pages.CardInfo.getIntent(this, cardId)
+                    }
                     startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.FADE)
                 }
                 return true

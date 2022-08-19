@@ -81,6 +81,7 @@ class PagesActivity : AnkiActivity() {
      */
     private fun getPageFragment(pageName: String): PageFragment {
         return when (pageName) {
+            CardInfo.PAGE_NAME -> CardInfo()
             CsvImporter.PAGE_NAME -> CsvImporter()
             else -> throw Exception("'$pageName' page doesn't have a PageFragment associated")
         }
