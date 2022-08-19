@@ -56,7 +56,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import timber.log.Timber;
 
-import static com.ichi2.libanki.SoundKt.addPlayIcons;
+import static com.ichi2.libanki.SoundKtKt.addPlayIcons;
 
 
 //NICE_TO_HAVE: Abstract, then add tests fir #6111
