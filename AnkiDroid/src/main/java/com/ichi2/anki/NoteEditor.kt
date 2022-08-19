@@ -2077,7 +2077,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     getString(R.string.multimedia_editor_popup_cloze)
                 )
             }
-
             return initialSize != menu.size()
         }
 
