@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s tinha %2$d campos, esperado %3$d</string>
     <string name="csv_importer_error_exception">Cancelado: %s</string>
     <string name="user_is_a_robot">Teste automático detectado. Se você é humano, entre em contato com o suporte do AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d nota adicionada.</item>
-        <item quantity="other">%d notas adicionadas.</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d nota atualizada.</item>
-        <item quantity="other">%d notas atualizadas.</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d nota inalterada</item>
-        <item quantity="other">%d notas inalteradas.</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Este card usa recursos não suportados pelo AnkiDroid. Entre em contato com o desenvolvedor %1$s, ou veja a wiki. %2$s</string>
     <string name="invalid_json_data">Card forneceu dados inválidos. %s</string>

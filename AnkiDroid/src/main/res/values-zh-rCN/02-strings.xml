@@ -289,15 +289,6 @@
     <string name="csv_importer_error_invalid_field_count">“%1$s”有 %2$d 个字段，而期望 %3$d 个字段</string>
     <string name="csv_importer_error_exception">已中止：%s</string>
     <string name="user_is_a_robot">检测到自动测试。如果您是真人，请联系 AnkiDroid 支持</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="other">%d 条笔记已添加</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="other">%d 条笔记已更新</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d 条笔记未变更</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">此卡片使用不受支持的 AnkiDroid 功能。请联系开发者 %1$s，或查看维基。%2$s</string>
     <string name="invalid_json_data">卡片提供了无效数据。%s</string>

@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">\"%1$s\"in %2$d alanı vardı, %3$d bekleniyordu</string>
     <string name="csv_importer_error_exception">İptal edildi: %s</string>
     <string name="user_is_a_robot">Otomatik test saptandı. Eğer insansanız, AnkiDroid desteğiyle iletişime geçin.</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d notu eklendi</item>
-        <item quantity="other">%d notları eklendi</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d notu güncellendi</item>
-        <item quantity="other">%d notları güncellendi</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d notu değiştirilmedi</item>
-        <item quantity="other">%d notları değiştirilmedi</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Bu kart desteklenmeyen AnkiDroid özellikleri kullanıyor. Geliştiriciyle iletişime geçin (%1$s), veya vikiye bakın. %2$s</string>
     <string name="invalid_json_data">Kart geçersiz veri sağladı. %s</string>

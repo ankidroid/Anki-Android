@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’%2$d ಕ್ಷೇತ್ರಗಳನ್ನು ಹೊಂದಿದ್ದು,%3$d ನಿರೀಕ್ಷಿಸಲಾಗಿದೆ</string>
     <string name="csv_importer_error_exception">ಸ್ಥಗಿತಗೊಳಿಸಲಾಗಿದೆ:%s</string>
     <string name="user_is_a_robot">ಸ್ವಯಂಚಾಲಿತ ಪರೀಕ್ಷೆ ಪತ್ತೆಯಾಗಿದೆ. ನೀವು ಮನುಷ್ಯರಾಗಿದ್ದರೆ, ಆಂಕಿಡ್ರಾಯ್ಡ್ ಬೆಂಬಲವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d ಟಿಪ್ಪಣಿ ಸೇರಿಸಲಾಗಿದೆ</item>
-        <item quantity="other">%d ಟಿಪ್ಪಣಿಗಳನ್ನು ಸೇರಿಸಲಾಗಿದೆ</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d ಟಿಪ್ಪಣಿಗಳನ್ನು ಸೇರಿಸಲಾಗಿದೆ</item>
-        <item quantity="other">%d ಟಿಪ್ಪಣಿಗಳನ್ನು ನವೀಕರಿಸಲಾಗಿದೆ</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d ಟಿಪ್ಪಣಿ ಬದಲಾಗಿಲ್ಲ</item>
-        <item quantity="other">%d ಟಿಪ್ಪಣಿಗಳು ಬದಲಾಗುವುದಿಲ್ಲ</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">ಈ ಕಾರ್ಡ್ ಬೆಂಬಲಿಸದ ಆಂಕಿಡ್ರಾಯ್ಡ್ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಬಳಸುತ್ತದೆ. ಡೆವಲಪರ್ %1$s ಅನ್ನು ಸಂಪರ್ಕಿಸಿ, ಅಥವಾ ವಿಕಿಯನ್ನು ವೀಕ್ಷಿಸಿ. %2$s</string>
     <string name="invalid_json_data">ಕಾರ್ಡ್ ಅಮಾನ್ಯ ಡೇಟಾವನ್ನು ಒದಗಿಸಿದೆ. %s</string>

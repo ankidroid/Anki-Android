@@ -324,24 +324,6 @@
     <string name="csv_importer_error_invalid_field_count">ל %1$s יש %2$d שדות, צריך %3$d</string>
     <string name="csv_importer_error_exception">בוטל: %s</string>
     <string name="user_is_a_robot">זוהה אוטומציה ממוחשבת, אם אתה אנושי, צור קשר עם תמיכת AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d רשומה נוספה</item>
-        <item quantity="two">%d רשומות נוספו</item>
-        <item quantity="many">%d הערות נוספו</item>
-        <item quantity="other">%d רשומות נוספו</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d רשומה עודכנה</item>
-        <item quantity="two">%d רשומות עודכנו</item>
-        <item quantity="many">%d רשומות עודכנו</item>
-        <item quantity="other">%d רשומות עודכנו</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d רשומה ללא שינוי</item>
-        <item quantity="two">%d רשומות ללא שינוי</item>
-        <item quantity="many">%d רשומות ללא שינוי</item>
-        <item quantity="other">%d רשומות ללא שינוי</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">קלף זה משתמש באפשרויות שאינן נתמכות בAnkiDroid. צור קשר עם המפתח %1$s, או קרא בויקי. %2$s</string>
     <string name="invalid_json_data">הקלף מכיל תוכן לא תקין. %s</string>

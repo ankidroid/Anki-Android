@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ मध्ये %2$d फील्ड होती, अपेक्षित %3$d</string>
     <string name="csv_importer_error_exception">निरस्त: %s</string>
     <string name="user_is_a_robot">स्वयंचलित चाचणी आढळली. आपण मनुष्य असल्यास, अँकीड्रोइड समर्थनाशी संपर्क साधा</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="other">%d टिपा जोडल्या</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="other">%d टिपा अद्यतनित केल्या</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="other">%d नोटा बदलल्या नाहीत</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">हे कार्ड असमर्थित AnkiDroid वैशिष्ट्ये वापरते. विकसक %1$s शी संपर्क साधा किंवा विकी पहा. %2$s</string>
     <string name="invalid_json_data">कार्डने अवैध डेटा प्रदान केला. %s</string>

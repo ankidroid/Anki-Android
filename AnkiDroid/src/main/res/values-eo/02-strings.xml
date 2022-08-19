@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">“%1$s” havis %2$d kampojn, %3$d estis esperataj</string>
     <string name="csv_importer_error_exception">Ĉesigita: %s</string>
     <string name="user_is_a_robot">Eltrovita aŭtomata testo. Se vi estas homo, kontaktu la helpteamon AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d noto aldonita</item>
-        <item quantity="other">%d notoj aldonitaj</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d noto aktualigita</item>
-        <item quantity="other">%d notoj aktualigitaj</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d noto ne ŝanĝita</item>
-        <item quantity="other">%d notoj ne ŝanĝitaj</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Tiu ĉi karto uzas eblaĵojn nesubtenatajn de AnkiDroid. Kontaktu la programiston %1$s aŭ legu la vikion. %2$s</string>
     <string name="invalid_json_data">Karto liveris malĝustajn datumojn. %s</string>

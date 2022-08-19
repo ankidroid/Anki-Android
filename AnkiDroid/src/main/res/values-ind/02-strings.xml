@@ -289,15 +289,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ mempunyai %2$d bidang, diharapkan %3$d</string>
     <string name="csv_importer_error_exception">Dibatalkan: %s</string>
     <string name="user_is_a_robot">Tes otomatis terdeteksi. Jika kamu manusia, kontak dukungan AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="other">%d catatan ditambahkan</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="other">%d catatan diperbarui</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d catatan tidak berubah</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Kartu ini menggunakan fitur yang tidak didukung AnkiDroid. Kontak pengembang %1$s, atau kunjungi wiki. %2$s</string>
     <string name="invalid_json_data">Kartu memiliki data yang tidak valid. %s</string>

@@ -290,15 +290,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’에 %2$d개의 필드, %3$d가 필요</string>
     <string name="csv_importer_error_exception">무시 됨: %s</string>
     <string name="user_is_a_robot">자동 테스트를 감지했습니다. 만약 당신이 로봇이 아니라면 AnkiDroid 지원부에 연락하세요.</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="other">노트 %d개 추가됨</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="other">노트 %d개 업데이트됨</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">노트 %d개 변경되지 않음</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">이 카드는 AnkiDroid에서 지원하지 않은 기능을 이용합니다. 개발자에게 문의하거나(%1$s), wiki를 확인해주십시오. %2$s</string>
     <string name="invalid_json_data">잘못된 카드 데이터입니다. %s</string>

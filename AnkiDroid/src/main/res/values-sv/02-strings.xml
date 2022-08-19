@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ hade %2$d fält, förväntade %3$d</string>
     <string name="csv_importer_error_exception">Avbruten: %s</string>
     <string name="user_is_a_robot">Upptäckte automatiskt test. Om du är en människa, kontakta AnkiDroid support</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d anteckning tillagd</item>
-        <item quantity="other">%d anteckningar tillagda</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d anteckning uppdaterad</item>
-        <item quantity="other">%d anteckningar uppdaterade</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d anteckning oförändrad</item>
-        <item quantity="other">%d anteckningar oförändrade</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Detta kort använder AnkiDroid-funktioner som inte stöds. Kontakta utvecklaren %1$s, eller visa wiki. %2$s</string>
     <string name="invalid_json_data">Kortet angav ogiltig data. %s</string>

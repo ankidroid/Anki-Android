@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ ha %2$d campi, su %3$d attesi</string>
     <string name="csv_importer_error_exception">Interrotto: %s</string>
     <string name="user_is_a_robot">Rilevato test automatico. Se sei umano, contatta il supporto AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d nota aggiunta</item>
-        <item quantity="other">%d note aggiunte</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d nota aggiornata</item>
-        <item quantity="other">%d note aggiornate</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d nota invariata</item>
-        <item quantity="other">%d note invariate</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Questa carta utilizza funzioni AnkiDroid non supportate. Contatta lo sviluppatore %1$s, o visualizza la wiki. %2$s</string>
     <string name="invalid_json_data">La scheda fornisce dati non validi. %s</string>

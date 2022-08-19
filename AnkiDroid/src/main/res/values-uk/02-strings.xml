@@ -322,24 +322,6 @@
     <string name="csv_importer_error_invalid_field_count">«%1$s» мала %2$d полів, очікувалось %3$d</string>
     <string name="csv_importer_error_exception">Перервано: %s</string>
     <string name="user_is_a_robot">Виявлено автоматичний тест. Якщо Ви — людина, зверніться до підтримки AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d запис додано</item>
-        <item quantity="few">%d записи додано</item>
-        <item quantity="many">%d записів додано</item>
-        <item quantity="other">%d записів додано</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d запис оновлено</item>
-        <item quantity="few">%d записи оновлено</item>
-        <item quantity="many">%d записів оновлено</item>
-        <item quantity="other">%d записів оновлено</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d запис не змінено</item>
-        <item quantity="few">%d записи не змінено</item>
-        <item quantity="many">%d записів не змінено</item>
-        <item quantity="other">%d записів не змінено</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Ця картка використовує непідтримувані функції AnkiDroid. Зверніться до розробника %1$s, або перегляньте вікі. %2$s</string>
     <string name="invalid_json_data">Картці надано некоректні дані. %s</string>

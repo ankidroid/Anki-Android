@@ -289,15 +289,6 @@
     <string name="csv_importer_error_invalid_field_count">\'%1$s\'は %2$d のフィールドがあります。予測値は %3$d</string>
     <string name="csv_importer_error_exception">中止: %s</string>
     <string name="user_is_a_robot">自動テストが検出されました。AnkiDroidサポートにお問い合わせください。</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="other">%d枚のカードを追加しました</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="other">%d枚のカードを更新しました</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d枚のカードは更新されませんでした</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">このカードはサポートされない機能を使用しています。開発者 %1$sに連絡するか、Wikiで確認してください。 %2$s</string>
     <string name="invalid_json_data">カードに無効なデータがあります; %s</string>

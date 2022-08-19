@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ के पास %2$d क्षेत्र थे,%3$d अपेक्षित था</string>
     <string name="csv_importer_error_exception">निरस्त: %s</string>
     <string name="user_is_a_robot">स्वचालित परीक्षण का पता लगाया। यदि आप एक मानव हैं, तो AnkiDroid समर्थन से संपर्क करें</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d नोट जोड़ा गया</item>
-        <item quantity="other">%d नोट जोड़े गए</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d नोट अपडेट किया गया</item>
-        <item quantity="other">%d नोट अपडेट किए गए</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d नोट अपरिवर्तित</item>
-        <item quantity="other">%d नोट अपरिवर्तित</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">यह कार्ड असमर्थित AnkiDroid सुविधाओं का उपयोग करता है। डेवलपर से संपर्क करें %1$s, या विकी देखें। %2$s</string>
     <string name="invalid_json_data">कार्ड ने अवैध डेटा प्रदान किया। %s</string>

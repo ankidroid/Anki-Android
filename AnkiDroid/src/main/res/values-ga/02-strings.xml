@@ -333,27 +333,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
     <string name="csv_importer_error_exception">Aborted: %s</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d note added</item>
-        <item quantity="two">%d notes added</item>
-        <item quantity="few">%d notes added</item>
-        <item quantity="many">%d notes added</item>
-        <item quantity="other">%d notes added</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d note updated</item>
-        <item quantity="two">%d notes updated</item>
-        <item quantity="few">%d notes updated</item>
-        <item quantity="many">%d notes updated</item>
-        <item quantity="other">%d notes updated</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d note unchanged</item>
-        <item quantity="two">%d notes unchanged</item>
-        <item quantity="few">%d notes unchanged</item>
-        <item quantity="many">%d notes unchanged</item>
-        <item quantity="other">%d notes unchanged</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
     <string name="invalid_json_data">Card provided invalid data. %s</string>

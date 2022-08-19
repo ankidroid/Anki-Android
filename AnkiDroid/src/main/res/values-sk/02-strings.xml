@@ -322,24 +322,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ malo %2$d polí, očakávalo sa %3$d</string>
     <string name="csv_importer_error_exception">Prerušené: %s</string>
     <string name="user_is_a_robot">Bol zachytený automatizovaný test. Ak ste človek, kontaktuje AnkiDroid podporu</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d pridaná poznámka</item>
-        <item quantity="few">%d pridané poznámky</item>
-        <item quantity="many">%d pridaných poznámok</item>
-        <item quantity="other">%d pridaných poznámok</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d aktualizovaná poznámka</item>
-        <item quantity="few">%d aktualizované poznámky</item>
-        <item quantity="many">%d aktualizovaných poznámok</item>
-        <item quantity="other">%d aktualizovaných poznámok</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d nezmenená poznámka</item>
-        <item quantity="few">%d nezmenené poznámky</item>
-        <item quantity="many">%d nezmenených poznámok</item>
-        <item quantity="other">%d nezmenených poznámok</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Táto kartička používa nepodporované prvky AnkiDroidu. Kontaktujte vývojára %1$s, alebo si pozrite wiki. %2$s</string>
     <string name="invalid_json_data">Kartička poskytla chybné dáta. %s</string>

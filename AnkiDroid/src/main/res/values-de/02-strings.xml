@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">»%1$s« hatte %2$d Felder, erwartet %3$d</string>
     <string name="csv_importer_error_exception">Abgebrochen: %s</string>
     <string name="user_is_a_robot">Automatischer Test erkannt. Wenn Sie ein Mensch sind, wenden Sie sich an AnkiDroid-Support</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d Notiz hinzugefügt</item>
-        <item quantity="other">%d Notizen hinzugefügt</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d Notiz aktualisiert</item>
-        <item quantity="other">%d Notizen aktualisiert</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d Notiz unverändert</item>
-        <item quantity="other">%d Notizen unverändert</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Diese Karte verwendet AnkiDroid-Funktionen, die nicht  nicht unterstützt sind. Kontaktieren Sie den Entwickler %1$s oder sehen Sie sich das Wiki an. %2$s</string>
     <string name="invalid_json_data">Karte hat ungültige Daten angegeben. %s</string>
