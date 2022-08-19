@@ -15,6 +15,8 @@
  */
 package com.ichi2.anki.pages
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
 import com.ichi2.anki.R
@@ -47,5 +49,16 @@ class CsvImporter : PageFragment() {
 
         /** Key of [CsvImporter]'s argument that holds the path of the file to be imported */
         private const val ARG_KEY_PATH = "csvPath"
+
+        /**
+         * @param filePath path of the csv file that will be imported, which should be accessible by AnkiDroid
+         * @return an intent to open the [CsvImporter] page on [PagesActivity]
+         */
+        fun getIntent(context: Context, filePath: String): Intent {
+            val arguments = Bundle().apply {
+                putString(ARG_KEY_PATH, filePath)
+            }
+            return PagesActivity.getIntent(context, PAGE_NAME, arguments)
+        }
     }
 }
