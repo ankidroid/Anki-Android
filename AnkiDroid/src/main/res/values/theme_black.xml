@@ -18,6 +18,7 @@
         <item name="android:textColorSecondary">@color/theme_black_secondary_text</item>
         <item name="android:colorBackground">@color/theme_black_primary</item>
         <item name="android:windowBackground">@color/theme_black_primary</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">#303030</item>
         <item name="largeButtonBackgroundColorFocused">#444444</item>
