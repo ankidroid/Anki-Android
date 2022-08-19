@@ -88,6 +88,11 @@
             android:configChanges="keyboardHidden|locale|orientation|screenSize|uiMode"
             />
         <activity
+            android:name="com.ichi2.anki.pages.PagesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize|locale|uiMode"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

@@ -25,6 +25,7 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWE
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
 import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.pages.PagesActivity
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
 import com.ichi2.utils.KotlinCleanup
@@ -70,7 +71,8 @@ object ActivityList {
             get(CardInfo::class.java),
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },
-            get(SharedDecksActivity::class.java)
+            get(SharedDecksActivity::class.java),
+            get(PagesActivity::class.java)
         )
     }
 
