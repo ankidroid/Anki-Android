@@ -27,6 +27,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.reviewer.FullScreenMode
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Utils
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
@@ -50,7 +51,9 @@ class AppearanceSettingsFragment : SettingsFragment() {
             if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || newValue != "none") {
                 true
             } else {
-                UIUtils.showThemedToast(requireContext(), R.string.full_screen_error_gestures, false)
+                // TODO add a button on the snackbar that leads directly to the
+                // Controls fragment and highlight the gesture preference
+                showSnackbar(R.string.full_screen_error_gestures)
                 false
             }
         }
@@ -59,7 +62,9 @@ class AppearanceSettingsFragment : SettingsFragment() {
             if (prefs.getBoolean(GestureProcessor.PREF_KEY, false) || FullScreenMode.FULLSCREEN_ALL_GONE.getPreferenceValue() != newValue) {
                 true
             } else {
-                UIUtils.showThemedToast(requireContext(), R.string.full_screen_error_gestures, false)
+                // TODO add a button on the snackbar that leads directly to the
+                // Controls fragment and highlight the gesture preference
+                showSnackbar(R.string.full_screen_error_gestures)
                 false
             }
         }
@@ -79,24 +84,12 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
                 if (imgFile.exists()) {
                     if (imgFile.delete()) {
-                        UIUtils.showThemedToast(
-                            requireContext(),
-                            getString(R.string.background_image_removed),
-                            false
-                        )
+                        showSnackbar(R.string.background_image_removed)
                     } else {
-                        UIUtils.showThemedToast(
-                            requireContext(),
-                            getString(R.string.error_deleting_image),
-                            false
-                        )
+                        showSnackbar(R.string.error_deleting_image)
                     }
                 } else {
-                    UIUtils.showThemedToast(
-                        requireContext(),
-                        getString(R.string.background_image_removed),
-                        false
-                    )
+                    showSnackbar(R.string.background_image_removed)
                 }
             }
             true
@@ -225,7 +218,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
                         (requireContext().contentResolver.openInputStream(selectedImage) as FileInputStream).channel.use { sourceChannel ->
                             FileOutputStream(destFile).channel.use { destChannel ->
                                 destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
-                                UIUtils.showThemedToast(requireContext(), getString(R.string.background_image_applied), false)
+                                showSnackbar(R.string.background_image_applied)
                             }
                         }
                     } else {
@@ -235,14 +228,14 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 }
             } catch (e: OutOfMemoryError) {
                 Timber.w(e)
-                UIUtils.showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
+                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
             } catch (e: Exception) {
                 Timber.w(e)
-                UIUtils.showThemedToast(requireContext(), getString(R.string.error_selecting_image, e.localizedMessage), false)
+                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
             }
         } else {
             mBackgroundImage!!.isChecked = false
-            UIUtils.showThemedToast(requireContext(), getString(R.string.no_image_selected), false)
+            showSnackbar(R.string.no_image_selected)
         }
     }
 }
