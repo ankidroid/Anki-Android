@@ -1,10 +1,4 @@
-apply plugin: "java-library"
 apply plugin: 'kotlin'
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
 
 repositories {
     google()
@@ -23,4 +17,3 @@ dependencies {
     testImplementation "com.android.tools.lint:lint-api:$lint_version"
     testImplementation "com.android.tools.lint:lint-tests:$lint_version"
 }
-apply from: "./kotlinMigration-lint.gradle"
