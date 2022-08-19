@@ -21,6 +21,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.onAttachedToWindow2
 import com.ichi2.anki.BuildConfig
@@ -189,6 +190,75 @@ fun View.showSnackbar(
     if (snackbarBuilder != null) { snackbar.snackbarBuilder() }
 
     snackbar.show()
+}
+
+/**
+ * Show a snackbar.
+ *
+ * You can create snackbars by calling `showSnackbar` on either an activity or a view.
+ * As `CoordinatorLayout` is responsible for proper placement and animation of snackbars,
+ *
+ *   * if calling on an activity, the activity **MUST** have a `CoordinatorLayout`
+ *     with id `root_layout`;
+ *
+ *   * if calling on a view, the view **MUST** be either a `CoordinatorLayout`,
+ *     or a (possibly indirect) child of `CoordinatorLayout`.
+ *
+ * Any additional configuration can be done in the configuration block, e.g.
+ *
+ *     showSnackbar(text) {
+ *         addCallback(callback)
+ *     }
+ *
+ * @receiver A [View] that is either a [CoordinatorLayout],
+ *     or a (possibly indirect) child of `CoordinatorLayout`.
+ * @param text Text to show, can be formatted.
+ * @param duration Optional. For how long to show the snackbar. Can be one of:
+ *     [Snackbar.LENGTH_SHORT], [Snackbar.LENGTH_LONG] (default), [Snackbar.LENGTH_INDEFINITE],
+ *     or exact duration in milliseconds.
+ * @param snackbarBuilder Optional. A configuration block with the [Snackbar] as `this`.
+ */
+fun Fragment.showSnackbar(
+    text: CharSequence,
+    duration: Int = Snackbar.LENGTH_LONG,
+    snackbarBuilder: SnackbarBuilder? = null
+) {
+    requireActivity().showSnackbar(text, duration, snackbarBuilder)
+}
+
+/**
+ * Show a snackbar.
+ *
+ * You can create snackbars by calling `showSnackbar` on either an activity or a view.
+ * As `CoordinatorLayout` is responsible for proper placement and animation of snackbars,
+ *
+ *   * if calling on an activity, the activity **MUST** have a `CoordinatorLayout`
+ *     with id `root_layout`;
+ *
+ *   * if calling on a view, the view **MUST** be either a `CoordinatorLayout`,
+ *     or a (possibly indirect) child of `CoordinatorLayout`.
+ *
+ * Any additional configuration can be done in the configuration block, e.g.
+ *
+ *     showSnackbar(text) {
+ *         addCallback(callback)
+ *     }
+ *
+ * @receiver A [View] that is either a [CoordinatorLayout],
+ *     or a (possibly indirect) child of `CoordinatorLayout`.
+ * @param textResource String resource to show, can be formatted.
+ * @param duration Optional. For how long to show the snackbar. Can be one of:
+ *     [Snackbar.LENGTH_SHORT], [Snackbar.LENGTH_LONG] (default), [Snackbar.LENGTH_INDEFINITE],
+ *     or exact duration in milliseconds.
+ * @param snackbarBuilder Optional. A configuration block with the [Snackbar] as `this`.
+ */
+fun Fragment.showSnackbar(
+    @StringRes textResource: Int,
+    duration: Int = Snackbar.LENGTH_LONG,
+    snackbarBuilder: SnackbarBuilder? = null
+) {
+    val text = resources.getText(textResource)
+    showSnackbar(text, duration, snackbarBuilder)
 }
 
 /* ********************************************************************************************** */
