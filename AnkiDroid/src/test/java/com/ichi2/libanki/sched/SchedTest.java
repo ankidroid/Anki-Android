@@ -393,7 +393,7 @@ public class SchedTest extends RobolectricTest {
         col.getSched().answerCard(c, BUTTON_THREE);
         assertEquals(CARD_TYPE_REV, c.getType());
         assertEquals(QUEUE_TYPE_REV, c.getQueue());
-        assertTrue(checkRevIvl(col, c, 4));
+        assertTrue(checkRevIvl(c, 4));
         // revlog should have been updated each time
         assertEquals(5, col.getDb().queryScalar("select count() from revlog where type = 0"));
         // now failed card handling
@@ -564,7 +564,7 @@ public class SchedTest extends RobolectricTest {
         col.getSched().answerCard(c, BUTTON_TWO);
         assertEquals(QUEUE_TYPE_REV, c.getQueue());
         // the new interval should be (100 + 8/4) * 1.2 = 122
-        assertTrue(checkRevIvl(col, c, 122));
+        assertTrue(checkRevIvl(c, 122));
         assertEquals(col.getSched().getToday() + c.getIvl(), c.getDue());
         // factor should have been decremented
         assertEquals(2350, c.getFactor());
@@ -577,7 +577,7 @@ public class SchedTest extends RobolectricTest {
         c.flush();
         col.getSched().answerCard(c, BUTTON_THREE);
         // the new interval should be (100 + 8/2) * 2.5 = 260
-        assertTrue(checkRevIvl(col, c, 260));
+        assertTrue(checkRevIvl(c, 260));
         assertEquals(col.getSched().getToday() + c.getIvl(), c.getDue());
         // factor should have been left alone
         assertEquals(STARTING_FACTOR, c.getFactor());
@@ -587,7 +587,7 @@ public class SchedTest extends RobolectricTest {
         c.flush();
         col.getSched().answerCard(c, BUTTON_FOUR);
         // the new interval should be (100 + 8) * 2.5 * 1.3 = 351
-        assertTrue(checkRevIvl(col, c, 351));
+        assertTrue(checkRevIvl(c, 351));
         assertEquals(col.getSched().getToday() + c.getIvl(), c.getDue());
         // factor should have been increased
         assertEquals(2650, c.getFactor());

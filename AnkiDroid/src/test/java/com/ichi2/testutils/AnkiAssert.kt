@@ -13,79 +13,71 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.testutils
 
-package com.ichi2.testutils;
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.ListUtil.Companion.assertListEquals
+import org.junit.Assert
+import java.util.*
 
-import android.util.Pair;
-
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.sched.SchedV2;
-
-import java.util.Arrays;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-
-import static com.ichi2.utils.ListUtil.assertListEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-/** Assertion methods that aren't currently supported by our dependencies */
-public class AnkiAssert {
-
-    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check */
-    public static void assertDoesNotThrow(String message, @NonNull Runnable runnable) {
+/** Assertion methods that aren't currently supported by our dependencies  */
+@KotlinCleanup("IDE Lint")
+@KotlinCleanup("combine with AnkiAssertKt")
+object AnkiAssert {
+    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
+    fun assertDoesNotThrow(message: String, runnable: Runnable) {
         try {
-            runnable.run();
-        } catch (Exception e) {
-            throw new AssertionError(message + "\nmethod should not throw", e);
+            runnable.run()
+        } catch (e: Exception) {
+            throw AssertionError("$message\nmethod should not throw", e)
         }
     }
 
-    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check */
-    public static void assertDoesNotThrow(@NonNull Runnable runnable) {
+    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
+    fun assertDoesNotThrow(runnable: Runnable) {
         try {
-            runnable.run();
-        } catch (Exception e) {
-            throw new AssertionError("method should not throw", e);
+            runnable.run()
+        } catch (e: Exception) {
+            throw AssertionError("method should not throw", e)
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T extends Throwable> T assertThrows(Runnable r, Class<T> clazz) {
+    fun <T : Throwable?> assertThrows(r: Runnable, clazz: Class<T>): T {
         try {
-            r.run();
-            fail("Expected exception: " + clazz.getSimpleName() + ". No exception thrown.");
-        } catch (Throwable t) {
-            if (t.getClass().equals(clazz)) {
-                return (T) t;
+            r.run()
+            Assert.fail("Expected exception: " + clazz.simpleName + ". No exception thrown.")
+        } catch (t: Throwable) {
+            if (t.javaClass == clazz) {
+                @Suppress("UNCHECKED_CAST")
+                return t as T
             }
-
-            if (t.getMessage() != null && t.getMessage().startsWith("Expected exception: ")) {
+            if (t.message != null && t.message!!.startsWith("Expected exception: ")) {
                 // We need to add a "throws" if we rethrow t, so fail with the same code.
-                fail("Expected exception: " + clazz.getSimpleName() + ". No exception thrown.");
+                Assert.fail("Expected exception: " + clazz.simpleName + ". No exception thrown.")
             }
-
-            // We don't want to assert here as we want to include the exception.
-            throw new AssertionError("Expected '" + clazz.getSimpleName() + "' got '" + t.getClass().getSimpleName() + "'", t);
+            throw AssertionError(
+                "Expected '" + clazz.simpleName + "' got '" + t.javaClass.simpleName + "'",
+                t
+            )
         }
-        throw new IllegalStateException("unreachable");
+        throw IllegalStateException("unreachable")
     }
 
-    public static <T> void assertEqualsArrayList(T[] expected, List<T> actual) {
-        assertListEquals(Arrays.asList(expected), actual);
+    fun <T> assertEqualsArrayList(expected: Array<T>, actual: List<T>?) {
+        assertListEquals(Arrays.asList(*expected), actual)
     }
 
-
-    public static String without_unicode_isolation(String s) {
-        return s.replace("\u2068", "").replace("\u2069", "");
+    @JvmStatic
+    fun without_unicode_isolation(s: String): String {
+        return s.replace("\u2068", "").replace("\u2069", "")
     }
 
-    public static boolean checkRevIvl(Collection col, Card c, int targetIvl) {
-        Pair<Integer, Integer> min_max = SchedV2._fuzzIvlRange(targetIvl);
-        return min_max.first <= c.getIvl() && c.getIvl() <= min_max.second;
+    @JvmStatic
+    @KotlinCleanup("scope function")
+    fun checkRevIvl(c: Card, targetIvl: Int): Boolean {
+        val min_max = SchedV2._fuzzIvlRange(targetIvl)
+        return min_max.first <= c.ivl && c.ivl <= min_max.second
     }
-
-
 }
