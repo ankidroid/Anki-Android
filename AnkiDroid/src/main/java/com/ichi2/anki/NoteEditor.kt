@@ -639,83 +639,49 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // ----------------------------------------------------------------------------
 
     /**
-     * @param noOfAddedCards null if any exception occurred internally
+     * @param noOfAddedCards
      */
     @KotlinCleanup("return early and simplify if possible")
-    private fun onNoteAdded(noOfAddedCards: Int?) {
+    private fun onNoteAdded(noOfAddedCards: Int) {
         var closeEditorAfterSave = false
         var closeIntent: Intent? = null
-        if (noOfAddedCards != null) {
-            // if task executed without any exception
+        // if task executed without any exception
+        if (noOfAddedCards > 0) {
+            changed = true
+            sourceText = null
+            refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
+            UIUtils.showThemedToast(
+                this,
+                resources.getQuantityString(
+                    R.plurals.factadder_cards_added,
+                    noOfAddedCards,
+                    noOfAddedCards
+                ),
+                true
+            )
+        } else {
+            displayErrorSavingNote()
+        }
+
+        if (!addNote || caller == CALLER_NOTEEDITOR || aedictIntent) {
+            changed = true
+            closeEditorAfterSave = true
+        } else if (caller == CALLER_NOTEEDITOR_INTENT_ADD) {
             if (noOfAddedCards > 0) {
                 changed = true
-                sourceText = null
-                refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
-                UIUtils.showThemedToast(
-                    this,
-                    resources.getQuantityString(
-                        R.plurals.factadder_cards_added,
-                        noOfAddedCards,
-                        noOfAddedCards
-                    ),
-                    true
-                )
-            } else {
-                displayErrorSavingNote()
             }
-
-            if (!addNote || caller == CALLER_NOTEEDITOR || aedictIntent) {
-                changed = true
-                closeEditorAfterSave = true
-            } else if (caller == CALLER_NOTEEDITOR_INTENT_ADD) {
-                if (noOfAddedCards > 0) {
-                    changed = true
-                }
-                closeEditorAfterSave = true
-                closeIntent = Intent().apply { putExtra(EXTRA_ID, intent.getStringExtra(EXTRA_ID)) }
-            } else if (!mEditFields!!.isEmpty()) {
-                mEditFields!!.first!!.focusWithKeyboard()
-            }
-
-            if (progressDialog != null && progressDialog!!.isShowing) {
-                try {
-                    progressDialog!!.dismiss()
-                } catch (e: IllegalArgumentException) {
-                    Timber.e(e, "Note Editor: Error on dismissing progress dialog")
-                }
-            }
-
-            if (closeEditorAfterSave) {
-                closeNoteEditor(closeIntent ?: Intent())
-            } else {
-                // Reset check for changes to fields
-                isFieldEdited = false
-                isTagsEdited = false
-            }
-        } else {
-            // RuntimeException occurred on adding note
-            closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null)
+            closeEditorAfterSave = true
+            closeIntent = Intent().apply { putExtra(EXTRA_ID, intent.getStringExtra(EXTRA_ID)) }
+        } else if (!mEditFields!!.isEmpty()) {
+            mEditFields!!.first!!.focusWithKeyboard()
         }
-    }
 
-    /**
-     * Saves the [Note] to given [Collection]. Should be called from an IO thread/dispatcher
-     * @param col  Collection instance to which note is to be saved
-     * @param note Note instance to be saved
-     * @return Number of saved notes, null when any failure occurs
-     * */
-    private fun doInBackgroundAddNote(col: Collection, note: Note): Int? {
-        return try {
-            Timber.d("doInBackgroundAddNote - Started")
-            val noOfAddedCards = col.db.executeInTransaction {
-                col.addNote(note, Models.AllowEmpty.ONLY_CLOZE)
-            }
-            Timber.d("doInBackgroundAddNote - Cards Added $noOfAddedCards")
-            noOfAddedCards
-        } catch (e: RuntimeException) {
-            Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note")
-            CrashReportService.sendExceptionReport(e, "doInBackgroundAddNote")
-            null
+        if (closeEditorAfterSave) {
+            closeNoteEditor(closeIntent ?: Intent())
+        } else {
+            // Reset check for changes to fields
+            isFieldEdited = false
+            isTagsEdited = false
         }
     }
 
@@ -750,17 +716,18 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
 
             mReloadRequired = true
-            withProgress(resources.getString(R.string.saving_facts)) {
-                // prepare UI: no need because it is already handled by withProgress
-                val noOfAddedCards = CollectionManager.withCol {
+            // adding current note to collection
+            val noOfAddedCards = withProgress(resources.getString(R.string.saving_facts)) {
+                CollectionManager.withCol {
                     models.current()!!.put("tags", tags)
                     models.setChanged()
-                    // add note in background, withCol itself performs operation on IO dispatcher
-                    doInBackgroundAddNote(this, mEditorNote!!)
+                    db.executeInTransaction {
+                        addNote(mEditorNote!!, Models.AllowEmpty.ONLY_CLOZE)
+                    }
                 }
-                // update UI based on the result from doInBackgroundAddNote
-                onNoteAdded(noOfAddedCards)
             }
+            // update UI based on the result, noOfAddedCards
+            onNoteAdded(noOfAddedCards)
             updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
