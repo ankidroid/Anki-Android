@@ -38,11 +38,11 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 @RequiresApi(Build.VERSION_CODES.O) // getNotificationChannels, NotificationChannel.getId
-@KotlinCleanup("IDE Lint")
+
 @KotlinCleanup("Enable JUnit 5 in androidTest and use JUnit5Asserter to match the standard tests")
 class NotificationChannelTest : InstrumentedTest() {
     @get:Rule
-    var runtimePermissionRule =
+    var runtimePermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var mCurrentAPI = -1
     private var mTargetAPI = -1

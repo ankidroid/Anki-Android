@@ -20,29 +20,20 @@ package com.ichi2.anki.tests.libanki
 import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.tests.InstrumentedTest
-import com.ichi2.libanki.Collection
-import com.ichi2.utils.KotlinCleanup
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.IOException
-@KotlinCleanup("lateinit")
+
 @RunWith(AndroidJUnit4::class)
 class ModelTest : InstrumentedTest() {
 
-    private var mTestCol: Collection? = null
-    @Before
-    @Throws(IOException::class)
-    fun setUp() {
-        mTestCol = emptyCol
-    }
+    private val mTestCol = emptyCol
 
     @After
     fun tearDown() {
-        mTestCol!!.close()
+        mTestCol.close()
     }
 
     @Test
@@ -51,7 +42,7 @@ class ModelTest : InstrumentedTest() {
             "This test is flaky on API29, ignoring",
             Build.VERSION.SDK_INT != Build.VERSION_CODES.Q
         )
-        val models = mTestCol!!.models
+        val models = mTestCol.models
         val model = models.all()[0]
         val testString = "test"
         val size = testString.length * 1024 * 1024
@@ -64,7 +55,7 @@ class ModelTest : InstrumentedTest() {
         // Buf should be more than 4MB, so at least two chunks from database.
         models.flush()
         // Reload models
-        mTestCol!!.load()
+        mTestCol.load()
         val newModel = models.all()[0]
         assertEquals(newModel, model)
     }
