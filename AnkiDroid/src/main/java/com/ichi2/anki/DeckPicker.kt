@@ -80,6 +80,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.export.ActivityExportingDelegate
+import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.DeckService
@@ -823,8 +824,8 @@ open class DeckPicker :
                 ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, false)
             }
         } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
-            ImportUtils.getFileCachedCopy(this, data!!) ?: return
-            showThemedToast(this, "CSV importer is not implemented yet", true)
+            val path = ImportUtils.getFileCachedCopy(this, data!!) ?: return
+            startActivity(CsvImporter.getIntent(this, path))
         }
     }
 
