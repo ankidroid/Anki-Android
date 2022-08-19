@@ -661,7 +661,7 @@ abstract class AbstractFlashcardViewer :
             if (!mExitViaDoubleTapBack || mBackButtonPressedToReturn) {
                 closeReviewer(RESULT_DEFAULT, false)
             } else {
-                showThemedToast(this, getString(R.string.back_pressed_once_reviewer), true)
+                showSnackbar(R.string.back_pressed_once_reviewer, Snackbar.LENGTH_SHORT)
             }
             mBackButtonPressedToReturn = true
             executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) { mBackButtonPressedToReturn = false }
@@ -839,24 +839,19 @@ abstract class AbstractFlashcardViewer :
 
     open fun undo(): Job? {
         if (isUndoAvailable) {
-            val res = resources
-            val undoName = col.undoName(res)
+            val undoneAction = col.undoName(resources)
+            val message = getString(R.string.undo_succeeded, undoneAction)
             fun legacyUndo() {
                 Undo().runWithHandler(
                     answerCardHandler(false)
-                        .alsoExecuteAfter {
-                            showThemedToast(
-                                this@AbstractFlashcardViewer,
-                                res.getString(R.string.undo_succeeded, undoName),
-                                true
-                            )
-                        }
+                        .alsoExecuteAfter { showSnackbarAboveAnswerButtons(message, Snackbar.LENGTH_SHORT) }
                 )
             }
             if (BackendFactory.defaultLegacySchema) {
                 legacyUndo()
             } else {
                 return launchCatchingTask {
+                    // TODO make backendUndoAndShowPopup() snackbar don't show on top of the answer buttons
                     if (!backendUndoAndShowPopup()) {
                         legacyUndo()
                     }
@@ -917,7 +912,18 @@ abstract class AbstractFlashcardViewer :
 
     /** Consumers should use [.showDeleteNoteDialog]   */
     private fun deleteNoteWithoutConfirmation() {
-        dismiss(DeleteNote(mCurrentCard!!)) { showThemedToast(this, R.string.deleted_note, true) }
+        dismiss(DeleteNote(mCurrentCard!!)) {
+            showSnackbarWithUndoButton(R.string.deleted_note)
+        }
+    }
+
+    private fun showSnackbarWithUndoButton(
+        @StringRes textResource: Int,
+        duration: Int = Snackbar.LENGTH_SHORT
+    ) {
+        showSnackbarAboveAnswerButtons(textResource, duration) {
+            setAction(R.string.undo) { undo() }
+        }
     }
 
     private fun getRecommendedEase(easy: Boolean): Int {
@@ -1647,19 +1653,27 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal fun buryCard(): Boolean {
-        return dismiss(BuryCard(mCurrentCard!!)) { showThemedToast(this, R.string.buried_card, true) }
+        return dismiss(BuryCard(mCurrentCard!!)) {
+            showSnackbarWithUndoButton(R.string.buried_card)
+        }
     }
 
     internal fun suspendCard(): Boolean {
-        return dismiss(SuspendCard(mCurrentCard!!)) { showThemedToast(this, R.string.suspended_card, true) }
+        return dismiss(SuspendCard(mCurrentCard!!)) {
+            showSnackbarWithUndoButton(R.string.suspended_card)
+        }
     }
 
     internal fun suspendNote(): Boolean {
-        return dismiss(SuspendNote(mCurrentCard!!)) { showThemedToast(this, R.string.suspended_note, true) }
+        return dismiss(SuspendNote(mCurrentCard!!)) {
+            showSnackbarWithUndoButton(R.string.suspended_note)
+        }
     }
 
     internal fun buryNote(): Boolean {
-        return dismiss(BuryNote(mCurrentCard!!)) { showThemedToast(this, R.string.buried_note, true) }
+        return dismiss(BuryNote(mCurrentCard!!)) {
+            showSnackbarWithUndoButton(R.string.buried_note)
+        }
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
