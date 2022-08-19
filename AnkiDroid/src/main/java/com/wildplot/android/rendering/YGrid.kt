@@ -13,111 +13,94 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
+package com.wildplot.android.rendering
 
-import android.annotation.SuppressLint;
-
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
-import com.wildplot.android.rendering.interfaces.Drawable;
-
+import android.annotation.SuppressLint
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
+import com.wildplot.android.rendering.interfaces.Drawable
 
 /**
  * This class represents grid lines parallel to the y-axis
  */
 @SuppressLint("NonPublicNonStaticFieldName")
-public class YGrid implements Drawable {
-
-    /**
-     * the color of the grid lines
-     */
-    private ColorWrap color = ColorWrap.LIGHT_GRAY;
-
+class YGrid
+/**
+ * Constructor for an Y-Grid object
+ *
+ * @param plotSheet the sheet the grid will be drawn onto
+ * @param ticStart  start point for relative positioning of grid
+ * @param tic       the space between two grid lines
+ */(
     /**
      * the Sheet the grid lines will be drawn onto
      */
-    private final PlotSheet plotSheet;
-
+    private val plotSheet: PlotSheet,
     /**
      * start point for relative positioning of grid
      */
-    private final double ticStart;
-
+    private val ticStart: Double,
     /**
      * the space between two grid lines
      */
-    private final double tic;
+    private val tic: Double
+) : Drawable {
+    /**
+     * the color of the grid lines
+     */
+    private var color = ColorWrap.LIGHT_GRAY
 
     /**
      * maximal distance from x axis the grid will be drawn
      */
-    private double xLength = 10;
+    private var xLength = 10.0
 
     /**
      * maximal distance from y axis the grid will be drawn
      */
-    private double yLength = 2;
-
-    private double[] mTickPositions;
-
-
-    /**
-     * Constructor for an Y-Grid object
-     *
-     * @param plotSheet the sheet the grid will be drawn onto
-     * @param ticStart  start point for relative positioning of grid
-     * @param tic       the space between two grid lines
-     */
-    public YGrid(PlotSheet plotSheet, double ticStart, double tic) {
-        super();
-        this.plotSheet = plotSheet;
-        this.ticStart = ticStart;
-        this.tic = tic;
-    }
-
-
-    @Override
-    public void paint(GraphicsWrap g) {
-        ColorWrap oldColor = g.getColor();
-        g.setColor(color);
-
-        this.xLength = Math.max(Math.abs(plotSheet.getxRange()[0]), Math.abs(plotSheet.getxRange()[1]));
-        this.yLength = Math.max(Math.abs(plotSheet.getyRange()[0]), Math.abs(plotSheet.getyRange()[1]));
-
-        int tics = (int) ((this.ticStart - (0 - this.xLength)) / tic);
-        double leftStart = this.ticStart - this.tic * tics;
-
+    private var yLength = 2.0
+    private var mTickPositions: DoubleArray? = null
+    override fun paint(g: GraphicsWrap) {
+        val oldColor = g.color
+        g.color = color
+        xLength = Math.max(
+            Math.abs(plotSheet.getxRange()[0]),
+            Math.abs(
+                plotSheet.getxRange()[1]
+            )
+        )
+        yLength = Math.max(
+            Math.abs(plotSheet.getyRange()[0]),
+            Math.abs(
+                plotSheet.getyRange()[1]
+            )
+        )
+        val tics = ((ticStart - (0 - xLength)) / tic).toInt()
+        val leftStart = ticStart - tic * tics
         if (mTickPositions == null) {
-            drawImplicitLines(g, leftStart);
+            drawImplicitLines(g, leftStart)
         } else {
-            drawExplicitLines(g);
+            drawExplicitLines(g)
         }
-
-        g.setColor(oldColor);
-
+        g.color = oldColor
     }
 
-
-    private void drawImplicitLines(GraphicsWrap g, double leftStart) {
-        RectangleWrap field = g.getClipBounds();
-        double currentX = leftStart;
-
-        while (currentX <= this.xLength) {
-            drawGridLine(currentX, g, field);
-            currentX += this.tic;
+    private fun drawImplicitLines(g: GraphicsWrap, leftStart: Double) {
+        val field = g.clipBounds
+        var currentX = leftStart
+        while (currentX <= xLength) {
+            drawGridLine(currentX, g, field)
+            currentX += tic
         }
     }
 
-
-    private void drawExplicitLines(GraphicsWrap g) {
-        RectangleWrap field = g.getClipBounds();
-
-        for (double currentX : mTickPositions) {
-            drawGridLine(currentX, g, field);
+    private fun drawExplicitLines(g: GraphicsWrap) {
+        val field = g.clipBounds
+        for (currentX in mTickPositions!!) {
+            drawGridLine(currentX, g, field)
         }
     }
-
 
     /**
      * Draw a grid line in specified graphics object
@@ -126,37 +109,34 @@ public class YGrid implements Drawable {
      * @param g     graphic the line shall be drawn onto
      * @param field definition of the graphic boundaries
      */
-    private void drawGridLine(double x, GraphicsWrap g, RectangleWrap field) {
-        g.drawLine(plotSheet.xToGraphic(x, field), plotSheet.yToGraphic(0, field),
-                plotSheet.xToGraphic(x, field), plotSheet.yToGraphic(yLength, field));
-        g.drawLine(plotSheet.xToGraphic(x, field), plotSheet.yToGraphic(0, field),
-                plotSheet.xToGraphic(x, field), plotSheet.yToGraphic(-yLength, field));
+    private fun drawGridLine(x: Double, g: GraphicsWrap, field: RectangleWrap) {
+        g.drawLine(
+            plotSheet.xToGraphic(x, field), plotSheet.yToGraphic(0.0, field),
+            plotSheet.xToGraphic(x, field), plotSheet.yToGraphic(yLength, field)
+        )
+        g.drawLine(
+            plotSheet.xToGraphic(x, field), plotSheet.yToGraphic(0.0, field),
+            plotSheet.xToGraphic(x, field), plotSheet.yToGraphic(-yLength, field)
+        )
     }
 
-
-    public boolean isOnFrame() {
-        return false;
+    override fun isOnFrame(): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean isClusterable() {
-        return true;
+    override fun isClusterable(): Boolean {
+        return true
     }
 
-
-    @Override
-    public boolean isCritical() {
-        return true;
+    override fun isCritical(): Boolean {
+        return true
     }
 
-
-    public void setColor(ColorWrap color) {
-        this.color = color;
+    fun setColor(color: ColorWrap) {
+        this.color = color
     }
 
-
-    public void setExplicitTicks(double[] tickPositions) {
-        mTickPositions = tickPositions;
+    fun setExplicitTicks(tickPositions: DoubleArray?) {
+        mTickPositions = tickPositions
     }
 }
