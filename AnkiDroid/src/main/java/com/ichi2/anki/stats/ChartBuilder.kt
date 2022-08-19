@@ -181,7 +181,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             }
             val barGraph = BarGraph(usedPlotSheet, barThickness, bars, color)
             barGraph.setFilling(true)
-            barGraph.name = chartView.resources.getString(mValueLabels[i - 1])
+            barGraph.setName(chartView.resources.getString(mValueLabels[i - 1]))
             // barGraph.setFillColor(Color.GREEN.darker());
             barGraph.setFillColor(color)
             plotSheet.addDrawable(barGraph)
