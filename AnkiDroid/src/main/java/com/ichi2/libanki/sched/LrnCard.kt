@@ -14,24 +14,20 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sched;
+package com.ichi2.libanki.sched
 
-import com.ichi2.libanki.Card;
-import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
+import com.ichi2.utils.KotlinCleanup
 
-class LrnCard extends Card.Cache implements Comparable<LrnCard> {
-    private final long mDue;
-    public LrnCard(Collection col, long due, long cid) {
-        super(col, cid);
-        mDue = due;
-    }
-
-    public long getDue () {
-        return mDue;
-    }
-
-    @Override
-    public int compareTo(LrnCard o) {
-        return Long.compare(mDue, o.mDue);
+@KotlinCleanup("make col non-null")
+@KotlinCleanup("IDE Lint")
+internal class LrnCard(col: Collection?, val due: Long, cid: Long) :
+    Card.Cache(
+        col!!, cid
+    ),
+    Comparable<LrnCard> {
+    override fun compareTo(other: LrnCard): Int {
+        return java.lang.Long.compare(due, other.due)
     }
 }
