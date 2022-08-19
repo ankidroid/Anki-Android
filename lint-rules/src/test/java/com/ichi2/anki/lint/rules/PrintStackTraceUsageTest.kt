@@ -15,15 +15,15 @@
  */
 package com.ichi2.anki.lint.rules
 
-import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.*
-import com.android.tools.lint.checks.infrastructure.TestLintTask.*
-import com.ichi2.anki.lint.utils.KotlinCleanup
+import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create
+import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
 import org.intellij.lang.annotations.Language
-import org.junit.Assert.*
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
-@KotlinCleanup("IDE Lint")
+@Suppress("UnstableApiUsage") // .issues() is unstable
 class PrintStackTraceUsageTest {
+    @Suppress("EmptyTryBlock") // in code samples
     companion object {
         @Language("JAVA")
         private val printStackTraceUsage = """import java.io.IOException;          

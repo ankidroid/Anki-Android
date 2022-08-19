@@ -16,14 +16,13 @@
 package com.ichi2.anki.lint.rules
 
 import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile
-import com.android.tools.lint.checks.infrastructure.TestLintTask.*
-import com.ichi2.anki.lint.utils.KotlinCleanup
-import org.hamcrest.MatcherAssert.*
-import org.hamcrest.Matchers.*
+import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsString
 import org.intellij.lang.annotations.Language
 import org.junit.Test
 
-@KotlinCleanup("IDE Lint")
+@Suppress("UnstableApiUsage")
 class JavaConstantFieldDetectorTest {
     companion object {
         @Language("JAVA")
