@@ -28,7 +28,10 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
-import com.ichi2.anki.TestUtils.*
+import com.ichi2.anki.TestUtils.activityInstance
+import com.ichi2.anki.TestUtils.clickChildViewWithId
+import com.ichi2.anki.TestUtils.isScreenSw600dp
+import com.ichi2.anki.TestUtils.wasBuiltOnCI
 import com.ichi2.anki.tests.InstrumentedTest.Companion.isEmulator
 import com.ichi2.anki.testutil.ThreadUtils.sleep
 import org.hamcrest.Matchers.instanceOf
@@ -55,7 +58,7 @@ class DeckPickerTest {
         assumeFalse("Test flaky in CI - #9282, skipping", wasBuiltOnCI())
 
         // For mobile. If it is not a mobile, then test will be ignored.
-        assumeTrue(!isScreenSw600dp())
+        assumeTrue(!isScreenSw600dp)
         val testString = System.currentTimeMillis().toString() + ""
         createDeckWithCard(testString)
 
@@ -73,7 +76,7 @@ class DeckPickerTest {
 
         // Check if currently open Activity is StudyOptionsActivity
         assertThat(
-            getActivityInstance(),
+            activityInstance,
             instanceOf(StudyOptionsActivity::class.java)
         )
     }
@@ -85,7 +88,7 @@ class DeckPickerTest {
         assumeFalse("Test flaky in CI - #9282, skipping", wasBuiltOnCI())
 
         // For tablet. If it is not a tablet, then test will be ignored.
-        assumeTrue(isScreenSw600dp())
+        assumeTrue(isScreenSw600dp)
         val testString = System.currentTimeMillis().toString() + ""
         createDeckWithCard(testString)
 
