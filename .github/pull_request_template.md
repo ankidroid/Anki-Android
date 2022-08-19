@@ -21,9 +21,7 @@ _Links to blog posts, patterns, libraries or addons used to solve this problem_
 ## Checklist
 _Please, go through these checks before submitting the PR._
 
-- [ ] You have not changed whitespace unnecessarily (it makes diffs hard to read)
 - [ ] You have a descriptive commit message with a short title (first line, max 50 chars).
-- [ ] Your code follows the style of the project (e.g. never omit braces in `if` statements) 
 - [ ] You have commented your code, particularly in hard-to-understand areas
 - [ ] You have performed a self-review of your own code
 - [ ] UI changes: include screenshots of all affected screens (in particular showing any new or changed strings)
