@@ -3,7 +3,6 @@
     <color name="theme_dark_primary">#3d3d3d</color>
     <color name="theme_dark_primary_dark">@color/material_grey_900</color>
     <color name="theme_dark_primary_light">@color/material_grey_800</color>
-    <color name="theme_dark_accent">@color/material_light_blue_700</color>
     <color name="theme_dark_primary_text">@color/white</color>
     <color name="theme_dark_secondary_text">#b2ffffff</color>
     <color name="theme_dark_row_current">#393939</color>
@@ -14,7 +13,7 @@
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_dark_primary</item>
         <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
-        <item name="colorAccent">@color/theme_dark_accent</item>
+        <item name="colorAccent">@color/material_blue_400</item>
         <item name="android:textColor">@color/theme_dark_primary_text</item>
         <item name="android:textColorPrimary">@color/theme_dark_primary_text</item>
         <item name="android:textColorSecondary">@color/theme_dark_secondary_text</item>
@@ -136,7 +135,7 @@
         <item name="filterItemBackground">@color/theme_dark_primary_dark</item>
         <item name="filterItemBackgroundSelected">@color/theme_dark_drawer_row_current</item>
         <item name="filterItemTextColor">@color/theme_dark_drawer_item</item>
-        <item name="filterItemTextColorSelected">@color/theme_dark_accent</item>
+        <item name="filterItemTextColorSelected">?attr/colorAccent</item>
         <item name="filterHeaderDivider">@color/white</item>
 
         <!-- Snackbar. Attributes snackbarStyle, snackbarTextViewStyle and snackbarButtonStyle
