@@ -2057,7 +2057,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (menu.findItem(mClozeMenuId) != null) {
                 return false
             }
-            // Test commit
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(mSetLanguageId) != null) {
                 return false
             }
