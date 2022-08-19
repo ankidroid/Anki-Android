@@ -498,7 +498,7 @@ open class CardBrowser :
         startLoadingCollection()
 
         // search card using deep links
-        intent.data?.getQueryParameter("search_query")?.let {
+        intent.data?.getQueryParameter("search")?.let {
             mSearchTerms = it
             searchCards()
         }
