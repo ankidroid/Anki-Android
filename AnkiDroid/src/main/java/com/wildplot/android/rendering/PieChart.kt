@@ -25,7 +25,11 @@ class PieChart(plotSheet: PlotSheet, values: DoubleArray, colors: Array<ColorWra
     private val mPlotSheet: PlotSheet
     private val mValues: DoubleArray
     private val mColors: Array<ColorWrap>
-    private var mName = ""
+    override var name: String = ""
+        set(value) {
+            field = value
+            mNameIsSet = true
+        }
     private var mNameIsSet = false
     private val mPercent: DoubleArray
     private var mSum = 0.0
@@ -116,21 +120,11 @@ class PieChart(plotSheet: PlotSheet, values: DoubleArray, colors: Array<ColorWra
         return false
     }
 
-    override fun getColor(): ColorWrap {
-        return if (mColors.size > 0) mColors[0] else ColorWrap.WHITE
-    }
-
-    override fun getName(): String {
-        return mName
-    }
+    override val color: ColorWrap
+        get() = if (mColors.size > 0) mColors[0] else ColorWrap.WHITE
 
     override fun nameIsSet(): Boolean {
         return mNameIsSet
-    }
-
-    fun setName(name: String) {
-        mName = name
-        mNameIsSet = true
     }
 
     companion object {
