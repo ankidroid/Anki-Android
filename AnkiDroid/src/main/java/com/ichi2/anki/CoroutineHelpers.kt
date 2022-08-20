@@ -30,11 +30,12 @@ import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 /**
- * Launch a job that catches any uncaught errors and reports them to the user.
+ * Runs a suspend function that catches any uncaught errors and reports them to the user.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
  *
@@ -49,26 +50,64 @@ import kotlin.coroutines.suspendCoroutine
  *   If not, add a comment explaining why, or refactor to have a method that returns
  *   a non-null localized message.
  */
+suspend fun <T> FragmentActivity.runCatchingTask(
+    errorMessage: String? = null,
+    block: suspend () -> T?
+): T? {
+    val extraInfo = errorMessage ?: ""
+    try {
+        return block()
+    } catch (exc: CancellationException) {
+        // do nothing
+    } catch (exc: BackendInterruptedException) {
+        Timber.e("caught: %s %s", exc, extraInfo)
+        exc.localizedMessage?.let { showSnackbar(it) }
+    } catch (exc: BackendException) {
+        Timber.e("caught: %s %s", exc, extraInfo)
+        showError(this, exc.localizedMessage!!)
+    } catch (exc: Exception) {
+        Timber.e("caught: %s %s", exc, extraInfo)
+        showError(this, exc.toString())
+    }
+    return null
+}
+
+/**
+ * Calls [runBlocking] while catching errors with [runCatchingTask]
+ */
+fun <T> FragmentActivity.runBlockingCatching(
+    errorMessage: String? = null,
+    block: suspend CoroutineScope.() -> T?
+): T? {
+    return runBlocking {
+        runCatchingTask(errorMessage) { block() }
+    }
+}
+
+/**
+ * Calls [withContext] while catching errors with [runCatchingTask]
+ */
+suspend fun <T> FragmentActivity.withContextCatching(
+    coroutineContext: CoroutineContext,
+    errorMessage: String? = null,
+    block: suspend CoroutineScope.() -> T?
+): T? {
+    return withContext(coroutineContext) {
+        runCatchingTask(errorMessage) { block() }
+    }
+}
+
+/**
+ * Launch a job that catches any uncaught errors and reports them to the user.
+ * Errors from the backend contain localized text that is often suitable to show to the user as-is.
+ * Other errors should ideally be handled in the block.
+ */
 fun FragmentActivity.launchCatchingTask(
     errorMessage: String? = null,
     block: suspend CoroutineScope.() -> Unit
 ): Job {
-    val extraInfo = errorMessage ?: ""
     return lifecycle.coroutineScope.launch {
-        try {
-            block()
-        } catch (exc: CancellationException) {
-            // do nothing
-        } catch (exc: BackendInterruptedException) {
-            Timber.e("caught: %s %s", exc, extraInfo)
-            exc.localizedMessage?.let { showSnackbar(it) }
-        } catch (exc: BackendException) {
-            Timber.e("caught: %s %s", exc, extraInfo)
-            showError(this@launchCatchingTask, exc.localizedMessage!!)
-        } catch (exc: Exception) {
-            Timber.e("caught: %s %s", exc, extraInfo)
-            showError(this@launchCatchingTask, exc.toString())
-        }
+        runCatchingTask(errorMessage) { block() }
     }
 }
 
