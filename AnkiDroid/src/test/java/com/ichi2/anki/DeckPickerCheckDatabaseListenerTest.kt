@@ -153,7 +153,8 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
             mDidDisplayDbLocked = false
         }
 
-        override fun showSimpleMessageDialog(message: String, reload: Boolean) {
+        @KotlinCleanup("param should be on-nul")
+        override fun showSimpleMessageDialog(message: String?, reload: Boolean) {
             mDidDisplayMessage = true
             super.showSimpleMessageDialog(message, reload)
         }

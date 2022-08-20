@@ -61,9 +61,9 @@ import java.util.*
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
         fun onExtendStudyLimits()
-        fun showDialogFragment(newFragment: DialogFragment?)
+        fun showDialogFragment(newFragment: DialogFragment)
         fun dismissAllDialogFragments()
-        fun startActivityForResultWithoutAnimation(intent: Intent?, requestCode: Int)
+        fun startActivityForResultWithoutAnimation(intent: Intent, requestCode: Int)
     }
 
     @JvmOverloads

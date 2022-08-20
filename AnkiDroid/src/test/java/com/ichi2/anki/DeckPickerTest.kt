@@ -11,10 +11,7 @@ import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
-import com.ichi2.testutils.AnkiActivityUtils
-import com.ichi2.testutils.BackendEmulatingOpenConflict
-import com.ichi2.testutils.BackupManagerTestUtilities
-import com.ichi2.testutils.DbUtils
+import com.ichi2.testutils.*
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,6 +29,7 @@ import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import java.io.File
+import java.lang.Exception
 import java.util.*
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -367,11 +365,9 @@ class DeckPickerTest : RobolectricTest() {
             )
 
             // Neither collection, not its models will be initialized without storage permission
-            assertThat(
-                "Lazy Collection initialization CollectionTask.LoadCollectionComplete fails",
-                d.col,
-                nullValue()
-            )
+
+            // assert: Lazy Collection initialization CollectionTask.LoadCollectionComplete fails
+            assertThrowsSubclass<Exception> { d.col }
         } finally {
             disableNullCollection()
         }
