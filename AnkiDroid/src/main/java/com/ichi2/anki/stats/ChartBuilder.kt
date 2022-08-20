@@ -56,7 +56,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             else -> {}
         }
         mCumulative = stats.cumulative
-        mSeriesList = stats.seriesList
+        mSeriesList = stats.seriesList!!
         val metaData = stats.metaInfo
         mBackwards = metaData[2] as Boolean
         mValueLabels = metaData[3] as IntArray
