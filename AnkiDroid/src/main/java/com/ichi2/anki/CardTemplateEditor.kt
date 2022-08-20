@@ -788,7 +788,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 numAffectedCards, tmpl.optString("name")
             )
             d.setArgs(msg)
-            val confirm = Runnable { deleteTemplateWithCheck(tmpl, model) }
+
+            val deleteCard = Runnable { deleteTemplate(tmpl, model) }
+            val confirm = Runnable { executeWithSyncCheck(deleteCard) }
             d.setConfirm(confirm)
             mTemplateEditor.showDialogFragment(d)
         }
@@ -807,28 +809,29 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 numAffectedCards
             )
             d.setArgs(msg)
-            val confirm = Runnable { addNewTemplateWithCheck(model) }
+
+            val addCard = Runnable { addNewTemplate(model) }
+            val confirm = Runnable { executeWithSyncCheck(addCard) }
             d.setConfirm(confirm)
             mTemplateEditor.showDialogFragment(d)
         }
 
         /**
-         * Delete tmpl from model, asking user to confirm again if it's going to require a full sync
-         *
-         * @param tmpl template to remove
-         * @param model model to remove template from, modified in place by reference
+         * Execute an action on the schema, asking the user to confirm that a full sync is ok
+         * @param schemaChangingAction The action to execute (adding / removing card)
          */
-        private fun deleteTemplateWithCheck(tmpl: JSONObject, model: Model) {
+        private fun executeWithSyncCheck(schemaChangingAction: Runnable) {
             try {
                 mTemplateEditor.col.modSchema()
-                deleteTemplate(tmpl, model)
+                schemaChangingAction.run()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
                 val d = ConfirmationDialog()
                 d.setArgs(resources.getString(R.string.full_sync_confirmation))
                 val confirm = Runnable {
                     mTemplateEditor.col.modSchemaNoCheck()
-                    deleteTemplate(tmpl, model)
+                    schemaChangingAction.run()
+                    mTemplateEditor.dismissAllDialogFragments()
                 }
                 val cancel = Runnable { mTemplateEditor.dismissAllDialogFragments() }
                 d.setConfirm(confirm)
@@ -858,32 +861,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
             mTemplateEditor.viewPager.adapter!!.notifyDataSetChanged()
             mTemplateEditor.viewPager.setCurrentItem(newTemplates.length() - 1, mTemplateEditor.animationDisabled())
-            if (activity != null) {
-                (activity as CardTemplateEditor).dismissAllDialogFragments()
-            }
-        }
-
-        /**
-         * Add new template to model, asking user to confirm if it's going to require a full sync
-         *
-         * @param model model to add new template to
-         */
-        private fun addNewTemplateWithCheck(model: JSONObject) {
-            try {
-                mTemplateEditor.col.modSchema()
-                Timber.d("addNewTemplateWithCheck() called and no ConfirmModSchemaException?")
-                addNewTemplate(model)
-            } catch (e: ConfirmModSchemaException) {
-                e.log()
-                val d = ConfirmationDialog()
-                d.setArgs(resources.getString(R.string.full_sync_confirmation))
-                val confirm = Runnable {
-                    mTemplateEditor.col.modSchemaNoCheck()
-                    addNewTemplate(model)
-                }
-                d.setConfirm(confirm)
-                mTemplateEditor.showDialogFragment(d)
-            }
         }
 
         /**
