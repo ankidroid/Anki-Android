@@ -94,7 +94,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
         val backgroundColor = getColorFromAttr(chartView.context, R.attr.colorBackground)
         plotSheet.setBackgroundColor(ColorWrap(backgroundColor))
         val textColor = getColorFromAttr(chartView.context, R.attr.textColor)
-        plotSheet.setTextColor(ColorWrap(textColor))
+        plotSheet.textColor = ColorWrap(textColor)
         plotSheet.setIsBackwards(mBackwards)
         if (chartType == ChartType.CARDS_TYPES) {
             return createPieChart(plotSheet)
