@@ -876,7 +876,7 @@ abstract class AbstractFlashcardViewer :
 
     fun generateQuestionSoundList() {
         val tags = Sound.extractTagsFromLegacyContent(mCurrentCard!!.qSimple())
-        mSoundPlayer.addSounds(mBaseUrl, tags, SoundSide.QUESTION)
+        mSoundPlayer.addSounds(mBaseUrl!!, tags, SoundSide.QUESTION)
     }
 
     @KotlinCleanup("remove _ variables")
@@ -1445,7 +1445,7 @@ abstract class AbstractFlashcardViewer :
         // don't add answer sounds multiple times, such as when reshowing card after exiting editor
         // additionally, this condition reduces computation time
         if (!mAnswerSoundsAdded) {
-            mSoundPlayer.addSounds(mBaseUrl, answerSounds.get(), SoundSide.ANSWER)
+            mSoundPlayer.addSounds(mBaseUrl!!, answerSounds.get(), SoundSide.ANSWER)
             mAnswerSoundsAdded = true
         }
     }
@@ -1464,7 +1464,7 @@ abstract class AbstractFlashcardViewer :
             // leaving the card (such as when edited)
             mSoundPlayer.resetSounds()
             mAnswerSoundsAdded = false
-            mSoundPlayer.addSounds(mBaseUrl, content.getSoundTags(Side.FRONT), SoundSide.QUESTION)
+            mSoundPlayer.addSounds(mBaseUrl!!, content.getSoundTags(Side.FRONT), SoundSide.QUESTION)
             if (mAutomaticAnswer.isEnabled() && !mAnswerSoundsAdded && mCardSoundConfig!!.autoplay) {
                 addAnswerSounds { content.getSoundTags(Side.BACK) }
             }
@@ -2482,7 +2482,7 @@ abstract class AbstractFlashcardViewer :
                     else -> null
                 }
                 filename?.let {
-                    Sound.getSoundPath(mBaseUrl, it)
+                    Sound.getSoundPath(mBaseUrl!!, it)
                 } ?: return
             }
             if (replacedUrl != mSoundPlayer.currentAudioUri || mSoundPlayer.isCurrentAudioFinished) {
