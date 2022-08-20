@@ -29,7 +29,7 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 object CollectionLoader {
-    interface Callback {
+    fun interface Callback {
         fun execute(col: Collection?)
     }
 

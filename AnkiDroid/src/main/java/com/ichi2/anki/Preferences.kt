@@ -104,10 +104,10 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.preferences, menu)
 
-        val searchIcon = menu!!.findItem(R.id.preferences_search)
+        val searchIcon = menu.findItem(R.id.preferences_search)
         searchView = searchIcon.actionView as PreferencesSearchView
         searchView.setActivity(this)
 
@@ -288,8 +288,8 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    public override fun attachBaseContext(context: Context) {
-        super.attachBaseContext(context)
+    public override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
     }
 
     companion object {
