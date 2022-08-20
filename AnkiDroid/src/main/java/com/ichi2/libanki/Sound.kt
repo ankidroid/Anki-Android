@@ -15,145 +15,82 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Point;
-import android.media.AudioAttributes;
-import android.media.AudioFocusRequest;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.MediaMetadataRetriever;
-import android.media.MediaPlayer.OnCompletionListener;
-import android.net.Uri;
+import android.app.Activity
+import android.content.Context
+import android.media.*
+import android.media.AudioManager.OnAudioFocusChangeListener
+import android.media.MediaPlayer.OnCompletionListener
+import android.net.Uri
+import android.os.Build
+import android.webkit.MimeTypeMap
+import android.widget.VideoView
+import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.AbstractFlashcardViewer
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.ReadText
+import com.ichi2.compat.CompatHelper
+import com.ichi2.utils.DisplayUtils
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.StringUtil.trimRight
+import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
+import timber.log.Timber
+import java.lang.ref.WeakReference
+import java.util.*
+import java.util.regex.Pattern
 
-import android.os.Build;
-import android.webkit.MimeTypeMap;
-import android.widget.VideoView;
-
-import com.ichi2.anki.AbstractFlashcardViewer;
-import com.ichi2.anki.AnkiDroidApp;
-import com.ichi2.anki.ReadText;
-import com.ichi2.compat.CompatHelper;
-import com.ichi2.utils.DisplayUtils;
-import com.ichi2.utils.StringUtil;
-
-import net.ankiweb.rsdroid.BackendFactory;
-
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import timber.log.Timber;
-
-import static com.ichi2.libanki.SoundKtKt.addPlayIcons;
-
-
-//NICE_TO_HAVE: Abstract, then add tests fir #6111
+@KotlinCleanup("IDE Lint")
+// NICE_TO_HAVE: Abstract, then add tests for #6111
 /**
  * Class used to parse, load and play sound files on AnkiDroid.
  */
-@SuppressWarnings({"PMD.NPathComplexity","PMD.CollapsibleIfStatements"})
-public class Sound {
-
-    /**
-     * Pattern used to identify the markers for sound files
-     */
-    public static final Pattern SOUND_PATTERN = Pattern.compile("\\[sound:([^\\[\\]]*)]");
-
-    /**
-     * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)
-     */
-    private static final Pattern sUriPattern = Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$");
-
+class Sound {
     /**
      * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playing or paused, otherwise it is null.
      */
-    private MediaPlayer mMediaPlayer = null;
+    private var mMediaPlayer: MediaPlayer? = null
 
     /**
      * It's used to store the Uri of the current Audio in case of running or pausing.
      */
-    private Uri mCurrentAudioUri = null;
+    private var mCurrentAudioUri: Uri? = null
 
     /**
      * AudioManager to request/release audio focus
      */
-    private AudioManager mAudioManager;
-
-    /**
-     * OnCompletionListener so that external video player can notify to play next sound
-     */
-    private static OnCompletionListener mPlayAllListener;
+    private var mAudioManager: AudioManager? = null
 
     /**
      * Weak reference to the activity which is attempting to play the sound
      */
-    private WeakReference<Activity> mCallingActivity;
-
+    private var mCallingActivity: WeakReference<Activity?>? = null
     @VisibleForTesting
-    public ArrayList<String> getSounds(@NonNull Sound.SoundSide side) {
+    fun getSounds(side: SoundSide): ArrayList<String>? {
         if (side == SoundSide.QUESTION_AND_ANSWER) {
-            makeQuestionAnswerList();
+            makeQuestionAnswerList()
         }
-        return mSoundPaths.get(side);
+        return mSoundPaths!![side]
     }
-
 
     /**
      * Subset Flags: Flags that indicate the subset of sounds to involve
      */
-    public enum SoundSide {
-        QUESTION(0),
-        ANSWER(1),
-        QUESTION_AND_ANSWER(2);
-
-        private final int mInt;
-        SoundSide(int i) {
-            mInt = i;
-        }
-        public int getInt() {
-            return mInt;
-        }
+    enum class SoundSide(val int: Int) {
+        QUESTION(0), ANSWER(1), QUESTION_AND_ANSWER(2);
     }
-
-
 
     /**
      * Stores sounds for the current card, key is one of the subset flags. It is intended that it not contain empty lists, and code assumes this will be true.
      */
-    private final HashMap<SoundSide, ArrayList<String>> mSoundPaths = new HashMap<>();
-
-
-    /**
-     * Whitelist for video extensions
-     */
-    private static final String[] VIDEO_WHITELIST = {"3gp", "mp4", "webm", "mkv", "flv"};
-
-    /**
-     * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
-     */
-    private static final AudioManager.OnAudioFocusChangeListener afChangeListener = focusChange -> {
-    };
-    
-    private AudioFocusRequest mAudioFocusRequest;
-
+    private val mSoundPaths: HashMap<SoundSide, ArrayList<String>>? = HashMap()
+    private var mAudioFocusRequest: AudioFocusRequest? = null
 
     // Clears current sound paths; call before parseSounds() calls
-    public void resetSounds() {
-        mSoundPaths.clear();
+    fun resetSounds() {
+        mSoundPaths!!.clear()
     }
-
 
     /**
      * Stores entries to the filepaths for sounds, categorized as belonging to the front (question) or back (answer) of cards.
@@ -163,33 +100,17 @@ public class Sound {
      * @param tags -- the entries expected in display order
      * @param qa -- the base categorization of the sounds in the content, SoundSide.SOUNDS_QUESTION or SoundSide.SOUNDS_ANSWER
      */
-    public void addSounds(String soundDir, List<SoundOrVideoTag> tags, SoundSide qa) {
-        for (SoundOrVideoTag tag: tags) {
+    fun addSounds(soundDir: String, tags: List<SoundOrVideoTag>, qa: SoundSide) {
+        for ((filename) in tags) {
             // Create appropriate list if needed; list must not be empty so long as code does no check
-            if (!mSoundPaths.containsKey(qa)) {
-                mSoundPaths.put(qa, new ArrayList<>(0));
+            if (!mSoundPaths!!.containsKey(qa)) {
+                mSoundPaths[qa] = ArrayList(0)
             }
-
-            String soundPath = getSoundPath(soundDir, tag.getFilename());
+            val soundPath = getSoundPath(soundDir, filename)
             // Construct the sound path and store it
-            Timber.d("Adding Sound to side: %s", qa);
-            mSoundPaths.get(qa).add(soundPath);
+            Timber.d("Adding Sound to side: %s", qa)
+            mSoundPaths[qa]!!.add(soundPath)
         }
-    }
-
-
-    /** Extract SoundOrVideoTag instances from content where sound tags are in the form: [sound:filename.mp3] */
-    @CheckResult
-    public static List<SoundOrVideoTag> extractTagsFromLegacyContent(String content) {
-        Matcher matcher = SOUND_PATTERN.matcher(content);
-        // While there is matches of the pattern for sound markers
-        List<SoundOrVideoTag> ret = new ArrayList<>();
-        while (matcher.find()) {
-            // Get the sound file name
-            String sound = matcher.group(1);
-            ret.add(new SoundOrVideoTag(sound));
-        }
-        return ret;
     }
 
     /**
@@ -198,100 +119,54 @@ public class Sound {
      * together, which even when configured as supported may not be instigated
      * @return True if a non-null list was created, or false otherwise
      */
-    private Boolean makeQuestionAnswerList() {
+    private fun makeQuestionAnswerList(): Boolean {
         // if combined list already exists, don't recreate
-        if (mSoundPaths.containsKey(SoundSide.QUESTION_AND_ANSWER)) {
-            return false; // combined list already exists
+        if (mSoundPaths!!.containsKey(SoundSide.QUESTION_AND_ANSWER)) {
+            return false // combined list already exists
         }
 
         // make combined list only if necessary to avoid an empty combined list
         if (mSoundPaths.containsKey(SoundSide.QUESTION) || mSoundPaths.containsKey(SoundSide.ANSWER)) {
             // some list exists to place into combined list
-            mSoundPaths.put(SoundSide.QUESTION_AND_ANSWER, new ArrayList<>(0));
+            mSoundPaths[SoundSide.QUESTION_AND_ANSWER] = ArrayList(0)
         } else { // no need to make list
-            return false;
+            return false
         }
-
-        ArrayList<String> combinedSounds = mSoundPaths.get(SoundSide.QUESTION_AND_ANSWER);
-
+        val combinedSounds = mSoundPaths[SoundSide.QUESTION_AND_ANSWER]!!
         if (mSoundPaths.containsKey(SoundSide.QUESTION)) {
-            combinedSounds.addAll(mSoundPaths.get(SoundSide.QUESTION));
+            combinedSounds.addAll(mSoundPaths[SoundSide.QUESTION]!!)
         }
         if (mSoundPaths.containsKey(SoundSide.ANSWER)) {
-            combinedSounds.addAll(mSoundPaths.get(SoundSide.ANSWER));
+            combinedSounds.addAll(mSoundPaths[SoundSide.ANSWER]!!)
         }
-
-        return true;
+        return true
     }
-
-    /**
-     * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media
-     * file
-     *
-     * @param soundDir -- the base path of the media files
-     * @param content -- card content to be rendered that may contain embedded audio
-     * @return -- the same content but in a format that will render working play buttons when audio was embedded
-     */
-    @NonNull
-    public static String expandSounds(String soundDir, String content) {
-        if (!BackendFactory.getDefaultLegacySchema()) {
-            return addPlayIcons(content);
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        String contentLeft = content;
-
-        Timber.d("expandSounds");
-
-        Matcher matcher = SOUND_PATTERN.matcher(content);
-        // While there is matches of the pattern for sound markers
-        while (matcher.find()) {
-            // Get the sound file name
-            String sound = matcher.group(1);
-
-            // Construct the sound path
-            String soundPath = getSoundPath(soundDir, sound);
-
-            // Construct the new content, appending the substring from the beginning of the content left until the
-            // beginning of the sound marker
-            // and then appending the html code to add the play button
-            String button = "<svg viewBox=\"0 0 64 64\"><circle cx=\"32\" cy=\"32\" r=\"29\" fill = \"lightgrey\"/>" +
-                    "<path d=\"M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z\" fill = \"" +
-                    "black\"/>Replay</svg>";
-            String soundMarker = matcher.group();
-            int markerStart = contentLeft.indexOf(soundMarker);
-            stringBuilder.append(contentLeft.substring(0, markerStart));
-            // The <span> around the button (SVG or PNG image) is needed to make the vertical alignment work.
-            stringBuilder.append("<a class='replay-button replaybutton' href=\"playsound:").append(soundPath).append("\">")
-                    .append("<span>").append(button)
-                    .append("</span></a>");
-            contentLeft = contentLeft.substring(markerStart + soundMarker.length());
-            Timber.v("Content left = %s", contentLeft);
-        }
-
-        // unused code related to tts support taken out after v2.2alpha55
-        // if/when tts support is considered complete, these comment lines serve no purpose
-
-        stringBuilder.append(contentLeft);
-
-        return stringBuilder.toString();
-    }
-
 
     /**
      * Plays the sounds for the indicated sides
      * @param qa -- One of SoundSide.SOUNDS_QUESTION, SoundSide.SOUNDS_ANSWER, or SoundSide.SOUNDS_QUESTION_AND_ANSWER
      */
-    public void playSounds(SoundSide qa, @Nullable OnErrorListener errorListener) {
+    fun playSounds(qa: SoundSide, errorListener: OnErrorListener?) {
         // If there are sounds to play for the current card, start with the first one
         if (mSoundPaths != null && mSoundPaths.containsKey(qa)) {
-            Timber.d("playSounds %s", qa);
-            playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa, errorListener), null, errorListener);
+            Timber.d("playSounds %s", qa)
+            playSoundInternal(
+                mSoundPaths[qa]!![0],
+                PlayAllCompletionListener(qa, errorListener),
+                null,
+                errorListener
+            )
         } else if (mSoundPaths != null && qa == SoundSide.QUESTION_AND_ANSWER) {
             if (makeQuestionAnswerList()) {
-                Timber.d("playSounds: playing both question and answer");
-                playSoundInternal(mSoundPaths.get(qa).get(0), new PlayAllCompletionListener(qa, errorListener), null, errorListener);
+                Timber.d("playSounds: playing both question and answer")
+                playSoundInternal(
+                    mSoundPaths[qa]!![0],
+                    PlayAllCompletionListener(qa, errorListener),
+                    null,
+                    errorListener
+                )
             } else {
-                Timber.d("playSounds: No question answer list, not playing sound");
+                Timber.d("playSounds: No question answer list, not playing sound")
             }
         }
     }
@@ -300,208 +175,217 @@ public class Sound {
      * Returns length in milliseconds.
      * @param qa -- One of SoundSide.SOUNDS_QUESTION, SoundSide.SOUNDS_ANSWER, or SoundSide.SOUNDS_QUESTION_AND_ANSWER
      */
-    public long getSoundsLength(SoundSide qa) {
-        long length = 0;
-        if (mSoundPaths != null && (qa == SoundSide.QUESTION_AND_ANSWER && makeQuestionAnswerList() || mSoundPaths.containsKey(qa))) {
-            MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
-            for (String uri_string : mSoundPaths.get(qa)) {
-                Uri soundUri = Uri.parse(uri_string);
+    fun getSoundsLength(qa: SoundSide): Long {
+        var length: Long = 0
+        if (mSoundPaths != null && (
+            qa == SoundSide.QUESTION_AND_ANSWER && makeQuestionAnswerList() || mSoundPaths.containsKey(
+                    qa
+                )
+            )
+        ) {
+            val metaRetriever = MediaMetadataRetriever()
+            for (uri_string in mSoundPaths[qa]!!) {
+                val soundUri = Uri.parse(uri_string)
                 try {
-                    metaRetriever.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
-                    length += Long.parseLong(metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-                } catch (Exception e) {
-                    Timber.e(e, "metaRetriever - Error setting Data Source for mediaRetriever (media doesn't exist or forbidden?).");
+                    metaRetriever.setDataSource(
+                        AnkiDroidApp.instance.applicationContext,
+                        soundUri
+                    )
+                    length += metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)!!
+                        .toLong()
+                } catch (e: Exception) {
+                    Timber.e(
+                        e,
+                        "metaRetriever - Error setting Data Source for mediaRetriever (media doesn't exist or forbidden?)."
+                    )
                 }
             }
         }
-        return length;
+        return length
     }
 
     /**
      * Plays the given sound or video and sets playAllListener if available on media player to start next media.
      * If videoView is null and the media is a video, then a request is sent to start the VideoPlayer Activity
      */
-    public void playSound(String soundPath, OnCompletionListener playAllListener, final VideoView videoView, @Nullable OnErrorListener errorListener) {
-        Timber.d("Playing single sound");
-        SingleSoundCompletionListener completionListener = new SingleSoundCompletionListener(playAllListener);
-        playSoundInternal(soundPath, completionListener, videoView, errorListener);
+    fun playSound(
+        soundPath: String,
+        playAllListener: OnCompletionListener?,
+        videoView: VideoView?,
+        errorListener: OnErrorListener?
+    ) {
+        Timber.d("Playing single sound")
+        val completionListener = SingleSoundCompletionListener(playAllListener)
+        playSoundInternal(soundPath, completionListener, videoView, errorListener)
     }
 
     /**
      * Play or Pause the running sound. Called on pressing the content inside span tag.
      */
-    public void playOrPauseSound() {
-        MediaPlayer mediaPlayer = mMediaPlayer;
-        if (mediaPlayer == null) {
-            return;
-        }
-        if (mMediaPlayer.isPlaying()) {
-            mMediaPlayer.pause();
+    @KotlinCleanup("?.let { }")
+    fun playOrPauseSound() {
+        mMediaPlayer ?: return
+        if (mMediaPlayer!!.isPlaying) {
+            mMediaPlayer!!.pause()
         } else {
-            mMediaPlayer.start();
+            mMediaPlayer!!.start()
         }
     }
 
-    public boolean isCurrentAudioFinished() {
-        // When an audio finishes and I'm trying to replay it again, this method should check if the mMediaPlayer is null which means
-        // the audio finished to return true, so that I would be able to play the same sound again.
-        return mMediaPlayer == null;
-    }
+    // When an audio finishes and I'm trying to replay it again, this method should check if the mMediaPlayer is null which means
+    // the audio finished to return true, so that I would be able to play the same sound again.
+    @KotlinCleanup("simplify property with ?. ")
+    val isCurrentAudioFinished: Boolean
+        get() = mMediaPlayer == null
 
     /**
      * Plays a sound without ensuring that the playAllListener will release the audio
      */
-    @SuppressWarnings({"PMD.EmptyIfStmt","PMD.CollapsibleIfStatements"})
-    private void playSoundInternal(String soundPath, @NonNull OnCompletionListener playAllListener, VideoView videoView, OnErrorListener errorListener) {
-        Timber.d("Playing %s has listener? %b", soundPath, playAllListener != null);
-        Uri soundUri = Uri.parse(soundPath);
-        mCurrentAudioUri = soundUri;
-
-        final OnErrorListener errorHandler = errorListener == null ?
-                (mp, what, extra, path) -> {
-                    Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra);
-                    return false;
-                }
-            : errorListener;
-
-        if ("tts".equals(soundPath.substring(0, 3))) {
+    @KotlinCleanup("remove timber - always true")
+    private fun playSoundInternal(
+        soundPath: String,
+        playAllListener: OnCompletionListener,
+        videoView: VideoView?,
+        errorListener: OnErrorListener?
+    ) {
+        Timber.d("Playing %s has listener? %b", soundPath, true)
+        val soundUri = Uri.parse(soundPath)
+        mCurrentAudioUri = soundUri
+        val errorHandler = errorListener
+            ?: OnErrorListener { _: MediaPlayer?, what: Int, extra: Int, _: String? ->
+                Timber.w("Media Error: (%d, %d). Calling OnCompletionListener", what, extra)
+                false
+            }
+        if ("tts" == soundPath.substring(0, 3)) {
             // TODO: give information about did
 //            ReadText.textToSpeech(soundPath.substring(4, soundPath.length()),
 //                    Integer.parseInt(soundPath.substring(3, 4)));
         } else {
             // Check if the file extension is that of a known video format
-            final String extension = soundPath.substring(soundPath.lastIndexOf(".") + 1).toLowerCase(Locale.getDefault());
-            boolean isVideo = Arrays.asList(VIDEO_WHITELIST).contains(extension);
+            val extension =
+                soundPath.substring(soundPath.lastIndexOf(".") + 1).lowercase(Locale.getDefault())
+            var isVideo = Arrays.asList(*VIDEO_WHITELIST).contains(extension)
             if (!isVideo) {
-                final String guessedType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
-                isVideo = (guessedType != null) && guessedType.startsWith("video/");
+                val guessedType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+                isVideo = guessedType != null && guessedType.startsWith("video/")
             }
             // Also check that there is a video thumbnail, as some formats like mp4 can be audio only
-            isVideo = isVideo && hasVideoThumbnail(soundUri);
+            isVideo = isVideo && hasVideoThumbnail(soundUri)
             // No thumbnail: no video after all. (Or maybe not a video we can handle on the specific device.)
             // If video file but no SurfaceHolder provided then ask AbstractFlashcardViewer to provide a VideoView
             // holder
-            if (isVideo && videoView == null && mCallingActivity != null && mCallingActivity.get() != null) {
-                Timber.d("Requesting AbstractFlashcardViewer play video - no SurfaceHolder");
-                mPlayAllListener = playAllListener;
-                ((AbstractFlashcardViewer) mCallingActivity.get()).playVideo(soundPath);
-                return;
+            if (isVideo && videoView == null && mCallingActivity != null && mCallingActivity!!.get() != null) {
+                Timber.d("Requesting AbstractFlashcardViewer play video - no SurfaceHolder")
+                mediaCompletionListener = playAllListener
+                (mCallingActivity!!.get() as AbstractFlashcardViewer?)!!.playVideo(soundPath)
+                return
             }
             // Play media
             try {
                 // Create media player
                 if (mMediaPlayer == null) {
-                    Timber.d("Creating media player for playback");
-                    mMediaPlayer = new MediaPlayer();
+                    Timber.d("Creating media player for playback")
+                    mMediaPlayer = MediaPlayer()
                 } else {
-                    Timber.d("Resetting media for playback");
-                    mMediaPlayer.reset();
+                    Timber.d("Resetting media for playback")
+                    mMediaPlayer!!.reset()
                 }
                 if (mAudioManager == null) {
-                    mAudioManager = (AudioManager) AnkiDroidApp.getInstance().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+                    mAudioManager = AnkiDroidApp.instance.applicationContext.getSystemService(
+                        Context.AUDIO_SERVICE
+                    ) as AudioManager
                 }
                 // Provide a VideoView to the MediaPlayer if valid video file
                 if (isVideo && videoView != null) {
-                    mMediaPlayer.setDisplay(videoView.getHolder());
-                    mMediaPlayer.setOnVideoSizeChangedListener((mp, width, height) -> configureVideo(videoView, width, height));
+                    mMediaPlayer!!.setDisplay(videoView.holder)
+                    mMediaPlayer!!.setOnVideoSizeChangedListener { _: MediaPlayer?, width: Int, height: Int ->
+                        configureVideo(
+                            videoView,
+                            width,
+                            height
+                        )
+                    }
                 }
-                mMediaPlayer.setOnErrorListener((mp, which, extra) -> errorHandler.onError(mp, which, extra, soundPath));
+                mMediaPlayer!!.setOnErrorListener { mp: MediaPlayer?, which: Int, extra: Int ->
+                    errorHandler.onError(
+                        mp,
+                        which,
+                        extra,
+                        soundPath
+                    )
+                }
                 // Setup the MediaPlayer
-                mMediaPlayer.setDataSource(AnkiDroidApp.getInstance().getApplicationContext(), soundUri);
-                mMediaPlayer.setAudioAttributes(
-                        new AudioAttributes
-                                .Builder()
-                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                .build());
-                mMediaPlayer.setOnPreparedListener(mp -> {
-                    Timber.d("Starting media player");
-                    mMediaPlayer.start();
-                });
-                mMediaPlayer.setOnCompletionListener(playAllListener);
-                mMediaPlayer.prepareAsync();
-                Timber.d("Requesting audio focus");
+                @KotlinCleanup("simplify with scope function on mediaPlayer")
+                mMediaPlayer!!.setDataSource(
+                    AnkiDroidApp.instance.applicationContext,
+                    soundUri
+                )
+                mMediaPlayer!!.setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .build()
+                )
+                mMediaPlayer!!.setOnPreparedListener {
+                    Timber.d("Starting media player")
+                    mMediaPlayer!!.start()
+                }
+                mMediaPlayer!!.setOnCompletionListener(playAllListener)
+                mMediaPlayer!!.prepareAsync()
+                Timber.d("Requesting audio focus")
 
                 // Set mAudioFocusRequest for API 26 and above.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    mAudioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                    mAudioFocusRequest =
+                        AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
                             .setOnAudioFocusChangeListener(afChangeListener)
-                            .build();
+                            .build()
                 }
-                CompatHelper.getCompat().requestAudioFocus(mAudioManager, afChangeListener, mAudioFocusRequest);
-            } catch (Exception e) {
-                Timber.e(e, "playSounds - Error reproducing sound %s", soundPath);
-                if (!errorHandler.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNSUPPORTED, 0, soundPath)) {
-                    Timber.d("Force playing next sound.");
-                    playAllListener.onCompletion(mMediaPlayer);
+                CompatHelper.compat.requestAudioFocus(mAudioManager!!, afChangeListener, mAudioFocusRequest)
+            } catch (e: Exception) {
+                Timber.e(e, "playSounds - Error reproducing sound %s", soundPath)
+                if (!errorHandler.onError(
+                        mMediaPlayer,
+                        MediaPlayer.MEDIA_ERROR_UNSUPPORTED,
+                        0,
+                        soundPath
+                    )
+                ) {
+                    Timber.d("Force playing next sound.")
+                    playAllListener.onCompletion(mMediaPlayer)
                 }
             }
         }
     }
 
-
-    private boolean hasVideoThumbnail(@Nullable Uri soundUri) {
+    @KotlinCleanup("simplify code with ?. or make uri non-null")
+    private fun hasVideoThumbnail(soundUri: Uri?): Boolean {
         if (soundUri == null) {
-            return false;
+            return false
         }
-        String path = soundUri.getPath();
-        if (path == null) {
-            return false;
-        }
-
-        return CompatHelper.getCompat().hasVideoThumbnail(path);
+        val path = soundUri.path ?: return false
+        return CompatHelper.compat.hasVideoThumbnail(path)
     }
 
+    val currentAudioUri: String?
+        get() = if (mCurrentAudioUri == null) {
+            null
+        } else mCurrentAudioUri.toString()
 
-    public String getCurrentAudioUri() {
-        if (mCurrentAudioUri == null) {
-            return null;
-        }
-        return mCurrentAudioUri.toString();
-    }
-
-    private static void configureVideo(VideoView videoView, int videoWidth, int videoHeight) {
-        // get the display
-        Context context = AnkiDroidApp.getInstance().getApplicationContext();
-        // adjust the size of the video so it fits on the screen
-        float videoProportion = (float) videoWidth / (float) videoHeight;
-        Point point = DisplayUtils.getDisplayDimensions(context);
-        int screenWidth = point.x;
-        int screenHeight = point.y;
-        float screenProportion = (float) screenWidth / (float) screenHeight;
-        android.view.ViewGroup.LayoutParams lp = videoView.getLayoutParams();
-
-        if (videoProportion > screenProportion) {
-            lp.width = screenWidth;
-            lp.height = (int) ((float) screenWidth / videoProportion);
-        } else {
-            lp.width = (int) (videoProportion * (float) screenHeight);
-            lp.height = screenHeight;
-        }
-        videoView.setLayoutParams(lp);
-    }
-
-    public void notifyConfigurationChanged(VideoView videoView) {
+    fun notifyConfigurationChanged(videoView: VideoView) {
         if (mMediaPlayer != null) {
-            configureVideo(videoView, mMediaPlayer.getVideoWidth(), mMediaPlayer.getVideoHeight());
+            configureVideo(videoView, mMediaPlayer!!.videoWidth, mMediaPlayer!!.videoHeight)
         }
     }
 
-    /** #5414 - Ensures playing a single sound performs cleanup */
-    private final class SingleSoundCompletionListener implements OnCompletionListener {
-        @Nullable
-        private final OnCompletionListener mUserCallback;
-
-        public SingleSoundCompletionListener(@Nullable OnCompletionListener userCallback) {
-            this.mUserCallback = userCallback;
-        }
-
-        @Override
-        public void onCompletion(MediaPlayer mp) {
-            Timber.d("Single Sound completed");
-            if (mUserCallback != null) {
-                mUserCallback.onCompletion(mp);
+    /** #5414 - Ensures playing a single sound performs cleanup  */
+    private inner class SingleSoundCompletionListener(private val userCallback: OnCompletionListener?) :
+        OnCompletionListener {
+        override fun onCompletion(mp: MediaPlayer) {
+            Timber.d("Single Sound completed")
+            if (userCallback != null) {
+                userCallback.onCompletion(mp)
             } else {
-                releaseSound();
+                releaseSound()
             }
         }
     }
@@ -509,35 +393,25 @@ public class Sound {
     /**
      * Class used to play all sounds for a given card side
      */
-    private final class PlayAllCompletionListener implements OnCompletionListener {
-
+    private inner class PlayAllCompletionListener(
         /**
          * Question/Answer
          */
-        private final SoundSide mQa;
-        private final OnErrorListener mErrorListener;
-
+        private val qa: SoundSide,
+        private val errorListener: OnErrorListener?
+    ) : OnCompletionListener {
         /**
          * next sound to play (onCompletion() is first called after the first (0) has been played)
          */
-        private int mNextToPlay = 1;
-
-
-        private PlayAllCompletionListener(SoundSide qa, @Nullable OnErrorListener errorListener) {
-            mQa = qa;
-            mErrorListener = errorListener;
-        }
-
-
-        @Override
-        public void onCompletion(MediaPlayer mp) {
+        private var mNextToPlay = 1
+        override fun onCompletion(mp: MediaPlayer) {
             // If there is still more sounds to play for the current card, play the next one
-            if (mSoundPaths.containsKey(mQa) && mNextToPlay < mSoundPaths.get(mQa).size()) {
-                Timber.i("Play all: Playing next sound");
-                playSound(mSoundPaths.get(mQa).get(mNextToPlay++), this, null, mErrorListener);
+            if (mSoundPaths!!.containsKey(qa) && mNextToPlay < mSoundPaths[qa]!!.size) {
+                Timber.i("Play all: Playing next sound")
+                playSound(mSoundPaths[qa]!![mNextToPlay++], this, null, errorListener)
             } else {
-                Timber.i("Play all: Completed - releasing sound");
-                releaseSound();
+                Timber.i("Play all: Completed - releasing sound")
+                releaseSound()
             }
         }
     }
@@ -545,75 +419,184 @@ public class Sound {
     /**
      * Releases the sound.
      */
-    private void releaseSound() {
-        Timber.d("Releasing sounds and abandoning audio focus");
+    private fun releaseSound() {
+        Timber.d("Releasing sounds and abandoning audio focus")
         if (mMediaPlayer != null) {
-            //Required to remove warning: "mediaplayer went away with unhandled events"
-            //https://stackoverflow.com/questions/9609479/android-mediaplayer-went-away-with-unhandled-events
-            mMediaPlayer.reset();
-            mMediaPlayer.release();
-            mMediaPlayer = null;
+            // Required to remove warning: "mediaplayer went away with unhandled events"
+            // https://stackoverflow.com/questions/9609479/android-mediaplayer-went-away-with-unhandled-events
+            mMediaPlayer!!.reset()
+            mMediaPlayer!!.release()
+            mMediaPlayer = null
         }
         if (mAudioManager != null) {
             // mAudioFocusRequest was initialised for API 26 and above in playSoundInternal().
-            CompatHelper.getCompat().abandonAudioFocus(mAudioManager, afChangeListener, mAudioFocusRequest);
-            mAudioManager = null;
+            CompatHelper.compat.abandonAudioFocus(mAudioManager!!, afChangeListener, mAudioFocusRequest)
+            mAudioManager = null
         }
     }
 
     /**
      * Stops the playing sounds.
      */
-    public void stopSounds() {
+    fun stopSounds() {
         if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-            releaseSound();
+            mMediaPlayer!!.stop()
+            releaseSound()
         }
-        ReadText.stopTts();
-    }
-
-    /**
-     * @param soundDir -- base path to the media files.
-     * @param sound -- path to the sound file from the card content.
-     * @return absolute URI to the sound file.
-     */
-    public static String getSoundPath(String soundDir, String sound) {
-        String trimmedSound = sound.trim();
-        if (hasURIScheme(trimmedSound)) {
-            return trimmedSound;
-        }
-
-        return soundDir + Uri.encode(StringUtil.trimRight(sound));
-    }
-
-    /**
-     * @param path -- path to the sound file from the card content.
-     * @return true if path is well-formed URI and contains URI scheme.
-     */
-    private static boolean hasURIScheme(String path) {
-        Matcher uriMatcher = sUriPattern.matcher(path.trim());
-        return uriMatcher.matches() && uriMatcher.group(2) != null;
+        ReadText.stopTts()
     }
 
     /**
      * Set the context for the calling activity (necessary for playing videos)
      */
-    public void setContext(WeakReference<Activity> activityRef) {
-        mCallingActivity = activityRef;
+    fun setContext(activityRef: WeakReference<Activity?>?) {
+        mCallingActivity = activityRef
     }
 
-    public OnCompletionListener getMediaCompletionListener() {
-        return mPlayAllListener;
+    fun hasQuestion(): Boolean {
+        return mSoundPaths!!.containsKey(SoundSide.QUESTION)
     }
 
-    public boolean hasQuestion() {
-        return mSoundPaths.containsKey(SoundSide.QUESTION);
-    }
-    public boolean hasAnswer() {
-        return mSoundPaths.containsKey(SoundSide.ANSWER);
+    fun hasAnswer(): Boolean {
+        return mSoundPaths!!.containsKey(SoundSide.ANSWER)
     }
 
-    public interface OnErrorListener {
-        boolean onError(MediaPlayer mp, int which, int extra, String path);
+    fun interface OnErrorListener {
+        fun onError(mp: MediaPlayer?, which: Int, extra: Int, path: String?): Boolean
+    }
+
+    companion object {
+        /**
+         * Pattern used to identify the markers for sound files
+         */
+        val SOUND_PATTERN = Pattern.compile("\\[sound:([^\\[\\]]*)]")
+
+        /**
+         * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)
+         */
+        private val sUriPattern =
+            Pattern.compile("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?$")
+
+        /**
+         * OnCompletionListener so that external video player can notify to play next sound
+         */
+        var mediaCompletionListener: OnCompletionListener? = null
+            private set
+
+        /**
+         * Whitelist for video extensions
+         */
+        private val VIDEO_WHITELIST = arrayOf("3gp", "mp4", "webm", "mkv", "flv")
+
+        /**
+         * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
+         */
+        private val afChangeListener = OnAudioFocusChangeListener { }
+
+        /** Extract SoundOrVideoTag instances from content where sound tags are in the form: [sound:filename.mp3]  */
+        @CheckResult
+        @KotlinCleanup("non-null param")
+        @JvmStatic
+        fun extractTagsFromLegacyContent(content: String?): List<SoundOrVideoTag> {
+            val matcher = SOUND_PATTERN.matcher(content!!)
+            // While there is matches of the pattern for sound markers
+            val ret: MutableList<SoundOrVideoTag> = ArrayList()
+            while (matcher.find()) {
+                // Get the sound file name
+                val sound = matcher.group(1)!!
+                ret.add(SoundOrVideoTag(sound))
+            }
+            return ret
+        }
+
+        /**
+         * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media
+         * file
+         *
+         * @param soundDir -- the base path of the media files
+         * @param content -- card content to be rendered that may contain embedded audio
+         * @return -- the same content but in a format that will render working play buttons when audio was embedded
+         */
+        fun expandSounds(soundDir: String, content: String): String {
+            if (!defaultLegacySchema) {
+                return addPlayIcons(content)
+            }
+            val stringBuilder = StringBuilder()
+            var contentLeft = content
+            Timber.d("expandSounds")
+            val matcher = SOUND_PATTERN.matcher(content)
+            // While there is matches of the pattern for sound markers
+            while (matcher.find()) {
+                // Get the sound file name
+                val sound = matcher.group(1)!!
+
+                // Construct the sound path
+                val soundPath = getSoundPath(soundDir, sound)
+
+                // Construct the new content, appending the substring from the beginning of the content left until the
+                // beginning of the sound marker
+                // and then appending the html code to add the play button
+                val button =
+                    "<svg viewBox=\"0 0 64 64\"><circle cx=\"32\" cy=\"32\" r=\"29\" fill = \"lightgrey\"/>" +
+                        "<path d=\"M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z\" fill = \"" +
+                        "black\"/>Replay</svg>"
+                val soundMarker = matcher.group()
+                val markerStart = contentLeft.indexOf(soundMarker)
+                stringBuilder.append(contentLeft.substring(0, markerStart))
+                // The <span> around the button (SVG or PNG image) is needed to make the vertical alignment work.
+                stringBuilder.append("<a class='replay-button replaybutton' href=\"playsound:")
+                    .append(soundPath).append("\">")
+                    .append("<span>").append(button)
+                    .append("</span></a>")
+                contentLeft = contentLeft.substring(markerStart + soundMarker.length)
+                Timber.v("Content left = %s", contentLeft)
+            }
+
+            // unused code related to tts support taken out after v2.2alpha55
+            // if/when tts support is considered complete, these comment lines serve no purpose
+            stringBuilder.append(contentLeft)
+            return stringBuilder.toString()
+        }
+
+        private fun configureVideo(videoView: VideoView, videoWidth: Int, videoHeight: Int) {
+            // get the display
+            val context = AnkiDroidApp.instance.applicationContext
+            // adjust the size of the video so it fits on the screen
+            val videoProportion = videoWidth.toFloat() / videoHeight.toFloat()
+            val point = DisplayUtils.getDisplayDimensions(context)
+            val screenWidth = point.x
+            val screenHeight = point.y
+            val screenProportion = screenWidth.toFloat() / screenHeight.toFloat()
+            val lp = videoView.layoutParams
+            if (videoProportion > screenProportion) {
+                lp.width = screenWidth
+                lp.height = (screenWidth.toFloat() / videoProportion).toInt()
+            } else {
+                lp.width = (videoProportion * screenHeight.toFloat()).toInt()
+                lp.height = screenHeight
+            }
+            videoView.layoutParams = lp
+        }
+
+        /**
+         * @param soundDir -- base path to the media files.
+         * @param sound -- path to the sound file from the card content.
+         * @return absolute URI to the sound file.
+         */
+        fun getSoundPath(soundDir: String, sound: String): String {
+            val trimmedSound = sound.trim { it <= ' ' }
+            return if (hasURIScheme(trimmedSound)) {
+                trimmedSound
+            } else soundDir + Uri.encode(trimRight(sound))
+        }
+
+        /**
+         * @param path -- path to the sound file from the card content.
+         * @return true if path is well-formed URI and contains URI scheme.
+         */
+        private fun hasURIScheme(path: String): Boolean {
+            val uriMatcher = sUriPattern.matcher(path.trim { it <= ' ' })
+            return uriMatcher.matches() && uriMatcher.group(2) != null
+        }
     }
 }
