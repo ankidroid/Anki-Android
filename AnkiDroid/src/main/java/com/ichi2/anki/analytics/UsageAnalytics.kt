@@ -453,5 +453,8 @@ object UsageAnalytics {
 
         @AnalyticsConstant
         val IMPORT_COLPKG_FILE = "Import COLPKG"
+
+        @AnalyticsConstant
+        val IMPORT_CSV_FILE = "Import CSV"
     }
 }

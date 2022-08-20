@@ -130,7 +130,7 @@ class ImportUtilsTest : RobolectricTest() {
             return true
         }
 
-        override fun getFileNameFromContentProvider(context: Context, data: Uri?): String? {
+        override fun getFileNameFromContentProvider(context: Context, data: Uri): String? {
             return fileName
         }
     }

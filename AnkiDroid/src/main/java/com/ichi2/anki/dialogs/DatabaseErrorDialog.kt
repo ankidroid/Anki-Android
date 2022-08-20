@@ -219,7 +219,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                     dialog.title(R.string.backup_restore_select_title)
                         .positiveButton(R.string.restore_backup_choose_another) {
-                            ImportFileSelectionFragment.openImportFilePicker(activity as AnkiActivity)
+                            ImportFileSelectionFragment.openImportFilePicker(activity as AnkiActivity, DeckPicker.PICK_APKG_FILE)
                         }
                         .negativeButton(R.string.dialog_cancel)
                         .listItemsSingleChoice(items = dates.toTypedArray().toList(), waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
