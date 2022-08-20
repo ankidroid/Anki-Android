@@ -925,11 +925,12 @@ open class DeckPicker :
 
         // Check whether the option is selected, the user is signed in and last sync was AUTOMATIC_SYNC_TIME ago
         // (currently 10 minutes)
-        val hkey = preferences.getString("hkey", "")
+        val isLoggedIn = preferences.getString("hkey", "")!!.isNotEmpty()
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
-        if (hkey!!.isNotEmpty() && preferences.getBoolean("automaticSyncMode", false) &&
-            Connection.isOnline && TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
-        ) {
+        val autoSyncIsEnabled = preferences.getBoolean("automaticSyncMode", false)
+        val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
+
+        if (isLoggedIn && autoSyncIsEnabled && Connection.isOnline && syncIntervalPassed) {
             Timber.i("Triggering Automatic Sync")
             sync()
         }
