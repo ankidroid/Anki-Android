@@ -148,12 +148,6 @@ class CollectionV16(
         } catch (e: BackendInvalidInputException) {
             throw InvalidSearchException(e)
         }
-        for (id in cardIdsList) {
-            if (task?.isCancelled() == true) {
-                break
-            }
-            task?.doProgress(listOf(id))
-        }
         return cardIdsList
     }
 
