@@ -39,7 +39,7 @@ package com.ichi2.libanki
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import com.google.protobuf.ByteString
-import com.ichi2.libanki.Decks.ACTIVE_DECKS
+import com.ichi2.libanki.Decks.Companion.ACTIVE_DECKS
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.exception.DeckRenameException

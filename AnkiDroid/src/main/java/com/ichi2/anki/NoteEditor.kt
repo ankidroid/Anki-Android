@@ -82,7 +82,7 @@ import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Decks.CURRENT_DECK
+import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Models.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Note.DupeOrEmpty
