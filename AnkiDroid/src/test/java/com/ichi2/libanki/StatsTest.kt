@@ -13,28 +13,22 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.ichi2.libanki
 
-package com.ichi2.libanki;
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import com.ichi2.anki.RobolectricTest;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-
-@RunWith(AndroidJUnit4.class)
-public class StatsTest extends RobolectricTest {
-
+@RunWith(AndroidJUnit4::class)
+class StatsTest : RobolectricTest() {
     /*****************
-     ** Stats        *
-     *****************/
+     * Stats        *
+     */
     @Test
-    public void empty_test() {
+    fun empty_test() {
         // A test should occurs in the file, otherwise travis rejects. This remains here until we can uncomment the real tests.
-    }
-    /* TODO put in Collection
+    } /* TODO put in Collection
        @Test
        public void test_stats() throws Exception {
        Collection col = getCol();
