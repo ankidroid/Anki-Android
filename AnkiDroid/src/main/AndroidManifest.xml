@@ -216,8 +216,8 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "anki://x-callback-url/cardbrowser” -->
-                <data android:scheme="anki" android:host="x-callback-url" android:path="/cardbrowser"/>
+                <!-- Accepts URIs that begin with "anki://x-callback-url/browser” -->
+                <data android:scheme="anki" android:host="x-callback-url" android:path="/browser"/>
             </intent-filter>
         </activity>
         <activity
