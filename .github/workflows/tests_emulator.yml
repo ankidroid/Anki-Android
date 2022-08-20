@@ -142,6 +142,9 @@ jobs:
           disable-animations: true
           script: |
             $ANDROID_HOME/platform-tools/adb logcat '*:D' > adb-log.txt &
+            sleep 5
+            $ANDROID_HOME/platform-tools/adb shell su root "setprop ctl.restart zygote"
+            sleep 10
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
       - name: Compress Emulator Log
