@@ -42,13 +42,15 @@
         android:key="@string/sync_status_badge_key"
         android:summary="@string/sync_status_badge_summ"
         android:title="@string/sync_status_badge" />
-    <Preference
-        android:key="@string/force_full_sync_key"
-        android:title="@string/force_full_sync_title"
-        android:summary="@string/force_full_sync_summary" />
-    <Preference
-        android:key="@string/custom_sync_server_key"
-        android:title="@string/custom_sync_server_title"
-        android:fragment="com.ichi2.anki.preferences.CustomSyncServerSettingsFragment"
-        search:ignore="true"/>
+    <PreferenceCategory android:title="@string/pref_cat_advanced">
+        <Preference
+            android:key="@string/force_full_sync_key"
+            android:title="@string/force_full_sync_title"
+            android:summary="@string/force_full_sync_summary" />
+        <Preference
+            android:key="@string/custom_sync_server_key"
+            android:title="@string/custom_sync_server_title"
+            android:fragment="com.ichi2.anki.preferences.CustomSyncServerSettingsFragment"
+            search:ignore="true"/>
+    </PreferenceCategory>
 </PreferenceScreen>
