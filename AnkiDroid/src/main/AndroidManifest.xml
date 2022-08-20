@@ -212,6 +212,13 @@
             android:configChanges="keyboardHidden|orientation|locale|screenSize|uiMode"
             android:parentActivityName=".DeckPicker"
             >
+            <intent-filter android:label="@string/card_browser">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "anki://x-callback-url/browser” -->
+                <data android:scheme="anki" android:host="x-callback-url" android:path="/browser"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".ModelBrowser"
