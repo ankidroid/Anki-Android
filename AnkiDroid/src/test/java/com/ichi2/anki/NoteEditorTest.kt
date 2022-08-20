@@ -29,7 +29,7 @@ import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.compat.Compat.Companion.ACTION_PROCESS_TEXT
 import com.ichi2.compat.Compat.Companion.EXTRA_PROCESS_TEXT
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Decks.CURRENT_DECK
+import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow

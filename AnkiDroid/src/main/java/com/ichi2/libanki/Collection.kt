@@ -1207,7 +1207,7 @@ open class Collection(
         fields["Tags"] = tags.trim { it <= ' ' }
         fields["Type"] = model.getString("name")
         fields["Deck"] = decks.name(did)
-        val baseName = Decks.basename(fields["Deck"])
+        val baseName = Decks.basename(fields["Deck"]!!)
         fields["Subdeck"] = baseName
         fields["CardFlag"] = _flagNameFromCardFlags(flags)
         val template: JSONObject = if (model.isStd) {
