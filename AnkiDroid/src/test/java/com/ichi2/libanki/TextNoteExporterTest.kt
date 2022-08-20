@@ -10,119 +10,95 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
+import android.text.TextUtils
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.libanki.backend.exception.DeckRenameException
+import com.ichi2.utils.FileOperation
+import com.ichi2.utils.KotlinCleanup
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.ParameterizedRobolectricTestRunner
+import timber.log.Timber
+import java.io.File
+import java.io.IOException
+import java.util.*
+import kotlin.Throws
 
-import android.text.TextUtils;
-
-import com.ichi2.anki.RobolectricTest;
-import com.ichi2.libanki.backend.exception.DeckRenameException;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.ParameterizedRobolectricTestRunner;
-import org.robolectric.ParameterizedRobolectricTestRunner.Parameters;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
-import timber.log.Timber;
-
-import static com.ichi2.utils.FileOperation.getFileContents;
-import static org.junit.Assert.assertEquals;
-
-@RunWith(ParameterizedRobolectricTestRunner.class)
-public class TextNoteExporterTest extends RobolectricTest {
-
-    @Parameters(name = "{index} id:{0}\ttags:{1}\thtml:{2}")
-    public static Iterable<Object[]> data() {
-        List<Object[]> data = new ArrayList<>();
-        for (int id = 0; id <= 1; id++) {
-            for (int tags = 0; tags <= 1; tags++) {
-                for (int html = 0; html <= 1; html++) {
-                    data.add(new Object[] {id != 0, tags != 0, html != 0});
-                }
-            }
-        }
-        return data;
-    }
-
-
-    private final boolean mIncludeId;
-    private final boolean mIncludeTags;
-    private final boolean mIncludeHTML;
-
-    private Collection mCollection;
-    private TextNoteExporter mExporter;
-    private List<Note> mNoteList;
-
-
-    public TextNoteExporterTest(boolean includeId, boolean includeTags, boolean includeHTML) {
-        this.mIncludeId = includeId;
-        this.mIncludeTags = includeTags;
-        this.mIncludeHTML = includeHTML;
-    }
-
-
+@KotlinCleanup("lateinit wherever possible")
+@KotlinCleanup("IDE-lint")
+@RunWith(ParameterizedRobolectricTestRunner::class)
+class TextNoteExporterTest(
+    private val includeId: Boolean,
+    private val includeTags: Boolean,
+    private val includeHTML: Boolean
+) : RobolectricTest() {
+    private var mCollection: Collection? = null
+    private var mExporter: TextNoteExporter? = null
+    private var mNoteList: List<Note>? = null
     @Before
-    public void setUp() {
-        super.setUp();
-        mCollection = getCol();
-        mExporter = new TextNoteExporter(mCollection, mIncludeId, mIncludeTags, mIncludeHTML);
-
-        final Note n1 = mCollection.newNote();
-        n1.setItem("Front", "foo");
-        n1.setItem("Back", "bar<br>");
-        n1.addTags(new HashSet<>(Arrays.asList("tag", "tag2")));
-        mCollection.addNote(n1);
-
-        final Note n2 = mCollection.newNote();
-        n2.setItem("Front", "baz");
-        n2.setItem("Back", "qux");
-
+    override fun setUp() {
+        super.setUp()
+        mCollection = col
+        mExporter = TextNoteExporter(mCollection!!, includeId, includeTags, includeHTML)
+        val n1 = mCollection!!.newNote()
+        n1.setItem("Front", "foo")
+        n1.setItem("Back", "bar<br>")
+        n1.addTags(HashSet(Arrays.asList("tag", "tag2")))
+        mCollection!!.addNote(n1)
+        val n2 = mCollection!!.newNote()
+        n2.setItem("Front", "baz")
+        n2.setItem("Back", "qux")
         try {
-            n2.model().put("did", mCollection.getDecks().id("new col"));
-        } catch (DeckRenameException filteredAncestor) {
-            Timber.e(filteredAncestor);
+            n2.model().put("did", mCollection!!.decks.id("new col"))
+        } catch (filteredAncestor: DeckRenameException) {
+            Timber.e(filteredAncestor)
         }
-        mCollection.addNote(n2);
-
-        mNoteList = Arrays.asList(n1, n2);
+        mCollection!!.addNote(n2)
+        mNoteList = Arrays.asList(n1, n2)
     }
-
 
     @Test
-    public void will_export_id_tags_html() throws IOException {
-        File exportedFile = File.createTempFile("export", ".txt");
-
-        mExporter.doExport(exportedFile.getAbsolutePath());
-
-        String lines[] = getFileContents(exportedFile).split("\n");
-
-        assertEquals(mNoteList.size(), lines.length);
-
-        for (int i = 0; i < mNoteList.size(); i++) {
-            final Note note = mNoteList.get(i);
-            final String line = lines[i];
-
-            List<String> row = new ArrayList<>();
-            if (mIncludeId) {
-                row.add(note.getGuId());
+    @Throws(IOException::class)
+    fun will_export_id_tags_html() {
+        val exportedFile = File.createTempFile("export", ".txt")
+        mExporter!!.doExport(exportedFile.absolutePath)
+        val lines = FileOperation.getFileContents(exportedFile).split("\n".toRegex()).toTypedArray()
+        Assert.assertEquals(mNoteList!!.size.toLong(), lines.size.toLong())
+        for (i in mNoteList!!.indices) {
+            val note = mNoteList!![i]
+            val line = lines[i]
+            val row: MutableList<String?> = ArrayList()
+            if (includeId) {
+                row.add(note.guId)
             }
-            for (String field : note.getFields()) {
-                row.add(mExporter.processText(field));
+            for (field in note.fields) {
+                row.add(mExporter!!.processText(field!!))
             }
-            if (mIncludeTags) {
-                row.add(TextUtils.join(" ", note.getTags()));
+            if (includeTags) {
+                row.add(TextUtils.join(" ", note.tags))
             }
+            val expected = TextUtils.join("\t", row)
+            Assert.assertEquals(expected, line)
+        }
+    }
 
-            final String expected = TextUtils.join("\t", row);
-            assertEquals(expected, line);
+    companion object {
+        @JvmStatic
+        @ParameterizedRobolectricTestRunner.Parameters(name = "{index} id:{0}\ttags:{1}\thtml:{2}")
+        fun data(): Iterable<Array<Any>> {
+            val data: MutableList<Array<Any>> = ArrayList()
+            for (id in 0..1) {
+                for (tags in 0..1) {
+                    for (html in 0..1) {
+                        data.add(arrayOf(id != 0, tags != 0, html != 0))
+                    }
+                }
+            }
+            return data
         }
     }
 }
