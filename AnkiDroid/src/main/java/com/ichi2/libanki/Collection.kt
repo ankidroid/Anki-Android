@@ -28,6 +28,8 @@ import android.util.Pair
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.search.SearchNode
+import anki.search.SearchNodeKt
+import anki.search.searchNode
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
@@ -1389,6 +1391,22 @@ open class Collection(
     fun findDupes(fieldName: String?, search: String?): List<Pair<String, List<Long>>> {
         return Finder.findDupes(this, fieldName, search)
     }
+
+    @KotlinCleanup("inline in Finder.java after conversion to Kotlin")
+    fun buildFindDupesString(fieldName: String, search: String): String {
+        return buildSearchString(
+            searchNode {
+                group = SearchNodeKt.group {
+                    joiner = SearchNode.Group.Joiner.AND
+                    if (!TextUtils.isEmpty(search)) {
+                        nodes += searchNode { literalText = search }
+                    }
+                    nodes += searchNode { this.fieldName = fieldName }
+                }
+            }
+        )
+    }
+
     /*
       Stats ******************************************************************** ***************************
      */

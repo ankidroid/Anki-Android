@@ -49,6 +49,8 @@ import java.util.regex.Pattern;
 
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import anki.search.SearchNode;
+import anki.search.SearchNodeKt;
 import timber.log.Timber;
 
 import static com.ichi2.async.CancelListener.isCancelled;
@@ -1034,10 +1036,7 @@ public class Finder {
      */
     public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName, String search) {
         // limit search to notes with applicable field name
-        if (!TextUtils.isEmpty(search)) {
-            search = "(" + search + ") ";
-        }
-        search += "'" + fieldName + ":*'";
+        search = col.buildFindDupesString(fieldName ,search);
         // go through notes
         List<Long> nids = col.findNotes(search);
         Map<String, List<Long>> vals = HashUtil.HashMapInit(nids.size());
