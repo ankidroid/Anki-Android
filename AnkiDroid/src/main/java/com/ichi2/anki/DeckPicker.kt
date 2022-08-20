@@ -113,6 +113,7 @@ import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
+import com.ichi2.utils.isActiveNetworkMetered
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
@@ -923,14 +924,15 @@ open class DeckPicker :
     private fun automaticSync() {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
 
-        // Check whether the option is selected, the user is signed in and last sync was AUTOMATIC_SYNC_TIME ago
-        // (currently 10 minutes)
+        // Check whether the option is selected, the user is signed in, last sync was AUTOMATIC_SYNC_TIME ago
+        // (currently 10 minutes), and is not under a metered connection (if not allowed by preference)
         val isLoggedIn = preferences.getString("hkey", "")!!.isNotEmpty()
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
         val autoSyncIsEnabled = preferences.getBoolean("automaticSyncMode", false)
         val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
+        val isNotBlockedByMeteredConnection = preferences.getBoolean(getString(R.string.metered_sync_key), false) || !isActiveNetworkMetered()
 
-        if (isLoggedIn && autoSyncIsEnabled && Connection.isOnline && syncIntervalPassed) {
+        if (isLoggedIn && autoSyncIsEnabled && Connection.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection) {
             Timber.i("Triggering Automatic Sync")
             sync()
         }
@@ -1563,24 +1565,29 @@ open class DeckPicker :
             Timber.w("User not logged in")
             mPullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
-        } else {
+            return
+        }
+        /** Nested function that makes the connection to
+         * the sync server and starts syncing the data */
+        fun doSync() {
             val syncMedia = preferences.getBoolean("syncFetchesMedia", true)
-
             if (!BackendFactory.defaultLegacySchema) {
                 handleNewSync(conflict, syncMedia)
             } else {
-                Connection.sync(
-                    mSyncListener,
-                    Connection.Payload(
-                        arrayOf(
-                            hkey,
-                            syncMedia,
-                            conflict,
-                            HostNumFactory.getInstance(baseContext)
-                        )
-                    )
-                )
+                val data = arrayOf(hkey, syncMedia, conflict, HostNumFactory.getInstance(baseContext))
+                Connection.sync(mSyncListener, Connection.Payload(data))
             }
+        }
+        // Warn the user in case the connection is metered
+        val meteredSyncIsAllowed = preferences.getBoolean(getString(R.string.metered_sync_key), false)
+        if (!meteredSyncIsAllowed && isActiveNetworkMetered()) {
+            MaterialDialog(this).show {
+                message(R.string.metered_sync_warning)
+                positiveButton(R.string.dialog_continue) { doSync() }
+                negativeButton(R.string.dialog_cancel)
+            }
+        } else {
+            doSync()
         }
     }
 
