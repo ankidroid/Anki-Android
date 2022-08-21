@@ -29,6 +29,8 @@ import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
 import com.ichi2.libanki.importer.importCsvRaw
 import com.ichi2.libanki.undoableOp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Translations
 
 fun DeckPicker.importApkgs(apkgPaths: List<String>) {
@@ -50,20 +52,27 @@ fun DeckPicker.importApkgs(apkgPaths: List<String>) {
     }
 }
 
-fun PagesActivity.importCsvRaw(input: ByteArray): ByteArray? {
-    launchCatchingTask {
+@Suppress("BlockingMethodInNonBlockingContext") // ImportResponse.parseFrom
+suspend fun PagesActivity.importCsvRaw(input: ByteArray): ByteArray {
+    return withContext(Dispatchers.Main) {
         val output = withProgress(
-            extractProgress = { if (progress.hasImporting()) { text = progress.importing } },
+            extractProgress = {
+                if (progress.hasImporting()) {
+                    text = progress.importing
+                }
+            },
             op = { withCol { (this as CollectionV16).importCsvRaw(input) } }
         )
+        val importResponse = ImportResponse.parseFrom(output)
+        undoableOp { importResponse }
         MaterialDialog(this@importCsvRaw).show {
-            message(text = summarizeReport(col.tr, ImportResponse.parseFrom(output)))
+            message(text = summarizeReport(col.tr, importResponse))
             positiveButton(R.string.dialog_ok) {
                 this@importCsvRaw.finish()
             }
         }
+        output
     }
-    return null
 }
 
 private fun summarizeReport(tr: Translations, output: ImportResponse): String {

@@ -19,11 +19,11 @@ package com.ichi2.anki.pages
 
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.importCsvRaw
+import com.ichi2.anki.runBlockingCatching
 import com.ichi2.libanki.*
 import com.ichi2.libanki.importer.getCsvMetadataRaw
 import com.ichi2.libanki.stats.*
 import fi.iki.elonen.NanoHTTPD
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
@@ -46,7 +46,7 @@ class AnkiServer(
             Timber.d("POST: Requested %s", uri)
             val inputBytes = getSessionBytes(session)
             if (uri.startsWith(ANKI_PREFIX)) {
-                val data: ByteArray? = runBlocking {
+                val data: ByteArray? = activity.runBlockingCatching {
                     handlePostRequest(uri.substring(ANKI_PREFIX.length), inputBytes)
                 }
                 return newChunkedResponse(data)
