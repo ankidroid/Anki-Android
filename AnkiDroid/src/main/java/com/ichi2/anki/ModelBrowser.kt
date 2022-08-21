@@ -230,7 +230,7 @@ class ModelBrowser : AnkiActivity() {
             mModelListPosition = position
             val noteOpenIntent = Intent(this@ModelBrowser, ModelFieldEditor::class.java)
             noteOpenIntent.putExtra("title", mModelDisplayList!![position].name)
-            noteOpenIntent.putExtra("noteTypeID", noteTypeID)
+            noteOpenIntent.putExtra(notetypeIdKey, noteTypeID)
             startActivityForResultWithAnimation(noteOpenIntent, 0, ActivityTransitionAnimation.Direction.START)
         }
         mModelListView!!.onItemLongClickListener = OnItemLongClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
@@ -510,3 +510,4 @@ class ModelBrowser : AnkiActivity() {
         }
     }
 }
+const val notetypeIdKey = "noteTypeID"

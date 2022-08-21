@@ -122,7 +122,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * to finish the activity.
      */
     private fun initialize() {
-        val noteTypeID = intent.getLongExtra("noteTypeID", 0)
+        val noteTypeID = intent.getLongExtra(notetypeIdKey, 0)
         val collectionModel = collection.models.get(noteTypeID)
         if (collectionModel == null) {
             showThemedToast(this, R.string.field_editor_model_not_available, true)
