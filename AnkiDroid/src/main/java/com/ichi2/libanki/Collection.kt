@@ -1324,7 +1324,7 @@ open class Collection(
     /** Return a list of card ids  */
     @RustCleanup("Remove in V16.") // Not in libAnki
     fun findOneCardByNote(query: String?): List<Long> {
-        return Finder(this).findOneCardByNote(query)
+        return Finder(this).findOneCardByNote(query!!)
     }
 
     /** Return a list of note ids
@@ -1336,15 +1336,15 @@ open class Collection(
     }
 
     fun findReplace(nids: List<Long?>?, src: String?, dst: String?): Int {
-        return Finder.findReplace(this, nids, src, dst)
+        return Finder.findReplace(this, nids!!, src!!, dst!!)
     }
 
     fun findReplace(nids: List<Long?>?, src: String?, dst: String?, regex: Boolean): Int {
-        return Finder.findReplace(this, nids, src, dst, regex)
+        return Finder.findReplace(this, nids!!, src!!, dst!!, regex)
     }
 
     fun findReplace(nids: List<Long?>?, src: String?, dst: String?, field: String?): Int {
-        return Finder.findReplace(this, nids, src, dst, field)
+        return Finder.findReplace(this, nids!!, src!!, dst!!, field = field)
     }
 
     @KotlinCleanup("JvmOverloads")
@@ -1357,7 +1357,7 @@ open class Collection(
         field: String?,
         fold: Boolean
     ): Int {
-        return Finder.findReplace(this, nids, src, dst, regex, field, fold)
+        return Finder.findReplace(this, nids!!, src!!, dst!!, regex, field, fold)
     }
 
     fun findDupes(fieldName: String?): List<Pair<String, List<Long>>> {
