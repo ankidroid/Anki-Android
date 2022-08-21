@@ -16,7 +16,6 @@
  ****************************************************************************************/
 package com.ichi2.anki.tests.libanki
 
-import com.ichi2.utils.KotlinCleanup
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -26,11 +25,10 @@ import kotlin.Throws
  * Retry a test maxTries times, only failing if zero successes.
  * Defaults to 3 tries.
  *
- *
  * Usage: @Rule public final RetryRule retry = new RetryRule(3);
  * @param i how many times to try
+ * @throws IllegalArgumentException if maxTries is less than 1
  */
-@KotlinCleanup("IDE Lint")
 class RetryRule(i: Int) : TestRule {
     /**
      * How many times to try a test
@@ -73,12 +71,6 @@ class RetryRule(i: Int) : TestRule {
         }
     }
 
-    /**
-     * Try a test maxTries times in an attempt to not fail a full test suite for one flaky test
-     *
-     *
-     * @throws [IllegalArgumentException] if maxTries is less than 1
-     */
     init {
         setMaxTries(i)
     }
