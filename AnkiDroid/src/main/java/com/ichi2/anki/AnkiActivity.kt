@@ -716,7 +716,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         /** Finish Activity using FADE animation  */
         fun finishActivityWithFade(activity: Activity) {
             activity.finish()
-            ActivityTransitionAnimation.slide(activity, UP)
+            ActivityTransitionAnimation.slide(activity, FADE)
         }
 
         fun showDialogFragment(activity: AnkiActivity, newFragment: DialogFragment) {
