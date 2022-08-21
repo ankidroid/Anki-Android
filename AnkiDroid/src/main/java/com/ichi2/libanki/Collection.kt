@@ -1102,18 +1102,20 @@ open class Collection(
         return rep.toString()
     }
 
+    /** Returned data from [_fieldData] */
+    private data class FieldData(val nid: NoteId, val modelId: NoteTypeId, val flds: String)
+
     /**
      * Field checksums and sorting fields ***************************************
      * ********************************************************
      */
-    @KotlinCleanup("return List<class>")
-    private fun _fieldData(snids: String): ArrayList<Array<Any>> {
-        val result = ArrayList<Array<Any>>(
+    private fun _fieldData(snids: String): ArrayList<FieldData> {
+        val result = ArrayList<FieldData>(
             db.queryScalar("SELECT count() FROM notes WHERE id IN$snids")
         )
         db.query("SELECT id, mid, flds FROM notes WHERE id IN $snids").use { cur ->
             while (cur.moveToNext()) {
-                result.add(arrayOf(cur.getLong(0), cur.getLong(1), cur.getString(2)))
+                result.add(FieldData(nid = cur.getLong(0), modelId = cur.getLong(1), flds = cur.getString(2)))
             }
         }
         return result
@@ -1142,12 +1144,12 @@ open class Collection(
         val data = _fieldData(snids)
         val r = ArrayList<Array<Any>>(data.size)
         for (o in data) {
-            val fields = Utils.splitFields(o[2] as String)
-            val model = models.get((o[1] as Long))
+            val fields = Utils.splitFields(o.flds)
+            val model = models.get(o.modelId)
                 ?: // note point to invalid model
                 continue
             val csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, models.sortIdx(model))
-            r.add(arrayOf(csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o[0]))
+            r.add(arrayOf(csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o.nid))
         }
         // apply, relying on calling code to bump usn+mod
         db.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r)
