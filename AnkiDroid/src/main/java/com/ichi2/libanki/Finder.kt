@@ -16,108 +16,82 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
-import android.database.Cursor;
-import android.database.SQLException;
-import android.text.TextUtils;
+import android.database.SQLException
+import android.text.TextUtils
+import android.util.Pair
+import androidx.annotation.CheckResult
+import com.ichi2.async.CancelListener
+import com.ichi2.async.CancelListener.Companion.isCancelled
+import com.ichi2.async.CollectionTask.PartialSearch
+import com.ichi2.async.ProgressSender
+import com.ichi2.async.ProgressSender.Companion.publishProgress
+import com.ichi2.libanki.SortOrder.*
+import com.ichi2.libanki.stats.Stats
+import com.ichi2.libanki.utils.TimeManager.time
+import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.RustCleanup
+import timber.log.Timber
+import java.text.Normalizer
+import java.util.*
+import java.util.regex.Pattern
 
-import android.util.Pair;
-
-import com.ichi2.async.CancelListener;
-import com.ichi2.async.CollectionTask;
-import com.ichi2.async.ProgressSender;
-import com.ichi2.libanki.utils.TimeManager;
-import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONObject;
-import com.ichi2.utils.KotlinCleanup;
-
-import net.ankiweb.rsdroid.RustCleanup;
-
-import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import androidx.annotation.CheckResult;
-import androidx.annotation.NonNull;
-import anki.search.SearchNode;
-import anki.search.SearchNodeKt;
-import timber.log.Timber;
-
-import static com.ichi2.async.CancelListener.isCancelled;
-import static com.ichi2.async.ProgressSender.publishProgress;
-import static com.ichi2.libanki.stats.Stats.SECONDS_PER_DAY;
-
-@SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.AvoidThrowingRawExceptionTypes","PMD.AvoidReassigningParameters","PMD.NPathComplexity","PMD.MethodNamingConventions"})
 @RustCleanup("remove this once Java backend is gone")
-public class Finder {
-
-    private static final Pattern fPropPattern = Pattern.compile("(^.+?)(<=|>=|!=|=|<|>)(.+?$)");
-    private static final Pattern fNidsPattern = Pattern.compile("[^0-9,]");
-    private static final Pattern fMidPattern = Pattern.compile("[^0-9]");
-
-    private final Collection mCol;
-
-
-    public Finder(Collection col) {
-        mCol = col;
-    }
-
-
-    /** Return a list of card ids for QUERY */
+class Finder(private val col: Collection) {
+    /** Return a list of card ids for QUERY  */
     @CheckResult
-    public List<Long> findCards(String query, SortOrder _order) {
-        return findCards(query, _order, null);
+    fun findCards(query: String, _order: SortOrder): List<Long> {
+        return findCards(query, _order, null)
     }
 
     @CheckResult
-    public List<Long> findCards(String query, SortOrder _order, CollectionTask.PartialSearch task) {
-        return _findCards(query, _order, task, task == null ? null : task.getProgressSender());
+    fun findCards(query: String, _order: SortOrder, task: PartialSearch?): List<Long> {
+        return _findCards(query, _order, task, task?.progressSender)
     }
 
     @CheckResult
-    private List<Long> _findCards(String query, SortOrder _order, CancelListener cancellation, ProgressSender<Long> progress) {
-        String[] tokens = _tokenize(query);
-        Pair<String, String[]> res1 = _where(tokens);
-        String preds = res1.first;
-        String[] args = res1.second;
-        List<Long> res = new ArrayList<>();
+    private fun _findCards(
+        query: String,
+        _order: SortOrder,
+        cancellation: CancelListener?,
+        progress: ProgressSender<Long>?
+    ): List<Long> {
+        val tokens = _tokenize(query)
+        val res1 = _where(tokens)
+        val preds = res1.first
+        val args = res1.second
+        val res: MutableList<Long> = ArrayList()
         if (preds == null) {
-            return res;
+            return res
         }
-        Pair<String, Boolean> res2 = _order(_order);
-        String order = res2.first;
-        boolean rev = res2.second;
-        String sql = _query(preds, order);
-        Timber.v("Search query '%s' is compiled as '%s'.", query, sql);
-        try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
-            while (cur.moveToNext()) {
-                if (isCancelled(cancellation)) {
-                    return new ArrayList<>(0);
+        val res2 = _order(_order)
+        val order = res2.first
+        val rev = res2.second
+        val sql = _query(preds, order)
+        Timber.v("Search query '%s' is compiled as '%s'.", query, sql)
+        try {
+            col.db.database.query(sql, args).use { cur ->
+                while (cur.moveToNext()) {
+                    if (isCancelled(cancellation)) {
+                        return ArrayList(0)
+                    }
+                    res.add(cur.getLong(0))
+                    publishProgress(progress, cur.getLong(0))
                 }
-                res.add(cur.getLong(0));
-                publishProgress(progress, cur.getLong(0));
             }
-        } catch (SQLException e) {
+        } catch (e: SQLException) {
             // invalid grouping
-            Timber.w(e);
-            return new ArrayList<>(0);
+            Timber.w(e)
+            return ArrayList(0)
         }
         if (rev) {
-            Collections.reverse(res);
+            Collections.reverse(res)
         }
-        return res;
+        return res
     }
-
 
     /**
      *
@@ -125,16 +99,17 @@ public class Finder {
      * @return card id (at most one by note) of cards satisfying the query.
      */
     @KotlinCleanup("Remove in V16.") // Not in libAnki
-    public List<Long> findOneCardByNote(String query) {
-        return findNotes(query, true);
+    fun findOneCardByNote(query: String): List<Long> {
+        return findNotes(query, true)
     }
+
     /**
      *
      * @param query the query as in browser search langage.
      * @return note of notes satisfying the query.
      */
-    public List<Long> findNotes(String query) {
-        return findNotes(query, false);
+    fun findNotes(query: String): List<Long> {
+        return findNotes(query, false)
     }
 
     /**
@@ -144,275 +119,210 @@ public class Finder {
      * @return note or card id (at most one by note) of notes satisfying the query.
      */
     @KotlinCleanup("Remove 'returnCid' in V16.") // returnCid Not in libAnki
-    public List<Long> findNotes(String query, boolean returnCid) {
-        String[] tokens = _tokenize(query);
-        Pair<String, String[]> res1 = _where(tokens);
-        String preds = res1.first;
-        String[] args = res1.second;
-        List<Long> res = new ArrayList<>();
+    fun findNotes(query: String, returnCid: Boolean): List<Long> {
+        val tokens = _tokenize(query)
+        val res1 = _where(tokens)
+        var preds = res1.first
+        val args = res1.second
+        val res: MutableList<Long> = ArrayList()
         if (preds == null) {
-            return res;
+            return res
         }
-        if ("".equals(preds)) {
-            preds = "1";
+        preds = if ("" == preds) {
+            "1"
         } else {
-            preds = "(" + preds + ")";
+            "($preds)"
         }
-        String sql;
-        if (returnCid) {
-            sql = "select min(c.id) from cards c, notes n where c.nid=n.id and " + preds + " group by n.id";
+        val sql: String
+        sql = if (returnCid) {
+            "select min(c.id) from cards c, notes n where c.nid=n.id and $preds group by n.id"
         } else {
-            sql = "select distinct(n.id) from cards c, notes n where c.nid=n.id and " + preds;
+            "select distinct(n.id) from cards c, notes n where c.nid=n.id and $preds"
         }
-        try (Cursor cur = mCol.getDb().getDatabase().query(sql, args)) {
-            while (cur.moveToNext()) {
-                res.add(cur.getLong(0));
+        try {
+            col.db.database.query(sql, args).use { cur ->
+                while (cur.moveToNext()) {
+                    res.add(cur.getLong(0))
+                }
             }
-        } catch (SQLException e) {
-            Timber.w(e);
+        } catch (e: SQLException) {
+            Timber.w(e)
             // invalid grouping
-            return new ArrayList<>(0);
+            return ArrayList(0)
         }
-        return res;
+        return res
     }
-
 
     /**
      * Tokenizing
      * ***********************************************************
      */
-
-    public String[] _tokenize(String query) {
-        char inQuote = 0;
-        List<String> tokens = new ArrayList<>();
-        String token = "";
-        for (int i = 0; i < query.length(); ++i) {
+    fun _tokenize(query: String): Array<String> {
+        var inQuote = 0.toChar()
+        val tokens: MutableList<String> = ArrayList()
+        var token = ""
+        for (i in 0 until query.length) {
             // quoted text
-            char c = query.charAt(i);
+            val c = query[i]
             if (c == '\'' || c == '"') {
-                if (inQuote != 0) {
+                if (inQuote.code != 0) {
                     if (c == inQuote) {
-                        inQuote = 0;
+                        inQuote = 0.toChar()
                     } else {
-                        token += c;
+                        token += c
                     }
-                } else if (token.length() != 0) {
+                } else if (token.length != 0) {
                     // quotes are allowed to start directly after a :
                     if (token.endsWith(":")) {
-                        inQuote = c;
+                        inQuote = c
                     } else {
-                        token += c;
+                        token += c
                     }
                 } else {
-                    inQuote = c;
+                    inQuote = c
                 }
                 // separator
             } else if (c == ' ') {
-                if (inQuote != 0) {
-                    token += c;
-                } else if (token.length() != 0) {
+                if (inQuote.code != 0) {
+                    token += c
+                } else if (token.length != 0) {
                     // space marks token finished
-                    tokens.add(token);
-                    token = "";
+                    tokens.add(token)
+                    token = ""
                 }
                 // nesting
             } else if (c == '(' || c == ')') {
-                if (inQuote != 0) {
-                    token += c;
+                if (inQuote.code != 0) {
+                    token += c
                 } else {
-                    if (c == ')' && token.length() != 0) {
-                        tokens.add(token);
-                        token = "";
+                    if (c == ')' && token.length != 0) {
+                        tokens.add(token)
+                        token = ""
                     }
-                    tokens.add(String.valueOf(c));
+                    tokens.add(c.toString())
                 }
                 // negation
             } else if (c == '-') {
-                if (token.length() != 0) {
-                    token += c;
-                } else if (tokens.isEmpty() || !"-".equals(tokens.get(tokens.size() - 1))) {
-                    tokens.add("-");
+                if (token.length != 0) {
+                    token += c
+                } else if (tokens.isEmpty() || "-" != tokens[tokens.size - 1]) {
+                    tokens.add("-")
                 }
                 // normal character
             } else {
-                token += c;
+                token += c
             }
         }
         // if we finished in a token, add it
-        if (token.length() != 0) {
-            tokens.add(token);
+        if (token.length != 0) {
+            tokens.add(token)
         }
-        return tokens.toArray(new String[tokens.size()]);
+        return tokens.toTypedArray()
     }
-
-
     /*
       Query building
       ***********************************************************
      */
-
     /**
      * LibAnki creates a dictionary and operates on it with an inner function inside _where().
      * AnkiDroid combines the two in this class instead.
      */
-    public static class SearchState {
-        public boolean isnot;
-        public boolean isor;
-        public boolean join;
-        public String q = "";
-        public boolean bad;
-        
-        public void add(String txt) {
-            add(txt, true);
-        }
-
-        public void add(String txt, boolean wrap) {
+    class SearchState {
+        var isnot = false
+        var isor = false
+        var join = false
+        var q: String? = ""
+        var bad = false
+        @JvmOverloads
+        fun add(txt: String?, wrap: Boolean = true) {
             // failed command?
+            @Suppress("NAME_SHADOWING")
+            var txt = txt
             if (TextUtils.isEmpty(txt)) {
                 // if it was to be negated then we can just ignore it
                 if (isnot) {
-                    isnot = false;
+                    isnot = false
                 } else {
-                    bad = true;
+                    bad = true
                 }
-                return;
-            } else if ("skip".equals(txt)) {
-                return;
+                return
+            } else if ("skip" == txt) {
+                return
             }
             // do we need a conjunction?
             if (join) {
                 if (isor) {
-                    q += " or ";
-                    isor = false;
+                    q += " or "
+                    isor = false
                 } else {
-                    q += " and ";
+                    q += " and "
                 }
             }
             if (isnot) {
-                q += " not ";
-                isnot = false;
+                q += " not "
+                isnot = false
             }
             if (wrap) {
-                txt = "(" + txt + ")";
+                txt = "($txt)"
             }
-            q += txt;
-            join = true;
+            q += txt
+            join = true
         }
     }
 
-
-    private Pair<String, String[]> _where(String[] tokens) {
+    private fun _where(tokens: Array<String>): Pair<String?, Array<String>?> {
         // state and query
-        SearchState s = new SearchState();
-        List<String> args = new ArrayList<>();
-        for (String token : tokens) {
+        val s = SearchState()
+        val args: MutableList<String> = ArrayList()
+        for (token in tokens) {
             if (s.bad) {
-                return new Pair<>(null, null);
+                return Pair(null, null)
             }
             // special tokens
-            if ("-".equals(token)) {
-                s.isnot = true;
-            } else if ("or".equalsIgnoreCase(token)) {
-                s.isor = true;
-            } else if ("(".equals(token)) {
-                s.add(token, false);
-                s.join = false;
-            } else if (")".equals(token)) {
-                s.q += ")";
+            if ("-" == token) {
+                s.isnot = true
+            } else if ("or".equals(token, ignoreCase = true)) {
+                s.isor = true
+            } else if ("(" == token) {
+                s.add(token, false)
+                s.join = false
+            } else if (")" == token) {
+                s.q += ")"
                 // commands
             } else if (token.contains(":")) {
-                String[] spl = token.split(":", 2);
-                String cmd = spl[0].toLowerCase(Locale.ROOT);
-                String val = spl[1];
-
-                switch (cmd) {
-                    case "added":
-                        s.add(_findAdded(val));
-                        break;
-                    case "card":
-                        s.add(_findTemplate(val));
-                        break;
-                    case "deck":
-                        s.add(_findDeck(val));
-                        break;
-                    case "flag":
-                        s.add(_findFlag(val));
-                        break;
-                    case "mid":
-                        s.add(_findMid(val));
-                        break;
-                    case "nid":
-                        s.add(_findNids(val));
-                        break;
-                    case "cid":
-                        s.add(_findCids(val));
-                        break;
-                    case "note":
-                        s.add(_findModel(val));
-                        break;
-                    case "prop":
-                        s.add(_findProp(val));
-                        break;
-                    case "rated":
-                        s.add(_findRated(val));
-                        break;
-                    case "tag":
-                        s.add(_findTag(val, args));
-                        break;
-                    case "dupe":
-                        s.add(_findDupes(val));
-                        break;
-                    case "is":
-                        s.add(_findCardState(val));
-                        break;
-                    default:
-                        s.add(_findField(cmd, val));
-                        break;
+                val spl = token.split(":".toRegex(), 2).toTypedArray()
+                val cmd = spl[0].lowercase()
+                val `val` = spl[1]
+                when (cmd) {
+                    "added" -> s.add(_findAdded(`val`))
+                    "card" -> s.add(_findTemplate(`val`))
+                    "deck" -> s.add(_findDeck(`val`))
+                    "flag" -> s.add(_findFlag(`val`))
+                    "mid" -> s.add(_findMid(`val`))
+                    "nid" -> s.add(_findNids(`val`))
+                    "cid" -> s.add(_findCids(`val`))
+                    "note" -> s.add(_findModel(`val`))
+                    "prop" -> s.add(_findProp(`val`))
+                    "rated" -> s.add(_findRated(`val`))
+                    "tag" -> s.add(_findTag(`val`, args))
+                    "dupe" -> s.add(_findDupes(`val`))
+                    "is" -> s.add(_findCardState(`val`))
+                    else -> s.add(_findField(cmd, `val`))
                 }
-            // normal text search
+                // normal text search
             } else {
-                s.add(_findText(token, args));
+                s.add(_findText(token, args))
             }
         }
-        if (s.bad) {
-            return new Pair<>(null, null);
-        }
-        return new Pair<>(s.q, args.toArray(new String[args.size()]));
+        return if (s.bad) {
+            Pair(null, null)
+        } else Pair(s.q, args.toTypedArray())
     }
-
-
-    /**
-     * @param preds A sql predicate, or empty string, with c a card, n its note
-     * @param order A part of a query, ordering element of table Card, with c a card, n its note
-     * @return A query to return all card ids satifying the predicate and in the given order
-     */
-    private static String _query(String preds, String order) {
-        // can we skip the note table?
-        String sql;
-        if (!preds.contains("n.") && !order.contains("n.")) {
-            sql = "select c.id from cards c where ";
-        } else {
-            sql = "select c.id from cards c, notes n where c.nid=n.id and ";
-        }
-        // combine with preds
-        if (!TextUtils.isEmpty(preds)) {
-            sql += "(" + preds + ")";
-        } else {
-            sql += "1";
-        }
-        // order
-        if (!TextUtils.isEmpty(order)) {
-            sql += " " + order;
-        }
-        return sql;
-    }
-
 
     /**
      * Ordering
      * ***********************************************************
      */
-
     /*
      * NOTE: In the python code, _order() follows a code path based on:
      * - Empty order string (no order)
@@ -422,310 +332,281 @@ public class Finder {
      * The python code combines all code paths in one function. In Java, we must overload the method
      * in order to consume either a String (no order, custom order) or a Boolean (no order, built-in order).
      */
-
-    @NonNull
-    private Pair<String, Boolean> _order(SortOrder order) {
-
-        if (order instanceof SortOrder.NoOrdering) {
-            return new Pair<>("", false);
+    private fun _order(order: SortOrder): Pair<String, Boolean> {
+        if (order is NoOrdering) {
+            return Pair("", false)
         }
-        if (order instanceof SortOrder.AfterSqlOrderBy) {
-            String query = ((SortOrder.AfterSqlOrderBy) order).getCustomOrdering();
-            if (TextUtils.isEmpty(query)) {
-                return _order(new SortOrder.NoOrdering());
+        if (order is AfterSqlOrderBy) {
+            val query = order.customOrdering
+            return if (TextUtils.isEmpty(query)) {
+                _order(NoOrdering())
             } else {
                 // custom order string provided
-                return new Pair<>(" order by " + query, false);
+                Pair(" order by $query", false)
             }
         }
-        if (order instanceof SortOrder.UseCollectionOrdering) {
+        if (order is UseCollectionOrdering) {
             // use deck default
-            String type = mCol.get_config_string("sortType");
-            String sort = null;
+            val type = col.get_config_string("sortType")
+            var sort: String? = null
             if (type.startsWith("note")) {
                 if (type.startsWith("noteCrt")) {
-                    sort = "n.id, c.ord";
+                    sort = "n.id, c.ord"
                 } else if (type.startsWith("noteMod")) {
-                    sort = "n.mod, c.ord";
+                    sort = "n.mod, c.ord"
                 } else if (type.startsWith("noteFld")) {
-                    sort = "n.sfld COLLATE NOCASE, c.ord";
+                    sort = "n.sfld COLLATE NOCASE, c.ord"
                 }
             } else if (type.startsWith("card")) {
                 if (type.startsWith("cardMod")) {
-                    sort = "c.mod";
+                    sort = "c.mod"
                 } else if (type.startsWith("cardReps")) {
-                    sort = "c.reps";
+                    sort = "c.reps"
                 } else if (type.startsWith("cardDue")) {
-                    sort = "c.type, c.due";
+                    sort = "c.type, c.due"
                 } else if (type.startsWith("cardEase")) {
-                    sort = "c.type == " + Consts.CARD_TYPE_NEW + ", c.factor";
+                    sort = "c.type == " + Consts.CARD_TYPE_NEW + ", c.factor"
                 } else if (type.startsWith("cardLapses")) {
-                    sort = "c.lapses";
+                    sort = "c.lapses"
                 } else if (type.startsWith("cardIvl")) {
-                    sort = "c.ivl";
+                    sort = "c.ivl"
                 }
             }
             if (sort == null) {
                 // deck has invalid sort order; revert to noteCrt
-                sort = "n.id, c.ord";
+                sort = "n.id, c.ord"
             }
-            boolean sortBackwards = mCol.get_config_boolean("sortBackwards");
-            return new Pair<>(" ORDER BY " + sort, sortBackwards);
+            val sortBackwards = col.get_config_boolean("sortBackwards")
+            return Pair(" ORDER BY $sort", sortBackwards)
         }
-        throw new IllegalStateException("unhandled order type: " + order);
+        throw IllegalStateException("unhandled order type: $order")
     }
-
 
     /**
      * Commands
      * ***********************************************************
      */
-
-    private String _findTag(String val, List<String> args) {
-        if ("none".equals(val)) {
-            return "n.tags = \"\"";
+    private fun _findTag(`val`: String, args: MutableList<String>): String {
+        @Suppress("NAME_SHADOWING")
+        var `val` = `val`
+        if ("none" == `val`) {
+            return "n.tags = \"\""
         }
-        val = val.replace("*", "%");
-        if (!val.startsWith("%")) {
-            val = "% " + val;
+        `val` = `val`.replace("*", "%")
+        if (!`val`.startsWith("%")) {
+            `val` = "% $`val`"
         }
-        if (!val.endsWith("%") || val.endsWith("\\%")) {
-            args.add(val + " %");
+        if (!`val`.endsWith("%") || `val`.endsWith("\\%")) {
+            args.add("$`val` %")
         } else {
-            args.add(val);
+            args.add(`val`)
         }
         // match descendants
-        if (val.endsWith("::")) {
-            args.add(val + "%");
+        if (`val`.endsWith("::")) {
+            args.add("$`val`%")
         } else {
-            args.add(val + "::%");
+            args.add("$`val`::%")
         }
-        return "((n.tags like ? escape '\\') or (n.tags like ? escape '\\'))";
+        return "((n.tags like ? escape '\\') or (n.tags like ? escape '\\'))"
     }
 
-
-    private String _findCardState(String val) {
-        int n;
-        if ("review".equals(val) || "new".equals(val) || "learn".equals(val)) {
-            if ("review".equals(val)) {
-                n = 2;
-            } else if ("new".equals(val)) {
-                n = 0;
+    private fun _findCardState(`val`: String): String? {
+        val n: Int
+        return if ("review" == `val` || "new" == `val` || "learn" == `val`) {
+            n = if ("review" == `val`) {
+                2
+            } else if ("new" == `val`) {
+                0
             } else {
-                return "queue IN (1, " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")";
+                return "queue IN (1, " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")"
             }
-            return "type = " + n;
-        } else if ("suspended".equals(val)) {
-            return "c.queue = " + Consts.QUEUE_TYPE_SUSPENDED;
-        } else if ("buried".equals(val)) {
-            return "c.queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")";
-        } else if ("due".equals(val)) {
-            return "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and c.due <= " + mCol.getSched().getToday() +
-                    ") or (c.queue = " + Consts.QUEUE_TYPE_LRN + " and c.due <= " + mCol.getSched().getDayCutoff() + ")";
+            "type = $n"
+        } else if ("suspended" == `val`) {
+            "c.queue = " + Consts.QUEUE_TYPE_SUSPENDED
+        } else if ("buried" == `val`) {
+            "c.queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")"
+        } else if ("due" == `val`) {
+            "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and c.due <= " + col.sched.today +
+                ") or (c.queue = " + Consts.QUEUE_TYPE_LRN + " and c.due <= " + col.sched.dayCutoff + ")"
         } else {
-            return null;
+            null
         }
     }
 
-    private String _findFlag(String val) {
-        int flag;
-        switch (val) {
-        case "0":
-            flag = 0;
-            break;
-        case "1":
-            flag = 1;
-            break;
-        case "2":
-            flag = 2;
-            break;
-        case "3":
-            flag = 3;
-            break;
-        case "4":
-            flag = 4;
-            break;
-        case "5":
-            flag = 5;
-            break;
-        case "6":
-            flag = 6;
-            break;
-        case "7":
-            flag = 7;
-            break;
-        default:
-            return null;
+    private fun _findFlag(`val`: String): String? {
+        val flag: Int
+        flag = when (`val`) {
+            "0" -> 0
+            "1" -> 1
+            "2" -> 2
+            "3" -> 3
+            "4" -> 4
+            "5" -> 5
+            "6" -> 6
+            "7" -> 7
+            else -> return null
         }
-        int mask = 0b111; // 2**3 -1 in Anki
-        return "(c.flags & "+mask+") == " + flag;
+        val mask = 7 // 2**3 -1 in Anki
+        return "(c.flags & $mask) == $flag"
     }
 
-    private String _findRated(String val) {
+    private fun _findRated(`val`: String): String? {
         // days(:optional_ease)
-        String[] r = val.split(":");
-        int days;
-        try {
-            days = Integer.parseInt(r[0]);
-        } catch (NumberFormatException e) {
-            Timber.w(e);
-            return null;
+        val r = `val`.split(":".toRegex()).toTypedArray()
+        var days: Int
+        days = try {
+            r[0].toInt()
+        } catch (e: NumberFormatException) {
+            Timber.w(e)
+            return null
         }
-        days = Math.min(days, 31);
+        days = Math.min(days, 31)
         // ease
-        String ease = "";
-        if (r.length > 1) {
+        var ease = ""
+        if (r.size > 1) {
             if (!Arrays.asList("1", "2", "3", "4").contains(r[1])) {
-                return null;
+                return null
             }
-            ease = "and ease=" + r[1];
+            ease = "and ease=" + r[1]
         }
-        long cutoff = (mCol.getSched().getDayCutoff() - SECONDS_PER_DAY * days) * 1000;
-        return "c.id in (select cid from revlog where id>" + cutoff + " " + ease + ")";
+        val cutoff = (col.sched.dayCutoff - Stats.SECONDS_PER_DAY * days) * 1000
+        return "c.id in (select cid from revlog where id>$cutoff $ease)"
     }
 
-
-    private String _findAdded(String val) {
-        int days;
-        try {
-            days = Integer.parseInt(val);
-        } catch (NumberFormatException e) {
-            Timber.w(e);
-            return null;
+    private fun _findAdded(`val`: String): String? {
+        val days: Int
+        days = try {
+            `val`.toInt()
+        } catch (e: NumberFormatException) {
+            Timber.w(e)
+            return null
         }
-        long cutoff = (mCol.getSched().getDayCutoff() - SECONDS_PER_DAY * days) * 1000;
-        return "c.id > " + cutoff;
+        val cutoff = (col.sched.dayCutoff - Stats.SECONDS_PER_DAY * days) * 1000
+        return "c.id > $cutoff"
     }
 
-
-    private String _findProp(String _val) {
+    private fun _findProp(_val: String): String? {
         // extract
-        Matcher m = fPropPattern.matcher(_val);
+        val m = fPropPattern.matcher(_val)
         if (!m.matches()) {
-            return null;
+            return null
         }
-        String prop = m.group(1).toLowerCase(Locale.ROOT);
-        String cmp = m.group(2);
-        String sval = m.group(3);
-        int val;
+        var prop = m.group(1)!!.lowercase()
+        val cmp = m.group(2)
+        val sval = m.group(3)!!
+        var `val`: Int
         // is val valid?
-        try {
-            if ("ease".equals(prop)) {
+        `val` = try {
+            if ("ease" == prop) {
                 // LibAnki does this below, but we do it here to avoid keeping a separate float value.
-                val = (int)(Double.parseDouble(sval) * 1000);
+                (sval.toDouble() * 1000).toInt()
             } else {
-                val = Integer.parseInt(sval);
+                sval.toInt()
             }
-        } catch (NumberFormatException e) {
-            Timber.w(e);
-            return null;
+        } catch (e: NumberFormatException) {
+            Timber.w(e)
+            return null
         }
         // is prop valid?
         if (!Arrays.asList("due", "ivl", "reps", "lapses", "ease").contains(prop)) {
-            return null;
+            return null
         }
         // query
-        String q = "";
-        if ("due".equals(prop)) {
-            val += mCol.getSched().getToday();
+        var q = ""
+        if ("due" == prop) {
+            `val` += col.sched.today
             // only valid for review/daily learning
-            q = "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")) and ";
-        } else if ("ease".equals(prop)) {
-            prop = "factor";
+            q =
+                "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")) and "
+        } else if ("ease" == prop) {
+            prop = "factor"
             // already done: val = int(val*1000)
         }
-        q += "(" + prop + " " + cmp + " " + val + ")";
-        return q;
+        q += "($prop $cmp $`val`)"
+        return q
     }
 
-
-    private String _findText(String val, List<String> args) {
-        val = val.replace("*", "%");
-        args.add("%" + val + "%");
-        args.add("%" + val + "%");
-        return "(n.sfld like ? escape '\\' or n.flds like ? escape '\\')";
+    private fun _findText(`val`: String, args: MutableList<String>): String {
+        @Suppress("NAME_SHADOWING")
+        var `val` = `val`
+        `val` = `val`.replace("*", "%")
+        args.add("%$`val`%")
+        args.add("%$`val`%")
+        return "(n.sfld like ? escape '\\' or n.flds like ? escape '\\')"
     }
 
-
-    private String _findNids(String val) {
-        if (fNidsPattern.matcher(val).find()) {
-            return null;
-        }
-        return "n.id in (" + val + ")";
+    private fun _findNids(`val`: String): String? {
+        return if (fNidsPattern.matcher(`val`).find()) {
+            null
+        } else "n.id in ($`val`)"
     }
 
-
-    private String _findCids(String val) {
-        if (fNidsPattern.matcher(val).find()) {
-            return null;
-        }
-        return "c.id in (" + val + ")";
+    private fun _findCids(`val`: String): String? {
+        return if (fNidsPattern.matcher(`val`).find()) {
+            null
+        } else "c.id in ($`val`)"
     }
 
-
-    private String _findMid(String val) {
-        if (fMidPattern.matcher(val).find()) {
-            return null;
-        }
-        return "n.mid = " + val;
+    private fun _findMid(`val`: String): String? {
+        return if (fMidPattern.matcher(`val`).find()) {
+            null
+        } else "n.mid = $`val`"
     }
 
-
-    private String _findModel(String val) {
-        LinkedList<Long> ids = new LinkedList<>();
-        for (JSONObject m : mCol.getModels().all()) {
-            String modelName = m.getString("name");
-            modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC);
-            if (modelName.equalsIgnoreCase(val)) {
-                ids.add(m.getLong("id"));
+    private fun _findModel(`val`: String): String {
+        val ids = LinkedList<Long>()
+        for (m in col.models.all()) {
+            var modelName = m.getString("name")
+            modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC)
+            if (modelName.equals(`val`, ignoreCase = true)) {
+                ids.add(m.getLong("id"))
             }
         }
-        return "n.mid in " + Utils.ids2str(ids);
+        return "n.mid in " + Utils.ids2str(ids)
     }
 
-
-    private List<Long> dids(Long did) {
+    private fun dids(did: Long?): MutableList<Long>? {
         if (did == null) {
-            return null;
+            return null
         }
-        java.util.Collection<Long> children = mCol.getDecks().children(did).values();
-        List<Long> res = new ArrayList<>(children.size() + 1);
-        res.add(did);
-        res.addAll(children);
-        return res;
+        val children: kotlin.collections.Collection<Long> = col.decks.children(did).values
+        val res: MutableList<Long> = ArrayList(children.size + 1)
+        res.add(did)
+        res.addAll(children)
+        return res
     }
 
-
-    public String _findDeck(String val) {
+    fun _findDeck(`val`: String): String? {
         // if searching for all decks, skip
-        if ("*".equals(val)) {
-            return "skip";
+        @Suppress("NAME_SHADOWING")
+        var `val` = `val`
+        if ("*" == `val`) {
+            return "skip"
             // deck types
-        } else if ("filtered".equals(val)) {
-            return "c.odid";
+        } else if ("filtered" == `val`) {
+            return "c.odid"
         }
-        List<Long> ids = null;
+        var ids: MutableList<Long>?
         // current deck?
-        if ("current".equalsIgnoreCase(val)) {
-            ids = dids(mCol.getDecks().selected());
-        } else if (!val.contains("*")) {
+        if ("current".equals(`val`, ignoreCase = true)) {
+            ids = dids(col.decks.selected())
+        } else if (!`val`.contains("*")) {
             // single deck
-            ids = dids(mCol.getDecks().id_for_name(val));
+            ids = dids(col.decks.id_for_name(`val`))
         } else {
             // wildcard
-            ids = dids(mCol.getDecks().id_for_name(val));
+            ids = dids(col.decks.id_for_name(`val`))
             if (ids == null) {
-                ids = new ArrayList<>();
-                val = val.replace("*", ".*");
-                val = val.replace("+", "\\+");
-
-                for (Deck d : mCol.getDecks().all()) {
-                    String deckName = d.getString("name");
-                    deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC);
-                    if (deckName.matches("(?i)" + val)) {
-                        for (long id : dids(d.getLong("id"))) {
+                ids = ArrayList()
+                `val` = `val`.replace("*", ".*")
+                `val` = `val`.replace("+", "\\+")
+                for (d in col.decks.all()) {
+                    var deckName = d.getString("name")
+                    deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC)
+                    if (deckName.matches("(?i)$`val`".toRegex())) {
+                        for (id in dids(d.getLong("id"))!!) {
                             if (!ids.contains(id)) {
-                                ids.add(id);
+                                ids.add(id)
                             }
                         }
                     }
@@ -733,340 +614,348 @@ public class Finder {
             }
         }
         if (ids == null || ids.isEmpty()) {
-            return null;
+            return null
         }
-        String sids = Utils.ids2str(ids);
-        return "c.did in " + sids + " or c.odid in " + sids;
+        val sids = Utils.ids2str(ids)
+        return "c.did in $sids or c.odid in $sids"
     }
 
-
-    private String _findTemplate(String val) {
+    private fun _findTemplate(`val`: String): String {
         // were we given an ordinal number?
-        Integer num = null;
-        try {
-            num = Integer.parseInt(val) - 1;
-        } catch (NumberFormatException e) {
-            Timber.w(e);
-            num = null;
+        val num: Int? = try {
+            `val`.toInt() - 1
+        } catch (e: NumberFormatException) {
+            Timber.w(e)
+            null
         }
         if (num != null) {
-            return "c.ord = " + num;
+            return "c.ord = $num"
         }
         // search for template names
-        List<String> lims = new ArrayList<>();
-        for (Model m : mCol.getModels().all()) {
-            JSONArray tmpls = m.getJSONArray("tmpls");
-            for (JSONObject t: tmpls.jsonObjectIterable()) {
-                String templateName = t.getString("name");
-                Normalizer.normalize(templateName, Normalizer.Form.NFC);
-                if (templateName.equalsIgnoreCase(val)) {
-                    if (m.isCloze()) {
+        val lims: MutableList<String> = ArrayList()
+        for (m in col.models.all()) {
+            val tmpls = m.getJSONArray("tmpls")
+            for (t in tmpls.jsonObjectIterable()) {
+                val templateName = t.getString("name")
+                Normalizer.normalize(templateName, Normalizer.Form.NFC)
+                if (templateName.equals(`val`, ignoreCase = true)) {
+                    if (m.isCloze) {
                         // if the user has asked for a cloze card, we want
                         // to give all ordinals, so we just limit to the
                         // model instead
-                        lims.add("(n.mid = " + m.getLong("id") + ")");
+                        lims.add("(n.mid = " + m.getLong("id") + ")")
                     } else {
-                        lims.add("(n.mid = " + m.getLong("id") + " and c.ord = " +
-                                t.getInt("ord") + ")");
+                        lims.add(
+                            "(n.mid = " + m.getLong("id") + " and c.ord = " +
+                                t.getInt("ord") + ")"
+                        )
                     }
                 }
             }
         }
-        return TextUtils.join(" or ", lims.toArray(new String[lims.size()]));
+        return TextUtils.join(" or ", lims.toTypedArray())
     }
 
-
-    private String _findField(String field, String val) {
+    private fun _findField(field: String, `val`: String): String? {
         /*
          * We need two expressions to query the cards: One that will use JAVA REGEX syntax and another
          * that should use SQLITE LIKE clause syntax.
          */
-        String sqlVal = val
-                .replace("%","\\%") // For SQLITE, we escape all % signs
-                .replace("*","%"); // And then convert the * into non-escaped % signs
+        val sqlVal = `val`
+            .replace("%", "\\%") // For SQLITE, we escape all % signs
+            .replace("*", "%") // And then convert the * into non-escaped % signs
 
         /*
          * The following three lines make sure that only _ and * are valid wildcards.
          * Any other characters are enclosed inside the \Q \E markers, which force
          * all meta-characters in between them to lose their special meaning
          */
-        String javaVal = val
-                    .replace("_","\\E.\\Q")
-                    .replace("*","\\E.*\\Q");
+        val javaVal = `val`
+            .replace("_", "\\E.\\Q")
+            .replace("*", "\\E.*\\Q")
         /*
          * For the pattern, we use the javaVal expression that uses JAVA REGEX syntax
          */
-        Pattern pattern = Pattern.compile("\\Q" + javaVal + "\\E", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        val pattern = Pattern.compile("\\Q$javaVal\\E", Pattern.CASE_INSENSITIVE or Pattern.DOTALL)
 
         // find models that have that field
-        Map<Long, Object[]> mods = HashUtil.HashMapInit(mCol.getModels().count());
-        for (JSONObject m : mCol.getModels().all()) {
-            JSONArray flds = m.getJSONArray("flds");
-            for (JSONObject f: flds.jsonObjectIterable()) {
-                String fieldName = f.getString("name");
-                fieldName = Normalizer.normalize(fieldName, Normalizer.Form.NFC);
-                if (fieldName.equalsIgnoreCase(field)) {
-                    mods.put(m.getLong("id"), new Object[] { m, f.getInt("ord") });
+        val mods: MutableMap<Long, Array<Any>> = HashMapInit(col.models.count())
+        for (m in col.models.all()) {
+            val flds = m.getJSONArray("flds")
+            for (f in flds.jsonObjectIterable()) {
+                var fieldName = f.getString("name")
+                fieldName = Normalizer.normalize(fieldName, Normalizer.Form.NFC)
+                if (fieldName.equals(field, ignoreCase = true)) {
+                    mods[m.getLong("id")] = arrayOf(m, f.getInt("ord"))
                 }
             }
         }
         if (mods.isEmpty()) {
             // nothing has that field
-            return null;
+            return null
         }
-        LinkedList<Long> nids = new LinkedList<>();
-        try (Cursor cur = mCol.getDb().query(
-                "select id, mid, flds from notes where mid in " +
-                        Utils.ids2str(new LinkedList<>(mods.keySet())) +
-                        " and flds like ? escape '\\'",  "%" + sqlVal + "%")) {
+        val nids = LinkedList<Long>()
+        col.db.query(
+            "select id, mid, flds from notes where mid in " +
+                Utils.ids2str(LinkedList(mods.keys)) +
+                " and flds like ? escape '\\'",
+            "%$sqlVal%"
+        ).use { cur ->
             /*
              * Here we use the sqlVal expression, that is required for LIKE syntax in sqllite.
              * There is no problem with special characters, because only % and _ are special
              * characters in this syntax.
              */
-
             while (cur.moveToNext()) {
-                String[] flds = Utils.splitFields(cur.getString(2));
-                int ord = (Integer)mods.get(cur.getLong(1))[1];
-                String strg = flds[ord];
+                val flds = Utils.splitFields(cur.getString(2))
+                val ord = mods[cur.getLong(1)]!![1] as Int
+                val strg = flds[ord]
                 if (pattern.matcher(strg).matches()) {
-                    nids.add(cur.getLong(0));
+                    nids.add(cur.getLong(0))
                 }
             }
         }
-        if (nids.isEmpty()) {
-            return "0";
-        }
-        return "n.id in " + Utils.ids2str(nids);
+        return if (nids.isEmpty()) {
+            "0"
+        } else "n.id in " + Utils.ids2str(nids)
     }
 
-
-    private String _findDupes(String val) {
+    private fun _findDupes(`val`: String): String? {
         // caller must call stripHTMLMedia on passed val
-        String[] split = val.split(",", 1);
-        if (split.length != 2) {
-            return null;
+        @Suppress("NAME_SHADOWING")
+        var `val` = `val`
+        val split = `val`.split(",".toRegex(), 1).toTypedArray()
+        if (split.size != 2) {
+            return null
         }
-        String mid = split[0];
-        val = split[1];
-        String csum = Long.toString(Utils.fieldChecksumWithoutHtmlMedia(val));
-        List<Long> nids = new ArrayList<>();
-        try (Cursor cur = mCol.getDb().query(
-                "select id, flds from notes where mid=? and csum=?",
-                mid, csum)) {
-            long nid = cur.getLong(0);
-            String flds = cur.getString(1);
-            if (Utils.stripHTMLMedia(Utils.splitFields(flds)[0]).equals(val)) {
-                nids.add(nid);
+        val mid = split[0]
+        `val` = split[1]
+        val csum = java.lang.Long.toString(Utils.fieldChecksumWithoutHtmlMedia(`val`))
+        val nids: MutableList<Long> = ArrayList()
+        col.db.query(
+            "select id, flds from notes where mid=? and csum=?",
+            mid, csum
+        ).use { cur ->
+            val nid = cur.getLong(0)
+            val flds = cur.getString(1)
+            if (Utils.stripHTMLMedia(Utils.splitFields(flds)[0]) == `val`) {
+                nids.add(nid)
             }
         }
-        return "n.id in " +  Utils.ids2str(nids);
+        return "n.id in " + Utils.ids2str(nids)
     }
 
+    companion object {
+        private val fPropPattern = Pattern.compile("(^.+?)(<=|>=|!=|=|<|>)(.+?$)")
+        private val fNidsPattern = Pattern.compile("[^0-9,]")
+        private val fMidPattern = Pattern.compile("[^0-9]")
 
-    /*
+        /**
+         * @param preds A sql predicate, or empty string, with c a card, n its note
+         * @param order A part of a query, ordering element of table Card, with c a card, n its note
+         * @return A query to return all card ids satifying the predicate and in the given order
+         */
+        private fun _query(preds: String, order: String): String {
+            // can we skip the note table?
+            var sql: String
+            sql = if (!preds.contains("n.") && !order.contains("n.")) {
+                "select c.id from cards c where "
+            } else {
+                "select c.id from cards c, notes n where c.nid=n.id and "
+            }
+            // combine with preds
+            sql += if (!TextUtils.isEmpty(preds)) {
+                "($preds)"
+            } else {
+                "1"
+            }
+            // order
+            if (!TextUtils.isEmpty(order)) {
+                sql += " $order"
+            }
+            return sql
+        }
+
+        /*
       Find and replace
       ***********************************************************
      */
-
-    /**
-     * Find and replace fields in a note
-     *
-     * @param col The collection to search into.
-     * @param nids The cards to be searched for.
-     * @param src The original text to find.
-     * @param dst The text to change to.
-     * @return Number of notes with fields that were updated.
-     */
-    public static int findReplace(Collection col, List<Long> nids, String src, String dst) {
-        return findReplace(col, nids, src, dst, false, null, true);
-    }
-
-    /**
-     * Find and replace fields in a note
-     *
-     * @param col The collection to search into.
-     * @param nids The cards to be searched for.
-     * @param src The original text to find.
-     * @param dst The text to change to.
-     * @param regex If true, the src is treated as a regex. Default = false.
-     * @return Number of notes with fields that were updated.
-     */
-    public static int findReplace(Collection col, List<Long> nids, String src, String dst, boolean regex) {
-        return findReplace(col, nids, src, dst, regex, null, true);
-    }
-
-    /**
-     * Find and replace fields in a note
-     *
-     * @param col The collection to search into.
-     * @param nids The cards to be searched for.
-     * @param src The original text to find.
-     * @param dst The text to change to.
-     * @param field Limit the search to specific field. If null, it searches all fields.
-     * @return Number of notes with fields that were updated.
-     */
-    public static int findReplace(Collection col, List<Long> nids, String src, String dst, String field) {
-        return findReplace(col, nids, src, dst, false, field, true);
-    }
-
-    /**
-     * Find and replace fields in a note
-     *
-     * @param col The collection to search into.
-     * @param nids The cards to be searched for.
-     * @param src The original text to find.
-     * @param dst The text to change to.
-     * @param isRegex If true, the src is treated as a regex. Default = false.
-     * @param field Limit the search to specific field. If null, it searches all fields.
-     * @param fold If true the search is case-insensitive. Default = true.
-     * @return Number of notes with fields that were updated. */
-    public static int findReplace(Collection col, List<Long> nids, String src, String dst, boolean isRegex,
-            String field, boolean fold) {
-        Map<Long, Integer> mmap = new HashMap<>();
-        if (field != null) {
-            for (JSONObject m : col.getModels().all()) {
-                JSONArray flds = m.getJSONArray("flds");
-                for (JSONObject f: flds.jsonObjectIterable()) {
-                    if (f.getString("name").equalsIgnoreCase(field)) {
-                        mmap.put(m.getLong("id"), f.getInt("ord"));
+        /**
+         * Find and replace fields in a note
+         *
+         * @param col The collection to search into.
+         * @param nids The cards to be searched for.
+         * @param src The original text to find.
+         * @param dst The text to change to.
+         * @return Number of notes with fields that were updated.
+         */
+        @JvmOverloads
+        fun findReplace(
+            col: Collection,
+            nids: List<Long?>,
+            src: String,
+            dst: String,
+            isRegex: Boolean = false,
+            field: String? = null,
+            fold: Boolean = true
+        ): Int {
+            @Suppress("NAME_SHADOWING")
+            var src = src
+            @Suppress("NAME_SHADOWING")
+            var dst = dst
+            val mmap: MutableMap<Long, Int> = HashMap()
+            if (field != null) {
+                for (m in col.models.all()) {
+                    val flds = m.getJSONArray("flds")
+                    for (f in flds.jsonObjectIterable()) {
+                        if (f.getString("name").equals(field, ignoreCase = true)) {
+                            mmap[m.getLong("id")] = f.getInt("ord")
+                        }
+                    }
+                }
+                if (mmap.isEmpty()) {
+                    return 0
+                }
+            }
+            // find and gather replacements
+            if (!isRegex) {
+                src = Pattern.quote(src)
+                dst = dst.replace("\\", "\\\\")
+            }
+            if (fold) {
+                src = "(?i)$src"
+            }
+            val regex = Pattern.compile(src)
+            val d = ArrayList<Array<Any>>(nids.size)
+            val snids = Utils.ids2str(nids)
+            val midToNid: MutableMap<Long, MutableCollection<Long>> =
+                HashMapInit(col.models.count())
+            col.db.query(
+                "select id, mid, flds from notes where id in $snids"
+            ).use { cur ->
+                while (cur.moveToNext()) {
+                    val mid = cur.getLong(1)
+                    var flds = cur.getString(2)
+                    val origFlds = flds
+                    // does it match?
+                    val sflds = Utils.splitFields(flds)
+                    if (field != null) {
+                        if (!mmap.containsKey(mid)) {
+                            // note doesn't have that field
+                            continue
+                        }
+                        val ord = mmap[mid]!!
+                        sflds[ord] = regex.matcher(sflds[ord]).replaceAll(dst)
+                    } else {
+                        for (i in sflds.indices) {
+                            sflds[i] = regex.matcher(sflds[i]).replaceAll(dst)
+                        }
+                    }
+                    flds = Utils.joinFields(sflds)
+                    if (flds != origFlds) {
+                        val nid = cur.getLong(0)
+                        if (!midToNid.containsKey(mid)) {
+                            midToNid[mid] = ArrayList()
+                        }
+                        midToNid[mid]!!.add(nid)
+                        d.add(
+                            arrayOf(
+                                flds,
+                                time.intTime(),
+                                col.usn(),
+                                nid
+                            )
+                        ) // order based on query below
                     }
                 }
             }
-            if (mmap.isEmpty()) {
-                return 0;
+            if (d.isEmpty()) {
+                return 0
             }
+            // replace
+            col.db.executeMany("update notes set flds=?,mod=?,usn=? where id=?", d)
+            for ((mid, nids_) in midToNid) {
+                col.updateFieldCache(nids_)
+                col.genCards(nids_, mid)
+            }
+            return d.size
         }
-        // find and gather replacements
-        if (!isRegex) {
-            src = Pattern.quote(src);
-            dst = dst.replace("\\", "\\\\");
-        }
-        if (fold) {
-            src = "(?i)" + src;
-        }
-        Pattern regex = Pattern.compile(src);
 
-        ArrayList<Object[]> d = new ArrayList<>(nids.size());
-        String snids = Utils.ids2str(nids);
-        Map<Long, java.util.Collection<Long>> midToNid = HashUtil.HashMapInit(col.getModels().count());
-        try (Cursor cur = col.getDb().query(
-                "select id, mid, flds from notes where id in " + snids)) {
-            while (cur.moveToNext()) {
-                long mid = cur.getLong(1);
-                String flds = cur.getString(2);
-                String origFlds = flds;
-                // does it match?
-                String[] sflds = Utils.splitFields(flds);
-                if (field != null) {
-                    if (!mmap.containsKey(mid)) {
-                        // note doesn't have that field
-                        continue;
+        /**
+         * Find duplicates
+         * ***********************************************************
+         * @param col  The collection
+         * @param fields A map from some note type id to the ord of the field fieldName
+         * @param mid a note type id
+         * @param fieldName A name, assumed to be the name of a field of some note type
+         * @return The ord of the field fieldName in the note type whose id is mid. null if there is no such field. Save the information in fields
+         */
+        fun ordForMid(
+            col: Collection,
+            fields: MutableMap<Long?, Int?>,
+            mid: Long,
+            fieldName: String?
+        ): Int? {
+            if (!fields.containsKey(mid)) {
+                val model: JSONObject? = col.models.get(mid)
+                val flds = model!!.getJSONArray("flds")
+                for (c in 0 until flds.length()) {
+                    val f = flds.getJSONObject(c)
+                    if (f.getString("name").equals(fieldName, ignoreCase = true)) {
+                        fields[mid] = c
+                        return c
                     }
-                    int ord = mmap.get(mid);
-                    sflds[ord] = regex.matcher(sflds[ord]).replaceAll(dst);
-                } else {
-                    for (int i = 0; i < sflds.length; ++i) {
-                        sflds[i] = regex.matcher(sflds[i]).replaceAll(dst);
+                }
+                fields[mid] = null
+            }
+            return fields[mid]
+        }
+
+        /**
+         * @param col       the collection
+         * @param fieldName a name of a field of some note type(s)
+         * @param search A search query, as in the browser
+         * @return List of Pair("dupestr", List[nids]), with nids note satisfying the search query, and having a field fieldName with value duepstr. Each list has at least two elements.
+         */
+        @JvmOverloads
+        fun findDupes(
+            col: Collection,
+            fieldName: String?,
+            search: String? = ""
+        ): List<Pair<String, List<Long>>> {
+            // limit search to notes with applicable field name
+            @Suppress("NAME_SHADOWING")
+            var search = search
+            search = col.buildFindDupesString(fieldName!!, search!!)
+            // go through notes
+            val nids = col.findNotes(search)
+            val vals: MutableMap<String, MutableList<Long>> = HashMapInit(nids.size)
+            val dupes: MutableList<Pair<String, List<Long>>> = ArrayList(nids.size)
+            val fields: MutableMap<Long?, Int?> = HashMap()
+            col.db.query(
+                "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search))
+            ).use { cur ->
+                while (cur.moveToNext()) {
+                    val nid = cur.getLong(0)
+                    val mid = cur.getLong(1)
+                    val flds = Utils.splitFields(cur.getString(2))
+                    val ord = ordForMid(col, fields, mid, fieldName) ?: continue
+                    var `val` = flds[ord]
+                    `val` = Utils.stripHTMLMedia(`val`)
+                    // empty does not count as duplicate
+                    if (TextUtils.isEmpty(`val`)) {
+                        continue
+                    }
+                    if (!vals.containsKey(`val`)) {
+                        vals[`val`] = ArrayList()
+                    }
+                    vals[`val`]!!.add(nid)
+                    if (vals[`val`]!!.size == 2) {
+                        dupes.add(Pair(`val`, vals[`val`]))
                     }
                 }
-                flds = Utils.joinFields(sflds);
-                if (!flds.equals(origFlds)) {
-                    long nid = cur.getLong(0);
-                    if (!midToNid.containsKey(mid)) {
-                        midToNid.put(mid, new ArrayList<>());
-                    }
-                    midToNid.get(mid).add(nid);
-                    d.add(new Object[] { flds, TimeManager.INSTANCE.getTime().intTime(), col.usn(), nid }); // order based on query below
-                }
             }
+            return dupes
         }
-        if (d.isEmpty()) {
-            return 0;
-        }
-        // replace
-        col.getDb().executeMany("update notes set flds=?,mod=?,usn=? where id=?", d);
-        for (Map.Entry<Long, java.util.Collection<Long>> entry : midToNid.entrySet()) {
-            long mid = entry.getKey();
-            java.util.Collection<Long> nids_ = entry.getValue();
-            col.updateFieldCache(nids_);
-            col.genCards(nids_, mid);
-        }
-        return d.size();
-    }
-
-
-    /**
-     * Find duplicates
-     * ***********************************************************
-     * @param col  The collection
-     * @param fields A map from some note type id to the ord of the field fieldName
-     * @param mid a note type id
-     * @param fieldName A name, assumed to be the name of a field of some note type
-     * @return The ord of the field fieldName in the note type whose id is mid. null if there is no such field. Save the information in fields
-     */
-
-    public static Integer ordForMid(Collection col, Map<Long, Integer> fields, long mid, String fieldName) {
-        if (!fields.containsKey(mid)) {
-            JSONObject model = col.getModels().get(mid);
-            JSONArray flds = model.getJSONArray("flds");
-            for (int c = 0; c < flds.length(); c++) {
-                JSONObject f = flds.getJSONObject(c);
-                if (f.getString("name").equalsIgnoreCase(fieldName)) {
-                    fields.put(mid, c);
-                    return c;
-                }
-            }
-            fields.put(mid, null);
-        }
-        return fields.get(mid);
-    }
-
-
-    public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName) {
-        return findDupes(col, fieldName, "");
-    }
-
-
-    /**
-     * @param col       the collection
-     * @param fieldName a name of a field of some note type(s)
-     * @param search A search query, as in the browser
-     * @return List of Pair("dupestr", List[nids]), with nids note satisfying the search query, and having a field fieldName with value duepstr. Each list has at least two elements.
-     */
-    public static List<Pair<String, List<Long>>> findDupes(Collection col, String fieldName, String search) {
-        // limit search to notes with applicable field name
-        search = col.buildFindDupesString(fieldName ,search);
-        // go through notes
-        List<Long> nids = col.findNotes(search);
-        Map<String, List<Long>> vals = HashUtil.HashMapInit(nids.size());
-        List<Pair<String, List<Long>>> dupes = new ArrayList<>(nids.size());
-        Map<Long, Integer> fields = new HashMap<>();
-        try (Cursor cur = col.getDb().query(
-                "select id, mid, flds from notes where id in " + Utils.ids2str(col.findNotes(search)))) {
-            while (cur.moveToNext()) {
-                long nid = cur.getLong(0);
-                long mid = cur.getLong(1);
-                String[] flds = Utils.splitFields(cur.getString(2));
-                Integer ord = ordForMid(col, fields, mid, fieldName);
-                if (ord == null) {
-                    continue;
-                }
-                String val = flds[ord];
-                val = Utils.stripHTMLMedia(val);
-                // empty does not count as duplicate
-                if (TextUtils.isEmpty(val)) {
-                    continue;
-                }
-                if (!vals.containsKey(val)) {
-                    vals.put(val, new ArrayList<>());
-                }
-                vals.get(val).add(nid);
-                if (vals.get(val).size() == 2) {
-                    dupes.add(new Pair<>(val, vals.get(val)));
-                }
-            }
-        }
-        return dupes;
     }
 }
