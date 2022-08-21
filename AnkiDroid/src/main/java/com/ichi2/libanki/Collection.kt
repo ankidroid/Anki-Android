@@ -166,7 +166,7 @@ open class Collection(
     @RustCleanup("remove")
     var dirty: Boolean = false
     private var mUsn = 0
-    private var mLs: Long = 0
+    var ls: Long = 0
     // END: SQL table columns
 
     /* this getter is only for syncing routines, use usn() instead elsewhere */
@@ -311,7 +311,7 @@ open class Collection(
             scm = cursor.getLong(2)
             dirty = cursor.getInt(3) == 1 // No longer used
             mUsn = cursor.getInt(4)
-            mLs = cursor.getLong(5)
+            ls = cursor.getLong(5)
             _config = initConf(cursor.getString(6))
             deckConf = cursor.getString(7)
             tags.load(cursor.getString(8))
@@ -387,7 +387,7 @@ open class Collection(
         values.put("scm", scm)
         values.put("dty", if (dirty) 1 else 0)
         values.put("usn", mUsn)
-        values.put("ls", mLs)
+        values.put("ls", ls)
         if (flushConf()) {
             values.put("conf", Utils.jsonToString(conf))
         }
@@ -521,7 +521,7 @@ open class Collection(
 
     /** True if schema changed since last sync.  */
     open fun schemaChanged(): Boolean {
-        return scm > mLs
+        return scm > ls
     }
 
     @KotlinCleanup("maybe change to getter")
@@ -546,7 +546,7 @@ open class Collection(
         tags.beforeUpload()
         decks.beforeUpload()
         modSchemaNoCheck()
-        mLs = scm
+        ls = scm
         Timber.i("Compacting database before full upload")
         // ensure db is compacted before upload
         db.execute("vacuum")
@@ -971,7 +971,6 @@ open class Collection(
     // actual backing store (for instance, if you are previewing unsaved changes on templates)
     // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
     @KotlinCleanup("use card.nid in the query to remove the need for a few variables.")
-    @KotlinCleanup("1 -> Consts.DEFAULT_DECK_ID")
     fun getNewLinkedCard(
         card: Card,
         note: Note,
@@ -1001,7 +1000,7 @@ open class Collection(
         val deck = decks.get(card.did)
         if (deck.isDyn) {
             // must not be a filtered deck
-            card.did = 1
+            card.did = Consts.DEFAULT_DECK_ID
         } else {
             card.did = deck.getLong("id")
         }
@@ -1104,18 +1103,20 @@ open class Collection(
         return rep.toString()
     }
 
+    /** Returned data from [_fieldData] */
+    private data class FieldData(val nid: NoteId, val modelId: NoteTypeId, val flds: String)
+
     /**
      * Field checksums and sorting fields ***************************************
      * ********************************************************
      */
-    @KotlinCleanup("return List<class>")
-    private fun _fieldData(snids: String): ArrayList<Array<Any>> {
-        val result = ArrayList<Array<Any>>(
+    private fun _fieldData(snids: String): ArrayList<FieldData> {
+        val result = ArrayList<FieldData>(
             db.queryScalar("SELECT count() FROM notes WHERE id IN$snids")
         )
         db.query("SELECT id, mid, flds FROM notes WHERE id IN $snids").use { cur ->
             while (cur.moveToNext()) {
-                result.add(arrayOf(cur.getLong(0), cur.getLong(1), cur.getString(2)))
+                result.add(FieldData(nid = cur.getLong(0), modelId = cur.getLong(1), flds = cur.getString(2)))
             }
         }
         return result
@@ -1144,12 +1145,12 @@ open class Collection(
         val data = _fieldData(snids)
         val r = ArrayList<Array<Any>>(data.size)
         for (o in data) {
-            val fields = Utils.splitFields(o[2] as String)
-            val model = models.get((o[1] as Long))
+            val fields = Utils.splitFields(o.flds)
+            val model = models.get(o.modelId)
                 ?: // note point to invalid model
                 continue
             val csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, models.sortIdx(model))
-            r.add(arrayOf(csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o[0]))
+            r.add(arrayOf(csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o.nid))
         }
         // apply, relying on calling code to bump usn+mod
         db.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r)
@@ -1261,30 +1262,6 @@ open class Collection(
         return d
     }
 
-    /**
-     * Return [cid, nid, mid, did, ord, tags, flds, flags] db query
-     */
-    @JvmOverloads
-    @KotlinCleanup("either remove or return class - probably remove?")
-    fun _qaData(where: String = ""): ArrayList<Array<Any?>> {
-        val data = ArrayList<Array<Any?>>()
-        db.query(
-            "SELECT c.id, n.id, n.mid, c.did, c.ord, " +
-                "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where
-        ).use { cur ->
-            while (cur.moveToNext()) {
-                data.add(
-                    arrayOf(
-                        cur.getLong(0), cur.getLong(1),
-                        models.get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
-                        cur.getString(5), cur.getString(6), cur.getInt(7)
-                    )
-                )
-            }
-        }
-        return data
-    }
-
     fun _flagNameFromCardFlags(flags: Int): String {
         val flag = flags and 0b111
         return if (flag == 0) {
@@ -1345,7 +1322,7 @@ open class Collection(
     }
 
     /** Return a list of card ids  */
-    @KotlinCleanup("Remove in V16.") // Not in libAnki
+    @RustCleanup("Remove in V16.") // Not in libAnki
     fun findOneCardByNote(query: String?): List<Long> {
         return Finder(this).findOneCardByNote(query)
     }
@@ -1502,7 +1479,6 @@ open class Collection(
     }
 
     @RustCleanup("Hack for Card Template Previewer, needs review")
-    @KotlinCleanup("named params")
     fun render_output_legacy(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput {
         val f = c.note(reload)
         val m = c.model()
@@ -1516,26 +1492,34 @@ open class Collection(
             val bqfmt = t.getString("bqfmt")
             val bafmt = t.getString("bafmt")
             _renderQA(
-                c.id,
-                m,
-                did,
-                c.ord,
-                f.stringTags(),
-                f.fields,
-                c.internalGetFlags(),
-                browser,
-                bqfmt,
-                bafmt
+                cid = c.id,
+                model = m,
+                did = did,
+                ord = c.ord,
+                tags = f.stringTags(),
+                flist = f.fields,
+                flags = c.internalGetFlags(),
+                browser = browser,
+                qfmtParam = bqfmt,
+                afmtParam = bafmt
             )
         } else {
-            _renderQA(c.id, m, did, c.ord, f.stringTags(), f.fields, c.internalGetFlags())
+            _renderQA(
+                cid = c.id,
+                model = m,
+                did = did,
+                ord = c.ord,
+                tags = f.stringTags(),
+                flist = f.fields,
+                flags = c.internalGetFlags()
+            )
         }
         return TemplateRenderOutput(
-            qa["q"]!!,
-            qa["a"]!!,
-            listOf(),
-            listOf(),
-            c.model().getString("css")
+            question_text = qa["q"]!!,
+            answer_text = qa["a"]!!,
+            question_av_tags = listOf(),
+            answer_av_tags = listOf(),
+            css = c.model().getString("css")
         )
     }
 
@@ -2129,13 +2113,7 @@ open class Collection(
                 try {
                     val flds = cur.getString(1)
                     val id = cur.getLong(0)
-                    @KotlinCleanup("count { }")
-                    var fldsCount = 0
-                    for (i in 0 until flds.length) {
-                        if (flds[i].code == 0x1f) {
-                            fldsCount++
-                        }
-                    }
+                    val fldsCount = flds.count { it.code == 0x1f }
                     if (fldsCount + 1 != m.getJSONArray("flds").length()) {
                         ids.add(id)
                     }
@@ -2259,7 +2237,6 @@ open class Collection(
         }
     }
 
-    @KotlinCleanup("changed array to mutable list")
     fun log(vararg argsParam: Any?) {
         val args = argsParam.toMutableList()
         if (!debugLog) {
@@ -2279,11 +2256,10 @@ open class Collection(
         writeLog(s)
     }
 
-    @KotlinCleanup("remove !! with scope function")
     private fun writeLog(s: String) {
-        if (mLogHnd != null) {
+        mLogHnd?.let {
             try {
-                mLogHnd!!.println(s)
+                it.println(s)
             } catch (e: Exception) {
                 Timber.w(e, "Failed to write to collection log")
             }
@@ -2313,13 +2289,10 @@ open class Collection(
         }
     }
 
-    @KotlinCleanup("remove !! via scope function")
     private fun _closeLog() {
         Timber.i("Closing Collection Log")
-        if (mLogHnd != null) {
-            mLogHnd!!.close()
-            mLogHnd = null
-        }
+        mLogHnd?.close()
+        mLogHnd = null
     }
 
     /**
@@ -2543,11 +2516,6 @@ open class Collection(
     }
 
     //endregion
-
-    @KotlinCleanup("merge with `mLs`")
-    fun setLs(ls: Long) {
-        mLs = ls
-    }
 
     fun setUsnAfterSync(usn: Int) {
         mUsn = usn

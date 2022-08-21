@@ -12,7 +12,6 @@
  */
 package com.ichi2.libanki
 
-import com.ichi2.utils.KotlinCleanup
 import java.io.BufferedWriter
 import java.io.FileOutputStream
 import java.io.IOException
@@ -39,7 +38,6 @@ class TextCardExporter(col: Collection, did: DeckId?, includeHTML: Boolean) : Ex
         val out = StringBuilder()
         for (cid in ids) {
             val c = col.getCard(cid)
-            @KotlinCleanup("use a string template to reduce to a single append() call")
             out.append(esc(c.q()))
             out.append("\t")
             out.append(esc(c.a()))

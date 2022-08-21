@@ -452,7 +452,7 @@ class Syncer(
             // server side; we decide new mod time
             _mod = time.intTimeMS()
         }
-        col.setLs(_mod)
+        col.ls = _mod
         col.setUsnAfterSync(mMaxUsn + 1)
         // ensure we save the mod time even if no changes made
         col.db.mod = true
