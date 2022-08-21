@@ -2,7 +2,6 @@
 package com.wildplot.android.rendering
 
 import android.graphics.Color
-import com.ichi2.utils.KotlinCleanup
 import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
 import com.wildplot.android.rendering.graphics.wrapper.FontMetricsWrap
 import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
@@ -24,20 +23,15 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import java.lang.IllegalArgumentException
 
-@KotlinCleanup("`when` -> whenever")
 class PieChartTest {
     @Mock
-    @KotlinCleanup("lateinit")
     private val mGraphics: GraphicsWrap? = null
 
     @Mock
-    @KotlinCleanup("lateinit")
     private val mPlot: PlotSheet? = null
 
-    @KotlinCleanup("lateinit")
     private var mPieChart: PieChart? = null
 
-    @KotlinCleanup("lateinit")
     private var mColorMockedStatic: MockedStatic<Color>? = null
 
     @Before
