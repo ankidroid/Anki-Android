@@ -14,7 +14,6 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Process
 import android.view.*
 import android.view.animation.Animation
 import android.widget.ProgressBar
@@ -45,6 +44,7 @@ import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.SimpleMessageDialog.SimpleMessageDialogListener
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
@@ -667,44 +667,11 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         return supportActionBar!!
     }
 
-    protected fun showedActivityFailedScreen(savedInstanceState: Bundle?): Boolean {
-        if (AnkiDroidApp.isInitialized()) {
-            return false
-        }
-
-        // #7630: Can be triggered with `adb shell bmgr restore com.ichi2.anki` after AnkiDroid settings are changed.
-        // Application.onCreate() is not called if:
-        // * The App was open
-        // * A restore took place
-        // * The app is reopened (until it exits: finish() does not do this - and removes it from the app list)
-        Timber.w("Activity started with no application instance")
-        showThemedToast(
-            this,
-            getString(R.string.ankidroid_cannot_open_after_backup_try_again),
-            false
+    protected fun showedActivityFailedScreen(savedInstanceState: Bundle?) =
+        showedActivityFailedScreen(
+            savedInstanceState = savedInstanceState,
+            activitySuperOnCreate = { state -> super.onCreate(state) }
         )
-
-        // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
-        // on Importer
-        Themes.setTheme(this)
-        // Avoids a SuperNotCalledException
-        super.onCreate(savedInstanceState)
-        finishActivityWithFade(this)
-
-        // If we don't kill the process, the backup is not "done" and reopening the app show the same message.
-        Thread {
-
-            // 3.5 seconds sleep, as the toast is killed on process death.
-            // Same as the default value of LENGTH_LONG
-            try {
-                Thread.sleep(3500)
-            } catch (e: InterruptedException) {
-                Timber.w(e)
-            }
-            Process.killProcess(Process.myPid())
-        }.start()
-        return true
-    }
 
     companion object {
         const val REQUEST_REVIEW = 901
