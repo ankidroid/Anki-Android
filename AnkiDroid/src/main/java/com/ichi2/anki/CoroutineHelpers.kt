@@ -30,7 +30,6 @@ import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -73,26 +72,16 @@ suspend fun <T> FragmentActivity.runCatchingTask(
 }
 
 /**
- * Calls [runBlocking] while catching errors with [runCatchingTask]
+ * Calls [runBlocking] while catching errors with [runCatchingTask].
+ * This routine has a niche use case - it allows us to integrate coroutines into NanoHTTPD, which runs
+ * request handlers in a synchronous context on a background thread. In most cases, you will want
+ * to use [FragmentActivity.launchCatchingTask] instead.
  */
 fun <T> FragmentActivity.runBlockingCatching(
     errorMessage: String? = null,
     block: suspend CoroutineScope.() -> T?
 ): T? {
     return runBlocking {
-        runCatchingTask(errorMessage) { block() }
-    }
-}
-
-/**
- * Calls [withContext] while catching errors with [runCatchingTask]
- */
-suspend fun <T> FragmentActivity.withContextCatching(
-    coroutineContext: CoroutineContext,
-    errorMessage: String? = null,
-    block: suspend CoroutineScope.() -> T?
-): T? {
-    return withContext(coroutineContext) {
         runCatchingTask(errorMessage) { block() }
     }
 }
