@@ -764,14 +764,14 @@ open class Collection(
     @KotlinCleanup("Check CollectionTask<Int?, Int> - should be fine")
     @KotlinCleanup("change to ArrayList!")
     fun genCards(nids: kotlin.collections.Collection<Long>, model: Model): ArrayList<Long>? {
-        return genCards<CollectionTask<Int?, Int>>(Utils.collection2Array(nids), model)
+        return genCards<CollectionTask<Int, Int>>(Utils.collection2Array(nids), model)
     }
 
     fun <T> genCards(
         nids: kotlin.collections.Collection<Long>,
         model: Model,
         task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         return genCards(Utils.collection2Array(nids), model, task)
     }
 
@@ -784,7 +784,7 @@ open class Collection(
         nid: NoteId,
         model: Model,
         task: T? = null
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         return genCards("($nid)", model, task)
     }
 
@@ -798,7 +798,7 @@ open class Collection(
         nids: LongArray,
         model: Model,
         task: T? = null
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         // build map of (nid,ord) so we don't create dupes
         val snids = Utils.ids2str(nids)
         return genCards(snids, model, task)
@@ -812,11 +812,12 @@ open class Collection(
      * @param <T>
      </T> */
     @KotlinCleanup("see if we can cleanup if (!have.containsKey(nid)) { to a default dict or similar?")
+    @KotlinCleanup("use task framework to handle cancellation, don't return null")
     fun <T> genCards(
         snids: String,
         model: Model,
         task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         val nbCount = noteCount()
         // For each note, indicates ords of cards it contains
         val have = HashUtil.HashMapInit<Long, HashMap<Int, Long>>(nbCount)
@@ -1077,7 +1078,7 @@ open class Collection(
         _remNotes(nids)
     }
 
-    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int?>?, T : CancelListener? {
+    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int>?, T : CancelListener? {
         val rem: MutableList<Long> = ArrayList()
         for (m in models.all()) {
             rem.addAll(genCards(models.nids(m), m, task)!!)

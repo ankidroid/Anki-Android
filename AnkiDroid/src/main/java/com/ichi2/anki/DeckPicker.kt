@@ -2498,7 +2498,7 @@ open class DeckPicker :
         return HandleEmptyCardListener(this)
     }
 
-    private class HandleEmptyCardListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Int?, List<Long?>?>(deckPicker) {
+    private class HandleEmptyCardListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Int, List<Long?>?>(deckPicker) {
         private val mNumberOfCards: Int = deckPicker.col.cardCount()
         private val mOnePercent: Int = mNumberOfCards / 100
         private var mIncreaseSinceLastUpdate = 0
@@ -2531,11 +2531,7 @@ open class DeckPicker :
             }
         }
 
-        @KotlinCleanup("don't handle null")
-        override fun actualOnProgressUpdate(context: DeckPicker, value: Int?) {
-            if (value == null) {
-                return
-            }
+        override fun actualOnProgressUpdate(context: DeckPicker, value: Int) {
             mIncreaseSinceLastUpdate += value
             // Increase each time at least a percent of card has been processed since last update
             if (mIncreaseSinceLastUpdate > mOnePercent) {

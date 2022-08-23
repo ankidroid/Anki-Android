@@ -1323,9 +1323,8 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    @KotlinCleanup("make non-null")
-    class FindEmptyCards : TaskDelegate<Int?, List<Long?>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int?>): List<Long> {
+    class FindEmptyCards : TaskDelegate<Int, List<Long>?>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): List<Long> {
             return col.emptyCids(collectionTask)
         }
     }
