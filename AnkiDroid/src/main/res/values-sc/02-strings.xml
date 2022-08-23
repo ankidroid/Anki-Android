@@ -189,7 +189,7 @@
     <string name="import_error_load_imported_database">Sas sostitutziones de sa base de datos de Anki (.anki2) non sunt galu suportadas. Pòmpia·ti su manuale pro sas istrutziones de sostitutzione.</string>
     <string name="import_error_content_provider">Su documentu ischertadu non podet èssere importadu in manera automàtica dae AnkiDroid. Pòmpia·ti su manuale pro imparare comente importare sos documentos de Anki in automàticu: \n
                               %s</string>
-    <string name="import_error_copy_to_cache">copyFileToCache() fallidu (probabilmente ca non b\'at logu in sa memòria)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() fallidu (probabilmente ca non b\'at logu in sa memòria)</string>
     <string name="import_error_unhandled_scheme">Importatzione non gestida dae: “%s”</string>
     <string name="import_error_multiple_colpkg">Sunt istados seletzionados documentos colpkg mùltiplos.</string>
     <string name="import_error_colpkg_apkg">Siat sos archìvios apkg siat cussos colpkg sunt istados seletzionados paris.</string>

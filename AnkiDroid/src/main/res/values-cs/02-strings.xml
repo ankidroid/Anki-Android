@@ -189,7 +189,7 @@
     <string name="import_error_not_apkg_extension">Název souboru „%s“ nemá příponu .apkg nebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
-    <string name="import_error_copy_to_cache">copyFileToCache() selhalo (asi nedostatek místa v úložišti)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() selhalo (asi nedostatek místa v úložišti)</string>
     <string name="import_error_unhandled_scheme">Nezpracovaný import z: „%s“</string>
     <string name="import_error_multiple_colpkg">Bylo vybráno více colpkg souborů.</string>
     <string name="import_error_colpkg_apkg">Soubory apkg &amp; colpkg byly vybrány najednou.</string>

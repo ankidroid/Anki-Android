@@ -181,7 +181,7 @@
     <string name="import_error_not_apkg_extension">Dateiname »%s« muss auf .apkg oder .colpkg enden</string>
     <string name="import_error_load_imported_database">Anki-Datenbank-Platzhalter (.anki2) werden noch nicht unterstützt. Bitte lesen Sie das Handbuch für entsprechende Anweisungen.</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
-    <string name="import_error_copy_to_cache">copyFileToCache() konnte nicht durchführt werden (evtl. mangelnder Speicherplatz)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() konnte nicht durchführt werden (evtl. mangelnder Speicherplatz)</string>
     <string name="import_error_unhandled_scheme">Unbehandelter Import von: »%s«</string>
     <string name="import_error_multiple_colpkg">Mehrere KOLPKG-Dateien wurden ausgewählt.</string>
     <string name="import_error_colpkg_apkg">Beide apkg &amp; colpkg Dateien wurden auf einmal ausgewählt.</string>

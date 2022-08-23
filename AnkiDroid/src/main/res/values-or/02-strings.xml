@@ -181,7 +181,7 @@
     <string name="import_error_not_apkg_extension">ଫାଇଲ୍ ନାମ “%s” ପାଖରେ .apkg କିମ୍ବା .colpkg extension ନାହିଁ</string>
     <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ପ୍ରତିସ୍ଥାପନ ଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ପ୍ରତିସ୍ଥାପନ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
     <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାବରେ ଆମଦାନୀ କରିବେ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
-    <string name="import_error_copy_to_cache">copyFileToCache() ବିଫଳ ହେଲା (ସମ୍ଭବତଃ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() ବିଫଳ ହେଲା (ସମ୍ଭବତଃ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
     <string name="import_error_unhandled_scheme">“%s” ରୁ ଅନିୟନ୍ତ୍ରିତ ଆମଦାନୀ</string>
     <string name="import_error_multiple_colpkg">ଏକାଧିକ colpkg ଫାଇଲ୍ ଚୟନ କରାଯାଇଥିଲା।</string>
     <string name="import_error_colpkg_apkg">ଉଭୟ apkg ଏବଂ colpkg ଫାଇଲଗୁଡ଼ିକ ଏକାସାଙ୍ଗରେ ଚୟନ କରାଯାଇଥିଲା।</string>

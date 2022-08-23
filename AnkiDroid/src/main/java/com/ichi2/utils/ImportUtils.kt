@@ -185,7 +185,7 @@ object ImportUtils {
                     // Copy to temporary file
                     filename = ensureValidLength(filename)
                     val tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
-                    val errorMessage = if (copyFileToCache(context, data, tempOutDir)) null else context.getString(R.string.import_error_copy_to_cache)
+                    val errorMessage = if (copyFileToCache(context, data, tempOutDir)) null else context.getString(R.string.import_error_copy_file_to_cache)
                     // Show import dialog
                     if (errorMessage != null) {
                         CrashReportService.sendExceptionReport(RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed")

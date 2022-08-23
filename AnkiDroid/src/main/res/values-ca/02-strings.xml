@@ -181,7 +181,7 @@
     <string name="import_error_not_apkg_extension">El nom del fitxer \"%s\" no té l\'extensió .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Les substitucions a la base de dades Anki (.anki2) encara no són suportades. Consulteu el manual per obtenir instruccions de substitució.</string>
     <string name="import_error_content_provider">El fitxer seleccionat no s\'ha importat automàticament per AnkiDroid. Consulteu el manual d\'usuari per com importar arxius anki manualment: \n%s</string>
-    <string name="import_error_copy_to_cache">copyFileToCache() ha fallat (segurament s\'ha acabat l\'espai d\'emmagatzemament)</string>
+    <string name="import_error_copy_file_to_cache">copyFileToCache() ha fallat (segurament s\'ha acabat l\'espai d\'emmagatzemament)</string>
     <string name="import_error_unhandled_scheme">Importació de: \"%s\" no gestionada</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
