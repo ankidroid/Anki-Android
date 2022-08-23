@@ -193,13 +193,13 @@ open class StorageTest : RobolectricTest() {
             MatcherAssert.assertThat(tags, Matchers.equalTo(expected.tags))
         }
 
-        private fun assertDConfEqual(actualConf: String?, expectedConf: String?) {
+        private fun assertDConfEqual(actualConf: String, expectedConf: String) {
             val actualConfiguration = removeUnusedNewIntervalValue(actualConf)
             val expectedConfiguration = removeUnusedNewIntervalValue(expectedConf)
             assertJsonEqual(actualConfiguration, expectedConfiguration)
         }
 
-        private fun removeUnusedNewIntervalValue(actualDecks: String?): String {
+        private fun removeUnusedNewIntervalValue(actualDecks: String): String {
             // remove ints[2] - this is unused. And Anki Desktop is inconsistent with the initial value
 
             // permalinks for defaults (0 is used):
@@ -212,7 +212,7 @@ open class StorageTest : RobolectricTest() {
             return obj.toString()
         }
 
-        private fun assertJsonEqual(actual: String?, expected: String?, vararg keysToRemove: String) {
+        private fun assertJsonEqual(actual: String, expected: String, vararg keysToRemove: String) {
             val expectedRawJson = JSONObject(expected)
             val actualRawJson = JSONObject(actual)
             for (k in keysToRemove) {
