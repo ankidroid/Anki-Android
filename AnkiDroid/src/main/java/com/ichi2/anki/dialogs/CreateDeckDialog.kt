@@ -27,6 +27,7 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.servicelayer.DeckService.deckExists
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
@@ -34,6 +35,7 @@ import com.ichi2.utils.displayKeyboard
 import timber.log.Timber
 import java.util.function.Consumer
 
+@NeedsTest("Ensure a toast is shown on a successful action")
 class CreateDeckDialog(private val context: Context, private val title: Int, private val deckDialogType: DeckDialogType, private val parentId: Long?) {
     private var mPreviousDeckName: String? = null
     private var mOnNewDeckCreated: Consumer<Long>? = null
@@ -136,6 +138,8 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             Timber.i("CreateDeckDialog::createFilteredDeck...")
             val newDeckId = col.decks.newDyn(deckName)
             mOnNewDeckCreated!!.accept(newDeckId)
+            // 11668: Display feedback if a deck is created
+            showThemedToast(context, R.string.deck_created, true)
         } catch (ex: DeckRenameException) {
             showThemedToast(context, ex.getLocalizedMessage(context.resources), false)
             return false
@@ -192,6 +196,8 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
                 val deckId = decks.id(mPreviousDeckName!!)
                 decks.rename(decks.get(deckId), newName)
                 mOnNewDeckCreated!!.accept(deckId)
+                // 11668: Display feedback if a deck is renamed
+                showThemedToast(context, R.string.deck_renamed, true)
             } catch (e: DeckRenameException) {
                 Timber.w(e)
                 // We get a localized string from libanki to explain the error
