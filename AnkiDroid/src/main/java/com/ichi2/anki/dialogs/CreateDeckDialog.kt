@@ -121,6 +121,8 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
     fun createDeck(deckName: String) {
         if (Decks.isValidDeckName(deckName)) {
             createNewDeck(deckName)
+            // 11668: Display feedback if a deck is created
+            showThemedToast(context, R.string.deck_created, true)
         } else {
             Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
             showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
