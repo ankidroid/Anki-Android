@@ -177,7 +177,7 @@
     <string name="import_error_not_apkg_extension">\"%s\" 并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() 失败（可能存储空间不足）</string>
+    <string name="import_error_copy_to_cache">copyFileToCache() 失败（可能存储空间不足）</string>
     <string name="import_error_unhandled_scheme">未处理的导入来自：“%s”</string>
     <string name="import_error_multiple_colpkg">选择了多个 colpkg 文件。</string>
     <string name="import_error_colpkg_apkg">同时选择了 apkg &amp; colpkg 文件。</string>

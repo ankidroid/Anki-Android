@@ -177,7 +177,7 @@
     <string name="import_error_not_apkg_extension">Tên file \"%s\" không chứa định dạng .apkg hoặc .colpkg</string>
     <string name="import_error_load_imported_database">Cơ sở dữ liệu Anki (.anki2) thay thế chưa được hỗ trợ. Vui lòng xem sách hướng dẫn để biết hướng dẫn thay thế.</string>
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp anki: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() không thành công (có thể hết dung lượng lưu trữ)</string>
+    <string name="import_error_copy_to_cache">copyFileToCache() không thành công (có thể hết dung lượng lưu trữ)</string>
     <string name="import_error_unhandled_scheme">Việc nhập chưa xử lý từ: “%s”</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>

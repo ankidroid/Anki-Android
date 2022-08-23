@@ -181,7 +181,7 @@
     <string name="import_error_not_apkg_extension">“%s” എന്ന ഫയലിന്റെ പേരിന് .apkg അല്ലെങ്കിൽ .colpkg വിപുലീകരണം ഇല്ല</string>
     <string name="import_error_load_imported_database">അങ്കി ഡാറ്റാബേസ് (.anki2) മാറ്റിസ്ഥാപിക്കൽ ഇതുവരെ പിന്തുണയ്‌ക്കുന്നില്ല. മാറ്റിസ്ഥാപിക്കാനുള്ള നിർദ്ദേശങ്ങൾക്കായി മാനുവൽ കാണുക.</string>
     <string name="import_error_content_provider">തിരഞ്ഞെടുത്ത ഫയൽ AnkiDroid സ്വപ്രേരിതമായി ഇറക്കുമതി ചെയ്യാൻ കഴിയില്ല. അങ്കി ഫയലുകൾ എങ്ങനെ സ്വമേധയാ ഇറക്കുമതി ചെയ്യാമെന്നതിനുള്ള ഉപയോക്തൃ മാനുവൽ കാണുക: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() പരാജയപ്പെട്ടു (ഒരുപക്ഷേ സംഭരണ ​​സ്ഥലത്തിന് പുറത്തായിരിക്കാം)</string>
+    <string name="import_error_copy_to_cache">copyFileToCache() പരാജയപ്പെട്ടു (ഒരുപക്ഷേ സംഭരണ ​​സ്ഥലത്തിന് പുറത്തായിരിക്കാം)</string>
     <string name="import_error_unhandled_scheme">ഇതിൽ നിന്ന് നിയന്ത്രിക്കാത്ത ഇറക്കുമതി: “%s\"</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>

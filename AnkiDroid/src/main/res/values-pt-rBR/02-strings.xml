@@ -181,7 +181,7 @@
     <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Substituições do banco de dados do Anki (.anki2) não são ainda suportadas. Por favor, consulte o manual para obter instruções de substituição.</string>
     <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos anki: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() falhou (possivelmente sem espaço de armazenamento)</string>
+    <string name="import_error_copy_to_cache">copyFileToCache() falhou (possivelmente sem espaço de armazenamento)</string>
     <string name="import_error_unhandled_scheme">Importação não tratada de: “%s”</string>
     <string name="import_error_multiple_colpkg">Vários arquivos colpkg foram selecionados.</string>
     <string name="import_error_colpkg_apkg">Tanto arquivos apkg &amp; colpkg foram selecionados de uma vez.</string>
