@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">Det finns inte tillräckligt med utrymme för att importera paketet.\nBehövs - %1$s \nTillgänglig - %2$s.\n\nHar du problem? Försök att frigöra utrymme på telefonen om möjligt. Alternativt så använder synkronisering mindre utrymme än import. Du kan försöka importera paketet med en enhet med mer utrymme (till exempel Anki Desktop) och sedan synkronisera det med den här enheten.</string>
     <string name="import_log_file_cache_cleared">Fel vid import av fil, sannolikt en cacherensning under behandling.\nFörsök igen</string>
     <string name="import_succeeded_but_check_database">Dataimport lyckades, men rensningen efter import misslyckades. Kontrollera databasen senare. Rotorsak: %s</string>
-    <string name="import_error_unhandled_request">Det går inte att bearbeta importbegäran</string>
     <string name="import_error_corrupt_zip">apkg-filen är skadad. Vänligen ta bort och ladda ner den igen.\n\nRotorsak: %s</string>
-    <string name="import_error_exception">Det gick inte att importera paket\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filnamnet \"%s\" har varken .apkg eller .colpkg suffix</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) ersättningar stöds inte än. Se manualen för ersättningsinstruktioner.</string>
     <string name="import_error_content_provider">Den valda filen kunde inte importeras automatiskt av AnkiDroid. Vänligen se användarmanualen för information om manuell import av Anki-filer: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() misslyckades (möjligen slut på lagringsutrymme)</string>
-    <string name="import_error_unhandled_scheme">Ohanterad import från: ”%s”</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>

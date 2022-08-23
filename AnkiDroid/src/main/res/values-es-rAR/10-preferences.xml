@@ -50,7 +50,7 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Sin resultados</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>
@@ -201,7 +201,7 @@
     <string name="html_javascript_debugging_summ">Habilitar conexiones remotas de WebView y guardar el HTML de la tarjeta en el directorio AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">Accesibilidad</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Pegar imágenes del portapapeles como PNG</string>
     <string name="paste_as_png_summary">Por defecto Anki pega imágenes en el portapapeles como archivos JPG para ahorrar espacio en disco. Puede utilizar esta opción para pegar como imágenes PNG en su lugar.</string>
@@ -230,7 +230,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Sincronizar media url</string>
     <string name="custom_sync_server_media_url_invalid">URL de sincronización de medios inválida</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Teclado</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Mapeo de comandos</string>
     <!-- studyoptions -->

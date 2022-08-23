@@ -178,19 +178,15 @@
     <string name="import_log_file_cache_cleared">Faddina in s\'importatzione de su documentu, probabilmente un\'isboidamentu de sa memòria temporànea durante s\'elaboratzione.\n
                               Torra a proare</string>
     <string name="import_succeeded_but_check_database">S\'importatzione de sos datos est andada bene ma s\'innetadura a pustis de s\'elaboratzione est fallida. Prus a tardu faghe una verìfica de sa base de datos. Càusa de raighina: %s</string>
-    <string name="import_error_unhandled_request">No est istadu possìbile protzessare sa rechesta de importatzione</string>
     <string name="import_error_corrupt_zip">Su documentu apkg est corrùmpidu. Pro praghere iscantzella·lu e torra·lu a iscarrigare.\n
                               \n
                               Càusa de raighina: %s</string>
-    <string name="import_error_exception">Importatzione de su pachete fallida\n
-                              \n
-                              %s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Su nùmene de su documentu “%s” non tenet un\'estensione .apkg o. colpkg</string>
     <string name="import_error_load_imported_database">Sas sostitutziones de sa base de datos de Anki (.anki2) non sunt galu suportadas. Pòmpia·ti su manuale pro sas istrutziones de sostitutzione.</string>
     <string name="import_error_content_provider">Su documentu ischertadu non podet èssere importadu in manera automàtica dae AnkiDroid. Pòmpia·ti su manuale pro imparare comente importare sos documentos de Anki in automàticu: \n
                               %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() fallidu (probabilmente ca non b\'at logu in sa memòria)</string>
-    <string name="import_error_unhandled_scheme">Importatzione non gestida dae: “%s”</string>
     <string name="import_error_multiple_colpkg">Sunt istados seletzionados documentos colpkg mùltiplos.</string>
     <string name="import_error_colpkg_apkg">Siat sos archìvios apkg siat cussos colpkg sunt istados seletzionados paris.</string>
     <string name="import_stats_error">B\'at àpidu carchi errore in s\'importatzione de sos archìvios sighentes:\n%s</string>

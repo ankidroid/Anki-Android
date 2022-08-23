@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">Няма достатъчно място за импортиране на пакетът\nТрябвало - %1$s \nДостъпно - %2$s.\n\nНещо не е наред? Опитайте се да освободите место на телефона си, ако е възможно. Или опитайте синхронизиране, който заема по-малко място от импортиране. Вие можете да импортирате пакетът на устройство който има повече място (например Anki Desktop) и след това да го синхронизира с това устройството.</string>
     <string name="import_log_file_cache_cleared">Възникна грешка при импортирането на файла, най-вероятно кеш беше изтрит.\nМоля, опитайте отново</string>
     <string name="import_succeeded_but_check_database">Импортирането на данните е успешно, но почистването на след импортирането се провали. Стартирайте проверка на базата данни по-късно. Главна причина: %s</string>
-    <string name="import_error_unhandled_request">Заявката за импортиране не може да бъде обработена</string>
     <string name="import_error_corrupt_zip">Файлът apkg е повреден. Моля, изхвърляйте го и качите го отново.\n\nПървопричина: %s</string>
-    <string name="import_error_exception">Неуспешно импортиране на пакет \n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Замената на базата данни Anki (.anki2) все още не се поддържат. Моля, вижте инструкцията за замена.</string>
     <string name="import_error_content_provider">Избраният файл не можа да бъде импортиран автоматично от AnkiDroid. Моля, вижте ръководството на потребителя за как да ръчно да импортирате anki файлове: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>

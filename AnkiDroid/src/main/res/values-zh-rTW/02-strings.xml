@@ -171,14 +171,12 @@
     <string name="import_log_insufficient_space_error">無足夠空間用於匯入套件包。\n需求 - %1$s\n可用 - %2$s\n\n存在問題？請嘗試清除手機儲存空間。備選方案是利用同步功能，其使用空間量小於匯入。你也許可以在擁有更多空間的裝置上匯入套件包 (比如說 Anki 桌面版) 然後同步至此裝置。</string>
     <string name="import_log_file_cache_cleared">匯出檔案錯誤，似乎在處理時發生了清除快取操作。\n請重試</string>
     <string name="import_succeeded_but_check_database">資料匯出成功，但預匯出清理操作失敗。稍後檢查資料庫。根本原因：%s</string>
-    <string name="import_error_unhandled_request">無法執行匯入請求</string>
     <string name="import_error_corrupt_zip">此 apkg 檔案已損毀。請刪除它再重新下載\n\n根本原因：%s</string>
-    <string name="import_error_exception">無法匯入套件\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">檔案名“%s”不包含 .apkg 或 .colpkg 副檔名</string>
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() 失敗（可能是儲存空間溢出）</string>
-    <string name="import_error_unhandled_scheme">無法處理來自“%s”的匯入</string>
     <string name="import_error_multiple_colpkg">已選擇多個 colpkg 檔案。</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>

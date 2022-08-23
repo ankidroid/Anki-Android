@@ -183,14 +183,12 @@
     <string name="import_log_insufficient_space_error">Недостаточно места для импорта пакета.\nНужно %1$s \nДоступно %2$s.\n\nЧто-то не получается? Попытайтесь освободить место на телефоне. Или попробуйте синхронизацию, для которой нужно меньше места, чем для импорта. Вы можете импортировать пакет на устройстве с большим объемом памяти (например, Anki на компьютере) и синхронизировать его с этим устройством.</string>
     <string name="import_log_file_cache_cleared">Ошибка при импорте файла: скорее всего, был очищен кеш. Попробуйте снова</string>
     <string name="import_succeeded_but_check_database">Импорт данных удался, но очистка — нет. Выполните проверку базы данных. Главная причина: %s</string>
-    <string name="import_error_unhandled_request">Не удаётся обработать запрос на импорт</string>
     <string name="import_error_corrupt_zip">Файл apkg повреждён.Удалите и повторно загрузите его.\n\nПервопричина: %s</string>
-    <string name="import_error_exception">Не удалось импортировать пакет\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">У файла “%s” должно быть расширение .apkg или .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы данных Anki (.anki2) пока не поддерживается. Смотрите руководство для инструкций по замене.</string>
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() не удалось. Возможно недостаточно места</string>
-    <string name="import_error_unhandled_scheme">Необработанный импорт из «%s»</string>
     <string name="import_error_multiple_colpkg">Было выбрано несколько файлов colpkg.</string>
     <string name="import_error_colpkg_apkg">Были выбраны одновременно файлы apkg и colpkg</string>
     <string name="import_stats_error">При импорте этих файлов произошла ошибка:\n%s</string>
