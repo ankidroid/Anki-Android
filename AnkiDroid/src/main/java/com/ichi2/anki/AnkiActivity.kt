@@ -240,10 +240,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         super.addContentView(view, params)
     }
 
-    @KotlinCleanup("Remove deprecation and make it call startActivityWithAnimation(DEFAULT). See: https://github.com/ankidroid/Anki-Android/pull/11699")
-    @Deprecated("", ReplaceWith("startActivityWithAnimation(DEFAULT)"))
     override fun startActivity(intent: Intent) {
-        super.startActivity(intent)
+        startActivityWithAnimation(intent, DEFAULT)
     }
 
     fun startActivityWithoutAnimation(intent: Intent) {

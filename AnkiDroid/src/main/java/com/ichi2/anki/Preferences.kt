@@ -37,7 +37,6 @@ import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.preferences.*
 import com.ichi2.anki.preferences.PreferencesSearchView
@@ -219,7 +218,7 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
             CollectionManager.discardBackend()
             val deckPicker = Intent(this@Preferences, DeckPicker::class.java)
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.DEFAULT)
+            startActivity(deckPicker)
         }
     }
 
