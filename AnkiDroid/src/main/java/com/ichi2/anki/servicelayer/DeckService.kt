@@ -58,4 +58,10 @@ object DeckService {
             "select count() from cards where did in $ids or odid in $ids"
         )
     }
+
+    /**
+     * @return true if the collection contains a deck with the given name
+     */
+    fun deckExists(col: Collection, name: String) =
+        col.decks.byName(name) != null
 }

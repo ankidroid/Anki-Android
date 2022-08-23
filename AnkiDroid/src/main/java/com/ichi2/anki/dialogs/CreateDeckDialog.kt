@@ -19,11 +19,14 @@ package com.ichi2.anki.dialogs
 import android.annotation.SuppressLint
 import android.content.Context
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.servicelayer.DeckService.deckExists
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
@@ -72,12 +75,39 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
                 onPositiveButtonClicked()
             }
             negativeButton(R.string.dialog_cancel)
-            input(prefill = mInitialDeckName)
+            input(prefill = mInitialDeckName, waitForPositiveButton = false) { dialog, text ->
+                // we need the fully-qualified name for subdecks
+                val fullyQualifiedDeckName = fullyQualifyDeckName(dialogText = text)
+                // if the name is empty, it seems distracting to show an error
+                if (!Decks.isValidDeckName(fullyQualifiedDeckName)) {
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
+                    return@input
+                }
+
+                if (deckExists(col, fullyQualifiedDeckName!!)) {
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
+                    dialog.getInputField().error = context.getString(R.string.validation_deck_already_exists)
+                    return@input
+                }
+
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
+            }
             displayKeyboard(getInputField())
         }
         mShownDialog = dialog
         return dialog
     }
+
+    /**
+     * Returns the fully qualified deck name for the provided input
+     * @param dialogText The user supplied text in the dialog
+     * @return [dialogText], or the deck name containing `::` in case of [DeckDialogType.SUB_DECK]
+     */
+    private fun fullyQualifyDeckName(dialogText: CharSequence) =
+        when (deckDialogType) {
+            DeckDialogType.DECK, DeckDialogType.FILTERED_DECK, DeckDialogType.RENAME_DECK -> dialogText.toString()
+            DeckDialogType.SUB_DECK -> col.decks.getSubdeckName(parentId!!, dialogText.toString())
+        }
 
     fun closeDialog() {
         mShownDialog?.dismiss()
