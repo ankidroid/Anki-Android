@@ -66,13 +66,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     /** The name of the parent class (example: 'Reviewer')  */
     private val mActivityName: String
     val dialogHandler = DialogHandler(this)
-    @KotlinCleanup("lateinit")
-    private var mPreviousTheme: Theme? = null
+    private lateinit var mPreviousTheme: Theme
 
-    @KotlinCleanup("lateinit")
-    // custom tabs
-    var customTabActivityHelper: CustomTabActivityHelper? = null
-        private set
+    private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper()
 
     constructor() : super() {
         mActivityName = javaClass.simpleName
@@ -99,7 +95,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        customTabActivityHelper = CustomTabActivityHelper()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.transparent)
         }
@@ -112,7 +107,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     override fun onStart() {
         Timber.i("AnkiActivity::onStart - %s", mActivityName)
         super.onStart()
-        customTabActivityHelper!!.bindCustomTabsService(this)
+        customTabActivityHelper.bindCustomTabsService(this)
         // Reload theme in case it was changed on another activity
         if (mPreviousTheme != Themes.currentTheme) {
             recreate()
@@ -122,7 +117,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     override fun onStop() {
         Timber.i("AnkiActivity::onStop - %s", mActivityName)
         super.onStop()
-        customTabActivityHelper!!.unbindCustomTabsService(this)
+        customTabActivityHelper.unbindCustomTabsService(this)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -415,7 +410,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     }
 
     internal fun mayOpenUrl(url: Uri) {
-        val success = customTabActivityHelper!!.mayLaunchUrl(url, null, null)
+        val success = customTabActivityHelper.mayLaunchUrl(url, null, null)
         if (!success) {
             Timber.w("Couldn't preload url: %s", url.toString())
         }
@@ -440,8 +435,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             .setToolbarColor(toolbarColor)
             .setNavigationBarColor(navBarColor)
             .build()
-        val helper = customTabActivityHelper
-        val builder = CustomTabsIntent.Builder(helper!!.session)
+        val builder = CustomTabsIntent.Builder(customTabActivityHelper.session)
             .setShowTitle(true)
             .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
             .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
@@ -451,7 +445,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
                     R.drawable.ic_back_arrow_custom_tab
                 )
             )
-            .setColorScheme(colorScheme)
+            .setColorScheme(customTabsColorScheme)
             .setDefaultColorSchemeParams(colorSchemeParams)
         val customTabsIntent = builder.build()
         CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent)
@@ -466,8 +460,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         openUrl(getString(url))
     }
 
-    @KotlinCleanup("maybe rename - only for custom tabs")
-    private val colorScheme: Int
+    private val customTabsColorScheme: Int
         get() = if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
             COLOR_SCHEME_SYSTEM
         } else if (Themes.currentTheme.isNightMode) {
