@@ -298,6 +298,8 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         /* Only enable AnkiDroid notifications unrelated to due reminders */
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
+        private const val DEFAULT_ROLLOVER_VALUE: Int = 4
+
         /**
          * The number of cards that should be due today in a deck to justify adding a notification.
          */
@@ -309,7 +311,7 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         @JvmStatic
         fun getDayOffset(col: Collection): Int {
             return when (col.schedVer()) {
-                2 -> col.get_config("rollover", 4.toInt())!!
+                2 -> col.get_config("rollover", DEFAULT_ROLLOVER_VALUE)!!
                 // 1, or otherwise:
                 else -> col.crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
             }
