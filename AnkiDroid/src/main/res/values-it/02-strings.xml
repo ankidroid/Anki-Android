@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">Non c\'è abbastanza spazio per importare il pacchetto.\nNecessario - %1$s \nDisponibile - %2$s.\n\nHai Problemi? Prova a liberare spazio sul tuo telefono, se possibile. In alternativa, la sincronizzazione utilizza meno spazio dell\'importazione. Si può provare a importare il pacchetto con un dispositivo con più spazio (ad esempio Anki Desktop) e quindi sincronizzarlo con questo dispositivo.</string>
     <string name="import_log_file_cache_cleared">Errore nell\'importazione del file, probabilmente una cache pulita durante l\'elaborazione.\nSi prega di riprovare</string>
     <string name="import_succeeded_but_check_database">L\'importazione dei dati ha riuscito ma la pulizia postimportazione no. Esegui il controllo di banca dati più tardi. Causa: %s</string>
-    <string name="import_error_unhandled_request">Impossibile elaborare la richiesta di importazione</string>
     <string name="import_error_corrupt_zip">Il file apkg è corrotto. Si prega di eliminare e ri-scaricarlo.\n\nCausa root: %s</string>
-    <string name="import_error_exception">Impossibile importare il pacchetto\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Il file \"%s\" non ha estensione .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Le sostituzioni di Anki Database (.anki2) non sono ancora supportate. Consultare il manuale per le istruzioni di sostituzione.</string>
     <string name="import_error_content_provider">Il file selezionato non ha potuto essere importato automaticamente da AnkiDroid. Consulta il manuale utente per importare manualmente i file anki: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() fallito (possibilmente una mancanza di spazio di archiviazione)</string>
-    <string name="import_error_unhandled_scheme">Importazione non gestita da: «%s»</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>

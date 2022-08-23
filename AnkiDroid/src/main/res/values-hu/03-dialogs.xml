@@ -255,6 +255,7 @@
     <string name="deck_picker_counts">Nyisd meg a pakli áttekintő oldalát, az tartalamzza a ma megnézendő kártyák számát.</string>
     <string name="import_deck_package">Pakli telepítőcsomag (.apkg)</string>
     <string name="import_collection_package">Gyűjtemény telepítő csomag (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

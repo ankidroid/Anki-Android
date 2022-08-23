@@ -183,14 +183,12 @@
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Chyba pri importovaní súboru, pravdepodobne vymazanie pamäte cache počas spracovávania.\nProsím, skúste znovu</string>
     <string name="import_succeeded_but_check_database">Import dát bol úspešný, avšak čistenie po importe zlyhalo. Skúste neskôr skontrolovať databázu. Hlavná príčina: %s</string>
-    <string name="import_error_unhandled_request">Nedá sa spracovať požiadavka na import</string>
     <string name="import_error_corrupt_zip">Súbor apkg je poškodený. Vymažte ho, prosím, alebo znovu stiahnite..\n\nHlavná príčina: %s</string>
-    <string name="import_error_exception">Nepodarilo sa importovať balík\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Názov súboru “%s” nemá príponu .apkg alebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady anki databázy (.anki2) ešte nie sú podporované. Pozrite si, prosím, manuál pre náhrady.</string>
     <string name="import_error_content_provider">Zvolený súbor nemohol byť importovaný automaticky AnkiDroidom. Pozrite si, prosím, používateľský manuál ako manuálne importovať anki súbory: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() zlyhalo (pravdepodobne nedostatok úložiska)</string>
-    <string name="import_error_unhandled_scheme">Nezvládnutý import z: “%s”</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>

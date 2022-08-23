@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">फाइल आयात करताना त्रुटी, प्रक्रियेदरम्यान कदाचित कॅशे साफ होईल. Lease n कृपया पुन्हा प्रयत्न करा</string>
     <string name="import_succeeded_but_check_database">डेटा आयात यशस्वी झाले परंतु आयातानंतरची साफसफाई अयशस्वी झाली. नंतर चेक डेटाबेस चालवा. मूळ कारणे:%s</string>
-    <string name="import_error_unhandled_request">आयात विनंतीवर प्रक्रिया करण्यात अक्षम</string>
     <string name="import_error_corrupt_zip">Apkg फाईल दूषित आहे. कृपया ते हटवा आणि पुन्हा डाउनलोड करा. \n\n मूळ कारण:%s</string>
-    <string name="import_error_exception">पॅकेज आयात करण्यात अयशस्वी \n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">फाइलनाव \"%s\" मध्ये .apkg किंवा .colpkg विस्तार नाही</string>
     <string name="import_error_load_imported_database">अंकी डेटाबेस (.anki2) बदली अद्याप समर्थित नाहीत. कृपया बदलीच्या सूचनांसाठी मॅन्युअल पहा.</string>
     <string name="import_error_content_provider">Nivaḍalēlī phā\'ila AnkiDroid dvārē svayan̄calitapaṇē āyāta karaṇē śakya navhatē. Kr̥payā ēnkī phā\'ilsa svahastē kaśī āyāta karāvī yābaddala vāparakartā mĕn\'yu\'ala pahā: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache () अयशस्वी (संभाव्यत: संचय स्थानाबाहेर)</string>
-    <string name="import_error_unhandled_scheme">कडून नसलेले आयात: \"%s\"</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>

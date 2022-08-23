@@ -255,6 +255,7 @@
     <string name="deck_picker_counts">Öppna översiktssidan som innehåller antalet kort att se idag.</string>
     <string name="import_deck_package">Kortlekspaket (.apkg)</string>
     <string name="import_collection_package">Samlingspaket (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

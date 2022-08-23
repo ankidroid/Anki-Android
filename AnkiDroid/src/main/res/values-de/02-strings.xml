@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">Es gibt nicht genügend Speicherplatz, um das Paket zu importieren.\nBenötigt - %1$s \nVerfügbar - %2$s.\n\nHaben Sie Probleme? Versuchen Sie, wenn möglich, Platz auf Ihrem Telefon freizugeben. Alternativ verbraucht die Synchronisation weniger Speicherplatz als der Import. Sie können versuchen, das Paket auf einem Gerät mit mehr Speicherplatz zu importieren (z.B. Anki Desktop) und es dann mit diesem Gerät synchronisieren.</string>
     <string name="import_log_file_cache_cleared">Fehler beim Importieren der Datei. Wahrscheinlich wird der Cache während der Verarbeitung gelöscht.\nBitte versuchen Sie es erneut</string>
     <string name="import_succeeded_but_check_database">Der Datenimport war erfolgreich, jedoch ist bei der anschließenden Bereinigung ein Fehler aufgetreten. Hauptursache: %s</string>
-    <string name="import_error_unhandled_request">Importanfrage kann nicht verarbeitet werden</string>
     <string name="import_error_corrupt_zip">Die APKG-Datei ist beschädigt. Bitte löschen und erneut herunterladen.\n\nUrsache: %s</string>
-    <string name="import_error_exception">Paket konnte nicht importiert werden\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dateiname »%s« muss auf .apkg oder .colpkg enden</string>
     <string name="import_error_load_imported_database">Anki-Datenbank-Platzhalter (.anki2) werden noch nicht unterstützt. Bitte lesen Sie das Handbuch für entsprechende Anweisungen.</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache() konnte nicht durchführt werden (evtl. mangelnder Speicherplatz)</string>
-    <string name="import_error_unhandled_scheme">Unbehandelter Import von: »%s«</string>
     <string name="import_error_multiple_colpkg">Mehrere KOLPKG-Dateien wurden ausgewählt.</string>
     <string name="import_error_colpkg_apkg">Beide apkg &amp; colpkg Dateien wurden auf einmal ausgewählt.</string>
     <string name="import_stats_error">Beim Importieren der folgenden Dateien sind einige Fehler aufgetreten:\n%s</string>

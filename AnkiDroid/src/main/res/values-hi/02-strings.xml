@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">फ़ाइल आयात करने में त्रुटि हुई, प्रसंस्करण के दौरान कैश स्पष्ट होने की संभावना है। \n कृपया पुनः प्रयास करें</string>
     <string name="import_succeeded_but_check_database">डेटा आयात सफल रहा, लेकिन आयात के बाद का क्लीनअप विफल रहा। बाद में चेक डेटाबेस चलाएं। मूल कारण : %s</string>
-    <string name="import_error_unhandled_request">आयात अनुरोध संसाधित करने में असमर्थ</string>
     <string name="import_error_corrupt_zip">एपीकेजी फ़ाइल भ्रष्ट है। कृपया हटाएं और इसे फिर से डाउनलोड करें। \n\n कारण:%s</string>
-    <string name="import_error_exception">पैकेज आयात करने में विफल \n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">फ़ाइल नाम \"%s\" में .apkg या .colpkg एक्सटेंशन नहीं है</string>
     <string name="import_error_load_imported_database">अन्कि डाटाबेस (.anki2) प्रतिस्थापन अभीतक सहारा नहीं दिया जाता हैं । कृपया पुस्तिका प्रतिस्थापन के शिक्षण के लिये देखिये ।</string>
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_error_copy_file_to_cache">copyFileToCache () विफल (संभवतः संग्रहण स्थान से बाहर)</string>
-    <string name="import_error_unhandled_scheme">से अनहेल्दी आयात: \"%s\"</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
