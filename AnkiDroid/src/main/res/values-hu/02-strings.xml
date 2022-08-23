@@ -180,7 +180,7 @@
     <string name="import_error_not_apkg_extension">A \"%s\" fájlnévnek nincsen .apkg vagy .colpkg kiterjesztése</string>
     <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
     <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan anki fájlokat:\n%s</string>
-    <string name="import_error_copy_file_to_cache">A copyFileToCache() sikertelen (feltehetőleg nem elég a tárhely)</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Több colpkg fájl lett kiválasztva.</string>
     <string name="import_error_colpkg_apkg">Az apkg &amp; colpkg fájlok egyszerre lettek kiválasztva.</string>
     <string name="import_stats_error">Hibák történtek a következő fájlok importálásánál:\n%s</string>
