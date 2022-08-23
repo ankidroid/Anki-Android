@@ -499,7 +499,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      */
     fun showAsyncDialogFragment(
         newFragment: AsyncDialogFragment,
-        channel: NotificationChannels.Channel?
+        channel: NotificationChannels.Channel
     ) {
         try {
             showDialogFragment(newFragment)
@@ -520,42 +520,19 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * notification bar instead.
      *
      * @param message
-     */
-    @KotlinCleanup("make non-null and use overrides")
-    fun showSimpleMessageDialog(message: String?) {
-        showSimpleMessageDialog(message, false)
-    }
-
-    @KotlinCleanup("make non-null and use overrides")
-    fun showSimpleMessageDialog(title: String?, message: String?) {
-        showSimpleMessageDialog(title, message, false)
-    }
-
-    /**
-     * Show a simple message dialog, dismissing the message without taking any further action when OK button is pressed.
-     * If a DialogFragment cannot be shown due to the Activity being stopped then the message is shown in the
-     * notification bar instead.
-     *
-     * @param message
      * @param reload flag which forces app to be restarted when true
      */
-    @KotlinCleanup("make non-null and use overrides")
-    open fun showSimpleMessageDialog(message: String?, reload: Boolean) {
-        val newFragment: AsyncDialogFragment = SimpleMessageDialog.newInstance(message, reload)
-        showAsyncDialogFragment(newFragment)
-    }
-
-    @KotlinCleanup("make non-null and use overrides")
-    fun showSimpleMessageDialog(title: String?, message: String?, reload: Boolean) {
+    @KotlinCleanup("make message non-null")
+    open fun showSimpleMessageDialog(message: String?, title: String = "", reload: Boolean = false) {
         val newFragment: AsyncDialogFragment = SimpleMessageDialog.newInstance(title, message, reload)
         showAsyncDialogFragment(newFragment)
     }
 
-    @KotlinCleanup("make non-null and use overrides")
+    @KotlinCleanup("make non-null")
     fun showSimpleNotification(
-        title: String?,
+        title: String,
         message: String?,
-        channel: NotificationChannels.Channel?
+        channel: NotificationChannels.Channel
     ) {
         val prefs = AnkiDroidApp.getSharedPrefs(this)
         // Show a notification unless all notifications have been totally disabled
@@ -563,7 +540,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             .toInt() <= Preferences.PENDING_NOTIFICATIONS_ONLY
         ) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
-            var ticker = title
+            var ticker: String? = title
             if (title == resources.getString(R.string.app_name)) {
                 ticker = message
             }

@@ -243,7 +243,7 @@ class MyAccount : AnkiActivity() {
                 }
             } else {
                 val res = AnkiDroidApp.getAppResources()
-                showSimpleMessageDialog(res.getString(messageResource), loginMessage, false)
+                showSimpleMessageDialog(title = res.getString(messageResource), message = loginMessage)
             }
         }
     }
@@ -290,7 +290,11 @@ class MyAccount : AnkiActivity() {
                     val message = resources.getString(R.string.connection_error_message)
                     val result = data.result
                     if (!result.isNullOrEmpty() && result[0] is Exception) {
-                        showSimpleMessageDialog(message, getHumanReadableLoginErrorMessage(result[0] as Exception), false)
+                        showSimpleMessageDialog(
+                            title = message,
+                            message = getHumanReadableLoginErrorMessage(result[0] as Exception),
+                            reload = false
+                        )
                     } else {
                         showSnackbar(message)
                     }

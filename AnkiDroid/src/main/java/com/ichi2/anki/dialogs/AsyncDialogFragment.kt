@@ -27,7 +27,7 @@ abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
        This can happen when the DialogFragment is shown from
        the onPostExecute() method of an AsyncTask */
     abstract val notificationMessage: String?
-    abstract val notificationTitle: String?
+    abstract val notificationTitle: String
     open val dialogHandlerMessage: Message? get() = null
 
     protected fun res(): Resources {
