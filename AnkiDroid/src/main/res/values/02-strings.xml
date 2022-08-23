@@ -426,4 +426,5 @@
 
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
 </resources>
