@@ -341,7 +341,7 @@ open class DeckPicker :
             if (result!!.succeeded()) {
                 context.updateDeckList()
             } else {
-                context.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true)
+                context.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), reload = true)
             }
         }
 
@@ -1333,7 +1333,7 @@ open class DeckPicker :
      */
     private fun showSyncErrorMessage(message: String?) {
         val title = resources.getString(R.string.sync_error)
-        showSimpleMessageDialog(title, message, true)
+        showSimpleMessageDialog(title = title, message = message, reload = true)
     }
 
     /**
@@ -1364,7 +1364,7 @@ open class DeckPicker :
                 }
             } else {
                 val res = AnkiDroidApp.getAppResources()
-                showSimpleMessageDialog(res.getString(messageResource), syncMessage, false)
+                showSimpleMessageDialog(title = res.getString(messageResource), message = syncMessage)
             }
         }
     }
@@ -1508,8 +1508,8 @@ open class DeckPicker :
                 context.mProgressDialog!!.dismiss()
             }
             context.showSimpleMessageDialog(
-                context.resources.getString(R.string.delete_media_result_title),
-                context.resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
+                title = context.resources.getString(R.string.delete_media_result_title),
+                message = context.resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
             )
         }
     }
@@ -2652,7 +2652,7 @@ open class DeckPicker :
                 resources.getString(R.string.check_db_acknowledge)
             }
             // Show result of database check and restart the app
-            showSimpleMessageDialog(msg, true)
+            showSimpleMessageDialog(msg, reload = true)
         }
 
         /**

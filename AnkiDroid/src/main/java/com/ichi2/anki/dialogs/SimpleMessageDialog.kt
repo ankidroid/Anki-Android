@@ -21,7 +21,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.utils.contentNullable
-import com.ichi2.utils.titleNullable
 
 class SimpleMessageDialog : AsyncDialogFragment() {
     interface SimpleMessageDialogListener {
@@ -32,7 +31,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         // FIXME this should be super.onCreateDialog(Bundle), no?
         super.onCreate(savedInstanceState)
         return MaterialDialog(requireActivity()).show {
-            titleNullable(notificationTitle)
+            title(text = notificationTitle)
             contentNullable(notificationMessage)
             positiveButton(R.string.dialog_ok) {
                 (activity as SimpleMessageDialogListener?)
@@ -45,9 +44,9 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         }
     }
 
-    override val notificationTitle: String?
+    override val notificationTitle: String
         get() {
-            val title = requireArguments().getString("title")
+            val title = requireArguments().getString("title")!!
             return if ("" != title) {
                 title
             } else {
@@ -61,13 +60,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         }
 
     companion object {
-        @JvmStatic
-        fun newInstance(message: String?, reload: Boolean): SimpleMessageDialog {
-            return newInstance("", message, reload)
-        }
-
-        @JvmStatic
-        fun newInstance(title: String?, message: String?, reload: Boolean): SimpleMessageDialog {
+        fun newInstance(title: String, message: String?, reload: Boolean): SimpleMessageDialog {
             val f = SimpleMessageDialog()
             val args = Bundle()
             args.putString("title", title)
