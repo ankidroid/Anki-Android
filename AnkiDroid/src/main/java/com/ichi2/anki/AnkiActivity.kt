@@ -1,4 +1,6 @@
 //noinspection MissingCopyrightHeader #8659
+@file:Suppress("LeakingThis") // fine - used as WeakReference
+
 package com.ichi2.anki
 
 import android.app.Activity
@@ -59,10 +61,7 @@ import com.ichi2.utils.AndroidUiUtils
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
-@KotlinCleanup("IDE Lint")
-@KotlinCleanup("Lots to do")
 open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
-    val SIMPLE_NOTIFICATION_ID = 0
 
     /** The name of the parent class (example: 'Reviewer')  */
     private val mActivityName: String
@@ -242,7 +241,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     }
 
     @KotlinCleanup("Remove deprecation and make it call startActivityWithAnimation(DEFAULT). See: https://github.com/ankidroid/Anki-Android/pull/11699")
-    @Deprecated("")
+    @Deprecated("", ReplaceWith("startActivityWithAnimation(DEFAULT)"))
     override fun startActivity(intent: Intent) {
         super.startActivity(intent)
     }
@@ -291,7 +290,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         enableActivityAnimation(animation)
     }
 
-    fun launchActivityForResult(
+    private fun launchActivityForResult(
         intent: Intent?,
         launcher: ActivityResultLauncher<Intent?>,
         animation: Direction?
@@ -337,6 +336,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         enableActivityAnimation(animation)
     }
 
+    @Suppress("MemberVisibilityCanBePrivate")
     protected fun disableViewAnimation(view: View) {
         view.clearAnimation()
     }
@@ -468,7 +468,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         openUrl(getString(url))
     }
 
-    @KotlinCleanup("maybe rename - oonly for custom tabs")
+    @KotlinCleanup("maybe rename - only for custom tabs")
     private val colorScheme: Int
         get() = if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
             COLOR_SCHEME_SYSTEM
@@ -704,5 +704,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             newFragment.show(ft, DIALOG_FRAGMENT_TAG)
             manager.executePendingTransactions()
         }
+
+        private const val SIMPLE_NOTIFICATION_ID = 0
     }
 }
