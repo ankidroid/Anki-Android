@@ -180,7 +180,7 @@
     <string name="import_error_not_apkg_extension">\"%s\" adlı dosyanın uzantısı .apkg veya .colpkg değil</string>
     <string name="import_error_load_imported_database">Anki Veritabanı (.anki2) değiştirmeleri henüz desteklenmiyor. Lütfen değiştirme yönergeleri için kılavuza bakın.</string>
     <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() başarısız oldu (belki depolama alanı bitmiştir)</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Birden fazla colpkg dosyası seçilmiş.</string>
     <string name="import_error_colpkg_apkg">Aynı zamanda hem apkg hem colpkg dosyaları seçilmiş.</string>
     <string name="import_stats_error">Aşağıdaki dosyaları içeri aktarırken hatalar meydana geldi:\n%s</string>

@@ -184,11 +184,11 @@
     <string name="import_log_file_cache_cleared">Chyba při importu souboru, pravděpodobně se během zpracování vyčistila mezipaměť.\nZkuste to prosím znovu</string>
     <string name="import_succeeded_but_check_database">Import dat se zdařil, ale čištění po importu selhalo. Spusťte kontrolu databáze. Příčina: %s</string>
     <string name="import_error_corrupt_zip">Soubor apkg je poškozen. Prosím odstraňte ho a stáhněte ho znovu.\n\nPříčina: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">Nepodařilo se importovat soubor\n\n%s</string>
     <string name="import_error_not_apkg_extension">Název souboru „%s“ nemá příponu .apkg nebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() selhalo (asi nedostatek místa v úložišti)</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Bylo vybráno více colpkg souborů.</string>
     <string name="import_error_colpkg_apkg">Soubory apkg &amp; colpkg byly vybrány najednou.</string>
     <string name="import_stats_error">Došlo k chybám při importu následujících souborů:\n%s</string>
