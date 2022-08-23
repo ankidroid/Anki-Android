@@ -958,7 +958,7 @@ open class DeckPicker :
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
-        if (mToolbarSearchView != null && mToolbarSearchView!!.hasFocus()) {
+        if (mToolbarSearchView?.hasFocus() == true) {
             Timber.d("Skipping keypress: search action bar is focused")
             return true
         }
@@ -2232,7 +2232,7 @@ open class DeckPicker :
                 }
             }
         }
-        val currentFilter = if (mToolbarSearchView != null) mToolbarSearchView!!.query else null
+        val currentFilter = mToolbarSearchView?.query
 
         if (isEmpty) {
             if (supportActionBar != null) {
