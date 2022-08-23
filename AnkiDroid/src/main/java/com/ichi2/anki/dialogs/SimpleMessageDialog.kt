@@ -37,7 +37,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
                 (activity as SimpleMessageDialogListener?)
                     ?.dismissSimpleMessageDialog(
                         requireArguments().getBoolean(
-                            "reload"
+                            ARGS_RELOAD
                         )
                     )
             }
@@ -46,7 +46,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
 
     override val notificationTitle: String
         get() {
-            val title = requireArguments().getString("title")!!
+            val title = requireArguments().getString(ARGS_TITLE)!!
             return if ("" != title) {
                 title
             } else {
@@ -56,16 +56,26 @@ class SimpleMessageDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String?
         get() {
-            return requireArguments().getString("message")
+            return requireArguments().getString(ARGS_MESSAGE)
         }
 
     companion object {
+        /** The title of the notification/dialog */
+        private const val ARGS_TITLE = "title"
+        /** The content of the notification/dialog */
+        private const val ARGS_MESSAGE = "message"
+        /**
+         * If the calling activity should be reloaded when 'OK' is pressed.
+         * @see SimpleMessageDialogListener.dismissSimpleMessageDialog
+         */
+        private const val ARGS_RELOAD = "reload"
+
         fun newInstance(title: String, message: String?, reload: Boolean): SimpleMessageDialog {
             val f = SimpleMessageDialog()
             val args = Bundle()
-            args.putString("title", title)
-            args.putString("message", message)
-            args.putBoolean("reload", reload)
+            args.putString(ARGS_TITLE, title)
+            args.putString(ARGS_MESSAGE, message)
+            args.putBoolean(ARGS_RELOAD, reload)
             f.arguments = args
             return f
         }
