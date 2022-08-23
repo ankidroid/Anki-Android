@@ -20,7 +20,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.text.TextUtils
 import androidx.browser.customtabs.CustomTabsService
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 /**
@@ -34,8 +33,6 @@ object CustomTabsHelper {
     private const val EXTRA_CUSTOM_TABS_KEEP_ALIVE = "android.support.customtabs.extra.KEEP_ALIVE"
     private var sPackageNameToUse: String? = null
 
-    @JvmStatic
-    @KotlinCleanup("the !! could be removed and the warning suppressed as it will return a non null value")
     fun addKeepAliveExtra(context: Context, intent: Intent) {
         val keepAliveIntent = Intent().setClassName(
             context.packageName,
@@ -54,11 +51,9 @@ object CustomTabsHelper {
      * @param context [Context] to use for accessing [PackageManager].
      * @return The package name recommended to use for connecting to custom tabs related components.
      */
-    @JvmStatic
-    @KotlinCleanup("AFTER fixing @KotlinCleanup for CustomTabActivityHelper see if context can be non null")
-    fun getPackageNameToUse(context: Context?): String? {
+    fun getPackageNameToUse(context: Context): String? {
         if (sPackageNameToUse != null) return sPackageNameToUse
-        val pm = context!!.packageManager
+        val pm = context.packageManager
         // Get default VIEW intent handler.
         val activityIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"))
         val defaultViewHandlerInfo = pm.resolveActivity(activityIntent, 0)
