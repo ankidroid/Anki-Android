@@ -30,10 +30,17 @@ import com.ichi2.libanki.template.Tokenizer.TokenKind.CLOSE_CONDITIONAL
 import com.ichi2.libanki.template.Tokenizer.TokenKind.OPEN_CONDITIONAL
 import com.ichi2.libanki.template.Tokenizer.TokenKind.OPEN_NEGATED
 import com.ichi2.libanki.template.Tokenizer.TokenKind.REPLACEMENT
+import com.ichi2.libanki.template.Tokenizer.classify_handle
+import com.ichi2.libanki.template.Tokenizer.handlebar_token
+import com.ichi2.libanki.template.Tokenizer.legacy_handlebar_token
+import com.ichi2.libanki.template.Tokenizer.new_handlebar_token
+import com.ichi2.libanki.template.Tokenizer.new_to_legacy
+import com.ichi2.libanki.template.Tokenizer.next_token
+import com.ichi2.libanki.template.Tokenizer.text_token
+import com.ichi2.testutils.assertThrows
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
-import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -371,16 +378,14 @@ class TokenizerTest : RobolectricTest() {
             legacy_tokenizer.next(),
             equalTo(Tokenizer.Token(Tokenizer.TokenKind.TEXT, "iee "))
         )
-        try {
+        assertThrows<NoClosingBrackets> {
             tokenizer.next()
-            fail()
-        } catch (exc: NoClosingBrackets) {
+        }.let { exc ->
             assertThat(exc.remaining, equalTo("{{!ien nnr"))
         }
-        try {
+        assertThrows<NoClosingBrackets> {
             legacy_tokenizer.next()
-            fail()
-        } catch (exc: NoClosingBrackets) {
+        }.let { exc ->
             assertThat(exc.remaining, equalTo("<%!ien nnr"))
         }
         assertThat(tokenizer.hasNext(), equalTo(false))
