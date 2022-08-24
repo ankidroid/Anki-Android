@@ -127,8 +127,10 @@ private suspend fun handleNormalSync(
     HostNumFactory.getInstance(deckPicker).setHostNum(output.hostNumber)
 
     when (output.required) {
+        // a successful sync returns this value
         SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
-            // a successful sync returns this value
+            // scheduler version may have changed
+            withCol { _loadScheduler() }
             deckPicker.showSyncLogMessage(R.string.sync_database_acknowledge, output.serverMessage)
             deckPicker.refreshState()
             // kick off media sync - future implementations may want to run this in the

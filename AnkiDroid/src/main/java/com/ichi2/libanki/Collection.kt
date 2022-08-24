@@ -483,6 +483,9 @@ open class Collection(
             dbInternal = db_
             media.connect()
             _openLog()
+            if (afterFullSync) {
+                _loadScheduler()
+            }
             return created
         } else {
             return false
