@@ -128,7 +128,7 @@ class PieChartTest {
             return r
         }
 
-        private fun closeTo(v: Double): FloatMatcher {
+        private fun closeTo(v: Double): (Float) -> Boolean {
             return FloatMatcher.closeTo(v, PRECISION)
         }
     }
