@@ -14,48 +14,31 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.template;
+package com.ichi2.libanki.template
 
-import java.util.Map;
-import java.util.Set;
+import java.lang.StringBuilder
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public class Text extends ParsedNode {
-    private final String mText;
-
-
-    public Text(String text) {
-        this.mText = text;
+class Text(private val text: String) : ParsedNode() {
+    override fun template_is_empty(nonempty_fields: Set<String>): Boolean {
+        return true
     }
 
-
-    @Override
-    public boolean template_is_empty(@NonNull Set<String> nonempty_fields) {
-        return true;
+    override fun render_into(
+        fields: Map<String, String>,
+        nonempty_fields: Set<String>,
+        builder: StringBuilder
+    ) {
+        builder.append(text)
     }
 
-
-    @Override
-    public void render_into(Map<String, String> fields, Set<String> nonempty_fields, StringBuilder builder) {
-        builder.append(mText);
-    }
-
-
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (! (obj instanceof Text)) {
-            return false;
+    override fun equals(other: Any?): Boolean {
+        if (other !is Text) {
+            return false
         }
-        Text other = (Text) obj;
-        return other.mText.equals(mText);
+        return other.text == text
     }
 
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "new Text(\"" + mText.replace("\\", "\\\\").replace("\"", "\\\"")+ "\")";
+    override fun toString(): String {
+        return "new Text(\"" + text.replace("\\", "\\\\").replace("\"", "\\\"") + "\")"
     }
 }
