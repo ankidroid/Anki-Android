@@ -258,7 +258,7 @@ class MyAccount : AnkiActivity() {
 
         override fun onPreExecute() {
             Timber.d("loginListener.onPreExecute()")
-            if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
+            if (mProgressDialog?.isShowing != true) {
                 mProgressDialog = StyledProgressDialog.show(
                     this@MyAccount, null,
                     resources.getString(R.string.alert_logging_message), false
