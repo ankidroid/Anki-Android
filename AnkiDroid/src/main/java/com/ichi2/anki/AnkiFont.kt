@@ -127,7 +127,7 @@ class AnkiFont private constructor(val name: String, private val family: String,
                 if (!corruptFonts.contains(path)) {
                     // Show warning toast
                     val name = File(path).name
-                    val res = AnkiDroidApp.getAppResources()
+                    val res = AnkiDroidApp.appResources
                     UIUtils.showThemedToast(ctx, res.getString(R.string.corrupt_font, name), false)
                     // Don't warn again in this session
                     corruptFonts.add(path)

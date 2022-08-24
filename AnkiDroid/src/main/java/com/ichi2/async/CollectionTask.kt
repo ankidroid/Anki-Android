@@ -125,7 +125,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             }
         }
         TaskManager.setLatestInstance(this)
-        context = AnkiDroidApp.getInstance().applicationContext
+        context = AnkiDroidApp.instance.applicationContext
 
         // Skip the task if the collection cannot be opened
         if (task.requiresOpenCollection() && CollectionHelper.getInstance().getColSafe(context) == null) {
@@ -779,7 +779,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Pair<Boolean, CheckDatabaseResult?> {
             Timber.d("doInBackgroundCheckDatabase")
             // Don't proceed if collection closed
-            val result = col.fixIntegrity(TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.getAppResources()))
+            val result = col.fixIntegrity(TaskManager.ProgressCallback(collectionTask, AnkiDroidApp.appResources))
             return if (result.failed) {
                 // we can fail due to a locked database, which requires knowledge of the failure.
                 Pair(false, result)
@@ -854,7 +854,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, Triple<List<AnkiPackageImporter>?, Boolean, String?>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Triple<List<AnkiPackageImporter>?, Boolean, String?> {
             Timber.d("doInBackgroundImportAdd")
-            val res = AnkiDroidApp.getInstance().baseContext.resources
+            val res = AnkiDroidApp.instance.baseContext.resources
 
             var impList = arrayListOf<AnkiPackageImporter>()
             var errFlag = false
@@ -881,7 +881,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     class ImportReplace(private val pathList: List<String>) : TaskDelegate<String, Computation<*>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Computation<*> {
             Timber.d("doInBackgroundImportReplace")
-            val res = AnkiDroidApp.getInstance().baseContext.resources
+            val res = AnkiDroidApp.instance.baseContext.resources
             val context = col.context
             val colPath = CollectionHelper.getCollectionPath(context)
             // extract the deck from the zip file

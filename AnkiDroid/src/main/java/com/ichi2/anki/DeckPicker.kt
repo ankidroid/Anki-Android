@@ -514,7 +514,7 @@ open class DeckPicker :
                 message(
                     text = getString(
                         R.string.ankidroid_init_failed_webview,
-                        AnkiDroidApp.getWebViewErrorMessage()
+                        AnkiDroidApp.webViewErrorMessage
                     )
                 )
                 positiveButton(R.string.close) {
@@ -1340,7 +1340,7 @@ open class DeckPicker :
     @KotlinCleanup("nullOrEmpty")
     fun showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
         if (mActivityPaused) {
-            val res = AnkiDroidApp.getAppResources()
+            val res = AnkiDroidApp.appResources
             showSimpleNotification(
                 res.getString(R.string.app_name),
                 res.getString(messageResource),
@@ -1360,7 +1360,7 @@ open class DeckPicker :
                     showSnackbar(messageResource)
                 }
             } else {
-                val res = AnkiDroidApp.getAppResources()
+                val res = AnkiDroidApp.appResources
                 showSimpleMessageDialog(title = res.getString(messageResource), message = syncMessage)
             }
         }
@@ -2599,7 +2599,7 @@ open class DeckPicker :
     internal inner class CheckDatabaseListener : TaskListener<String, Pair<Boolean, CheckDatabaseResult?>?>() {
         override fun onPreExecute() {
             mProgressDialog = StyledProgressDialog.show(
-                this@DeckPicker, AnkiDroidApp.getAppResources().getString(R.string.app_name),
+                this@DeckPicker, AnkiDroidApp.appResources.getString(R.string.app_name),
                 resources.getString(R.string.check_db_message), false
             )
         }

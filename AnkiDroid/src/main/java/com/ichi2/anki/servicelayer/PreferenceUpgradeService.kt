@@ -365,7 +365,7 @@ object PreferenceUpgradeService {
                     }
                     remove("invertedColors")
                 }
-                if (AnkiDroidApp.isInitialized()) {
+                if (AnkiDroidApp.isInitialized) {
                     Themes.updateCurrentTheme()
                 }
             }

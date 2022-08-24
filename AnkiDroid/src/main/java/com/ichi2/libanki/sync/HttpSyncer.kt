@@ -137,7 +137,7 @@ open class HttpSyncer(
                 buf.write(bdry + "\r\n")
                 buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", key, value))
             }
-            tmpFileBuffer = File.createTempFile("syncer", ".tmp", File(AnkiDroidApp.getCacheStorageDirectory()))
+            tmpFileBuffer = File.createTempFile("syncer", ".tmp", File(AnkiDroidApp.cacheStorageDirectory))
             val fos = FileOutputStream(tmpFileBuffer)
             var bos = BufferedOutputStream(fos)
             val tgt: GZIPOutputStream
@@ -299,7 +299,7 @@ open class HttpSyncer(
         }
     }
 
-    val preferences: SharedPreferences get() = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+    val preferences: SharedPreferences get() = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
 
     open fun getDefaultSyncUrl() = "https://sync${hostNum ?: ""}.ankiweb.net/sync/"
 

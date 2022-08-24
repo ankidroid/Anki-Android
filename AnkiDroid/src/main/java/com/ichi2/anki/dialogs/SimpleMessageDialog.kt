@@ -50,7 +50,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
             return if ("" != title) {
                 title
             } else {
-                AnkiDroidApp.getAppResources().getString(R.string.app_name)
+                AnkiDroidApp.appResources.getString(R.string.app_name)
             }
         }
 

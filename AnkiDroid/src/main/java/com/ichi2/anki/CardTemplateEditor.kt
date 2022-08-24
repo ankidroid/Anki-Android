@@ -646,7 +646,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         private fun launchCardBrowserAppearance(currentTemplate: JSONObject) {
-            val context = AnkiDroidApp.getInstance().baseContext
+            val context = AnkiDroidApp.instance.baseContext
             @KotlinCleanup("remove if block (bug has been fixed already)")
             if (context == null) {
                 // Catch-22, we can't notify failure as there's no context. Shouldn't happen anyway
@@ -743,7 +743,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             private var mProgressDialog: android.app.ProgressDialog? = null
             override fun actualOnPreExecute(context: CardTemplateFragment) {
                 Timber.d("saveModelAndExitHandler::preExecute called")
-                mProgressDialog = StyledProgressDialog.show(context.mTemplateEditor, AnkiDroidApp.getAppResources().getString(R.string.saving_model), context.resources.getString(R.string.saving_changes), false)
+                mProgressDialog = StyledProgressDialog.show(context.mTemplateEditor, AnkiDroidApp.appResources.getString(R.string.saving_model), context.resources.getString(R.string.saving_changes), false)
             }
 
             override fun actualOnPostExecute(context: CardTemplateFragment, result: Pair<Boolean, String?>?) {

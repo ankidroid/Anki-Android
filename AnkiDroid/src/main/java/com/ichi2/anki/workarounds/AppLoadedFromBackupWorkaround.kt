@@ -41,7 +41,7 @@ object AppLoadedFromBackupWorkaround {
      * displayed and the app will be killed. `false` if the app started normally
      */
     fun Activity.showedActivityFailedScreen(savedInstanceState: Bundle?, activitySuperOnCreate: (Bundle?) -> Unit): Boolean {
-        if (AnkiDroidApp.isInitialized()) {
+        if (AnkiDroidApp.isInitialized) {
             return false
         }
 

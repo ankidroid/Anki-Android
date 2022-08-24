@@ -61,19 +61,19 @@ enum class SyncStatus {
 
         private val isDisabled: Boolean
             get() {
-                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
         val isLoggedIn: Boolean
             get() {
-                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
                 val hkey = preferences.getString("hkey", "")
                 return hkey != null && hkey.length != 0
             }
 
         /** Whether data has been changed - to be converted to Rust  */
         fun hasDatabaseChanges(): Boolean {
-            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).getBoolean("changesSinceLastSync", false)
+            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).getBoolean("changesSinceLastSync", false)
         }
 
         /** To be converted to Rust  */
@@ -82,7 +82,7 @@ enum class SyncStatus {
                 return
             }
             sMarkedInMemory = true
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).edit().putBoolean("changesSinceLastSync", true).apply()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit().putBoolean("changesSinceLastSync", true).apply()
         }
 
         /** To be converted to Rust  */
@@ -90,7 +90,7 @@ enum class SyncStatus {
         @JvmStatic
         fun markSyncCompleted() {
             sMarkedInMemory = false
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).edit().putBoolean("changesSinceLastSync", false).apply()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit().putBoolean("changesSinceLastSync", false).apply()
         }
 
         @JvmStatic

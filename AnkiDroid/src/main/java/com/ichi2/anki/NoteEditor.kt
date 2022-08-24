@@ -2201,12 +2201,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         private const val PREF_NOTE_EDITOR_CUSTOM_BUTTONS = "note_editor_custom_buttons"
 
         private fun shouldReplaceNewlines(): Boolean {
-            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
                 .getBoolean(PREF_NOTE_EDITOR_NEWLINE_REPLACE, true)
         }
 
         private fun shouldHideToolbar(): Boolean {
-            return !AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+            return !AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
                 .getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)
         }
     }

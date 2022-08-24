@@ -107,7 +107,7 @@ object TemplateFilters {
                 }
             } catch (e: Exception) {
                 Timber.e(e, "Exception while running hook %s", filter)
-                AnkiDroidApp.getAppResources().getString(R.string.filter_error, filter)
+                AnkiDroidApp.appResources.getString(R.string.filter_error, filter)
             }
         }
     }
@@ -116,7 +116,7 @@ object TemplateFilters {
         if (txt.trim { it <= ' ' }.length == 0) {
             return ""
         }
-        val res = AnkiDroidApp.getAppResources()
+        val res = AnkiDroidApp.appResources
         // random id
         val domId = "hint" + txt.hashCode()
         return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +
