@@ -688,7 +688,7 @@ open class Collection(
         return ncards
     }
 
-    fun remNotes(ids: LongArray?) {
+    open fun remNotes(ids: LongArray) {
         val list = db
             .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids))
         remCards(list)
@@ -1462,6 +1462,15 @@ open class Collection(
         return lastUndo.undo(this)
     }
 
+    @BlocksSchemaUpgrade("audit all UI actions that call this, and make sure they call a backend method")
+    @RustCleanup("this will be unnecessary after legacy schema dropped")
+    /**
+     * In the legacy schema, this adds the undo action to the undo list.
+     * In the new schema, this action is not useful, as the backend stores its own
+     * undo information, and will clear the [undo] list when the backend has an undo
+     * operation available. If you find an action is not undoable with the new backend,
+     * you probably need to be calling the relevant backend method to perform it,
+     * instead of trying to do it with raw SQL. */
     fun markUndo(undoAction: UndoAction) {
         Timber.d("markUndo() of type %s", undoAction.javaClass)
         undo.add(undoAction)

@@ -219,6 +219,10 @@ class CollectionV16(
         return super.undo()
     }
 
+    override fun remNotes(ids: LongArray) {
+        backend.removeNotes(noteIds = ids.asIterable(), cardIds = listOf())
+    }
+
     /** True if the V3 scheduled is enabled when schedVer is 2. */
     var v3Enabled: Boolean
         get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
