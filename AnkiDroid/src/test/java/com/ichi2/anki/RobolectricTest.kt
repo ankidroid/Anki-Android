@@ -347,11 +347,11 @@ open class RobolectricTest : CollectionGetter {
         return startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
     }
 
-    protected fun addNoteUsingBasicModel(front: String?, back: String?): Note {
+    protected fun addNoteUsingBasicModel(front: String, back: String): Note {
         return addNoteUsingModelName("Basic", front, back)
     }
 
-    protected fun addRevNoteUsingBasicModelDueToday(front: String?, back: String?): Note {
+    protected fun addRevNoteUsingBasicModelDueToday(front: String, back: String): Note {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
@@ -360,22 +360,22 @@ open class RobolectricTest : CollectionGetter {
         return note
     }
 
-    protected fun addNoteUsingBasicAndReversedModel(front: String?, back: String?): Note {
+    protected fun addNoteUsingBasicAndReversedModel(front: String, back: String): Note {
         return addNoteUsingModelName("Basic (and reversed card)", front, back)
     }
 
-    protected fun addNoteUsingBasicTypedModel(front: String?, back: String?): Note {
+    protected fun addNoteUsingBasicTypedModel(front: String, back: String): Note {
         return addNoteUsingModelName("Basic (type in the answer)", front, back)
     }
 
-    protected fun addNoteUsingModelName(name: String?, vararg fields: String?): Note {
+    protected fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
         val model = col.models.byName((name)!!)
             ?: throw IllegalArgumentException(String.format("Could not find model '%s'", name))
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
         val n = col.newNote(model)
-        for (i in 0 until fields.size) {
-            n.setField(i, fields[i])
+        for ((i, field) in fields.withIndex()) {
+            n.setField(i, field)
         }
         check(col.addNote(n) != 0) { String.format("Could not add note: {%s}", fields.joinToString(separator = ", ")) }
         return n

@@ -106,7 +106,7 @@ object NoteService {
             }
             val totalFields: Int = mmNote.numberOfFields
             for (i in 0 until totalFields) {
-                editorNoteDst.values()[i] = mmNote.getField(i)!!.formattedValue
+                editorNoteDst.values()[i] = mmNote.getField(i)!!.formattedValue!!
             }
         }
     }

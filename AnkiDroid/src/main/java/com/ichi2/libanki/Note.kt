@@ -46,8 +46,7 @@ class Note : Cloneable {
         private set
     lateinit var tags: ArrayList<String>
         private set
-    @KotlinCleanup("make non-null")
-    lateinit var fields: Array<String?>
+    lateinit var fields: Array<String>
         private set
     private var mFlags = 0
     private var mData: String? = null
@@ -72,8 +71,7 @@ class Note : Cloneable {
         mModel = model
         mid = model.getLong("id")
         tags = ArrayList()
-        fields = arrayOfNulls(model.getJSONArray("flds").length())
-        Arrays.fill(fields, "")
+        fields = Array(model.getJSONArray("flds").length()) { "" }
         mFlags = 0
         mData = ""
         mFMap = Models.fieldMap(mModel)
@@ -191,7 +189,7 @@ class Note : Cloneable {
         return mFMap!!.keys.toTypedArray()
     }
 
-    fun values(): Array<String?> {
+    fun values(): Array<String> {
         return fields
     }
 
@@ -221,11 +219,11 @@ class Note : Cloneable {
         return fieldPair.first
     }
 
-    fun getItem(key: String): String? {
+    fun getItem(key: String): String {
         return fields[_fieldOrd(key)]
     }
 
-    fun setItem(key: String, value: String?) {
+    fun setItem(key: String, value: String) {
         fields[_fieldOrd(key)] = value
     }
 
@@ -288,7 +286,7 @@ class Note : Cloneable {
      */
     fun dupeOrEmpty(): DupeOrEmpty {
         val `val` = fields[0]
-        if (`val`!!.trim { it <= ' ' }.length == 0) {
+        if (`val`.trim { it <= ' ' }.length == 0) {
             return DupeOrEmpty.EMPTY
         }
         val csumAndStrippedFieldField = Utils.sfieldAndCsum(
@@ -337,7 +335,7 @@ class Note : Cloneable {
     val sFld: String
         get() = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
-    fun setField(index: Int, value: String?) {
+    fun setField(index: Int, value: String) {
         fields[index] = value
     }
 
