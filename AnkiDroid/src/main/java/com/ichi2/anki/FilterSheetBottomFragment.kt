@@ -17,7 +17,6 @@
 package com.ichi2.anki
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -36,6 +35,7 @@ import anki.search.SearchNodeKt.group
 import anki.search.searchNode
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.libanki.bool
@@ -80,16 +80,22 @@ class FilterSheetBottomFragment :
         val applyButton = this.findViewById<Button>(R.id.apply_filter_button)
         applyButton.setOnClickListener {
             val filterQuery = createQuery(flagSearchItems)
-
-            if (filterQuery != "") {
-                (activity as CardBrowser).searchWithFilterQuery(filterQuery)
-            }
+            (activity as CardBrowser).searchWithFilterQuery(filterQuery)
             dismiss()
         }
 
         // Close the filter sheet
         val cancelButton = this.findViewById<Button>(R.id.cancel_filter_button)
         cancelButton.setOnClickListener {
+            dismiss()
+        }
+
+        /* Clear the selected filters, search with no filters applied to show all the cards
+           and close the filter sheet */
+        val clearButton = this.findViewById<Button>(R.id.clear_filter_button)
+        clearButton.setOnClickListener {
+            clearQuery()
+            (activity as CardBrowser).searchWithFilterQuery("")
             dismiss()
         }
     }
@@ -141,17 +147,6 @@ class FilterSheetBottomFragment :
         }
     }
 
-    /**
-     * Clear the filters if Bottom Sheet is dismissed
-     * TODO: Filters should be retained on swiping down
-     * (user might swipe down accidentally)
-     */
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-
-        clearQuery()
-    }
-
     private fun createQuery(
         flagList: Set<SearchNode.Flag>
     ): String {
@@ -188,12 +183,11 @@ class FilterSheetBottomFragment :
     /**
      * Add/remove items from list of selected filters
      * Change background color accordingly
-     * TODO: background color should be retained if selected and swiped down
      */
 
     inner class FlagsAdapter(
         /** The collection of data to be displayed*/
-        private var dataset: Array<Flags>,
+        private var dataset: Array<Flags>
     ) :
         RecyclerView.Adapter<FlagsAdapter.ViewHolder>() {
 
@@ -204,7 +198,7 @@ class FilterSheetBottomFragment :
             private fun onFlagItemClicked(item: Flags, position: Int) {
                 val itemTextView = flagRecyclerView[position].findViewById<TextView>(R.id.filter_list_item)
 
-                if (!isSelected(item, flagSearchItems)) {
+                if (!isSelected(item)) {
                     itemView.setBackgroundColor(getColorFromAttr(R.attr.filterItemBackgroundSelected))
                     itemTextView.setTextColor(getColorFromAttr(R.attr.filterItemTextColorSelected))
 
@@ -224,12 +218,19 @@ class FilterSheetBottomFragment :
                 itemTextView.text = currFlag.getFlagName(itemView.context)
                 icon.setImageResource(currFlag.flagIcon)
 
+                // If [currFlag] is currently selected, bind the view with the selected item background and text color
+                @NeedsTest("Test if background color is being correctly set if item is selected")
+                if (isSelected(currFlag)) {
+                    itemView.setBackgroundColor(getColorFromAttr(context, R.attr.filterItemBackgroundSelected))
+                    itemTextView.setTextColor(getColorFromAttr(context, R.attr.filterItemTextColorSelected))
+                }
+
                 itemView.setOnClickListener {
                     onFlagItemClicked(currFlag, position)
                 }
             }
 
-            fun isSelected(flag: Flags, flagSearchItems: Set<SearchNode.Flag>): bool {
+            fun isSelected(flag: Flags): bool {
                 return flagSearchItems.contains(flag.flagNode)
             }
         }
