@@ -38,9 +38,9 @@ package com.ichi2.utils
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.AnkiAssert.assertThrows
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.assertThrows
+import com.ichi2.testutils.assertThrowsSubclass
 import junit.framework.TestCase.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull.notNullValue
@@ -70,45 +70,29 @@ class JSONObjectTest {
         assertNull(testObject.toJSONArray(JSONArray()))
         assertEquals("{}", testObject.toString())
         assertEquals("{}", testObject.toString(5))
-        try {
+        assertThrows<JSONException> {
             testObject["foo"]
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.getBoolean("foo")
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.getDouble("foo")
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.getInt("foo")
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.getJSONArray("foo")
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.getJSONObject("foo")
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.getLong("foo")
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.getString("foo")
-            fail()
-        } catch (e: JSONException) {
         }
         assertFalse(testObject.has("foo"))
         assertTrue(testObject.isNull("foo")) // isNull also means "is not present"
@@ -145,10 +129,8 @@ class JSONObjectTest {
         testObject.put("bar", Any())
         testObject.put("baz", Any())
         assertSame(value, testObject["foo"])
-        try {
+        assertThrows<JSONException> {
             testObject["FOO"]
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -177,10 +159,8 @@ class JSONObjectTest {
         testObject.put("foo", null)
         assertEquals(0, testObject.length())
         assertFalse(testObject.has("foo"))
-        try {
+        assertThrows<JSONException> {
             testObject["foo"]
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -199,20 +179,14 @@ class JSONObjectTest {
     @Test
     fun testPutOptUnsupportedNumbers() {
         val testObject = JSONObject()
-        try {
+        assertThrows<JSONException> {
             testObject.putOpt("foo", Double.NaN)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.putOpt("foo", Double.NEGATIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.putOpt("foo", Double.POSITIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -319,20 +293,14 @@ class JSONObjectTest {
     @Test
     fun testFloats() {
         val testObject = JSONObject()
-        try {
+        assertThrows<JSONException> {
             testObject.put("foo", Float.NaN)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.put("foo", Float.NEGATIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.put("foo", Float.POSITIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -361,10 +329,9 @@ class JSONObjectTest {
             }
         }
         val testObject = JSONObject()
-        try {
+        assertThrows<JSONException> {
             testObject.put("foo", nan)
             fail("Object.put() accepted a NaN (via a custom Number class)")
-        } catch (e: JSONException) {
         }
     }
 
@@ -416,10 +383,8 @@ class JSONObjectTest {
         assertEquals(9.223372036854776E18, testObject.getDouble("baz"), 0.0)
         assertEquals(Int.MAX_VALUE, testObject.getInt("baz"))
         assertFalse(testObject.isNull("quux"))
-        try {
+        assertThrows<JSONException> {
             testObject.getDouble("quux")
-            fail()
-        } catch (e: JSONException) {
         }
         assertEquals(Double.NaN, testObject.optDouble("quux"), 0.0)
         assertEquals(-1.0, testObject.optDouble("quux", -1.0), 0.0)
@@ -436,15 +401,11 @@ class JSONObjectTest {
         testObject.put("bar", b)
         assertSame(a, testObject.getJSONArray("foo"))
         assertSame(b, testObject.getJSONObject("bar"))
-        try {
+        assertThrows<JSONException> {
             testObject.getJSONObject("foo")
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.getJSONArray("bar")
-            fail()
-        } catch (e: JSONException) {
         }
         assertEquals(a, testObject.optJSONArray("foo"))
         assertEquals(b, testObject.optJSONObject("bar"))
@@ -463,10 +424,8 @@ class JSONObjectTest {
     fun testArrayCoercion() {
         val testObject = JSONObject()
         testObject.put("foo", "[true]")
-        try {
+        assertThrows<JSONException> {
             testObject.getJSONArray("foo")
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -474,32 +433,24 @@ class JSONObjectTest {
     fun testObjectCoercion() {
         val testObject = JSONObject()
         testObject.put("foo", "{}")
-        try {
+        assertThrows<JSONException> {
             testObject.getJSONObject("foo")
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
     @Test
     fun testAccumulateValueChecking() {
         val testObject = JSONObject()
-        try {
+        assertThrows<JSONException> {
             testObject.accumulate("foo", Double.NaN)
-            fail()
-        } catch (e: JSONException) {
         }
         testObject.accumulate("foo", 1)
-        try {
+        assertThrows<JSONException> {
             testObject.accumulate("foo", Double.NaN)
-            fail()
-        } catch (e: JSONException) {
         }
         testObject.accumulate("foo", 2)
-        try {
+        assertThrows<JSONException> {
             testObject.accumulate("foo", Double.NaN)
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -538,10 +489,8 @@ class JSONObjectTest {
         assertEquals(4, array.length())
         assertEquals(5.0, array[0])
         assertEquals(true, array[1])
-        try {
+        assertThrows<JSONException> {
             array[2]
-            fail()
-        } catch (e: JSONException) {
         }
         assertEquals(JSONObject.NULL, array[3])
     }
@@ -587,40 +536,28 @@ class JSONObjectTest {
     @Test
     fun testPutUnsupportedNumbers() {
         val testObject = JSONObject()
-        try {
+        assertThrows<JSONException> {
             testObject.put("foo", Double.NaN)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.put("foo", Double.NEGATIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.put("foo", Double.POSITIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
     @Test
     fun testPutUnsupportedNumbersAsObjects() {
         val testObject = JSONObject()
-        try {
+        assertThrows<JSONException> {
             testObject.put("foo", Double.NaN)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.put("foo", Double.NEGATIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             testObject.put("foo", Double.POSITIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -660,10 +597,9 @@ class JSONObjectTest {
     fun testMapConstructorWithBogusEntries() {
         val contents: MutableMap<Any?, Any?> = HashMap()
         contents[5] = 5
-        try {
+        assertThrowsSubclass<Exception> {
             JSONObject(contents)
             fail("JSONObject constructor doesn't validate its input!")
-        } catch (e: Exception) {
         }
     }
 
@@ -676,28 +612,22 @@ class JSONObjectTest {
 
     @Test
     fun testTokenerConstructorWrongType() {
-        try {
+        assertThrows<JSONException> {
             JSONObject(JSONTokener("[\"foo\", false]"))
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
     @Test
     fun testTokenerConstructorNull() {
-        try {
+        assertThrows<NullPointerException> {
             JSONObject(null as JSONTokener?)
-            fail()
-        } catch (e: NullPointerException) {
         }
     }
 
     @Test
     fun testTokenerConstructorParseFail() {
-        try {
+        assertThrows<JSONException> {
             JSONObject(JSONTokener("{"))
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -710,28 +640,22 @@ class JSONObjectTest {
 
     @Test
     fun testStringConstructorWrongType() {
-        try {
+        assertThrows<JSONException> {
             JSONObject("[\"foo\", false]")
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
     @Test
     fun testStringConstructorNull() {
-        try {
+        assertThrows<NullPointerException> {
             JSONObject(null as String?)
-            fail()
-        } catch (e: NullPointerException) {
         }
     }
 
     @Test
     fun testStringonstructorParseFail() {
-        try {
+        assertThrows<JSONException> {
             JSONObject("{")
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
@@ -877,10 +801,8 @@ class JSONObjectTest {
     fun testKeysEmptyObject() {
         val testObject = JSONObject()
         assertFalse(testObject.keys().hasNext())
-        try {
+        assertThrows<NoSuchElementException> {
             testObject.keys().next()
-            fail()
-        } catch (e: NoSuchElementException) {
         }
     }
 
@@ -898,10 +820,8 @@ class JSONObjectTest {
         result.add(keys.next())
         assertFalse(keys.hasNext())
         assertEquals(HashSet(Arrays.asList("foo", "bar")), result)
-        try {
+        assertThrows<NoSuchElementException> {
             keys.next()
-            fail()
-        } catch (e: NoSuchElementException) {
         }
     }
 
@@ -932,30 +852,22 @@ class JSONObjectTest {
         assertEquals("9223372036854775806", JSONObject.numberToString(9223372036854775806L))
         assertEquals("4.9E-324", JSONObject.numberToString(Double.MIN_VALUE))
         assertEquals("1.7976931348623157E308", JSONObject.numberToString(Double.MAX_VALUE))
-        try {
+        assertThrows<JSONException> {
             JSONObject.numberToString(Double.NaN)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             JSONObject.numberToString(Double.NEGATIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
-        try {
+        assertThrows<JSONException> {
             JSONObject.numberToString(Double.POSITIVE_INFINITY)
-            fail()
-        } catch (e: JSONException) {
         }
         assertEquals("0.001", JSONObject.numberToString(BigDecimal("0.001")))
         assertEquals(
             "9223372036854775806",
             JSONObject.numberToString(BigInteger("9223372036854775806"))
         )
-        try {
+        assertThrows<JSONException> {
             JSONObject.numberToString(null)
-            fail()
-        } catch (e: JSONException) {
         }
     }
 
