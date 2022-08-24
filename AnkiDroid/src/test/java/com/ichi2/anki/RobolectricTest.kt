@@ -557,21 +557,19 @@ open class RobolectricTest : CollectionGetter {
         // Allow an override for the testing library (allowing Robolectric to access the Rust backend)
         // This allows M1 macs to access a .dylib built for arm64, despite it not existing in the .jar
         val backendPath = System.getenv("ANKIDROID_BACKEND_PATH")
+        val localBackendVersion = System.getenv("ANKIDROID_BACKEND_VERSION")
+        val supportedBackendVersion = BuildConfig.BACKEND_VERSION
         if (backendPath != null) {
-            if (BuildConfig.BACKEND_VERSION != System.getenv("ANKIDROID_BACKEND_VERSION")) {
+            if (BuildConfig.BACKEND_VERSION != localBackendVersion) {
                 throw java.lang.IllegalStateException(
-                    "AnkiDroid backend testing library requires an update.\n" +
-                        "Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v ${
-                        System.getenv(
-                            "ANKIDROID_BACKEND_VERSION"
-                        )
-                        })\n" +
-                        "And then set \$ANKIDROID_BACKEND_VERSION to ${BuildConfig.BACKEND_VERSION}\n" +
-                        "Error: \$ANKIDROID_BACKEND_VERSION: expected '${BuildConfig.BACKEND_VERSION}', got '${
-                        System.getenv(
-                            "ANKIDROID_BACKEND_VERSION"
-                        )
-                        }'"
+                    """
+                        AnkiDroid backend testing library requires an update.
+                        Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v$localBackendVersion)
+                        And then set $\0ANKIDROID_BACKEND_VERSION to $supportedBackendVersion
+                        Or to update you can just run the script: sh tools/setup-anki-backend.sh
+                        For more details see, https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#note-for-apple-silicon-users
+                        Error: $\0ANKIDROID_BACKEND_VERSION: expected '$supportedBackendVersion', got '$localBackendVersion
+                    """.trimIndent()
                 )
             }
             // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
@@ -584,9 +582,13 @@ open class RobolectricTest : CollectionGetter {
                 if (e.message.toString().contains("arm64e")) {
                     // Giving the commands to user to add the required env variables
                     val exception =
-                        "Please download the arm64 dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/${BuildConfig.BACKEND_VERSION} and add the following environment variables to your device by using following commands: \n" +
-                            "export ANKIDROID_BACKEND_PATH=\"{Path to the dylib file}\"\n" +
-                            "export ANKIDROID_BACKEND_VERSION=\"${BuildConfig.BACKEND_VERSION}\""
+                        """
+                            Please download the arm64 dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/$supportedBackendVersion and add the following environment variables to your device by using following commands: 
+                            export ANKIDROID_BACKEND_PATH={Path to the dylib file}
+                            export ANKIDROID_BACKEND_VERSION=$supportedBackendVersion
+                            Or to do setup automatically, run the script: sh tools/setup-anki-backend.sh
+                            For more details see, https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#note-for-apple-silicon-users
+                        """.trimIndent()
                     throw IllegalStateException(exception, e)
                 }
                 throw e
