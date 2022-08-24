@@ -242,7 +242,7 @@ class MyAccount : AnkiActivity() {
                     showSnackbar(messageResource)
                 }
             } else {
-                val res = AnkiDroidApp.getAppResources()
+                val res = AnkiDroidApp.appResources
                 showSimpleMessageDialog(title = res.getString(messageResource), message = loginMessage)
             }
         }

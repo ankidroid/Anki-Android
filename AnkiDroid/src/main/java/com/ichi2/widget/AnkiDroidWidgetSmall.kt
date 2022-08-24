@@ -83,7 +83,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
         private fun buildUpdate(context: Context, updateDueDecksNow: Boolean): RemoteViews {
             Timber.d("buildUpdate")
             val updateViews = RemoteViews(context.packageName, R.layout.widget_small)
-            val mounted = AnkiDroidApp.isSdCardMounted()
+            val mounted = AnkiDroidApp.isSdCardMounted
             if (!mounted) {
                 updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE)
                 updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
@@ -98,10 +98,10 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                             if (action != null && action == Intent.ACTION_MEDIA_MOUNTED) {
                                 Timber.d("mMountReceiver - Action = Media Mounted")
                                 if (remounted) {
-                                    WidgetStatus.update(AnkiDroidApp.getInstance())
+                                    WidgetStatus.update(AnkiDroidApp.instance)
                                     remounted = false
                                     if (mMountReceiver != null) {
-                                        AnkiDroidApp.getInstance().unregisterReceiver(mMountReceiver)
+                                        AnkiDroidApp.instance.unregisterReceiver(mMountReceiver)
                                     }
                                 } else {
                                     remounted = true
@@ -112,7 +112,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                     val iFilter = IntentFilter()
                     iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED)
                     iFilter.addDataScheme("file")
-                    AnkiDroidApp.getInstance().registerReceiver(mMountReceiver, iFilter)
+                    AnkiDroidApp.instance.registerReceiver(mMountReceiver, iFilter)
                 }
             } else {
                 // If we do not have a cached version, always update.

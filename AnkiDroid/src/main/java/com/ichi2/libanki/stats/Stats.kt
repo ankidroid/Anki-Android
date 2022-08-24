@@ -76,7 +76,7 @@ class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
         get() {
             val title: String
             title = if (mWholeCollection) {
-                AnkiDroidApp.getInstance().resources.getString(R.string.card_browser_all_decks)
+                AnkiDroidApp.instance.resources.getString(R.string.card_browser_all_decks)
             } else {
                 col.decks.get(mDeckId).getString("name")
             }

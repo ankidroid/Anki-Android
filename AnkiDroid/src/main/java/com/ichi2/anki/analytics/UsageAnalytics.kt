@@ -182,7 +182,7 @@ object UsageAnalytics {
         sAnalytics!!.flush()
         sAnalytics = null
         unInstallDefaultExceptionHandler()
-        initialize(AnkiDroidApp.getInstance().applicationContext)
+        initialize(AnkiDroidApp.instance.applicationContext)
     }
 
     /**
@@ -298,12 +298,12 @@ object UsageAnalytics {
     // A listener on this preference handles the rest
     var isEnabled: Boolean
         get() {
-            val userPrefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+            val userPrefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
             return userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false)
         }
         set(value) {
             // A listener on this preference handles the rest
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()).edit()
+            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit()
                 .putBoolean(ANALYTICS_OPTIN_KEY, value)
                 .apply()
         }

@@ -246,7 +246,7 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     fun databaseLockedWithPermissionIntegrationTest() {
-        AnkiDroidApp.sSentExceptionReportHack = false
+        AnkiDroidApp.sentExceptionReportHack = false
         try {
             BackendEmulatingOpenConflict.enable()
             InitialActivityWithConflictTest.setupForDatabaseConflict()
@@ -260,7 +260,7 @@ class DeckPickerTest : RobolectricTest() {
             )
             assertThat(
                 "No exception reports should be thrown",
-                AnkiDroidApp.sSentExceptionReportHack,
+                AnkiDroidApp.sentExceptionReportHack,
                 equalTo(false)
             )
         } finally {

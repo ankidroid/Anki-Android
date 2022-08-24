@@ -58,7 +58,7 @@ class StdModels(
     }
 
     val defaultName: String
-        get() = AnkiDroidApp.getAppResources().getString(defaultNameRes)
+        get() = AnkiDroidApp.appResources.getString(defaultNameRes)
 
     companion object {
         // / create the standard models
@@ -66,13 +66,13 @@ class StdModels(
         val BASIC_MODEL = StdModels(
             { mm: ModelManager, name: String ->
                 val m = mm.newModel(name)
-                val frontName = AnkiDroidApp.getAppResources().getString(R.string.front_field_name)
+                val frontName = AnkiDroidApp.appResources.getString(R.string.front_field_name)
                 var fm = mm.newField(frontName)
                 mm.addFieldInNewModel(m, fm)
-                val backName = AnkiDroidApp.getAppResources().getString(R.string.back_field_name)
+                val backName = AnkiDroidApp.appResources.getString(R.string.back_field_name)
                 fm = mm.newField(backName)
                 mm.addFieldInNewModel(m, fm)
-                val cardOneName = AnkiDroidApp.getAppResources().getString(R.string.card_n_name, 1)
+                val cardOneName = AnkiDroidApp.appResources.getString(R.string.card_n_name, 1)
                 val t = Models.newTemplate(cardOneName)
                 t.put("qfmt", "{{$frontName}}")
                 t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{$backName}}")
@@ -98,7 +98,7 @@ class StdModels(
                 val m = BASIC_MODEL._new(mm, name)
                 val frontName = m.getJSONArray("flds").getJSONObject(0).getString("name")
                 val backName = m.getJSONArray("flds").getJSONObject(1).getString("name")
-                val cardTwoName = AnkiDroidApp.getAppResources().getString(R.string.card_n_name, 2)
+                val cardTwoName = AnkiDroidApp.appResources.getString(R.string.card_n_name, 2)
                 val t = Models.newTemplate(cardTwoName)
                 t.put("qfmt", "{{$backName}}")
                 t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{$frontName}}")
@@ -110,7 +110,7 @@ class StdModels(
         val FORWARD_OPTIONAL_REVERSE_MODEL = StdModels(
             { mm: ModelManager, name: String ->
                 val m = FORWARD_REVERSE_MODEL._new(mm, name)
-                val av = AnkiDroidApp.getAppResources().getString(R.string.field_to_ask_front_name)
+                val av = AnkiDroidApp.appResources.getString(R.string.field_to_ask_front_name)
                 val fm = mm.newField(av)
                 mm.addFieldInNewModel(m, fm)
                 val t = m.getJSONArray("tmpls").getJSONObject(1)
@@ -125,15 +125,15 @@ class StdModels(
                     name!!
                 )
                 m.put("type", Consts.MODEL_CLOZE)
-                val txt = AnkiDroidApp.getAppResources().getString(R.string.text_field_name)
+                val txt = AnkiDroidApp.appResources.getString(R.string.text_field_name)
                 var fm = mm.newField(txt)
                 mm.addFieldInNewModel(m, fm)
                 val fieldExtraName =
-                    AnkiDroidApp.getAppResources().getString(R.string.extra_field_name_new)
+                    AnkiDroidApp.appResources.getString(R.string.extra_field_name_new)
                 fm = mm.newField(fieldExtraName)
                 mm.addFieldInNewModel(m, fm)
                 val cardTypeClozeName =
-                    AnkiDroidApp.getAppResources().getString(R.string.cloze_model_name)
+                    AnkiDroidApp.appResources.getString(R.string.cloze_model_name)
                 val t = Models.newTemplate(cardTypeClozeName)
                 val fmt = "{{cloze:$txt}}"
                 m.put(

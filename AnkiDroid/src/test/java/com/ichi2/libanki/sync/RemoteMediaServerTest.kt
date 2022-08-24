@@ -93,13 +93,13 @@ class RemoteMediaServerTest {
 
     @KotlinCleanup("use edit{} extension function")
     private fun setCustomServerWithNoUrl() {
-        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
         userPreferences.edit().putBoolean("useCustomSyncServer", true).apply()
     }
 
     @KotlinCleanup("use edit{} extension function")
     private fun setCustomMediaServer(s: String) {
-        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
+        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
         val e = userPreferences.edit()
         e.putBoolean("useCustomSyncServer", true)
         e.putString("syncMediaUrl", s)

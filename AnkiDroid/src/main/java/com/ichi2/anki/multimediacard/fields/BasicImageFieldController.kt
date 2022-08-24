@@ -225,7 +225,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
 
         // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
-        val cameraManager = AnkiDroidApp.getInstance().applicationContext
+        val cameraManager = AnkiDroidApp.instance.applicationContext
             .getSystemService(Context.CAMERA_SERVICE) as CameraManager?
         @KotlinCleanup(".isNotEmpty()")
         try {

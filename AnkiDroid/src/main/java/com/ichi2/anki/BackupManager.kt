@@ -55,7 +55,7 @@ open class BackupManager {
      */
     @Suppress("PMD.NPathComplexity")
     fun performBackupInBackground(colPath: String, interval: Int, time: Time): Boolean {
-        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)
+        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext)
         if (hasDisabledBackups(prefs)) {
             Timber.w("backups are disabled")
             return false
@@ -150,7 +150,7 @@ open class BackupManager {
             CompatHelper.compat.copyFile(colPath, zos)
             zos.close()
             // Delete old backup files if needed
-            val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().baseContext)
+            val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext)
             deleteDeckBackups(colPath, prefs.getInt("backupMax", 8))
             // set timestamp of file in order to avoid creating a new backup unless its changed
             if (!backupFile.setLastModified(colFile.lastModified())) {

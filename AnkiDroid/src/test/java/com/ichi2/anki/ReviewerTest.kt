@@ -229,7 +229,7 @@ class ReviewerTest : RobolectricTest() {
 
         val decks = col.decks
         val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name))
+        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
         val didA = addDeck("A")
@@ -245,7 +245,7 @@ class ReviewerTest : RobolectricTest() {
         val decks = col.decks
 
         val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name))
+        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
 

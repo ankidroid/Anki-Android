@@ -89,8 +89,8 @@ object VersionUtils {
         }
 
     private val applicationInstance: Context?
-        get() = if (AnkiDroidApp.isInitialized()) {
-            AnkiDroidApp.getInstance()
+        get() = if (AnkiDroidApp.isInitialized) {
+            AnkiDroidApp.instance
         } else {
             Timber.w("AnkiDroid instance not set")
             null

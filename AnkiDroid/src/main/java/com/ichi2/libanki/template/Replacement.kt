@@ -90,7 +90,7 @@ class Replacement(
             if (txt.trim { it <= ' ' }.length == 0) {
                 return ""
             }
-            val res = AnkiDroidApp.getAppResources()
+            val res = AnkiDroidApp.appResources
             // random id
             val domId = "hint" + txt.hashCode()
             return "<a class=hint href=\"#\" onclick=\"this.style.display='none';document.getElementById('" +

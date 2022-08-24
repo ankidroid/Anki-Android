@@ -40,7 +40,7 @@ object InitialActivity {
         if (CollectionHelper.getInstance().getColSafe(context) != null) {
             return null
         }
-        if (!AnkiDroidApp.isSdCardMounted()) {
+        if (!AnkiDroidApp.isSdCardMounted) {
             return StartupFailure.SD_CARD_NOT_MOUNTED
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
             return StartupFailure.DIRECTORY_NOT_ACCESSIBLE
