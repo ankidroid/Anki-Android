@@ -1596,7 +1596,7 @@ open class DeckPicker :
             val syncStartTime = TimeManager.time.intTimeMS()
             if (mProgressDialog?.isShowing != true) {
                 try {
-                    mProgressDialog = StyledProgressDialog.show(
+                    StyledProgressDialog.show(
                         this@DeckPicker, resources.getString(R.string.sync_title),
                         """
                                 ${resources.getString(R.string.sync_title)}
@@ -1610,38 +1610,40 @@ open class DeckPicker :
                     mDialogDisplayFailure = true
                     Connection.cancel()
                     return
-                }
+                }.apply {
 
-                // Override the back key so that the user can cancel a sync which is in progress
-                mProgressDialog!!.setOnKeyListener { _: DialogInterface?, keyCode: Int, event: KeyEvent ->
-                    // Make sure our method doesn't get called twice
-                    if (event.action != KeyEvent.ACTION_DOWN) {
-                        return@setOnKeyListener true
-                    }
-                    if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable &&
-                        !Connection.isCancelled
-                    ) {
-                        // If less than 2s has elapsed since sync started then don't ask for confirmation
-                        if (TimeManager.time.intTimeMS() - syncStartTime < 2000) {
-                            Connection.cancel()
-                            @Suppress("Deprecation")
-                            mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
+                    // Override the back key so that the user can cancel a sync which is in progress
+                    mProgressDialog = this
+                    setOnKeyListener { _: DialogInterface?, keyCode: Int, event: KeyEvent ->
+                        // Make sure our method doesn't get called twice
+                        if (event.action != KeyEvent.ACTION_DOWN) {
                             return@setOnKeyListener true
                         }
-                        // Show confirmation dialog to check if the user wants to cancel the sync
-                        MaterialDialog(mProgressDialog!!.context).show {
-                            message(R.string.cancel_sync_confirm)
-                            cancelable(false)
-                            positiveButton(R.string.dialog_ok) {
+                        if (keyCode == KeyEvent.KEYCODE_BACK && Connection.isCancellable &&
+                            !Connection.isCancelled
+                        ) {
+                            // If less than 2s has elapsed since sync started then don't ask for confirmation
+                            if (TimeManager.time.intTimeMS() - syncStartTime < 2000) {
+                                Connection.cancel()
                                 @Suppress("Deprecation")
                                 mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
-                                Connection.cancel()
+                                return@setOnKeyListener true
                             }
-                            negativeButton(R.string.continue_sync)
+                            // Show confirmation dialog to check if the user wants to cancel the sync
+                            MaterialDialog(mProgressDialog!!.context).show {
+                                message(R.string.cancel_sync_confirm)
+                                cancelable(false)
+                                positiveButton(R.string.dialog_ok) {
+                                    @Suppress("Deprecation")
+                                    mProgressDialog!!.setMessage(getString(R.string.sync_cancel_message))
+                                    Connection.cancel()
+                                }
+                                negativeButton(R.string.continue_sync)
+                            }
+                            return@setOnKeyListener true
+                        } else {
+                            return@setOnKeyListener false
                         }
-                        return@setOnKeyListener true
-                    } else {
-                        return@setOnKeyListener false
                     }
                 }
             }
@@ -2515,9 +2517,10 @@ open class DeckPicker :
                 setTitle(R.string.emtpy_cards_finding)
                 setCancelable(true)
                 show()
+            }.apply {
+                setOnCancelListener(onCancel)
+                setCanceledOnTouchOutside(false)
             }
-            context.mProgressDialog!!.setOnCancelListener(onCancel)
-            context.mProgressDialog!!.setCanceledOnTouchOutside(false)
         }
 
         @KotlinCleanup("don't handle null")
