@@ -98,7 +98,7 @@ class PagesActivity : AnkiActivity() {
          */
         const val EXTRA_PAGE_NAME = "pageName"
 
-        const val HOST_NAME = "127.0.0.1"
+        const val HOST_NAME = "localhost"
 
         /**
          * @param pageName name of the Anki HTML page that should be opened
