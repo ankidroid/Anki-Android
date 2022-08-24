@@ -271,9 +271,7 @@ open class DeckPicker :
     @KotlinCleanup("Migrate from Triple to Kotlin class")
     private class ImportAddListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Triple<List<AnkiPackageImporter>?, Boolean, String?>?>(deckPicker) {
         override fun actualOnPostExecute(context: DeckPicker, result: Triple<List<AnkiPackageImporter>?, Boolean, String?>?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
+            context.mProgressDialog.dismissIfShowing()
             // If result.second and result are both set, we are signalling
             // some files were imported successfully & some errors occurred.
             // If result.first is null & result.second & result.third is set
@@ -312,7 +310,7 @@ open class DeckPicker :
         }
 
         override fun actualOnPreExecute(context: DeckPicker) {
-            if (context.mProgressDialog == null || !context.mProgressDialog!!.isShowing) {
+            context.mProgressDialog.applyToShowingDialog {
                 context.mProgressDialog = StyledProgressDialog.show(
                     context,
                     context.resources.getString(R.string.import_title), null, false
@@ -333,9 +331,7 @@ open class DeckPicker :
     private class ImportReplaceListener(deckPicker: DeckPicker?) : TaskListenerWithContext<DeckPicker, String, Computation<*>?>(deckPicker) {
         override fun actualOnPostExecute(context: DeckPicker, result: Computation<*>?) {
             Timber.i("Import: Replace Task Completed")
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
+            context.mProgressDialog.dismissIfShowing()
             val res = context.resources
             if (result!!.succeeded()) {
                 context.updateDeckList()
@@ -910,9 +906,7 @@ open class DeckPicker :
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)
         }
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-            mProgressDialog!!.dismiss()
-        }
+        mProgressDialog.dismissIfShowing()
         Timber.d("onDestroy()")
     }
 
@@ -1397,9 +1391,7 @@ open class DeckPicker :
         }
 
         override fun actualOnPostExecute(context: DeckPicker, result: Boolean?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
+            context.mProgressDialog.dismissIfShowing()
             if (!result!!) {
                 showThemedToast(context, context.resources.getString(R.string.deck_repair_error), true)
                 context.showCollectionErrorDialog()
@@ -1456,9 +1448,7 @@ open class DeckPicker :
         }
 
         override fun actualOnPostExecute(context: DeckPicker, result: Computation<List<List<String>>>?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
+            context.mProgressDialog.dismissIfShowing()
             if (result!!.succeeded()) {
                 val checkList = result.value
                 context.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, checkList)
@@ -1499,9 +1489,7 @@ open class DeckPicker :
          * @param result Number of deleted files
          */
         override fun actualOnPostExecute(context: DeckPicker, result: Int?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
+            context.mProgressDialog.dismissIfShowing()
             context.showSimpleMessageDialog(
                 context.resources.getString(R.string.delete_media_result_title),
                 context.resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
@@ -1682,7 +1670,7 @@ open class DeckPicker :
                     mCountDown = values[2] as Long
                 }
             }
-            if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+            mProgressDialog.applyToShowingDialog {
                 @Suppress("Deprecation")
                 mProgressDialog!!.setMessage(
                     """
@@ -1701,9 +1689,7 @@ open class DeckPicker :
             Timber.d("Sync Listener onPostExecute()")
             val res = resources
             try {
-                if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                    mProgressDialog!!.dismiss()
-                }
+                mProgressDialog.dismissIfShowing()
             } catch (e: IllegalArgumentException) {
                 Timber.e(e, "Could not dismiss mProgressDialog. The Activity must have been destroyed while the AsyncTask was running")
                 CrashReportService.sendExceptionReport(e, "DeckPicker.onPostExecute", "Could not dismiss mProgressDialog")
@@ -2423,9 +2409,9 @@ open class DeckPicker :
             } else {
                 context.updateDeckList()
             }
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
+            context.mProgressDialog.applyToShowingDialog {
                 try {
-                    context.mProgressDialog!!.dismiss()
+                    it.dismiss()
                 } catch (e: Exception) {
                     Timber.e(e, "onPostExecute - Exception dismissing dialog")
                 }
@@ -2574,9 +2560,7 @@ open class DeckPicker :
                 }
                 context.showDialogFragment(dialog)
             }
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
+            context.mProgressDialog.dismissIfShowing()
         }
     }
 
@@ -2612,9 +2596,7 @@ open class DeckPicker :
         }
 
         override fun onPostExecute(result: Pair<Boolean, CheckDatabaseResult?>?) {
-            if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                mProgressDialog!!.dismiss()
-            }
+            mProgressDialog.dismissIfShowing()
             val databaseResult = result!!.second
             if (databaseResult == null) {
                 if (result.first) {

@@ -234,7 +234,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     context.mEditFields!!.first!!.focusWithKeyboard()
                 }
 
-                if (context.progressDialog != null && context.progressDialog!!.isShowing) {
+                context.progressDialog.applyToShowingDialog {
                     try {
                         context.progressDialog!!.dismiss()
                     } catch (e: IllegalArgumentException) {

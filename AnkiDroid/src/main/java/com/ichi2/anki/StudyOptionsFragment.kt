@@ -50,6 +50,7 @@ import com.ichi2.themes.StyledProgressDialog.Companion.show
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.applyToShowingDialog
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
@@ -450,9 +451,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             mStudyOptionsView!!.findViewById<View>(R.id.progress_bar).visibility = View.GONE
         }
         // for rebuilding cram decks
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+        mProgressDialog.applyToShowingDialog {
             try {
-                mProgressDialog!!.dismiss()
+                it.dismiss()
             } catch (e: Exception) {
                 Timber.e("onPostExecute - Dialog dismiss Exception = %s", e.message)
             }

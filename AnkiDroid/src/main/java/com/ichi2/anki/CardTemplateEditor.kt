@@ -752,9 +752,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 if (button != null) {
                     button.isEnabled = true
                 }
-                if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                    mProgressDialog!!.dismiss()
-                }
+                mProgressDialog.dismissIfShowing()
                 context.mTemplateEditor.tempModel = null
                 if (result!!.first) {
                     context.mTemplateEditor.finishWithAnimation(
