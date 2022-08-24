@@ -625,15 +625,6 @@ class DecksV16(private val col: CollectionV16) :
         return Optional.empty()
     }
 
-    fun setDeck(cids: LongArray, did: DeckId) {
-        this.col.db.execute(
-            "update cards set did=?,usn=?,mod=? where id in " + ids2str(cids),
-            did,
-            this.col.usn(),
-            TimeManager.time.intTime(),
-        )
-    }
-
     override fun cids(did: DeckId, children: bool): MutableList<Long> {
         if (!children) {
             return this.col.db.queryLongList("select id from cards where did=?", did)

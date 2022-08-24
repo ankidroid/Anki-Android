@@ -20,6 +20,7 @@ package com.ichi2.libanki
 import android.util.Pair
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.utils.TimeManager.time
+import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
@@ -110,6 +111,7 @@ class Note : Cloneable {
      * If fields or tags have changed, write changes to disk.
      */
     @JvmOverloads
+    @BlocksSchemaUpgrade("new path must update to native note adding/updating routine")
     fun flush(mod: Long? = null, changeUsn: Boolean = true) {
         assert(mScm == col.scm)
         _preFlush()
@@ -138,7 +140,7 @@ class Note : Cloneable {
         if (defaultLegacySchema) {
             col.tags.register(this.tags)
         } else {
-            Timber.w("new backend must update to native note adding routine")
+            // TODO: tags are not registered; calling code must switch to using backend add/update notes
         }
         _postFlush()
     }
