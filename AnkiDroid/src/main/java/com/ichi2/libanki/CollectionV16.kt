@@ -20,6 +20,7 @@ import android.content.res.Resources
 import anki.config.ConfigKey
 import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
+import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.utils.TimeManager
@@ -221,6 +222,15 @@ class CollectionV16(
 
     override fun remNotes(ids: LongArray) {
         backend.removeNotes(noteIds = ids.asIterable(), cardIds = listOf())
+    }
+
+    override fun setDeck(cids: LongArray, did: Long) {
+        backend.setDeck(cardIds = cids.asIterable(), deckId = did)
+    }
+
+    /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. */
+    fun updateNote(note: Note) {
+        backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
     }
 
     /** True if the V3 scheduled is enabled when schedVer is 2. */

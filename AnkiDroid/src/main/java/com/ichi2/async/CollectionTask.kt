@@ -182,25 +182,32 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             val sched = col.sched
             val editNote = editCard.note()
             try {
-                col.db.executeInTransaction {
-                    // TODO: undo integration
-                    editNote.flush()
-                    // flush card too, in case, did has been changed
-                    editCard.flush()
-                    if (isFromReviewer) {
-                        val newCard: Card?
-                        if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
-                            newCard = editCard
-                            newCard.load()
-                            // reload qa-cache
-                            newCard.q(true)
-                        } else {
-                            newCard = sched.card
-                        }
-                        collectionTask.doProgress(newCard) // check: are there deleted too?
-                    } else {
-                        collectionTask.doProgress(editCard)
+                if (BackendFactory.defaultLegacySchema) {
+                    col.db.executeInTransaction {
+                        // TODO: undo integration
+                        editNote.flush()
+                        // flush card too, in case, did has been changed
+                        editCard.flush()
                     }
+                } else {
+                    // TODO: the proper way to do this would be to call this in undoableOp() in
+                    // a coroutine
+                    col.newBackend.updateNote(editNote)
+                    // no need to flush card in new path
+                }
+                if (isFromReviewer) {
+                    val newCard: Card?
+                    if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
+                        newCard = editCard
+                        newCard.load()
+                        // reload qa-cache
+                        newCard.q(true)
+                    } else {
+                        newCard = sched.card
+                    }
+                    collectionTask.doProgress(newCard) // check: are there deleted too?
+                } else {
+                    collectionTask.doProgress(editCard)
                 }
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note")

@@ -898,12 +898,6 @@ public class Decks extends DeckManager {
     }
 
 
-    public void setDeck(long[] cids, long did) {
-        mCol.getDb().execute("update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-                did, mCol.usn(), TimeManager.INSTANCE.getTime().intTime());
-    }
-
-
     private void maybeAddToActive() {
         // reselect current deck, or default if current has disappeared
         Deck c = current();

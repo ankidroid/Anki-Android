@@ -53,6 +53,7 @@ import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
@@ -2554,6 +2555,13 @@ open class Collection(
         } catch (e: Exception) {
             throw UnknownDatabaseVersionException(e)
         }
+    }
+
+    open fun setDeck(cids: LongArray, did: Long) {
+        db.execute(
+            "update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
+            did, usn(), time.intTime()
+        )
     }
 
     class CheckDatabaseResult(private val oldSize: Long) {
