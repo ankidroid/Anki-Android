@@ -171,14 +171,12 @@
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Lỗi khi nhập tệp, có thể là bộ nhớ cache bị xóa trong quá trình xử lý. \nVui lòng thử lại</string>
     <string name="import_succeeded_but_check_database">Nhập dữ liệu thành công nhưng quá trình dọn dẹp sau nhập không thành công. Chạy kiểm tra cơ sở dữ liệu sau. Nguyên nhân chính: %s</string>
-    <string name="import_error_unhandled_request">Không thể xử lý yêu cầu nhập</string>
     <string name="import_error_corrupt_zip">Tệp apkg bị hỏng. Vui lòng xóa và tải xuống lại. \n\n. Nguyên nhân chính: %s</string>
-    <string name="import_error_exception">Không nhập được gói \n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Tên file \"%s\" không chứa định dạng .apkg hoặc .colpkg</string>
     <string name="import_error_load_imported_database">Cơ sở dữ liệu Anki (.anki2) thay thế chưa được hỗ trợ. Vui lòng xem sách hướng dẫn để biết hướng dẫn thay thế.</string>
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp anki: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() không thành công (có thể hết dung lượng lưu trữ)</string>
-    <string name="import_error_unhandled_scheme">Việc nhập chưa xử lý từ: “%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">1 số lỗi đã xảy ra khi nhập những file sau: \n%s</string>

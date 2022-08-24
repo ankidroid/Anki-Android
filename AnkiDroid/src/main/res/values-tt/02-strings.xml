@@ -171,14 +171,12 @@
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Файлны импортланганда хата: бәлки, кэш чистартылган иде.\nЯңадан тырышып карагыз</string>
     <string name="import_succeeded_but_check_database">Импортлау уңышлы үтте, чистарту - уңышсыз. Мәгълүмәт базасын тикшерегез. Төп сәбәп: %s</string>
-    <string name="import_error_unhandled_request">Импортлау таләбен эшкәртеп булмый</string>
     <string name="import_error_corrupt_zip">apkg файлы бозык. Зинhар, аны бетерегез hәм яңадан йөкләгез.\n\nТөп сәбәп: %s</string>
-    <string name="import_error_exception">Пакетны импортлау килеп чыкмады\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">\"%s\" файлның киңәйтүсе .apkg я .colpkg булырга тиеш</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Сайланган файл автомат рәвештә импортлана алмады. Аны кулдан ничек итеп импортларга, җитәкчелектән карагыз: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() килеп чыкмады (бәлки хәтердә урын җитмидер)</string>
-    <string name="import_error_unhandled_scheme">Эшкәртелә алмаган импорт: \"%s\" </string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>

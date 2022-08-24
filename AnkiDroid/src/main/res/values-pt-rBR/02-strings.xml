@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">Não há espaço suficiente para importar o pacote.\nNecessário - %1$s \nDisponível - %2$s.\n\nTendo problemas? Tente liberar espaço no seu telefone, se possível. Alternativamente, a sincronização usa menos espaço do que a importação. Você pode tentar importar o pacote com um dispositivo com mais espaço (por exemplo, Anki Desktop) e, em seguida, sincronizá-lo com este dispositivo.</string>
     <string name="import_log_file_cache_cleared">Erro ao importar arquivo, provavelmente um cache foi limpo durante o processamento.\nPor favor, tente novamente</string>
     <string name="import_succeeded_but_check_database">Importação de dados bem-sucedida, mas a limpeza pós importação falhou. Execute a verificação do banco de dados mais tarde. Causa: %s</string>
-    <string name="import_error_unhandled_request">Não foi possível completar a importação</string>
     <string name="import_error_corrupt_zip">O arquivo apkg está corrompido. Por favor delete-o e baixe-o novamente.\n\nCausa raiz: %s</string>
-    <string name="import_error_exception">Erro ao importar o pacote\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Substituições do banco de dados do Anki (.anki2) não são ainda suportadas. Por favor, consulte o manual para obter instruções de substituição.</string>
     <string name="import_error_content_provider">O arquivo selecionado não pôde ser importado automaticamente pelo AnkiDroid. Por favor veja o manual do usuário para aprender a importar manualmente arquivos anki: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() falhou (possivelmente sem espaço de armazenamento)</string>
-    <string name="import_error_unhandled_scheme">Importação não tratada de: “%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Vários arquivos colpkg foram selecionados.</string>
     <string name="import_error_colpkg_apkg">Tanto arquivos apkg &amp; colpkg foram selecionados de uma vez.</string>
     <string name="import_stats_error">Ocorreram alguns erros ao importar os seguintes arquivos:\n%s</string>

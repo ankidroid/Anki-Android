@@ -79,19 +79,19 @@ open class StorageTest : RobolectricTest() {
             }
         }
 
-        var id: String? = null
-        private var crt: String? = null
-        var mod: String? = null
-        private var scm: String? = null
-        private var ver: String? = null
-        private var dty: String? = null
-        private var usn: String? = null
-        private var ls: String? = null
-        var conf: String? = null
-        var models: String? = null
-        var decks: String? = null
-        private var dConf: String? = null
-        var tags: String? = null
+        lateinit var id: String
+        private lateinit var crt: String
+        lateinit var mod: String
+        private lateinit var scm: String
+        private lateinit var ver: String
+        private lateinit var dty: String
+        private lateinit var usn: String
+        private lateinit var ls: String
+        lateinit var conf: String
+        lateinit var models: String
+        lateinit var decks: String
+        private lateinit var dConf: String
+        lateinit var tags: String
 
         fun loadFromCollection(col: Collection) {
             if (col is CollectionV16) {
@@ -158,7 +158,7 @@ open class StorageTest : RobolectricTest() {
             }
         }
 
-        private fun loadV11(i: Int, string: String?) {
+        private fun loadV11(i: Int, string: String) {
             when (i) {
                 0 -> id = string
                 1 -> crt = string
@@ -193,13 +193,13 @@ open class StorageTest : RobolectricTest() {
             MatcherAssert.assertThat(tags, Matchers.equalTo(expected.tags))
         }
 
-        private fun assertDConfEqual(actualConf: String?, expectedConf: String?) {
+        private fun assertDConfEqual(actualConf: String, expectedConf: String) {
             val actualConfiguration = removeUnusedNewIntervalValue(actualConf)
             val expectedConfiguration = removeUnusedNewIntervalValue(expectedConf)
             assertJsonEqual(actualConfiguration, expectedConfiguration)
         }
 
-        private fun removeUnusedNewIntervalValue(actualDecks: String?): String {
+        private fun removeUnusedNewIntervalValue(actualDecks: String): String {
             // remove ints[2] - this is unused. And Anki Desktop is inconsistent with the initial value
 
             // permalinks for defaults (0 is used):
@@ -212,7 +212,7 @@ open class StorageTest : RobolectricTest() {
             return obj.toString()
         }
 
-        private fun assertJsonEqual(actual: String?, expected: String?, vararg keysToRemove: String) {
+        private fun assertJsonEqual(actual: String, expected: String, vararg keysToRemove: String) {
             val expectedRawJson = JSONObject(expected)
             val actualRawJson = JSONObject(actual)
             for (k in keysToRemove) {

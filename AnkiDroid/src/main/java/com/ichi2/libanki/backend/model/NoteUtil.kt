@@ -27,7 +27,7 @@ fun Note.to_backend_note(): anki.notes.Note {
         .setMtimeSecs(this.mod.toInt()) // this is worrying, 2038 problem
         .setUsn(this.usn)
         .setTagsList(this.tags)
-        .setFieldList(this.fields)
+        .setFieldList(this.fields.requireNoNulls())
         .build()
 }
 

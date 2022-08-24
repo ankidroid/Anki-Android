@@ -37,7 +37,6 @@ import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.preferences.*
 import com.ichi2.anki.preferences.PreferencesSearchView
@@ -219,7 +218,7 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
             CollectionManager.discardBackend()
             val deckPicker = Intent(this@Preferences, DeckPicker::class.java)
             deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.DEFAULT)
+            startActivity(deckPicker)
         }
     }
 
@@ -299,6 +298,8 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         /* Only enable AnkiDroid notifications unrelated to due reminders */
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
+        private const val DEFAULT_ROLLOVER_VALUE: Int = 4
+
         /**
          * The number of cards that should be due today in a deck to justify adding a notification.
          */
@@ -310,7 +311,7 @@ class Preferences : AnkiActivity(), SearchPreferenceResultListener {
         @JvmStatic
         fun getDayOffset(col: Collection): Int {
             return when (col.schedVer()) {
-                2 -> col.get_config("rollover", 4.toInt())!!
+                2 -> col.get_config("rollover", DEFAULT_ROLLOVER_VALUE)!!
                 // 1, or otherwise:
                 else -> col.crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
             }

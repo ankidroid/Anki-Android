@@ -183,14 +183,12 @@
     <string name="import_log_insufficient_space_error">Недастаткова месца для імпартавання пакета.\nНеабходна - %1$s \nДаступна - %2$s.\n\nНешта працуе не так? Паспрабуйце вызваліць месца на вашай прыладзе. Ці паспрабуйце сінхранізацыю, для якой неабходна менш месца, чым для імпартавання. Вы можаце імпартаваць пакет на прыладзе з большым аб\'ёмам памяці (напрыклад, Anki Desktop), а потым сінхранізаваць яго з гэтай прыладай.</string>
     <string name="import_log_file_cache_cleared">Памылка імпартавання файла. Верагодна, што кэш-памяць была ачышчаная падчас апрацоўкі.\nПаспрабуйце яшчэ раз.</string>
     <string name="import_succeeded_but_check_database">Імпартаванне даных паспяхова выканана, але пасля гэтага працэсу адбылася памылка ачысткі. Запусціць праверку базы даных пазней. Галоўная прычына: %s</string>
-    <string name="import_error_unhandled_request">Не атрымалася апрацаваць запыт на імпарт</string>
     <string name="import_error_corrupt_zip">Пашкоджаны файл apkg. Спачатку выдаліце яго, а потым спампуйце дадзены файл паўторна. \n\nГалоўная прычына: %s</string>
-    <string name="import_error_exception">Не атрымалася імпартаваць пакет\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы даных Anki (.anki2) пакуль не падтрымліваецца. Звярніцеся да даведніка для інструкцыі па замене.</string>
     <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файла ўручную: \n %s</string>
-    <string name="import_error_copy_file_to_cache">Памылка аперацыі copyFileToCache() (верагодна не засталося месца)</string>
-    <string name="import_error_unhandled_scheme">Неапрацаваны імпарт з: “%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Было выбрана некалькі файлаў colpkg.</string>
     <string name="import_error_colpkg_apkg">Абодва файлы apkg і colpkg былі выбраны разам.</string>
     <string name="import_stats_error">Адбыліся некаторыя памылкі падчас імпартавання наступных файлаў:\n%s</string>

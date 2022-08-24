@@ -87,6 +87,7 @@ import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
+import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
@@ -340,7 +341,7 @@ open class DeckPicker :
             if (result!!.succeeded()) {
                 context.updateDeckList()
             } else {
-                context.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), true)
+                context.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), reload = true)
             }
         }
 
@@ -478,6 +479,10 @@ open class DeckPicker :
             }
         } else {
             requestStoragePermission()
+        }
+
+        if (!BackendFactory.defaultLegacySchema) {
+            CustomSyncServer.setOrUnsetEnvironmentalVariablesForBackend(this)
         }
     }
 
@@ -1328,7 +1333,7 @@ open class DeckPicker :
      */
     private fun showSyncErrorMessage(message: String?) {
         val title = resources.getString(R.string.sync_error)
-        showSimpleMessageDialog(title, message, true)
+        showSimpleMessageDialog(title = title, message = message, reload = true)
     }
 
     /**
@@ -1359,7 +1364,7 @@ open class DeckPicker :
                 }
             } else {
                 val res = AnkiDroidApp.getAppResources()
-                showSimpleMessageDialog(res.getString(messageResource), syncMessage, false)
+                showSimpleMessageDialog(title = res.getString(messageResource), message = syncMessage)
             }
         }
     }
@@ -1503,8 +1508,8 @@ open class DeckPicker :
                 context.mProgressDialog!!.dismiss()
             }
             context.showSimpleMessageDialog(
-                context.resources.getString(R.string.delete_media_result_title),
-                context.resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
+                title = context.resources.getString(R.string.delete_media_result_title),
+                message = context.resources.getQuantityString(R.plurals.delete_media_result_message, result!!, result)
             )
         }
     }
@@ -1563,15 +1568,17 @@ open class DeckPicker :
             mPullToSyncWrapper.isRefreshing = false
             showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
         } else {
+            val syncMedia = preferences.getBoolean("syncFetchesMedia", true)
+
             if (!BackendFactory.defaultLegacySchema) {
-                handleNewSync(conflict)
+                handleNewSync(conflict, syncMedia)
             } else {
                 Connection.sync(
                     mSyncListener,
                     Connection.Payload(
                         arrayOf(
                             hkey,
-                            preferences.getBoolean("syncFetchesMedia", true),
+                            syncMedia,
                             conflict,
                             HostNumFactory.getInstance(baseContext)
                         )
@@ -2645,7 +2652,7 @@ open class DeckPicker :
                 resources.getString(R.string.check_db_acknowledge)
             }
             // Show result of database check and restart the app
-            showSimpleMessageDialog(msg, true)
+            showSimpleMessageDialog(msg, reload = true)
         }
 
         /**

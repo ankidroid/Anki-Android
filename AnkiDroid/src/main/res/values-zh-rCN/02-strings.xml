@@ -171,14 +171,12 @@
     <string name="import_log_insufficient_space_error">没有足够的空间来导入包。\n 需要 - %1$s \n 可用 - %2$s。\n\n 有问题？如果可能，请尝试在您的手机上腾出空间。 或者，同步使用的空间少于导入。 您可以尝试用具备更多可用空间的设备 (例如 Anki Desktop) 导入包，然后将其同步到此设备。</string>
     <string name="import_log_file_cache_cleared">导入文件错误，可能处理期间的缓存清理造成的。\n请再次尝试</string>
     <string name="import_succeeded_but_check_database">数据导入成功，但导入后的清理失败。稍后运行检查数据库。根原因：%s</string>
-    <string name="import_error_unhandled_request">无法处理导入请求</string>
     <string name="import_error_corrupt_zip">apkg 文件已损坏。请删除并重新下载。\n\n根原因：%s</string>
-    <string name="import_error_exception">无法导入软件包\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">\"%s\" 并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() 失败（可能存储空间不足）</string>
-    <string name="import_error_unhandled_scheme">未处理的导入来自：“%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">选择了多个 colpkg 文件。</string>
     <string name="import_error_colpkg_apkg">同时选择了 apkg &amp; colpkg 文件。</string>
     <string name="import_stats_error">导入以下文件时发生了一些错误：\n%s</string>

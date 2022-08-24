@@ -171,14 +171,12 @@
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Galat mengimpor berkas. Harap coba lagi</string>
     <string name="import_succeeded_but_check_database">Impor data berhasil namun pembersihan pasca impor gagal.Periksa basisdata nanti. Sebab: %s</string>
-    <string name="import_error_unhandled_request">Tidak dapat memproses permintaan impor</string>
     <string name="import_error_corrupt_zip">Terjadi kesalahan dengan file apkg. Tolong hapus dan unduh kembali.\n\nAkar penyebab: %s</string>
-    <string name="import_error_exception">Gagal mengimpor paket\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Berkas bernama “%s” tidak memiliki ekstensi .apkg atau .colpkg</string>
     <string name="import_error_load_imported_database">Pengganti basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk langkah penggantian</string>
     <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas anki secara manual: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() gagal (mungkin karena ruang penyimpanan)</string>
-    <string name="import_error_unhandled_scheme">Impor belum terselesaikan dari: \"%s\"</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>

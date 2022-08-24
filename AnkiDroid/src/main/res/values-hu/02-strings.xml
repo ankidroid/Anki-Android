@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">Nincs elég hely a csomag importálásához.\nSzükséges - %1$s\nRendelkezésre áll - %2$s\n\nProblémád van? Próbálj meg helyet felszabadítani a telefonjodon. Másik lehetőségként használd a szinkronizálást, ez kevesebb helyet használ mint az import. Megpróbálhatod importálni a csomagot egy olyan eszközön aminek több tárterülete van (pl Anki Desktop) és aztán szinkronizálni erre az eszközre. </string>
     <string name="import_log_file_cache_cleared">Hiba történt a fájl importálása során valószínű a cache törlés során.\n.Kérjük próbálja újra</string>
     <string name="import_succeeded_but_check_database">Adat importálás sikeres, de az import utáni takarítás sikertelen. Futass egy adatbázis ellenőrzést később. Hiba eredete: %s</string>
-    <string name="import_error_unhandled_request">Nem sikerült feldolgozni az import folyamat kérést</string>
     <string name="import_error_corrupt_zip">Hibás apkg fájl. Próbáld meg törölni és újra letölteni.\n\nA hiba oka: %s</string>
-    <string name="import_error_exception">Nem sikerült importálni a csomagot\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">A \"%s\" fájlnévnek nincsen .apkg vagy .colpkg kiterjesztése</string>
     <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
     <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan anki fájlokat:\n%s</string>
-    <string name="import_error_copy_file_to_cache">A copyFileToCache() sikertelen (feltehetőleg nem elég a tárhely)</string>
-    <string name="import_error_unhandled_scheme">Nem kezelt import a “%s”-ból</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Több colpkg fájl lett kiválasztva.</string>
     <string name="import_error_colpkg_apkg">Az apkg &amp; colpkg fájlok egyszerre lettek kiválasztva.</string>
     <string name="import_stats_error">Hibák történtek a következő fájlok importálásánál:\n%s</string>

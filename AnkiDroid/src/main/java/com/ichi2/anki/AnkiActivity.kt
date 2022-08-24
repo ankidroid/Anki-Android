@@ -1,4 +1,6 @@
 //noinspection MissingCopyrightHeader #8659
+@file:Suppress("LeakingThis") // fine - used as WeakReference
+
 package com.ichi2.anki
 
 import android.app.Activity
@@ -14,7 +16,6 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Process
 import android.view.*
 import android.view.animation.Animation
 import android.widget.ProgressBar
@@ -45,6 +46,7 @@ import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.SimpleMessageDialog.SimpleMessageDialogListener
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
@@ -59,21 +61,14 @@ import com.ichi2.utils.AndroidUiUtils
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
-@KotlinCleanup("IDE Lint")
-@KotlinCleanup("Lots to do")
 open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
-    val SIMPLE_NOTIFICATION_ID = 0
 
     /** The name of the parent class (example: 'Reviewer')  */
     private val mActivityName: String
     val dialogHandler = DialogHandler(this)
-    @KotlinCleanup("lateinit")
-    private var mPreviousTheme: Theme? = null
+    private lateinit var mPreviousTheme: Theme
 
-    @KotlinCleanup("lateinit")
-    // custom tabs
-    var customTabActivityHelper: CustomTabActivityHelper? = null
-        private set
+    private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper()
 
     constructor() : super() {
         mActivityName = javaClass.simpleName
@@ -100,7 +95,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        customTabActivityHelper = CustomTabActivityHelper()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             window.navigationBarColor = ContextCompat.getColor(this, R.color.transparent)
         }
@@ -113,7 +107,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     override fun onStart() {
         Timber.i("AnkiActivity::onStart - %s", mActivityName)
         super.onStart()
-        customTabActivityHelper!!.bindCustomTabsService(this)
+        customTabActivityHelper.bindCustomTabsService(this)
         // Reload theme in case it was changed on another activity
         if (mPreviousTheme != Themes.currentTheme) {
             recreate()
@@ -123,7 +117,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     override fun onStop() {
         Timber.i("AnkiActivity::onStop - %s", mActivityName)
         super.onStop()
-        customTabActivityHelper!!.unbindCustomTabsService(this)
+        customTabActivityHelper.unbindCustomTabsService(this)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -241,10 +235,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         super.addContentView(view, params)
     }
 
-    @KotlinCleanup("Remove deprecation and make it call startActivityWithAnimation(DEFAULT). See: https://github.com/ankidroid/Anki-Android/pull/11699")
-    @Deprecated("")
     override fun startActivity(intent: Intent) {
-        super.startActivity(intent)
+        startActivityWithAnimation(intent, DEFAULT)
     }
 
     fun startActivityWithoutAnimation(intent: Intent) {
@@ -291,7 +283,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         enableActivityAnimation(animation)
     }
 
-    fun launchActivityForResult(
+    private fun launchActivityForResult(
         intent: Intent?,
         launcher: ActivityResultLauncher<Intent?>,
         animation: Direction?
@@ -337,6 +329,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         enableActivityAnimation(animation)
     }
 
+    @Suppress("MemberVisibilityCanBePrivate")
     protected fun disableViewAnimation(view: View) {
         view.clearAnimation()
     }
@@ -417,7 +410,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     }
 
     internal fun mayOpenUrl(url: Uri) {
-        val success = customTabActivityHelper!!.mayLaunchUrl(url, null, null)
+        val success = customTabActivityHelper.mayLaunchUrl(url, null, null)
         if (!success) {
             Timber.w("Couldn't preload url: %s", url.toString())
         }
@@ -442,8 +435,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             .setToolbarColor(toolbarColor)
             .setNavigationBarColor(navBarColor)
             .build()
-        val helper = customTabActivityHelper
-        val builder = CustomTabsIntent.Builder(helper!!.session)
+        val builder = CustomTabsIntent.Builder(customTabActivityHelper.session)
             .setShowTitle(true)
             .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
             .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
@@ -453,7 +445,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
                     R.drawable.ic_back_arrow_custom_tab
                 )
             )
-            .setColorScheme(colorScheme)
+            .setColorScheme(customTabsColorScheme)
             .setDefaultColorSchemeParams(colorSchemeParams)
         val customTabsIntent = builder.build()
         CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent)
@@ -468,8 +460,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         openUrl(getString(url))
     }
 
-    @KotlinCleanup("maybe rename - oonly for custom tabs")
-    private val colorScheme: Int
+    private val customTabsColorScheme: Int
         get() = if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
             COLOR_SCHEME_SYSTEM
         } else if (Themes.currentTheme.isNightMode) {
@@ -508,7 +499,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      */
     fun showAsyncDialogFragment(
         newFragment: AsyncDialogFragment,
-        channel: NotificationChannels.Channel?
+        channel: NotificationChannels.Channel
     ) {
         try {
             showDialogFragment(newFragment)
@@ -529,42 +520,19 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * notification bar instead.
      *
      * @param message
-     */
-    @KotlinCleanup("make non-null and use overrides")
-    fun showSimpleMessageDialog(message: String?) {
-        showSimpleMessageDialog(message, false)
-    }
-
-    @KotlinCleanup("make non-null and use overrides")
-    fun showSimpleMessageDialog(title: String?, message: String?) {
-        showSimpleMessageDialog(title, message, false)
-    }
-
-    /**
-     * Show a simple message dialog, dismissing the message without taking any further action when OK button is pressed.
-     * If a DialogFragment cannot be shown due to the Activity being stopped then the message is shown in the
-     * notification bar instead.
-     *
-     * @param message
      * @param reload flag which forces app to be restarted when true
      */
-    @KotlinCleanup("make non-null and use overrides")
-    open fun showSimpleMessageDialog(message: String?, reload: Boolean) {
-        val newFragment: AsyncDialogFragment = SimpleMessageDialog.newInstance(message, reload)
-        showAsyncDialogFragment(newFragment)
-    }
-
-    @KotlinCleanup("make non-null and use overrides")
-    fun showSimpleMessageDialog(title: String?, message: String?, reload: Boolean) {
+    @KotlinCleanup("make message non-null")
+    open fun showSimpleMessageDialog(message: String?, title: String = "", reload: Boolean = false) {
         val newFragment: AsyncDialogFragment = SimpleMessageDialog.newInstance(title, message, reload)
         showAsyncDialogFragment(newFragment)
     }
 
-    @KotlinCleanup("make non-null and use overrides")
+    @KotlinCleanup("make non-null")
     fun showSimpleNotification(
-        title: String?,
+        title: String,
         message: String?,
-        channel: NotificationChannels.Channel?
+        channel: NotificationChannels.Channel
     ) {
         val prefs = AnkiDroidApp.getSharedPrefs(this)
         // Show a notification unless all notifications have been totally disabled
@@ -572,7 +540,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             .toInt() <= Preferences.PENDING_NOTIFICATIONS_ONLY
         ) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
-            var ticker = title
+            var ticker: String? = title
             if (title == resources.getString(R.string.app_name)) {
                 ticker = message
             }
@@ -667,44 +635,11 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         return supportActionBar!!
     }
 
-    protected fun showedActivityFailedScreen(savedInstanceState: Bundle?): Boolean {
-        if (AnkiDroidApp.isInitialized()) {
-            return false
-        }
-
-        // #7630: Can be triggered with `adb shell bmgr restore com.ichi2.anki` after AnkiDroid settings are changed.
-        // Application.onCreate() is not called if:
-        // * The App was open
-        // * A restore took place
-        // * The app is reopened (until it exits: finish() does not do this - and removes it from the app list)
-        Timber.w("Activity started with no application instance")
-        showThemedToast(
-            this,
-            getString(R.string.ankidroid_cannot_open_after_backup_try_again),
-            false
+    protected fun showedActivityFailedScreen(savedInstanceState: Bundle?) =
+        showedActivityFailedScreen(
+            savedInstanceState = savedInstanceState,
+            activitySuperOnCreate = { state -> super.onCreate(state) }
         )
-
-        // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
-        // on Importer
-        Themes.setTheme(this)
-        // Avoids a SuperNotCalledException
-        super.onCreate(savedInstanceState)
-        finishActivityWithFade(this)
-
-        // If we don't kill the process, the backup is not "done" and reopening the app show the same message.
-        Thread {
-
-            // 3.5 seconds sleep, as the toast is killed on process death.
-            // Same as the default value of LENGTH_LONG
-            try {
-                Thread.sleep(3500)
-            } catch (e: InterruptedException) {
-                Timber.w(e)
-            }
-            Process.killProcess(Process.myPid())
-        }.start()
-        return true
-    }
 
     companion object {
         const val REQUEST_REVIEW = 901
@@ -737,5 +672,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             newFragment.show(ft, DIALOG_FRAGMENT_TAG)
             manager.executePendingTransactions()
         }
+
+        private const val SIMPLE_NOTIFICATION_ID = 0
     }
 }

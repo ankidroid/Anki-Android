@@ -273,6 +273,7 @@
     <string name="deck_picker_counts">Otevřete stránku s přehledem balíčku, která obsahuje počet karet dnes k učení.</string>
     <string name="import_deck_package">Balíček (.apkg)</string>
     <string name="import_collection_package">Kolekce (.colpkg)</string>
+    <string name="import_csv">Textový soubor (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Nemůžete vytvořit podřízený balíček pro všechny balíčky</string>
 </resources>

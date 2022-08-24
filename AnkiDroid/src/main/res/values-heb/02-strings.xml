@@ -185,14 +185,12 @@
 נסו לפנות מקום בזיכרון המכשיר. לחילופין, סנכרון טופס פחות מקום מייבוא. ניתן לנסות לבצע את הייבוא במכשיר אחר, עם יותר נפח זיכרון, ולעשות סנכרון של המכשיר הנוכחי איתו.</string>
     <string name="import_log_file_cache_cleared">שגיאה בייבוא קובץ, נראה שהמטמון נוקה באמצע התהליך.\nאנא נסה שנית</string>
     <string name="import_succeeded_but_check_database">ייבוא הנתונים הצליח אבל תהליך הניקוי שלאחר הייבוא נכשל. יש להפעיל בדיקת מסד נתונים בהמשך. הגורם: %s</string>
-    <string name="import_error_unhandled_request">לא ניתן לעבד בקשת ייבוא</string>
     <string name="import_error_corrupt_zip">קובץ ה־apkg פגום. נא למחוק ולהוריד אותו מחדש.\n\nגורם: %s</string>
-    <string name="import_error_exception">ייבוא החבילה נכשל\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">לשם הקובץ „%s” אין סיומת ‎.apkg או ‎.colpkg</string>
     <string name="import_error_load_imported_database">עדיין אין תמיכה בהחלפות של Anki Database (.anki2). אנא עיין במדריך להוראות החלפה.</string>
     <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache()‎ נכשלה (כנראה שנגמר המקום)</string>
-    <string name="import_error_unhandled_scheme">ייבוא שלא טופל מאת: „%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">נבחרו קבצי colpkg מרובים.</string>
     <string name="import_error_colpkg_apkg">הן apkg &amp; וקבצי colpkg נבחרו בבת אחת.</string>
     <string name="import_stats_error">ארעו כמה שגיאות במהלך ייבוא הקבצים הבאים:\n%s</string>

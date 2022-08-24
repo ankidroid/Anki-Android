@@ -47,6 +47,7 @@ import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.MaterialDialog
 import com.drakeet.drawer.FullDraggableContainer
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
@@ -72,6 +73,7 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.UndoService.Undo
+import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.PreloadNextCard
@@ -659,7 +661,7 @@ abstract class AbstractFlashcardViewer :
             if (!mExitViaDoubleTapBack || mBackButtonPressedToReturn) {
                 closeReviewer(RESULT_DEFAULT, false)
             } else {
-                showThemedToast(this, getString(R.string.back_pressed_once_reviewer), true)
+                showSnackbar(R.string.back_pressed_once_reviewer, Snackbar.LENGTH_SHORT)
             }
             mBackButtonPressedToReturn = true
             executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) { mBackButtonPressedToReturn = false }
@@ -837,24 +839,19 @@ abstract class AbstractFlashcardViewer :
 
     open fun undo(): Job? {
         if (isUndoAvailable) {
-            val res = resources
-            val undoName = col.undoName(res)
+            val undoneAction = col.undoName(resources)
+            val message = getString(R.string.undo_succeeded, undoneAction)
             fun legacyUndo() {
                 Undo().runWithHandler(
                     answerCardHandler(false)
-                        .alsoExecuteAfter {
-                            showThemedToast(
-                                this@AbstractFlashcardViewer,
-                                res.getString(R.string.undo_succeeded, undoName),
-                                true
-                            )
-                        }
+                        .alsoExecuteAfter { showSnackbarAboveAnswerButtons(message, Snackbar.LENGTH_SHORT) }
                 )
             }
             if (BackendFactory.defaultLegacySchema) {
                 legacyUndo()
             } else {
                 return launchCatchingTask {
+                    // TODO make backendUndoAndShowPopup() snackbar don't show on top of the answer buttons
                     if (!backendUndoAndShowPopup()) {
                         legacyUndo()
                     }
@@ -915,7 +912,18 @@ abstract class AbstractFlashcardViewer :
 
     /** Consumers should use [.showDeleteNoteDialog]   */
     private fun deleteNoteWithoutConfirmation() {
-        dismiss(DeleteNote(mCurrentCard!!)) { showThemedToast(this, R.string.deleted_note, true) }
+        dismiss(DeleteNote(mCurrentCard!!)) {
+            showSnackbarWithUndoButton(R.string.deleted_note)
+        }
+    }
+
+    private fun showSnackbarWithUndoButton(
+        @StringRes textResource: Int,
+        duration: Int = Snackbar.LENGTH_SHORT
+    ) {
+        showSnackbarAboveAnswerButtons(textResource, duration) {
+            setAction(R.string.undo) { undo() }
+        }
     }
 
     private fun getRecommendedEase(easy: Boolean): Int {
@@ -1645,19 +1653,27 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal fun buryCard(): Boolean {
-        return dismiss(BuryCard(mCurrentCard!!)) { showThemedToast(this, R.string.buried_card, true) }
+        return dismiss(BuryCard(mCurrentCard!!)) {
+            showSnackbarWithUndoButton(R.string.buried_card)
+        }
     }
 
     internal fun suspendCard(): Boolean {
-        return dismiss(SuspendCard(mCurrentCard!!)) { showThemedToast(this, R.string.suspended_card, true) }
+        return dismiss(SuspendCard(mCurrentCard!!)) {
+            showSnackbarWithUndoButton(R.string.suspended_card)
+        }
     }
 
     internal fun suspendNote(): Boolean {
-        return dismiss(SuspendNote(mCurrentCard!!)) { showThemedToast(this, R.string.suspended_note, true) }
+        return dismiss(SuspendNote(mCurrentCard!!)) {
+            showSnackbarWithUndoButton(R.string.suspended_note)
+        }
     }
 
     internal fun buryNote(): Boolean {
-        return dismiss(BuryNote(mCurrentCard!!)) { showThemedToast(this, R.string.buried_note, true) }
+        return dismiss(BuryNote(mCurrentCard!!)) {
+            showSnackbarWithUndoButton(R.string.buried_note)
+        }
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
@@ -1786,10 +1802,14 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** Displays a snackbar which does not obscure the answer buttons  */
-    private fun showSnackbarAboveAnswerButtons(text: String, @StringRes buttonTextResource: Int, onClickListener: View.OnClickListener) {
+    private fun showSnackbarAboveAnswerButtons(
+        text: CharSequence,
+        duration: Int = Snackbar.LENGTH_LONG,
+        snackbarBuilder: SnackbarBuilder? = null
+    ) {
         // BUG: Moving from full screen to non-full screen obscures the buttons
-        showSnackbar(text) {
-            setAction(buttonTextResource, onClickListener)
+        showSnackbar(text, duration) {
+            snackbarBuilder?.let { it() }
 
             if (mAnswerButtonsPosition == "bottom") {
                 val easeButtons = findViewById<View>(R.id.answer_options_layout)
@@ -1797,6 +1817,15 @@ abstract class AbstractFlashcardViewer :
                 anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
             }
         }
+    }
+
+    private fun showSnackbarAboveAnswerButtons(
+        @StringRes textResource: Int,
+        duration: Int = Snackbar.LENGTH_LONG,
+        snackbarBuilder: SnackbarBuilder? = null
+    ) {
+        val text = getString(textResource)
+        showSnackbarAboveAnswerButtons(text, duration, snackbarBuilder)
     }
 
     private fun onPageUp() {
@@ -2505,13 +2534,15 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun displayCouldNotFindMediaSnackbar(filename: String?) {
-        val onClickListener = View.OnClickListener { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
-        showSnackbarAboveAnswerButtons(getString(R.string.card_viewer_could_not_find_image, filename), R.string.help, onClickListener)
+        showSnackbarAboveAnswerButtons(getString(R.string.card_viewer_could_not_find_image, filename)) {
+            setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
+        }
     }
 
     private fun displayMediaUpgradeRequiredSnackbar() {
-        val onClickListener = View.OnClickListener { openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative))) }
-        showSnackbarAboveAnswerButtons(getString(R.string.card_viewer_media_relative_protocol), R.string.help, onClickListener)
+        showSnackbarAboveAnswerButtons(R.string.card_viewer_media_relative_protocol) {
+            setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative))) }
+        }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

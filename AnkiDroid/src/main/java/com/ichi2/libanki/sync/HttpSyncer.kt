@@ -23,11 +23,9 @@ import android.content.SharedPreferences
 import android.net.Uri
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.exception.UnknownHttpResponseException
-import com.ichi2.anki.web.CustomSyncServer.getSyncBaseUrl
-import com.ichi2.anki.web.CustomSyncServer.isEnabled
+import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.HttpFetcher
 import com.ichi2.async.Connection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.KotlinCleanup
@@ -237,7 +235,7 @@ open class HttpSyncer(
         return try {
             url.toHttpUrl()
         } catch (ex: IllegalArgumentException) {
-            if (isUsingCustomSyncServer(AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance()))) {
+            if (getCustomSyncUrlOrNull() != null) {
                 throw CustomSyncServerUrlException(url, ex)
             } else {
                 throw ex
@@ -301,38 +299,16 @@ open class HttpSyncer(
         }
     }
 
-    open fun syncURL(): String? {
-        // Allow user to specify custom sync server
-        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
-        if (isUsingCustomSyncServer(userPreferences)) {
-            val syncBaseString = getSyncBaseUrl(userPreferences) ?: return defaultAnkiWebUrl
-            return Uri.parse(syncBaseString).buildUpon().appendPath(getUrlPrefix()).toString() + "/"
-        }
-        // Usual case
-        return defaultAnkiWebUrl
-    }
+    val preferences: SharedPreferences get() = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
 
-    open fun getUrlPrefix(): String {
-        return "sync"
-    }
+    open fun getDefaultSyncUrl() = "https://sync${hostNum ?: ""}.ankiweb.net/sync/"
+
+    open fun getCustomSyncUrlOrNull() = CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(preferences)
+
+    fun syncURL() = getCustomSyncUrlOrNull() ?: getDefaultSyncUrl()
 
     protected val hostNum: Int?
         get() = mHostNum.getHostNum()
-
-    protected fun isUsingCustomSyncServer(userPreferences: SharedPreferences?): Boolean {
-        return userPreferences != null && isEnabled(userPreferences)
-    }
-
-    @KotlinCleanup("simplify")
-    protected val defaultAnkiWebUrl: String
-        get() {
-            var hostNumAsStringFormat = ""
-            val hostNum = hostNum
-            if (hostNum != null) {
-                hostNumAsStringFormat = hostNum.toString()
-            }
-            return String.format(Consts.SYNC_BASE, hostNumAsStringFormat) + getUrlPrefix() + "/"
-        }
 
     companion object {
         private const val BOUNDARY = "Anki-sync-boundary"
