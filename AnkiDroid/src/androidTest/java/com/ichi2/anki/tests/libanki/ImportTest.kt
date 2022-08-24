@@ -109,7 +109,7 @@ class ImportTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
-        assertTrue(n.fields[0]!!.contains("foo.mp3"))
+        assertTrue("foo.mp3" in n.fields[0])
         // if the local file content is different, and import should trigger a rename
         empty.remCards(empty.db.queryLongList("select id from cards"))
         os = FileOutputStream(File(empty.media.dir(), "foo.mp3"), false)
@@ -122,7 +122,7 @@ class ImportTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
-        assertTrue(n.fields[0]!!.contains("_"))
+        assertTrue(n.fields[0].contains("_"))
         // if the localized media file already exists, we rewrite the note and media
         empty.remCards(empty.db.queryLongList("select id from cards"))
         os = FileOutputStream(File(empty.media.dir(), "foo.mp3"))
@@ -135,7 +135,7 @@ class ImportTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
-        assertTrue(n.fields[0]!!.contains("_"))
+        assertTrue(n.fields[0].contains("_"))
         empty.close()
     }
 

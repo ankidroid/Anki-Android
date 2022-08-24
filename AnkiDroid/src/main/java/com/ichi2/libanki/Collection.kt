@@ -1167,7 +1167,7 @@ open class Collection(
         did: DeckId,
         ord: Int,
         tags: String,
-        flist: Array<String?>,
+        flist: Array<String>,
         flags: Int
     ): HashMap<String, String> {
         return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null)
@@ -1180,7 +1180,7 @@ open class Collection(
         did: DeckId,
         ord: Int,
         tags: String,
-        flist: Array<String?>,
+        flist: Array<String>,
         flags: Int,
         browser: Boolean,
         qfmtParam: String?,
@@ -1192,7 +1192,7 @@ open class Collection(
         var afmt = afmtParam
         val fmap = Models.fieldMap(model)
         val maps: Set<Map.Entry<String, Pair<Int, JSONObject>>> = fmap.entries
-        val fields: MutableMap<String, String?> = HashUtil.HashMapInit(maps.size + 8)
+        val fields: MutableMap<String, String> = HashUtil.HashMapInit(maps.size + 8)
         for ((key, value) in maps) {
             fields[key] = flist[value.first]
         }
@@ -1231,7 +1231,7 @@ open class Collection(
                     .replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum))
                 // the following line differs from libanki // TODO: why?
                 fields["FrontSide"] =
-                    d["q"] // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                    d["q"]!! // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
             var html: String
             html = try {
