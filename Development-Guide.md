@@ -168,18 +168,27 @@ There are two kinds of test in AnkiDroid. Unit test and on-device integration te
 ```bash
 ./gradlew jacocoTestReport
 ```
+
 #### Note for Apple Silicon Users
-You need to do one more additional step to run tests on your machine
+To run tests on Apple Silicon devices, you need to download and setup latest release of arm64 dylib file [Anki-Android-Backend](https://github.com/ankidroid/Anki-Android-Backend/releases/).
+You can either use the script tools/setup-anki-backend.sh or do manual setup:
+
+##### Script [_UPCOMING_]
+Run the following command from project root and follow the instructions.
+```bash
+sh tools/setup-anki-backend.sh
+```
+##### Manual Setup
 - Download the latest release of arm64 dylib file [Anki-Android-Backend](https://github.com/ankidroid/Anki-Android-Backend/releases/)
 - Place it on your system somewhere accessible [I made a .anki folder in $HOME and placed it there]
-- Add these two environment variables, run the command
+- Add these two environment variables into .zshrc if you use zshell, .bashrc if bash etc.
 ```bash
-echo 'export ANKIDROID_BACKEND_PATH={Path to the dylib file}' >> ~/.zshenv
-echo 'export ANKIDROID_BACKEND_VERSION={Latest release version}' >> ~/.zshenv
+export ANKIDROID_BACKEND_PATH={Path to dylib file}
+export ANKIDROID_BACKEND_VERSION={Latest release version}
 ```
-- By default mac uses `zsh` shell. But if you have changed your default shell to fish, bash, etc, you need to change it back to zsh and then add the env variables.
-- You might get a permission denied error when running tests for first time, click on the right top `?` icon ([ref](https://user-images.githubusercontent.com/69595691/172110983-fb345535-86b9-4ebd-a14e-3f29b3156bd4.jpg)) and follow the steps in order to run .dylib file
-- If you get `java.io.FileNotFoundException`, try using full path. Eg: `'/Users/<username>/<path to dylib file>'`
+Please log out and log back in again, then start Android Studio again for the changes to take effect. You might get a permission denied error when running tests for first time, click on the right top `?` icon ([ref](https://user-images.githubusercontent.com/69595691/172110983-fb345535-86b9-4ebd-a14e-3f29b3156bd4.jpg)) and follow the steps in order to run .dylib file.
+<br>
+If you get `java.io.FileNotFoundException`, try using full path. Eg: `'/Users/<username>/<path to dylib file>'`
 
 ### Unit tests
 There are unit tests defined in the `AnkiDroid/src/test` directory, with [an extendable test superclass available using the Robolectric framework](https://github.com/ankidroid/Anki-Android/blob/main/AnkiDroid/src/test/java/com/ichi2/anki/RobolectricTest.java) to make standard Android services available, including sqlite so you can operate on Anki Collections in your tests - each Collection created on the fly prior to each test method and deleted afterwards for isolation. You can run these tests by selecting them directly from AndroidStudio for individual tests or all tests from one file, or you can run them from the command line and generate a coverage report to verify the effect of your testing from the command line using:
