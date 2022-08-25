@@ -13,79 +13,69 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.tests
 
-package com.ichi2.anki.tests;
-
-import android.content.Context;
-import android.text.TextUtils;
-
-import com.ichi2.libanki.Collection;
-import com.ichi2.libanki.Storage;
-import com.ichi2.libanki.Utils;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
-import androidx.annotation.NonNull;
-
-import static org.junit.Assert.assertTrue;
+import android.content.Context
+import android.text.TextUtils
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Storage
+import com.ichi2.libanki.Utils
+import com.ichi2.utils.KotlinCleanup
+import org.junit.Assert.assertTrue
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
 
 /**
  * Shared methods for unit tests.
  */
-public class Shared {
-
-    public static Collection getEmptyCol(Context context) throws IOException {
-        File f = File.createTempFile("test", ".anki2");
+@KotlinCleanup("maybe delete Shared object and make inner functions as top level")
+object Shared {
+    @Throws(IOException::class)
+    @KotlinCleanup("make context not null")
+    fun getEmptyCol(context: Context?): Collection {
+        val f = File.createTempFile("test", ".anki2")
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).
-        String path = f.getAbsolutePath();
-        assertTrue(f.delete());
-        return Storage.collection(context, path);
+        val path = f.absolutePath
+        assertTrue(f.delete())
+        return Storage.collection(context!!, path)
     }
-
 
     /**
      * @return A File object pointing to a directory in which temporary test files can be placed. The directory is
-     *         emptied on every invocation of this method so it is suitable to use at the start of each test.
-     *         Only add files (and not subdirectories) to this directory.
+     * emptied on every invocation of this method so it is suitable to use at the start of each test.
+     * Only add files (and not subdirectories) to this directory.
      */
-    public static File getTestDir(Context context) {
-        return getTestDir(context, "");
+    fun getTestDir(context: Context): File {
+        return getTestDir(context, "")
     }
-
-
 
     /**
      * @param name An additional suffix to ensure the test directory is only used by a particular resource.
      * @return See getTestDir.
      */
-    private static File getTestDir(Context context, String name) {
-        String suffix = "";
+    private fun getTestDir(context: Context, name: String): File {
+        @KotlinCleanup("initialize suffix with if/else expression")
+        var suffix = ""
         if (!TextUtils.isEmpty(name)) {
-            suffix = "-" + name;
+            suffix = "-$name"
         }
-        File dir = new File(context.getCacheDir(), "testfiles" + suffix);
+        val dir = File(context.cacheDir, "testfiles$suffix")
         if (!dir.exists()) {
-            assertTrue(dir.mkdir());
+            assertTrue(dir.mkdir())
         }
-        File[] files = dir.listFiles();
-        if (files == null) {
-            // Had this problem on an API 16 emulator after a stress test - directory existed
+        val files = dir.listFiles()
+            ?: // Had this problem on an API 16 emulator after a stress test - directory existed
             // but listFiles() returned null due to EMFILE (Too many open files)
             // Don't throw here - later file accesses will provide a better exception.
             // and the directory exists, even if it's unusable.
-            return dir;
+            return dir
+        for (f in files) {
+            assertTrue(f.delete())
         }
-
-        for (File f : files) {
-            assertTrue(f.delete());
-        }
-        return dir;
+        return dir
     }
-
 
     /**
      * Copy a file from the application's assets directory and return the absolute path of that
@@ -94,13 +84,13 @@ public class Shared {
      * Files located inside the application's assets collection are not stored on the file
      * system and can not return a usable path, so copying them to disk is a requirement.
      */
-    public static @NonNull String getTestFilePath(Context context, String name) throws IOException {
-        InputStream is = context.getClassLoader().getResourceAsStream("assets/" + name);
-        if (is == null) {
-            throw new FileNotFoundException("Could not find test file: assets/" + name);
-        }
-        String dst = new File(getTestDir(context, name), name).getAbsolutePath();
-        Utils.writeToFile(is, dst);
-        return dst;
+    @Throws(IOException::class)
+    @KotlinCleanup("fix `is` usage")
+    fun getTestFilePath(context: Context, name: String): String {
+        val `is` = context.classLoader.getResourceAsStream("assets/$name")
+            ?: throw FileNotFoundException("Could not find test file: assets/$name")
+        val dst = File(getTestDir(context, name), name).absolutePath
+        Utils.writeToFile(`is`, dst)
+        return dst
     }
 }
