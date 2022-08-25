@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">„%1$s“ имаше %2$d полета, очаквайки %3$d</string>
     <string name="csv_importer_error_exception">Прекъснато: %s</string>
     <string name="user_is_a_robot">Открит автоматичен тест. Ако сте човек, свържете се с екипа за поддръжка на AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d бележката е добавена</item>
-        <item quantity="other">%d бележките са добавени</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d бележката е обновена</item>
-        <item quantity="other">%d бележките са обновени</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d бележката е непроменена</item>
-        <item quantity="other">%d бележките са непроменени</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Тази карта използва неподдържани функции на AnkiDroid. Свържете се с разработчика %1$s или вижте уикито. %2$s</string>
     <string name="invalid_json_data">Картата предоставя невалидни данни. %s</string>

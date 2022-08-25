@@ -344,30 +344,6 @@
     <string name="csv_importer_error_invalid_field_count">\'%1$s\' له %2$d حقل، لكن توقع %3$d</string>
     <string name="csv_importer_error_exception">تم الإلغاء: %s</string>
     <string name="user_is_a_robot">تم الكشف عن اختبار تلقائي. إذا كنت بشراً، اتصل بدعم أنكيدرويد</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="zero">أضيفت %d ملحوظة</item>
-        <item quantity="one">أضيفت %d ملحوظة</item>
-        <item quantity="two">أضيفت %d ملحوظة</item>
-        <item quantity="few">أضيفت %d ملحوظات</item>
-        <item quantity="many">أضيفت %d ملحوظة</item>
-        <item quantity="other">أضيفت %d ملحوظة</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="zero">حُدِّثت %d ملحوظة</item>
-        <item quantity="one">حُدِّثت %d ملحوظة</item>
-        <item quantity="two">حُدِّثت %d ملحوظة</item>
-        <item quantity="few">حُدِّثت %d ملحوظات</item>
-        <item quantity="many">حُدِّثت %d ملحوظة</item>
-        <item quantity="other">حُدِّثت %d ملحوظة</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="zero">%d ملحوظة لم تتغير</item>
-        <item quantity="one">%d ملحوظة لم تتغير</item>
-        <item quantity="two">%d ملحوظة لم تتغير</item>
-        <item quantity="few">%d ملحوظات لم تتغير</item>
-        <item quantity="many">%d ملحوظة لم تتغير</item>
-        <item quantity="other">%d ملحوظة لم تتغير</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">تستخدم هذه البطاقة ميزات أنكيدرويد غير مدعومة. اتصل بالمطور %1$s، أو اطلع على الويكي. %2$s</string>
     <string name="invalid_json_data">وفرت البطاقة بيانات غير صالحة. %s</string>

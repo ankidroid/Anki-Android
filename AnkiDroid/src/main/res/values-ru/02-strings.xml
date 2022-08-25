@@ -322,24 +322,6 @@
     <string name="csv_importer_error_invalid_field_count">В «%1$s» %2$d поля, но должно быть %3$d</string>
     <string name="csv_importer_error_exception">Прервано: %s</string>
     <string name="user_is_a_robot">Обнаружен автоматический тест. Если вы человек, обратитесь в службу поддержки AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d запись добавлена</item>
-        <item quantity="few">%d записи добавлено</item>
-        <item quantity="many">%d записей добавлены</item>
-        <item quantity="other">%d записей добавлено</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d запись обновлена</item>
-        <item quantity="few">%d записи обновлены</item>
-        <item quantity="many">%d записей обновлены</item>
-        <item quantity="other">%d записей обновлено</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d запись не изменена</item>
-        <item quantity="few">%d записи не изменены</item>
-        <item quantity="many">%d записей не изменены</item>
-        <item quantity="other">%d записей не изменено</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Эта карточка использует неподдерживаемые в AnkiDroid функции. Свяжитесь с разработчиками %1$s или обратитесь к вики-справке. %2$s</string>
     <string name="invalid_json_data">В карточке недопустимые данные. %s</string>

@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d velden, %3$d verwacht</string>
     <string name="csv_importer_error_exception">Afgebroken: %s</string>
     <string name="user_is_a_robot">Geautomatiseerde test gedetecteerd. Als u een mens bent, neem dan contact op met de AnkiDroid-ondersteuning</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d memo toegevoegd</item>
-        <item quantity="other">%d memo\'s toegevoegd</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d memo bijgewerkt</item>
-        <item quantity="other">%d memo\'s bijgewerkt</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d memo ongewijzigd</item>
-        <item quantity="other">%d memo\'s ongewijzigd</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Deze kaart maakt gebruik van niet-ondersteunde AnkiDroid-functies. Neem contact op met de ontwikkelaar %1$s of raadpleeg de wiki. %2$s</string>
     <string name="invalid_json_data">Kaart verstrekte ongeldige gegevens. %s</string>

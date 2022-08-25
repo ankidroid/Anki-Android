@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ volt %2$d mezők, várható %3$d</string>
     <string name="csv_importer_error_exception">Megszakított: %s</string>
     <string name="user_is_a_robot">Felismert automatizált teszt. Ha te csináltad, vedd fel a kapcsolatot az AnkiDroid támogatással</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d bejegyzés hozzáadva</item>
-        <item quantity="other">%d bejegyzés hozzáadva</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d bejegyzés frissítve</item>
-        <item quantity="other">%d bejegyzés frissítve</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d bejegyzés változatlan</item>
-        <item quantity="other">%d bejegyzés változatlan</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Ez a kártya nem támogatott AnkiDroid funkciókat használ. Vegye fel a kapcsolatot a fejlesztővel %1$s, vagy tekintse meg a wikit . %2$s</string>
     <string name="invalid_json_data">Érvénytelen adatok a kártyákon. %s</string>

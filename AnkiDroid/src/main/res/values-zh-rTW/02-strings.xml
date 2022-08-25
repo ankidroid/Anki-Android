@@ -289,15 +289,6 @@
     <string name="csv_importer_error_invalid_field_count">「%1$s」有%2$d個欄位，預期%3$d</string>
     <string name="csv_importer_error_exception">已中止：%s</string>
     <string name="user_is_a_robot">已偵測到自動測驗。如果您不是機器人，請聯絡AnkiDroid支援.</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="other">%d 筆記已新增</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="other">%d 筆記已更新</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d 筆記未變動</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">這張卡使用AnkiDroid不支援的功能。請連絡開發人員%1$s，或查看wiki。%2$s</string>
     <string name="invalid_json_data">卡片提供了無效的資訊。%s</string>

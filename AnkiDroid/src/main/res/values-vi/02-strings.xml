@@ -289,15 +289,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ có %2$d trường, dự kiến %3$d</string>
     <string name="csv_importer_error_exception">Đã hủy bỏ: %s</string>
     <string name="user_is_a_robot">Đã phát hiện kiểm tra tự động. Nếu bạn là con người, hãy liên hệ với bộ phận hỗ trợ AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="other">%d thêm ghi chú</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="other">%d cập nhật ghi chú</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d ghi chú không thay đổi</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Thẻ này sử dụng các tính năng AnkiDroid không được hỗ trợ. Liên hệ với nhà phát triển %1$s%1$s hoặc xem wiki. %2$s</string>
     <string name="invalid_json_data">Dữ liệu thẻ không hợp lệ. %s</string>

@@ -306,18 +306,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ tenet %2$d campos, de %3$d isetados</string>
     <string name="csv_importer_error_exception">Annulladu: %s</string>
     <string name="user_is_a_robot">Test automàticu agatadu. Si ses un\'umanu cuntata su suportu de AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d nota annanta</item>
-        <item quantity="other">%d notas annantas</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d nota atualizada</item>
-        <item quantity="other">%d notas atualizadas</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d nota non cambiada</item>
-        <item quantity="other">%d notas non cambiadas</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Custa carta impreat funtzionalidades de AnkiDroid non suportadas. Cuntata s\'isvilupadore %1$s o pòmpia·ti sa wiki. %2$s</string>
     <string name="invalid_json_data">Sa carta at frunidu datos non vàlidos. %s</string>

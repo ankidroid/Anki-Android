@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ tenia %2$d camps, s\'esperaven %3$d</string>
     <string name="csv_importer_error_exception">Interromput: %s</string>
     <string name="user_is_a_robot">Test automàtic detectat. Si ets un humà contacta amb el suport AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d nota afegida</item>
-        <item quantity="other">%d notes afegides</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d nota actualitzada</item>
-        <item quantity="other">%d notes actualitzades</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d nota sense canvis</item>
-        <item quantity="other">%d notes sense canvis</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Aquesta carta usa funcions AnkiDroid no compatibles. Contacta amb el desenvolupador %1$s, o mira la wiki %2$s</string>
     <string name="invalid_json_data">La carta ha proporcionat dades no vàlides. %s</string>

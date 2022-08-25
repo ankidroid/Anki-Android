@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ ରେ %2$d କ୍ଷେତ୍ରସବୁ ଥିଲା, %3$d ଆଶା କରାଯାଉଥିଲା</string>
     <string name="csv_importer_error_exception">ପରିତ୍ୟାଗୀତ: %s</string>
     <string name="user_is_a_robot">ସ୍ୱୟଂଚାଳିତ ପରୀକ୍ଷା ଚିହ୍ନଟ। ଯଦି ଆପଣ ଜଣେ ମଣିଷ, AnkiDroid ସମର୍ଥନ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d ନୋଟ୍ ଯୋଡା ଯାଇଛି</item>
-        <item quantity="other">%d ଟି ନୋଟ୍ ଯୋଡା ଯାଇଛି </item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%dଟିଏ ନୋଟ୍ ଅଦ୍ୟତନ ହୋଇଛି</item>
-        <item quantity="other">%dଟି ନୋଟ୍ ଅଦ୍ୟତନ ହୋଇଛି</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d ନୋଟ୍ ଅପରିବର୍ତ୍ତିତ</item>
-        <item quantity="other">%d  ଟି ନୋଟ୍ ଅପରିବର୍ତ୍ତିତ</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">ଏହି ପତ୍ର ଅସମର୍ଥିତ AnkiDroid ବୈଶିଷ୍ଠ୍ୟଗୁଡ଼ିକ ବ୍ୟବହାର କରେ। ବିକାଶକାରୀ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ %1$s, କିମ୍ବା ୱିକି ଦେଖନ୍ତୁ। %2$s</string>
     <string name="invalid_json_data">ପତ୍ର ଅବୈଧ ତଥ୍ୟ ପ୍ରଦାନ କଲା। %s</string>

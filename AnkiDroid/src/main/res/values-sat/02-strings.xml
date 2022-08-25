@@ -300,18 +300,6 @@
     <string name="csv_importer_error_invalid_field_count">‘%1$s’ ᱴᱷᱮᱱ %2$d ᱡᱟᱭᱜᱟ, %3$d ᱟᱥᱟ ᱛᱟᱦᱮᱸ ᱠᱟᱱᱟ</string>
     <string name="csv_importer_error_exception">ᱰᱟᱫ ᱮᱱᱟ: %s</string>
     <string name="user_is_a_robot">ᱟᱹᱴᱚᱢᱮᱴᱮᱰ ᱴᱮᱥᱴ ᱯᱟᱱᱛᱮ ᱚᱲᱚᱠ ᱾ ᱡᱩᱫᱤ ᱟᱢ ᱦᱚᱲ ᱠᱟᱱᱟᱢ AnkiDroid ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
-        <item quantity="other">%d ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d ᱱᱚᱴ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ</item>
-        <item quantity="other">%d ᱱᱚᱴ ᱠᱚ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d ᱱᱚᱴ ᱵᱟᱝ ᱵᱚᱫᱚᱞᱟᱠᱟᱱᱟ</item>
-        <item quantity="other">%d ᱱᱚᱴ ᱠᱚ ᱵᱟᱝ ᱵᱚᱫᱚᱞᱟᱠᱟᱱᱟ</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱵᱟᱝ ᱥᱟᱯᱯᱚᱨᱴ AnkiDroid ᱯᱷᱤᱪᱚᱨ ᱠᱚ ᱵᱮᱵᱷᱟᱨ ᱮᱫ ᱟᱭ ᱾ %1$s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾ %2$s</string>
     <string name="invalid_json_data">ᱠᱟᱰ ᱵᱷᱩᱞ ᱰᱟᱴᱟ ᱮᱢᱠᱮᱫ ᱟ ᱾ %s</string>
