@@ -175,7 +175,11 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class UpdateNote(private val editCard: Card, val isFromReviewer: Boolean, private val canAccessScheduler: Boolean) : TaskDelegate<Void, Card?>() {
+    class UpdateNote(
+        private val editCard: Card,
+        val isFromReviewer: Boolean,
+        private val canAccessScheduler: Boolean
+    ) : TaskDelegate<Void, Card?>() {
         // returns updated card if no error and null if error
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Card? {
             Timber.d("doInBackgroundUpdateNote")
