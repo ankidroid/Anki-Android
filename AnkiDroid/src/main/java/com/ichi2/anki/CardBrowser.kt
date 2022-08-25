@@ -1588,6 +1588,7 @@ open class CardBrowser :
         }
     }
 
+    // TODO: method does heavy work on the main thread, move to a background thread/coroutine
     private fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) {
         val selectedNotes = selectedCardIds
             .map { cardId: CardId? -> col.getCard(cardId!!).note() }
@@ -1683,15 +1684,19 @@ open class CardBrowser :
         return UpdateMultipleNotesHandler(this)
     }
 
-    private class UpdateMultipleNotesHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<List<Note>, Computation<*>?>("Card Browser - UpdateMultipleNotesHandler.actualOnPostExecute(CardBrowser browser)", browser) {
-        override fun actualOnProgressUpdate(context: CardBrowser, value: List<Note>) {
-            val cardsToUpdate = value
-                .flatMap { n: Note -> n.cards() }
-            context.updateCardsInList(cardsToUpdate)
+    private class UpdateMultipleNotesHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Void, List<Note>?>(browser) {
+        override fun actualOnPreExecute(context: CardBrowser) {
+            context.showProgressBar()
         }
 
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<*>?) {
-            browser.hideProgressBar()
+        override fun actualOnPostExecute(context: CardBrowser, result: List<Note>?) {
+            context.hideProgressBar()
+            if (result != null) {
+                val cardsToUpdate = result.flatMap { n: Note -> n.cards() }
+                context.updateCardsInList(cardsToUpdate)
+            } else {
+                context.closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
+            }
         }
     }
 

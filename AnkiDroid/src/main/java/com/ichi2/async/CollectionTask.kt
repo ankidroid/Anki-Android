@@ -206,10 +206,14 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class UpdateMultipleNotes @JvmOverloads constructor(private val notesToUpdate: List<Note>, private val shouldUpdateCards: Boolean = false) : TaskDelegate<List<Note>, Computation<*>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<List<Note>>): Computation<*> {
+    // Currently being used only to update tags of multiple notes simultaneously
+    class UpdateMultipleNotes constructor(
+        private val notesToUpdate: List<Note>,
+        private val shouldUpdateCards: Boolean = false
+    ) : TaskDelegate<Void, List<Note>?>() {
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<Note>? {
             Timber.d("doInBackgroundUpdateMultipleNotes")
-            try {
+            return try {
                 col.db.executeInTransaction {
                     for (note in notesToUpdate) {
                         note.flush()
@@ -219,14 +223,13 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                             }
                         }
                     }
-                    collectionTask.doProgress(notesToUpdate)
+                    notesToUpdate
                 }
             } catch (e: RuntimeException) {
                 Timber.w(e, "doInBackgroundUpdateMultipleNotes - RuntimeException on updating multiple note")
                 CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateMultipleNotes")
-                return Computation.ERR
+                return null
             }
-            return Computation.OK
         }
     }
 
