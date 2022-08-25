@@ -53,9 +53,11 @@ import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
 import com.ichi2.ui.FixedTextView
 import kotlinx.coroutines.Job
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.Locale
 
+@RustCleanup("Remove this whole activity and use the new Anki page once the new backend is the default")
 class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleListener {
     lateinit var viewPager: ViewPager2
         private set
