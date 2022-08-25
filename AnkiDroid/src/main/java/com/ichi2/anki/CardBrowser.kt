@@ -1674,13 +1674,21 @@ open class CardBrowser :
         return UpdateCardHandler(this)
     }
 
-    private class UpdateCardHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Card, Computation<*>?>("Card Browser - UpdateCardHandler.actualOnPostExecute(CardBrowser browser)", browser) {
-        override fun actualOnProgressUpdate(context: CardBrowser, value: Card) {
-            context.updateCardInList(value)
+    private class UpdateCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Void, Card?>(browser) {
+
+        override fun actualOnPreExecute(context: CardBrowser) {
+            context.showProgressBar()
         }
 
-        override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<*>?) {
-            browser.hideProgressBar()
+        override fun actualOnPostExecute(context: CardBrowser, result: Card?) {
+            Timber.d("Card Browser - UpdateCardHandler.actualOnPostExecute()")
+            context.hideProgressBar()
+            if (result != null) {
+                context.updateCardInList(result)
+            } else {
+                // TODO: Too rude to close with error, allow user to backup their edited data
+                context.closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
+            }
         }
     }
 

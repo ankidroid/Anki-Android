@@ -175,11 +175,13 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class UpdateNote(private val editCard: Card, val isFromReviewer: Boolean, private val canAccessScheduler: Boolean) : TaskDelegate<Card, Computation<*>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Card>): Computation<*> {
+    class UpdateNote(private val editCard: Card, val isFromReviewer: Boolean, private val canAccessScheduler: Boolean) : TaskDelegate<Void, Card?>() {
+        // returns updated card if no error and null if error
+        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Card? {
             Timber.d("doInBackgroundUpdateNote")
             // Save the note
             val sched = col.sched
+            val returnCard: Card
             val editNote = editCard.note()
             try {
                 if (BackendFactory.defaultLegacySchema) {
@@ -205,16 +207,16 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     } else {
                         newCard = sched.card
                     }
-                    collectionTask.doProgress(newCard) // check: are there deleted too?
+                    returnCard = newCard!! // check: are there deleted too?
                 } else {
-                    collectionTask.doProgress(editCard)
+                    returnCard = editCard
                 }
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note")
                 CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateNote")
-                return Computation.ERR
+                return null
             }
-            return Computation.OK
+            return returnCard
         }
     }
 
