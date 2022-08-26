@@ -14,30 +14,32 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.anki.tests
 
-package com.ichi2.anki.tests;
-
-import android.Manifest;
-import androidx.test.rule.GrantPermissionRule;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertNotNull;
+import android.Manifest
+import android.annotation.SuppressLint
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
+import com.ichi2.utils.KotlinCleanup
+import org.junit.Assert.assertNotNull
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 
 /**
  * This test case verifies that the directory initialization works even if the app is not yet fully initialized.
  */
-@RunWith(androidx.test.ext.junit.runners.AndroidJUnit4.class)
-public class CollectionTest extends InstrumentedTest {
+@RunWith(AndroidJUnit4::class)
+class CollectionTest : InstrumentedTest() {
+    @KotlinCleanup("fix ide lint issue, declare as val")
+    @get:Rule
+    var runtimePermissionRule =
+        GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-    @Rule
-    public GrantPermissionRule mRuntimePermissionRule =
-            GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
+    @SuppressLint("LegacyNullAssertionDetector")
     @Test
-    public void testOpenCollection() {
-        assertNotNull("Collection could not be opened", getCol());
+    @KotlinCleanup("use the recommended assertion to remove the @SuppressLint")
+    fun testOpenCollection() {
+        assertNotNull("Collection could not be opened", col)
     }
 }
