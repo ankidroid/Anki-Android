@@ -15,19 +15,15 @@
  */
 package com.ichi2.utils
 
-import android.content.Context
 import android.net.ConnectivityManager
+import androidx.core.content.getSystemService
 import com.ichi2.anki.AnkiDroidApp
-import timber.log.Timber
 
 fun isActiveNetworkMetered(): Boolean {
-    return try {
-        val cm = AnkiDroidApp.instance.applicationContext
-            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        cm.isActiveNetworkMetered
-    } catch (e: Exception) {
-        Timber.w(e, "Exception obtaining metered connection - assuming metered connection")
-        true
-    }
+    return AnkiDroidApp
+        .instance
+        .applicationContext
+        .getSystemService<ConnectivityManager>()
+        ?.isActiveNetworkMetered
+        ?: true
 }
-
