@@ -129,7 +129,7 @@ class MediaSyncer(
                     String.format(
                         Locale.US,
                         "check: lsum=%s rsum=%s ldirty=%d rusn=%d fname=%s",
-                        if (TextUtils.isEmpty(lsum)) "" else lsum.subSequence(0, 4),
+                        if (TextUtils.isEmpty(lsum)) "" else lsum!!.subSequence(0, 4),
                         if (TextUtils.isEmpty(rsum)) "" else rsum!!.subSequence(0, 4),
                         ldirty,
                         rusn,
@@ -202,7 +202,7 @@ class MediaSyncer(
                 } else {
                     col.log("concurrent update, skipping usn update")
                     // commit for markClean
-                    col.media.db.commit()
+                    col.media.db!!.commit()
                     updateConflict = true
                 }
                 toSend -= processedCnt

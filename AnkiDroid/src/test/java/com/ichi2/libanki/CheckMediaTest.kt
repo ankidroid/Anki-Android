@@ -44,16 +44,16 @@ class CheckMediaTest : RobolectricTest() {
             return
         }
         // 7421
-        col.media.db.database.execSQL("drop table meta")
+        col.media.db!!.database.execSQL("drop table meta")
         assertThat(
-            col.media.db.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
+            col.media.db!!.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
             equalTo(0)
         )
         val task =
             TaskManager.launchCollectionTask(CheckMedia()) as CollectionTask<*, *>
         task.get()
         assertThat(
-            col.media.db.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
+            col.media.db!!.queryScalar("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='meta';"),
             equalTo(1)
         )
     }
