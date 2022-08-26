@@ -428,4 +428,11 @@
     <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Created deck</string>
     <string name="deck_renamed">Renamed deck</string>
+
+    <!-- Browser Options Dialog -->
+    <string name="show_cards">Cards</string>
+    <string name="show_notes">Notes</string>
+    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
+    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
+    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
 </resources>

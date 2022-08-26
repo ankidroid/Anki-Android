@@ -157,6 +157,13 @@ open class CardBrowser :
     private var mPreviewItem: MenuItem? = null
     private var mUndoSnackbar: Snackbar? = null
 
+    /**
+     * Boolean that keeps track of whether the browser is working in
+     * Cards mode or Notes mode.
+     * True by default.
+     * */
+    private var inCardsMode: Boolean = true
+
     // card that was clicked (not marked)
     private var mCurrentCardId: CardId = 0
     private var mOrder = 0
@@ -676,6 +683,8 @@ open class CardBrowser :
             this, col, findViewById(R.id.toolbar_spinner),
             showAllDecks = true, alwaysShowDefault = false, showFilteredDecks = true
         )
+        inCardsMode = AnkiDroidApp.getSharedPrefs(this).getBoolean("inCardsMode", true)
+        isTruncated = AnkiDroidApp.getSharedPrefs(this).getBoolean("isTruncated", true)
         mDeckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
 
@@ -903,7 +912,6 @@ open class CardBrowser :
                 // Provide SearchView with the previous search terms
                 mSearchView!!.setQuery(mSearchTerms, false)
             }
-            menu.findItem(R.id.action_truncate).isChecked = isTruncated
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
@@ -1229,25 +1237,22 @@ open class CardBrowser :
             R.id.action_edit_tags -> {
                 showEditTagsDialog()
             }
-            R.id.action_truncate -> {
-                onTruncate()
+            R.id.action_open_options -> {
+                showOptionsDialog()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun onTruncate() {
-        val truncate = mActionBarMenu!!.findItem(R.id.action_truncate)
+    fun onTruncate(newTruncateValue: Boolean) {
+        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
 
-        if (truncate.isChecked) {
-            isTruncated = false
-            mCardsAdapter!!.notifyDataSetChanged()
-            truncate.isChecked = false
-        } else {
-            isTruncated = true
-            mCardsAdapter!!.notifyDataSetChanged()
-            truncate.isChecked = true
-        }
+        sharedPrefs.edit()
+            .putBoolean("isTruncated", newTruncateValue)
+            .apply()
+
+        isTruncated = newTruncateValue
+        mCardsAdapter!!.notifyDataSetChanged()
     }
 
     protected fun deleteSelectedNote() {
@@ -1437,6 +1442,11 @@ open class CardBrowser :
             TagsDialog.DialogType.FILTER_BY_TAG, ArrayList(0), col.tags.all()
         )
         showDialogFragment(dialog)
+    }
+
+    private fun showOptionsDialog() {
+        val dialog = BrowserOptionsDialog(inCardsMode, isTruncated)
+        dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
