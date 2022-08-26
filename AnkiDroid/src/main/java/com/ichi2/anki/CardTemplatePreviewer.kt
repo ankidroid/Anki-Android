@@ -317,7 +317,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
      * @param index The index in the templates for the model. NOT `ord`
      */
     fun getDummyCard(model: Model, index: Int): Card? {
-        return getDummyCard(model, index, model.fieldsNames)
+        return getDummyCard(model, index, model.fieldsNames.toMutableList())
     }
 
     /**
