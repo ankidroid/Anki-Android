@@ -186,7 +186,7 @@ class DB(db: SupportSQLiteDatabase) {
         return results
     }
 
-    fun execute(@Language("SQL") sql: String, vararg `object`: Any) {
+    fun execute(@Language("SQL") sql: String, vararg `object`: Any?) {
         val s = sql.trim { it <= ' ' }.lowercase()
         // mark modified?
         for (mo in MOD_SQLS) {
@@ -230,7 +230,7 @@ class DB(db: SupportSQLiteDatabase) {
         return database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
     }
 
-    fun executeMany(@Language("SQL") sql: String, list: List<Array<out Any>>) {
+    fun executeMany(@Language("SQL") sql: String, list: List<Array<out Any?>>) {
         mod = true
         if (BuildConfig.DEBUG) {
             if (list.size <= 1) {
@@ -245,7 +245,7 @@ class DB(db: SupportSQLiteDatabase) {
 
     /** Use this executeMany version with external transaction management  */
     @KotlinCleanup("Use forEach")
-    fun executeManyNoTransaction(@Language("SQL") sql: String, list: List<Array<out Any>>) {
+    fun executeManyNoTransaction(@Language("SQL") sql: String, list: List<Array<out Any?>>) {
         mod = true
         for (o in list) {
             database.execSQL(sql, o)

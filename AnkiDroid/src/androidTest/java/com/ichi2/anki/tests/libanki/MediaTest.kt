@@ -104,43 +104,43 @@ class MediaTest : InstrumentedTest() {
         val mid = mTestCol!!.models.getModels().entries.iterator().next().key
 
         var expected: List<String?> = emptyList<String>()
-        var actual = mTestCol!!.media.filesInStr(mid, "aoeu")
+        var actual = mTestCol!!.media.filesInStr(mid, "aoeu").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src='foo.jpg'>ao")
+        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src='foo.jpg'>ao").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg", "bar.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao")
+        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src='foo.jpg'><img src=\"bar.jpg\">ao").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src=foo.jpg style=bar>ao")
+        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src=foo.jpg style=bar>ao").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
         expected = listOf("one", "two")
-        actual = mTestCol!!.media.filesInStr(mid, "<img src=one><img src=two>")
+        actual = mTestCol!!.media.filesInStr(mid, "<img src=one><img src=two>").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg")
-        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao")
+        actual = mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\">ao").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.jpg", "fo")
         actual =
-            mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao")
+            mTestCol!!.media.filesInStr(mid, "aoeu<img src=\"foo.jpg\"><img class=yo src=fo>ao").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
         expected = listOf("foo.mp3")
-        actual = mTestCol!!.media.filesInStr(mid, "aou[sound:foo.mp3]aou")
+        actual = mTestCol!!.media.filesInStr(mid, "aou[sound:foo.mp3]aou").toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
 
@@ -183,11 +183,11 @@ class MediaTest : InstrumentedTest() {
         // check media
         val ret = mTestCol!!.media.check()
         var expected = listOf("fake2.png")
-        var actual = ret[0]
+        var actual = ret[0].toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
         expected = listOf("foo.jpg")
-        actual = ret[1]
+        actual = ret[1].toMutableList()
         actual.retainAll(expected)
         assertEquals(expected.size, actual.size)
     }
@@ -209,11 +209,11 @@ class MediaTest : InstrumentedTest() {
     }
 
     private fun added(d: Collection?): List<String> {
-        return d!!.media.db.queryStringList("select fname from media where csum is not null")
+        return d!!.media.db!!.queryStringList("select fname from media where csum is not null")
     }
 
     private fun removed(d: Collection?): List<String> {
-        return d!!.media.db.queryStringList("select fname from media where csum is null")
+        return d!!.media.db!!.queryStringList("select fname from media where csum is null")
     }
 
     @Test
