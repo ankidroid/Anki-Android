@@ -161,69 +161,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         listener?.onCancelled()
     }
 
-    @KotlinCleanup("non-null return")
-    class AddNote(private val note: Note) : TaskDelegate<Void, Int?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>) = try {
-            Timber.d("doInBackgroundAddNote")
-            col.db.executeInTransaction {
-                col.addNote(note, Models.AllowEmpty.ONLY_CLOZE)
-            }
-        } catch (e: RuntimeException) {
-            Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note")
-            CrashReportService.sendExceptionReport(e, "doInBackgroundAddNote")
-            null
-        }
-    }
-
-    class UpdateNote(
-        private val editCard: Card,
-        val isFromReviewer: Boolean,
-        private val canAccessScheduler: Boolean
-    ) : TaskDelegate<Void, Card?>() {
-        // returns updated card if no error and null if error
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Card? {
-            Timber.d("doInBackgroundUpdateNote")
-            // Save the note
-            val sched = col.sched
-            val returnCard: Card
-            val editNote = editCard.note()
-            try {
-                if (BackendFactory.defaultLegacySchema) {
-                    col.db.executeInTransaction {
-                        // TODO: undo integration
-                        editNote.flush()
-                        // flush card too, in case, did has been changed
-                        editCard.flush()
-                    }
-                } else {
-                    // TODO: the proper way to do this would be to call this in undoableOp() in
-                    // a coroutine
-                    col.newBackend.updateNote(editNote)
-                    // no need to flush card in new path
-                }
-                if (isFromReviewer) {
-                    val newCard: Card?
-                    if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
-                        newCard = editCard
-                        newCard.load()
-                        // reload qa-cache
-                        newCard.q(true)
-                    } else {
-                        newCard = sched.card
-                    }
-                    returnCard = newCard!! // check: are there deleted too?
-                } else {
-                    returnCard = editCard
-                }
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note")
-                CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateNote")
-                return null
-            }
-            return returnCard
-        }
-    }
-
     class UpdateMultipleNotes @JvmOverloads constructor(private val notesToUpdate: List<Note>, private val shouldUpdateCards: Boolean = false) : TaskDelegate<List<Note>, Computation<*>>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<List<Note>>): Computation<*> {
             Timber.d("doInBackgroundUpdateMultipleNotes")

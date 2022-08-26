@@ -41,6 +41,7 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiFont.Companion.getTypeface
 import com.ichi2.anki.CardUtils.getAllCards
 import com.ichi2.anki.CardUtils.getNotes
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
@@ -74,9 +75,9 @@ import com.ichi2.async.CollectionTask.RenderBrowserQA
 import com.ichi2.async.CollectionTask.SearchCards
 import com.ichi2.async.CollectionTask.SuspendCardMulti
 import com.ichi2.async.CollectionTask.UpdateMultipleNotes
-import com.ichi2.async.CollectionTask.UpdateNote
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
+import com.ichi2.async.updateNote
 import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.SortOrder.NoOrdering
@@ -178,10 +179,14 @@ open class CardBrowser :
         }
         if (result.resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...")
-            TaskManager.launchCollectionTask(
-                UpdateNote(sCardBrowserCard!!, isFromReviewer = false, canAccessScheduler = false),
-                updateCardHandler()
-            )
+            launchCatchingTask {
+                val updatedCard = withProgress {
+                    withCol {
+                        updateNote(this, sCardBrowserCard!!, false, false)
+                    }
+                }
+                updateCardInList(updatedCard)
+            }
         }
         val data = result.data
         if (data != null &&
@@ -1667,28 +1672,6 @@ open class CardBrowser :
 
         override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<*>?) {
             browser.hideProgressBar()
-        }
-    }
-
-    private fun updateCardHandler(): UpdateCardHandler {
-        return UpdateCardHandler(this)
-    }
-
-    private class UpdateCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Void, Card?>(browser) {
-
-        override fun actualOnPreExecute(context: CardBrowser) {
-            context.showProgressBar()
-        }
-
-        override fun actualOnPostExecute(context: CardBrowser, result: Card?) {
-            Timber.d("Card Browser - UpdateCardHandler.actualOnPostExecute()")
-            context.hideProgressBar()
-            if (result != null) {
-                context.updateCardInList(result)
-            } else {
-                // TODO: Too rude to close with error, allow user to backup their edited data
-                context.closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
-            }
         }
     }
 

@@ -50,6 +50,7 @@ import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
@@ -77,9 +78,9 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.PreloadNextCard
-import com.ichi2.async.CollectionTask.UpdateNote
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
+import com.ichi2.async.updateNote
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -398,43 +399,30 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private val mUpdateCardHandler: TaskListener<Void, Card?> = object : TaskListener<Void, Card?>() {
-        override fun onPreExecute() {
-            showProgressBar()
+    fun onCardUpdated(result: Card) {
+        if (mCurrentCard !== result) {
+            /*
+             * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
+             * then we need to display it as a new card, without showing the answer.
+             */
+            sDisplayAnswer = false
         }
-
-        override fun onPostExecute(result: Card?) {
-            if (result == null) {
-                // RuntimeException occurred on update cards
-                closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
-                return
-            }
-
-            if (mCurrentCard !== result) {
-                /*
-                 * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
-                 * then we need to display it as a new card, without showing the answer.
-                 */
-                sDisplayAnswer = false
-            }
-            currentCard = result
-            TaskManager.launchCollectionTask(PreloadNextCard()) // Tasks should always be launched from GUI. So in
-            // listener and not in background
-            if (mCurrentCard == null) {
-                // If the card is null means that there are no more cards scheduled for review.
-                showProgressBar()
-                closeReviewer(RESULT_NO_MORE_CARDS, true)
-            }
-            onCardEdited(mCurrentCard)
-            if (sDisplayAnswer) {
-                mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
-                mAnswerSoundsAdded = false // causes answer sounds to be reloaded
-                generateQuestionSoundList() // questions must be intentionally regenerated
-                displayCardAnswer()
-            } else {
-                displayCardQuestion()
-            }
-            hideProgressBar()
+        currentCard = result
+        TaskManager.launchCollectionTask(PreloadNextCard()) // Tasks should always be launched from GUI. So in
+        // listener and not in background
+        if (mCurrentCard == null) {
+            // If the card is null means that there are no more cards scheduled for review.
+            showProgressBar()
+            closeReviewer(RESULT_NO_MORE_CARDS, true)
+        }
+        onCardEdited(mCurrentCard)
+        if (sDisplayAnswer) {
+            mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
+            mAnswerSoundsAdded = false // causes answer sounds to be reloaded
+            generateQuestionSoundList() // questions must be intentionally regenerated
+            displayCardAnswer()
+        } else {
+            displayCardQuestion()
         }
     }
 
@@ -758,10 +746,14 @@ abstract class AbstractFlashcardViewer :
             if (resultCode == RESULT_OK) {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...")
-                TaskManager.launchCollectionTask(
-                    UpdateNote(editorCard!!, true, canAccessScheduler()),
-                    mUpdateCardHandler
-                )
+                launchCatchingTask {
+                    val updatedCard: Card = withProgress {
+                        withCol {
+                            updateNote(this, editorCard!!, true, canAccessScheduler())
+                        }
+                    }
+                    onCardUpdated(updatedCard)
+                }
                 onEditedNoteChanged()
             } else if (resultCode == RESULT_CANCELED && !reloadRequired) {
                 // nothing was changed by the note editor so just redraw the card
