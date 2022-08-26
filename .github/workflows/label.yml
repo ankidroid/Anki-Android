@@ -1,17 +1,18 @@
-name: Remove Labels
+name: Add/Remove Labels
 
 on:
   pull_request_target:
-    types: [ closed ]
+    types: [ opened, closed ]
 
 jobs:
   merge_job:
     if: github.event.pull_request.merged == true
     permissions:
       contents: read
-      pull-requests: write    
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - uses: actions/github-script@v6
       with:
         script: |
@@ -52,3 +53,36 @@ jobs:
                 }
             }
           }
+
+  add_label:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            let stringsLabel = "strings";
+
+            async function addLabel(labels) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: labels
+              });
+            }
+
+            const changedFiles = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            for (let files of changedFiles.data) {
+              if (files.filename.includes("AnkiDroid/src/main/res/values")) {
+                addLabel([stringsLabel]);
+                break;
+              }
+            }
