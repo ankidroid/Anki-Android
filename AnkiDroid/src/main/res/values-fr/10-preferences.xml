@@ -50,11 +50,11 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s \%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Pas de résultat</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Général</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Etudier</string>
+    <string name="pref_cat_system_wide" maxLength="41">À l\'échelle du système</string>
     <string name="pref_cat_reviewing" maxLength="41">Révision</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronisation</string>
     <string name="pref_cat_scheduling" maxLength="41">Planification</string>
@@ -340,11 +340,11 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Retirer « %s »</string>
     <string name="bindings_already_bound">Déjà lié à %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="pref_cat_experimental" maxLength="41">Expérimental</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Activer ‘%s’</string>
+    <string name="use_rust_backend_title" maxLength="41">Utiliser le nouveau backend</string>
+    <string name="use_rust_backend_summary">Active les nouvelles fonctionnalités Anki, telles que le planificateur v3\nINSTABLE. N\'utilisez pas sur une collection qui vous intéresse. PAS de retour à la fermeture de l\'application</string>
+    <string name="use_rust_backend_warning">Il y a une chance que cela puisse corrompre votre installation complètement, exiger la désinstallation et la suppression de l\'application du dossier AnkiDroid, et a une chance de propager la corruption via la synchronisation à AnkiWeb.\n\nNous nous réjouissons du test, mais veuillez vous assurer que vous avez une sauvegarde non-AnkiWeb valide.</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Options développeur</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activer les options développeur</string>

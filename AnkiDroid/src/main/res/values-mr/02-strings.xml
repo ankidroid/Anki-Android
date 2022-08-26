@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
     <string name="title_whiteboard_editor">Whiteboard editor</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">रिक्त प्रथम फील्ड:%s</string>
-    <string name="note_importer_error_first_field_matched">प्रथम फील्ड जुळले:%s</string>
-    <string name="note_importer_error_added_duplicate_first_field">पहिल्या फील्डसह डुप्लिकेट जोडले:%s</string>
-    <string name="note_importer_error_appeared_twice">फाइलमध्ये दोनदा दिसू लागले:%s</string>
-    <string name="note_importer_error_empty_notes">एक किंवा अधिक नोट्स आयात केल्या नव्हत्या, कारण त्यांनी कोणतीही कार्ड व्युत्पन्न केली नाही. जेव्हा आपल्याकडे रिक्त फील्ड असेल किंवा मजकूर फाईलमधील सामग्री योग्य फील्डमध्ये मॅप केली नसेल तेव्हा असे होऊ शकते</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ मध्ये %2$d फील्ड होती, अपेक्षित %3$d</string>
-    <string name="csv_importer_error_exception">निरस्त: %s</string>
     <string name="user_is_a_robot">स्वयंचलित चाचणी आढळली. आपण मनुष्य असल्यास, अँकीड्रोइड समर्थनाशी संपर्क साधा</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">हे कार्ड असमर्थित AnkiDroid वैशिष्ट्ये वापरते. विकसक %1$s शी संपर्क साधा किंवा विकी पहा. %2$s</string>

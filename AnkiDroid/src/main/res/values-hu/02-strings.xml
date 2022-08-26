@@ -100,8 +100,8 @@
         <item>A jegyzet módosítva lett</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Alkamaz</string>
+    <string name="filter_by_flags">Zászlók</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Módosítsa a mai új kártyakorlátot</string>
     <string name="custom_study_increase_review_limit">Módosítsa a megismételhető kártyák számát a mai napra</string>
@@ -176,11 +176,11 @@
     <string name="import_log_file_cache_cleared">Hiba történt a fájl importálása során valószínű a cache törlés során.\n.Kérjük próbálja újra</string>
     <string name="import_succeeded_but_check_database">Adat importálás sikeres, de az import utáni takarítás sikertelen. Futass egy adatbázis ellenőrzést később. Hiba eredete: %s</string>
     <string name="import_error_corrupt_zip">Hibás apkg fájl. Próbáld meg törölni és újra letölteni.\n\nA hiba oka: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">Nem sikerült importálni a fájlt\n\n%s</string>
     <string name="import_error_not_apkg_extension">A \"%s\" fájlnévnek nincsen .apkg vagy .colpkg kiterjesztése</string>
     <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
     <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan anki fájlokat:\n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">Nem sikerült gyorsítótárba helyezni a fájlt (valószínűleg elfogyott a tárhely)</string>
     <string name="import_error_multiple_colpkg">Több colpkg fájl lett kiválasztva.</string>
     <string name="import_error_colpkg_apkg">Az apkg &amp; colpkg fájlok egyszerre lettek kiválasztva.</string>
     <string name="import_stats_error">Hibák történtek a következő fájlok importálásánál:\n%s</string>
@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">A rajztábla kép elmentve %s-ba</string>
     <string name="title_whiteboard_pen_color">Rajtábla tollszín </string>
     <string name="title_whiteboard_editor">Rajztábla szerkesztő</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Üres kártyákat találtam. Kérlek, futtasd az Eszközök/Üres kártyák menüt.]]></string>
-    <string name="note_importer_error_empty_first_field">Üres első mező: %s</string>
-    <string name="note_importer_error_first_field_matched">Az első mező megegyezett %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Hozzáadott másolat az első mezővel: %s</string>
-    <string name="note_importer_error_appeared_twice">Kétszer jelenik meg a fájlban: %s</string>
-    <string name="note_importer_error_empty_notes">Egy vagy több jegyzetet nem importálható.Ez akkor fordulhat elő, ha üres mezők vannak, vagy ha a szöveges fájl tartalma nem a megfelelő mezőben van.</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ volt %2$d mezők, várható %3$d</string>
-    <string name="csv_importer_error_exception">Megszakított: %s</string>
     <string name="user_is_a_robot">Felismert automatizált teszt. Ha te csináltad, vedd fel a kapcsolatot az AnkiDroid támogatással</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Ez a kártya nem támogatott AnkiDroid funkciókat használ. Vegye fel a kapcsolatot a fejlesztővel %1$s, vagy tekintse meg a wikit . %2$s</string>
@@ -401,5 +392,5 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Címke kibontás \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Nem sikerült elérni a gyűjteményt. Kérjük próbálja meg később!</string>
 </resources>

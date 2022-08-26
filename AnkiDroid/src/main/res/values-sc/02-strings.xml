@@ -101,8 +101,8 @@
         <item>Carta modificada</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Àplica</string>
+    <string name="filter_by_flags">Banderas</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modìfica su lìmite de cartas noas de oe</string>
     <string name="custom_study_increase_review_limit">Modìfica su lìmite de revisiones de oe</string>
@@ -181,12 +181,12 @@
     <string name="import_error_corrupt_zip">Su documentu apkg est corrùmpidu. Pro praghere iscantzella·lu e torra·lu a iscarrigare.\n
                               \n
                               Càusa de raighina: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">Fallimentu de s\'mportatzione de s\'archìviu\n\n%s</string>
     <string name="import_error_not_apkg_extension">Su nùmene de su documentu “%s” non tenet un\'estensione .apkg o. colpkg</string>
     <string name="import_error_load_imported_database">Sas sostitutziones de sa base de datos de Anki (.anki2) non sunt galu suportadas. Pòmpia·ti su manuale pro sas istrutziones de sostitutzione.</string>
     <string name="import_error_content_provider">Su documentu ischertadu non podet èssere importadu in manera automàtica dae AnkiDroid. Pòmpia·ti su manuale pro imparare comente importare sos documentos de Anki in automàticu: \n
                               %s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">Sarvamentu de s\'archìviu in sa memòria temporànea fallidu (probabilmente ca non b\'at logu in sa memòria)</string>
     <string name="import_error_multiple_colpkg">Sunt istados seletzionados documentos colpkg mùltiplos.</string>
     <string name="import_error_colpkg_apkg">Siat sos archìvios apkg siat cussos colpkg sunt istados seletzionados paris.</string>
     <string name="import_stats_error">B\'at àpidu carchi errore in s\'importatzione de sos archìvios sighentes:\n%s</string>
@@ -296,15 +296,6 @@
     <string name="white_board_image_saved">Immàgine de sa lavagna sarvada in %s</string>
     <string name="title_whiteboard_pen_color">Colore de pinna de sa lavagna</string>
     <string name="title_whiteboard_editor">Editore de sa lavagna</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Cartas bòidas agatadas. Pro praghere avia Ainas&gt;Cartas bòidas.]]></string>
-    <string name="note_importer_error_empty_first_field">Primu campu bòidu: %s</string>
-    <string name="note_importer_error_first_field_matched">Primu campu chi currispondet: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Duplicadu annantu cun su primu campu: %s</string>
-    <string name="note_importer_error_appeared_twice">Aparidu duas bortas in su documentu: %s</string>
-    <string name="note_importer_error_empty_notes">Una o prus notas non sunt istadas importadas, ca no ant generadu carta peruna. Custu podet acontèssere cando tenes campos bòidos o cando no as mapadu su cuntenutu in su documentu de testu in sos campos curretos</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ tenet %2$d campos, de %3$d isetados</string>
-    <string name="csv_importer_error_exception">Annulladu: %s</string>
     <string name="user_is_a_robot">Test automàticu agatadu. Si ses un\'umanu cuntata su suportu de AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Custa carta impreat funtzionalidades de AnkiDroid non suportadas. Cuntata s\'isvilupadore %1$s o pòmpia·ti sa wiki. %2$s</string>

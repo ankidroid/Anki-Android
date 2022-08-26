@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
     <string name="title_whiteboard_pen_color">Koloro por skribi sur skribtabulo</string>
     <string name="title_whiteboard_editor">Redaktilo de skribtabulo</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Trovis malplenajn kartojn. Ekigu “iloj” → “malplenaj kartoj”]]></string>
-    <string name="note_importer_error_empty_first_field">Unua kampo malplena: %s</string>
-    <string name="note_importer_error_first_field_matched">Unua kampo kongruis al: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Aldonis duplikaton al unua kampo: %s</string>
-    <string name="note_importer_error_appeared_twice">Aperis dufoje en dosiero: %s</string>
-    <string name="note_importer_error_empty_notes">Almenaŭ unu noto ne estis enportita, ĉar ili generis neniun karton. Tio ĉi povas okazi kiam vi havas malplenajn kampojn aŭ kiam vi ne bildigis enhavon en la teksta dosiero al la ĝustaj kampoj.</string>
-    <string name="csv_importer_error_invalid_field_count">“%1$s” havis %2$d kampojn, %3$d estis esperataj</string>
-    <string name="csv_importer_error_exception">Ĉesigita: %s</string>
     <string name="user_is_a_robot">Eltrovita aŭtomata testo. Se vi estas homo, kontaktu la helpteamon AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Tiu ĉi karto uzas eblaĵojn nesubtenatajn de AnkiDroid. Kontaktu la programiston %1$s aŭ legu la vikion. %2$s</string>

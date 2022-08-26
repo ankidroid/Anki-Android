@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ %s ᱛᱮ ᱥᱟᱱᱪᱟᱣ</string>
     <string name="title_whiteboard_pen_color">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱞᱚᱢ ᱨᱚᱰ</string>
     <string name="title_whiteboard_editor">ᱯᱩᱸᱰᱵᱚᱰ ᱮᱰᱤᱴᱚᱨ</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱧᱟᱢᱮᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱦᱟᱹᱛᱤᱭᱟᱨ>ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱠᱚ ᱨᱮ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ ᱾ ]]></string>
-    <string name="note_importer_error_empty_first_field">ᱢᱟᱲᱟᱝ ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ: %s</string>
-    <string name="note_importer_error_first_field_matched">ᱢᱟᱲᱟᱝ ᱡᱟᱭᱜᱟ ᱥᱟᱞᱟᱜ ᱥᱚᱢᱟᱱ ᱮᱱᱟ: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">ᱢᱟᱲᱟᱝ ᱡᱟᱭᱜᱟ ᱨᱮ ᱱᱚᱠᱚᱞ ᱥᱮᱞᱮᱫ ᱮᱱᱟ: %s</string>
-    <string name="note_importer_error_appeared_twice">ᱨᱮᱪ ᱨᱮ ᱵᱟᱨ ᱡᱮᱠᱷᱟ ᱧᱮᱞᱪᱷᱚᱭ ᱮᱱᱟ: %s</string>
-    <string name="note_importer_error_empty_notes">ᱢᱤᱫᱴᱟᱹᱝ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱱᱚᱴ ᱠᱚ ᱵᱟᱭ ᱞᱟᱫᱮ ᱟᱠᱟᱱᱟ, ᱪᱮᱫᱟᱜ ᱩᱱᱠᱩ ᱫᱚ ᱠᱟᱰ ᱠᱚ ᱵᱟᱠᱚ ᱛᱮᱭᱟᱨ ᱟᱠᱟᱫᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ ᱟᱨ ᱵᱟᱝ ᱡᱤᱱᱤᱥ ᱠᱚ ᱨᱮᱭᱟᱜ ᱚᱞ ᱨᱮᱫ ᱠᱚ ᱴᱷᱤᱠ ᱥᱮ ᱵᱟᱭ ᱢᱮᱯ ᱟᱠᱟᱱᱟ ᱴᱷᱤᱠ ᱡᱟᱭᱜᱟ ᱨᱮ </string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ ᱴᱷᱮᱱ %2$d ᱡᱟᱭᱜᱟ, %3$d ᱟᱥᱟ ᱛᱟᱦᱮᱸ ᱠᱟᱱᱟ</string>
-    <string name="csv_importer_error_exception">ᱰᱟᱫ ᱮᱱᱟ: %s</string>
     <string name="user_is_a_robot">ᱟᱹᱴᱚᱢᱮᱴᱮᱰ ᱴᱮᱥᱴ ᱯᱟᱱᱛᱮ ᱚᱲᱚᱠ ᱾ ᱡᱩᱫᱤ ᱟᱢ ᱦᱚᱲ ᱠᱟᱱᱟᱢ AnkiDroid ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱵᱟᱝ ᱥᱟᱯᱯᱚᱨᱴ AnkiDroid ᱯᱷᱤᱪᱚᱨ ᱠᱚ ᱵᱮᱵᱷᱟᱨ ᱮᱫ ᱟᱭ ᱾ %1$s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾ %2$s</string>

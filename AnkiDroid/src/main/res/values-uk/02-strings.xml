@@ -312,15 +312,6 @@
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
     <string name="title_whiteboard_pen_color">Колір пензля</string>
     <string name="title_whiteboard_editor">Редактор дошоки</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Знайдено порожні картки. Натисніть Інструменти > Порожні картки.]]></string>
-    <string name="note_importer_error_empty_first_field">Порожнє перше поле: %s</string>
-    <string name="note_importer_error_first_field_matched">Перше поле відповідне: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Додано дублікат з першим полем: %s</string>
-    <string name="note_importer_error_appeared_twice">У файлі відображено двічі: %s</string>
-    <string name="note_importer_error_empty_notes">Один або більше записів не імпортовано, оскільки вони не згенерували картки. Це може статися, коли у вас є порожні поля, або коли ви не зіставили вміст в текстовому файлі до правильних полів</string>
-    <string name="csv_importer_error_invalid_field_count">«%1$s» мала %2$d полів, очікувалось %3$d</string>
-    <string name="csv_importer_error_exception">Перервано: %s</string>
     <string name="user_is_a_robot">Виявлено автоматичний тест. Якщо Ви — людина, зверніться до підтримки AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Ця картка використовує непідтримувані функції AnkiDroid. Зверніться до розробника %1$s, або перегляньте вікі. %2$s</string>

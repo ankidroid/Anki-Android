@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">დაფის სურათი შეინახა %s-ში</string>
     <string name="title_whiteboard_pen_color">დაფის მარკერის ფერი</string>
     <string name="title_whiteboard_editor">დაფის რედაქტორი</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Empty cards found. Please run Tools>Empty Cards.]]></string>
-    <string name="note_importer_error_empty_first_field">ცარიელი პირველი ველი: %s</string>
-    <string name="note_importer_error_first_field_matched">პირველი ველი დაემთხვა: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">დაემატა პირველი ველის დუბლიკატი: %s</string>
-    <string name="note_importer_error_appeared_twice">ფაილში ორჯერ არის: %s</string>
-    <string name="note_importer_error_empty_notes">One or more notes were not imported, because they didn\'t generate any cards. This can happen when you have empty fields or when you have not mapped the content in the text file to the correct fields</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d fields, expected %3$d</string>
-    <string name="csv_importer_error_exception">შეწყდა: %s</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>

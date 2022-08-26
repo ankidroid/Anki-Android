@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">ವೈಟ್‌ಬೋರ್ಡ್ ಚಿತ್ರವನ್ನು%s ಗೆ ಉಳಿಸಲಾಗಿದೆ</string>
     <string name="title_whiteboard_pen_color">ವೈಟ್‌ಬೋರ್ಡ್ ಪೆನ್ ಬಣ್ಣ</string>
     <string name="title_whiteboard_editor">ವೈಟ್‌ಬೋರ್ಡ್ ಸಂಪಾದಕ</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು ಕಂಡುಬಂದಿವೆ. ದಯವಿಟ್ಟು ಪರಿಕರಗಳು> ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳನ್ನು ಚಲಾಯಿಸಿ.]]></string>
-    <string name="note_importer_error_empty_first_field">ಖಾಲಿ ಮೊದಲ ಕ್ಷೇತ್ರ:%s</string>
-    <string name="note_importer_error_first_field_matched">ಮೊದಲ ಕ್ಷೇತ್ರವು ಹೊಂದಿಕೆಯಾಗಿದೆ:%s</string>
-    <string name="note_importer_error_added_duplicate_first_field">ಮೊದಲ ಕ್ಷೇತ್ರದೊಂದಿಗೆ ನಕಲನ್ನು ಸೇರಿಸಲಾಗಿದೆ:%s</string>
-    <string name="note_importer_error_appeared_twice">ಫೈಲ್‌ನಲ್ಲಿ ಎರಡು ಬಾರಿ ಕಾಣಿಸಿಕೊಂಡಿದೆ:%s</string>
-    <string name="note_importer_error_empty_notes">ಒಂದು ಅಥವಾ ಹೆಚ್ಚಿನ ಟಿಪ್ಪಣಿಗಳನ್ನು ಆಮದು ಮಾಡಿಕೊಳ್ಳಲಾಗಿಲ್ಲ, ಏಕೆಂದರೆ ಅವು ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ರಚಿಸಲಿಲ್ಲ. ನೀವು ಖಾಲಿ ಜಾಗಗಳನ್ನು ಹೊಂದಿರುವಾಗ ಅಥವಾ ಪಠ್ಯ ಫೈಲ್‌ನಲ್ಲಿರುವ ವಿಷಯವನ್ನು ಸರಿಯಾದ ಕ್ಷೇತ್ರಗಳಿಗೆ ಮ್ಯಾಪ್ ಮಾಡದಿದ್ದಾಗ ಇದು ಸಂಭವಿಸಬಹುದು</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’%2$d ಕ್ಷೇತ್ರಗಳನ್ನು ಹೊಂದಿದ್ದು,%3$d ನಿರೀಕ್ಷಿಸಲಾಗಿದೆ</string>
-    <string name="csv_importer_error_exception">ಸ್ಥಗಿತಗೊಳಿಸಲಾಗಿದೆ:%s</string>
     <string name="user_is_a_robot">ಸ್ವಯಂಚಾಲಿತ ಪರೀಕ್ಷೆ ಪತ್ತೆಯಾಗಿದೆ. ನೀವು ಮನುಷ್ಯರಾಗಿದ್ದರೆ, ಆಂಕಿಡ್ರಾಯ್ಡ್ ಬೆಂಬಲವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">ಈ ಕಾರ್ಡ್ ಬೆಂಬಲಿಸದ ಆಂಕಿಡ್ರಾಯ್ಡ್ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಬಳಸುತ್ತದೆ. ಡೆವಲಪರ್ %1$s ಅನ್ನು ಸಂಪರ್ಕಿಸಿ, ಅಥವಾ ವಿಕಿಯನ್ನು ವೀಕ್ಷಿಸಿ. %2$s</string>

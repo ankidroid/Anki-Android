@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">വൈറ്റ്ബോർഡ് ചിത്രം %s ലേക്ക് സംരക്ഷിച്ചു</string>
     <string name="title_whiteboard_pen_color">വൈറ്റ്ബോർഡ് പേന നിറം</string>
     <string name="title_whiteboard_editor">Whiteboard editor</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[ശൂന്യമായ കാർഡുകൾ കണ്ടെത്തി. ഉപകരണങ്ങൾ> ശൂന്യ കാർഡുകൾ പ്രവർത്തിപ്പിക്കുക.]]></string>
-    <string name="note_importer_error_empty_first_field">ആദ്യ ഫീൽഡ് ശൂന്യമാക്കുക:%s</string>
-    <string name="note_importer_error_first_field_matched">ആദ്യ ഫീൽഡ് പൊരുത്തപ്പെട്ടു: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">ആദ്യ ഫീൽഡിനൊപ്പം തനിപ്പകർപ്പ് ചേർത്തു:%s</string>
-    <string name="note_importer_error_appeared_twice">ഫയലിൽ രണ്ടുതവണ പ്രത്യക്ഷപ്പെട്ടു:%s</string>
-    <string name="note_importer_error_empty_notes">ഒന്നോ അതിലധികമോ കുറിപ്പുകൾ ഇറക്കുമതി ചെയ്തിട്ടില്ല, കാരണം അവ കാർഡുകളൊന്നും സൃഷ്ടിച്ചിട്ടില്ല. നിങ്ങൾക്ക് ശൂന്യമായ ഫീൽഡുകൾ ഉള്ളപ്പോൾ അല്ലെങ്കിൽ ടെക്സ്റ്റ് ഫയലിലെ ഉള്ളടക്കം ശരിയായ ഫീൽഡുകളിലേക്ക് മാപ്പ് ചെയ്യാത്തപ്പോൾ ഇത് സംഭവിക്കാം</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ ന്%2$d ഫീൽഡുകൾ ഉണ്ടായിരുന്നു, പ്രതീക്ഷിച്ച %3$d</string>
-    <string name="csv_importer_error_exception">ഉപേക്ഷിച്ചു:%s</string>
     <string name="user_is_a_robot">യാന്ത്രിക പരിശോധന കണ്ടെത്തി. നിങ്ങൾ ഒരു മനുഷ്യനാണെങ്കിൽ, അങ്കിഡ്രോയിഡ് പിന്തുണയുമായി ബന്ധപ്പെടുക</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">ഈ കാർഡ് പിന്തുണയ്‌ക്കാത്ത അങ്കിഡ്രോയിഡ് സവിശേഷതകൾ ഉപയോഗിക്കുന്നു. %1$s ഡവലപ്പറുമായി ബന്ധപ്പെടുക, അല്ലെങ്കിൽ വിക്കി കാണുക. %2$s</string>

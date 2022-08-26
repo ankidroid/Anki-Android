@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">श्वेतपट्ट छवि %s में सहेजी गई</string>
     <string name="title_whiteboard_pen_color">श्वेतपट्ट के कलम का रंग</string>
     <string name="title_whiteboard_editor">श्वेतपट्ट संपादक</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[खाली कार्ड मिले। कृपया उपकरण> खाली कार्ड चलाएं।]]></string>
-    <string name="note_importer_error_empty_first_field">खाली पहला क्षेत्र: %s</string>
-    <string name="note_importer_error_first_field_matched">पहला फ़ील्ड मिलान किया गया: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">प्रथम फ़ील्ड के साथ डुप्लिकेट जोड़ा गया: %s</string>
-    <string name="note_importer_error_appeared_twice">फ़ाइल में दो बार दिखाई दिया: %s</string>
-    <string name="note_importer_error_empty_notes">एक या अधिक नोट आयात नहीं किए गए थे, क्योंकि उन्होंने कोई कार्ड नहीं बनाया था। यह तब हो सकता है जब आपके पास खाली फ़ील्ड हों या जब आपने टेक्स्ट फ़ाइल में सामग्री को सही फ़ील्ड में मैप न किया हो</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ के पास %2$d क्षेत्र थे,%3$d अपेक्षित था</string>
-    <string name="csv_importer_error_exception">निरस्त: %s</string>
     <string name="user_is_a_robot">स्वचालित परीक्षण का पता लगाया। यदि आप एक मानव हैं, तो AnkiDroid समर्थन से संपर्क करें</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">यह कार्ड असमर्थित AnkiDroid सुविधाओं का उपयोग करता है। डेवलपर से संपर्क करें %1$s, या विकी देखें। %2$s</string>

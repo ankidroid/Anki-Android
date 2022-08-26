@@ -172,11 +172,11 @@
     <string name="import_log_file_cache_cleared">导入文件错误，可能处理期间的缓存清理造成的。\n请再次尝试</string>
     <string name="import_succeeded_but_check_database">数据导入成功，但导入后的清理失败。稍后运行检查数据库。根原因：%s</string>
     <string name="import_error_corrupt_zip">apkg 文件已损坏。请删除并重新下载。\n\n根原因：%s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">导入文件\n\n%s 失败</string>
     <string name="import_error_not_apkg_extension">\"%s\" 并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">缓存文件失败 (可能超出存储空间)</string>
     <string name="import_error_multiple_colpkg">选择了多个 colpkg 文件。</string>
     <string name="import_error_colpkg_apkg">同时选择了 apkg &amp; colpkg 文件。</string>
     <string name="import_stats_error">导入以下文件时发生了一些错误：\n%s</string>
@@ -279,15 +279,6 @@
     <string name="white_board_image_saved">白板图像已保存到 %s</string>
     <string name="title_whiteboard_pen_color">白板笔颜色</string>
     <string name="title_whiteboard_editor">白板编辑器</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[找到空的卡片。请运行 工具 > 空卡片。]]></string>
-    <string name="note_importer_error_empty_first_field">第一个字段为空：%s</string>
-    <string name="note_importer_error_first_field_matched">第一个字段匹配：%s</string>
-    <string name="note_importer_error_added_duplicate_first_field">已添加重复的第一个字段：%s</string>
-    <string name="note_importer_error_appeared_twice">在文件中出现两次：%s</string>
-    <string name="note_importer_error_empty_notes">一个或多个笔记未被导入，因为它们没有生成任何卡片。 当您有空字段或您未将文本文件中的内容映射到正确字段时，可能发生此情况</string>
-    <string name="csv_importer_error_invalid_field_count">“%1$s”有 %2$d 个字段，而期望 %3$d 个字段</string>
-    <string name="csv_importer_error_exception">已中止：%s</string>
     <string name="user_is_a_robot">检测到自动测试。如果您是真人，请联系 AnkiDroid 支持</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">此卡片使用不受支持的 AnkiDroid 功能。请联系开发者 %1$s，或查看维基。%2$s</string>

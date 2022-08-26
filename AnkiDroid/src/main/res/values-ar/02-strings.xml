@@ -334,15 +334,6 @@
     <string name="white_board_image_saved">تم حفظ صورة السبورة إلى %s</string>
     <string name="title_whiteboard_pen_color">لون قلم السبورة</string>
     <string name="title_whiteboard_editor">لون قلم السبورة</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[عُثِر على بطاقات فارغة. استخدم أدوات>بطاقات فارغة.]]></string>
-    <string name="note_importer_error_empty_first_field">حقل أول فارغ: %s</string>
-    <string name="note_importer_error_first_field_matched">الحقل الأول مطابق: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">أضيفت ملحوظة مكررة بحقل أول: %s</string>
-    <string name="note_importer_error_appeared_twice">ظهر مرتين في الملف: %s</string>
-    <string name="note_importer_error_empty_notes">لم يتم استيراد واحدة أو أكثر من الملحوظات، لأنها لا تولّد أي بطاقات. يمكن أن يحدث هذا عندما يكون لديك حقول فارغة أو عندما لا توزع المحتوى في الملف النصي إلى الحقول الصحيحة.</string>
-    <string name="csv_importer_error_invalid_field_count">\'%1$s\' له %2$d حقل، لكن توقع %3$d</string>
-    <string name="csv_importer_error_exception">تم الإلغاء: %s</string>
     <string name="user_is_a_robot">تم الكشف عن اختبار تلقائي. إذا كنت بشراً، اتصل بدعم أنكيدرويد</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">تستخدم هذه البطاقة ميزات أنكيدرويد غير مدعومة. اتصل بالمطور %1$s، أو اطلع على الويكي. %2$s</string>

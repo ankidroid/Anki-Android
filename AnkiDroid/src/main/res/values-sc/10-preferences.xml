@@ -50,11 +50,11 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Perunu resurtadu</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Generale</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Istudiende</string>
+    <string name="pref_cat_system_wide" maxLength="41">Pro totu su sistema</string>
     <string name="pref_cat_reviewing" maxLength="41">Revisione</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronizatzione</string>
     <string name="pref_cat_scheduling" maxLength="41">Programmatzione</string>
@@ -318,12 +318,12 @@
     <string name="type_in_answer_focus_summ">Pone in evidèntzia in automàticu su campu ‘iscrie sa risposta’ in su revisore</string>
     <!-- About -->
     <string name="open_changelog">Aberi su registru de sas modìficas</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="pref_cat_about_title" maxLength="41">Informatziones</string>
+    <string name="contributors_title">Contribuidores</string>
+    <string name="about_contributors_description"><![CDATA[Custos sunt sos <a href=\"%1$s\">contribuidores</a> istravanados nostros. Fintzas tue podes agiudare AnkiDroid programmende, bortende, donende e  <a href=\"%2$s\">àteru galu</a>!]]></string>
+    <string name="license">Litzèntzia</string>
+    <string name="license_description"><![CDATA[AnkiDroid est publicadu suta de sas litzèntzias <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a>, cun su còdighe de orìgine a disponimentu <a href=\"%3$s\">in GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[Podes suportare s\'isvilupu de AnkiDroid <a href=\"%1$s\">cun una donatzione</a>. Cale si siat tantu est apretziadu meda.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Annanghe unu gestu</string>
     <string name="binding_replace_gesture">Sostitui su gestu</string>
@@ -342,15 +342,15 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Boga ‘%s’</string>
     <string name="bindings_already_bound">Giai assotziadu a %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="pref_cat_experimental" maxLength="41">Isperimentale</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Abìlita ‘%s’</string>
+    <string name="use_rust_backend_title" maxLength="41">Imprea su backend nou</string>
+    <string name="use_rust_backend_summary">Abìlitat funtzionalidades noas de Anki, che a su pranificadore v3\nINSTÀBILE. Non l\'imprees cun una colletzione a sa cale tenes. NON benit annulladu serrende s\'aplicatzione</string>
+    <string name="use_rust_backend_warning">B\'at una possibilidade chi custu potzat corrumpere s\'installatzione tua de su totu, faghende in manera chi siat netzessària una disinstallatzione de s\'aplicatzione e un\'iscantzelladura de sa cartella de AnkiDroid, e tenet sa possibilidade de ispàrghere sa corrutzione finas a AnkiWeb pro mèdiu de sa sincronizatzione.\n\nAgradessimus sas proas, ma assegura·ti de tènnere una còpia de seguresa non de AnkiWeb vàlida.</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="pref_cat_dev_options" maxLength="41">Optziones de isvilupu</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Abìlita sas optziones de isvilupu</string>
+    <string name="disable_dev_options">Disabìlita sas optziones de isvilupu</string>
+    <string name="dev_options_warning">        Assegura·ti de s\'intentu tuo in antis de abilitare sas optziones de isvilupu. Custas optziones sunt perigulosas e diant pòdere segare s\'aplicatzione o corrùmpere sa colletzione tua.\n\nTene in contu chi custas optziones non sunt adatas pro sa parte manna de sos utentes e pro custa resone non sunt traduidas, duncas sunt in inglesu.
     </string>
 </resources>

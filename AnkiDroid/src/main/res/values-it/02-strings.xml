@@ -101,7 +101,7 @@
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">Applica</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags">Contrassegni</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifica il limite odierno di nuove carte</string>
     <string name="custom_study_increase_review_limit">Modifica il limite odierno di revisioni</string>
@@ -181,7 +181,7 @@
     <string name="import_error_load_imported_database">Le sostituzioni di Anki Database (.anki2) non sono ancora supportate. Consultare il manuale per le istruzioni di sostituzione.</string>
     <string name="import_error_content_provider">Il file selezionato non ha potuto essere importato automaticamente da AnkiDroid. Consulta il manuale utente per importare manualmente i file anki: \n %s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_multiple_colpkg">Sono stati selezionati più file colpkg.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Si sono verificati degli errori durante l\'importazione dei seguenti file:\n%s</string>
     <string name="import_replacing">Sostituzione collezione&#8230;</string>
@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">Immagine lavagna salvata in %s</string>
     <string name="title_whiteboard_pen_color">Colore della penna della lavagna</string>
     <string name="title_whiteboard_editor">Editor di lavagna bianca</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Trovate carte vuote. Si prega di eseguire Strumenti>Carte Vuote.]]></string>
-    <string name="note_importer_error_empty_first_field">Primo campo vuoto: %s</string>
-    <string name="note_importer_error_first_field_matched">Primo campo corrisponde: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Aggiunto duplicato con il primo campo: %s</string>
-    <string name="note_importer_error_appeared_twice">Apparso due volte nel file: %s</string>
-    <string name="note_importer_error_empty_notes">Una o più note non sono state importate, perché non hanno generato alcuna carta. Ciò può accadere quando hai dei campi vuoti o quando non hai mappato il contenuto del file di testo ai giusti campi</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ ha %2$d campi, su %3$d attesi</string>
-    <string name="csv_importer_error_exception">Interrotto: %s</string>
     <string name="user_is_a_robot">Rilevato test automatico. Se sei umano, contatta il supporto AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Questa carta utilizza funzioni AnkiDroid non supportate. Contatta lo sviluppatore %1$s, o visualizza la wiki. %2$s</string>
@@ -394,9 +385,9 @@
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
     <string name="could_not_create_dir">Impossibile creare la cartella %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
+    <string name="malicious_archive_entry_outside">Archivio dannoso. Contiene voce fuori dalla directory di destinazione: %s</string>
     <string name="malicious_archive_exceeds_limit">Archivio dannoso. La dimensione supera %1$s o contiene più di %2$d file</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">Il file estratto supera lo spazio di archiviazione</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Espandi etichetta \'%s\'</string>
     <!-- Manage note types -->

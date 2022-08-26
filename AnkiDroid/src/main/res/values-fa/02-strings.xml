@@ -288,15 +288,6 @@
     <string name="white_board_image_saved">تصویر تخته سفید در %s ذخیره شد</string>
     <string name="title_whiteboard_pen_color">رنگ ماژیک تخته سفید</string>
     <string name="title_whiteboard_editor">Whiteboard editor</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[کارت های خالی پیدا شد. لطفا ابزار>کارت های خالی را اجرا کنید.]]></string>
-    <string name="note_importer_error_empty_first_field">فیلد اول خالی: %s</string>
-    <string name="note_importer_error_first_field_matched">فیلد اول مطابق با: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Added duplicate with first field: %s</string>
-    <string name="note_importer_error_appeared_twice">دوبار در فایل %s وجود دارد</string>
-    <string name="note_importer_error_empty_notes">یک یا تعداد بیشتری یادداشت، درون‌ریزی نشدند زیرا کارتی تولید نکردند. این اتفاق می‌تواند زمانی رخ دهد که فیلدهای خالی داشته و یا نتوانسته باشید نگاشت محتوای داخل متن روی فیلدها را به درستی انجام دهید.</string>
-    <string name="csv_importer_error_invalid_field_count">\'%1$s\' دارای %2$d فیلد است، تعداد مورد انتظار: %3$d</string>
-    <string name="csv_importer_error_exception">Aborted: %s</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
