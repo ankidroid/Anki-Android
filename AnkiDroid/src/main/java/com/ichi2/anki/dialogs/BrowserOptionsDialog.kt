@@ -22,15 +22,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.RadioButton
+import android.widget.RadioGroup
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 
 class BrowserOptionsDialog(private val inCardsMode: Boolean, private val isTruncated: Boolean) : AppCompatDialogFragment() {
+    private var newCardsMode = true
     private lateinit var dialogView: View
 
     private val positiveButtonClick = { _: DialogInterface, _: Int ->
+        @IdRes val selectedButtonId = dialogView.findViewById<RadioGroup>(R.id.select_browser_mode).checkedRadioButtonId
+        newCardsMode = selectedButtonId == R.id.select_cards_mode
+        if (inCardsMode != newCardsMode) {
+            (activity as CardBrowser).switchCardOrNote(newCardsMode)
+        }
         val newTruncate = dialogView.findViewById<CheckBox>(R.id.truncate_checkbox).isChecked
 
         if (newTruncate != isTruncated) {

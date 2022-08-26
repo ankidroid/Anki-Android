@@ -1244,6 +1244,17 @@ open class CardBrowser :
         return super.onOptionsItemSelected(item)
     }
 
+    fun switchCardOrNote(newCardsMode: bool) {
+        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
+
+        sharedPrefs.edit()
+            .putBoolean("inCardsMode", newCardsMode)
+            .apply()
+
+        inCardsMode = newCardsMode
+        searchCards()
+    }
+
     fun onTruncate(newTruncateValue: Boolean) {
         val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
 
@@ -1459,6 +1470,7 @@ open class CardBrowser :
         savedInstanceState.putInt("mLastSelectedPosition", mLastSelectedPosition)
         savedInstanceState.putBoolean("mInMultiSelectMode", isInMultiSelectMode)
         savedInstanceState.putBoolean("mIsTruncated", isTruncated)
+        savedInstanceState.putBoolean("inCardsMode", inCardsMode)
         super.onSaveInstanceState(savedInstanceState)
     }
 
@@ -1472,6 +1484,7 @@ open class CardBrowser :
         mLastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition")
         isInMultiSelectMode = savedInstanceState.getBoolean("mInMultiSelectMode")
         isTruncated = savedInstanceState.getBoolean("mIsTruncated")
+        inCardsMode = savedInstanceState.getBoolean("inCardsMode")
         searchCards()
     }
 
@@ -1506,7 +1519,7 @@ open class CardBrowser :
         val query = searchText!!
         val order = if (mOrder == CARD_ORDER_NONE) NoOrdering() else UseCollectionOrdering()
         launchCatchingTask {
-            val cards = withProgress { searchForCards(query, order) }
+            val cards = withProgress { searchForCards(query, order, inCardsMode) }
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
                 cards[i].load(false, mColumn1Index, mColumn2Index)
@@ -1570,7 +1583,11 @@ open class CardBrowser :
     override val subtitleText: String
         get() {
             val count = cardCount
-            return resources.getQuantityString(R.plurals.card_browser_subtitle, count, count)
+            @androidx.annotation.StringRes val subtitleId = if (inCardsMode)
+                R.plurals.card_browser_subtitle
+            else
+                R.plurals.card_browser_subtitle_notes_mode
+            return resources.getQuantityString(subtitleId, count, count)
         }
 
     // convenience method for updateCardsInList(...)
@@ -2678,10 +2695,11 @@ open class CardBrowser :
 
 suspend fun searchForCards(
     query: String,
-    order: SortOrder
+    order: SortOrder,
+    inCardsMode: Boolean = true
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
-        findCards(query, order).asSequence()
+        (if (inCardsMode) findCards(query, order) else findOneCardByNote(query)).asSequence()
             .mapIndexed { idx, cid ->
                 CardBrowser.CardCache(cid, col, idx)
             }.toMutableList()
