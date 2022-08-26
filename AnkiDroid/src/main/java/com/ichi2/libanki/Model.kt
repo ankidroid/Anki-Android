@@ -14,23 +14,16 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki;
+package com.ichi2.libanki
 
-
-import android.text.TextUtils;
-
-import com.ichi2.libanki.template.ParsedNode;
-import com.ichi2.libanki.template.TemplateError;
-import com.ichi2.utils.HashUtil;
-import com.ichi2.utils.JSONArray;
-import com.ichi2.utils.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import androidx.annotation.CheckResult;
-import timber.log.Timber;
+import android.text.TextUtils
+import androidx.annotation.CheckResult
+import com.ichi2.libanki.template.ParsedNode
+import com.ichi2.libanki.template.TemplateError
+import com.ichi2.utils.HashUtil
+import com.ichi2.utils.JSONObject
+import com.ichi2.utils.KotlinCleanup
+import timber.log.Timber
 
 /**
  * Represents a note type, a.k.a. Model.
@@ -40,97 +33,87 @@ import timber.log.Timber;
  * `Models.save(this, true)` should be called. However, you should do the change in batch and change only when all are d
  * one, because recomputing the list of card is an expensive operation.
  */
-public class Model extends JSONObject {
+@KotlinCleanup("fix kotlin docs")
+@KotlinCleanup("IDE Lint")
+class Model : JSONObject {
     /**
      * Creates a new empty model object
      */
-    public Model() {
-        super();
-    }
+    constructor() : super() {}
 
     /**
-     * Creates a copy from {@link JSONObject} and use it as a string
+     * Creates a copy from [JSONObject] and use it as a string
      *
      * This function will perform deepCopy on the passed object
      *
-     * @see Model#from(JSONObject) if you want to create a
-     *                             Model without deepCopy
+     * @see Model.from
      */
-    public Model(JSONObject json) {
-        super(json);
-    }
+    @KotlinCleanup("non-null")
+    constructor(json: JSONObject?) : super(json!!) {}
 
     /**
      * Creates a model object form json string
      */
-    public Model(String json) {
-        super(json);
-    }
+    @KotlinCleanup("non-null")
+    constructor(json: String?) : super(json) {}
 
-    @Override
     @CheckResult
-    public Model deepClone() {
-        Model clone = new Model();
-        return deepClonedInto(clone);
+    override fun deepClone(): Model {
+        val clone = Model()
+        return deepClonedInto(clone)
     }
 
-    public List<String> getFieldsNames() {
-        return getJSONArray("flds").toStringList("name");
-    }
+    val fieldsNames: List<String>
+        get() = getJSONArray("flds").toStringList("name")
 
-    public JSONObject getField(int pos) {
-        return getJSONArray("flds").getJSONObject(pos);
+    fun getField(pos: Int): JSONObject {
+        return getJSONArray("flds").getJSONObject(pos)
     }
 
     /**
      * @return model did or default deck id (1) if null
      */
-    public Long getDid() { return isNull("did") ? 1L : getLong("did"); }
-
-    public List<String> getTemplatesNames() {
-        return getJSONArray("tmpls").toStringList("name");
-    }
-
-    public boolean isStd() {
-        return getInt("type") == Consts.MODEL_STD;
-    }
-
-    public boolean isCloze() {
-        return getInt("type") == Consts.MODEL_CLOZE;
-    }
+    val did: Long
+        get() = if (isNull("did")) 1L else getLong("did")
+    val templatesNames: List<String>
+        get() = getJSONArray("tmpls").toStringList("name")
+    val isStd: Boolean
+        get() = getInt("type") == Consts.MODEL_STD
+    val isCloze: Boolean
+        get() = getInt("type") == Consts.MODEL_CLOZE
 
     /**
      * @param sfld Fields of a note of this note type
      * @return The set of name of non-empty fields.
      */
-    public Set<String> nonEmptyFields(String[] sfld) {
-        List<String> fieldNames = getFieldsNames();
-        Set<String> nonemptyFields = HashUtil.HashSetInit(sfld.length);
-        for (int i = 0; i < sfld.length; i++) {
-            if (!TextUtils.isEmpty(sfld[i].trim())) {
-                nonemptyFields.add(fieldNames.get(i));
+    @KotlinCleanup("filter")
+    fun nonEmptyFields(sfld: Array<String>): Set<String> {
+        val fieldNames = fieldsNames
+        val nonemptyFields: MutableSet<String> = HashUtil.HashSetInit(sfld.size)
+        for (i in sfld.indices) {
+            if (!TextUtils.isEmpty(sfld[i].trim { it <= ' ' })) {
+                nonemptyFields.add(fieldNames[i])
             }
         }
-        return nonemptyFields;
+        return nonemptyFields
     }
-
 
     /**
      * @return A list of parsed nodes for each template's question. null in case of exception
      */
-    public List<ParsedNode> parsedNodes() {
-        JSONArray tmpls = getJSONArray("tmpls");
-        List<ParsedNode> nodes = new ArrayList<>(tmpls.length());
-        for (JSONObject tmpl : tmpls.jsonObjectIterable()) {
-            String format_question = tmpl.getString("qfmt");
-            ParsedNode node = null;
+    fun parsedNodes(): List<ParsedNode?> {
+        val tmpls = getJSONArray("tmpls")
+        val nodes: MutableList<ParsedNode?> = ArrayList(tmpls.length())
+        for (tmpl in tmpls.jsonObjectIterable()) {
+            val format_question = tmpl.getString("qfmt")
+            var node: ParsedNode? = null
             try {
-                node = ParsedNode.parse_inner(format_question);
-            } catch (TemplateError er) {
-                Timber.w(er);
+                node = ParsedNode.parse_inner(format_question)
+            } catch (er: TemplateError) {
+                Timber.w(er)
             }
-            nodes.add(node);
+            nodes.add(node)
         }
-        return nodes;
+        return nodes
     }
 }

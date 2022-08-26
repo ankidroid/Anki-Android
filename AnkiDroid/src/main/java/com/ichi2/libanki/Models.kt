@@ -985,7 +985,7 @@ class Models(col: Collection) : ModelManager(col) {
         @JvmOverloads
         fun _availStandardOrds(
             m: Model,
-            sfld: Array<String>?,
+            sfld: Array<String>,
             allowEmpty: Boolean = false
         ): ArrayList<Int> {
             return _availStandardOrds(m, sfld, m.parsedNodes(), allowEmpty)
@@ -994,7 +994,7 @@ class Models(col: Collection) : ModelManager(col) {
         /** Given a joined field string and a standard note type, return available template ordinals  */
         fun _availStandardOrds(
             m: Model,
-            sfld: Array<String>?,
+            sfld: Array<String>,
             nodes: List<ParsedNode?>,
             allowEmpty: Boolean
         ): ArrayList<Int> {
