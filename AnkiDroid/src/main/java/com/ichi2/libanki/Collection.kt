@@ -57,7 +57,6 @@ import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
-import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
@@ -132,6 +131,9 @@ open class Collection(
         get() = dbInternal!!
 
     var dbInternal: DB? = null
+
+    /** whether the v3 scheduler is enabled */
+    open var v3Enabled: Boolean = false
 
     /**
      * Getters/Setters ********************************************************** *************************************
@@ -259,7 +261,7 @@ open class Collection(
         if (ver == 1) {
             sched = Sched(this)
         } else if (ver == 2) {
-            if (!BackendFactory.defaultLegacySchema && newBackend.v3Enabled) {
+            if (v3Enabled) {
                 sched = SchedV3(this.newBackend)
             } else {
                 sched = SchedV2(this)
