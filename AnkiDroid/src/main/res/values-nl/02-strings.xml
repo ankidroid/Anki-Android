@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">schrijfbordafbeelding opgeslagen in %s</string>
     <string name="title_whiteboard_pen_color">Penkleur schrijfbord</string>
     <string name="title_whiteboard_editor">Whiteboard bewerker</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Lege kaarten gevonden. Gelieve Gereedschap>Lege kaarten uit te voeren.]]></string>
-    <string name="note_importer_error_empty_first_field">Leeg eerste veld: %s</string>
-    <string name="note_importer_error_first_field_matched">Eerste overeenkomend veld: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Duplicaat met eerste veld toegevoegd: %s</string>
-    <string name="note_importer_error_appeared_twice">Twee keer verschenen in bestand: %s</string>
-    <string name="note_importer_error_empty_notes">Een of meer memo\'s werden niet geïmporteerd, omdat ze geen kaarten genereerden. Dit kan gebeuren wanneer u lege velden hebt of wanneer u de inhoud in het tekstbestand niet aan de juiste velden hebt gekoppeld</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ had %2$d velden, %3$d verwacht</string>
-    <string name="csv_importer_error_exception">Afgebroken: %s</string>
     <string name="user_is_a_robot">Geautomatiseerde test gedetecteerd. Als u een mens bent, neem dan contact op met de AnkiDroid-ondersteuning</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Deze kaart maakt gebruik van niet-ondersteunde AnkiDroid-functies. Neem contact op met de ontwikkelaar %1$s of raadpleeg de wiki. %2$s</string>

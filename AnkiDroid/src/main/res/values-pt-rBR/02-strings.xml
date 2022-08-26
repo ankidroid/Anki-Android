@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">Imagem do quadro branco salva em %s</string>
     <string name="title_whiteboard_pen_color">Cor da caneta.</string>
     <string name="title_whiteboard_editor">Editor de quadro branco</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Cards vazios encontrados. Por favor, execute Ferramentas>Cards Vazios.]]></string>
-    <string name="note_importer_error_empty_first_field">Primeiro campo vazio: %s</string>
-    <string name="note_importer_error_first_field_matched">Primeiro campo correspondido: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Adicionada duplicata com o primeiro campo: %s</string>
-    <string name="note_importer_error_appeared_twice">Apareceu duas vezes no arquivo: %s</string>
-    <string name="note_importer_error_empty_notes">Uma ou mais notas não foram importadas, pois não geraram nenhum card. Isso pode acontecer quando você tem campos vazios ou quando você não colocou o conteúdo do arquivo de texto nos campos corretos.</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s tinha %2$d campos, esperado %3$d</string>
-    <string name="csv_importer_error_exception">Cancelado: %s</string>
     <string name="user_is_a_robot">Teste automático detectado. Se você é humano, entre em contato com o suporte do AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Este card usa recursos não suportados pelo AnkiDroid. Entre em contato com o desenvolvedor %1$s, ou veja a wiki. %2$s</string>

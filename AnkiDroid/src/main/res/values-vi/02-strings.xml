@@ -279,15 +279,6 @@
     <string name="white_board_image_saved">Hình ảnh bảng trắng được lưu vào %s</string>
     <string name="title_whiteboard_pen_color">Bảng màu bút</string>
     <string name="title_whiteboard_editor">Trình chỉnh sửa bảng trắng</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Đã tìm thấy thẻ trống. Vui lòng chạy Công cụ > Thẻ trống.]]></string>
-    <string name="note_importer_error_empty_first_field">Trường đầu tiên trống: %s</string>
-    <string name="note_importer_error_first_field_matched">Trường đầu tiên phù hợp: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Đã thêm bản sao với trường đầu tiên: %s</string>
-    <string name="note_importer_error_appeared_twice">Đã xuất hiện hai lần trong tệp: %s</string>
-    <string name="note_importer_error_empty_notes">Một hoặc nhiều ghi chú không được nhập vì chúng không tạo bất kỳ thẻ nào. Điều này có thể xảy ra khi bạn có các trường trống hoặc khi bạn chưa ánh xạ nội dung trong tệp văn bản vào các trường chính xác</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ có %2$d trường, dự kiến %3$d</string>
-    <string name="csv_importer_error_exception">Đã hủy bỏ: %s</string>
     <string name="user_is_a_robot">Đã phát hiện kiểm tra tự động. Nếu bạn là con người, hãy liên hệ với bộ phận hỗ trợ AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Thẻ này sử dụng các tính năng AnkiDroid không được hỗ trợ. Liên hệ với nhà phát triển %1$s%1$s hoặc xem wiki. %2$s</string>

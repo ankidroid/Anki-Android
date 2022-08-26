@@ -312,15 +312,6 @@
     <string name="white_board_image_saved">Obraz tablicy zapisany w %s</string>
     <string name="title_whiteboard_pen_color">Kolor tablicy</string>
     <string name="title_whiteboard_editor">Edytor tablicy</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Znaleziono puste karty. Proszę uruchomić Narzędzia>Puste karty.]]></string>
-    <string name="note_importer_error_empty_first_field">Pierwsze pole puste: %s</string>
-    <string name="note_importer_error_first_field_matched">Pierwsze pole pasuje: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Dodano duplikat w pierwszym polu: %s</string>
-    <string name="note_importer_error_appeared_twice">Pojawił się dwukrotnie w pliku: %s</string>
-    <string name="note_importer_error_empty_notes">Jedna lub więcej notatek nie została zaimportowana, ponieważ nie wygenerowały żadnych kart. Może się tak zdarzyć, gdy pola kart są puste lub gdy w pliku tekstowym zawartość nie jest przypisana do odpowiedniego pola</string>
-    <string name="csv_importer_error_invalid_field_count">„%1$s” posiada %2$d pól, oczekiwano %3$d</string>
-    <string name="csv_importer_error_exception">Przerwano: %s</string>
     <string name="user_is_a_robot">Wykryto automatyczny test. Jeśli jesteś człowiekiem, skontaktuj się z pomocą techniczną AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Ta karta używa funkcji nieobsługiwanych przez AnkiDroid. Skontaktuj się z deweloperem %1$s lub sprawdź wiki. %2$s</string>

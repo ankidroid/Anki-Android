@@ -312,15 +312,6 @@
     <string name="white_board_image_saved">Obrázok tabule sa uložil do %s</string>
     <string name="title_whiteboard_pen_color">Farba pera pre tabuľu</string>
     <string name="title_whiteboard_editor">Editor tabule</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Našli sa prázdne kartičky. Spustite, prosím, Nástroje>Vyprázdniť kartičky.]]></string>
-    <string name="note_importer_error_empty_first_field">Prázdne prvé pole: %s</string>
-    <string name="note_importer_error_first_field_matched">Prvé pole zhodné: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Pridaný duplikát s prvým poľom: %s</string>
-    <string name="note_importer_error_appeared_twice">Vyskytujúce sa v súbore dvakrát: %s</string>
-    <string name="note_importer_error_empty_notes">Jedna alebo viac poznámok neboli naimportované, pretože nevygenerovali žiadne kartičky. Toto môže nastať, keď máte prázdne polia alebo keď ste nenamapovali obsah v textovom súbore do správnych polí.</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ malo %2$d polí, očakávalo sa %3$d</string>
-    <string name="csv_importer_error_exception">Prerušené: %s</string>
     <string name="user_is_a_robot">Bol zachytený automatizovaný test. Ak ste človek, kontaktuje AnkiDroid podporu</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Táto kartička používa nepodporované prvky AnkiDroidu. Kontaktujte vývojára %1$s, alebo si pozrite wiki. %2$s</string>

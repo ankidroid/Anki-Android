@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">Yazı tahtası resmi %s adresine kaydedildi</string>
     <string name="title_whiteboard_pen_color">Beyaz tahta kalem rengi</string>
     <string name="title_whiteboard_editor">Yazı tahtası düzenleyici</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Boş kartlar bulundu. Lütfen Araçlar>Boş Kartlar\'ı çalıştırın.]]></string>
-    <string name="note_importer_error_empty_first_field">Boş ilk alan: %s</string>
-    <string name="note_importer_error_first_field_matched">İlk alan eşleşti: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">İlk alanla tekrar eklendi: %s</string>
-    <string name="note_importer_error_appeared_twice">Dosyada iki kez çıktı: %s</string>
-    <string name="note_importer_error_empty_notes">Bir veya daha fazla not içeri aktarılmadı, çünkü hiç kart üretmediler. Bu durum boş alanlarınız olduğunda ya da metin dosyasındaki içeriği doğru alanlarla eşlemediğinizde meydana gelebilir.</string>
-    <string name="csv_importer_error_invalid_field_count">\"%1$s\"in %2$d alanı vardı, %3$d bekleniyordu</string>
-    <string name="csv_importer_error_exception">İptal edildi: %s</string>
     <string name="user_is_a_robot">Otomatik test saptandı. Eğer insansanız, AnkiDroid desteğiyle iletişime geçin.</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Bu kart desteklenmeyen AnkiDroid özellikleri kullanıyor. Geliştiriciyle iletişime geçin (%1$s), veya vikiye bakın. %2$s</string>

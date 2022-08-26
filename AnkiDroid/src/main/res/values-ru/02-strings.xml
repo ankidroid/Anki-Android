@@ -312,15 +312,6 @@
     <string name="white_board_image_saved">Изображение доски сохранено в %s</string>
     <string name="title_whiteboard_pen_color">Цвет маркера</string>
     <string name="title_whiteboard_editor">Редактор доски</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Найдены пустые карточки. Нажмите «Инструменты» — »Пустые карточки».]]></string>
-    <string name="note_importer_error_empty_first_field">Пустое первое поле: %s</string>
-    <string name="note_importer_error_first_field_matched">Совпадение по первому полю: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Добавлен повтор с первым полем «%s»</string>
-    <string name="note_importer_error_appeared_twice">Дважды встречается в файле: %s</string>
-    <string name="note_importer_error_empty_notes">Одна или несколько записей не были импортированы, потому что они не создали никаких карточек. Это могло произойти, если есть пустые поля или если вы не сопоставили содержимое текстового файла с верными полями</string>
-    <string name="csv_importer_error_invalid_field_count">В «%1$s» %2$d поля, но должно быть %3$d</string>
-    <string name="csv_importer_error_exception">Прервано: %s</string>
     <string name="user_is_a_robot">Обнаружен автоматический тест. Если вы человек, обратитесь в службу поддержки AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Эта карточка использует неподдерживаемые в AnkiDroid функции. Свяжитесь с разработчиками %1$s или обратитесь к вики-справке. %2$s</string>

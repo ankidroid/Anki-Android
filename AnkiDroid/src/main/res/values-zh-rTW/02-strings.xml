@@ -279,15 +279,6 @@
     <string name="white_board_image_saved">白板圖像儲存至%s</string>
     <string name="title_whiteboard_pen_color">白板筆色彩</string>
     <string name="title_whiteboard_editor">白板編輯器</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[已找到空白卡片。請運作 工具 > 空白卡片。]]></string>
-    <string name="note_importer_error_empty_first_field">第一欄位為空：%s</string>
-    <string name="note_importer_error_first_field_matched">第一個欄位符合：%s</string>
-    <string name="note_importer_error_added_duplicate_first_field">第一個欄位重複新增：%s</string>
-    <string name="note_importer_error_appeared_twice">第兩次出現在檔案中：%s</string>
-    <string name="note_importer_error_empty_notes">未匯入一個或多個筆記，因為其未生成任何卡片。 當您有空欄位或未將文字檔案中的內容排到正確的欄位時，可能會發生這種情況</string>
-    <string name="csv_importer_error_invalid_field_count">「%1$s」有%2$d個欄位，預期%3$d</string>
-    <string name="csv_importer_error_exception">已中止：%s</string>
     <string name="user_is_a_robot">已偵測到自動測驗。如果您不是機器人，請聯絡AnkiDroid支援.</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">這張卡使用AnkiDroid不支援的功能。請連絡開發人員%1$s，或查看wiki。%2$s</string>

@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">Whiteboard-bild sparad till %s</string>
     <string name="title_whiteboard_pen_color">Färg på whiteboardpenna</string>
     <string name="title_whiteboard_editor">Redigerare för whiteboard</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Tomma kort hittades. Kör Verktyg>Tomma kort.]]></string>
-    <string name="note_importer_error_empty_first_field">Tomt första fält: %s</string>
-    <string name="note_importer_error_first_field_matched">Första fältet matchade: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Lade till dubblett med första fältet: %s</string>
-    <string name="note_importer_error_appeared_twice">Förekommer två gånger i filen: %s</string>
-    <string name="note_importer_error_empty_notes">En eller flera anteckningar importerades inte, eftersom de inte genererade några kort. Detta kan hända när du har tomma fält eller när du inte har mappat innehållet i textfilen till rätt fält</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ hade %2$d fält, förväntade %3$d</string>
-    <string name="csv_importer_error_exception">Avbruten: %s</string>
     <string name="user_is_a_robot">Upptäckte automatiskt test. Om du är en människa, kontakta AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Detta kort använder AnkiDroid-funktioner som inte stöds. Kontakta utvecklaren %1$s, eller visa wiki. %2$s</string>

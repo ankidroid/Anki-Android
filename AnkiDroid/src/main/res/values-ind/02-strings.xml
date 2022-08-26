@@ -279,15 +279,6 @@
     <string name="white_board_image_saved">Gambar whiteboard disimpan ke %s</string>
     <string name="title_whiteboard_pen_color">Warna pena whiteboard</string>
     <string name="title_whiteboard_editor">Editor papan tulis</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Kartu kosong ditemukan. Harap jalankan Alat>Kartu Kosong.]]></string>
-    <string name="note_importer_error_empty_first_field">Bidang pertama kosong: %s</string>
-    <string name="note_importer_error_first_field_matched">Bidang pertama cocok: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Duplikat bidang pertama ditambahkan: %s</string>
-    <string name="note_importer_error_appeared_twice">Muncul dua kali di berkas: %s</string>
-    <string name="note_importer_error_empty_notes">Satu catatan atau lebih tidak terimpor, karena mereka tidak menghasilkan kartu apapun. Ini dapat terjadi saat kamu mempunyai bidang kosong atau saat isi di berkas teks tidak sesuai dengan bidang yang benar</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ mempunyai %2$d bidang, diharapkan %3$d</string>
-    <string name="csv_importer_error_exception">Dibatalkan: %s</string>
     <string name="user_is_a_robot">Tes otomatis terdeteksi. Jika kamu manusia, kontak dukungan AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Kartu ini menggunakan fitur yang tidak didukung AnkiDroid. Kontak pengembang %1$s, atau kunjungi wiki. %2$s</string>

@@ -290,15 +290,6 @@
     <string name="white_board_image_saved">Изображението на бялата дъска е запазено в %s</string>
     <string name="title_whiteboard_pen_color">Цвят на писалката за бяла дъска</string>
     <string name="title_whiteboard_editor">Whiteboard editor</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Намерени са празни карти. Моля, стартирайте Инструменти>Празни карти.]]></string>
-    <string name="note_importer_error_empty_first_field">Празно първо поле: %s</string>
-    <string name="note_importer_error_first_field_matched">Съвпадение на първото поле: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Добавен дубликат с първо поле: %s</string>
-    <string name="note_importer_error_appeared_twice">Появява се два пъти във файл: %s</string>
-    <string name="note_importer_error_empty_notes">Една или повече бележки не бяха импортирани, тъй като не генерираха карти. Това може да се случи, когато имате празни полета или когато не сте преобразували съдържанието в текстовия файл в правилните полета</string>
-    <string name="csv_importer_error_invalid_field_count">„%1$s“ имаше %2$d полета, очаквайки %3$d</string>
-    <string name="csv_importer_error_exception">Прекъснато: %s</string>
     <string name="user_is_a_robot">Открит автоматичен тест. Ако сте човек, свържете се с екипа за поддръжка на AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Тази карта използва неподдържани функции на AnkiDroid. Свържете се с разработчика %1$s или вижте уикито. %2$s</string>
