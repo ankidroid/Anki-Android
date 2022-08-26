@@ -72,6 +72,14 @@ class CollectionV16(
     override val newDecks: DecksV16
         get() = this.decks as DecksV16
 
+    /** True if the V3 scheduled is enabled when schedVer is 2. */
+    override var v3Enabled: Boolean
+        get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
+        set(value) {
+            backend.setConfigBool(ConfigKey.Bool.SCHED_2021, value, undoable = false)
+            _loadScheduler()
+        }
+
     override fun load() {
         _config = initConf(null)
         decks = initDecks(null)
@@ -232,12 +240,4 @@ class CollectionV16(
     fun updateNote(note: Note) {
         backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
     }
-
-    /** True if the V3 scheduled is enabled when schedVer is 2. */
-    var v3Enabled: Boolean
-        get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
-        set(value) {
-            backend.setConfigBool(ConfigKey.Bool.SCHED_2021, value, undoable = false)
-            _loadScheduler()
-        }
 }
