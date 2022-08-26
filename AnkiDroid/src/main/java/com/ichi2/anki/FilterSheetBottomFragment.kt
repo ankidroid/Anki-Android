@@ -50,7 +50,7 @@ class FilterSheetBottomFragment :
     CollectionGetter {
     private lateinit var behavior: BottomSheetBehavior<View>
 
-    private var flagSearchItems = mutableListOf<SearchNode.Flag>()
+    private var flagSearchItems = mutableSetOf<SearchNode.Flag>()
 
     private lateinit var flagRecyclerView: RecyclerView
     private lateinit var flagListAdapter: FlagsAdapter
@@ -153,7 +153,7 @@ class FilterSheetBottomFragment :
     }
 
     private fun createQuery(
-        flagList: MutableList<SearchNode.Flag>
+        flagList: Set<SearchNode.Flag>
     ): String {
 
         if (flagList.isEmpty()) {
@@ -229,7 +229,7 @@ class FilterSheetBottomFragment :
                 }
             }
 
-            fun isSelected(flag: Flags, flagSearchItems: List<SearchNode.Flag>): bool {
+            fun isSelected(flag: Flags, flagSearchItems: Set<SearchNode.Flag>): bool {
                 return flagSearchItems.contains(flag.flagNode)
             }
         }
