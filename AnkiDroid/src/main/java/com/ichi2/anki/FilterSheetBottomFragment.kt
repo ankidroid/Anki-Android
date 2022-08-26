@@ -76,6 +76,7 @@ class FilterSheetBottomFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.filter_bottom_sheet, container, false).apply {
+        // Create a query with currently selected filters, and close the filter sheet
         val applyButton = this.findViewById<Button>(R.id.apply_filter_button)
         applyButton.setOnClickListener {
             val filterQuery = createQuery(flagSearchItems)
@@ -86,6 +87,7 @@ class FilterSheetBottomFragment :
             dismiss()
         }
 
+        // Close the filter sheet
         val cancelButton = this.findViewById<Button>(R.id.cancel_filter_button)
         cancelButton.setOnClickListener {
             dismiss()
