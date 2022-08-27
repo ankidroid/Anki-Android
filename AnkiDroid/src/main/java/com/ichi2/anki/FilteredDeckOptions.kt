@@ -138,7 +138,7 @@ class FilteredDeckOptions :
                         "preset" -> {
                             val i: Int = (value as String).toInt()
                             if (i > 0) {
-                                val presetValues = JSONObject(mDynExamples[i])
+                                val presetValues = JSONObject(mDynExamples[i]!!)
                                 val arr = presetValues.names() ?: continue
                                 for (name in arr.stringIterable()) {
                                     if ("steps" == name) {

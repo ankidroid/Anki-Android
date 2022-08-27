@@ -119,7 +119,7 @@ open class StorageTest : RobolectricTest() {
             tags = JSONObject(
                 col.tags.all().stream()
                     .map { x: String -> Pair(x, 0) }
-                    .collect(Collectors.toMap({ x: Pair<String?, Int?> -> x.first }, { x: Pair<String?, Int?> -> x.second }))
+                    .collect(Collectors.toMap({ x: Pair<String, Int?> -> x.first }, { x: Pair<String, Int?> -> x.second }))
             )
                 .toString()
         }

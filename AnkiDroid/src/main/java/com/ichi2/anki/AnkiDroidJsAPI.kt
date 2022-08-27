@@ -168,7 +168,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     }
 
     @JavascriptInterface
-    fun init(jsonData: String?): String {
+    fun init(jsonData: String): String {
         val data: JSONObject
         var apiStatusJson = ""
         try {

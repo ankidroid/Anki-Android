@@ -567,7 +567,7 @@ class JSONObjectTest {
      */
     @Test
     fun testCreateWithUnsupportedNumbers() {
-        val contents: MutableMap<String?, Any?> = HashMap()
+        val contents: MutableMap<String, Any?> = HashMap()
         contents["foo"] = Double.NaN
         contents["bar"] = Double.NEGATIVE_INFINITY
         contents["baz"] = Double.POSITIVE_INFINITY
@@ -586,7 +586,7 @@ class JSONObjectTest {
 
     @Test
     fun testMapConstructorCopiesContents() {
-        val contents: MutableMap<String?, Any?> = HashMap()
+        val contents: MutableMap<String, Any?> = HashMap()
         contents["foo"] = 5
         val testObject = JSONObject(contents.toMap())
         contents["foo"] = 10
@@ -598,7 +598,9 @@ class JSONObjectTest {
         val contents: MutableMap<Any?, Any?> = HashMap()
         contents[5] = 5
         assertThrowsSubclass<Exception> {
-            JSONObject(contents)
+            // Cast is invalid. Used only for testing with invalid map input
+            @Suppress("UNCHECKED_CAST")
+            JSONObject(contents as Map<String, Any?>)
             fail("JSONObject constructor doesn't validate its input!")
         }
     }
@@ -614,13 +616,6 @@ class JSONObjectTest {
     fun testTokenerConstructorWrongType() {
         assertThrows<JSONException> {
             JSONObject(JSONTokener("[\"foo\", false]"))
-        }
-    }
-
-    @Test
-    fun testTokenerConstructorNull() {
-        assertThrows<NullPointerException> {
-            JSONObject(null as JSONTokener?)
         }
     }
 
@@ -642,13 +637,6 @@ class JSONObjectTest {
     fun testStringConstructorWrongType() {
         assertThrows<JSONException> {
             JSONObject("[\"foo\", false]")
-        }
-    }
-
-    @Test
-    fun testStringConstructorNull() {
-        assertThrows<NullPointerException> {
-            JSONObject(null as String?)
         }
     }
 
@@ -866,9 +854,6 @@ class JSONObjectTest {
             "9223372036854775806",
             JSONObject.numberToString(BigInteger("9223372036854775806"))
         )
-        assertThrows<JSONException> {
-            JSONObject.numberToString(null)
-        }
     }
 
     /* *************************************************************************
