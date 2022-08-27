@@ -62,6 +62,7 @@
       <w>libanki</w>
       <w>lims</w>
       <w>lineterminator</w>
+      <w>lpath</w>
       <w>lscm</w>
       <w>lsum</w>
       <w>mdir</w>
@@ -71,6 +72,7 @@
       <w>mtime</w>
       <w>mult</w>
       <w>musn</w>
+      <w>ncards</w>
       <w>nconf</w>
       <w>ndid</w>
       <w>newc</w>
@@ -111,6 +113,7 @@
       <w>strids</w>
       <w>subdeck</w>
       <w>subdecks</w>
+      <w>substr</w>
       <w>timebox</w>
       <w>timeboxing</w>
       <w>tmpls</w>

@@ -80,7 +80,7 @@ class CollectionV16(
         }
 
     override fun load() {
-        _config = initConf(null)
+        config = initConf(null)
         decks = initDecks(null)
     }
 
