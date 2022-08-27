@@ -161,20 +161,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         listener?.onCancelled()
     }
 
-    @KotlinCleanup("non-null return")
-    class AddNote(private val note: Note) : TaskDelegate<Void, Int?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>) = try {
-            Timber.d("doInBackgroundAddNote")
-            col.db.executeInTransaction {
-                col.addNote(note, Models.AllowEmpty.ONLY_CLOZE)
-            }
-        } catch (e: RuntimeException) {
-            Timber.e(e, "doInBackgroundAddNote - RuntimeException on adding note")
-            CrashReportService.sendExceptionReport(e, "doInBackgroundAddNote")
-            null
-        }
-    }
-
     class UpdateNote(
         private val editCard: Card,
         val isFromReviewer: Boolean,
