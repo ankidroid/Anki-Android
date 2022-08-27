@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/toggle_browser_mode_help"
-            android:textColor="@color/material_grey_700"
+            android:textColor="?android:attr/textColorSecondary"
             android:layout_marginHorizontal="16dp" />
     </LinearLayout>
 
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/truncate_content_help"
-            android:textColor="@color/material_grey_700"
+            android:textColor="?android:attr/textColorSecondary"
             android:layout_marginHorizontal="16dp" />
 
     </LinearLayout>

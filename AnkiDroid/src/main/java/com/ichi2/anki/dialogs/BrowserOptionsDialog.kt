@@ -24,8 +24,8 @@ import android.widget.CheckBox
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.annotation.IdRes
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 
@@ -47,8 +47,6 @@ class BrowserOptionsDialog(private val inCardsMode: Boolean, private val isTrunc
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(requireActivity())
-
         val layoutInflater = requireActivity().layoutInflater
         dialogView = layoutInflater.inflate(R.layout.browser_options_dialog, null)
 
@@ -60,7 +58,7 @@ class BrowserOptionsDialog(private val inCardsMode: Boolean, private val isTrunc
 
         dialogView.findViewById<CheckBox>(R.id.truncate_checkbox).isChecked = isTruncated
 
-        return builder.run {
+        return MaterialAlertDialogBuilder(requireContext()).run {
             this.setView(dialogView)
             this.setTitle("Browser Options")
             this.setNegativeButton(getString(R.string.dialog_cancel)) { _: DialogInterface, _: Int ->

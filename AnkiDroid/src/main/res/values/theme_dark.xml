@@ -150,6 +150,8 @@
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#883d3d3d</item>
 
+        <!-- Browser Options Dialog-->
+        <item name="colorSurface">@color/theme_dark_primary</item>
     </style>
 
     <!-- Preferences screens -->
