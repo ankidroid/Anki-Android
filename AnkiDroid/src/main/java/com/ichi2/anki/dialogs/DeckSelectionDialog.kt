@@ -97,7 +97,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val args = requireArguments()
         if (args.containsKey("currentDeckId")) {
             val did = args.getLong("currentDeckId")
-            recyclerView.scrollToPosition(getPositionOfDeck(did, decks))
+            recyclerView.scrollToPosition(getPositionOfDeck(did, adapter.getCurrentlyDisplayedDecks()))
         }
         mDialog = MaterialDialog(requireActivity())
             .neutralButton(R.string.dialog_cancel) // Shouldn't it be negative button?
@@ -110,10 +110,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         return mDialog!!
     }
 
-    private fun getPositionOfDeck(did: Long, decks: List<SelectableDeck>): Int {
+    private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>): Int {
         var i = 0
         var pos = 0
-        for (item in decks.sorted()) {
+        for (item in decks) {
             if (did == item.deckId) {
                 pos = i
                 break
@@ -298,6 +298,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         override fun getFilter(): Filter {
             return DecksFilter()
+        }
+
+        fun getCurrentlyDisplayedDecks(): List<SelectableDeck> {
+            return mCurrentlyDisplayedDecks
         }
 
         private inner class DecksFilter : TypedFilter<SelectableDeck>(mAllDecksList) {

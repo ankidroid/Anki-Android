@@ -489,7 +489,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         }
     }
 
-    fun getCurrentDeckId(): Long {
+    fun getCurrentDeckId(): DeckId {
         return mStatsDeckId
     }
 
