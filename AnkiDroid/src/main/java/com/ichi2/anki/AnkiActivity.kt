@@ -173,9 +173,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         hideProgressBar()
     }
 
-    override fun getCol(): Collection {
-        return CollectionHelper.getInstance().getCol(this)
-    }
+    override val col: Collection
+        get() = CollectionHelper.getInstance().getCol(this)
 
     fun colIsOpen(): Boolean {
         return CollectionHelper.getInstance().colIsOpen()

@@ -2615,9 +2615,8 @@ open class Collection(
      * Allows a collection to be used as a CollectionGetter
      * @return Itself.
      */
-    override fun getCol(): Collection {
-        return this
-    }
+    override val col: Collection
+        get() = this
 
     /** https://stackoverflow.com/questions/62150333/lateinit-property-mock-object-has-not-been-initialized */
     @VisibleForTesting

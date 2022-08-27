@@ -180,9 +180,8 @@ class FilterSheetBottomFragment :
         private const val DELAY_TIME = 500
     }
 
-    override fun getCol(): Collection {
-        return CollectionHelper.getInstance().getCol(activity)
-    }
+    override val col: Collection
+        get() = CollectionHelper.getInstance().getCol(activity)
 
     /**
      * Add/remove items from list of selected filters
