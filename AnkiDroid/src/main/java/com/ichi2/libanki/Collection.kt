@@ -15,6 +15,10 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+// remove "LeakingThis" this after CollectionV16 is inlined
+// "FunctionName": many libAnki functions used to have leading _s
+@file:Suppress("LeakingThis", "FunctionName")
+
 package com.ichi2.libanki
 
 import android.annotation.SuppressLint
@@ -52,7 +56,6 @@ import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
@@ -72,7 +75,6 @@ import kotlin.random.Random
 // tracked, so unused tags can only be removed from the list with a DB check.
 //
 // This module manages the tag cache and tags for notes.
-@KotlinCleanup("IDE Lint")
 @KotlinCleanup("Fix @Contract annotations to work in Kotlin")
 @KotlinCleanup("TextUtils -> Kotlin isNotEmpty()")
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
@@ -152,7 +154,7 @@ open class Collection(
         "move accessor methods here, maybe reconsider return type." +
             "See variable: conf"
     )
-    protected var _config: ConfigManager? = null
+    protected var config: ConfigManager? = null
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
     lateinit var sched: AbstractSched
@@ -260,10 +262,10 @@ open class Collection(
         if (ver == 1) {
             sched = Sched(this)
         } else if (ver == 2) {
-            if (v3Enabled) {
-                sched = SchedV3(this.newBackend)
+            sched = if (v3Enabled) {
+                SchedV3(this.newBackend)
             } else {
-                sched = SchedV2(this)
+                SchedV2(this)
             }
             if (!server) {
                 set_config("localOffset", sched._current_timezone_offset())
@@ -298,7 +300,7 @@ open class Collection(
     @KotlinCleanup("Cleanup: make cursor a val + move cursor and cursor.close() to the try block")
     open fun load() {
         var cursor: Cursor? = null
-        var deckConf: String?
+        val deckConf: String?
         try {
             // Read in deck table columns
             cursor = db.query(
@@ -314,7 +316,7 @@ open class Collection(
             dirty = cursor.getInt(3) == 1 // No longer used
             mUsn = cursor.getInt(4)
             ls = cursor.getLong(5)
-            _config = initConf(cursor.getString(6))
+            config = initConf(cursor.getString(6))
             deckConf = cursor.getString(7)
             tags.load(cursor.getString(8))
         } finally {
@@ -333,8 +335,7 @@ open class Collection(
             }
             // This is valid for the framework sqlite as far back as Android 5 / SDK21
             // https://github.com/aosp-mirror/platform_frameworks_base/blob/ba35a77c7c4494c9eb74e87d8eaa9a7205c426d2/core/res/res/values/config.xml#L1141
-            val WINDOW_SIZE_KB = 2048
-            val cursorWindowSize = WINDOW_SIZE_KB * 1024
+            val cursorWindowSize = SQLITE_WINDOW_SIZE_KB * 1024
 
             // reduce the actual size a little bit.
             // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
@@ -342,19 +343,19 @@ open class Collection(
             return sChunk
         }
 
-    fun loadColumn(columnName: String): String {
+    private fun loadColumn(columnName: String): String {
         var pos = 1
         val buf = StringBuilder()
         while (true) {
             db.query(
                 "SELECT substr($columnName, ?, ?) FROM col",
-                Integer.toString(pos), Integer.toString(chunk)
+                pos.toString(), chunk.toString()
             ).use { cursor ->
                 if (!cursor.moveToFirst()) {
                     return buf.toString()
                 }
                 val res = cursor.getString(0)
-                if (res.length == 0) {
+                if (res.isEmpty()) {
                     return buf.toString()
                 }
                 buf.append(res)
@@ -480,7 +481,7 @@ open class Collection(
     @JvmOverloads
     fun reopen(afterFullSync: Boolean = false): Boolean {
         Timber.i("(Re)opening Database: %s", path)
-        if (dbClosed) {
+        return if (dbClosed) {
             val (db_, created) = Storage.openDB(path, backend, afterFullSync)
             dbInternal = db_
             media.connect()
@@ -488,9 +489,9 @@ open class Collection(
             if (afterFullSync) {
                 _loadScheduler()
             }
-            return created
+            created
         } else {
-            return false
+            false
         }
     }
 
@@ -557,7 +558,7 @@ open class Collection(
         db.execute("vacuum")
         db.execute("analyze")
         // downgrade the collection
-        close(true, true)
+        close(save = true, downgrade = true)
     }
 
     /**
@@ -566,10 +567,6 @@ open class Collection(
      */
     fun getCard(id: Long): Card {
         return Card(this, id)
-    }
-
-    fun getCardCache(id: Long): Card.Cache {
-        return Card.Cache(this, id)
     }
 
     fun getNote(id: Long): Note {
@@ -583,8 +580,7 @@ open class Collection(
     fun nextID(typeParam: String): Int {
         var type = typeParam
         type = "next" + Character.toUpperCase(type[0]) + type.substring(1)
-        val id: Int
-        id = try {
+        val id: Int = try {
             get_config_int(type)
         } catch (e: JSONException) {
             Timber.w(e)
@@ -633,17 +629,13 @@ open class Collection(
     fun noteCount(): Int {
         return db.queryScalar("SELECT count() FROM notes")
     }
+
     /**
      * Return a new note with the model derived from the deck or the configuration
      * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
      * the configuration (curModel)
      * @return The new note
      */
-    /**
-     * Return a new note with the default model from the deck
-     * @return The new note
-     */
-    @KotlinCleanup("combine comments")
     @JvmOverloads
     fun newNote(forDeck: Boolean = true): Note {
         return newNote(models.current(forDeck))
@@ -658,17 +650,14 @@ open class Collection(
     fun newNote(m: Model?): Note {
         return Note(this, m!!)
     }
+
     /**
      * Add a note and cards to the collection. If allowEmpty, at least one card is generated.
      * @param note  The note to add to the collection
      * @param allowEmpty Whether we accept to add it even if it should generate no card. Useful to import note even if buggy
      * @return Number of card added
-     */
-    /**
-     * @param note A note to add if it generates card
      * @return Number of card added.
      */
-    @KotlinCleanup("combine comments")
     @KotlinCleanup("allowEmpty: non-null")
     @JvmOverloads
     fun addNote(note: Note, allowEmpty: Models.AllowEmpty? = Models.AllowEmpty.ONLY_CLOZE): Int {
@@ -699,6 +688,7 @@ open class Collection(
     /**
      * Bulk delete notes by ID. Don't call this directly.
      */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun _remNotes(ids: kotlin.collections.Collection<Long>) {
         if (ids.isEmpty()) {
             return
@@ -892,8 +882,8 @@ open class Collection(
                 task?.doProgress(avail.size)
                 var did = dids[nid]
                 // use sibling due if there is one, else use a new id
-                var due: Long
-                due = if (dues.containsKey(nid)) {
+                @KotlinCleanup("getOrDefault + lambda")
+                val due: Long = if (dues.containsKey(nid)) {
                     dues[nid]!!
                 } else {
                     nextID("pos").toLong()
@@ -955,13 +945,7 @@ open class Collection(
         return _newCard(note, template, due, flush)
     }
 
-    @KotlinCleanup("remove - unused")
-    private fun _newCard(note: Note, template: JSONObject, due: Int, did: DeckId): Card {
-        val flush = true
-        return _newCard(note, template, due, did, flush)
-    }
-
-    private fun _newCard(note: Note, template: JSONObject, due: Int, flush: Boolean): Card {
+    private fun _newCard(note: Note, template: JSONObject, due: Int, @Suppress("SameParameterValue") flush: Boolean): Card {
         val did = 0L
         return _newCard(note, template, due, did, flush)
     }
@@ -971,7 +955,7 @@ open class Collection(
         note: Note,
         template: JSONObject,
         due: Int,
-        parameterDid: DeckId,
+        @Suppress("SameParameterValue") parameterDid: DeckId,
         flush: Boolean
     ): Card {
         val card = Card(this)
@@ -1001,6 +985,7 @@ open class Collection(
         if (did == 0L) {
             did = template.optLong("did", 0)
             if (did > 0 && decks.get(did, false) != null) {
+                // did is valid
             } else if (parameterDid != 0L) {
                 did = parameterDid
             } else {
@@ -1023,7 +1008,7 @@ open class Collection(
         return card
     }
 
-    fun _dueForDid(did: DeckId, due: Int): Int {
+    private fun _dueForDid(did: DeckId, due: Int): Int {
         val conf = decks.confForDid(did)
         // in order due?
         return if (conf.getJSONObject("new")
@@ -1091,28 +1076,6 @@ open class Collection(
             rem.addAll(genCards(models.nids(m), m, task)!!)
         }
         return rem
-    }
-
-    fun emptyCardReport(cids: List<Long>): String {
-        val rep = StringBuilder()
-        db.query(
-            "select group_concat(ord+1), count(), flds from cards c, notes n " +
-                "where c.nid = n.id and c.id in " + Utils.ids2str(cids) + " group by nid"
-        ).use { cur ->
-            while (cur.moveToNext()) {
-                val ords = cur.getString(0)
-                // int cnt = cur.getInt(1);  // present but unused upstream as well
-                val flds = cur.getString(2)
-                rep.append(
-                    String.format(
-                        "Empty card numbers: %s\nFields: %s\n\n",
-                        ords,
-                        flds.replace("\u001F", " / ")
-                    )
-                )
-            }
-        }
-        return rep.toString()
     }
 
     /** Returned data from [_fieldData] */
@@ -1224,7 +1187,7 @@ open class Collection(
         fields[String.format(Locale.US, "c%d", cardNum)] = "1"
         // render q & a
         val d = HashUtil.HashMapInit<String, String>(2)
-        d["id"] = java.lang.Long.toString(cid)
+        d["id"] = cid.toString()
         qfmt = if (TextUtils.isEmpty(qfmt)) template.getString("qfmt") else qfmt
         afmt = if (TextUtils.isEmpty(afmt)) template.getString("afmt") else afmt
         for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt!!), Pair("a", afmt!!))) {
@@ -1274,7 +1237,7 @@ open class Collection(
         return d
     }
 
-    fun _flagNameFromCardFlags(flags: Int): String {
+    private fun _flagNameFromCardFlags(flags: Int): String {
         val flag = flags and 0b111
         return if (flag == 0) {
             ""
@@ -1392,7 +1355,7 @@ open class Collection(
       Stats ******************************************************************** ***************************
      */
 
-    // cardstats
+    // card stats
     // stats
 
     /*
@@ -1443,7 +1406,7 @@ open class Collection(
     @VisibleForTesting
     fun undoType(): UndoAction? {
         return if (!undo.isEmpty()) {
-            undo.getLast()
+            undo.last
         } else null
     }
 
@@ -1849,7 +1812,7 @@ open class Collection(
         // get the deck Ids to query
         val dynDeckIds = decks.allDynamicDeckIds()
         // make it mutable
-        val dynIdsAndZero: MutableList<Long> = ArrayList(Arrays.asList(*dynDeckIds))
+        val dynIdsAndZero: MutableList<Long> = ArrayList(listOf(*dynDeckIds))
         dynIdsAndZero.add(0L)
         val cardIds = db.queryLongList(
             "select id from cards where did in " +
@@ -1943,7 +1906,7 @@ open class Collection(
         val ids =
             db.queryLongList("SELECT id FROM cards WHERE queue = " + Consts.QUEUE_TYPE_REV + " AND due > 100000")
         notifyProgress.run()
-        if (!ids.isEmpty()) {
+        if (ids.isNotEmpty()) {
             problems.add("Reviews had incorrect due date.")
             db.execute(
                 "UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(
@@ -2153,7 +2116,7 @@ open class Collection(
             }
             Timber.i("deleteNotesWithWrongFieldCounts - completed successfully")
             notifyProgress.run()
-            if (!ids.isEmpty()) {
+            if (ids.isNotEmpty()) {
                 problems.add("Deleted " + ids.size + " note(s) with wrong field count.")
                 _remNotes(ids)
             }
@@ -2181,7 +2144,7 @@ open class Collection(
                     "SELECT id FROM notes WHERE mid = ?)",
                 m.getLong("id")
             )
-            if (!ids.isEmpty()) {
+            if (ids.isNotEmpty()) {
                 problems.add("Deleted " + ids.size + " card(s) with missing template.")
                 remCards(ids)
             }
@@ -2235,7 +2198,7 @@ open class Collection(
      * @param integrityCheckProblems list of problems, the first 10 will be used
      */
     private fun logProblems(integrityCheckProblems: List<String?>) {
-        if (!integrityCheckProblems.isEmpty()) {
+        if (integrityCheckProblems.isNotEmpty()) {
             val additionalInfo = StringBuffer()
             var i = 0
             while (i < 10 && integrityCheckProblems.size > i) {
@@ -2312,7 +2275,7 @@ open class Collection(
      * Card Flags *****************************************************************************************************
      */
     fun setUserFlag(flag: Int, cids: List<Long>) {
-        assert(0 <= flag && flag <= 7)
+        assert(flag in (0..7))
         db.execute(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
                 cids
@@ -2356,7 +2319,7 @@ open class Collection(
     // prior to version 2.16 and has been corrected with
     // dae/anki#347
     var conf: JSONObject
-        get() = _config!!.json
+        get() = config!!.json
         set(conf) {
             // Anki sometimes set sortBackward to 0/1 instead of
             // False/True. This should be repaired before setting mConf;
@@ -2366,7 +2329,7 @@ open class Collection(
             // prior to version 2.16 and has been corrected with
             // dae/anki#347
             Upgrade.upgradeJSONIfNecessary(this, "sortBackwards", false)
-            _config!!.json = conf
+            config!!.json = conf
         }
 
     // region JSON-Related Config
@@ -2377,51 +2340,53 @@ open class Collection(
     // NOTE: get_config("key", 1) and get_config("key", 1L) will return different types
     fun has_config(key: String): Boolean {
         // not in libAnki
-        return _config!!.has(key)
+        return config!!.has(key)
     }
 
     fun has_config_not_null(key: String): Boolean {
         // not in libAnki
-        return has_config(key) && !_config!!.isNull(key)
+        return has_config(key) && !config!!.isNull(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
     fun get_config_boolean(key: String): Boolean {
-        return _config!!.getBoolean(key)
+        return config!!.getBoolean(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
     fun get_config_long(key: String): Long {
-        return _config!!.getLong(key)
+        return config!!.getLong(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
     fun get_config_int(key: String): Int {
-        return _config!!.getInt(key)
+        return config!!.getInt(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
+    @Suppress("unused")
     fun get_config_double(key: String): Double {
-        return _config!!.getDouble(key)
+        return config!!.getDouble(key)
     }
 
     /**
      * Edits to this object are not persisted to preferences.
      * @throws JSONException object does not exist or can't be cast
      */
+    @Suppress("unused")
     fun get_config_object(key: String): JSONObject {
-        return JSONObject(_config!!.getJSONObject(key))
+        return JSONObject(config!!.getJSONObject(key))
     }
 
     /** Edits to the array are not persisted to the preferences
      * @throws JSONException object does not exist or can't be cast
      */
     fun get_config_array(key: String): JSONArray {
-        return JSONArray(_config!!.getJSONArray(key))
+        return JSONArray(config!!.getJSONArray(key))
     }
 
     /**
@@ -2429,103 +2394,103 @@ open class Collection(
      * @throws JSONException object does not exist, or can't be cast
      */
     fun get_config_string(key: String): String {
-        return _config!!.getString(key)
+        return config!!.getString(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Boolean?): Boolean? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             defaultValue
-        } else _config!!.getBoolean(key)
+        } else config!!.getBoolean(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Long?): Long? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             defaultValue
-        } else _config!!.getLong(key)
+        } else config!!.getLong(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Int?): Int? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             defaultValue
-        } else _config!!.getInt(key)
+        } else config!!.getInt(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Double?): Double? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             defaultValue
-        } else _config!!.getDouble(key)
+        } else config!!.getDouble(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: String?): String? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             defaultValue
-        } else _config!!.getString(key)
+        } else config!!.getString(key)
     }
 
     /** Edits to the config are not persisted to the preferences  */
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: JSONObject?): JSONObject? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             if (defaultValue == null) null else JSONObject(defaultValue)
-        } else JSONObject(_config!!.getJSONObject(key))
+        } else JSONObject(config!!.getJSONObject(key))
     }
 
     /** Edits to the array are not persisted to the preferences  */
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: JSONArray?): JSONArray? {
-        return if (_config!!.isNull(key)) {
+        return if (config!!.isNull(key)) {
             if (defaultValue == null) null else JSONArray(defaultValue)
-        } else JSONArray(_config!!.getJSONArray(key))
+        } else JSONArray(config!!.getJSONArray(key))
     }
 
     fun set_config(key: String, value: Boolean) {
         setMod()
-        _config!!.put(key, value)
+        config!!.put(key, value)
     }
 
     fun set_config(key: String, value: Long) {
         setMod()
-        _config!!.put(key, value)
+        config!!.put(key, value)
     }
 
     fun set_config(key: String, value: Int) {
         setMod()
-        _config!!.put(key, value)
+        config!!.put(key, value)
     }
 
     fun set_config(key: String, value: Double) {
         setMod()
-        _config!!.put(key, value)
+        config!!.put(key, value)
     }
 
     fun set_config(key: String, value: String?) {
         setMod()
-        _config!!.put(key, value!!)
+        config!!.put(key, value!!)
     }
 
     fun set_config(key: String, value: JSONArray?) {
         setMod()
-        _config!!.put(key, value!!)
+        config!!.put(key, value!!)
     }
 
     fun set_config(key: String, value: JSONObject?) {
         setMod()
-        _config!!.put(key, value!!)
+        config!!.put(key, value!!)
     }
 
     fun set_config(key: String, value: Any?) {
         setMod()
-        _config!!.put(key, value)
+        config!!.put(key, value)
     }
 
     fun remove_config(key: String) {
         setMod()
-        _config!!.remove(key)
+        config!!.remove(key)
     }
 
     //endregion
@@ -2534,12 +2499,8 @@ open class Collection(
         mUsn = usn
     }
 
-    fun crtCalendar(): Calendar {
-        return Time.calendar((crt * 1000).toLong())
-    }
-
     fun crtGregorianCalendar(): GregorianCalendar {
-        return Time.gregorianCalendar((crt * 1000).toLong())
+        return Time.gregorianCalendar((crt * 1000))
     }
 
     /** Not in libAnki  */
@@ -2560,7 +2521,7 @@ open class Collection(
     open fun setDeck(cids: LongArray, did: Long) {
         db.execute(
             "update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-            did, usn(), time.intTime()
+            did, usn(), TimeManager.time.intTime()
         )
     }
 
@@ -2580,7 +2541,7 @@ open class Collection(
         }
 
         fun hasProblems(): Boolean {
-            return !mProblems.isEmpty()
+            return mProblems.isNotEmpty()
         }
 
         val problems: List<String?>
@@ -2603,7 +2564,7 @@ open class Collection(
             return markAsFailed()
         }
 
-        private fun setLocked(value: Boolean) {
+        private fun setLocked(@Suppress("SameParameterValue") value: Boolean) {
             databaseLocked = value
         }
     }
@@ -2634,7 +2595,7 @@ open class Collection(
          * See: #8926
          */
         private const val fDefaultSchedulerVersion = 1
-        private val fSupportedSchedulerVersions = Arrays.asList(1, 2)
+        private val fSupportedSchedulerVersions = listOf(1, 2)
 
         // other options
         const val DEFAULT_CONF = (
@@ -2648,5 +2609,7 @@ open class Collection(
             ) // add new to currently selected deck?
         private const val UNDO_SIZE_MAX = 20
         private var sChunk = 0
+
+        private const val SQLITE_WINDOW_SIZE_KB = 2048
     }
 }
