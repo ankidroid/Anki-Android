@@ -237,6 +237,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Đồng bộ hóa tự động có thể được kích hoạt sau %d giây</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Số thẻ mới trong bộ thẻ của ngày hôm nay</string>
     <string name="deck_picker_rev">Số thẻ đến hạn trong bộ thẻ của ngày hôm nay.</string>
     <string name="deck_picker_lrn">Số thẻ đang học trong bộ thẻ.</string>

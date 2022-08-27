@@ -265,6 +265,7 @@
         <item quantity="many">סינכרון אוטומטי עשוי להיות מופעל בעוד %d שניות</item>
         <item quantity="other">סינכרון אוטומטי עשוי להיות מופעל בעוד %d שניות</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">מספר הקלפים החדשים שניתן לראות היום בחפיסה זו.</string>
     <string name="deck_picker_rev">מספר הקלפים ללימוד היום בחפיסה זו.</string>
     <string name="deck_picker_lrn">מספר הקלפים בלמידה בחפיסה זו.</string>

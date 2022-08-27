@@ -123,6 +123,7 @@
     <string name="swipe_sensitivity" maxLength="41">ସ୍ୱାଇପ୍ ସମ୍ବେଦନଶୀଳତା</string>
     <string name="tts" maxLength="41">ପାଠ୍ୟ ରୁ କଥନ</string>
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">ସିଙ୍କରେ ମିଡ଼ିଆ ଆଣିବା</string>
     <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡ଼ିଆ ଆଣ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
@@ -131,6 +132,8 @@
     <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
     <string name="sync_status_badge" maxLength="41">ସିଙ୍କ୍ରୋନାଇଜେସନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">ଥିମ୍</string>
     <string name="day_theme" maxLength="41">ଦିନ ଥିମ୍</string>
     <string name="night_theme" maxLength="41">ରାତ୍ରି ଥିମ୍</string>
@@ -345,6 +348,7 @@
     <string name="use_rust_backend_title" maxLength="41">ନୂଆ ବ୍ୟାକେଣ୍ଡ୍ ବ୍ୟବହାର କରିବା</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ</string>
     <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା</string>

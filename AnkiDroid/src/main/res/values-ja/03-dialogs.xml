@@ -237,6 +237,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d 秒後に自動同期がスタートします。</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
     <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
     <string name="deck_picker_lrn">このデッキ内の、学習中カードの数。</string>
