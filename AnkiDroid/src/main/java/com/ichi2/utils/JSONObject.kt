@@ -267,7 +267,7 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
 
     @CheckResult
     override fun getJSONArray(name: String): JSONArray = try {
-        JSONArray.arrayToArray(super.getJSONArray(name))
+        JSONArray.arrayToArray(super.getJSONArray(name))!!
     } catch (e: org.json.JSONException) {
         throw JSONException(e)
     }

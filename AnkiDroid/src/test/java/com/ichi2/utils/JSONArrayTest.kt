@@ -129,38 +129,6 @@ class JSONArrayTest {
         assertEquals(false, other.getBoolean(3))
     }
 
-    @Test
-    fun testNulls() {
-        val array = JSONArray()
-        array.put(3, null)
-        array.put(0, JSONObject.NULL)
-        assertEquals(4, array.length())
-        assertEquals("[null,null,null,null]", array.toString())
-        // there's 2 ways to represent null; each behaves differently!
-        assertEquals(JSONObject.NULL, array[0])
-        assertThrows<JSONException> {
-            array[1]
-        }
-        assertThrows<JSONException> {
-            array[2]
-        }
-        assertThrows<JSONException> {
-            array[3]
-        }
-        assertEquals(JSONObject.NULL, array.opt(0))
-        assertEquals(null, array.opt(1))
-        assertEquals(null, array.opt(2))
-        assertEquals(null, array.opt(3))
-        assertTrue(array.isNull(0))
-        assertTrue(array.isNull(1))
-        assertTrue(array.isNull(2))
-        assertTrue(array.isNull(3))
-        assertEquals("null", array.optString(0))
-        assertEquals("", array.optString(1))
-        assertEquals("", array.optString(2))
-        assertEquals("", array.optString(3))
-    }
-
     /**
      * Our behaviour is questioned by this bug:
      * http://code.google.com/p/android/issues/detail?id=7257
@@ -290,12 +258,6 @@ class JSONArrayTest {
         assertEquals("null & \"\\\"\" & 5 & true & [true,false]", array.join(" & "))
         array.put(JSONObject(Collections.singletonMap("x", 6)))
         assertEquals("null & \"\\\"\" & 5 & true & [true,false] & {\"x\":6}", array.join(" & "))
-    }
-
-    @Test
-    fun testJoinWithNull() {
-        val array = JSONArray(mutableListOf(5, 6))
-        assertEquals("5null6", array.join(null))
     }
 
     @Test
@@ -438,14 +400,6 @@ class JSONArrayTest {
     }
 
     @Test
-    fun testTokenerConstructorNull() {
-        try {
-            JSONArray(null as JSONTokener?)
-        } catch (e: NullPointerException) {
-        }
-    }
-
-    @Test
     fun testTokenerConstructorParseFail() {
         try {
             assertThrows<JSONException> {
@@ -467,13 +421,6 @@ class JSONArrayTest {
     fun testStringConstructorWrongType() {
         assertThrows<JSONException> {
             JSONArray("{\"foo\": false}")
-        }
-    }
-
-    @Test
-    fun testStringConstructorNull() {
-        assertThrows<NullPointerException> {
-            JSONArray(null as String?)
         }
     }
 

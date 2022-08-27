@@ -85,7 +85,7 @@ class RemoteMediaServer(
      * be automatically deleted when the stream is closed.
      */
     @Throws(UnknownHttpResponseException::class)
-    fun downloadFiles(top: List<String?>?): ZipFile {
+    fun downloadFiles(top: List<String?>): ZipFile {
         var resp: Response? = null
         return try {
             resp = req(
