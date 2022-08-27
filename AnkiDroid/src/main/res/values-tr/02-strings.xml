@@ -356,10 +356,6 @@
     <string name="check_network">Lütfen ağ bağlantını kontrol et</string>
     <string name="search_using_deck_name">Deste ismini kullanarak ara</string>
     <string name="home">Ana sayfa</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">%s ile eşlendi</string>
-    <string name="import_mapped_to_tags">etiketler ile eşlendi</string>
-    <string name="import_mapped_to_nothing">Yok sayıldı</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Gömülmüş kart</string>
     <string name="buried_note">Gömülmüş not</string>
@@ -392,4 +388,11 @@
     <string name="expand_tag">\"%s\" etiketini genişlet</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Koleksiyona erişilemedi. Lütfen tekrar deneyin!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

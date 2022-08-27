@@ -378,10 +378,6 @@
     <string name="check_network">Sprawdź swoje połączenie internetowe</string>
     <string name="search_using_deck_name">Szukaj używając nazwy talii</string>
     <string name="home">Strona główna</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Przypisano do %s</string>
-    <string name="import_mapped_to_tags">Przypisano do Etykiet</string>
-    <string name="import_mapped_to_nothing">Ignorowane</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Ukryta karta</string>
     <string name="buried_note">Notatka zakopana</string>
@@ -414,4 +410,11 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

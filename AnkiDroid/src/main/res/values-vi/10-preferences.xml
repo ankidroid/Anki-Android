@@ -123,6 +123,7 @@
     <string name="swipe_sensitivity" maxLength="41">Độ nhạy của chạm vuốt</string>
     <string name="tts" maxLength="41">Văn bản sang tiếng nói</string>
     <string name="tts_summ">Đọc ra câu hỏi và câu trả lời nếu không có tập tin âm thanh nào được kèm theo</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Tìm nạp phương tiện truyền thông trên đồng bộ</string>
     <string name="sync_fetch_missing_media_summ">Tự động lấy truyền thông bị thiếu khi đồng bộ hoá.</string>
     <string name="sync_account" maxLength="41">tài khoản AnkiWeb </string>
@@ -131,6 +132,8 @@
     <string name="automatic_sync_choice_summ">Đồng bộ hóa tự động khi khởi động / thoát ứng dụng nếu lần đồng bộ hóa cuối cùng nhiều hơn 10         phút trước.</string>
     <string name="sync_status_badge" maxLength="41">Hiển thị trạng thái đồng bộ hóa</string>
     <string name="sync_status_badge_summ">Thay đổi biểu tượng đồng bộ hóa khi các thay đổi có thể được tải lên</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">Giao diện</string>
     <string name="day_theme" maxLength="41">Chủ đề ban ngày</string>
     <string name="night_theme" maxLength="41">Chủ đề ban đêm</string>
@@ -343,6 +346,7 @@
     <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>

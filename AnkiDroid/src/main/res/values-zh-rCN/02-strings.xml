@@ -345,10 +345,6 @@
     <string name="check_network">请检查您的网络连接。</string>
     <string name="search_using_deck_name">使用牌组名称搜索</string>
     <string name="home">主页</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">已映射到 %s</string>
-    <string name="import_mapped_to_tags">映射到标签</string>
-    <string name="import_mapped_to_nothing">已忽略</string>
     <!-- Reviewer actions -->
     <string name="buried_card">搁置的卡片</string>
     <string name="buried_note">隐藏的笔记</string>
@@ -381,4 +377,11 @@
     <string name="expand_tag">展开标签 \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">访问牌组集合失败。请重试！</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

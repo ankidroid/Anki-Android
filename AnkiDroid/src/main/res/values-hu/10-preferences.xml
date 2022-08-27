@@ -123,6 +123,7 @@
     <string name="swipe_sensitivity" maxLength="41">Törlés érzékenysége</string>
     <string name="tts" maxLength="41">Beszéd</string>
     <string name="tts_summ">Felolvassa a kérdést és a választ, ha nincs csatolt hangfájl</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Média letöltése szinkronizáláskor</string>
     <string name="sync_fetch_missing_media_summ">Automatikusan töltse le a hiányzó médiát, amikor szinkronizál.</string>
     <string name="sync_account" maxLength="41">AnkiWeb fiók</string>
@@ -132,6 +133,8 @@
         perce volt.</string>
     <string name="sync_status_badge" maxLength="41">Szinkronizálás állapotának megjelenítése</string>
     <string name="sync_status_badge_summ">A szinkronizálás ikonjának módosítása, amikor a változások feltölthetők</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">Sablon</string>
     <string name="day_theme" maxLength="41">Nappali téma</string>
     <string name="night_theme" maxLength="41">Éjszakai téma</string>
@@ -346,6 +349,7 @@
     <string name="use_rust_backend_title" maxLength="41">Használd az új backendet</string>
     <string name="use_rust_backend_summary">Engedélyezi az újabb Anki funkciókat, mint a scheduler v3\nINSTABIL. Ne használd olyan gyűjteményen, ami komolyabban érdelel. NEM áll vissza az alkalmazás bezárásakor.</string>
     <string name="use_rust_backend_warning">Van esély rá, hogy ez teljesen korruptá teszi a telepítést, ami az alkalmazás törlését és az AnkiDroid mappa törlését igényli és van rá esély, hogy az AnkiWeb szinkronizálásával továbbterjed a korrupció.\n\nSzívesen fogadjuk a tesztelést, de kérjük, győződjön meg róla, hogy van egy érvényes, nem AnkiWeb biztonsági mentése.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Fejlesztői beállítások</string>
     <string name="dev_options_enabled_pref" maxLength="41">Fejlesztői beállítások engedélyezése</string>
