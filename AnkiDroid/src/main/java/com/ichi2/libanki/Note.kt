@@ -28,7 +28,6 @@ import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
 
-@KotlinCleanup("IDE Lint")
 @KotlinCleanup("lots to do")
 class Note : Cloneable {
     val col: Collection
@@ -114,7 +113,7 @@ class Note : Cloneable {
     @BlocksSchemaUpgrade("new path must update to native note adding/updating routine")
     fun flush(mod: Long? = null, changeUsn: Boolean = true) {
         assert(mScm == col.scm)
-        _preFlush()
+        preFlush()
         if (changeUsn) {
             usn = col.usn()
         }
@@ -126,7 +125,7 @@ class Note : Cloneable {
         val fields = joinedFields()
         if (mod == null && col.db.queryScalar(
                 "select 1 from notes where id = ? and tags = ? and flds = ?",
-                java.lang.Long.toString(this.id), tags, fields
+                this.id.toString(), tags, fields
             ) > 0
         ) {
             return
@@ -142,10 +141,10 @@ class Note : Cloneable {
         } else {
             // TODO: tags are not registered; calling code must switch to using backend add/update notes
         }
-        _postFlush()
+        postFlush()
     }
 
-    fun joinedFields(): String {
+    private fun joinedFields(): String {
         return Utils.joinFields(fields)
     }
 
@@ -210,7 +209,7 @@ class Note : Cloneable {
         return result
     }
 
-    private fun _fieldOrd(key: String): Int {
+    private fun fieldOrd(key: String): Int {
         val fieldPair = mFMap!![key]
             ?: throw IllegalArgumentException(
                 String.format(
@@ -222,11 +221,11 @@ class Note : Cloneable {
     }
 
     fun getItem(key: String): String {
-        return fields[_fieldOrd(key)]
+        return fields[fieldOrd(key)]
     }
 
     fun setItem(key: String, value: String) {
-        fields[_fieldOrd(key)] = value
+        fields[fieldOrd(key)] = value
     }
 
     operator fun contains(key: String): Boolean {
@@ -287,8 +286,7 @@ class Note : Cloneable {
      * @return whether it has no content, dupe first field, or nothing remarkable.
      */
     fun dupeOrEmpty(): DupeOrEmpty {
-        val `val` = fields[0]
-        if (`val`.trim { it <= ' ' }.length == 0) {
+        if (fields[0].trim { it <= ' ' }.isEmpty()) {
             return DupeOrEmpty.EMPTY
         }
         val csumAndStrippedFieldField = Utils.sfieldAndCsum(
@@ -320,17 +318,16 @@ class Note : Cloneable {
     /*
      * have we been added yet?
      */
-    private fun _preFlush() {
+    private fun preFlush() {
         mNewlyAdded = col.db.queryScalar("SELECT 1 FROM cards WHERE nid = ?", this.id) == 0
     }
 
     /*
      * generate missing cards
      */
-    @KotlinCleanup("fix 'task = null'")
-    private fun _postFlush() {
+    private fun postFlush() {
         if (!mNewlyAdded) {
-            col.genCards(this.id, mModel, task = null)
+            col.genCards(this.id, mModel)
         }
     }
 
@@ -371,14 +368,13 @@ class Note : Cloneable {
          * @param fieldValues Iterable of field values that may contain existing cloze deletions
          * @return the next index that a cloze should be inserted at
          */
-        @KotlinCleanup("non-null param")
         @KotlinCleanup("general regex fixes for '.group' being nullable")
-        fun getNextClozeIndex(fieldValues: Iterable<String?>): Int {
+        fun getNextClozeIndex(fieldValues: Iterable<String>): Int {
             var highestClozeId = 0
             // Begin looping through the fields
             for (fieldLiteral in fieldValues) {
                 // Begin searching in the current field for cloze references
-                val matcher = mClozeRegexPattern.matcher(fieldLiteral!!)
+                val matcher = mClozeRegexPattern.matcher(fieldLiteral)
                 while (matcher.find()) {
                     val detectedClozeId = matcher.group(1)!!.toInt()
                     if (detectedClozeId > highestClozeId) {

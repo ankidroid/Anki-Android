@@ -780,7 +780,13 @@ open class Collection(
         return genCards(nids, models.get(mid)!!)
     }
 
-    @JvmOverloads
+    fun genCards(
+        nid: NoteId,
+        model: Model
+    ): ArrayList<Long>? {
+        return genCards("($nid)", model, task = null)
+    }
+
     fun <T> genCards(
         nid: NoteId,
         model: Model,
