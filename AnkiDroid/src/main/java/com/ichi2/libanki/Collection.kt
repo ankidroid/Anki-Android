@@ -25,7 +25,6 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.content.res.Resources
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabaseLockedException
 import android.text.TextUtils
 import android.util.Pair
@@ -223,9 +222,8 @@ open class Collection(
         return deckManager
     }
 
-    @KotlinCleanup("make non-null")
-    protected open fun initConf(conf: String?): ConfigManager {
-        return Config(conf!!)
+    protected open fun initConf(conf: String): ConfigManager {
+        return Config(conf)
     }
 
     protected open fun initTags(): TagManager {
@@ -297,31 +295,24 @@ open class Collection(
     /**
      * DB-related *************************************************************** ********************************
      */
-    @KotlinCleanup("Cleanup: make cursor a val + move cursor and cursor.close() to the try block")
     open fun load() {
-        var cursor: Cursor? = null
         val deckConf: String?
-        try {
-            // Read in deck table columns
-            cursor = db.query(
-                "SELECT crt, mod, scm, dty, usn, ls, " +
-                    "conf, dconf, tags FROM col"
-            )
-            if (!cursor.moveToFirst()) {
-                return
+        // Read in deck table columns
+        db.query("""SELECT crt, mod, scm, dty, usn, ls, conf, dconf, tags FROM col""")
+            .use { cursor ->
+                if (!cursor.moveToFirst()) {
+                    return
+                }
+                crt = cursor.getLong(0)
+                mod = cursor.getLong(1)
+                scm = cursor.getLong(2)
+                dirty = cursor.getInt(3) == 1 // No longer used
+                mUsn = cursor.getInt(4)
+                ls = cursor.getLong(5)
+                config = initConf(cursor.getString(6))
+                deckConf = cursor.getString(7)
+                tags.load(cursor.getString(8))
             }
-            crt = cursor.getLong(0)
-            mod = cursor.getLong(1)
-            scm = cursor.getLong(2)
-            dirty = cursor.getInt(3) == 1 // No longer used
-            mUsn = cursor.getInt(4)
-            ls = cursor.getLong(5)
-            config = initConf(cursor.getString(6))
-            deckConf = cursor.getString(7)
-            tags.load(cursor.getString(8))
-        } finally {
-            cursor?.close()
-        }
         decks = initDecks(deckConf)!!
     }
 
@@ -379,20 +370,20 @@ open class Collection(
     /**
      * Flush state to DB, updating mod time.
      */
-    @KotlinCleanup("scope function")
     @JvmOverloads
     open fun flush(mod: Long = 0) {
         Timber.i("flush - Saving information to DB...")
         this.mod = if (mod == 0L) TimeManager.time.intTimeMS() else mod
-        val values = ContentValues()
-        values.put("crt", this.crt)
-        values.put("mod", this.mod)
-        values.put("scm", scm)
-        values.put("dty", if (dirty) 1 else 0)
-        values.put("usn", mUsn)
-        values.put("ls", ls)
-        if (flushConf()) {
-            values.put("conf", Utils.jsonToString(conf))
+        val values = ContentValues().apply {
+            put("crt", this@Collection.crt)
+            put("mod", this@Collection.mod)
+            put("scm", scm)
+            put("dty", if (dirty) 1 else 0)
+            put("usn", mUsn)
+            put("ls", ls)
+            if (flushConf()) {
+                put("conf", Utils.jsonToString(conf))
+            }
         }
         db.update("col", values)
     }
@@ -405,24 +396,8 @@ open class Collection(
      * Flush, commit DB, and take out another write lock.
      */
     @Synchronized
-    fun save() {
-        save(null, 0)
-    }
-
-    @Synchronized
-    fun save(mod: Long) {
-        save(null, mod)
-    }
-
-    @Synchronized
-    fun save(name: String?) {
-        save(name, 0)
-    }
-
-    @Synchronized
-    @KotlinCleanup("remove name")
-    @KotlinCleanup("JvmOverloads")
-    fun save(@Suppress("UNUSED_PARAMETER") name: String?, mod: Long) {
+    @Suppress("UNUSED_PARAMETER") // name is required by tests and likely should be used
+    fun save(name: String? = null, mod: Long = 0) {
         // let the managers conditionally flush
         models.flush()
         decks.flush()
@@ -576,10 +551,8 @@ open class Collection(
     /**
      * Utils ******************************************************************** ***************************
      */
-    @KotlinCleanup("combine first two lines (use typeParam)")
     fun nextID(typeParam: String): Int {
-        var type = typeParam
-        type = "next" + Character.toUpperCase(type[0]) + type.substring(1)
+        val type = "next" + Character.toUpperCase(typeParam[0]) + typeParam.substring(1)
         val id: Int = try {
             get_config_int(type)
         } catch (e: JSONException) {
@@ -600,25 +573,13 @@ open class Collection(
     /**
      * Deletion logging ********************************************************* **************************************
      */
-    @KotlinCleanup("scope function")
-    fun _logRem(ids: LongArray, type: Int) {
-        for (id in ids) {
-            val values = ContentValues()
-            values.put("usn", usn())
-            values.put("oid", id)
-            values.put("type", type)
-            db.insert("graves", values)
-        }
-    }
-
-    @KotlinCleanup("scope function")
-    @KotlinCleanup("combine with above")
     fun _logRem(ids: kotlin.collections.Collection<Long>, @Consts.REM_TYPE type: Int) {
         for (id in ids) {
-            val values = ContentValues()
-            values.put("usn", usn())
-            values.put("oid", id)
-            values.put("type", type)
+            val values = ContentValues().apply {
+                put("usn", usn())
+                put("oid", id)
+                put("type", type)
+            }
             db.insert("graves", values)
         }
     }
@@ -638,7 +599,7 @@ open class Collection(
      */
     @JvmOverloads
     fun newNote(forDeck: Boolean = true): Note {
-        return newNote(models.current(forDeck))
+        return newNote(models.current(forDeck)!!)
     }
 
     /**
@@ -646,9 +607,8 @@ open class Collection(
      * @param m The model to use for the new note
      * @return The new note
      */
-    @KotlinCleanup("non-null")
-    fun newNote(m: Model?): Note {
-        return Note(this, m!!)
+    fun newNote(m: Model): Note {
+        return Note(this, m)
     }
 
     /**
@@ -658,9 +618,8 @@ open class Collection(
      * @return Number of card added
      * @return Number of card added.
      */
-    @KotlinCleanup("allowEmpty: non-null")
     @JvmOverloads
-    fun addNote(note: Note, allowEmpty: Models.AllowEmpty? = Models.AllowEmpty.ONLY_CLOZE): Int {
+    fun addNote(note: Note, allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE): Int {
         // check we have card models available, then save
         val cms = findTemplates(note, allowEmpty)
         // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
@@ -709,14 +668,13 @@ open class Collection(
      * @param allowEmpty whether we allow to have a card which is actually empty if it is necessary to return a non-empty list
      * @return (active), non-empty templates.
      */
-    @KotlinCleanup("allowEmpty: non-null")
     @JvmOverloads
     fun findTemplates(
         note: Note,
-        allowEmpty: Models.AllowEmpty? = Models.AllowEmpty.ONLY_CLOZE
+        allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE
     ): ArrayList<JSONObject> {
         val model = note.model()
-        val avail = Models.availOrds(model, note.fields, allowEmpty!!)
+        val avail = Models.availOrds(model, note.fields, allowEmpty)
         return _tmplsFromOrds(model, avail)
     }
 
@@ -882,12 +840,7 @@ open class Collection(
                 task?.doProgress(avail.size)
                 var did = dids[nid]
                 // use sibling due if there is one, else use a new id
-                @KotlinCleanup("getOrDefault + lambda")
-                val due: Long = if (dues.containsKey(nid)) {
-                    dues[nid]!!
-                } else {
-                    nextID("pos").toLong()
-                }
+                val due = dues.getOrElse(nid) { nextID("pos").toLong() }
                 if (did == null || did == 0L) {
                     did = model.did
                 }
@@ -939,24 +892,12 @@ open class Collection(
     /**
      * Create a new card.
      */
-    @KotlinCleanup("inline flush = true with a named arg")
-    private fun _newCard(note: Note, template: JSONObject, due: Int): Card {
-        val flush = true
-        return _newCard(note, template, due, flush)
-    }
-
-    private fun _newCard(note: Note, template: JSONObject, due: Int, @Suppress("SameParameterValue") flush: Boolean): Card {
-        val did = 0L
-        return _newCard(note, template, due, did, flush)
-    }
-
-    @KotlinCleanup("JvmOverloads")
     private fun _newCard(
         note: Note,
         template: JSONObject,
         due: Int,
-        @Suppress("SameParameterValue") parameterDid: DeckId,
-        flush: Boolean
+        @Suppress("SameParameterValue") parameterDid: DeckId = 0L,
+        flush: Boolean = true
     ): Card {
         val card = Card(this)
         return getNewLinkedCard(card, note, template, due, parameterDid, flush)
@@ -1188,9 +1129,9 @@ open class Collection(
         // render q & a
         val d = HashUtil.HashMapInit<String, String>(2)
         d["id"] = cid.toString()
-        qfmt = if (TextUtils.isEmpty(qfmt)) template.getString("qfmt") else qfmt
-        afmt = if (TextUtils.isEmpty(afmt)) template.getString("afmt") else afmt
-        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt!!), Pair("a", afmt!!))) {
+        qfmt = if (qfmt.isNullOrEmpty()) template.getString("qfmt") else qfmt
+        afmt = if (afmt.isNullOrEmpty()) template.getString("afmt") else afmt
+        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt), Pair("a", afmt))) {
             val type = p.first
             var format = p.second
             if ("q" == type) {
@@ -1302,37 +1243,30 @@ open class Collection(
         return Finder(this).findNotes(query)
     }
 
-    fun findReplace(nids: List<Long?>?, src: String?, dst: String?): Int {
-        return Finder.findReplace(this, nids!!, src!!, dst!!)
+    fun findReplace(nids: List<Long?>, src: String, dst: String): Int {
+        return Finder.findReplace(this, nids, src, dst)
     }
 
-    fun findReplace(nids: List<Long?>?, src: String?, dst: String?, regex: Boolean): Int {
-        return Finder.findReplace(this, nids!!, src!!, dst!!, regex)
+    fun findReplace(nids: List<Long?>, src: String, dst: String, regex: Boolean): Int {
+        return Finder.findReplace(this, nids, src, dst, regex)
     }
 
-    fun findReplace(nids: List<Long?>?, src: String?, dst: String?, field: String?): Int {
-        return Finder.findReplace(this, nids!!, src!!, dst!!, field = field)
+    fun findReplace(nids: List<Long?>, src: String, dst: String, field: String?): Int {
+        return Finder.findReplace(this, nids, src, dst, field = field)
     }
 
-    @KotlinCleanup("JvmOverloads")
-    @KotlinCleanup("make non-null")
     fun findReplace(
-        nids: List<Long?>?,
-        src: String?,
-        dst: String?,
+        nids: List<Long?>,
+        src: String,
+        dst: String,
         regex: Boolean,
         field: String?,
         fold: Boolean
     ): Int {
-        return Finder.findReplace(this, nids!!, src!!, dst!!, regex, field, fold)
+        return Finder.findReplace(this, nids, src, dst, regex, field, fold)
     }
 
-    fun findDupes(fieldName: String?): List<Pair<String, List<Long>>> {
-        return Finder.findDupes(this, fieldName, "")
-    }
-
-    @KotlinCleanup("JvmOverloads")
-    fun findDupes(fieldName: String?, search: String?): List<Pair<String, List<Long>>> {
+    fun findDupes(fieldName: String?, search: String? = ""): List<Pair<String, List<Long>>> {
         return Finder.findDupes(this, fieldName, search)
     }
 
@@ -1342,7 +1276,7 @@ open class Collection(
             searchNode {
                 group = SearchNodeKt.group {
                     joiner = SearchNode.Group.Joiner.AND
-                    if (!TextUtils.isEmpty(search)) {
+                    if (search.isNotEmpty()) {
                         nodes += searchNode { literalText = search }
                     }
                     nodes += searchNode { this.fieldName = fieldName }

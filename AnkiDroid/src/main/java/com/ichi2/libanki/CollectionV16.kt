@@ -48,7 +48,11 @@ class CollectionV16(
         return ModelsV16(this)
     }
 
-    override fun initConf(conf: String?): ConfigManager {
+    override fun initConf(conf: String): ConfigManager {
+        return initConfV16()
+    }
+
+    private fun initConfV16(): ConfigV16 {
         return ConfigV16(RustConfigBackend(backend))
     }
 
@@ -80,7 +84,7 @@ class CollectionV16(
         }
 
     override fun load() {
-        config = initConf(null)
+        config = initConfV16()
         decks = initDecks(null)
     }
 

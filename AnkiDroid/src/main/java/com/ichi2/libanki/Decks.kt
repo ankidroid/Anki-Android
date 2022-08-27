@@ -311,7 +311,7 @@ class Decks(private val col: Collection) : DeckManager() {
             return
         }
         // log the removal regardless of whether we have the deck or not
-        col._logRem(longArrayOf(did), Consts.REM_DECK)
+        col._logRem(listOf(did), Consts.REM_DECK)
         // do nothing else if doesn't exist
         if (deck == null) {
             return
