@@ -18,17 +18,9 @@ package com.ichi2.testutils
 
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.utils.KotlinCleanup
 
 object AnkiActivityUtils {
-    @Suppress("unused")
-    @KotlinCleanup("replace getDialogFragment with this")
-    inline fun <reified T : DialogFragment> AnkiActivity.getDialogFragmentKt(): T? {
+    inline fun <reified T : DialogFragment> AnkiActivity.getDialogFragment(): T? {
         return supportFragmentManager.findFragmentByTag(AnkiActivity.DIALOG_FRAGMENT_TAG) as T?
-    }
-
-    @JvmStatic
-    fun getDialogFragment(activity: AnkiActivity): DialogFragment? {
-        return activity.supportFragmentManager.findFragmentByTag(AnkiActivity.DIALOG_FRAGMENT_TAG) as DialogFragment?
     }
 }

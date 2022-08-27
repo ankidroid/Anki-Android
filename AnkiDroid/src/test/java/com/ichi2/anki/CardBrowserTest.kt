@@ -573,11 +573,11 @@ class CardBrowserTest : RobolectricTest() {
         val dialog = cardBrowser.getChangeDeckDialog(listOf())
         cardBrowser.showDialogFragment(dialog)
 
-        val shownDialog: Fragment? = getDialogFragment(cardBrowser)
+        val shownDialog: Fragment? = cardBrowser.getDialogFragment()
         assertNotNull(shownDialog)
 
         cardBrowser.recreate()
-        val dialogAfterRecreate: Fragment? = getDialogFragment(cardBrowser)
+        val dialogAfterRecreate: Fragment? = cardBrowser.getDialogFragment()
         assertNull(dialogAfterRecreate)
     }
 

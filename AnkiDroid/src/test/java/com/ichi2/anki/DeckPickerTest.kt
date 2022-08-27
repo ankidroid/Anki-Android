@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.view.Menu
 import androidx.core.content.edit
+import androidx.fragment.app.DialogFragment
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
@@ -13,6 +14,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.testutils.*
+import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -228,7 +230,7 @@ class DeckPickerTest : RobolectricTest() {
             DeckPicker::class.java, Intent()
         )
         deckPicker.confirmDeckDeletion(did)
-        val fragment = AnkiActivityUtils.getDialogFragment(deckPicker)
+        val fragment = deckPicker.getDialogFragment<DialogFragment>()
         assertThat(
             "deck deletion confirmation window should be shown", fragment,
             instanceOf(DeckPickerConfirmDeleteDeckDialog::class.java)

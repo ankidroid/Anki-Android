@@ -20,6 +20,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.annotation.StringRes
+import androidx.core.content.edit
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
@@ -28,7 +29,6 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ALWAYS
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.R
-import com.ichi2.utils.KotlinCleanup
 import org.acra.ACRA
 import org.acra.builder.ReportBuilder
 import org.acra.collections.ImmutableList
@@ -37,7 +37,7 @@ import org.acra.config.LimitingReportAdministrator
 import org.acra.config.ToastConfiguration
 import org.acra.data.CrashReportDataFactory
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -47,11 +47,9 @@ import timber.log.Timber
 
 @RunWith(AndroidJUnit4::class)
 @SuppressLint("DirectSystemCurrentTimeMillisUsage")
-@KotlinCleanup("IDE Lint")
-@KotlinCleanup("is -> equalTo")
 class ACRATest : InstrumentedTest() {
     @get:Rule
-    var runtimePermissionRule =
+    var runtimePermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var mApp: AnkiDroidApp? = null
     private val mDebugLogcatArguments = arrayOf("-t", "300", "-v", "long", "ACRA:S")
@@ -242,7 +240,7 @@ class ACRATest : InstrumentedTest() {
         for (configuration in config.pluginConfigurations()) {
             // Make sure the dialog is set to pop up
             if (configuration.javaClass.toString().contains("Dialog")) {
-                assertThat(message, configuration.enabled(), `is`(isEnabled))
+                assertThat(message, configuration.enabled(), equalTo(isEnabled))
             }
         }
     }
@@ -252,11 +250,7 @@ class ACRATest : InstrumentedTest() {
         val config = CrashReportService.getAcraCoreConfigBuilder().build()
         for (configuration in config.pluginConfigurations()) {
             if (configuration.javaClass.toString().contains("Toast")) {
-                assertThat(
-                    "Toast should be enabled",
-                    configuration.enabled(),
-                    `is`(true)
-                )
+                assertThat("Toast should be enabled", configuration.enabled(), equalTo(true))
             }
         }
     }
@@ -282,10 +276,8 @@ class ACRATest : InstrumentedTest() {
         )
     }
 
-    @KotlinCleanup("edit {}")
     private fun setReportConfig(feedbackReportAsk: String) {
-        sharedPrefs.edit()
-            .putString(CrashReportService.FEEDBACK_REPORT_KEY, feedbackReportAsk).commit()
+        sharedPrefs.edit { putString(CrashReportService.FEEDBACK_REPORT_KEY, feedbackReportAsk) }
     }
 
     private val sharedPrefs: SharedPreferences
