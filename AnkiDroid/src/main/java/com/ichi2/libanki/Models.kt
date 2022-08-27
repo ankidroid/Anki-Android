@@ -60,11 +60,7 @@ class Models(col: Collection) : ModelManager(col) {
         val ids = modelarray.names()
         if (ids != null) {
             for (id in ids.stringIterable()) {
-                val o = Model(
-                    modelarray.getJSONObject(
-                        id!!
-                    )
-                )
+                val o = Model(modelarray.getJSONObject(id))
                 mModels!![o.getLong("id")] = o
             }
         }

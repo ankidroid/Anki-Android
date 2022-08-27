@@ -83,7 +83,7 @@ class TemporaryModel(model: Model) {
     val css: String
         get() = model.getString("css")
 
-    fun updateTemplate(ordinal: Int, template: JSONObject?) {
+    fun updateTemplate(ordinal: Int, template: JSONObject) {
         model.getJSONArray("tmpls").put(ordinal, template)
     }
 

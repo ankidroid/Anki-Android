@@ -19,7 +19,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
 
 object FilteredDeckUtil {
-    fun createFilteredDeck(col: Collection, name: String?, search: String?): Long {
+    fun createFilteredDeck(col: Collection, name: String?, search: String): Long {
         val filteredDid: Long = try {
             col.decks.newDyn(name!!)
         } catch (filteredAncestor: DeckRenameException) {
