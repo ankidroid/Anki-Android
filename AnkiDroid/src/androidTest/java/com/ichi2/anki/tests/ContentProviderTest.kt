@@ -523,7 +523,8 @@ class ContentProviderTest : InstrumentedTest() {
         dummyFields2[0] = TEST_FIELD_VALUE
         for (uri in mCreatedNotes!!) {
             // Update the flds
-            cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2))
+            @Suppress("UNCHECKED_CAST")
+            cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2 as Array<String>))
             cr.update(uri, cv, null, null)
             cr.query(uri, FlashCardsContract.Note.DEFAULT_PROJECTION, null, null, null)
                 .use { noteCursor ->
