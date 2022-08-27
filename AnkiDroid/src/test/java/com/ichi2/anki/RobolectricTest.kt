@@ -303,13 +303,12 @@ open class RobolectricTest : CollectionGetter {
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
-    override fun getCol(): Collection {
-        try {
-            return CollectionHelper.getInstance().getCol(targetContext)
+    override val col: Collection
+        get() = try {
+            CollectionHelper.getInstance().getCol(targetContext)
         } catch (e: UnsatisfiedLinkError) {
             throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
         }
-    }
 
     protected val collectionTime: MockTime
         get() = TimeManager.time as MockTime

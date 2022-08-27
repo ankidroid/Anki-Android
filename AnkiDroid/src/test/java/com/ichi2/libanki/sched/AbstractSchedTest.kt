@@ -146,7 +146,7 @@ class AbstractSchedTest : RobolectricTest() {
         val dconf = col.decks.getConf(1)
         assertThat(dconf, notNullValue())
         dconf!!.getJSONObject("new").put("bury", true)
-        getCol().decks.save(dconf)
+        col.decks.save(dconf)
         val nbNote = 2
         val notes = arrayOfNulls<Note>(nbNote)
         for (i in 0 until nbNote) {
