@@ -15,7 +15,7 @@ class ClozeTest : RobolectricTest() {
     @Test
     fun testCloze() {
         val d = col
-        var f = d.newNote(d.models.byName("Cloze"))
+        var f = d.newNote(d.models.byName("Cloze")!!)
         val name = f.model().getString("name")
         assertEquals("Cloze", name)
         // a cloze model with no clozes is not empty
@@ -24,19 +24,19 @@ class ClozeTest : RobolectricTest() {
         val card = f.cards()[0]
         assertTrue(card.isEmpty)
         // try with one cloze
-        f = d.newNote(d.models.byName("Cloze"))
+        f = d.newNote(d.models.byName("Cloze")!!)
         f.setItem("Text", "hello {{c1::world}}")
         assertEquals(1, d.addNote(f))
         assertThat(f.firstCard().q(), containsString("hello <span class=cloze>[...]</span>"))
         assertThat(f.firstCard().a(), containsString("hello <span class=cloze>world</span>"))
         // and with a comment
-        f = d.newNote(d.models.byName("Cloze"))
+        f = d.newNote(d.models.byName("Cloze")!!)
         f.setItem("Text", "hello {{c1::world::typical}}")
         assertEquals(1, d.addNote(f))
         assertThat(f.firstCard().q(), containsString("<span class=cloze>[typical]</span>"))
         assertThat(f.firstCard().a(), containsString("<span class=cloze>world</span>"))
         // and with two clozes
-        f = d.newNote(d.models.byName("Cloze"))
+        f = d.newNote(d.models.byName("Cloze")!!)
         f.setItem("Text", "hello {{c1::world}} {{c2::bar}}")
         assertEquals(2, d.addNote(f))
         val c1 = f.firstCard()
@@ -47,7 +47,7 @@ class ClozeTest : RobolectricTest() {
         assertThat(c2.a(), containsString("world <span class=cloze>bar</span>"))
         // if there are multiple answers for a single cloze, they are given in a
         // list
-        f = d.newNote(d.models.byName("Cloze"))
+        f = d.newNote(d.models.byName("Cloze")!!)
         f.setItem("Text", "a {{c1::b}} {{c1::c}}")
         assertEquals(1, d.addNote(f))
         assertThat(f.firstCard().a(), containsString("<span class=cloze>b</span> <span class=cloze>c</span>"))

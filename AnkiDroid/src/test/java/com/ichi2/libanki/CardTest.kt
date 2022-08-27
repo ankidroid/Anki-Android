@@ -38,7 +38,7 @@ class CardTest : RobolectricTest() {
     fun `pureAnswer handled quoted html element`() {
         // <hr id="answer"> is also used
         val modelName = addNonClozeModel("Test", arrayOf("One", "Two"), "{{One}}", "{{One}}<hr id=\"answer\">{{Two}}")
-        val note = col.newNote(col.models.byName(modelName))
+        val note = col.newNote(col.models.byName(modelName)!!)
         note.setItem("One", "1")
         note.setItem("Two", "2")
         col.addNote(note)
