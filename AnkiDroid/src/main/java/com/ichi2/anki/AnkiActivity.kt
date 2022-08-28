@@ -174,10 +174,10 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     }
 
     override val col: Collection
-        get() = CollectionHelper.getInstance().getCol(this)
+        get() = CollectionHelper.instance.getCol(this)!!
 
     fun colIsOpen(): Boolean {
-        return CollectionHelper.getInstance().colIsOpen()
+        return CollectionHelper.instance.colIsOpen()
     }
 
     /**

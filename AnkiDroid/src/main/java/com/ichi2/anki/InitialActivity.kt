@@ -37,7 +37,7 @@ object InitialActivity {
         }
 
         // If we're OK, return null
-        if (CollectionHelper.getInstance().getColSafe(context) != null) {
+        if (CollectionHelper.instance.getColSafe(context) != null) {
             return null
         }
         if (!AnkiDroidApp.isSdCardMounted) {
@@ -46,7 +46,7 @@ object InitialActivity {
             return StartupFailure.DIRECTORY_NOT_ACCESSIBLE
         }
 
-        return when (CollectionHelper.getLastOpenFailure()) {
+        return when (CollectionHelper.lastOpenFailure) {
             CollectionHelper.CollectionOpenFailure.FILE_TOO_NEW -> StartupFailure.FUTURE_ANKIDROID_VERSION
             CollectionHelper.CollectionOpenFailure.CORRUPT -> StartupFailure.DB_ERROR
             CollectionHelper.CollectionOpenFailure.LOCKED -> StartupFailure.DATABASE_LOCKED

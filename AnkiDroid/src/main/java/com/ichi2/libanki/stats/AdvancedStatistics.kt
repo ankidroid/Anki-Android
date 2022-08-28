@@ -123,7 +123,7 @@ class AdvancedStatistics {
         // To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
         mSettings = Settings(context)
         metaInfo.isStatsCalculated = true
-        val col = CollectionHelper.getInstance().getCol(context)
+        val col = CollectionHelper.instance.getCol(context)!!
         var maxCards = 0
         var lastElement = 0.0
         var zeroIndex = 0
@@ -843,7 +843,7 @@ class AdvancedStatistics {
 
         init {
             val prefs = getSharedPrefs(context)
-            mCol = CollectionHelper.getInstance().getCol(context)
+            mCol = CollectionHelper.instance.getCol(context)!!
             computeNDays = prefs.getInt("advanced_forecast_stats_compute_n_days", 0)
             val computePrecision = prefs.getInt("advanced_forecast_stats_compute_precision", 90)
             computeMaxError = (100 - computePrecision) / 100.0

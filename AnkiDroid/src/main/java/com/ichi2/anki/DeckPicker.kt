@@ -1551,7 +1551,7 @@ open class DeckPicker :
     }
 
     fun exit() {
-        CollectionHelper.getInstance().closeCollection(false, "DeckPicker:exit()")
+        CollectionHelper.instance.closeCollection(false, "DeckPicker:exit()")
         finishWithoutAnimation()
     }
 

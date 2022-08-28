@@ -64,7 +64,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     @Before
     override fun setUp() {
         // had interference between two tests
-        CollectionHelper.getInstance().setColForTests(null)
+        CollectionHelper.instance.setColForTests(null)
         super.setUp()
         defaultCollectionSourcePath = getMigrationSourcePath()
     }

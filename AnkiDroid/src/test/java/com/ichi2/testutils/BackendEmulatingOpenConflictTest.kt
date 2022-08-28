@@ -43,7 +43,7 @@ class BackendEmulatingOpenConflictTest : RobolectricTest() {
     fun assumeMocksAreValid() {
         assertThrows(
             BackendDbLockedException::class.java,
-            { CollectionHelper.getInstance().getCol(super.targetContext) }
+            { CollectionHelper.instance.getCol(super.targetContext) }
         )
     }
 }

@@ -22,7 +22,7 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.createTransientDirectory
 import io.mockk.every
-import io.mockk.mockkStatic
+import io.mockk.mockkObject
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -121,7 +121,7 @@ class ScopedStorageAndroidTest {
      * run the test [test], with the hypothesis that [externalDirectories] are the external directories of the system.
      */
     private fun runTestWithTwoExternalDirectories(externalDirectories: Array<File>, test: (Array<File>) -> Unit) {
-        mockkStatic(CollectionHelper::getAppSpecificExternalDirectories) {
+        mockkObject(CollectionHelper) {
             every { CollectionHelper.getAppSpecificExternalDirectories(any()) } returns externalDirectories
             test(externalDirectories)
         }

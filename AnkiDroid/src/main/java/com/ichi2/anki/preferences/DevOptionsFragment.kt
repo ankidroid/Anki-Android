@@ -67,7 +67,7 @@ class DevOptionsFragment : SettingsFragment() {
         }
         // Lock database
         requirePreference<Preference>(getString(R.string.pref_lock_database_key)).setOnPreferenceClickListener {
-            val c = CollectionHelper.getInstance().getCol(requireContext())!!
+            val c = CollectionHelper.instance.getCol(requireContext())!!
             Timber.w("Toggling database lock")
             c.db.database.beginTransaction()
             true

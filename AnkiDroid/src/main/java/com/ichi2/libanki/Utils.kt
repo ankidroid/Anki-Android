@@ -996,7 +996,7 @@ object Utils {
     }
 
     /** Returns a list of apkg-files.  */
-    fun getImportableDecks(context: Context?): List<File> {
+    fun getImportableDecks(context: Context): List<File> {
         val deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context)
         val dir = File(deckPath)
         val decks: MutableList<File> = ArrayList()

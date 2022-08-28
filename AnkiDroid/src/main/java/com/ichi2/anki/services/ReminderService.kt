@@ -63,7 +63,7 @@ class ReminderService : BroadcastReceiver() {
         val colHelper: CollectionHelper
         val col: Collection?
         try {
-            colHelper = CollectionHelper.getInstance()
+            colHelper = CollectionHelper.instance
             col = colHelper.getCol(context)
         } catch (t: Throwable) {
             Timber.w(t, "onReceive - unexpectedly unable to get collection. Returning.")

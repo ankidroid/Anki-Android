@@ -77,7 +77,7 @@ class DB(db: SupportSQLiteDatabase) {
                 "DB.MyDbErrorHandler.onCorruption",
                 "Db has been corrupted: " + db.path
             )
-            CollectionHelper.getInstance().closeCollection(false, "Database corrupted")
+            CollectionHelper.instance.closeCollection(false, "Database corrupted")
             DatabaseErrorDialog.databaseCorruptFlag = true
         }
     }

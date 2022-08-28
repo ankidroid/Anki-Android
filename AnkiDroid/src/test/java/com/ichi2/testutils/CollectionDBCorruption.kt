@@ -48,7 +48,7 @@ object CollectionDBCorruption {
      * Closes and corrupts [CollectionHelper]'s collection
      */
     fun closeAndCorrupt(context: Context): String {
-        val col = CollectionHelper.getInstance().getCol(context)
+        val col = CollectionHelper.instance.getCol(context)!!
         val path = col.path
         col.close()
         corrupt(path)

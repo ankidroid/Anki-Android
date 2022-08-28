@@ -1352,7 +1352,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mediaButton!!.setOnClickListener { v: View? ->
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
             if (mEditorNote!!.items()[index][1]!!.isNotEmpty()) {
-                val col = CollectionHelper.getInstance().getCol(this@NoteEditor)
+                val col = CollectionHelper.instance.getCol(this@NoteEditor)!!
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
                 val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col)
@@ -1448,7 +1448,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun startMultimediaFieldEditorForField(index: Int, field: IField) {
-        val col = CollectionHelper.getInstance().getCol(this@NoteEditor)
+        val col = CollectionHelper.instance.getCol(this@NoteEditor)!!
         val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col)
         note.setField(index, field)
         startMultimediaFieldEditor(index, note)

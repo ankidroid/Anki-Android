@@ -152,7 +152,7 @@ class SchedTest : RobolectricTest() {
     @Test
     fun testRevLogValues() {
         TimeManager.withMockInstance(MutableTime(MockTime.timeStamp(2020, 8, 4, 11, 22, 19, 123), 10)) { time: MutableTime ->
-            val col = CollectionHelper.getInstance().getCol(targetContext)
+            val col = CollectionHelper.instance.getCol(targetContext)!!
             addNoteUsingBasicModel("Hello", "World")
             val sched = col.sched
             val c = sched.card

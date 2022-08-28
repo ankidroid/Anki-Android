@@ -48,7 +48,7 @@ abstract class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     protected val col: Collection?
-        get() = CollectionHelper.getInstance().getCol(requireContext())
+        get() = CollectionHelper.instance.getCol(requireContext())
 
     abstract fun initSubscreen()
 

@@ -233,7 +233,7 @@ internal constructor(
      */
     @VisibleForTesting
     open fun throwIfCollectionCannotBeOpened() {
-        CollectionHelper.getInstance().getCol(context) ?: throw IllegalStateException("collection could not be opened")
+        CollectionHelper.instance.getCol(context) ?: throw IllegalStateException("collection could not be opened")
     }
 
     /**
@@ -284,7 +284,7 @@ internal constructor(
     private fun ensureCollectionNotOpenable() {
         val lockedCollection: Collection?
         try {
-            lockedCollection = CollectionHelper.getInstance().getCol(context)
+            lockedCollection = CollectionHelper.instance.getCol(context)
         } catch (e: Exception) {
             Timber.i("Expected exception thrown: ", e)
             return
@@ -320,7 +320,7 @@ internal constructor(
         try {
             // Store the collection in `result` so we can close it in the `finally`
             // this can throw [StorageAccessException]: locked or invalid
-            result = CollectionHelper.getInstance().getColFromPath(path, context)
+            result = CollectionHelper.instance.getColFromPath(path, context)
             if (!result.basicCheck()) {
                 throw UserActionRequiredException.CheckDatabaseException()
             }
@@ -527,7 +527,7 @@ internal constructor(
             destination: File,
             transformAlgo: ((MigrateEssentialFiles) -> MigrateEssentialFiles)? = null
         ) {
-            val collectionPath: CollectionFilePath = CollectionHelper.getInstance().getCol(context).path
+            val collectionPath: CollectionFilePath = CollectionHelper.instance.getCol(context)!!.path
             val sourceDirectory = File(collectionPath).parent!!
 
             if (!ScopedStorageService.isLegacyStorage(sourceDirectory, context)) {

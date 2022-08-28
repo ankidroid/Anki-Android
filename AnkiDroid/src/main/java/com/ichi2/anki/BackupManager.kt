@@ -96,7 +96,7 @@ open class BackupManager {
         }
 
         // TODO: Probably not a good idea to do the backup while the collection is open
-        if (CollectionHelper.getInstance().colIsOpen()) {
+        if (CollectionHelper.instance.colIsOpen()) {
             Timber.w("Collection is already open during backup... we probably shouldn't be doing this")
         }
 
