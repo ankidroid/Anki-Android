@@ -110,18 +110,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         return mDialog!!
     }
 
-    private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>): Int {
-        var i = 0
-        var pos = 0
-        for (item in decks) {
-            if (did == item.deckId) {
-                pos = i
-                break
-            }
-            i++
-        }
-        return pos
-    }
+    private fun getPositionOfDeck(did: DeckId, decks: List<SelectableDeck>) =
+        decks.indexOfFirst { it.deckId == did }
 
     private fun getSummaryMessage(arguments: Bundle): String? {
         return arguments.getString(SUMMARY_MESSAGE)
