@@ -17,7 +17,6 @@
 package com.ichi2.libanki
 
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 class DeckConfig : JSONObject {
@@ -36,10 +35,7 @@ class DeckConfig : JSONObject {
      * This function will perform deepCopy on the passed object
      *
      */
-    @KotlinCleanup("nullability")
-    constructor(json: JSONObject?, source: Source) : super(
-        json!!
-    ) {
+    constructor(json: JSONObject, source: Source) : super(json) {
         this.source = source
     }
 
@@ -86,13 +82,10 @@ class DeckConfig : JSONObject {
             }
         }
 
-        @KotlinCleanup("use ?:")
-        fun parseTimerOpt(config: JSONObject, defaultValue: Boolean): Boolean {
-            var ret = parseTimer(config)
-            if (ret == null) {
-                ret = defaultValue
-            }
-            return ret
-        }
+        /**
+         * @return The 'timer' property on [config], or [defaultValue] if it's not set.
+         */
+        fun parseTimerOpt(config: JSONObject, defaultValue: Boolean): Boolean =
+            parseTimer(config) ?: defaultValue
     }
 }
