@@ -251,7 +251,7 @@ class Syncer(
         // And it's fine to continue without one.
         try {
             if (rMeta.has("hostNum")) {
-                hostNum.setHostNum(rMeta.getInt("hostNum"))
+                hostNum.hostNum = rMeta.getInt("hostNum")
             }
         } catch (e: Exception) {
             Timber.w(e, "Failed to set hostNum")

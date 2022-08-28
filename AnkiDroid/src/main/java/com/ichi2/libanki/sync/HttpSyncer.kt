@@ -308,7 +308,7 @@ open class HttpSyncer(
     fun syncURL() = getCustomSyncUrlOrNull() ?: getDefaultSyncUrl()
 
     protected val hostNum: Int?
-        get() = mHostNum.getHostNum()
+        get() = mHostNum.hostNum
 
     companion object {
         private const val BOUNDARY = "Anki-sync-boundary"
