@@ -13,84 +13,83 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.libanki.template
 
-package com.ichi2.libanki.template;
+import androidx.annotation.VisibleForTesting
+import com.ichi2.utils.KotlinCleanup
+import java.util.*
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-
-public class ParsedNodes extends ParsedNode {
-    private final List<ParsedNode> mChildren;
+@KotlinCleanup("fix hashCode issue suppression")
+@Suppress("EqualsOrHashCode")
+class ParsedNodes : ParsedNode {
+    private val mChildren: List<ParsedNode?>
 
     @VisibleForTesting
-    public ParsedNodes(List<ParsedNode> nodes) {
-        this.mChildren = nodes;
+    constructor(nodes: List<ParsedNode?>) {
+        mChildren = nodes
     }
 
     // Only used for testing
     @VisibleForTesting
-    public ParsedNodes(ParsedNode... nodes) {
-        this.mChildren = new ArrayList(Arrays.asList(nodes));
+    @KotlinCleanup("fix ide issue")
+    constructor(vararg nodes: ParsedNode?) {
+        mChildren = ArrayList(Arrays.asList(*nodes))
     }
 
-
-    /**
-     * @param nodes A list of nodes to put in a tree
-     * @return The list of node, as compactly as possible.
-     */
-    public static @NonNull ParsedNode create(List<ParsedNode> nodes) {
-        if (nodes.isEmpty()) {
-            return new EmptyNode();
-        } else if (nodes.size() == 1) {
-            return nodes.get(0);
-        } else {
-            return new ParsedNodes(nodes);
-        }
-    }
-
-
-    @Override
-    public boolean template_is_empty(@NonNull Set<String> nonempty_fields) {
-        for (ParsedNode child : mChildren) {
-            if (!child.template_is_empty(nonempty_fields)) {
-                return false;
+    @KotlinCleanup("simplify fun with any {}")
+    override fun template_is_empty(nonempty_fields: Set<String>): Boolean {
+        for (child in mChildren) {
+            if (!child!!.template_is_empty(nonempty_fields)) {
+                return false
             }
         }
-        return true;
+        return true
     }
 
-
-    @NonNull
-    public void render_into(Map<String, String> fields, Set<String> nonempty_fields, StringBuilder builder) throws TemplateError {
-        for (ParsedNode child: mChildren) {
-            child.render_into(fields, nonempty_fields, builder);
+    @Throws(TemplateError::class)
+    override fun render_into(
+        fields: Map<String, String>,
+        nonempty_fields: Set<String>,
+        builder: StringBuilder
+    ) {
+        for (child in mChildren) {
+            child!!.render_into(fields, nonempty_fields, builder)
         }
     }
 
-
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (! (obj instanceof ParsedNodes)) {
-            return false;
+    @KotlinCleanup("fix parameter name issue")
+    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+    override fun equals(obj: Any?): Boolean {
+        if (obj !is ParsedNodes) {
+            return false
         }
-        ParsedNodes other = (ParsedNodes) obj;
-        return mChildren.equals(other.mChildren);
+        return mChildren == obj.mChildren
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        String t = "new ParsedNodes(Arrays.asList(";
-        for (ParsedNode child: mChildren) {
-            t += child;
+    @KotlinCleanup("see if it can be removed if not simplify string and function")
+    override fun toString(): String {
+        var t: String? = "new ParsedNodes(Arrays.asList("
+        for (child in mChildren) {
+            t += child
         }
-        return  t + "))";
+        return "$t))"
+    }
+
+    companion object {
+        /**
+         * @param nodes A list of nodes to put in a tree
+         * @return The list of node, as compactly as possible.
+         */
+        @JvmStatic
+        fun create(nodes: List<ParsedNode>): ParsedNode {
+            @KotlinCleanup("replace with when")
+            return if (nodes.isEmpty()) {
+                EmptyNode()
+            } else if (nodes.size == 1) {
+                nodes[0]
+            } else {
+                ParsedNodes(nodes)
+            }
+        }
     }
 }
