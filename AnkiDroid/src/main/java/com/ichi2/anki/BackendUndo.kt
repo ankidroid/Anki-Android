@@ -16,14 +16,17 @@
 
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
+import android.widget.Button
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.undoNew
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BlocksSchemaUpgrade
 import net.ankiweb.rsdroid.BackendException
 
+@SuppressLint("DirectSnackbarMakeUsage")
 suspend fun FragmentActivity.backendUndoAndShowPopup(): Boolean {
     return try {
         val changes = withProgress() {
@@ -31,7 +34,11 @@ suspend fun FragmentActivity.backendUndoAndShowPopup(): Boolean {
                 undoNew()
             }
         }
-        showSnackbar(TR.undoActionUndone(changes.operation))
+        val ans_button = findViewById(R.id.flip_card) as Button
+        val snackbar = Snackbar.make(findViewById(android.R.id.content), TR.undoActionUndone(changes.operation), Snackbar.LENGTH_LONG)
+        snackbar.setAnchorView(ans_button)
+        snackbar.show()
+
         true
     } catch (exc: BackendException) {
         @BlocksSchemaUpgrade("Backend module should export this as a separate Exception")
