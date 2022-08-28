@@ -13,17 +13,11 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.parsing;
+package com.wildplot.android.parsing
 
+import java.lang.IllegalArgumentException
 
-public class ExpressionFormatException extends IllegalArgumentException {
-
-    public ExpressionFormatException() {
-        super();
-    }
-
-
-    public ExpressionFormatException(String detailMessage) {
-        super(detailMessage);
-    }
+class ExpressionFormatException : IllegalArgumentException {
+    constructor() : super()
+    constructor(detailMessage: String?) : super(detailMessage)
 }
