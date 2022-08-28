@@ -163,7 +163,8 @@ open class CardBrowser :
      * Cards mode or Notes mode.
      * True by default.
      * */
-    private var inCardsMode: Boolean = true
+    @get:VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var inCardsMode: Boolean = true
 
     // card that was clicked (not marked)
     private var mCurrentCardId: CardId = 0
@@ -1503,7 +1504,8 @@ open class CardBrowser :
     }
 
     @RustCleanup("remove card cache; switch to RecyclerView and browserRowForId (#11889)")
-    private fun searchCards() {
+    @VisibleForTesting
+    fun searchCards() {
         // cancel the previous search & render tasks if still running
         invalidate()
         if ("" != mSearchTerms && mSearchView != null) {
