@@ -13,135 +13,104 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.parsing;
+package com.wildplot.android.parsing
 
-
-import android.annotation.SuppressLint;
+import android.annotation.SuppressLint
 
 @SuppressLint("NonPublicNonStaticFieldName")
-public class Term implements TreeElement {
-    private final TopLevelParser parser;
-
-
-
-    public enum TermType {TERM_MUL_FACTOR, TERM_DIV_FACTOR, FACTOR, INVALID}
-
-
-
-    private TermType termType = TermType.INVALID;
-    private Factor factor = null;
-    private Term term = null;
-
-
-    public Term(String termString, TopLevelParser parser) {
-        this.parser = parser;
-
-        if (!TopLevelParser.stringHasValidBrackets(termString)) {
-            this.termType = TermType.INVALID;
-            return;
-        }
-
-        boolean isReady = initAsTermMulOrDivFactor(termString);
-        if (!isReady) {
-            isReady = initAsFactor(termString);
-        }
-        if (!isReady) {
-            this.termType = TermType.INVALID;
-        }
+class Term(termString: String, private val parser: TopLevelParser) : TreeElement {
+    enum class TermType {
+        TERM_MUL_FACTOR, TERM_DIV_FACTOR, FACTOR, INVALID
     }
 
-
-    private boolean initAsTermMulOrDivFactor(String termString) {
-        int bracketChecker = 0;
-        for (int i = 0; i < termString.length(); i++) {
-            if (termString.charAt(i) == '(') {
-                bracketChecker++;
+    var termType = TermType.INVALID
+        private set
+    private var factor: Factor? = null
+    private var term: Term? = null
+    private fun initAsTermMulOrDivFactor(termString: String): Boolean {
+        var bracketChecker = 0
+        for (i in 0 until termString.length) {
+            if (termString[i] == '(') {
+                bracketChecker++
             }
-            if (termString.charAt(i) == ')') {
-                bracketChecker--;
+            if (termString[i] == ')') {
+                bracketChecker--
             }
-            if ((termString.charAt(i) == '*' || termString.charAt(i) == '/') && bracketChecker == 0) {
-                String leftSubString = termString.substring(0, i);
+            if ((termString[i] == '*' || termString[i] == '/') && bracketChecker == 0) {
+                val leftSubString = termString.substring(0, i)
                 if (!TopLevelParser.stringHasValidBrackets(leftSubString)) {
-                    continue;
+                    continue
                 }
-                Term leftTerm = new Term(leftSubString, parser);
-                boolean isValidFirstPartTerm = leftTerm.getTermType() != TermType.INVALID;
-
+                val leftTerm = Term(leftSubString, parser)
+                val isValidFirstPartTerm = leftTerm.termType != TermType.INVALID
                 if (!isValidFirstPartTerm) {
-                    continue;
+                    continue
                 }
-
-                String rightSubString = termString.substring(i + 1);
+                val rightSubString = termString.substring(i + 1)
                 if (!TopLevelParser.stringHasValidBrackets(rightSubString)) {
-                    continue;
+                    continue
                 }
-                Factor rightFactor = new Factor(rightSubString, parser);
-                boolean isValidSecondPartFactor = rightFactor.getFactorType() != Factor.FactorType.INVALID;
-
+                val rightFactor = Factor(rightSubString, parser)
+                val isValidSecondPartFactor = rightFactor.factorType != Factor.FactorType.INVALID
                 if (isValidSecondPartFactor) {
-                    if (termString.charAt(i) == '*') {
-                        this.termType = TermType.TERM_MUL_FACTOR;
+                    if (termString[i] == '*') {
+                        termType = TermType.TERM_MUL_FACTOR
                     } else {
-                        this.termType = TermType.TERM_DIV_FACTOR;
+                        termType = TermType.TERM_DIV_FACTOR
                     }
-                    this.term = leftTerm;
-                    this.factor = rightFactor;
-                    return true;
+                    term = leftTerm
+                    factor = rightFactor
+                    return true
                 }
-
             }
         }
-
-        return false;
+        return false
     }
 
-
-    private boolean initAsFactor(String termString) {
-        Factor factor = new Factor(termString, parser);
-        boolean isValidTerm = factor.getFactorType() != Factor.FactorType.INVALID;
+    private fun initAsFactor(termString: String): Boolean {
+        val factor = Factor(termString, parser)
+        val isValidTerm = factor.factorType != Factor.FactorType.INVALID
         if (isValidTerm) {
-            this.termType = TermType.FACTOR;
-            this.factor = factor;
-            return true;
+            termType = TermType.FACTOR
+            this.factor = factor
+            return true
         }
-        return false;
+        return false
     }
 
-
-    public TermType getTermType() {
-        return termType;
-    }
-
-
-    public double getValue() throws ExpressionFormatException {
-        switch (termType) {
-            case TERM_MUL_FACTOR:
-                return term.getValue() * factor.getValue();
-            case TERM_DIV_FACTOR:
-                return term.getValue() / factor.getValue();
-            case FACTOR:
-                return factor.getValue();
-            case INVALID:
-            default:
-                throw new ExpressionFormatException("could not parse Term");
+    // @Suppress because the IDE thinks term.value is a recursive call, this is most likely
+    // an IDE bug because getValue() is invoked on another object(of the same type) which
+    // eventually will end in one of the two other cases(FACTOR or INVALID)
+    @Suppress("RecursivePropertyAccessor")
+    @Throws(ExpressionFormatException::class)
+    override fun getValue(): Double {
+        return when (termType) {
+            TermType.TERM_MUL_FACTOR -> term!!.value * factor!!.value
+            TermType.TERM_DIV_FACTOR -> term!!.value / factor!!.value
+            TermType.FACTOR -> factor!!.value
+            TermType.INVALID -> throw ExpressionFormatException("could not parse Term")
         }
     }
 
-
-    @Override
-    public boolean isVariable() {
-        switch (termType) {
-            case TERM_MUL_FACTOR:
-            case TERM_DIV_FACTOR:
-                return term.isVariable() || factor.isVariable();
-            case FACTOR:
-                return factor.isVariable();
-            case INVALID:
-            default:
-                throw new ExpressionFormatException("could not parse Term");
+    override fun isVariable(): Boolean {
+        return when (termType) {
+            TermType.TERM_MUL_FACTOR, TermType.TERM_DIV_FACTOR -> term!!.isVariable || factor!!.isVariable
+            TermType.FACTOR -> factor!!.isVariable
+            TermType.INVALID -> throw ExpressionFormatException("could not parse Term")
         }
     }
 
-
+    init {
+        if (!TopLevelParser.stringHasValidBrackets(termString)) {
+            termType = TermType.INVALID
+        } else {
+            var isReady = initAsTermMulOrDivFactor(termString)
+            if (!isReady) {
+                isReady = initAsFactor(termString)
+            }
+            if (!isReady) {
+                termType = TermType.INVALID
+            }
+        }
+    }
 }
