@@ -36,7 +36,7 @@ class PreferenceExtensionsTest {
 
     @Mock
     private val mMockEditor: SharedPreferences.Editor? = null
-    private fun getOrSetString(key: String, supplier: Supplier<String?>): String? {
+    private fun getOrSetString(key: String, supplier: Supplier<String>): String {
         return getOrSetString(mockPreferences, key, supplier)
     }
 
@@ -90,8 +90,8 @@ class PreferenceExtensionsTest {
     private class ExpectedException : RuntimeException()
     private class UnexpectedException : RuntimeException()
     companion object {
-        private val UNUSED_SUPPLIER = Supplier<String?> { throw UnexpectedException() }
-        private val EXCEPTION_SUPPLIER = Supplier<String?> { throw ExpectedException() }
+        private val UNUSED_SUPPLIER = Supplier<String> { throw UnexpectedException() }
+        private val EXCEPTION_SUPPLIER = Supplier<String> { throw ExpectedException() }
         private const val VALID_KEY = "VALID"
         private const val VALID_RESULT = "WAS VALID KEY"
         private const val MISSING_KEY = "INVALID"
