@@ -36,7 +36,7 @@ suspend fun FragmentActivity.backendUndoAndShowPopup(): Boolean {
         }
         val ans_button = findViewById(R.id.flip_card) as Button
         val snackbar = Snackbar.make(findViewById(android.R.id.content), TR.undoActionUndone(changes.operation), Snackbar.LENGTH_LONG)
-        snackbar.setAnchorView(ans_button)
+        snackbar.setAnchorView(ans_button) // sets the anchorview as answerbutton
         snackbar.show()
 
         true
