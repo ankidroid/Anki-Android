@@ -1,1 +1,0 @@
-Text scanner for ankidroid is an awesome application that can help you to easily create flashcards containing a huge amount of text using your phone camera or your gallery. here is the playstore link: https://play.google.com/store/apps/details?id=com.altrech.ocrapp
