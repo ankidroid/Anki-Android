@@ -1,81 +1,82 @@
 //noinspection MissingCopyrightHeader #8659
 
-package com.ichi2.anki.api;
+package com.ichi2.anki.api
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.junit.Assert.*
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import java.util.HashSet
+import kotlin.test.assertNull
 
 /**
  * Created by rodrigobresan on 19/10/17.
- * <p>
+ *
+ *
  * In case of any questions, feel free to ask me
- * <p>
+ *
+ *
  * E-mail: rcbresan@gmail.com
  * Slack: bresan
  */
-
-@RunWith(RobolectricTestRunner.class)
-public class ApiUtilsTest {
-
-    private static final String delimiter = "\u001F";
-
+// TODO: @KotlinCleanup("replace Assert.assertEquals with kotlin.test.assertEquals")
+@RunWith(RobolectricTestRunner::class)
+class ApiUtilsTest {
     @Test
-    public void joinFieldsShouldJoinWhenListIsValid() {
-        String[] fieldList = {"A", "B", "C"};
-        assertEquals("A" + delimiter + "B" + delimiter + "C", Utils.joinFields(fieldList));
+    fun joinFieldsShouldJoinWhenListIsValid() {
+        val fieldList = arrayOf<String>("A", "B", "C")
+        assertEquals("A" + delimiter + "B" + delimiter + "C", Utils.joinFields(fieldList))
     }
 
     @Test
-    public void joinFieldsShouldReturnNullWhenListIsNull() {
-        assertNull(Utils.joinFields(null));
+    fun joinFieldsShouldReturnNullWhenListIsNull() {
+        assertNull(Utils.joinFields(null))
     }
 
     @Test
-    public void splitFieldsShouldSplitRightWhenStringIsValid() {
-        String fieldList = "A" + delimiter + "B" + delimiter + "C";
-        String[] output = Utils.splitFields(fieldList);
-        assertEquals("A", output[0]);
-        assertEquals("B", output[1]);
-        assertEquals("C", output[2]);
+    fun splitFieldsShouldSplitRightWhenStringIsValid() {
+        val fieldList = "A" + delimiter + "B" + delimiter + "C"
+        val output = Utils.splitFields(fieldList)
+        assertEquals("A", output[0])
+        assertEquals("B", output[1])
+        assertEquals("C", output[2])
     }
 
     @Test
-    public void joinTagsShouldReturnEmptyStringWhenSetIsValid() {
-        Set<String> set = new HashSet<>();
-        set.add("A");
-        set.add("B");
-        set.add("C");
-        assertEquals("A B C", Utils.joinTags(set));
+    // TODO: @KotlinCleanup("use mutableSetOf, use scope function")
+    fun joinTagsShouldReturnEmptyStringWhenSetIsValid() {
+        val set: MutableSet<String?> = HashSet()
+        set.add("A")
+        set.add("B")
+        set.add("C")
+        assertEquals("A B C", Utils.joinTags(set))
     }
 
     @Test
-    public void joinTagsShouldReturnEmptyStringWhenSetIsNull() {
-        assertEquals("", Utils.joinTags(null));
+    fun joinTagsShouldReturnEmptyStringWhenSetIsNull() {
+        assertEquals("", Utils.joinTags(null))
     }
 
     @Test
-    public void joinTagsShouldReturnEmptyStringWhenSetIsEmpty() {
-        assertEquals("", Utils.joinTags(new HashSet<>()));
+    fun joinTagsShouldReturnEmptyStringWhenSetIsEmpty() {
+        assertEquals("", Utils.joinTags(HashSet()))
     }
 
     @Test
-    public void splitTagsShouldReturnNullWhenStringIsValid() {
-        String tags = "A B C";
-        String[] output = Utils.splitTags(tags);
-        assertEquals("A", output[0]);
-        assertEquals("B", output[1]);
-        assertEquals("C", output[2]);
+    fun splitTagsShouldReturnNullWhenStringIsValid() {
+        val tags = "A B C"
+        val output = Utils.splitTags(tags)
+        assertEquals("A", output[0])
+        assertEquals("B", output[1])
+        assertEquals("C", output[2])
     }
 
     @Test
-    public void shouldGenerateProperCheckSum() {
-        assertEquals(3533307532L, Utils.fieldChecksum("AnkiDroid"));
+    fun shouldGenerateProperCheckSum() {
+        assertEquals(3533307532L, Utils.fieldChecksum("AnkiDroid"))
+    }
+
+    companion object {
+        private const val delimiter = "\u001F"
     }
 }
