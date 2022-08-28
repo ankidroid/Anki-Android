@@ -33,6 +33,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.edit
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -1247,9 +1248,10 @@ open class CardBrowser :
     fun switchCardOrNote(newCardsMode: bool) {
         val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
 
-        sharedPrefs.edit()
-            .putBoolean("inCardsMode", newCardsMode)
-            .apply()
+        sharedPrefs.edit {
+            this.putBoolean("inCardsMode", newCardsMode)
+            this.apply()
+        }
 
         inCardsMode = newCardsMode
         searchCards()
@@ -1258,9 +1260,10 @@ open class CardBrowser :
     fun onTruncate(newTruncateValue: Boolean) {
         val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
 
-        sharedPrefs.edit()
-            .putBoolean("isTruncated", newTruncateValue)
-            .apply()
+        sharedPrefs.edit {
+            this.putBoolean("isTruncated", newTruncateValue)
+            this.apply()
+        }
 
         isTruncated = newTruncateValue
         mCardsAdapter!!.notifyDataSetChanged()

@@ -60,7 +60,7 @@ class BrowserOptionsDialog(private val inCardsMode: Boolean, private val isTrunc
 
         return MaterialAlertDialogBuilder(requireContext()).run {
             this.setView(dialogView)
-            this.setTitle("Browser Options")
+            this.setTitle(getString(R.string.browser_options_dialog_heading))
             this.setNegativeButton(getString(R.string.dialog_cancel)) { _: DialogInterface, _: Int ->
                 dismiss()
             }
