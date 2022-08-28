@@ -25,7 +25,6 @@ import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.sqlite.db.SupportSQLiteOpenHelper
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService.sendExceptionReport
@@ -47,12 +46,11 @@ import kotlin.jvm.JvmOverloads
  * or the Android framework), and provides some helpers on top.
  */
 @KotlinCleanup("Improve documentation")
-@KotlinCleanup("remove init by directly initializing the properties")
 class DB(db: SupportSQLiteDatabase) {
     /**
      * The collection, which is actually an SQLite database.
      */
-    val database: SupportSQLiteDatabase
+    val database: SupportSQLiteDatabase = DatabaseChangeDecorator(db)
     var mod = false
 
     /**
@@ -189,7 +187,7 @@ class DB(db: SupportSQLiteDatabase) {
     fun execute(@Language("SQL") sql: String, vararg `object`: Any?) {
         val s = sql.trim { it <= ' ' }.lowercase()
         // mark modified?
-        for (mo in MOD_SQLS) {
+        for (mo in MOD_SQL_STATEMENTS) {
             if (s.startsWith(mo)) {
                 mod = true
                 break
@@ -204,7 +202,6 @@ class DB(db: SupportSQLiteDatabase) {
      * not contain any non-statement-terminating semicolons.
      */
     @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
-    @KotlinCleanup("Use map")
     fun executeScript(@Language("SQL") sql: String) {
         mod = true
         @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN") val queries = java.lang.String(sql).split(";")
@@ -244,7 +241,6 @@ class DB(db: SupportSQLiteDatabase) {
     }
 
     /** Use this executeMany version with external transaction management  */
-    @KotlinCleanup("Use forEach")
     fun executeManyNoTransaction(@Language("SQL") sql: String, list: List<Array<out Any?>>) {
         mod = true
         for (o in list) {
@@ -280,10 +276,7 @@ class DB(db: SupportSQLiteDatabase) {
     }
 
     companion object {
-        private val MOD_SQLS = arrayOf("insert", "update", "delete")
-
-        /** may be injected to use a different sqlite implementation - null means use default  */
-        private val sqliteOpenHelperFactory: SupportSQLiteOpenHelper.Factory? = null
+        private val MOD_SQL_STATEMENTS = arrayOf("insert", "update", "delete")
 
         /**
          * Open a connection using the system framework.
@@ -324,10 +317,5 @@ class DB(db: SupportSQLiteDatabase) {
                 Timber.w("Not in a transaction. Cannot end transaction.")
             }
         }
-    }
-
-    init {
-        database = DatabaseChangeDecorator(db)
-        mod = false
     }
 }
