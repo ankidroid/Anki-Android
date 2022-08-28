@@ -242,7 +242,6 @@ open class CardBrowser :
         private set
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var isTruncated = false
-        private set
     private val mCheckedCards = Collections.synchronizedSet(LinkedHashSet<CardCache>())
     private var mLastSelectedPosition = 0
     private var mActionBarMenu: Menu? = null
