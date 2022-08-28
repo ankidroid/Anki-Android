@@ -235,7 +235,7 @@ public class CollectionHelper {
      * @param path  Directory to initialize
      * @throws StorageAccessException If no write access to directory
      */
-    public static synchronized void initializeAnkiDroidDirectory(String path) throws StorageAccessException {
+    public static synchronized void initializeAnkiDroidDirectory(@NonNull String path) throws StorageAccessException {
         // Create specified directory if it doesn't exit
         File dir = new File(path);
         if (!dir.exists() && !dir.mkdirs()) {
