@@ -17,14 +17,11 @@ import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.view.ContextThemeWrapper
-import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.CoreMatchers.*
-import org.hamcrest.MatcherAssert.*
 import org.junit.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import kotlin.test.assertEquals
-import kotlin.test.fail
 
 @RunWith(RobolectricTestRunner::class)
 class RtlCompliantActionProviderTest {
@@ -44,7 +41,6 @@ class RtlCompliantActionProviderTest {
     }
 
     @Test
-    @KotlinCleanup("assertThrows<>")
     fun test_unwrapContext_will_throw_on_no_activity() {
         val a = Application()
         val c: Context = ContextWrapper(
@@ -55,12 +51,6 @@ class RtlCompliantActionProviderTest {
                 0
             )
         )
-        try {
-            RtlCompliantActionProvider(c)
-        } catch (e: Exception) {
-            assertThat(e, instanceOf(ClassCastException::class.java))
-            return
-        }
-        fail("unwrapContext should have thrown a ClassCastException, because the base context is not an activity")
+        assertThrows<ClassCastException> { RtlCompliantActionProvider(c) }
     }
 }
