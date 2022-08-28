@@ -58,7 +58,7 @@ class FunctionXAtom(funcString: String, private val parser: TopLevelParser) : Tr
     @Throws(ExpressionFormatException::class)
     override fun getValue(): Double {
         return if (atomType !== AtomType.INVALID) {
-            parser.getFuncVal(funcName, expression!!.value)
+            parser.getFuncVal(funcName!!, expression!!.value)
         } else {
             throw ExpressionFormatException("Number is Invalid, cannot parse")
         }

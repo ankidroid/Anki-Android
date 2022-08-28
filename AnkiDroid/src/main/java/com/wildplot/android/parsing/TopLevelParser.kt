@@ -13,191 +13,150 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.parsing;
+package com.wildplot.android.parsing
 
-import android.annotation.SuppressLint;
-
-import com.ichi2.utils.HashUtil;
-import com.wildplot.android.rendering.interfaces.Function2D;
-import com.wildplot.android.rendering.interfaces.Function3D;
-
-import java.util.HashMap;
-import java.util.regex.Pattern;
+import android.annotation.SuppressLint
+import com.ichi2.utils.HashUtil.HashMapInit
+import com.wildplot.android.rendering.interfaces.Function2D
+import com.wildplot.android.rendering.interfaces.Function3D
+import java.util.regex.Pattern
 
 @SuppressLint("NonPublicNonStaticFieldName")
-public class TopLevelParser implements Function2D, Function3D, Cloneable {
-    private final HashMap<String, TopLevelParser> parserRegister;
-    private final HashMap<String, Double> varMap = HashUtil.HashMapInit(2); // Number form initVarMap
-    private double x = 0.0, y = 0.0;
-    private final Expression expression;
-    private final boolean isValid;
-    private String expressionString;
-    private String xName = "x", yName = "y";
+class TopLevelParser(expressionString: String, parserRegister: HashMap<String, TopLevelParser>) :
+    Function2D, Function3D, Cloneable {
+    private val parserRegister: HashMap<String, TopLevelParser>
+    private val varMap = HashMapInit<String, Double>(2) // Number form initVarMap
+    var x = 0.0
+    var y = 0.0
+    private val expression: Expression
+    val isValid: Boolean
+    private var expressionString: String
+    private var xName = "x"
+    private var yName = "y"
 
-
-    public TopLevelParser(String expressionString, HashMap<String, TopLevelParser> parserRegister) {
-        initVarMap();
-        this.parserRegister = parserRegister;
-        this.expressionString = expressionString;
-        boolean isValidExpressionString = initExpressionString();
-
-        this.expression = new Expression(this.expressionString, this);
-        this.isValid = (expression.getExpressionType() != Expression.ExpressionType.INVALID) && isValidExpressionString;
-
+    init {
+        initVarMap()
+        this.parserRegister = parserRegister
+        this.expressionString = expressionString
+        val isValidExpressionString = initExpressionString()
+        expression = Expression(this.expressionString, this)
+        isValid =
+            expression.expressionType != Expression.ExpressionType.INVALID && isValidExpressionString
     }
 
-
-    private void initVarMap() {
-        varMap.put("e", Math.E);
-        varMap.put("pi", Math.PI);
+    private fun initVarMap() {
+        varMap["e"] = Math.E
+        varMap["pi"] = Math.PI
     }
 
-
-    private boolean initExpressionString() {
-        this.expressionString = expressionString.replace(" ", "");
-        int equalPosition = expressionString.indexOf("=");
+    private fun initExpressionString(): Boolean {
+        expressionString = expressionString.replace(" ", "")
+        val equalPosition = expressionString.indexOf("=")
         if (equalPosition >= 1) {
-            String leftStatement = expressionString.substring(0, equalPosition);
-            this.expressionString = expressionString.substring(equalPosition + 1);
-            int commaPos = leftStatement.indexOf(",");
-            int leftBracketPos = leftStatement.indexOf("(");
-            int rightBracketPos = leftStatement.indexOf(")");
-
+            val leftStatement = expressionString.substring(0, equalPosition)
+            expressionString = expressionString.substring(equalPosition + 1)
+            val commaPos = leftStatement.indexOf(",")
+            val leftBracketPos = leftStatement.indexOf("(")
+            val rightBracketPos = leftStatement.indexOf(")")
             if (leftBracketPos > 0 && rightBracketPos > leftBracketPos + 1) {
-                String funcName = leftStatement.substring(0, leftBracketPos);
-                Pattern p = Pattern.compile("[^a-zA-Z0-9]");
-                boolean hasSpecialChar = p.matcher(funcName).find();
+                val funcName = leftStatement.substring(0, leftBracketPos)
+                val p = Pattern.compile("[^a-zA-Z0-9]")
+                var hasSpecialChar = p.matcher(funcName).find()
                 if (hasSpecialChar) {
-                    return false;
+                    return false
                 }
                 if (commaPos == -1) {
-                    String xVarName = leftStatement.substring(leftBracketPos + 1, rightBracketPos);
-                    hasSpecialChar = p.matcher(xVarName).find();
+                    val xVarName = leftStatement.substring(leftBracketPos + 1, rightBracketPos)
+                    hasSpecialChar = p.matcher(xVarName).find()
                     if (hasSpecialChar) {
-                        return false;
+                        return false
                     }
-                    this.xName = xVarName;
+                    xName = xVarName
                 } else {
-                    String xVarName = leftStatement.substring(leftBracketPos + 1, commaPos);
-                    hasSpecialChar = p.matcher(xVarName).find();
+                    val xVarName = leftStatement.substring(leftBracketPos + 1, commaPos)
+                    hasSpecialChar = p.matcher(xVarName).find()
                     if (hasSpecialChar) {
-                        return false;
+                        return false
                     }
-                    String yVarName = leftStatement.substring(commaPos + 1, rightBracketPos);
-                    hasSpecialChar = p.matcher(yVarName).find();
+                    val yVarName = leftStatement.substring(commaPos + 1, rightBracketPos)
+                    hasSpecialChar = p.matcher(yVarName).find()
                     if (hasSpecialChar) {
-                        return false;
+                        return false
                     }
-
-
-                    this.xName = xVarName;
-                    this.yName = yVarName;
+                    xName = xVarName
+                    yName = yVarName
                 }
             } else {
-                return false;
+                return false
             }
-
-
         }
-
-        return true;
+        return true
     }
 
-
-    public double getVarVal(String varName) {
-        return varMap.get(varName);
+    fun getVarVal(varName: String): Double {
+        return varMap[varName]!!
     }
 
-
-    public double getX() {
-        return x;
-    }
-
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-
-    public double getY() {
-        return y;
-    }
-
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-
-    @Override
-    public double f(double x) {
-        this.x = x;
-        if (isValid) {
-            return expression.getValue();
+    override fun f(x: Double): Double {
+        this.x = x
+        return if (isValid) {
+            expression.value
         } else {
-            throw new ExpressionFormatException("illegal Expression, cannot parse and return value");
+            throw ExpressionFormatException("illegal Expression, cannot parse and return value")
         }
     }
 
-
-    public boolean isValid() {
-        return isValid;
-    }
-
-
-    @Override
-    public double f(double x, double y) {
-        this.x = x;
-        this.y = y;
-        if (isValid) {
-            return expression.getValue();
+    override fun f(x: Double, y: Double): Double {
+        this.x = x
+        this.y = y
+        return if (isValid) {
+            expression.value
         } else {
-            throw new ExpressionFormatException("illegal Expression, cannot parse and return value");
+            throw ExpressionFormatException("illegal Expression, cannot parse and return value")
         }
     }
 
-
-    public double getFuncVal(String funcName, double xVal) {
-        TopLevelParser funcParser = this.parserRegister.get(funcName);
-        return funcParser.f(xVal);
+    fun getFuncVal(funcName: String, xVal: Double): Double {
+        val funcParser = parserRegister[funcName]
+        return funcParser!!.f(xVal)
     }
 
-
-    public double getFuncVal(String funcName, double xVal, double yVal) {
-        TopLevelParser funcParser = this.parserRegister.get(funcName);
-        return funcParser.f(xVal, yVal);
+    fun getFuncVal(funcName: String, xVal: Double, yVal: Double): Double {
+        val funcParser = parserRegister[funcName]
+        return funcParser!!.f(xVal, yVal)
     }
 
-
-    public String getxName() {
-        return xName;
+    fun getxName(): String {
+        return xName
     }
 
-
-    public String getyName() {
-        return yName;
+    fun getyName(): String {
+        return yName
     }
 
-
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public static boolean stringHasValidBrackets(String string) {
-        int finalBracketCheck = string.replaceAll("\\(", "").length() - string.replaceAll("\\)", "").length();
-        if (finalBracketCheck != 0) {
-            return false;
+    companion object {
+        @JvmStatic
+        fun stringHasValidBrackets(string: String): Boolean {
+            val finalBracketCheck = string.replace("\\(".toRegex(), "").length - string.replace(
+                "\\)".toRegex(),
+                ""
+            ).length
+            if (finalBracketCheck != 0) {
+                return false
+            }
+            var bracketOpeningCheck = 0
+            for (i in 0 until string.length) {
+                if (string[i] == '(') {
+                    bracketOpeningCheck++
+                }
+                if (string[i] == ')') {
+                    bracketOpeningCheck--
+                }
+                if (bracketOpeningCheck < 0) {
+                    return false
+                }
+            }
+            return true
         }
-
-        int bracketOpeningCheck = 0;
-        for (int i = 0; i < string.length(); i++) {
-            if (string.charAt(i) == '(') {
-                bracketOpeningCheck++;
-            }
-            if (string.charAt(i) == ')') {
-                bracketOpeningCheck--;
-            }
-            if (bracketOpeningCheck < 0) {
-                return false;
-            }
-        }
-        return true;
     }
 }
