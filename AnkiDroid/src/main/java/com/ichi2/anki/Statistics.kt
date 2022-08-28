@@ -489,6 +489,10 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         }
     }
 
+    fun getCurrentDeckId(): DeckId {
+        return mStatsDeckId
+    }
+
     companion object {
         const val TODAYS_STATS_TAB_POSITION = 0
         const val FORECAST_TAB_POSITION = 1
