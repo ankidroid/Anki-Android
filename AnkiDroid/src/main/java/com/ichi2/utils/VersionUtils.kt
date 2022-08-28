@@ -35,7 +35,7 @@ object VersionUtils {
     val appName: String
         get() {
             var pkgName = AnkiDroidApp.TAG
-            val context: Context = AnkiDroidApp.getInstance()
+            val context: Context = applicationInstance ?: return AnkiDroidApp.TAG
             try {
                 val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
                 pkgName = context.getString(pInfo.applicationInfo.labelRes)
@@ -52,14 +52,12 @@ object VersionUtils {
     val pkgVersionName: String
         get() {
             var pkgVersion = "?"
-            val context: Context? = AnkiDroidApp.getInstance()
-            if (context != null) {
-                try {
-                    val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-                    pkgVersion = pInfo.versionName
-                } catch (e: PackageManager.NameNotFoundException) {
-                    Timber.e(e, "Couldn't find package named %s", context.packageName)
-                }
+            val context: Context = applicationInstance ?: return pkgVersion
+            try {
+                val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                pkgVersion = pInfo.versionName
+            } catch (e: PackageManager.NameNotFoundException) {
+                Timber.e(e, "Couldn't find package named %s", context.packageName)
             }
             return pkgVersion
         }
@@ -70,7 +68,7 @@ object VersionUtils {
     @JvmStatic
     val pkgVersionCode: Long
         get() {
-            val context: Context = AnkiDroidApp.getInstance()
+            val context: Context = applicationInstance ?: return 0
             try {
                 val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
                 val versionCode = PackageInfoCompat.getLongVersionCode(pInfo)
@@ -88,6 +86,14 @@ object VersionUtils {
                 Timber.e(npe, "Unexpected exception getting version code?")
             }
             return 0
+        }
+
+    private val applicationInstance: Context?
+        get() = if (AnkiDroidApp.isInitialized) {
+            AnkiDroidApp.instance
+        } else {
+            Timber.w("AnkiDroid instance not set")
+            null
         }
 
     /**

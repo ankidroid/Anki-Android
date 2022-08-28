@@ -246,6 +246,7 @@
         <item quantity="one">%d സെക്കൻഡിൽ ഒരു യാന്ത്രിക സമന്വയം പ്രവർത്തനക്ഷമമാക്കാം</item>
         <item quantity="other">%d സെക്കൻഡിനുള്ളിൽ ഒരു യാന്ത്രിക സമന്വയം പ്രവർത്തനക്ഷമമാക്കാം</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
     <string name="deck_picker_rev">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
     <string name="deck_picker_lrn">ഈ ഡെക്കിൽ ഇന്ന് കാണാനുള്ള പുതിയ കാർഡുകളുടെ എണ്ണം.</string>
@@ -255,6 +256,7 @@
     <string name="deck_picker_counts">ഇന്ന് കാണുന്നതിന് കാർഡുകളുടെ എണ്ണം അടങ്ങിയ ഡെക്ക് അവലോകന പേജ് തുറക്കുക.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

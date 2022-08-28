@@ -246,6 +246,7 @@
         <item quantity="one">Es pot activar una sincronització automàtica en %d segon</item>
         <item quantity="other">Es pot activar una sincronització automàtica en %d segons</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Nombre de cartes noves que es poden veure avui en aquest paquet.</string>
     <string name="deck_picker_rev">Nombre de cartes pendents per avui en aquest paquet.</string>
     <string name="deck_picker_lrn">Número de cartes que s\'estan aprenent en aquest paquet.</string>
@@ -255,6 +256,7 @@
     <string name="deck_picker_counts">Obriu la pàgina de descripció general del paquet que conté el nombre de cartes que podeu veure avui.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

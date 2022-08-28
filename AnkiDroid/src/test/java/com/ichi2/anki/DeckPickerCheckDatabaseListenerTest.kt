@@ -27,7 +27,6 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("IDE lint")
 class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
     private lateinit var mImpl: DeckPickerTestImpl
     override fun setUp() {
@@ -130,7 +129,7 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
 
     /**COULD_BE_BETTER: Listener is too coupled to this  */
     @KotlinCleanup("replace getters with variables")
-    protected class DeckPickerTestImpl : DeckPicker() {
+    private class DeckPickerTestImpl : DeckPicker() {
         private var mDidDisplayDialogLoadFailed = false
         private var mDidDisplayMessage = false
         private var mDidDisplayDbLocked = false
@@ -154,9 +153,10 @@ class DeckPickerCheckDatabaseListenerTest : RobolectricTest() {
             mDidDisplayDbLocked = false
         }
 
-        override fun showSimpleMessageDialog(message: String, reload: Boolean) {
+        @KotlinCleanup("param should be non-nul")
+        override fun showSimpleMessageDialog(message: String?, title: String, reload: Boolean) {
             mDidDisplayMessage = true
-            super.showSimpleMessageDialog(message, reload)
+            super.showSimpleMessageDialog(message = message, title = title, reload = reload)
         }
 
         fun didDisplayMessage(): Boolean {

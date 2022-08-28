@@ -237,6 +237,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Đồng bộ hóa tự động có thể được kích hoạt sau %d giây</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Số thẻ mới trong bộ thẻ của ngày hôm nay</string>
     <string name="deck_picker_rev">Số thẻ đến hạn trong bộ thẻ của ngày hôm nay.</string>
     <string name="deck_picker_lrn">Số thẻ đang học trong bộ thẻ.</string>
@@ -246,6 +247,7 @@
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

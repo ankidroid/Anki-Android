@@ -25,17 +25,6 @@ class CollectionUtilsTest {
     var testList = arrayListOf(1, 2, 3)
 
     @Test
-    fun testGetLastListElement() {
-        assertThat(CollectionUtils.getLastListElement(testList), equalTo(3))
-    }
-
-    @Test(expected = IndexOutOfBoundsException::class)
-    fun testGetLastOnEmptyList() {
-        val emptyList: List<Int> = ArrayList()
-        CollectionUtils.getLastListElement(emptyList)
-    }
-
-    @Test
     fun testAddAll() {
         val toTest = arrayListOf<Int>()
         CollectionUtils.addAll(toTest, testList)

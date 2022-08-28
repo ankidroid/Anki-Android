@@ -67,6 +67,7 @@ object AnalyticsConstantsTest {
         listOfConstantFields.add("Exception Report")
         listOfConstantFields.add("Import APKG")
         listOfConstantFields.add("Import COLPKG")
+        listOfConstantFields.add("Import CSV")
     }
 
     internal val analyticsConstantFields

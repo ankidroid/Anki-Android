@@ -56,7 +56,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             else -> {}
         }
         mCumulative = stats.cumulative
-        mSeriesList = stats.seriesList
+        mSeriesList = stats.seriesList!!
         val metaData = stats.metaInfo
         mBackwards = metaData[2] as Boolean
         mValueLabels = metaData[3] as IntArray
@@ -94,7 +94,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
         val backgroundColor = getColorFromAttr(chartView.context, R.attr.colorBackground)
         plotSheet.setBackgroundColor(ColorWrap(backgroundColor))
         val textColor = getColorFromAttr(chartView.context, R.attr.textColor)
-        plotSheet.setTextColor(ColorWrap(textColor))
+        plotSheet.textColor = ColorWrap(textColor)
         plotSheet.setIsBackwards(mBackwards)
         if (chartType == ChartType.CARDS_TYPES) {
             return createPieChart(plotSheet)
@@ -181,7 +181,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             }
             val barGraph = BarGraph(usedPlotSheet, barThickness, bars, color)
             barGraph.setFilling(true)
-            barGraph.name = chartView.resources.getString(mValueLabels[i - 1])
+            barGraph.setName(chartView.resources.getString(mValueLabels[i - 1]))
             // barGraph.setFillColor(Color.GREEN.darker());
             barGraph.setFillColor(color)
             plotSheet.addDrawable(barGraph)

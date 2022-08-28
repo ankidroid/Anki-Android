@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">ಫೈಲ್ ಆಮದು ಮಾಡುವಲ್ಲಿ ದೋಷ, ಪ್ರಕ್ರಿಯೆಗೊಳಿಸುವಾಗ ಸಂಗ್ರಹ ಸ್ಪಷ್ಟವಾಗಿದೆ. \n ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
     <string name="import_succeeded_but_check_database">ಡೇಟಾ ಆಮದು ಯಶಸ್ವಿಯಾಗಿದೆ ಆದರೆ ಆಮದು ನಂತರದ ಸ್ವಚ್ clean ಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ. ನಂತರ ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಿ. ಮೂಲ ಕಾರಣ: %s</string>
-    <string name="import_error_unhandled_request">ಆಮದು ವಿನಂತಿಯನ್ನು ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
     <string name="import_error_corrupt_zip">ಎಪಿಕೆಜಿ ಫೈಲ್ ಭ್ರಷ್ಟವಾಗಿದೆ. ದಯವಿಟ್ಟು ಅದನ್ನು ಅಳಿಸಿ ಮತ್ತು ಮರು-ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ. \n\n ಮೂಲ ಕಾರಣ:%s</string>
-    <string name="import_error_exception">ಪ್ಯಾಕೇಜ್ import \n\n%s ಅನ್ನು ಆಮದು ಮಾಡಲು ವಿಫಲವಾಗಿದೆ</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">“%s” ಫೈಲ್ ಹೆಸರು .apkg ಅಥವಾ .colpkg ವಿಸ್ತರಣೆಯನ್ನು ಹೊಂದಿಲ್ಲ</string>
     <string name="import_error_load_imported_database">ಅಂಕಿ ಡೇಟಾಬೇಸ್ (.anki2) ಬದಲಿಗಳನ್ನು ಇನ್ನೂ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ. ಬದಲಿ ಸೂಚನೆಗಳಿಗಾಗಿ ದಯವಿಟ್ಟು ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ.</string>
     <string name="import_error_content_provider">ಆಯ್ದ ಫೈಲ್ ಅನ್ನು ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡಲಾಗುವುದಿಲ್ಲ. ಆಂಕಿ ಫೈಲ್‌ಗಳನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡುವುದು ಹೇಗೆ ಎಂದು ದಯವಿಟ್ಟು ಬಳಕೆದಾರರ ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() ವಿಫಲವಾಗಿದೆ (ಬಹುಶಃ ಶೇಖರಣಾ ಸ್ಥಳವಿಲ್ಲ)</string>
-    <string name="import_error_unhandled_scheme">ಇವರಿಂದ ಅನಿಯಂತ್ರಿತ ಆಮದು: “%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
@@ -292,28 +290,7 @@
     <string name="white_board_image_saved">ವೈಟ್‌ಬೋರ್ಡ್ ಚಿತ್ರವನ್ನು%s ಗೆ ಉಳಿಸಲಾಗಿದೆ</string>
     <string name="title_whiteboard_pen_color">ವೈಟ್‌ಬೋರ್ಡ್ ಪೆನ್ ಬಣ್ಣ</string>
     <string name="title_whiteboard_editor">ವೈಟ್‌ಬೋರ್ಡ್ ಸಂಪಾದಕ</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು ಕಂಡುಬಂದಿವೆ. ದಯವಿಟ್ಟು ಪರಿಕರಗಳು> ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳನ್ನು ಚಲಾಯಿಸಿ.]]></string>
-    <string name="note_importer_error_empty_first_field">ಖಾಲಿ ಮೊದಲ ಕ್ಷೇತ್ರ:%s</string>
-    <string name="note_importer_error_first_field_matched">ಮೊದಲ ಕ್ಷೇತ್ರವು ಹೊಂದಿಕೆಯಾಗಿದೆ:%s</string>
-    <string name="note_importer_error_added_duplicate_first_field">ಮೊದಲ ಕ್ಷೇತ್ರದೊಂದಿಗೆ ನಕಲನ್ನು ಸೇರಿಸಲಾಗಿದೆ:%s</string>
-    <string name="note_importer_error_appeared_twice">ಫೈಲ್‌ನಲ್ಲಿ ಎರಡು ಬಾರಿ ಕಾಣಿಸಿಕೊಂಡಿದೆ:%s</string>
-    <string name="note_importer_error_empty_notes">ಒಂದು ಅಥವಾ ಹೆಚ್ಚಿನ ಟಿಪ್ಪಣಿಗಳನ್ನು ಆಮದು ಮಾಡಿಕೊಳ್ಳಲಾಗಿಲ್ಲ, ಏಕೆಂದರೆ ಅವು ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ರಚಿಸಲಿಲ್ಲ. ನೀವು ಖಾಲಿ ಜಾಗಗಳನ್ನು ಹೊಂದಿರುವಾಗ ಅಥವಾ ಪಠ್ಯ ಫೈಲ್‌ನಲ್ಲಿರುವ ವಿಷಯವನ್ನು ಸರಿಯಾದ ಕ್ಷೇತ್ರಗಳಿಗೆ ಮ್ಯಾಪ್ ಮಾಡದಿದ್ದಾಗ ಇದು ಸಂಭವಿಸಬಹುದು</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’%2$d ಕ್ಷೇತ್ರಗಳನ್ನು ಹೊಂದಿದ್ದು,%3$d ನಿರೀಕ್ಷಿಸಲಾಗಿದೆ</string>
-    <string name="csv_importer_error_exception">ಸ್ಥಗಿತಗೊಳಿಸಲಾಗಿದೆ:%s</string>
     <string name="user_is_a_robot">ಸ್ವಯಂಚಾಲಿತ ಪರೀಕ್ಷೆ ಪತ್ತೆಯಾಗಿದೆ. ನೀವು ಮನುಷ್ಯರಾಗಿದ್ದರೆ, ಆಂಕಿಡ್ರಾಯ್ಡ್ ಬೆಂಬಲವನ್ನು ಸಂಪರ್ಕಿಸಿ</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d ಟಿಪ್ಪಣಿ ಸೇರಿಸಲಾಗಿದೆ</item>
-        <item quantity="other">%d ಟಿಪ್ಪಣಿಗಳನ್ನು ಸೇರಿಸಲಾಗಿದೆ</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d ಟಿಪ್ಪಣಿಗಳನ್ನು ಸೇರಿಸಲಾಗಿದೆ</item>
-        <item quantity="other">%d ಟಿಪ್ಪಣಿಗಳನ್ನು ನವೀಕರಿಸಲಾಗಿದೆ</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d ಟಿಪ್ಪಣಿ ಬದಲಾಗಿಲ್ಲ</item>
-        <item quantity="other">%d ಟಿಪ್ಪಣಿಗಳು ಬದಲಾಗುವುದಿಲ್ಲ</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">ಈ ಕಾರ್ಡ್ ಬೆಂಬಲಿಸದ ಆಂಕಿಡ್ರಾಯ್ಡ್ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಬಳಸುತ್ತದೆ. ಡೆವಲಪರ್ %1$s ಅನ್ನು ಸಂಪರ್ಕಿಸಿ, ಅಥವಾ ವಿಕಿಯನ್ನು ವೀಕ್ಷಿಸಿ. %2$s</string>
     <string name="invalid_json_data">ಕಾರ್ಡ್ ಅಮಾನ್ಯ ಡೇಟಾವನ್ನು ಒದಗಿಸಿದೆ. %s</string>
@@ -379,10 +356,6 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Buried card</string>
     <string name="buried_note">Buried note</string>
@@ -415,4 +388,11 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

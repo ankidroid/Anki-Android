@@ -39,7 +39,7 @@ class GestureMapper {
         // Else, when Robolectric executes in the CI it accesses AnkiDroidApp.getInstance before it exists #9173
         if (VIEW_CONFIGURATION == null) {
             // Set good default values for swipe detection
-            VIEW_CONFIGURATION = ViewConfiguration.get(AnkiDroidApp.getInstance())
+            VIEW_CONFIGURATION = ViewConfiguration.get(AnkiDroidApp.instance)
             DEFAULT_SWIPE_MIN_DISTANCE = VIEW_CONFIGURATION!!.scaledPagingTouchSlop
             DEFAULT_SWIPE_THRESHOLD_VELOCITY = VIEW_CONFIGURATION!!.scaledMinimumFlingVelocity
         }

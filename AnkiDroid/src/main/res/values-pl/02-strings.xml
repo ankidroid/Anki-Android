@@ -183,14 +183,12 @@
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Błąd importowania pliku, prawdopodobnie spowodowane czyszczeniem pamięci podręcznej podczas przetwarzania.\nSpróbuj ponownie</string>
     <string name="import_succeeded_but_check_database">Importowanie danych zakończone powodzeniem, ale czyszczenie po imporcie nie powiodło się. Uruchom sprawdzanie bazy danych. Przyczyna: %s</string>
-    <string name="import_error_unhandled_request">Nie udało się przetworzyć żądania importu</string>
     <string name="import_error_corrupt_zip">Plik apkg jest uszkodzony. Należy spróbować pobrać go ponownie.\n\nPrzyczyna: %s</string>
-    <string name="import_error_exception">Nie udało się zaimportować pakietu\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg lub .colpkg</string>
     <string name="import_error_load_imported_database">Pliki bazy danych Anki (.anki2) nie są jeszcze obsługiwane. W podręczniku możesz przeczytać o alternatywnych możliwościach importu</string>
     <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
-    <string name="import_error_copy_file_to_cache">Błąd copyFileToCache() (prawdopodobnie brak miejsca)</string>
-    <string name="import_error_unhandled_scheme">Import z \"%s\" nieobsługiwany</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
@@ -314,34 +312,7 @@
     <string name="white_board_image_saved">Obraz tablicy zapisany w %s</string>
     <string name="title_whiteboard_pen_color">Kolor tablicy</string>
     <string name="title_whiteboard_editor">Edytor tablicy</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Znaleziono puste karty. Proszę uruchomić Narzędzia>Puste karty.]]></string>
-    <string name="note_importer_error_empty_first_field">Pierwsze pole puste: %s</string>
-    <string name="note_importer_error_first_field_matched">Pierwsze pole pasuje: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Dodano duplikat w pierwszym polu: %s</string>
-    <string name="note_importer_error_appeared_twice">Pojawił się dwukrotnie w pliku: %s</string>
-    <string name="note_importer_error_empty_notes">Jedna lub więcej notatek nie została zaimportowana, ponieważ nie wygenerowały żadnych kart. Może się tak zdarzyć, gdy pola kart są puste lub gdy w pliku tekstowym zawartość nie jest przypisana do odpowiedniego pola</string>
-    <string name="csv_importer_error_invalid_field_count">„%1$s” posiada %2$d pól, oczekiwano %3$d</string>
-    <string name="csv_importer_error_exception">Przerwano: %s</string>
     <string name="user_is_a_robot">Wykryto automatyczny test. Jeśli jesteś człowiekiem, skontaktuj się z pomocą techniczną AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d notatka dodana</item>
-        <item quantity="few">%d notatki dodano</item>
-        <item quantity="many">%d notatek dodano</item>
-        <item quantity="other">%d notatek dodano</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d notatka zaktualizowana</item>
-        <item quantity="few">%d notatki zaktualizowane</item>
-        <item quantity="many">%d notatek zaktualizowano</item>
-        <item quantity="other">%d notatek zaktualizowano</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d notatka niezmieniona</item>
-        <item quantity="few">%d notatki niezmienione</item>
-        <item quantity="many">%d notatek niezmienionych</item>
-        <item quantity="other">%d notatek niezmienionych</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Ta karta używa funkcji nieobsługiwanych przez AnkiDroid. Skontaktuj się z deweloperem %1$s lub sprawdź wiki. %2$s</string>
     <string name="invalid_json_data">Karta zwiera nieprawidłowe dane. %s</string>
@@ -407,10 +378,6 @@
     <string name="check_network">Sprawdź swoje połączenie internetowe</string>
     <string name="search_using_deck_name">Szukaj używając nazwy talii</string>
     <string name="home">Strona główna</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Przypisano do %s</string>
-    <string name="import_mapped_to_tags">Przypisano do Etykiet</string>
-    <string name="import_mapped_to_nothing">Ignorowane</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Ukryta karta</string>
     <string name="buried_note">Notatka zakopana</string>
@@ -443,4 +410,11 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

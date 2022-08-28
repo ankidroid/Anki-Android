@@ -137,7 +137,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
     }
 
     init {
-        val context = AnkiDroidApp.getInstance().applicationContext
+        val context = AnkiDroidApp.instance.applicationContext
         mTts = TextToSpeech(context, this)
     }
 }

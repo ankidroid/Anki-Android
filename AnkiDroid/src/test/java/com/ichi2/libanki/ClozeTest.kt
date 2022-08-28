@@ -4,7 +4,6 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.utils.JSONException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
@@ -17,12 +16,8 @@ class ClozeTest : RobolectricTest() {
     fun testCloze() {
         val d = col
         var f = d.newNote(d.models.byName("Cloze"))
-        try {
-            val name = f.model().getString("name")
-            assertEquals("Cloze", name)
-        } catch (e: JSONException) {
-            fail()
-        }
+        val name = f.model().getString("name")
+        assertEquals("Cloze", name)
         // a cloze model with no clozes is not empty
         f.setItem("Text", "nothing")
         assertThat(d.addNote(f), greaterThan(0))

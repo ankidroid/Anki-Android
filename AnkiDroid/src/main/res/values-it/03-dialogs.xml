@@ -112,8 +112,8 @@
     <string name="import_update_details">Aggiornate %1$d di %2$d note esistenti.</string>
     <string name="import_update_ignored">Alcuni aggiornamenti sono stati ignorati perché il tipo di nota è cambiato</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">Carte importate: %2$d</item>
+        <item quantity="other">File importati: %1$d\nCarte importate in totale: %2$d</item>
     </plurals>
     <string name="sd_card_full_title">Scheda SD piena</string>
     <string name="sd_card_almost_full_title">Scheda SD quasi piena</string>
@@ -126,7 +126,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">No</string>
     <string name="dialog_continue">Continua</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Elaborazione...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crea</string>
     <string name="dialog_positive_delete">Elimina</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -246,6 +246,7 @@
         <item quantity="one">Una sincronizzazione automatica potrebbe essere attivata in %d secondo</item>
         <item quantity="other">Una sincronizzazione automatica potrebbe essere attivata in %d secondi</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Numero di nuove carte da vedere oggi in questo mazzo.</string>
     <string name="deck_picker_rev">Numero di carte in questo mazzo che scadono oggi.</string>
     <string name="deck_picker_lrn">Numero di carte da imparare in questo mazzo.</string>
@@ -255,6 +256,7 @@
     <string name="deck_picker_counts">Aprire la pagina panoramica del mazzo contenente il numero di carte da vedere oggi.</string>
     <string name="import_deck_package">Pacchetto mazzo (.apkg)</string>
     <string name="import_collection_package">Pacchetto di raccolta (.colpkg)</string>
+    <string name="import_csv">File di testo (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Non puoi creare un sottomazzo per tutti i mazzi</string>
 </resources>

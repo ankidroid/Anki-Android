@@ -246,6 +246,7 @@
         <item quantity="one">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
         <item quantity="other">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">इस डेक में आज देखने के लिए नई पत्तियों की संख्या।</string>
     <string name="deck_picker_rev">इस डेक में आज के लिए पत्तियों की संख्या।</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
@@ -255,6 +256,7 @@
     <string name="deck_picker_counts">डेक अवलोकन पृष्ठ खोलें जिसमें आज देखने के लिए पत्तियों की संख्या है।</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

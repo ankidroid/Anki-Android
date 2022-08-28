@@ -5,7 +5,8 @@ package com.ichi2.libanki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.template.MathJax
-import com.ichi2.libanki.template.TemplateFilters
+import com.ichi2.libanki.template.TemplateFilters.removeFormattingFromMathjax
+import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*
@@ -13,23 +14,24 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@KotlinCleanup("removeFormattingFromMathjax was imported to stop bug in Kotlin: java.lang.NoSuchFieldError: INSTANCE")
 class MathJaxClozeTest : RobolectricTest() {
 
     @Test
     fun removeFormattingFromMathjax() {
         val original_s = "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}"
 
-        assertEquals(original_s, TemplateFilters.removeFormattingFromMathjax(original_s, "1"))
-        assertEquals(original_s, TemplateFilters.removeFormattingFromMathjax(original_s, "2"))
-        assertEquals(original_s, TemplateFilters.removeFormattingFromMathjax(original_s, "4"))
-        assertEquals(original_s, TemplateFilters.removeFormattingFromMathjax(original_s, "5"))
+        assertEquals(original_s, removeFormattingFromMathjax(original_s, "1"))
+        assertEquals(original_s, removeFormattingFromMathjax(original_s, "2"))
+        assertEquals(original_s, removeFormattingFromMathjax(original_s, "4"))
+        assertEquals(original_s, removeFormattingFromMathjax(original_s, "5"))
 
         val escaped_s = "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{C3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}"
-        assertEquals(escaped_s, TemplateFilters.removeFormattingFromMathjax(original_s, "3"))
+        assertEquals(escaped_s, removeFormattingFromMathjax(original_s, "3"))
 
         val original_s2 = "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]"
         val escaped_s2 = "\\(a\\) {{c1::b}} \\[ {{C1::c}} \\]"
-        assertEquals(escaped_s2, TemplateFilters.removeFormattingFromMathjax(original_s2, "1"))
+        assertEquals(escaped_s2, removeFormattingFromMathjax(original_s2, "1"))
     }
 
     @Test

@@ -123,6 +123,7 @@
     <string name="swipe_sensitivity" maxLength="41">滑動靈敏度</string>
     <string name="tts" maxLength="41">文字轉語音</string>
     <string name="tts_summ">如果沒有內含音訊檔案，則讀出問題和答案</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">同步時取得媒體檔案</string>
     <string name="sync_fetch_missing_media_summ">同步時自動取得缺少的媒體檔案</string>
     <string name="sync_account" maxLength="41">AnkiWeb 帳號</string>
@@ -131,6 +132,8 @@
     <string name="automatic_sync_choice_summ">如果距離上次同步超過 10 分鐘，則在開啟/關閉程式時自動同步。</string>
     <string name="sync_status_badge" maxLength="41">顯示同步狀態</string>
     <string name="sync_status_badge_summ">可上傳變更時，變更同步圖標</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">白天主題</string>
     <string name="night_theme" maxLength="41">夜間主題</string>
@@ -343,6 +346,7 @@
     <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>

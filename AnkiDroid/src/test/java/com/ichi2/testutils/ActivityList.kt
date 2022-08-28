@@ -25,21 +25,20 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWE
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
 import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.pages.PagesActivity
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
 import com.ichi2.utils.KotlinCleanup
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
-import java.util.Arrays
 import java.util.function.Function
 
 object ActivityList {
     // TODO: This needs a test to ensure that all activities are valid with the given intents
     // Otherwise, ActivityStartupUnderBackup and other classes could be flaky
-    @KotlinCleanup("asList -> listOf()")
     @CheckResult
     fun allActivitiesAndIntents(): List<ActivityLaunchParam> {
-        return Arrays.asList(
+        return listOf(
             get(DeckPicker::class.java),
             // IntentHandler has unhandled intents
             get(IntentHandler::class.java) { ctx: Context ->
@@ -72,7 +71,10 @@ object ActivityList {
             get(CardInfo::class.java),
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },
-            get(SharedDecksActivity::class.java)
+            get(SharedDecksActivity::class.java),
+            get(PagesActivity::class.java),
+            get(LoginActivity::class.java),
+            get(IntroductionActivity::class.java),
         )
     }
 
@@ -95,12 +97,10 @@ object ActivityList {
         return intent
     }
 
-    @KotlinCleanup("IDE lint for variable 'intentBuilder' ")
-    @KotlinCleanup("make constructor private")
     @KotlinCleanup("simplify expression by removing `get()`")
     class ActivityLaunchParam(
         var activity: Class<out Activity>,
-        var intentBuilder: Function<Context, Intent>
+        private var intentBuilder: Function<Context, Intent>
     ) {
         val simpleName: String
             get() = activity.simpleName

@@ -21,12 +21,9 @@ import android.content.*
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.*
-import android.view.KeyEvent
-import android.view.MenuItem
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
@@ -45,11 +42,12 @@ import timber.log.Timber
 import java.util.*
 
 @NeedsTest("construction + onCreate - do this after converting to fragment-based preferences.")
-class FilteredDeckOptions : AppCompatPreferenceActivity() {
+class FilteredDeckOptions :
+    AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
     @KotlinCleanup("try to make mDeck non-null / use lateinit")
     private var mDeck: Deck? = null
     private var mAllowCommit = true
-    private var mUnmountReceiver: BroadcastReceiver? = null
 
     // TODO: not anymore used in libanki?
     private val mDynExamples = arrayOf(
@@ -63,11 +61,9 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         "{'search'=\"\", 'steps'=\"1 10 20\", 'order'=0}"
     )
 
-    inner class DeckPreferenceHack : SharedPreferences {
-        val mValues: MutableMap<String, String> = HashMap()
-        val mSummaries: MutableMap<String, String?> = HashMap()
+    inner class DeckPreferenceHack : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {
         var secondFilter = false
-        protected fun cacheValues() {
+        override fun cacheValues() {
             Timber.d("cacheValues()")
             val ar = mDeck!!.getJSONArray("terms").getJSONArray(0)
             secondFilter = if (mDeck!!.getJSONArray("terms").length() > 1) true else false
@@ -92,17 +88,10 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
             mValues["resched"] = java.lang.Boolean.toString(mDeck!!.getBoolean("resched"))
         }
 
-        inner class Editor : SharedPreferences.Editor {
-            private var mUpdate = ContentValues()
-            override fun clear(): SharedPreferences.Editor {
-                Timber.d("clear()")
-                mUpdate = ContentValues()
-                return this
-            }
-
+        inner class Editor : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
             override fun commit(): Boolean {
                 Timber.d("commit() changes back to database")
-                for ((key, value) in mUpdate.valueSet()) {
+                for ((key, value) in update.valueSet()) {
                     Timber.i("Change value for key '%s': %s", key, value)
                     val ar = mDeck!!.getJSONArray("terms")
                     if (pref.secondFilter) {
@@ -149,21 +138,21 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
                         "preset" -> {
                             val i: Int = (value as String).toInt()
                             if (i > 0) {
-                                val presetValues = JSONObject(mDynExamples[i])
+                                val presetValues = JSONObject(mDynExamples[i]!!)
                                 val arr = presetValues.names() ?: continue
                                 for (name in arr.stringIterable()) {
                                     if ("steps" == name) {
-                                        mUpdate.put("stepsOn", true)
+                                        update.put("stepsOn", true)
                                     }
                                     if ("resched" == name) {
-                                        mUpdate.put(name, presetValues.getBoolean(name))
+                                        update.put(name, presetValues.getBoolean(name))
                                         mValues[name] = java.lang.Boolean.toString(presetValues.getBoolean(name))
                                     } else {
-                                        mUpdate.put(name, presetValues.getString(name))
+                                        update.put(name, presetValues.getString(name))
                                         mValues[name] = presetValues.getString(name)
                                     }
                                 }
-                                mUpdate.put("preset", "0")
+                                update.put("preset", "0")
                                 commit()
                             }
                         }
@@ -190,99 +179,10 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
                 }
                 return true
             }
-
-            override fun putBoolean(key: String, value: Boolean): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putFloat(key: String, value: Float): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putInt(key: String, value: Int): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putLong(key: String, value: Long): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun putString(key: String, value: String?): SharedPreferences.Editor {
-                mUpdate.put(key, value)
-                return this
-            }
-
-            override fun remove(key: String): SharedPreferences.Editor {
-                Timber.d("Editor.remove(key=%s)", key)
-                mUpdate.remove(key)
-                return this
-            }
-
-            override fun apply() {
-                if (mAllowCommit) {
-                    commit()
-                }
-            }
-
-            // @Override On Android 1.5 this is not Override
-            override fun putStringSet(arg0: String, arg1: Set<String>?): SharedPreferences.Editor? {
-                // TODO Auto-generated method stub
-                return null
-            }
-        }
-
-        override fun contains(key: String): Boolean {
-            return mValues.containsKey(key)
         }
 
         override fun edit(): Editor {
             return Editor()
-        }
-
-        override fun getAll(): Map<String, *> {
-            return mValues
-        }
-
-        override fun getBoolean(key: String, defValue: Boolean): Boolean {
-            return java.lang.Boolean.parseBoolean(this.getString(key, java.lang.Boolean.toString(defValue)))
-        }
-
-        override fun getFloat(key: String, defValue: Float): Float {
-            return this.getString(key, java.lang.Float.toString(defValue))!!.toFloat()
-        }
-
-        override fun getInt(key: String, defValue: Int): Int {
-            return this.getString(key, Integer.toString(defValue))!!.toInt()
-        }
-
-        override fun getLong(key: String, defValue: Long): Long {
-            return this.getString(key, java.lang.Long.toString(defValue))!!.toLong()
-        }
-
-        override fun getString(key: String, defValue: String?): String? {
-            Timber.d("getString(key=%s, defValue=%s)", key, defValue)
-            return if (!mValues.containsKey(key)) {
-                defValue
-            } else mValues[key]
-        }
-
-        val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
-        override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-            listeners.add(listener)
-        }
-
-        override fun unregisterOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
-            listeners.remove(listener)
-        }
-
-        // @Override On Android 1.5 this is not Override
-        override fun getStringSet(arg0: String, arg1: Set<String>?): Set<String>? {
-            // TODO Auto-generated method stub
-            return null
         }
 
         init {
@@ -290,7 +190,6 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         }
     }
 
-    private lateinit var pref: DeckPreferenceHack
     override fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
         Timber.d("getSharedPreferences(name=%s)", name)
         return pref
@@ -381,25 +280,7 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            closeDeckOptions()
-            return true
-        }
-        return false
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
-            Timber.i("DeckOptions - onBackPressed()")
-            closeDeckOptions()
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
-    }
-
-    private fun closeDeckOptions() {
+    override fun closeWithResult() {
         if (prefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {
@@ -410,15 +291,6 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         }
         finish()
         slide(this, ActivityTransitionAnimation.Direction.FADE)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onDestroy() {
-        @Suppress("DEPRECATION")
-        super.onDestroy()
-        if (mUnmountReceiver != null) {
-            unregisterReceiver(mUnmountReceiver)
-        }
     }
 
     @Suppress("deprecation") // conversion to fragments tracked in github as #5019
@@ -470,24 +342,6 @@ class FilteredDeckOptions : AppCompatPreferenceActivity() {
         if (pref.secondFilter) {
             newOrderPrefSecond.value = pref.getString("order_2", "5")
         }
-    }
-
-    /**
-     * Call exactly once, during creation
-     * to ensure that if the SD card is ejected
-     * this activity finish.
-     */
-    private fun registerExternalStorageListener() {
-        mUnmountReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                    finish()
-                }
-            }
-        }
-        val iFilter = IntentFilter()
-        iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-        registerReceiver(mUnmountReceiver, iFilter)
     }
 
     @Suppress("deprecation")

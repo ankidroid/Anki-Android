@@ -21,7 +21,6 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.assertThrows
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers
@@ -32,7 +31,6 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @RustCleanup("Can be removed once we sunset the Java backend")
-@KotlinCleanup("IDE-based lint")
 @RunWith(AndroidJUnit4::class)
 class LegacyDecksTest : RobolectricTest() {
     @Test
@@ -40,8 +38,8 @@ class LegacyDecksTest : RobolectricTest() {
     fun testEnsureParents() {
         val decks = decks
         decks.id("test")
-        val subsubdeck_name = decks._ensureParents("  tESt :: sub :: subdeck")
-        assertEquals("test::sub:: subdeck", subsubdeck_name) // Only parents are renamed, not the last deck.
+        val subsubdeckName = decks._ensureParents("  tESt :: sub :: subdeck")
+        assertEquals("test::sub:: subdeck", subsubdeckName) // Only parents are renamed, not the last deck.
         assertNotNull(decks.byName("test::sub"))
         assertNull(decks.byName("test::sub:: subdeck"))
         assertNull(decks.byName("  test :: sub :: subdeck"))
@@ -56,16 +54,16 @@ class LegacyDecksTest : RobolectricTest() {
     fun testEnsureParentsNotFiltered() {
         val decks = decks
         decks.id("test")
-        val subsubdeck_name = decks._ensureParentsNotFiltered("  tESt :: sub :: subdeck")
-        assertEquals("test::sub:: subdeck", subsubdeck_name) // Only parents are renamed, not the last deck.
+        val subsubdeckName = decks._ensureParentsNotFiltered("  tESt :: sub :: subdeck")
+        assertEquals("test::sub:: subdeck", subsubdeckName) // Only parents are renamed, not the last deck.
         assertNotNull(decks.byName("test::sub"))
         assertNull(decks.byName("test::sub:: subdeck"))
         assertNull(decks.byName("  test :: sub :: subdeck"))
         assertNull(decks.byName("  test :: sub "))
 
         decks.newDyn("filtered")
-        val filtered_subdeck_name = decks._ensureParentsNotFiltered("filtered:: sub :: subdeck")
-        assertEquals("filtered'::sub:: subdeck", filtered_subdeck_name) // Only parents are renamed, not the last deck.
+        val filteredSubdeckName = decks._ensureParentsNotFiltered("filtered:: sub :: subdeck")
+        assertEquals("filtered'::sub:: subdeck", filteredSubdeckName) // Only parents are renamed, not the last deck.
         assertNotNull(decks.byName("filtered'::sub"))
         assertNotNull(decks.byName("filtered'"))
         assertNull(decks.byName("filtered::sub:: subdeck"))
@@ -91,13 +89,13 @@ class LegacyDecksTest : RobolectricTest() {
         decks.newDyn("filtered")
         assertThrows<DeckRenameException> { decks.id("filtered::subdeck::subsubdeck") }
 
-        val subdeck_id = decks.id_safe("filtered::subdeck::subsubdeck")
-        val subdeck = decks.get(subdeck_id)
+        val subdeckId = decks.id_safe("filtered::subdeck::subsubdeck")
+        val subdeck = decks.get(subdeckId)
         assertEquals("filtered'::subdeck::subsubdeck", subdeck.getString("name"))
     }
 
     // following copied from storage:: _setColVars
-    protected val decks: Decks
+    private val decks: Decks
         get() {
             val col = col
             if (col.decks is Decks) {

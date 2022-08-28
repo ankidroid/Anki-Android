@@ -28,6 +28,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber
 import java.io.BufferedInputStream
@@ -37,6 +38,7 @@ import java.io.IOException
 import java.util.*
 
 class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!, file!!) {
+    @KotlinCleanup("lateinit")
     private var mZip: ZipFile? = null
     private var mNameToNum: MutableMap<String, String>? = null
 
@@ -69,7 +71,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!
                 }
 
                 // Make sure we have sufficient free space
-                val uncompressedSize = Utils.calculateUncompressedSize(mZip)
+                val uncompressedSize = Utils.calculateUncompressedSize(mZip!!)
                 val availableSpace = Utils.determineBytesAvailable(mCol.path)
                 Timber.d("Total uncompressed size will be: %d", uncompressedSize)
                 Timber.d("Total available size is:         %d", availableSpace)
@@ -83,7 +85,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!
                 // We follow how Anki does it and fix the problem here.
                 val mediaToFileNameMap = HashMapInit<String, String>(1)
                 mediaToFileNameMap[colname] = CollectionHelper.COLLECTION_FILENAME
-                Utils.unzipFiles(mZip, tempDir.absolutePath, arrayOf(colname, "media"), mediaToFileNameMap)
+                Utils.unzipFiles(mZip!!, tempDir.absolutePath, arrayOf(colname, "media"), mediaToFileNameMap)
                 colname = CollectionHelper.COLLECTION_FILENAME
             } catch (e: IOException) {
                 Timber.e(e, "Failed to unzip apkg.")
@@ -146,7 +148,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!
                 val path = File(mCol.media.dir(), Utils.nfcNormalized(file))
                 if (!path.exists()) {
                     try {
-                        Utils.unzipFiles(mZip, mCol.media.dir(), arrayOf(c), numToName)
+                        Utils.unzipFiles(mZip!!, mCol.media.dir(), arrayOf(c), numToName)
                     } catch (e: IOException) {
                         Timber.e("Failed to extract static media file. Ignoring.")
                     }

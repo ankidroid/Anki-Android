@@ -16,12 +16,10 @@
  ****************************************************************************************/
 package com.ichi2.libanki.sync
 
-import android.net.Uri
 import android.text.TextUtils
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.exception.MediaSyncException
 import com.ichi2.anki.exception.UnknownHttpResponseException
-import com.ichi2.anki.web.CustomSyncServer.getMediaSyncUrl
+import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
@@ -44,18 +42,9 @@ class RemoteMediaServer(
     hostNum: HostNum
 ) : HttpSyncer(hkey, con, hostNum) {
 
-    override fun syncURL(): String {
-        // Allow user to specify custom sync server
-        val userPreferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance())
-        if (isUsingCustomSyncServer(userPreferences)) {
-            val mediaSyncBase = getMediaSyncUrl(userPreferences) ?: return defaultAnkiWebUrl
-            // Note: the preference did not necessarily contain /msync/, so we can't concat with the default as done in
-            // getDefaultAnkiWebUrl
-            return Uri.parse(mediaSyncBase).toString()
-        }
-        // Usual case
-        return defaultAnkiWebUrl
-    }
+    override fun getDefaultSyncUrl() = "https://sync${hostNum ?: ""}.ankiweb.net/msync/"
+
+    override fun getCustomSyncUrlOrNull() = CustomSyncServer.getMediaSyncUrlIfSetAndEnabledOrNull(preferences)
 
     @Throws(UnknownHttpResponseException::class, MediaSyncException::class)
     fun begin(): JSONObject {
@@ -164,10 +153,9 @@ class RemoteMediaServer(
      * @return The "data" element from the HTTP response from the server. The type of object returned is determined by
      * returnType.
      */
-    @Suppress("UNCHECKED_CAST")
     @Throws(MediaSyncException::class)
     // NOTE: the original name of the method was _dataOnly which followed upstream naming
-    private fun <T> dataOnly(resp: JSONObject, returnType: Class<T>): T {
+    private inline fun <reified T> dataOnly(resp: JSONObject, returnType: Class<T>): T {
         if (!TextUtils.isEmpty(resp.optString("err"))) {
             val err = resp.getString("err")
             col?.log("error returned: $err")
@@ -179,11 +167,5 @@ class RemoteMediaServer(
             JSONArray::class.java -> return resp.getJSONArray("data") as T
         }
         throw RuntimeException("Did not specify a valid type for the 'data' element in response")
-    }
-
-    // Difference from libAnki: we allow a custom URL to specify a different prefix, so this is only used with the
-    // default URL
-    override fun getUrlPrefix(): String {
-        return "msync"
     }
 }

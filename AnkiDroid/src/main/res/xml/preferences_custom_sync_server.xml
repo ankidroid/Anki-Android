@@ -3,6 +3,7 @@
 
 <!-- Advanced Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/custom_sync_server_title"
     android:key="@string/pref_custom_sync_server_screen_key">
     <SwitchPreference
@@ -12,10 +13,12 @@
         android:defaultValue="false"/>
     <EditTextPreference
         android:dependency="@string/custom_sync_server_enable_key"
-        android:key="@string/custom_sync_server_base_url_key"
-        android:title="@string/custom_sync_server_base_url_title" />
+        android:key="@string/custom_sync_server_collection_url_key"
+        android:title="@string/custom_sync_server_base_url_title"
+        app:useSimpleSummaryProvider="true" />
     <EditTextPreference
         android:dependency="@string/custom_sync_server_enable_key"
         android:key="@string/custom_sync_server_media_url_key"
-        android:title="@string/custom_sync_server_media_url_title" />
+        android:title="@string/custom_sync_server_media_url_title"
+        app:useSimpleSummaryProvider="true" />
 </PreferenceScreen>

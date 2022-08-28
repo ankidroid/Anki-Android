@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">Mankas spaco por enporti la pakaĵon.\nPostulata: %1$s\nDisponebla: %2$s\n\nProvu liberigi iom da spaco en via telefono. Samtempigado uzas malpli da spaco ol enportado. Vi povas enporti la pakaĵon ĉe aparato kun pli da spaco (ekzemple per Anki Desktop ĉe via komputilo) kaj sekve samtempigi ĝin kun tiu ĉi aparato.</string>
     <string name="import_log_file_cache_cleared">Eraro dum enporti dosieron, probable la kaŝmemoro forviŝiĝis dum pritraktado.\nReprovu</string>
     <string name="import_succeeded_but_check_database">Sukcese enportis datumojn, sed fiaskis ordigi la datumojn. Plenumu kontrolon de datumbazo poste. Ĉefa kialo: %s</string>
-    <string name="import_error_unhandled_request">Fiaskis pritrakti peton pri enporto</string>
     <string name="import_error_corrupt_zip">La apkg-dosiero estas difektita. Forigu kaj reelŝutu ĝin.\n\nĈefa kialo: %s</string>
-    <string name="import_error_exception">Fiaskis enporti pakaĵon\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dosiernomo \"%s\" ne finiĝas per .apkg aŭ .colpkg</string>
     <string name="import_error_load_imported_database">Anstataŭigoj de Anki-datumbazo (.anki2) ankoraŭ ne estas subtenataj. Legu la manlibron por instrukciojn pri anstataŭigo.</string>
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti anki-dosierojn:\n%s</string>
-    <string name="import_error_copy_file_to_cache">Fiaskis kopii dosieron al kaŝmemoro (probable mankas spaco en konservejo)</string>
-    <string name="import_error_unhandled_scheme">Nepritraktita enporto el: “%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
@@ -292,28 +290,7 @@
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
     <string name="title_whiteboard_pen_color">Koloro por skribi sur skribtabulo</string>
     <string name="title_whiteboard_editor">Redaktilo de skribtabulo</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Trovis malplenajn kartojn. Ekigu “iloj” → “malplenaj kartoj”]]></string>
-    <string name="note_importer_error_empty_first_field">Unua kampo malplena: %s</string>
-    <string name="note_importer_error_first_field_matched">Unua kampo kongruis al: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Aldonis duplikaton al unua kampo: %s</string>
-    <string name="note_importer_error_appeared_twice">Aperis dufoje en dosiero: %s</string>
-    <string name="note_importer_error_empty_notes">Almenaŭ unu noto ne estis enportita, ĉar ili generis neniun karton. Tio ĉi povas okazi kiam vi havas malplenajn kampojn aŭ kiam vi ne bildigis enhavon en la teksta dosiero al la ĝustaj kampoj.</string>
-    <string name="csv_importer_error_invalid_field_count">“%1$s” havis %2$d kampojn, %3$d estis esperataj</string>
-    <string name="csv_importer_error_exception">Ĉesigita: %s</string>
     <string name="user_is_a_robot">Eltrovita aŭtomata testo. Se vi estas homo, kontaktu la helpteamon AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d noto aldonita</item>
-        <item quantity="other">%d notoj aldonitaj</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d noto aktualigita</item>
-        <item quantity="other">%d notoj aktualigitaj</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d noto ne ŝanĝita</item>
-        <item quantity="other">%d notoj ne ŝanĝitaj</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Tiu ĉi karto uzas eblaĵojn nesubtenatajn de AnkiDroid. Kontaktu la programiston %1$s aŭ legu la vikion. %2$s</string>
     <string name="invalid_json_data">Karto liveris malĝustajn datumojn. %s</string>
@@ -379,10 +356,6 @@
     <string name="check_network">Kontrolu vian retkonekton</string>
     <string name="search_using_deck_name">Serĉi laŭ nomo de kartaro</string>
     <string name="home">Hejmo</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Asignitaj al %s</string>
-    <string name="import_mapped_to_tags">Asignitaj al etikedoj</string>
-    <string name="import_mapped_to_nothing">Ignoritaj</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Kaŝis karton por unu tago</string>
     <string name="buried_note">Kaŝis noton por tago</string>
@@ -415,4 +388,11 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

@@ -151,7 +151,7 @@ object CollectionManager {
     /** See [ensureBackend]. This must only be run inside the queue. */
     private fun ensureBackendInner() {
         if (backend == null) {
-            backend = BackendFactory.getBackend(AnkiDroidApp.getInstance())
+            backend = BackendFactory.getBackend(AnkiDroidApp.instance)
         }
     }
 
@@ -195,14 +195,14 @@ object CollectionManager {
         if (collection == null || collection!!.dbClosed) {
             val path = createCollectionPath()
             collection =
-                collection(AnkiDroidApp.getInstance(), path, server = false, log = true, backend)
+                collection(AnkiDroidApp.instance, path, server = false, log = true, backend)
         }
     }
 
     /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
      * inside it. */
     fun createCollectionPath(): String {
-        val dir = CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.getInstance())
+        val dir = CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance)
         CollectionHelper.initializeAnkiDroidDirectory(dir)
         return File(dir, "collection.anki2").absolutePath
     }

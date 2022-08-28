@@ -248,6 +248,7 @@
         <item quantity="one">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
         <item quantity="other">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">تعداد کارت های جدیدی که امروز در این دسته خواهید دید.</string>
     <string name="deck_picker_rev">تعداد کارت های تا مهلت امروز در این دسته</string>
     <string name="deck_picker_lrn">تعداد کارت های در حال یاد‌گیری در این دسته.</string>
@@ -257,6 +258,7 @@
     <string name="deck_picker_counts">صفحه ی مرور دسته کارت را که شامل تعداد کارت هایی که امروز باید ببینید را باز کن.</string>
     <string name="import_deck_package">بسته ی دسته کارت (.apkg)</string>
     <string name="import_collection_package">بسته ی مجموعه (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">شما نمیتوانید برای همه دسته ها یک زیردسته درست کنید</string>
 </resources>

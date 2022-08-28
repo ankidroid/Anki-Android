@@ -111,7 +111,6 @@ private constructor(
      *
      * @see Collections.sort
      */
-    @Suppress("UNCHECKED_CAST")
     @KotlinCleanup("sortWith")
     override fun sort(c: Comparator<in E>?) {
         sortOverride(c)

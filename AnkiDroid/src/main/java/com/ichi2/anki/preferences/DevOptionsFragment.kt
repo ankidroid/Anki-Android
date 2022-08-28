@@ -21,6 +21,7 @@ import androidx.preference.SwitchPreference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 
 /**
@@ -57,9 +58,9 @@ class DevOptionsFragment : SettingsFragment() {
         // Make it possible to test analytics
         requirePreference<Preference>(getString(R.string.pref_analytics_debug_key)).setOnPreferenceClickListener {
             if (UsageAnalytics.isEnabled) {
-                UIUtils.showThemedToast(requireContext(), "Analytics set to dev mode", true)
+                showSnackbar("Analytics set to dev mode")
             } else {
-                UIUtils.showThemedToast(requireContext(), "Done! Enable Analytics in 'General' settings to use.", true)
+                showSnackbar("Done! Enable Analytics in 'General' settings to use.")
             }
             UsageAnalytics.setDevMode()
             true

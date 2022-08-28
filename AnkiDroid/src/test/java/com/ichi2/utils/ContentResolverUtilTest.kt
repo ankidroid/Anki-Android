@@ -35,7 +35,6 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class) // needs a URI instance
 @Config(application = EmptyApplication::class)
-@KotlinCleanup("IDE-based lint")
 class ContentResolverUtilTest {
 
     @Test
@@ -76,7 +75,7 @@ class ContentResolverUtilTest {
         assertThat(filename, equalTo("image.gif"))
     }
 
-    private fun cursorReturning(value: String): Cursor {
+    private fun cursorReturning(@Suppress("SameParameterValue") value: String): Cursor {
         val cursor = mock(Cursor::class.java)
         whenever(cursor.getString(0)).thenReturn(value)
         return cursor

@@ -58,7 +58,7 @@ class SyncSettingsFragment : SettingsFragment() {
             if (!CustomSyncServer.isEnabled(preferences)) {
                 getString(R.string.disabled)
             } else {
-                CustomSyncServer.getSyncBaseUrlOrDefault(preferences, "")
+                CustomSyncServer.getCollectionSyncUrl(preferences) ?: ""
             }
         }
     }

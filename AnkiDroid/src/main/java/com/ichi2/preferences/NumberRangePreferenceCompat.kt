@@ -30,6 +30,7 @@ import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
 open class NumberRangePreferenceCompat @JvmOverloads constructor(
@@ -172,6 +173,18 @@ open class NumberRangePreferenceCompat @JvmOverloads constructor(
 
             // Clone the existing filters so we don't override them, then append our one at the end.
             editText.filters = arrayOf(*editText.filters, InputFilter.LengthFilter(numberRangePreference.maxDigits))
+        }
+
+        @NeedsTest("value is set to preference previous value if text is blank")
+        override fun onDialogClosed(positiveResult: Boolean) {
+            // don't change the value if the dialog was cancelled or closed without any text
+            if (!positiveResult || editText.text.isEmpty()) {
+                return
+            }
+            val newValue = editText.text.toString().toInt()
+            if (numberRangePreference.callChangeListener(newValue)) {
+                numberRangePreference.setValue(newValue)
+            }
         }
 
         companion object {

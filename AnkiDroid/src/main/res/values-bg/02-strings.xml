@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">Няма достатъчно място за импортиране на пакетът\nТрябвало - %1$s \nДостъпно - %2$s.\n\nНещо не е наред? Опитайте се да освободите место на телефона си, ако е възможно. Или опитайте синхронизиране, който заема по-малко място от импортиране. Вие можете да импортирате пакетът на устройство който има повече място (например Anki Desktop) и след това да го синхронизира с това устройството.</string>
     <string name="import_log_file_cache_cleared">Възникна грешка при импортирането на файла, най-вероятно кеш беше изтрит.\nМоля, опитайте отново</string>
     <string name="import_succeeded_but_check_database">Импортирането на данните е успешно, но почистването на след импортирането се провали. Стартирайте проверка на базата данни по-късно. Главна причина: %s</string>
-    <string name="import_error_unhandled_request">Заявката за импортиране не може да бъде обработена</string>
     <string name="import_error_corrupt_zip">Файлът apkg е повреден. Моля, изхвърляйте го и качите го отново.\n\nПървопричина: %s</string>
-    <string name="import_error_exception">Неуспешно импортиране на пакет \n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Замената на базата данни Anki (.anki2) все още не се поддържат. Моля, вижте инструкцията за замена.</string>
     <string name="import_error_content_provider">Избраният файл не можа да бъде импортиран автоматично от AnkiDroid. Моля, вижте ръководството на потребителя за как да ръчно да импортирате anki файлове: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() failed (possibly out of storage space)</string>
-    <string name="import_error_unhandled_scheme">Unhandled import from: “%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
@@ -292,28 +290,7 @@
     <string name="white_board_image_saved">Изображението на бялата дъска е запазено в %s</string>
     <string name="title_whiteboard_pen_color">Цвят на писалката за бяла дъска</string>
     <string name="title_whiteboard_editor">Whiteboard editor</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Намерени са празни карти. Моля, стартирайте Инструменти>Празни карти.]]></string>
-    <string name="note_importer_error_empty_first_field">Празно първо поле: %s</string>
-    <string name="note_importer_error_first_field_matched">Съвпадение на първото поле: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Добавен дубликат с първо поле: %s</string>
-    <string name="note_importer_error_appeared_twice">Появява се два пъти във файл: %s</string>
-    <string name="note_importer_error_empty_notes">Една или повече бележки не бяха импортирани, тъй като не генерираха карти. Това може да се случи, когато имате празни полета или когато не сте преобразували съдържанието в текстовия файл в правилните полета</string>
-    <string name="csv_importer_error_invalid_field_count">„%1$s“ имаше %2$d полета, очаквайки %3$d</string>
-    <string name="csv_importer_error_exception">Прекъснато: %s</string>
     <string name="user_is_a_robot">Открит автоматичен тест. Ако сте човек, свържете се с екипа за поддръжка на AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d бележката е добавена</item>
-        <item quantity="other">%d бележките са добавени</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d бележката е обновена</item>
-        <item quantity="other">%d бележките са обновени</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d бележката е непроменена</item>
-        <item quantity="other">%d бележките са непроменени</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Тази карта използва неподдържани функции на AnkiDroid. Свържете се с разработчика %1$s или вижте уикито. %2$s</string>
     <string name="invalid_json_data">Картата предоставя невалидни данни. %s</string>
@@ -379,10 +356,6 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Buried card</string>
     <string name="buried_note">Buried note</string>
@@ -415,4 +388,11 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

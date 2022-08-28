@@ -264,6 +264,7 @@
         <item quantity="many">Automatická synchronizácia sa môže spustiť za %d sekúnd</item>
         <item quantity="other">Automatická synchronizácia sa môže spustiť za %d sekúnd</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">Počet nových kariet na dnes v tomto balíčku</string>
     <string name="deck_picker_rev">Počet kartičiek na preskúšanie na dnes v tomto balíčku</string>
     <string name="deck_picker_lrn">Počet kartičiek v štádiu učenia v tomto balíčku.</string>
@@ -273,6 +274,7 @@
     <string name="deck_picker_counts">Otvoriť stránku prehľadu balíčka obsahujúcu počet kartičiek pre dnes.</string>
     <string name="import_deck_package">Súbor balíčka</string>
     <string name="import_collection_package">Súbor zbierky</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

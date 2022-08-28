@@ -18,11 +18,10 @@ package com.ichi2.libanki
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.Decks.CURRENT_DECK
+import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
-import com.ichi2.utils.KotlinCleanup
 import org.apache.http.util.Asserts
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -33,9 +32,9 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("fix lint issues")
 class DecksTest : RobolectricTest() {
     @Test
+    @Suppress("SpellCheckingInspection")
     fun ensureDeckList() {
         val decks = col.decks
         for (deckName in TEST_DECKS) {
@@ -256,12 +255,12 @@ class DecksTest : RobolectricTest() {
         assertThat(filtered.isStd, equalTo(false))
         assertThat(filtered.isDyn, equalTo(true))
 
-        val filtered_config = decks.confForDid(filteredId)
-        val deck_config = decks.confForDid(deckId)
-        assertThat(deck_config.isStd, equalTo((true)))
-        assertThat(deck_config.isDyn, equalTo((false)))
-        assertThat(filtered_config.isStd, equalTo((false)))
-        assertThat(filtered_config.isDyn, equalTo((true)))
+        val filteredConfig = decks.confForDid(filteredId)
+        val deckConfig = decks.confForDid(deckId)
+        assertThat(deckConfig.isStd, equalTo((true)))
+        assertThat(deckConfig.isDyn, equalTo((false)))
+        assertThat(filteredConfig.isStd, equalTo((false)))
+        assertThat(filteredConfig.isDyn, equalTo((true)))
     }
 
     @Test
@@ -284,6 +283,7 @@ class DecksTest : RobolectricTest() {
     companion object {
         // Used in other class to populate decks.
         @JvmField
+        @Suppress("SpellCheckingInspection")
         val TEST_DECKS = arrayOf(
             "scxipjiyozczaaczoawo",
             "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",

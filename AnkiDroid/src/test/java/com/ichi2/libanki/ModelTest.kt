@@ -19,9 +19,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.MODEL_CLOZE
-import com.ichi2.libanki.Models.REQ_ALL
-import com.ichi2.libanki.Models.REQ_ANY
+import com.ichi2.libanki.Models.Companion.REQ_ALL
+import com.ichi2.libanki.Models.Companion.REQ_ANY
 import com.ichi2.libanki.Utils.stripHTML
+import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.utils.JSONArray
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
@@ -524,11 +525,6 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_modelChange() {
-
-        if (!BackendFactory.defaultLegacySchema) {
-            // backend provides different API with TypeScript frontend
-            return
-        }
         val col = col
         val cloze = col.models.byName("Cloze")
         // enable second template and add a note
@@ -545,9 +541,10 @@ class ModelTest : RobolectricTest() {
         col.addNote(note)
         // switch fields
         var map: MutableMap<Int, Int?> = HashMap()
+        val noOp = mapOf<Int, Int?>(0 to 0, 1 to 1)
         map[0] = 1
         map[1] = 0
-        col.models.change(basic, note.id, basic, map, null)
+        col.models.change(basic, note.id, basic, map, noOp)
         note.load()
         assertEquals("b123", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
@@ -558,7 +555,7 @@ class ModelTest : RobolectricTest() {
         assertThat(c1.q(), containsString("note"))
         assertEquals(0, c0.ord)
         assertEquals(1, c1.ord)
-        col.models.change(basic, note.id, basic, null, map)
+        col.models.change(basic, note.id, basic, noOp, map)
         note.load()
         c0.load()
         c1.load()
@@ -576,7 +573,7 @@ class ModelTest : RobolectricTest() {
         //     // The low precision timer on Windows reveals a race condition
         //     time.sleep(0.05);
         // }
-        col.models.change(basic, note.id, basic, null, map)
+        col.models.change(basic, note.id, basic, noOp, map)
         note.load()
         c0.load()
         // the card was deleted
@@ -585,7 +582,7 @@ class ModelTest : RobolectricTest() {
         // an unmapped field becomes blank
         assertEquals("b123", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
-        col.models.change(basic, note.id, basic, map, null)
+        col.models.change(basic, note.id, basic, map, noOp)
         note.load()
         assertEquals("", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
@@ -699,12 +696,10 @@ class ModelTest : RobolectricTest() {
         val basic = mm.byName("Basic")
         val template = basic!!.getJSONArray("tmpls").getJSONObject(0)
         template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}")
-        try {
+        assertThrowsSubclass<Exception>() {
             // in V16, the "save" throws, in V11, the "add" throws
             mm.save(basic, true)
             addNoteUsingBasicModel("foo", "bar")
-            fail()
-        } catch (er: Exception) {
         }
     }
 
@@ -743,8 +738,8 @@ class ModelTest : RobolectricTest() {
     fun avail_standard_order_test() {
         val col = col
         val mm = col.models
-        val basic = mm.byName("Basic")
-        val reverse = mm.byName("Basic (and reversed card)")
+        val basic = mm.byName("Basic")!!
+        val reverse = mm.byName("Basic (and reversed card)")!!
 
         assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "")))
         assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "Back")))
@@ -820,8 +815,8 @@ class ModelTest : RobolectricTest() {
     fun avail_ords_test() {
         val col = col
         val mm = col.models
-        val basic = mm.byName("Basic")
-        val reverse = mm.byName("Basic (and reversed card)")
+        val basic = mm.byName("Basic")!!
+        val reverse = mm.byName("Basic (and reversed card)")!!
 
         assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "")))
         assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "Back")))

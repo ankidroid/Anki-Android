@@ -30,6 +30,7 @@ import com.ichi2.libanki.ModelManager
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.PreferenceUtils
+import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.utils.JSONArray
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
@@ -41,9 +42,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import timber.log.Timber
+import java.lang.Exception
 import java.util.*
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
-import kotlin.test.junit5.JUnit5Asserter.assertNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ReviewerTest : RobolectricTest() {
@@ -64,7 +65,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun verifyStartupNoCollection() {
         enableNullCollection()
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertNull("Collection should have been null", reviewer.col) } }
+        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertThrowsSubclass<Exception> { reviewer.col } } }
     }
 
     @Test
@@ -228,7 +229,7 @@ class ReviewerTest : RobolectricTest() {
 
         val decks = col.decks
         val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name))
+        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
         val didA = addDeck("A")
@@ -244,7 +245,7 @@ class ReviewerTest : RobolectricTest() {
         val decks = col.decks
 
         val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.getAppResources().getString(R.string.basic_model_name))
+        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
 

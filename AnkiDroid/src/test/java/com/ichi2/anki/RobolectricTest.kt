@@ -48,6 +48,7 @@ import com.ichi2.testutils.TaskSchedulerRule
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import com.ichi2.utils.JSONException
+import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendException
@@ -302,13 +303,12 @@ open class RobolectricTest : CollectionGetter {
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
-    override fun getCol(): Collection {
-        try {
-            return CollectionHelper.getInstance().getCol(targetContext)
+    override val col: Collection
+        get() = try {
+            CollectionHelper.getInstance().getCol(targetContext)
         } catch (e: UnsatisfiedLinkError) {
             throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
         }
-    }
 
     protected val collectionTime: MockTime
         get() = TimeManager.time as MockTime
@@ -346,11 +346,11 @@ open class RobolectricTest : CollectionGetter {
         return startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
     }
 
-    protected fun addNoteUsingBasicModel(front: String?, back: String?): Note {
+    protected fun addNoteUsingBasicModel(front: String, back: String): Note {
         return addNoteUsingModelName("Basic", front, back)
     }
 
-    protected fun addRevNoteUsingBasicModelDueToday(front: String?, back: String?): Note {
+    protected fun addRevNoteUsingBasicModelDueToday(front: String, back: String): Note {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
@@ -359,22 +359,22 @@ open class RobolectricTest : CollectionGetter {
         return note
     }
 
-    protected fun addNoteUsingBasicAndReversedModel(front: String?, back: String?): Note {
+    protected fun addNoteUsingBasicAndReversedModel(front: String, back: String): Note {
         return addNoteUsingModelName("Basic (and reversed card)", front, back)
     }
 
-    protected fun addNoteUsingBasicTypedModel(front: String?, back: String?): Note {
+    protected fun addNoteUsingBasicTypedModel(front: String, back: String): Note {
         return addNoteUsingModelName("Basic (type in the answer)", front, back)
     }
 
-    protected fun addNoteUsingModelName(name: String?, vararg fields: String?): Note {
+    protected fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
         val model = col.models.byName((name)!!)
             ?: throw IllegalArgumentException(String.format("Could not find model '%s'", name))
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
         val n = col.newNote(model)
-        for (i in 0 until fields.size) {
-            n.setField(i, fields[i])
+        for ((i, field) in fields.withIndex()) {
+            n.setField(i, field)
         }
         check(col.addNote(n) != 0) { String.format("Could not add note: {%s}", fields.joinToString(separator = ", ")) }
         return n
@@ -518,7 +518,8 @@ open class RobolectricTest : CollectionGetter {
 
     @NonNull
     @CheckResult
-    protected fun openDialogFragmentUsingActivity(menu: DialogFragment?): FragmentTestActivity {
+    @KotlinCleanup("scope function")
+    protected fun openDialogFragmentUsingActivity(menu: DialogFragment): FragmentTestActivity {
         val startActivityIntent = Intent(targetContext, FragmentTestActivity::class.java)
         val activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity::class.java, startActivityIntent)
         activity.showDialogFragment(menu)
@@ -555,21 +556,19 @@ open class RobolectricTest : CollectionGetter {
         // Allow an override for the testing library (allowing Robolectric to access the Rust backend)
         // This allows M1 macs to access a .dylib built for arm64, despite it not existing in the .jar
         val backendPath = System.getenv("ANKIDROID_BACKEND_PATH")
+        val localBackendVersion = System.getenv("ANKIDROID_BACKEND_VERSION")
+        val supportedBackendVersion = BuildConfig.BACKEND_VERSION
         if (backendPath != null) {
-            if (BuildConfig.BACKEND_VERSION != System.getenv("ANKIDROID_BACKEND_VERSION")) {
+            if (BuildConfig.BACKEND_VERSION != localBackendVersion) {
                 throw java.lang.IllegalStateException(
-                    "AnkiDroid backend testing library requires an update.\n" +
-                        "Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v ${
-                        System.getenv(
-                            "ANKIDROID_BACKEND_VERSION"
-                        )
-                        })\n" +
-                        "And then set \$ANKIDROID_BACKEND_VERSION to ${BuildConfig.BACKEND_VERSION}\n" +
-                        "Error: \$ANKIDROID_BACKEND_VERSION: expected '${BuildConfig.BACKEND_VERSION}', got '${
-                        System.getenv(
-                            "ANKIDROID_BACKEND_VERSION"
-                        )
-                        }'"
+                    """
+                        AnkiDroid backend testing library requires an update.
+                        Please update the library at '$backendPath' from https://github.com/ankidroid/Anki-Android-Backend/releases/ (v$localBackendVersion)
+                        And then set $\0ANKIDROID_BACKEND_VERSION to $supportedBackendVersion
+                        Or to update you can just run the script: sh tools/setup-anki-backend.sh
+                        For more details see, https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#note-for-apple-silicon-users
+                        Error: $\0ANKIDROID_BACKEND_VERSION: expected '$supportedBackendVersion', got '$localBackendVersion
+                    """.trimIndent()
                 )
             }
             // we're the right version, load the library from $ANKIDROID_BACKEND_PATH
@@ -582,9 +581,13 @@ open class RobolectricTest : CollectionGetter {
                 if (e.message.toString().contains("arm64e")) {
                     // Giving the commands to user to add the required env variables
                     val exception =
-                        "Please download the arm64 dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/${BuildConfig.BACKEND_VERSION} and add the following environment variables to your device by using following commands: \n" +
-                            "export ANKIDROID_BACKEND_PATH=\"{Path to the dylib file}\"\n" +
-                            "export ANKIDROID_BACKEND_VERSION=\"${BuildConfig.BACKEND_VERSION}\""
+                        """
+                            Please download the arm64 dylib file from https://github.com/ankidroid/Anki-Android-Backend/releases/tag/$supportedBackendVersion and add the following environment variables to your device by using following commands: 
+                            export ANKIDROID_BACKEND_PATH={Path to the dylib file}
+                            export ANKIDROID_BACKEND_VERSION=$supportedBackendVersion
+                            Or to do setup automatically, run the script: sh tools/setup-anki-backend.sh
+                            For more details see, https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#note-for-apple-silicon-users
+                        """.trimIndent()
                     throw IllegalStateException(exception, e)
                 }
                 throw e

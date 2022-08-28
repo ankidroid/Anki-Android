@@ -447,7 +447,7 @@ open class Card : Cloneable {
         val date: Long
         val due = due
         date = if (isInDynamicDeck) {
-            return AnkiDroidApp.getAppResources().getString(R.string.card_browser_due_filtered_card)
+            return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
         } else if (queue == Consts.QUEUE_TYPE_LRN) {
             due
         } else if (queue == Consts.QUEUE_TYPE_NEW || type == Consts.CARD_TYPE_NEW) {
@@ -589,7 +589,7 @@ open class Card : Cloneable {
 
         @Throws(CancellationException::class)
         fun deepCopyCardArray(originals: Array<Card>, cancelListener: CancelListener): Array<Card> {
-            val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.getInstance())
+            val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.instance)
             val copies = mutableListOf<Card>()
             for (i in originals.indices) {
                 if (cancelListener.isCancelled()) {

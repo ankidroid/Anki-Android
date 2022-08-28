@@ -50,7 +50,7 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Sin resultados</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>
@@ -123,6 +123,7 @@
     <string name="swipe_sensitivity" maxLength="41">Sensibilidad de deslizado</string>
     <string name="tts" maxLength="41">Texto a voz</string>
     <string name="tts_summ">Lee pregunta y respuesta si no hay un archivo de sonido incluido</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Buscar archivos media al sincronizar</string>
     <string name="sync_fetch_missing_media_summ">Buscar automáticamente archivos media faltantes al sincronizar.</string>
     <string name="sync_account" maxLength="41">Cuenta de AnkiWeb</string>
@@ -131,6 +132,8 @@
     <string name="automatic_sync_choice_summ">Sincronizar automáticamente al abrir / cerrar la aplicación si la última sincronización fue hace más de 10 minutos.</string>
     <string name="sync_status_badge" maxLength="41">Mostrar estado de sincronización</string>
     <string name="sync_status_badge_summ">Cambiar el icono de sincronización cuando se pueden subir los cambios</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema del día</string>
     <string name="night_theme" maxLength="41">Tema nocturno</string>
@@ -201,7 +204,7 @@
     <string name="html_javascript_debugging_summ">Habilitar conexiones remotas de WebView y guardar el HTML de la tarjeta en el directorio AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">Accesibilidad</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Pegar imágenes del portapapeles como PNG</string>
     <string name="paste_as_png_summary">Por defecto Anki pega imágenes en el portapapeles como archivos JPG para ahorrar espacio en disco. Puede utilizar esta opción para pegar como imágenes PNG en su lugar.</string>
@@ -230,7 +233,7 @@
     <string name="custom_sync_server_media_url_title" maxLength="41">Sincronizar media url</string>
     <string name="custom_sync_server_media_url_invalid">URL de sincronización de medios inválida</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Teclado</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Mapeo de comandos</string>
     <!-- studyoptions -->
@@ -345,6 +348,7 @@
     <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>

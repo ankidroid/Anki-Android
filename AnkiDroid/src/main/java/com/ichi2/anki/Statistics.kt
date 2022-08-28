@@ -53,9 +53,11 @@ import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.stats.Stats.ChartType
 import com.ichi2.ui.FixedTextView
 import kotlinx.coroutines.Job
+import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.Locale
 
+@RustCleanup("Remove this whole activity and use the new Anki page once the new backend is the default")
 class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleListener {
     lateinit var viewPager: ViewPager2
         private set
@@ -116,7 +118,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         }
         mDeckSpinnerSelection = DeckSpinnerSelection(
             this, col,
-            findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true
+            findViewById(R.id.toolbar_spinner), showAllDecks = true, alwaysShowDefault = true, showFilteredDecks = true
         )
         mDeckSpinnerSelection.initializeActionBarDeckSpinner(this.supportActionBar!!)
         mDeckSpinnerSelection.selectDeckById(mStatsDeckId, false)
@@ -376,7 +378,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         private fun createChart() {
             val statisticsActivity = requireActivity() as Statistics
             val taskHandler = statisticsActivity.taskHandler
-            statisticsJob = viewLifecycleOwner.catchingLifecycleScope(requireActivity()) {
+            statisticsJob = catchingLifecycleScope {
                 taskHandler.createChart(getChartTypeFromPosition(mSectionNumber), mProgressBar, mChart)
             }
         }
@@ -451,7 +453,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
 
         private fun createStatisticOverview() {
             val handler = (requireActivity() as Statistics).taskHandler
-            statisticsJob = catchingLifecycleScope(requireActivity(), "createStatisticOverview failed with error") {
+            statisticsJob = catchingLifecycleScope("createStatisticOverview failed with error") {
                 handler.createStatisticsOverview(mWebView, mProgressBar)
             }
         }

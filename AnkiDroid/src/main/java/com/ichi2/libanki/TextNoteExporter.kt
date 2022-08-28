@@ -57,7 +57,7 @@ class TextNoteExporter(
                     row.add(id)
                 }
                 for (field in Utils.splitFields(flds)) {
-                    row.add(processText(field!!))
+                    row.add(processText(field))
                 }
                 if (includedTags) {
                     row.add(tags.trim())

@@ -27,7 +27,8 @@ package com.ichi2.libanki
 
 import anki.notetypes.StockNotetype
 import com.ichi2.anki.R
-import com.ichi2.libanki.Utils.*
+import com.ichi2.libanki.Consts.MODEL_CLOZE
+import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.utils.*
@@ -557,17 +558,57 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     # Model changing
     ##########################################################################
     # - maps are ord->ord, and there should not be duplicate targets
-    # - newModel should be self if model is not changing
+    # - newModel should be same as m if model is not changing
      */
 
+    /** A compatibility wrapper that converts legacy-style arguments and
+     * feeds them into a backend request, so that AnkiDroid's editor-bound
+     * notetype changing can be used. Changing the notetype via the editor is
+     * not ideal: it doesn't let users re-order fields in a 2 element note,
+     * doesn't provide a warning to users about fields/cards that will be removed,
+     * and doesn't allow mapping one source field to multiple target fields. In
+     * the future, it may be worth removing this routine and exposing the
+     * change_notetype.html page to the user instead. The editor could remove
+     * the field-reordering code, and when saving a note where the notetype
+     * has been changed, the separate change_notetype screen could be shown.
+     * It would also be a good idea to expose change notetype as a bulk action
+     * in the browsing screen, so that the user can change the notetype of
+     * multiple notes at once.
+     * */
     override fun change(
         m: NoteType,
         nid: NoteId,
         newModel: NoteType,
-        fmap: Map<Int, Int?>?,
-        cmap: Map<Int, Int?>?
+        fmap: Map<Int, Int?>,
+        cmap: Map<Int, Int?>
     ) {
-        TODO("backend provides new API")
+        col.modSchema()
+        val fieldMap = convertLegacyMap(fmap, newModel.fieldsNames.size)
+        val templateMap =
+            if (cmap.isEmpty() || m.type == MODEL_CLOZE || newModel.type == MODEL_CLOZE) {
+                listOf()
+            } else {
+                convertLegacyMap(cmap, newModel.templatesNames.size)
+            }
+        col.backend.changeNotetype(
+            noteIds = listOf(nid),
+            newFields = fieldMap,
+            newTemplates = templateMap,
+            oldNotetypeId = newModel.id,
+            newNotetypeId = newModel.id,
+            currentSchema = col.scm,
+            oldNotetypeName = m.name,
+        )
+    }
+
+    /** Convert old->new map to list of old indexes/nulls */
+    private fun convertLegacyMap(map: Map<Int, Int?>, newSize: Int): Iterable<Int> {
+        val newToOld = map.entries.filter({ it.value != null }).associate { (k, v) -> v to k }
+        val output = mutableListOf<Int>()
+        for (idx in 0 until newSize) {
+            output.append(newToOld[idx] ?: -1)
+        }
+        return output
     }
 
     /*

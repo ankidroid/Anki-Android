@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:singleLine="true"
+    style="@style/card_browser_spinner_child_height"
+    android:layout_width="match_parent"
+    android:layout_marginTop="10dp"
+    android:textAlignment="center"
+    android:gravity="center_vertical|center_horizontal"
+    android:layout_marginStart="10dp"
+    android:ellipsize="marquee"/>

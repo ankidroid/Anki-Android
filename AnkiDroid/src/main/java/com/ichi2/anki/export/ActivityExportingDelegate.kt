@@ -22,14 +22,14 @@ import android.os.ParcelFileDescriptor
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.StringRes
 import androidx.core.app.ShareCompat.IntentBuilder
 import androidx.core.content.FileProvider
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
-import com.ichi2.anki.UIUtils.showSimpleSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.CollectionTask.ExportApkg
 import com.ichi2.async.TaskManager
 import com.ichi2.compat.CompatHelper
@@ -143,7 +143,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             activity.startActivityWithoutAnimation(shareIntent)
         } else {
             // Try to save it?
-            showSimpleSnackbar(activity, R.string.export_send_no_handlers, false)
+            activity.showSnackbar(R.string.export_send_no_handlers)
             saveExportFile(path)
         }
     }
@@ -153,7 +153,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         val attachment = File(exportPath)
         if (!attachment.exists()) {
             Timber.e("saveExportFile() Specified apkg file %s does not exist", exportPath)
-            showSimpleSnackbar(activity, R.string.export_save_apkg_unsuccessful, false)
+            activity.showSnackbar(R.string.export_save_apkg_unsuccessful)
             return
         }
 
@@ -171,8 +171,12 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
 
     private fun saveFileCallback(result: ActivityResult) {
         val isSuccessful = exportToProvider(result.data!!, true)
-        @StringRes val message = if (isSuccessful) R.string.export_save_apkg_successful else R.string.export_save_apkg_unsuccessful
-        showSimpleSnackbar(activity, activity.getString(message), isSuccessful)
+
+        if (isSuccessful) {
+            activity.showSnackbar(R.string.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
+        } else {
+            activity.showSnackbar(R.string.export_save_apkg_unsuccessful)
+        }
     }
 
     private fun exportToProvider(intent: Intent, deleteAfterExport: Boolean): Boolean {

@@ -237,6 +237,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d 秒後に自動同期がスタートします。</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
     <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
     <string name="deck_picker_lrn">このデッキ内の、学習中カードの数。</string>
@@ -246,6 +247,7 @@
     <string name="deck_picker_counts">今日出題する予定のカード数などが記載されたデッキ概要ページを開きます。</string>
     <string name="import_deck_package">デッキパッケージ (.apkg)</string>
     <string name="import_collection_package">コレクションパッケージ (.colpkg)</string>
+    <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

@@ -21,18 +21,17 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.net.Uri
 import android.text.TextUtils
-import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
-import android.widget.TextView
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.servicelayer.SearchService
+import com.ichi2.anki.snackbar.setMaxLines
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.CollectionTask.SearchCards
 import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
@@ -44,6 +43,7 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
+import com.ichi2.utils.isActiveNetworkMetered
 import timber.log.Timber
 
 open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
@@ -107,20 +107,14 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      */
     fun showDeveloperContact(errorCode: Int) {
         val errorMsg: String = context.getString(R.string.anki_js_error_code, errorCode)
-        val parentLayout: View = activity.findViewById(android.R.id.content)
         val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, cardSuppliedDeveloperContact, errorMsg)
-        val snackbar: Snackbar? = UIUtils.showSnackbar(
-            activity,
-            snackbarMsg,
-            false,
-            R.string.reviewer_invalid_api_version_visit_documentation,
-            { activity.openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki")) },
-            parentLayout,
-            null
-        )
-        val snackbarTextView = snackbar!!.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-        snackbarTextView.maxLines = 3
-        snackbar.show()
+
+        activity.showSnackbar(snackbarMsg, Snackbar.LENGTH_INDEFINITE) {
+            setMaxLines(3)
+            setAction(R.string.reviewer_invalid_api_version_visit_documentation) {
+                activity.openUrl(Uri.parse("https://github.com/ankidroid/Anki-Android/wiki"))
+            }
+        }
     }
 
     /**
@@ -174,7 +168,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     }
 
     @JavascriptInterface
-    fun init(jsonData: String?): String {
+    fun init(jsonData: String): String {
         val data: JSONObject
         var apiStatusJson = ""
         try {
@@ -404,14 +398,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiIsActiveNetworkMetered(): Boolean {
-        return try {
-            val cm = AnkiDroidApp.getInstance().applicationContext
-                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            cm.isActiveNetworkMetered
-        } catch (e: Exception) {
-            Timber.w(e, "Exception obtaining metered connection - assuming metered connection")
-            true
-        }
+        return isActiveNetworkMetered()
     }
 
     // Know if {{tts}} is supported - issue #10443

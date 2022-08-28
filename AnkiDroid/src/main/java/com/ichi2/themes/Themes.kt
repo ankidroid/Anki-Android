@@ -67,7 +67,7 @@ object Themes {
      */
     @JvmStatic
     fun updateCurrentTheme() {
-        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().applicationContext)
+        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.applicationContext)
 
         currentTheme = if (themeFollowsSystem()) {
             if (systemIsInNightMode) {
@@ -134,7 +134,7 @@ object Themes {
      */
     @JvmStatic
     fun themeFollowsSystem(): Boolean {
-        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.getInstance().applicationContext)
+        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.applicationContext)
         return prefs.getString(APP_THEME_KEY, FOLLOW_SYSTEM_MODE) == FOLLOW_SYSTEM_MODE
     }
 }

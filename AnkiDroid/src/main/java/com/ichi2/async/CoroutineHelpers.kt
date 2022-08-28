@@ -20,18 +20,18 @@
 package com.ichi2.async
 
 import android.app.Activity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
 import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showDismissibleSnackbar
+import com.ichi2.anki.snackbar.showSnackbar
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-/*
+/**
  * Launch a job that catches any uncaught errors, informs the user and prints it to Log.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
@@ -48,7 +48,20 @@ fun LifecycleOwner.catchingLifecycleScope(
     } catch (e: Exception) {
         // TODO: localize
         Timber.w(e, errorMessage)
-        showDismissibleSnackbar(activity, "An error occurred: $e", R.string.close)
+        activity.showSnackbar("An error occurred: $e")
         CrashReportService.sendExceptionReport(e, activity::class.java.simpleName)
     }
 }
+
+/**
+ * @see [LifecycleOwner.catchingLifecycleScope]
+ */
+fun Fragment.catchingLifecycleScope(
+    errorMessage: String? = null,
+    block: suspend CoroutineScope.() -> Unit
+) = (this as LifecycleOwner).catchingLifecycleScope(requireActivity(), errorMessage, block)
+
+fun Activity.catchingLifecycleScope(
+    errorMessage: String? = null,
+    block: suspend CoroutineScope.() -> Unit
+) = (this as LifecycleOwner).catchingLifecycleScope(this, errorMessage, block)

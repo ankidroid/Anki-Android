@@ -19,10 +19,12 @@ import android.net.Uri
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperWithSleep
+import com.ichi2.utils.KotlinCleanup
 
 class FragmentTestActivity : AnkiActivity() {
     var lastUrlOpened: String? = null
         private set
+    @KotlinCleanup("maybe lateinit")
     var lastShownDialogFragment: DialogFragment? = null
         private set
 
@@ -31,7 +33,7 @@ class FragmentTestActivity : AnkiActivity() {
         super.openUrl(url)
     }
 
-    override fun showDialogFragment(newFragment: DialogFragment?) {
+    override fun showDialogFragment(newFragment: DialogFragment) {
         super.showDialogFragment(newFragment)
         lastShownDialogFragment = newFragment
         // Note: I saw a potential solution for this sleeping on StackOverflow - can't find the code again.

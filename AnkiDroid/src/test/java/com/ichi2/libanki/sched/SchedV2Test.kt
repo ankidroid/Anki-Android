@@ -523,7 +523,7 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_FOUR)
         Assert.assertEquals(CARD_TYPE_REV, c.type)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
-        Assert.assertTrue(AnkiAssert.checkRevIvl(col, c, 4))
+        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 4))
         // revlog should have been updated each time
         Assert.assertEquals(
             5,
@@ -710,7 +710,7 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_TWO)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         // the new interval should be (100) * 1.2 = 120
-        Assert.assertTrue(AnkiAssert.checkRevIvl(col, c, 120))
+        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 120))
         Assert.assertEquals((col.sched.today + c.ivl).toLong(), c.due)
         // factor should have been decremented
         Assert.assertEquals(2350, c.factor)
@@ -723,7 +723,7 @@ open class SchedV2Test : RobolectricTest() {
         c.flush()
         col.sched.answerCard(c, BUTTON_THREE)
         // the new interval should be (100 + 8/2) * 2.5 = 260
-        Assert.assertTrue(AnkiAssert.checkRevIvl(col, c, 260))
+        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 260))
         Assert.assertEquals((col.sched.today + c.ivl).toLong(), c.due)
         // factor should have been left alone
         Assert.assertEquals(STARTING_FACTOR, c.factor)
@@ -733,7 +733,7 @@ open class SchedV2Test : RobolectricTest() {
         c.flush()
         col.sched.answerCard(c, BUTTON_FOUR)
         // the new interval should be (100 + 8) * 2.5 * 1.3 = 351
-        Assert.assertTrue(AnkiAssert.checkRevIvl(col, c, 351))
+        Assert.assertTrue(AnkiAssert.checkRevIvl(c, 351))
         Assert.assertEquals((col.sched.today + c.ivl).toLong(), c.due)
         // factor should have been increased
         Assert.assertEquals(2650, c.factor)
@@ -1173,7 +1173,7 @@ open class SchedV2Test : RobolectricTest() {
 
         // answer 'good'
         col.sched.answerCard(c, BUTTON_THREE)
-        AnkiAssert.checkRevIvl(col, c, 90)
+        AnkiAssert.checkRevIvl(c, 90)
         Assert.assertEquals((col.sched.today + c.ivl).toLong(), c.due)
         Assert.assertEquals(0L, c.oDue)
         // should not be in learning

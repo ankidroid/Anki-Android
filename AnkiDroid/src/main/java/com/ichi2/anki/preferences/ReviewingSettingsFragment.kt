@@ -39,7 +39,7 @@ class ReviewingSettingsFragment : SettingsFragment() {
         requirePreference<ListPreference>(R.string.new_spread_preference).apply {
             setValueIndex(col.get_config_int("newSpread"))
             setOnPreferenceChangeListener { newValue ->
-                col.set_config("newSpread", ((newValue as String).toInt()))
+                col.set_config("newSpread", newValue as Int)
             }
         }
 
@@ -50,7 +50,7 @@ class ReviewingSettingsFragment : SettingsFragment() {
         requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
             setValue(col.get_config_int("collapseTime") / 60)
             setOnPreferenceChangeListener { newValue ->
-                col.set_config("collapseTime", ((newValue as String).toInt() * 60))
+                col.set_config("collapseTime", (newValue as Int * 60))
             }
         }
         // Timebox time limit
@@ -60,7 +60,7 @@ class ReviewingSettingsFragment : SettingsFragment() {
         requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
             setValue(col.get_config_int("timeLim") / 60)
             setOnPreferenceChangeListener { newValue ->
-                col.set_config("timeLim", ((newValue as String).toInt() * 60))
+                col.set_config("timeLim", (newValue as Int * 60))
             }
         }
         // Start of next day

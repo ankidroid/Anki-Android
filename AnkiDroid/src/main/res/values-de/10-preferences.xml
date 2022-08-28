@@ -50,10 +50,10 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s Min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Keine Ergebnisse gefunden</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Allgemein</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_studying" maxLength="41">Lernen</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Lernen</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronisieren</string>
@@ -123,6 +123,7 @@
     <string name="swipe_sensitivity" maxLength="41">Wischempfindlichkeit</string>
     <string name="tts" maxLength="41">Sprachausgabe</string>
     <string name="tts_summ">Liest Frage und Antwort vor, wenn keine anderen Sounds enthalten sind</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Mediadaten synchronisieren</string>
     <string name="sync_fetch_missing_media_summ">Mediadaten automatisch beziehen, wenn synchronisiert wird.</string>
     <string name="sync_account" maxLength="41">AnkiWeb-Konto</string>
@@ -131,6 +132,8 @@
     <string name="automatic_sync_choice_summ">Bei Programmstart/-ende automatisch synchronisieren, falls die letzte Synchronisation mehr als 10 Minuten zurückliegt.</string>
     <string name="sync_status_badge" maxLength="41">Status der Synchronisation anzeigen</string>
     <string name="sync_status_badge_summ">Synchronisationssymbol ändern, wenn Änderungen hochgeladen werden können</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">Design</string>
     <string name="day_theme" maxLength="41">Design Tag</string>
     <string name="night_theme" maxLength="41">Design Nacht</string>
@@ -340,11 +343,12 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s ’ entfernen</string>
     <string name="bindings_already_bound">Bereits an %s gebunden</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41">Experimentell</string>
     <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="use_rust_backend_title" maxLength="41">Verwende neues Backend</string>
+    <string name="use_rust_backend_summary">Aktiviert neuere Anki-Funktionen, wie den v3-Scheduler\nUNSTABLE. Verwende keine Sammlung die dir am Herzen liegt. NICHT bei Schließen der App rückgängig gemacht wird</string>
+    <string name="use_rust_backend_warning">Es ist möglich, dass dies die Installation vollständig beschädigt, sodass die Deinstallation und Löschung des AnkiDroid Ordners erforderlich ist ebenso wie die Ausbreitung des Schadens durch die  Synchronisation mit AnkiWeb. \n\n Wir begrüßen den Test, aber bitte stellen Sie sicher, dass sie ein gültiges nicht AnkiWeb Backup besitzen.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Entwickleroptionen</string>
     <string name="dev_options_enabled_pref" maxLength="41">Entwickleroptionen aktivieren</string>

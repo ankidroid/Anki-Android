@@ -39,14 +39,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
-import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.navigation.NavigationView
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.dialogs.HelpDialog
+import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.libanki.CardId
 import com.ichi2.themes.Themes
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.*
 
@@ -84,7 +85,7 @@ abstract class NavigationDrawerActivity :
         if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
             // Then add coordinatorLayout as a child view of fullDraggableContainer.
-            val fullDraggableContainer = FullDraggableContainer(this)
+            val fullDraggableContainer = FullDraggableContainerFix(this)
             fullDraggableContainer.addView(coordinatorLayout)
             closableDrawerLayout.addView(fullDraggableContainer, 0)
         } else {
@@ -112,7 +113,7 @@ abstract class NavigationDrawerActivity :
         mDrawerLayout!!.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
         window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
-        mDrawerLayout!!.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimaryDark))
+        mDrawerLayout!!.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, R.attr.colorPrimary))
         // Setup toolbar and hamburger
         mNavigationView = mDrawerLayout!!.findViewById(R.id.navdrawer_items_container)
         mNavigationView!!.setNavigationItemSelectedListener(this)
@@ -294,18 +295,29 @@ abstract class NavigationDrawerActivity :
                 }
                 R.id.nav_stats -> {
                     Timber.i("Navigating to stats")
-                    val intent = Intent(this@NavigationDrawerActivity, Statistics::class.java)
+                    val intent = if (BackendFactory.defaultLegacySchema) {
+                        Intent(this@NavigationDrawerActivity, Statistics::class.java)
+                    } else {
+                        com.ichi2.anki.pages.Statistics.getIntent(this)
+                    }
                     startActivityForResultWithAnimation(intent, REQUEST_STATISTICS, START)
                 }
                 R.id.nav_settings -> {
                     Timber.i("Navigating to settings")
-                    launchActivityForResultWithAnimation(Intent(this@NavigationDrawerActivity, Preferences::class.java), mPreferencesLauncher, FADE)
+                    launchActivityForResultWithAnimation(
+                        Intent(
+                            this@NavigationDrawerActivity,
+                            Preferences::class.java
+                        ),
+                        mPreferencesLauncher,
+                        FADE
+                    )
                     // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
                     (this as? Statistics)?.finishWithAnimation(FADE)
                 }
                 R.id.nav_help -> {
                     Timber.i("Navigating to help")
-                    showDialogFragment(HelpDialog.createInstance(this))
+                    showDialogFragment(HelpDialog.createInstance())
                 }
                 R.id.support_ankidroid -> {
                     Timber.i("Navigating to support AnkiDroid")
@@ -313,7 +325,6 @@ abstract class NavigationDrawerActivity :
                 }
             }
         }
-
         closeDrawer()
         return true
     }

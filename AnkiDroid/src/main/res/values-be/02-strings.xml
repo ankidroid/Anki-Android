@@ -183,14 +183,12 @@
     <string name="import_log_insufficient_space_error">Недастаткова месца для імпартавання пакета.\nНеабходна - %1$s \nДаступна - %2$s.\n\nНешта працуе не так? Паспрабуйце вызваліць месца на вашай прыладзе. Ці паспрабуйце сінхранізацыю, для якой неабходна менш месца, чым для імпартавання. Вы можаце імпартаваць пакет на прыладзе з большым аб\'ёмам памяці (напрыклад, Anki Desktop), а потым сінхранізаваць яго з гэтай прыладай.</string>
     <string name="import_log_file_cache_cleared">Памылка імпартавання файла. Верагодна, што кэш-памяць была ачышчаная падчас апрацоўкі.\nПаспрабуйце яшчэ раз.</string>
     <string name="import_succeeded_but_check_database">Імпартаванне даных паспяхова выканана, але пасля гэтага працэсу адбылася памылка ачысткі. Запусціць праверку базы даных пазней. Галоўная прычына: %s</string>
-    <string name="import_error_unhandled_request">Не атрымалася апрацаваць запыт на імпарт</string>
     <string name="import_error_corrupt_zip">Пашкоджаны файл apkg. Спачатку выдаліце яго, а потым спампуйце дадзены файл паўторна. \n\nГалоўная прычына: %s</string>
-    <string name="import_error_exception">Не атрымалася імпартаваць пакет\n\n%s</string>
+    <string name="import_error_handle_exception">Не атрымалася імпартаваць файл\n\n%s</string>
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы даных Anki (.anki2) пакуль не падтрымліваецца. Звярніцеся да даведніка для інструкцыі па замене.</string>
     <string name="import_error_content_provider">Выбраны файл немагчыма імпартаваць аўтаматычна ў праграму. Звярніцеся да даведніка карыстальніка для імпартавання файла ўручную: \n %s</string>
-    <string name="import_error_copy_file_to_cache">Памылка аперацыі copyFileToCache() (верагодна не засталося месца)</string>
-    <string name="import_error_unhandled_scheme">Неапрацаваны імпарт з: “%s”</string>
+    <string name="import_error_copy_to_cache">Не атрымалася кэшыраваць файл (магчыма, што скончылася месца ў сховішчы)</string>
     <string name="import_error_multiple_colpkg">Было выбрана некалькі файлаў colpkg.</string>
     <string name="import_error_colpkg_apkg">Абодва файлы apkg і colpkg былі выбраны разам.</string>
     <string name="import_stats_error">Адбыліся некаторыя памылкі падчас імпартавання наступных файлаў:\n%s</string>
@@ -314,34 +312,7 @@
     <string name="white_board_image_saved">Відарыс дошкі захаваны ў %s</string>
     <string name="title_whiteboard_pen_color">Колер крэйды дошкі</string>
     <string name="title_whiteboard_editor">Рэдактар дошкі</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Знойдзеныя пустыя карткі. Калі ласка, запусціце Інструменты->Пустыя карткі.]]></string>
-    <string name="note_importer_error_empty_first_field">Першае поле пустое: %s</string>
-    <string name="note_importer_error_first_field_matched">Першае поле супадае: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Даданы дублікат з першым полем: %s</string>
-    <string name="note_importer_error_appeared_twice">Двойчы сустракаецца ў файле: %s</string>
-    <string name="note_importer_error_empty_notes">Адзін або больш запісаў не імпартаваныя з той прычыны, што яны не стварылі ніякіх картак. Гэта здараецца таму, што прысутнічалі пустыя палі або вы памылкова супаставілі змесціва тэкставага файла з правільнымі палямі</string>
-    <string name="csv_importer_error_invalid_field_count">У ‘%1$s’ мала %2$d палёў, а павінна быць %3$d</string>
-    <string name="csv_importer_error_exception">Перарвана: %s</string>
     <string name="user_is_a_robot">Выяўлены аўтаматычны тэст. У выпадку, калі вы чалавек, калі ласка, напішыце ў падтрымку AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">Дададзены %d запіс</item>
-        <item quantity="few">Дададзеныя %d запісы</item>
-        <item quantity="many">Дададзеныя %d запісаў</item>
-        <item quantity="other">Дададзеныя %d запісы</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">Абноўлены %d запіс</item>
-        <item quantity="few">Абноўленыя %d запісы</item>
-        <item quantity="many">Абноўленыя %d запісаў</item>
-        <item quantity="other">Абноўленыя %d запісы</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">Не зменены %d запіс</item>
-        <item quantity="few">Не змененыя %d запісы</item>
-        <item quantity="many">Не змененыя %d запісаў</item>
-        <item quantity="other">Не змененыя %d запісы</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">У гэтай карткі ёсць магчымасці, якія не падтрымлівае AnkiDroid. Звярніцеся да распрацоўшчыка %1$s або паспрабуйце знайсці неабходную інфармацыю ў Wikipedia. %2$s</string>
     <string name="invalid_json_data">У картцы прысутнічаюць недапушчальныя даныя. %s</string>
@@ -407,10 +378,6 @@
     <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
     <string name="search_using_deck_name">Пошук па назве калоды</string>
     <string name="home">Галоўная</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Супастаўлена з %s</string>
-    <string name="import_mapped_to_tags">Супастаўлена з меткамі</string>
-    <string name="import_mapped_to_nothing">Праігнаравана</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Адкладзеная картка</string>
     <string name="buried_note">Адкладзеныя карткі</string>
@@ -443,4 +410,11 @@
     <string name="expand_tag">Разгарнуць тэг \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Збой атрымання доступу да калекцыі. Калі ласка, паспрабуйце яшчэ раз!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

@@ -237,6 +237,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">可能在 %d 秒后触发自动同步</item>
     </plurals>
+    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
     <string name="deck_picker_new">此牌组中今天要看的新卡片数</string>
     <string name="deck_picker_rev">此牌组今天到期的卡片数量。</string>
     <string name="deck_picker_lrn">此牌组中学习中的卡片数</string>
@@ -246,6 +247,7 @@
     <string name="deck_picker_counts">打开包含今天要查看的卡片数量的牌组概览页。</string>
     <string name="import_deck_package">牌组包（.apkg）</string>
     <string name="import_collection_package">收藏包（.colpkg）</string>
+    <string name="import_csv">文本文件(.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">您不能为所有牌组创建子牌组</string>
 </resources>

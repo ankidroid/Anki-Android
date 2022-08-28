@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs
 
 import android.widget.EditText
+import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import com.afollestad.materialdialogs.WhichButton
@@ -24,6 +25,7 @@ import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.input.getInputField
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.DeckManager
@@ -51,6 +53,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     private var mActivityScenario: ActivityScenario<DeckPicker>? = null
     override fun setUp() {
         super.setUp()
+        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
         ensureCollectionLoadIsSynchronous()
         mActivityScenario = ActivityScenario.launch(DeckPicker::class.java)
         val activityScenario: ActivityScenario<DeckPicker>? = mActivityScenario
@@ -68,7 +71,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                 // a deck was created
                 try {
                     isCreated.set(true)
-                    val decks: DeckManager = activity.col!!.decks
+                    val decks: DeckManager = activity.col.decks
                     MatcherAssert.assertThat(id, equalTo(decks.id(deckName)))
                 } catch (filteredAncestor: DeckRenameException) {
                     throw RuntimeException(filteredAncestor)
@@ -91,7 +94,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 try {
                     isCreated.set(true)
-                    val decks: DeckManager = activity.col!!.decks
+                    val decks: DeckManager = activity.col.decks
                     val deckNameWithParentName = decks.getSubdeckName(deckParentId, deckName)
                     MatcherAssert.assertThat(id, equalTo(decks.id(deckNameWithParentName!!)))
                 } catch (filteredAncestor: DeckRenameException) {
@@ -113,8 +116,8 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 // a deck was created
                 isCreated.set(true)
-                val decks: DeckManager? = activity.col?.decks
-                MatcherAssert.assertThat(id, equalTo(decks?.byName(deckName)!!.getLong("id")))
+                val decks: DeckManager = activity.col.decks
+                MatcherAssert.assertThat(id, equalTo(decks.byName(deckName)!!.getLong("id")))
             }
             createDeckDialog.createDeck(deckName)
             MatcherAssert.assertThat(isCreated.get(), equalTo(true))
@@ -133,7 +136,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a deck name was renamed
                 isCreated.set(true)
-                val decks: DeckManager = activity.col!!.decks
+                val decks: DeckManager = activity.col.decks
                 MatcherAssert.assertThat(deckNewName, equalTo(decks.name(id!!)))
             }
             createDeckDialog.renameDeck(deckNewName)

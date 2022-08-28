@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">No hay espacio suficiente para importar el paquete.\nNecesitado - %1$s\nDisponible - %2$s\n\n¿Tienes problemas? Intenta liberar espacio en tu teléfono si es posible. Alternativamente, la sincronización requiere menos espacio que la importación. Puedes tratar de importar el paquete con un dispositivo con más espacio (por ejemplo Anki Desktop) y luego sincronizarlo a este dispositivo.</string>
     <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se borre la caché durante el procesamiento.\nInténtalo de nuevo</string>
     <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
-    <string name="import_error_unhandled_request">No se puede procesar la solicitud de importación</string>
     <string name="import_error_corrupt_zip">El archivo apkg está dañado. Por favor, borre y vuelva a descargarlo.\n\nCausa original: %s</string>
-    <string name="import_error_exception">Error al importar el paquete\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">El nombre de archivo “%s” no tiene extensión .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Los reemplazos de la base de datos de Anki (.anki2) aún no están soportados. Consulta el manual para obtener instrucciones de reemplazo.</string>
     <string name="import_error_content_provider">El archivo seleccionado no puede ser importado automáticamente por AnkiDroid. Por favor, revise el manual de usuario para cómo importar manualmente archivos de anki: \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() falló (posiblemente fuera de espacio de almacenamiento)</string>
-    <string name="import_error_unhandled_scheme">Importación no controlada de: “%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
@@ -292,28 +290,7 @@
     <string name="white_board_image_saved">Imagen de pizarra guardada en %s</string>
     <string name="title_whiteboard_pen_color">Color del lápiz</string>
     <string name="title_whiteboard_editor">Hola</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Se han encontrado tarjetas vacías. Por favor, ejecute "Herramientas > Tarjetas vacías".]]></string>
-    <string name="note_importer_error_empty_first_field">Primer campo vacío: %s</string>
-    <string name="note_importer_error_first_field_matched">Primer campo coincidente: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Añadido duplicado con el primer campo: %s</string>
-    <string name="note_importer_error_appeared_twice">Apareció dos veces en el archivo: %s</string>
-    <string name="note_importer_error_empty_notes">Una o más notas no se importaron porque no generaron ninguna tarjeta. Esto puede suceder cuando hay campos vacíos o cuando no se ha mapeado el contenido del archivo de texto a los campos correctos</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s tenía %2$d campos, se esperaba %3$d</string>
-    <string name="csv_importer_error_exception">Abortado: %s</string>
     <string name="user_is_a_robot">Prueba automatizada detectada. Si eres un humano, ponte en contacto con el soporte de AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">Se ha añadido %d nota</item>
-        <item quantity="other">Se han añadido %d notas</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d nota actualizada</item>
-        <item quantity="other">%d notas actualizadas</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d nota sin cambios</item>
-        <item quantity="other">%d notas sin cambios</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Esta tarjeta utiliza características de AnkiDroid no compatibles. Contacte con el desarrollador %1$s o vea la wiki. %2$s</string>
     <string name="invalid_json_data">Tarjeta ha proporcionado datos no válidos. %s</string>
@@ -379,10 +356,6 @@
     <string name="check_network">Por favor revisa tu conexión de red</string>
     <string name="search_using_deck_name">Buscar usando nombre de mazo</string>
     <string name="home">Inicio</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Mapeado a %s</string>
-    <string name="import_mapped_to_tags">Mapeado a Tags</string>
-    <string name="import_mapped_to_nothing">Ignorado</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Carta enterrada</string>
     <string name="buried_note">Nota enterrada</string>
@@ -415,4 +388,11 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

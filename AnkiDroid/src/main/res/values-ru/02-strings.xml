@@ -183,14 +183,12 @@
     <string name="import_log_insufficient_space_error">Недостаточно места для импорта пакета.\nНужно %1$s \nДоступно %2$s.\n\nЧто-то не получается? Попытайтесь освободить место на телефоне. Или попробуйте синхронизацию, для которой нужно меньше места, чем для импорта. Вы можете импортировать пакет на устройстве с большим объемом памяти (например, Anki на компьютере) и синхронизировать его с этим устройством.</string>
     <string name="import_log_file_cache_cleared">Ошибка при импорте файла: скорее всего, был очищен кеш. Попробуйте снова</string>
     <string name="import_succeeded_but_check_database">Импорт данных удался, но очистка — нет. Выполните проверку базы данных. Главная причина: %s</string>
-    <string name="import_error_unhandled_request">Не удаётся обработать запрос на импорт</string>
     <string name="import_error_corrupt_zip">Файл apkg повреждён.Удалите и повторно загрузите его.\n\nПервопричина: %s</string>
-    <string name="import_error_exception">Не удалось импортировать пакет\n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">У файла “%s” должно быть расширение .apkg или .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы данных Anki (.anki2) пока не поддерживается. Смотрите руководство для инструкций по замене.</string>
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() не удалось. Возможно недостаточно места</string>
-    <string name="import_error_unhandled_scheme">Необработанный импорт из «%s»</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Было выбрано несколько файлов colpkg.</string>
     <string name="import_error_colpkg_apkg">Были выбраны одновременно файлы apkg и colpkg</string>
     <string name="import_stats_error">При импорте этих файлов произошла ошибка:\n%s</string>
@@ -314,34 +312,7 @@
     <string name="white_board_image_saved">Изображение доски сохранено в %s</string>
     <string name="title_whiteboard_pen_color">Цвет маркера</string>
     <string name="title_whiteboard_editor">Редактор доски</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Найдены пустые карточки. Нажмите «Инструменты» — »Пустые карточки».]]></string>
-    <string name="note_importer_error_empty_first_field">Пустое первое поле: %s</string>
-    <string name="note_importer_error_first_field_matched">Совпадение по первому полю: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Добавлен повтор с первым полем «%s»</string>
-    <string name="note_importer_error_appeared_twice">Дважды встречается в файле: %s</string>
-    <string name="note_importer_error_empty_notes">Одна или несколько записей не были импортированы, потому что они не создали никаких карточек. Это могло произойти, если есть пустые поля или если вы не сопоставили содержимое текстового файла с верными полями</string>
-    <string name="csv_importer_error_invalid_field_count">В «%1$s» %2$d поля, но должно быть %3$d</string>
-    <string name="csv_importer_error_exception">Прервано: %s</string>
     <string name="user_is_a_robot">Обнаружен автоматический тест. Если вы человек, обратитесь в службу поддержки AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d запись добавлена</item>
-        <item quantity="few">%d записи добавлено</item>
-        <item quantity="many">%d записей добавлены</item>
-        <item quantity="other">%d записей добавлено</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d запись обновлена</item>
-        <item quantity="few">%d записи обновлены</item>
-        <item quantity="many">%d записей обновлены</item>
-        <item quantity="other">%d записей обновлено</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d запись не изменена</item>
-        <item quantity="few">%d записи не изменены</item>
-        <item quantity="many">%d записей не изменены</item>
-        <item quantity="other">%d записей не изменено</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Эта карточка использует неподдерживаемые в AnkiDroid функции. Свяжитесь с разработчиками %1$s или обратитесь к вики-справке. %2$s</string>
     <string name="invalid_json_data">В карточке недопустимые данные. %s</string>
@@ -407,10 +378,6 @@
     <string name="check_network">Проверьте подключение к Интернету</string>
     <string name="search_using_deck_name">Искать по названию колоды</string>
     <string name="home">Главная</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Сопоставлено с %s</string>
-    <string name="import_mapped_to_tags">Сопоставлено с метками</string>
-    <string name="import_mapped_to_nothing">Проигнорировано</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Карточка отложена</string>
     <string name="buried_note">Запись отложена</string>
@@ -443,4 +410,11 @@
     <string name="expand_tag">Развернуть метку «%s»</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Не удалось получить доступ к коллекции. Попробуйте еще раз!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

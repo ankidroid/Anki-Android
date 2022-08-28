@@ -24,7 +24,7 @@ package com.ichi2.libanki
 
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.av_tags_to_native
 import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.backend.model.to_backend_note
+import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
 import com.ichi2.utils.JSONObject
@@ -170,7 +170,7 @@ class TemplateManager {
                 fields["Tags"] = _note.stringTags().trim()
                 fields["Type"] = _note_type.name
                 fields["Deck"] = _col.decks.name(_card.oDid or _card.did)
-                fields["Subdeck"] = Decks.basename(fields["Deck"])
+                fields["Subdeck"] = Decks.basename(fields["Deck"]!!)
                 if (_template != null) {
                     fields["Card"] = _template!!["name"]
                 } else {
@@ -244,7 +244,7 @@ class TemplateManager {
                 if (_template != null) {
                     // card layout screen
                     backend.renderUncommittedCardLegacy(
-                        _note.to_backend_note(),
+                        _note.toBackendNote(),
                         _card.ord,
                         BackendUtils.to_json_bytes(JSONObject(_template!!.toMap())),
                         _fill_empty,

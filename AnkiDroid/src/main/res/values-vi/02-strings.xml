@@ -171,14 +171,12 @@
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Lỗi khi nhập tệp, có thể là bộ nhớ cache bị xóa trong quá trình xử lý. \nVui lòng thử lại</string>
     <string name="import_succeeded_but_check_database">Nhập dữ liệu thành công nhưng quá trình dọn dẹp sau nhập không thành công. Chạy kiểm tra cơ sở dữ liệu sau. Nguyên nhân chính: %s</string>
-    <string name="import_error_unhandled_request">Không thể xử lý yêu cầu nhập</string>
     <string name="import_error_corrupt_zip">Tệp apkg bị hỏng. Vui lòng xóa và tải xuống lại. \n\n. Nguyên nhân chính: %s</string>
-    <string name="import_error_exception">Không nhập được gói \n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Tên file \"%s\" không chứa định dạng .apkg hoặc .colpkg</string>
     <string name="import_error_load_imported_database">Cơ sở dữ liệu Anki (.anki2) thay thế chưa được hỗ trợ. Vui lòng xem sách hướng dẫn để biết hướng dẫn thay thế.</string>
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp anki: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache() không thành công (có thể hết dung lượng lưu trữ)</string>
-    <string name="import_error_unhandled_scheme">Việc nhập chưa xử lý từ: “%s”</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">1 số lỗi đã xảy ra khi nhập những file sau: \n%s</string>
@@ -281,25 +279,7 @@
     <string name="white_board_image_saved">Hình ảnh bảng trắng được lưu vào %s</string>
     <string name="title_whiteboard_pen_color">Bảng màu bút</string>
     <string name="title_whiteboard_editor">Trình chỉnh sửa bảng trắng</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[Đã tìm thấy thẻ trống. Vui lòng chạy Công cụ > Thẻ trống.]]></string>
-    <string name="note_importer_error_empty_first_field">Trường đầu tiên trống: %s</string>
-    <string name="note_importer_error_first_field_matched">Trường đầu tiên phù hợp: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">Đã thêm bản sao với trường đầu tiên: %s</string>
-    <string name="note_importer_error_appeared_twice">Đã xuất hiện hai lần trong tệp: %s</string>
-    <string name="note_importer_error_empty_notes">Một hoặc nhiều ghi chú không được nhập vì chúng không tạo bất kỳ thẻ nào. Điều này có thể xảy ra khi bạn có các trường trống hoặc khi bạn chưa ánh xạ nội dung trong tệp văn bản vào các trường chính xác</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ có %2$d trường, dự kiến %3$d</string>
-    <string name="csv_importer_error_exception">Đã hủy bỏ: %s</string>
     <string name="user_is_a_robot">Đã phát hiện kiểm tra tự động. Nếu bạn là con người, hãy liên hệ với bộ phận hỗ trợ AnkiDroid</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="other">%d thêm ghi chú</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="other">%d cập nhật ghi chú</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="other">%d ghi chú không thay đổi</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">Thẻ này sử dụng các tính năng AnkiDroid không được hỗ trợ. Liên hệ với nhà phát triển %1$s%1$s hoặc xem wiki. %2$s</string>
     <string name="invalid_json_data">Dữ liệu thẻ không hợp lệ. %s</string>
@@ -365,10 +345,6 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Buried card</string>
     <string name="buried_note">Buried note</string>
@@ -401,4 +377,11 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

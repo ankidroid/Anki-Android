@@ -55,7 +55,7 @@ import com.ichi2.utils.JSON.toString
 @KotlinCleanup("Simplify null comparison, !! -> ?.")
 open class JSONObject : org.json.JSONObject, Iterable<String?> {
     constructor() : super()
-    constructor(copyFrom: Map<Any?, Any?>) : super(copyFrom)
+    constructor(copyFrom: Map<out String, Any?>) : super(copyFrom)
 
     /**
      * Creates a new [JSONObject] by copying mappings for the listed names
@@ -77,12 +77,11 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
 
     // original code from https://github.com/stleary/JSON-java/blob/master/JSONObject.java
     // super() must be first instruction, thus it can't be in a try, and the exception can't be caught
-    @KotlinCleanup("make JSONTokener non-null")
-    constructor(x: JSONTokener?) : this() {
+    constructor(x: JSONTokener) : this() {
         try {
             var c: Char
             var key: String
-            if (x!!.nextClean() != '{') {
+            if (x.nextClean() != '{') {
                 throw x.syntaxError("A JSONObject text must begin with '{'")
             }
             while (true) {
@@ -127,7 +126,7 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
         }
     }
 
-    constructor(source: String?) : this(JSONTokener(source))
+    constructor(source: String) : this(JSONTokener(source))
     constructor(copyFrom: JSONObject) : this() {
         copyFrom.keys()
             .forEach { put(it, copyFrom[it]) }
@@ -204,7 +203,7 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
     // It must be copied, otherwise it adds a org.json.JSONArray instead of a JSONArray
     // in the object
     override fun accumulate(name: String, value: Any?): JSONObject {
-        val current = opt(checkName(name))
+        val current = opt(name)
             ?: return put(name, value!!)
 
         // check in accumulate, since array.put(Object) doesn't do any checking
@@ -307,22 +306,21 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
 
     /** deep clone this into clone.
      *
-     * Given a subtype [T] of JSONObject, and a JSONObject [j], we could do
+     * Given a subtype [T] of JSONObject, and a JSONObject [clone], we could do
      * ```
      * T t = new T();
-     * j.deepClonedInto(t);
+     * clone.deepClonedInto(t);
      * ```
-     * in order to obtain a deep clone of [j] of type [T].  */
+     * in order to obtain a deep clone of [clone] of type [T].  */
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    @KotlinCleanup("make JSONObject non-null")
-    fun <T : JSONObject?> deepClonedInto(clone: T): T {
+    fun <T : JSONObject> deepClonedInto(clone: T): T {
         for (key in this) {
             if (get(key) is JSONObject) {
-                clone!!.put(key, getJSONObject(key).deepClone())
+                clone.put(key, getJSONObject(key).deepClone())
             } else if (get(key) is JSONArray) {
-                clone!!.put(key, getJSONArray(key).deepClone())
+                clone.put(key, getJSONArray(key).deepClone())
             } else {
-                clone!!.put(key, get(key))
+                clone.put(key, get(key))
             }
         }
         return clone
@@ -353,19 +351,8 @@ open class JSONObject : org.json.JSONObject, Iterable<String?> {
         @JvmStatic
         fun objectToObject(obj: org.json.JSONObject?): JSONObject = obj as JSONObject
 
-        // Copied from upstream
-        @KotlinCleanup("remove, always called with non-null")
-        private fun checkName(name: String?): String {
-            if (name == null) {
-                throw JSONException("Names must be non-null")
-            }
-            return name
-        }
-
         @CheckResult
-        @KotlinCleanup("make number non-null")
-        fun numberToString(number: Number?): String = try {
-            number ?: throw org.json.JSONException("")
+        fun numberToString(number: Number): String = try {
             org.json.JSONObject.numberToString(number)
         } catch (e: org.json.JSONException) {
             throw JSONException(e)

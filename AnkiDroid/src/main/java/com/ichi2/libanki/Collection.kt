@@ -28,6 +28,8 @@ import android.util.Pair
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.search.SearchNode
+import anki.search.SearchNodeKt
+import anki.search.searchNode
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
@@ -51,10 +53,10 @@ import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.upgrade.Upgrade
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
-import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
@@ -130,6 +132,9 @@ open class Collection(
 
     var dbInternal: DB? = null
 
+    /** whether the v3 scheduler is enabled */
+    open var v3Enabled: Boolean = false
+
     /**
      * Getters/Setters ********************************************************** *************************************
      */
@@ -164,7 +169,7 @@ open class Collection(
     @RustCleanup("remove")
     var dirty: Boolean = false
     private var mUsn = 0
-    private var mLs: Long = 0
+    var ls: Long = 0
     // END: SQL table columns
 
     /* this getter is only for syncing routines, use usn() instead elsewhere */
@@ -256,7 +261,7 @@ open class Collection(
         if (ver == 1) {
             sched = Sched(this)
         } else if (ver == 2) {
-            if (!BackendFactory.defaultLegacySchema && newBackend.v3Enabled) {
+            if (v3Enabled) {
                 sched = SchedV3(this.newBackend)
             } else {
                 sched = SchedV2(this)
@@ -309,7 +314,7 @@ open class Collection(
             scm = cursor.getLong(2)
             dirty = cursor.getInt(3) == 1 // No longer used
             mUsn = cursor.getInt(4)
-            mLs = cursor.getLong(5)
+            ls = cursor.getLong(5)
             _config = initConf(cursor.getString(6))
             deckConf = cursor.getString(7)
             tags.load(cursor.getString(8))
@@ -385,7 +390,7 @@ open class Collection(
         values.put("scm", scm)
         values.put("dty", if (dirty) 1 else 0)
         values.put("usn", mUsn)
-        values.put("ls", mLs)
+        values.put("ls", ls)
         if (flushConf()) {
             values.put("conf", Utils.jsonToString(conf))
         }
@@ -481,6 +486,9 @@ open class Collection(
             dbInternal = db_
             media.connect()
             _openLog()
+            if (afterFullSync) {
+                _loadScheduler()
+            }
             return created
         } else {
             return false
@@ -519,7 +527,7 @@ open class Collection(
 
     /** True if schema changed since last sync.  */
     open fun schemaChanged(): Boolean {
-        return scm > mLs
+        return scm > ls
     }
 
     @KotlinCleanup("maybe change to getter")
@@ -544,7 +552,7 @@ open class Collection(
         tags.beforeUpload()
         decks.beforeUpload()
         modSchemaNoCheck()
-        mLs = scm
+        ls = scm
         Timber.i("Compacting database before full upload")
         // ensure db is compacted before upload
         db.execute("vacuum")
@@ -683,7 +691,7 @@ open class Collection(
         return ncards
     }
 
-    fun remNotes(ids: LongArray?) {
+    open fun remNotes(ids: LongArray) {
         val list = db
             .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids))
         remCards(list)
@@ -757,19 +765,19 @@ open class Collection(
      */
     @KotlinCleanup("Check CollectionTask<Int?, Int> - should be fine")
     @KotlinCleanup("change to ArrayList!")
-    fun genCards(nids: kotlin.collections.Collection<Long?>?, model: Model): ArrayList<Long>? {
-        return genCards<CollectionTask<Int?, Int>>(Utils.collection2Array(nids), model)
+    fun genCards(nids: kotlin.collections.Collection<Long>, model: Model): ArrayList<Long>? {
+        return genCards<CollectionTask<Int, Int>>(Utils.collection2Array(nids), model)
     }
 
     fun <T> genCards(
-        nids: kotlin.collections.Collection<Long?>?,
+        nids: kotlin.collections.Collection<Long>,
         model: Model,
         task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         return genCards(Utils.collection2Array(nids), model, task)
     }
 
-    fun genCards(nids: kotlin.collections.Collection<Long?>?, mid: NoteTypeId): ArrayList<Long>? {
+    fun genCards(nids: kotlin.collections.Collection<Long>, mid: NoteTypeId): ArrayList<Long>? {
         return genCards(nids, models.get(mid)!!)
     }
 
@@ -778,7 +786,7 @@ open class Collection(
         nid: NoteId,
         model: Model,
         task: T? = null
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         return genCards("($nid)", model, task)
     }
 
@@ -789,10 +797,10 @@ open class Collection(
      */
     @JvmOverloads
     fun <T> genCards(
-        nids: LongArray?,
+        nids: LongArray,
         model: Model,
         task: T? = null
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         // build map of (nid,ord) so we don't create dupes
         val snids = Utils.ids2str(nids)
         return genCards(snids, model, task)
@@ -806,11 +814,12 @@ open class Collection(
      * @param <T>
      </T> */
     @KotlinCleanup("see if we can cleanup if (!have.containsKey(nid)) { to a default dict or similar?")
+    @KotlinCleanup("use task framework to handle cancellation, don't return null")
     fun <T> genCards(
         snids: String,
         model: Model,
         task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int?>?, T : CancelListener? {
+    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
         val nbCount = noteCount()
         // For each note, indicates ords of cards it contains
         val have = HashUtil.HashMapInit<Long, HashMap<Int, Long>>(nbCount)
@@ -969,7 +978,6 @@ open class Collection(
     // actual backing store (for instance, if you are previewing unsaved changes on templates)
     // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
     @KotlinCleanup("use card.nid in the query to remove the need for a few variables.")
-    @KotlinCleanup("1 -> Consts.DEFAULT_DECK_ID")
     fun getNewLinkedCard(
         card: Card,
         note: Note,
@@ -999,7 +1007,7 @@ open class Collection(
         val deck = decks.get(card.did)
         if (deck.isDyn) {
             // must not be a filtered deck
-            card.did = 1
+            card.did = Consts.DEFAULT_DECK_ID
         } else {
             card.did = deck.getLong("id")
         }
@@ -1036,11 +1044,11 @@ open class Collection(
     }
 
     // NOT IN LIBANKI //
-    fun cardCount(vararg dids: Long?): Int {
+    fun cardCount(vararg dids: Long): Int {
         return db.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids))
     }
 
-    fun isEmptyDeck(vararg dids: Long?): Boolean {
+    fun isEmptyDeck(vararg dids: Long): Boolean {
         return cardCount(*dids) == 0
     }
 
@@ -1072,7 +1080,7 @@ open class Collection(
         _remNotes(nids)
     }
 
-    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int?>?, T : CancelListener? {
+    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int>?, T : CancelListener? {
         val rem: MutableList<Long> = ArrayList()
         for (m in models.all()) {
             rem.addAll(genCards(models.nids(m), m, task)!!)
@@ -1080,7 +1088,7 @@ open class Collection(
         return rem
     }
 
-    fun emptyCardReport(cids: List<Long>?): String {
+    fun emptyCardReport(cids: List<Long>): String {
         val rep = StringBuilder()
         db.query(
             "select group_concat(ord+1), count(), flds from cards c, notes n " +
@@ -1102,18 +1110,20 @@ open class Collection(
         return rep.toString()
     }
 
+    /** Returned data from [_fieldData] */
+    private data class FieldData(val nid: NoteId, val modelId: NoteTypeId, val flds: String)
+
     /**
      * Field checksums and sorting fields ***************************************
      * ********************************************************
      */
-    @KotlinCleanup("return List<class>")
-    private fun _fieldData(snids: String): ArrayList<Array<Any>> {
-        val result = ArrayList<Array<Any>>(
+    private fun _fieldData(snids: String): ArrayList<FieldData> {
+        val result = ArrayList<FieldData>(
             db.queryScalar("SELECT count() FROM notes WHERE id IN$snids")
         )
         db.query("SELECT id, mid, flds FROM notes WHERE id IN $snids").use { cur ->
             while (cur.moveToNext()) {
-                result.add(arrayOf(cur.getLong(0), cur.getLong(1), cur.getString(2)))
+                result.add(FieldData(nid = cur.getLong(0), modelId = cur.getLong(1), flds = cur.getString(2)))
             }
         }
         return result
@@ -1122,7 +1132,7 @@ open class Collection(
     /** Update field checksums and sort cache, after find&replace, etc.
      * @param nids
      */
-    fun updateFieldCache(nids: kotlin.collections.Collection<Long>?) {
+    fun updateFieldCache(nids: kotlin.collections.Collection<Long>) {
         val snids = Utils.ids2str(nids)
         updateFieldCache(snids)
     }
@@ -1130,7 +1140,7 @@ open class Collection(
     /** Update field checksums and sort cache, after find&replace, etc.
      * @param nids
      */
-    fun updateFieldCache(nids: LongArray?) {
+    fun updateFieldCache(nids: LongArray) {
         val snids = Utils.ids2str(nids)
         updateFieldCache(snids)
     }
@@ -1142,12 +1152,12 @@ open class Collection(
         val data = _fieldData(snids)
         val r = ArrayList<Array<Any>>(data.size)
         for (o in data) {
-            val fields = Utils.splitFields(o[2] as String)
-            val model = models.get((o[1] as Long))
+            val fields = Utils.splitFields(o.flds)
+            val model = models.get(o.modelId)
                 ?: // note point to invalid model
                 continue
             val csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, models.sortIdx(model))
-            r.add(arrayOf(csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o[0]))
+            r.add(arrayOf(csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o.nid))
         }
         // apply, relying on calling code to bump usn+mod
         db.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r)
@@ -1164,7 +1174,7 @@ open class Collection(
         did: DeckId,
         ord: Int,
         tags: String,
-        flist: Array<String?>,
+        flist: Array<String>,
         flags: Int
     ): HashMap<String, String> {
         return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null)
@@ -1177,7 +1187,7 @@ open class Collection(
         did: DeckId,
         ord: Int,
         tags: String,
-        flist: Array<String?>,
+        flist: Array<String>,
         flags: Int,
         browser: Boolean,
         qfmtParam: String?,
@@ -1189,7 +1199,7 @@ open class Collection(
         var afmt = afmtParam
         val fmap = Models.fieldMap(model)
         val maps: Set<Map.Entry<String, Pair<Int, JSONObject>>> = fmap.entries
-        val fields: MutableMap<String, String?> = HashUtil.HashMapInit(maps.size + 8)
+        val fields: MutableMap<String, String> = HashUtil.HashMapInit(maps.size + 8)
         for ((key, value) in maps) {
             fields[key] = flist[value.first]
         }
@@ -1197,7 +1207,7 @@ open class Collection(
         fields["Tags"] = tags.trim { it <= ' ' }
         fields["Type"] = model.getString("name")
         fields["Deck"] = decks.name(did)
-        val baseName = Decks.basename(fields["Deck"])
+        val baseName = Decks.basename(fields["Deck"]!!)
         fields["Subdeck"] = baseName
         fields["CardFlag"] = _flagNameFromCardFlags(flags)
         val template: JSONObject = if (model.isStd) {
@@ -1228,7 +1238,7 @@ open class Collection(
                     .replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum))
                 // the following line differs from libanki // TODO: why?
                 fields["FrontSide"] =
-                    d["q"] // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
+                    d["q"]!! // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
             }
             var html: String
             html = try {
@@ -1257,30 +1267,6 @@ open class Collection(
             }
         }
         return d
-    }
-
-    /**
-     * Return [cid, nid, mid, did, ord, tags, flds, flags] db query
-     */
-    @JvmOverloads
-    @KotlinCleanup("either remove or return class - probably remove?")
-    fun _qaData(where: String = ""): ArrayList<Array<Any?>> {
-        val data = ArrayList<Array<Any?>>()
-        db.query(
-            "SELECT c.id, n.id, n.mid, c.did, c.ord, " +
-                "n.tags, n.flds, c.flags FROM cards c, notes n WHERE c.nid == n.id " + where
-        ).use { cur ->
-            while (cur.moveToNext()) {
-                data.add(
-                    arrayOf(
-                        cur.getLong(0), cur.getLong(1),
-                        models.get(cur.getLong(2)), cur.getLong(3), cur.getInt(4),
-                        cur.getString(5), cur.getString(6), cur.getInt(7)
-                    )
-                )
-            }
-        }
-        return data
     }
 
     fun _flagNameFromCardFlags(flags: Int): String {
@@ -1343,26 +1329,29 @@ open class Collection(
     }
 
     /** Return a list of card ids  */
-    @KotlinCleanup("Remove in V16.") // Not in libAnki
+    @RustCleanup("Remove in V16.") // Not in libAnki
     fun findOneCardByNote(query: String?): List<Long> {
-        return Finder(this).findOneCardByNote(query)
+        return Finder(this).findOneCardByNote(query!!)
     }
 
-    /** Return a list of note ids  */
-    fun findNotes(query: String?): List<Long> {
+    /** Return a list of note ids
+     * @param order only used in overridden V16 findNotes() method
+     * */
+    @JvmOverloads
+    open fun findNotes(query: String, order: SortOrder = SortOrder.NoOrdering()): List<Long> {
         return Finder(this).findNotes(query)
     }
 
     fun findReplace(nids: List<Long?>?, src: String?, dst: String?): Int {
-        return Finder.findReplace(this, nids, src, dst)
+        return Finder.findReplace(this, nids!!, src!!, dst!!)
     }
 
     fun findReplace(nids: List<Long?>?, src: String?, dst: String?, regex: Boolean): Int {
-        return Finder.findReplace(this, nids, src, dst, regex)
+        return Finder.findReplace(this, nids!!, src!!, dst!!, regex)
     }
 
     fun findReplace(nids: List<Long?>?, src: String?, dst: String?, field: String?): Int {
-        return Finder.findReplace(this, nids, src, dst, field)
+        return Finder.findReplace(this, nids!!, src!!, dst!!, field = field)
     }
 
     @KotlinCleanup("JvmOverloads")
@@ -1375,7 +1364,7 @@ open class Collection(
         field: String?,
         fold: Boolean
     ): Int {
-        return Finder.findReplace(this, nids, src, dst, regex, field, fold)
+        return Finder.findReplace(this, nids!!, src!!, dst!!, regex, field, fold)
     }
 
     fun findDupes(fieldName: String?): List<Pair<String, List<Long>>> {
@@ -1386,6 +1375,22 @@ open class Collection(
     fun findDupes(fieldName: String?, search: String?): List<Pair<String, List<Long>>> {
         return Finder.findDupes(this, fieldName, search)
     }
+
+    @KotlinCleanup("inline in Finder.java after conversion to Kotlin")
+    fun buildFindDupesString(fieldName: String, search: String): String {
+        return buildSearchString(
+            searchNode {
+                group = SearchNodeKt.group {
+                    joiner = SearchNode.Group.Joiner.AND
+                    if (!TextUtils.isEmpty(search)) {
+                        nodes += searchNode { literalText = search }
+                    }
+                    nodes += searchNode { this.fieldName = fieldName }
+                }
+            }
+        )
+    }
+
     /*
       Stats ******************************************************************** ***************************
      */
@@ -1461,6 +1466,15 @@ open class Collection(
         return lastUndo.undo(this)
     }
 
+    @BlocksSchemaUpgrade("audit all UI actions that call this, and make sure they call a backend method")
+    @RustCleanup("this will be unnecessary after legacy schema dropped")
+    /**
+     * In the legacy schema, this adds the undo action to the undo list.
+     * In the new schema, this action is not useful, as the backend stores its own
+     * undo information, and will clear the [undo] list when the backend has an undo
+     * operation available. If you find an action is not undoable with the new backend,
+     * you probably need to be calling the relevant backend method to perform it,
+     * instead of trying to do it with raw SQL. */
     fun markUndo(undoAction: UndoAction) {
         Timber.d("markUndo() of type %s", undoAction.javaClass)
         undo.add(undoAction)
@@ -1481,7 +1495,6 @@ open class Collection(
     }
 
     @RustCleanup("Hack for Card Template Previewer, needs review")
-    @KotlinCleanup("named params")
     fun render_output_legacy(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput {
         val f = c.note(reload)
         val m = c.model()
@@ -1495,26 +1508,34 @@ open class Collection(
             val bqfmt = t.getString("bqfmt")
             val bafmt = t.getString("bafmt")
             _renderQA(
-                c.id,
-                m,
-                did,
-                c.ord,
-                f.stringTags(),
-                f.fields,
-                c.internalGetFlags(),
-                browser,
-                bqfmt,
-                bafmt
+                cid = c.id,
+                model = m,
+                did = did,
+                ord = c.ord,
+                tags = f.stringTags(),
+                flist = f.fields,
+                flags = c.internalGetFlags(),
+                browser = browser,
+                qfmtParam = bqfmt,
+                afmtParam = bafmt
             )
         } else {
-            _renderQA(c.id, m, did, c.ord, f.stringTags(), f.fields, c.internalGetFlags())
+            _renderQA(
+                cid = c.id,
+                model = m,
+                did = did,
+                ord = c.ord,
+                tags = f.stringTags(),
+                flist = f.fields,
+                flags = c.internalGetFlags()
+            )
         }
         return TemplateRenderOutput(
-            qa["q"]!!,
-            qa["a"]!!,
-            listOf(),
-            listOf(),
-            c.model().getString("css")
+            question_text = qa["q"]!!,
+            answer_text = qa["a"]!!,
+            question_av_tags = listOf(),
+            answer_av_tags = listOf(),
+            css = c.model().getString("css")
         )
     }
 
@@ -2108,13 +2129,7 @@ open class Collection(
                 try {
                     val flds = cur.getString(1)
                     val id = cur.getLong(0)
-                    @KotlinCleanup("count { }")
-                    var fldsCount = 0
-                    for (i in 0 until flds.length) {
-                        if (flds[i].code == 0x1f) {
-                            fldsCount++
-                        }
-                    }
+                    val fldsCount = flds.count { it.code == 0x1f }
                     if (fldsCount + 1 != m.getJSONArray("flds").length()) {
                         ids.add(id)
                     }
@@ -2238,7 +2253,6 @@ open class Collection(
         }
     }
 
-    @KotlinCleanup("changed array to mutable list")
     fun log(vararg argsParam: Any?) {
         val args = argsParam.toMutableList()
         if (!debugLog) {
@@ -2258,11 +2272,10 @@ open class Collection(
         writeLog(s)
     }
 
-    @KotlinCleanup("remove !! with scope function")
     private fun writeLog(s: String) {
-        if (mLogHnd != null) {
+        mLogHnd?.let {
             try {
-                mLogHnd!!.println(s)
+                it.println(s)
             } catch (e: Exception) {
                 Timber.w(e, "Failed to write to collection log")
             }
@@ -2292,19 +2305,16 @@ open class Collection(
         }
     }
 
-    @KotlinCleanup("remove !! via scope function")
     private fun _closeLog() {
         Timber.i("Closing Collection Log")
-        if (mLogHnd != null) {
-            mLogHnd!!.close()
-            mLogHnd = null
-        }
+        mLogHnd?.close()
+        mLogHnd = null
     }
 
     /**
      * Card Flags *****************************************************************************************************
      */
-    fun setUserFlag(flag: Int, cids: List<Long>?) {
+    fun setUserFlag(flag: Int, cids: List<Long>) {
         assert(0 <= flag && flag <= 7)
         db.execute(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
@@ -2523,11 +2533,6 @@ open class Collection(
 
     //endregion
 
-    @KotlinCleanup("merge with `mLs`")
-    fun setLs(ls: Long) {
-        mLs = ls
-    }
-
     fun setUsnAfterSync(usn: Int) {
         mUsn = usn
     }
@@ -2553,6 +2558,13 @@ open class Collection(
         } catch (e: Exception) {
             throw UnknownDatabaseVersionException(e)
         }
+    }
+
+    open fun setDeck(cids: LongArray, did: Long) {
+        db.execute(
+            "update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
+            did, usn(), time.intTime()
+        )
     }
 
     class CheckDatabaseResult(private val oldSize: Long) {
@@ -2603,9 +2615,8 @@ open class Collection(
      * Allows a collection to be used as a CollectionGetter
      * @return Itself.
      */
-    override fun getCol(): Collection {
-        return this
-    }
+    override val col: Collection
+        get() = this
 
     /** https://stackoverflow.com/questions/62150333/lateinit-property-mock-object-has-not-been-initialized */
     @VisibleForTesting

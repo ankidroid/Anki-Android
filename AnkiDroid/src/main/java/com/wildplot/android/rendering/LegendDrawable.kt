@@ -24,9 +24,13 @@ import com.wildplot.android.rendering.interfaces.Legendable
 
 @SuppressLint("NonPublicNonStaticFieldName")
 class LegendDrawable : Drawable, Legendable {
-    private var mName = ""
+    override var name: String = ""
+        set(value) {
+            field = value
+            mNameIsSet = true
+        }
     private var mNameIsSet = false
-    private var color = ColorWrap.BLACK
+    override var color = ColorWrap.BLACK
     override fun paint(g: GraphicsWrap) {}
     override fun isOnFrame(): Boolean {
         return false
@@ -40,24 +44,7 @@ class LegendDrawable : Drawable, Legendable {
         return false
     }
 
-    override fun getColor(): ColorWrap {
-        return color
-    }
-
-    override fun getName(): String {
-        return mName
-    }
-
     override fun nameIsSet(): Boolean {
         return mNameIsSet
-    }
-
-    fun setName(name: String) {
-        mName = name
-        mNameIsSet = true
-    }
-
-    fun setColor(color: ColorWrap) {
-        this.color = color
     }
 }

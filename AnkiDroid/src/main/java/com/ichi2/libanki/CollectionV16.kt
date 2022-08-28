@@ -20,6 +20,7 @@ import android.content.res.Resources
 import anki.config.ConfigKey
 import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
+import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.utils.TimeManager
@@ -70,6 +71,14 @@ class CollectionV16(
 
     override val newDecks: DecksV16
         get() = this.decks as DecksV16
+
+    /** True if the V3 scheduled is enabled when schedVer is 2. */
+    override var v3Enabled: Boolean
+        get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
+        set(value) {
+            backend.setConfigBool(ConfigKey.Bool.SCHED_2021, value, undoable = false)
+            _loadScheduler()
+        }
 
     override fun load() {
         _config = initConf(null)
@@ -148,13 +157,28 @@ class CollectionV16(
         } catch (e: BackendInvalidInputException) {
             throw InvalidSearchException(e)
         }
-        for (id in cardIdsList) {
-            if (task?.isCancelled() == true) {
-                break
-            }
-            task?.doProgress(listOf(id))
-        }
         return cardIdsList
+    }
+
+    override fun findNotes(
+        query: String,
+        order: SortOrder,
+    ): List<Long> {
+        val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
+            @Suppress("DEPRECATION")
+            SortOrder.BuiltinSortKind(
+                get_config("noteSortType", null as String?) ?: "noteFld",
+                get_config("browserNoteSortBackwards", false) ?: false,
+            )
+        } else {
+            order
+        }
+        val noteIDsList = try {
+            backend.searchNotes(query, adjustedOrder.toProtoBuf())
+        } catch (e: BackendInvalidInputException) {
+            throw InvalidSearchException(e)
+        }
+        return noteIDsList
     }
 
     /** Takes raw input from TypeScript frontend and returns suitable translations. */
@@ -204,11 +228,16 @@ class CollectionV16(
         return super.undo()
     }
 
-    /** True if the V3 scheduled is enabled when schedVer is 2. */
-    var v3Enabled: Boolean
-        get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
-        set(value) {
-            backend.setConfigBool(ConfigKey.Bool.SCHED_2021, value, undoable = false)
-            _loadScheduler()
-        }
+    override fun remNotes(ids: LongArray) {
+        backend.removeNotes(noteIds = ids.asIterable(), cardIds = listOf())
+    }
+
+    override fun setDeck(cids: LongArray, did: Long) {
+        backend.setDeck(cardIds = cids.asIterable(), deckId = did)
+    }
+
+    /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. */
+    fun updateNote(note: Note) {
+        backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
+    }
 }

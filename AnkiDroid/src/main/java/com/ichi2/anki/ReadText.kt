@@ -25,14 +25,13 @@ import android.view.WindowManager.BadTokenException
 import androidx.annotation.VisibleForTesting
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
-import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.UIUtils.showSnackbar
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.TTSTag
-import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
+import com.ichi2.utils.iconAttr
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
@@ -90,7 +89,7 @@ object ReadText {
      * @param qa   The card question or card answer
      */
     @SuppressLint("CheckResult")
-    fun selectTts(text: String?, did: DeckId, ord: Int, qa: SoundSide?, context: Context) {
+    fun selectTts(text: String?, did: DeckId, ord: Int, qa: SoundSide?) {
         // TODO: Consolidate with ReadText.readCardSide
         textToSpeak = text
         questionAnswer = qa
@@ -105,7 +104,7 @@ object ReadText {
         if (availableTtsLocales.isEmpty()) {
             Timber.w("ReadText.textToSpeech() no TTS languages available")
             dialog.message(R.string.no_tts_available_message)
-                .icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                .iconAttr(R.attr.dialogErrorIcon)
                 .positiveButton(R.string.dialog_ok)
         } else {
             val dialogItems = ArrayList<CharSequence>(availableTtsLocales.size)
@@ -153,7 +152,7 @@ object ReadText {
      * @param did              Index of the deck containing the card.
      * @param ord              The card template ordinal.
      */
-    fun readCardSide(textsToRead: List<TTSTag>, cardSide: SoundSide, did: DeckId, ord: Int, context: Context) {
+    fun readCardSide(textsToRead: List<TTSTag>, cardSide: SoundSide, did: DeckId, ord: Int) {
         var isFirstText = true
         var playedSound = false
         for (textToRead in textsToRead) {
@@ -165,8 +164,7 @@ object ReadText {
                 did,
                 ord,
                 cardSide,
-                if (isFirstText) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD,
-                context
+                if (isFirstText) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD
             )
             isFirstText = false
         }
@@ -196,7 +194,7 @@ object ReadText {
      * @param queueMode TextToSpeech.QUEUE_ADD or TextToSpeech.QUEUE_FLUSH.
      * @return false if a sound was not played
      */
-    private fun textToSpeech(tag: TTSTag, did: DeckId, ord: Int, qa: SoundSide, queueMode: Int, context: Context): Boolean {
+    private fun textToSpeech(tag: TTSTag, did: DeckId, ord: Int, qa: SoundSide, queueMode: Int): Boolean {
         textToSpeak = tag.fieldText
         questionAnswer = qa
         mDid = did
@@ -234,7 +232,7 @@ object ReadText {
                 false
             )
         }
-        selectTts(textToSpeak, mDid, mOrd, questionAnswer, context)
+        selectTts(textToSpeak, mDid, mOrd, questionAnswer)
         return true
     }
 
@@ -260,7 +258,7 @@ object ReadText {
                 if (!availableTtsLocales.isEmpty()) {
                     // notify the reviewer that TTS has been initialized
                     Timber.d("TTS initialized and available languages found")
-                    (context as AbstractFlashcardViewer?)!!.ttsInitialized()
+                    (context as AbstractFlashcardViewer).ttsInitialized()
                 } else {
                     showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
                     Timber.w("TTS initialized but no available languages found")
@@ -274,13 +272,11 @@ object ReadText {
                     override fun onError(utteranceId: String) {
                         Timber.v("Android TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.")
                         val helpUrl = Uri.parse(context.getString(R.string.link_faq_tts))
-                        val ankiActivity = context as AnkiActivity?
-                        ankiActivity!!.mayOpenUrl(helpUrl)
-                        showSnackbar(
-                            ankiActivity, R.string.no_tts_available_message, false, R.string.help,
-                            { openTtsHelpUrl(helpUrl) }, ankiActivity.findViewById(R.id.root_layout),
-                            Snackbar.Callback()
-                        )
+                        val ankiActivity = context as AnkiActivity
+                        ankiActivity.mayOpenUrl(helpUrl)
+                        ankiActivity.showSnackbar(R.string.no_tts_available_message) {
+                            setAction(R.string.help) { openTtsHelpUrl(helpUrl) }
+                        }
                     }
 
                     override fun onStart(arg0: String) {

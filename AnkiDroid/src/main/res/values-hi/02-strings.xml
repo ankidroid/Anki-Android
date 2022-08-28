@@ -175,14 +175,12 @@
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">फ़ाइल आयात करने में त्रुटि हुई, प्रसंस्करण के दौरान कैश स्पष्ट होने की संभावना है। \n कृपया पुनः प्रयास करें</string>
     <string name="import_succeeded_but_check_database">डेटा आयात सफल रहा, लेकिन आयात के बाद का क्लीनअप विफल रहा। बाद में चेक डेटाबेस चलाएं। मूल कारण : %s</string>
-    <string name="import_error_unhandled_request">आयात अनुरोध संसाधित करने में असमर्थ</string>
     <string name="import_error_corrupt_zip">एपीकेजी फ़ाइल भ्रष्ट है। कृपया हटाएं और इसे फिर से डाउनलोड करें। \n\n कारण:%s</string>
-    <string name="import_error_exception">पैकेज आयात करने में विफल \n\n%s</string>
+    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">फ़ाइल नाम \"%s\" में .apkg या .colpkg एक्सटेंशन नहीं है</string>
     <string name="import_error_load_imported_database">अन्कि डाटाबेस (.anki2) प्रतिस्थापन अभीतक सहारा नहीं दिया जाता हैं । कृपया पुस्तिका प्रतिस्थापन के शिक्षण के लिये देखिये ।</string>
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
-    <string name="import_error_copy_file_to_cache">copyFileToCache () विफल (संभवतः संग्रहण स्थान से बाहर)</string>
-    <string name="import_error_unhandled_scheme">से अनहेल्दी आयात: \"%s\"</string>
+    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
@@ -292,28 +290,7 @@
     <string name="white_board_image_saved">श्वेतपट्ट छवि %s में सहेजी गई</string>
     <string name="title_whiteboard_pen_color">श्वेतपट्ट के कलम का रंग</string>
     <string name="title_whiteboard_editor">श्वेतपट्ट संपादक</string>
-    <!-- CSV/Note Import -->
-    <string name="note_importer_empty_cards_found"><![CDATA[खाली कार्ड मिले। कृपया उपकरण> खाली कार्ड चलाएं।]]></string>
-    <string name="note_importer_error_empty_first_field">खाली पहला क्षेत्र: %s</string>
-    <string name="note_importer_error_first_field_matched">पहला फ़ील्ड मिलान किया गया: %s</string>
-    <string name="note_importer_error_added_duplicate_first_field">प्रथम फ़ील्ड के साथ डुप्लिकेट जोड़ा गया: %s</string>
-    <string name="note_importer_error_appeared_twice">फ़ाइल में दो बार दिखाई दिया: %s</string>
-    <string name="note_importer_error_empty_notes">एक या अधिक नोट आयात नहीं किए गए थे, क्योंकि उन्होंने कोई कार्ड नहीं बनाया था। यह तब हो सकता है जब आपके पास खाली फ़ील्ड हों या जब आपने टेक्स्ट फ़ाइल में सामग्री को सही फ़ील्ड में मैप न किया हो</string>
-    <string name="csv_importer_error_invalid_field_count">‘%1$s’ के पास %2$d क्षेत्र थे,%3$d अपेक्षित था</string>
-    <string name="csv_importer_error_exception">निरस्त: %s</string>
     <string name="user_is_a_robot">स्वचालित परीक्षण का पता लगाया। यदि आप एक मानव हैं, तो AnkiDroid समर्थन से संपर्क करें</string>
-    <plurals name="note_importer_notes_added">
-        <item quantity="one">%d नोट जोड़ा गया</item>
-        <item quantity="other">%d नोट जोड़े गए</item>
-    </plurals>
-    <plurals name="note_importer_notes_updated">
-        <item quantity="one">%d नोट अपडेट किया गया</item>
-        <item quantity="other">%d नोट अपडेट किए गए</item>
-    </plurals>
-    <plurals name="note_importer_notes_unchanged">
-        <item quantity="one">%d नोट अपरिवर्तित</item>
-        <item quantity="other">%d नोट अपरिवर्तित</item>
-    </plurals>
     <!-- JS api -->
     <string name="api_version_developer_contact">यह कार्ड असमर्थित AnkiDroid सुविधाओं का उपयोग करता है। डेवलपर से संपर्क करें %1$s, या विकी देखें। %2$s</string>
     <string name="invalid_json_data">कार्ड ने अवैध डेटा प्रदान किया। %s</string>
@@ -379,10 +356,6 @@
     <string name="check_network">कृपया अपने नेटवर्क कनेक्शन की जांच करें</string>
     <string name="search_using_deck_name">डेक नाम का उपयोग करके खोजें</string>
     <string name="home">गृह</string>
-    <!-- Importing -->
-    <string name="import_mapped_to_field">Mapped to %s</string>
-    <string name="import_mapped_to_tags">Mapped to Tags</string>
-    <string name="import_mapped_to_nothing">Ignored</string>
     <!-- Reviewer actions -->
     <string name="buried_card">Buried card</string>
     <string name="buried_note">Buried note</string>
@@ -415,4 +388,11 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <!-- App Intro -->
+    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="already_logged_in">Already logged in</string>
 </resources>

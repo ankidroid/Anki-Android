@@ -104,7 +104,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         try {
             // Use transactions for performance and rollbacks in case of error
             dst.db.database.beginTransaction()
-            dst.media.db.database.beginTransaction()
+            dst.media.db!!.database.beginTransaction()
             if (!TextUtils.isEmpty(mDeckPrefix)) {
                 val id = dst.decks.id_safe(mDeckPrefix!!)
                 dst.decks.select(id)
@@ -123,14 +123,14 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             _postImport()
             publishProgress(100, 100, 50)
             dst.db.database.setTransactionSuccessful()
-            dst.media.db.database.setTransactionSuccessful()
+            dst.media.db!!.database.setTransactionSuccessful()
         } catch (err: Exception) {
             Timber.e(err, "_import() exception")
             throw err
         } finally {
             // endTransaction throws about invalid transaction even when you check first!
             DB.safeEndInTransaction(dst.db)
-            DB.safeEndInTransaction(dst.media.db)
+            DB.safeEndInTransaction(dst.media.db!!)
         }
         Timber.i("Performing vacuum/analyze")
         try {
@@ -719,7 +719,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         return _mediaData(fname, dst.media.dir())
     }
 
-    private fun _writeDstMedia(fname: String?, data: BufferedInputStream) {
+    private fun _writeDstMedia(fname: String, data: BufferedInputStream) {
         try {
             val path = File(dst.media.dir(), Utils.nfcNormalized(fname)).absolutePath
             Utils.writeToFile(data, path)

@@ -123,6 +123,7 @@
     <string name="swipe_sensitivity" maxLength="41">スワイプ感度</string>
     <string name="tts" maxLength="41">テキスト読み上げ（TTS）</string>
     <string name="tts_summ">音声ファイルが含まれていない場合に、質問と解答を読み上げます</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">メディアの同期</string>
     <string name="sync_fetch_missing_media_summ">同期時に、不足しているメディア（画像・音声・動画）ファイルを自動的に取得します</string>
     <string name="sync_account" maxLength="41">AnkiWebアカウント</string>
@@ -131,6 +132,8 @@
     <string name="automatic_sync_choice_summ">最後に同期したのが10分以上前であった場合、アプリ起動/終了時に自動的に同期します</string>
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
     <string name="sync_status_badge_summ">変更を行い、その変更をまだアップロードしていない場合、同期アイコンに目印を付けます</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">テーマ</string>
     <string name="day_theme" maxLength="41">通常モードのテーマ</string>
     <string name="night_theme" maxLength="41">ナイトモードのテーマ</string>
@@ -343,6 +346,7 @@
     <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>

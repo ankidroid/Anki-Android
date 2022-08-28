@@ -20,6 +20,7 @@ import android.content.SharedPreferences
 import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
+import androidx.core.net.toUri
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -86,6 +87,7 @@ object PreferenceUpgradeService {
                 yield(UpdateNoteEditorToolbarPrefs())
                 yield(UpgradeGesturesToControls())
                 yield(UpgradeDayAndNightThemes())
+                yield(UpgradeCustomCollectionSyncUrl())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -363,10 +365,34 @@ object PreferenceUpgradeService {
                     }
                     remove("invertedColors")
                 }
-                if (AnkiDroidApp.isInitialized()) {
+                if (AnkiDroidApp.isInitialized) {
                     Themes.updateCurrentTheme()
                 }
             }
         }
+
+        internal class UpgradeCustomCollectionSyncUrl : PreferenceUpgrade(7) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val oldUrl = preferences.getString(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE, null)
+                var newUrl: String? = null
+
+                if (oldUrl != null && oldUrl.isNotBlank()) {
+                    try {
+                        newUrl = oldUrl.toUri().buildUpon().appendPath("sync").toString() + "/"
+                    } catch (e: Exception) {
+                        Timber.e(e, "Error constructing new sync URL from '%s'", oldUrl)
+                    }
+                }
+
+                preferences.edit {
+                    remove(RemovedPreferences.PREFERENCE_CUSTOM_SYNC_BASE)
+                    if (newUrl != null) putString(CustomSyncServer.PREFERENCE_CUSTOM_COLLECTION_SYNC_URL, newUrl)
+                }
+            }
+        }
     }
+}
+
+object RemovedPreferences {
+    const val PREFERENCE_CUSTOM_SYNC_BASE = "syncBaseUrl"
 }

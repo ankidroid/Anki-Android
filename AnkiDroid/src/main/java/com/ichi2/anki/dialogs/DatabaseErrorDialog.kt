@@ -31,10 +31,10 @@ import com.ichi2.anki.*
 import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.contentNullable
+import com.ichi2.utils.iconAttr
 import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
@@ -73,7 +73,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     cancelable(false)
                     contentNullable(message)
-                    icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                    iconAttr(R.attr.dialogErrorIcon)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
@@ -90,19 +90,19 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     cancelable(false)
                     contentNullable(message)
-                    icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                    iconAttr(R.attr.dialogErrorIcon)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
                     }
                     negativeButton(R.string.answering_error_report) {
-                        (activity as DeckPicker?)!!.sendErrorReport()
+                        (activity as DeckPicker).sendErrorReport()
                         dismissAllDialogFragments()
                     }
                     neutralButton(R.string.close) {
                         exit()
                     }
-                    setActionButtonEnabled(WhichButton.NEGATIVE, (activity as DeckPicker?)!!.hasErrorFiles())
+                    setActionButtonEnabled(WhichButton.NEGATIVE, (activity as DeckPicker).hasErrorFiles())
                 }
             }
             DIALOG_ERROR_HANDLING -> {
@@ -111,7 +111,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // to the previous dialog
                 val options = ArrayList<String>(6)
                 val values = ArrayList<Int>(6)
-                if (!(activity as AnkiActivity?)!!.colIsOpen()) {
+                if (!(activity as AnkiActivity).colIsOpen()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
                     values.add(0)
@@ -145,32 +145,32 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     i++
                 }
                 dialog.show {
-                    icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                    iconAttr(R.attr.dialogErrorIcon)
                     negativeButton(R.string.dialog_cancel)
                     listItems(items = titles.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
                         when (mRepairValues[index]) {
                             0 -> {
-                                (activity as DeckPicker?)!!.restartActivity()
+                                (activity as DeckPicker).restartActivity()
                                 return@listItems
                             }
                             1 -> {
-                                (activity as DeckPicker?)!!.showDatabaseErrorDialog(DIALOG_CONFIRM_DATABASE_CHECK)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_CONFIRM_DATABASE_CHECK)
                                 return@listItems
                             }
                             2 -> {
-                                (activity as DeckPicker?)!!.showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION)
                                 return@listItems
                             }
                             3 -> {
-                                (activity as DeckPicker?)!!.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
                                 return@listItems
                             }
                             4 -> {
-                                (activity as DeckPicker?)!!.showDatabaseErrorDialog(DIALOG_FULL_SYNC_FROM_SERVER)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_FULL_SYNC_FROM_SERVER)
                                 return@listItems
                             }
                             5 -> {
-                                (activity as DeckPicker?)!!.showDatabaseErrorDialog(DIALOG_NEW_COLLECTION)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_NEW_COLLECTION)
                                 return@listItems
                             }
                             else -> throw RuntimeException("Unknown dialog selection: " + mRepairValues[index])
@@ -183,9 +183,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // Allow user to run BackupManager.repairCollection()
                 dialog.show {
                     contentNullable(message)
-                    icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                    iconAttr(R.attr.dialogErrorIcon)
                     positiveButton(R.string.dialog_positive_repair) {
-                        (activity as DeckPicker?)!!.repairCollection()
+                        (activity as DeckPicker).repairCollection()
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -219,7 +219,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                     dialog.title(R.string.backup_restore_select_title)
                         .positiveButton(R.string.restore_backup_choose_another) {
-                            ImportFileSelectionFragment.openImportFilePicker(activity as AnkiActivity)
+                            ImportFileSelectionFragment.openImportFilePicker(activity as AnkiActivity, DeckPicker.PICK_APKG_FILE)
                         }
                         .negativeButton(R.string.dialog_cancel)
                         .listItemsSingleChoice(items = dates.toTypedArray().toList(), waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
@@ -265,9 +265,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
                         val path1 = CollectionHelper.getCollectionPath(activity)
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
-                            (activity as DeckPicker?)!!.restartActivity()
+                            (activity as DeckPicker).restartActivity()
                         } else {
-                            (activity as DeckPicker?)!!.showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
+                            (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
                         }
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -279,7 +279,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     contentNullable(message)
                     positiveButton(R.string.dialog_ok) {
-                        (activity as DeckPicker?)!!.integrityCheck()
+                        (activity as DeckPicker).integrityCheck()
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -303,7 +303,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     contentNullable(message)
                     positiveButton(R.string.dialog_positive_overwrite) {
-                        (activity as DeckPicker?)!!.sync(Connection.ConflictResolution.FULL_DOWNLOAD)
+                        (activity as DeckPicker).sync(Connection.ConflictResolution.FULL_DOWNLOAD)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -332,16 +332,16 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     cancelable(false)
                     contentNullable(message)
-                    icon(getResFromAttr(context, R.attr.dialogErrorIcon))
+                    iconAttr(R.attr.dialogErrorIcon)
                     positiveButton(R.string.close) {
                         exit()
                     }
                     listItems(items = options, waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
                         when (values[index]) {
-                            0 -> (activity as DeckPicker?)!!.showDatabaseErrorDialog(
+                            0 -> (activity as DeckPicker).showDatabaseErrorDialog(
                                 DIALOG_RESTORE_BACKUP
                             )
-                            1 -> (activity as DeckPicker?)!!.showDatabaseErrorDialog(
+                            1 -> (activity as DeckPicker).showDatabaseErrorDialog(
                                 DIALOG_FULL_SYNC_FROM_SERVER
                             )
                         }
@@ -353,7 +353,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     }
 
     private fun exit() {
-        (activity as DeckPicker?)!!.exit()
+        (activity as DeckPicker).exit()
     } // Generic message shown when a libanki task failed
 
     // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
@@ -426,7 +426,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         }
 
     fun dismissAllDialogFragments() {
-        (activity as DeckPicker?)!!.dismissAllDialogFragments()
+        (activity as DeckPicker).dismissAllDialogFragments()
     }
 
     companion object {

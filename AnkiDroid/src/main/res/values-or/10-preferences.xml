@@ -50,11 +50,11 @@
     <string name="pref_summary_seconds">%s ସେ</string>
     <string name="pref_summary_minutes">%s ମି</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">କିଛି ପରିଣାମ ନାହିଁ</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">ସାଧାରଣ</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">ଅଧ୍ୟୟନ କରିବା</string>
+    <string name="pref_cat_system_wide" maxLength="41">ସିଷ୍ଟମ୍-ବ୍ୟାପୀ</string>
     <string name="pref_cat_reviewing" maxLength="41">ସମୀକ୍ଷା</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ସିଙ୍କ୍</string>
     <string name="pref_cat_scheduling" maxLength="41">ନିର୍ଦ୍ଧାରଣ</string>
@@ -123,6 +123,7 @@
     <string name="swipe_sensitivity" maxLength="41">ସ୍ୱାଇପ୍ ସମ୍ବେଦନଶୀଳତା</string>
     <string name="tts" maxLength="41">ପାଠ୍ୟ ରୁ କଥନ</string>
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
+    <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">ସିଙ୍କରେ ମିଡ଼ିଆ ଆଣିବା</string>
     <string name="sync_fetch_missing_media_summ">ସିଙ୍କ୍ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ନିଖୋଜ ମିଡ଼ିଆ ଆଣ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
@@ -131,6 +132,8 @@
     <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
     <string name="sync_status_badge" maxLength="41">ସିଙ୍କ୍ରୋନାଇଜେସନ୍ ସ୍ଥିତି ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
     <string name="app_theme" maxLength="41">ଥିମ୍</string>
     <string name="day_theme" maxLength="41">ଦିନ ଥିମ୍</string>
     <string name="night_theme" maxLength="41">ରାତ୍ରି ଥିମ୍</string>
@@ -155,7 +158,7 @@
     <string name="software_render" maxLength="41">କାର୍ଡ ହାର୍ଡୱେର ପ୍ରସ୍ତୁତକର୍ତ୍ତା କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="software_render_summ">ହାର୍ଡୱେୟାର୍ ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦ୍ରୁତ ଅଟେ କିନ୍ତୁ ବିଶେଷ କରି ଆଣ୍ଡ୍ରଏଡ୍ 8/8.1 ରେ ସମସ୍ୟା ହୋଇପାରେ। ଯଦି ଆପଣ ପତ୍ର ସମୀକ୍ଷା ଇଣ୍ଟରଫେସର କିଛି ଅଂଶ ଦେଖିପାରୁ ନାହାନ୍ତି, ତେବେ ଏହି ସେଟିଂ ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="safe_display" maxLength="41">ସୁରକ୍ଷିତ ପ୍ରଦର୍ଶନ ମୋଡ୍</string>
-    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରି ପତ୍ର ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ। E-ink ଡିଭାଇସଗୁଡ଼ିକ ଏହା ଆବଶ୍ୟକ କରିପାରନ୍ତି।</string>
+    <string name="safe_display_summ">ସମସ୍ତ ଆନିମେସନ୍ ଅକ୍ଷମ କରି ପତ୍ର ଅଙ୍କନ ପାଇଁ ସୁରକ୍ଷିତ ପଦ୍ଧତି ବ୍ୟବହାର କରନ୍ତୁ। E-ink ଡିଵାଇସଗୁଡ଼ିକ ଏହା ଲୋଡ଼ି ପାରନ୍ତି।</string>
     <string name="disable_extended_text_ui" maxLength="41">ଗୋଟିଏ-କ୍ଷେତ୍ର ସମ୍ପାଦନା ମୋଡ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ବିଲୋପ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
@@ -340,11 +343,12 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ ଅପସାରଣ କରନ୍ତୁ</string>
     <string name="bindings_already_bound">ପୂର୍ବରୁ %s କୁ ବନ୍ଧା</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
+    <string name="pref_cat_experimental" maxLength="41">ପ୍ରାୟୋଗିକ</string>
+    <string name="experimental_pref_confirmation" maxLength="41">‘%s’ ସକ୍ଷମ କରିବା</string>
+    <string name="use_rust_backend_title" maxLength="41">ନୂଆ ବ୍ୟାକେଣ୍ଡ୍ ବ୍ୟବହାର କରିବା</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ</string>
     <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା</string>

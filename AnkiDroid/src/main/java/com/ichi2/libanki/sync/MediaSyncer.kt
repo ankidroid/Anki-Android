@@ -129,7 +129,7 @@ class MediaSyncer(
                     String.format(
                         Locale.US,
                         "check: lsum=%s rsum=%s ldirty=%d rusn=%d fname=%s",
-                        if (TextUtils.isEmpty(lsum)) "" else lsum.subSequence(0, 4),
+                        if (TextUtils.isEmpty(lsum)) "" else lsum!!.subSequence(0, 4),
                         if (TextUtils.isEmpty(rsum)) "" else rsum!!.subSequence(0, 4),
                         ldirty,
                         rusn,
@@ -180,7 +180,7 @@ class MediaSyncer(
                 }
                 con.publishProgress(
                     String.format(
-                        AnkiDroidApp.getAppResources().getString(R.string.sync_media_changes_count), toSend
+                        AnkiDroidApp.appResources.getString(R.string.sync_media_changes_count), toSend
                     )
                 )
                 val changes = server.uploadChanges(zip)
@@ -202,7 +202,7 @@ class MediaSyncer(
                 } else {
                     col.log("concurrent update, skipping usn update")
                     // commit for markClean
-                    col.media.db.commit()
+                    col.media.db!!.commit()
                     updateConflict = true
                 }
                 toSend -= processedCnt
@@ -245,7 +245,7 @@ class MediaSyncer(
                 }
                 con.publishProgress(
                     String.format(
-                        AnkiDroidApp.getAppResources().getString(R.string.sync_media_downloaded_count), mDownloadCount
+                        AnkiDroidApp.appResources.getString(R.string.sync_media_downloaded_count), mDownloadCount
                     )
                 )
             } catch (e: IOException) {

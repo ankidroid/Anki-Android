@@ -29,11 +29,13 @@ import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.compat.Compat.Companion.ACTION_PROCESS_TEXT
 import com.ichi2.compat.Compat.Companion.EXTRA_PROCESS_TEXT
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Decks.CURRENT_DECK
+import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.utils.KotlinCleanup
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
@@ -47,6 +49,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("IDE lint")
 class NoteEditorTest : RobolectricTest() {
@@ -154,34 +157,34 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    fun clozeNoteWithNoClozeDeletionsDoesNotSave() {
+    fun clozeNoteWithNoClozeDeletionsDoesNotSave() = runTest {
         val initialCards = cardCount
         val editor = getNoteEditorAdding(NoteType.CLOZE)
             .withFirstField("no cloze deletions")
             .build()
-        saveNote(editor)
+        editor.saveNote()
         assertThat(cardCount, equalTo(initialCards))
     }
 
     @Test
-    fun clozeNoteWithClozeDeletionsDoesSave() {
+    fun clozeNoteWithClozeDeletionsDoesSave() = runTest {
         val initialCards = cardCount
         val editor = getNoteEditorAdding(NoteType.CLOZE)
             .withFirstField("{{c1::AnkiDroid}} is fantastic")
             .build()
-        saveNote(editor)
+        editor.saveNote()
         assertThat(cardCount, equalTo(initialCards + 1))
     }
 
     @Test
     @Ignore("Not yet implemented")
-    fun clozeNoteWithClozeInWrongFieldDoesNotSave() {
+    fun clozeNoteWithClozeInWrongFieldDoesNotSave() = runTest {
         // Anki Desktop blocks with "Continue?", we should just block to match the above test
         val initialCards = cardCount
         val editor = getNoteEditorAdding(NoteType.CLOZE)
             .withSecondField("{{c1::AnkiDroid}} is fantastic")
             .build()
-        saveNote(editor)
+        editor.saveNote()
         assertThat(cardCount, equalTo(initialCards))
     }
 
@@ -216,7 +219,7 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    fun stickyFieldsAreUnchangedAfterAdd() {
+    fun stickyFieldsAreUnchangedAfterAdd() = runTest {
         // #6795 - newlines were converted to <br>
         val basic = makeNoteForType(NoteType.BASIC)
 
@@ -233,7 +236,7 @@ class NoteEditorTest : RobolectricTest() {
         editor.setFieldValueFromUi(0, newFirstField)
         assertThat(editor.currentFieldStrings.toList(), contains(newFirstField, initSecondField))
 
-        saveNote(editor)
+        editor.saveNote()
         waitForAsyncTasksToComplete()
         val actual = editor.currentFieldStrings.toList()
 
@@ -432,11 +435,6 @@ class NoteEditorTest : RobolectricTest() {
             DECK_LIST -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
         }
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i)
-    }
-
-    private fun saveNote(editor: NoteEditor) {
-        editor.saveNote()
-        advanceRobolectricLooperWithSleep()
     }
 
     private enum class FromScreen {

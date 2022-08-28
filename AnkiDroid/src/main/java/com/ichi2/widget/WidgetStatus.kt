@@ -75,7 +75,7 @@ object WidgetStatus {
             super.doInBackground(*arg0)
             Timber.d("WidgetStatus.UpdateDeckStatusAsyncTask.doInBackground()")
             val context = arg0[0]
-            if (!AnkiDroidApp.isSdCardMounted()) {
+            if (!AnkiDroidApp.isSdCardMounted) {
                 return context
             }
             try {

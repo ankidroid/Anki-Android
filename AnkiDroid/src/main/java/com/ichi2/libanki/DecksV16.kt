@@ -39,7 +39,7 @@ package com.ichi2.libanki
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import com.google.protobuf.ByteString
-import com.ichi2.libanki.Decks.ACTIVE_DECKS
+import com.ichi2.libanki.Decks.Companion.ACTIVE_DECKS
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.exception.DeckRenameException
@@ -623,15 +623,6 @@ class DecksV16(private val col: CollectionV16) :
             return Optional.of(deck.name)
         }
         return Optional.empty()
-    }
-
-    fun setDeck(cids: LongArray, did: DeckId) {
-        this.col.db.execute(
-            "update cards set did=?,usn=?,mod=? where id in " + ids2str(cids),
-            did,
-            this.col.usn(),
-            TimeManager.time.intTime(),
-        )
     }
 
     override fun cids(did: DeckId, children: bool): MutableList<Long> {
