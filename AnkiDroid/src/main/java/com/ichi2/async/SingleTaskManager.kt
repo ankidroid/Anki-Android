@@ -85,12 +85,9 @@ class SingleTaskManager : TaskManager() {
         listener: TaskListener<in Progress, in Result?>?
     ): Cancellable {
         // Start new task
-        val newTask = CollectionTask(task, listener, mLatestInstance)
-
-        newTask.apply {
+        return CollectionTask(task, listener, mLatestInstance).apply {
             addTasks(this)
             execute()
-            return this
         }
     }
 
