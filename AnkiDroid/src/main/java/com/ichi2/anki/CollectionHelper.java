@@ -177,16 +177,6 @@ public class CollectionHelper {
         return openCollection(context, path);
     }
 
-    /** Collection time if possible, otherwise real time.*/
-    public synchronized Time getTimeSafe(Context context) {
-        try {
-            return TimeManager.INSTANCE.getTime();
-        } catch (Exception e) {
-            Timber.w(e);
-            return new SystemTime();
-        }
-    }
-
     /**
      * Call getCol(context) inside try / catch statement.
      * Send exception report and return null if there was an exception.
