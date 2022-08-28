@@ -8,11 +8,11 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
-  - type: input
+  - type: checkboxes
     id: contact
     attributes:
-      label: Contact Details hi
-      description: How can we get in touch with you if we need more info?
+      label: Is there an existing issue for this?
+      description: Please go through open issues, to see if anything similar already exists.
       placeholder: ex. email@example.com
     validations:
       required: false
