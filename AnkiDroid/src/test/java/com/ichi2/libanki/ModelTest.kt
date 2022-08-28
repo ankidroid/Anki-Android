@@ -37,7 +37,6 @@ import org.robolectric.annotation.Config
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-@KotlinCleanup("fix IDE lint issues")
 @KotlinCleanup("improve kotlin code where possible")
 class ModelTest : RobolectricTest() {
     @Test
@@ -315,11 +314,11 @@ class ModelTest : RobolectricTest() {
     fun test_cloze_empty() {
         val col = col
         val mm = col.models
-        val cloze_model = mm.byName("Cloze")
-        mm.setCurrent(cloze_model!!)
+        val clozeModel = mm.byName("Cloze")
+        mm.setCurrent(clozeModel!!)
         assertListEquals(
-            Arrays.asList(0, 1),
-            Models.availOrds(cloze_model, arrayOf("{{c1::Empty}} and {{c2::}}", ""))
+            listOf(0, 1),
+            Models.availOrds(clozeModel, arrayOf("{{c1::Empty}} and {{c2::}}", ""))
         )
     }
 
@@ -475,7 +474,7 @@ class ModelTest : RobolectricTest() {
     }
 
     @Test
-    fun test_typecloze() {
+    fun test_type_and_cloze() {
         val col = col
         val m = col.models.byName("Cloze")
         col.models.setCurrent(m!!)
@@ -492,6 +491,7 @@ class ModelTest : RobolectricTest() {
 
     @Test
     @Throws(ConfirmModSchemaException::class)
+    @Suppress("SpellCheckingInspection") // chaine
     fun test_chained_mods() {
         val col = col
         col.models.setCurrent(col.models.byName("Cloze")!!)
@@ -638,7 +638,7 @@ class ModelTest : RobolectricTest() {
         var r = basic.getJSONArray("req").getJSONArray(0)
         assertEquals(0, r.getInt(0))
         assertTrue(
-            Arrays.asList(Models.REQ_ANY, Models.REQ_ALL).contains(r.getString(1))
+            listOf(REQ_ANY, REQ_ALL).contains(r.getString(1))
         )
         assertEquals(1, r.getJSONArray(2).length())
         assertEquals(0, r.getJSONArray(2).getInt(0))
@@ -648,7 +648,7 @@ class ModelTest : RobolectricTest() {
 
         r = opt!!.getJSONArray("req").getJSONArray(0)
         assertTrue(
-            Arrays.asList(Models.REQ_ANY, Models.REQ_ALL).contains(r.getString(1))
+            listOf(REQ_ANY, REQ_ALL).contains(r.getString(1))
         )
         assertEquals(1, r.getJSONArray(2).length())
         assertEquals(0, r.getJSONArray(2).getInt(0))
@@ -678,7 +678,7 @@ class ModelTest : RobolectricTest() {
         reqSize(opt)
         r = opt!!.getJSONArray("req").getJSONArray(0)
         assertTrue(
-            Arrays.asList(REQ_ANY, REQ_ALL).contains(r.getString(1))
+            listOf(REQ_ANY, REQ_ALL).contains(r.getString(1))
         )
         if (col.models is ModelsV16) {
             assertEquals(JSONArray("[0, 1]"), r.getJSONArray(2))
@@ -696,7 +696,7 @@ class ModelTest : RobolectricTest() {
         val basic = mm.byName("Basic")
         val template = basic!!.getJSONArray("tmpls").getJSONObject(0)
         template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}")
-        assertThrowsSubclass<Exception>() {
+        assertThrowsSubclass<Exception> {
             // in V16, the "save" throws, in V11, the "add" throws
             mm.save(basic, true)
             addNoteUsingBasicModel("foo", "bar")
@@ -708,11 +708,11 @@ class ModelTest : RobolectricTest() {
         assertListEquals(ArrayList(), Models.getNamesOfFieldsContainingCloze(""))
         val example = "{{cloze::foo}} <%cloze:bar%>"
         assertListEquals(
-            Arrays.asList("foo", "bar"),
+            listOf("foo", "bar"),
             Models.getNamesOfFieldsContainingCloze(example)
         )
         assertListEquals(
-            Arrays.asList("foo", "bar"),
+            listOf("foo", "bar"),
             Models.getNamesOfFieldsContainingCloze(example)
         )
     }
@@ -743,70 +743,70 @@ class ModelTest : RobolectricTest() {
 
         assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "")))
         assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "Back")))
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, arrayOf("Foo", "")))
-        assertListEquals(Arrays.asList(), Models._availStandardOrds(basic, arrayOf("  \t ", "")))
+        assertListEquals(listOf(0), Models._availStandardOrds(basic, arrayOf("Foo", "")))
+        assertListEquals(listOf(), Models._availStandardOrds(basic, arrayOf("  \t ", "")))
         assertListEquals(ArrayList(), Models._availStandardOrds(reverse, arrayOf("", "")))
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(reverse, arrayOf("Foo", "")))
+        assertListEquals(listOf(0), Models._availStandardOrds(reverse, arrayOf("Foo", "")))
         assertListEquals(
-            Arrays.asList(0, 1),
+            listOf(0, 1),
             Models._availStandardOrds(reverse, arrayOf("Foo", "Bar"))
         )
         assertListEquals(
-            Arrays.asList(1),
+            listOf(1),
             Models._availStandardOrds(reverse, arrayOf("  \t ", "Bar"))
         )
 
         assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", ""), false))
         assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "Back"), false))
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models._availStandardOrds(basic, arrayOf("Foo", ""), false)
         )
         assertListEquals(
-            Arrays.asList(),
+            listOf(),
             Models._availStandardOrds(basic, arrayOf("  \t ", ""), false)
         )
         assertListEquals(ArrayList(), Models._availStandardOrds(reverse, arrayOf("", ""), false))
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models._availStandardOrds(reverse, arrayOf("Foo", ""), false)
         )
         assertListEquals(
-            Arrays.asList(0, 1),
+            listOf(0, 1),
             Models._availStandardOrds(reverse, arrayOf("Foo", "Bar"), false)
         )
         assertListEquals(
-            Arrays.asList(1),
+            listOf(1),
             Models._availStandardOrds(reverse, arrayOf("  \t ", "Bar"), false)
         )
 
-        assertListEquals(Arrays.asList(0), Models._availStandardOrds(basic, arrayOf("", ""), true))
+        assertListEquals(listOf(0), Models._availStandardOrds(basic, arrayOf("", ""), true))
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models._availStandardOrds(basic, arrayOf("", "Back"), true)
         )
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models._availStandardOrds(basic, arrayOf("Foo", ""), true)
         )
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models._availStandardOrds(basic, arrayOf("  \t ", ""), true)
         )
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models._availStandardOrds(reverse, arrayOf("", ""), true)
         )
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models._availStandardOrds(reverse, arrayOf("Foo", ""), true)
         )
         assertListEquals(
-            Arrays.asList(0, 1),
+            listOf(0, 1),
             Models._availStandardOrds(reverse, arrayOf("Foo", "Bar"), true)
         )
         assertListEquals(
-            Arrays.asList(1),
+            listOf(1),
             Models._availStandardOrds(reverse, arrayOf("  \t ", "Bar"), true)
         )
     }
@@ -820,60 +820,60 @@ class ModelTest : RobolectricTest() {
 
         assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "")))
         assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "Back")))
-        assertListEquals(Arrays.asList(0), Models.availOrds(basic, arrayOf("Foo", "")))
-        assertListEquals(Arrays.asList(), Models.availOrds(basic, arrayOf("  \t ", "")))
+        assertListEquals(listOf(0), Models.availOrds(basic, arrayOf("Foo", "")))
+        assertListEquals(listOf(), Models.availOrds(basic, arrayOf("  \t ", "")))
         assertListEquals(ArrayList(), Models.availOrds(reverse, arrayOf("", "")))
-        assertListEquals(Arrays.asList(0), Models.availOrds(reverse, arrayOf("Foo", "")))
-        assertListEquals(Arrays.asList(0, 1), Models.availOrds(reverse, arrayOf("Foo", "Bar")))
-        assertListEquals(Arrays.asList(1), Models.availOrds(reverse, arrayOf("  \t ", "Bar")))
+        assertListEquals(listOf(0), Models.availOrds(reverse, arrayOf("Foo", "")))
+        assertListEquals(listOf(0, 1), Models.availOrds(reverse, arrayOf("Foo", "Bar")))
+        assertListEquals(listOf(1), Models.availOrds(reverse, arrayOf("  \t ", "Bar")))
 
         for (allow in arrayOf(Models.AllowEmpty.ONLY_CLOZE, Models.AllowEmpty.FALSE)) {
             assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", ""), allow))
             assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "Back"), allow))
-            assertListEquals(Arrays.asList(0), Models.availOrds(basic, arrayOf("Foo", ""), allow))
-            assertListEquals(Arrays.asList(), Models.availOrds(basic, arrayOf("  \t ", ""), allow))
+            assertListEquals(listOf(0), Models.availOrds(basic, arrayOf("Foo", ""), allow))
+            assertListEquals(listOf(), Models.availOrds(basic, arrayOf("  \t ", ""), allow))
             assertListEquals(ArrayList(), Models.availOrds(reverse, arrayOf("", ""), allow))
-            assertListEquals(Arrays.asList(0), Models.availOrds(reverse, arrayOf("Foo", ""), allow))
+            assertListEquals(listOf(0), Models.availOrds(reverse, arrayOf("Foo", ""), allow))
             assertListEquals(
-                Arrays.asList(0, 1),
+                listOf(0, 1),
                 Models.availOrds(reverse, arrayOf("Foo", "Bar"), allow)
             )
             assertListEquals(
-                Arrays.asList(1),
+                listOf(1),
                 Models.availOrds(reverse, arrayOf("  \t ", "Bar"), allow)
             )
         }
 
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models.availOrds(basic, arrayOf("", ""), Models.AllowEmpty.TRUE)
         )
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models.availOrds(basic, arrayOf("", "Back"), Models.AllowEmpty.TRUE)
         )
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models.availOrds(basic, arrayOf("Foo", ""), Models.AllowEmpty.TRUE)
         )
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models.availOrds(basic, arrayOf("  \t ", ""), Models.AllowEmpty.TRUE)
         )
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models.availOrds(reverse, arrayOf("", ""), Models.AllowEmpty.TRUE)
         )
         assertListEquals(
-            Arrays.asList(0),
+            listOf(0),
             Models.availOrds(reverse, arrayOf("Foo", ""), Models.AllowEmpty.TRUE)
         )
         assertListEquals(
-            Arrays.asList(0, 1),
+            listOf(0, 1),
             Models.availOrds(reverse, arrayOf("Foo", "Bar"), Models.AllowEmpty.TRUE)
         )
         assertListEquals(
-            Arrays.asList(1),
+            listOf(1),
             Models.availOrds(reverse, arrayOf("  \t ", "Bar"), Models.AllowEmpty.TRUE)
         )
     }
