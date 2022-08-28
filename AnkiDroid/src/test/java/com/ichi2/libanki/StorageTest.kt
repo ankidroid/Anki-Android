@@ -46,7 +46,7 @@ open class StorageTest : RobolectricTest() {
         val expected = results
 
         // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-        CollectionHelper.getInstance().closeCollection(false, "compareNewDatabases")
+        CollectionHelper.instance.closeCollection(false, "compareNewDatabases")
 
         // After every test make sure the CollectionHelper is no longer overridden (done for null testing)
         disableNullCollection()

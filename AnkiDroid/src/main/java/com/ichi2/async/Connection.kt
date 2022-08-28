@@ -252,9 +252,9 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         // A number AnkiWeb told us to send back. Probably to choose the best server for the user
         val hostNum = data.data[3] as HostNum
         // Use safe version that catches exceptions so that full sync is still possible
-        val col = CollectionHelper.getInstance().getColSafe(AnkiDroidApp.instance)
+        val col = CollectionHelper.instance.getColSafe(AnkiDroidApp.instance)
         var colCorruptFullSync = false
-        if (!CollectionHelper.getInstance().colIsOpen() || !ok) {
+        if (!CollectionHelper.instance.colIsOpen() || !ok) {
             colCorruptFullSync = if (FULL_DOWNLOAD == conflictResolution) {
                 true
             } else {
@@ -262,9 +262,9 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
             }
         }
         return try {
-            CollectionHelper.getInstance().lockCollection()
+            CollectionHelper.instance.lockCollection()
             val remoteServer = RemoteServer(this, hkey, hostNum)
-            val client = Syncer(col, remoteServer, hostNum)
+            val client = Syncer(col!!, remoteServer, hostNum)
 
             // run sync and check state
             var noChanges = false
@@ -455,7 +455,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
             Timber.i("Sync Finished - Closing Collection")
             // don't bump mod time unless we explicitly save
             col?.close(false)
-            CollectionHelper.getInstance().unlockCollection()
+            CollectionHelper.instance.unlockCollection()
         }
     }
 

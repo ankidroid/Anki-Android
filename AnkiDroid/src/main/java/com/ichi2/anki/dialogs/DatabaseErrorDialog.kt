@@ -260,10 +260,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     contentNullable(message)
                     positiveButton(R.string.dialog_positive_create) {
-                        val ch = CollectionHelper.getInstance()
+                        val ch = CollectionHelper.instance
                         val time = TimeManager.time
                         ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
-                        val path1 = CollectionHelper.getCollectionPath(requireContext())
+                        val path1 = CollectionHelper.getCollectionPath(requireActivity())
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
                             (activity as DeckPicker).restartActivity()
                         } else {

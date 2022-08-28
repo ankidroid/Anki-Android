@@ -90,7 +90,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     private val col: Collection
-        get() = CollectionHelper.getInstance().getCol(context)
+        get() = CollectionHelper.instance.getCol(context)!!
 
     protected override fun doInBackground(vararg arg0: Void): Result? {
         return try {
@@ -127,7 +127,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         context = AnkiDroidApp.instance.applicationContext
 
         // Skip the task if the collection cannot be opened
-        if (task.requiresOpenCollection() && CollectionHelper.getInstance().getColSafe(context) == null) {
+        if (task.requiresOpenCollection() && CollectionHelper.instance.getColSafe(context) == null) {
             Timber.e("CollectionTask CollectionTask %s as Collection could not be opened", task.javaClass)
             return null
         }
@@ -614,7 +614,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 Pair(false, result)
             } else {
                 // Close the collection and we restart the app to reload
-                CollectionHelper.getInstance().closeCollection(true, "Check Database Completed")
+                CollectionHelper.instance.closeCollection(true, "Check Database Completed")
                 Pair(true, result)
             }
         }
@@ -765,10 +765,10 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 }
                 collectionTask.doProgress(res.getString(R.string.importing_collection))
                 try {
-                    CollectionHelper.getInstance().getCol(context)
+                    CollectionHelper.instance.getCol(context)
                     // unload collection
-                    CollectionHelper.getInstance().closeCollection(true, "Importing new collection")
-                    CollectionHelper.getInstance().lockCollection()
+                    CollectionHelper.instance.closeCollection(true, "Importing new collection")
+                    CollectionHelper.instance.lockCollection()
                 } catch (e: Exception) {
                     Timber.w(e)
                 }
@@ -779,7 +779,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     return Computation.ERR
                 }
                 return try {
-                    CollectionHelper.getInstance().unlockCollection()
+                    CollectionHelper.instance.unlockCollection()
 
                     // because users don't have a backup of media, it's safer to import new
                     // data and rely on them running a media db check to get rid of any

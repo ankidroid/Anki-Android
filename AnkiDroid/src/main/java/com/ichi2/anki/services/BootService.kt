@@ -64,7 +64,7 @@ class BootService : BroadcastReceiver() {
         // #6239 - previously would crash if ejecting, we don't want a report if this happens so don't use
         // getInstance().getColSafe
         return try {
-            CollectionHelper.getInstance().getCol(context)
+            CollectionHelper.instance.getCol(context)
         } catch (e: Exception) {
             Timber.e(e, "Failed to get collection for boot service - possibly media ejecting")
             null
@@ -73,7 +73,7 @@ class BootService : BroadcastReceiver() {
 
     private fun scheduleDeckReminder(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        for (deckConfiguration in CollectionHelper.getInstance().getCol(context).decks.allConf()) {
+        for (deckConfiguration in CollectionHelper.instance.getCol(context)!!.decks.allConf()) {
             if (deckConfiguration.has("reminder")) {
                 val reminder = deckConfiguration.getJSONObject("reminder")
                 if (reminder.getBoolean("enabled")) {
@@ -131,7 +131,7 @@ class BootService : BroadcastReceiver() {
             // TODO; We might want to use the BootService retry code here when called from preferences.
             val defValue = 4
             return try {
-                val col = CollectionHelper.getInstance().getCol(context)
+                val col = CollectionHelper.instance.getCol(context)!!
                 when (col.schedVer()) {
                     1 -> {
                         val sp = AnkiDroidApp.getSharedPrefs(context)

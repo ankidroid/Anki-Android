@@ -75,7 +75,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
             val dialog = ConfirmationDialog()
             val confirm = Runnable {
                 // Bypass the check once the user confirms
-                CollectionHelper.getInstance().getCol(AnkiDroidApp.instance).modSchemaNoCheck()
+                CollectionHelper.instance.getCol(AnkiDroidApp.instance)!!.modSchemaNoCheck()
             }
             dialog.setConfirm(confirm)
             dialog.setArgs(msgData.getString("message"))

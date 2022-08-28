@@ -1287,7 +1287,7 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     private fun reopenCol(): com.ichi2.libanki.Collection {
-        CollectionHelper.getInstance().closeCollection(false, "ContentProviderTest: reopenCol")
+        CollectionHelper.instance.closeCollection(false, "ContentProviderTest: reopenCol")
         return col
     }
 

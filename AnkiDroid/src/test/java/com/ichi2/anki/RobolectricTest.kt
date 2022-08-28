@@ -95,7 +95,7 @@ open class RobolectricTest : CollectionGetter {
         ChangeManager.clearSubscribers()
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
-        CollectionHelper.getInstance().setColForTests(null)
+        CollectionHelper.instance.setColForTests(null)
 
         if (mTaskScheduler.shouldRunInForeground()) {
             runTasksInForeground()
@@ -151,11 +151,11 @@ open class RobolectricTest : CollectionGetter {
         mControllersForCleanup.clear()
 
         try {
-            if (CollectionHelper.getInstance().colIsOpen()) {
-                CollectionHelper.getInstance().getCol(targetContext).debugEnsureNoOpenPointers()
+            if (CollectionHelper.instance.colIsOpen()) {
+                CollectionHelper.instance.getCol(targetContext)!!.debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.getInstance().closeCollection(false, "RobolectricTest: End")
+            CollectionHelper.instance.closeCollection(false, "RobolectricTest: End")
         } catch (ex: BackendException) {
             if ("CollectionNotOpen".equals(ex.message)) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
@@ -311,7 +311,7 @@ open class RobolectricTest : CollectionGetter {
      * we don't get two equal time. */
     override val col: Collection
         get() = try {
-            CollectionHelper.getInstance().getCol(targetContext)
+            CollectionHelper.instance.getCol(targetContext)!!
         } catch (e: UnsatisfiedLinkError) {
             throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
         }
@@ -322,17 +322,16 @@ open class RobolectricTest : CollectionGetter {
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {
         CollectionManager.closeCollectionBlocking()
-        CollectionHelper.LazyHolder.INSTANCE = object : CollectionHelper() {
-            override fun getCol(context: Context): Collection? {
-                return null
-            }
-        }
+        CollectionHelper.setInstanceForTesting(object : CollectionHelper() {
+            @Synchronized
+            override fun getCol(context: Context?): Collection? = null
+        })
         CollectionManager.emulateOpenFailure = true
     }
 
     /** Restore regular collection behavior  */
     protected fun disableNullCollection() {
-        CollectionHelper.LazyHolder.INSTANCE = CollectionHelper()
+        CollectionHelper.setInstanceForTesting(CollectionHelper())
         CollectionManager.emulateOpenFailure = false
     }
 

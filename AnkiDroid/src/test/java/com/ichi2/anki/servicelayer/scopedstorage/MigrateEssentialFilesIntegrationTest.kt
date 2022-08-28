@@ -108,7 +108,7 @@ class MigrateEssentialFilesIntegrationTest : RobolectricTest() {
     @Test
     fun exception_if_source_already_scoped() {
         getPreferences().edit { putString(DECK_PATH, destinationPath.canonicalPath) }
-        CollectionHelper.getInstance().setColForTests(null)
+        CollectionHelper.instance.setColForTests(null)
 
         val newDestination = File(destinationPath, "again")
 

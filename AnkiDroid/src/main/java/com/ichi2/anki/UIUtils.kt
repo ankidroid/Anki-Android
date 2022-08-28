@@ -50,7 +50,7 @@ object UIUtils {
     @JvmStatic
     @JvmOverloads
     fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
-        if (CollectionHelper.getInstance().colIsOpen()) {
+        if (CollectionHelper.instance.colIsOpen()) {
             val listener: TaskListener<Void?, Void?> = object : TaskListener<Void?, Void?>() {
                 override fun onPreExecute() {
                     Timber.d("saveCollectionInBackground: start")

@@ -38,14 +38,14 @@ object CollectionLoader {
         lifecycleOwner.lifecycleScope.launch {
             val col = withContext(Dispatchers.IO) {
                 // Don't touch collection if lockCollection flag is set
-                if (CollectionHelper.getInstance().isCollectionLocked) {
+                if (CollectionHelper.instance.isCollectionLocked) {
                     Timber.w("onStartLoading() :: Another thread has requested to keep the collection closed.")
                     null
                 } else {
                     // load collection
                     try {
                         Timber.d("CollectionLoader accessing collection")
-                        val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.instance.applicationContext)
+                        val col = CollectionHelper.instance.getCol(AnkiDroidApp.instance.applicationContext)
                         Timber.i("CollectionLoader obtained collection")
                         col
                     } catch (e: RuntimeException) {

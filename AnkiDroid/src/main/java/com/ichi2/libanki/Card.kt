@@ -589,7 +589,7 @@ open class Card : Cloneable {
 
         @Throws(CancellationException::class)
         fun deepCopyCardArray(originals: Array<Card>, cancelListener: CancelListener): Array<Card> {
-            val col = CollectionHelper.getInstance().getCol(AnkiDroidApp.instance)
+            val col = CollectionHelper.instance.getCol(AnkiDroidApp.instance)!!
             val copies = mutableListOf<Card>()
             for (i in originals.indices) {
                 if (cancelListener.isCancelled()) {

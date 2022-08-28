@@ -181,7 +181,7 @@ class FilterSheetBottomFragment :
     }
 
     override val col: Collection
-        get() = CollectionHelper.getInstance().getCol(activity)
+        get() = CollectionHelper.instance.getCol(activity)!!
 
     /**
      * Add/remove items from list of selected filters

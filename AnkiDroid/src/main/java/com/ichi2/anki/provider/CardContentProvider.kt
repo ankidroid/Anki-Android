@@ -209,7 +209,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("query", uri)
         }
-        val col = CollectionHelper.getInstance().getCol(mContext)
+        val col = CollectionHelper.instance.getCol(mContext)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         Timber.d(getLogMessage("query", uri))
 
@@ -421,7 +421,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceUpdateSecurity(uri)) {
             throwSecurityException("update", uri)
         }
-        val col = CollectionHelper.getInstance().getCol(mContext)
+        val col = CollectionHelper.instance.getCol(mContext)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         col.log(getLogMessage("update", uri))
 
@@ -666,7 +666,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission()) {
             throwSecurityException("delete", uri)
         }
-        val col = CollectionHelper.getInstance().getCol(mContext)
+        val col = CollectionHelper.instance.getCol(mContext)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         col.log(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
@@ -723,7 +723,7 @@ class CardContentProvider : ContentProvider() {
         if (valuesArr == null || valuesArr.size == 0) {
             return 0
         }
-        val col = CollectionHelper.getInstance().getCol(mContext)
+        val col = CollectionHelper.instance.getCol(mContext)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         if (col.decks.isDyn(deckId)) {
             throw IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes")
@@ -789,7 +789,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("insert", uri)
         }
-        val col = CollectionHelper.getInstance().getCol(mContext)
+        val col = CollectionHelper.instance.getCol(mContext)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
         col.log(getLogMessage("insert", uri))
 
