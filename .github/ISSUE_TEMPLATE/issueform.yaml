@@ -1,7 +1,7 @@
-name: 🐞 Bug
-description:  File a bug/issue
-title: "[BUG] <title>"
-labels:  [Bug] 
+name: Issue
+description:  File a issue
+title: "[ISSUE] <title>"
+labels:   
 
 body:
   - type: markdown
