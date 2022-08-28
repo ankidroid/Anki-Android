@@ -80,16 +80,18 @@ class SingleTaskManager : TaskManager() {
      */
     // #7108: AsyncTask
     @Suppress("DEPRECATION")
-    @KotlinCleanup("use scoped function")
     override fun <Progress, Result> launchCollectionTaskConcrete(
         task: TaskDelegateBase<Progress, Result>,
         listener: TaskListener<in Progress, in Result?>?
     ): Cancellable {
         // Start new task
         val newTask = CollectionTask(task, listener, mLatestInstance)
-        addTasks(newTask)
-        newTask.execute()
-        return newTask
+
+        newTask.apply {
+            addTasks(this)
+            execute()
+            return this
+        }
     }
 
     /**
