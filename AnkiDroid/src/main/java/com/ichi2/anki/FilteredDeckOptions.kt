@@ -39,14 +39,12 @@ import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
-import java.util.*
 
 @NeedsTest("construction + onCreate - do this after converting to fragment-based preferences.")
 class FilteredDeckOptions :
     AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>(),
     SharedPreferences.OnSharedPreferenceChangeListener {
-    @KotlinCleanup("try to make mDeck non-null / use lateinit")
-    private var mDeck: Deck? = null
+    private lateinit var mDeck: Deck
     private var mAllowCommit = true
 
     // TODO: not anymore used in libanki?
@@ -65,19 +63,19 @@ class FilteredDeckOptions :
         var secondFilter = false
         override fun cacheValues() {
             Timber.d("cacheValues()")
-            val ar = mDeck!!.getJSONArray("terms").getJSONArray(0)
-            secondFilter = if (mDeck!!.getJSONArray("terms").length() > 1) true else false
-            var ar2: JSONArray?
+            val ar = mDeck.getJSONArray("terms").getJSONArray(0)
+            secondFilter = mDeck.getJSONArray("terms").length() > 1
+            val ar2: JSONArray?
             mValues["search"] = ar.getString(0)
             mValues["limit"] = ar.getString(1)
             mValues["order"] = ar.getString(2)
             if (secondFilter) {
-                ar2 = mDeck!!.getJSONArray("terms").getJSONArray(1)
+                ar2 = mDeck.getJSONArray("terms").getJSONArray(1)
                 mValues["search_2"] = ar2.getString(0)
                 mValues["limit_2"] = ar2.getString(1)
                 mValues["order_2"] = ar2.getString(2)
             }
-            val delays = mDeck!!.optJSONArray("delays")
+            val delays = mDeck.optJSONArray("delays")
             if (delays != null) {
                 mValues["steps"] = convertFromJSON(delays)
                 mValues["stepsOn"] = java.lang.Boolean.toString(true)
@@ -85,7 +83,7 @@ class FilteredDeckOptions :
                 mValues["steps"] = "1 10"
                 mValues["stepsOn"] = java.lang.Boolean.toString(false)
             }
-            mValues["resched"] = java.lang.Boolean.toString(mDeck!!.getBoolean("resched"))
+            mValues["resched"] = java.lang.Boolean.toString(mDeck.getBoolean("resched"))
         }
 
         inner class Editor : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack.Editor() {
@@ -93,7 +91,7 @@ class FilteredDeckOptions :
                 Timber.d("commit() changes back to database")
                 for ((key, value) in update.valueSet()) {
                     Timber.i("Change value for key '%s': %s", key, value)
-                    val ar = mDeck!!.getJSONArray("terms")
+                    val ar = mDeck.getJSONArray("terms")
                     if (pref.secondFilter) {
                         when (key) {
                             "search_2" -> {
@@ -119,21 +117,21 @@ class FilteredDeckOptions :
                             ar.getJSONArray(0).put(2, (value as String).toInt())
                         }
                         "resched" -> {
-                            mDeck!!.put("resched", value)
+                            mDeck.put("resched", value)
                         }
                         "stepsOn" -> {
                             val on = value as Boolean
                             if (on) {
                                 val steps = convertToJSON(mValues["steps"]!!)
                                 if (steps!!.length() > 0) {
-                                    mDeck!!.put("delays", steps)
+                                    mDeck.put("delays", steps)
                                 }
                             } else {
-                                mDeck!!.put("delays", JSONObject.NULL)
+                                mDeck.put("delays", JSONObject.NULL)
                             }
                         }
                         "steps" -> {
-                            mDeck!!.put("delays", convertToJSON((value as String)))
+                            mDeck.put("delays", convertToJSON((value as String)))
                         }
                         "preset" -> {
                             val i: Int = (value as String).toInt()
@@ -161,7 +159,7 @@ class FilteredDeckOptions :
 
                 // save deck
                 try {
-                    col.decks.save(mDeck!!)
+                    col.decks.save(mDeck)
                 } catch (e: RuntimeException) {
                     Timber.e(e, "RuntimeException on saving deck")
                     CrashReportService.sendExceptionReport(e, "FilteredDeckOptionsSaveDeck")
@@ -211,7 +209,7 @@ class FilteredDeckOptions :
             col.decks.current()
         }
         registerExternalStorageListener()
-        if (mDeck!!.isStd) {
+        if (mDeck.isStd) {
             Timber.w("Deck is not a dyn deck")
             finish()
             return
@@ -227,7 +225,7 @@ class FilteredDeckOptions :
         var title = resources.getString(R.string.deckpreferences_title)
         if (title.contains("XXX")) {
             title = try {
-                title.replace("XXX", mDeck!!.getString("name"))
+                title.replace("XXX", mDeck.getString("name"))
             } catch (e: JSONException) {
                 Timber.w(e)
                 title.replace("XXX", "???")
@@ -284,7 +282,7 @@ class FilteredDeckOptions :
         if (prefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {
-                col.sched.rebuildDyn(mDeck!!.getLong("id"))
+                col.sched.rebuildDyn(mDeck.getLong("id"))
             } catch (e: JSONException) {
                 Timber.e(e)
             }
@@ -300,8 +298,7 @@ class FilteredDeckOptions :
         val keys: Set<String> = pref.mValues.keys
         for (key in keys) {
             val pref = findPreference(key)
-            var value: String?
-            value = if (pref == null) {
+            val value: String? = if (pref == null) {
                 continue
             } else if (pref is CheckBoxPreference) {
                 continue
@@ -331,7 +328,7 @@ class FilteredDeckOptions :
     }
 
     @Suppress("deprecation") // Tracked as #5019 on github
-    protected fun buildLists() {
+    private fun buildLists() {
         val newOrderPref = findPreference("order") as ListPreference
         val newOrderPrefSecond = findPreference("order_2") as ListPreference
         newOrderPref.setEntries(R.array.cram_deck_conf_order_labels)
@@ -357,15 +354,15 @@ class FilteredDeckOptions :
                 return@OnPreferenceChangeListener true
             }
             if (!newValue) {
-                mDeck!!.getJSONArray("terms").remove(1)
+                mDeck.getJSONArray("terms").remove(1)
                 secondFilter.isEnabled = false
             } else {
                 secondFilter.isEnabled = true
                 /**Link to the defaults used in AnkiDesktop
                  * <https://github.com/ankitects/anki/blob/1b15069b248a8f86f9bd4b3c66a9bfeab8dfb2b8/qt/aqt/filtered_deck.py#L148-L149>
                  */
-                val narr = JSONArray(Arrays.asList("", 20, 5))
-                mDeck!!.getJSONArray("terms").put(1, narr)
+                val narr = JSONArray(listOf("", 20, 5))
+                mDeck.getJSONArray("terms").put(1, narr)
                 val newOrderPrefSecond = findPreference("order_2") as ListPreference
                 newOrderPrefSecond.value = "5"
             }
