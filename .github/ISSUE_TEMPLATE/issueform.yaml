@@ -1,8 +1,7 @@
 name: 🐞 Bug
 description:  File a bug/issue
 title: "[BUG] <title>"
-labels:  [Bug]
-assignees: 
+labels:  [Bug] 
 
 body:
   - type: markdown
