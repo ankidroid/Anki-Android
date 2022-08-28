@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Thanks for taking the time to fill out this bug/issue report!
   - type: checkboxes
     id: contact
     attributes:
@@ -18,6 +18,15 @@ body:
         required: true
     validations:
       required: false
+  - type: checkboxes
+  id: cat-preferences
+  attributes:
+    label: What kinds of cats do you like?
+    description: You may select more than one.
+    options:
+      - label: Orange cat (required. Everyone likes orange cats.)
+        required: true
+      - label: **Black cat**
   - type: textarea
     id: what-happened
     attributes:
