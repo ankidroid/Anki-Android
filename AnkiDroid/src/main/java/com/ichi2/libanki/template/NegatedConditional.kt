@@ -13,52 +13,40 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+package com.ichi2.libanki.template
 
-package com.ichi2.libanki.template;
+import com.ichi2.utils.KotlinCleanup
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public class NegatedConditional extends ParsedNode {
-
-    private final String mKey;
-    private final ParsedNode mChild;
-
-
-    public NegatedConditional(String key, ParsedNode child) {
-        this.mKey = key;
-        this.mChild = child;
+@KotlinCleanup("fix hashCode related @Suppress")
+@Suppress("EqualsOrHashCode")
+class NegatedConditional(private val key: String, private val child: ParsedNode) : ParsedNode() {
+    override fun template_is_empty(nonempty_fields: Set<String>): Boolean {
+        return nonempty_fields.contains(key) || child.template_is_empty(nonempty_fields)
     }
 
-    @Override
-    public boolean template_is_empty(@NonNull Set<String> nonempty_fields) {
-        return nonempty_fields.contains(mKey) || mChild.template_is_empty(nonempty_fields);
-    }
-
-    @NonNull
-    @Override
-    public void render_into(Map<String, String> fields, Set<String> nonempty_fields, StringBuilder builder) throws TemplateError {
-        if (!nonempty_fields.contains(mKey)) {
-            mChild.render_into(fields, nonempty_fields, builder);
+    @Throws(TemplateError::class)
+    override fun render_into(
+        fields: Map<String, String>,
+        nonempty_fields: Set<String>,
+        builder: StringBuilder
+    ) {
+        if (!nonempty_fields.contains(key)) {
+            child.render_into(fields, nonempty_fields, builder)
         }
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (! (obj instanceof NegatedConditional)) {
-            return false;
+    @KotlinCleanup("fix parameter name issue")
+    @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+    override fun equals(obj: Any?): Boolean {
+        if (obj !is NegatedConditional) {
+            return false
         }
-        NegatedConditional other = (NegatedConditional) obj;
-        return other.mKey.equals(mKey) && other.mChild.equals(mChild);
+        val other = obj
+        return other.key == key && other.child == child
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return "new NegatedConditional(\"" + mKey.replace("\\", "\\\\") + "," + mChild + "\")";
+    override fun toString(): String {
+        @KotlinCleanup("this seems like java")
+        return "new NegatedConditional(\"" + key.replace("\\", "\\\\") + "," + child + "\")"
     }
 }
