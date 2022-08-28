@@ -59,6 +59,8 @@ tasks.withType(Test) {
     jacoco.excludes = ['jdk.internal.*']
 }
 
+def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+
 // Our merge report task
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', 'connectedPlayDebugAndroidTest']) {
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
@@ -72,12 +74,12 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', '
         html.destination htmlOutDir
     }
 
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
     def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/playDebug/classes", excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
-    classDirectories.from = files([debugTree])
+    classDirectories.from = files([debugTree, kotlinClasses])
     executionData.from = fileTree(dir: project.buildDir, includes: [
             '**/*.exec',
             '**/*.ec'
@@ -97,12 +99,12 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest
         html.destination htmlOutDir
     }
 
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
     def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/playDebug/classes", excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
-    classDirectories.from = files([debugTree])
+    classDirectories.from = files([debugTree, kotlinClasses])
     executionData.from = fileTree(dir: project.buildDir, includes: [
             '**/*.exec'
 
@@ -122,12 +124,12 @@ task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedPlayDebug
         html.destination htmlOutDir
     }
 
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
     def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/playDebug/classes", excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
-    classDirectories.from = files([debugTree])
+    classDirectories.from = files([debugTree, kotlinClasses])
     executionData.from = fileTree(dir: project.buildDir, includes: [
             '**/*.ec'
     ])
