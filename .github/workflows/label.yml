@@ -98,9 +98,13 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: `Message to maintainers, this PR contains strings changes. So read more about updating strings on wiki,
-                      https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#localization-administration
-                      https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#download-localized-strings`
+                body: `Message to maintainers, this PR contains strings changes. 
+            1. Before merging this PR, it is best to run the "Sync Translations" GitHub action, then make and merge a PR from the i18n_sync branch to get translations cleaned out.
+            2. Then merge this PR, and immediately do another translation PR so the huge change made by this PR's key changes are all by themselves.
+                
+            Read more about updating strings on the wiki,
+            - [localization-administration](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#localization-administration)
+            - [download-localized-strings](https://github.com/ankidroid/Anki-Android/wiki/Development-Guide#download-localized-strings)`
               })
             }
 
