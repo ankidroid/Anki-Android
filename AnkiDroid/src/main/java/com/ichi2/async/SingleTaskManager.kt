@@ -166,15 +166,13 @@ class SingleTaskManager : TaskManager() {
     override fun waitForAllToFinishConcrete(timeoutSeconds: Int): Boolean {
         // HACK: This should be better - there is currently a race condition in sLatestInstance, and no means to obtain this information.
         // This should work in all reasonable cases given how few tasks we have concurrently blocking.
-        var result: Boolean
-        result = waitToFinish(timeoutSeconds / 4)
-        sleep(10)
-        result = result and waitToFinish(timeoutSeconds / 4)
-        sleep(10)
-        result = result and waitToFinish(timeoutSeconds / 4)
-        sleep(10)
-        result = result and waitToFinish(timeoutSeconds / 4)
-        sleep(10)
+        var result = true
+
+        repeat(4) {
+            result = result and waitToFinish(timeoutSeconds / 4)
+            sleep(10)
+        }
+
         Timber.i("Waited for all tasks to finish")
         return result
     }
