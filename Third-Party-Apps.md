@@ -18,6 +18,8 @@ Bildkortsappen is an Android app to create flashcards for language learning. Giv
 Look up Mandarin Chinese words offline using English, Pinyin or Chinese characters (Hanzi) in a clean, intuitive, yet powerful interface. AnkiDroid Flashcards support (bulk export as well as auto-export when word is starred).
 ### [Hanping Cantonese Dictionary](https://play.google.com/store/apps/details?id=com.embermitre.hanping.cantodict.app.pro)
 Cantonese dictionary with AnkiDroid Flashcards support (bulk export as well as auto-export when word is starred) for studying using Anki flashcards.
+###  [Text scanner for ankidroid] (https://play.google.com/store/apps/details?id=com.altrech.ocrapp)
+This app will easily allow you to create and add flashcards to ankidroid containing a huge amount of text.
 ### [The Korean Learners' Dictionary](https://play.google.com/store/apps/details?id=com.schurawel.kl_dictionary)
 A Korean dictionary available in multiple languages that uses the database of the Korean Government's National Institute of Korean Language. Utilizes the AnkiDroid api to create flashcards from within the app.
 ### [jidoujisho](https://github.com/lrorpilla/jidoujisho)
