@@ -45,7 +45,7 @@ import timber.log.Timber
 fun DeckPicker.syncAuth(): SyncAuth? {
     val preferences = AnkiDroidApp.getSharedPrefs(this)
     val hkey = preferences.getString("hkey", null)
-    val hostNum = HostNumFactory.getInstance(baseContext).getHostNum()
+    val hostNum = HostNumFactory.getInstance(baseContext).hostNum
     return hkey?.let {
         syncAuth {
             this.hkey = hkey
@@ -124,7 +124,7 @@ private suspend fun handleNormalSync(
     }
 
     // Save current host number
-    HostNumFactory.getInstance(deckPicker).setHostNum(output.hostNumber)
+    HostNumFactory.getInstance(deckPicker).hostNum = output.hostNumber
 
     when (output.required) {
         // a successful sync returns this value

@@ -18,25 +18,24 @@ package com.ichi2.anki.web
 
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
+import androidx.core.content.edit
 import com.ichi2.libanki.sync.HostNum
 import timber.log.Timber
 
 class PreferenceBackedHostNum(hostNum: Int?, private val preferences: SharedPreferences) : HostNum(hostNum) {
     /** Clearing hostNum whenever on log out/changes the server URL should avoid any problems with malicious servers */
     override fun reset() {
-        setHostNum(getDefaultHostNum())
+        hostNum = getDefaultHostNum()
     }
 
-    override fun getHostNum(): Int? {
-        return getHostNum(preferences)
-    }
-
-    override fun setHostNum(newHostNum: Int?) {
-        Timber.d("Setting hostnum to %s", newHostNum)
-        val prefValue = convertToPreferenceValue(newHostNum)
-        preferences.edit().putString("hostNum", prefValue).apply()
-        super.setHostNum(newHostNum)
-    }
+    override var hostNum: Int?
+        get() = getHostNum(preferences)
+        set(value) {
+            Timber.d("Setting hostnum to %s", value)
+            val prefValue = convertToPreferenceValue(value)
+            preferences.edit { putString("hostNum", prefValue) }
+            super.hostNum = value
+        }
 
     @CheckResult
     private fun convertToPreferenceValue(newHostNum: Int?): String? {

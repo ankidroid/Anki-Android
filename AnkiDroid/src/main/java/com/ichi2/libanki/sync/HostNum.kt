@@ -16,7 +16,6 @@
 package com.ichi2.libanki.sync
 
 import com.ichi2.libanki.Consts
-import com.ichi2.utils.KotlinCleanup
 
 /**
  * The server provides hostNum in the /sync/meta call. All requests after that (including future meta requests)
@@ -34,23 +33,13 @@ import com.ichi2.utils.KotlinCleanup
  *
  * As new user data will likely not be under the same hostNum
  */
-@KotlinCleanup("turn hostNum into a property and remove getHostNum/setHostNum")
-open class HostNum(private var hostNum: Int?) {
-
-    open fun getHostNum(): Int? {
-        return hostNum
-    }
-
-    open fun setHostNum(newHostNum: Int?) {
-        hostNum = newHostNum
-    }
+open class HostNum(open var hostNum: Int?) {
 
     open fun reset() {
         hostNum = getDefaultHostNum()
     }
 
     companion object {
-        @KotlinCleanup("try to inline in reset()")
         @JvmStatic
         fun getDefaultHostNum(): Int? {
             return Consts.DEFAULT_HOST_NUM
