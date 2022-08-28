@@ -15,6 +15,7 @@
 import fs from "fs";
 import path from "path";
 import readline from "readline";
+import { checkI18nFile } from "./check";
 import {
     LANGUAGES,
     LOCALIZED_REGIONS,
@@ -56,17 +57,13 @@ async function replacechars(fileName: string): Promise<boolean> {
             if (line.startsWith("    <item>0 </item>")) {
                 line = "    <item>0</item>\n";
             }
-
-            line = line.replace(/\'/g, "\\'");
-            line = line.replace(/\\\\\'/g, "\\'");
-            line = line.replace(/\n\s/g, "\\n");
-            line = line.replace(/…/g, "&#8230;");
-
-            // valid format for xml file ankidroid is %1$s but some translator may put $1s$, so it needs to correct/replace
-            const regexp = new RegExp(/%[0-9]s\$/g);
-            if (line.search(regexp) != -1) {
-                errorOccured = true;
-            }
+            
+            // running prettier will change this line, remove back slash
+            line = line.replace(/\'/g, "\\'")
+            line = line.replace(/\\\\\'/g, "\\'")
+            line = line.replace(/\n\s/g, "\\n")
+            line = line.replace(/…/g, "&#8230;")
+            
         }
 
         fs.appendFileSync(newfilename, line + "\n");
