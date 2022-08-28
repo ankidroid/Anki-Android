@@ -579,15 +579,13 @@ open class Reviewer : AbstractFlashcardViewer() {
         super.blockControls(quick)
     }
 
-    @KotlinCleanup("tempAudioPath!!")
     override fun closeReviewer(result: Int, saveDeck: Boolean) {
         // Stop the mic recording if still pending
-        if (audioView != null) {
-            audioView!!.notifyStopRecord()
-        }
+        audioView?.notifyStopRecord()
+
         // Remove the temporary audio file
-        if (tempAudioPath != null) {
-            val tempAudioPathToDelete = File(tempAudioPath!!)
+        tempAudioPath?.let {
+            val tempAudioPathToDelete = File(it)
             if (tempAudioPathToDelete.exists()) {
                 tempAudioPathToDelete.delete()
             }
