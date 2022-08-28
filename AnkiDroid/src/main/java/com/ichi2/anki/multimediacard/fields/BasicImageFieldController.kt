@@ -50,6 +50,7 @@ import androidx.activity.result.ActivityResultRegistry
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContentResolverCompat
 import androidx.core.content.FileProvider
+import androidx.core.content.getSystemService
 import com.afollestad.materialdialogs.MaterialDialog
 import com.canhub.cropper.*
 import com.ichi2.anki.AnkiDroidApp
@@ -71,21 +72,21 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.math.min
+import kotlin.math.roundToLong
 
-@KotlinCleanup("IDE-lint")
 class BasicImageFieldController : FieldControllerBase(), IFieldController {
     @KotlinCleanup("lateinit wherever possible")
-    private var mImagePreview: ImageView? = null
-    private var mImageFileSize: TextView? = null
-    private var mImageFileSizeWarning: TextView? = null
+    private lateinit var mImagePreview: ImageView
+    private lateinit var mImageFileSize: TextView
+    private lateinit var mImageFileSizeWarning: TextView
     private var mViewModel = ImageViewModel(null, null)
     private var mPreviousImagePath: String? = null // save the latest path to prevent from cropping or taking photo action canceled
     private var mPreviousImageUri: Uri? = null
     private var mAnkiCacheDirectory: String? = null // system provided 'External Cache Dir' with "temp-photos" on it
     // e.g.  '/self/primary/Android/data/com.ichi2.anki.AnkiDroid/cache/temp-photos'
 
-    private var mMetrics: DisplayMetrics? = null
-    private var mCropButton: Button? = null
+    private lateinit var mCropButton: Button
     private val maxImageSize: Int
         get() {
             val metrics = displayMetrics
@@ -93,7 +94,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             val height = metrics.heightPixels
             val width = metrics.widthPixels
 
-            return Math.min(height * 0.4, width * 0.6).toInt()
+            return min(height * 0.4, width * 0.6).toInt()
         }
     private lateinit var cropImageRequest: ActivityResultLauncher<CropImageContractOptions>
     @VisibleForTesting
@@ -146,31 +147,34 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
         drawUIComponents(context)
 
-        mCropButton = Button(mActivity)
-        mCropButton!!.text = gtxt(R.string.crop_button)
-        mCropButton!!.setOnClickListener { mViewModel = requestCrop(mViewModel) }
-        mCropButton!!.visibility = View.INVISIBLE
-
-        val btnGallery = Button(mActivity)
-        btnGallery.text = gtxt(R.string.multimedia_editor_image_field_editing_galery)
-        btnGallery.setOnClickListener {
-            val i = Intent(Intent.ACTION_PICK)
-            i.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-            mActivity.startActivityForResultWithoutAnimation(i, ACTIVITY_SELECT_IMAGE)
+        mCropButton = Button(mActivity).apply {
+            text = gtxt(R.string.crop_button)
+            setOnClickListener { mViewModel = requestCrop(mViewModel) }
+            visibility = View.INVISIBLE
         }
 
-        val btnDraw = Button(mActivity)
-        btnDraw.text = gtxt(R.string.drawing)
-        btnDraw.setOnClickListener {
-            mActivity.startActivityForResultWithoutAnimation(Intent(mActivity, DrawingActivity::class.java), ACTIVITY_DRAWING)
+        val btnGallery = Button(mActivity).apply {
+            text = gtxt(R.string.multimedia_editor_image_field_editing_galery)
+            setOnClickListener {
+                val i = Intent(Intent.ACTION_PICK)
+                i.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+                mActivity.startActivityForResultWithoutAnimation(i, ACTIVITY_SELECT_IMAGE)
+            }
         }
 
-        val btnCamera = Button(mActivity)
-        btnCamera.text = gtxt(R.string.multimedia_editor_image_field_editing_photo)
-        btnCamera.setOnClickListener { mViewModel = captureImage(context) }
+        val btnDraw = Button(mActivity).apply {
+            text = gtxt(R.string.drawing)
+            setOnClickListener {
+                mActivity.startActivityForResultWithoutAnimation(Intent(mActivity, DrawingActivity::class.java), ACTIVITY_DRAWING)
+            }
+        }
 
-        if (!canUseCamera(context)) {
-            btnCamera.visibility = View.INVISIBLE
+        val btnCamera = Button(mActivity).apply {
+            text = gtxt(R.string.multimedia_editor_image_field_editing_photo)
+            setOnClickListener { mViewModel = captureImage(context) }
+            if (!canUseCamera(context)) {
+                visibility = View.INVISIBLE
+            }
         }
 
         setPreviewImage(mViewModel.imagePath, maxImageSize)
@@ -195,7 +199,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         @NeedsTest("check the happy/failure path for the crop action")
         cropImageRequest = registryToUse.register(CROP_IMAGE_LAUNCHER_KEY, CropImageContract()) { cropResult ->
             if (cropResult.isSuccessful) {
-                mImageFileSizeWarning?.visibility = View.GONE
+                mImageFileSizeWarning.visibility = View.GONE
                 if (cropResult != null) {
                     handleCropResult(cropResult)
                 }
@@ -225,17 +229,13 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
 
         // Some hardware has no camera or reports yes but has zero (e.g., cheap devices, and Chromebook emulator)
-        val cameraManager = AnkiDroidApp.instance.applicationContext
-            .getSystemService(Context.CAMERA_SERVICE) as CameraManager?
-        @KotlinCleanup(".isNotEmpty()")
-        try {
-            if (cameraManager != null) {
-                return cameraManager.cameraIdList.size > 0
-            }
+        val cameraManager = AnkiDroidApp.instance.applicationContext.getSystemService<CameraManager>()
+        return try {
+            cameraManager?.cameraIdList?.isNotEmpty() ?: false
         } catch (e: CameraAccessException) {
             Timber.e(e, "Unable to enumerate cameras")
+            false
         }
-        return false
     }
 
     private fun captureImage(context: Context): ImageViewModel {
@@ -300,11 +300,8 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     @Throws(IOException::class)
-    @KotlinCleanup("Scope function")
-    private fun createCachedFile(filename: String): File {
-        val file = File(mAnkiCacheDirectory, filename)
-        file.deleteOnExit()
-        return file
+    private fun createCachedFile(filename: String) = File(mAnkiCacheDirectory, filename).apply {
+        deleteOnExit()
     }
 
     private fun drawUIComponents(context: Context) {
@@ -313,30 +310,32 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         val height = metrics.heightPixels
         val width = metrics.widthPixels
 
-        mImagePreview = ImageView(mActivity)
-        mImagePreview!!.scaleType = ImageView.ScaleType.CENTER_INSIDE
-        mImagePreview!!.adjustViewBounds = true
+        mImagePreview = ImageView(mActivity).apply {
+            scaleType = ImageView.ScaleType.CENTER_INSIDE
+            adjustViewBounds = true
 
-        mImagePreview!!.maxHeight = Math.round(height * 0.4).toInt()
-        mImagePreview!!.maxWidth = Math.round(width * 0.6).toInt()
+            maxHeight = (height * 0.4).roundToLong().toInt()
+            maxWidth = (width * 0.6).roundToLong().toInt()
+        }
 
-        mImageFileSize = FixedEditText(context)
-        mImageFileSize!!.setMaxWidth(Math.round(width * 0.6).toInt())
-        mImageFileSize!!.setEnabled(false)
-        mImageFileSize!!.setGravity(Gravity.CENTER_HORIZONTAL)
-        mImageFileSize!!.setBackground(null)
-        mImageFileSize!!.setVisibility(View.GONE)
+        mImageFileSize = FixedEditText(context).apply {
+            maxWidth = (width * 0.6).roundToLong().toInt()
+            isEnabled = false
+            gravity = Gravity.CENTER_HORIZONTAL
+            background = null
+            visibility = View.GONE
+        }
 
         // #5513 - Image compression failed, but we'll confuse most users if we tell them that. Instead, just imply that
         // there's an action that they can take.
-        mImageFileSizeWarning = FixedEditText(context)
-        mImageFileSizeWarning!!.setMaxWidth(Math.round(width * 0.6).toInt())
-        mImageFileSizeWarning!!.setEnabled(false)
-        mImageFileSizeWarning!!.setTextColor(Color.parseColor("#FF4500")) // Orange-Red
-        mImageFileSizeWarning!!.setGravity(Gravity.CENTER_HORIZONTAL)
-        mImageFileSizeWarning!!.setVisibility(View.GONE)
-        mImageFileSize!!.setBackground(null)
-        mImageFileSizeWarning!!.setText(R.string.multimedia_editor_image_compression_failed)
+        mImageFileSizeWarning = FixedEditText(context).apply {
+            maxWidth = (width * 0.6).roundToLong().toInt()
+            isEnabled = false
+            setTextColor(Color.parseColor("#FF4500")) // Orange-Red
+            gravity = Gravity.CENTER_HORIZONTAL
+            visibility = View.GONE
+            setText(R.string.multimedia_editor_image_compression_failed)
+        }
     }
 
     private fun gtxt(id: Int): String {
@@ -345,14 +344,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     // #9333: getDefaultDisplay & getMetrics
     @Suppress("deprecation") // defaultDisplay
-    private val displayMetrics: DisplayMetrics
-        get() {
-            if (mMetrics == null) {
-                mMetrics = DisplayMetrics()
-                mActivity.windowManager.defaultDisplay.getMetrics(mMetrics)
-            }
-            return mMetrics!!
+    private val displayMetrics: DisplayMetrics by lazy {
+        DisplayMetrics().apply {
+            mActivity.windowManager.defaultDisplay.getMetrics(this)
         }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // All image modification methods come through here - this ensures that the state is consistent
@@ -376,27 +372,29 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             return
         }
 
-        mImageFileSizeWarning!!.visibility = View.GONE
-        @KotlinCleanup("use when")
-        if (requestCode == ACTIVITY_SELECT_IMAGE) {
-            try {
-                handleSelectImageIntent(data)
-                mImageFileSizeWarning!!.visibility = View.GONE
-            } catch (e: Exception) {
-                CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent")
-                Timber.e(e, "Failed to select image")
-                showSomethingWentWrong()
+        mImageFileSizeWarning.visibility = View.GONE
+        when (requestCode) {
+            ACTIVITY_SELECT_IMAGE -> {
+                try {
+                    handleSelectImageIntent(data)
+                    mImageFileSizeWarning.visibility = View.GONE
+                } catch (e: Exception) {
+                    CrashReportService.sendExceptionReport(e, "BasicImageFieldController - handleSelectImageIntent")
+                    Timber.e(e, "Failed to select image")
+                    showSomethingWentWrong()
+                    return
+                }
+            }
+            ACTIVITY_TAKE_PICTURE -> handleTakePictureResult()
+            ACTIVITY_DRAWING -> {
+                // receive image from drawing activity
+                val savedImagePath = data!!.extras!![DrawingActivity.EXTRA_RESULT_WHITEBOARD] as Uri?
+                handleDrawingResult(savedImagePath)
+            }
+            else -> {
+                Timber.w("Unhandled request code: %d", requestCode)
                 return
             }
-        } else if (requestCode == ACTIVITY_TAKE_PICTURE) {
-            handleTakePictureResult()
-        } else if (requestCode == ACTIVITY_DRAWING) {
-            // receive image from drawing activity
-            val savedImagePath = data!!.extras!![DrawingActivity.EXTRA_RESULT_WHITEBOARD] as Uri?
-            handleDrawingResult(savedImagePath)
-        } else {
-            Timber.w("Unhandled request code: %d", requestCode)
-            return
         }
         setPreviewImage(mViewModel.imagePath, maxImageSize)
     }
@@ -410,11 +408,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     private fun showSomethingWentWrong() {
-        UIUtils.showThemedToast(mActivity, mActivity.getResources().getString(R.string.multimedia_editor_something_wrong), false)
+        UIUtils.showThemedToast(mActivity, mActivity.resources.getString(R.string.multimedia_editor_something_wrong), false)
     }
 
     private fun showSVGPreviewToast() {
-        UIUtils.showThemedToast(mActivity, mActivity.getResources().getString(R.string.multimedia_editor_svg_preview), false)
+        UIUtils.showThemedToast(mActivity, mActivity.resources.getString(R.string.multimedia_editor_svg_preview), false)
     }
 
     private fun handleSelectImageIntent(data: Intent?) {
@@ -424,7 +422,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             return
         }
         @KotlinCleanup("Make this non-inline")
-        Timber.i("handleSelectImageIntent() Intent: %s. extras: %s", data, if (data.extras == null) "null" else TextUtils.join(", ", data.extras!!.keySet()))
+        Timber.i(
+            "handleSelectImageIntent() Intent: %s. extras: %s",
+            data,
+            if (data.extras == null) "null" else TextUtils.join(", ", data.extras!!.keySet())
+        )
 
         val selectedImage = getImageUri(mActivity, data)
         if (selectedImage == null) {
@@ -486,7 +488,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             return null
         }
         return try {
-            val returnFile = FileUtil.internalizeUri(uri, internalFile, mActivity.getContentResolver())
+            val returnFile = FileUtil.internalizeUri(uri, internalFile, mActivity.contentResolver)
             Timber.d("internalizeUri successful. Returning internalFile.")
             returnFile
         } catch (e: Exception) {
@@ -512,11 +514,10 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
      *
      * @return true if successful, false indicates the current image is likely not usable, revert if possible
      */
-    @KotlinCleanup("make imagePath non null")
-    private fun rotateAndCompress(imagePath: String?, imageViewModel: ImageViewModel): Boolean {
+    private fun rotateAndCompress(imagePath: String, imageViewModel: ImageViewModel): Boolean {
         Timber.d("rotateAndCompress() on %s", imagePath)
         // Set the rotation of the camera image and save as png
-        val f = File(imagePath!!)
+        val f = File(imagePath)
         Timber.d("rotateAndCompress in path %s has size %d", f.absolutePath, f.length())
         // use same filename but with png extension for output file
         // Load into a bitmap with max size of 1920 pixels and rotate if necessary
@@ -554,12 +555,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         return true
     }
 
-    @KotlinCleanup(".isNotEmpty()")
     private fun setPreviewImage(imagePath: String?, maxsize: Int) {
-        if (imagePath != null && "" != imagePath) {
-            val f = File(imagePath)
-            setImagePreview(f, maxsize)
-        }
+        if (imagePath.isNullOrEmpty()) return
+
+        val f = File(imagePath)
+        setImagePreview(f, maxsize)
     }
 
     @VisibleForTesting
@@ -580,21 +580,18 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
     }
 
-    @KotlinCleanup("scope function")
     private fun onValidImage(b: Bitmap, fileSize: String) {
-        mImagePreview!!.setImageBitmap(b)
-        mImageFileSize!!.visibility = View.VISIBLE
-        mImageFileSize!!.text = fileSize
-        mCropButton!!.visibility = View.VISIBLE
+        mImagePreview.setImageBitmap(b)
+        mImageFileSize.visibility = View.VISIBLE
+        mImageFileSize.text = fileSize
+        mCropButton.visibility = View.VISIBLE
     }
 
     // ensure the previous preview is not visible
-    @KotlinCleanup("redundant imageView variable")
-    fun hideImagePreview() {
-        val imageView = mImagePreview
-        BitmapUtil.freeImageView(imageView)
-        mCropButton!!.visibility = View.INVISIBLE
-        mImageFileSize!!.visibility = View.INVISIBLE
+    private fun hideImagePreview() {
+        BitmapUtil.freeImageView(mImagePreview)
+        mCropButton.visibility = View.INVISIBLE
+        mImageFileSize.visibility = View.INVISIBLE
     }
 
     override fun onDestroy() {
@@ -648,14 +645,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         return ret
     }
 
-    @KotlinCleanup("Scope function")
     private fun setTemporaryMedia(imagePath: String) {
-        mField.imagePath = imagePath
-        mField.setHasTemporaryMedia(true)
+        mField.apply {
+            this.imagePath = imagePath
+            setHasTemporaryMedia(true)
+        }
     }
 
-    @KotlinCleanup("content non-null")
-    fun showCropDialog(content: String?, negativeCallback: (() -> Unit)?) {
+    fun showCropDialog(content: String, negativeCallback: (() -> Unit)?) {
         if (!mViewModel.isValid) {
             Timber.w("showCropDialog called with null URI or Path")
             return
@@ -684,8 +681,8 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     private fun rotateAndCompress(): Boolean {
-        if (!rotateAndCompress(mViewModel.imagePath, mViewModel)) {
-            mImageFileSizeWarning!!.visibility = View.VISIBLE
+        if (!rotateAndCompress(mViewModel.imagePath!!, mViewModel)) {
+            mImageFileSizeWarning.visibility = View.VISIBLE
             revertToPreviousImage()
             showSomethingWentWrong()
             return false
@@ -772,7 +769,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     }
 
     val isShowingPreview: Boolean
-        get() = mImageFileSize!!.visibility == View.VISIBLE
+        get() = mImageFileSize.visibility == View.VISIBLE
 
     private class ImageViewModel(val imagePath: String?, val imageUri: Uri?) {
         var isPreExistingImage = false
@@ -829,7 +826,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         @VisibleForTesting
         val ACTIVITY_SELECT_IMAGE = 1
         private const val ACTIVITY_TAKE_PICTURE = 2
-        private const val ACTIVITY_CROP_PICTURE = 3
         private const val ACTIVITY_DRAWING = 4
         private const val IMAGE_SAVE_MAX_WIDTH = 1920
         private const val CROP_IMAGE_LAUNCHER_KEY = "crop_image_launcher_key"
