@@ -1,7 +1,7 @@
 name: Issue
 description:  File a issue
 title: "[ISSUE] <title>"
-labels:   
+labels:  [] 
 
 body:
   - type: markdown
