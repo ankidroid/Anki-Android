@@ -63,21 +63,9 @@ class FinderTest : RobolectricTest() {
         val buriedCards = Finder(col).findCards(searchQuery, SortOrder.NoOrdering())
 
         // assert
-        assertThat(
-            "A manually buried card should be returned",
-            buriedCards,
-            hasItem(manuallyBuriedCard.id)
-        )
-        assertThat(
-            "A sibling buried card should be returned",
-            buriedCards,
-            hasItem(siblingBuried.id)
-        )
-        assertThat(
-            "sibling and manually buried should be the only cards returned",
-            buriedCards,
-            hasSize(2)
-        )
+        assertThat("A manually buried card should be returned", buriedCards, hasItem(manuallyBuriedCard.id))
+        assertThat("A sibling buried card should be returned", buriedCards, hasItem(siblingBuried.id))
+        assertThat("sibling and manually buried should be the only cards returned", buriedCards, hasSize(2))
     }
 
     private fun enableBurySiblings() {
