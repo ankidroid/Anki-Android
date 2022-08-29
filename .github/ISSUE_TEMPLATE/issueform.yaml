@@ -37,7 +37,8 @@ body:
   - type: textarea
     id: actual-behaviour
     attributes:
-      label: What actually happen?
+      label: Current behaviour?
+      discription: A concise discription of what you are experiencing
       placeholder: actual behaviour
       value: "actual behaviour"
     validations:
