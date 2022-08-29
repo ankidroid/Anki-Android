@@ -171,9 +171,8 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             Timber.d("doInBackgroundUpdateNote")
             // Save the note
             val sched = col.sched
-            val returnCard: Card
             val editNote = editCard.note()
-            try {
+            return try {
                 if (BackendFactory.defaultLegacySchema) {
                     col.db.executeInTransaction {
                         // TODO: undo integration
@@ -188,25 +187,23 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                     // no need to flush card in new path
                 }
                 if (isFromReviewer) {
-                    val newCard: Card?
                     if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
-                        newCard = editCard
-                        newCard.load()
-                        // reload qa-cache
-                        newCard.q(true)
+                        editCard.apply {
+                            load()
+                            // reload qa-cache
+                            q(true)
+                        }
                     } else {
-                        newCard = sched.card
+                        sched.card!! // check: are there deleted too?
                     }
-                    returnCard = newCard!! // check: are there deleted too?
                 } else {
-                    returnCard = editCard
+                    editCard
                 }
             } catch (e: RuntimeException) {
                 Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note")
                 CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateNote")
-                return null
+                null
             }
-            return returnCard
         }
     }
 
