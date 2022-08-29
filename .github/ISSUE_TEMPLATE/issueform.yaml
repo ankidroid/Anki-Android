@@ -22,8 +22,7 @@ body:
     id: steps
     attributes:
       label: What are the steps to reproduce this bug?
-      placeholder: Tell us what you see!
-      value: "tell briefly what are the steps to reproduce this bug."
+      placeholder: tell briefly what are the steps to reproduce this bug.
     validations:
       required: true     
   - type: textarea
@@ -31,8 +30,7 @@ body:
     attributes:
       label: What did you expect to happen?
       description: A concise discription of what you expect to happen.
-      placeholder: expected behavious!
-      value: "expected behaviour"
+      placeholder: expected behaviour
     validations:
       required: true  
   - type: textarea
@@ -41,7 +39,6 @@ body:
       label: Current behaviour?
       description: A concise discription of what you are experiencing.
       placeholder: actual behaviour
-      value: "actual behaviour"
     validations:
       required: true 
   - type: textarea
