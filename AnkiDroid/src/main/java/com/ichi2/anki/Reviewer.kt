@@ -53,6 +53,7 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
 import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
@@ -267,21 +268,30 @@ open class Reviewer : AbstractFlashcardViewer() {
         if (card == null) {
             return
         }
-        card.setUserFlag(flag)
-        card.flush()
-        refreshActionBar()
-        /* Following code would allow to update value of {{cardFlag}}.
-           Anki does not update this value when a flag is changed, so
-           currently this code would do something that anki itself
-           does not do. I hope in the future Anki will correct that
-           and this code may becomes useful.
+        launchCatchingTask {
+            card.setUserFlag(flag)
+            if (BackendFactory.defaultLegacySchema) {
+                card.flush()
+                /* Following code would allow to update value of {{cardFlag}}.
+               Anki does not update this value when a flag is changed, so
+               currently this code would do something that anki itself
+               does not do. I hope in the future Anki will correct that
+               and this code may becomes useful.
 
-        card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
-        if (sDisplayAnswer) {
-            displayCardAnswer();
-        } else {
-            displayCardQuestion();
-            } */onFlagChanged()
+            card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
+            if (sDisplayAnswer) {
+                displayCardAnswer();
+            } else {
+                displayCardQuestion();
+                } */
+            } else {
+                withCol {
+                    newBackend.setUserFlagForCards(listOf(card.id), flag)
+                }
+            }
+            refreshActionBar()
+            onFlagChanged()
+        }
     }
 
     private fun onFlagChanged() {

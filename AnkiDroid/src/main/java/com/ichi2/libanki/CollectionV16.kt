@@ -240,4 +240,9 @@ class CollectionV16(
     fun updateNote(note: Note) {
         backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
     }
+
+    /** Change the flag color of the specified cards. flag=0 removes flag. */
+    fun setUserFlagForCards(cids: Iterable<Long>, flag: Int) {
+        backend.setFlag(cardIds = cids, flag = flag)
+    }
 }
