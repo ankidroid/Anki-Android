@@ -28,7 +28,7 @@ body:
     validations:
       required: true
   - type: textarea
-    id: Steps to reproduce this bug
+    id: steps
     attributes:
       label: What happened?
       description: Also tell us, what did you expect to happen?
