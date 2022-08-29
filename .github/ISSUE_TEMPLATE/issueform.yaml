@@ -33,9 +33,9 @@ body:
       label: Reproduction steps
       description: write clear steps to reproduce this bug.
       placeholder: Tell us what you see!
-      value:|
-      -"1"
-      -"2"
+      value:>
+      "1"
+      "2"
     validations:
       required: true   
   - type: checkboxes
