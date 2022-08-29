@@ -8,6 +8,7 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug/issue report!
+        
   - type: checkboxes
     id: contact
     attributes:
@@ -18,13 +19,15 @@ body:
         required: true
     validations:
       required: true
+      
   - type: textarea
     id: steps
     attributes:
       label: What are the steps to reproduce this bug?
       placeholder: briefly explain the steps.
     validations:
-      required: true     
+      required: true   
+      
   - type: textarea
     id: expected-behaviour
     attributes:
@@ -33,6 +36,7 @@ body:
       placeholder: Expected behaviour.
     validations:
       required: true  
+      
   - type: textarea
     id: actual-behaviour
     attributes:
@@ -41,6 +45,7 @@ body:
       placeholder: Actual behaviour.
     validations:
       required: true 
+      
   - type: textarea
     id: debug-info
     attributes:
@@ -48,12 +53,14 @@ body:
       description: Refer to the [support page](https://ankidroid.org/docs/help.html) if you are unsure where to get the "debug info".
       placeholder: Debug info.
     validations:
-      required: true      
+      required: true  
+      
   - type: textarea
     id: extra_info
     attributes:
       label: Is there anything else you want to share?
-      placeholder: discibe any extra information.   
+      placeholder: discibe any extra information. 
+      
   - type: checkboxes
     id: research
     attributes:
