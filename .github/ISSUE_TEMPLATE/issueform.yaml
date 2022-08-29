@@ -30,24 +30,24 @@ body:
     id: expected-behaviour
     attributes:
       label: What did you expect to happen?
-      description: expected behavious
       placeholder: expected behavious!
+      value: "expected behaviour"
     validations:
       required: true  
   - type: textarea
     id: actual-behaviour
     attributes:
       label: What actually happen?
-      description: expected behavious
-      placeholder: expected behavious!
+      placeholder: actual behaviour
+      value: "actual behaviour"
     validations:
       required: true 
   - type: textarea
     id: debug-info
     attributes:
-      label: debug info
-      description: expected behavious
-      placeholder: expected behavious!
+      label: Debug info
+      description: Refer to the [support page](https://ankidroid.org/docs/help.html) if you are unsure where to get the "debug info".
+      placeholder: debug info
     validations:
       required: true      
   - type: checkboxes
