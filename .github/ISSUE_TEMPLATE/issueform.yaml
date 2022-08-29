@@ -50,17 +50,7 @@ body:
       description: expected behavious
       placeholder: expected behavious!
     validations:
-      required: true    
-  - type: checkboxes
-    id: contact
-    attributes:
-      label: Research
-      description: Please go through open issues, to see if anything similar already exists.
-      options:
-      - label: I have searched the existing issues
-        required: true
-    validations:
-      required: true    
+      required: true      
   - type: checkboxes
     id: research
     attributes:
