@@ -22,9 +22,8 @@ body:
     id: steps
     attributes:
       label: What are the steps to reproduce this bug?
-      description: tell briefly what are the steps to reproduce this bug.
       placeholder: Tell us what you see!
-      value: "1. "
+      value: "tell briefly what are the steps to reproduce this bug."
     validations:
       required: true     
   - type: textarea
