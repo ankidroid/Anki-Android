@@ -49,6 +49,11 @@ body:
       placeholder: Debug info.
     validations:
       required: true      
+  - type: textarea
+    id: extra_info
+    attributes:
+      label: Is there anything else you want to share?
+      placeholder: discibe any extra information.   
   - type: checkboxes
     id: research
     attributes:
