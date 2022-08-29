@@ -26,7 +26,7 @@ object TtsParser {
     fun getTextsToRead(html: String, clozeReplacement: String?): List<TTSTag> {
         val textsToRead: MutableList<TTSTag> = ArrayList()
         val elem = Jsoup.parseBodyFragment(html).body()
-        parseTtsElements(elem, textsToRead)
+        parseTtsElements(elem, textsToRead, clozeReplacement)
         if (textsToRead.isEmpty()) {
             // No <tts service="android"> elements found: return the text of the whole HTML fragment
             textsToRead.add(readWholeCard(elem.text().replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement!!)))
@@ -34,15 +34,15 @@ object TtsParser {
         return textsToRead
     }
 
-    private fun parseTtsElements(element: Element, textsToRead: MutableList<TTSTag>) {
+    private fun parseTtsElements(element: Element, textsToRead: MutableList<TTSTag>, clozeReplacement: String?) {
         if ("tts".equals(element.tagName(), ignoreCase = true) &&
             "android".equals(element.attr("service"), ignoreCase = true)
         ) {
-            textsToRead.add(localisedText(element.text(), element.attr("voice")))
+            textsToRead.add(localisedText(element.text().replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement!!), element.attr("voice")))
             return // ignore any children
         }
         for (child in element.children()) {
-            parseTtsElements(child, textsToRead)
+            parseTtsElements(child, textsToRead, clozeReplacement)
         }
     }
 
