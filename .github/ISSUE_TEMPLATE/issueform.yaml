@@ -55,7 +55,7 @@ body:
     id: research
     attributes:
       label: Research
-      description: confirm the points below:
+      description: Confirm the points below
       options:
         - label: I have read the [support page](https://ankidroid.org/docs/help.html) and am reporting a bug or enhancement request specific to AnkiDroid
           required: true
