@@ -22,7 +22,7 @@ body:
     id: steps
     attributes:
       label: What are the steps to reproduce this bug?
-      placeholder: tell briefly what are the steps to reproduce this bug.
+      placeholder: briefly explain the steps.
     validations:
       required: true     
   - type: textarea
