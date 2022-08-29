@@ -38,7 +38,7 @@ body:
     id: actual-behaviour
     attributes:
       label: Current behaviour?
-      discription: A concise discription of what you are experiencing
+      description: A concise discription of what you are experiencing
       placeholder: actual behaviour
       value: "actual behaviour"
     validations:
