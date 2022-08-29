@@ -28,14 +28,11 @@ body:
     validations:
       required: true     
   - type: textarea
-    id: what-happened
+    id: expected-behaviour
     attributes:
-      label: Reproduction steps
-      description: write clear steps to reproduce this bug.
+      label: What did you expect to happen?
+      description: expected behavious
       placeholder: Tell us what you see!
-      value: >
-        - 1 \n
-        - "2"
     validations:
       required: true   
   - type: checkboxes
