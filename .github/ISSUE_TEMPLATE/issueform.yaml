@@ -32,9 +32,17 @@ body:
     attributes:
       label: What did you expect to happen?
       description: expected behavious
-      placeholder: Tell us what you see!
+      placeholder: expected behavious!
     validations:
-      required: true   
+      required: true  
+  - type: textarea
+    id: actual-behaviour
+    attributes:
+      label: What actually happen?
+      description: expected behavious
+      placeholder: expected behavious!
+    validations:
+      required: true      
   - type: checkboxes
     id: terms
     attributes:
