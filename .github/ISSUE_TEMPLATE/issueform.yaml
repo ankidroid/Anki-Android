@@ -62,9 +62,9 @@ body:
     validations:
       required: true    
   - type: checkboxes
-    id: terms
+    id: research
     attributes:
-      label: Code of Conduct
+      label: Research
       description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
       options:
         - label: I have read the [support page](https://ankidroid.org/docs/help.html) and am reporting a bug or enhancement request specific to AnkiDroid
