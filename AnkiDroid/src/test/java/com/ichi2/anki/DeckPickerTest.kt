@@ -206,13 +206,13 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    fun confirmDeckDeletionDeletesEmptyDeck() {
+    fun confirmDeckDeletionDeletesEmptyDeck() = runTest {
         val did = addDeck("Hello World")
         assertThat("Deck was added", col.decks.count(), equalTo(2))
         val deckPicker = startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java, Intent()
         )
-        awaitJob(deckPicker.confirmDeckDeletion(did))
+        deckPicker.confirmDeckDeletion(did)
         advanceRobolectricLooperWithSleep()
         assertThat("deck was deleted", col.decks.count(), equalTo(1))
     }

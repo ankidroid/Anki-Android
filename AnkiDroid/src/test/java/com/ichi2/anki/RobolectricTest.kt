@@ -49,8 +49,8 @@ import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.KotlinCleanup
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.*
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.Matcher
@@ -62,10 +62,11 @@ import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
-import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 open class RobolectricTest : CollectionGetter {
 
@@ -211,17 +212,6 @@ open class RobolectricTest : CollectionGetter {
             return null
         }
         return dialog.view.contentLayout.findViewById<TextView>(R.id.md_text_message).text.toString()
-    }
-
-    fun awaitJob(job: Job?) {
-        job?.let {
-            runBlocking {
-                while (!job.isCompleted) {
-                    waitForAsyncTasksToComplete()
-                    ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
-                }
-            }
-        }
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
@@ -594,6 +584,33 @@ open class RobolectricTest : CollectionGetter {
                 }
                 throw e
             }
+        }
+    }
+
+    /** * A wrapper around the standard [kotlinx.coroutines.test.runTest] that
+     * takes care of updating the dispatcher used by CollectionManager as well.
+     * * An argument could be made for using [StandardTestDispatcher] and
+     * explicitly advanced coroutines with advanceUntilIdle(), but there are
+     * issues with using it at the moment:
+     * * - Any usage of CollectionManager with runBlocking() will hang. tearDown()
+     * calls runBlocking() twice, which prevents tests from finishing.
+     * - The hang is not limited to the scope of runTest(). Even if the runBlocking
+     * calls in tearDown() are selectively moved into this function,
+     * when a coroutine test fails, the next regular test
+     * that executes after it will call runBlocking(), and it then hangs.
+     *
+     * A fix for this might require either wrapping all tests in runTest(),
+     * or finding some other way to isolate the coroutine and non-coroutine tests
+     * on separate threads/processes.
+     * */
+    fun runTest(
+        context: CoroutineContext = EmptyCoroutineContext,
+        dispatchTimeoutMs: Long = 60_000L,
+        testBody: suspend TestScope.() -> Unit
+    ): TestResult {
+        kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs) {
+            CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
+            testBody()
         }
     }
 }

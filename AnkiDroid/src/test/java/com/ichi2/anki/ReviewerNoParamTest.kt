@@ -144,7 +144,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    fun undoingCardHidesFullScreen() {
+    fun undoingCardHidesFullScreen() = runTest {
         addNoteUsingBasicModel("Hello", "World")
         val reviewer = startReviewerFullScreen()
 
@@ -155,7 +155,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val hideCount = reviewer.delayedHideCount
 
-        awaitJob(reviewer.undo())
+        reviewer.undo()
 
         advanceRobolectricLooperWithSleep()
 
