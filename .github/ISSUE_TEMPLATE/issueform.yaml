@@ -30,7 +30,7 @@ body:
     attributes:
       label: What did you expect to happen?
       description: A concise discription of what you expect to happen.
-      placeholder: expected behaviour
+      placeholder: Expected behaviour.
     validations:
       required: true  
   - type: textarea
@@ -38,7 +38,7 @@ body:
     attributes:
       label: Current behaviour?
       description: A concise discription of what you are experiencing.
-      placeholder: actual behaviour
+      placeholder: Actual behaviour.
     validations:
       required: true 
   - type: textarea
@@ -46,7 +46,7 @@ body:
     attributes:
       label: Debug info
       description: Refer to the [support page](https://ankidroid.org/docs/help.html) if you are unsure where to get the "debug info".
-      placeholder: debug info
+      placeholder: Debug info.
     validations:
       required: true      
   - type: checkboxes
