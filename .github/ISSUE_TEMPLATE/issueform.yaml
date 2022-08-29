@@ -30,8 +30,8 @@ body:
   - type: textarea
     id: steps
     attributes:
-      label: What are the steps to produce this bug
-      description: tell breifly what are the steps to reproduce this bug.
+      label: What are the steps to reproduce this bug?
+      description: tell briefly what are the steps to reproduce this bug.
       placeholder: Tell us what you see!
       value: "A bug happened!"
     validations:
