@@ -42,7 +42,15 @@ body:
       description: expected behavious
       placeholder: expected behavious!
     validations:
-      required: true      
+      required: true 
+  - type: textarea
+    id: debug-info
+    attributes:
+      label: debug info
+      description: expected behavious
+      placeholder: expected behavious!
+    validations:
+      required: true     
   - type: checkboxes
     id: terms
     attributes:
