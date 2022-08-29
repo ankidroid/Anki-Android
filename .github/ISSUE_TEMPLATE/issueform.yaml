@@ -50,12 +50,27 @@ body:
       description: expected behavious
       placeholder: expected behavious!
     validations:
-      required: true     
+      required: true    
+  - type: checkboxes
+    id: contact
+    attributes:
+      label: Research
+      description: Please go through open issues, to see if anything similar already exists.
+      options:
+      - label: I have searched the existing issues
+        required: true
+    validations:
+      required: true    
   - type: checkboxes
     id: terms
     attributes:
       label: Code of Conduct
       description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
       options:
-        - label: I agree to follow this project's Code of Conduct
+        - label: I have read the [support page](https://ankidroid.org/docs/help.html) and am reporting a bug or enhancement request specific to AnkiDroid
           required: true
+        - label: I have checked the [manual](https://ankidroid.org/docs/manual.html) and the [FAQ](https://github.com/ankidroid/Anki-Android/wiki/FAQ) and could not find a solution to my issue  
+          required: true
+        - label: I have searched for similar existing issues here and on the user forum
+          required: true
+        - label: I have confirmed the issue is not resolved in the latest alpha release [instructions](https://docs.ankidroid.org/manual.html#betaTesting)
