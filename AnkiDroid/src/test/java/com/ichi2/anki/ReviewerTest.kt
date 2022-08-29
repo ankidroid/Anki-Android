@@ -156,7 +156,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     @Synchronized
     @Throws(ConfirmModSchemaException::class)
-    fun testMultipleCards() {
+    fun testMultipleCards() = runTest {
         addNoteWithThreeCards()
         val nw = col.decks.confForDid(1).getJSONObject("new")
         val time = collectionTime
@@ -185,7 +185,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
-    fun testLrnQueueAfterUndo() {
+    fun testLrnQueueAfterUndo() = runTest {
         val nw = col.decks.confForDid(1).getJSONObject("new")
         val time = TimeManager.time as MockTime
         nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
@@ -286,8 +286,8 @@ class ReviewerTest : RobolectricTest() {
         assertThat("Unexpected card ord", ord + 1, not(equalTo(i)))
     }
 
-    private fun undo(reviewer: Reviewer) {
-        awaitJob(reviewer.undo())
+    private suspend fun undo(reviewer: Reviewer) {
+        reviewer.undo()
     }
 
     @Suppress("SameParameterValue")

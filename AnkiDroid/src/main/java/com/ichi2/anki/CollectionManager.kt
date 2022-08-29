@@ -33,7 +33,6 @@ import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 import java.io.File
 
-@OptIn(ExperimentalCoroutinesApi::class)
 object CollectionManager {
     /**
      * The currently active backend, which is created on demand via [ensureBackend], and
@@ -363,5 +362,11 @@ object CollectionManager {
             ensureBackendInner()
             importCollectionPackage(backend!!, createCollectionPath(), colpkgPath)
         }
+    }
+
+    fun setTestDispatcher(dispatcher: CoroutineDispatcher) {
+        // note: we avoid the call to .limitedParallelism() here,
+        // as it does not seem to be compatible with the test scheduler
+        queue = dispatcher
     }
 }
