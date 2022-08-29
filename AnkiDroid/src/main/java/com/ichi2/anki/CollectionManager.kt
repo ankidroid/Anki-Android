@@ -17,6 +17,9 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.VisibleForTesting
+import anki.backend.backendError
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.Storage.collection
@@ -24,11 +27,13 @@ import com.ichi2.libanki.importCollectionPackage
 import com.ichi2.utils.Threads
 import kotlinx.coroutines.*
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 import java.io.File
 
+@OptIn(ExperimentalCoroutinesApi::class)
 object CollectionManager {
     /**
      * The currently active backend, which is created on demand via [ensureBackend], and
@@ -47,8 +52,12 @@ object CollectionManager {
      */
     private var collection: Collection? = null
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private var queue: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
+
+    private val robolectric = "robolectric" == Build.FINGERPRINT
+
+    @VisibleForTesting
+    var emulateOpenFailure = false
 
     /**
      * Execute the provided block on a serial queue, to ensure concurrent access
@@ -192,6 +201,9 @@ object CollectionManager {
     /** See [ensureOpen]. This must only be run inside the queue. */
     private fun ensureOpenInner() {
         ensureBackendInner()
+        if (emulateOpenFailure) {
+            throw BackendException.BackendDbException.BackendDbLockedException(backendError {})
+        }
         if (collection == null || collection!!.dbClosed) {
             val path = createCollectionPath()
             collection =
@@ -207,6 +219,23 @@ object CollectionManager {
         return File(dir, "collection.anki2").absolutePath
     }
 
+    /**
+     * Like [withQueue], but can be used in a synchronous context.
+     *
+     * Note: Because [runBlocking] inside [runTest] will lead to
+     * deadlocks, this will not block when run under Robolectric,
+     * and there is no guarantee about concurrent access.
+     */
+    private fun <T> blockForQueue(block: CollectionManager.() -> T): T {
+        return if (robolectric) {
+            block(this)
+        } else {
+            runBlocking {
+                withQueue(block)
+            }
+        }
+    }
+
     @JvmStatic
     fun closeCollectionBlocking(save: Boolean = true) {
         runBlocking { ensureClosed(save = save) }
@@ -220,7 +249,12 @@ object CollectionManager {
      */
     @JvmStatic
     fun getColUnsafe(): Collection {
-        return logUIHangs { runBlocking { withCol { this } } }
+        return logUIHangs {
+            blockForQueue {
+                ensureOpenInner()
+                collection!!
+            }
+        }
     }
 
     /**
@@ -263,8 +297,10 @@ object CollectionManager {
     @JvmStatic
     fun isOpenUnsafe(): Boolean {
         return logUIHangs {
-            runBlocking {
-                withQueue {
+            blockForQueue {
+                if (emulateOpenFailure) {
+                    false
+                } else {
                     collection?.dbClosed == false
                 }
             }
@@ -277,13 +313,11 @@ object CollectionManager {
      */
     @JvmStatic
     fun setColForTests(col: Collection?) {
-        runBlocking {
-            withQueue {
-                if (col == null) {
-                    ensureClosedInner()
-                }
-                collection = col
+        blockForQueue {
+            if (col == null) {
+                ensureClosedInner()
             }
+            collection = col
         }
     }
 

@@ -321,11 +321,13 @@ open class RobolectricTest : CollectionGetter {
                 return null
             }
         }
+        CollectionManager.emulateOpenFailure = true
     }
 
     /** Restore regular collection behavior  */
     protected fun disableNullCollection() {
         CollectionHelper.LazyHolder.INSTANCE = CollectionHelper()
+        CollectionManager.emulateOpenFailure = false
     }
 
     @Throws(JSONException::class)
