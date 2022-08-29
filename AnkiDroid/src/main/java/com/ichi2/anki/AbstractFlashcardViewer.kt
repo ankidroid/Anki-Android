@@ -50,6 +50,7 @@ import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
@@ -936,20 +937,33 @@ abstract class AbstractFlashcardViewer :
     }
 
     open fun answerCard(@BUTTON_TYPE ease: Int) {
-        if (mInAnswer) {
-            return
+        launchCatchingTask {
+            if (mInAnswer) {
+                return@launchCatchingTask
+            }
+            mIsSelecting = false
+            val buttonNumber = col.sched.answerButtons(mCurrentCard!!)
+            // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
+            if (buttonNumber < ease) {
+                return@launchCatchingTask
+            }
+            // Temporarily sets the answer indicator dots appearing below the toolbar
+            mPreviousAnswerIndicator!!.displayAnswerIndicator(ease, buttonNumber)
+            mSoundPlayer.stopSounds()
+            mCurrentEase = ease
+            val oldCard = mCurrentCard!!
+            val newCard = withCol {
+                Timber.i("Answering card %d", oldCard.id)
+                col.sched.answerCard(oldCard, ease)
+                Timber.i("Obtaining next card")
+                sched.card?.apply { render_output(reload = true) }
+            }
+            // TODO: this handling code is unnecessarily complex, and would be easier to follow
+            //  if written imperatively
+            val handler = answerCardHandler(true)
+            handler.before?.run()
+            handler.after?.accept(Computation.ok(NextCard.withNoResult(newCard)))
         }
-        mIsSelecting = false
-        val buttonNumber = col.sched.answerButtons(mCurrentCard!!)
-        // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
-        if (buttonNumber < ease) {
-            return
-        }
-        // Temporarily sets the answer indicator dots appearing below the toolbar
-        mPreviousAnswerIndicator!!.displayAnswerIndicator(ease, buttonNumber)
-        mSoundPlayer.stopSounds()
-        mCurrentEase = ease
-        AnswerAndGetCard(mCurrentCard!!, mCurrentEase).runWithHandler(answerCardHandler(true))
     }
 
     // Set the content view to the one provided and initialize accessors.

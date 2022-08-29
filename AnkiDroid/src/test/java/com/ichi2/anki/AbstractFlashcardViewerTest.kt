@@ -177,7 +177,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    fun typedLanguageIsSet() {
+    fun typedLanguageIsSet() = runTest {
         val withLanguage = StdModels.BASIC_TYPING_MODEL.add(col, "a")
         val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
         val typedField = 1 // BACK
@@ -221,7 +221,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    fun shortcutShowsToastOnFinish() {
+    fun shortcutShowsToastOnFinish() = runTest {
         val viewer: NonAbstractFlashcardViewer = getViewer(true, true)
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
