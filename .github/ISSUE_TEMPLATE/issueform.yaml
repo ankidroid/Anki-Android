@@ -19,15 +19,6 @@ body:
     validations:
       required: true
   - type: textarea
-    id: what-happened
-    attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
-      value: "A bug happened!"
-    validations:
-      required: true
-  - type: textarea
     id: steps
     attributes:
       label: What are the steps to reproduce this bug?
@@ -35,7 +26,18 @@ body:
       placeholder: Tell us what you see!
       value: "1. "
     validations:
-      required: true    
+      required: true     
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Reproduction steps
+      description: write clear steps to reproduce this bug.
+      placeholder: Tell us what you see!
+      value:|
+      -"1"
+      -"2"
+    validations:
+      required: true   
   - type: checkboxes
     id: terms
     attributes:
