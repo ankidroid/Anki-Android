@@ -1,6 +1,6 @@
 name: 🐞 Bug
-description: File a bug/issue
-title: "[BUG] "
+description: File a bug
+title: "[BUG]: "
 labels:  [Bug] 
 
 body:
