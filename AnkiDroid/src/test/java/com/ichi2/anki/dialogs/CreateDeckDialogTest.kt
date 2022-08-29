@@ -31,11 +31,9 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.DeckManager
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -158,49 +156,56 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("this is difficult to test at the moment")
-    fun searchDecksIconVisibilityDeckCreationTest() {
-        // this is currently broken, as it has a few issues:
-        // - we need to await the completion of createMenuJob, as the menu is created asynchronously
-        // - the calls to `decks` should be made using withCol, and this routine should be asynchronous
-        // - when I attempted to implement this, I found the test hung. I'm guessing it might be some
-        // sort of deadlock, where a runBlocking() call is waiting for some UI state to update
-        mActivityScenario!!.onActivity { deckPicker ->
-            val decks = deckPicker.col.decks
-            val deckCounter = AtomicInteger(1)
-            for (i in 0 until 10) {
-                val createDeckDialog = CreateDeckDialog(deckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
-                createDeckDialog.setOnNewDeckCreated { _ ->
-                    assertEquals(deckCounter.incrementAndGet(), decks.count())
+    fun searchDecksIconVisibilityDeckCreationTest() = runTest {
+        // await deckpicker
+        val deckPicker = suspendCoroutine { coro ->
+            mActivityScenario!!.onActivity { deckPicker ->
+                coro.resume(deckPicker)
+            }
+        }
 
-                    assertEquals(deckCounter.get(), decks.count())
+        suspend fun decksCount() = withCol { decks.count() }
+        val deckCounter = AtomicInteger(1)
 
-                    updateSearchDecksIcon(deckPicker)
-                    assertEquals(deckPicker.searchDecksIcon!!.isVisible, decks.count() >= 10)
-
-                    // After the last deck was created, delete a deck
-                    if (decks.count() >= 10) {
-//                        awaitJob(deckPicker.confirmDeckDeletion(did))
-                        assertEquals(deckCounter.decrementAndGet(), decks.count())
-
-                        assertEquals(deckCounter.get(), decks.count())
-
-                        updateSearchDecksIcon(deckPicker)
-                        assertFalse(deckPicker.searchDecksIcon!!.isVisible)
-                    }
+        for (i in 0 until 10) {
+            val createDeckDialog = CreateDeckDialog(
+                deckPicker,
+                R.string.new_deck,
+                CreateDeckDialog.DeckDialogType.DECK,
+                null
+            )
+            val did = suspendCoroutine { coro ->
+                createDeckDialog.setOnNewDeckCreated { did ->
+                    coro.resume(did)
                 }
                 createDeckDialog.createDeck("Deck$i")
+            }
+            assertEquals(deckCounter.incrementAndGet(), decksCount())
+
+            assertEquals(deckCounter.get(), decksCount())
+
+            updateSearchDecksIcon(deckPicker)
+            assertEquals(
+                deckPicker.optionsMenuState?.searchIcon, decksCount() >= 10
+            )
+
+            // After the last deck was created, delete a deck
+            if (decksCount() >= 10) {
+                deckPicker.confirmDeckDeletion(did)
+                assertEquals(deckCounter.decrementAndGet(), decksCount())
+
+                assertEquals(deckCounter.get(), decksCount())
+
+                updateSearchDecksIcon(deckPicker)
+                assertFalse(deckPicker.optionsMenuState?.searchIcon ?: true)
             }
         }
     }
 
-    private fun updateSearchDecksIcon(deckPicker: DeckPicker) {
-        deckPicker.updateDeckList()
-        // the icon normally is updated in the background usually; force it to update
-        // immediately so that the test can continue
-        runBlocking {
-            deckPicker.createMenuJob?.join()
-        }
+    private suspend fun updateSearchDecksIcon(deckPicker: DeckPicker) {
+        // the icon update requires a call to refreshState() and subsequent menu
+        // rebuild; access it directly instead so the test passes
+        deckPicker.updateMenuState()
     }
 
     @Test
