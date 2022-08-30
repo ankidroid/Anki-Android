@@ -73,9 +73,9 @@ import com.ichi2.async.CollectionTask.MarkNoteMulti
 import com.ichi2.async.CollectionTask.RenderBrowserQA
 import com.ichi2.async.CollectionTask.SuspendCardMulti
 import com.ichi2.async.CollectionTask.UpdateMultipleNotes
-import com.ichi2.async.CollectionTask.UpdateNote
 import com.ichi2.async.TaskListenerWithContext
 import com.ichi2.async.TaskManager
+import com.ichi2.async.updateCard
 import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.SortOrder.NoOrdering
@@ -147,9 +147,6 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var mCardsAdapter: MultiColumnListAdapter? = null
 
-    // TODO: Introduced for migration of [CollectionTask.UpdateNote] to Coroutines,remove after migration
-    private val context = this
-
     private var mSearchTerms: String = ""
     private var mRestrictOnDeck: String? = null
     private var mCurrentFlag = 0
@@ -180,10 +177,7 @@ open class CardBrowser :
         }
         if (result.resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...")
-            TaskManager.launchCollectionTask(
-                UpdateNote(sCardBrowserCard!!, isFromReviewer = false, canAccessScheduler = false),
-                updateCardHandler()
-            )
+            launchCatchingTask { saveEditedCard() }
         }
         val data = result.data
         if (data != null &&
@@ -1703,29 +1697,22 @@ open class CardBrowser :
         }
     }
 
-    private fun updateCardHandler(): UpdateCardHandler {
-        return UpdateCardHandler(this)
-    }
-
-    private class UpdateCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Void, Card?>(browser) {
-
-        override fun actualOnPreExecute(context: CardBrowser) {
-            context.showProgressBar()
+    private suspend fun saveEditedCard() {
+        val updatedCard: Card? = withProgress {
+            withCol {
+                updateCard(this, sCardBrowserCard!!, isFromReviewer = false, false)
+            }
         }
-
-        override fun actualOnPostExecute(context: CardBrowser, result: Card?) {
-            context.onCardUpdated(result)
-        }
+        onCardUpdated(updatedCard)
     }
 
     private fun onCardUpdated(result: Card?) {
         Timber.d("CardBrowser - onCardUpdated()")
-        context.hideProgressBar()
         if (result != null) {
-            context.updateCardInList(result)
+            updateCardInList(result)
         } else {
             // TODO: Too rude to close with error, allow user to backup their edited data
-            context.closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
+            closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
         }
     }
 
