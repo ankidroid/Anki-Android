@@ -15,7 +15,6 @@
  ****************************************************************************************/
 
 package com.ichi2.async
-import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import net.ankiweb.rsdroid.BackendFactory
@@ -34,41 +33,35 @@ fun updateCard(
     editCard: Card,
     isFromReviewer: Boolean,
     canAccessScheduler: Boolean,
-): Card? {
+): Card {
     Timber.d("doInBackgroundUpdateNote")
     // Save the note
     val sched = col.sched
     val editNote = editCard.note()
-    return try {
-        if (BackendFactory.defaultLegacySchema) {
-            col.db.executeInTransaction {
-                // TODO: undo integration
-                editNote.flush()
-                // flush card too, in case, did has been changed
-                editCard.flush()
+    if (BackendFactory.defaultLegacySchema) {
+        col.db.executeInTransaction {
+            // TODO: undo integration
+            editNote.flush()
+            // flush card too, in case, did has been changed
+            editCard.flush()
+        }
+    } else {
+        // TODO: the proper way to do this would be to call this in undoableOp() in
+        // a coroutine
+        col.newBackend.updateNote(editNote)
+        // no need to flush card in new path
+    }
+    return if (isFromReviewer) {
+        if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
+            editCard.apply {
+                load()
+                // reload qa-cache
+                q(true)
             }
         } else {
-            // TODO: the proper way to do this would be to call this in undoableOp() in
-            // a coroutine
-            col.newBackend.updateNote(editNote)
-            // no need to flush card in new path
+            sched.card!! // check: are there deleted too?
         }
-        if (isFromReviewer) {
-            if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
-                editCard.apply {
-                    load()
-                    // reload qa-cache
-                    q(true)
-                }
-            } else {
-                sched.card!! // check: are there deleted too?
-            }
-        } else {
-            editCard
-        }
-    } catch (e: RuntimeException) {
-        Timber.e(e, "doInBackgroundUpdateNote - RuntimeException on updating note")
-        CrashReportService.sendExceptionReport(e, "doInBackgroundUpdateNote")
-        null
+    } else {
+        editCard
     }
 }
