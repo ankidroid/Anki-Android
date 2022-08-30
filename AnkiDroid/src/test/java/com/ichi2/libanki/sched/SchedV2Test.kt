@@ -448,6 +448,7 @@ open class SchedV2Test : RobolectricTest() {
 
     @Test
     @Throws(Exception::class)
+    @KotlinCleanup("This is flaky just before 4AM")
     fun test_learnV2() {
         if (v3 && Instant.now().atZone(ZoneOffset.UTC).getHour().let { it >= 2 && it < 4 }) {
             // The backend shifts the current time around rollover, and expects the frontend to

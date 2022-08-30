@@ -318,7 +318,7 @@ public class Sched extends SchedV2 {
         mLrnCount = getCol().getDb().queryScalar(
                 "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN " + _deckLimit()
                 + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? and id != ? LIMIT ?)",
-                mDayCutoff, currentCardId(), mReportLimit);
+                getDayCutoff(), currentCardId(), mReportLimit);
         if (isCancelled(cancelListener)) return;
         // day
         mLrnCount += getCol().getDb().queryScalar(
@@ -356,7 +356,7 @@ public class Sched extends SchedV2 {
         mLrnQueue.setFilled();
         try (Cursor cur = getCol().getDb().query(
                            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
-                           mDayCutoff, currentCardId(), mReportLimit)) {
+                getDayCutoff(), currentCardId(), mReportLimit)) {
             while (cur.moveToNext()) {
                 mLrnQueue.add(cur.getLong(0), cur.getLong(1));
             }
@@ -437,7 +437,7 @@ public class Sched extends SchedV2 {
             card.setDue(getTime().intTime() + delay);
 
             // due today?
-            if (card.getDue() < mDayCutoff) {
+            if (card.getDue() < getDayCutoff()) {
                 mLrnCount += card.getLeft() / 1000;
                 // if the queue is not empty and there's nothing else to do, make
                 // sure we don't put it at the head of the queue and end up showing
@@ -450,7 +450,7 @@ public class Sched extends SchedV2 {
                 _sortIntoLrn(card.getDue(), card.getId());
             } else {
                 // the card is due in one or more days, so we need to use the day learn queue
-                long ahead = ((card.getDue() - mDayCutoff) / SECONDS_PER_DAY) + 1;
+                long ahead = ((card.getDue() - getDayCutoff()) / SECONDS_PER_DAY) + 1;
                 card.setDue(mToday + ahead);
                 card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
             }
@@ -773,13 +773,13 @@ public class Sched extends SchedV2 {
         card.setDue(delay + getTime().intTime());
         card.setLeft(_startingLeft(card));
         // queue 1
-        if (card.getDue() < mDayCutoff) {
+        if (card.getDue() < getDayCutoff()) {
             mLrnCount += card.getLeft() / 1000;
             card.setQueue(Consts.QUEUE_TYPE_LRN);
             _sortIntoLrn(card.getDue(), card.getId());
         } else {
             // day learn queue
-            long ahead = ((card.getDue() - mDayCutoff) / SECONDS_PER_DAY) + 1;
+            long ahead = ((card.getDue() - getDayCutoff()) / SECONDS_PER_DAY) + 1;
             card.setDue(mToday + ahead);
             card.setQueue(Consts.QUEUE_TYPE_DAY_LEARN_RELEARN);
         }
@@ -1071,9 +1071,9 @@ public class Sched extends SchedV2 {
         // days since col created
         mToday = (int) ((getTime().intTime() - getCol().getCrt()) / SECONDS_PER_DAY);
         // end of day cutoff
-        mDayCutoff = getCol().getCrt() + ((mToday + 1) * SECONDS_PER_DAY);
+        setDayCutoff(getCol().getCrt() + ((mToday + 1) * SECONDS_PER_DAY));
         if (!mToday.equals(oldToday)) {
-            getCol().log(mToday, mDayCutoff);
+            getCol().log(mToday, getDayCutoff());
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
