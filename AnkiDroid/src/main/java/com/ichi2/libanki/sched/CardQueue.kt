@@ -22,7 +22,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
-internal abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not queue, because during initialization of sched, when CardQueues are initialized
+abstract class CardQueue<T : Card.Cache?>( // We need to store mSched and not queue, because during initialization of sched, when CardQueues are initialized
     // sched.getCol is null.
     private val sched: AbstractSched?
 ) {
@@ -63,7 +63,7 @@ internal abstract class CardQueue<T : Card.Cache?>( // We need to store mSched a
         Collections.shuffle(queue, r)
     }
 
-    fun listIterator(): ListIterator<T?> {
+    fun listIterator(): MutableListIterator<T> {
         return queue.listIterator()
     }
 

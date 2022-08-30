@@ -22,7 +22,7 @@ import com.ichi2.utils.KotlinCleanup
 
 @KotlinCleanup("make col non-null")
 @KotlinCleanup("IDE Lint")
-internal class LrnCard(col: Collection?, val due: Long, cid: Long) :
+class LrnCard(col: Collection?, val due: Long, cid: Long) :
     Card.Cache(
         col!!, cid
     ),
