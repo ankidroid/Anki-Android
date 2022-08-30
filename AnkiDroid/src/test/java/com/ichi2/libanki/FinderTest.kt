@@ -29,6 +29,7 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThan
@@ -113,6 +114,7 @@ class FinderTest : RobolectricTest() {
 
     @Test
     fun test_findCards() {
+        TimeManager.reset()
         val col = col
         var note = col.newNote()
         note.setItem("Front", "dog")
@@ -149,8 +151,14 @@ class FinderTest : RobolectricTest() {
         // tag searches
         assertEquals(5, col.findCards("tag:*").size)
         assertEquals(1, col.findCards("tag:\\*").size)
-        assertEquals(5, col.findCards("tag:%").size)
-        assertEquals(1, col.findCards("tag:\\%").size)
+        assertEquals(
+            if (BackendFactory.defaultLegacySchema) {
+                5
+            } else {
+                1
+            },
+            col.findCards("tag:%").size
+        )
         assertEquals(2, col.findCards("tag:animal_1").size)
         assertEquals(1, col.findCards("tag:animal\\_1").size)
         assertEquals(0, col.findCards("tag:donkey").size)
@@ -335,19 +343,20 @@ class FinderTest : RobolectricTest() {
             assertEquals(1, col.findCards("rated:1:1").size)
             assertEquals(1, col.findCards("rated:1:2").size)
             assertEquals(2, col.findCards("rated:1").size)
-            assertEquals(0, col.findCards("rated:0:2").size)
             assertEquals(1, col.findCards("rated:2:2").size)
             // added
-            assertEquals(0, col.findCards("added:0").size)
-            col.db.execute(
-                "update cards set id = id - " + Stats.SECONDS_PER_DAY * 1000 + " where id = ?",
-                id
-            )
-            assertEquals(
-                (col.cardCount() - 1),
-                col.findCards("added:1").size
-            )
-            assertEquals(col.cardCount(), col.findCards("added:2").size)
+            if (BackendFactory.defaultLegacySchema) {
+                assertEquals(0, col.findCards("added:0").size)
+                col.db.execute(
+                    "update cards set id = id - " + Stats.SECONDS_PER_DAY * 1000 + " where id = ?",
+                    id
+                )
+                assertEquals(
+                    (col.cardCount() - 1),
+                    col.findCards("added:1").size
+                )
+                assertEquals(col.cardCount(), col.findCards("added:2").size)
+            }
         } else {
             Timber.w("some find tests disabled near cutoff")
         }
@@ -401,7 +410,14 @@ class FinderTest : RobolectricTest() {
         assertEquals(2, col.findCards("tag:cat1::some*").size)
         assertEquals(1, col.findCards("tag:cat1::something").size)
         assertEquals(2, col.findCards("tag:cat2::some").size)
-        assertEquals(1, col.findCards("tag:cat2::some::").size)
+        assertEquals(
+            if (BackendFactory.defaultLegacySchema) {
+                1
+            } else {
+                0
+            },
+            col.findCards("tag:cat2::some::").size
+        )
     }
 
     @Test
