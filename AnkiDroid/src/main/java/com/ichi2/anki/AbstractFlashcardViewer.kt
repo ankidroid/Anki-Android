@@ -401,7 +401,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     suspend fun saveEditedCard() {
-        val updatedCard: Card? = withProgress {
+        val updatedCard: Card = withProgress {
             withCol {
                 updateCard(this, editorCard!!, true, canAccessScheduler())
             }
@@ -409,13 +409,7 @@ abstract class AbstractFlashcardViewer :
         onCardUpdated(updatedCard)
     }
 
-    private fun onCardUpdated(result: Card?) {
-        if (result == null) {
-            // RuntimeException occurred on update cards
-            closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
-            return
-        }
-
+    private fun onCardUpdated(result: Card) {
         if (mCurrentCard !== result) {
             /*
              * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,

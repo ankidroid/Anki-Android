@@ -1698,22 +1698,13 @@ open class CardBrowser :
     }
 
     private suspend fun saveEditedCard() {
-        val updatedCard: Card? = withProgress {
+        Timber.d("CardBrowser - saveEditedCard()")
+        val updatedCard: Card = withProgress {
             withCol {
                 updateCard(this, sCardBrowserCard!!, isFromReviewer = false, false)
             }
         }
-        onCardUpdated(updatedCard)
-    }
-
-    private fun onCardUpdated(result: Card?) {
-        Timber.d("CardBrowser - onCardUpdated()")
-        if (result != null) {
-            updateCardInList(result)
-        } else {
-            // TODO: Too rude to close with error, allow user to backup their edited data
-            closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
-        }
+        updateCardInList(updatedCard)
     }
 
     private class ChangeDeckHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Any?, Computation<Array<Card>>?>("Card Browser - changeDeckHandler.actualOnPostExecute(CardBrowser browser)", browser) {
