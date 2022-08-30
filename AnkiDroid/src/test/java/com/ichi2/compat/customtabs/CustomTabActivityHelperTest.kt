@@ -18,9 +18,8 @@ package com.ichi2.compat.customtabs
 import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.annotation.CheckResult
-import androidx.annotation.NonNull
 import androidx.browser.customtabs.CustomTabsClient
-import com.ichi2.utils.KotlinCleanup
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -28,17 +27,14 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito.doThrow
-import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
 import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.mock
 import org.robolectric.RobolectricTestRunner
 
-@KotlinCleanup("`when` -> whenever")
-@KotlinCleanup("remove @NonNull")
 @RunWith(RobolectricTestRunner::class)
 class CustomTabActivityHelperTest {
     @Before
@@ -58,40 +54,34 @@ class CustomTabActivityHelperTest {
 
     @Test
     fun invalidClientMeansFallbackIsCalled() {
-        val badClient = getClientThrowingSecurityException()
-        val customTabActivityHelper = getValidTabHandler()
+        getValidTabHandler().onServiceConnected(getClientThrowingSecurityException())
 
-        customTabActivityHelper.onServiceConnected(badClient)
-
-        val fallback = mock(CustomTabActivityHelper.CustomTabFallback::class.java)
-        val activity = mock(Activity::class.java)
-        val packageManager = mock(PackageManager::class.java)
-
-        `when`(activity.packageManager).thenReturn(packageManager)
-        `when`(packageManager.queryIntentActivities(any(), anyInt())).thenReturn(emptyList())
+        val fallback = mock<CustomTabActivityHelper.CustomTabFallback>()
+        val packageManager = mock<PackageManager> {
+            on { it.queryIntentActivities(any(), anyInt()) } doReturn emptyList()
+        }
+        val activity = mock<Activity> {
+            on { it.packageManager } doReturn packageManager
+        }
 
         CustomTabActivityHelper.openCustomTab(activity, mock(), mock(), fallback)
 
         verify(fallback, times(1)).openUri(any(), any())
     }
 
-    @NonNull @CheckResult
-    @KotlinCleanup("Use not() matcher")
-    private fun getValidTabHandler(): CustomTabActivityHelper {
-        val customTabActivityHelper = CustomTabActivityHelper()
-        assertThat("Should not be failed before call", !customTabActivityHelper.isFailed)
-        return customTabActivityHelper
+    @CheckResult
+    private fun getValidTabHandler(): CustomTabActivityHelper = CustomTabActivityHelper().also {
+        assertThat("Should not be failed before call", not(it.isFailed))
     }
 
-    @NonNull @CheckResult
-    @KotlinCleanup("Try to use mock { }")
+    @CheckResult
     private fun getClientThrowingSecurityException(): CustomTabsClient {
         val exceptionToThrow = SecurityException("Binder invocation to an incorrect interface")
 
-        val invalidClient = mock(CustomTabsClient::class.java)
-        doThrow(exceptionToThrow).`when`(invalidClient).warmup(anyLong())
-        doThrow(exceptionToThrow).`when`(invalidClient).extraCommand(anyString(), any())
-        doThrow(exceptionToThrow).`when`(invalidClient).newSession(any())
-        return invalidClient
+        return mock {
+            on { it.warmup(anyLong()) } doThrow exceptionToThrow
+            on { it.extraCommand(anyString(), any()) } doThrow exceptionToThrow
+            on { it.newSession(any()) } doThrow exceptionToThrow
+        }
     }
 }
