@@ -2,7 +2,6 @@
 
 package com.ichi2.anki
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.webkit.RenderProcessGoneDetail
@@ -101,8 +100,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    @Suppress("deprecation") // onActivityResult
-    fun testEditingCardChangesTypedAnswer() {
+    fun testEditingCardChangesTypedAnswer() = runTest {
         // 7363
         addNoteUsingBasicTypedModel("Hello", "World")
 
@@ -117,7 +115,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val note = viewer.mCurrentCard!!.note()
         note.setField(1, "David")
 
-        viewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, Intent())
+        viewer.saveEditedCard()
 
         waitForAsyncTasksToComplete()
 
@@ -125,8 +123,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     }
 
     @Test
-    @Suppress("deprecation") // onActivityResult
-    fun testEditingCardChangesTypedAnswerOnDisplayAnswer() {
+    fun testEditingCardChangesTypedAnswerOnDisplayAnswer() = runTest {
         // 7363
         addNoteUsingBasicTypedModel("Hello", "World")
 
@@ -145,7 +142,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val note = viewer.mCurrentCard!!.note()
         note.setField(1, "David")
 
-        viewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, Intent())
+        viewer.saveEditedCard()
 
         waitForAsyncTasksToComplete()
 

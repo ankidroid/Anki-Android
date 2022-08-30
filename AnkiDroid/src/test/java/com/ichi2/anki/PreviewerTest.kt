@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki
 
-import android.app.Activity
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -31,8 +30,7 @@ import org.robolectric.annotation.Config
 class PreviewerTest : RobolectricTest() {
 
     @Test
-    @Suppress("DEPRECATION")
-    fun editingNoteDoesNotChangePreviewedCardId() {
+    fun editingNoteDoesNotChangePreviewedCardId() = runTest {
         // #7801
         addNoteUsingBasicModel("Hello", "World")
 
@@ -43,16 +41,13 @@ class PreviewerTest : RobolectricTest() {
 
         assertThat("Initially should be previewing selected card", previewer.currentCardId, equalTo(cardToPreview.id))
 
-        previewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, null)
-
-        advanceRobolectricLooperWithSleep()
+        previewer.saveEditedCard()
 
         assertThat("Should be previewing selected card after edit", previewer.currentCardId, equalTo(cardToPreview.id))
     }
 
     @Test
-    @Suppress("DEPRECATION")
-    fun editingNoteChangesContent() {
+    fun editingNoteChangesContent() = runTest {
         // #7801
         addNoteUsingBasicModel("Hello", "World")
 
@@ -65,9 +60,7 @@ class PreviewerTest : RobolectricTest() {
 
         cardToPreview.note().setField(0, "Hi")
 
-        previewer.onActivityResult(AbstractFlashcardViewer.EDIT_CURRENT_CARD, Activity.RESULT_OK, null)
-
-        advanceRobolectricLooperWithSleep()
+        previewer.saveEditedCard()
 
         assertThat("Card content should be updated after editing", previewer.cardContent, containsString("Hi"))
     }
