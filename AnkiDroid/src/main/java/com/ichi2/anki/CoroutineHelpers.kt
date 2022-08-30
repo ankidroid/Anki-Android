@@ -59,13 +59,13 @@ suspend fun <T> FragmentActivity.runCatchingTask(
     } catch (exc: CancellationException) {
         // do nothing
     } catch (exc: BackendInterruptedException) {
-        Timber.e("caught: %s %s", exc, extraInfo)
+        Timber.e(exc, extraInfo)
         exc.localizedMessage?.let { showSnackbar(it) }
     } catch (exc: BackendException) {
-        Timber.e("caught: %s %s", exc, extraInfo)
+        Timber.e(exc, extraInfo)
         showError(this, exc.localizedMessage!!)
     } catch (exc: Exception) {
-        Timber.e("caught: %s %s", exc, extraInfo)
+        Timber.e(exc, extraInfo)
         showError(this, exc.toString())
     }
     return null
