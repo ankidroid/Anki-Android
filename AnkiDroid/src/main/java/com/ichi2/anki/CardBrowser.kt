@@ -147,6 +147,9 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var mCardsAdapter: MultiColumnListAdapter? = null
 
+    // TODO: Introduced for migration of [CollectionTask.UpdateNote] to Coroutines,remove after migration
+    private val context = this
+
     private var mSearchTerms: String = ""
     private var mRestrictOnDeck: String? = null
     private var mCurrentFlag = 0
@@ -1711,14 +1714,18 @@ open class CardBrowser :
         }
 
         override fun actualOnPostExecute(context: CardBrowser, result: Card?) {
-            Timber.d("Card Browser - UpdateCardHandler.actualOnPostExecute()")
-            context.hideProgressBar()
-            if (result != null) {
-                context.updateCardInList(result)
-            } else {
-                // TODO: Too rude to close with error, allow user to backup their edited data
-                context.closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
-            }
+            context.onCardUpdated(result)
+        }
+    }
+
+    private fun onCardUpdated(result: Card?) {
+        Timber.d("CardBrowser - onCardUpdated()")
+        context.hideProgressBar()
+        if (result != null) {
+            context.updateCardInList(result)
+        } else {
+            // TODO: Too rude to close with error, allow user to backup their edited data
+            context.closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
         }
     }
 

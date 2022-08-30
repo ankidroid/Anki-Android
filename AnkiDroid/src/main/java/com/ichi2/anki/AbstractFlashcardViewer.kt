@@ -401,43 +401,42 @@ abstract class AbstractFlashcardViewer :
     }
 
     private val mUpdateCardHandler: TaskListener<Void, Card?> = object : TaskListener<Void, Card?>() {
-        override fun onPreExecute() {
+        override fun onPreExecute() = showProgressBar()
+        override fun onPostExecute(result: Card?) = onCardUpdated(result)
+    }
+
+    private fun onCardUpdated(result: Card?) {
+        if (result == null) {
+            // RuntimeException occurred on update cards
+            closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
+            return
+        }
+
+        if (mCurrentCard !== result) {
+            /*
+             * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
+             * then we need to display it as a new card, without showing the answer.
+             */
+            sDisplayAnswer = false
+        }
+        currentCard = result
+        TaskManager.launchCollectionTask(PreloadNextCard()) // Tasks should always be launched from GUI. So in
+        // listener and not in background
+        if (mCurrentCard == null) {
+            // If the card is null means that there are no more cards scheduled for review.
             showProgressBar()
+            closeReviewer(RESULT_NO_MORE_CARDS, true)
         }
-
-        override fun onPostExecute(result: Card?) {
-            if (result == null) {
-                // RuntimeException occurred on update cards
-                closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
-                return
-            }
-
-            if (mCurrentCard !== result) {
-                /*
-                 * Before updating mCurrentCard, we check whether it is changing or not. If the current card changes,
-                 * then we need to display it as a new card, without showing the answer.
-                 */
-                sDisplayAnswer = false
-            }
-            currentCard = result
-            TaskManager.launchCollectionTask(PreloadNextCard()) // Tasks should always be launched from GUI. So in
-            // listener and not in background
-            if (mCurrentCard == null) {
-                // If the card is null means that there are no more cards scheduled for review.
-                showProgressBar()
-                closeReviewer(RESULT_NO_MORE_CARDS, true)
-            }
-            onCardEdited(mCurrentCard)
-            if (sDisplayAnswer) {
-                mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
-                mAnswerSoundsAdded = false // causes answer sounds to be reloaded
-                generateQuestionSoundList() // questions must be intentionally regenerated
-                displayCardAnswer()
-            } else {
-                displayCardQuestion()
-            }
-            hideProgressBar()
+        onCardEdited(mCurrentCard)
+        if (sDisplayAnswer) {
+            mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
+            mAnswerSoundsAdded = false // causes answer sounds to be reloaded
+            generateQuestionSoundList() // questions must be intentionally regenerated
+            displayCardAnswer()
+        } else {
+            displayCardQuestion()
         }
+        hideProgressBar()
     }
 
     @KotlinCleanup("nullability")
