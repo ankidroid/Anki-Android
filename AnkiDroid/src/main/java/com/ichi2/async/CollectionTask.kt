@@ -160,17 +160,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         listener?.onCancelled()
     }
 
-    class UpdateNote(
-        private val editCard: Card,
-        val isFromReviewer: Boolean,
-        private val canAccessScheduler: Boolean
-    ) : TaskDelegate<Void, Card?>() {
-        // returns updated card if no error and null if error
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Card? {
-            return updateCard(col, editCard, isFromReviewer, canAccessScheduler)
-        }
-    }
-
     // Currently being used only to update tags of multiple notes simultaneously
     class UpdateMultipleNotes constructor(
         private val notesToUpdate: List<Note>,

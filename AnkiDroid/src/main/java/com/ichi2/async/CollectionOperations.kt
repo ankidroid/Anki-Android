@@ -26,7 +26,8 @@ import timber.log.Timber
  */
 
 /**
- * Returns updated card if no error and null if error
+ * Saves the newly updated card [editCard] to disk
+ * @return updated card
  */
 fun updateCard(
     col: Collection,
@@ -36,7 +37,6 @@ fun updateCard(
 ): Card {
     Timber.d("doInBackgroundUpdateNote")
     // Save the note
-    val sched = col.sched
     val editNote = editCard.note()
     if (BackendFactory.defaultLegacySchema) {
         col.db.executeInTransaction {
@@ -46,8 +46,7 @@ fun updateCard(
             editCard.flush()
         }
     } else {
-        // TODO: the proper way to do this would be to call this in undoableOp() in
-        // a coroutine
+        // TODO: the proper way to do this would be to call this in undoableOp() in a coroutine
         col.newBackend.updateNote(editNote)
         // no need to flush card in new path
     }
@@ -55,11 +54,10 @@ fun updateCard(
         if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
             editCard.apply {
                 load()
-                // reload qa-cache
-                q(true)
+                q(true) // reload qa-cache
             }
         } else {
-            sched.card!! // check: are there deleted too?
+            col.sched.card!! // check: are there deleted too?
         }
     } else {
         editCard
