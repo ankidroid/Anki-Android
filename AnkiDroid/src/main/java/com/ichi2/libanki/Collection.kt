@@ -38,7 +38,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
 import com.ichi2.async.CollectionTask
-import com.ichi2.async.CollectionTask.PartialSearch
 import com.ichi2.async.ProgressSender
 import com.ichi2.async.TaskManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
@@ -1316,16 +1315,8 @@ open class Collection(
      * @return A list of card ids
      * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
      */
-    fun findCards(search: String, order: SortOrder): List<Long> {
+    open fun findCards(search: String, order: SortOrder): List<Long> {
         return Finder(this).findCards(search, order)
-    }
-
-    /**
-     * @return A list of card ids
-     * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
-     */
-    open fun findCards(search: String, order: SortOrder, task: PartialSearch?): List<Long?>? {
-        return Finder(this).findCards(search, order, task)
     }
 
     /** Return a list of card ids  */

@@ -41,7 +41,6 @@ import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.utils.*
 import com.ichi2.utils.SyncStatus.Companion.ignoreDatabaseModification
 import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.RustCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber
 import java.io.File
@@ -542,87 +541,13 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    /**
-     * A class allowing to send partial search result to the browser to display while the search ends
-     */
-    @KotlinCleanup("move variables to constructor")
-    @RustCleanup("This provides little value since moving to the backend for DB access. Strip out?")
-    class PartialSearch(cards: List<CardCache>, columnIndex1: Int, columnIndex2: Int, numCardsToRender: Int, collectionTask: ProgressSenderAndCancelListener<List<CardCache>>, col: Collection) : ProgressSenderAndCancelListener<List<Long>> {
-        private val mCards: MutableList<CardCache>
-        private val mColumn1Index: Int
-        private val mColumn2Index: Int
-        private val mNumCardsToRender: Int
-        private val mCollectionTask: ProgressSenderAndCancelListener<List<CardCache>>
-        private val mCol: Collection
-        override fun isCancelled(): Boolean {
-            return mCollectionTask.isCancelled()
-        }
-
-        /**
-         * @param cards Card ids to display in the browser. It is assumed that it is as least as long as mCards, and that
-         * mCards[i].cid = cards[i].  It add the cards in cards after `mPosition` to mCards
-         */
-        fun add(cards: List<Long?>) {
-            while (mCards.size < cards.size) {
-                mCards.add(CardCache(cards[mCards.size]!!, mCol, mCards.size))
-            }
-        }
-
-        @KotlinCleanup("non-null argument to doProgress")
-        override fun doProgress(value: List<Long>?) {
-            if (value == null) {
-                return
-            }
-            // PERF: This is currently called on the background thread and blocks further execution of the search
-            // PERF: This performs an individual query to load each note
-            add(value)
-            for (card in mCards) {
-                if (isCancelled()) {
-                    Timber.d("doInBackgroundSearchCards was cancelled so return")
-                    return
-                }
-                card.load(false, mColumn1Index, mColumn2Index)
-            }
-            mCollectionTask.doProgress(mCards)
-        }
-
-        val progressSender: ProgressSender<Long>
-            get() = object : ProgressSender<Long> {
-                private val mRes: MutableList<Long> = ArrayList()
-                private var mSendProgress = true
-                override fun doProgress(value: Long?) {
-                    if (!mSendProgress || value == null) {
-                        return
-                    }
-                    mRes.add(value)
-                    if (mRes.size >= mNumCardsToRender) {
-                        this@PartialSearch.doProgress(mRes)
-                        mSendProgress = false
-                    }
-                }
-            }
-
-        init {
-            mCards = ArrayList(cards)
-            mColumn1Index = columnIndex1
-            mColumn2Index = columnIndex2
-            mNumCardsToRender = numCardsToRender
-            mCollectionTask = collectionTask
-            mCol = col
-        }
-    }
-
     class SearchCards(private val query: String, private val order: SortOrder, private val numCardsToRender: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<List<CardCache>, SearchCardsResult>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<List<CardCache>>): SearchCardsResult {
             Timber.d("doInBackgroundSearchCards")
-            if (collectionTask.isCancelled()) {
-                Timber.d("doInBackgroundSearchCards was cancelled so return null")
-                return SearchCardsResult.invalidResult()
-            }
             val searchResult: MutableList<CardCache> = ArrayList()
             val searchResult_: List<Long>
             searchResult_ = try {
-                col.findCards(query, order, PartialSearch(searchResult, column1Index, column2Index, numCardsToRender, collectionTask, col))!!.requireNoNulls()
+                col.findCards(query, order)
             } catch (e: Exception) {
                 // exception can occur via normal operation
                 Timber.w(e)
@@ -636,19 +561,10 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             }
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender, searchResult.size)) {
-                if (collectionTask.isCancelled()) {
-                    Timber.d("doInBackgroundSearchCards was cancelled so return null")
-                    return SearchCardsResult.invalidResult()
-                }
                 searchResult[i].load(false, column1Index, column2Index)
             }
             // Finish off the task
-            return if (collectionTask.isCancelled()) {
-                Timber.d("doInBackgroundSearchCards was cancelled so return null")
-                SearchCardsResult.invalidResult()
-            } else {
-                SearchCardsResult.success(searchResult)
-            }
+            return SearchCardsResult.success(searchResult)
         }
     }
 

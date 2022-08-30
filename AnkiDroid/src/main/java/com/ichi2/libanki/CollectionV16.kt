@@ -18,7 +18,6 @@ package com.ichi2.libanki
 import android.content.Context
 import android.content.res.Resources
 import anki.config.ConfigKey
-import com.ichi2.async.CollectionTask
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
@@ -134,15 +133,10 @@ class CollectionV16(
         return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
     }
 
-    @RustCleanup("drop the PartialSearch handling in the browse screen, which slows things down")
     override fun findCards(
         search: String,
         order: SortOrder,
-        task: CollectionTask.PartialSearch?
     ): List<Long> {
-        if (task?.isCancelled() == true) {
-            return listOf()
-        }
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
