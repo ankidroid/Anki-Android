@@ -41,6 +41,7 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiFont.Companion.getTypeface
 import com.ichi2.anki.CardUtils.getAllCards
 import com.ichi2.anki.CardUtils.getNotes
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.saveCollectionInBackground
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
@@ -61,7 +62,6 @@ import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
 import com.ichi2.anki.servicelayer.SchedulerService.RescheduleCards
 import com.ichi2.anki.servicelayer.SchedulerService.ResetCards
-import com.ichi2.anki.servicelayer.SearchService.SearchCardsResult
 import com.ichi2.anki.servicelayer.UndoService.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
@@ -71,7 +71,6 @@ import com.ichi2.async.CollectionTask.CheckCardSelection
 import com.ichi2.async.CollectionTask.DeleteNoteMulti
 import com.ichi2.async.CollectionTask.MarkNoteMulti
 import com.ichi2.async.CollectionTask.RenderBrowserQA
-import com.ichi2.async.CollectionTask.SearchCards
 import com.ichi2.async.CollectionTask.SuspendCardMulti
 import com.ichi2.async.CollectionTask.UpdateMultipleNotes
 import com.ichi2.async.CollectionTask.UpdateNote
@@ -1470,7 +1469,6 @@ open class CardBrowser :
     }
 
     private fun invalidate() {
-        TaskManager.cancelAllTasks(SearchCards::class.java)
         TaskManager.cancelAllTasks(RenderBrowserQA::class.java)
         TaskManager.cancelAllTasks(CheckCardSelection::class.java)
         mCards.clear()
@@ -1482,7 +1480,7 @@ open class CardBrowser :
         searchCards()
     }
 
-    @KotlinCleanup("isNotEmpty()")
+    @RustCleanup("remove card cache; switch to RecyclerView and browserRowForId (#11889)")
     private fun searchCards() {
         // cancel the previous search & render tasks if still running
         invalidate()
@@ -1495,23 +1493,49 @@ open class CardBrowser :
         } else {
             if ("" != mSearchTerms) "$mRestrictOnDeck($mSearchTerms)" else mRestrictOnDeck
         }
-        if (colIsOpen() && mCardsAdapter != null) {
-            // clear the existing card list
-            mCards.reset()
-            mCardsAdapter!!.notifyDataSetChanged()
-            //  estimate maximum number of cards that could be visible (assuming worst-case minimum row height of 20dp)
-            // Perform database query to get all card ids
-            TaskManager.launchCollectionTask(
-                SearchCards(
-                    searchText!!,
-                    if (mOrder == CARD_ORDER_NONE) NoOrdering() else UseCollectionOrdering(),
-                    numCardsToRender(),
-                    mColumn1Index,
-                    mColumn2Index
-                ),
-                mSearchCardsHandler
-            )
+        // clear the existing card list
+        mCards.reset()
+        mCardsAdapter!!.notifyDataSetChanged()
+        val query = searchText!!
+        val order = if (mOrder == CARD_ORDER_NONE) NoOrdering() else UseCollectionOrdering()
+        launchCatchingTask {
+            val cards = withProgress { searchForCards(query, order) }
+            // Render the first few items
+            for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
+                cards[i].load(false, mColumn1Index, mColumn2Index)
+            }
+            redrawAfterSearch(cards)
         }
+    }
+
+    fun redrawAfterSearch(cards: MutableList<CardCache>) {
+        mCards.replaceWith(cards)
+        Timber.i("CardBrowser:: Completed searchCards() Successfully")
+        updateList()
+        if (mSearchView == null || mSearchView!!.isIconified) {
+            return
+        }
+        if (hasSelectedAllDecks()) {
+            showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
+        } else {
+            // If we haven't selected all decks, allow the user the option to search all decks.
+            val message = if (cardCount == 0) {
+                getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi)
+            } else {
+                subtitleText
+            }
+            showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
+                setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
+            }
+        }
+        if (mShouldRestoreScroll) {
+            mShouldRestoreScroll = false
+            val newPosition = newPositionOfSelectedCard
+            if (newPosition != CARD_NOT_AVAILABLE) {
+                autoScrollTo(newPosition)
+            }
+        }
+        updatePreviewMenuItem()
     }
 
     @VisibleForTesting
@@ -1817,66 +1841,6 @@ open class CardBrowser :
             browser.mCardsAdapter!!.notifyDataSetChanged()
             browser.updatePreviewMenuItem()
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
-        }
-    }
-
-    private val mSearchCardsHandler = SearchCardsHandler(this)
-
-    @VisibleForTesting
-    internal inner class SearchCardsHandler(browser: CardBrowser) : ListenerWithProgressBar<List<CardCache>, SearchCardsResult?>(browser) {
-        override fun actualOnProgressUpdate(context: CardBrowser, value: List<CardCache>) {
-            // Need to copy the list into a new list, because the original list is modified, and
-            // ListAdapter crash
-            mCards.replaceWith(java.util.ArrayList(value))
-            updateList()
-        }
-
-        override fun actualOnPostExecute(context: CardBrowser, result: SearchCardsResult?) {
-            if (result!!.hasResult) {
-                mCards.replaceWith(result.result!!.toMutableList())
-                updateList()
-                handleSearchResult()
-            }
-            if (result.hasError) {
-                showThemedToast(this@CardBrowser, result.error, true)
-            }
-            if (mShouldRestoreScroll) {
-                mShouldRestoreScroll = false
-                val newPosition = newPositionOfSelectedCard
-                if (newPosition != CARD_NOT_AVAILABLE) {
-                    autoScrollTo(newPosition)
-                }
-            }
-            updatePreviewMenuItem()
-            hideProgressBar()
-        }
-
-        private fun handleSearchResult() {
-            Timber.i("CardBrowser:: Completed doInBackgroundSearchCards Successfully")
-            updateList()
-            if (mSearchView == null || mSearchView!!.isIconified) {
-                return
-            }
-
-            if (hasSelectedAllDecks()) {
-                showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
-            } else {
-                // If we haven't selected all decks, allow the user the option to search all decks.
-                val message = if (cardCount == 0) {
-                    getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi)
-                } else {
-                    subtitleText
-                }
-
-                showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
-                    setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
-                }
-            }
-        }
-
-        override fun actualOnCancelled(context: CardBrowser) {
-            super.actualOnCancelled(context)
-            hideProgressBar()
         }
     }
 
@@ -2709,5 +2673,17 @@ open class CardBrowser :
             s = s.trim { it <= ' ' }
             return s
         }
+    }
+}
+
+suspend fun searchForCards(
+    query: String,
+    order: SortOrder
+): MutableList<CardBrowser.CardCache> {
+    return withCol {
+        findCards(query, order).asSequence()
+            .mapIndexed { idx, cid ->
+                CardBrowser.CardCache(cid, col, idx)
+            }.toMutableList()
     }
 }

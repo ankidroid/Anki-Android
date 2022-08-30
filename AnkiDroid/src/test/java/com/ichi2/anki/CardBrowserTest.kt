@@ -28,12 +28,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.errorprone.annotations.CheckReturnValue
 import com.ichi2.anki.CardBrowser.CardCache
-import com.ichi2.async.CollectionTask.SearchCards
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
-import com.ichi2.libanki.SortOrder.NoOrdering
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.IntentAssert
@@ -356,7 +353,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun tagWithBracketsDisplaysProperly() {
+    fun tagWithBracketsDisplaysProperly() = runTest {
         val n = addNoteUsingBasicModel("Hello", "World")
         n.addTag("sketchy::(1)")
         n.flush()
@@ -369,7 +366,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun filterByFlagDisplaysProperly() {
+    fun filterByFlagDisplaysProperly() = runTest {
         val cardWithRedFlag = addNoteUsingBasicModel("Card with red flag", "Reverse")
         flagCardForNote(cardWithRedFlag, 1)
 
@@ -583,7 +580,7 @@ class CardBrowserTest : RobolectricTest() {
 
     /** 8027  */
     @Test
-    fun checkSearchString() {
+    fun checkSearchString() = runTest {
         addNoteUsingBasicModel("Hello", "John")
         val deck = addDeck("Deck 1")
         col.decks.select(deck)
@@ -641,7 +638,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun checkIfSearchAllDecksWorks() {
+    fun checkIfSearchAllDecksWorks() = runTest {
         addNoteUsingBasicModel("Hello", "World")
         val deck = addDeck("Test Deck")
         col.decks.select(deck)
@@ -774,21 +771,6 @@ class CardBrowserTest : RobolectricTest() {
 
         val renderOnScroll = cardBrowser.RenderOnScroll()
         renderOnScroll.onScroll(cardBrowser.mCardsListView!!, 0, 0, 2)
-    }
-
-    @Test
-    fun searchCardsNumberOfResultCount() {
-        val cardsToRender = 1
-
-        val cardBrowser = getBrowserWithNotes(2, CardBrowserSizeOne::class.java)
-
-        val task = SearchCards("", NoOrdering(), cardsToRender, 0, 0)
-
-        TaskManager.launchCollectionTask(task, cardBrowser.SearchCardsHandler(cardBrowser))
-        val cards = cardBrowser.mCards
-        assertThat(2, equalTo(cards.size()))
-        assertTrue(cards[0].isLoaded)
-        assertFalse(cards[1].isLoaded)
     }
 
     @Test

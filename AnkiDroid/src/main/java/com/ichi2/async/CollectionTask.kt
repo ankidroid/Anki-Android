@@ -541,33 +541,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class SearchCards(private val query: String, private val order: SortOrder, private val numCardsToRender: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<List<CardCache>, SearchCardsResult>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<List<CardCache>>): SearchCardsResult {
-            Timber.d("doInBackgroundSearchCards")
-            val searchResult: MutableList<CardCache> = ArrayList()
-            val searchResult_: List<Long>
-            searchResult_ = try {
-                col.findCards(query, order)
-            } catch (e: Exception) {
-                // exception can occur via normal operation
-                Timber.w(e)
-                return SearchCardsResult.error(e)
-            }
-            Timber.d("The search found %d cards", searchResult_.size)
-            var position = 0
-            for (cid in searchResult_) {
-                val card = CardCache(cid, col, position++)
-                searchResult.add(card)
-            }
-            // Render the first few items
-            for (i in 0 until Math.min(numCardsToRender, searchResult.size)) {
-                searchResult[i].load(false, column1Index, column2Index)
-            }
-            // Finish off the task
-            return SearchCardsResult.success(searchResult)
-        }
-    }
-
     class SearchNotes(private val query: String, private val order: SortOrder, private val numCardsToRender: Int, private val column1Index: Int, private val column2Index: Int) : TaskDelegate<List<CardCache>, SearchCardsResult>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<List<CardCache>>): SearchCardsResult {
             Timber.d("doInBackgroundSearchCards")
