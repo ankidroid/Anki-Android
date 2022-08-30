@@ -22,13 +22,13 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.PreviewLayout.Companion.createAndDisplay
-import com.ichi2.libanki.Card
+import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Model
-import com.ichi2.libanki.Note
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
-import net.ankiweb.rsdroid.RustCleanup
+import com.ichi2.utils.JSONObject
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
@@ -38,6 +38,7 @@ import java.util.*
  * to begin showing them. Special rules are applied if the list size is 1 (i.e., no scrolling
  * buttons will be shown).
  */
+@NeedsTest("after switch to new schema as default, add test to confirm audio tags rendered")
 open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private var mEditedModelFileName: String? = null
     private var mEditedModel: Model? = null
@@ -370,7 +371,9 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             mNote = null
         }
 
-        /* if we have an unsaved note saved, use it instead of a collection lookup */ override fun note(reload: Boolean): Note {
+        /* if we have an unsaved note saved, use it instead of a collection lookup */ override fun note(
+            reload: Boolean
+        ): Note {
             return mNote ?: super.note(reload)
         }
 
@@ -390,10 +393,25 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             return mEditedModel ?: super.model()
         }
 
-        @RustCleanup("determine how Anki Desktop does this")
         override fun render_output(reload: Boolean, browser: Boolean): TemplateRenderOutput {
             if (render_output == null || reload) {
-                render_output = col.render_output_legacy(this, reload, browser)
+                render_output = if (BackendFactory.defaultLegacySchema) {
+                    col.render_output_legacy(this, reload, browser)
+                } else {
+                    val index = if (model().isCloze) {
+                        0
+                    } else {
+                        ord
+                    }
+                    val context = TemplateManager.TemplateRenderContext.from_card_layout(
+                        note(),
+                        this,
+                        model(),
+                        model().getJSONArray("tmpls")[index] as JSONObject,
+                        fill_empty = false
+                    )
+                    context.render()
+                }
             }
             return render_output!!
         }

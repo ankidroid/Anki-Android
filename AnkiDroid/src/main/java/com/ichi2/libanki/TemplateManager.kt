@@ -114,7 +114,7 @@ class TemplateManager {
         note: Note,
         browser: bool = false,
         notetype: NoteType? = null,
-        template: Dict<str, str>? = null,
+        template: JSONObject? = null,
         fill_empty: bool = false
     ) {
 
@@ -124,7 +124,7 @@ class TemplateManager {
         internal var _card: Card = card
         internal var _note: Note = note
         internal var _browser: bool = browser
-        internal var _template: Dict<str, str>? = template
+        internal var _template: JSONObject? = template
         internal var _fill_empty: bool = fill_empty
         private var _fields: Dict<str, str>? = null
         internal var _note_type: NoteType = notetype ?: note.model()
@@ -144,7 +144,7 @@ class TemplateManager {
                 note: Note,
                 card: Card,
                 notetype: NoteType,
-                template: Dict<str, str>,
+                template: JSONObject,
                 fill_empty: bool,
             ): TemplateRenderContext {
                 return TemplateRenderContext(
@@ -172,7 +172,7 @@ class TemplateManager {
                 fields["Deck"] = _col.decks.name(_card.oDid or _card.did)
                 fields["Subdeck"] = Decks.basename(fields["Deck"]!!)
                 if (_template != null) {
-                    fields["Card"] = _template!!["name"]
+                    fields["Card"] = _template!!["name"] as String
                 } else {
                     fields["Card"] = ""
                 }
@@ -246,7 +246,7 @@ class TemplateManager {
                     backend.renderUncommittedCardLegacy(
                         _note.toBackendNote(),
                         _card.ord,
-                        BackendUtils.to_json_bytes(JSONObject(_template!!.toMap())),
+                        BackendUtils.to_json_bytes(JSONObject(_template!!)),
                         _fill_empty,
                     )
                 } else {
