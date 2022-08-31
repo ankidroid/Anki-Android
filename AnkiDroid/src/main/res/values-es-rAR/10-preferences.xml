@@ -53,11 +53,11 @@
     <string name="pref_search_no_results">Sin resultados</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Estudiando</string>
+    <string name="pref_cat_system_wide" maxLength="41">Todo el sistema</string>
     <string name="pref_cat_reviewing" maxLength="41">Repasando</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronización</string>
+    <string name="pref_cat_scheduling" maxLength="41">Programación</string>
     <string name="pref_cat_whiteboard" maxLength="41">Pizarra</string>
     <string name="pref_cat_appearance" maxLength="41">Apariencia</string>
     <string name="pref_cat_themes" maxLength="41">Temas</string>
@@ -97,7 +97,7 @@
     <string name="gestures_summ">Asignar gestos a acciones tales como contestar o editar tarjetas.</string>
     <string name="gestures_corner_touch" maxLength="41">Toque de 9 puntos</string>
     <string name="gestures_corner_touch_summary">Permitir gestos táctiles en las esquinas de pantalla</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel de navegación a pantalla completa</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Abrir el cajón de navegación cuando se desliza a la derecha desde cualquier lugar de la pantalla</string>
     <string name="gestures_swipe_up" maxLength="41">Deslizar hacia arriba</string>
     <string name="gestures_swipe_down" maxLength="41">Deslizar hacia abajo</string>
@@ -132,8 +132,8 @@
     <string name="automatic_sync_choice_summ">Sincronizar automáticamente al abrir / cerrar la aplicación si la última sincronización fue hace más de 10 minutos.</string>
     <string name="sync_status_badge" maxLength="41">Mostrar estado de sincronización</string>
     <string name="sync_status_badge_summ">Cambiar el icono de sincronización cuando se pueden subir los cambios</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Permitir sincronización en conexiones medidas</string>
+    <string name="metered_sync_summary">Si está deshabilitado, serás avisado si intentas sincronizar con una conexión medida</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema del día</string>
     <string name="night_theme" maxLength="41">Tema nocturno</string>
@@ -149,7 +149,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz parpadeante</string>
     <string name="timeout_answer_text" maxLength="41">Mostrar automáticamente la respuesta</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Tiempo de respuesta agotado</string>
     <string name="timeout_answer_summ">Mostrar respuesta automáticamente sin intervención del usuario. Retraso incluye tiempo para archivos de audio automáticamente reproducidas.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tiempo para mostrar respuesta</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
@@ -183,7 +183,7 @@
     <string name="time_limit" maxLength="41">Límite de tiempo para Timebox</string>
     <string name="new_timezone" maxLength="41">Nuevo manejo de zona horaria</string>
     <string name="day_offset_with_description" maxLength="41">Comienzo del día siguiente (0 es medianoche, 23 es 11PM)</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s horas después de medianoche</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Medianoche</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11 PM</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantener la pantalla encendida</string>
@@ -203,20 +203,20 @@
     <string name="html_javascript_debugging" maxLength="41">Depuración de HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Habilitar conexiones remotas de WebView y guardar el HTML de la tarjeta en el directorio AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">Revisor</string>
     <string name="accessibility" maxLength="41">Accesibilidad</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Pegar imágenes del portapapeles como PNG</string>
     <string name="paste_as_png_summary">Por defecto Anki pega imágenes en el portapapeles como archivos JPG para ahorrar espacio en disco. Puede utilizar esta opción para pegar como imágenes PNG en su lugar.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Presione dos veces para regresar o salir</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back_summ">Para evitar dejar accidentalmente el revisor o la aplicación</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files" maxLength="41">Permitir todos los archivos en las importaciones de medios</string>
     <string name="media_import_allow_all_files_summ">Si Android no reconoce un archivo multimedia</string>
     <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
+    <string name="stats_default_deck_title" maxLength="41">Mazo por defecto al abrir las estadísticas</string>
+    <string name="stats_default_deck_current">Mostrar estadísticas del mazo más reciente</string>
+    <string name="stats_default_deck_all">Mostrar estadísticas de todos los mazos</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">Estadísticas avanzadas</string>
     <string name="enable_advanced_statistics_title" maxLength="41">Activar estadísticas avanzadas</string>
@@ -319,17 +319,17 @@
     <string name="type_in_answer_focus_summ">Enfocar automáticamente el campo \"escribir en respuesta\" en el revisor</string>
     <!-- About -->
     <string name="open_changelog">Abrir el Registro de Cambios</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="pref_cat_about_title" maxLength="41">Acerca de</string>
+    <string name="contributors_title">Colaboradores</string>
+    <string name="about_contributors_description"><![CDATA[Estos son nuestros increíbles <a href=\"%1$s\">colaboradores</a>. ¡También puedes ayudar a AnkiDroid programando, traduciendo, donando y <a href=\"%2$s\">más</a>!]]></string>
+    <string name="license">Licencia</string>
+    <string name="license_description"><![CDATA[AnkiDroid se publica bajo las licencias <a href=\"%1$s\">GPL-3.0</a> y <a href=\"%2$s\">AGPL-3.0</a> con el código fuente <a href=\"%3$s\">disponible en GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[Puedes apoyar el desarrollo de AnkiDroid <a href=\"%1$s\">donando</a>. Cualquier cantidad es profundamente apreciada.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Agregar gesto</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Reemplazar gesto</string>
     <string name="binding_add_key">Añadir botón</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Reemplazar clave</string>
     <string name="key_picker_default_press_key">Presione una tecla</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecciona el lado de la tarjeta</string>
@@ -344,15 +344,15 @@
     <string name="bindings_already_bound">Ya vinculado a %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Activar ‘%s’</string>
+    <string name="use_rust_backend_title" maxLength="41">Usar el nuevo backend</string>
+    <string name="use_rust_backend_summary">Activa nuevas características de Anki, como el planificador v3\nINESTABLE. No lo uses en una colección que te importe. NO será revertido al cerrar la aplicación</string>
+    <string name="use_rust_backend_warning">Existe la posibilidad de que esto pueda dañar completamente tu instalación, siendo necesario desinstalar y eliminar la aplicación de la carpeta AnkiDroid y existe la posibilidad de que se propague la corrupción a través de la sincronización con AnkiWeb.\n\nLe damos la bienvenida a la prueba, pero, por favor, asegúrate de que tienes una copia de seguridad válida que no sea de AnkiWeb.</string>
+    <string name="enable_v3_sched_title" maxLength="41">Usar el planificador v3</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="pref_cat_dev_options" maxLength="41">Opciones de desarrollador</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Activar opciones de desarrollador</string>
+    <string name="disable_dev_options">Desactivar opciones de desarrollador</string>
+    <string name="dev_options_warning">        Por favor, asegúrate antes de activar las opciones de desarrollador. Estas opciones son peligrosas y podrían romper la aplicación o dañar tu colección.\n\nTen en cuenta que estas opciones no son adecuadas para la mayoría de los usuarios y, por lo tanto, no están traducidas, así que están en inglés.
     </string>
 </resources>

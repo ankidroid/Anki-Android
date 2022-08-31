@@ -164,8 +164,8 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Añadir</string>
     <string name="import_message_replace_confirm">Esto eliminará tu colección actual y la reemplazará con los datos del archivo %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">¿Añadir “%s” a la colección? Esto puede tardar mucho tiempo</item>
+        <item quantity="other">¿Quieres importar los siguientes archivos?\n%s\nEsto puede tardar mucho tiempo</item>
     </plurals>
     <string name="import_log_no_apkg">Este no es un archivo de paquete Anki válido</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
@@ -176,14 +176,14 @@
     <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se borre la caché durante el procesamiento.\nInténtalo de nuevo</string>
     <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
     <string name="import_error_corrupt_zip">El archivo apkg está dañado. Por favor, borre y vuelva a descargarlo.\n\nCausa original: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">Error al importar el archivo\n\n%s</string>
     <string name="import_error_not_apkg_extension">El nombre de archivo “%s” no tiene extensión .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Los reemplazos de la base de datos de Anki (.anki2) aún no están soportados. Consulta el manual para obtener instrucciones de reemplazo.</string>
     <string name="import_error_content_provider">AnkiDroid no ha podido importar automáticamente el archivo seleccionado. Por favor, lee el manual de usuario sobre como importar manualmente anki files:  \n %s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_copy_to_cache">Error al almacenar el archivo en caché (posiblemente fuera de espacio de almacenamiento)</string>
+    <string name="import_error_multiple_colpkg">Se seleccionaron varios archivos colpkg.</string>
+    <string name="import_error_colpkg_apkg">Los archivos apkg y colpkg fueron seleccionados a la vez.</string>
+    <string name="import_stats_error">Se han producido algunos errores al importar los siguientes archivos:\n%s</string>
     <string name="import_replacing">Reemplazando colección&#8230;</string>
     <string name="import_interrupted">Importación interrumpida</string>
     <string name="export_include_schedule">Incluir programación</string>
@@ -383,16 +383,20 @@
     <string name="could_not_create_dir">No se pudo crear el directorio %s</string>
     <string name="malicious_archive_entry_outside">Archivo malicioso. Contiene entrada fuera del dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Archivo malicioso. El tamaño excede %1$s o contiene más de %2$d archivos</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="file_extract_exceeds_storage_space">El archivo extraído excede el espacio de almacenamiento</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Expandir etiqueta \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Error al acceder a la colección. ¡Por favor, vuelve a intentarlo!</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="intro_ankidroid_tagline_one">Estudia menos</string>
+    <string name="intro_ankidroid_tagline_two">Recuerda más</string>
+    <string name="intro_short_ankidroid_explanation">El planificador de tarjetas Anki ahorra tiempo fortaleciendo tus recuerdos más débiles y preservando los más fuertes</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Empieza</string>
+    <string name="intro_sync_from_ankiweb">Sincronizar desde AnkiWeb</string>
+    <string name="already_logged_in">Ya has iniciado sesión</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

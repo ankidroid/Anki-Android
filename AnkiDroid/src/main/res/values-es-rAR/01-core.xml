@@ -76,7 +76,7 @@
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d día %2$d restante</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d días %2$d restantes</item>
     </plurals>
     <string name="no_cards_placeholder_title">Colección vacía</string>
     <string name="no_cards_placeholder_description">Comienza añadiendo tarjetas usando el icono +</string>

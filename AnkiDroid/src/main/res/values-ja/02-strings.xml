@@ -100,7 +100,7 @@
         <item>ノート編集日</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">適用する</string>
+    <string name="apply_filter">適用</string>
     <string name="filter_by_flags">フラグ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
@@ -382,4 +382,8 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

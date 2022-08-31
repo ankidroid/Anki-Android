@@ -180,7 +180,7 @@
     <string name="import_error_not_apkg_extension">Il file \"%s\" non ha estensione .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Le sostituzioni di Anki Database (.anki2) non sono ancora supportate. Consultare il manuale per le istruzioni di sostituzione.</string>
     <string name="import_error_content_provider">Il file selezionato non ha potuto essere importato automaticamente da AnkiDroid. Consulta il manuale utente per importare manualmente i file anki: \n %s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">Impossibile cache del file (forse fuori dallo spazio di archiviazione)</string>
     <string name="import_error_multiple_colpkg">Sono stati selezionati più file colpkg.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Si sono verificati degli errori durante l\'importazione dei seguenti file:\n%s</string>
@@ -395,4 +395,8 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>
