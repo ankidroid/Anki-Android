@@ -50,14 +50,14 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Geen resultaten</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Algemeen</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_studying" maxLength="41">Studeren</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Overhoren</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronisatie</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_scheduling" maxLength="41">Plannen</string>
     <string name="pref_cat_whiteboard" maxLength="41">Schrijfbord</string>
     <string name="pref_cat_appearance" maxLength="41">Opmaak</string>
     <string name="pref_cat_themes" maxLength="41">Thema\'s</string>
@@ -183,7 +183,7 @@
     <string name="time_limit" maxLength="41">Stel een tijdslimiet in</string>
     <string name="new_timezone" maxLength="41">Nieuwe tijdzone afhandeling</string>
     <string name="day_offset_with_description" maxLength="41">Begin van de volgende dag (0 is middernacht, 23 is 11PM)</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s uur na middernacht</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">Middernacht</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">Scherm aanlaten</string>
@@ -214,7 +214,7 @@
     <string name="media_import_allow_all_files" maxLength="41">Alle bestanden bij media-import toestaan</string>
     <string name="media_import_allow_all_files_summ">Als Android een mediabestand niet herkent</string>
     <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
+    <string name="stats_default_deck_title" maxLength="41">Standaardset bij het openen van statistieken</string>
     <string name="stats_default_deck_current">Show stats for most recent deck</string>
     <string name="stats_default_deck_all">Show stats for all decks</string>
     <!-- Advanced statistics settings -->
@@ -319,15 +319,15 @@
     <string name="type_in_answer_focus_summ">Automatisch focussen op het ‘type in antwoord’ veld in de beoordelaar</string>
     <!-- About -->
     <string name="open_changelog">Wijzigingslogboek openen</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
+    <string name="pref_cat_about_title" maxLength="41">Over</string>
+    <string name="contributors_title">Bijdragers</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
+    <string name="license">Licentie</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Gebaar toevoegen</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Gebaar vervangen</string>
     <string name="binding_add_key">Add key</string>
     <string name="binding_replace_key">Replace key</string>
     <string name="key_picker_default_press_key">Druk op een toets</string>
@@ -343,16 +343,16 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Verwijder ‘%s’</string>
     <string name="bindings_already_bound">Reeds gekoppeld aan %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
+    <string name="pref_cat_experimental" maxLength="41">Experimenteel</string>
+    <string name="experimental_pref_confirmation" maxLength="41">Schakel de ‘%s’ in</string>
+    <string name="use_rust_backend_title" maxLength="41">Gebruik de nieuwe backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">Gebruik de v3 planner</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
+    <string name="pref_cat_dev_options" maxLength="41">Opties voor ontwikkelaars</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Opties voor ontwikkelaars inschakelen</string>
+    <string name="disable_dev_options">Ontwikkelaarsopties uitschakelen</string>
     <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
     </string>
 </resources>

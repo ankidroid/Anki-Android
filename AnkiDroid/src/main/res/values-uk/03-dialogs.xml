@@ -264,7 +264,7 @@
         <item quantity="many">Автоматична синхронізація може запуститися через %d секунд.</item>
         <item quantity="other">Автоматична синхронізація може запуститися через %d секунди.</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">Ваше з\'єднання вимірюється. За передачу даних можуть зніматися кошти</string>
     <string name="deck_picker_new">Кількість нових карт, що будуть бачити сьогодні в цій колоді.</string>
     <string name="deck_picker_rev">Кількість нових карток на сьогодні в цій колоді</string>
     <string name="deck_picker_lrn">Кількість карток для повторення на сьогодні в цій колоді</string>
@@ -274,7 +274,7 @@
     <string name="deck_picker_counts">Відкрити сторінку огляду колоди, що містить число карт для перегляду на сьогодні.</string>
     <string name="import_deck_package">Пакет колоди (.apkg)</string>
     <string name="import_collection_package">Пакет колекції (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">Текстовий файл (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Ви не можете створити підколоду для всіх колод</string>
 </resources>

@@ -264,7 +264,7 @@
         <item quantity="many">Automatická synchronizace může být spuštěna za %d sekundy</item>
         <item quantity="other">Automatická synchronizace může být spuštěna za %d sekund</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">Vaše připojení je měřené podle objemu dat. Přenos dat může stát peníze</string>
     <string name="deck_picker_new">Počet nových karet dnes k učení v tomto balíčku.</string>
     <string name="deck_picker_rev">Počet karet dnes ke zkoušení v tomto balíčku.</string>
     <string name="deck_picker_lrn">Počet karet v procesu učení v tomto balíčku.</string>

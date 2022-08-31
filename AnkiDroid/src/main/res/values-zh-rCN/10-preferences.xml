@@ -132,8 +132,8 @@
     <string name="automatic_sync_choice_summ">如果距离上次同步了超过10分钟，在应用程序启动/退出自动同步。</string>
     <string name="sync_status_badge" maxLength="41">显示同步状态</string>
     <string name="sync_status_badge_summ">当更改可被上传时改变同步图标</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">允许通过按流量计费连接同步</string>
+    <string name="metered_sync_summary">如禁用，如果您试图通过按流量计费连接进行同步，你将被警告</string>
     <string name="app_theme" maxLength="41">主题</string>
     <string name="day_theme" maxLength="41">白天主题</string>
     <string name="night_theme" maxLength="41">夜间主题</string>
@@ -346,7 +346,7 @@
     <string name="use_rust_backend_title" maxLength="41">使用新后端</string>
     <string name="use_rust_backend_summary">启用较新的 Anki 功能，例如 v3 版调度程序\n不稳定。不要用在你在意的牌组上。应用关闭时不会还原。</string>
     <string name="use_rust_backend_warning">此操作可能彻底损坏您的安装。 要求应用卸载和删除 AnkiDroid 文件夹，并可能通过同步将损坏传播到 AnkiWeb。\n\n 我们欢迎测试，但请确保您有一个有效的非 AnkiWeb 备份。</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">使用 v3 调度器</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">开发者选项</string>
     <string name="dev_options_enabled_pref" maxLength="41">启用开发者选项</string>

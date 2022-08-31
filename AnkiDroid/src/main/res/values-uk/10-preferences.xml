@@ -53,8 +53,8 @@
     <string name="pref_search_no_results">Немає результатів</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Загальні</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_studying" maxLength="41">Навчання</string>
+    <string name="pref_cat_system_wide" maxLength="41">Загальносистемні</string>
     <string name="pref_cat_reviewing" maxLength="41">Навчання</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронізація</string>
     <string name="pref_cat_scheduling" maxLength="41">Планування</string>
@@ -133,8 +133,8 @@
     програми. Якщо остання синхронізація була більше 10 хвилин тому.</string>
     <string name="sync_status_badge" maxLength="41">Відображати стан синхронізації</string>
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Дозволити синхронізацію на вимірюваному Інтернет-підключенні</string>
+    <string name="metered_sync_summary">Якщо вимкнено, то вас буде попереджено коли ви спробуєте синхронізувати при вимірюваному Інтернет підключенні</string>
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Денна тема</string>
     <string name="night_theme" maxLength="41">Нічна тема</string>
@@ -348,12 +348,12 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Видалити \'%s\'</string>
     <string name="bindings_already_bound">Вже прив\'язано до %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41">Експериментальні</string>
     <string name="experimental_pref_confirmation" maxLength="41">Ввімкнути \'%s\'</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
+    <string name="use_rust_backend_title" maxLength="41">Використовувати новий бекенд</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
     <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">Використовувати v3 планувальник </string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметри розробника</string>
     <string name="dev_options_enabled_pref" maxLength="41">Увімкнути параметри розробника</string>

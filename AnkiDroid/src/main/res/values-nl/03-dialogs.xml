@@ -76,7 +76,7 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
+        <item quantity="one">Herplannen %d kaart</item>
         <item quantity="other">Reschedule %d cards</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
@@ -126,7 +126,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_no">Nee</string>
     <string name="dialog_continue">Doorgaan</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">Verwerking...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Maak</string>
     <string name="dialog_positive_delete">Verwijder</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -188,7 +188,7 @@
     <string name="card_browser_deck_change_error">Kon de set niet wijzigen</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fout bij decoderen van gegevens uit de kaart</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="undo_succeeded">Onvoltooide \"%s\"</string>
     <!-- Deck Options -->
     <string name="deck_options_corrupt">Verwerken van de setopties mislukt: %s</string>
     <!-- Database Errors-->
@@ -256,7 +256,7 @@
     <string name="deck_picker_counts">Open de leerset overzichtspagina, die het aantal kaarten die u vandaag ziet bevat</string>
     <string name="import_deck_package">Leerset pakket (.apkg)</string>
     <string name="import_collection_package">Verzamelingspakket (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">Tekstbestand (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
 </resources>

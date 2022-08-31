@@ -282,7 +282,7 @@
         <item quantity="many">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
         <item quantity="other">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">اتصالك بالإنترنت محدود. قد يكلف نقل البيانات مصاريف</string>
     <string name="deck_picker_new">عدد البطاقات الجديدة لتراها اليوم من هذه الرزمة.</string>
     <string name="deck_picker_rev">عدد البطاقات التي موعدها اليوم في هذه الرزمة.</string>
     <string name="deck_picker_lrn">عدد بطاقات التعلّم في هذه الرزمة.</string>
@@ -292,7 +292,7 @@
     <string name="deck_picker_counts">افتح صفحة مراجعة الرزمة،  والتي تحتوي عدد البطاقات التي تراها اليوم.</string>
     <string name="import_deck_package">حزمة رزمة (.apkg)</string>
     <string name="import_collection_package">حزمة مجموعة (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">ملف نصي (.txt; .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">لا يمكنك إنشاء رزمة فرعية لكل الرزم</string>
 </resources>

@@ -101,8 +101,8 @@
         <item>노트 편집일</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">적용하기</string>
+    <string name="filter_by_flags">플래그</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>
     <string name="custom_study_increase_review_limit">오늘의 복습 카드 학습량 늘리기</string>
@@ -162,25 +162,25 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">추가</string>
     <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">다음을 컬렉션에 추가합니까?\n%s\n시간이 걸릴 수도 있습니다.</item>
     </plurals>
     <string name="import_log_no_apkg">이것은 유효한 Anki package 파일이 아닙니다。</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">오류</string>
     <string name="import_log_failed_unzip">apkg 압축 해제 실패: %s</string>
     <string name="import_log_failed_copy_to">%s에서 apkg 복사 실패</string>
     <string name="import_log_failed_validate">apkg 검사 실패</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_log_insufficient_space_error">패키지를 추가할 공간이 부족합니다.\n필요 - %1$s\n여유 - %2$s.\n\n도움이 필요한가요? 필요 없는 파일들을 지워보세요. 또한, 동기화 기능은 공간을 적게 사용하기에, 다른 기기(예: Anki 컴퓨터)랑 동기화를 해 보세요.</string>
     <string name="import_log_file_cache_cleared">파일을 불러오는데 문제가 발생했습니다. 처리 중 캐시가 삭제됐을 수 있습니다.\n다시 시도하십시오.</string>
     <string name="import_succeeded_but_check_database">데이타를 가져오는 데는 성공했지만, 정리에 실패했습니다. 나중에 데이터베이스 점검하기를 실행해주십시오. 원인: %s</string>
     <string name="import_error_corrupt_zip">apkg파일이 손상되었습니다. 삭제 후 다시 다운로드해주십시오. \n\n원인: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">패키지를 가져오는데 실패했습니다.\n\n%s</string>
     <string name="import_error_not_apkg_extension">apkg, colpkg 확장자를 가진 \"%s\" 파일이 없습니다.</string>
     <string name="import_error_load_imported_database">Anki 데이터베이스 (.anki2)의 덮어쓰기는 아직 지원되지 않습니다. 덮어쓰려면 설명서를 참조해주십시오.</string>
     <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
+    <string name="import_error_copy_to_cache">파일 캐시 실패 (저장 공간이 부족하기 때문일 수 있습니다)</string>
+    <string name="import_error_multiple_colpkg">여러 colpkg 파일이 선택되었습니다.</string>
+    <string name="import_error_colpkg_apkg">apkg 랑 colpkg 파일이 동시에 선택되었습니다.</string>
+    <string name="import_stats_error">다음 파일을 추가하는데 오류가 있었습니다:\n%s</string>
     <string name="import_replacing">컬렉션을 대체하는 중...</string>
     <string name="import_interrupted">불러오기 중단됨: AnkiDroid가 닫힘</string>
     <string name="export_include_schedule">일정 포함</string>
@@ -196,13 +196,15 @@
     <string name="export_save_apkg_unsuccessful">Anki 패키지 저장 실패</string>
     <string name="export_successful">파일 \"%s\" 는 보내졌습니다. 다른 앱으로 보내고 싶으십니까?</string>
     <string name="export_email_subject">AnkiDroid로 보내진 플래시 카드: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        안녕하세요!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
-        [1] %1$s<br/>
-        [2] %2$s
-        ]]></string>
+       이것은 AnkiDroid에서 보낸 안키 플래시 카드입니다[1].
+        이 중에서 이용 가능한 것을 선택해 보시고[2] 쉽고 효율적으로 즐겁게 공부하세요!<br/><br/>
+        [1]%1$s<br/>
+        [2]%2$s
+        ]]>    
+ 
+Context | Request Context    [1]</string>
     <string name="export_unsuccessful">Apkg 파일 오류 내보내기</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">설정</string>
     <string name="menu__deck_options">덱 옵션</string>
@@ -385,4 +387,8 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>

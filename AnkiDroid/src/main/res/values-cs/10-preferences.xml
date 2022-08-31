@@ -132,8 +132,8 @@
     <string name="automatic_sync_choice_summ">Automaticky synchronizovat při spuštění/ukončení aplikace, jestliže od poslední synchronizace uplynulo více než 10 minut</string>
     <string name="sync_status_badge" maxLength="41">Zobrazit stav synchronizace</string>
     <string name="sync_status_badge_summ">Změnit ikonu synchronizace, když lze nahrát změny</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Povolit synchronizaci na měřeném připojení</string>
+    <string name="metered_sync_summary">Je-li zajázáno, budete varováni při pokusu o synchronizaci na připojení měřeném podle objemu dat</string>
     <string name="app_theme" maxLength="41">Motiv</string>
     <string name="day_theme" maxLength="41">Motivy vzhledu - den</string>
     <string name="night_theme" maxLength="41">Motivy vzhledu - noc</string>
@@ -352,7 +352,7 @@
     <string name="use_rust_backend_title" maxLength="41">Použít nový backend</string>
     <string name="use_rust_backend_summary">Povolí novější funkce Anki, jako je v3 plánovač\nNESTABILNÍ. Nepoužívejte s kolekcí, která je pro vás důležitá. Toto nastavení ZŮSTÁVÁ i po ukončení aplikace</string>
     <string name="use_rust_backend_warning">Existuje možnost, že by se mohla zcela poškodit vaše instalace, což by vyžadovalo odinstalaci aplikace a smazání složky AnkiDroid, a je zde možnost, že se poškození rozšíří přes synchronizaci na AnkiWeb.\n\nUvítáme testování, ale ujistěte se prosím, že máte platnou zálohu mimo AnkiWeb.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="enable_v3_sched_title" maxLength="41">Použít v3 plánovač</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Možnosti pro vývojáře</string>
     <string name="dev_options_enabled_pref" maxLength="41">Povolit možnosti pro vývojáře</string>

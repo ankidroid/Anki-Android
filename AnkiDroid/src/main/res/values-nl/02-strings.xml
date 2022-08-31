@@ -100,8 +100,8 @@
         <item>Memo gewijzigd</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Toepassen</string>
+    <string name="filter_by_flags">Vlaggen </string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Nieuwe kaartenlimiet voor vandaag wijzigen</string>
     <string name="custom_study_increase_review_limit">Limiet te overhoren kaarten voor vandaag wijzigen</string>
@@ -164,8 +164,8 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Toevoegen</string>
     <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">“%s” aan de collectie toevoegen? Dit kan lang duren</item>
+        <item quantity="other">Wilt u de volgende bestanden importeren:\n%s\nDit kan lang duren</item>
     </plurals>
     <string name="import_log_no_apkg">Dit is geen geldig Anki-pakketbestand</string>
     <string name="import_title_error" comment="Title of error dialog">Fout</string>
@@ -176,11 +176,11 @@
     <string name="import_log_file_cache_cleared">Fout bij het importeren van het bestand, waarschijnlijk een cache die tijdens de verwerking wordt gewist.\nGelieve opnieuw te proberen</string>
     <string name="import_succeeded_but_check_database">Het importeren van gegevens is gelukt, maar de opruiming na de import is mislukt. Voer later de databasecontrole uit. Kernoorzaak: %s</string>
     <string name="import_error_corrupt_zip">Het apkg-bestand is beschadigd. Verwijder en herdownload het.\n\nKernoorzaak: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">Importeren van bestand\n\n%s mislukt</string>
     <string name="import_error_not_apkg_extension">Bestandsnaam “%s” heeft geen .apkg of .colpkg-extensie</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) vervangingen worden nog niet ondersteund. Zie alstublieft de handleiding voor vervangende instructies.</string>
     <string name="import_error_content_provider">Het selecteerde bestand kon niet automatisch geïmporteerd worden door AnkiDroid. Bekijk de gebruikershandleiding om te zien hoe je anki bestanden handmatig importeert: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">Het cachen van het bestand is mislukt (mogelijk gebrek aan opslagruimte)</string>
     <string name="import_error_multiple_colpkg">Er zijn meerdere colpkg bestanden geselecteerd.</string>
     <string name="import_error_colpkg_apkg">Zowel apkg als colpkg bestanden werden in een keer geselecteerd.</string>
     <string name="import_stats_error">Er zijn enkele fouten opgetreden tijdens het importeren van de volgende bestanden:\n%s</string>
@@ -385,14 +385,18 @@
     <string name="malicious_archive_exceeds_limit">Schadelijk archief. Grootte overschrijdt %1$s of bevat meer dan %2$d bestanden</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Label \'%s \' uitklappen</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Toegang tot verzameling mislukt. Probeer het opnieuw!</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="intro_ankidroid_tagline_one">Studeer minder</string>
+    <string name="intro_ankidroid_tagline_two">Meer onthouden</string>
+    <string name="intro_short_ankidroid_explanation">De kaartplanner van Anki\'s bespaart tijd door je zwakste herinneringen te versterken en je sterkste te bewaren</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Aan de slag</string>
+    <string name="intro_sync_from_ankiweb">Synchronizeren vanaf AnkiWeb</string>
+    <string name="already_logged_in">Reeds ingelogd</string>
+    <!-- Deck Creation -->
+    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="deck_created">Created deck</string>
+    <string name="deck_renamed">Renamed deck</string>
 </resources>
