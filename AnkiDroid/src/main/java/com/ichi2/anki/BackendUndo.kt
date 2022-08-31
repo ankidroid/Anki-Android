@@ -16,7 +16,7 @@
 
 package com.ichi2.anki
 
-import android.widget.Button
+import android.view.View
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
@@ -26,7 +26,7 @@ import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BlocksSchemaUpgrade
 import net.ankiweb.rsdroid.BackendException
 
-suspend fun FragmentActivity.backendUndoAndShowPopup(): Boolean {
+suspend fun FragmentActivity.backendUndoAndShowPopup(anchorView: View? = null): Boolean {
     return try {
         val changes = withProgress() {
             undoableOp {
@@ -36,9 +36,9 @@ suspend fun FragmentActivity.backendUndoAndShowPopup(): Boolean {
 
         showSnackbar(TR.undoActionUndone(changes.operation), Snackbar.LENGTH_LONG) {
 
-            val ans_button = findViewById(R.id.flip_card) as Button
-            this.setAnchorView(ans_button) /* A snackbar may obscure vital elements on some screens (e.g: the answer buttons on the Reviewer)
-                                               To fix this, a view may be [tagged/provided with an ID], and the snackbar will be displayed above it */
+            // A snackbar may obscure vital elements (e.g: the answer buttons on the Reviewer)
+            // `anchorView` stops this
+            anchorView?.let { setAnchorView(anchorView) }
         }
 
         true
