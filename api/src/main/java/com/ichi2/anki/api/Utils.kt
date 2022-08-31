@@ -34,7 +34,7 @@ internal object Utils {
     private val tagPattern = Pattern.compile("<.*?>")
     private val imgPattern = Pattern.compile("<img src=[\"']?([^\"'>]+)[\"']? ?/?>")
     private val htmlEntitiesPattern = Pattern.compile("&#?\\w+;")
-    private val FIELD_SEPARATOR = Character.toString('\u001f')
+    private const val FIELD_SEPARATOR = '\u001f'.toString()
 
     @JvmStatic
     fun joinFields(list: Array<String?>?): String? {
