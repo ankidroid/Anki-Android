@@ -50,7 +50,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
         // Check that input is valid before committing change in the collection path
         requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
             setOnPreferenceChangeListener { _, newValue: Any? ->
-                val newPath = newValue as String?
+                val newPath = newValue as String
                 try {
                     CollectionHelper.initializeAnkiDroidDirectory(newPath)
                     (requireActivity() as Preferences).restartWithNewDeckPicker()

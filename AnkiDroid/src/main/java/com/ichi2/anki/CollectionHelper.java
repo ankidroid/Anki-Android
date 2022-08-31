@@ -177,16 +177,6 @@ public class CollectionHelper {
         return openCollection(context, path);
     }
 
-    /** Collection time if possible, otherwise real time.*/
-    public synchronized Time getTimeSafe(Context context) {
-        try {
-            return TimeManager.INSTANCE.getTime();
-        } catch (Exception e) {
-            Timber.w(e);
-            return new SystemTime();
-        }
-    }
-
     /**
      * Call getCol(context) inside try / catch statement.
      * Send exception report and return null if there was an exception.
@@ -245,7 +235,7 @@ public class CollectionHelper {
      * @param path  Directory to initialize
      * @throws StorageAccessException If no write access to directory
      */
-    public static synchronized void initializeAnkiDroidDirectory(String path) throws StorageAccessException {
+    public static synchronized void initializeAnkiDroidDirectory(@NonNull String path) throws StorageAccessException {
         // Create specified directory if it doesn't exit
         File dir = new File(path);
         if (!dir.exists() && !dir.mkdirs()) {
@@ -407,7 +397,7 @@ public class CollectionHelper {
      *
      * @return the path to the actual {@link Collection} file
      */
-    public static @NonNull String getCollectionPath(Context context) {
+    public static @NonNull String getCollectionPath(@NonNull Context context) {
         return new File(getCurrentAnkiDroidDirectory(context), COLLECTION_FILENAME).getAbsolutePath();
     }
 
