@@ -985,7 +985,7 @@ open class DeckPicker :
                     automaticSync()
                     finishWithAnimation()
                 } else {
-                    showThemedToast(this, getString(R.string.back_pressed_once), true)
+                    showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
                 }
                 mBackButtonPressedToExit = true
                 HandlerUtils.executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) { mBackButtonPressedToExit = false }
