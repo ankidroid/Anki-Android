@@ -702,8 +702,9 @@ open class Reviewer : AbstractFlashcardViewer() {
             return
         }
         val intent = if (BackendFactory.defaultLegacySchema) {
-            Intent(this, CardInfo::class.java)
-            intent.putExtra("cardId", mCurrentCard!!.id)
+            Intent(this, CardInfo::class.java).apply {
+                putExtra("cardId", mCurrentCard!!.id)
+            }
         } else {
             com.ichi2.anki.pages.CardInfo.getIntent(this, mCurrentCard!!.id)
         }
