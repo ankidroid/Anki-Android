@@ -61,7 +61,7 @@ body:
       label: Research
       description: Confirm the points below
       options:
-        - label: I am reporting a bug/enhancement request specific to AnkiDroid.
+        - label: I am reporting a bug/enhancement request specific to Anki-Android.
           required: true
         - label: I have checked the [manual](https://ankidroid.org/docs/manual.html) and the [FAQ](https://github.com/ankidroid/Anki-Android/wiki/FAQ) and could not find a solution to my issue.
           required: true
