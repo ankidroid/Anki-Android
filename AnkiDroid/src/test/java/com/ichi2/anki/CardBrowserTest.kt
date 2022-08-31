@@ -30,7 +30,7 @@ import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.IntentAssert
-import com.ichi2.testutils.revokeWritePermissions
+import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -296,20 +296,21 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
-        revokeWritePermissions()
-        val inputIntent = Intent("android.intent.action.PROCESS_TEXT")
+        withNoWritePermission {
+            val inputIntent = Intent("android.intent.action.PROCESS_TEXT")
 
-        val browserController = Robolectric.buildActivity(CardBrowser::class.java, inputIntent).create()
-        val cardBrowser = browserController.get()
-        saveControllerForCleanup(browserController)
+            val browserController = Robolectric.buildActivity(CardBrowser::class.java, inputIntent).create()
+            val cardBrowser = browserController.get()
+            saveControllerForCleanup(browserController)
 
-        val shadowActivity = shadowOf(cardBrowser)
-        val outputIntent = shadowActivity.nextStartedActivity
-        val component = assertNotNull(outputIntent.component)
+            val shadowActivity = shadowOf(cardBrowser)
+            val outputIntent = shadowActivity.nextStartedActivity
+            val component = assertNotNull(outputIntent.component)
 
-        assertThat("Deck Picker currently handles permissions, so should be called", component.className, equalTo("com.ichi2.anki.DeckPicker"))
-        assertThat("Activity should be finishing", cardBrowser.isFinishing)
-        assertThat("Activity should be cancelled as it did nothing", shadowActivity.resultCode, equalTo(Activity.RESULT_CANCELED))
+            assertThat("Deck Picker currently handles permissions, so should be called", component.className, equalTo("com.ichi2.anki.DeckPicker"))
+            assertThat("Activity should be finishing", cardBrowser.isFinishing)
+            assertThat("Activity should be cancelled as it did nothing", shadowActivity.resultCode, equalTo(Activity.RESULT_CANCELED))
+        }
     }
 
     @Test
