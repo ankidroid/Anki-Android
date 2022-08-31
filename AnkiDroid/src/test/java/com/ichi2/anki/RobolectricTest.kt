@@ -229,6 +229,22 @@ open class RobolectricTest : CollectionGetter {
             Shadows.shadowOf(Looper.getMainLooper()).runToEndOfTasks()
         }
 
+        /**
+         * * Causes all of the [Runnable]s that have been scheduled to run while advancing the clock to the start time of the last scheduled Runnable.
+         * * Executes all posted tasks scheduled before or at the current time
+         *
+         * Supersedes and will eventually replace [advanceRobolectricLooper] and [advanceRobolectricLooperWithSleep]
+         */
+        fun advanceRobolectricUiLooper() {
+            Shadows.shadowOf(Looper.getMainLooper()).apply {
+                runToEndOfTasks()
+                idle()
+                // CardBrowserTest:browserIsInMultiSelectModeWhenSelectingAll failed on Windows CI
+                // This line was added and may or may not make a difference
+                runToEndOfTasks()
+            }
+        }
+
         // Robolectric needs some help sometimes in form of a manual kick, then a wait, to stabilize UI activity
         @JvmStatic
         fun advanceRobolectricLooperWithSleep() {
