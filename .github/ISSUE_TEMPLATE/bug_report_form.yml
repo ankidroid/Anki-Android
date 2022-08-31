@@ -1,0 +1,67 @@
+name: 🐞 Bug
+description: File a bug
+title: "[BUG]: "
+labels:  [Bug, "Needs Triage"]
+
+body:
+
+  - type: checkboxes
+    id: contact
+    attributes:
+      label: Checked for duplicates?
+      description: Quickly search our [open issues](https://github.com/ankidroid/Anki-Android/issues) to see if a similar issue exists
+      options:
+        - label: This issue is not a duplicate
+          required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: What are the steps to reproduce this bug?
+      description: Briefly explain what you did which caused this bug to occur
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behaviour
+    attributes:
+      label: Expected behaviour
+      description: Briefly describe what should have happened
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behaviour
+    attributes:
+      label: Actual behaviour
+      description: Briefly describe what happened
+    validations:
+      required: true
+
+  - type: textarea
+    id: debug-info
+    attributes:
+      label: Debug info
+      description: Refer to the [support page](https://ankidroid.org/docs/help.html) if you are unsure where to get the "debug info"
+      placeholder: AnkiDroid Debug Info (Starts with "AnkiDroid Version")
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra_info
+    attributes:
+      label: (Optional) Anything else you want to share?
+      placeholder: List any extra information
+
+  - type: checkboxes
+    id: research
+    attributes:
+      label: Research
+      description: Confirm the points below
+      options:
+        - label: I am reporting a bug specific to AnkiDroid (Android app)
+          required: true
+        - label: I have checked the [manual](https://ankidroid.org/docs/manual.html) and the [FAQ](https://github.com/ankidroid/Anki-Android/wiki/FAQ) and could not find a solution to my issue
+          required: true
+        - label: (Optional) I have confirmed the issue is not resolved in the latest alpha release ([instructions](https://docs.ankidroid.org/manual.html#betaTesting))
+          required: false
