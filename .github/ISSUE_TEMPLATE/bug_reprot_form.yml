@@ -11,7 +11,7 @@ body:
       label: Is there an existing issue for this?
       description: Please go through [open issues](https://github.com/ankidroid/Anki-Android/issues), to see if anything similar already exists.
       options:
-        - label: This issue is not a duplicate
+        - label: This issue is not a duplicate.
           required: true
 
   - type: textarea
