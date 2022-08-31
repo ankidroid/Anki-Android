@@ -27,7 +27,7 @@ import java.util.regex.Pattern
 /**
  * Utilities class for the API
  */
-internal object Utils {
+object Utils {
     // Regex pattern used in removing tags from text before checksum
     private val stylePattern = Pattern.compile("(?s)<style.*?>.*?</style>")
     private val scriptPattern = Pattern.compile("(?s)<script.*?>.*?</script>")
