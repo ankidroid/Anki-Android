@@ -18,7 +18,6 @@ import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.*
@@ -302,7 +301,7 @@ class DeckPickerTest : RobolectricTest() {
     fun deckPickerOpensWithHelpMakeAnkiDroidBetterDialog() {
         // Refactor: It would be much better to use a spy - see if we can get this into Robolectric
         try {
-            InitialActivityWithConflictTest.grantWritePermissions()
+            grantWritePermissions()
             BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
             // We don't show it if the user is new.
             AnkiDroidApp.getSharedPrefs(targetContext).edit().putString("lastVersion", "0.1")
@@ -316,7 +315,7 @@ class DeckPickerTest : RobolectricTest() {
                 equalTo(true)
             )
         } finally {
-            InitialActivityWithConflictTest.revokeWritePermissions()
+            revokeWritePermissions()
             BackupManagerTestUtilities.reset()
         }
     }
@@ -343,7 +342,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun showOptionsMenuWhenCollectionAccessible() = runTest {
         try {
-            InitialActivityWithConflictTest.grantWritePermissions()
+            grantWritePermissions()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java, Intent()
             )
@@ -354,7 +353,7 @@ class DeckPickerTest : RobolectricTest() {
                 `is`(notNullValue())
             )
         } finally {
-            InitialActivityWithConflictTest.revokeWritePermissions()
+            revokeWritePermissions()
         }
     }
 
@@ -362,7 +361,7 @@ class DeckPickerTest : RobolectricTest() {
     @RunInBackground
     fun onResumeLoadCollectionFailureWithInaccessibleCollection() {
         try {
-            InitialActivityWithConflictTest.revokeWritePermissions()
+            revokeWritePermissions()
             enableNullCollection()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java, Intent()
@@ -380,7 +379,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun onResumeLoadCollectionSuccessWithAccessibleCollection() {
         try {
-            InitialActivityWithConflictTest.grantWritePermissions()
+            grantWritePermissions()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java, Intent()
             )
@@ -394,7 +393,7 @@ class DeckPickerTest : RobolectricTest() {
                 notNullValue()
             )
         } finally {
-            InitialActivityWithConflictTest.revokeWritePermissions()
+            revokeWritePermissions()
         }
     }
 
