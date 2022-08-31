@@ -112,8 +112,8 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
+import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
-import com.ichi2.utils.isActiveNetworkMetered
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory

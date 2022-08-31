@@ -19,11 +19,16 @@ import android.net.ConnectivityManager
 import androidx.core.content.getSystemService
 import com.ichi2.anki.AnkiDroidApp
 
-fun isActiveNetworkMetered(): Boolean {
-    return AnkiDroidApp
-        .instance
-        .applicationContext
-        .getSystemService<ConnectivityManager>()
-        ?.isActiveNetworkMetered
-        ?: true
+object NetworkUtils {
+    private val connectivityManager: ConnectivityManager?
+        get() = AnkiDroidApp
+            .instance
+            .applicationContext
+            .getSystemService()
+
+    fun isActiveNetworkMetered(): Boolean {
+        return connectivityManager
+            ?.isActiveNetworkMetered
+            ?: true
+    }
 }
