@@ -23,6 +23,16 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import org.robolectric.Shadows
 
+/** Executes [runnable] without [WRITE_EXTERNAL_STORAGE] and [READ_EXTERNAL_STORAGE] */
+fun withNoWritePermission(runnable: (() -> Unit)) {
+    try {
+        revokeWritePermissions()
+        runnable()
+    } finally {
+        grantWritePermissions()
+    }
+}
+
 fun grantWritePermissions() {
     val app = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application)
     app.grantPermissions(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE)
