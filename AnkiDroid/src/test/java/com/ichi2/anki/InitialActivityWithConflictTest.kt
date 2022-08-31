@@ -15,22 +15,20 @@
  */
 package com.ichi2.anki
 
-import android.Manifest
-import android.app.Application
 import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.getStartupFailureType
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.grantWritePermissions
+import com.ichi2.testutils.revokeWritePermissions
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowEnvironment
 
 @RunWith(AndroidJUnit4::class)
@@ -78,18 +76,6 @@ class InitialActivityWithConflictTest : RobolectricTest() {
         fun setupForDefault() {
             revokeWritePermissions()
             ShadowEnvironment.setExternalStorageState("removed")
-        }
-
-        @JvmStatic
-        fun grantWritePermissions() {
-            val app = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application)
-            app.grantPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-        }
-
-        @JvmStatic
-        fun revokeWritePermissions() {
-            val app = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application)
-            app.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
         }
     }
 }

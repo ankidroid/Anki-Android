@@ -30,6 +30,7 @@ import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.IntentAssert
+import com.ichi2.testutils.revokeWritePermissions
 import com.ichi2.ui.FixedTextView
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -295,7 +296,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
-        InitialActivityWithConflictTest.revokeWritePermissions()
+        revokeWritePermissions()
         val inputIntent = Intent("android.intent.action.PROCESS_TEXT")
 
         val browserController = Robolectric.buildActivity(CardBrowser::class.java, inputIntent).create()
