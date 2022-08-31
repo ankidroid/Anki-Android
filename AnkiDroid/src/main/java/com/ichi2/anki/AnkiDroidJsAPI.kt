@@ -38,7 +38,7 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
-import com.ichi2.utils.isActiveNetworkMetered
+import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
@@ -394,7 +394,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiIsActiveNetworkMetered(): Boolean {
-        return isActiveNetworkMetered()
+        return NetworkUtils.isActiveNetworkMetered()
     }
 
     // Know if {{tts}} is supported - issue #10443
