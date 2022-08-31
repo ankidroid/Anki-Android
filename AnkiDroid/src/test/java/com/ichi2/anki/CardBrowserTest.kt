@@ -15,38 +15,25 @@
  */
 package com.ichi2.anki
 
-import android.Manifest
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.ListView
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.errorprone.annotations.CheckReturnValue
 import com.ichi2.anki.CardBrowser.CardCache
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
-import com.ichi2.testutils.AnkiAssert
+import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.containsString
-import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.greaterThan
-import org.hamcrest.Matchers.hasItem
-import org.hamcrest.Matchers.hasSize
-import org.hamcrest.Matchers.not
-import org.hamcrest.Matchers.notNullValue
-import org.junit.Assert
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.hamcrest.Matchers.*
+import org.junit.Assert.*
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -54,10 +41,8 @@ import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import timber.log.Timber
-import java.util.Arrays.stream
 import java.util.Locale
 import java.util.Random
-import kotlin.collections.HashSet
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -151,7 +136,7 @@ class CardBrowserTest : RobolectricTest() {
         val browser = getBrowserWithNotes(6)
         // Sometimes an async operation deletes a card, we clear the data and rerender it to simulate this
         deleteCardAtPosition(browser, 0)
-        AnkiAssert.assertDoesNotThrow { browser.rerenderAllCards() }
+        assertDoesNotThrow { browser.rerenderAllCards() }
         advanceRobolectricLooperWithSleep()
         assertThat(browser.cardCount(), equalTo(5L))
     }
@@ -186,10 +171,9 @@ class CardBrowserTest : RobolectricTest() {
                 return
             }
         }
-        Assert.fail("Added deck was not found in the Card Browser")
+        fail("Added deck was not found in the Card Browser")
     }
 
-    @KotlinCleanup(".any()")
     @Test
     fun cannotChangeDeckToDynamicDeck() {
         // 5932 - dynamic decks are meant to have cards added to them through "Rebuild".
@@ -198,10 +182,8 @@ class CardBrowserTest : RobolectricTest() {
 
         val decks = b.validDecksForChangeDeck
 
-        for (d in decks) {
-            if (d.getString("name") == "World") {
-                Assert.fail("Dynamic decks should not be transferred to by the browser.")
-            }
+        if (decks.any { it.getString("name") == "World" }) {
+            fail("Dynamic decks should not be transferred to by the browser.")
         }
     }
 
@@ -210,9 +192,7 @@ class CardBrowserTest : RobolectricTest() {
         addDeck("Hello")
         addDynamicDeck("World")
 
-        val validNames = HashSet<String?>()
-        validNames.add("Default")
-        validNames.add("Hello")
+        val validNames = hashSetOf("Default", "Hello")
 
         val b = getBrowserWithNotes(5)
 
@@ -242,7 +222,7 @@ class CardBrowserTest : RobolectricTest() {
         }
 
         // act
-        AnkiAssert.assertDoesNotThrow { b.moveSelectedCardsToDeck(deckIdToChangeTo) }
+        assertDoesNotThrow { b.moveSelectedCardsToDeck(deckIdToChangeTo) }
 
         // assert
         advanceRobolectricLooperWithSleep()
@@ -267,7 +247,6 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
-    @KotlinCleanup("Remove .toLong(), needs additional changes")
     @Test
     fun flagsAreShownInBigDecksTest() {
         val numberOfNotes = 75
@@ -304,9 +283,9 @@ class CardBrowserTest : RobolectricTest() {
         // check if all card flags turned to flag = 3
         assertThat(
             "All cards should be flagged",
-            stream(cardBrowser.cardIds)
-                .map { cardId: CardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId).toLong() }
-                .noneMatch { flag1: Long -> flag1 != flagForAll.toLong() }
+            cardBrowser.cardIds
+                .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
+                .all { flag1 -> flag1 == flagForAll }
         )
     }
 
@@ -330,10 +309,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
-        val application = ApplicationProvider.getApplicationContext<Application>()
-        val app = shadowOf(application)
-        app.denyPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
-        app.denyPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        InitialActivityWithConflictTest.revokeWritePermissions()
         val inputIntent = Intent("android.intent.action.PROCESS_TEXT")
 
         val browserController = Robolectric.buildActivity(CardBrowser::class.java, inputIntent).create()
@@ -342,12 +318,9 @@ class CardBrowserTest : RobolectricTest() {
 
         val shadowActivity = shadowOf(cardBrowser)
         val outputIntent = shadowActivity.nextStartedActivity
-        val component = outputIntent.component
+        val component = assertNotNull(outputIntent.component)
 
-        assertThat(component, notNullValue())
-        val componentName = component!!
-
-        assertThat("Deck Picker currently handles permissions, so should be called", componentName.className, equalTo("com.ichi2.anki.DeckPicker"))
+        assertThat("Deck Picker currently handles permissions, so should be called", component.className, equalTo("com.ichi2.anki.DeckPicker"))
         assertThat("Activity should be finishing", cardBrowser.isFinishing)
         assertThat("Activity should be cancelled as it did nothing", shadowActivity.resultCode, equalTo(Activity.RESULT_CANCELED))
     }
@@ -483,11 +456,12 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
     fun resetDataTest() {
-        val c = addNoteUsingBasicModel("Hello", "World").firstCard()
-        c.due = 5
-        c.queue = Consts.QUEUE_TYPE_REV
-        c.type = Consts.CARD_TYPE_REV
-        c.flush()
+        addNoteUsingBasicModel("Hello", "World").firstCard().apply {
+            due = 5
+            queue = Consts.QUEUE_TYPE_REV
+            type = Consts.CARD_TYPE_REV
+            flush()
+        }
 
         val b = browserWithNoNewCards
 
@@ -625,7 +599,7 @@ class CardBrowserTest : RobolectricTest() {
         // Find the current (after database has been changed) Mod time
         val finalMod = col.mod
         assertThat("Card Browser has the new sortType field", col.get_config_string("sortType"), equalTo("cardEase"))
-        Assert.assertNotEquals("Modification time must change", initialMod, finalMod)
+        assertNotEquals("Modification time must change", initialMod, finalMod)
     }
 
     @Test
@@ -722,47 +696,30 @@ class CardBrowserTest : RobolectricTest() {
         shadowActivity.clickMenuItem(action_select_all)
     }
 
-    private val browserWithMultipleNotes: CardBrowser
-        get() = getBrowserWithNotes(3)
-
     private class CardBrowserSizeOne : CardBrowser() {
         override fun numCardsToRender(): Int {
             return 1
         }
     }
 
-    private fun getBrowserWithNotes(count: Int): CardBrowser {
-        return getBrowserWithNotes(count, CardBrowser::class.java)
-    }
-
-    private fun getBrowserWithNotes(count: Int, cardBrowserClass: Class<out CardBrowser>): CardBrowser {
+    /** Returns an instance of [CardBrowser] containing [noteCount] notes */
+    private fun getBrowserWithNotes(noteCount: Int): CardBrowser {
         ensureCollectionLoadIsSynchronous()
-        for (i in 0 until count) {
+        for (i in 0 until noteCount) {
             addNoteUsingBasicModel(i.toString(), "back")
         }
-        val multimediaController = Robolectric.buildActivity(cardBrowserClass, Intent())
-            .create().start()
-        multimediaController.resume().visible()
-        saveControllerForCleanup(multimediaController)
-        advanceRobolectricLooperWithSleep()
-        return multimediaController.get()
+        return super.startRegularActivity(Intent())
     }
 
     private fun removeCardFromCollection(cardId: CardId) {
         col.remCards(listOf(cardId))
     }
 
-    @get:CheckReturnValue
     private val browserWithNoNewCards: CardBrowser
-        get() {
-            ensureCollectionLoadIsSynchronous()
-            val multimediaController = Robolectric.buildActivity(CardBrowser::class.java, Intent())
-                .create().start()
-            multimediaController.resume().visible()
-            saveControllerForCleanup(multimediaController)
-            advanceRobolectricLooperWithSleep()
-            return multimediaController.get()
-        }
+        get() = getBrowserWithNotes(0)
+
+    private val browserWithMultipleNotes: CardBrowser
+        get() = getBrowserWithNotes(3)
 
     // Regression test for #8821
     @Test
@@ -794,12 +751,12 @@ class CardBrowserTest : RobolectricTest() {
             val column2 = row.findViewById<FixedTextView>(R.id.card_column2)
 
             // Testing truncation
-            assertTrue(column1.maxLines == CardBrowser.LINES_VISIBLE_WHEN_COLLAPSED)
-            assertTrue(column2.maxLines == CardBrowser.LINES_VISIBLE_WHEN_COLLAPSED)
+            assertThat(column1.maxLines, equalTo(CardBrowser.LINES_VISIBLE_WHEN_COLLAPSED))
+            assertThat(column2.maxLines, equalTo(CardBrowser.LINES_VISIBLE_WHEN_COLLAPSED))
 
             // Testing ellipses
-            assertTrue(column1.ellipsize == TextUtils.TruncateAt.END)
-            assertTrue(column2.ellipsize == TextUtils.TruncateAt.END)
+            assertThat(column1.ellipsize, equalTo(TextUtils.TruncateAt.END))
+            assertThat(column2.ellipsize, equalTo(TextUtils.TruncateAt.END))
         }
 
         // Simulating uncheck "Truncate content"
@@ -818,12 +775,12 @@ class CardBrowserTest : RobolectricTest() {
             val column2 = row.findViewById<FixedTextView>(R.id.card_column2)
 
             // Testing expansion
-            assertTrue(column1.maxLines == Integer.MAX_VALUE)
-            assertTrue(column2.maxLines == Integer.MAX_VALUE)
+            assertThat(column1.maxLines, equalTo(Integer.MAX_VALUE))
+            assertThat(column2.maxLines, equalTo(Integer.MAX_VALUE))
 
             // Testing not ellipsized
-            assertTrue(column1.ellipsize == null)
-            assertTrue(column2.ellipsize == null)
+            assertThat(column1.ellipsize, nullValue())
+            assertThat(column2.ellipsize, nullValue())
         }
     }
 }
