@@ -679,7 +679,9 @@ class CardBrowserTest : RobolectricTest() {
         for (i in 0 until noteCount) {
             addNoteUsingBasicModel(i.toString(), "back")
         }
-        return super.startRegularActivity(Intent())
+        return super.startRegularActivity<CardBrowser>(Intent()).also {
+            advanceRobolectricUiLooper() // may be a fix for flaky tests
+        }
     }
 
     private fun removeCardFromCollection(cardId: CardId) {
