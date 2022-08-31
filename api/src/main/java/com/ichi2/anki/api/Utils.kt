@@ -37,7 +37,7 @@ internal object Utils {
     private val FIELD_SEPARATOR = Character.toString('\u001f')
 
     @JvmStatic
-    fun joinFields(list: Array<String?>?): String? {
+    fun joinFields(list: Array<String>?): String? {
         return if (list != null) TextUtils.join("\u001f", list) else null
     }
 
