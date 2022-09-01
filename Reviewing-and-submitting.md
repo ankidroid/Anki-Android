@@ -49,13 +49,13 @@ If the PR includes any changes in strings that require translation, some extra s
 2. To make things easier, if possible, after all approvals are made on the PR *do not merge it yet*, mark it pending merge then:
   - run the "Sync Translations" github actions workflow
   - create a new / separate PR based on the i18n_sync branch (which should have fresh translations from the "Sync Translations" workflow, and work it through successful Unit / Emulator test workflows in CI along with reviewing the strings for anything odd.
-  - merge that new "Sync Translations" PR
+  - merge that new "Sync Translations" PR (with at least 1 approval)
   - Now you have a clean basis for the PR you are reviewing to make translations changes!
 3. Merge the PR you are reviewing, which means there are now new strings added or removed
 4. Run the "Sync Translations" github actions workflow, if you followed step 2, this translation PR will be easy to review! A huge bonus. Otherwise it will be a mix of real fresh translations (possibly with errors) *and* a big batch of add/remove string changes from the PR
 5. Create a new translations PR based on the i18n_sync branch which the "Sync Translations" branch just updated
 6. Make sure the translations PR passes CI etc (making changes in crowdin for any errors, and re-running the "Sync Translations" github action no earlier than 30 minutes after the last run since crowdin throttles our free tier plan from building new bundles too often)
-7. Merge that translations PR
+7. Merge that translations PR (with at least 1 approval)
 
 ## How to become a reviewer
 
