@@ -21,9 +21,9 @@ import android.os.Message
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.async.Connection
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
+import com.ichi2.utils.NetworkUtils
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import kotlin.math.max
@@ -86,7 +86,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
             val hkey = preferences.getString("hkey", "")
             val millisecondsSinceLastSync = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
             val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
-            if (!limited && hkey!!.isNotEmpty() && Connection.isOnline) {
+            if (!limited && hkey!!.isNotEmpty() && NetworkUtils.isOnline) {
                 deckPicker.sync()
             } else {
                 val err = res.getString(R.string.sync_error)

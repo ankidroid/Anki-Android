@@ -38,9 +38,9 @@ import com.ichi2.anki.multimediacard.beolingus.parsing.BeolingusParser
 import com.ichi2.anki.multimediacard.language.LanguageListerBeolingus
 import com.ichi2.anki.web.HttpFetcher.downloadFileToSdCard
 import com.ichi2.anki.web.HttpFetcher.fetchThroughHttp
-import com.ichi2.async.Connection
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
+import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -147,7 +147,7 @@ open class LoadPronunciationActivity : AnkiActivity(), DialogInterface.OnCancelL
      * @param v Start of the story.
      */
     private fun onLoadPronunciation(@Suppress("UNUSED_PARAMETER") v: View?) {
-        if (!Connection.isOnline) {
+        if (!NetworkUtils.isOnline) {
             showToast(gtxt(R.string.network_no_connection))
             return
         }
