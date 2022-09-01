@@ -156,9 +156,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             length-- // there is data in hourly breakdown that is never used (even in Anki-Desktop)
         }
         for (i in 1 until length) {
-            val bars = arrayOfNulls<DoubleArray>(2)
-            bars[0] = mSeriesList[0]
-            bars[1] = mSeriesList[i]
+            val bars = arrayOf(mSeriesList[0], mSeriesList[i])
             var usedPlotSheet = plotSheet
             var barThickness = STARTING_BAR_THICKNESS
             if (chartType == ChartType.HOURLY_BREAKDOWN || chartType == ChartType.WEEKLY_BREAKDOWN) {
@@ -181,7 +179,7 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
             }
             val barGraph = BarGraph(usedPlotSheet, barThickness, bars, color)
             barGraph.setFilling(true)
-            barGraph.setName(chartView.resources.getString(mValueLabels[i - 1]))
+            barGraph.name = chartView.resources.getString(mValueLabels[i - 1])
             // barGraph.setFillColor(Color.GREEN.darker());
             barGraph.setFillColor(color)
             plotSheet.addDrawable(barGraph)

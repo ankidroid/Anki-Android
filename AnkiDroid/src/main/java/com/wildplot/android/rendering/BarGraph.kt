@@ -13,108 +13,70 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.rendering;
+package com.wildplot.android.rendering
 
-import android.annotation.SuppressLint;
-
-import com.wildplot.android.rendering.graphics.wrapper.ColorWrap;
-import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap;
-import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap;
-import com.wildplot.android.rendering.interfaces.Drawable;
-import com.wildplot.android.rendering.interfaces.Legendable;
-
+import android.annotation.SuppressLint
+import com.wildplot.android.rendering.graphics.wrapper.ColorWrap
+import com.wildplot.android.rendering.graphics.wrapper.GraphicsWrap
+import com.wildplot.android.rendering.graphics.wrapper.RectangleWrap
+import com.wildplot.android.rendering.interfaces.Drawable
+import com.wildplot.android.rendering.interfaces.Legendable
 
 /**
  * BarGraph uses a point matrix or a function to render bar graphs on PlotSheet object
- */
+ *
+ *
+ * Constructor for BarGraph object
+ *
+ * @param plotSheet the sheet the bar will be drawn onto
+ * @param size      absolute x-width of the bar
+ * @param points    start points (x,y) from each bar
+ * @param color     color of the bar
+*/
 @SuppressLint("NonPublicNonStaticFieldName")
-public class BarGraph implements Drawable, Legendable {
-
-    private String mName = "";
-    private boolean mNameIsSet = false;
-
-    private final PlotSheet plotSheet;
-
-    private final double[][] points;
-
-    private final double size;
-
-    private final ColorWrap color;
-
-    private ColorWrap fillColor;
-
-    private boolean filling = false;
-
-
-    /**
-     * Constructor for BarGraph object
-     *
-     * @param plotSheet the sheet the bar will be drawn onto
-     * @param size      absolute x-width of the bar
-     * @param points    start points (x,y) from each bar
-     * @param color     color of the bar
-     */
-    public BarGraph(PlotSheet plotSheet, double size, double[][] points, ColorWrap color) {
-        this.plotSheet = plotSheet;
-        this.size = size;
-        this.points = points;
-        this.color = color;
-    }
-
+class BarGraph(
+    private val plotSheet: PlotSheet,
+    private val size: Double,
+    private val points: Array<DoubleArray>,
+    override val color: ColorWrap
+) : Drawable, Legendable {
+    private var mName = ""
+    private var mNameIsSet = false
+    private var fillColor: ColorWrap? = null
+    private var filling = false
 
     /**
      * Set filling for a bar graph true or false
      */
-    public void setFilling(boolean filling) {
-        this.filling = filling;
+    fun setFilling(filling: Boolean) {
+        this.filling = filling
         if (this.fillColor == null) {
-            this.fillColor = this.color;
+            this.fillColor = this.color
         }
     }
-
 
     /**
      * Set filling color for bar graph
      *
      * @param fillColor of the bar graph
      */
-    public void setFillColor(ColorWrap fillColor) {
-        this.fillColor = fillColor;
+    fun setFillColor(fillColor: ColorWrap?) {
+        this.fillColor = fillColor
     }
 
-
-    @Override
-    public void paint(GraphicsWrap g) {
-        ColorWrap oldColor = g.getColor();
-        RectangleWrap field = g.getClipBounds();
-        g.setColor(color);
-
-        for (int i = 0; i < this.points[0].length; i++) {
-            if (points.length == 3) {
-                drawBar(points[0][i], points[1][i], g, field, points[2][i]);
+    override fun paint(g: GraphicsWrap) {
+        val oldColor = g.color
+        val field = g.clipBounds
+        g.color = color
+        for (i in 0 until points[0].size) {
+            if (points.size == 3) {
+                drawBar(points[0][i], points[1][i], g, field, points[2][i])
             } else {
-                drawBar(points[0][i], points[1][i], g, field);
+                drawBar(points[0][i], points[1][i], g, field)
             }
         }
-
-        g.setColor(oldColor);
-
+        g.color = oldColor
     }
-
-
-    /**
-     * draw a single bar at given coordinates with given graphics object and bounds
-     *
-     * @param x     x-coordinate of bar
-     * @param y     height of bar
-     * @param g     graphics object for drawing
-     * @param field bounds of plot
-     */
-    private void drawBar(double x, double y, GraphicsWrap g, RectangleWrap field) {
-        drawBar(x, y, g, field, this.size);
-    }
-
-
     /**
      * draw a single bar at given coordinates with given graphics object and bounds and specific size
      *
@@ -124,77 +86,87 @@ public class BarGraph implements Drawable, Legendable {
      * @param field bounds of plot
      * @param size  specific size for this bar
      */
-    private void drawBar(double x, double y, GraphicsWrap g, RectangleWrap field, double size) {
-
-
-        float[] pointUpLeft = plotSheet.toGraphicPoint(x - size / 2, y, field);
-        float[] pointUpRight = plotSheet.toGraphicPoint(x + size / 2, y, field);
-        float[] pointBottomLeft = plotSheet.toGraphicPoint(x - size / 2, 0, field);
-
+    /**
+     * draw a single bar at given coordinates with given graphics object and bounds
+     *
+     * @param x     x-coordinate of bar
+     * @param y     height of bar
+     * @param g     graphics object for drawing
+     * @param field bounds of plot
+     */
+    private fun drawBar(
+        x: Double,
+        y: Double,
+        g: GraphicsWrap,
+        field: RectangleWrap,
+        size: Double = this.size
+    ) {
+        val pointUpLeft = plotSheet.toGraphicPoint(x - size / 2, y, field)
+        val pointUpRight = plotSheet.toGraphicPoint(x + size / 2, y, field)
+        val pointBottomLeft = plotSheet.toGraphicPoint(x - size / 2, 0.0, field)
         if (filling) {
-            ColorWrap oldColor = g.getColor();
+            val oldColor = g.color
             if (this.fillColor != null) {
-                g.setColor(fillColor);
+                g.color = this.fillColor!!
             }
-
             if (y < 0) {
-                g.fillRect(pointUpLeft[0], plotSheet.yToGraphic(0, field), pointUpRight[0] - pointUpLeft[0], pointUpLeft[1] - pointBottomLeft[1]);
+                g.fillRect(
+                    pointUpLeft[0],
+                    plotSheet.yToGraphic(0.0, field),
+                    pointUpRight[0] - pointUpLeft[0],
+                    pointUpLeft[1] - pointBottomLeft[1]
+                )
             } else {
-                g.fillRect(pointUpLeft[0], pointUpLeft[1], pointUpRight[0] - pointUpLeft[0], pointBottomLeft[1] - pointUpLeft[1]);
+                g.fillRect(
+                    pointUpLeft[0],
+                    pointUpLeft[1],
+                    pointUpRight[0] - pointUpLeft[0],
+                    pointBottomLeft[1] - pointUpLeft[1]
+                )
             }
-
-            g.setColor(oldColor);
+            g.color = oldColor
         } else {
-
             if (y < 0) {
-                g.drawRect(pointUpLeft[0], plotSheet.yToGraphic(0, field), pointUpRight[0] - pointUpLeft[0], pointUpLeft[1] - pointBottomLeft[1]);
+                g.drawRect(
+                    pointUpLeft[0],
+                    plotSheet.yToGraphic(0.0, field),
+                    pointUpRight[0] - pointUpLeft[0],
+                    pointUpLeft[1] - pointBottomLeft[1]
+                )
             } else {
-                g.drawRect(pointUpLeft[0], pointUpLeft[1], pointUpRight[0] - pointUpLeft[0], pointBottomLeft[1] - pointUpLeft[1]);
+                g.drawRect(
+                    pointUpLeft[0],
+                    pointUpLeft[1],
+                    pointUpRight[0] - pointUpLeft[0],
+                    pointBottomLeft[1] - pointUpLeft[1]
+                )
             }
         }
     }
 
-
     /**
      * returns true if this BarGraph can draw on the outer frame of plot (normally not)
      */
-    public boolean isOnFrame() {
-        return false;
+    override fun isOnFrame(): Boolean {
+        return false
     }
 
-
-    @Override
-    public boolean isClusterable() {
-        return true;
+    override fun isClusterable(): Boolean {
+        return true
     }
 
-
-    @Override
-    public boolean isCritical() {
-        return false;
+    override fun isCritical(): Boolean {
+        return false
     }
 
+    override var name: String
+        get() = mName
+        set(name) {
+            mName = name
+            mNameIsSet = true
+        }
 
-    @Override
-    public ColorWrap getColor() {
-        return fillColor;
-    }
-
-
-    @Override
-    public String getName() {
-        return mName;
-    }
-
-
-    @Override
-    public boolean nameIsSet() {
-        return mNameIsSet;
-    }
-
-
-    public void setName(String name) {
-        mName = name;
-        mNameIsSet = true;
+    override fun nameIsSet(): Boolean {
+        return mNameIsSet
     }
 }
