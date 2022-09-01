@@ -13,139 +13,109 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.wildplot.android.parsing;
+package com.wildplot.android.parsing
 
-
-import android.annotation.SuppressLint;
+import android.annotation.SuppressLint
 
 @SuppressLint("NonPublicNonStaticFieldName")
-public class Expression implements TreeElement {
-    private final TopLevelParser parser;
-
-
-
-    public enum ExpressionType {EXP_PLUS_TERM, EXP_MINUS_TERM, TERM, INVALID}
-
-
-
-    private ExpressionType expressionType = ExpressionType.INVALID;
-    private Expression expression = null;
-    private Term term = null;
-
-
-    public Expression(String expressionString, TopLevelParser parser) {
-        this.parser = parser;
-        if (!TopLevelParser.stringHasValidBrackets(expressionString)) {
-            this.expressionType = ExpressionType.INVALID;
-            return;
-        }
-
-        boolean isReady = initAsExpPlusOrMinusTerm(expressionString);
-        if (!isReady) {
-            isReady = initAsTerm(expressionString);
-        }
-        if (!isReady) {
-            this.expressionType = ExpressionType.INVALID;
-        }
-
+class Expression(expressionString: String, private val parser: TopLevelParser) : TreeElement {
+    enum class ExpressionType {
+        EXP_PLUS_TERM, EXP_MINUS_TERM, TERM, INVALID
     }
 
+    var expressionType = ExpressionType.INVALID
+        private set
+    private var expression: Expression? = null
+    private var term: Term? = null
 
-    private boolean initAsExpPlusOrMinusTerm(String expressionString) {
-        int bracketChecker = 0;
-        for (int i = 0; i < expressionString.length(); i++) {
-            if (expressionString.charAt(i) == '(') {
-                bracketChecker++;
+    init {
+        if (!TopLevelParser.stringHasValidBrackets(expressionString)) {
+            expressionType = ExpressionType.INVALID
+        } else {
+            var isReady = initAsExpPlusOrMinusTerm(expressionString)
+            if (!isReady) {
+                isReady = initAsTerm(expressionString)
             }
-            if (expressionString.charAt(i) == ')') {
-                bracketChecker--;
+            if (!isReady) {
+                expressionType = ExpressionType.INVALID
             }
+        }
+    }
 
-            if ((expressionString.charAt(i) == '+' || expressionString.charAt(i) == '-') && bracketChecker == 0) {
-                String leftSubString = expressionString.substring(0, i);
+    private fun initAsExpPlusOrMinusTerm(expressionString: String): Boolean {
+        var bracketChecker = 0
+        for (i in 0 until expressionString.length) {
+            if (expressionString[i] == '(') {
+                bracketChecker++
+            }
+            if (expressionString[i] == ')') {
+                bracketChecker--
+            }
+            if ((expressionString[i] == '+' || expressionString[i] == '-') && bracketChecker == 0) {
+                val leftSubString = expressionString.substring(0, i)
                 if (!TopLevelParser.stringHasValidBrackets(leftSubString)) {
-                    continue;
+                    continue
                 }
-                Expression leftExpression = new Expression(leftSubString, parser);
-                boolean isValidFirstPartExpression = leftExpression.getExpressionType() != ExpressionType.INVALID;
-
+                val leftExpression = Expression(leftSubString, parser)
+                val isValidFirstPartExpression =
+                    leftExpression.expressionType != ExpressionType.INVALID
                 if (!isValidFirstPartExpression) {
-                    continue;
+                    continue
                 }
-
-                String rightSubString = expressionString.substring(i + 1);
+                val rightSubString = expressionString.substring(i + 1)
                 if (!TopLevelParser.stringHasValidBrackets(rightSubString)) {
-                    continue;
+                    continue
                 }
-
-                Term rightTerm = new Term(rightSubString, parser);
-                boolean isValidSecondPartTerm = rightTerm.getTermType() != Term.TermType.INVALID;
-
+                val rightTerm = Term(rightSubString, parser)
+                val isValidSecondPartTerm = rightTerm.termType != Term.TermType.INVALID
                 if (isValidSecondPartTerm) {
-                    if (expressionString.charAt(i) == '+') {
-                        this.expressionType = ExpressionType.EXP_PLUS_TERM;
+                    if (expressionString[i] == '+') {
+                        expressionType = ExpressionType.EXP_PLUS_TERM
                     } else {
-                        this.expressionType = ExpressionType.EXP_MINUS_TERM;
+                        expressionType = ExpressionType.EXP_MINUS_TERM
                     }
-
-                    this.expression = leftExpression;
-                    this.term = rightTerm;
-                    return true;
+                    expression = leftExpression
+                    term = rightTerm
+                    return true
                 }
-
             }
         }
-        return false;
+        return false
     }
 
-
-    private boolean initAsTerm(String expressionString) {
+    private fun initAsTerm(expressionString: String): Boolean {
         if (!TopLevelParser.stringHasValidBrackets(expressionString)) {
-            return false;
+            return false
         }
-        Term term = new Term(expressionString, parser);
-        boolean isValidTerm = term.getTermType() != Term.TermType.INVALID;
+        val term = Term(expressionString, parser)
+        val isValidTerm = term.termType != Term.TermType.INVALID
         if (isValidTerm) {
-            this.expressionType = ExpressionType.TERM;
-            this.term = term;
-            return true;
+            expressionType = ExpressionType.TERM
+            this.term = term
+            return true
         }
-        return false;
+        return false
     }
 
-
-    public ExpressionType getExpressionType() {
-        return expressionType;
-    }
-
-
-    public double getValue() throws ExpressionFormatException {
-        switch (expressionType) {
-            case EXP_PLUS_TERM:
-                return expression.getValue() + term.getValue();
-            case EXP_MINUS_TERM:
-                return expression.getValue() - term.getValue();
-            case TERM:
-                return term.getValue();
-            default:
-            case INVALID:
-                throw new ExpressionFormatException("could not parse Expression");
+    // @Suppress because the IDE thinks expression!!.value is a recursive call, this is most likely
+    // an IDE bug because getValue() is invoked on another object(of the same type) which
+    // eventually will end in one of the two other cases(TERM or INVALID)
+    @Suppress("RecursivePropertyAccessor")
+    @Throws(ExpressionFormatException::class)
+    override fun getValue(): Double {
+        return when (expressionType) {
+            ExpressionType.EXP_PLUS_TERM -> expression!!.value + term!!.value
+            ExpressionType.EXP_MINUS_TERM -> expression!!.value - term!!.value
+            ExpressionType.TERM -> term!!.value
+            ExpressionType.INVALID -> throw ExpressionFormatException("could not parse Expression")
         }
     }
 
-
-    @Override
-    public boolean isVariable() {
-        switch (expressionType) {
-            case EXP_PLUS_TERM:
-            case EXP_MINUS_TERM:
-                return expression.isVariable() || term.isVariable();
-            case TERM:
-                return term.isVariable();
-            default:
-            case INVALID:
-                throw new ExpressionFormatException("could not parse Expression");
+    override fun isVariable(): Boolean {
+        return when (expressionType) {
+            ExpressionType.EXP_PLUS_TERM, ExpressionType.EXP_MINUS_TERM -> expression!!.isVariable || term!!.isVariable
+            ExpressionType.TERM -> term!!.isVariable
+            ExpressionType.INVALID -> throw ExpressionFormatException("could not parse Expression")
         }
     }
-
 }
