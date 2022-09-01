@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 
 @RunWith(AndroidJUnit4::class)
-class CollectionTaskCountModelsTest : RobolectricTest() {
+class CountModelsTest : RobolectricTest() {
 
     @Test
     fun testModelsCount() {
