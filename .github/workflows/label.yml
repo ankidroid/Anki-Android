@@ -55,6 +55,7 @@ jobs:
           }
 
   add_label:
+    if: (!(github.event.action == 'closed' && github.event.pull_request.merged != true)) && github.event.pull_request.merged != true && github.event.pull_request.head.ref != 'i18n_sync'
     permissions:
       contents: read
       pull-requests: write
