@@ -26,6 +26,7 @@ import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BlocksSchemaUpgrade
 import net.ankiweb.rsdroid.BackendException
 
+/** @param anchorView The view to display the snackbar above */
 suspend fun FragmentActivity.backendUndoAndShowPopup(anchorView: View? = null): Boolean {
     return try {
         val changes = withProgress() {
