@@ -23,6 +23,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import com.ichi2.async.Connection
 import com.ichi2.libanki.sync.HostNum
+import com.ichi2.utils.NetworkUtils
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -61,7 +62,7 @@ class HttpTest {
 
         // If we are not online this test is not nearly as interesting
         // TODO simulate offline programmatically - currently exercised by manually toggling an emulator offline pre-test
-        if (!Connection.Companion.isOnline) {
+        if (!NetworkUtils.isOnline) {
             Connection.login(testListener, invalidPayload)
             Assert.assertFalse(
                 "Successful login despite being offline",
