@@ -20,9 +20,6 @@ package com.ichi2.async
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.PowerManager
 import android.os.PowerManager.WakeLock
 import android.util.Pair
@@ -46,6 +43,7 @@ import com.ichi2.libanki.sync.Syncer.ConnectionResultType.*
 import com.ichi2.utils.JSONException
 import com.ichi2.utils.JSONObject
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions
 import okhttp3.Response
 import timber.log.Timber
@@ -532,7 +530,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         // #7108: AsyncTask
         @KotlinCleanup("Scoped function")
         private fun launchConnectionTask(listener: TaskListener, data: Payload): Connection? {
-            if (!isOnline) {
+            if (!NetworkUtils.isOnline && !allowLoginSyncOnNoConnection) {
                 data.success = false
                 listener.onDisconnected()
                 return null
@@ -574,31 +572,6 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
             data.result = arrayOfNulls(0)
             return data
         }
-
-        /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
-        val isOnline: Boolean
-            get() {
-                if (allowLoginSyncOnNoConnection) {
-                    return true
-                }
-                val cm = AnkiDroidApp.instance.applicationContext
-                    .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                /* NetworkInfo is deprecated in API 29 so we have to check separately for higher API Levels */
-                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    val network = cm.activeNetwork ?: return false
-                    val networkCapabilities = cm.getNetworkCapabilities(network) ?: return false
-                    val isInternetSuspended =
-                        !networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
-                    (
-                        networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
-                            networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) &&
-                            !isInternetSuspended
-                        )
-                } else {
-                    val networkInfo = cm.activeNetworkInfo
-                    networkInfo != null && networkInfo.isConnected
-                }
-            }
 
         @Synchronized // #7108: AsyncTask
         fun cancel() {
