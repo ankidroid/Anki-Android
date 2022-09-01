@@ -26,7 +26,7 @@ import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
 
 @RunWith(AndroidJUnit4::class)
-class CollectionTaskCheckDatabaseTest : RobolectricTest() {
+class CheckDatabaseTest : RobolectricTest() {
     @Test
     fun checkDatabaseWithLockedCollectionReturnsLocked() {
         lockDatabase()
