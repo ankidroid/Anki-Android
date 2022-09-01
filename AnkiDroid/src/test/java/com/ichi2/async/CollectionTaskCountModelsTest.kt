@@ -16,27 +16,26 @@
 package com.ichi2.async
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RunInBackground
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.async.CollectionTask.CountModels
-import org.hamcrest.MatcherAssert.*
-import org.hamcrest.Matchers.*
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.*
+import org.mockito.kotlin.mock
 
 @RunWith(AndroidJUnit4::class)
-class CollectionTaskCountModelsTest : AbstractCollectionTaskTest() {
+class CollectionTaskCountModelsTest : RobolectricTest() {
 
     @Test
-    @RunInBackground
     fun testModelsCount() {
-        val task = CountModels()
-        val initialCount = execute(task)!!.first.size
+        val initialCount = getModelCount()
 
-        addNonClozeModel("testModel", arrayOf<String>("front", "back"), qfmt = "{{front}}", afmt = "{{FrontSide}}\n\n<hr id=answer>\n\n{{ back }}")
+        addNonClozeModel("testModel", arrayOf("front", "back"), qfmt = "{{front}}", afmt = "{{FrontSide}}\n\n<hr id=answer>\n\n{{ back }}")
 
-        val finalCount = execute(task)!!.first.size
+        val finalCount = getModelCount()
         assertEquals(initialCount + 1, finalCount)
     }
+
+    /** Returns the number of models in the collection */
+    private fun getModelCount() = CountModels().execTask(col, mock())!!.first.size
 }
