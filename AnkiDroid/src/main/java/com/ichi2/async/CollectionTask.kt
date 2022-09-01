@@ -234,27 +234,27 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     }
 
     @KotlinCleanup("can quickDeckDueTree return null?")
-    class LoadDeck : TaskDelegate<Void, List<TreeNode<DeckTreeNode>>?>() {
+    class QuicklyLoadDeck : TaskDelegate<Void, List<TreeNode<DeckTreeNode>>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<TreeNode<DeckTreeNode>>? {
-            Timber.d("doInBackgroundLoadDeckCounts")
+            Timber.d("doInBackgroundQuicklyLoadDeck")
             return try {
                 // Get due tree
                 col.sched.quickDeckDueTree()
             } catch (e: RuntimeException) {
-                Timber.w(e, "doInBackgroundLoadDeckCounts - error")
+                Timber.w(e, "doInBackgroundQuicklyLoadDeck - error")
                 null
             }
         }
     }
 
-    class LoadDeckCounts : TaskDelegate<Void, List<TreeNode<DeckDueTreeNode>>?>() {
+    class LoadDeck : TaskDelegate<Void, List<TreeNode<DeckDueTreeNode>>?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): List<TreeNode<DeckDueTreeNode>>? {
-            Timber.d("doInBackgroundLoadDeckCounts")
+            Timber.d("doInBackgroundLoadDeck")
             return try {
                 // Get due tree
                 col.sched.deckDueTree(collectionTask)
             } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundLoadDeckCounts - error")
+                Timber.e(e, "doInBackgroundLoadDeck - error")
                 null
             }
         }

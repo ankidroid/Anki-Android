@@ -929,8 +929,8 @@ open class DeckPicker :
     override fun onPause() {
         Timber.d("onPause()")
         mActivityPaused = true
-        // The deck count will be computed on resume. No need to compute it now
-        TaskManager.cancelAllTasks(LoadDeckCounts::class.java)
+        // The deck will be loaded on resume. No need to load it now
+        TaskManager.cancelAllTasks(LoadDeck::class.java)
         super.onPause()
     }
 
@@ -2231,9 +2231,9 @@ open class DeckPicker :
             performBackupInBackground()
         }
         if (quick) {
-            TaskManager.launchCollectionTask(LoadDeck(), updateDeckListListener())
+            TaskManager.launchCollectionTask(QuicklyLoadDeck(), updateDeckListListener())
         } else {
-            TaskManager.launchCollectionTask(LoadDeckCounts(), updateDeckListListener())
+            TaskManager.launchCollectionTask(LoadDeck(), updateDeckListListener())
         }
     }
 
