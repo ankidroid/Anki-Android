@@ -23,7 +23,7 @@ import com.ichi2.anki.R
 
 class CardInfo : PageFragment() {
     override val title = R.string.card_info_title
-    override val pageName = PAGE_NAME
+    override val pageName = "card-info"
     override lateinit var webViewClient: PageWebViewClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,14 +44,13 @@ class CardInfo : PageFragment() {
     }
 
     companion object {
-        const val PAGE_NAME = "card-info"
         private const val ARG_CARD_ID = "cardId"
 
         fun getIntent(context: Context, cardId: Long): Intent {
             val arguments = Bundle().apply {
                 putLong(ARG_CARD_ID, cardId)
             }
-            return PagesActivity.getIntent(context, PAGE_NAME, arguments)
+            return PagesActivity.getIntent(context, CardInfo::class, arguments)
         }
     }
 }
