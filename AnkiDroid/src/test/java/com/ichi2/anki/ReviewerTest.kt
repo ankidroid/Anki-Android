@@ -22,6 +22,7 @@ import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_DEFAULT
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.anki.preferences.PreferenceUtils
 import com.ichi2.anki.reviewer.ActionButtonStatus
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
@@ -29,7 +30,6 @@ import com.ichi2.libanki.Model
 import com.ichi2.libanki.ModelManager
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
-import com.ichi2.testutils.PreferenceUtils
 import com.ichi2.testutils.assertThrowsSubclass
 import com.ichi2.utils.JSONArray
 import org.hamcrest.MatcherAssert.assertThat
