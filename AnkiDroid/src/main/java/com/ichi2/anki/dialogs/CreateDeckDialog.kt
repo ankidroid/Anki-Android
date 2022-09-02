@@ -28,10 +28,13 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.servicelayer.DeckService.deckExists
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
+import com.ichi2.libanki.getOrCreateFilteredDeck
 import com.ichi2.utils.displayKeyboard
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.function.Consumer
 
@@ -52,13 +55,17 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
 
     fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
-        val names = col.decks.allNames()
-        var n = 1
-        val namePrefix = context.resources.getString(R.string.filtered_deck_name) + " "
-        while (names.contains(namePrefix + n)) {
-            n++
+        mInitialDeckName = if (!BackendFactory.defaultLegacySchema) {
+            (col as CollectionV16).getOrCreateFilteredDeck(did = 0).name
+        } else {
+            val names = col.decks.allNames()
+            var n = 1
+            val namePrefix = context.resources.getString(R.string.filtered_deck_name) + " "
+            while (names.contains(namePrefix + n)) {
+                n++
+            }
+            namePrefix + n
         }
-        mInitialDeckName = namePrefix + n
         showDialog()
     }
 
