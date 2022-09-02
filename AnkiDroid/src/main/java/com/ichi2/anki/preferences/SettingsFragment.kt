@@ -28,6 +28,8 @@ import com.ichi2.libanki.Collection
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SeekBarPreferenceCompat
+import kotlin.reflect.KClass
+import kotlin.reflect.jvm.jvmName
 
 abstract class SettingsFragment : PreferenceFragmentCompat() {
     /** @return The XML file which defines the preferences displayed by this PreferenceFragment
@@ -80,9 +82,9 @@ abstract class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
         @JvmStatic
-        protected fun getSubscreenIntent(context: Context?, javaClassName: String): Intent {
+        protected fun getSubscreenIntent(context: Context, fragmentClass: KClass<out SettingsFragment>): Intent {
             return Intent(context, Preferences::class.java)
-                .putExtra(Preferences.INITIAL_FRAGMENT_EXTRA, javaClassName)
+                .putExtra(Preferences.INITIAL_FRAGMENT_EXTRA, fragmentClass.jvmName)
         }
     }
 }
