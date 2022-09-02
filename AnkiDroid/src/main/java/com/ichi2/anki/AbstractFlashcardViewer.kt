@@ -845,7 +845,6 @@ abstract class AbstractFlashcardViewer :
                 legacyUndo()
             } else {
                 return launchCatchingTask {
-                    // TODO make backendUndoAndShowPopup() snackbar don't show on top of the answer buttons
                     if (!backendUndoAndShowPopup(findViewById(R.id.flip_card))) {
                         legacyUndo()
                     }
