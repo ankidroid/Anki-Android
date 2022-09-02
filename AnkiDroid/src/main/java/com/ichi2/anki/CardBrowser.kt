@@ -1788,7 +1788,7 @@ open class CardBrowser :
 
         override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<*>?) {
             browser.hideProgressBar()
-            browser.mActionBarTitle!!.text = String.format(LanguageUtil.getLocaleCompat(browser.resources), "%d", browser.checkedCardCount())
+            browser.mActionBarTitle!!.text = "$LanguageUtil.getLocaleCompat(browser.resources),$browser.checkedCardCount())"
             browser.invalidateOptionsMenu() // maybe the availability of undo changed
 
             val deletedMessage = browser.resources.getQuantityString(R.plurals.card_browser_cards_deleted, mCardsDeleted, mCardsDeleted)
