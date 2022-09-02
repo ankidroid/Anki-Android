@@ -105,22 +105,44 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     protected fun actualDoInBackground(): Result? {
         super.doInBackground()
         // Wait for previous thread (if any) to finish before continuing
-        if (previousTask != null && previousTask!!.status != Status.FINISHED) {
-            Timber.d("Waiting for %s to finish before starting %s", previousTask!!.task, task.javaClass)
-            try {
-                previousTask!!.get()
-                Timber.d("Finished waiting for %s to finish. Status= %s", previousTask!!.task, previousTask!!.status)
-            } catch (e: InterruptedException) {
-                Thread.currentThread().interrupt()
-                // We have been interrupted, return immediately.
-                Timber.d(e, "interrupted while waiting for previous task: %s", previousTask!!.task.javaClass)
-                return null
-            } catch (e: ExecutionException) {
-                // Ignore failures in the previous task.
-                Timber.e(e, "previously running task failed with exception: %s", previousTask!!.task.javaClass)
-            } catch (e: CancellationException) {
-                // Ignore cancellation of previous task
-                Timber.d(e, "previously running task was cancelled: %s", previousTask!!.task.javaClass)
+        previousTask?.let { previousTask ->
+            if (previousTask.status != Status.FINISHED) {
+                Timber.d(
+                    "Waiting for %s to finish before starting %s",
+                    previousTask.task,
+                    task.javaClass
+                )
+                try {
+                    previousTask.get()
+                    Timber.d(
+                        "Finished waiting for %s to finish. Status= %s",
+                        previousTask.task,
+                        previousTask.status
+                    )
+                } catch (e: InterruptedException) {
+                    Thread.currentThread().interrupt()
+                    // We have been interrupted, return immediately.
+                    Timber.d(
+                        e,
+                        "interrupted while waiting for previous task: %s",
+                        previousTask.task.javaClass
+                    )
+                    return null
+                } catch (e: ExecutionException) {
+                    // Ignore failures in the previous task.
+                    Timber.e(
+                        e,
+                        "previously running task failed with exception: %s",
+                        previousTask.task.javaClass
+                    )
+                } catch (e: CancellationException) {
+                    // Ignore cancellation of previous task
+                    Timber.d(
+                        e,
+                        "previously running task was cancelled: %s",
+                        previousTask.task.javaClass
+                    )
+                }
             }
         }
         TaskManager.setLatestInstance(this)
