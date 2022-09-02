@@ -80,7 +80,7 @@ abstract class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
         @JvmStatic
-        protected fun getSubscreenIntent(context: Context?, javaClassName: String): Intent {
+        protected fun getSubscreenIntent(context: Context, javaClassName: String): Intent {
             return Intent(context, Preferences::class.java)
                 .putExtra(Preferences.INITIAL_FRAGMENT_EXTRA, javaClassName)
         }

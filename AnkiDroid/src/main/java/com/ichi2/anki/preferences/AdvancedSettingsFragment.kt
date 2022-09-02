@@ -208,7 +208,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
     companion object {
         @JvmStatic
-        fun getSubscreenIntent(context: Context?): Intent {
+        fun getSubscreenIntent(context: Context): Intent {
             return getSubscreenIntent(context, AdvancedSettingsFragment::class.java.name)
         }
     }

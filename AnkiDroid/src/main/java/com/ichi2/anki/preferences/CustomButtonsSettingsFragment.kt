@@ -80,7 +80,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
 
     companion object {
         @JvmStatic
-        fun getSubscreenIntent(context: Context?): Intent {
+        fun getSubscreenIntent(context: Context): Intent {
             return getSubscreenIntent(context, CustomButtonsSettingsFragment::class.java.name)
         }
     }
