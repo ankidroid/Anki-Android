@@ -33,13 +33,13 @@ import java.io.IOException
 object Shared {
     @Throws(IOException::class)
     @KotlinCleanup("make context not null")
-    fun getEmptyCol(context: Context?): Collection {
+    fun getEmptyCol(context: Context): Collection {
         val f = File.createTempFile("test", ".anki2")
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).
         val path = f.absolutePath
         assertTrue(f.delete())
-        return Storage.collection(context!!, path)
+        return Storage.collection(context, path)
     }
 
     /**
