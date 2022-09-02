@@ -145,7 +145,7 @@ open class CardBrowser :
     lateinit var cardsAdapter: MultiColumnListAdapter
 
     private var mSearchTerms: String = ""
-    private var mRestrictOnDeck: String? = null
+    private lateinit var restrictOnDeck: String
     private var mCurrentFlag = 0
     private lateinit var tagsDialogFactory: TagsDialogFactory
     private var mSearchItem: MenuItem? = null
@@ -688,7 +688,7 @@ open class CardBrowser :
 
     fun selectDeckAndSave(deckId: DeckId) {
         deckSpinnerSelection.selectDeckById(deckId, true)
-        mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
+        restrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""
         } else {
             val deckName = col.decks.name(deckId)
@@ -764,7 +764,7 @@ open class CardBrowser :
     @VisibleForTesting
     fun selectAllDecks() {
         deckSpinnerSelection.selectAllDecks()
-        mRestrictOnDeck = ""
+        restrictOnDeck = ""
         saveLastDeckId(ALL_DECKS_ID)
         searchCards()
     }
@@ -1485,7 +1485,7 @@ open class CardBrowser :
         val searchText: String? = if (mSearchTerms.contains("deck:")) {
             "($mSearchTerms)"
         } else {
-            if ("" != mSearchTerms) "$mRestrictOnDeck($mSearchTerms)" else mRestrictOnDeck
+            if ("" != mSearchTerms) "$restrictOnDeck($mSearchTerms)" else restrictOnDeck
         }
         // clear the existing card list
         mCards.reset()
