@@ -15,7 +15,10 @@
  */
 package com.ichi2.anki.preferences
 
+import androidx.fragment.app.commitNow
+import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
@@ -53,6 +56,20 @@ class PreferencesTest : RobolectricTest() {
         for (i in 0..23) {
             preferences.setDayOffset(i)
             assertThat(getDayOffset(col), equalTo(i))
+        }
+    }
+
+    /** checks if any of the Preferences fragments throws while being created */
+    @Test
+    fun fragmentsDoNotThrowOnCreation() {
+        val activityScenario = ActivityScenario.launch(Preferences::class.java)
+
+        activityScenario.onActivity { activity ->
+            PreferenceUtils.getAllPreferencesFragments(activity).forEach {
+                activity.supportFragmentManager.commitNow {
+                    add(R.id.settings_container, it)
+                }
+            }
         }
     }
 
