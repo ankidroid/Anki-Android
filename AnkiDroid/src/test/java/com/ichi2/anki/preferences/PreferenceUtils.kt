@@ -13,13 +13,11 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.testutils
+package com.ichi2.anki.preferences
 
 import android.content.Context
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
-import com.ichi2.anki.preferences.CustomButtonsSettingsFragment
-import com.ichi2.anki.preferences.Preferences
 import java.util.concurrent.atomic.AtomicReference
 
 object PreferenceUtils {
