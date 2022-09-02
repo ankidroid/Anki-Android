@@ -467,7 +467,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     fun handleAction(contextMenuAction: ModelEditorContextMenuAction) {
-        supportFragmentManager.popBackStackImmediate()
         when (contextMenuAction) {
             ModelEditorContextMenuAction.Sort -> sortByField()
             ModelEditorContextMenuAction.Reposition -> repositionFieldDialog()
