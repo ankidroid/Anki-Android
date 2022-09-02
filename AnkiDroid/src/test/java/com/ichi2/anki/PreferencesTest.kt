@@ -16,8 +16,9 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.Preferences.Companion.getDayOffset
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
 import com.ichi2.preferences.HeaderPreference
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo

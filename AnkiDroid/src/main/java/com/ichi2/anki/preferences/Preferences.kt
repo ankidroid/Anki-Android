@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.anki
+package com.ichi2.anki.preferences
 
 import android.content.Context
 import android.content.Intent
@@ -37,9 +37,8 @@ import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
+import com.ichi2.anki.*
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.preferences.*
-import com.ichi2.anki.preferences.PreferencesSearchView
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection

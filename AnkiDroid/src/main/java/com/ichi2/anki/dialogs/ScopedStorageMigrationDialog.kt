@@ -28,6 +28,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.utils.MDUtil
 import com.ichi2.anki.*
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedTextView
 import timber.log.Timber

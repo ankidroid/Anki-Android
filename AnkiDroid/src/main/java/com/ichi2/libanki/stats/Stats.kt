@@ -20,8 +20,8 @@ import android.content.Context
 import android.text.TextUtils
 import android.util.Pair
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.Preferences.Companion.getDayOffset
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOverview
 import com.ichi2.anki.stats.StatsMetaInfo

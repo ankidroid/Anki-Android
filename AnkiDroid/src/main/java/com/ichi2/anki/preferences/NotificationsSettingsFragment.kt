@@ -20,7 +20,6 @@ import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreference
-import com.ichi2.anki.Preferences
 import com.ichi2.anki.R
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.anki.services.NotificationService

@@ -26,6 +26,7 @@ import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUEST
 import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.pages.PagesActivity
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
 import com.ichi2.utils.KotlinCleanup

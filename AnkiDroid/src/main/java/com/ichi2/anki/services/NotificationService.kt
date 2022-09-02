@@ -25,8 +25,8 @@ import androidx.core.content.ContextCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.NotificationChannels
-import com.ichi2.anki.Preferences
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.compat.CompatHelper
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber

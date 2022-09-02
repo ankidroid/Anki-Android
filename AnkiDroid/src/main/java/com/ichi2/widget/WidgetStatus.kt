@@ -19,7 +19,7 @@ import android.util.Pair
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.MetaDB
-import com.ichi2.anki.Preferences
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.async.BaseAsyncTask
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.KotlinCleanup

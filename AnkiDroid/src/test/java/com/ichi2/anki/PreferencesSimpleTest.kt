@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki
 
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.preferences.HeaderPreference
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo

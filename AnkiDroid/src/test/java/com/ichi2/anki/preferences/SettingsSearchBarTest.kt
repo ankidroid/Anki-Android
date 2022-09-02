@@ -18,7 +18,6 @@ package com.ichi2.anki.preferences
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bytehamster.lib.preferencesearch.PreferenceItem
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
-import com.ichi2.anki.Preferences
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.getJavaFieldAsAccessible
 import org.hamcrest.MatcherAssert.assertThat
