@@ -137,9 +137,8 @@ open class CardBrowser :
     lateinit var deckSpinnerSelection: DeckSpinnerSelection
 
     @KotlinCleanup("move to onCreate and make lateinit")
-    @JvmField
     @VisibleForTesting
-    var mCardsListView: ListView? = null
+    lateinit var cardsListView: ListView
     private var mSearchView: CardBrowserSearchView? = null
 
     @JvmField
@@ -549,7 +548,7 @@ open class CardBrowser :
         // conf saved may still have this bug.
         mOrderAsc = upgradeJSONIfNecessary(col, "sortBackwards", false)
         mCards.reset()
-        mCardsListView = findViewById(R.id.card_browser_list)
+        cardsListView = findViewById(R.id.card_browser_list)
         // Create a spinner for column 1
         val cardsColumn1Spinner = findViewById<Spinner>(R.id.browser_column1_spinner)
         val column1Adapter = ArrayAdapter.createFromResource(
@@ -618,13 +617,13 @@ open class CardBrowser :
             sflCustomFont
         )
         // link the adapter to the main mCardsListView
-        mCardsListView!!.adapter = mCardsAdapter
+        cardsListView.adapter = mCardsAdapter
         // make the items (e.g. question & answer) render dynamically when scrolling
-        mCardsListView!!.setOnScrollListener(RenderOnScroll())
+        cardsListView.setOnScrollListener(RenderOnScroll())
         // set the spinner index
         cardsColumn1Spinner.setSelection(mColumn1Index)
         cardsColumn2Spinner.setSelection(mColumn2Index)
-        mCardsListView!!.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
+        cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (isInMultiSelectMode) {
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
@@ -638,7 +637,7 @@ open class CardBrowser :
             }
         }
         @KotlinCleanup("helper function for min/max range")
-        mCardsListView!!.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
+        cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (isInMultiSelectMode) {
                 var hasChanged = false
                 for (
@@ -647,7 +646,7 @@ open class CardBrowser :
                         position
                     )
                 ) {
-                    val card = mCardsListView!!.getItemAtPosition(i) as CardCache
+                    val card = cardsListView.getItemAtPosition(i) as CardCache
 
                     // Add to the set of checked cards
                     hasChanged = hasChanged or mCheckedCards.add(card)
@@ -1538,7 +1537,7 @@ open class CardBrowser :
     protected open fun numCardsToRender(): Int {
         return ceil(
             (
-                mCardsListView!!.height /
+                cardsListView.height /
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics)
                 ).toDouble()
         ).toInt() + 5
@@ -1839,13 +1838,13 @@ open class CardBrowser :
     }
 
     private fun autoScrollTo(newPosition: Int) {
-        mCardsListView!!.setSelectionFromTop(newPosition, mOldCardTopOffset)
+        cardsListView.setSelectionFromTop(newPosition, mOldCardTopOffset)
         mPostAutoScroll = true
     }
 
     private fun calculateTopOffset(cardPosition: Int): Int {
-        val firstVisiblePosition = mCardsListView!!.firstVisiblePosition
-        val v = mCardsListView!!.getChildAt(cardPosition - firstVisiblePosition)
+        val firstVisiblePosition = cardsListView.firstVisiblePosition
+        val v = cardsListView.getChildAt(cardPosition - firstVisiblePosition)
         return v?.top ?: 0
     }
 
@@ -2426,13 +2425,13 @@ open class CardBrowser :
      * adjust so that the vertical position of the given view is maintained
      */
     private fun recenterListView(view: View) {
-        val position = mCardsListView!!.getPositionForView(view)
+        val position = cardsListView.getPositionForView(view)
         // Get the current vertical position of the top of the selected view
         val top = view.top
         // Post to event queue with some delay to give time for the UI to update the layout
         postDelayedOnNewHandler({
             // Scroll to the same vertical position before the layout was changed
-            mCardsListView!!.setSelectionFromTop(position, top)
+            cardsListView.setSelectionFromTop(position, top)
         }, 10)
     }
 
@@ -2462,7 +2461,7 @@ open class CardBrowser :
         mCheckedCards.clear()
         isInMultiSelectMode = false
         // If view which was originally selected when entering multi-select is visible then maintain its position
-        val view = mCardsListView!!.getChildAt(mLastSelectedPosition - mCardsListView!!.firstVisiblePosition)
+        val view = cardsListView.getChildAt(mLastSelectedPosition - cardsListView.firstVisiblePosition)
         view?.let { recenterListView(it) }
         // update adapter to remove check boxes
         mCardsAdapter!!.notifyDataSetChanged()
