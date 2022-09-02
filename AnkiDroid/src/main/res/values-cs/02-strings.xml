@@ -418,7 +418,7 @@
     <string name="intro_sync_from_ankiweb">Synchronizovat z AnkiWebu</string>
     <string name="already_logged_in">Již jste přihlášeni</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="validation_deck_already_exists">Balíček existuje</string>
     <string name="deck_created">Created deck</string>
     <string name="deck_renamed">Renamed deck</string>
 </resources>

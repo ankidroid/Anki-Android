@@ -66,7 +66,7 @@
     <string name="add_to_deck_use_current_deck">選択中のデッキ</string>
     <string name="add_to_deck_decide_by_note_type">ノートタイプから選択</string>
     <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">新規カードと復習カードを混ぜる</string>
+    <string name="new_spread_mix_new_and_review">復習カードと混ぜる</string>
     <string name="new_spread_new_after_review">復習カードの後</string>
     <string name="new_spread_new_before_review">復習カードの前</string>
     <!-- override_font_labels -->
