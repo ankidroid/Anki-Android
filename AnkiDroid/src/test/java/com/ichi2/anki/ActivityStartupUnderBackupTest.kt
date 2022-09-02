@@ -19,6 +19,7 @@ import android.app.Activity
 import android.os.Looper.getMainLooper
 import com.canhub.cropper.CropImageActivity
 import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
+import com.ichi2.anki.preferences.Preferences
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
 import com.ichi2.testutils.EmptyApplication
