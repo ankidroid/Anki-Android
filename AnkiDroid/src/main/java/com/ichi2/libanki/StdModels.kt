@@ -18,9 +18,8 @@ package com.ichi2.libanki
 import androidx.annotation.StringRes
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.utils.KotlinCleanup
 
-@KotlinCleanup("IDE Lint")
+@Suppress("FunctionName") // `_new` was a name in libAnki
 class StdModels(
     /**
      * Function creating the standard model. Needs to be a function to take the local language into account.
@@ -93,7 +92,7 @@ class StdModels(
             },
             R.string.basic_typing_model_name
         )
-        val FORWARD_REVERSE_MODEL = StdModels(
+        private val FORWARD_REVERSE_MODEL = StdModels(
             { mm: ModelManager, name: String ->
                 val m = BASIC_MODEL._new(mm, name)
                 val frontName = m.getJSONArray("flds").getJSONObject(0).getString("name")
@@ -107,7 +106,7 @@ class StdModels(
             },
             R.string.forward_reverse_model_name
         )
-        val FORWARD_OPTIONAL_REVERSE_MODEL = StdModels(
+        private val FORWARD_OPTIONAL_REVERSE_MODEL = StdModels(
             { mm: ModelManager, name: String ->
                 val m = FORWARD_REVERSE_MODEL._new(mm, name)
                 val av = AnkiDroidApp.appResources.getString(R.string.field_to_ask_front_name)
@@ -119,7 +118,7 @@ class StdModels(
             },
             R.string.forward_optional_reverse_model_name
         )
-        val CLOZE_MODEL = StdModels(
+        private val CLOZE_MODEL = StdModels(
             { mm: ModelManager, name: String? ->
                 val m = mm.newModel(
                     name!!

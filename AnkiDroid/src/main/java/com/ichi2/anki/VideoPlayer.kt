@@ -21,20 +21,17 @@ import android.content.res.Configuration
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.SurfaceHolder
-import android.view.WindowManager
+import android.view.WindowManager.LayoutParams
 import android.widget.VideoView
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.libanki.Sound
 import com.ichi2.themes.Themes
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
-@KotlinCleanup("for better possibly-null handling")
 class VideoPlayer : Activity(), SurfaceHolder.Callback {
-    @KotlinCleanup("lateinit")
-    private var mVideoView: VideoView? = null
+    private lateinit var mVideoView: VideoView
+    private val mSoundPlayer: Sound = Sound()
     private var mPath: String? = null
-    private var mSoundPlayer: Sound? = null
 
     /** Called when the activity is first created.  */
     @Suppress("DEPRECATION") // #9332: UI Visibility -> Insets
@@ -46,13 +43,12 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
         mPath = intent.getStringExtra("path")
         Timber.i("Video Player intent had path: %s", mPath)
         window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
+            LayoutParams.FLAG_FULLSCREEN,
+            LayoutParams.FLAG_FULLSCREEN
         )
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.addFlags(LayoutParams.FLAG_KEEP_SCREEN_ON)
         mVideoView = findViewById(R.id.video_surface)
-        mVideoView!!.holder.addCallback(this)
-        mSoundPlayer = Sound()
+        mVideoView.holder.addCallback(this)
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
@@ -65,7 +61,7 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
             finish()
             return
         }
-        mSoundPlayer!!.playSound(mPath!!, { mp: MediaPlayer? ->
+        mSoundPlayer.playSound(mPath!!, { mp: MediaPlayer? ->
             finish()
 
             val originalListener = Sound.mediaCompletionListener
@@ -83,13 +79,13 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-        mSoundPlayer!!.stopSounds()
+        mSoundPlayer.stopSounds()
         finish()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        mSoundPlayer!!.notifyConfigurationChanged(mVideoView!!)
+        mSoundPlayer.notifyConfigurationChanged(mVideoView)
     }
 
     public override fun onStop() {
