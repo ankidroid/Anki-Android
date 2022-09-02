@@ -438,7 +438,7 @@
     <string name="intro_sync_from_ankiweb">مزامنة من أنكي ويب</string>
     <string name="already_logged_in">تم تسجيل الدخول مسبقًا</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="validation_deck_already_exists">سلام </string>
+    <string name="deck_created">كيفية </string>
+    <string name="deck_renamed">Minato </string>
 </resources>

@@ -50,7 +50,7 @@
         <item quantity="one">%d AnkiDroid kaardi tõttu</item>
         <item quantity="other">%d AnkiDroid kaardi tõttu</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid Väike</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid väike</string>
     <plurals name="widget_cards_due">
         <item quantity="one">%d card due</item>
         <item quantity="other">%d cards due</item>
@@ -59,5 +59,5 @@
         <item quantity="one">%d minut jäänud</item>
         <item quantity="other">%d minutit jäänud</item>
     </plurals>
-    <string name="widget_add_note_button">Add new AnkiDroid note</string>
+    <string name="widget_add_note_button">Lisa uus AnkiDroid märge</string>
 </resources>
