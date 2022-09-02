@@ -21,8 +21,11 @@ import android.os.Bundle
 import android.webkit.WebView
 import androidx.fragment.app.commit
 import com.ichi2.anki.*
+import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
 import java.net.ServerSocket
+import kotlin.reflect.KClass
+import kotlin.reflect.jvm.jvmName
 
 /**
  * Container activity to host Anki HTML pages
@@ -54,14 +57,14 @@ class PagesActivity : AnkiActivity() {
         ankiServer.start()
 
         // Launch page
-        val pageName = intent.extras?.getString(EXTRA_PAGE_NAME)
-            ?: throw Exception("PageActivity's intent should have a '$EXTRA_PAGE_NAME' extra")
+        val pageClassName = intent.extras?.getString(EXTRA_PAGE_CLASS)
+            ?: throw Exception("PageActivity's intent should have a '$EXTRA_PAGE_CLASS' extra")
 
-        val pageFragment = getPageFragment(pageName).apply {
+        val pageFragment = getInstanceFromClassName<PageFragment>(pageClassName).apply {
             arguments = intent.getBundleExtra(EXTRA_PAGE_ARGS)
         }
         supportFragmentManager.commit {
-            replace(R.id.page_container, pageFragment, pageName)
+            replace(R.id.page_container, pageFragment)
         }
         setTitle(pageFragment.title)
     }
@@ -75,19 +78,6 @@ class PagesActivity : AnkiActivity() {
         }
     }
 
-    /**
-     * @return the [PageFragment] whose name is equal to [pageName]
-     * @throws Exception if there is not a page associated with the given [pageName]
-     */
-    private fun getPageFragment(pageName: String): PageFragment {
-        return when (pageName) {
-            CardInfo.PAGE_NAME -> CardInfo()
-            CsvImporter.PAGE_NAME -> CsvImporter()
-            Statistics.PAGE_NAME -> Statistics()
-            else -> throw Exception("'$pageName' page doesn't have a PageFragment associated")
-        }
-    }
-
     companion object {
         /**
          * Extra key of [PagesActivity]'s intent that can be used to pass a [Bundle]
@@ -98,17 +88,17 @@ class PagesActivity : AnkiActivity() {
          * Extra key of [PagesActivity]'s intent that must be included and
          * hold the name of an [Anki HTML page](https://github.com/ankitects/anki/tree/main/ts)
          */
-        const val EXTRA_PAGE_NAME = "pageName"
+        const val EXTRA_PAGE_CLASS = "pageClass"
 
         const val HOST_NAME = "localhost"
 
         /**
-         * @param pageName name of the Anki HTML page that should be opened
+         * @param fragmentClass class of the [PageFragment] to be created
          * @param arguments to be passed to the created [PageFragment]
          */
-        fun getIntent(context: Context, pageName: String, arguments: Bundle? = null): Intent {
+        fun getIntent(context: Context, fragmentClass: KClass<out PageFragment>, arguments: Bundle? = null): Intent {
             return Intent(context, PagesActivity::class.java).apply {
-                putExtra(EXTRA_PAGE_NAME, pageName)
+                putExtra(EXTRA_PAGE_CLASS, fragmentClass.jvmName)
                 putExtra(EXTRA_PAGE_ARGS, arguments)
             }
         }

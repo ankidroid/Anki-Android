@@ -26,7 +26,7 @@ import com.ichi2.anki.R
  */
 class CsvImporter : PageFragment() {
     override val title = R.string.menu_import
-    override val pageName = PAGE_NAME
+    override val pageName = "import-csv"
     override lateinit var webViewClient: PageWebViewClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +45,6 @@ class CsvImporter : PageFragment() {
     }
 
     companion object {
-        const val PAGE_NAME = "import-csv"
-
         /** Key of [CsvImporter]'s argument that holds the path of the file to be imported */
         private const val ARG_KEY_PATH = "csvPath"
 
@@ -58,7 +56,7 @@ class CsvImporter : PageFragment() {
             val arguments = Bundle().apply {
                 putString(ARG_KEY_PATH, filePath)
             }
-            return PagesActivity.getIntent(context, PAGE_NAME, arguments)
+            return PagesActivity.getIntent(context, CsvImporter::class, arguments)
         }
     }
 }

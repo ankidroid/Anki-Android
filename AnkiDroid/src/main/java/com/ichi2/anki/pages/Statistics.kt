@@ -21,14 +21,12 @@ import com.ichi2.anki.R
 
 class Statistics : PageFragment() {
     override val title = R.string.statistics
-    override val pageName = PAGE_NAME
+    override val pageName = "graphs"
     override var webViewClient = PageWebViewClient()
 
     companion object {
-        const val PAGE_NAME = "graphs"
-
         fun getIntent(context: Context): Intent {
-            return PagesActivity.getIntent(context, PAGE_NAME)
+            return PagesActivity.getIntent(context, Statistics::class)
         }
     }
 }
